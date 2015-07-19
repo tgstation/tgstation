@@ -45,7 +45,7 @@
 	explosion_block = 3
 	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
 
-/turf/simulated/wall/mineral/diamond/thermitemelt(mob/user as mob)
+/turf/simulated/wall/mineral/diamond/thermitemelt(mob/user)
 	return
 
 /turf/simulated/wall/mineral/clown
@@ -89,11 +89,11 @@
 			return
 	return
 
-/turf/simulated/wall/mineral/uranium/attack_hand(mob/user as mob)
+/turf/simulated/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
 	..()
 
-/turf/simulated/wall/mineral/uranium/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/wall/mineral/uranium/attackby(obj/item/weapon/W, mob/user, params)
 	radiate()
 	..()
 
@@ -111,7 +111,7 @@
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/simulated/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
-/turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/wall/mineral/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma wall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")

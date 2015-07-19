@@ -20,7 +20,7 @@
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
-		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/machinery/atmospherics/components/unary/cryo_cell,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
@@ -34,8 +34,11 @@
 
 
 
-/obj/item/weapon/reagent_containers/glass/attack(mob/M as mob, mob/user as mob, obj/target)
+/obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
+		return
+
+	if(!spillable)
 		return
 
 	if(!reagents || !reagents.total_volume)
@@ -125,7 +128,7 @@
 			reagents.reaction(target, TOUCH)
 			reagents.clear_reagents()
 
-/obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
 		return
 	var/hotness = is_hot(I)
@@ -265,7 +268,7 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
 			user << "<span class='warning'>[src] is out of water!</span>"

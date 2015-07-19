@@ -77,13 +77,13 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	..()
 
 
-/datum/game_mode/proc/forge_gang_objectives(var/datum/mind/boss_mind)
+/datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
 	rival_obj.explanation_text = "Be the first gang to successfully takeover the station with a Dominator."
 	boss_mind.objectives += rival_obj
 
-/datum/game_mode/proc/greet_gang(var/datum/mind/boss_mind, var/you_are=1)
+/datum/game_mode/proc/greet_gang(datum/mind/boss_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		boss_mind.current << "<FONT size=3 color=red><B>You are the Boss of the [boss_mind.gang_datum.name] Gang!</B></FONT>"
@@ -147,7 +147,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ///////////////////////////////////////////
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
-/datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, var/datum/gang/G, var/check = 1)
+/datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()))
 		return 0
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
@@ -171,7 +171,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
 ////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, var/beingborged, var/silent, var/remove_bosses=0)
+/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
 	if(!gang)
 		return 0
@@ -231,17 +231,20 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gang_bosses += G.bosses
 	return gang_bosses
 
+/proc/get_domination_time(var/datum/gang/G)
+	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
-	if(!winner)
-		world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT><br>"
-	else
-		world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT><br>"
-	..()
+	if(gangs.len)
+		if(!winner)
+			world << "<FONT size=3 color=red><B>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</B></FONT><br>"
+		else
+			world << "<FONT size=3 color=red><B>The [winner.name] Gang successfully performed a hostile takeover of the station!</B></FONT><br>"
+
 	for(var/datum/gang/G in gangs)
 		world << "<br><b>The [G.name] Gang was [winner==G ? "<font color=green>victorious</font>" : "<font color=red>defeated</font>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
 		world << "<br>The [G.name] Gang Bosses were:"
@@ -252,7 +255,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 
 
-/datum/game_mode/proc/gang_membership_report(var/list/membership)
+/datum/game_mode/proc/gang_membership_report(list/membership)
 	var/text = ""
 	for(var/datum/mind/gang_mind in membership)
 		text += "<br><b>[gang_mind.key]</b> was <b>[gang_mind.name]</b> ("

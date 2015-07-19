@@ -16,7 +16,7 @@ var/global/dmm_suite/preloader/_preloader = null
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(var/dmm_file as file, var/z_offset as num)
+/dmm_suite/load_map(dmm_file as file, z_offset as num)
 	if(!z_offset)//what z_level we are creating the map on
 		z_offset = world.maxz+1
 
@@ -110,7 +110,7 @@ var/global/dmm_suite/preloader/_preloader = null
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(var/model as text,var/xcrd as num,var/ycrd as num,var/zcrd as num)
+/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -203,7 +203,7 @@ var/global/dmm_suite/preloader/_preloader = null
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(var/path,var/list/attributes, var/x, var/y, var/z)
+/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z)
 	var/atom/instance
 	_preloader = new(attributes, path)
 
@@ -216,7 +216,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
-/dmm_suite/proc/trim_text(var/what as text,var/trim_quotes=0)
+/dmm_suite/proc/trim_text(what as text,trim_quotes=0)
 	while(length(what) && (findtext(what," ",1,2)))
 		what=copytext(what,2,0)
 	while(length(what) && (findtext(what," ",length(what),0)))
@@ -230,7 +230,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //find the position of the next delimiter,skipping whatever is comprised between opening_escape and closing_escape
 //returns 0 if reached the last delimiter
-/dmm_suite/proc/find_next_delimiter_position(var/text as text,var/initial_position as num, var/delimiter=",",var/opening_escape=quote,var/closing_escape=quote)
+/dmm_suite/proc/find_next_delimiter_position(text as text,initial_position as num, delimiter=",",opening_escape=quote,closing_escape=quote)
 	var/position = initial_position
 	var/next_delimiter = findtext(text,delimiter,position,0)
 	var/next_opening = findtext(text,opening_escape,position,0)
@@ -245,7 +245,7 @@ var/global/dmm_suite/preloader/_preloader = null
 
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
-/dmm_suite/proc/text2list(var/text as text,var/delimiter=",")
+/dmm_suite/proc/text2list(text as text,delimiter=",")
 
 	var/list/to_return = list()
 
@@ -295,7 +295,7 @@ var/global/dmm_suite/preloader/_preloader = null
 	return to_return
 
 //simulates the DM multiple turfs on one tile underlaying
-/dmm_suite/proc/add_underlying_turf(var/turf/placed,var/turf/underturf, var/list/turfs_underlays)
+/dmm_suite/proc/add_underlying_turf(turf/placed,turf/underturf, list/turfs_underlays)
 	if(underturf.density)
 		placed.density = 1
 	if(underturf.opacity)
@@ -318,7 +318,7 @@ var/global/dmm_suite/preloader/_preloader = null
 	var/list/attributes
 	var/target_path
 
-/dmm_suite/preloader/New(var/list/the_attributes, var/path)
+/dmm_suite/preloader/New(list/the_attributes, path)
 	.=..()
 	if(!the_attributes.len)
 		Del()

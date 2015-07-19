@@ -51,7 +51,7 @@
 
 ////////////////////The Powers
 
-/mob/living/simple_animal/slaughter/proc/phaseout(var/obj/effect/decal/cleanable/B)
+/mob/living/simple_animal/slaughter/proc/phaseout(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
 	var/turf/bloodloc = get_turf(B.loc)
 	if(Adjacent(bloodloc))
@@ -93,7 +93,7 @@
 				src.eating = FALSE
 			src.notransform = 0
 
-/mob/living/simple_animal/slaughter/proc/phasein(var/obj/effect/decal/cleanable/B)
+/mob/living/simple_animal/slaughter/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.eating)
 		src << "<B>Finish eating first!</B>"
 	else
@@ -104,7 +104,7 @@
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 		qdel(src.holder)
 
-/obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
+/obj/effect/decal/cleanable/blood/CtrlClick(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
@@ -114,7 +114,7 @@
 			S.phaseout(src)
 
 
-/obj/effect/decal/cleanable/trail_holder/CtrlClick(var/mob/user)
+/obj/effect/decal/cleanable/trail_holder/CtrlClick(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
@@ -147,7 +147,7 @@
 	anchored = 1
 	invisibility = 60
 
-obj/effect/dummy/slaughter/relaymove(var/mob/user, direction)
+obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	if (!src.canmove || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	loc = newLoc

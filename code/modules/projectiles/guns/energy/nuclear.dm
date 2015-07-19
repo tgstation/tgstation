@@ -8,7 +8,7 @@
 	modifystate = 2
 	can_flashlight = 1
 
-/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	select_fire(user)
 	update_icon()
 

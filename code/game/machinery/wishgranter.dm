@@ -11,7 +11,7 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(var/mob/living/carbon/user)
+/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
 	if(istype(user))	return
 	usr.set_machine(src)
 

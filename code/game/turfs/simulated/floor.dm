@@ -81,10 +81,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(lava)
 		return 0
 	if(air)
-		update_visuals(air)
+		update_visuals()
 	return 1
 
-/turf/simulated/floor/attack_paw(mob/user as mob)
+/turf/simulated/floor/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /turf/simulated/floor/proc/gets_drilled()
@@ -123,7 +123,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	W.update_icon()
 	return W
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 	if(!C || !user)
 		return 1
 	if(..())

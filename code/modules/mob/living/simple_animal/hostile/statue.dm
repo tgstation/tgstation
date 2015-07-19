@@ -62,7 +62,7 @@
 	if(creator)
 		src.creator = creator
 
-/mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
+/mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
 			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
@@ -96,7 +96,7 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
+/mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
 	// Check for darkness
@@ -131,13 +131,13 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib(var/animation = 0)
+/mob/living/simple_animal/hostile/statue/gib(animation = 0)
 	dust(animation)
 
 
 // Stop attacking clientless mobs
 
-/mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
+/mob/living/simple_animal/hostile/statue/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)

@@ -496,7 +496,7 @@
 		possible_destinations = C.possible_destinations
 		shuttleId = C.shuttleId
 
-/obj/machinery/computer/shuttle/attack_hand(user as mob)
+/obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)
@@ -540,7 +540,7 @@
 			if(1)	usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else	usr << "<span class='notice'>Unable to comply.</span>"
 
-/obj/machinery/computer/shuttle/emag_act(mob/user as mob)
+/obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1

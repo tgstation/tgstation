@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/oxygen_generator
+/obj/machinery/atmospherics/components/unary/oxygen_generator
 
 	icon_state = "o2gen_map"
 
@@ -12,28 +12,31 @@
 
 	var/oxygen_content = 10
 
-/obj/machinery/atmospherics/unary/oxygen_generator/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon_nopipes()
 
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions) //it works for now
 
-	if(!node || !on || stat & BROKEN)
+	if(!nodes[NODE1] || !on || stat & BROKEN)
 		icon_state = "o2gen_off"
 		return
 
 	else
 		icon_state = "o2gen_on"
 
-/obj/machinery/atmospherics/unary/oxygen_generator/New()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/New()
 	..()
-
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	air_contents.volume = 50
+	airs[AIR1] = air_contents
 
-/obj/machinery/atmospherics/unary/oxygen_generator/process_atmos()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
 	..()
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
 	var/total_moles = air_contents.total_moles()
 
@@ -45,6 +48,6 @@
 		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
 		air_contents.oxygen += added_oxygen
 
-		parent.update = 1
+		update_parents()
 
 	return 1

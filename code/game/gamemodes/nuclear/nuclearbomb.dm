@@ -212,13 +212,13 @@ var/bomb_set
 				attack_hand(M)
 	return
 
-/obj/machinery/nuclearbomb/attack_paw(mob/user as mob)
+/obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/nuclearbomb/attack_ai(mob/user as mob)
+/obj/machinery/nuclearbomb/attack_ai(mob/user)
 	return
 
-/obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
+/obj/machinery/nuclearbomb/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = text("<TT>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (auth ? "++++++++++" : "----------"))
 	if (auth)

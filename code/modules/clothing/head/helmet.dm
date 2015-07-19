@@ -66,9 +66,10 @@
 				icon_state = "[initial(icon_state)]up"
 				usr << "[alt_toggle_message] \the [src]"
 				usr.update_inv_head(0)
-				while(up)
-					playsound(src.loc, "[activation_sound]", 100, 0, 4)
-					sleep(15)
+				if(active_sound)
+					while(up)
+						playsound(src.loc, "[active_sound]", 100, 0, 4)
+						sleep(15)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
@@ -79,8 +80,8 @@
 	action_button_name = "Toggle Justice Lights"
 	can_toggle = 1
 	toggle_cooldown = 20
-	activation_sound = 'sound/items/WEEOO1.ogg'
-
+	active_sound = 'sound/items/WEEOO1.ogg'
+	
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
@@ -180,7 +181,7 @@
 	toggle_helmlight()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/clothing/head/helmet/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/device/flashlight/seclite))
 		var/obj/item/device/flashlight/seclite/S = A
 		if(can_flashlight)
@@ -231,7 +232,7 @@
 	update_helmlight(user)
 	return
 
-/obj/item/clothing/head/helmet/proc/update_helmlight(var/mob/user = null)
+/obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		action_button_name = "Toggle Helmetlight"
 		if(F.on)

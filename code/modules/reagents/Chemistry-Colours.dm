@@ -1,5 +1,5 @@
 
-/proc/mix_color_from_reagents(var/list/reagent_list)
+/proc/mix_color_from_reagents(list/reagent_list)
 	if(!istype(reagent_list))
 		return
 

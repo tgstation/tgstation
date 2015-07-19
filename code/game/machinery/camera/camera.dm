@@ -102,16 +102,16 @@
 	qdel(src)
 	return
 
-/obj/machinery/camera/proc/setViewRange(var/num = 7)
+/obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/proc/shock(var/mob/living/user)
+/obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
+/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
 	user.do_attack_animation(src)
@@ -327,7 +327,7 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/living/user)
+/obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(busy)
 		return 0
 	if(!WT.remove_fuel(0, user))
@@ -344,7 +344,7 @@
 	busy = 0
 	return 0
 
-/obj/machinery/camera/bullet_act(var/obj/item/projectile/proj)
+/obj/machinery/camera/bullet_act(obj/item/projectile/proj)
 	if(proj.damage_type == BRUTE)
 		health = max(0, health - proj.damage)
 		if(!health && status)

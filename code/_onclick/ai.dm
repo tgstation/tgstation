@@ -85,7 +85,7 @@
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
-/atom/proc/attack_ai(mob/user as mob)
+/atom/proc/attack_ai(mob/user)
 	return
 
 /*
@@ -112,7 +112,7 @@
 /* Atom Procs */
 /atom/proc/AICtrlClick()
 	return
-/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
+/atom/proc/AIAltClick(mob/living/silicon/ai/user)
 	AltClick(user)
 	return
 /atom/proc/AIShiftClick()
