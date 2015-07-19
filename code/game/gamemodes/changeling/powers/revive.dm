@@ -4,7 +4,7 @@
 	req_stat = DEAD
 
 //Revive from revival stasis
-/obj/effect/proc_holder/changeling/revive/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
 	if(user.stat == DEAD)
 		dead_mob_list -= user
 		living_mob_list += user

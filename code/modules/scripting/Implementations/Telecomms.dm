@@ -58,7 +58,7 @@ var/list/allowed_custom_spans = list(SPAN_ROBOT,SPAN_YELL,SPAN_ITALICS,SPAN_SANS
 
 	/* -- Execute the compiled code -- */
 
-	proc/Run(var/datum/signal/signal)
+	proc/Run(datum/signal/signal)
 
 		if(!ready)
 			return
@@ -256,7 +256,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 
 /datum/signal
 
-	proc/mem(var/address, var/value)
+	proc/mem(address, value)
 
 		if(istext(address))
 			var/obj/machinery/telecomms/server/S = data["server"]
@@ -268,7 +268,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 				S.memory[address] = value
 
 
-	proc/signaler(var/freq = 1459, var/code = 30)
+	proc/signaler(freq = 1459, code = 30)
 
 		if(isnum(freq) && isnum(code))
 
@@ -299,7 +299,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
 
-	proc/tcombroadcast(var/message, var/freq, var/source, var/job, var/spans, var/say = "says", var/ask = "asks", var/yell = "yells", var/exclaim = "exclaims")
+	proc/tcombroadcast(message, freq, source, job, spans, say = "says", ask = "asks", yell = "yells", exclaim = "exclaims")
 
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]

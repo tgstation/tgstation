@@ -21,8 +21,8 @@
 	maxHealth = 150
 	health = 150
 	environment_smash = 1
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	idle_vision_range = 1 // Only attack when target is close
@@ -41,15 +41,15 @@
 		..()
 	return
 
-/mob/living/simple_animal/hostile/morph/proc/allowed(var/atom/movable/A) // make it into property/proc ? not sure if worth it
+/mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
 	if(istype(A,/obj/screen))
 		return 0
 	if(istype(A,/obj/singularity))
 		return 0
 	return 1
 
-/mob/living/simple_animal/hostile/morph/ShiftClickOn(var/atom/movable/A)
-	if(morph_time <= world.time)
+/mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
+	if(morph_time <= world.time && !stat)
 		if(A == src)
 			restore()
 			return
@@ -58,7 +58,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/morph/proc/assume(var/atom/movable/target)
+/mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
 	morphed = 1
 	form = target
 	
@@ -171,7 +171,7 @@
 /datum/round_event/morph
 	var/key_of_morph
 
-/datum/round_event/morph/proc/get_morph(var/end_if_fail = 0)
+/datum/round_event/morph/proc/get_morph(end_if_fail = 0)
 	key_of_morph = null
 	if(!key_of_morph)
 		var/list/candidates = get_candidates(BE_ALIEN)
@@ -194,7 +194,13 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
-	S << "<B>You are a Morph, a shapeshifting alien creature.</B><br>You can assume the shape of anything in sight by Shift-Clicking it.<br> You can only transform every 5 seconds.<br> To return to your basic form Shift-Click on yourself."
+	var/info = {"<B>You are a Morph, a shapeshifting alien creature.</B>
+ You can assume the shape of anything in sight by Shift-Clicking it.
+ You can only transform every 5 seconds.
+ To return to your basic form Shift-Click on yourself.
+ Base form is slow but strong, you're much weaker and faster when disguised.
+ You can eat items and corpses by clicking on them,eating corpses will heal you."}
+	S << info
 	message_admins("[key_of_morph] has been made into Morph by an event.")
 	log_game("[key_of_morph] was spawned as a Morph by an event.")
 	return 1

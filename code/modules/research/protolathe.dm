@@ -70,7 +70,7 @@ Note: Must be placed west/left of and R&D console to function.
 		T += (M.rating/3)
 	efficiency_coeff = max(T, 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/A = 0
 	switch(M)
 		if(MAT_METAL)
@@ -94,7 +94,7 @@ Note: Must be placed west/left of and R&D console to function.
 	A = A / max(1, (being_built.materials[M]/efficiency_coeff))
 	return A
 
-/obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/r_n_d/protolathe/attackby(obj/item/O, mob/user, params)
 	if (shocked)
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))

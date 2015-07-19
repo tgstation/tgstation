@@ -50,6 +50,7 @@
 	ignore_maskadjust = 0
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACE
+	w_class = 2.0
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
@@ -74,7 +75,7 @@
 	..()
 	verbs -= /obj/item/clothing/mask/gas/sechailer/verb/adjust
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)

@@ -9,7 +9,7 @@
 	var/owned = 1	// Boolean, no owner to begin with
 
 // Attack self
-/obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user as mob)
+/obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
 	src.add_fingerprint(user)	// Anyone can add their fingerprints to it with this
 	if(owned)
 		user << "<span class='notice'>[src] stares up at you with friendly eyes.</span>"

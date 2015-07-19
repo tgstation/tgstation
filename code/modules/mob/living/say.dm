@@ -87,7 +87,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		return
 
 	if(!can_speak_vocal(message))
-		src << "<span class='warning'>You find yourself unable to speak!</span>" 
+		src << "<span class='warning'>You find yourself unable to speak!</span>"
 		return
 
 	message = treat_message(message)
@@ -96,6 +96,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(!message)
 		return
+
+	//Log of what we've said, plain message, no spans or junk
+	say_log += message
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)

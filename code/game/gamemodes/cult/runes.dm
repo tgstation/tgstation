@@ -6,7 +6,7 @@ var/list/sacrificed = list()
 ///Teleport: Teleports the user to a random teleport rune with the same rune. Can be imbued into a talisman.
 
 
-/obj/effect/rune/proc/teleport(var/key)
+/obj/effect/rune/proc/teleport(key)
 	var/mob/living/user = usr
 	var/allrunesloc[]
 	allrunesloc = new/list()
@@ -42,7 +42,7 @@ var/list/sacrificed = list()
 
 
 //Subtype of teleport, teleports any items and mobs on top of the rune rather than the user themselves
-/obj/effect/rune/proc/itemport(var/key)
+/obj/effect/rune/proc/itemport(key)
 //	var/allrunesloc[]
 //	allrunesloc = new/list()
 //	var/index = 0
@@ -184,7 +184,7 @@ var/list/sacrificed = list()
 ///EMP: Lets out a large EMP blast
 
 
-/obj/effect/rune/proc/emp(var/U,var/range_red) //range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
+/obj/effect/rune/proc/emp(U,range_red) //range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
 	if(istype(src,/obj/effect/rune))
 		usr.say("Ta'gh fara[pick("'","`")]qha fel d'amar det!")
 	else
@@ -323,7 +323,7 @@ var/list/sacrificed = list()
 ///Veil: Makes all surrounding runes invisible. They cannot be used directly but still used indirectly (i.e. teleport...)
 
 
-/obj/effect/rune/proc/obscure(var/rad)
+/obj/effect/rune/proc/obscure(rad)
 	var/S=0
 	for(var/obj/effect/rune/R in orange(rad,src))
 		if(R!=src)
@@ -638,14 +638,14 @@ var/list/sacrificed = list()
 	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/pet/corgi/sac_act for an example
 		victim.sac_act(src, victim)			//Sacrifice procs are now seperate per mob, this allows us to allow sacrifice on as many mob types as we want without making an already clunky system worse
 
-/obj/effect/rune/proc/sac_grant_word(var/mob/living/C)	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
+/obj/effect/rune/proc/sac_grant_word(mob/living/C)	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
 	if(C.mind.cult_words.len != ticker.mode.allwords.len) // No point running if they already know everything
 		var/convert_word
 		var/pick_list = ticker.mode.allwords - C.mind.cult_words
 		convert_word = pick(pick_list)
 		ticker.mode.grant_runeword(C, convert_word)
 
-/obj/effect/rune/proc/stone_or_gib(var/mob/T)
+/obj/effect/rune/proc/stone_or_gib(mob/T)
 	var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
 	if(!stone.transfer_soul("FORCE", T, usr))	//if it fails to add soul
 		qdel(stone)
@@ -659,7 +659,7 @@ var/list/sacrificed = list()
 ///Reveal: Reverses the Veil rune's effect, revealing all hidden runes.
 
 
-/obj/effect/rune/proc/revealrunes(var/obj/W as obj)
+/obj/effect/rune/proc/revealrunes(obj/W)
 	var/go=0
 	var/rad
 	var/S=0
@@ -928,7 +928,7 @@ var/list/sacrificed = list()
 ///Stun: Everyone nearby would be stunned for a -very- short time. If used in a talisman, it stuns and mutes a single target.
 
 
-/obj/effect/rune/proc/runestun(var/mob/living/T as mob)
+/obj/effect/rune/proc/runestun(mob/living/T)
 	if(istype(src,/obj/effect/rune))   ///When invoked as rune, flash and stun everyone around.
 		usr.say("Fuu ma[pick("'","`")]jin!")
 		for(var/mob/living/L in viewers(src))

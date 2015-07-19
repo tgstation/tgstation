@@ -259,7 +259,7 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/Crossed(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
@@ -267,7 +267,7 @@
 	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, var/safety = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0)
 	if(!safety)
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
@@ -533,7 +533,7 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_sel.selecting
@@ -575,7 +575,7 @@
 	else
 		return null
 
-/mob/living/carbon/human/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
+/mob/living/carbon/human/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 
@@ -786,3 +786,16 @@
 		..(I, cuff_break = 1)
 	else
 		..()
+
+/mob/living/carbon/human/clean_blood()
+	var/mob/living/carbon/human/H = src
+	if(H.gloves)
+		if(H.gloves.clean_blood())
+			H.update_inv_gloves(0)
+	else
+		..() // Clear the Blood_DNA list
+		if(H.bloody_hands)
+			H.bloody_hands = 0
+			H.bloody_hands_mob = null
+			H.update_inv_gloves(0)
+	update_icons()	//apply the now updated overlays to the mob

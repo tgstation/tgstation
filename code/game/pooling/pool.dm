@@ -34,7 +34,7 @@ var/global/list/GlobalPool = list()
 //Or a list of arguments
 //Either way it gets passed to new
 
-/proc/PoolOrNew(var/get_type,var/second_arg)
+/proc/PoolOrNew(get_type,second_arg)
 	if(!get_type)
 		return
 
@@ -48,7 +48,7 @@ var/global/list/GlobalPool = list()
 				. = new get_type (second_arg)
 
 
-/proc/GetFromPool(var/get_type,var/second_arg)
+/proc/GetFromPool(get_type,second_arg)
 	if(!get_type)
 		return
 
@@ -78,7 +78,7 @@ var/global/list/GlobalPool = list()
 		return pooled
 
 
-/proc/PlaceInPool(var/datum/diver, destroy = 1)
+/proc/PlaceInPool(datum/diver, destroy = 1)
 	if(!istype(diver))
 		return
 

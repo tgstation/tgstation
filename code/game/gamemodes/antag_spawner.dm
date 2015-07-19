@@ -4,10 +4,10 @@
 	w_class = 1.0
 	var/used = 0
 
-/obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
 	return
 
-/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target as mob)
+/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target)
 	return
 
 /obj/item/weapon/antag_spawner/contract
@@ -16,7 +16,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
 
-/obj/item/weapon/antag_spawner/contract/attack_self(mob/user as mob)
+/obj/item/weapon/antag_spawner/contract/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if(used)
@@ -63,7 +63,7 @@
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
-/obj/item/weapon/antag_spawner/contract/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
 	PoolOrNew(/obj/effect/effect/smoke, T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
@@ -108,7 +108,7 @@
 	ticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
 
-/obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
+/obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
 	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), slot_w_uniform)
 	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
@@ -125,7 +125,7 @@
 	icon_state = "locator"
 	var/TC_cost = 0
 
-/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
+/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
 		user << "The teleporter is out of power."
 		return
@@ -137,7 +137,7 @@
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
-/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
@@ -156,7 +156,7 @@
 	icon_state = "vial"
 
 
-/obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user as mob)
+/obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
 	var/list/demon_candidates = get_candidates(BE_ALIEN)
 	if(user.z != 1)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
@@ -173,7 +173,7 @@
 		user << "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>"
 
 
-/obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
 	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)

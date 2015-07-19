@@ -145,7 +145,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 
 
-/obj/effect/rune/attackby(I as obj, user as mob, params)
+/obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		user << "<span class='notice'>You retrace your steps, carefully undoing the lines of the rune.</span>"
 		qdel(src)
@@ -157,7 +157,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	return
 
 
-/obj/effect/rune/attack_hand(mob/living/user as mob)		// OH GOD this is horrible
+/obj/effect/rune/attack_hand(mob/living/user)		// OH GOD this is horrible
 	if(!iscultist(user))
 		user << "<span class='warning'>You can't mouth the arcane scratchings without fumbling over them!</span>"
 		return
@@ -221,7 +221,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return fizzle(user)
 
 
-/obj/effect/rune/proc/fizzle(var/mob/living/cultist = null)
+/obj/effect/rune/proc/fizzle(mob/living/cultist = null)
 	var/gibberish = pick("B'ADMINES SP'WNIN SH'T","IC'IN O'OC","RO'SHA'M I'SA GRI'FF'N ME'AI","TOX'IN'S O'NM FI'RAH","IA BL'AME TOX'IN'S","FIR'A NON'AN RE'SONA","A'OI I'RS ROUA'GE","LE'OAN JU'STA SP'A'C Z'EE SH'EF","IA PT'WOBEA'RD, IA A'DMI'NEH'LP")
 
 	if(cultist)
@@ -489,7 +489,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //		usr << "whatev"
 //		usr << browse(null, "window=tank")
 
-/obj/item/weapon/tome/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
 	if(istype(M,/mob/dead))
 		M.invisibility = 0
 		user.visible_message( \
@@ -516,7 +516,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	add_logs(user, M, "smacked", src)
 
 
-/obj/item/weapon/tome/attack_self(mob/living/user as mob)
+/obj/item/weapon/tome/attack_self(mob/living/user)
 	usr = user
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
@@ -649,7 +649,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		user << "The book seems full of illegible scribbles. Is this a joke?"
 		return
 
-/obj/item/weapon/tome/attackby(obj/item/weapon/tome/T as obj, mob/living/user as mob, params)
+/obj/item/weapon/tome/attackby(obj/item/weapon/tome/T, mob/living/user, params)
 	if(istype(T, /obj/item/weapon/tome)) // sanity check to prevent a runtime error
 		switch(alert("Copy the runes from your tome?",,"Copy", "Cancel"))
 			if("cancel")

@@ -17,7 +17,7 @@
 	smash(target,thrower,1)
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob, var/ranged = 0)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	var/new_location = get_turf(loc)
@@ -47,7 +47,7 @@
 
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target as mob, mob/living/user as mob)
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
 	if(!target)
 		return
@@ -266,7 +266,7 @@
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
-	name = "Molotov cocktail"
+	name = "molotov cocktail"
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
@@ -298,26 +298,30 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(is_hot(I))
+	if(is_hot(I) && !active)
 		active = 1
-		user << "<span class='info'>You light the [src] on fire.</span>"
+		user << "<span class='info'>You light \the [src] on fire.</span>"
 		overlays += fire_overlay
 		if(!isGlass)
 			spawn(50)
-				var/counter
-				var/target = src.loc
-				for(counter = 0, counter<2, counter++)
-					if(istype(target, /obj/item/weapon/storage))
-						var/obj/item/weapon/storage/S = target
-						target = S.loc
-				if(istype(target, /atom))
-					var/atom/A = target
-					SplashReagents(A)
-					A.fire_act()
-				qdel(src)
+				if(active)
+					var/counter
+					var/target = src.loc
+					for(counter = 0, counter<2, counter++)
+						if(istype(target, /obj/item/weapon/storage))
+							var/obj/item/weapon/storage/S = target
+							target = S.loc
+					if(istype(target, /atom))
+						var/atom/A = target
+						SplashReagents(A)
+						A.fire_act()
+					qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
-	if(active && isGlass)
-		user << "<span class='info'>You snuff out the flame on [src].</span>"
+	if(active)
+		if(!isGlass)
+			user << "<span class='danger'>The flame's spread too far on it!</span>"
+			return
+		user << "<span class='info'>You snuff out the flame on \the [src].</span>"
 		overlays -= fire_overlay
 		active = 0
