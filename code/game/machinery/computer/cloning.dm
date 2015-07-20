@@ -365,7 +365,7 @@
 	if ((NOCLONE in subject.mutations) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
-	if ((!subject.ckey) || (!subject.client))
+	if (!subject.ckey)
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
 		return
 	if (find_record("ckey", subject.ckey, records))
