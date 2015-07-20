@@ -36,6 +36,7 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	var/material = "metal"
 	var/spam_flag = 0 //For certain interactions, like bananium floors honking when stepped on
 	var/obj/item/stack/tile/floor_tile
+	var/image/floor_overlay
 
 	melt_temperature = 1643.15 // Melting point of steel
 
@@ -94,7 +95,8 @@ var/image/list/w_overlays = list("wet" = image('icons/effects/water.dmi',icon_st
 	return
 
 turf/simulated/floor/proc/update_icon()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/simulated/floor/proc/update_icon() called tick#: [world.time]")
+	overlays -= floor_overlay
+
 	if(lava)
 		return
 	else if(is_plasteel_floor())
@@ -106,31 +108,10 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_light_floor())
 		var/obj/item/stack/tile/light/T = floor_tile
 		if(T.on)
-			switch(T.state)
-				if(LIGHTFLOOR_ON)
-					icon_state = "light_on"
-					set_light(5)
-				if(LIGHTFLOOR_WHITE)
-					icon_state = "light_on-w"
-					set_light(5)
-				if(LIGHTFLOOR_RED)
-					icon_state = "light_on-r"
-					set_light(5)
-				if(LIGHTFLOOR_GREEN)
-					icon_state = "light_on-g"
-					set_light(5)
-				if(LIGHTFLOOR_YELLOW)
-					icon_state = "light_on-y"
-					set_light(5)
-				if(LIGHTFLOOR_BLUE)
-					icon_state = "light_on-b"
-					set_light(5)
-				if(LIGHTFLOOR_PURPLE)
-					icon_state = "light_on-p"
-					set_light(5)
-				else
-					icon_state = "light_off"
-					set_light(0)
+			set_light(5)
+			floor_overlay = T.get_turf_image()
+			icon_state = "light_base"
+			overlays += floor_overlay
 		else
 			set_light(0)
 			icon_state = "light_off"
@@ -539,7 +520,9 @@ turf/simulated/floor/proc/update_icon()
 					if(istype(T,/obj/item/stack/tile/light))
 						var/obj/item/stack/tile/light/L = T
 						var/obj/item/stack/tile/light/F = floor_tile
-						F.state = L.state
+						F.color_r = L.color_r
+						F.color_g = L.color_g
+						F.color_b = L.color_b
 						F.on = L.on
 					if(istype(T,/obj/item/stack/tile/grass))
 						for(var/direction in cardinal)
