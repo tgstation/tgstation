@@ -39,7 +39,7 @@ AI MODULES
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(mob/living/silicon/reciever, mob/user)
-	if(!laws.len || laws[1] == "") //So we don't loop trough an empty list and end up with runtimes.
+	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
 
