@@ -55,10 +55,13 @@
 
 /datum/holiday/new_year
 	name = NEW_YEAR
-	begin_day = 30 // 1 day early
+	begin_day = 31
 	begin_month = DECEMBER
-	end_day = 5 //4 days extra
+	end_day = 1
 	end_month = JANUARY
+
+/datum/holiday/new_year/getStationPrefix()
+	return pick("Party","New","Hangover","Resolution")
 
 /datum/holiday/groundhog
 	name = "Groundhog Day"
@@ -67,10 +70,11 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 9 //6 days early
+	begin_day = 14
 	begin_month = FEBRUARY
-	end_day = 15 //1 day extra
 
+/datum/holiday/valentines/getStationPrefix()
+	return pick("Love","Amore","Single","Smootch","Hug")
 
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
@@ -78,7 +82,22 @@
 	begin_month = FEBRUARY
 
 /datum/holiday/birthday/greet()
-	return "Say 'Happy Birthday' to Space Station 13, first publicly playable on February 16th, 2003!"
+	var/game_age = text2num(time2text(world.timeofday, "YY")) - 3
+	var/Fact
+	switch(game_age)
+		if(16)	Fact = " SS13 is now old enough to drive!"
+		if(18)	Fact = " SS13 is now legal!"
+		if(21)	Fact = " SS13 can now drink!"
+		if(26)	Fact = " SS13 can now rent a car!"
+		if(30)	Fact = " SS13 can now go home and be a family man!"
+		if(40)	Fact = " SS13 can now suffer a midlife crisis!"
+		if(50)	Fact = " Happy golden anniversary!"
+		if(65)	Fact = " SS13 can now start thinking about retirement!"
+		if(96)	Fact = " Please send a time machine back to pick me up, I need to update the time formatting for this feature!" //See you later suckers
+	if(!Fact)
+		Fact = " SS13 is now [game_age] years old!"
+
+	return "Say 'Happy Birthday' to Space Station 13, first publicly playable on February 16th, 2003![Fact]"
 
 /datum/holiday/random_kindness
 	name = "Random Acts of Kindness Day"
@@ -87,6 +106,11 @@
 
 /datum/holiday/random_kindness/greet()
 	return "Go do some random acts of kindness for a stranger!" //haha yeah right
+
+/datum/holiday/leap
+	name = "Leap Day"
+	begin_day = 29
+	begin_month = FEBRUARY
 
 /datum/holiday/pi
 	name = "Pi Day"
@@ -98,16 +122,21 @@
 	begin_day = 17
 	begin_month = MARCH
 
+/datum/holiday/no_this_is_patrick/getStationPrefix()
+	return pick("Blarney","Green","Leprechaun","Booze")
+
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
 	begin_day = 1
 	begin_month = APRIL
-	end_day = 2 //1 day extra only because this shit just gets annoying fast
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
 	begin_day = 20
 	begin_month = APRIL
+
+/datum/holiday/fourtwenty/getStationPrefix()
+	return pick("Snoop","Blunt","Toke","Dank")
 
 /datum/holiday/earth
 	name = "Earth Day"
@@ -124,7 +153,13 @@
 	begin_day = 4
 	begin_month = MAY
 
-// No holidays in June :'(
+/datum/holiday/firefighter/getStationPrefix()
+	return pick("Burning","Blazing","Plasma","Fire")
+
+/datum/holiday/summersolstice
+	name = "Summer Solstice"
+	begin_day = 21
+	begin_month = JUNE
 
 /datum/holiday/doctor
 	name = "Doctor's Day"
@@ -135,6 +170,9 @@
 	name = "UFO Day"
 	begin_day = 2
 	begin_month = JULY
+
+/datum/holiday/UFO/getStationPrefix() //Is such a thing even possible?
+	return pick("Ayy","Truth","Tsoukalos","Mulder") //Yes it is!
 
 /datum/holiday/writer
 	name = "Writer's Day"
@@ -162,6 +200,25 @@
 /datum/holiday/pirate/greet()
 	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
 
+/datum/holiday/pirate/getStationPrefix()
+	return pick("Yarr","Scurvy","Yo-ho-ho")
+
+/datum/holiday/programmers
+	name = "Programmers' Day"
+
+/datum/holiday/programmers/shouldCelebrate(dd, mm, yy) //Programmer's day falls on the 2^8th day of the year
+	if(mm == 9)
+		if(yy/4 == round(yy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
+			if(dd == 12)
+				return 1
+		else
+			if(dd == 13)
+				return 1
+	return 0
+
+/datum/holiday/programmers/getStationPrefix()
+	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
+
 /datum/holiday/questions
 	name = "Stupid-Questions Day"
 	begin_day = 28
@@ -175,6 +232,9 @@
 	begin_day = 4
 	begin_month = OCTOBER
 
+/datum/holiday/animal/getStationPrefix()
+	return pick("Parrot","Corgi","Cat","Pug","Goat","Fox")
+
 /datum/holiday/smile
 	name = "Smiling Day"
 	begin_day = 7
@@ -187,13 +247,16 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 24 //7 days early
+	begin_day = 31
 	begin_month = OCTOBER
-	end_day = 7 //7 days extra
+	end_day = 1
 	end_month = NOVEMBER
 
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
+
+/datum/holiday/halloween/getStationPrefix()
+	return pick("Bone-Rattling","Mr. Bones' Own","2SPOOKY","Spooky","Scary","Skeletons")
 
 /datum/holiday/vegan
 	name = "Vegan Day"
@@ -230,10 +293,9 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 18 //7 days early
+	begin_day = 24
 	begin_month = DECEMBER
-	end_day = 8 //14 days extra, christmas is important
-	end_month = JANUARY
+	end_day = 25
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
@@ -258,7 +320,7 @@
 /datum/holiday/easter
 	name = EASTER
 	var/const/days_early = 1 //to make editing the holiday easier
-	var/const/days_extra = 6
+	var/const/days_extra = 1
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yy)
 // Easter's celebration day is as snowflakey as Uhangi's code
