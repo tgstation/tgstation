@@ -65,7 +65,7 @@ var/global/list/tech_list = list()
 //Checks to see if tech has all the required pre-reqs.
 //Input: datum/tech; Output: 0/1 (false/true)
 /datum/research/proc/TechHasReqs(var/datum/tech/T)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/TechHasReqs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/TechHasReqs() called tick#: [world.time]")
 	if(T.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -82,7 +82,7 @@ var/global/list/tech_list = list()
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
 /datum/research/proc/DesignHasReqs(var/datum/design/D)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/DesignHasReqs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/DesignHasReqs() called tick#: [world.time]")
 	if(D.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -100,7 +100,7 @@ var/global/list/tech_list = list()
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
 /datum/research/proc/DesignHasReqs(var/datum/design/D)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/DesignHasReqs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/DesignHasReqs() called tick#: [world.time]")
 	if(D.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -117,7 +117,7 @@ var/global/list/tech_list = list()
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
 /datum/research/proc/AddTech2Known(var/datum/tech/T)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/AddTech2Known() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/AddTech2Known() called tick#: [world.time]")
 	for(var/datum/tech/known in known_tech)
 		if(T.id == known.id)
 			if(T.level > known.level)
@@ -127,7 +127,7 @@ var/global/list/tech_list = list()
 	return
 
 /datum/research/proc/AddDesign2Known(var/datum/design/D)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/AddDesign2Known() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/AddDesign2Known() called tick#: [world.time]")
 	if(!(D in known_designs))
 		for(var/datum/design/known in known_designs)
 			if(D.id == known.id)
@@ -140,7 +140,7 @@ var/global/list/tech_list = list()
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/RefreshResearch() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/RefreshResearch() called tick#: [world.time]")
 	for(var/datum/tech/PT in tech_list)
 		if(TechHasReqs(PT))
 			AddTech2Known(PT)
@@ -156,14 +156,14 @@ var/global/list/tech_list = list()
 //Refreshes the levels of a given tech.
 //Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(var/ID, var/level)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/UpdateTech() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/UpdateTech() called tick#: [world.time]")
 	for(var/datum/tech/KT in known_tech)
 		if(KT.id == ID)
 			if(KT.level <= level) KT.level = max((KT.level + 1), (level - 1))
 	return
 
 /datum/research/proc/UpdateDesign(var/path)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/UpdateDesign() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/UpdateDesign() called tick#: [world.time]")
 	for(var/datum/design/KD in known_designs)
 		if(KD.build_path == path)
 			KD.reliability_mod += rand(1,2)

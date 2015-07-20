@@ -13,7 +13,7 @@ var/global/list/pooledvariables = new
  * Example call: getFromPool(/datum/pipeline, args)
  */
 /proc/getFromDPool()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getFromDPool() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getFromDPool() called tick#: [world.time]")
 	var/A = args[1]
 	var/list/B = list()
 	B += (args - A)
@@ -56,7 +56,7 @@ var/global/list/pooledvariables = new
  * Example call: returnToDPool(src)
  */
 /proc/returnToDPool(const/datum/D)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/returnToDPool() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/returnToDPool() called tick#: [world.time]")
 	if(!D)
 		return
 	if(length(masterdatumPool["[D.type]"]) > MAINTAINING_DATUM_POOL_COUNT)
@@ -88,7 +88,7 @@ var/global/list/pooledvariables = new
 #endif
 
 /datum/proc/createVariables()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/datum/proc/createVariables() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/datum/proc/createVariables() called tick#: [world.time]")
 	pooledvariables[type] = new/list()
 	var/list/exclude = global.exclude + args
 
@@ -102,7 +102,7 @@ var/global/list/pooledvariables = new
 //SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
 
 /datum/proc/resetVariables()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/datum/proc/resetVariables() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/datum/proc/resetVariables() called tick#: [world.time]")
 	if(!pooledvariables[type])
 		createVariables(args)
 
@@ -110,7 +110,7 @@ var/global/list/pooledvariables = new
 		vars[key] = pooledvariables[type][key]
 
 /proc/isInTypes(atom/Object, types)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/isInTypes() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/isInTypes() called tick#: [world.time]")
 	if(!Object)
 		return 0
 	var/prototype = Object.type

@@ -36,7 +36,7 @@
 //Minimizes snowflake coding and allows dynamically disabling the helmet's light if needed
 /obj/item/clothing/head/helmet/space/rig/proc/check_light()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/head/helmet/space/rig/proc/check_light() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/head/helmet/space/rig/proc/check_light() called tick#: [world.time]")
 
 	if(no_light) //There's no light on the helmet
 		if(on) //The helmet light is currently on
@@ -52,7 +52,7 @@
 //Note to coders : DO NOT EVER FIRE THIS UNLESS YOU TOGGLE A LIGHT ON OR OFF BEFOREHAND. AND NO, CERTAINLY NOT IF YOU UPDATE BRIGHTNESS_ON
 /obj/item/clothing/head/helmet/space/rig/proc/update_brightness()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/head/helmet/space/rig/proc/update_brightness() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/head/helmet/space/rig/proc/update_brightness() called tick#: [world.time]")
 
 	if(on)
 		if(ismob(loc))

@@ -211,7 +211,7 @@
 					toxic++
 
 /obj/machinery/apiary/proc/die()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/apiary/proc/die() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/apiary/proc/die() called tick#: [world.time]")
 	if(owned_bee_swarms.len)
 		var/mob/living/simple_animal/bee/B = pick(owned_bee_swarms)
 		B.target_turf = get_turf(src)
@@ -224,7 +224,7 @@
 	health = 0
 
 /obj/machinery/apiary/proc/angry_swarm(var/mob/M)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/apiary/proc/angry_swarm() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/apiary/proc/angry_swarm() called tick#: [world.time]")
 	for(var/mob/living/simple_animal/bee/B in owned_bee_swarms)
 		B.feral = 25
 		B.target = M
@@ -248,7 +248,7 @@
 	set src in oview(1)
 	set name = "Harvest honeycomb"
 	set category = "Object"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/apiary/verb/harvest_honeycomb()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/apiary/verb/harvest_honeycomb()  called tick#: [world.time]")
 
 	while(health > 15)
 		health -= 15

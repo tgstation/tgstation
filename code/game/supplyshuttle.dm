@@ -26,7 +26,7 @@ var/list/mechtoys = list(
 	luminosity = 1
 	lighting_use_dynamic = 0
 	requires_power = 0
-	lighting_use_dynamic = 0
+
 
 /area/supply/dock //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
@@ -34,7 +34,6 @@ var/list/mechtoys = list(
 	luminosity = 1
 	lighting_use_dynamic = 0
 	requires_power = 0
-	lighting_use_dynamic = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
@@ -183,7 +182,7 @@ var/list/mechtoys = list(
 
 	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcomm and the station
 	proc/process()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 		for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
 			var/datum/supply_packs/P = new typepath()
 			supply_packs[P.name] = P
@@ -206,7 +205,7 @@ var/list/mechtoys = list(
 				sleep(processing_interval)
 
 	proc/send()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/send() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/send() called tick#: [world.time]")
 		var/area/from
 		var/area/dest
 		var/area/the_shuttles_way
@@ -239,7 +238,7 @@ var/list/mechtoys = list(
 
 	//Check whether the shuttle is allowed to move
 	proc/can_move()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/can_move() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/can_move() called tick#: [world.time]")
 		if(moving) return 0
 
 		var/area/shuttle = locate(/area/supply/station)
@@ -252,7 +251,7 @@ var/list/mechtoys = list(
 
 	proc/SellObjToOrders(var/atom/A,var/in_crate)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SellObjToOrders() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SellObjToOrders() called tick#: [world.time]")
 
 		// Per-unit orders run last so they don't steal shit.
 		var/list/deferred_order_checks=list()
@@ -269,7 +268,7 @@ var/list/mechtoys = list(
 				return
 	//Sellin
 	proc/sell()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/sell() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/sell() called tick#: [world.time]")
 		var/shuttle_at
 		if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
 		else			shuttle_at = SUPPLY_DOCK_AREATYPE
@@ -324,7 +323,7 @@ var/list/mechtoys = list(
 
 	//Buyin
 	proc/buy()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/buy() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/buy() called tick#: [world.time]")
 		if(!shoppinglist.len) return
 
 		var/shuttle_at
@@ -405,7 +404,7 @@ var/list/mechtoys = list(
 		return
 
 /datum/controller/supply_shuttle/proc/forbidden_atoms_check(atom/A)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/supply_shuttle/proc/forbidden_atoms_check() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/supply_shuttle/proc/forbidden_atoms_check() called tick#: [world.time]")
 	var/contents = get_contents_in_object(A)
 
 	if (locate(/mob/living) in contents)
@@ -876,7 +875,7 @@ var/list/mechtoys = list(
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/supplycomp/proc/post_signal() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/supplycomp/proc/post_signal() called tick#: [world.time]")
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

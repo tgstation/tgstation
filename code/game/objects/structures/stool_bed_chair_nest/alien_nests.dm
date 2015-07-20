@@ -65,7 +65,7 @@
 	healthcheck()
 
 /obj/structure/stool/bed/nest/proc/healthcheck()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/nest/proc/healthcheck() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/nest/proc/healthcheck() called tick#: [world.time]")
 	if(health <=0)
 		density = 0
 		del(src)

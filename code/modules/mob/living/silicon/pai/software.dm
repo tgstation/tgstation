@@ -25,7 +25,7 @@
 /mob/living/silicon/pai/verb/paiInterface()
 	set category = "pAI Commands"
 	set name = "Software Interface"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/pai/verb/paiInterface()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/pai/verb/paiInterface()  called tick#: [world.time]")
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
@@ -298,7 +298,7 @@
 // MENUS
 
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareMenu() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareMenu() called tick#: [world.time]")
 	var/dat = ""
 
 	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
@@ -361,7 +361,7 @@
 
 
 /mob/living/silicon/pai/proc/downloadSoftware()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/downloadSoftware() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/downloadSoftware() called tick#: [world.time]")
 	var/dat = ""
 
 
@@ -384,7 +384,7 @@
 
 
 /mob/living/silicon/pai/proc/directives()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/directives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/directives() called tick#: [world.time]")
 	var/dat = ""
 
 
@@ -411,7 +411,7 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(var/mob/M, var/mob/living/silicon/pai/P)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/CheckDNA() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/CheckDNA() called tick#: [world.time]")
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		var/turf/T = get_turf(P.loc)
@@ -430,7 +430,7 @@
 
 //Remote Signaller
 /mob/living/silicon/pai/proc/softwareSignal()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareSignal() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareSignal() called tick#: [world.time]")
 	var/dat = ""
 	dat += "<h3>Remote Signaller</h3><br><br>"
 	dat += {"<B>Frequency/Code</B> for signaler:<BR>
@@ -453,7 +453,7 @@
 
 // Crew Manifest
 /mob/living/silicon/pai/proc/softwareManifest()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareManifest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareManifest() called tick#: [world.time]")
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><br><br>"
 	if(data_core)
@@ -463,7 +463,7 @@
 
 // Medical Records
 /mob/living/silicon/pai/proc/softwareMedicalRecord()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareMedicalRecord() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareMedicalRecord() called tick#: [world.time]")
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Medical Records</h3><HR>"
@@ -487,7 +487,7 @@
 
 // Security Records
 /mob/living/silicon/pai/proc/softwareSecurityRecord()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareSecurityRecord() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareSecurityRecord() called tick#: [world.time]")
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += "<h3>Security Records</h3><HR>"
@@ -509,7 +509,7 @@
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareTranslator() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareTranslator() called tick#: [world.time]")
 	var/dat = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will automatically convert all spoken and written language into a format that any known recipient can understand.<br><br>
 				The device is currently [ (universal_understand) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
@@ -519,7 +519,7 @@
 
 // Security HUD
 /mob/living/silicon/pai/proc/facialRecognition()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/facialRecognition() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/facialRecognition() called tick#: [world.time]")
 	var/dat = {"<h3>Facial Recognition Suite</h3><br>
 				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
 				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
@@ -529,7 +529,7 @@
 
 // Medical HUD
 /mob/living/silicon/pai/proc/medicalAnalysis()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/medicalAnalysis() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/medicalAnalysis() called tick#: [world.time]")
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += {"<h3>Medical Analysis Suite</h3><br>
@@ -573,7 +573,7 @@
 
 // Atmospheric Scanner
 /mob/living/silicon/pai/proc/softwareAtmo()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareAtmo() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareAtmo() called tick#: [world.time]")
 	var/dat = "<h3>Atmospheric Sensor</h4>"
 
 	var/turf/T = get_turf(src.loc)
@@ -615,7 +615,7 @@
 // Camera Jack - Clearly not finished
 /mob/living/silicon/pai/proc/softwareCamera()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareCamera() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareCamera() called tick#: [world.time]")
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:583: var/dat = "<h3>Camera Jack</h3>"
@@ -639,7 +639,7 @@ Cable status :"}
 // Door Jack
 /mob/living/silicon/pai/proc/softwareDoor()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareDoor() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareDoor() called tick#: [world.time]")
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\living\silicon\\\pai\software.dm:602: var/dat = "<h3>Airlock Jack</h3>"
@@ -680,7 +680,7 @@ Cable status :"}
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/hackloop() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/hackloop() called tick#: [world.time]")
 	var/turf/T = get_turf(src.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
@@ -707,7 +707,7 @@ Cable status :"}
 // Digital Messenger
 /mob/living/silicon/pai/proc/pdamessage()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/pdamessage() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/pdamessage() called tick#: [world.time]")
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>

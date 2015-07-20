@@ -16,7 +16,7 @@
 	return get_all_slots()
 
 /mob/living/silicon/robot/proc/uneq_module(const/obj/item/module)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/uneq_module() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/uneq_module() called tick#: [world.time]")
 	if(!istype(module))
 		return 0
 
@@ -33,7 +33,7 @@
 	return 1
 
 /mob/living/silicon/robot/proc/uneq_active()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/uneq_active() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/uneq_active() called tick#: [world.time]")
 	if(isnull(module_active))
 		return
 
@@ -70,7 +70,7 @@
 	hud_used.update_robot_modules_display()
 
 /mob/living/silicon/robot/proc/activate_module(var/obj/item/O)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/activate_module() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/activate_module() called tick#: [world.time]")
 	if(!(locate(O) in src.module.modules) && O != src.module.emag)
 		return
 	if(activated(O))
@@ -101,7 +101,7 @@
 		src << "<span class='notice'>You need to disable a module first!</span>"
 
 /mob/living/silicon/robot/proc/uneq_all()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/uneq_all() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/uneq_all() called tick#: [world.time]")
 	module_active = null
 
 	if(module_state_1)
@@ -122,7 +122,7 @@
 	updateicon()
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/activated() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/activated() called tick#: [world.time]")
 	if(module_state_1 == O)
 		return 1
 	else if(module_state_2 == O)
@@ -138,12 +138,12 @@
 
 //module_selected(module) - Checks whether the module slot specified by "module" is currently selected.
 /mob/living/silicon/robot/proc/module_selected(var/module) //Module is 1-3
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/module_selected() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/module_selected() called tick#: [world.time]")
 	return module == get_selected_module()
 
 //module_active(module) - Checks whether there is a module active in the slot specified by "module".
 /mob/living/silicon/robot/proc/module_active(var/module) //Module is 1-3
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/module_active() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/module_active() called tick#: [world.time]")
 	if(module < 1 || module > 3) return 0
 
 	switch(module)
@@ -160,7 +160,7 @@
 
 //get_selected_module() - Returns the slot number of the currently selected module.  Returns 0 if no modules are selected.
 /mob/living/silicon/robot/proc/get_selected_module()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_selected_module() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_selected_module() called tick#: [world.time]")
 	if(module_state_1 && module_active == module_state_1)
 		return 1
 	else if(module_state_2 && module_active == module_state_2)
@@ -172,7 +172,7 @@
 
 //select_module(module) - Selects the module slot specified by "module"
 /mob/living/silicon/robot/proc/select_module(var/module) //Module is 1-3
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/select_module() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/select_module() called tick#: [world.time]")
 	if(module < 1 || module > 3) return
 
 	if(!module_active(module)) return
@@ -203,7 +203,7 @@
 
 //deselect_module(module) - Deselects the module slot specified by "module"
 /mob/living/silicon/robot/proc/deselect_module(var/module) //Module is 1-3
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/deselect_module() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/deselect_module() called tick#: [world.time]")
 	if(module < 1 || module > 3) return
 
 	switch(module)
@@ -226,7 +226,7 @@
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
 /mob/living/silicon/robot/proc/toggle_module(var/module) //Module is 1-3
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/toggle_module() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/toggle_module() called tick#: [world.time]")
 	if(module < 1 || module > 3) return
 
 	if(module_selected(module))
@@ -240,7 +240,7 @@
 
 //cycle_modules() - Cycles through the list of selected modules.
 /mob/living/silicon/robot/proc/cycle_modules()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/cycle_modules() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/cycle_modules() called tick#: [world.time]")
 	var/slot_start = get_selected_module()
 	if(slot_start) deselect_module(slot_start) //Only deselect if we have a selected slot.
 

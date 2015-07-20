@@ -142,7 +142,7 @@
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -154,7 +154,7 @@
 	set name = "Rotate Counter Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate_ccw()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cold_sink/freezer/verb/rotate_ccw()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -305,7 +305,7 @@
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"
@@ -317,7 +317,7 @@
 	set name = "Rotate Counter Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate_ccw()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/heat_reservoir/heater/verb/rotate_ccw()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"

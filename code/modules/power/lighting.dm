@@ -232,7 +232,7 @@ var/global/list/obj/machinery/light/alllights = list()
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(var/trigger = 1)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/update() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/update() called tick#: [world.time]")
 
 	update_icon()
 	if(on)
@@ -273,7 +273,7 @@ var/global/list/obj/machinery/light/alllights = list()
  * Will not switch on if broken/burned/empty.
  */
 /obj/machinery/light/proc/seton(const/s)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/seton() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/seton() called tick#: [world.time]")
 	on = (s && LIGHT_OK == status)
 	update()
 
@@ -394,11 +394,11 @@ var/global/list/obj/machinery/light/alllights = list()
  * TRUE if area has power and lightswitch is on otherwise FALSE.
  */
 /obj/machinery/light/proc/has_power()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/has_power() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/has_power() called tick#: [world.time]")
 	return areaMaster.lightswitch && areaMaster.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/flicker() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/flicker() called tick#: [world.time]")
 	if(flickering) return
 	flickering = 1
 	spawn(0)
@@ -511,7 +511,7 @@ var/global/list/obj/machinery/light/alllights = list()
 // break the light and make sparks if was on
 
 /obj/machinery/light/proc/broken(var/skip_sound_and_sparks = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/broken() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/broken() called tick#: [world.time]")
 	if(status == LIGHT_EMPTY)
 		return
 
@@ -526,7 +526,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	update()
 
 /obj/machinery/light/proc/fix()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/fix() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/fix() called tick#: [world.time]")
 	if(status == LIGHT_OK)
 		return
 	status = LIGHT_OK
@@ -572,7 +572,7 @@ var/global/list/obj/machinery/light/alllights = list()
  * Explode the light.
  */
 /obj/machinery/light/proc/explode()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/explode() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/light/proc/explode() called tick#: [world.time]")
 	spawn(0)
 		broken() // Break it first to give a warning.
 		sleep(2)
@@ -656,7 +656,7 @@ var/global/list/obj/machinery/light/alllights = list()
 // update the icon state and description of the light
 
 /obj/item/weapon/light/proc/update()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/light/proc/update() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/light/proc/update() called tick#: [world.time]")
 	switch(status)
 		if(LIGHT_OK)
 			icon_state = base_state
@@ -713,7 +713,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	shatter()
 
 /obj/item/weapon/light/proc/shatter()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/light/proc/shatter() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/light/proc/shatter() called tick#: [world.time]")
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
 		src.visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN

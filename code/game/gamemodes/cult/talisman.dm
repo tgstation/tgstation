@@ -5,7 +5,7 @@
 	var/nullblock = 0
 
 /obj/item/weapon/paper/talisman/proc/findNullRod(var/atom/target)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/findNullRod() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/findNullRod() called tick#: [world.time]")
 	if(istype(target,/obj/item/weapon/nullrod))
 		var/turf/T = get_turf(target)
 		nullblock = 1
@@ -82,7 +82,7 @@
 		attack_self(M)
 
 /obj/item/weapon/paper/talisman/proc/supply(var/key)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/supply() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/supply() called tick#: [world.time]")
 	if (!src.uses)
 		qdel(src)
 		return
@@ -148,7 +148,7 @@
 
 //imbued talismans invocation for a few runes, since calling the proc causes a runtime error due to src = null
 /obj/item/weapon/paper/talisman/proc/runestun(var/mob/living/T as mob)//When invoked as talisman, stun and mute the target mob.
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/runestun() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/runestun() called tick#: [world.time]")
 	usr.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
 	nullblock = 0
 	for(var/turf/TU in range(T,1))
@@ -171,7 +171,7 @@
 	return
 
 /obj/item/weapon/paper/talisman/proc/blind()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/blind() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/blind() called tick#: [world.time]")
 	var/affected = 0
 	for(var/mob/living/carbon/C in view(2,usr))
 		if (iscultist(C))
@@ -192,7 +192,7 @@
 
 
 /obj/item/weapon/paper/talisman/proc/deafen()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/deafen() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/deafen() called tick#: [world.time]")
 	var/affected = 0
 	for(var/mob/living/carbon/C in range(7,usr))
 		if (iscultist(C))

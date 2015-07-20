@@ -1,5 +1,5 @@
 /client/proc/only_one()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/only_one() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/only_one() called tick#: [world.time]")
 	if(!ticker)
 		alert("The game hasn't started yet!")
 		return

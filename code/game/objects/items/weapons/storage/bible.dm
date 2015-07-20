@@ -36,7 +36,7 @@
 //vg13 EDIT
 // All cult functionality moved to Null Rod
 /obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/M as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/bible/proc/bless() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/bible/proc/bless() called tick#: [world.time]")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 40

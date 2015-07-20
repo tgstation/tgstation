@@ -11,7 +11,7 @@
 		events = new
 
 	proc/addEventType(event_type as text)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/addEventType() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/addEventType() called tick#: [world.time]")
 		if(!(event_type in events) || !islist(events[event_type]))
 			events[event_type] = list()
 			return 1
@@ -21,7 +21,7 @@
 	//	Arguments: event_type as text, proc_holder as datum, proc_name as text
 	//	Returns: New event, null on error.
 	proc/addEvent(event_type as text, proc_holder, proc_name as text)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/addEvent() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/addEvent() called tick#: [world.time]")
 		if(!event_type || !proc_holder || !proc_name)
 			return
 		addEventType(event_type)
@@ -33,7 +33,7 @@
 	//  Arguments: event_type as text, any number of additional arguments to pass to event handler
 	//  Returns: null
 	proc/fireEvent()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/fireEvent() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/fireEvent() called tick#: [world.time]")
 		//world << "Events in [args[1]] called"
 		var/list/event = listgetindex(events,args[1])
 		if(istype(event))
@@ -46,7 +46,7 @@
 	// Arguments: event_type as text, E as /datum/event
 	// Returns: 1 if event cleared, null on error
 	proc/clearEvent(event_type as text, datum/event/E)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/clearEvent() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/clearEvent() called tick#: [world.time]")
 		if(!event_type || !E)
 			return
 		var/list/event = listgetindex(events,event_type)
@@ -64,7 +64,7 @@
 		return ..()
 
 	proc/Fire()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Fire() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Fire() called tick#: [world.time]")
 		//world << "Event fired"
 		if(listener)
 			call(listener,proc_name)(arglist(args))

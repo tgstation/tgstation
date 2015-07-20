@@ -1,5 +1,5 @@
 client/verb/discon_pipes()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/discon_pipes()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/discon_pipes()  called tick#: [world.time]")
 	set name = "Show Disconnected Pipes"
 	set category = "Debug"
 

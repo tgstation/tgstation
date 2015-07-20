@@ -250,7 +250,7 @@ var/global/list/nlist = list( \
 )
 /obj/item/pipe/proc/update()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/update() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/update() called tick#: [world.time]")
 
 	name = nlist[pipe_type+1] + " fitting"
 	icon = 'icons/obj/pipe-item.dmi'
@@ -265,7 +265,7 @@ var/global/list/nlist = list( \
 	set category = "Object"
 	set name = "Rotate Pipe"
 	set src in view(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/pipe/verb/rotate()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/pipe/verb/rotate()  called tick#: [world.time]")
 
 	if ( usr.stat || usr.restrained()  || (usr.status_flags & FAKEDEATH))
 		return
@@ -291,7 +291,7 @@ var/global/list/nlist = list( \
 // returns all pipe's endpoints
 
 /obj/item/pipe/proc/get_pipe_dir()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/get_pipe_dir() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/get_pipe_dir() called tick#: [world.time]")
 	if (!dir)
 		return 0
 	var/flip = turn(dir, 180)
@@ -327,7 +327,7 @@ var/global/list/nlist = list( \
 
 /obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/get_pdir() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/get_pdir() called tick#: [world.time]")
 
 	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -345,7 +345,7 @@ var/global/list/nlist = list( \
 // return the h_dir (heat-exchange pipes) from the type and the dir
 
 /obj/item/pipe/proc/get_hdir() //endpoints for h/e pipes
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/get_hdir() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/get_hdir() called tick#: [world.time]")
 
 //	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)

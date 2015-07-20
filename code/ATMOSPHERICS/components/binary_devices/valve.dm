@@ -33,7 +33,7 @@
 
 /obj/machinery/atmospherics/binary/valve/proc/open()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/proc/open() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/proc/open() called tick#: [world.time]")
 
 	if(open) return 0
 
@@ -53,7 +53,7 @@
 
 /obj/machinery/atmospherics/binary/valve/proc/close()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/proc/close() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/proc/close() called tick#: [world.time]")
 
 	if(!open)
 		return 0
@@ -73,7 +73,7 @@
 	return 1
 
 /obj/machinery/atmospherics/binary/valve/proc/normalize_dir()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/proc/normalize_dir() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/proc/normalize_dir() called tick#: [world.time]")
 	if(dir==3)
 		dir = 1
 	else if(dir==12)
@@ -137,7 +137,7 @@
 //Radio remote control
 
 /obj/machinery/atmospherics/binary/valve/digital/proc/set_frequency(new_frequency)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/digital/proc/set_frequency() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/valve/digital/proc/set_frequency() called tick#: [world.time]")
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)

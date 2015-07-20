@@ -95,7 +95,7 @@ This is to cycle sounds forward
 /obj/item/device/soundsynth/verb/CycleForward()
 	set category = "Object"
 	set name = "Cycle Sound Forward"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/soundsynth/verb/CycleForward()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/soundsynth/verb/CycleForward()  called tick#: [world.time]")
 	switch(sound_flag)
 		if(SOUND_NUM)
 			usr << "There is no sound higher then Double Beep!"
@@ -115,7 +115,7 @@ And backwards
 	set category = "Object"
 	set name = "Cycle Sound Backward"
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/soundsynth/verb/CycleBackward()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/device/soundsynth/verb/CycleBackward()  called tick#: [world.time]")
 	switch(sound_flag)
 		if(0)
 			usr << "There is no sound lower then Honk!"

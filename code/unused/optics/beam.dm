@@ -34,7 +34,7 @@
 
 
 	proc/propagate()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/propagate() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/propagate() called tick#: [world.time]")
 		var/turf/T = get_step(src, dir)
 		if(T)
 			if(T.Enter(src))
@@ -47,7 +47,7 @@
 
 
 	proc/remove()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/remove() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/remove() called tick#: [world.time]")
 		if(next)
 			next.remove()
 		del(src)
@@ -55,7 +55,7 @@
 
 
 	proc/blocked(var/atom/A)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/blocked() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/blocked() called tick#: [world.time]")
 		return density || opacity
 /*
 /turf/Enter(atom/movable/mover as mob|obj)
@@ -111,7 +111,7 @@
 
 	proc/set_wavelength(var/lambda)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_wavelength() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/set_wavelength() called tick#: [world.time]")
 
 		var/w = round(lambda,1)	// integer wavelength
 		wavelength = lambda

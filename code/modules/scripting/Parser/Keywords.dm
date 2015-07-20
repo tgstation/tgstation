@@ -32,7 +32,7 @@ var/const/Represents a special statement in the code triggered by a keyword.
 	to its AST.
 */
 	proc/Parse(n_Parser/parser)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Parse() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Parse() called tick#: [world.time]")
 
 /*
 	Class: nS_Keyword

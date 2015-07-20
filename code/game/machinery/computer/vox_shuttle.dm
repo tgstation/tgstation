@@ -15,7 +15,7 @@ var/global/vox_shuttle_location
 	l_color = "#B40000"
 
 /obj/machinery/computer/vox_station/proc/vox_move_to(var/destination)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/vox_station/proc/vox_move_to() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/vox_station/proc/vox_move_to() called tick#: [world.time]")
 	if(moving)
 		return
 

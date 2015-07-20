@@ -16,7 +16,7 @@
 		..()
 
 /obj/item/mounted/proc/try_build(turf/on_wall, mob/user, proximity_flag) //checks
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mounted/proc/try_build() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mounted/proc/try_build() called tick#: [world.time]")
 	if(!on_wall || !user)
 		return
 	if (proximity_flag != 1) //if we aren't next to the wall
@@ -32,5 +32,5 @@
 	return 1
 
 /obj/item/mounted/proc/do_build(turf/on_wall, mob/user) //the buildy bit after we pass the checks
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mounted/proc/do_build() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/mounted/proc/do_build() called tick#: [world.time]")
 	return

@@ -61,7 +61,7 @@ datum/light_source
 
 	//Check a light to see if its effect needs reprocessing. If it does, remove any old effect and create a new one
 	proc/check()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check() called tick#: [world.time]")
 		if(!owner)
 			remove_effect()
 			return 1	//causes it to be removed from our list of lights. The garbage collector will then destroy it.
@@ -83,14 +83,14 @@ datum/light_source
 		return 0
 
 	proc/remove_effect()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/remove_effect() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/remove_effect() called tick#: [world.time]")
 		// before we apply the effect we remove the light's current effect.
 		for(var/turf/T in effect)	// negate the effect of this light source
 			T.update_lumcount(-effect[T], col_r, col_g, col_b, 1)
 		effect.len = 0					// clear the effect list
 
 	proc/add_effect()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_effect() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_effect() called tick#: [world.time]")
 		// only do this if the light is turned on and is on the map
 		if(owner.loc && owner.luminosity > 0)
 			readrgb(owner.l_color)
@@ -108,7 +108,7 @@ datum/light_source
 						//longer referenced by the queue
 
 	proc/lum(turf/A)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/lum() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/lum() called tick#: [world.time]")
 		if (owner.trueLuminosity < 1)
 			return 0
 		var/dist
@@ -126,7 +126,7 @@ datum/light_source
 			return sqrtTable[owner.trueLuminosity] - dist
 
 	proc/readrgb(const/col)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/readrgb() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/readrgb() called tick#: [world.time]")
 		_l_color = col
 
 		if(col)
@@ -170,7 +170,7 @@ atom/movable/New()
 //queues are complete.
 //if we have a light already it is merely updated, rather than making a new one.
 atom/proc/SetLuminosity(new_luminosity, trueLum = FALSE)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/SetLuminosity() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/SetLuminosity() called tick#: [world.time]")
 	if(new_luminosity < 0)
 		new_luminosity = 0
 	if(!trueLum)
@@ -190,7 +190,7 @@ atom/proc/SetLuminosity(new_luminosity, trueLum = FALSE)
 		luminosity = sqrt(trueLuminosity)
 
 atom/proc/AddLuminosity(delta_luminosity)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/AddLuminosity() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/AddLuminosity() called tick#: [world.time]")
 	if(delta_luminosity > 0)
 		SetLuminosity(trueLuminosity + delta_luminosity*delta_luminosity, TRUE)
 	else if(delta_luminosity < 0)
@@ -203,7 +203,7 @@ area/SetLuminosity(new_luminosity)			//we don't want dynamic lighting for areas
 
 //change our opacity (defaults to toggle), and then update all lights that affect us.
 atom/proc/SetOpacity(new_opacity)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/SetOpacity() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/SetOpacity() called tick#: [world.time]")
 	if(new_opacity == null)
 		new_opacity = !opacity			//default = toggle opacity
 	else if(opacity == new_opacity)
@@ -238,7 +238,7 @@ turf/space
 	lighting_lumcount = 4
 
 turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/update_lumcount() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/update_lumcount() called tick#: [world.time]")
 	lighting_lumcount += amount
 
 	if(!isnull(col_r)) //col_r is the "key" var, if it's null so will the rest
@@ -268,12 +268,12 @@ turf/proc/update_lumcount(amount, col_r, col_g, col_b, removing = 0)
 		lighting_changed = 1
 
 turf/proc/lighting_tag(const/level)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/lighting_tag() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/lighting_tag() called tick#: [world.time]")
 	var/area/A = loc
 	return A.tagbase + "sd_L[level]"
 
 turf/proc/build_lighting_area(const/tag, const/level, const/color_light)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/build_lighting_area() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/build_lighting_area() called tick#: [world.time]")
 	var/area/Area = loc
 	var/area/A = new Area.type()    // create area if it wasn't found
 	// replicate vars
@@ -298,7 +298,7 @@ turf/proc/build_lighting_area(const/tag, const/level, const/color_light)
 	return A
 
 turf/proc/shift_to_subarea()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/shift_to_subarea() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/proc/shift_to_subarea() called tick#: [world.time]")
 	lighting_changed = 0
 	var/area/Area = loc
 	if(!istype(Area) || !Area.lighting_use_dynamic) return
@@ -344,7 +344,7 @@ area
 	var/image/color_overlay //Tracks the color image.
 
 	proc/SetLightLevel(light, color_light = 0)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetLightLevel() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetLightLevel() called tick#: [world.time]")
 		if(!src) return
 		if(light <= 0)
 			light = 0
@@ -428,14 +428,14 @@ area
 
 	proc/SetDynamicLighting()
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetDynamicLighting() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetDynamicLighting() called tick#: [world.time]")
 
 		src.lighting_use_dynamic = 1
 		for(var/turf/T in src.contents)
 			T.update_lumcount(0)
 
 	proc/InitializeLighting()	//TODO: could probably improve this bit ~Carn
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/InitializeLighting() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/InitializeLighting() called tick#: [world.time]")
 		tagbase = "[type]"
 		if(!tag) tag = tagbase
 		if(!lighting_use_dynamic)
@@ -455,14 +455,14 @@ area
 //We don't need to worry about lights which lit us but moved away, since they will have change status set already
 //This proc can cause lots of lights to be updated. :(
 atom/proc/UpdateAffectingLights()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/UpdateAffectingLights() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/UpdateAffectingLights() called tick#: [world.time]")
 	for(var/atom/A in oview(LIGHTING_MAX_LUMINOSITY_STATIC-1,src))
 		if(A.light)
 			A.light.changed = 1			//force it to update at next process()
 
 //caps luminosity effects max-range based on what type the light's owner is.
 atom/proc/get_light_range()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/get_light_range() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/proc/get_light_range() called tick#: [world.time]")
 	return min(luminosity, LIGHTING_MAX_LUMINOSITY_STATIC)
 
 atom/movable/get_light_range()

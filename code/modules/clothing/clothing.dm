@@ -132,7 +132,7 @@ BLIND     // can't see anything
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
 /obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/gloves/proc/Touch() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/gloves/proc/Touch() called tick#: [world.time]")
 	return 0 // return 1 to cancel attack_hand()
 
 //Head
@@ -159,7 +159,7 @@ BLIND     // can't see anything
 	set name = "Toggle Mask"
 	set category = "Object"
 	set src in usr
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/mask/verb/togglemask()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/mask/verb/togglemask()  called tick#: [world.time]")
 	if(ignore_flip)
 		return
 	else
@@ -192,7 +192,7 @@ BLIND     // can't see anything
 	togglemask()
 
 /obj/item/clothing/mask/proc/treat_mask_message(var/message)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/proc/treat_mask_message() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/proc/treat_mask_message() called tick#: [world.time]")
 	return message
 
 //Shoes
@@ -336,7 +336,7 @@ BLIND     // can't see anything
 	return ..()
 
 /obj/item/clothing/under/proc/priority_accessories()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/priority_accessories() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/priority_accessories() called tick#: [world.time]")
 	if(!accessories.len)
 		return list()
 	var/list/unorg = accessories
@@ -351,7 +351,7 @@ BLIND     // can't see anything
 	return prioritized
 
 /obj/item/clothing/under/proc/can_attach_accessory(var/obj/item/clothing/accessory/accessory)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/can_attach_accessory() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/can_attach_accessory() called tick#: [world.time]")
 	if(!accessory) return
 
 	if(!accessories.len) return 1 //nothing can stop us!
@@ -362,7 +362,7 @@ BLIND     // can't see anything
 	return 1
 
 /obj/item/clothing/under/proc/remove_accessory(mob/user, var/obj/item/clothing/accessory/accessory)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/remove_accessory() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/remove_accessory() called tick#: [world.time]")
 	if(!accessory || !(accessory in accessories)) return
 
 	accessory.on_removed(user)
@@ -388,7 +388,7 @@ BLIND     // can't see anything
 		user << "<span class='info'>\A [A] is clipped to it.</span>"
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/set_sensors() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/under/proc/set_sensors() called tick#: [world.time]")
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
 	if (usr.stat || usr.restrained()) return
@@ -420,7 +420,7 @@ BLIND     // can't see anything
 	set name = "Toggle Suit Sensors"
 	set category = "Object"
 	set src in usr
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/under/verb/toggle()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/under/verb/toggle()  called tick#: [world.time]")
 	set_sensors(usr)
 	..()
 
@@ -428,7 +428,7 @@ BLIND     // can't see anything
 	set name = "Remove Accessory"
 	set category = "Object"
 	set src in usr
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/under/verb/removetie()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/under/verb/removetie()  called tick#: [world.time]")
 	if(!istype(usr, /mob/living)) return
 	if(usr.stat || (usr.status_flags & FAKEDEATH)) return
 

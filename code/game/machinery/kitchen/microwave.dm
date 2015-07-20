@@ -288,7 +288,7 @@
 ************************************/
 
 /obj/machinery/microwave/proc/cook()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/cook() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/cook() called tick#: [world.time]")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	start()
@@ -346,7 +346,7 @@
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/wzhzhzh() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/wzhzhzh() called tick#: [world.time]")
 	for (var/i=1 to seconds)
 		if (stat & (NOPOWER|BROKEN))
 			return 0
@@ -355,7 +355,7 @@
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/has_extra_item() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/has_extra_item() called tick#: [world.time]")
 	for (var/obj/O in contents)
 		if ( \
 				!istype(O,/obj/item/weapon/reagent_containers/food) && \
@@ -365,27 +365,27 @@
 	return 0
 
 /obj/machinery/microwave/proc/start()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/start() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/start() called tick#: [world.time]")
 	src.visible_message("<span class='notice'>The microwave turns on.</span>", "<span class='notice'>You hear a microwave.</span>")
 	src.operating = 1
 	src.icon_state = "mw1"
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/abort()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/abort() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/abort() called tick#: [world.time]")
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = "mw"
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/stop()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/stop() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/stop() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = "mw"
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/dispose()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/dispose() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/dispose() called tick#: [world.time]")
 	for (var/obj/O in contents)
 		O.loc = src.loc
 	if (src.reagents.total_volume)
@@ -395,12 +395,12 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/muck_start()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/muck_start() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/muck_start() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
 	src.icon_state = "mwbloody1" // Make it look dirty!!
 
 /obj/machinery/microwave/proc/muck_finish()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/muck_finish() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/muck_finish() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 	src.visible_message("<span class='warning'>The microwave gets covered in muck!</span>")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
@@ -410,7 +410,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/broke()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/broke() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/broke() called tick#: [world.time]")
 	var/datum/effect/effect/system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
@@ -422,7 +422,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/microwave/proc/fail()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/fail() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/microwave/proc/fail() called tick#: [world.time]")
 	var/obj/item/weapon/reagent_containers/food/snacks/badrecipe/ffuu = new(src)
 	var/amount = 0
 	for (var/obj/O in contents-ffuu)

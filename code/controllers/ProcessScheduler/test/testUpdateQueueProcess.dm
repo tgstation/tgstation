@@ -5,7 +5,7 @@
  */
 
 /datum/fastTestDatum/proc/wackyUpdateProcessName()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/fastTestDatum/proc/wackyUpdateProcessName() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/fastTestDatum/proc/wackyUpdateProcessName() called tick#: [world.time]")
 	sleep(prob(10)) // Pretty quick, usually instant
 	
 /datum/controller/process/testUpdateQueueProcess

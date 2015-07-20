@@ -47,7 +47,7 @@
 
 /datum/map/proc/loadZLevels(list/levelPaths)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/map/proc/loadZLevels() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/map/proc/loadZLevels() called tick#: [world.time]")
 
 	for(var/i = 1 to levelPaths.len)
 		var/path = levelPaths[i]
@@ -55,7 +55,7 @@
 
 /datum/map/proc/addZLevel(datum/zLevel/level, z_to_use = 0)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/map/proc/addZLevel() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/map/proc/addZLevel() called tick#: [world.time]")
 
 	if(!istype(level))
 		warning("ERROR: addZLevel received [level ? "a bad level of type [ispath(level) ? "[level]" : "[level.type]" ]" : "no level at all!"]")
@@ -119,7 +119,7 @@ var/global/list/accessable_z_levels = list()
 
 /*
 /mob/verb/getCurMapData()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/getCurMapData()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/getCurMapData()  called tick#: [world.time]")
 	src << "\nCurrent map data:"
 	src << "* Short name: [map.nameShort]"
 	src << "* Long name: [map.nameLong]"
@@ -141,7 +141,7 @@ var/global/list/accessable_z_levels = list()
 
 proc/get_base_turf(var/z)
 
-	writepanic("[__FILE__].[__LINE__] \\/proc/get_base_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/get_base_turf() called tick#: [world.time]")
 
 	var/datum/zLevel/L = map.zLevels[z]
 	return L.base_turf
@@ -152,7 +152,7 @@ proc/get_base_turf(var/z)
 	set category = "Debug"
 	set name = "Set Base Turf"
 	set desc = "Set the base turf for a z-level. Defaults to space, does not replace existing tiles."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/set_base_turf()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/verb/set_base_turf()  called tick#: [world.time]")
 
 	if(check_rights(R_DEBUG, 0))
 

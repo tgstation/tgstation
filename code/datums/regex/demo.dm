@@ -1,5 +1,5 @@
 mob/verb/Search(t as text,p as text)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Search()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Search()  called tick#: [world.time]")
 	if(!t || !p) return
 	var/regex/rp = new(p)
 	if(rp.error)
@@ -13,7 +13,7 @@ mob/verb/Search(t as text,p as text)
 	rp=null
 
 mob/verb/Replace(t as text,p as text)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Replace()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Replace()  called tick#: [world.time]")
 	if(!t || !p) return
 	var/regex/rp = new(p)
 	if(rp.error)
@@ -26,7 +26,7 @@ mob/verb/Replace(t as text,p as text)
 	rp=null
 
 mob/verb/Pattern(p as text)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Pattern()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Pattern()  called tick#: [world.time]")
 	if(!p) return
 	var/regex/rp = new(p)
 	if(rp.error)
@@ -52,7 +52,7 @@ mob/verb/Pattern(p as text)
 	usr << "(done)"
 
 mob/verb/Split(t as text,p as text)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Split()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/verb/Split()  called tick#: [world.time]")
 	if(!t || !p) return
 	var/regex/rp = new(p)
 	if(rp.error)
@@ -64,10 +64,10 @@ mob/verb/Split(t as text,p as text)
 	usr << ""
 
 proc/double(n)
-	writepanic("[__FILE__].[__LINE__] \\/proc/double() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/double() called tick#: [world.time]")
 	return text2num(n)*2
 
 proc/sum(a,b)
-	writepanic("[__FILE__].[__LINE__] \\/proc/sum() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/sum() called tick#: [world.time]")
 	world << "sum(\"[a]\",\"[b]\")"
 	return text2num(a)+text2num(b)

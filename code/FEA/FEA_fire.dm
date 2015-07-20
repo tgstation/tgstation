@@ -1,6 +1,6 @@
 
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/temperature_expose() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/temperature_expose() called tick#: [world.time]")
 	return null
 
 
@@ -8,7 +8,7 @@
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/hotspot_expose() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/hotspot_expose() called tick#: [world.time]")
 
 
 
@@ -66,7 +66,7 @@
 
 
 /obj/effect/hotspot/proc/perform_exposure()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/hotspot/proc/perform_exposure() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/hotspot/proc/perform_exposure() called tick#: [world.time]")
 	var/turf/simulated/floor/location = loc
 	if(!istype(location))	return 0
 
@@ -147,7 +147,7 @@
 // Garbage collect itself by nulling reference to it
 
 /obj/effect/hotspot/proc/Kill()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/hotspot/proc/Kill() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/hotspot/proc/Kill() called tick#: [world.time]")
 	DestroyTurf()
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc
@@ -157,7 +157,7 @@
 
 /obj/effect/hotspot/proc/DestroyTurf()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/hotspot/proc/DestroyTurf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/hotspot/proc/DestroyTurf() called tick#: [world.time]")
 
 	if(istype(loc, /turf/simulated))
 		var/turf/simulated/T = loc

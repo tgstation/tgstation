@@ -79,7 +79,7 @@
 
 
 /datum/game_mode/proc/forge_wizard_objectives(var/datum/mind/wizard)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_wizard_objectives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_wizard_objectives() called tick#: [world.time]")
 	switch(rand(1,100))
 		if(1 to 30)
 
@@ -128,7 +128,7 @@
 
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/name_wizard() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/name_wizard() called tick#: [world.time]")
 	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
 	if(wizard_mob.species && wizard_mob.species.name != "Human")
 		wizard_mob.set_species("Human", 1)
@@ -149,7 +149,7 @@
 
 
 /datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_wizard() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_wizard() called tick#: [world.time]")
 	if (you_are)
 		wizard.current << "<span class='danger'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
@@ -172,7 +172,7 @@
 */
 
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_wizard() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_wizard() called tick#: [world.time]")
 	if (!istype(wizard_mob))
 		return
 
@@ -247,7 +247,7 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_wizard() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_wizard() called tick#: [world.time]")
 	var/text = ""
 	if(wizards.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "wizard-logo")
@@ -315,19 +315,19 @@
 
 //To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(var/mob/M as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/spellremove() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/spellremove() called tick#: [world.time]")
 	for(var/spell/spell_to_remove in src.spell_list)
 		remove_spell(spell_to_remove)
 
 // Does this clothing slot count as wizard garb? (Combines a few checks)
 /proc/is_wiz_garb(var/obj/item/clothing/C)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_wiz_garb() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_wiz_garb() called tick#: [world.time]")
 	return C && C.wizard_garb
 
 /*Checks if the wizard is wearing the proper attire.
 Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/wearing_wiz_garb()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/wearing_wiz_garb() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/wearing_wiz_garb() called tick#: [world.time]")
 	src << "Silly creature, you're not a human. Only humans can cast this spell."
 	return 0
 
@@ -360,7 +360,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 */
 
 /datum/game_mode/proc/update_all_wizard_icons()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_all_wizard_icons() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_all_wizard_icons() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/wizard_mind in wizards)
 			if(wizard_mind.current)
@@ -378,7 +378,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 							wizard_mind.current.client.images += I
 
 /datum/game_mode/proc/update_wizard_icons_added(datum/mind/wizard_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_wizard_icons_added() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_wizard_icons_added() called tick#: [world.time]")
 	spawn(0)
 		if(wizard_mind.current)
 			if(wizard_mind.current.client)
@@ -386,7 +386,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 				wizard_mind.current.client.images += I
 
 /datum/game_mode/proc/update_wizard_icons_removed(datum/mind/wizard_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_wizard_icons_removed() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_wizard_icons_removed() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/wizard in wizards)
 			if(wizard.current)

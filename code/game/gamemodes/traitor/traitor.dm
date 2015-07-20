@@ -83,7 +83,7 @@
 
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_traitor_objectives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_traitor_objectives() called tick#: [world.time]")
 	if(istype(traitor.current, /mob/living/silicon))
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = traitor
@@ -166,7 +166,7 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_traitor() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_traitor() called tick#: [world.time]")
 	traitor.current << {"
 	<SPAN CLASS='big bold center red'>You are now a traitor!</SPAN>
 	"}
@@ -181,7 +181,7 @@
 		obj_count++
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/finalize_traitor() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/finalize_traitor() called tick#: [world.time]")
 	if (istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
 	else
@@ -202,7 +202,7 @@
 	return 0
 
 /datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/add_law_zero() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/add_law_zero() called tick#: [world.time]")
 	var/law = "Accomplish your objectives at all costs."
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 	killer << "<b>Your laws have been changed!</b>"
@@ -226,7 +226,7 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_traitor() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_traitor() called tick#: [world.time]")
 	var/text = ""
 	if(traitors.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "synd-logo")
@@ -295,7 +295,7 @@
 
 
 /datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, var/safety = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_traitor() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_traitor() called tick#: [world.time]")
 	if (!istype(traitor_mob))
 		return
 	. = 1
@@ -368,7 +368,7 @@
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_traitor_icons_added() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_traitor_icons_added() called tick#: [world.time]")
 	var/ref = "\ref[traitor_mind]"
 	if(ref in implanter)
 		if(traitor_mind.current)
@@ -393,7 +393,7 @@
 						t_mind.current.client.images += I
 
 /datum/game_mode/proc/update_traitor_icons_removed(datum/mind/traitor_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_traitor_icons_removed() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_traitor_icons_removed() called tick#: [world.time]")
 	for(var/headref in implanter)
 		var/datum/mind/head = locate(headref)
 		for(var/datum/mind/t_mind in implanter[headref])
@@ -421,7 +421,7 @@
 					traitor_mind.current.client.images -= I
 
 /datum/game_mode/proc/remove_traitor_mind(datum/mind/traitor_mind, datum/mind/head)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_traitor_mind() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_traitor_mind() called tick#: [world.time]")
 	//var/list/removal
 	var/ref = "\ref[head]"
 	if(ref in implanter)

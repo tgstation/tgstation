@@ -87,7 +87,7 @@
 //Loads a design from a list onto the machine to be researched
 //Pretty simple, just checks if the design is already present and then adds it and removes it from the parent list
 /obj/machinery/r_n_d/reverse_engine/proc/AddDesign(var/datum/design/mechanic_design/design, var/list/design_list, var/mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/AddDesign() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/AddDesign() called tick#: [world.time]")
 	if(!istype(design))
 		design_list -= design //lets just brush that under the rug
 		return
@@ -115,7 +115,7 @@
 //given a design, it checks to see the difference between the tech levels of the design and of the rd console it is linked to.
 //returns the number of levels difference between the design and the console, if any at all ( no negatives )
 /obj/machinery/r_n_d/reverse_engine/proc/Tech_Difference(var/datum/design/mechanic_design/design)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/Tech_Difference() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/Tech_Difference() called tick#: [world.time]")
 	var/list/techlist = design.req_tech
 	var/techdifference = 0
 	if(techlist.len && linked_console)
@@ -137,7 +137,7 @@
 	return techdifference
 
 /obj/machinery/r_n_d/reverse_engine/proc/researchQueue()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/researchQueue() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/researchQueue() called tick#: [world.time]")
 	if(!research_queue.len)
 		return
 	while(research_queue[1])
@@ -154,7 +154,7 @@
 		src.visible_message("<span class='notice'>\icon [src] \The [src] beeps: 'Successfully researched all designs.'</span>")
 
 /obj/machinery/r_n_d/reverse_engine/proc/researchDesign(var/datum/design/mechanic_design/design)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/researchDesign() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/researchDesign() called tick#: [world.time]")
 	//message_admins("This researchDesign got called with the [design.design_name].")
 	if(busy)
 		return
@@ -179,7 +179,7 @@
 
 //finds a printer connected to the console, and use it to print our design
 /obj/machinery/r_n_d/reverse_engine/proc/PrintDesign(var/datum/design/mechanic_design/design, var/use_nano = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/PrintDesign() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/r_n_d/reverse_engine/proc/PrintDesign() called tick#: [world.time]")
 	if(linked_console)
 		//message_admins("Looking for machines...")
 		for(var/obj/machinery/r_n_d/M in linked_console.linked_machines)

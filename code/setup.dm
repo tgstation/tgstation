@@ -1140,7 +1140,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_VOX "Vox-pidgin"
 #define LANGUAGE_CULT "Cult"
 
-//#define SAY_DEBUG 0
+/*#define SAY_DEBUG 0
 #ifdef SAY_DEBUG
 	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
 	#define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
@@ -1161,7 +1161,7 @@ var/proccalls = 1
 
 #else
 	#define writepanic(a) null << a
-#endif
+#endif*/
 
 //Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
 #define LIGHTING_INTERVAL 5 // frequency, in 1/10ths of a second, of the lighting process

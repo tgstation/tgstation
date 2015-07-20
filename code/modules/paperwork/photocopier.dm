@@ -394,7 +394,7 @@
 	updateUsrDialog()
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/photocopier/proc/check_ass() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/photocopier/proc/check_ass() called tick#: [world.time]")
 	if(!ass)
 		return 0
 	if(ass.loc != src.loc)
@@ -410,7 +410,7 @@
 		return 1
 
 /obj/machinery/photocopier/proc/copier_empty()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/photocopier/proc/copier_empty() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/photocopier/proc/copier_empty() called tick#: [world.time]")
 	if(copy || photocopy || check_ass())
 		return 0
 	else
@@ -426,7 +426,7 @@
 	var/max_charges = 5
 
 /obj/machinery/photocopier/proc/copier_blocked(var/mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/photocopier/proc/copier_blocked() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/photocopier/proc/copier_blocked() called tick#: [world.time]")
 	if(gcDestroyed)
 		return
 	if(loc.density)

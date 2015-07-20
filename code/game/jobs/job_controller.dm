@@ -14,7 +14,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/SetupOccupations(var/faction = "Station")
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetupOccupations() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SetupOccupations() called tick#: [world.time]")
 		occupations = list()
 		var/list/all_jobs = typesof(/datum/job)
 		if(!all_jobs.len)
@@ -31,14 +31,14 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/Debug(var/text)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Debug() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Debug() called tick#: [world.time]")
 		if(!Debug2)	return 0
 		job_debug.Add(text)
 		return 1
 
 
 	proc/GetJob(var/rank)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetJob() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetJob() called tick#: [world.time]")
 		if(!rank)	return null
 		for(var/datum/job/J in occupations)
 			if(!J)	continue
@@ -46,11 +46,11 @@ var/global/datum/controller/occupations/job_master
 		return null
 
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetPlayerAltTitle() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetPlayerAltTitle() called tick#: [world.time]")
 		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AssignRole() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AssignRole() called tick#: [world.time]")
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 		if(player && player.mind && rank)
 			var/datum/job/job = GetJob(rank)
@@ -72,7 +72,7 @@ var/global/datum/controller/occupations/job_master
 		return 0
 
 	proc/FreeRole(var/rank)	//making additional slot on the fly
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FreeRole() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FreeRole() called tick#: [world.time]")
 		var/datum/job/job = GetJob(rank)
 		if(job && job.current_positions >= job.total_positions)
 			job.total_positions++
@@ -80,7 +80,7 @@ var/global/datum/controller/occupations/job_master
 		return 0
 
 	proc/FindOccupationCandidates(datum/job/job, level, flag)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FindOccupationCandidates() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FindOccupationCandidates() called tick#: [world.time]")
 		Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
 		var/list/candidates = list()
 		for(var/mob/new_player/player in unassigned)
@@ -99,7 +99,7 @@ var/global/datum/controller/occupations/job_master
 		return candidates
 
 	proc/GiveRandomJob(var/mob/new_player/player)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GiveRandomJob() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GiveRandomJob() called tick#: [world.time]")
 		Debug("GRJ Giving random job, Player: [player]")
 		for(var/datum/job/job in shuffle(occupations))
 			if(!job)
@@ -126,7 +126,7 @@ var/global/datum/controller/occupations/job_master
 				break
 
 	proc/ResetOccupations()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ResetOccupations() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ResetOccupations() called tick#: [world.time]")
 		for(var/mob/new_player/player in player_list)
 			if((player) && (player.mind))
 				player.mind.assigned_role = null
@@ -138,7 +138,7 @@ var/global/datum/controller/occupations/job_master
 
 	///This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until it locates a head or runs out of levels to check
 	proc/FillHeadPosition()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FillHeadPosition() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FillHeadPosition() called tick#: [world.time]")
 		for(var/level = 1 to 3)
 			for(var/command_position in command_positions)
 				var/datum/job/job = GetJob(command_position)
@@ -153,7 +153,7 @@ var/global/datum/controller/occupations/job_master
 
 	///This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
 	proc/CheckHeadPositions(var/level)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/CheckHeadPositions() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/CheckHeadPositions() called tick#: [world.time]")
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)	continue
@@ -165,7 +165,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/FillAIPosition()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FillAIPosition() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/FillAIPosition() called tick#: [world.time]")
 		var/ai_selected = 0
 		var/datum/job/job = GetJob("AI")
 		if(!job)	return 0
@@ -200,7 +200,7 @@ var/global/datum/controller/occupations/job_master
  *  This proc must not have any side effect besides of modifying "assigned_role".
  **/
 	proc/DivideOccupations()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/DivideOccupations() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/DivideOccupations() called tick#: [world.time]")
 		//Setup new player list and get the jobs list
 		Debug("Running DO")
 		SetupOccupations()
@@ -347,7 +347,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late = 0)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/EquipRank() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/EquipRank() called tick#: [world.time]")
 		if(!H)	return 0
 		var/datum/job/job = GetJob(rank)
 		if(job)
@@ -466,7 +466,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawnId() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawnId() called tick#: [world.time]")
 		if(!H)	return 0
 		var/obj/item/weapon/card/id/C = null
 
@@ -509,7 +509,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/LoadJobs() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/LoadJobs() called tick#: [world.time]")
 		if(!config.load_jobs_from_txt)
 			return 0
 
@@ -545,7 +545,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/HandleFeedbackGathering()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HandleFeedbackGathering() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/HandleFeedbackGathering() called tick#: [world.time]")
 		for(var/datum/job/job in occupations)
 			var/tmp_str = "|[job.title]|"
 

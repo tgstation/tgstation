@@ -419,7 +419,7 @@ Status: []<BR>"},
 		src.die()
 
 /obj/machinery/porta_turret/proc/die() // called when the turret dies, ie, health <= 0
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/porta_turret/proc/die() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/porta_turret/proc/die() called tick#: [world.time]")
 	src.health = 0
 	src.density = 0
 	src.stat |= BROKEN // enables the BROKEN bit
@@ -561,7 +561,7 @@ Status: []<BR>"},
 
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/porta_turret/proc/assess_perp() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/porta_turret/proc/assess_perp() called tick#: [world.time]")
 	var/threatcount = 0 // the integer returned
 
 	if(src.emagged) return 10 // if emagged, always return 10.
@@ -628,7 +628,7 @@ Status: []<BR>"},
 
 
 /obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target) // shoots at a target
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/porta_turret/proc/shootAt() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/porta_turret/proc/shootAt() called tick#: [world.time]")
 	if(disabled)
 		return
 

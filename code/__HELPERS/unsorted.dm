@@ -5,7 +5,7 @@
  */
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Get_Angle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Get_Angle() called tick#: [world.time]")
 	if(!start || !end) return 0
 	var/dy
 	var/dx
@@ -21,7 +21,7 @@
 
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_teleport_loc() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_teleport_loc() called tick#: [world.time]")
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
@@ -114,11 +114,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return destination
 
 /proc/sign(x)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sign() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sign() called tick#: [world.time]")
 	return x!=0?x/abs(x):0
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getline() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getline() called tick#: [world.time]")
 	var/px=M.x		//starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
@@ -151,7 +151,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/IsGuestKey() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/IsGuestKey() called tick#: [world.time]")
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
 		return 0
 
@@ -165,7 +165,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(var/f)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_frequency() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sanitize_frequency() called tick#: [world.time]")
 	f = Clamp(round(f), 1201, 1599) // 120.1, 159.9
 
 	if ((f % 2) == 0) //Ensure the last digit is an odd number
@@ -175,7 +175,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Turns 1479 into 147.9
 /proc/format_frequency(var/f)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/format_frequency() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/format_frequency() called tick#: [world.time]")
 	f = text2num(f)
 	return "[round(f / 10)].[f % 10]"
 
@@ -186,7 +186,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
  * Calling this proc without an oldname will only update the mob and skip updating the pda, id and records. ~Carn
  */
 /mob/proc/fully_replace_character_name(oldname, newname)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/mob/proc/fully_replace_character_name() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/mob/proc/fully_replace_character_name() called tick#: [world.time]")
 	if (!newname)
 		return 0
 
@@ -258,7 +258,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
 //Last modified by Carn
 /mob/proc/rename_self(var/role, var/allow_numbers=0)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/mob/proc/rename_self() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/mob/proc/rename_self() called tick#: [world.time]")
 	spawn(0)
 		var/oldname = real_name
 
@@ -306,12 +306,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ionnum()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ionnum() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/ionnum() called tick#: [world.time]")
 	return "[pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
 //When an AI is activated, it can choose from a list of non-slaved borgs to have as a slave.
 /proc/freeborg()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/freeborg() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/freeborg() called tick#: [world.time]")
 	var/select = null
 	var/list/borgs = list()
 
@@ -328,7 +328,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //When a borg is activated, it can choose which AI it wants to be slaved to
 /proc/active_ais()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/active_ais() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/active_ais() called tick#: [world.time]")
 	. = list()
 	for(var/mob/living/silicon/ai/A in living_mob_list)
 		if(A.stat == DEAD)
@@ -340,7 +340,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
 /proc/select_active_ai_with_fewest_borgs()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/select_active_ai_with_fewest_borgs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/select_active_ai_with_fewest_borgs() called tick#: [world.time]")
 	var/mob/living/silicon/ai/selected
 	var/list/active = active_ais()
 	for(var/mob/living/silicon/ai/A in active)
@@ -350,7 +350,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return selected
 
 /proc/select_active_ai(var/mob/user)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/select_active_ai() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/select_active_ai() called tick#: [world.time]")
 	var/list/ais = active_ais()
 	if(ais.len)
 		if(user)	. = input(usr,"AI signals detected:", "AI selection") in ais
@@ -358,7 +358,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 /proc/get_sorted_mobs()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_sorted_mobs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_sorted_mobs() called tick#: [world.time]")
 	var/list/old_list = getmobs()
 	var/list/AI_list = list()
 	var/list/Dead_list = list()
@@ -389,7 +389,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of all mobs with their name
 /proc/getmobs()
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getmobs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getmobs() called tick#: [world.time]")
 
 	var/list/mobs = sortmobs()
 	var/list/names = list()
@@ -416,7 +416,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Orders mobs by type then by name
 /proc/sortmobs()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortmobs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sortmobs() called tick#: [world.time]")
 	var/list/moblist = list()
 	var/list/sortmob = sortNames(mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
@@ -451,18 +451,18 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //E = MC^2
 /proc/convert2energy(var/M)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/convert2energy() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/convert2energy() called tick#: [world.time]")
 	var/E = M*(SPEED_OF_LIGHT_SQ)
 	return E
 
 //M = E/C^2
 /proc/convert2mass(var/E)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/convert2mass() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/convert2mass() called tick#: [world.time]")
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
 /proc/key_name(var/whom, var/include_link = null, var/include_name = 1)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/key_name() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/key_name() called tick#: [world.time]")
 	var/mob/M
 	var/client/C
 	var/key
@@ -508,13 +508,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 /proc/key_name_admin(var/whom, var/include_name = 1)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/key_name_admin() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/key_name_admin() called tick#: [world.time]")
 	return key_name(whom, 1, include_name)
 
 // Returns the atom sitting on the turf.
 // For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
 /proc/get_atom_on_turf(var/atom/movable/M)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_atom_on_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_atom_on_turf() called tick#: [world.time]")
 	var/atom/loc = M
 	while(loc && loc.loc && !istype(loc.loc, /turf/))
 		loc = loc.loc
@@ -536,7 +536,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // Otherwise, the user mob's machine var will be reset directly.
 //
 /proc/onclose(mob/user, windowid, var/atom/ref=null)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/onclose() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/onclose() called tick#: [world.time]")
 	if(!user.client) return
 	var/param = "null"
 	if(ref)
@@ -556,7 +556,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/client/verb/windowclose()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""]) \\/client/verb/windowclose()  called tick#: [world.time]")
 	//world << "windowclose: [atomref]"
 	if(atomref!="null")				// if passed a real atomref
 		var/hsrc = locate(atomref)	// find the reffed atom
@@ -578,7 +578,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_edge_target_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_edge_target_turf() called tick#: [world.time]")
 
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
@@ -604,7 +604,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // used for disposal system
 /proc/get_ranged_target_turf(var/atom/A, var/direction, var/range)
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_ranged_target_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_ranged_target_turf() called tick#: [world.time]")
 
 	var/x = A.x
 	var/y = A.y
@@ -623,7 +623,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
 /proc/get_offset_target_turf(atom/A, dx, dy)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_offset_target_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_offset_target_turf() called tick#: [world.time]")
 	var/x = Clamp(A.x + dx, 1, world.maxx)
 	var/y = Clamp(A.y + dy, 1, world.maxy)
 
@@ -631,7 +631,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //returns random gauss number
 proc/GaussRand(var/sigma)
-  writepanic("[__FILE__].[__LINE__] \\/proc/GaussRand() called tick#: [world.time]")
+  //writepanic("[__FILE__].[__LINE__] \\/proc/GaussRand() called tick#: [world.time]")
   var/x,y,rsq
   do
     x=2*rand()-1
@@ -642,12 +642,12 @@ proc/GaussRand(var/sigma)
 
 //returns random gauss number, rounded to 'roundto'
 proc/GaussRandRound(var/sigma,var/roundto)
-	writepanic("[__FILE__].[__LINE__] \\/proc/GaussRandRound() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/GaussRandRound() called tick#: [world.time]")
 	return round(GaussRand(sigma),roundto)
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(var/atom/source, var/atom/target, var/length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_see() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_see() called tick#: [world.time]")
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)
 	var/steps = 0
@@ -663,7 +663,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 	return 1
 
 /proc/is_blocked_turf(var/turf/T)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_blocked_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_blocked_turf() called tick#: [world.time]")
 	var/cant_pass = 0
 	if(T.density) cant_pass = 1
 	for(var/atom/A in T)
@@ -672,7 +672,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 	return cant_pass
 
 /proc/get_step_towards2(var/atom/ref , var/atom/trg)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_step_towards2() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_step_towards2() called tick#: [world.time]")
 	var/base_dir = get_dir(ref, get_step_towards(ref,trg))
 	var/turf/temp = get_step_towards(ref,trg)
 
@@ -701,7 +701,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 	else return get_step(ref, base_dir)
 
 /proc/do_mob(var/mob/user , var/mob/target, var/delay = 30, var/numticks = 10) //This is quite an ugly solution but i refuse to use the old request system.
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/do_mob() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/do_mob() called tick#: [world.time]")
 	if(!user || !target) return 0
 	var/user_loc = user.loc
 	var/target_loc = target.loc
@@ -741,7 +741,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 	return 1
 
 /proc/do_after(var/mob/user as mob, var/atom/target, var/delay as num, var/numticks = 10, var/needhand = TRUE)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/do_after() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/do_after() called tick#: [world.time]")
 	if(!user || isnull(user))
 		return 0
 	if(numticks == 0)
@@ -791,14 +791,14 @@ proc/GaussRandRound(var/sigma,var/roundto)
 //Takes: Anything that could possibly have variables and a varname to check.
 //Returns: 1 if found, 0 if not.
 /proc/hasvar(var/datum/A, var/varname)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/hasvar() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/hasvar() called tick#: [world.time]")
 	if(A.vars.Find(lowertext(varname))) return 1
 	else return 0
 
 //Returns sortedAreas list if populated
 //else populates the list first before returning it
 /proc/SortAreas()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SortAreas() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SortAreas() called tick#: [world.time]")
 	for(var/area/A in areas)
 		if(A.lighting_subarea)
 			continue
@@ -809,14 +809,14 @@ proc/GaussRandRound(var/sigma,var/roundto)
 
 
 /area/proc/addSorted()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/addSorted() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/addSorted() called tick#: [world.time]")
 	sortedAreas.Add(src)
 	sortTim(sortedAreas, /proc/cmp_name_asc)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
 /proc/get_areas(var/areatype)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_areas() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_areas() called tick#: [world.time]")
 	if(!areatype) return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
@@ -831,7 +831,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
 /proc/get_area_turfs(var/areatype)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_area_turfs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_area_turfs() called tick#: [world.time]")
 	if(!areatype) return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
@@ -847,7 +847,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
 /proc/get_area_all_atoms(var/areatype)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_area_all_atoms() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_area_all_atoms() called tick#: [world.time]")
 	if(!areatype) return null
 	if(istext(areatype)) areatype = text2path(areatype)
 	if(isarea(areatype))
@@ -868,7 +868,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 
 var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group","contents","air","light","areaMaster","underlays")
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/move_contents_to() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/move_contents_to() called tick#: [world.time]")
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -1053,7 +1053,7 @@ var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "typ
 
 
 proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
-	writepanic("[__FILE__].[__LINE__] \\/proc/DuplicateObject() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/DuplicateObject() called tick#: [world.time]")
 	if(!original)
 		return null
 
@@ -1073,7 +1073,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 /area/proc/copy_contents_to(var/area/A , var/platingRequired = 0 )
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/copy_contents_to() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/copy_contents_to() called tick#: [world.time]")
 	//Takes: Area. Optional: If it should copy to areas that don't have plating
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -1216,18 +1216,18 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 proc/get_cardinal_dir(atom/A, atom/B)
-	writepanic("[__FILE__].[__LINE__] \\/proc/get_cardinal_dir() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/get_cardinal_dir() called tick#: [world.time]")
 	var/dx = abs(B.x - A.x)
 	var/dy = abs(B.y - A.y)
 	return get_dir(A, B) & (rand() * (dx+dy) < dy ? 3 : 12)
 
 //chances are 1:value. anyprob(1) will always return true
 proc/anyprob(value)
-	writepanic("[__FILE__].[__LINE__] \\/proc/anyprob() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/anyprob() called tick#: [world.time]")
 	return (rand(1,value)==value)
 
 proc/view_or_range(distance = world.view , center = usr , type)
-	writepanic("[__FILE__].[__LINE__] \\/proc/view_or_range() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/view_or_range() called tick#: [world.time]")
 	switch(type)
 		if("view")
 			. = view(distance,center)
@@ -1236,7 +1236,7 @@ proc/view_or_range(distance = world.view , center = usr , type)
 	return
 
 proc/oview_or_orange(distance = world.view , center = usr , type)
-	writepanic("[__FILE__].[__LINE__] \\/proc/oview_or_orange() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/oview_or_orange() called tick#: [world.time]")
 	switch(type)
 		if("view")
 			. = oview(distance,center)
@@ -1245,7 +1245,7 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 	return
 
 proc/get_mob_with_client_list()
-	writepanic("[__FILE__].[__LINE__] \\/proc/get_mob_with_client_list() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/get_mob_with_client_list() called tick#: [world.time]")
 	var/list/mobs = list()
 	for(var/mob/M in mob_list)
 		if (M.client)
@@ -1254,7 +1254,7 @@ proc/get_mob_with_client_list()
 
 
 /proc/parse_zone(zone)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/parse_zone() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/parse_zone() called tick#: [world.time]")
 	switch(zone)
 		if ("r_hand")
 			return "right hand"
@@ -1276,7 +1276,7 @@ proc/get_mob_with_client_list()
 			return zone
 
 /proc/get_turf(const/atom/O)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_turf() called tick#: [world.time]")
 	if (isnull(O) || isarea(O) || !istype(O))
 		return
 	var/atom/A
@@ -1284,7 +1284,7 @@ proc/get_mob_with_client_list()
 	return A
 
 /proc/get(atom/loc, type)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get() called tick#: [world.time]")
 	while(loc)
 		if(istype(loc, type))
 			return loc
@@ -1302,7 +1302,7 @@ var/global/list/common_tools = list(
 /obj/item/weapon/crowbar)
 
 /proc/is_surgery_tool(obj/item/W as obj)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_surgery_tool() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_surgery_tool() called tick#: [world.time]")
 	return (	\
 	istype(W, /obj/item/weapon/scalpel)			||	\
 	istype(W, /obj/item/weapon/hemostat)		||	\
@@ -1314,14 +1314,14 @@ var/global/list/common_tools = list(
 
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_operate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_operate() called tick#: [world.time]")
 	return (ishuman(M) && M.lying && \
 	locate(/obj/machinery/optable, M.loc) || \
 	(locate(/obj/structure/stool/bed/roller, M.loc) && prob(75)) || \
 	(locate(/obj/structure/table/, M.loc) && prob(66)))
 
 /proc/reverse_direction(var/dir)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reverse_direction() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/reverse_direction() called tick#: [world.time]")
 	switch(dir)
 		if(NORTH)
 			return SOUTH
@@ -1353,7 +1353,7 @@ var/list/WALLITEMS = list(
 	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "obj/structure/sign"
 	)
 /proc/gotwallitem(loc, dir)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/gotwallitem() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/gotwallitem() called tick#: [world.time]")
 	for(var/obj/O in loc)
 		for(var/item in WALLITEMS)
 			if(istype(O, text2path(item)))
@@ -1387,11 +1387,11 @@ var/list/WALLITEMS = list(
 
 
 proc/get_angle(atom/a, atom/b)
-    writepanic("[__FILE__].[__LINE__] \\/proc/get_angle() called tick#: [world.time]")
+    //writepanic("[__FILE__].[__LINE__] \\/proc/get_angle() called tick#: [world.time]")
     return Atan2(b.y - a.y, b.x - a.x)
 
 proc/rotate_icon(file, state, step = 1, aa = FALSE)
-	writepanic("[__FILE__].[__LINE__] \\/proc/rotate_icon() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/rotate_icon() called tick#: [world.time]")
 	var icon/base = icon(file, state)
 
 	var w, h, w2, h2
@@ -1417,13 +1417,13 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 	return result
 
 /proc/has_edge(obj/O as obj)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/has_edge() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/has_edge() called tick#: [world.time]")
 	if (!O) return 0
 	if(O.edge) return 1
 	return 0
 
 proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first object holder of the type you specified
-	writepanic("[__FILE__].[__LINE__] \\/proc/find_holder_of_type() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/find_holder_of_type() called tick#: [world.time]")
 	var/atom/location = reference.loc //ie /mob to find the first mob holding it
 	while(!istype(location,/turf) && !istype(location,null))
 		if(istype(location,typepath))
@@ -1432,7 +1432,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	return 0
 
 /proc/get_distant_turf(var/turf/T,var/direction,var/distance)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_distant_turf() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_distant_turf() called tick#: [world.time]")
 	if(!T || !direction || !distance)	return
 
 	var/dest_x = T.x
@@ -1452,7 +1452,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 //Gets the Z level datum for this atom's Z level
 /proc/get_z_level(var/atom/A)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_z_level() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_z_level() called tick#: [world.time]")
 	var/z
 	if(istype(A, /atom/movable))
 		var/turf/T = get_turf(A)

@@ -18,12 +18,12 @@
 
 /mob/new_player/verb/new_player_panel()
 	set src = usr
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/new_player/verb/new_player_panel()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/new_player/verb/new_player_panel()  called tick#: [world.time]")
 	new_player_panel_proc()
 
 
 /mob/new_player/proc/new_player_panel_proc()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/new_player_panel_proc() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/new_player_panel_proc() called tick#: [world.time]")
 	var/output = "<div align='center'><B>New Player Options</B>"
 
 	// AUTOFIXED BY fix_string_idiocy.py
@@ -285,7 +285,7 @@
 						vote_on_poll(pollid, optionid, 1)
 
 /mob/new_player/proc/IsJobAvailable(rank)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/IsJobAvailable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/IsJobAvailable() called tick#: [world.time]")
 	var/datum/job/job = job_master.GetJob(rank)
 	if(!job)	return 0
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)	return 0
@@ -312,7 +312,7 @@
 	return
 
 /mob/new_player/proc/FuckUpGenes(var/mob/living/carbon/human/H)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/FuckUpGenes() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/FuckUpGenes() called tick#: [world.time]")
 	// 20% of players have bad genetic mutations.
 	if(prob(20))
 		H.dna.GiveRandomSE(notflags = GENE_UNNATURAL,genetype = GENETYPE_BAD)
@@ -321,7 +321,7 @@
 
 
 /mob/new_player/proc/AttemptLateSpawn(rank)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/AttemptLateSpawn() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/AttemptLateSpawn() called tick#: [world.time]")
 	if (src != usr)
 		return 0
 	if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
@@ -383,7 +383,7 @@
 	del(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/AnnounceArrival() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/AnnounceArrival() called tick#: [world.time]")
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
@@ -393,7 +393,7 @@
 		//del(a)
 
 /mob/new_player/proc/LateChoices()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/LateChoices() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/LateChoices() called tick#: [world.time]")
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
@@ -427,7 +427,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 
 /mob/new_player/proc/create_character()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/create_character() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/create_character() called tick#: [world.time]")
 	spawning = 1
 	close_spawn_windows()
 
@@ -493,7 +493,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 /mob/new_player/proc/ViewManifest()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/ViewManifest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/ViewManifest() called tick#: [world.time]")
 
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\new_player.dm:410: var/dat = "<html><body>"
@@ -509,7 +509,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 
 
 /mob/new_player/proc/close_spawn_windows()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/close_spawn_windows() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/close_spawn_windows() called tick#: [world.time]")
 	src << browse(null, "window=latechoices") //closes late choices window
 	src << browse(null, "window=playersetup") //closes the player setup window
 

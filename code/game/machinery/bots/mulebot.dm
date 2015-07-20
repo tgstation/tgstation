@@ -260,7 +260,7 @@ var/global/mulebot_count = 0
 
 // returns the wire panel text
 /obj/machinery/bot/mulebot/proc/wires()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/wires() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/wires() called tick#: [world.time]")
 	return wires.GetInteractWindow()
 
 
@@ -379,11 +379,11 @@ var/global/mulebot_count = 0
 
 // returns true if the bot has power
 /obj/machinery/bot/mulebot/proc/has_power()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/has_power() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/has_power() called tick#: [world.time]")
 	return !open && cell && cell.charge > 0 && wires.HasPower()
 
 /obj/machinery/bot/mulebot/proc/toggle_lock(var/mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/toggle_lock() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/toggle_lock() called tick#: [world.time]")
 	if(src.allowed(user))
 		locked = !locked
 		updateDialog()
@@ -411,7 +411,7 @@ var/global/mulebot_count = 0
 
 // called to load a crate
 /obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/load() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/load() called tick#: [world.time]")
 	if(wires.LoadCheck() && !is_type_in_list(C,can_load))
 		src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -461,7 +461,7 @@ var/global/mulebot_count = 0
 // argument is optional direction to unload
 // if zero, unload at bot's location
 /obj/machinery/bot/mulebot/proc/unload(var/dirn = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/unload() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/unload() called tick#: [world.time]")
 	if(!load)
 		return
 
@@ -536,7 +536,7 @@ var/global/mulebot_count = 0
 	if(refresh) updateDialog()
 
 /obj/machinery/bot/mulebot/proc/process_bot()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/process_bot() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/process_bot() called tick#: [world.time]")
 	//if(mode) world << "Mode: [mode]"
 	switch(mode)
 		if(0)		// idle
@@ -659,7 +659,7 @@ var/global/mulebot_count = 0
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/proc/calc_path(var/turf/avoid = null)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/calc_path() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/calc_path() called tick#: [world.time]")
 	src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
 	if(!src.path)
 		src.path = list()
@@ -669,7 +669,7 @@ var/global/mulebot_count = 0
 // signals all beacons matching the delivery code
 // beacons will return a signal giving their locations
 /obj/machinery/bot/mulebot/proc/set_destination(var/new_dest)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/set_destination() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/set_destination() called tick#: [world.time]")
 	spawn(0)
 		new_destination = new_dest
 		post_signal(beacon_freq, "findbeacon", "delivery")
@@ -677,7 +677,7 @@ var/global/mulebot_count = 0
 
 // starts bot moving to current destination
 /obj/machinery/bot/mulebot/proc/start()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/start() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/start() called tick#: [world.time]")
 	if(destination == home_destination)
 		mode = 3
 	else
@@ -687,7 +687,7 @@ var/global/mulebot_count = 0
 // starts bot moving to home
 // sends a beacon query to find
 /obj/machinery/bot/mulebot/proc/start_home()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/start_home() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/start_home() called tick#: [world.time]")
 	spawn(0)
 		set_destination(home_destination)
 		mode = 4
@@ -695,7 +695,7 @@ var/global/mulebot_count = 0
 
 // called when bot reaches current target
 /obj/machinery/bot/mulebot/proc/at_target()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/at_target() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/at_target() called tick#: [world.time]")
 	if(!reached_target)
 		src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
 		playsound(get_turf(src), 'sound/machines/chime.ogg', 50, 0)
@@ -755,7 +755,7 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/RunOver() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/RunOver() called tick#: [world.time]")
 	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 
@@ -772,7 +772,7 @@ var/global/mulebot_count = 0
 	currentBloodColor="#A10808" // For if species get different blood colors.
 
 /obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/RunOverCreature() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/RunOverCreature() called tick#: [world.time]")
 	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	bloodiness += 4
@@ -862,13 +862,13 @@ var/global/mulebot_count = 0
 
 // send a radio signal with a single data key/value pair
 /obj/machinery/bot/mulebot/proc/post_signal(var/freq, var/key, var/value)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/post_signal() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/post_signal() called tick#: [world.time]")
 	post_signal_multiple(freq, list("[key]" = value) )
 
 // send a radio signal with multiple data key/values
 /obj/machinery/bot/mulebot/proc/post_signal_multiple(var/freq, var/list/keyval)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/post_signal_multiple() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/post_signal_multiple() called tick#: [world.time]")
 
 	if(freq == beacon_freq && !(wires.BeaconRX()))
 		return
@@ -897,7 +897,7 @@ var/global/mulebot_count = 0
 
 // signals bot status etc. to controller
 /obj/machinery/bot/mulebot/proc/send_status()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/send_status() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/send_status() called tick#: [world.time]")
 	var/list/kv = list(
 		"type" = "mulebot",
 		"name" = suffix,

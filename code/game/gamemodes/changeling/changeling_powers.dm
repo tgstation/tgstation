@@ -1,6 +1,6 @@
 //Restores our verbs. It will only restore verbs allowed during lesser (monkey) form if we are not human
 /mob/proc/make_changeling()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/make_changeling() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/make_changeling() called tick#: [world.time]")
 	if(!mind)				return
 	if(!mind.changeling)	mind.changeling = new /datum/changeling(gender)
 	verbs += /datum/changeling/proc/EvolutionMenu
@@ -34,7 +34,7 @@
 //Used to dump the languages from the changeling datum into the actual mob.
 /mob/proc/changeling_update_languages(var/updated_languages)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_update_languages() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_update_languages() called tick#: [world.time]")
 
 	languages.len = 0
 	for(var/language in updated_languages)
@@ -51,7 +51,7 @@
 
 	set category = "Changeling"
 	set name = "Change Species (5)"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_change_species() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_change_species() called tick#: [world.time]")
 
 	var/mob/living/carbon/human/H = src
 	if(!istype(H))
@@ -91,7 +91,7 @@
 	set category = "Changeling"
 	set name = "Horror Form (30)"
 	set desc = "This costly evolution allows us to transform into an all-consuming abomination. We are extremely strong, to the point that we can force airlocks open and devour humans whole, and immune to stuns."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_horror_form() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_horror_form() called tick#: [world.time]")
 
 	if(!istype(src, /mob/living/carbon/human))
 		usr << "<span class='warning'>We must be in human form before activating Horror Form.</span>"
@@ -135,7 +135,7 @@
 
 //removes our changeling verbs
 /mob/proc/remove_changeling_powers()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_changeling_powers() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_changeling_powers() called tick#: [world.time]")
 	if(!mind || !mind.changeling)	return
 	for(var/datum/power/changeling/P in mind.changeling.purchasedpowers)
 		if(P.isVerb)
@@ -145,7 +145,7 @@
 //Helper proc. Does all the checks and stuff for us to avoid copypasta
 /mob/proc/changeling_power(var/required_chems=0, var/required_dna=0, var/max_genetic_damage=100, var/max_stat=0, var/deny_horror=0)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_power() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_power() called tick#: [world.time]")
 
 	if(!src.mind)		return
 	if(!iscarbon(src))	return
@@ -184,7 +184,7 @@
 /mob/proc/changeling_absorb_dna()
 	set category = "Changeling"
 	set name = "Absorb DNA"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_absorb_dna() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_absorb_dna() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(0,0,100)
 	if(!changeling)	return
@@ -297,7 +297,7 @@
 /mob/proc/changeling_transform()
 	set category = "Changeling"
 	set name = "Transform (5)"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_transform() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_transform() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(5,1,0, deny_horror=1)
 	if(!changeling)	return
@@ -337,7 +337,7 @@
 /mob/proc/changeling_lesser_form()
 	set category = "Changeling"
 	set name = "Lesser Form (1)"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_lesser_form() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_lesser_form() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(1,0,0, deny_horror=1)
 	if(!changeling)	return
@@ -413,7 +413,7 @@
 /mob/proc/changeling_lesser_transform()
 	set category = "Changeling"
 	set name = "Transform (1)"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_lesser_transform() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_lesser_transform() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(1,1,0, deny_horror=1)
 	if(!changeling)	return
@@ -500,7 +500,7 @@
 /mob/verb/check_mob_list()
 	set name = "(Mobs) Check Mob List"
 	set category = "Debug"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/check_mob_list()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/check_mob_list()  called tick#: [world.time]")
 	var/yes = 0
 	if(src in mob_list)
 		yes = 1
@@ -521,7 +521,7 @@
 /mob/proc/changeling_returntolife()
 	set category = "Changeling"
 	set name = "Return To Life (20)"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_returntolife() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_returntolife() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
@@ -546,7 +546,7 @@
 /mob/proc/changeling_fakedeath()
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_fakedeath() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_fakedeath() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(20,1,100,DEAD)
 	if(!changeling)	return
@@ -579,7 +579,7 @@
 	set category = "Changeling"
 	set name = "Ranged Sting (10)"
 	set desc="Your next sting ability can be used against targets 2 squares away."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_boost_range() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_boost_range() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(10,0,100)
 	if(!changeling)	return 0
@@ -597,7 +597,7 @@
 	set category = "Changeling"
 	set name = "Epinephrine Sacs (45)"
 	set desc = "Removes all stuns"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_unstun() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_unstun() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(45,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
@@ -623,13 +623,13 @@
 
 //Speeds up chemical regeneration
 /mob/proc/changeling_fastchemical()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_fastchemical() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_fastchemical() called tick#: [world.time]")
 	src.mind.changeling.chem_recharge_rate *= 2
 	return 1
 
 //Increases macimum chemical storage
 /mob/proc/changeling_engorgedglands()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_engorgedglands() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_engorgedglands() called tick#: [world.time]")
 	src.mind.changeling.chem_storage += 25
 	return 1
 
@@ -639,7 +639,7 @@
 	set category = "Changeling"
 	set name = "Toggle Digital Camoflague"
 	set desc = "The AI can no longer track us, but we will look different if examined.  Has a constant cost while active."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_digitalcamo() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_digitalcamo() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power()
 	if(!changeling)	return 0
@@ -665,7 +665,7 @@
 	set category = "Changeling"
 	set name = "Rapid Regeneration (30)"
 	set desc = "Begins rapidly regenerating.  Does not effect stuns or chemicals."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_rapidregen() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_rapidregen() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(30,0,100,UNCONSCIOUS)
 	if(!changeling)	return 0
@@ -694,7 +694,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Hive Channel (10)"
 	set desc = "Allows you to channel DNA in the airwaves to allow other changelings to absorb it."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_hiveupload() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_hiveupload() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(10,1)
 	if(!changeling)	return
@@ -725,7 +725,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Hive Absorb (20)"
 	set desc = "Allows you to absorb DNA that is being channeled in the airwaves."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_hivedownload() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_hivedownload() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(20,1)
 	if(!changeling)	return
@@ -757,7 +757,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Mimic Voice"
 	set desc = "Shape our vocal glands to form a voice of someone we choose. We cannot regenerate chemicals when mimicing."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_mimicvoice() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_mimicvoice() called tick#: [world.time]")
 
 
 	if(!usr)
@@ -793,7 +793,7 @@ var/list/datum/dna/hivemind_bank = list()
 	//////////
 
 /mob/proc/sting_can_reach(mob/M as mob, sting_range = 1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/sting_can_reach() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/sting_can_reach() called tick#: [world.time]")
 	if(M.loc == src.loc) return 1 //target and source are in the same thing
 	if(!isturf(src.loc) || !isturf(M.loc)) return 0 //One is inside, the other is outside something.
 	if(sting_range < 2)
@@ -804,7 +804,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 //Handles the general sting code to reduce on copypasta (seeming as somebody decided to make SO MANY dumb abilities)
 /mob/proc/changeling_sting(var/required_chems=0, var/verb_path)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_sting() called tick#: [world.time]")
 	var/datum/changeling/changeling = changeling_power(required_chems)
 	if(!changeling)								return
 
@@ -833,7 +833,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Hallucination Sting (15)"
 	set desc = "Causes terror in the target."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_lsdsting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_lsdsting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(15,/mob/proc/changeling_lsdsting)
 	if(!T)	return 0
@@ -846,7 +846,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Silence sting (10)"
 	set desc="Sting target"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_silence_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_silence_sting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(10,/mob/proc/changeling_silence_sting)
 	if(!T)	return 0
@@ -858,7 +858,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Blind sting (20)"
 	set desc="Sting target"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_blind_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_blind_sting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(20,/mob/proc/changeling_blind_sting)
 	if(!T)	return 0
@@ -874,7 +874,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Deaf sting (5)"
 	set desc="Sting target:"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_deaf_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_deaf_sting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(5,/mob/proc/changeling_deaf_sting)
 	if(!T)	return 0
@@ -888,7 +888,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Paralysis sting (30)"
 	set desc="Sting target"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_paralysis_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_paralysis_sting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(30,/mob/proc/changeling_paralysis_sting)
 	if(!T)	return 0
@@ -901,7 +901,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Transformation sting (40)"
 	set desc="Sting target"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_transformation_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_transformation_sting() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = changeling_power(40)
 	if(!changeling)	return 0
@@ -936,7 +936,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Unfat sting"
 	set desc = "A rapid weightloss plan that actually works!"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_unfat_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_unfat_sting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(0,/mob/proc/changeling_unfat_sting)
 	if(!T)	return 0
@@ -951,7 +951,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Death Sting (40)"
 	set desc = "Causes spasms onto death."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_DEATHsting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_DEATHsting() called tick#: [world.time]")
 
 	var/mob/living/carbon/T = changeling_sting(40,/mob/proc/changeling_DEATHsting)
 	if(!T)	return 0
@@ -967,7 +967,7 @@ var/list/datum/dna/hivemind_bank = list()
 	set category = "Changeling"
 	set name = "Extract DNA Sting (40)"
 	set desc="Stealthily sting a target to extract their DNA."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_extract_dna_sting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_extract_dna_sting() called tick#: [world.time]")
 
 	var/datum/changeling/changeling = null
 	if(src.mind && src.mind.changeling)

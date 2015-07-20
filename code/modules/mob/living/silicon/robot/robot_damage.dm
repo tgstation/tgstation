@@ -34,7 +34,7 @@
 		heal_overall_damage(0, -amount)
 
 /mob/living/silicon/robot/proc/get_damaged_components(var/brute, var/burn, var/destroyed = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_damaged_components() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_damaged_components() called tick#: [world.time]")
 	var/list/datum/robot_component/parts = list()
 	for(var/V in components)
 		var/datum/robot_component/C = components[V]
@@ -44,7 +44,7 @@
 	return parts
 
 /mob/living/silicon/robot/proc/get_damageable_components()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_damageable_components() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_damageable_components() called tick#: [world.time]")
 	var/list/rval = new
 	for(var/V in components)
 		var/datum/robot_component/C = components[V]
@@ -53,7 +53,7 @@
 
 /mob/living/silicon/robot/proc/get_armour()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_armour() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/get_armour() called tick#: [world.time]")
 
 	if(!components.len) return 0
 	var/datum/robot_component/C = components["armour"]

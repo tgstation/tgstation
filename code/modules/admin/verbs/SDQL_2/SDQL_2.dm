@@ -17,7 +17,7 @@
 
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/SDQL2_query() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/SDQL2_query() called tick#: [world.time]")
 
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins("<span class='warning'>ERROR: Non-admin [usr.key] attempted to execute a SDQL query!</span>")
@@ -144,7 +144,7 @@
 
 
 /proc/SDQL_parse(list/query_list)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_parse() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_parse() called tick#: [world.time]")
 	var/datum/SDQL_parser/parser = new(query_list)
 	var/list/query_tree = parser.parse()
 
@@ -155,7 +155,7 @@
 
 
 /proc/SDQL_testout(list/query_tree, indent = 0)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_testout() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_testout() called tick#: [world.time]")
 	var/spaces = ""
 	for(var/s = 0, s < indent, s++)
 		spaces += "    "
@@ -182,7 +182,7 @@
 
 
 /proc/SDQL_from_objs(list/tree)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_from_objs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_from_objs() called tick#: [world.time]")
 	if("world" in tree)
 		return list(world)
 
@@ -201,7 +201,7 @@
 
 
 /proc/SDQL_get_all(type, location)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_get_all() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_get_all() called tick#: [world.time]")
 	var/list/out = list()
 
 	if(type == "*")
@@ -246,7 +246,7 @@
 
 
 /proc/SDQL_expression(datum/object, list/expression, start = 1)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_expression() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_expression() called tick#: [world.time]")
 	var/result = 0
 	var/val
 
@@ -302,7 +302,7 @@
 	return result
 
 /proc/SDQL_value(datum/object, list/expression, start = 1)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_value() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_value() called tick#: [world.time]")
 	var/i = start
 	var/val = null
 
@@ -344,7 +344,7 @@
 
 /proc/SDQL_var(datum/object, list/expression, start = 1)
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_var() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_var() called tick#: [world.time]")
 
 	if(expression[start] in object.vars)
 
@@ -359,7 +359,7 @@
 
 /proc/SDQL2_tokenize(query_text)
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL2_tokenize() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL2_tokenize() called tick#: [world.time]")
 
 	var/list/whitespace = list(" ", "\n", "\t")
 	var/list/single = list("(", ")", ",", "+", "-", ".")

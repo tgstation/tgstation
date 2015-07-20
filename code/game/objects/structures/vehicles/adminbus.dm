@@ -169,7 +169,7 @@
 		H.forceMove(get_step(H,src.dir))
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_lightsource() called tick#: [world.time]")
 	var/turf/T = get_step(src,src.dir)
 	if(T.opacity)
 		lightsource.loc = T
@@ -209,7 +209,7 @@
 
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/handle_mob_bumping() called tick#: [world.time]")
 	var/turf/S = get_turf(src)
 	switch(bumpers)
 		if(1)
@@ -282,7 +282,7 @@
 		return ..()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob(atom/A, var/selfclimb=0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/capture_mob() called tick#: [world.time]")
 	if(passengers.len >= MAX_CAPACITY)
 		A << "<span class='warning'>\the [src] is full!</span>"
 		return
@@ -403,20 +403,20 @@
 	return
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD(var/mob/M)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/add_HUD() called tick#: [world.time]")
 	if(!M || !(M.hud_used))	return
 
 	M.hud_used.adminbus_hud()
 	update_rearview()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_HUD(var/mob/M)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_HUD() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/remove_HUD() called tick#: [world.time]")
 	if(!M || !(M.hud_used))	return
 
 	M.hud_used.remove_adminbus_hud()
 
 /obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/update_rearview() called tick#: [world.time]")
 	if(buckled_mob)
 		for(var/i=1;i<=MAX_CAPACITY;i++)
 			buckled_mob.client.screen -= buckled_mob.gui_icons.rearviews[i]
@@ -481,7 +481,7 @@
 	layer = 7
 
 /obj/structure/hookshot/claw/proc/hook_throw(var/toward)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/hookshot/claw/proc/hook_throw() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/hookshot/claw/proc/hook_throw() called tick#: [world.time]")
 	max_distance--
 	var/obj/machinery/singularity/S = locate(/obj/machinery/singularity) in src.loc
 	if(S)
@@ -504,7 +504,7 @@
 		return null
 
 /obj/structure/hookshot/proc/hook_back()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/hookshot/proc/hook_back() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/hookshot/proc/hook_back() called tick#: [world.time]")
 	forceMove(get_step_towards(src,abus))
 	max_distance++
 	if(max_distance >= 7)
@@ -567,7 +567,7 @@
 	return
 
 /obj/structure/singulo_chain/proc/move_child(var/turf/parent)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/singulo_chain/proc/move_child() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/singulo_chain/proc/move_child() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	if(parent)//I don't see how this could be null but a sanity check won't hurt
 		src.loc = parent

@@ -25,7 +25,7 @@ RPD
 	src.dirtype=dt
 
 /datum/pipe_info/proc/Render(var/dispenser,var/label)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_info/proc/Render() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipe_info/proc/Render() called tick#: [world.time]")
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
 
 /datum/pipe_info/meter
@@ -177,14 +177,14 @@ var/global/list/RPD_recipes=list(
 	show_menu(user)
 
 /obj/item/weapon/pipe_dispenser/proc/render_dir_img(var/_dir,var/pic,var/title)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pipe_dispenser/proc/render_dir_img() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pipe_dispenser/proc/render_dir_img() called tick#: [world.time]")
 	var/selected=""
 	if(_dir == p_dir)
 		selected=" class=\"selected\""
 	return "<a href=\"?src=\ref[src];setdir=[_dir]\" title=\"[title]\"[selected]><img src=\"[pic]\" /></a>"
 
 /obj/item/weapon/pipe_dispenser/proc/show_menu(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pipe_dispenser/proc/show_menu() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pipe_dispenser/proc/show_menu() called tick#: [world.time]")
 	if(!user || !src)	return 0
 	var/dat = {"<h2>Type</h2>
 <b>Utilities:</b>
@@ -604,6 +604,6 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/proc/activate()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pipe_dispenser/proc/activate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/pipe_dispenser/proc/activate() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 

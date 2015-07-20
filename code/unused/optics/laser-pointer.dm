@@ -41,7 +41,7 @@
 		updateicon()
 
 	verb/rotate()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/rotate()  called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/rotate()  called tick#: [world.time]")
 		set name = "Rotate"
 		set src in view(1)
 		turn_off()
@@ -56,7 +56,7 @@
 		return .
 
 	proc/turn_on()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/turn_on() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/turn_on() called tick#: [world.time]")
 		if(!isturf(loc))
 			return
 
@@ -64,7 +64,7 @@
 		beam.master = src
 
 	proc/turn_off()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/turn_off() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/turn_off() called tick#: [world.time]")
 		if(beam)
 			beam.remove()
 
@@ -73,5 +73,5 @@
 		turn_on()
 
 	proc/updateicon()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
 		icon_state = "pointer[on]"

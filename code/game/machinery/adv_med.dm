@@ -49,7 +49,7 @@
 	return
 
 /obj/machinery/bodyscanner/proc/generate_console(turf/T as turf)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/generate_console() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/generate_console() called tick#: [world.time]")
 	if(connected)
 		connected.orient = src.orient
 		connected.update_icon()
@@ -171,7 +171,7 @@
 	set src in oview(1)
 	set category = "Object"
 	set name = "Eject Body Scanner"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/bodyscanner/verb/eject()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/bodyscanner/verb/eject()  called tick#: [world.time]")
 
 	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
@@ -183,7 +183,7 @@
 	set src in oview(1)
 	set category = "Object"
 	set name = "Enter Body Scanner"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/bodyscanner/verb/move_inside()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/bodyscanner/verb/move_inside()  called tick#: [world.time]")
 
 	if(usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
@@ -206,7 +206,7 @@
 	return
 
 /obj/machinery/bodyscanner/proc/go_out(var/exit = loc)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/go_out() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/go_out() called tick#: [world.time]")
 	if((!(src.occupant) || locked))
 		return
 	for(var/obj/O in src)
@@ -416,7 +416,7 @@
 
 
 /obj/machinery/bodyscanner/proc/get_occupant_data()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/get_occupant_data() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bodyscanner/proc/get_occupant_data() called tick#: [world.time]")
 	if (!occupant || !istype(occupant, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/H = occupant
@@ -453,7 +453,7 @@
 
 
 /obj/machinery/body_scanconsole/proc/format_occupant_data(var/list/occ)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/body_scanconsole/proc/format_occupant_data() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/body_scanconsole/proc/format_occupant_data() called tick#: [world.time]")
 	var/dat = "<font color='blue'><b>Scan performed at [occ["stationtime"]]</b></font><br>"
 	dat += "<font color='blue'><b>Occupant Statistics:</b></font><br>"
 	var/aux

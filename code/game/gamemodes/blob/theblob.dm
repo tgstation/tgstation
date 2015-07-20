@@ -87,13 +87,13 @@
 		update_icon()
 
 /obj/effect/blob/proc/Life()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/Life() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/Life() called tick#: [world.time]")
 	return
 
 
 /obj/effect/blob/proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/Pulse() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/Pulse() called tick#: [world.time]")
 
 	//set background = 1
 
@@ -121,12 +121,12 @@
 
 
 /obj/effect/blob/proc/run_action()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/run_action() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/run_action() called tick#: [world.time]")
 	return 0
 
 
 /obj/effect/blob/proc/expand(var/turf/T = null, var/prob = 1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/expand() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/expand() called tick#: [world.time]")
 	if(prob && !prob(health))
 		return
 	if(istype(T, /turf/space) && prob(75))
@@ -191,7 +191,7 @@
 	return
 
 /obj/effect/blob/proc/change_to(var/type, var/mob/camera/blob/M = null)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/change_to() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/change_to() called tick#: [world.time]")
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
 	if("[type]" == "/obj/effect/blob/core")
@@ -202,7 +202,7 @@
 	return
 
 /obj/effect/blob/proc/Delete()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/Delete() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/blob/proc/Delete() called tick#: [world.time]")
 	qdel(src)
 
 /obj/effect/blob/normal

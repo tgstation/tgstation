@@ -68,7 +68,7 @@
 //Allows us to quickly check if we should break the window, can handle not having an user
 /obj/structure/window/proc/healthcheck(var/mob/M, var/sound = 1)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/healthcheck() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/healthcheck() called tick#: [world.time]")
 
 	if(health <= 0)
 		if(M) //Did someone pass a mob ? If so, perform a pressure check
@@ -102,7 +102,7 @@
 
 /obj/structure/window/proc/is_fulltile()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/is_fulltile() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/is_fulltile() called tick#: [world.time]")
 
 	return 0
 
@@ -192,7 +192,7 @@
 
 /obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/attack_generic() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/attack_generic() called tick#: [world.time]")
 
 	user.delayNextAttack(10)
 	health -= damage
@@ -381,7 +381,7 @@
 
 /obj/structure/window/proc/can_be_reached(mob/user)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/can_be_reached() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/can_be_reached() called tick#: [world.time]")
 
 	if(!is_fulltile())
 		if(get_dir(user, src) & dir)
@@ -394,7 +394,7 @@
 	set name = "Rotate Window Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/window/verb/rotate()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/window/verb/rotate()  called tick#: [world.time]")
 
 	if(anchored)
 		usr << "<span class='warning'>Is fastened to the floor, therefore you can't rotate it!</span>"
@@ -410,7 +410,7 @@
 	set name = "Rotate Window Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/window/verb/revrotate()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/window/verb/revrotate()  called tick#: [world.time]")
 
 	if(anchored)
 		usr << "<span class='warning'>Is fastened to the floor, therefore you can't rotate it!</span>"
@@ -445,7 +445,7 @@
 //This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
 /obj/structure/window/proc/update_nearby_tiles()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/update_nearby_tiles() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/update_nearby_tiles() called tick#: [world.time]")
 
 	if(isnull(air_master))
 		return 0
@@ -460,7 +460,7 @@
 //This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/update_nearby_icons() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/window/proc/update_nearby_icons() called tick#: [world.time]")
 
 	if(!loc)
 		return 0

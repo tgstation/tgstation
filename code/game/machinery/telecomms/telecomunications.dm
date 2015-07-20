@@ -39,12 +39,12 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/relay_information() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/relay_information() called tick#: [world.time]")
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
-	var/mob/mob = signal.data["mob"]
-	var/datum/language/language = signal.data["language"]
-	var/langname = (language ? language.name : "No language")
-	say_testing(mob, "[src] relay_information start, language [langname]")
+	//var/mob/mob = signal.data["mob"]
+	//var/datum/language/language = signal.data["language"]
+	//var/langname = (language ? language.name : "No language")
+	//say_testing(mob, "[src] relay_information start, language [langname]")
 	if(!on)
 		return
 	var/send_count = 0
@@ -124,17 +124,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	return send_count
 
 /obj/machinery/telecomms/proc/relay_direct_information(datum/signal/signal, obj/machinery/telecomms/machine)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/relay_direct_information() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/relay_direct_information() called tick#: [world.time]")
 	// send signal directly to a machine
 	machine.receive_information(signal, src)
 
 /obj/machinery/telecomms/proc/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/receive_information() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/receive_information() called tick#: [world.time]")
 	// receive information from linked machinery
 	..()
 
 /obj/machinery/telecomms/proc/is_freq_listening(datum/signal/signal)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/is_freq_listening() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/is_freq_listening() called tick#: [world.time]")
 	// return 1 if found, 0 if not found
 	if(!signal)
 		return 0
@@ -171,7 +171,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 // Used in auto linking
 /obj/machinery/telecomms/proc/add_link(var/obj/machinery/telecomms/T)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/add_link() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/add_link() called tick#: [world.time]")
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
 	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
@@ -189,7 +189,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/proc/update_power()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/update_power() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/update_power() called tick#: [world.time]")
 
 	if(toggled)
 		if(stat & (BROKEN|NOPOWER|EMPED) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
@@ -221,7 +221,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 
 /obj/machinery/telecomms/proc/checkheat()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/checkheat() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/checkheat() called tick#: [world.time]")
 	// Checks heat from the environment and applies any integrity damage
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
@@ -238,7 +238,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			delay = initial(delay)
 
 /obj/machinery/telecomms/proc/produce_heat(heat_amt)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/produce_heat() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/produce_heat() called tick#: [world.time]")
 	if(heatgen == 0)
 		return
 
@@ -282,17 +282,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
-	var/mob/mob = signal.data["mob"]
-	var/datum/language/language = signal.data["language"]
-	var/langname = (language ? language.name : "No language")
-	say_testing(mob, "[src] received radio signal from us, language [langname]")
+	//var/mob/mob = signal.data["mob"]
+	//var/datum/language/language = signal.data["language"]
+	//var/langname = (language ? language.name : "No language")
+	//say_testing(mob, "[src] received radio signal from us, language [langname]")
 	if(!on) // has to be on to receive messages
 		return
 	if(!signal)
 		return
 	if(!check_receive_level(signal))
 		return
-	say_testing(mob, "[src] is on, has signal, and receive is good")
+	//say_testing(mob, "[src] is on, has signal, and receive is good")
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
@@ -304,13 +304,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
 		else
-			say_testing(mob, "[src] is not listening")
+			//say_testing(mob, "[src] is not listening")
 	else
-		say_testing(mob, "bad transmission method")
+		//say_testing(mob, "bad transmission method")
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/receiver/proc/check_receive_level() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/receiver/proc/check_receive_level() called tick#: [world.time]")
 
 	if(signal.data["level"] != listening_level)
 		for(var/obj/machinery/telecomms/hub/H in links)
@@ -395,7 +395,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 // Checks to see if it can send/receive.
 
 /obj/machinery/telecomms/relay/proc/can(datum/signal/signal)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/can() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/can() called tick#: [world.time]")
 	if(!on)
 		return 0
 	if(!is_freq_listening(signal))
@@ -403,13 +403,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	return 1
 
 /obj/machinery/telecomms/relay/proc/can_send(datum/signal/signal)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/can_send() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/can_send() called tick#: [world.time]")
 	if(!can(signal))
 		return 0
 	return broadcasting
 
 /obj/machinery/telecomms/relay/proc/can_receive(datum/signal/signal)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/can_receive() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/relay/proc/can_receive() called tick#: [world.time]")
 	if(!can(signal))
 		return 0
 	return receiving
@@ -620,13 +620,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 
 /obj/machinery/telecomms/server/proc/setcode(var/t)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/setcode() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/setcode() called tick#: [world.time]")
 	if(t)
 		if(istext(t))
 			rawcode = t
 
 /obj/machinery/telecomms/server/proc/admin_log(var/mob/mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/admin_log() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/admin_log() called tick#: [world.time]")
 	var/msg = "[key_name(mob)] has compiled a script to [src.id]"
 
 	diary << msg
@@ -639,14 +639,14 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 
 /obj/machinery/telecomms/server/proc/compile(var/mob/user)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/compile() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/compile() called tick#: [world.time]")
 
 	if(Compiler)
 		admin_log(user)
 		return Compiler.Compile(rawcode)
 
 /obj/machinery/telecomms/server/proc/update_logs()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/update_logs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/update_logs() called tick#: [world.time]")
 	// start deleting the very first log entry
 	if(logs >= 400)
 		for(var/i = 1, i <= logs, i++) // locate the first garbage collectable log entry and remove it
@@ -657,7 +657,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 				break
 
 /obj/machinery/telecomms/server/proc/add_entry(var/content, var/input)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/add_entry() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/server/proc/add_entry() called tick#: [world.time]")
 	var/datum/comm_log_entry/log = new
 	var/identifier = num2text( rand(-1000,1000) + world.time )
 	log.name = "[input] ([md5(identifier)])"

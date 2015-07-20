@@ -13,12 +13,12 @@ datum/air_group
 	var/check_delay = 10  //number of ticks between updates, starts fairly high to get boring groups out of the way
 
 	proc/members()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/members() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/members() called tick#: [world.time]")
 		//Returns the members of the group
 	proc/process_group()
 
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_group() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_group() called tick#: [world.time]")
 
 
 	var/list/borders //Tiles that connect this group to other groups/individual tiles
@@ -29,7 +29,7 @@ datum/air_group
 
 
 	proc/suspend_group_processing()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/suspend_group_processing() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/suspend_group_processing() called tick#: [world.time]")
 		group_processing = 0
 		update_tiles_from_group()
 		check_delay=0
@@ -39,7 +39,7 @@ datum/air_group
 	//Copy group air information to individual tile air
 	//Used right before turning on group processing
 	proc/update_group_from_tiles()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_group_from_tiles() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_group_from_tiles() called tick#: [world.time]")
 		var/sample_member = pick(members)
 		var/datum/gas_mixture/sample_air = sample_member:air
 
@@ -51,7 +51,7 @@ datum/air_group
 	//Copy group air information to individual tile air
 	//Used right before turning off group processing
 	proc/update_tiles_from_group()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_tiles_from_group() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_tiles_from_group() called tick#: [world.time]")
 		for(var/member in members)
 			member:air.copy_from(air)
 			if (istype(member,/turf/simulated))
@@ -60,7 +60,7 @@ datum/air_group
 
 
 	proc/archive()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/archive() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/archive() called tick#: [world.time]")
 		air.archive()
 		archived_cycle = air_master.current_cycle
 
@@ -68,7 +68,7 @@ datum/air_group
 	//If individually processing tiles, checks all member tiles to see if they are close enough that the group may resume group processing
 	//Warning: Do not call, called by air_master.process()
 	proc/check_regroup()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_regroup() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/check_regroup() called tick#: [world.time]")
 		//Purpose: Checks to see if group processing should be turned back on
 		//Returns: group_processing
 		if(prevent_airgroup_regroup)

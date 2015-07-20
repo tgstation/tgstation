@@ -1,6 +1,6 @@
 client/verb/tcssave()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcssave()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcssave()  called tick#: [world.time]")
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -25,7 +25,7 @@ client/verb/tcssave()
 
 client/verb/tcscompile()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcscompile()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcscompile()  called tick#: [world.time]")
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -82,7 +82,7 @@ client/verb/tcscompile()
 
 client/verb/tcsrun()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcsrun()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcsrun()  called tick#: [world.time]")
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -119,7 +119,7 @@ client/verb/tcsrun()
 
 client/verb/exittcs()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/exittcs()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/exittcs()  called tick#: [world.time]")
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -132,7 +132,7 @@ client/verb/exittcs()
 
 client/verb/tcsrevert()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcsrevert()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcsrevert()  called tick#: [world.time]")
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -162,7 +162,7 @@ client/verb/tcsrevert()
 
 client/verb/tcsclearmem()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcsclearmem()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\client/verb/tcsclearmem()  called tick#: [world.time]")
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -189,7 +189,7 @@ client/verb/tcsclearmem()
 		src << output("<font color = red>Failed to clear memory: Unable to locate machine.</font color>", "tcserror")
 
 /proc/telecomms_check(var/mob/mob)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/telecomms_check() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/telecomms_check() called tick#: [world.time]")
 	if(mob && istype(mob.machine, /obj/machinery/computer/telecomms/traffic) && in_range(mob.machine, mob) || issilicon(mob) && istype(mob.machine, /obj/machinery/computer/telecomms/traffic))
 		return 1
 	return 0

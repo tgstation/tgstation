@@ -48,7 +48,7 @@
 	return
 
 /obj/structure/stool/bed/proc/unbuckle()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/unbuckle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/unbuckle() called tick#: [world.time]")
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
 			buckled_mob.buckled = null
@@ -58,7 +58,7 @@
 	return
 
 /obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/manual_unbuckle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/manual_unbuckle() called tick#: [world.time]")
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			if(buckled_mob != user)
@@ -76,7 +76,7 @@
 	return
 
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/buckle_mob() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/buckle_mob() called tick#: [world.time]")
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
 	if ( !ismob(M) || isanimal(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )

@@ -23,7 +23,7 @@
 	desc = initial(desc) + "  Its outlet port is to the [dir2text(dir)]."
 
 /obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air() called tick#: [world.time]")
 	var/datum/gas_mixture/removed
 	if(anchored && !(stat&BROKEN) )
 		var/input_starting_pressure = air1.return_pressure()
@@ -106,7 +106,7 @@
 	set category = "Object"
 	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/binary/circulator/verb/rotate_clockwise()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/binary/circulator/verb/rotate_clockwise()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained() || anchored || (usr.status_flags & FAKEDEATH))
 		return
@@ -119,7 +119,7 @@
 	set category = "Object"
 	set name = "Rotate Circulator (Counterclockwise)"
 	set src in view(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/binary/circulator/verb/rotate_anticlockwise()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/binary/circulator/verb/rotate_anticlockwise()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained() || anchored || (usr.status_flags & FAKEDEATH))
 		return

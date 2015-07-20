@@ -29,7 +29,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * Example call: getFromPool(/obj/item/weapon/shard, loc)
  */
 /proc/getFromPool()
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getFromPool() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getFromPool() called tick#: [world.time]")
 	var/A = args[1]
 	var/list/B = list()
 	B += (args - A)
@@ -70,7 +70,7 @@ var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "
  * Example call: returnToPool(src)
  */
 /proc/returnToPool(const/atom/movable/AM)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/returnToPool() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/returnToPool() called tick#: [world.time]")
 	ASSERT(AM)
 	if(istype(AM.loc,/mob/living))
 		var/mob/living/L = AM.loc

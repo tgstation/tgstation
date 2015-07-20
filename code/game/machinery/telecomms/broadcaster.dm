@@ -121,10 +121,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
-	var/mob/mob = signal.data["mob"]
-	var/datum/language/language = signal.data["language"]
-	var/langname = (language ? language.name : "No language")
-	say_testing(mob, "[src] received radio signal from us, language [langname]")
+	//var/mob/mob = signal.data["mob"]
+	//var/datum/language/language = signal.data["language"]
+	//var/langname = (language ? language.name : "No language")
+	//say_testing(mob, "[src] received radio signal from us, language [langname]")
 
 	if(!on) // has to be on to receive messages
 		return
@@ -152,7 +152,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["name"], signal.data["job"],
 							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency)
 	else
-		say_testing(mob, "[src] is not listening")
+		//say_testing(mob, "[src] is not listening")
 /**
 
 	Here is the big, bad function that broadcasts a message given the appropriate
@@ -211,7 +211,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
-	say_testing(AM, "broadcast_message start")
+	//say_testing(AM, "broadcast_message start")
 	// Cut down on the message sizes.
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
@@ -264,10 +264,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	radios = null
 
 	var/rendered = virt.compose_message(virt, speaking, message, freq) // always call this on the virtualspeaker to advoid issues
-	var/listeners_sent = 0
+	//var/listeners_sent = 0
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listeners_sent++
+			//listeners_sent++
 			listener.Hear(rendered, virt, speaking, message, freq)
 
 	if (length(listeners))
@@ -303,13 +303,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
-	say_testing(AM, "Broadcast_Message finished with [listeners_sent] listener\s getting our message, [message] lang = [speaking ? speaking.name : "none"]")
+	//say_testing(AM, "Broadcast_Message finished with [listeners_sent] listener\s getting our message, [message] lang = [speaking ? speaking.name : "none"]")
 	spawn(50)
 		returnToPool(virt)
 
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Broadcast_SimpleMessage() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Broadcast_SimpleMessage() called tick#: [world.time]")
 
   /* ###### Prepare the radio connection ###### */
 
@@ -540,14 +540,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/test_telecomms() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/test_telecomms() called tick#: [world.time]")
 	var/datum/signal/signal = src.telecomms_process()
 	var/turf/position = get_turf(src)
 	return (position.z in signal.data["level"] && signal.data["done"])
 
 /atom/proc/telecomms_process()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/telecomms_process() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/telecomms_process() called tick#: [world.time]")
 
 	// First, we want to generate a new radio signal
 	var/datum/signal/signal = new

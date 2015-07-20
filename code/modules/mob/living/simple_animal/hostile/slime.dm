@@ -57,7 +57,7 @@
 		calm()
 
 /mob/living/simple_animal/hostile/slime/proc/calm()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/slime/proc/calm() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/slime/proc/calm() called tick#: [world.time]")
 	switch(colour)
 		if("grey")
 			new /mob/living/carbon/slime(loc)

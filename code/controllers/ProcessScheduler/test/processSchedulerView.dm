@@ -21,15 +21,15 @@
 			refreshProcessTable()
 
 /datum/processSchedulerView/proc/refreshProcessTable()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/refreshProcessTable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/refreshProcessTable() called tick#: [world.time]")
 	windowCall("handleRefresh", getProcessTable())
 
 /datum/processSchedulerView/proc/windowCall(var/function, var/data = null)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/windowCall() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/windowCall() called tick#: [world.time]")
 	usr << output(data, "processSchedulerContext.browser:[function]")
 
 /datum/processSchedulerView/proc/getProcessTable()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getProcessTable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getProcessTable() called tick#: [world.time]")
 	var/text = "<table class=\"table table-striped\"><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
 	// and the context of each
 	for (var/list/data in processScheduler.getStatusData())
@@ -57,7 +57,7 @@
  * Outputs an interface showing stats for all processes.
  */
 /datum/processSchedulerView/proc/getContext()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getContext() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getContext() called tick#: [world.time]")
 	bootstrap_browse()
 	usr << browse('processScheduler.js', "file=processScheduler.js;display=0")
 
@@ -82,7 +82,7 @@
 	usr << browse(text, "window=processSchedulerContext;size=800x600")
 
 /datum/processSchedulerView/proc/bootstrap_browse()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/bootstrap_browse() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/bootstrap_browse() called tick#: [world.time]")
 	usr << browse('bower_components/jquery/dist/jquery.min.js', "file=jquery.min.js;display=0")
 	usr << browse('bower_components/bootstrap2.3.2/bootstrap/js/bootstrap.min.js', "file=bootstrap.min.js;display=0")
 	usr << browse('bower_components/bootstrap2.3.2/bootstrap/css/bootstrap.min.css', "file=bootstrap.min.css;display=0")
@@ -91,7 +91,7 @@
 	usr << browse('bower_components/json2/json2.js', "file=json2.js;display=0")
 
 /datum/processSchedulerView/proc/bootstrap_includes()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/bootstrap_includes() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/bootstrap_includes() called tick#: [world.time]")
 	return {"
 	<link rel="stylesheet" href="bootstrap.min.css" />
 	<script type="text/javascript" src="json2.js"></script>

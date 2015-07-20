@@ -189,7 +189,7 @@ That prevents a few funky behaviors.
 */
 //What operation to perform based on target, what ineraction to perform based on object used, target itself, user. The object used is src and calls this proc.
 /obj/item/proc/transfer_ai(var/choice as text, var/interaction as text, var/target, var/mob/U as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/transfer_ai() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/transfer_ai() called tick#: [world.time]")
 	if(!src:flush)
 		switch(choice)
 			if("AICORE")//AI mob.

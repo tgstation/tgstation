@@ -43,7 +43,7 @@
 			inserted_id = I
 
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(var/obj/item/weapon/ore/O)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/process_sheet() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/process_sheet() called tick#: [world.time]")
 	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		var/datum/material/mat = materials.getMaterial(O.material)
@@ -76,7 +76,7 @@
 					B.materials.removeAmount(mat_id, B.materials.storage[mat_id])
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(var/obj/item/weapon/ore/O)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/SmeltMineral() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/SmeltMineral() called tick#: [world.time]")
 	if(O.material)
 		var/datum/material/mat = materials.getMaterial(O.material)
 		var/obj/item/stack/sheet/M = getFromPool(mat.sheettype, (src))
@@ -118,7 +118,7 @@
 	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/get_ore_values() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/ore_redemption/proc/get_ore_values() called tick#: [world.time]")
 	var/dat = "<table border='0' width='300'>"
 	for(var/mat_id in materials.storage)
 		var/datum/material/mat = materials.getMaterial(mat_id)
@@ -134,7 +134,7 @@
 			if(href_list["choice"] == "eject")
 				inserted_id.loc = loc
 				inserted_id.verb_pickup()
-				writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\inserted_id.verb_pickup()  called tick#: [world.time]")
+				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\inserted_id.verb_pickup()  called tick#: [world.time]")
 				inserted_id = null
 			if(href_list["choice"] == "claim")
 				var/datum/money_account/acct = get_card_account(inserted_id)
@@ -272,7 +272,7 @@
 			if(href_list["choice"] == "eject")
 				inserted_id.loc = loc
 				inserted_id.verb_pickup()
-				writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\inserted_id.verb_pickup()  called tick#: [world.time]")
+				//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\inserted_id.verb_pickup()  called tick#: [world.time]")
 				inserted_id = null
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
@@ -315,7 +315,7 @@
 	..()
 
 /obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(voucher, redeemer)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher() called tick#: [world.time]")
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		return
@@ -471,7 +471,7 @@
 	var/cooldown = 0
 
 /obj/item/weapon/resonator/proc/CreateResonance(var/target, var/creator)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/resonator/proc/CreateResonance() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/resonator/proc/CreateResonance() called tick#: [world.time]")
 	if(cooldown <= 0)
 		playsound(get_turf(src),'sound/effects/stealthoff.ogg',50,1)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
@@ -625,7 +625,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior() called tick#: [world.time]")
 	stop_automated_movement_when_pulled = 1
 	idle_vision_range = 9
 	search_objects = 2
@@ -636,7 +636,7 @@
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior() called tick#: [world.time]")
 	stop_automated_movement_when_pulled = 0
 	idle_vision_range = 5
 	search_objects = 0
@@ -653,7 +653,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/CollectOre() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/CollectOre() called tick#: [world.time]")
 	var/obj/item/weapon/ore/O
 	for(O in src.loc)
 		O.loc = src
@@ -664,7 +664,7 @@
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/DropOre() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/mining_drone/proc/DropOre() called tick#: [world.time]")
 	if(!contents.len)
 		return
 	for(var/obj/item/weapon/ore/O in contents)
@@ -765,7 +765,7 @@
 
 /obj/item/device/mobcapsule/proc/insert(var/atom/movable/AM, mob/user)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/insert() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/insert() called tick#: [world.time]")
 
 	if(contained_mob)
 		return -1
@@ -793,7 +793,7 @@
 
 
 /obj/item/device/mobcapsule/proc/dump_contents(mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/dump_contents() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/dump_contents() called tick#: [world.time]")
 	/*
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src)
@@ -823,7 +823,7 @@
 	update_icon()
 
 /obj/item/device/mobcapsule/proc/take_contents(mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/take_contents() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mobcapsule/proc/take_contents() called tick#: [world.time]")
 	for(var/mob/living/simple_animal/AM in src.loc)
 		if(istype(AM))
 			var/mob/living/simple_animal/M = AM

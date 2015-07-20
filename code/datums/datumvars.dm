@@ -4,7 +4,7 @@ client
 	proc/debug_reagents(datum/D in world)
 		set category = "Debug"
 		set name = "Add Reagent"
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_reagents() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_reagents() called tick#: [world.time]")
 
 		if(!usr.client || !usr.client.holder)
 			usr << "<span class='warning'>You need to be an administrator to access this.</span>"
@@ -26,7 +26,7 @@ client
 		set category = "Debug"
 		set name = "View Variables"
 		//set src in world
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_variables() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_variables() called tick#: [world.time]")
 
 
 		if(!usr.client || !usr.client.holder)
@@ -367,7 +367,7 @@ client
 		return
 
 	proc/debug_variable(name, value, level, var/datum/DA = null)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_variable() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/debug_variable() called tick#: [world.time]")
 		var/html = ""
 
 		if(DA)
@@ -463,7 +463,7 @@ client
 		return html
 
 /client/proc/view_var_Topic(href, href_list, hsrc)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/view_var_Topic() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/view_var_Topic() called tick#: [world.time]")
 	//This should all be moved over to datum/admins/Topic() or something ~Carn
 	if( (usr.client != src) || !src.holder )
 		return

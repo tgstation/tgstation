@@ -88,7 +88,7 @@
 	return
 
 /datum/game_mode/proc/vampire_completion()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/vampire_completion() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/vampire_completion() called tick#: [world.time]")
 	var/text = ""
 	if(vampires.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "vampire-logo")
@@ -154,7 +154,7 @@
 	return text
 
 /datum/game_mode/proc/auto_declare_completion_enthralled()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_enthralled() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_enthralled() called tick#: [world.time]")
 	var/text = vampire_completion()
 	if(enthralled.len)
 		var/icon/logo = icon('icons/mob/mob.dmi', "thrall-logo")
@@ -219,7 +219,7 @@
 	return text
 
 /datum/game_mode/proc/forge_vampire_objectives(var/datum/mind/vampire)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_vampire_objectives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_vampire_objectives() called tick#: [world.time]")
 	//Objectives are traitor objectives plus blood objectives
 
 	var/datum/objective/blood/blood_objective = new
@@ -252,12 +252,12 @@
 	return
 
 /datum/game_mode/proc/grant_vampire_powers(mob/living/carbon/vampire_mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/grant_vampire_powers() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/grant_vampire_powers() called tick#: [world.time]")
 	if(!istype(vampire_mob))	return
 	vampire_mob.make_vampire()
 
 /datum/game_mode/proc/greet_vampire(var/datum/mind/vampire, var/you_are=1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_vampire() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_vampire() called tick#: [world.time]")
 	var/dat
 	if (you_are)
 		dat = "<span class='danger'>You are a Vampire!</br></span>"
@@ -293,7 +293,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	gender = gend
 
 /mob/living/proc/make_vampire()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/make_vampire() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/make_vampire() called tick#: [world.time]")
 	if(!mind) return
 	if(!mind.vampire)
 		mind.vampire = new /datum/vampire(gender)
@@ -341,13 +341,13 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 				verbs += /client/proc/vampire_undeath
 				verbs += /client/proc/vampire_spawncape
 /mob/proc/remove_vampire_powers()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_vampire_powers() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_vampire_powers() called tick#: [world.time]")
 	for(var/handler in typesof(/client/proc))
 		if(findtext("[handler]","vampire_"))
 			verbs -= handler
 
 /datum/vampire/proc/OnLife()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/vampire/proc/OnLife() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/vampire/proc/OnLife() called tick#: [world.time]")
 	if(!owner) return
 	if(!owner.druggy)
 		owner.see_invisible = SEE_INVISIBLE_LEVEL_TWO
@@ -361,7 +361,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 		owner.sight |= SEE_MOBS
 
 /mob/proc/handle_bloodsucking(mob/living/carbon/human/H)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/handle_bloodsucking() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/handle_bloodsucking() called tick#: [world.time]")
 	src.mind.vampire.draining = H
 	var/blood = 0
 	var/bloodtotal = 0 //used to see if we increased our blood total
@@ -404,7 +404,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	return 1
 
 /mob/proc/check_vampire_upgrade(datum/mind/v)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/check_vampire_upgrade() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/check_vampire_upgrade() called tick#: [world.time]")
 	if(!v) return
 	if(!v.vampire) return
 	var/datum/vampire/vamp = v.vampire
@@ -461,7 +461,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	announce_new_power(old_powers, vamp.powers)
 
 /mob/proc/announce_new_power(list/old_powers, list/new_powers)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/announce_new_power() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/announce_new_power() called tick#: [world.time]")
 	for(var/n in new_powers)
 		if(!(n in old_powers))
 			switch(n)
@@ -508,7 +508,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 
 //prepare for copypaste
 /datum/game_mode/proc/update_vampire_icons_added(datum/mind/vampire_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_vampire_icons_added() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_vampire_icons_added() called tick#: [world.time]")
 	var/ref = "\ref[vampire_mind]"
 	if(ref in thralls)
 		if(vampire_mind.current)
@@ -533,7 +533,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 						t_mind.current.client.images += I
 
 /datum/game_mode/proc/update_vampire_icons_removed(datum/mind/vampire_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_vampire_icons_removed() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_vampire_icons_removed() called tick#: [world.time]")
 	for(var/headref in thralls)
 		var/datum/mind/head = locate(headref)
 		for(var/datum/mind/t_mind in thralls[headref])
@@ -561,7 +561,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 					vampire_mind.current.client.images -= I
 
 /datum/game_mode/proc/remove_vampire_mind(datum/mind/vampire_mind, datum/mind/head)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_vampire_mind() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_vampire_mind() called tick#: [world.time]")
 	//var/list/removal
 	if(!istype(head))
 		head = vampire_mind //workaround for removing a thrall's control over the enthralled
@@ -577,7 +577,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 
 /mob/living/carbon/human/proc/check_sun()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_sun() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/check_sun() called tick#: [world.time]")
 
 	var/ax = x
 	var/ay = y
@@ -617,7 +617,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	adjustFireLoss(3)
 
 /mob/living/carbon/human/proc/handle_vampire_smite()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_vampire_smite() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_vampire_smite() called tick#: [world.time]")
 	var/smitetemp = 0
 	var/vampcoat = istype(wear_suit, /obj/item/clothing/suit/storage/draculacoat) //coat reduces smiting
 	if(check_holy(src)) //if you're on a holy tile get ready for pain
@@ -691,7 +691,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			IgniteMob()
 
 /mob/living/carbon/human/proc/handle_vampire()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_vampire() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_vampire() called tick#: [world.time]")
 	if(hud_used)
 		if(!hud_used.vampire_blood_display)
 			hud_used.vampire_hud()

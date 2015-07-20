@@ -137,7 +137,7 @@
 
 
 /obj/machinery/computer/centrifuge/proc/cure()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/cure() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/cure() called tick#: [world.time]")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 	if (!B)
 		return
@@ -150,7 +150,7 @@
 	alert_noise("ping")
 
 /obj/machinery/computer/centrifuge/proc/isolate()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/isolate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/isolate() called tick#: [world.time]")
 	var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
 	dish.virus2 = virus2
 

@@ -20,7 +20,7 @@ mob/living/carbon/var
 	hal_crit = 0
 
 mob/living/carbon/proc/handle_hallucinations()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/proc/handle_hallucinations() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/proc/handle_hallucinations() called tick#: [world.time]")
 	if(handling_hal) return
 	handling_hal = 1
 	while(hallucination > 20)
@@ -227,7 +227,7 @@ mob/living/carbon/proc/handle_hallucinations()
 
 /*obj/machinery/proc/mockpanel(list/buttons,start_txt,end_txt,list/mid_txts)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/mockpanel() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/mockpanel() called tick#: [world.time]")
 
 	if(!mocktxt)
 
@@ -316,7 +316,7 @@ proc/check_panel(mob/M)
 
 
 /obj/effect/fake_attacker/proc/updateimage()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/fake_attacker/proc/updateimage() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/fake_attacker/proc/updateimage() called tick#: [world.time]")
 //	del src.currentimage
 
 
@@ -399,7 +399,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
 /proc/fake_attack(var/mob/living/target)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/fake_attack() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/fake_attack() called tick#: [world.time]")
 //	var/list/possible_clones = new/list()
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null

@@ -84,7 +84,7 @@
 	var/read_only = 0 //Well,it's still a floppy disk
 
 /obj/item/weapon/disk/data/proc/Initialize()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/disk/data/proc/Initialize() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/disk/data/proc/Initialize() called tick#: [world.time]")
 	buf = new
 	buf.dna=new
 
@@ -119,7 +119,7 @@
 
 //Find a dead mob with a brain and client.
 /proc/find_dead_player(var/find_key)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/find_dead_player() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/find_dead_player() called tick#: [world.time]")
 	if (isnull(find_key))
 		return
 
@@ -158,7 +158,7 @@
 	var/healthstring = ""
 
 /obj/item/weapon/implant/health/proc/sensehealth()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/implant/health/proc/sensehealth() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/implant/health/proc/sensehealth() called tick#: [world.time]")
 	if (!src.implanted)
 		return "ERROR"
 	else
@@ -186,7 +186,7 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/cloning/clonepod/proc/growclone(var/datum/dna2/record/R)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/growclone() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/growclone() called tick#: [world.time]")
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
@@ -375,7 +375,7 @@
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/cloning/clonepod/proc/connected_message(var/message)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/connected_message() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/connected_message() called tick#: [world.time]")
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
 	if (!message)
@@ -389,7 +389,7 @@
 	set name = "Eject Cloner"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/cloning/clonepod/verb/eject()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/cloning/clonepod/verb/eject()  called tick#: [world.time]")
 
 	if (usr.stat != 0 || (usr.status_flags & FAKEDEATH))
 		return
@@ -398,7 +398,7 @@
 	return
 
 /obj/machinery/cloning/clonepod/proc/go_out()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/go_out() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/go_out() called tick#: [world.time]")
 	if (src.locked)
 		return
 
@@ -440,7 +440,7 @@
 	return
 
 /obj/machinery/cloning/clonepod/proc/malfunction()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/malfunction() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cloning/clonepod/proc/malfunction() called tick#: [world.time]")
 	if(src.occupant)
 		src.connected_message("Critical Error!")
 		src.mess = 1

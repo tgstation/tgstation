@@ -70,7 +70,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/weapon/match/proc/update_brightness()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/match/proc/update_brightness() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/match/proc/update_brightness() called tick#: [world.time]")
 
 	if(lit == 1) //I wish I didn't need the == 1 part, but Dreamkamer is a dumb puppy
 		processing_objects.Add(src)
@@ -206,7 +206,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/proc/update_brightness()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/cigarette/proc/update_brightness() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/cigarette/proc/update_brightness() called tick#: [world.time]")
 
 	if(lit)
 		processing_objects.Add(src)
@@ -309,7 +309,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 				return
 
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights \the [src].")
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/cigarette/proc/light() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/cigarette/proc/light() called tick#: [world.time]")
 	if(lit) //Failsafe
 		return //"Normal" situations were already handled in attackby, don't show a message
 
@@ -658,7 +658,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 /obj/item/weapon/lighter/proc/update_brightness()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/lighter/proc/update_brightness() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/lighter/proc/update_brightness() called tick#: [world.time]")
 
 	if(lit)
 		processing_objects.Add(src)

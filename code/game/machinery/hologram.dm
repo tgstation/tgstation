@@ -67,7 +67,7 @@ var/const/HOLOPAD_MODE = 0
 	return
 
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/activate_holo() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/activate_holo() called tick#: [world.time]")
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
@@ -91,7 +91,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/create_holo() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/create_holo() called tick#: [world.time]")
 	hologram = new(T)//Spawn a blank effect at the location.
 	hologram.icon = A.holo_icon
 	hologram.mouse_opacity = 0//So you can't click on it.
@@ -107,7 +107,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/clear_holo() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/clear_holo() called tick#: [world.time]")
 //	hologram.SetLuminosity(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	del(hologram)//Get rid of hologram.
 	if(master.current == src)
@@ -137,7 +137,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 /obj/machinery/hologram/holopad/proc/move_hologram()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/move_hologram() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hologram/holopad/proc/move_hologram() called tick#: [world.time]")
 	if(hologram)
 		step_to(hologram, master.eyeobj) // So it turns.
 		hologram.loc = get_turf(master.eyeobj)
@@ -187,7 +187,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 Holographic project of everything else.
 
 /mob/verb/hologram_test()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/hologram_test()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/hologram_test()  called tick#: [world.time]")
 	set name = "Hologram Debug New"
 	set category = "CURRENT DEBUG"
 

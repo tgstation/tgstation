@@ -19,7 +19,7 @@
 /mob/verb/nanomapgen_DumpImage()
 	set category = "Server"
 	set name = "Generate NanoUI Map"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/nanomapgen_DumpImage()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/nanomapgen_DumpImage()  called tick#: [world.time]")
 
 	if(!src.client.holder)
 		src << "Only administrators may use this command."
@@ -34,7 +34,7 @@
 /mob/verb/nanomapgen_DumpImageAll()
 	set category = "Server"
 	set name = "Generate all NanoUI Maps"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/nanomapgen_DumpImageAll()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/nanomapgen_DumpImageAll()  called tick#: [world.time]")
 
 	if(!src.client.holder)
 		src << "Only administrators may use this command."
@@ -48,7 +48,7 @@
 
 /mob/proc/nanomapgen_DumpTile(var/startX = 1, var/startY = 1, var/currentZ = 1, var/endX = -1, var/endY = -1, var/allz = 0)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/nanomapgen_DumpTile() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/nanomapgen_DumpTile() called tick#: [world.time]")
 
 	if(currentZ == 2)
 		if(allz)

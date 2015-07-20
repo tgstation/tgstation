@@ -27,7 +27,7 @@
 		call(src,triggerproc)(M)
 
 /obj/effect/mine/proc/triggerrad(obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerrad() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerrad() called tick#: [world.time]")
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -38,7 +38,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerstun(obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerstun() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerstun() called tick#: [world.time]")
 	if(ismob(obj))
 		var/mob/M = obj
 		M.Stun(30)
@@ -49,7 +49,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggern2o(obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggern2o() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggern2o() called tick#: [world.time]")
 	//example: n2o triggerproc
 	//note: im lazy
 
@@ -68,7 +68,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerplasma(obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerplasma() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerplasma() called tick#: [world.time]")
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
 
@@ -84,7 +84,7 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerkick(obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerkick() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/triggerkick() called tick#: [world.time]")
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -93,7 +93,7 @@
 		del(src)
 
 /obj/effect/mine/proc/explode(obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/explode() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/mine/proc/explode() called tick#: [world.time]")
 	explosion(loc, 0, 1, 2, 3)
 	spawn(0)
 		del(src)

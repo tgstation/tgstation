@@ -128,7 +128,7 @@ var/global/list/battery_online =	list(
 		update_icon()
 
 /obj/machinery/power/battery/proc/chargedisplay()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery/proc/chargedisplay() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery/proc/chargedisplay() called tick#: [world.time]")
 	return round(5.5*charge/(capacity ? capacity : 5e6))
 
 /*
@@ -136,7 +136,7 @@ var/global/list/battery_online =	list(
  * Restores charge level to smes if there was excess this ptick
  */
 /obj/machinery/power/battery/proc/restore()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery/proc/restore() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery/proc/restore() called tick#: [world.time]")
 	if (stat & BROKEN)
 		return
 
@@ -251,7 +251,7 @@ var/global/list/battery_online =	list(
 	return 1
 
 /obj/machinery/power/battery/proc/ion_act()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery/proc/ion_act() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/battery/proc/ion_act() called tick#: [world.time]")
 	if(src.z == 1)
 		if(prob(1)) //explosion
 			message_admins("<span class='warning'>SMES explosion in [get_area(src)]</span>")
@@ -305,7 +305,7 @@ var/global/list/battery_online =	list(
 	..()
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/rate_control() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/rate_control() called tick#: [world.time]")
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
 	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
 	if(Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"

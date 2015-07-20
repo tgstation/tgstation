@@ -22,7 +22,7 @@
 #define SAY_MINIMUM_PRESSURE 10
 
 /proc/message_mode_to_name(mode)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/message_mode_to_name() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/message_mode_to_name() called tick#: [world.time]")
 	switch(mode)
 		if(MODE_WHISPER)
 			return "whisper"
@@ -106,7 +106,7 @@ var/list/department_radio_keys = list(
 )
 
 /mob/living/proc/get_default_language()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_default_language() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_default_language() called tick#: [world.time]")
 	if(!default_language)
 		if(languages && languages.len)
 			default_language = languages[1]
@@ -129,7 +129,7 @@ var/list/department_radio_keys = list(
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	message = capitalize(message)
 
-	say_testing(src, "Say start, message=[message]")
+	//say_testing(src, "Say start, message=[message]")
 	if(!message) return
 
 	if(silent)
@@ -140,50 +140,50 @@ var/list/department_radio_keys = list(
 		return
 
 	var/message_mode = get_message_mode(message)
-	var/message_mode_name = message_mode_to_name(message_mode)
+	//var/message_mode_name = message_mode_to_name(message_mode)
 	if (stat == DEAD) // Dead.
-		say_testing(src, "ur ded kid")
+		//say_testing(src, "ur ded kid")
 		say_dead(message)
 		return
 	if (stat) // Unconcious.
 		if(message_mode == MODE_WHISPER) //Lets us say our last words.
-			say_testing(src, "message mode was whisper.")
+			//say_testing(src, "message mode was whisper.")
 			whisper(copytext(message, 3))
 		return
 	if(check_emote(message))
-		say_testing(src, "Emoted")
+		//say_testing(src, "Emoted")
 		return
 	if(!can_speak_basic(message))
-		say_testing(src, "we aren't able to talk")
+		//say_testing(src, "we aren't able to talk")
 		return
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
-		say_testing(src, "Message mode was [message_mode == MODE_HEADSET ? "headset" : "robot"]")
+		//say_testing(src, "Message mode was [message_mode == MODE_HEADSET ? "headset" : "robot"]")
 		message = copytext(message, 2)
 	else if(message_mode)
-		say_testing(src, "Message mode is [message_mode_name]")
+		//say_testing(src, "Message mode is [message_mode_name]")
 		message = copytext(message, 3)
 
 	var/datum/language/speaking
 	if(!speaking)
 		speaking = parse_language(message)
-		say_testing(src, "Getting speaking language, [istype(speaking) ? "got [speaking.name]" : "got null"]")
+		//say_testing(src, "Getting speaking language, [istype(speaking) ? "got [speaking.name]" : "got null"]")
 	if(istype(speaking))
-		var/oldmsg = message
+		//var/oldmsg = message
 		message = copytext(message,2+length(speaking.key))
-		say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
+		//say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
 		if(!isnull(speaking))
-			var/oldmsg = message
+			//var/oldmsg = message
 			var/n = speaking
 			message = copytext(message,1+length(n))
-			say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
+			//say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
 			speaking = null
 		speaking = get_default_language()
-		say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
+		//say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
 	message = trim_left(message)
 	if(handle_inherent_channels(message, message_mode, speaking))
-		say_testing(src, "Handled by inherent channel")
+		//say_testing(src, "Handled by inherent channel")
 		return
 	if(!can_speak_vocal(message))
 		return
@@ -231,7 +231,7 @@ var/list/department_radio_keys = list(
 	return message
 
 /mob/living/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
-	say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
+	//say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
 	if(isnull(message_range)) message_range = 7
 	var/list/listeners = get_hearers_in_view(message_range, source) | observers
 
@@ -243,7 +243,7 @@ var/list/department_radio_keys = list(
 	send_speech_bubble(message, bubble_type, listeners)
 
 /mob/living/proc/say_test(var/text)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/say_test() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/say_test() called tick#: [world.time]")
 	var/ending = copytext(text, length(text))
 	if (ending == "?")
 		return "1"
@@ -256,7 +256,7 @@ var/list/department_radio_keys = list(
 		return 1
 
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_speak_basic() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_speak_basic() called tick#: [world.time]")
 	if(!message || message == "")
 		return
 
@@ -271,7 +271,7 @@ var/list/department_radio_keys = list(
 
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_speak_vocal() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/can_speak_vocal() called tick#: [world.time]")
 	if(!message)
 		return
 
@@ -287,21 +287,21 @@ var/list/department_radio_keys = list(
 	return 1
 
 /mob/living/proc/check_emote(message)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/check_emote() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/check_emote() called tick#: [world.time]")
 	if(copytext(message, 1, 2) == "*")
 		emote(copytext(message, 2))
 		return 1
 
 
 /mob/living/proc/get_message_mode(message)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_message_mode() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/get_message_mode() called tick#: [world.time]")
 	if(copytext(message, 1, 2) == ";")
 		return MODE_HEADSET
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
 
 /mob/living/proc/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_inherent_channels() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_inherent_channels() called tick#: [world.time]")
 	switch(message_mode)
 		if(MODE_CHANGELING)
 			if(lingcheck())
@@ -341,7 +341,7 @@ var/list/department_radio_keys = list(
 	return 0
 
 /mob/living/proc/treat_message(message, genesay = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/treat_message() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/treat_message() called tick#: [world.time]")
 	if(getBrainLoss() >= 60)
 		message = derpspeech(message, stuttering)
 
@@ -351,7 +351,7 @@ var/list/department_radio_keys = list(
 	return message
 
 /mob/living/proc/radio(message, message_mode, raw_message, var/datum/language/speaking)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/radio() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/radio() called tick#: [world.time]")
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
@@ -398,7 +398,7 @@ var/list/department_radio_keys = list(
 	return ..()
 
 /mob/living/proc/send_speech_bubble(var/message,var/bubble_type, var/list/hearers)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/send_speech_bubble() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/send_speech_bubble() called tick#: [world.time]")
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in hearers)
@@ -408,7 +408,7 @@ var/list/department_radio_keys = list(
 		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 /mob/proc/addSpeechBubble(image/speech_bubble)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/addSpeechBubble() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/addSpeechBubble() called tick#: [world.time]")
 	if(client)
 		client.images += speech_bubble
 		spawn(30)

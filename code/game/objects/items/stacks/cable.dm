@@ -126,7 +126,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 
 // called when cable_coil is clicked on a turf/simulated/floor
 /obj/item/stack/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user, var/dirnew)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/cable_coil/proc/turf_place() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/cable_coil/proc/turf_place() called tick#: [world.time]")
 	if(!isturf(user.loc))
 		return
 
@@ -181,7 +181,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
 /obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/cable_coil/proc/cable_join() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/cable_coil/proc/cable_join() called tick#: [world.time]")
 	var/turf/U = user.loc
 
 	if(!isturf(U))

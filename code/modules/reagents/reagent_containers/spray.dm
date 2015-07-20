@@ -55,7 +55,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	user << "<span class='notice'>You switched [amount_per_transfer_from_this == 10 ? "on" : "off"] the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>"
 
 /obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/spray/proc/make_puff() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/spray/proc/make_puff() called tick#: [world.time]")
 	// Create the chemical puff
 	var/mix_color = mix_color_from_reagents(reagents.reagent_list)
 	var/obj/effect/decal/chemical_puff/D = getFromPool(/obj/effect/decal/chemical_puff, get_turf(src), mix_color, amount_per_transfer_from_this)
@@ -78,7 +78,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 	set name = "Empty Spray Bottle"
 	set category = "Object"
 	set src in usr
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/reagent_containers/spray/verb/empty()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/reagent_containers/spray/verb/empty()  called tick#: [world.time]")
 
 	if(isturf(usr.loc))
 		usr << "<span class='notice'>You empty the [src] onto the floor.</span>"

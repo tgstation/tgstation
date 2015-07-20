@@ -26,7 +26,7 @@
 	// VG: We dun changed dis so we can link simple machines. - N3X
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 /obj/item/device/multitool/proc/IsBufferA(var/typepath)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/proc/IsBufferA() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/proc/IsBufferA() called tick#: [world.time]")
 	if(!buffer)
 		return 0
 	return istype(buffer,typepath)
@@ -41,7 +41,7 @@
 	spawn() src.ticker()
 
 /obj/item/device/multitool/ai_detect/proc/ticker()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/ai_detect/proc/ticker() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/ai_detect/proc/ticker() called tick#: [world.time]")
 	var/mob/M
 	var/range
 	var/turf/our_turf
@@ -80,14 +80,14 @@
 	return
 
 /obj/item/device/multitool/ai_detect/proc/findItem(pathToFind,atom/thingToSearch)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/ai_detect/proc/findItem() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/ai_detect/proc/findItem() called tick#: [world.time]")
 	if(locate(pathToFind) in thingToSearch.contents) return 1
 	for(var/mob/living/carbon/mob in thingToSearch)
 		if(.(pathToFind,mob)) return 1
 	return 0
 
 /obj/item/device/multitool/ai_detect/proc/findComponent(pathToFind,atom/thingToSearch)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/ai_detect/proc/findComponent() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/ai_detect/proc/findComponent() called tick#: [world.time]")
 	if(locate(pathToFind) in thingToSearch.contents) return 1
 	for(var/obj/item/device/assembly_holder/assembly in thingToSearch)
 		if(.(pathToFind,assembly)) return 1

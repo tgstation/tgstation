@@ -112,7 +112,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		return
 
 /datum/universal_state/supermatter_cascade/proc/AreaSet()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/AreaSet() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/AreaSet() called tick#: [world.time]")
 	for(var/area/ca in areas)
 		var/area/A=get_area_master(ca)
 		if(!istype(A,/area) || A.name=="Space" || istype(A,/area/beach))
@@ -154,14 +154,14 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 				T.update_lumcount(1, 160, 255, 0, 0)
 		tcheck(80,1)
 /datum/universal_state/supermatter_cascade/proc/MiscSet()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/MiscSet() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/MiscSet() called tick#: [world.time]")
 	for (var/obj/machinery/firealarm/alm in machines)
 		if (!(alm.stat & BROKEN))
 			alm.ex_act(2)
 		tcheck(80,1)
 
 /datum/universal_state/supermatter_cascade/proc/APCSet()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/APCSet() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/APCSet() called tick#: [world.time]")
 	for (var/obj/machinery/power/apc/APC in power_machines)
 		if (!(APC.stat & BROKEN) && !APC.is_critical)
 			APC.chargemode = 0
@@ -172,7 +172,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		tcheck(80,1)
 
 /datum/universal_state/supermatter_cascade/proc/PlayerSet()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/PlayerSet() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/supermatter_cascade/proc/PlayerSet() called tick#: [world.time]")
 	for(var/datum/mind/M in player_list)
 		if(!istype(M.current,/mob/living))
 			continue
@@ -277,7 +277,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 
 			A.malf_picker.remove_verbs(A)
 
-			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\A.malf_picker.remove_verbs()  called tick#: [world.time]")
+			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\A.malf_picker.remove_verbs()  called tick#: [world.time]")
 
 			A.laws = new base_law_type
 			del(A.malf_picker)

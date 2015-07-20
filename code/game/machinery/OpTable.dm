@@ -115,7 +115,7 @@
 		src.victim = L
 		return
 /obj/machinery/optable/proc/check_victim()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/check_victim() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/check_victim() called tick#: [world.time]")
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
 		if(M.lying)
@@ -130,7 +130,7 @@
 	check_victim()
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/take_victim() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/optable/proc/take_victim() called tick#: [world.time]")
 	if(C.buckled)
 		C.buckled.unbuckle()
 	if (C == user)
@@ -156,7 +156,7 @@
 	set name = "Climb On Table"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/optable/verb/climb_on()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/optable/verb/climb_on()  called tick#: [world.time]")
 
 	if(usr.stat || !ishuman(usr) || usr.buckled || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return

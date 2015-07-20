@@ -44,20 +44,20 @@
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/can_open() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/can_open() called tick#: [world.time]")
 	if(src.welded)
 		return 0
 	return 1
 
 /obj/structure/closet/proc/can_close()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/can_close() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/can_close() called tick#: [world.time]")
 	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet != src)
 			return 0
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/dump_contents() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/dump_contents() called tick#: [world.time]")
 	if(usr)
 		var/mob/living/L = usr
 		var/obj/machinery/power/supermatter/SM = locate() in contents
@@ -80,14 +80,14 @@
 			M.client.perspective = MOB_PERSPECTIVE
 
 /obj/structure/closet/proc/take_contents()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/take_contents() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/take_contents() called tick#: [world.time]")
 	for(var/atom/movable/AM in src.loc)
 		if(insert(AM) == -1) // limit reached
 			break
 		INVOKE_EVENT(AM.on_moved,list("loc"=src))
 
 /obj/structure/closet/proc/open()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/open() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/open() called tick#: [world.time]")
 	if(src.opened)
 		return 0
 
@@ -108,7 +108,7 @@
 
 /obj/structure/closet/proc/insert(var/atom/movable/AM)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/insert() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/insert() called tick#: [world.time]")
 
 	if(contents.len >= storage_capacity)
 		return -1
@@ -132,7 +132,7 @@
 	return 1
 
 /obj/structure/closet/proc/close()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/close() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/close() called tick#: [world.time]")
 	if(!src.opened)
 		return 0
 	if(!src.can_close())
@@ -183,7 +183,7 @@
 	return 1
 
 /obj/structure/closet/proc/toggle()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/toggle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/toggle() called tick#: [world.time]")
 	if(src.opened)
 		return src.close()
 	return src.open()
@@ -310,7 +310,7 @@
 	return
 
 /obj/structure/closet/proc/place(var/mob/user, var/obj/item/I)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/place() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/closet/proc/place() called tick#: [world.time]")
 	return 0
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob, var/needs_opened = 1, var/show_message = 1, var/move_them = 1)
@@ -371,7 +371,7 @@
 	set src in oview(1)
 	set category = "Object"
 	set name = "Toggle Open"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/closet/verb/verb_toggleopen()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/closet/verb/verb_toggleopen()  called tick#: [world.time]")
 
 	if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return

@@ -116,7 +116,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		transfer_personality(O.client)
 	update_verbs(0)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\update_verbs()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\update_verbs()  called tick#: [world.time]")
 
 	for(var/chemtype in borer_chem_types)
 		var/datum/borer_chem/C = new chemtype()
@@ -137,9 +137,9 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/proc/update_verbs(var/attached)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/borer/proc/update_verbs()  called tick#: [world.time]")
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/update_verbs() called tick#: [world.time]")
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/mob/living/simple_animal/borer/proc/update_verbs()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/borer/proc/update_verbs()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/update_verbs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/mob/living/simple_animal/borer/proc/update_verbs()  called tick#: [world.time]")
 	if(attached)
 		verbs += borer_attached_verbs
 		verbs -= borer_detached_verbs
@@ -256,7 +256,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 // VERBS!
 
 /mob/living/simple_animal/borer/proc/borer_speak(var/message)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/borer_speak() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/borer_speak() called tick#: [world.time]")
 	if(!message)
 		return
 
@@ -283,7 +283,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	set category = "Alien"
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/bond_brain() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/bond_brain() called tick#: [world.time]")
 
 	if(!host)
 		src << "You are not inside a host body."
@@ -307,7 +307,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 			do_bonding(rptext=1)
 
 /mob/living/simple_animal/borer/proc/do_bonding(var/rptext=0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/do_bonding() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/do_bonding() called tick#: [world.time]")
 	if(!host || host.stat==DEAD || !src || controlling)
 		return
 
@@ -330,7 +330,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	set category = "Alien"
 	set name = "Kill Host"
 	set desc = "Give the host massive brain damage, killing them nearly instantly."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/kill_host() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/kill_host() called tick#: [world.time]")
 
 	if(!host)
 		src << "You are not inside a host body."
@@ -367,7 +367,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	set category = "Alien"
 	set name = "Retard Host"
 	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/damage_brain() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/damage_brain() called tick#: [world.time]")
 
 	if(!host)
 		src << "You are not inside a host body."
@@ -391,7 +391,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	set category = "Alien"
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/secrete_chemicals() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/secrete_chemicals() called tick#: [world.time]")
 
 	if(!host)
 		src << "<span class='warning'>You are not inside a host body.</span>"
@@ -447,7 +447,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	set category = "Alien"
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/abandon_host() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/abandon_host() called tick#: [world.time]")
 
 	if(!host)
 		src << "<span class='warning'>You are not inside a host body.</span>"
@@ -476,7 +476,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 
 // Try to reset everything, also while handling invalid host/host_brain states.
 mob/living/simple_animal/borer/proc/detach()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/detach() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/detach() called tick#: [world.time]")
 	if(host)
 		if(istype(host,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = host
@@ -511,7 +511,7 @@ mob/living/simple_animal/borer/proc/detach()
 	set category = "Alien"
 	set name = "Infest"
 	set desc = "Infest a suitable humanoid host."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/infest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/infest() called tick#: [world.time]")
 
 	if(host)
 		src << "You are already within a host."
@@ -568,7 +568,7 @@ mob/living/simple_animal/borer/proc/detach()
 		return
 
 /mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/perform_infestation() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/perform_infestation() called tick#: [world.time]")
 	if(!M || !istype(M))
 		error("[src]: Unable to perform_infestation on [M]!")
 		return 0
@@ -607,14 +607,14 @@ mob/living/simple_animal/borer/proc/detach()
 			pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
 		if(pipe && src.canmove)
 			handle_ventcrawl(pipe)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/ventcrawl() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/ventcrawl() called tick#: [world.time]")
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/proc/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/hide() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/hide() called tick#: [world.time]")
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
@@ -625,7 +625,7 @@ mob/living/simple_animal/borer/proc/detach()
 
 //Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/request_player() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/request_player() called tick#: [world.time]")
 	var/list/candidates=list()
 	//testing("Polling for borers.")
 	for(var/mob/dead/observer/G in get_active_candidates(ROLE_BORER, poll="HEY KID, YOU WANNA BE A BORER?"))
@@ -657,7 +657,7 @@ mob/living/simple_animal/borer/proc/request_player()
 
 mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/transfer_personality() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/transfer_personality() called tick#: [world.time]")
 
 	if(!candidate)
 		return
@@ -686,7 +686,7 @@ mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 			obj_count++
 
 mob/living/simple_animal/borer/proc/forge_objectives()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/forge_objectives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/forge_objectives() called tick#: [world.time]")
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = mind
 	mind.objectives += survive_objective

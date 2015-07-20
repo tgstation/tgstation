@@ -25,7 +25,7 @@
 
 	proc/GC()
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GC() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GC() called tick#: [world.time]")
 
 		Holder = null
 		if(interpreter)
@@ -35,7 +35,7 @@
 	/* -- Compile a raw block of text -- */
 
 	proc/Compile(code as message)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Compile() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Compile() called tick#: [world.time]")
 		var/n_scriptOptions/nS_Options/options = new()
 		var/n_Scanner/nS_Scanner/scanner       = new(code, options)
 		var/list/tokens                        = scanner.Scan()
@@ -60,7 +60,7 @@
 
 	proc/Run(var/datum/signal/signal)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Run() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Run() called tick#: [world.time]")
 
 		if(!ready)
 			return
@@ -242,7 +242,7 @@ datum/signal
 
 	proc/mem(var/address, var/value)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mem() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mem() called tick#: [world.time]")
 
 		if(istext(address))
 			var/obj/machinery/telecomms/server/S = data["server"]
@@ -256,7 +256,7 @@ datum/signal
 
 	proc/signaler(var/freq = 1459, var/code = 30)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/signaler() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/signaler() called tick#: [world.time]")
 
 		if(isnum(freq) && isnum(code))
 
@@ -289,7 +289,7 @@ datum/signal
 
 	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/tcombroadcast() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/tcombroadcast() called tick#: [world.time]")
 
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]

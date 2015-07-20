@@ -44,7 +44,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 
 /mob/living/proc/handle_ventcrawl(var/atom/clicked_on) // -- TLE -- Merged by Carn
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_ventcrawl() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_ventcrawl() called tick#: [world.time]")
 	diary << "[src] is ventcrawling."
 	if(!stat)
 		if(!lying)
@@ -129,7 +129,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 	return
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/add_ventcrawl() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/add_ventcrawl() called tick#: [world.time]")
 	var/datum/pipe_network/network = starting_machine.return_network(starting_machine)
 	if(!network)
 		return
@@ -141,7 +141,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			client.images += A.pipe_image
 
 /mob/living/proc/remove_ventcrawl()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/remove_ventcrawl() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/remove_ventcrawl() called tick#: [world.time]")
 	if(client)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image

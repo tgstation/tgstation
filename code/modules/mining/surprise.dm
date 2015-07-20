@@ -20,7 +20,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		)
 
 	proc/GetAdjacentTypes(var/dir)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetAdjacentTypes() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetAdjacentTypes() called tick#: [world.time]")
 		return adjacents["[dir]"]
 
 /surprise_room
@@ -33,12 +33,12 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 	var/size_y=0
 
 	proc/UpdateTurfs()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateTurfs() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateTurfs() called tick#: [world.time]")
 		for(var/turf/T in turfs)
 			UpdateTurf(T)
 
 	proc/GetTurfs(var/ttype)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetTurfs() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetTurfs() called tick#: [world.time]")
 		var/list/selected[0]
 		for(var/turf/T in turfs)
 			var/surprise_turf_info/Ti = GetTurfInfo(T)
@@ -47,7 +47,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		return selected
 
 	proc/GetTurfInfo(var/turf/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetTurfInfo() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetTurfInfo() called tick#: [world.time]")
 		var/surprise_turf_info/sti
 		if(!(T in turf_info))
 			sti = new
@@ -57,7 +57,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		return sti
 
 	proc/UpdateTurf(var/turf/T, var/no_adjacent=0)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateTurf() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateTurf() called tick#: [world.time]")
 		// List types in this turf.
 		var/surprise_turf_info/sti = GetTurfInfo(T)
 		if(!istype(sti.types) || isnull(sti.types))
@@ -71,14 +71,14 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		UpdateAdjacentsOfTurf(T)
 
 	proc/AddTypeToTurf(var/turf/T, var/newtype)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddTypeToTurf() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AddTypeToTurf() called tick#: [world.time]")
 		var/surprise_turf_info/sti = GetTurfInfo(T)
 		sti.types |= newtype
 
 		//UpdateAdjacentsOfTurf(T)
 
 	proc/UpdateAdjacentsOfTurf(var/turf/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateAdjacentsOfTurf() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/UpdateAdjacentsOfTurf() called tick#: [world.time]")
 		var/surprise_turf_info/Ti = turf_info[T]
 		for(var/dir in cardinal)
 			var/turf/AT = get_step(T,dir)
@@ -95,24 +95,24 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 
 
 	proc/IsWall(var/turf/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/IsWall() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/IsWall() called tick#: [world.time]")
 		var/surprise_turf_info/sti = GetTurfInfo(T)
 		return sti.turf_type == TURF_WALL
 
 	proc/IsFloor(var/turf/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/IsFloor() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/IsFloor() called tick#: [world.time]")
 		var/surprise_turf_info/sti = GetTurfInfo(T)
 		return sti.turf_type == TURF_FLOOR
 
 	// Are we adjacent to an object of this type?
 	proc/AdjacentToType(var/turf/T,var/adjacent_type)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AdjacentToType() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AdjacentToType() called tick#: [world.time]")
 		var/surprise_turf_info/sti = GetTurfInfo(T)
 		return locate(adjacent_type) in sti.GetAdjacentTypes()
 
 	// Same, but for walls/floors
 	proc/AdjacentToTurfType(var/turf/T,var/turfType)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AdjacentToTurfType() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/AdjacentToTurfType() called tick#: [world.time]")
 		for(var/dir in cardinal)
 			var/turf/AT = get_step(T,dir)
 			var/surprise_turf_info/info = GetTurfInfo(AT)
@@ -146,7 +146,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 
 	// Called in Evaluate
 	proc/Plop(var/turf/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Plop() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Plop() called tick#: [world.time]")
 		new placetype(T)
 		placed_times++
 		room.AddTypeToTurf(T,placetype)
@@ -158,7 +158,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 	// Return 1 if we Plop()'d something.
 	// Return 0 if we didn't or something went wrong.
 	proc/Evaluate()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Evaluate() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Evaluate() called tick#: [world.time]")
 		var/list/candidates=GetCandidates()
 		if(candidates.len==0)
 			return 0
@@ -176,7 +176,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 
 	// Return list of turfs.
 	proc/GetCandidates()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetCandidates() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/GetCandidates() called tick#: [world.time]")
 		return list()
 
 /layout_rule/place_adjacent
@@ -213,7 +213,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		return candidates
 
 	proc/IsTurfCandidate(var/turf/T,var/list/opt_nt,var/list/opt_nnt)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/IsTurfCandidate() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/IsTurfCandidate() called tick#: [world.time]")
 		var/surprise_turf_info/sti = room.GetTurfInfo(T)
 		for(var/dir in cardinal)
 			var/di = "[dir]"
@@ -249,7 +249,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 	var/area/asteroid/artifactroom/complex_area
 
 	proc/spawn_complex(var/atom/start_loc)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawn_complex() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawn_complex() called tick#: [world.time]")
 		name = "[initial(name)] #[rand(100,999)]"
 		complex_area = new
 		complex_area.name = name
@@ -290,7 +290,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		return 1
 
 	proc/postProcessRoom(var/surprise_room/room)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/postProcessRoom() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/postProcessRoom() called tick#: [world.time]")
 		for(var/turf/floor in room.turfs)
 			if(floor.density) continue
 			for(var/turf/T in floor.AdjacentTurfs())
@@ -300,7 +300,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 					break
 
 	proc/postProcessComplex()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/postProcessComplex() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/postProcessComplex() called tick#: [world.time]")
 		for(var/i=0;i<=rand(1,max_richness);i++)
 			if(!candidates.len)
 				return
@@ -322,7 +322,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 			new thing(T)
 
 	proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/clean=0)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawn_room() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawn_room() called tick#: [world.time]")
 		if(!check_complex_placement(start_loc,x_size,y_size))
 			return 0
 

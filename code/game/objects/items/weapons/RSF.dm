@@ -64,7 +64,7 @@ RSF
 		user << "It currently holds [matter]/[max_matter] fabrication-units."
 
 /obj/item/weapon/rsf/proc/pay(var/mob/user, var/amount) //spend matter or energy
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/rsf/proc/pay() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/rsf/proc/pay() called tick#: [world.time]")
 	if(isrobot(user)) //if the user is a robot, take power from its cell
 		var/mob/living/silicon/robot/R = user
 		if(R.cell)

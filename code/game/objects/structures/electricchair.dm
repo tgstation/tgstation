@@ -27,7 +27,7 @@
 	set name = "Toggle Electric Chair"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/stool/bed/chair/e_chair/verb/toggle()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/stool/bed/chair/e_chair/verb/toggle()  called tick#: [world.time]")
 
 	if(on)
 		on = 0
@@ -45,7 +45,7 @@
 	return
 
 /obj/structure/stool/bed/chair/e_chair/proc/shock()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/e_chair/proc/shock() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/e_chair/proc/shock() called tick#: [world.time]")
 	if(!on)
 		return
 	if(last_time + 50 > world.time)

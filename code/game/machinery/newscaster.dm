@@ -47,7 +47,7 @@
 	//var/page = null //For newspapers
 
 /datum/feed_message/proc/clear()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feed_message/proc/clear() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feed_message/proc/clear() called tick#: [world.time]")
 	src.author = ""
 	src.body = ""
 	src.backup_body = ""
@@ -56,7 +56,7 @@
 	src.backup_img = null
 
 /datum/feed_channel/proc/clear()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feed_channel/proc/clear() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/feed_channel/proc/clear() called tick#: [world.time]")
 	src.channel_name = ""
 	src.messages = list()
 	src.locked = 0
@@ -997,7 +997,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/AttachPhoto() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/AttachPhoto() called tick#: [world.time]")
 	if(photo)
 		return EjectPhoto(user)
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
@@ -1005,7 +1005,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		user.drop_item(photo, src)
 
 /obj/machinery/newscaster/proc/EjectPhoto(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/EjectPhoto() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/EjectPhoto() called tick#: [world.time]")
 	if(!photo) return
 	if(istype(photo,/obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = photo
@@ -1016,7 +1016,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = null
 
 /obj/machinery/newscaster/proc/AttachPhotoButton(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/AttachPhotoButton() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/AttachPhotoButton() called tick#: [world.time]")
 	var/name = "Attach Photo"
 	var/href = "set_attachment=1"
 	if(isAI(user))
@@ -1203,7 +1203,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 
 /obj/machinery/newscaster/proc/scan_user(mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/scan_user() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/scan_user() called tick#: [world.time]")
 	if(masterController)
 		if(masterController != user)
 			if(get_dist(masterController,src)<=1)
@@ -1239,7 +1239,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	masterController << "\icon[src] <span class='notice'>Welcome back, [scanned_user]!</span>"
 
 /obj/machinery/newscaster/proc/print_paper()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/print_paper() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/print_paper() called tick#: [world.time]")
 	feedback_inc("newscaster_newspapers_printed",1)
 	var/obj/item/weapon/newspaper/NEWSPAPER = new /obj/item/weapon/newspaper
 	for(var/datum/feed_channel/FC in news_network.network_channels)
@@ -1255,7 +1255,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 //	return                                  //bode well with a newscaster network of 10+ machines. Let's just return it, as it's added in the machines list.
 
 /obj/machinery/newscaster/proc/newsAlert(channel)   //This isn't Agouri's work, for it is ugly and vile.
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/newsAlert() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/newscaster/proc/newsAlert() called tick#: [world.time]")
 	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ
 	if(channel)
 		say("Breaking news from [channel]!")

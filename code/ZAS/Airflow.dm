@@ -50,7 +50,7 @@ atom/movable/RepelAirflowDest(n)
 
 mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/airflow_stun() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/airflow_stun() called tick#: [world.time]")
 	if(stat == 2)
 		return 0
 	if(last_airflow_stun > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_stun_cooldown))	return 0
@@ -84,7 +84,7 @@ mob/living/carbon/human/airflow_stun()
 	return
 
 atom/movable/proc/check_airflow_movable(n)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/movable/proc/check_airflow_movable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/movable/proc/check_airflow_movable() called tick#: [world.time]")
 	if(anchored && !ismob(src))
 		return 0
 	if(!istype(src,/obj/item) && n < zas_settings.Get(/datum/ZAS_Setting/airflow_dense_pressure))
@@ -119,7 +119,7 @@ obj/item/check_airflow_movable(n)
 //Zones A and B are air zones. n represents the amount of air moved.
 
 proc/Airflow(zone/A, zone/B)
-	writepanic("[__FILE__].[__LINE__] \\/proc/Airflow() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/Airflow() called tick#: [world.time]")
 	set background = 1
 	var/n = B.air.return_pressure() - A.air.return_pressure()
 
@@ -199,7 +199,7 @@ proc/Airflow(zone/A, zone/B)
 						spawn M.RepelAirflowDest(abs(n)/5)
 
 proc/AirflowSpace(zone/A)
-	writepanic("[__FILE__].[__LINE__] \\/proc/AirflowSpace() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/AirflowSpace() called tick#: [world.time]")
 	spawn()
 		//The space version of the Airflow(A,B,n) proc.
 
@@ -242,7 +242,7 @@ proc/AirflowSpace(zone/A)
 
 // Mainly for bustanuts.
 /atom/movable/proc/AirflowCanPush()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/AirflowCanPush() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/AirflowCanPush() called tick#: [world.time]")
 	return 1
 
 /mob/AirflowCanPush()
@@ -251,7 +251,7 @@ proc/AirflowSpace(zone/A)
 	return 1
 
 /atom/movable/proc/GotoAirflowDest(n)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GotoAirflowDest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GotoAirflowDest() called tick#: [world.time]")
 	last_airflow = world.time
 	if(airflow_dest == loc)
 		return
@@ -312,7 +312,7 @@ proc/AirflowSpace(zone/A)
 
 
 /atom/movable/proc/RepelAirflowDest(n)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/RepelAirflowDest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/RepelAirflowDest() called tick#: [world.time]")
 	if(airflow_dest == loc)
 		step_away(src,loc)
 	if(ismob(src))
@@ -375,7 +375,7 @@ proc/AirflowSpace(zone/A)
 	sound_override = 0
 
 atom/movable/proc/airflow_hit(atom/A)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/movable/proc/airflow_hit() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/movable/proc/airflow_hit() called tick#: [world.time]")
 	airflow_speed = 0
 	airflow_dest = null
 
@@ -427,7 +427,7 @@ mob/living/carbon/human/airflow_hit(atom/A)
 	. = ..()
 
 zone/proc/movables()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/movables() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/zone/proc/movables() called tick#: [world.time]")
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/A in T)

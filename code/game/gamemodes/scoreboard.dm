@@ -1,6 +1,6 @@
 /datum/controller/gameticker/proc/scoreboard(var/completions)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/scoreboard() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/scoreboard() called tick#: [world.time]")
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
@@ -244,7 +244,7 @@
 
 
 /mob/proc/scorestats(var/completions)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/scorestats() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/scorestats() called tick#: [world.time]")
 	var/dat = completions
 	dat += {"<BR><h2>Round Statistics and Score</h2>"}
 	if (ticker.mode.name == "nuclear emergency")

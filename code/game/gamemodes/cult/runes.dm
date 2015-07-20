@@ -2,7 +2,7 @@
 	return
 
 /obj/effect/rune/proc/findNullRod(var/atom/target)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/findNullRod() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/findNullRod() called tick#: [world.time]")
 	if(istype(target,/obj/item/weapon/nullrod))
 		var/turf/T = get_turf(target)
 		nullblock = 1
@@ -14,7 +14,7 @@
 	return 0
 
 /obj/effect/rune/proc/invocation(var/animation_icon)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/invocation() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/invocation() called tick#: [world.time]")
 	c_animation = new /atom/movable/overlay(src.loc)
 	c_animation.name = "cultification"
 	c_animation.density = 0
@@ -32,7 +32,7 @@
 
 /////////////////////////////////////////FIRST RUNE
 /obj/effect/rune/proc/teleport(var/key)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/teleport() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/teleport() called tick#: [world.time]")
 	var/mob/living/user = usr
 	var/allrunesloc[]
 	allrunesloc = new/list()
@@ -77,7 +77,7 @@
 
 
 /obj/effect/rune/proc/itemport(var/key)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/itemport() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/itemport() called tick#: [world.time]")
 //	var/allrunesloc[]
 //	allrunesloc = new/list()
 //	var/index = 0
@@ -147,7 +147,7 @@
 /////////////////////////////////////////SECOND RUNE
 
 /obj/effect/rune/proc/tomesummon()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/tomesummon() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/tomesummon() called tick#: [world.time]")
 	if(istype(src,/obj/effect/rune))
 		usr.say("N[pick("'","`")]ath reth sh'yro eth d'raggathnor!")
 	else
@@ -167,7 +167,7 @@
 
 /obj/effect/rune/proc/convert()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/convert() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/convert() called tick#: [world.time]")
 
 	var/datum/game_mode/cult/mode_ticker = ticker.mode
 
@@ -222,7 +222,7 @@
 /////////////////////////////////////////FOURTH RUNE
 
 /obj/effect/rune/proc/tearreality()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/tearreality() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/tearreality() called tick#: [world.time]")
 	if(summoning)
 		return
 
@@ -271,7 +271,7 @@
 
 
 /obj/effect/rune/proc/updatetear(var/currentCountdown)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/updatetear() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/updatetear() called tick#: [world.time]")
 	if(!summoning)
 		summonturfs = list()
 		return
@@ -335,7 +335,7 @@
 		update()
 
 /obj/effect/summoning/proc/update()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/summoning/proc/update() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/summoning/proc/update() called tick#: [world.time]")
 	if(summon_target && (locate(get_turf(src)) in summon_target.summonturfs))
 		sleep(10)
 		update()
@@ -344,13 +344,13 @@
 		qdel(src)
 
 /obj/effect/summoning/proc/init(var/obj/effect/rune/S)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/summoning/proc/init() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/summoning/proc/init() called tick#: [world.time]")
 	summon_target = S
 
 /////////////////////////////////////////FIFTH RUNE
 
 /obj/effect/rune/proc/emp(var/U,var/range_red) //range_red - var which determines by which number to reduce the default emp range, U is the source loc, needed because of talisman emps which are held in hand at the moment of using and that apparently messes things up -- Urist
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/emp() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/emp() called tick#: [world.time]")
 	if(istype(src,/obj/effect/rune))
 		usr.say("Ta'gh fara[pick("'","`")]qha fel d'amar det!")
 	else
@@ -367,7 +367,7 @@
 /////////////////////////////////////////SIXTH RUNE
 
 /obj/effect/rune/proc/drain()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/drain() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/drain() called tick#: [world.time]")
 	var/drain = 0
 	for(var/obj/effect/rune/R in rune_list)
 		if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["self"])
@@ -416,7 +416,7 @@
 /////////////////////////////////////////SEVENTH RUNE
 
 /obj/effect/rune/proc/seer()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/seer() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/seer() called tick#: [world.time]")
 	if(usr.loc==src.loc)
 		if(usr.seer==1)
 			usr.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium viortia.")
@@ -440,7 +440,7 @@
 /////////////////////////////////////////EIGHTH RUNE
 
 /obj/effect/rune/proc/raise()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/raise() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/raise() called tick#: [world.time]")
 	var/mob/living/carbon/human/corpse_to_raise
 	var/mob/living/carbon/human/body_to_sacrifice
 
@@ -525,7 +525,7 @@
 /////////////////////////////////////////NINETH RUNE
 
 /obj/effect/rune/proc/obscure(var/rad)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/obscure() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/obscure() called tick#: [world.time]")
 	var/S=0
 	for(var/obj/effect/rune/R in orange(rad,src))
 		if(R!=src)
@@ -554,7 +554,7 @@
 /////////////////////////////////////////TENTH RUNE
 
 /obj/effect/rune/proc/ajourney() //some bits copypastaed from admin tools - Urist
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/ajourney() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/ajourney() called tick#: [world.time]")
 	if(usr.loc==src.loc)
 		var/mob/living/carbon/human/L = usr
 		usr.say("Fwe[pick("'","`")]sh mah erl nyag r'ya!")
@@ -577,7 +577,7 @@
 /////////////////////////////////////////ELEVENTH RUNE
 
 /obj/effect/rune/proc/manifest()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/manifest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/manifest() called tick#: [world.time]")
 	var/obj/effect/rune/this_rune = src
 	src = null
 	if(usr.loc!=this_rune.loc)
@@ -659,7 +659,7 @@
 /////////////////////////////////////////TWELFTH RUNE
 
 /obj/effect/rune/proc/talisman()//only tome, communicate, hide, reveal, emp, teleport, deafen, blind, stun and armor runes can be imbued
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/talisman() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/talisman() called tick#: [world.time]")
 	var/obj/item/weapon/paper/newtalisman
 	var/unsuitable_newtalisman = 0
 	for(var/obj/item/weapon/paper/P in src.loc)
@@ -745,7 +745,7 @@
 /////////////////////////////////////////THIRTEENTH RUNE
 
 /obj/effect/rune/proc/mend()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/mend() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/mend() called tick#: [world.time]")
 	var/mob/living/user = usr
 	src = null
 	user.say("Uhrast ka'hfa heldsagen ver[pick("'","`")]lot!")
@@ -766,7 +766,7 @@
 
 // returns 0 if the rune is not used. returns 1 if the rune is used.
 /obj/effect/rune/proc/communicate()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/communicate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/communicate() called tick#: [world.time]")
 	. = 1 // Default output is 1. If the rune is deleted it will return 1
 	var/mob/user = usr
 	var/input = stripped_input(user, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
@@ -798,7 +798,7 @@
 /////////////////////////////////////////FIFTEENTH RUNE
 
 /obj/effect/rune/proc/sacrifice()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/sacrifice() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/sacrifice() called tick#: [world.time]")
 	var/list/mob/living/cultsinrange = list()
 	var/ritualresponse = ""
 	var/sacrificedone = 0
@@ -956,7 +956,7 @@
 /////////////////////////////////////////SIXTEENTH RUNE
 
 /obj/effect/rune/proc/revealrunes(var/obj/W as obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/revealrunes() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/revealrunes() called tick#: [world.time]")
 	var/go=0
 	var/rad
 	var/S=0
@@ -1001,7 +1001,7 @@
 /////////////////////////////////////////SEVENTEENTH RUNE
 
 /obj/effect/rune/proc/wall()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/wall() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/wall() called tick#: [world.time]")
 	usr.say("Khari[pick("'","`")]d! Eske'te tannin!")
 	src.density = !src.density
 	var/mob/living/user = usr
@@ -1015,7 +1015,7 @@
 /////////////////////////////////////////EIGHTTEENTH RUNE
 
 /obj/effect/rune/proc/freedom()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/freedom() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/freedom() called tick#: [world.time]")
 	var/mob/living/user = usr
 	var/list/mob/living/carbon/cultists = new
 	for(var/datum/mind/H in ticker.mode.cult)
@@ -1107,7 +1107,7 @@
 /////////////////////////////////////////NINETEENTH RUNE
 
 /obj/effect/rune/proc/cultsummon()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/cultsummon() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/cultsummon() called tick#: [world.time]")
 	var/mob/living/user = usr
 	var/list/mob/living/carbon/cultists = new
 	for(var/datum/mind/H in ticker.mode.cult)
@@ -1159,7 +1159,7 @@
 /////////////////////////////////////////TWENTIETH RUNES
 
 /obj/effect/rune/proc/deafen()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/deafen() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/deafen() called tick#: [world.time]")
 	var/affected = 0
 	for(var/mob/living/carbon/C in range(7,src))
 		if (iscultist(C))
@@ -1182,7 +1182,7 @@
 		return fizzle()
 
 /obj/effect/rune/proc/blind()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/blind() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/blind() called tick#: [world.time]")
 	var/affected = 0
 	for(var/mob/living/carbon/C in viewers(src))
 		if (iscultist(C))
@@ -1209,7 +1209,7 @@
 
 
 /obj/effect/rune/proc/bloodboil() //cultists need at least one DANGEROUS rune. Even if they're all stealthy.
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/bloodboil() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/bloodboil() called tick#: [world.time]")
 /*
 			var/list/mob/living/carbon/cultists = new
 			for(var/datum/mind/H in ticker.mode.cult)
@@ -1250,7 +1250,7 @@
 // WIP rune, I'll wait for Rastaf0 to add limited blood.
 
 /obj/effect/rune/proc/burningblood()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/burningblood() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/burningblood() called tick#: [world.time]")
 	var/culcount = 0
 	for(var/mob/living/carbon/C in orange(1,src))
 		if(iscultist(C) && !C.stat)
@@ -1279,7 +1279,7 @@
 //////////             Rune 24 (counting burningblood, which kinda doesnt work yet.)
 
 /obj/effect/rune/proc/runestun(var/mob/living/T as mob)///When invoked as rune, flash and stun everyone around.
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/runestun() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/runestun() called tick#: [world.time]")
 	usr.say("Fuu ma[pick("'","`")]jin!")
 	for(var/mob/living/L in viewers(src))
 
@@ -1306,7 +1306,7 @@
 /////////////////////////////////////////TWENTY-FIFTH RUNE
 
 /obj/effect/rune/proc/armor()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/armor() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/rune/proc/armor() called tick#: [world.time]")
 	var/mob/living/user = usr
 	if(!istype(src,/obj/effect/rune))
 		usr.whisper("Sa tatha najin")

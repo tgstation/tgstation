@@ -4,7 +4,7 @@ atom/movable/var/pressure_resistance = 5
 atom/movable/var/last_forced_movement = 0
 
 atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/movable/proc/experience_pressure_difference() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datom/movable/proc/experience_pressure_difference() called tick#: [world.time]")
 	if(last_forced_movement >= air_master.current_cycle)
 		return 0
 	else if(!anchored)
@@ -55,7 +55,7 @@ turf
 	var/check_delay = 0  //number of ticks between updates
 
 	proc/high_pressure_movements()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/high_pressure_movements() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/high_pressure_movements() called tick#: [world.time]")
 		if(reporting_pressure_difference)
 			world << "pressure_difference = [pressure_difference]; pressure_direction = [pressure_direction]"
 		for(var/atom/movable/in_tile in src)
@@ -64,7 +64,7 @@ turf
 		pressure_difference = 0
 
 	proc/consider_pressure_difference(connection_difference, connection_direction)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/consider_pressure_difference() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/consider_pressure_difference() called tick#: [world.time]")
 		if(connection_difference < 0)
 			connection_difference = -connection_difference
 			connection_direction = turn(connection_direction,180)
@@ -76,7 +76,7 @@ turf
 			pressure_direction = connection_direction
 
 turf/simulated/proc/consider_pressure_difference_space(connection_difference)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/simulated/proc/consider_pressure_difference_space() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \turf/simulated/proc/consider_pressure_difference_space() called tick#: [world.time]")
 	for(var/direction in cardinal)
 		if(direction&group_border)
 			if(istype(get_step(src,direction),/turf/space))
@@ -111,7 +111,7 @@ turf/simulated
 	var/tmp/being_superconductive = 0
 
 	proc/update_visuals(datum/gas_mixture/model)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_visuals() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_visuals() called tick#: [world.time]")
 		overlays.len = 0
 
 		var/siding_icon_state = return_siding_icon_state()
@@ -192,7 +192,7 @@ turf/simulated
 		else return ..()
 
 	proc/archive()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/archive() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/archive() called tick#: [world.time]")
 		if(air) //For open space like floors
 			air.archive()
 
@@ -200,11 +200,11 @@ turf/simulated
 		archived_cycle = air_master.current_cycle
 
 	proc/share_air_with_tile(turf/simulated/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/share_air_with_tile() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/share_air_with_tile() called tick#: [world.time]")
 		return air.share(T.air)
 
 	proc/mimic_air_with_tile(turf/T)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mimic_air_with_tile() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mimic_air_with_tile() called tick#: [world.time]")
 		return air.mimic(T)
 
 	return_air()
@@ -238,7 +238,7 @@ turf/simulated
 			return ..()
 
 	proc/update_air_properties()//OPTIMIZE
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_air_properties() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_air_properties() called tick#: [world.time]")
 		air_check_directions = 0
 
 		for(var/direction in cardinal)
@@ -288,7 +288,7 @@ turf/simulated
 			processing = 0
 
 	proc/process_cell()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_cell() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_cell() called tick#: [world.time]")
 		//this proc does all the heavy lifting for individual tile processing
 		//it shares with all of its neighbors, spreads fire, calls superconduction
 		//and doesn't afraid of anything
@@ -395,7 +395,7 @@ turf/simulated
 		return 1
 
 	proc/super_conduct()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/super_conduct() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/super_conduct() called tick#: [world.time]")
 		var/conductivity_directions = 0
 		if(blocks_air)
 			//Does not participate in air exchange, so will conduct heat across all four borders at this time
@@ -526,7 +526,7 @@ turf/simulated
 				return 0
 
 	proc/mimic_temperature_solid(turf/model, conduction_coefficient)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mimic_temperature_solid() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/mimic_temperature_solid() called tick#: [world.time]")
 		var/delta_temperature = (temperature_archived - model.temperature)
 		if((heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
@@ -535,7 +535,7 @@ turf/simulated
 			temperature -= heat/heat_capacity
 
 	proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/share_temperature_mutual_solid() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/share_temperature_mutual_solid() called tick#: [world.time]")
 		var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 		if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
 
@@ -547,7 +547,7 @@ turf/simulated
 
 	proc/consider_superconductivity(starting)
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/consider_superconductivity() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/consider_superconductivity() called tick#: [world.time]")
 
 		if(being_superconductive || !thermal_conductivity)
 			return 0
@@ -566,7 +566,7 @@ turf/simulated
 		air_master.active_super_conductivity += src
 
 	proc/reset_delay()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/reset_delay() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/reset_delay() called tick#: [world.time]")
 		//sets this turf to process quickly again
 		next_check=0
 		check_delay= -5 //negative numbers mean a mandatory quick-update period

@@ -25,7 +25,7 @@
 	var/health = 100
 
 /obj/structure/table/proc/update_adjacent()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/update_adjacent() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/update_adjacent() called tick#: [world.time]")
 	for(var/direction in alldirs)
 		if(locate(/obj/structure/table, get_step(src, direction)))
 			var/obj/structure/table/T = locate(/obj/structure/table, get_step(src, direction))
@@ -47,19 +47,19 @@
 	..()
 
 /obj/structure/table/proc/destroy()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/destroy() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/destroy() called tick#: [world.time]")
 	new parts(loc)
 	density = 0
 	qdel(src)
 
 /obj/structure/rack/proc/destroy()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/rack/proc/destroy() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/rack/proc/destroy() called tick#: [world.time]")
 	new parts(loc)
 	density = 0
 	qdel(src)
 
 /obj/structure/table/proc/can_disassemble()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/can_disassemble() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/can_disassemble() called tick#: [world.time]")
 	return 1
 
 /obj/structure/table/update_icon()
@@ -296,7 +296,7 @@
 
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/check_cover() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/check_cover() called tick#: [world.time]")
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
 	if (get_dist(P.starting, loc) <= 1) //Tables won't help you if people are THIS close
 		return 1
@@ -383,7 +383,7 @@
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/straight_table_check() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/straight_table_check() called tick#: [world.time]")
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
 		T = locate() in get_step(src.loc,turn(direction,angle))
@@ -399,7 +399,7 @@
 	return T.straight_table_check(direction)
 
 /obj/structure/table/verb/can_touch(var/mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/table/verb/can_touch()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/table/verb/can_touch()  called tick#: [world.time]")
 	if (!user)
 		return 0
 	if (user.stat)	//zombie goasts go away
@@ -414,7 +414,7 @@
 	set desc = "Flips a non-reinforced table"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/table/verb/do_flip()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/table/verb/do_flip()  called tick#: [world.time]")
 	if(ismouse(usr))
 		return
 	if (!can_touch(usr))
@@ -426,7 +426,7 @@
 		return
 
 /obj/structure/table/proc/unflipping_check(var/direction)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/unflipping_check() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/unflipping_check() called tick#: [world.time]")
 	for(var/mob/M in oview(src,0))
 		return 0
 
@@ -448,7 +448,7 @@
 	set desc = "Puts flipped table back"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/do_put() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/do_put() called tick#: [world.time]")
 
 	if (!can_touch(usr))
 		return
@@ -459,7 +459,7 @@
 	unflip()
 
 /obj/structure/table/proc/flip(var/direction)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/flip() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/flip() called tick#: [world.time]")
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
@@ -487,7 +487,7 @@
 	return 1
 
 /obj/structure/table/proc/unflip()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/unflip() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/unflip() called tick#: [world.time]")
 	verbs -=/obj/structure/table/proc/do_put
 	verbs +=/obj/structure/table/verb/do_flip
 

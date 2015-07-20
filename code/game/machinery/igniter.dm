@@ -42,7 +42,7 @@ var/global/list/igniters = list()
 	return 1
 
 /obj/machinery/igniter/proc/toggle_state()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/igniter/proc/toggle_state() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/igniter/proc/toggle_state() called tick#: [world.time]")
 	use_power(50)
 	src.on = !( src.on )
 	src.icon_state = text("igniter[]", src.on)
@@ -139,7 +139,7 @@ var/global/list/igniters = list()
 		return
 
 /obj/machinery/sparker/proc/spark()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sparker/proc/spark() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/sparker/proc/spark() called tick#: [world.time]")
 	if (!(powered()))
 		return
 

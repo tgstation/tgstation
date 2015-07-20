@@ -157,7 +157,7 @@
 		set name = "Toggle Coat Buttons"
 		set category = "Object"
 		set src in usr
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/toggle()  called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/toggle()  called tick#: [world.time]")
 
 		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return 0
@@ -188,7 +188,7 @@
 		set name = "Toggle Jacket Buttons"
 		set category = "Object"
 		set src in usr
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/toggle()  called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/toggle()  called tick#: [world.time]")
 
 		if(!usr.canmove || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 			return 0

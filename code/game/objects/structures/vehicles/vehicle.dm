@@ -40,11 +40,11 @@
 	var/movement_delay = 0 //Speed of the vehicle decreases as this value increases. Anything above 6 is slow, 1 is fast and 0 is very fast
 
 /obj/structure/stool/bed/chair/vehicle/proc/getMovementDelay()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/getMovementDelay() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/getMovementDelay() called tick#: [world.time]")
 	return movement_delay
 
 /obj/structure/stool/bed/chair/vehicle/proc/delayNextMove(var/delay, var/additive=0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/delayNextMove() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/delayNextMove() called tick#: [world.time]")
 	move_delayer.delayNext(delay,additive)
 
 /obj/structure/stool/bed/chair/vehicle/New()
@@ -84,7 +84,7 @@
 			user << "You don't need a key."
 
 /obj/structure/stool/bed/chair/vehicle/proc/check_key(var/mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/check_key() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/check_key() called tick#: [world.time]")
 	if(!keytype)
 		return 1
 	if(mykey)
@@ -125,7 +125,7 @@
 	handle_rotation()
 
 /obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove(var/check_drift = 0, mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove() called tick#: [world.time]")
 	if(can_spacemove && buckled_mob)
 		return 1
 	//First check to see if we can do things
@@ -225,7 +225,7 @@
 			buckled_mob.forceMove(loc)
 
 /obj/structure/stool/bed/chair/vehicle/proc/can_buckle(mob/M, mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/can_buckle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/can_buckle() called tick#: [world.time]")
 	if(M != user || !ishuman(user) || !Adjacent(user) || user.restrained() || user.lying || user.stat || user.buckled || destroyed)
 		return 0
 	return 1
@@ -271,7 +271,7 @@
 	update_mob()
 
 /obj/structure/stool/bed/chair/vehicle/proc/update_mob()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/update_mob() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/update_mob() called tick#: [world.time]")
 	if(buckled_mob)
 		buckled_mob.dir = dir
 		switch(dir)
@@ -330,7 +330,7 @@
 		HealthCheck()
 
 /obj/structure/stool/bed/chair/vehicle/proc/HealthCheck()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/HealthCheck() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/HealthCheck() called tick#: [world.time]")
 	if(health > max_health) health = max_health
 	if(health <= 0 && !destroyed)
 		die()
@@ -346,7 +346,7 @@
 	HealthCheck()
 
 /obj/structure/stool/bed/chair/vehicle/proc/die() //called when health <= 0
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/die() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/die() called tick#: [world.time]")
 	destroyed = 1
 	density = 0
 	if(buckled_mob)

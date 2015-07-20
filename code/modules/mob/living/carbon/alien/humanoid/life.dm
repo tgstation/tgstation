@@ -67,7 +67,7 @@
 
 /mob/living/carbon/alien/humanoid
 	proc/handle_disabilities()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_disabilities() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_disabilities() called tick#: [world.time]")
 		if(disabilities & EPILEPSY)
 			if((prob(1) && paralysis < 10))
 				src << "<span class='warning'>You have a seizure !</span>"
@@ -90,7 +90,7 @@
 
 
 	proc/breathe()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/breathe() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/breathe() called tick#: [world.time]")
 		if(reagents)
 			if(reagents.has_reagent("lexorin")) return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
@@ -150,7 +150,7 @@
 
 
 	proc/get_breath_from_internal(volume_needed)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_breath_from_internal() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_breath_from_internal() called tick#: [world.time]")
 		if(internal)
 			if(!contents.Find(internal))
 				internal = null
@@ -166,7 +166,7 @@
 		return null
 
 	proc/handle_breath(datum/gas_mixture/breath)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_breath() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_breath() called tick#: [world.time]")
 		if((status_flags & GODMODE) || (flags & INVULNERABLE))
 			return
 
@@ -206,7 +206,7 @@
 		return 1
 
 	proc/adjust_body_temperature(current, loc_temp, boost)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjust_body_temperature() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjust_body_temperature() called tick#: [world.time]")
 		var/temperature = current
 		var/difference = abs(current-loc_temp)	//get difference
 		var/increments// = difference/10			//find how many increments apart they are
@@ -225,7 +225,7 @@
 
 	/*
 	proc/get_thermal_protection()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_thermal_protection() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/get_thermal_protection() called tick#: [world.time]")
 		var/thermal_protection = 1.0
 		//Handle normal clothing
 		if(head && (head.body_parts_covered & HEAD))
@@ -246,7 +246,7 @@
 		return thermal_protection
 
 	proc/add_fire_protection(var/temp)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_fire_protection() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/add_fire_protection() called tick#: [world.time]")
 		var/fire_prot = 0
 		if(head)
 			if(head.protective_temperature > temp)
@@ -264,7 +264,7 @@
 
 	proc/handle_chemicals_in_body()
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_chemicals_in_body() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_chemicals_in_body() called tick#: [world.time]")
 
 		if(reagents) reagents.metabolize(src)
 
@@ -304,7 +304,7 @@
 
 
 	proc/handle_regular_status_updates()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_status_updates() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_status_updates() called tick#: [world.time]")
 		updatehealth()
 
 		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
@@ -385,7 +385,7 @@
 
 	proc/handle_regular_hud_updates()
 
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_hud_updates() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_regular_hud_updates() called tick#: [world.time]")
 
 		if (stat == 2 || (M_XRAY in mutations))
 			sight |= SEE_TURFS
@@ -455,7 +455,7 @@
 		return 1
 
 	proc/handle_stomach()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_stomach() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/handle_stomach() called tick#: [world.time]")
 		spawn(0)
 			for(var/mob/living/M in stomach_contents)
 				if(M.loc != src)

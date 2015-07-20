@@ -8,7 +8,7 @@
 	subspace_transmission = 1
 
 /obj/item/device/radio/borg/proc/insert_key(obj/item/device/encryptionkey/key)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/borg/proc/insert_key() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/borg/proc/insert_key() called tick#: [world.time]")
 	keyslot = key
 	recalculateChannels()
 
@@ -49,7 +49,7 @@
 	return
 
 /obj/item/device/radio/borg/proc/recalculateChannels()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/borg/proc/recalculateChannels() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/radio/borg/proc/recalculateChannels() called tick#: [world.time]")
 	src.channels = list()
 	src.syndie = 0
 

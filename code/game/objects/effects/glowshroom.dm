@@ -44,7 +44,7 @@
 		// Spread() - Methinks this is broken - N3X
 
 /obj/effect/glowshroom/proc/Spread()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/glowshroom/proc/Spread() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/glowshroom/proc/Spread() called tick#: [world.time]")
 	//set background = 1
 	var/spreaded = 1
 
@@ -93,7 +93,7 @@
 		sleep(delay)
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/glowshroom/proc/CalcDir() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/glowshroom/proc/CalcDir() called tick#: [world.time]")
 	//set background = 1
 	var/direction = 16
 
@@ -155,6 +155,6 @@
 		CheckEndurance()
 
 /obj/effect/glowshroom/proc/CheckEndurance()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/glowshroom/proc/CheckEndurance() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/glowshroom/proc/CheckEndurance() called tick#: [world.time]")
 	if(endurance <= 0)
 		del(src)

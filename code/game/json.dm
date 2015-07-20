@@ -4,7 +4,7 @@ var/dmepath = "/home/bay12/git/vgstation13.dme"
 var/makejson = 1 //temp
 proc/makejson()
 
-	writepanic("[__FILE__].[__LINE__] \\/proc/makejson() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/makejson() called tick#: [world.time]")
 
 	if(!makejson)
 		return
@@ -44,7 +44,7 @@ proc/makejson()
 	fcopy("info.json","[jsonpath]/info.json")
 
 /proc/switchmap(newmap,newpath)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/switchmap() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/switchmap() called tick#: [world.time]")
 	var/oldmap
 	var/obj/mapinfo/M = locate()
 
@@ -90,17 +90,17 @@ obj/mapinfo
 	var/mapname = "thismap"
 	var/decks = 4
 proc/GetMapInfo()
-	writepanic("[__FILE__].[__LINE__] \\/proc/GetMapInfo() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/GetMapInfo() called tick#: [world.time]")
 //	var/obj/mapinfo/M = locate()
 //	Just removing these to try and fix the occasional JSON -> WORLD issue.
 //	world << M.name
 //	world << M.mapname
 client/proc/ChangeMap(var/X as text)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/ChangeMap() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/ChangeMap() called tick#: [world.time]")
 	set name = "Change Map"
 	set category  = "Admin"
 	switchmap(X,X)
 proc/send2adminirc(channel,msg)
-	writepanic("[__FILE__].[__LINE__] \\/proc/send2adminirc() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/send2adminirc() called tick#: [world.time]")
 	world << channel << " "<< msg
 	shell("python nudge.py '[channel]' [msg]")

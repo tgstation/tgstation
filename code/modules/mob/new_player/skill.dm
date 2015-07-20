@@ -156,7 +156,7 @@ datum/attribute/var
 
 
 proc/setup_skills()
-	writepanic("[__FILE__].[__LINE__] \\/proc/setup_skills() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/setup_skills() called tick#: [world.time]")
 	if(SKILLS == null)
 		SKILLS = list()
 		for(var/T in (typesof(/datum/skill)-/datum/skill))
@@ -169,7 +169,7 @@ proc/setup_skills()
 
 
 mob/living/carbon/human/proc/GetSkillClass(points)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/human/proc/GetSkillClass() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/carbon/human/proc/GetSkillClass() called tick#: [world.time]")
 	// skill classes describe how your character compares in total points
 	var/original_points = points
 	points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
@@ -196,7 +196,7 @@ mob/living/carbon/human/proc/GetSkillClass(points)
 
 
 proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
-	writepanic("[__FILE__].[__LINE__] \\/proc/show_skill_window() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/show_skill_window() called tick#: [world.time]")
 	if(!istype(M)) return
 	if(SKILLS == null)
 		setup_skills()
@@ -250,6 +250,6 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 mob/living/carbon/human/verb/show_skills()
 	set category = "IC"
 	set name = "Show Own Skills"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/living/carbon/human/verb/show_skills()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\mob/living/carbon/human/verb/show_skills()  called tick#: [world.time]")
 
 	show_skill_window(src, src)

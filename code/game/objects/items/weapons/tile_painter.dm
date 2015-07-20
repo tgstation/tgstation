@@ -29,7 +29,7 @@
 	src.adirs = padir
 
 /datum/paint_info/proc/validate(var/turf/simulated/floor/test)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paint_info/proc/validate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paint_info/proc/validate() called tick#: [world.time]")
 	//This is used to give the user a hint that he's a massive retard for using a floor painter on the carpet
 	switch(ftype)
 		if(PAINT_FLOOR) //why is it named plasteel anyway?
@@ -47,7 +47,7 @@
 	return 1
 
 /datum/paint_info/proc/apply(var/turf/simulated/floor/T, var/pname, var/pdesc)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paint_info/proc/apply() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/paint_info/proc/apply() called tick#: [world.time]")
 	//warning("[type]: Running /datum/paint_info/proc/apply.")
 	T.icon_state = icon_state
 	T.icon_regular_floor = icon_state	//required to 'save' the new floor type so if someone crowbars it and puts it back it won't revert to the original state
@@ -330,7 +330,7 @@ var/global/list/paint_variants = list(
 	show_menu(user)
 
 /obj/item/weapon/tile_painter/proc/render_tile(var/icon/basestate, var/mob/user, var/datum/paint_info/I, var/cdir=SOUTH)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/render_tile() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/render_tile() called tick#: [world.time]")
 	// Send user the image
 	user << browse_rsc(new /icon(basestate, dir=cdir), "[I.icon_state][cdir].png")
 	// Determine if we're actually selecting this
@@ -343,7 +343,7 @@ var/global/list/paint_variants = list(
 	return "<a href=\"?src=\ref[src];set_dir=[cdir];set_state=[I.icon_state];set_type=\ref[I]\"[class]><img src='[I.icon_state][cdir].png'></a>"
 
 /obj/item/weapon/tile_painter/proc/populate_selection(mob/user as mob, var/datum/paint_info/I)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/populate_selection() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/populate_selection() called tick#: [world.time]")
 	var/data = ""
 	var/icon/basestate = new /icon(I.icon, I.icon_state)
 	switch(I.adirs)
@@ -359,7 +359,7 @@ var/global/list/paint_variants = list(
 	return data
 
 /obj/item/weapon/tile_painter/proc/show_menu(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/show_menu() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/show_menu() called tick#: [world.time]")
 	if(!user || !src) return 0
 
 	var/data = {"<h2>Tile Painter</h2>
@@ -486,5 +486,5 @@ var/global/list/paint_variants = list(
 	return 0
 
 /obj/item/weapon/tile_painter/proc/activate()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/activate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tile_painter/proc/activate() called tick#: [world.time]")
 	playsound(get_turf(src), 'sound/effects/extinguish.ogg', 50, 1)	//pssshtt

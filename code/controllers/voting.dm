@@ -27,11 +27,11 @@ var/global/datum/controller/vote/vote = new()
 
 		vote = src
 //datum/controller/vote/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//datum/controller/vote/proc/ui_interact() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\//datum/controller/vote/proc/ui_interact() called tick#: [world.time]")
 //	return
 
 /datum/controller/vote/proc/process()	//called by master_controller
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/process() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/process() called tick#: [world.time]")
 	if(mode)
 		// No more change mode votes after the game has started.
 		// 3 is GAME_STATE_PLAYING, but that #define is undefined for some reason
@@ -56,7 +56,7 @@ var/global/datum/controller/vote/vote = new()
 					if(C && C.mob)
 						ui_interact(C.mob, force_open = 0)
 /datum/controller/vote/proc/reset()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/reset() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/reset() called tick#: [world.time]")
 	initiator = null
 	time_remaining = 0
 	mode = null
@@ -67,7 +67,7 @@ var/global/datum/controller/vote/vote = new()
 	current_votes.len = 0
 
 /datum/controller/vote/proc/get_result()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/get_result() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/get_result() called tick#: [world.time]")
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
@@ -116,7 +116,7 @@ var/global/datum/controller/vote/vote = new()
 	return .
 
 /datum/controller/vote/proc/announce_result()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/announce_result() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/announce_result() called tick#: [world.time]")
 	var/list/winners = get_result()
 	var/text
 	var/feedbackanswer
@@ -142,7 +142,7 @@ var/global/datum/controller/vote/vote = new()
 	return .
 
 /datum/controller/vote/proc/result()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/result() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/result() called tick#: [world.time]")
 	. = announce_result()
 	var/restart = 0
 	if(.)
@@ -184,7 +184,7 @@ var/global/datum/controller/vote/vote = new()
 	return .
 
 /datum/controller/vote/proc/submit_vote(var/ckey, var/vote)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/submit_vote() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/submit_vote() called tick#: [world.time]")
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -198,7 +198,7 @@ var/global/datum/controller/vote/vote = new()
 	return 0
 
 /datum/controller/vote/proc/initiate_vote(var/vote_type, var/initiator_key, var/popup = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/initiate_vote() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/vote/proc/initiate_vote() called tick#: [world.time]")
 	if(!mode)
 		if(started_time != null && !check_rights(R_ADMIN))
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -354,6 +354,6 @@ var/global/datum/controller/vote/vote = new()
 /mob/verb/vote()
 	set category = "OOC"
 	set name = "Vote"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/vote()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/verb/vote()  called tick#: [world.time]")
 	if(vote)
 		vote.ui_interact(usr)

@@ -6,7 +6,7 @@ var/global/list/gene_tag_masks = list()   // Gene obfuscation for delicious tria
 	set category = "Debug"
 	set name = "Show Plant Genes"
 	set desc = "Prints the round's plant gene masks."
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/show_plant_genes() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/show_plant_genes() called tick#: [world.time]")
 
 	if(!holder)	return
 
@@ -24,7 +24,7 @@ var/global/list/gene_tag_masks = list()   // Gene obfuscation for delicious tria
 
 proc/populate_seed_list()
 
-	writepanic("[__FILE__].[__LINE__] \\/proc/populate_seed_list() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] \\/proc/populate_seed_list() called tick#: [world.time]")
 
 	// Populate the global seed datum list.
 	for(var/type in typesof(/datum/seed)-/datum/seed)
@@ -119,7 +119,7 @@ proc/populate_seed_list()
 //Creates a random seed. MAKE SURE THE LINE HAS DIVERGED BEFORE THIS IS CALLED.
 /datum/seed/proc/randomize()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/randomize() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/randomize() called tick#: [world.time]")
 
 	roundstart = 0
 	seed_name = "strange plant"     // TODO: name generator.
@@ -313,14 +313,14 @@ proc/populate_seed_list()
 
 //Returns a key corresponding to an entry in the global seed list.
 /datum/seed/proc/get_mutant_variant()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/get_mutant_variant() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/get_mutant_variant() called tick#: [world.time]")
 	if(!mutants || !mutants.len || immutable > 0) return 0
 	return pick(mutants)
 
 //Mutates the plant overall (randomly).
 /datum/seed/proc/mutate(var/degree,var/turf/source_turf)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/mutate() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/mutate() called tick#: [world.time]")
 
 	if(!degree || immutable > 0) return
 
@@ -396,7 +396,7 @@ proc/populate_seed_list()
 //Mutates a specific trait/set of traits.
 /datum/seed/proc/apply_gene(var/datum/plantgene/gene)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/apply_gene() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/apply_gene() called tick#: [world.time]")
 
 	if(!gene || !gene.values || immutable > 0) return
 
@@ -505,7 +505,7 @@ proc/populate_seed_list()
 //Returns a list of the desired trait values.
 /datum/seed/proc/get_gene(var/genetype)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/get_gene() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/get_gene() called tick#: [world.time]")
 
 	if(!genetype) return 0
 
@@ -577,7 +577,7 @@ proc/populate_seed_list()
 //Place the plant products at the feet of the user.
 /datum/seed/proc/harvest(var/mob/user,var/yield_mod,var/harvest_sample)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/harvest() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/harvest() called tick#: [world.time]")
 
 	if(!user)
 		return
@@ -647,7 +647,7 @@ proc/populate_seed_list()
 // be put into the global datum list until the product is harvested, though.
 /datum/seed/proc/diverge(var/modified)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/diverge() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/seed/proc/diverge() called tick#: [world.time]")
 
 	if(immutable > 0) return
 

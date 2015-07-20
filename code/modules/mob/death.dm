@@ -1,7 +1,7 @@
 //This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
 /mob/proc/gib()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/gib() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/gib() called tick#: [world.time]")
 	death(1)
 	monkeyizing = 1
 	canmove = 0
@@ -20,7 +20,7 @@
 //Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
 //Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 /mob/proc/dust()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dust() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dust() called tick#: [world.time]")
 	death(1)
 	monkeyizing = 1
 	canmove = 0
@@ -36,7 +36,7 @@
 
 
 /mob/proc/death(gibbed)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/death() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/death() called tick#: [world.time]")
 	timeofdeath = world.time
 
 	living_mob_list -= src

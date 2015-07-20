@@ -111,7 +111,7 @@ var/global/list/blood_list = list()
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/proc/dry() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/proc/dry() called tick#: [world.time]")
 	name = "dried [src.name]"
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)
@@ -237,7 +237,7 @@ var/global/list/blood_list = list()
 
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(var/list/directions)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/gibs/proc/streak() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/gibs/proc/streak() called tick#: [world.time]")
 	spawn (0)
 		var/direction = pick(directions)
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)

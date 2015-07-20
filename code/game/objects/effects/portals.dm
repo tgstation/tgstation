@@ -31,7 +31,7 @@
 	return
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/portal/proc/teleport() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/portal/proc/teleport() called tick#: [world.time]")
 	if(istype(M, /obj/effect)) //sparks don't teleport
 		return
 	if (M.anchored&&istype(M, /obj/mecha))

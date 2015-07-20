@@ -47,7 +47,7 @@
 
 
 /obj/item/device/material_synth/proc/create_material(mob/user, var/material)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/material_synth/proc/create_material() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/material_synth/proc/create_material() called tick#: [world.time]")
 	var/obj/item/stack/sheet/material_type = material
 
 	if(isrobot(user))
@@ -192,7 +192,7 @@
 	create_material(user, active_material)
 
 /obj/item/device/material_synth/proc/TakeCost(var/spawned, var/modifier, mob/user)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/material_synth/proc/TakeCost() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/material_synth/proc/TakeCost() called tick#: [world.time]")
 	if(spawned)
 		matter -= round(spawned * modifier)
 

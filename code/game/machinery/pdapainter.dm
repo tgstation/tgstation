@@ -131,7 +131,7 @@ Feel free to do whatever with this if you think it lacks.
 	set name = "Eject PDA"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/pdapainter/verb/ejectpda()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/pdapainter/verb/ejectpda()  called tick#: [world.time]")
 
 	if(!ishuman(usr))
 		return
@@ -147,7 +147,7 @@ Feel free to do whatever with this if you think it lacks.
 	set name = "Print PDA"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/pdapainter/verb/printpda()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/pdapainter/verb/printpda()  called tick#: [world.time]")
 
 	if(!ishuman(usr))
 		return

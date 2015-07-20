@@ -3,18 +3,18 @@
 	var/atom/movable/lighting_overlay/lighting_overlay
 
 /turf/proc/reconsider_lights()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/reconsider_lights() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/reconsider_lights() called tick#: [world.time]")
 	for(var/datum/light_source/L in affecting_lights)
 		L.force_update()
 
 /turf/proc/lighting_clear_overlays()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_clear_overlays() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_clear_overlays() called tick#: [world.time]")
 //	testing("Clearing lighting overlays on \the [src]")
 	if(lighting_overlay)
 		returnToPool(lighting_overlay)
 
 /turf/proc/lighting_build_overlays()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_build_overlays() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_build_overlays() called tick#: [world.time]")
 	if(lighting_overlay)
 		return
 
@@ -25,7 +25,7 @@
 		all_lighting_overlays |= O
 
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/get_lumcount() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/get_lumcount() called tick#: [world.time]")
 	if(!lighting_overlay) //We're not dynamic, whatever, return 50% lighting.
 		return 0.5
 
@@ -39,7 +39,7 @@
 
 //Proc I made to dick around with update lumcount.
 /turf/proc/update_lumcount(delta_r, delta_g, delta_b)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/update_lumcount() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/update_lumcount() called tick#: [world.time]")
 	if(lighting_overlay)
 		lighting_overlay.update_lumcount(delta_r, delta_g, delta_b)
 
@@ -57,5 +57,5 @@
 
 //Testing proc like update_lumcount.
 /turf/proc/update_overlay()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/update_overlay() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/update_overlay() called tick#: [world.time]")
 	lighting_overlay.update_overlay()

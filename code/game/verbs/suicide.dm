@@ -2,7 +2,7 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/human/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/human/verb/suicide()  called tick#: [world.time]")
 
 	if (stat == DEAD)
 		src << "You're already dead!"
@@ -91,7 +91,7 @@
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/brain/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/brain/verb/suicide()  called tick#: [world.time]")
 
 	if (stat == 2)
 		src << "You're already dead!"
@@ -117,7 +117,7 @@
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/monkey/verb/suicide()  called tick#: [world.time]")
 
 	if (stat == 2)
 		src << "You're already dead!"
@@ -145,7 +145,7 @@
 
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/ai/verb/suicide()  called tick#: [world.time]")
 
 	if (stat == 2)
 		src << "You're already dead!"
@@ -166,7 +166,7 @@
 
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/robot/verb/suicide()  called tick#: [world.time]")
 
 	if (stat == 2)
 		src << "You're already dead!"
@@ -190,7 +190,7 @@
 	set category = "pAI Commands"
 	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
 	set name = "pAI Suicide"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/pai/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/silicon/pai/verb/suicide()  called tick#: [world.time]")
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
 		var/obj/item/device/paicard/card = loc
@@ -204,7 +204,7 @@
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/alien/humanoid/verb/suicide()  called tick#: [world.time]")
 
 	if (stat == 2)
 		src << "You're already dead!"
@@ -226,7 +226,7 @@
 
 /mob/living/carbon/slime/verb/suicide()
 	set hidden = 1
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/slime/verb/suicide()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/carbon/slime/verb/suicide()  called tick#: [world.time]")
 	if (stat == 2)
 		src << "You're already dead!"
 		return

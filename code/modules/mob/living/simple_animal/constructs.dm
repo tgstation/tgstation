@@ -337,7 +337,7 @@
 
 ////////////////Glow//////////////////
 /mob/living/simple_animal/construct/proc/updateicon()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/construct/proc/updateicon() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/construct/proc/updateicon() called tick#: [world.time]")
 	overlays = 0
 	var/overlay_layer = LIGHTING_LAYER+1
 	if(layer != MOB_LAYER)
@@ -350,7 +350,7 @@
 
 /*
 /client/proc/summon_cultist()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/summon_cultist() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/summon_cultist() called tick#: [world.time]")
 	set category = "Behemoth"
 	set name = "Summon Cultist (300)"
 	set desc = "Teleport a cultist to your location"

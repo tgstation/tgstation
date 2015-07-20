@@ -31,7 +31,7 @@
 	set name = "Rotate"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/zero_point_emitter/verb/rotate()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/zero_point_emitter/verb/rotate()  called tick#: [world.time]")
 
 	if (src.anchored || usr:stat)
 		usr << "It is fastened to the floor!"

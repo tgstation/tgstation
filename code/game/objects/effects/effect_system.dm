@@ -884,7 +884,7 @@ steam.start() -- spawns the effect
 	var/metal = 1		// 1=aluminum, 2=iron
 
 /obj/structure/foamedmetal/proc/updateicon()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/updateicon() called tick#: [world.time]")
 
 	if(metal == 1)
 		icon_state = "metalfoam"
@@ -946,7 +946,7 @@ steam.start() -- spawns the effect
 
 
 /obj/structure/foamedmetal/proc/update_nearby_tiles()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_nearby_tiles() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/update_nearby_tiles() called tick#: [world.time]")
 
 	if (isnull(air_master))
 		return 0

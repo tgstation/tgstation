@@ -41,7 +41,7 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/prox_sensor/proc/sense() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/prox_sensor/proc/sense() called tick#: [world.time]")
 	var/turf/mainloc = get_turf(src)
 //	if(scanning && cooldown <= 0)
 //		mainloc.visible_message("\icon[src] *boop* *boop*", "*boop* *boop*")
@@ -76,7 +76,7 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/proc/toggle_scan()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/prox_sensor/proc/toggle_scan() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/prox_sensor/proc/toggle_scan() called tick#: [world.time]")
 	if(!secured)	return 0
 	scanning = !scanning
 	update_icon()

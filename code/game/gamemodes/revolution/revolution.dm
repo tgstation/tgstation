@@ -107,7 +107,7 @@
 
 
 /datum/game_mode/proc/forge_revolutionary_objectives(var/datum/mind/rev_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_revolutionary_objectives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_revolutionary_objectives() called tick#: [world.time]")
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/mutiny/rev_obj = new
@@ -117,7 +117,7 @@
 		rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_revolutionary() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_revolutionary() called tick#: [world.time]")
 	var/obj_count = 1
 	if (you_are)
 		rev_mind.current << "<span class='notice'>You are a member of the revolutionaries' leadership!</span>"
@@ -130,7 +130,7 @@
 //This are equips the rev heads with their gear, and makes the clown not clumsy//
 /////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/equip_revolutionary(mob/living/carbon/human/mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_revolutionary() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/equip_revolutionary() called tick#: [world.time]")
 	if(!istype(mob))
 		return
 
@@ -185,7 +185,7 @@
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/add_revolutionary() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/add_revolutionary() called tick#: [world.time]")
 	if(rev_mind.assigned_role in command_positions)
 		return -1
 
@@ -211,7 +211,7 @@
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_revolutionary() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/remove_revolutionary() called tick#: [world.time]")
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
@@ -240,7 +240,7 @@
 //-UNCONFIRMED: DECONVERTED REVS NOT LOSING THEIR ICON properLY//////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/update_all_rev_icons()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_all_rev_icons() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_all_rev_icons() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
@@ -287,7 +287,7 @@
 //Refer to above bugs. They may apply here as well//
 ////////////////////////////////////////////////////
 /datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_rev_icons_added() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_rev_icons_added() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
@@ -313,7 +313,7 @@
 //Keeps track of deconverted revs//
 ///////////////////////////////////
 /datum/game_mode/proc/update_rev_icons_removed(datum/mind/rev_mind)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_rev_icons_removed() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_rev_icons_removed() called tick#: [world.time]")
 	spawn(0)
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
@@ -342,7 +342,7 @@
 //Checks for rev victory//
 //////////////////////////
 /datum/game_mode/revolution/proc/check_rev_victory()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/revolution/proc/check_rev_victory() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/revolution/proc/check_rev_victory() called tick#: [world.time]")
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/objective/objective in rev_mind.objectives)
 			if(!(objective.check_completion()))
@@ -354,7 +354,7 @@
 //Checks for a head victory//
 /////////////////////////////
 /datum/game_mode/revolution/proc/check_heads_victory()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/revolution/proc/check_heads_victory() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/revolution/proc/check_heads_victory() called tick#: [world.time]")
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
 		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && T && (T.z == 1))
@@ -376,7 +376,7 @@
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_revolution() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_revolution() called tick#: [world.time]")
 	var/list/targets = list()
 	var/text = ""
 	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
@@ -493,7 +493,7 @@
 	return text
 
 /proc/is_convertable_to_rev(datum/mind/mind)
-	writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_convertable_to_rev() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/is_convertable_to_rev() called tick#: [world.time]")
 	return istype(mind) && \
 		istype(mind.current, /mob/living/carbon/human) && \
 		!(mind.assigned_role in command_positions) && \

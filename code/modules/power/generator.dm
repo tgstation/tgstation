@@ -32,7 +32,7 @@
 //and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
 //note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/reconnect() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/reconnect() called tick#: [world.time]")
 	circ1 = null
 	circ2 = null
 	if(src.loc && anchored)
@@ -54,11 +54,11 @@
 				circ2 = null
 
 /obj/machinery/power/generator/proc/operable()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/operable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/operable() called tick#: [world.time]")
 	return circ1 && circ2 && anchored && !(stat & (BROKEN|NOPOWER))
 
 /obj/machinery/power/generator/proc/updateicon()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/updateicon() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/generator/proc/updateicon() called tick#: [world.time]")
 	overlays = 0
 
 	if(!operable())
@@ -205,7 +205,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	set category = "Object"
 	set name = "Rotate Generator (Clockwise)"
 	set src in view(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_clock()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_clock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return
@@ -216,7 +216,7 @@ Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"}
 	set category = "Object"
 	set name = "Rotate Generator (Counterclockwise)"
 	set src in view(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_anticlock()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/power/generator/verb/rotate_anticlock()  called tick#: [world.time]")
 
 	if (usr.stat || usr.restrained()  || anchored || (usr.status_flags & FAKEDEATH))
 		return

@@ -96,7 +96,7 @@
 		scanned_item = I
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/update_coolant() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/update_coolant() called tick#: [world.time]")
 	var/total_purity = 0
 	fresh_coolant = 0
 	coolant_purity = 0
@@ -245,7 +245,7 @@
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/stop_scanning() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/stop_scanning() called tick#: [world.time]")
 	scanning = 0
 	scanner_rpm_dir = 1
 	scanner_rpm = 0
@@ -260,7 +260,7 @@
 		used_coolant = 0
 
 /obj/machinery/radiocarbon_spectrometer/proc/complete_scan()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/complete_scan() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/radiocarbon_spectrometer/proc/complete_scan() called tick#: [world.time]")
 	src.visible_message("<span class='notice'>\icon[src] makes an insistent chime.</span>", 2)
 
 	if(scanned_item)

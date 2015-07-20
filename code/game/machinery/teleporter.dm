@@ -131,7 +131,7 @@
 		return 1
 
 /obj/machinery/computer/teleporter/proc/get_avail_dests()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/teleporter/proc/get_avail_dests() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/teleporter/proc/get_avail_dests() called tick#: [world.time]")
 	var/list/L = list()
 	var/list/areaindex = list()
 
@@ -173,7 +173,7 @@
 	set name = "Set teleporter ID"
 	set src in oview(1)
 	set desc = "ID Tag:"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/computer/teleporter/verb/set_id()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/computer/teleporter/verb/set_id()  called tick#: [world.time]")
 
 	if(stat & (NOPOWER|BROKEN) || !istype(usr,/mob/living))
 		return
@@ -243,7 +243,7 @@
 	return
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/hub/proc/teleport() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/hub/proc/teleport() called tick#: [world.time]")
 	var/atom/l = src.loc
 	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
 	if (!com)
@@ -270,7 +270,7 @@
 	return
 /*
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/do_teleport() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/proc/do_teleport() called tick#: [world.time]")
 	if(istype(M, /obj/effect))
 		del(M)
 		return
@@ -428,7 +428,7 @@ obj/machinery/teleport/station/New()
 		src.engage()
 
 /obj/machinery/teleport/station/proc/engage()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/station/proc/engage() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/station/proc/engage() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))
 		return
 
@@ -446,7 +446,7 @@ obj/machinery/teleport/station/New()
 	return
 
 /obj/machinery/teleport/station/proc/disengage()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/station/proc/disengage() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/station/proc/disengage() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))
 		return
 
@@ -466,7 +466,7 @@ obj/machinery/teleport/station/New()
 	set name = "Test Fire Teleporter"
 	set category = "Object"
 	set src in oview(1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/teleport/station/verb/testfire()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/teleport/station/verb/testfire()  called tick#: [world.time]")
 
 	if(stat & (BROKEN|NOPOWER) || !istype(usr,/mob/living))
 		return
@@ -506,5 +506,5 @@ obj/machinery/teleport/station/New()
 	return
 
 /atom/proc/laserhit(L as obj)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/laserhit() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/laserhit() called tick#: [world.time]")
 	return 1

@@ -16,10 +16,10 @@
 		message = copytext(message,2+length(speaking.key))
 	else
 		if(!isnull(speaking))
-			var/oldmsg = message
+			//var/oldmsg = message
 			var/n = speaking
 			message = copytext(message,1+length(n))
-			say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
+			//say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
 			speaking = null
 		speaking = get_default_language()
 

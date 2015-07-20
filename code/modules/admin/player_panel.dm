@@ -1,6 +1,6 @@
 
 /datum/admins/proc/player_panel_new()//The new one
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/player_panel_new() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/player_panel_new() called tick#: [world.time]")
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Admin Player Panel</title></head>"
@@ -325,7 +325,7 @@
 
 //The old one
 /datum/admins/proc/player_panel_old()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/player_panel_old() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/player_panel_old() called tick#: [world.time]")
 	if (!usr.client.holder)
 		return
 
@@ -391,7 +391,7 @@
 
 
 /datum/admins/proc/check_antagonists()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/check_antagonists() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/check_antagonists() called tick#: [world.time]")
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 

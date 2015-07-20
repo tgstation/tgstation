@@ -108,7 +108,7 @@
 
 
 /datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme, var/datum/mind/first_host)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_meme_objectives() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/forge_meme_objectives() called tick#: [world.time]")
 	// meme always needs to attune X hosts
 	var/datum/objective/meme_attune/attune_objective = new
 	attune_objective.owner = meme
@@ -127,7 +127,7 @@
 	return
 
 /datum/game_mode/proc/greet_meme(var/datum/mind/meme, var/you_are=1)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_meme() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/greet_meme() called tick#: [world.time]")
 	if (you_are)
 		meme.current << "<span class='danger'>You are a meme!</span>"
 
@@ -152,7 +152,7 @@
 		return 1
 
 /datum/game_mode/proc/auto_declare_completion_meme()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_meme() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/auto_declare_completion_meme() called tick#: [world.time]")
 	for(var/datum/mind/meme in memes)
 		var/memewin = 1
 		var/attuned = 0

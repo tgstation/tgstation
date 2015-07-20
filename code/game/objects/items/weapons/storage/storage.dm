@@ -57,7 +57,7 @@
 
 /obj/item/weapon/storage/proc/return_inv()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/return_inv() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/return_inv() called tick#: [world.time]")
 
 	var/list/L = list(  )
 
@@ -72,7 +72,7 @@
 	return L
 
 /obj/item/weapon/storage/proc/show_to(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/show_to() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/show_to() called tick#: [world.time]")
 	if(isliving(user))
 		if(user.s_active != src)
 			for(var/obj/item/I in src)
@@ -92,7 +92,7 @@
 
 /obj/item/weapon/storage/proc/hide_from(mob/user as mob)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/hide_from() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/hide_from() called tick#: [world.time]")
 
 	if(!user.client)
 		return
@@ -106,7 +106,7 @@
 
 /obj/item/weapon/storage/proc/close(mob/user as mob)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/close() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/close() called tick#: [world.time]")
 
 	src.hide_from(user)
 	user.s_active = null
@@ -115,7 +115,7 @@
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
 /obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/orient_objs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/orient_objs() called tick#: [world.time]")
 	var/cx = tx
 	var/cy = ty
 	src.boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
@@ -131,7 +131,7 @@
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
 /obj/item/weapon/storage/proc/standard_orient_objs(var/rows, var/cols, var/list/obj/item/display_contents)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/standard_orient_objs() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/standard_orient_objs() called tick#: [world.time]")
 	var/cx = 4
 	var/cy = 2+rows
 	src.boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
@@ -170,7 +170,7 @@
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/orient2hud() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/orient2hud() called tick#: [world.time]")
 
 	var/adjusted_contents = contents.len
 
@@ -201,7 +201,7 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W as obj, stop_messages = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/can_be_inserted() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/can_be_inserted() called tick#: [world.time]")
 	if(!istype(W)) return //Not an item
 
 	if(src.loc == W)
@@ -280,7 +280,7 @@
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W as obj, prevent_warning = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/handle_item_insertion() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/handle_item_insertion() called tick#: [world.time]")
 	if(!istype(W)) return 0
 	if(usr)
 		usr.u_equip(W,1)
@@ -310,7 +310,7 @@
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/remove_from_storage() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/remove_from_storage() called tick#: [world.time]")
 	if(!istype(W)) return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
@@ -436,7 +436,7 @@
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/storage/verb/toggle_gathering_mode()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/storage/verb/toggle_gathering_mode()  called tick#: [world.time]")
 
 	collection_mode = !collection_mode
 	switch (collection_mode)
@@ -449,7 +449,7 @@
 /obj/item/weapon/storage/verb/quick_empty()
 	set name = "Empty Contents"
 	set category = "Object"
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/storage/verb/quick_empty()  called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/weapon/storage/verb/quick_empty()  called tick#: [world.time]")
 
 	if((!ishuman(usr) && (src.loc != usr)) || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
 		return
@@ -502,7 +502,7 @@
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
 		if(src.verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
-			writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\if(src.verbs.Find()  called tick#: [world.time]")
+			//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\if(src.verbs.Find()  called tick#: [world.time]")
 			src.quick_empty()
 			return
 
@@ -527,7 +527,7 @@
 	del(src)
 //BubbleWrap END
 /obj/item/weapon/storage/proc/can_see_contents()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/can_see_contents() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/can_see_contents() called tick#: [world.time]")
 	var/list/cansee = list()
 	for(var/mob/M in is_seeing)
 		if(M.s_active == src && M.client)
@@ -537,7 +537,7 @@
 	return cansee
 
 /obj/item/weapon/storage/proc/close_all()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/close_all() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/close_all() called tick#: [world.time]")
 	for(var/mob/M in is_seeing)
 		close(M)
 		. = 1 //returns 1 if any mobs actually got a close(M) call

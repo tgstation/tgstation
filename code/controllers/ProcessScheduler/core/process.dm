@@ -99,7 +99,7 @@ datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	last_object = null
 
 datum/controller/process/proc/started()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/started() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/started() called tick#: [world.time]")
 	// Initialize last_slept so we can know when to sleep
 	last_slept = world.timeofday
 
@@ -115,7 +115,7 @@ datum/controller/process/proc/started()
 	onStart()
 
 datum/controller/process/proc/finished()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/finished() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/finished() called tick#: [world.time]")
 	ticks++
 	idle()
 	main.processFinished(src)
@@ -123,19 +123,19 @@ datum/controller/process/proc/finished()
 	onFinish()
 
 datum/controller/process/proc/doWork()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/doWork() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/doWork() called tick#: [world.time]")
 
 datum/controller/process/proc/setup()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/setup() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/setup() called tick#: [world.time]")
 
 datum/controller/process/proc/process()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/process() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/process() called tick#: [world.time]")
 	started()
 	doWork()
 	finished()
 
 datum/controller/process/proc/running()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/running() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/running() called tick#: [world.time]")
 	idle = 0
 	queued = 0
 	running = 1
@@ -143,7 +143,7 @@ datum/controller/process/proc/running()
 	setStatus(PROCESS_STATUS_RUNNING)
 
 datum/controller/process/proc/idle()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/idle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/idle() called tick#: [world.time]")
 	queued = 0
 	running = 0
 	idle = 1
@@ -151,7 +151,7 @@ datum/controller/process/proc/idle()
 	setStatus(PROCESS_STATUS_IDLE)
 
 datum/controller/process/proc/queued()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/queued() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/queued() called tick#: [world.time]")
 	idle = 0
 	running = 0
 	queued = 1
@@ -159,12 +159,12 @@ datum/controller/process/proc/queued()
 	setStatus(PROCESS_STATUS_QUEUED)
 
 datum/controller/process/proc/hung()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/hung() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/hung() called tick#: [world.time]")
 	hung = 1
 	setStatus(PROCESS_STATUS_HUNG)
 
 datum/controller/process/proc/handleHung()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/handleHung() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/handleHung() called tick#: [world.time]")
 	var/datum/lastObj = last_object
 	var/lastObjType = "null"
 	if(istype(lastObj))
@@ -182,7 +182,7 @@ datum/controller/process/proc/handleHung()
 	main.restartProcess(src.name)
 
 datum/controller/process/proc/kill()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/kill() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/kill() called tick#: [world.time]")
 	if (!killed)
 		var/msg = "[name] process was killed at tick #[ticks]."
 		logTheThing("debug", null, null, msg)
@@ -198,7 +198,7 @@ datum/controller/process/proc/kill()
 		del(src)
 
 datum/controller/process/proc/scheck(var/tickId = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/scheck() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/scheck() called tick#: [world.time]")
 	if (killed)
 		// The kill proc is the only place where killed is set.
 		// The kill proc should have deleted this datum, and all sleeping procs that are
@@ -222,7 +222,7 @@ datum/controller/process/proc/scheck(var/tickId = 0)
 			last_slept = world.timeofday
 
 datum/controller/process/proc/update()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/update() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/update() called tick#: [world.time]")
 	// Clear delta
 	if(previousStatus != status)
 		setStatus(status)
@@ -237,21 +237,21 @@ datum/controller/process/proc/update()
 		setStatus(PROCESS_STATUS_MAYBE_HUNG)
 
 datum/controller/process/proc/getElapsedTime()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getElapsedTime() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getElapsedTime() called tick#: [world.time]")
 	if (world.timeofday < run_start)
 		return world.timeofday - (run_start - 864000)
 	return world.timeofday - run_start
 
 datum/controller/process/proc/tickDetail()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/tickDetail() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/tickDetail() called tick#: [world.time]")
 	return
 
 datum/controller/process/proc/getContext()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getContext() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getContext() called tick#: [world.time]")
 	return "<tr><td>[name]</td><td>[main.averageRunTime(src)]</td><td>[main.last_run_time[src]]</td><td>[main.highest_run_time[src]]</td><td>[ticks]</td></tr>\n"
 
 datum/controller/process/proc/getContextData()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getContextData() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getContextData() called tick#: [world.time]")
 	return list(
 	"name" = name,
 	"averageRunTime" = main.averageRunTime(src),
@@ -264,11 +264,11 @@ datum/controller/process/proc/getContextData()
 	)
 
 datum/controller/process/proc/getStatus()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getStatus() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getStatus() called tick#: [world.time]")
 	return status
 
 datum/controller/process/proc/getStatusText(var/s = 0)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getStatusText() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getStatusText() called tick#: [world.time]")
 	if(!s)
 		s = status
 	switch(s)
@@ -288,25 +288,25 @@ datum/controller/process/proc/getStatusText(var/s = 0)
 			return "UNKNOWN"
 
 datum/controller/process/proc/getPreviousStatus()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getPreviousStatus() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getPreviousStatus() called tick#: [world.time]")
 	return previousStatus
 
 datum/controller/process/proc/getPreviousStatusText()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getPreviousStatusText() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/getPreviousStatusText() called tick#: [world.time]")
 	return getStatusText(previousStatus)
 
 datum/controller/process/proc/setStatus(var/newStatus)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/setStatus() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/setStatus() called tick#: [world.time]")
 	previousStatus = status
 	status = newStatus
 
 datum/controller/process/proc/setLastTask(var/task, var/object)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/setLastTask() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/setLastTask() called tick#: [world.time]")
 	last_task = task
 	last_object = object
 
 datum/controller/process/proc/_copyStateFrom(var/datum/controller/process/target)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/_copyStateFrom() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/_copyStateFrom() called tick#: [world.time]")
 	main = target.main
 	name = target.name
 	schedule_interval = target.schedule_interval
@@ -320,29 +320,29 @@ datum/controller/process/proc/_copyStateFrom(var/datum/controller/process/target
 	copyStateFrom(target)
 
 datum/controller/process/proc/copyStateFrom(var/datum/controller/process/target)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/copyStateFrom() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/copyStateFrom() called tick#: [world.time]")
 
 datum/controller/process/proc/onKill()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/onKill() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/onKill() called tick#: [world.time]")
 
 datum/controller/process/proc/onStart()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/onStart() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/onStart() called tick#: [world.time]")
 
 datum/controller/process/proc/onFinish()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/onFinish() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/onFinish() called tick#: [world.time]")
 
 datum/controller/process/proc/disable()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/disable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/disable() called tick#: [world.time]")
 	disabled = 1
 
 datum/controller/process/proc/enable()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/enable() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/process/proc/enable() called tick#: [world.time]")
 	disabled = 0
 
 /datum/controller/process/proc/getLastRunTime()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/process/proc/getLastRunTime() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/process/proc/getLastRunTime() called tick#: [world.time]")
 	return main.getProcessLastRunTime(src)
 
 /datum/controller/process/proc/getTicks()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/process/proc/getTicks() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/process/proc/getTicks() called tick#: [world.time]")
 	return ticks

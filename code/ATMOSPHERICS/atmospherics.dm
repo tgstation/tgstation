@@ -57,26 +57,26 @@ Pipelines + Other Objects -> Pipe network
 
 // Find a connecting /obj/machinery/atmospherics in specified direction.
 /obj/machinery/atmospherics/proc/findConnecting(var/direction)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findConnecting() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findConnecting() called tick#: [world.time]")
 	for(var/obj/machinery/atmospherics/target in get_step(src,direction))
 		if(target.initialize_directions & get_dir(target,src))
 			return target
 
 // Ditto, but for heat-exchanging pipes.
 /obj/machinery/atmospherics/proc/findConnectingHE(var/direction)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findConnectingHE() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findConnectingHE() called tick#: [world.time]")
 	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,direction))
 		if(target.initialize_directions_he & get_dir(target,src))
 			return target
 
 /obj/machinery/atmospherics/proc/getNodeType(var/node_id)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/getNodeType() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/getNodeType() called tick#: [world.time]")
 	return PIPE_TYPE_STANDARD
 
 // A bit more flexible.
 // @param connect_dirs integer Directions at which we should check for connections.
 /obj/machinery/atmospherics/proc/findAllConnections(var/connect_dirs)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findAllConnections() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/findAllConnections() called tick#: [world.time]")
 	var/node_id=0
 	for(var/direction in cardinal)
 		if(connect_dirs & direction)
@@ -107,19 +107,19 @@ Pipelines + Other Objects -> Pipe network
 	//testing("[src] called parent process to build_network()")
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/network_expand() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/network_expand() called tick#: [world.time]")
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
 	// Note don't forget to have neighbors look as well!
 
 	return null
 
 /obj/machinery/atmospherics/proc/build_network()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/build_network() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/build_network() called tick#: [world.time]")
 	// Called to build a network from this node
 	return null
 
 /obj/machinery/atmospherics/proc/return_network(obj/machinery/atmospherics/reference)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/return_network() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/return_network() called tick#: [world.time]")
 	// Returns pipe_network associated with connection to reference
 	// Notes: should create network if necessary
 	// Should never return null
@@ -127,26 +127,26 @@ Pipelines + Other Objects -> Pipe network
 	return null
 
 /obj/machinery/atmospherics/proc/unassign_network(datum/pipe_network/reference)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/unassign_network() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/unassign_network() called tick#: [world.time]")
 
 /obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/reassign_network() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/reassign_network() called tick#: [world.time]")
 	// Used when two pipe_networks are combining
 
 /obj/machinery/atmospherics/proc/return_network_air(datum/network/reference)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/return_network_air() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/return_network_air() called tick#: [world.time]")
 	// Return a list of gas_mixture(s) in the object
 	//		associated with reference pipe_network for use in rebuilding the networks gases list
 	// Is permitted to return null
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/disconnect() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/disconnect() called tick#: [world.time]")
 
 /obj/machinery/atmospherics/update_icon()
 	return null
 
 /obj/machinery/atmospherics/proc/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/buildFrom() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/buildFrom() called tick#: [world.time]")
 	error("[src] does not define a buildFrom!")
 	return FALSE
 
@@ -230,5 +230,5 @@ Pipelines + Other Objects -> Pipe network
 		user.canmove = 1
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/can_crawl_through() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/can_crawl_through() called tick#: [world.time]")
 	return 1

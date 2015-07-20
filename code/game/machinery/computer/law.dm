@@ -15,7 +15,7 @@
 		set category = "Object"
 		set name = "Access Computer's Internals"
 		set src in oview(1)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/AccessInternals()  called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\verb/AccessInternals()  called tick#: [world.time]")
 		if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || istype(usr, /mob/living/silicon) || (usr.status_flags & FAKEDEATH))
 			return
 
@@ -27,7 +27,7 @@
 		return
 
 	proc/install_module(var/obj/item/weapon/aiModule/O, var/mob/user)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/install_module() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/install_module() called tick#: [world.time]")
 		if(stat & NOPOWER)
 			usr << "The upload computer has no power!"
 			return 0
@@ -57,7 +57,7 @@
 		return 1
 
 	proc/announce_law_changes(var/mob/user)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/announce_law_changes() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/announce_law_changes() called tick#: [world.time]")
 		current << "These are your laws now:"
 		current.show_laws()
 		for(var/mob/living/silicon/robot/R in mob_list)
@@ -143,13 +143,13 @@
 	l_color = "#FFFFFF"
 
 	proc/announce_law_changes()
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/announce_law_changes() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/announce_law_changes() called tick#: [world.time]")
 		current << "These are your laws now:"
 		current.show_laws()
 		usr << "<span class='notice'>Upload complete. The robot's laws have been modified.</span>"
 
 	proc/install_module(var/obj/item/weapon/aiModule/M,var/mob/user)
-		writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/install_module() called tick#: [world.time]")
+		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/install_module() called tick#: [world.time]")
 		if(stat & NOPOWER)
 			usr << "The upload computer has no power!"
 			return 0

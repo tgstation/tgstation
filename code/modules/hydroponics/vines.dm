@@ -81,7 +81,7 @@
 	manual_unbuckle(user)
 
 /obj/effect/plantsegment/proc/unbuckle()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/unbuckle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/unbuckle() called tick#: [world.time]")
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
 			buckled_mob.buckled = null
@@ -91,7 +91,7 @@
 	return
 
 /obj/effect/plantsegment/proc/manual_unbuckle(mob/user as mob)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/manual_unbuckle() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/manual_unbuckle() called tick#: [world.time]")
 	if(buckled_mob)
 		if(prob(seed ? min(max(0,100 - seed.potency),100) : 50))
 			if(buckled_mob.buckled == src)
@@ -116,7 +116,7 @@
 
 /obj/effect/plantsegment/proc/grow()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/grow() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/grow() called tick#: [world.time]")
 
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
@@ -135,7 +135,7 @@
 
 /obj/effect/plantsegment/proc/entangle_mob()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/entangle_mob() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/entangle_mob() called tick#: [world.time]")
 
 	if(limited_growth)
 		return
@@ -187,7 +187,7 @@
 					H.reagents.add_reagent(rid,injecting)
 
 /obj/effect/plantsegment/proc/update()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/update() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/update() called tick#: [world.time]")
 	if(!seed) return
 
 	// Update bioluminescence.
@@ -221,7 +221,7 @@
 			overlays += flower_overlay
 
 /obj/effect/plantsegment/proc/spread()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/spread() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/spread() called tick#: [world.time]")
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
 	if(istype(step,/turf/simulated/floor))
@@ -269,14 +269,14 @@
 	qdel(src)
 
 /obj/effect/plantsegment/proc/die()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/die() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/die() called tick#: [world.time]")
 	if(seed && harvest)
 		if(rand(5))seed.harvest(src,1)
 		qdel(src)
 
 /obj/effect/plantsegment/proc/life()
 
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/life() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/life() called tick#: [world.time]")
 
 	if(!seed)
 		return
@@ -346,7 +346,7 @@
 	..()
 
 /obj/effect/plant_controller/proc/spawn_piece(var/turf/location)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plant_controller/proc/spawn_piece() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plant_controller/proc/spawn_piece() called tick#: [world.time]")
 	var/obj/effect/plantsegment/SV = new(location)
 	SV.limited_growth = src.limited_growth
 	growth_queue += SV

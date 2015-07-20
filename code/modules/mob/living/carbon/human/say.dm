@@ -74,18 +74,18 @@
 	return 1
 
 /mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/SetSpecialVoice() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/SetSpecialVoice() called tick#: [world.time]")
 	if(new_voice)
 		special_voice = new_voice
 	return
 
 /mob/living/carbon/human/proc/UnsetSpecialVoice()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/UnsetSpecialVoice() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/UnsetSpecialVoice() called tick#: [world.time]")
 	special_voice = ""
 	return
 
 /mob/living/carbon/human/proc/GetSpecialVoice()
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/GetSpecialVoice() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/GetSpecialVoice() called tick#: [world.time]")
 	return special_voice
 
 /mob/living/carbon/human/binarycheck()
@@ -102,25 +102,25 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				say_testing(src, "Talking into our headset")
+				//say_testing(src, "Talking into our headset")
 				ears.talk_into(src, message, null, speaking)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if (ears)
-				say_testing(src, "Talking into our headset")
+				//say_testing(src, "Talking into our headset")
 				ears.talk_into(src, message, 1, speaking)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
 			if (ears)
-				say_testing(src, "Talking into our dept headset")
+				//say_testing(src, "Talking into our dept headset")
 				ears.talk_into(src, message, message_mode, speaking)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
-			say_testing(src, "Talking through a radio channel")
+			//say_testing(src, "Talking through a radio channel")
 			ears.talk_into(src, message, message_mode, speaking)
 			return ITALICS | REDUCE_RANGE
 
@@ -131,7 +131,7 @@
 		return " (as [get_id_name("Unknown")])"
 
 /mob/living/carbon/human/proc/forcesay(list/append)
-	writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/forcesay() called tick#: [world.time]")
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/forcesay() called tick#: [world.time]")
 	if(stat == CONSCIOUS)
 		if(client)
 			var/virgin = 1	//has the text been modified yet?
