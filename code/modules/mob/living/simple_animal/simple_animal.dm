@@ -487,9 +487,11 @@
 		..()
 
 /mob/living/simple_animal/update_canmove()
-	if(paralysis || stunned || weakened || stat || resting || buckled)
+	if(paralysis || stunned || weakened || stat || resting)
 		drop_r_hand()
 		drop_l_hand()
+		canmove = 0
+	else if(buckled)
 		canmove = 0
 	else
 		canmove = 1

@@ -142,7 +142,6 @@
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
-	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 
 
 /obj/effect/mist
@@ -159,8 +158,13 @@
 	update_icon()
 	add_fingerprint(M)
 	if(on)
-		for (var/atom/movable/G in loc)
-			wash(G)
+		wash_turf()
+		for(var/atom/movable/G in loc)
+			if(isliving(G))
+				var/mob/living/L = G
+				wash_mob(L)
+			else
+				wash_obj(G)
 	else
 		if(istype(loc, /turf/simulated))
 			var/turf/simulated/tile = loc
@@ -206,115 +210,32 @@
 		ismist = 1
 		mymist = new /obj/effect/mist(loc)
 		spawn(250)
-			if(src && !on && mymist)
+			if(!on && mymist)
 				qdel(mymist)
 				ismist = 0
 
 
 /obj/machinery/shower/Crossed(atom/movable/O)
 	..()
-	wash(O)
-	if(iscarbon(O) && on)
-		var/mob/living/carbon/M=O
-		M.slip(4,2,null,NO_SLIP_WHEN_WALKING)
-
-
-
-/obj/machinery/shower/Uncrossed(atom/movable/O)
-	if(ismob(O))
-		mobpresent -= 1
-	..()
-
-
-//Yes, showers are super powerful as far as washing goes.
-/obj/machinery/shower/proc/wash(atom/movable/O)
-	if(!on) return
-
-	if(ismob(O))
-		mobpresent += 1
-		check_heat(O)
-	if(isliving(O))
-		var/mob/living/L = O
-		L.ExtinguishMob()
-		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
-		L << "<span class='warning'>You're drenched in water!</span>"
-		if(iscarbon(O))
-			var/mob/living/carbon/M = O
-			if(M.r_hand)
-				M.r_hand.clean_blood()
-			if(M.l_hand)
-				M.l_hand.clean_blood()
-			if(M.back)
-				if(M.back.clean_blood())
-					M.update_inv_back()
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				var/washgloves = 1
-				var/washshoes = 1
-				var/washmask = 1
-				var/washears = 1
-				var/washglasses = 1
-
-				if(H.wear_suit)
-					washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
-					washshoes = !(H.wear_suit.flags_inv & HIDESHOES)
-
-				if(H.head)
-					washmask = !(H.head.flags_inv & HIDEMASK)
-					washglasses = !(H.head.flags_inv & HIDEEYES)
-					washears = !(H.head.flags_inv & HIDEEARS)
-
-				if(H.wear_mask)
-					if (washears)
-						washears = !(H.wear_mask.flags_inv & HIDEEARS)
-					if (washglasses)
-						washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
-
-				if(H.head)
-					if(H.head.clean_blood())
-						H.update_inv_head()
-				if(H.wear_suit)
-					if(H.wear_suit.clean_blood())
-						H.update_inv_wear_suit()
-				else if(H.w_uniform)
-					if(H.w_uniform.clean_blood())
-						H.update_inv_w_uniform()
-				if(H.gloves && washgloves)
-					if(H.gloves.clean_blood())
-						H.update_inv_gloves()
-				if(H.shoes && washshoes)
-					if(H.shoes.clean_blood())
-						H.update_inv_shoes()
-				if(H.wear_mask)
-					if(washmask)
-						if(H.wear_mask.clean_blood())
-							H.update_inv_wear_mask()
-				else
-					H.lip_style = null
-					H.update_body()
-				if(H.glasses && washglasses)
-					if(H.glasses.clean_blood())
-						H.update_inv_glasses()
-				if(H.ears && washears)
-					if(H.ears.clean_blood())
-						H.update_inv_ears()
-				if(H.belt)
-					if(H.belt.clean_blood())
-						H.update_inv_belt()
-			else
-				if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
-					if(M.wear_mask.clean_blood())
-						M.update_inv_wear_mask()
+	if(on)
+		if(isliving(O))
+			var/mob/living/L = O
+			if(wash_mob(L)) //it's a carbon mob.
+				var/mob/living/carbon/C = L
+				C.slip(4,2,null,NO_SLIP_WHEN_WALKING)
 		else
-			O.clean_blood()
+			wash_obj(O)
 
-	else
-		O.clean_blood()
 
-		if(istype(O,/obj/item))
-			var/obj/item/Item = O
-			Item.extinguish()
+/obj/machinery/shower/proc/wash_obj(atom/movable/O)
+	O.clean_blood()
 
+	if(istype(O,/obj/item))
+		var/obj/item/I = O
+		I.extinguish()
+
+
+/obj/machinery/shower/proc/wash_turf()
 	if(isturf(loc))
 		var/turf/tile = loc
 		loc.clean_blood()
@@ -322,27 +243,103 @@
 			if(is_cleanable(E))
 				qdel(E)
 
+
+/obj/machinery/shower/proc/wash_mob(mob/living/L)
+	L.ExtinguishMob()
+	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
+	if(iscarbon(L))
+		var/mob/living/carbon/M = L
+		. = 1
+		check_heat(M)
+		if(M.r_hand)
+			M.r_hand.clean_blood()
+		if(M.l_hand)
+			M.l_hand.clean_blood()
+		if(M.back)
+			if(M.back.clean_blood())
+				M.update_inv_back(0)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/washgloves = 1
+			var/washshoes = 1
+			var/washmask = 1
+			var/washears = 1
+			var/washglasses = 1
+
+			if(H.wear_suit)
+				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
+				washshoes = !(H.wear_suit.flags_inv & HIDESHOES)
+
+			if(H.head)
+				washmask = !(H.head.flags_inv & HIDEMASK)
+				washglasses = !(H.head.flags_inv & HIDEEYES)
+				washears = !(H.head.flags_inv & HIDEEARS)
+
+			if(H.wear_mask)
+				if (washears)
+					washears = !(H.wear_mask.flags_inv & HIDEEARS)
+				if (washglasses)
+					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
+
+			if(H.head)
+				if(H.head.clean_blood())
+					H.update_inv_head()
+			if(H.wear_suit)
+				if(H.wear_suit.clean_blood())
+					H.update_inv_wear_suit()
+			else if(H.w_uniform)
+				if(H.w_uniform.clean_blood())
+					H.update_inv_w_uniform()
+			if(washgloves)
+				clean_blood()
+			if(H.shoes && washshoes)
+				if(H.shoes.clean_blood())
+					H.update_inv_shoes()
+			if(H.wear_mask)
+				if(washmask)
+					if(H.wear_mask.clean_blood())
+						H.update_inv_wear_mask()
+			else
+				H.lip_style = null
+				H.update_body()
+			if(H.glasses && washglasses)
+				if(H.glasses.clean_blood())
+					H.update_inv_glasses()
+			if(H.ears && washears)
+				if(H.ears.clean_blood())
+					H.update_inv_ears()
+			if(H.belt)
+				if(H.belt.clean_blood())
+					H.update_inv_belt()
+		else
+			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
+				if(M.wear_mask.clean_blood())
+					M.update_inv_wear_mask(0)
+			M.clean_blood()
+	else
+		L.clean_blood()
+
+
 /obj/machinery/shower/process()
-	if(!on || !mobpresent) return
-	for(var/mob/living/carbon/C in loc)
-		check_heat(C)
+	if(on)
+		wash_turf()
+		for(var/atom/movable/G in loc)
+			if(isliving(G))
+				var/mob/living/L = G
+				wash_mob(L)
+			else
+				wash_obj(G)
 
 
+/obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
+	if(watertemp == "freezing")
+		C.bodytemperature = max(80, C.bodytemperature - 80)
+		C << "<span class='warning'>The water is freezing!</span>"
+	else if(watertemp == "boiling")
+		C.bodytemperature = min(500, C.bodytemperature + 35)
+		C.adjustFireLoss(5)
+		C << "<span class='danger'>The water is searing!</span>"
 
-/obj/machinery/shower/proc/check_heat(mob/M)
-	if(!on || watertemp == "normal") return
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-
-		if(watertemp == "freezing")
-			C.bodytemperature = max(80, C.bodytemperature - 80)
-			C << "<span class='warning'>The water is freezing!</span>"
-			return
-		if(watertemp == "boiling")
-			C.bodytemperature = min(500, C.bodytemperature + 35)
-			C.adjustFireLoss(5)
-			C << "<span class='danger'>The water is searing!</span>"
-			return
 
 
 

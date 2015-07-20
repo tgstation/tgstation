@@ -20,7 +20,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 #define NODE3	"n3"
 
 /obj/machinery/atmospherics/components/
-	var/welded = 0 //Used on pumps and scrubbers
+	var/welded //Used on pumps and scrubbers
 	var/showpipe = 0
 
 	var/device_type = 0//used for initialization stuff
@@ -148,7 +148,7 @@ Pipenet stuff; housekeeping
 			parents["p[I]"] = reference
 			break
 
-/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[NODE1]) //returns PARENT1 if called without argument
 	for(var/I = 1; I <= device_type; I++)
 		if(A == nodes["n[I]"])
 			return parents["p[I]"]
@@ -159,7 +159,7 @@ Pipenet stuff; housekeeping
 			P = New
 			break
 
-/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures) //untestable; I'll fix this last
+/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
 	..()
 
 	var/turf/T = get_turf(src)
@@ -199,6 +199,7 @@ Helpers
 */
 
 /obj/machinery/atmospherics/components/proc/update_parents()
-	for(var/I = 1; I <= device_type; I++)
-		var/datum/pipeline/parent = parents["p[I]"]
-		parent.update = 1
+	for(var/P in parents)
+		var/datum/pipeline/parent = parents["[P]"]
+		if (parent && istype(parent))
+			parent.update = 1
