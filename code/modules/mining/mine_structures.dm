@@ -55,9 +55,11 @@
 /obj/structure/hanging_lantern/New()
 	..()
 	alllights += src
+	SetLuminosity(5)
 
 /obj/structure/hanging_lantern/Destroy()
 	alllights -= src
+	SetLuminosity(0)
 	..()
 
 /obj/structure/hanging_lantern/attack_hand(mob/user)
