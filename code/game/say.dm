@@ -234,6 +234,9 @@ var/global/resethearers = 0
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/sethearing() called tick#: [world.time]")
 	var/atom/A
 	for(var/mob/virtualhearer/VH in virtualhearers)
+		if(isnull(VH.attached))
+			returnToPool(VH)
+			continue
 		for(A=VH.attached.loc, A && !isturf(A), A=A.loc);
 		VH.loc = A
 	resethearers = world.time + 5
