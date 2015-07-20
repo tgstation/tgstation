@@ -430,10 +430,13 @@
 				update_icon()
 		else if(emagged)
 			user << "The interface is broken."
-		else
+		else if(has_electronics == 2)
 			wiresexposed = !wiresexposed
 			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
 			update_icon()
+		else
+			user << "<span class='warning'>You open the panel and find nothing inside.</span>"
+			return
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)
