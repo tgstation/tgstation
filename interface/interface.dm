@@ -91,6 +91,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tm = me
 \tt = say
 \to = OOC
+\tc = resist
 \tx = swap-hand
 \tz = activate held object (or y)
 \tf = cycle-intents-left
@@ -110,6 +111,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+q = drop
 \tCtrl+e = equip
 \tCtrl+r = throw
+\tCtrl+c = resist
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
@@ -140,6 +142,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tq = unequip active module
 \tt = say
 \tx = cycle active modules
+\tc = resist
 \tz = activate held object (or y)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
@@ -157,6 +160,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+w = up
 \tCtrl+q = unequip active module
 \tCtrl+x = cycle active modules
+\tCtrl+c = resist
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
 \tCtrl+g = cycle-intents-right
@@ -166,6 +170,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+4 = toggle intents
 \tDEL = pull
 \tINS = toggle intents
+\tEND = resist
 \tPGUP = cycle active modules
 \tPGDN = activate held object
 </font>"}

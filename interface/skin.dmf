@@ -16,6 +16,10 @@ macro "borghotkeymode"
 		command = ".southeast"
 		is-disabled = false
 	elem 
+		name = "SOUTHWEST"
+		command = "resist"
+		is-disabled = false
+	elem 
 		name = "NORTHWEST"
 		command = "unequip-module"
 		is-disabled = false
@@ -98,6 +102,14 @@ macro "borghotkeymode"
 	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
+		is-disabled = false
+	elem 
+		name = "C"
+		command = "resist"
+		is-disabled = false
+	elem 
+		name = "CTRL+C"
+		command = "resist"
 		is-disabled = false
 	elem 
 		name = "D+REP"
@@ -298,6 +310,10 @@ macro "macro"
 		command = ".west"
 		is-disabled = false
 	elem 
+		name = "CTRL+C"
+		command = "resist"
+		is-disabled = false
+	elem 
 		name = "CTRL+D+REP"
 		command = ".east"
 		is-disabled = false
@@ -484,6 +500,14 @@ macro "hotkeymode"
 		command = ".west"
 		is-disabled = false
 	elem 
+		name = "C"
+		command = "resist"
+		is-disabled = false
+	elem 
+		name = "CTRL+C"
+		command = "resist"
+		is-disabled = false
+	elem 
 		name = "D+REP"
 		command = ".east"
 		is-disabled = false
@@ -638,6 +662,10 @@ macro "borgmacro"
 		command = ".southeast"
 		is-disabled = false
 	elem 
+		name = "SOUTHWEST"
+		command = "resist"
+		is-disabled = false
+	elem 
 		name = "NORTHWEST"
 		command = "unequip-module"
 		is-disabled = false
@@ -700,6 +728,10 @@ macro "borgmacro"
 	elem 
 		name = "CTRL+A+REP"
 		command = ".west"
+		is-disabled = false
+	elem 
+		name = "CTRL+C"
+		command = "resist"
 		is-disabled = false
 	elem 
 		name = "CTRL+D+REP"
@@ -1201,6 +1233,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "eject"
 		type = BUTTON
 		pos = 264,4
@@ -1367,6 +1401,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "child1"
 		type = CHILD
 		pos = 0,40
@@ -1488,6 +1524,8 @@ window "chemdispenser_reagents"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 
 window "mainwindow"
 	elem "mainwindow"
@@ -1698,6 +1736,8 @@ window "mapwindow"
 		on-size = ""
 		icon-size = 0
 		text-mode = false
+		letterbox = true
+		zoom = 0
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ""
@@ -2226,4 +2266,6 @@ window "infowindow"
 		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
 		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
 		on-tab = ""
+		prefix-color = none
+		suffix-color = none
 
