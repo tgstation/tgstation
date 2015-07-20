@@ -423,20 +423,7 @@
 /obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
 		return 0
-
 	..()
-
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(occupant)
-		if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-
-			var/mob/dead/observer/ghost = occupant.get_ghost()
-			if(ghost)
-				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
-				ghost << sound('sound/effects/genetics.ogg')
 	return 1
 
 /obj/machinery/dna_scannernew/open_machine()

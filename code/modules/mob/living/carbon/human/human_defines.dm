@@ -19,7 +19,7 @@
 
 	var/age = 30		//Player's age (pure fluff)
 	var/blood_type = "A+"	//Player's bloodtype
-
+	var/be_cloned = 0
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
