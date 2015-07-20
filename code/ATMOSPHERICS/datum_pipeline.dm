@@ -121,11 +121,7 @@ var/pipenetwarnings = 10
 
 /obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
-	for(var/I = 1; I <= parents.len; I++)
-		if(parents["p[I]"] == P)
-			P.addMember(A, src)
-			break
-
+	P.addMember(A, src)
 
 
 /datum/pipeline/proc/temporarily_store_air()

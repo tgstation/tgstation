@@ -76,6 +76,8 @@
 			qdel(G)
 		for(var/mob/living/H in T.contents)
 			extinguishMob(H)
+		for(var/mob/living/silicon/robot/borgie in T.contents)
+			borgie.update_headlamp(1)
 
 
 
