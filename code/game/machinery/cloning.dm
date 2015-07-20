@@ -138,14 +138,6 @@
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
 			return 0
-	else
-		for(var/mob/M in player_list)
-			if(M.ckey == ckey)
-				if(istype(M, /mob/dead/observer))
-					var/mob/dead/observer/G = M
-					if(G.can_reenter_corpse)
-						break
-				return 0
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1

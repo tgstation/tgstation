@@ -51,7 +51,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
 	var/blood_type = "A+"				//blood type (not-chooseable)
-	var/do_not_clone = 0
+	var/be_cloned = 1
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
@@ -194,7 +194,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					dat += "<b>Species:</b> Human<BR>"
 
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
-				dat += "<b>Do Not Clone: </b><a href ='?_src_=prefs;preference=do_not_clone;task=input'>[do_not_clone ? "No" : "Yes"]</a><BR>"
+				dat += "<b>Be Cloned: </b><a href ='?_src_=prefs;preference=be_cloned;task=input'>[be_cloned ? "Yes" : "No"]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
@@ -938,12 +938,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							custom_names["deity"] = new_deity_name
 						else
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
-					if("do_not_clone")
+					if("be_cloned")
 						var/choice = alert(user, "Choose your cloning preference:", "Character Preference", "Be Cloned", "Do Not Clone")
 						if(choice == "Be Cloned")
-							do_not_clone = 1
+							be_cloned = 1
 						if(choice == "Do Not Clone")
-							do_not_clone = 0
+							be_cloned = 0
 
 
 			else
@@ -1065,7 +1065,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.gender = gender
 		character.age = age
 		character.blood_type = blood_type
-
+		character.be_cloned = be_cloned
 		character.eye_color = eye_color
 		character.hair_color = hair_color
 		character.facial_hair_color = facial_hair_color

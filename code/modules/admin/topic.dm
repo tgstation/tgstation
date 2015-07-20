@@ -739,6 +739,11 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
+		//Clone
+		if(jobban_isbanned(M, "clone"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=clone;jobban4=\ref[M]'><font color=red>[replacetext("Clone", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=clone;jobban4=\ref[M]'>[replacetext("Clone", " ", "&nbsp")]</a></td>"
 
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
