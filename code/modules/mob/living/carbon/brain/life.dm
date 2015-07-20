@@ -147,4 +147,5 @@
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	handle_vision()
 	handle_hud_icons_health()
+	update_action_buttons()
 	return 1

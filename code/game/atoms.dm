@@ -15,7 +15,6 @@
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 
-
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 

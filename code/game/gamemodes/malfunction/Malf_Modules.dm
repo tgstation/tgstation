@@ -140,7 +140,7 @@
 			rcdmod.uses --
 			for(var/obj/item/weapon/rcd/rcd in world)
 				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+			for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd in world)
 				rcd.disabled = 1
 			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
