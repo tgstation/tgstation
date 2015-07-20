@@ -200,8 +200,6 @@
 					H.Jitter(500)
 		return
 
-	var/user_loc = user.loc
-	var/self_loc = src.loc //To disallow fucking with shoes from distance
 	var/new_sound = input(user,"Select the new step sound!","Advanced clown shoes") in sound_list
 
 	if(Adjacent(user))
