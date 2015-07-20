@@ -225,22 +225,21 @@ var/list/beam_master = list()
 	var/frequency = 1
 
 /obj/item/projectile/beam/OnFired()
+	return ..()
 
 /obj/item/projectile/beam/process()
 	var/lastposition = loc
 	var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 
-	var/turf/target = get_turf(original)
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
+	target = get_turf(original)
+	dist_x = abs(target.x - src.x)
+	dist_y = abs(target.y - src.y)
 
-	var/dx
 	if (target.x > src.x)
 		dx = EAST
 	else
 		dx = WEST
 
-	var/dy
 	if (target.y > src.y)
 		dy = NORTH
 	else
@@ -248,7 +247,7 @@ var/list/beam_master = list()
 	var/target_dir = SOUTH
 
 	if(dist_x > dist_y)
-		var/error = dist_x/2 - dist_y
+		error = dist_x/2 - dist_y
 
 		spawn while(src && src.loc)
 			// only stop when we've hit something, or hit the end of the map
@@ -308,7 +307,7 @@ var/list/beam_master = list()
 					beam_master[reference] = turfs
 
 	else
-		var/error = dist_y/2 - dist_x
+		error = dist_y/2 - dist_x
 		spawn while(src && src.loc)
 			// only stop when we've hit something, or hit the end of the map
 			if(error < 0)

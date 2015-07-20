@@ -4,6 +4,7 @@
 	icon = 'icons/obj/gun_experimental.dmi'
 	icon_state = "ricochet"
 	item_state = null
+	origin_tech = null
 	projectile_type = "/obj/item/projectile/ricochet"
 	charge_cost = 100
 	cell_type = "/obj/item/weapon/cell"
@@ -15,6 +16,7 @@
 	icon = 'icons/obj/gun_experimental.dmi'
 	icon_state = "bison"
 	item_state = null
+	origin_tech = null
 	projectile_type = "/obj/item/projectile/beam/bison"
 	charge_cost = 100
 	cell_type = "/obj/item/weapon/cell"
@@ -47,4 +49,39 @@
 		icon_state = "bison50"
 	else
 		icon_state = "bison0"
+	return
+
+/obj/item/weapon/gun/energy/spur
+	name = "\improper Spur"
+	desc = "A masterpiece crafted by the legendary gunsmith of a far-away planet."
+	icon = 'icons/obj/gun_experimental.dmi'
+	icon_state = "spur"
+	item_state = null
+	origin_tech = null
+	projectile_type = "/obj/item/projectile/spur"
+	charge_cost = 100
+	cell_type = "/obj/item/weapon/cell"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
+	fire_delay = 1
+	var/charge_tick = 0
+
+/obj/item/weapon/gun/energy/spur/New()
+	..()
+	processing_objects.Add(src)
+
+
+/obj/item/weapon/gun/energy/spur/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/spur/process()
+	charge_tick++
+	if(charge_tick < 4) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(200)
+	update_icon()
+	return 1
+
+/obj/item/weapon/gun/energy/spur/update_icon()
 	return

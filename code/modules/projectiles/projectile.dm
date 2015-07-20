@@ -54,6 +54,13 @@
 
 	var/inaccurate = 0
 
+	var/turf/target = null
+	var/dist_x = 0
+	var/dist_y = 0
+	var/dx = 0
+	var/dy = 0
+	var/error = 0
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(target))	return 0
@@ -205,8 +212,100 @@
 	return 1
 
 /obj/item/projectile/proc/OnFired()	//if assigned, allows for code when the projectile gets fired
+	target = get_turf(original)
+	dist_x = abs(target.x - starting.x)
+	dist_y = abs(target.y - starting.y)
+
+	if (target.x > starting.x)
+		dx = EAST
+	else
+		dx = WEST
+
+	if (target.y > starting.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+
+	if(dist_x > dist_y)
+		error = dist_x/2 - dist_y
+	else
+		error = dist_y/2 - dist_x
 	return 1
 
+/obj/item/projectile/proc/process_step()
+	var/sleeptime = 1
+	if(src.loc)
+		if(dist_x > dist_y)
+			if(step_delay)
+				sleep(step_delay)
+			if(kill_count < 1)
+				//del(src)
+				OnDeath()
+				loc = null
+				returnToPool(src)
+				return
+			kill_count--
+			if(error < 0)
+				var/atom/step = get_step(src, dy)
+				if(!step)
+					bullet_die()
+				src.Move(step)
+				error += dist_x
+				bump_original_check()
+				sleeptime = 0//so that bullets going in diagonals don't move twice slower
+			else
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					bullet_die()
+				src.Move(step)
+				error -= dist_y
+				dir = dx
+				if(error < 0)
+					dir = dx + dy
+				bump_original_check()
+		else
+			if(step_delay)
+				sleep(step_delay)
+			if(kill_count < 1)
+				//del(src)
+				OnDeath()
+				loc = null
+				returnToPool(src)
+				return
+			kill_count--
+			if(error < 0)
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					bullet_die()
+				src.Move(step)
+				error += dist_y
+				bump_original_check()
+				sleeptime = 0//so that bullets going in diagonals don't move twice slower
+			else
+				var/atom/step = get_step(src, dy)
+				if(!step)
+					bullet_die()
+				src.Move(step)
+				error -= dist_x
+				dir = dy
+				if(error < 0)
+					dir = dx + dy
+				bump_original_check()
+		sleep(sleeptime)
+
+
+/obj/item/projectile/proc/bullet_die()
+	OnDeath()
+	loc = null
+	returnToPool(src)
+
+/obj/item/projectile/proc/bump_original_check()
+	if(!bumped && !isturf(original))
+		if(loc == get_turf(original))
+			if(!(original in permutated))
+				Bump(original)
+
+/*
 /obj/item/projectile/proc/process_step()
 	if(src.loc)
 		if(step_delay)
@@ -232,6 +331,7 @@
 				if(!(original in permutated))
 					Bump(original)
 		sleep(1)
+*/
 
 /obj/item/projectile/process()
 	spawn while(loc)
@@ -266,7 +366,7 @@
 	invisibility = 101 //Nope!  Can't see me!
 	yo = null
 	xo = null
-	var/target = null
+	var/ttarget = null
 	var/result = 0 //To pass the message back to the gun.
 
 /obj/item/projectile/test/Bump(atom/A as mob|obj|turf|area)
@@ -283,7 +383,7 @@
 
 /obj/item/projectile/test/process()
 	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(target)
+	var/turf/targloc = get_turf(ttarget)
 	if(!curloc || !targloc)
 		return 0
 	yo = targloc.y - curloc.y
@@ -292,13 +392,13 @@
 	while(loc) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( target ) || loc == target))
-			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
-		step_towards(src, target)
+		if((!( ttarget ) || loc == ttarget))
+			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		step_towards(src, ttarget)
 		var/mob/living/M = locate() in get_turf(src)
 		if(istype(M)) //If there is someting living...
 			return 1 //Return 1
 		else
-			M = locate() in get_step(src,target)
+			M = locate() in get_step(src,ttarget)
 			if(istype(M))
 				return 1
