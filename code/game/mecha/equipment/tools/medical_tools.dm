@@ -1,4 +1,7 @@
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper
+
+// Sleeper and Syringe gun
+
+/obj/item/mecha_parts/mecha_equipment/sleeper
 	name = "mounted sleeper"
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	icon = 'icons/obj/Cryogenic2.dmi'
@@ -8,35 +11,33 @@
 	range = MELEE
 	reliability = 1000
 	equip_cooldown = 20
-	var/mob/living/carbon/occupant = null
-	var/datum/global_iterator/pr_mech_sleeper
+	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
 	salvageable = 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/can_attach(obj/mecha/medical/M)
+/obj/item/mecha_parts/mecha_equipment/sleeper/can_attach(obj/mecha/medical/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/New()
+/obj/item/mecha_parts/mecha_equipment/sleeper/attach(obj/mecha/M)
 	..()
-	pr_mech_sleeper = new /datum/global_iterator/mech_sleeper(list(src),0)
-	pr_mech_sleeper.set_delay(equip_cooldown)
-	return
+	SSobj.processing |= src
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/allow_drop()
+/obj/item/mecha_parts/mecha_equipment/sleeper/allow_drop()
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/destroy()
+/obj/item/mecha_parts/mecha_equipment/sleeper/Destroy()
+	SSobj.processing.Remove(src)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
-	return ..()
+	..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Exit(atom/movable/O)
+/obj/item/mecha_parts/mecha_equipment/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(mob/living/carbon/target)
+/obj/item/mecha_parts/mecha_equipment/sleeper/action(mob/living/carbon/target)
 	if(!action_checks(target))
 		return
 	if(!istype(target))
@@ -44,7 +45,7 @@
 	if(target.buckled)
 		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they are buckled to [target.buckled]!</span>")
 		return
-	if(occupant)
+	if(patient)
 		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
 		return
 	for(var/mob/living/simple_animal/slime/M in range(1,target))
@@ -53,81 +54,65 @@
 			return
 	occupant_message("<span class='notice'>You start putting [target] into [src]...</span>")
 	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
-	var/C = chassis.loc
-	var/T = target.loc
 	if(do_after_cooldown(target))
-		if(chassis.loc!=C || target.loc!=T)
-			return
-		if(occupant)
+		if(patient)
 			occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
 			return
 		target.forceMove(src)
-		occupant = target
+		patient = target
 		target.reset_view(src)
-		/*
-		if(target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = chassis
-		*/
-		set_ready_state(0)
-		pr_mech_sleeper.start()
+		SSobj.processing |= src
+		update_equip_info()
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
 		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
 		log_message("[target] loaded. Life support functions engaged.")
-	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out()
-	if(!occupant)
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/go_out()
+	if(!patient)
 		return
-	occupant.forceMove(get_turf(src))
-	occupant_message("[occupant] ejected. Life support functions disabled.")
-	log_message("[occupant] ejected. Life support functions disabled.")
-	occupant.reset_view()
-	/*
-	if(occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	*/
-	occupant = null
-	pr_mech_sleeper.stop()
-	set_ready_state(1)
-	return
+	patient.forceMove(get_turf(src))
+	occupant_message("[patient] ejected. Life support functions disabled.")
+	log_message("[patient] ejected. Life support functions disabled.")
+	patient.reset_view()
+	SSobj.processing.Remove(src)
+	update_equip_info()
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/detach()
-	if(occupant)
+/obj/item/mecha_parts/mecha_equipment/sleeper/detach()
+	if(patient)
 		occupant_message("<span class='warning'>Unable to detach [src] - equipment occupied!</span>")
 		return
-	pr_mech_sleeper.stop()
+	SSobj.processing.Remove(src)
+	update_equip_info()
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/get_equip_info()
+/obj/item/mecha_parts/mecha_equipment/sleeper/get_equip_info()
 	var/output = ..()
 	if(output)
 		var/temp = ""
-		if(occupant)
-			temp = "<br />\[Occupant: [occupant] ([occupant.stat > 1 ? "*DECEASED*" : "Health: [occupant.health]%"])\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
+		if(patient)
+			temp = "<br />\[Occupant: [patient] ([patient.stat > 1 ? "*DECEASED*" : "Health: [patient.health]%"])\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
 		return "[output] [temp]"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/sleeper/Topic(href,href_list)
 	..()
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(filter.get("eject"))
 		go_out()
 	if(filter.get("view_stats"))
-		chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
+		chassis.occupant << browse(get_patient_stats(),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(filter.get("inject"))
 		inject_reagent(filter.getType("inject",/datum/reagent),filter.getObj("source"))
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_stats()
-	if(!occupant)
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_patient_stats()
+	if(!patient)
 		return
 	return {"<html>
 				<head>
-				<title>[occupant] statistics</title>
+				<title>[patient] statistics</title>
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
 				</script>
@@ -139,11 +124,11 @@
 				<body>
 				<h3>Health statistics</h3>
 				<div id="lossinfo">
-				[get_occupant_dam()]
+				[get_patient_dam()]
 				</div>
 				<h3>Reagents in bloodstream</h3>
 				<div id="reagents">
-				[get_occupant_reagents()]
+				[get_patient_reagents()]
 				</div>
 				<div id="injectwith">
 				[get_available_reagents()]
@@ -151,9 +136,9 @@
 				</body>
 				</html>"}
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_dam()
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_patient_dam()
 	var/t1
-	switch(occupant.stat)
+	switch(patient.stat)
 		if(0)
 			t1 = "Conscious"
 		if(1)
@@ -162,26 +147,26 @@
 			t1 = "*dead*"
 		else
 			t1 = "Unknown"
-	return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.stat > 1 ? "[t1]" : "[occupant.health]% ([t1])"]</font><br />
-				<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
-				<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
-				<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
-				<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
-				<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
-				<font color="red">[occupant.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</font><br />
-				<font color="red">[occupant.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
+	return {"<font color="[patient.health > 50 ? "blue" : "red"]"><b>Health:</b> [patient.stat > 1 ? "[t1]" : "[patient.health]% ([t1])"]</font><br />
+				<font color="[patient.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [patient.bodytemperature-T0C]&deg;C ([patient.bodytemperature*1.8-459.67]&deg;F)</font><br />
+				<font color="[patient.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [patient.getBruteLoss()]%</font><br />
+				<font color="[patient.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [patient.getOxyLoss()]%</font><br />
+				<font color="[patient.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [patient.getToxLoss()]%</font><br />
+				<font color="[patient.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
+				<font color="red">[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</font><br />
+				<font color="red">[patient.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
 				"}
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_occupant_reagents()
-	if(occupant.reagents)
-		for(var/datum/reagent/R in occupant.reagents.reagent_list)
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_patient_reagents()
+	if(patient.reagents)
+		for(var/datum/reagent/R in patient.reagents.reagent_list)
 			if(R.volume > 0)
 				. += "[R]: [round(R.volume,0.01)]<br />"
 	return . || "None"
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/get_available_reagents()
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/get_available_reagents()
 	var/output
-	var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun) in chassis
+	var/obj/item/mecha_parts/mecha_equipment/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/syringe_gun) in chassis
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
@@ -189,41 +174,41 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
-	if(!R || !occupant || !SG || !(SG in chassis.equipment))
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/syringe_gun/SG)
+	if(!R || !patient || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
-	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
-		occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
-		log_message("Injecting [occupant] with [to_inject] units of [R.name].")
-		add_logs(chassis.occupant, occupant, "injected", "[name] ([R] - [to_inject] units)")
-		SG.reagents.trans_id_to(occupant,R.id,to_inject)
+	if(to_inject && patient.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
+		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
+		log_message("Injecting [patient] with [to_inject] units of [R.name].")
+		add_logs(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
+		SG.reagents.trans_id_to(patient,R.id,to_inject)
 		update_equip_info()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/update_equip_info()
+/obj/item/mecha_parts/mecha_equipment/sleeper/update_equip_info()
 	if(..())
-		send_byjax(chassis.occupant,"msleeper.browser","lossinfo",get_occupant_dam())
-		send_byjax(chassis.occupant,"msleeper.browser","reagents",get_occupant_reagents())
+		send_byjax(chassis.occupant,"msleeper.browser","lossinfo",get_patient_dam())
+		send_byjax(chassis.occupant,"msleeper.browser","reagents",get_patient_reagents())
 		send_byjax(chassis.occupant,"msleeper.browser","injectwith",get_available_reagents())
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist()
+/obj/item/mecha_parts/mecha_equipment/sleeper/container_resist()
 	go_out()
 
-/datum/global_iterator/mech_sleeper
 
-/datum/global_iterator/mech_sleeper/process(obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
-	if(!S.chassis)
-		S.set_ready_state(1)
-		return stop()
-	if(!S.chassis.has_charge(S.energy_drain))
-		S.set_ready_state(1)
-		S.log_message("Deactivated.")
-		S.occupant_message("[src] deactivated - no power.")
-		return stop()
-	var/mob/living/carbon/M = S.occupant
+/obj/item/mecha_parts/mecha_equipment/sleeper/process()
+	if(!chassis)
+		SSobj.processing.Remove(src)
+		return
+	if(!chassis.has_charge(energy_drain))
+		set_ready_state(1)
+		log_message("Deactivated.")
+		occupant_message("[src] deactivated - no power.")
+		SSobj.processing.Remove(src)
+		return
+	var/mob/living/carbon/M = patient
 	if(!M)
 		return
 	if(M.health > 0)
@@ -234,11 +219,16 @@
 	M.AdjustStunned(-4)
 	if(M.reagents.get_reagent_amount("epinephrine") < 5)
 		M.reagents.add_reagent("epinephrine", 5)
-	S.chassis.use_power(S.energy_drain)
-	S.update_equip_info()
-	return
+	chassis.use_power(energy_drain)
+	update_equip_info()
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
+
+
+
+///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
+
+
+/obj/item/mecha_parts/mecha_equipment/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
 	icon = 'icons/obj/guns/projectile.dmi'
@@ -251,42 +241,44 @@
 	var/synth_speed = 5 //[num] reagent units per cycle
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
-	var/datum/global_iterator/mech_synth/synth
 	range = MELEE|RANGED
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/New()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/New()
 	..()
 	flags |= NOREACT
 	syringes = new
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
 	create_reagents(max_volume)
-	synth = new (list(src),0)
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/detach()
-	synth.stop()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/detach()
+	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/critfail()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/Destroy()
+	SSobj.processing.Remove(src)
+	..()
+
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/critfail()
 	..()
 	flags &= ~NOREACT
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/can_attach(obj/mecha/medical/M)
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/can_attach(obj/mecha/medical/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/get_equip_info()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/get_equip_info()
 	var/output = ..()
 	if(output)
 		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/action(atom/movable/target)
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/action(atom/movable/target)
 	if(!action_checks(target))
 		return
 	if(istype(target,/obj/item/weapon/reagent_containers/syringe))
@@ -303,8 +295,6 @@
 	if(reagents.total_volume<=0)
 		occupant_message("<span class=\"alert\">No available reagents to load syringe with.</span>")
 		return
-	set_ready_state(0)
-	chassis.use_power(energy_drain)
 	var/turf/trg = get_turf(target)
 	var/obj/item/weapon/reagent_containers/syringe/mechsyringe = syringes[1]
 	mechsyringe.forceMove(get_turf(chassis))
@@ -315,7 +305,7 @@
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
 	log_message("Launched [mechsyringe] from [src], targeting [target].")
 	var/mob/originaloccupant = chassis.occupant
-	spawn(-1)
+	spawn(0)
 		src = null //if src is deleted, still process the syringe
 		for(var/i=0, i<6, i++)
 			if(!mechsyringe)
@@ -350,11 +340,10 @@
 				mechsyringe.update_icon()
 				break
 			sleep(1)
-	do_after_cooldown()
 	return 1
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/Topic(href,href_list)
 	..()
 	var/datum/topic_input/filter = new (href,href_list)
 	if(filter.get("toggle_mode"))
@@ -375,7 +364,7 @@
 				m++
 		if(processed_reagents.len)
 			message += " added to production"
-			synth.start()
+			SSobj.processing |= src
 			occupant_message(message)
 			occupant_message("Reagent processing started.")
 			log_message("Reagent processing started.")
@@ -392,7 +381,7 @@
 		return
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_page()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
 						<head>
 						<title>Reagent Synthesizer</title>
@@ -420,7 +409,7 @@
 						"}
 	return output
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_form()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_form()
 	var/r_list = get_reagents_list()
 	var/inputs
 	if(r_list)
@@ -435,14 +424,14 @@
 						"}
 	return output
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_list()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_reagents_list()
 	var/output
 	for(var/i=1 to known_reagents.len)
 		var/reagent_id = known_reagents[i]
 		output += {"<input type="checkbox" value="[reagent_id]" name="reagent_[i]" [(reagent_id in processed_reagents)? "checked=\"1\"" : null]> [known_reagents[reagent_id]]<br />"}
 	return output
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_current_reagents()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/get_current_reagents()
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.volume > 0)
@@ -451,7 +440,7 @@
 		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=\ref[src];purge_all=1\">Purge All</a>"
 	return output || "None"
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
 			occupant_message("The syringe is too far away.")
@@ -473,7 +462,7 @@
 	occupant_message("The [src] syringe chamber is full.")
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/analyze_reagents(atom/A)
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/analyze_reagents(atom/A)
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
@@ -488,42 +477,38 @@
 	occupant_message("Analyzis complete.")
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/add_known_reagent(r_id,r_name)
-	set_ready_state(0)
-	do_after_cooldown()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/proc/add_known_reagent(r_id,r_name)
 	if(!(r_id in known_reagents))
 		known_reagents += r_id
 		known_reagents[r_id] = r_name
 		return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/update_equip_info()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/update_equip_info()
 	if(..())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/on_reagent_change()
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/on_reagent_change()
 	..()
 	update_equip_info()
 	return
 
-/datum/global_iterator/mech_synth
-	delay = 100
 
-/datum/global_iterator/mech_synth/process(var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
-	if(!S.chassis)
-		return stop()
-	var/energy_drain = S.energy_drain*10
-	if(!S.processed_reagents.len || S.reagents.total_volume >= S.reagents.maximum_volume || !S.chassis.has_charge(energy_drain))
-		S.occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
-		S.log_message("Reagent processing stopped.")
-		return stop()
-	if(anyprob(S.reliability))
-		S.critfail()
-	var/amount = S.synth_speed / S.processed_reagents.len
-	for(var/reagent in S.processed_reagents)
-		S.reagents.add_reagent(reagent,amount)
-		S.chassis.use_power(energy_drain)
-	return 1
+/obj/item/mecha_parts/mecha_equipment/syringe_gun/process()
+	if(!chassis)
+		SSobj.processing.Remove(src)
+		return
+	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
+		occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
+		log_message("Reagent processing stopped.")
+		SSobj.processing.Remove(src)
+	if(anyprob(reliability))
+		critfail()
+	var/amount = synth_speed / processed_reagents.len
+	for(var/reagent in processed_reagents)
+		reagents.add_reagent(reagent,amount)
+		chassis.use_power(energy_drain)
+

@@ -165,12 +165,12 @@
 					src.throw_impact(A,thrower)
 					src.throwing = 0
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, var/spin = 1)
 	if(!target || !src || (flags & NODROP))	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	src.throwing = 1
-	if(target.allow_spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
+	if(spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
 		SpinAnimation(5, 1)
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
