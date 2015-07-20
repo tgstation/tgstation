@@ -174,12 +174,11 @@
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/New()
 	..()
-	reagents.add_reagent("neurotoxin", 5)
-	reagents.add_reagent("morphine", 5)
-	reagents.add_reagent("spore", 5)
-	reagents.add_reagent("mutetoxin", 5) //;HELP OPS IN MAINT
-	reagents.add_reagent("initropidril", 5)
-	reagents.add_reagent("sodium_thiopental", 5)
+	reagents.add_reagent("neurotoxin", 6)
+	reagents.add_reagent("spore", 6)
+	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
+	reagents.add_reagent("coniine", 6)
+	reagents.add_reagent("sodium_thiopental", 6)
 
 /obj/item/ammo_casing/a762
 	desc = "A 7.62mm bullet casing."
