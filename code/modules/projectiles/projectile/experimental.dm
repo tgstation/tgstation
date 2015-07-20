@@ -628,6 +628,12 @@
 	else
 		return ..()
 
+#define SPUR_FULL_POWER 4
+#define SPUR_HIGH_POWER 3
+#define SPUR_MEDIUM_POWER 2
+#define SPUR_LOW_POWER 1
+#define SPUR_NO_POWER 0
+
 /obj/item/projectile/spur
 	name = "spur bullet"
 	damage_type = BRUTE
@@ -638,24 +644,23 @@
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "spur_medium"
 	animate_movement = 2
+	custom_impact = 1
 
 /obj/item/projectile/spur/OnFired()
 	var/obj/item/weapon/gun/energy/spur/quote = shot_from
-	var/obj/item/weapon/cell/energy = quote.power_supply
-	var/maxlevel = energy.maxcharge
-	var/level = energy.charge
-	if(level >= ((maxlevel/3)*2))
-		icon_state = "spur_high"
-		damage = 40
-		kill_count = 20
-	else if(level >= (maxlevel/3))
-		icon_state = "spur_medium"
-		damage = 30
-		kill_count = 13
-	else
-		icon_state = "spur_low"
-		damage = 20
-		kill_count = 7
+	switch(quote.firelevel)
+		if(SPUR_FULL_POWER,SPUR_HIGH_POWER)
+			icon_state = "spur_high"
+			damage = 40
+			kill_count = 20
+		if(SPUR_MEDIUM_POWER)
+			icon_state = "spur_medium"
+			damage = 30
+			kill_count = 13
+		if(SPUR_LOW_POWER,SPUR_NO_POWER)
+			icon_state = "spur_low"
+			damage = 20
+			kill_count = 7
 	..()
 
 /obj/item/projectile/spur/Bump(atom/A as mob|obj|turf|area)
@@ -671,8 +676,10 @@
 			impact.pixel_x = -16
 	if(ismob(A))
 		impact.icon_state = "spur_3"
+		playsound(impact, 'sound/weapons/spur_hitmob.ogg', 30, 1)
 	else
 		impact.icon_state = "spur_1"
+		playsound(impact, 'sound/weapons/spur_hitmob.ogg', 30, 1)
 	return ..()
 
 /obj/item/projectile/spur/process_step()
@@ -680,3 +687,9 @@
 		var/obj/effect/overlay/beam/impact/impact = new(get_turf(src))
 		impact.icon_state = "spur_2"
 	..()
+
+#undef SPUR_FULL_POWER
+#undef SPUR_HIGH_POWER
+#undef SPUR_MEDIUM_POWER
+#undef SPUR_LOW_POWER
+#undef SPUR_NO_POWER

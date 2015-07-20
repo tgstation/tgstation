@@ -27,17 +27,9 @@
 
 /obj/effect/overlay/beam/New(turf/loc, var/lifetime = 10, var/fade = 0)
 	..()
-	spawn()
-		sleep(lifetime/4)
-		if(fade)
-			alpha = 192
-		sleep(lifetime/4)
-		if(fade)
-			alpha = 128
-		sleep(lifetime/4)
-		if(fade)
-			alpha = 64
-		sleep(lifetime/4)
+	spawn if(fade)
+		animate(src, alpha=0, time=lifetime)
+	spawn(lifetime)
 		qdel(src)
 
 /obj/effect/overlay/beam/impact

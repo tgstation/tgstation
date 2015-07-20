@@ -61,6 +61,8 @@
 	var/dy = 0
 	var/error = 0
 
+	var/custom_impact = 0
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
 	if(!isliving(target))	return 0
@@ -185,6 +187,32 @@
 				loc = A.loc
 			permutated.Add(A)
 			return 0
+		else if(!custom_impact)
+			var/obj/effect/overlay/beam/impact/impact = new(get_turf(src))
+			switch(get_dir(src,A))
+				if(NORTH)
+					impact.pixel_y = 16
+				if(SOUTH)
+					impact.pixel_y = -16
+				if(EAST)
+					impact.pixel_x = 16
+				if(WEST)
+					impact.pixel_x = -16
+			var/impact_icon = null
+			var/impact_sound = null
+			if(ismob(A))
+				if(issilicon(A))
+					impact_icon = "default_solid"
+					impact_sound = 'sound/items/metal_impact.ogg'
+				else
+					impact_icon = "default_mob"//todo: blood_colors
+					impact_sound = 'sound/weapons/pierce.ogg'
+			else
+				impact_icon = "default_solid"
+				impact_sound = 'sound/items/metal_impact.ogg'
+
+			impact.icon_state = impact_icon
+			playsound(impact, impact_sound, 30, 1)
 		if(istype(A,/turf))
 			for(var/obj/O in A)
 				O.bullet_act(src)
@@ -236,67 +264,41 @@
 	var/sleeptime = 1
 	if(src.loc)
 		if(dist_x > dist_y)
-			if(step_delay)
-				sleep(step_delay)
-			if(kill_count < 1)
-				//del(src)
-				OnDeath()
-				loc = null
-				returnToPool(src)
-				return
-			kill_count--
-			if(error < 0)
-				var/atom/step = get_step(src, dy)
-				if(!step)
-					bullet_die()
-				src.Move(step)
-				error += dist_x
-				bump_original_check()
-				sleeptime = 0//so that bullets going in diagonals don't move twice slower
-			else
-				var/atom/step = get_step(src, dx)
-				if(!step)
-					bullet_die()
-				src.Move(step)
-				error -= dist_y
-				dir = dx
-				if(error < 0)
-					dir = dx + dy
-				bump_original_check()
+			sleeptime = bresenham_step(dist_x,dist_y,dx,dy)
 		else
-			if(step_delay)
-				sleep(step_delay)
-			if(kill_count < 1)
-				//del(src)
-				OnDeath()
-				loc = null
-				returnToPool(src)
-				return
-			kill_count--
-			if(error < 0)
-				var/atom/step = get_step(src, dx)
-				if(!step)
-					bullet_die()
-				src.Move(step)
-				error += dist_y
-				bump_original_check()
-				sleeptime = 0//so that bullets going in diagonals don't move twice slower
-			else
-				var/atom/step = get_step(src, dy)
-				if(!step)
-					bullet_die()
-				src.Move(step)
-				error -= dist_x
-				dir = dy
-				if(error < 0)
-					dir = dx + dy
-				bump_original_check()
+			sleeptime = bresenham_step(dist_y,dist_x,dy,dx)
 		sleep(sleeptime)
 
 
+/obj/item/projectile/proc/bresenham_step(var/distA, var/distB, var/dA, var/dB)
+	if(step_delay)
+		sleep(step_delay)
+	if(kill_count < 1)
+		bullet_die()
+		return 1
+	kill_count--
+	if(error < 0)
+		var/atom/step = get_step(src, dB)
+		if(!step)
+			bullet_die()
+		src.Move(step)
+		error += distA
+		bump_original_check()
+		return 0//so that bullets going in diagonals don't move twice slower
+	else
+		var/atom/step = get_step(src, dA)
+		if(!step)
+			bullet_die()
+		src.Move(step)
+		error -= distB
+		dir = dA
+		if(error < 0)
+			dir = dA + dB
+		bump_original_check()
+		return 1
+
 /obj/item/projectile/proc/bullet_die()
 	OnDeath()
-	loc = null
 	returnToPool(src)
 
 /obj/item/projectile/proc/bump_original_check()
@@ -304,34 +306,6 @@
 		if(loc == get_turf(original))
 			if(!(original in permutated))
 				Bump(original)
-
-/*
-/obj/item/projectile/proc/process_step()
-	if(src.loc)
-		if(step_delay)
-			sleep(step_delay)
-		if(kill_count < 1)
-			//del(src)
-			OnDeath()
-			loc = null
-			returnToPool(src)
-			return
-		kill_count--
-		if((!( current ) || loc == current))
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-			//del(src)
-			OnDeath()
-			loc = null
-			returnToPool(src)
-			return
-		step_towards(src, current)
-		if(!bumped && !isturf(original))
-			if(loc == get_turf(original))
-				if(!(original in permutated))
-					Bump(original)
-		sleep(1)
-*/
 
 /obj/item/projectile/process()
 	spawn while(loc)
