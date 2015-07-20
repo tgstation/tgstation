@@ -129,6 +129,7 @@
 		return 0
 	if(mess || attempting)
 		return 0
+
 	var/datum/mind/clonemind = locate(mindref)
 	if(!istype(clonemind))	//not a mind
 		return 0
@@ -181,8 +182,12 @@
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
-	clonemind.transfer_to(H)
-	H.ckey = ckey
+	var/list/candidates = get_candidates(BE_CLONE)
+	var/client/C = null
+	if(candidates.len)
+		C = pick(candidates)
+
+	H.ckey = C.ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	hardset_dna(H, ui, se, null, null, mrace, features)

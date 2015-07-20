@@ -350,6 +350,9 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
+	if (subject.client.prefs.do_not_clone)
+		scantemp = "<font class='bad'>Do Not Clone form on file.</font>"
+		return
 	if (!check_dna_integrity(subject) || !istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
