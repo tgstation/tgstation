@@ -143,6 +143,8 @@
 		else
 			playsound(H, step_sound, 20, 1)
 
+#define CLOWNSHOES_RANDOM_SOUND "random sound"
+
 /obj/item/clothing/shoes/clown_shoes/advanced
 	name = "advanced clown shoes"
 	desc = "Only granted to the most devout followers of Honkmother."
@@ -174,7 +176,10 @@
 		"Supermatter" = 'sound/effects/supermatter.ogg',
 		"Emitter" = 'sound/weapons/emitter.ogg',
 		"Laughter" = 'sound/effects/laughtrack.ogg',
-		"Mecha step" = 'sound/mecha/mechstep.ogg')
+		"Mecha step" = 'sound/mecha/mechstep.ogg',
+		"Fart" = 'sound/misc/fart.ogg',
+		"Random" = CLOWNSHOES_RANDOM_SOUND)
+	var/random_sound = 0
 
 /obj/item/clothing/shoes/clown_shoes/advanced/attack_self(mob/user)
 	if(user.mind && user.mind.assigned_role != "Clown")
@@ -199,11 +204,12 @@
 	var/self_loc = src.loc //To disallow fucking with shoes from distance
 	var/new_sound = input(user,"Select the new step sound!","Advanced clown shoes") in sound_list
 
-	if(user_loc==user.loc && self_loc==src.loc)
+	if(Adjacent(user))
 		step_sound = sound_list[new_sound]
 		user << "<span class='sinister'>You set the step sound to \"[new_sound]\"!</span>"
-	else
-		user << "<span class='warning'>You have to stand still!</span>"
+		random_sound = 0
+		if(step_sound == CLOWNSHOES_RANDOM_SOUND)
+			random_sound = 1
 
 /obj/item/clothing/shoes/clown_shoes/advanced/verb/ChangeSound()
 	set category = "Object"
@@ -216,20 +222,18 @@
 		var/mob/living/carbon/human/H = loc
 
 		if(H.mind && H.mind.assigned_role != "Clown")
-			if(prob(1) || ( H.mind.assigned_role == "Mime" && prob(10) ) )
-				spawn(rand(50,500))
-					H << "<i>[pick(boo_phrases)]</i>"
-			if(prob(10) || ( H.mind.assigned_role == "Mime" && prob(50) ) )
-				H.stop_pulling()
-				H << "<SPAN CLASS='notice'>You slipped!</SPAN>"
-				H.inertia_dir = H.last_move
-				step(H, H.inertia_dir)
+			if( ( H.mind.assigned_role == "Mime" ) )
 				playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 				H.Stun(3)
 				H.Weaken(2)
 
 			return
+
+		if(random_sound)
+			step_sound = sound_list[pick(sound_list)]
 	..()
+
+#undef CLOWNSHOES_RANDOM_SOUND
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
