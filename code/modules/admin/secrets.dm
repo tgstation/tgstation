@@ -166,11 +166,6 @@
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lawchanges;size=800x500")
 
-		if("check_antagonist")
-			if(!check_rights(R_ADMIN))
-				return
-			check_antagonists()
-
 		if("moveminingshuttle")
 			if(!check_rights(R_ADMIN))
 				return
@@ -197,23 +192,6 @@
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
-
-		if("kick_all_from_lobby")
-			if(!check_rights(R_ADMIN))
-				return
-			if(ticker && ticker.current_state == GAME_STATE_PLAYING)
-				var/afkonly = text2num(href_list["afkonly"])
-				if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
-					usr << "Kick clients from lobby aborted"
-					return
-				var/list/listkicked = kick_clients_in_lobby("<span class='danger'>The admin [usr.ckey] issued a 'kick all clients from lobby' command.</span>", afkonly)
-				var/strkicked = ""
-				for(var/name in listkicked)
-					strkicked += "[name], "
-				message_admins("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
-				log_admin("[key_name(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
-			else
-				usr << "You may only use this when the game is running"
 
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
