@@ -170,7 +170,6 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+4 = toggle intents
 \tDEL = pull
 \tINS = toggle intents
-\tEND = resist
 \tPGUP = cycle active modules
 \tPGDN = activate held object
 </font>"}

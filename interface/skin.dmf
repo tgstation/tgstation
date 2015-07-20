@@ -16,10 +16,6 @@ macro "borghotkeymode"
 		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST"
-		command = "resist"
-		is-disabled = false
-	elem 
 		name = "NORTHWEST"
 		command = "unequip-module"
 		is-disabled = false
