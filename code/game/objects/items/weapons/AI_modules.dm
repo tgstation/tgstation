@@ -227,7 +227,6 @@ AI MODULES
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
 	origin_tech = "programming=3;materials=4"
-	laws = list("This is a bug.")  //This won't give the AI a message reading "these are now your laws: 1. this is a bug" because this list is only read in aiModule's subtypes.
 	bypass_law_amt_check = 1
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
