@@ -9,7 +9,9 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
+	ammo_x_offset = 3
+	flight_x_offset = 17
+	flight_y_offset = 9
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	return
@@ -18,11 +20,13 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	item_state = "ioncarbine"
 	origin_tech = "combat=4;magnets=4;materials=4"
 	w_class = 3
 	slot_flags = SLOT_BELT
 	pin = null
+	ammo_x_offset = 2
+	flight_x_offset = 18
+	flight_y_offset = 11
 
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
@@ -31,6 +35,13 @@
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
+	ammo_x_offset = 1
+
+/obj/item/weapon/gun/energy/decloner/update_icon()
+	..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(power_supply.charge > shot.e_cost)
+		overlays += "decloner_spin"
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
@@ -41,7 +52,6 @@
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
 	var/charge_tick = 0
-	var/mode = 0 //0 = mutate, 1 = yield boost
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
@@ -115,6 +125,7 @@
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
+	ammo_x_offset = 2
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
@@ -150,6 +161,13 @@
 	recent_reload = 1
 	update_icon()
 	return
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(power_supply.charge < shot.e_cost)
+		icon_state = "[initial(icon_state)]_empty"
+	else
+		icon_state = initial(icon_state)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
@@ -205,50 +223,14 @@
 	else
 		..()
 
+/obj/item/weapon/gun/energy/plasmacutter/update_icon()
+	return
+
 /obj/item/weapon/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
 	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=3;engineering=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
-
-/obj/item/weapon/gun/energy/disabler
-	name = "disabler"
-	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
-	icon_state = "disabler"
-	item_state = null
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-
-/obj/item/weapon/gun/energy/disabler/cyborg
-	name = "cyborg disabler"
-	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	var/charge_tick = 0
-	var/recharge_time = 2.5
-	can_charge = 0
-
-/obj/item/weapon/gun/energy/disabler/cyborg/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
-				power_supply.give(shot.e_cost)	//... to recharge the shot
-
-	update_icon()
-	return 1
 
 /obj/item/weapon/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
@@ -261,6 +243,7 @@
 
 /obj/item/weapon/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
+	item_state = icon_state
 	return
 
 /obj/item/weapon/gun/energy/wormhole_projector/attack_self(mob/living/user)
@@ -333,3 +316,17 @@
 				power_supply.give(shot.e_cost)	//...to recharge the shot
 
 	return 1
+
+/obj/item/weapon/gun/energy/temperature
+	name = "temperature gun"
+	icon_state = "freezegun"
+	desc = "A gun that changes temperatures."
+	origin_tech = "combat=3;materials=4;powerstorage=3;magnets=2"
+	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
+	cell_type = "/obj/item/weapon/stock_parts/cell/high"
+	pin = null
+
+/obj/item/weapon/gun/energy/temperature/attack_self(mob/living/user)
+	select_fire(user)
+	update_icon()
+	return
