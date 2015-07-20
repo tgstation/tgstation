@@ -203,11 +203,14 @@
 	var/new_sound = input(user,"Select the new step sound!","Advanced clown shoes") in sound_list
 
 	if(Adjacent(user))
-		step_sound = sound_list[new_sound]
-		user << "<span class='sinister'>You set the step sound to \"[new_sound]\"!</span>"
-		random_sound = 0
 		if(step_sound == CLOWNSHOES_RANDOM_SOUND)
+			step_sound = "clownstep"
+			user << "<span class='sinister'>You set [src]'s step sound to always be random!</span>"
 			random_sound = 1
+		else
+			step_sound = sound_list[new_sound]
+			user << "<span class='sinister'>You set [src]'s step sound to \"[new_sound]\"!</span>"
+			random_sound = 0
 
 /obj/item/clothing/shoes/clown_shoes/advanced/verb/ChangeSound()
 	set category = "Object"
