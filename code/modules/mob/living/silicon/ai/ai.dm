@@ -231,12 +231,12 @@ var/list/ai_list = list()
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			for (var/datum/mind/malfai in malf.malf_ai)
 				if ((mind == malfai) && (malf.apcs > 0))
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
+					stat("Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds", null)
 
 		if(!stat)
-			stat(null, text("System integrity: [(health+100)/2]%"))
-			stat(null, "Station Time: [worldtime2text()]")
-			stat(null, text("Connected cyborgs: [connected_robots.len]"))
+			stat("System integrity: [(health+100)/2]%", null)
+			stat("Station Time: [worldtime2text()]", null)
+			stat("Connected cyborgs: [connected_robots.len]", null)
 			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
 				borg_area = get_area(R)
@@ -246,10 +246,10 @@ var/list/ai_list = list()
 				else if(!R.cell || R.cell.charge <= 0)
 					robot_status = "DEPOWERED"
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
-				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
- 				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]"))
+				stat("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
+ 				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]", null)
 		else
-			stat(null, text("Systems nonfunctional"))
+			stat("Systems nonfunctional", null)
 
 /mob/living/silicon/ai/canUseTopic()
 	if(stat)

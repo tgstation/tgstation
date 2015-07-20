@@ -305,16 +305,16 @@
 			for (var/datum/mind/malfai in malf.malf_ai)
 				if(connected_ai)
 					if((connected_ai.mind == malfai) && (malf.apcs > 0))
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds")
+						stat("Time until station control secured: [max(malf.AI_win_timeleft/malf.apcs, 0)] seconds", null)
 				else if(malf.malf_mode_declared && (malf.apcs > 0))
-					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
+					stat("Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]", null)
 
 		if(cell)
-			stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
+			stat("Charge Left: [cell.charge]/[cell.maxcharge]", null)
 		else
-			stat(null, text("No Cell Inserted!"))
+			stat("No Cell Inserted!", null)
 
-		stat(null, "Station Time: [worldtime2text()]")
+		stat("Station Time: [worldtime2text()]", null)
 		if(module)
 			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(internal)
@@ -323,7 +323,7 @@
 			for (var/datum/robot_energy_storage/st in module.storages)
 				stat("[st.name]: [st.energy]/[st.max_energy]")
 		if(connected_ai)
-			stat(null, text("Master AI: [connected_ai.name]"))
+			stat("Master AI: [connected_ai.name]", null)
 
 /mob/living/silicon/robot/restrained()
 	return 0

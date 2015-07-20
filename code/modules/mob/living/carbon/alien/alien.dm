@@ -142,9 +142,7 @@
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		stat(null, "Plasma Stored: [getPlasma()]/[max_plasma]")
+		stat("Plasma Stored: [getPlasma()]/[max_plasma]", null)
 
 	add_abilities_to_panel()
 

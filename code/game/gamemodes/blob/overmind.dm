@@ -113,8 +113,8 @@
 	..()
 	if(statpanel("Status"))
 		if(blob_core)
-			stat(null, "Core Health: [blob_core.health]")
-		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+			stat("Core Health: [blob_core.health]", null)
+		stat("Power Stored: [blob_points]/[max_blob_points]", null)
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
