@@ -2,18 +2,20 @@
 Title: Air Alarm
 Used In File(s): \code\game\machinery\alarm.dm
 
-#define AALARM_MODE_SCRUBBING	1
-#define AALARM_MODE_VENTING		2 //makes draught
-#define AALARM_MODE_PANIC		3 //constantly sucks all air
-#define AALARM_MODE_REPLACEMENT	4 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_OFF			5
-#define AALARM_MODE_FLOOD		6 //Emagged mode; turns off scrubbers and pressure checks on vents
+#define AALARM_MODE_SCRUBBING 		1
+#define AALARM_MODE_VENTING 		2 //makes draught
+#define AALARM_MODE_PANIC 			3 //like siphon, but stronger (enables widenet)
+#define AALARM_MODE_REPLACEMENT 	4 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_OFF 			5
+#define AALARM_MODE_FLOOD 			6 //Emagged mode; turns off scrubbers and pressure checks on vents
+#define AALARM_MODE_SIPHON 			7 //Scrubbers suck air
+#define AALARM_MODE_CONTAMINATED 	8 //Turns on all filtering and widenet scrubbing.
 
-#define AALARM_SCREEN_MAIN		1
-#define AALARM_SCREEN_VENT		2
-#define AALARM_SCREEN_SCRUB		3
-#define AALARM_SCREEN_MODE		4
-#define AALARM_SCREEN_SENSORS	5
+#define AALARM_SCREEN_MAIN    1
+#define AALARM_SCREEN_VENT    2
+#define AALARM_SCREEN_SCRUB   3
+#define AALARM_SCREEN_MODE    4
+#define AALARM_SCREEN_SENSORS 5
 
  -->
  <div class='notice'>
@@ -153,6 +155,14 @@ Used In File(s): \code\game\machinery\alarm.dm
 				</div>
 				<div class="itemContent">
 					{{:~link(scrubbing ? 'Scrubbing' : 'Siphoning', null, { 'id_tag' : id_tag, 'command' : 'scrubbing', 'val' : scrubbing ? 0 : 1}, null, scrubbing ? null : 'redButton')}}
+				</div>
+			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Scrub Range:
+				</div>
+				<div class="itemContent">
+					{{:~link(widenet ? 'Extended' : 'Normal', null, { 'id_tag' : id_tag, 'command' : 'widenet', 'val' : widenet ? 0 : 1}, null, widenet ? 'selected' : null)}}
 				</div>
 			</div>
 			<div class="item">

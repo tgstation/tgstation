@@ -36,6 +36,7 @@
 	R.designation = "Default"
 	R.notify_ai(2)
 	R.update_icons()
+	R.update_headlamp()
 
 	return 1
 
