@@ -274,8 +274,8 @@
 	dir = angle2dir(rotation+dir2angle(dir))
 
 	//resmooth if need be.
-	if(A.smooth)
-		smooth_icon(A)
+	if(smooth)
+		smooth_icon(src)
 
 	//rotate the pixel offsets too.
 	if (pixel_x || pixel_y)
