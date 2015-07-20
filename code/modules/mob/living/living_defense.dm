@@ -143,7 +143,7 @@
 	location.hotspot_expose(700, 50, 1)
 	if(istype(src, /mob/living/carbon))
 		var/mob/living/carbon/C = src
-		C.adjustFireLoss(0.3*M.fire_stacks)
+		C.adjustFireLoss(0.3*fire_stacks)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(0.5)
