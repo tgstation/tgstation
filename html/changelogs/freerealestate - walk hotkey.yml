@@ -1,0 +1,6 @@
+author: freerealestate
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added hotkeys to toggle walk. V and CTRL+V with hotkeys mode, Pause without them."

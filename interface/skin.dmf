@@ -222,6 +222,10 @@ macro "macro"
 		command = ".center"
 		is-disabled = false
 	elem 
+		name = "PAUSE"
+		command = "toggle-speed"
+		is-disabled = false
+	elem 
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
@@ -388,6 +392,10 @@ macro "hotkeymode"
 		command = ".center"
 		is-disabled = false
 	elem 
+		name = "PAUSE"
+		command = "toggle-speed"
+		is-disabled = false
+	elem 
 		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
@@ -550,6 +558,14 @@ macro "hotkeymode"
 	elem 
 		name = "T"
 		command = "say"
+		is-disabled = false
+	elem 
+		name = "V"
+		command = "toggle-speed"
+		is-disabled = false
+	elem 
+		name = "CTRL+V"
+		command = "toggle-speed"
 		is-disabled = false
 	elem "w_key"
 		name = "W+REP"

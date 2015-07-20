@@ -194,6 +194,20 @@
 /mob/living/carbon/proc/tintcheck()
 	return 0
 
+//Move intent
+/mob/living/carbon/proc/toggle_move_intent()
+	if(stat)
+		return
+
+	switch(usr.m_intent)
+		if("run")
+			usr.m_intent = "walk"
+			move_icon.icon_state = "walking"
+		if("walk")
+			usr.m_intent = "run"
+			move_icon.icon_state = "running"
+	usr.update_icons()
+
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
 	if(stat)
