@@ -25,6 +25,8 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
+	var/targetMoveKey = null //To prevent borgs from leaving without their beakers.
+
 
 /*
 USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
@@ -71,6 +73,19 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		T += Ml.rating
 	//Who even knows what to use the scanning module for
 */
+
+/obj/machinery/chem_dispenser/proc/user_moved(var/list/args)
+	var/event/E = args["event"]
+	if(!targetMoveKey)
+		E.handlers.Remove("\ref[src]:user_moved")
+		return
+
+	var/turf/T = args["loc"]
+
+	if(!Adjacent(T))
+		if(E.holder)
+			E.holder.on_moved.Remove(targetMoveKey)
+		detach()
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_dispenser/proc/recharge() called tick#: [world.time]")
@@ -211,6 +226,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 /obj/machinery/chem_dispenser/proc/detach()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/chem_dispenser/proc/detach() called tick#: [world.time]")
+	targetMoveKey=null
+
 	if(beaker)
 		var/obj/item/weapon/reagent_containers/glass/B = beaker
 		B.loc = loc
@@ -238,6 +255,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		var/mob/living/silicon/robot/R=user
 		if(!isMoMMI(user) && !istype(R.module,/obj/item/weapon/robot_module/medical))
 			return
+		targetMoveKey =  user.on_moved.Add(src, "user_moved")
 
 	if(istype(D, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
@@ -366,6 +384,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
+	var/targetMoveKey
+
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
@@ -396,6 +416,20 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 	overlays += overlay
 
+/obj/machinery/chem_master/proc/user_moved(var/list/args)
+	var/event/E = args["event"]
+	if(!targetMoveKey)
+		E.handlers.Remove("\ref[src]:user_moved")
+		return
+
+	var/turf/T = args["loc"]
+
+	if(!Adjacent(T))
+		if(E.holder)
+			E.holder.on_moved.Remove(targetMoveKey)
+		detach()
+
+
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -424,6 +458,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(user.type == /mob/living/silicon/robot)
 			var/mob/living/silicon/robot/R = user
 			R.uneq_active()
+			targetMoveKey =  R.on_moved.Add(src, "user_moved")
+
 		user.drop_item(B, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
@@ -760,6 +796,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
 	l_color = "#0000FF"
+	var/targetMoveKey
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -772,6 +809,19 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	)
 
 	RefreshParts()
+
+/obj/machinery/computer/pandemic/proc/user_moved(var/list/args)
+	var/event/E = args["event"]
+	if(!targetMoveKey)
+		E.handlers.Remove("\ref[src]:user_moved")
+		return
+
+	var/turf/T = args["loc"]
+
+	if(!Adjacent(T))
+		if(E.holder)
+			E.holder.on_moved.Remove(targetMoveKey)
+		detach()
 
 
 /obj/machinery/computer/pandemic/set_broken()
@@ -1032,6 +1082,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(user.type == /mob/living/silicon/robot)
 			var/mob/living/silicon/robot/R = user
 			R.uneq_active()
+			targetMoveKey =  R.on_moved.Add(src, "user_moved")
+
 		user.drop_item(I, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
@@ -1109,6 +1161,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 
 	var/list/holdingitems = list()
+	var/targetMoveKey
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -1129,6 +1182,20 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	RefreshParts()
 
 	return
+
+/obj/machinery/reagentgrinder/proc/user_moved(var/list/args)
+	var/event/E = args["event"]
+	if(!targetMoveKey)
+		E.handlers.Remove("\ref[src]:user_moved")
+		return
+
+	var/turf/T = args["loc"]
+
+	if(!Adjacent(T))
+		if(E.holder)
+			E.holder.on_moved.Remove(targetMoveKey)
+		detach()
+
 
 /obj/machinery/reagentgrinder/RefreshParts()
 	var/T = 0
@@ -1176,6 +1243,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if(user.type == /mob/living/silicon/robot)
 				var/mob/living/silicon/robot/R = user
 				R.uneq_active()
+				targetMoveKey =  R.on_moved.Add(src, "user_moved")
+
 			user.drop_item(O, src)
 			update_icon()
 			src.updateUsrDialog()
@@ -1545,6 +1614,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	/datum/chemical_reaction/toxins_special, /datum/chemical_reaction/goldschlager, /datum/chemical_reaction/patron,
 	/datum/chemical_reaction/Cream, /datum/chemical_reaction/soysauce)
 
+
 /obj/item/weapon/electrolyzer/attack_self(mob/user as mob)
 	if(beakers.len)
 		for(var/obj/B in beakers)
@@ -1649,6 +1719,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/list/cans = new/list() //These are the empty containers.
 	var/obj/item/weapon/reagent_containers/beaker = null // This is the active container
 
+	var/targetMoveKey
+
 /obj/structure/centrifuge/examine(mob/user)
 	..()
 	user << "<span class='info'>It contains [cans.len] empty containers[beaker ? " and an active container!" : "."]</span>"
@@ -1676,12 +1748,26 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if(user.type == /mob/living/silicon/robot)
 					var/mob/living/silicon/robot/R = user
 					R.uneq_active()
+					targetMoveKey =  R.on_moved.Add(src, "user_moved")
+
 				user.drop_item(W, src)
 			else
 				user << "<span class='warning'>There is already an active container.</span>"
 		return
 	else
 		..()
+/obj/structure/centrifuge/proc/user_moved(var/list/args)
+	var/event/E = args["event"]
+	if(!targetMoveKey)
+		E.handlers.Remove("\ref[src]:user_moved")
+		return
+
+	var/turf/T = args["loc"]
+
+	if(!Adjacent(T))
+		if(E.holder)
+			E.holder.on_moved.Remove(targetMoveKey)
+		detach()
 
 /obj/structure/centrifuge/attack_hand(mob/user as mob)
 	add_fingerprint(user)
