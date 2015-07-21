@@ -74,8 +74,6 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/machinery/recycler/update_icon()
 	..()
 	var/is_powered = !(stat & (BROKEN|NOPOWER))
-	if(safety_mode)
-		is_powered = 0
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 // This is purely for admin possession !FUN!.
