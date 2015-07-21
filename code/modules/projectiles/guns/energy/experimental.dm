@@ -158,10 +158,6 @@
 	fire_delay = 1
 
 /obj/item/weapon/gun/energy/spur/polarstar/process()
-	charge_tick++
-	if(charge_tick < 2) return 0
-	charge_tick = 0
-	levelChange()
 	return 1
 
 #undef SPUR_FULL_POWER
