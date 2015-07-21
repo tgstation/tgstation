@@ -62,10 +62,7 @@
 	if(usr)
 		if (usr.client)
 			if(usr.client.holder)
-				if(M.mind.assigned_role == "Chaplain")
-					M << "<B>You hear the voice of [ticker.Bible_deity_name] in your head... <em>[msg]</B></em>"
-				else
-					M << "<B>You hear a voice in your head... <em>[msg]</B></em>"
+				M.get_subtle_message(msg)
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("<span class='notice'><B>SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</B></span>", 1)

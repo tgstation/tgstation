@@ -1,3 +1,6 @@
+#define MOB_SPACEDRUGS_HALLUCINATING 15
+#define MOB_MINDBREAKER_HALLUCINATING 20
+
 /obj/screen/fuckstat
 	name = "Toggle Stat"
 	desc = "Fuck It"
@@ -239,7 +242,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 #define MESSAGE_SEE		1
 #define MESSAGE_HEAR	2
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1=visible or 2=hearable), alternative message, alt message type (1=if blind or 2=if deaf)
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/show_message() called tick#: [world.time]")
 
@@ -251,13 +254,13 @@ var/global/obj/screen/fuckstat/FUCK = new
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if((type & MESSAGE_SEE) && (sdisabilities & BLIND || blinded || paralysis)) //Vision related //We can't see all those emotes no-one ever does !
+		if((type & MESSAGE_SEE) && is_blind()) //Vision related //We can't see all those emotes no-one ever does !
 			if(!(alt))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if((type & MESSAGE_HEAR) && (sdisabilities & DEAF || ear_deaf)) //Hearing related //We can't hear what the person is saying. Too bad
+		if((type & MESSAGE_HEAR) && is_deaf()) //Hearing related //We can't hear what the person is saying. Too bad
 			if(!(alt))
 				src << "<span class='notice'>You can almost hear someone talking.</span>" //Well, not THAT deaf
 				return //And that does it
@@ -1738,3 +1741,38 @@ mob/proc/walking()
 
 /mob/can_shuttle_move()
 	return 1
+
+/mob/proc/is_blind()
+	if(sdisabilities & BLIND || blinded || paralysis)
+		return 1
+	return 0
+
+/mob/proc/is_deaf()
+	if(sdisabilities & DEAF || ear_deaf)
+		return 1
+	return 0
+
+/mob/proc/hallucinating() //Return 1 if hallucinating! This doesn't affect the scary stuff from mindbreaker toxin, but it does affect other stuff (like special messages for interacting with objects)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/hallucinating() called tick#: [world.time]")
+	if(isliving(src))
+		var/mob/living/M = src
+		if(M.hallucination >= MOB_MINDBREAKER_HALLUCINATING)
+			return 1
+		if(M.druggy >= MOB_SPACEDRUGS_HALLUCINATING)
+			return 1
+	return 0
+
+/mob/proc/get_subtle_message(var/msg)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_subtle_message() called tick#: [world.time]")
+	var/pre_msg = "You hear a voice in your head... "
+	if(mind && mind.assigned_role == "Chaplain")
+		pre_msg = "You hear the voice of [ticker.Bible_deity_name] in your head... "
+	if(src.hallucinating()) //If hallucinating, make subtle messages more fun
+		var/adjective = pick("an angry ","a funny ","a squeaky ","a disappointed ","your mother's ","your father's ","[ticker.Bible_deity_name]'s","an annoyed","a brittle","a loud","a very loud","a quiet")
+		var/location = pick("from above","from below","in your head")
+		pre_msg = pick("You hear [adjective] voice [location]...")
+
+	src << "<b>[pre_msg]<em>[msg]</em></b>"
+
+#undef MOB_SPACEDRUGS_HALLUCINATING
+#undef MOB_MINDBREAKER_HALLUCINATING
