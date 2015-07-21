@@ -23,10 +23,11 @@
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
-	..()
-	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	reagents.reaction(hit_atom, TOUCH)
-	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
+	if(!..()) //was it caught by a mob?
+		var/turf/T = get_turf(hit_atom)
+		new/obj/effect/decal/cleanable/pie_smudge(T)
+		reagents.reaction(hit_atom, TOUCH)
+		qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis

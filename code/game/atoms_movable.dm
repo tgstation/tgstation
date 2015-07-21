@@ -93,12 +93,12 @@
 /atom/movable/Crossed(atom/movable/AM)
 	return
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
-	if(throwing)
-		throw_impact(A)
-		throwing = 0
-	if ((A && yes))
-		A.last_bumped = world.time
+/atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
+	if((A && yes))
+		if(throwing)
+			throwing = 0
+			throw_impact(A)
+			. = 1
 		A.Bumped(src)
 
 
@@ -143,7 +143,6 @@
 	if(!direction)
 		return 1
 
-
 	var/old_dir = dir
 	. = step(src, direction)
 	dir = old_dir
@@ -151,70 +150,92 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/hit_check(mob/thrower) // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
-	if(src.throwing)
-		for(var/atom/A in get_turf(src))
-			if(A == src) continue
-			if(istype(A,/mob/living))
-				if(A:lying) continue
-				src.throw_impact(A,thrower)
-				if(src.throwing == 1)
-					src.throwing = 0
-			if(isobj(A))
-				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A,thrower)
-					src.throwing = 0
+/atom/movable/proc/throw_impact(atom/hit_atom)
+	return hit_atom.hitby(src)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, var/spin = 1)
+/atom/movable/hitby(atom/movable/AM, skip, var/hitpush = 1)
+	if(!anchored && hitpush)
+		step(src, AM.dir)
+	return ..()
+
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!target || !src || (flags & NODROP))	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
-	src.throwing = 1
-	if(spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
+	throwing = 1
+	if(spin) //if we don't want the /atom/movable to spin.
 		SpinAnimation(5, 1)
+
+	var/dist_travelled = 0
+	var/dist_since_sleep = 0
+
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 	var/dx = (target.x > src.x) ? EAST : WEST
 	var/dy = (target.y > src.y) ? NORTH : SOUTH
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
 
-	var/tdist_x = dist_x;
-	var/tdist_y = dist_y;
-	var/tdx = dx;
-	var/tdy = dy;
+	var/pure_diagonal = 0
+	if(dist_x == dist_y)
+		pure_diagonal = 1
 
 	if(dist_x <= dist_y)
-		tdist_x = dist_y;
-		tdist_y = dist_x;
-		tdx = dy;
-		tdy = dx;
+		var/olddist_x = dist_x
+		var/olddx = dx
+		dist_x = dist_y
+		dist_y = olddist_x
+		dx = dy
+		dy = olddx
 
-	var/error = tdist_x/2 - tdist_y
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST))) || ((dist_x <= dist_y) && ((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH))) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || !has_gravity(src)))
-		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
-		if(!src.throwing) break
-		if(!istype(src.loc, /turf)) break
+	var/error = dist_x/2 - dist_y
+	var/atom/finalturf = get_turf(target)
+	var/hit = 0
 
-		var/atom/step = get_step(src, (error < 0) ? tdy : tdx)
+	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
+
+		if(!istype(loc, /turf))
+			hit = 1
+			break
+
+		var/atom/step = get_step(src, get_dir(src, target))
+		if(!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
+			if(error >= 0 && get_dist(src, finalturf) > 1)
+				step = get_step(src, dx)
+			error += (error < 0) ? dist_x/2 : -dist_y
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			break
-		src.Move(step, get_dir(loc, step))
-		hit_check(thrower)
-		error += (error < 0) ? tdist_x : -tdist_y;
+		Move(step, get_dir(loc, step))
+		if(!throwing) // we hit something during our move
+			hit = 1
+			break
 		dist_travelled++
 		dist_since_sleep++
 		if(dist_since_sleep >= speed)
 			dist_since_sleep = 0
 			sleep(1)
 
-	//done throwing, either because it hit something or it finished moving
-	src.throwing = 0
-	if(isobj(src))
-		src.throw_impact(get_turf(src),thrower)
+		if(!dist_since_sleep && hitcheck()) //to catch sneaky things moving on our tile during our sleep(1)
+			hit = 1
+			break
 
+	//done throwing, either because it hit something or it finished moving
+	throwing = 0
+	if(!hit)
+		for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
+			if(A == target)
+				hit = 1
+				throw_impact(A)
+				return 1
+
+		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
 	return 1
 
+/atom/movable/proc/hitcheck()
+	for(var/atom/movable/AM in get_turf(src))
+		if(AM == src)
+			continue
+		if(AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
+			throw_impact(AM)
+			return 1
 
 //Overlays
 /atom/movable/overlay

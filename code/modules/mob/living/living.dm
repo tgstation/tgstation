@@ -52,13 +52,14 @@ Sorry Giacom. Please don't be mad :(
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
+	if(..()) //we are thrown onto something
+		return
 	if (buckled || !yes || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
 			return
-	..()
 	if(isobj(A))
 		var/obj/O = A
 		if(ObjBump(O))
@@ -67,6 +68,10 @@ Sorry Giacom. Please don't be mad :(
 		var/atom/movable/AM = A
 		if(PushAM(AM))
 			return
+
+/mob/living/Bumped(atom/movable/AM)
+	..()
+	last_bumped = world.time
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
