@@ -18,7 +18,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"monkey" = /datum/game_mode/monkey,				//11
 	"gangster" = /datum/game_mode/gang,				//12
 	"shadowling" = /datum/game_mode/shadowling,		//13
-	"abductor" = /datum/game_mode/abduction			//14
+	"abductor" = /datum/game_mode/abduction,		//14
+	"clone"											//15
 )
 
 
@@ -51,6 +52,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/age = 30						//age of character
 	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
+	var/be_cloned = 1					//cloning pref
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
 	var/backbag = 1						//backpack type
@@ -192,6 +194,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					dat += "<b>Species:</b> Human<BR>"
 
 				dat += "<b>Blood Type:</b> [blood_type]<BR>"
+				dat += "<b>Be Cloned: </b><a href ='?_src_=prefs;preference=be_cloned;task=input'>[be_cloned ? "Yes" : "No"]</a><BR>"
 				dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 				dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 				dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
@@ -935,7 +938,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							custom_names["deity"] = new_deity_name
 						else
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
-
+					if("be_cloned")
+						var/choice = alert(user, "Choose your cloning preference:", "Character Preference", "Be Cloned", "Do Not Clone")
+						if(choice == "Be Cloned")
+							be_cloned = 1
+						if(choice == "Do Not Clone")
+							be_cloned = 0
 
 			else
 				switch(href_list["preference"])
@@ -1056,7 +1064,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.gender = gender
 		character.age = age
 		character.blood_type = blood_type
-
+		character.be_cloned = be_cloned
 		character.eye_color = eye_color
 		character.hair_color = hair_color
 		character.facial_hair_color = facial_hair_color
