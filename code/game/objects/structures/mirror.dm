@@ -27,7 +27,7 @@
 				if(21 to 40)
 					H << "<span class='sinister'>There's [pick("somebody","a monster","a little girl","a zombie","a ghost","a catbeast","a demon")] standing behind you!</span>"
 					H.emote("scream",,, 1)
-					H.dir = turn(dir, 180)
+					H.dir = turn(H.dir, 180)
 					return
 				if(41 to 50)
 					H << "<span class='notice'>You don't see anything.</span>"
