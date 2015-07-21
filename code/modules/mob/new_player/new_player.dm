@@ -36,7 +36,7 @@
 		else	output += "<p><b>You are ready</b> (<a href='byond://?src=\ref[src];ready=2'>Cancel</A>)</p>"
 
 	else
-
+		ready = 0 // prevent setup character issues
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\\mob\new_player\new_player.dm:36: output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
 		output += {"<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>
