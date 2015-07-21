@@ -1,5 +1,3 @@
-
-
 var/global/list/boo_phrases=list(
 	"You feel a chill run down your spine.",
 	"You think you see a figure in your peripheral vision.",
@@ -9,6 +7,16 @@ var/global/list/boo_phrases=list(
 	"Something doesn't feel right...",
 	"You feel a presence in the room.",
 	"It feels like someone's standing behind you.",
+)
+
+var/global/list/boo_phrases_drugs=list(
+	"You feel something run down your leg!",
+	"You think you can see an elephant in your peripheral vision.",
+	"Was that a giraffe?",
+	"The hairs stand up on the back of your neck and applaud.",
+	"You are filled with happiness and delight.",
+	"Oh wow! Great stuff!",
+	"You feel like a room without a roof.",
 )
 
 var/global/list/boo_phrases_silicon=list(
@@ -47,39 +55,4 @@ var/global/list/boo_phrases_silicon=list(
 /spell/aoe_turf/boo/cast(list/targets)
 	for(var/turf/T in targets)
 		for(var/atom/A in T.contents)
-
-			// Bug humans
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
-				if(H && H.client)
-					H << "<i>[pick(boo_phrases)]</i>"
-
-			if(isrobot(A))
-				var/mob/living/silicon/S = A
-				if(S && S.client)
-					S << "<i>[pick(boo_phrases_silicon)]</i>"
-
-			// Blessed object? Skippit.
-			if(isobj(A) && A:blessed)
-				continue
-
-			// Flicker unblessed lights in range
-			if(istype(A,/obj/machinery/light))
-				var/obj/machinery/light/L = A
-				if(L)
-					L.flicker()
-
-			if(istype(A,/obj/structure/hanging_lantern))
-				var/obj/structure/hanging_lantern/H = A
-				if(H) //Fucked if I know
-					H.flicker()
-
-			// OH GOD BLUE APC (single animation cycle)
-			if(istype(A, /obj/machinery/power/apc))
-				A:spookify()
-
-			if(istype(A, /obj/machinery/status_display))
-				A:spookymode=1
-
-			if(istype(A, /obj/machinery/ai_status_display))
-				A:spookymode=1
+			A.spook()

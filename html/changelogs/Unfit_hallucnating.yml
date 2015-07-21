@@ -2,4 +2,4 @@ author: Unid
 delete-after: True
 changes: 
   - tweak: Chance of getting some annoying messages (including fake shuttle call) while hallucinating reduced greatly
-  - wip: The crematorium, mirrors and some other things now produce unique messages if used while hallucinating. This feature may be expanded in the future
+  - wip: Some things now produce unique messages if used while on drugs. This system may expand in the future.

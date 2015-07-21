@@ -310,3 +310,6 @@
 			if(max(abs(AM.x-src.x),abs(AM.y-src.y)) <= client.view)
 				return 1
 	return 0
+
+/mob/living/silicon/spook()
+	src << "<i>[pick(boo_phrases)]</i>"

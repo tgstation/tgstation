@@ -344,7 +344,7 @@
 			if(!M.hallucinating())
 				M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
 			else
-				M.show_message("<span class='notice'>You hear chewing sounds as the crematorium consumes its meal.</span>", 1)
+				M.show_message("<span class='notice'>You hear chewing as the crematorium consumes its meal.</span>", 1)
 				M << 'sound/items/eatfood.ogg'
 
 		locked = 1

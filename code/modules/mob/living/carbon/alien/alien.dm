@@ -233,7 +233,10 @@
 	visible_message( \
 		"<span class='warning'>[src] was shocked by the [source]!</span>", \
 		"<span class='danger'>You feel a powerful shock course through your body!</span>", \
-		"<span class='warning'>You hear a heavy electrical crack.</span>" \
+		"<span class='warning'>You hear a heavy electrical crack.</span>", \
+		"<span class='notice'>[src] starts raving!</span>", \
+		"<span class='notice'>You feel butterflies in your stomach!</span>", \
+		"<span class='warning'>You hear a policeman whistling!</span>"
 	)
 
 	//if(src.stunned < shock_damage)	src.stunned = shock_damage

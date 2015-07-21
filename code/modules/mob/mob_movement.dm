@@ -345,12 +345,14 @@
 			if(G.state == GRAB_AGGRESSIVE)
 				mob.delayNextMove(10)
 				if(!prob(25))	return 1
-				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s grip!</span>")
+				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s grip!</span>",
+					drugged_message="<span class='warning'>[mob] has broken free of [G.assailant]'s hug!</span>")
 				returnToPool(G)
 			if(G.state == GRAB_NECK)
 				mob.delayNextMove(10)
 				if(!prob(5))	return 1
-				mob.visible_message("<span class='warning'> [mob] has broken free of [G.assailant]'s headlock!</span>")
+				mob.visible_message("<span class='warning'>[mob] has broken free of [G.assailant]'s headlock!</span>",
+					drugged_message="<span class='warning'>[mob] has broken free of [G.assailant]'s passionate hug!</span>")
 				returnToPool(G)
 	return 0
 

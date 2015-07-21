@@ -122,7 +122,10 @@
 	visible_message( \
 		"<span class='warning'>[src] was shocked by the [source]!</span>", \
 		"<span class='danger'>You feel a powerful shock course through your body!</span>", \
-		"<span class='warning'>You hear a heavy electrical crack.</span>" \
+		"<span class='warning'>You hear a heavy electrical crack.</span>", \
+		"<span class='notice'>[src] starts raving!</span>", \
+		"<span class='notice'>You feel butterflies in your stomach!</span>", \
+		"<span class='warning'>You hear a policeman whistling!</span>"
 	)
 
 	//if(src.stunned < shock_damage)	src.stunned = shock_damage
@@ -233,6 +236,8 @@
 			M.visible_message( \
 				"<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 				"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>", \
+				drugged_message = "<span class='notice'>[M] starts massaging [t_him]'s back.</span>", \
+				self_drugged_message = "<span class='notice'>You start massaging [t_him]'s back.</span>"
 				)
 		// BEGIN HUGCODE - N3X
 		else
@@ -356,7 +361,8 @@
 	//actually throw it!
 	if (item)
 		item.forceMove(get_turf(src))
-		src.visible_message("<span class='warning'>[src] has thrown [item].</span>")
+		src.visible_message("<span class='warning'>[src] has thrown [item].</span>", \
+			drugged_message = "<span class='warning'>[item] escapes from [src]'s grasp and flies away!</span>")
 
 		if((istype(src.loc, /turf/space)) || (src.areaMaster.has_gravity == 0))
 			var/mob/space_obj=src
@@ -596,7 +602,8 @@
 			src << "<span class='warning'>Your young are not ready yet.</span>"
 		else
 			src << "<span class='danger'>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</span>"
-			visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+			visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>", \
+				drugged_message = "<span class='notice'>[src] starts vomiting a rainbow! Suddenly, a pot of gold appears.</span>")
 			B.chemicals -= 100
 
 			B.numChildren++

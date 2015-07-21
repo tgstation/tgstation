@@ -49,7 +49,6 @@
 		if(radio_controller)
 			radio_controller.add_object(src, frequency)
 
-
 // timed process
 /obj/machinery/status_display/process()
 	if(stat & NOPOWER)
@@ -186,7 +185,6 @@
 	if(maptext)
 		maptext = ""
 
-
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
 		if("blank")
@@ -207,6 +205,10 @@
 			if(supply_display)
 				mode = 4
 
+/obj/machinery/status_display/spook()
+	if(..())
+		spookymode = 1
+
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
@@ -223,7 +225,6 @@
 	var/picture_state	// icon_state of ai picture
 
 	var/emotion = "Neutral"
-
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
@@ -291,6 +292,9 @@
 	if(overlays.len)
 		overlays.len = 0
 	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+
+/obj/machinery/ai_status_display/spook()
+	spookymode = 1
 
 #undef CHARS_PER_LINE
 #undef FOND_SIZE

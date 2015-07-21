@@ -1,5 +1,5 @@
 #define MOB_SPACEDRUGS_HALLUCINATING 15
-#define MOB_MINDBREAKER_HALLUCINATING 20
+#define MOB_MINDBREAKER_HALLUCINATING 100
 
 /obj/screen/fuckstat
 	name = "Toggle Stat"
@@ -239,6 +239,12 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 	usr.show_message(t, 1)
 
+/mob/proc/simple_message(var/msg, var/hallucination_msg)//Same as M << "message", but with additinal message for hallucinations
+	if(hallucinating() && hallucination_msg)
+		src << hallucination_msg
+	else
+		src << msg
+
 #define MESSAGE_SEE		1
 #define MESSAGE_HEAR	2
 
@@ -291,24 +297,49 @@ var/global/obj/screen/fuckstat/FUCK = new
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// drugged_message (optional) is shown to hallucinating mobs instead of message
+// self_drugged_message (optional) is shown to src mob if it's hallucinating
+// blind_drugged_message (optional) is shown to blind hallucinating people
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
+/mob/visible_message(var/message, var/self_message, var/blind_message, var/drugged_message, var/self_drugged_message, var/blind_drugged_message)
 	for(var/mob/M in viewers(src))
 		if(M.see_invisible < invisibility)
 			continue
+		var/hallucination = M.hallucinating()
 		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+		var/msg2 = blind_message
+
+		if(hallucination && drugged_message)
+			if(drugged_message)
+				msg = drugged_message
+			if(blind_drugged_message)
+				msg2 = blind_drugged_message
+
+		if(M==src)
+			if(self_message)
+				msg = self_message
+			if(hallucination && self_drugged_message)
+				msg = self_drugged_message
+
+		M.show_message( msg, 1, msg2, 2)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message)
+/atom/proc/visible_message(var/message, var/blind_message, var/drugged_message, var/blind_drugged_message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/visible_message() called tick#: [world.time]")
 	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
+		var/hallucination = M.hallucinating()
+		var/msg = message
+		var/msg2 = blind_message
+
+		if(hallucination)
+			if(drugged_message)
+				msg = drugged_message
+			if(blind_drugged_message)
+				msg2 = blind_drugged_message
+		M.show_message( msg, 1, msg2, 2)
 
 
 /mob/proc/findname(msg)

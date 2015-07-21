@@ -215,6 +215,9 @@ mob/living/carbon/proc/handle_hallucinations()
 					src << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
 					src << "<font color='red'>[config.alert_desc_delta]</font>"
 					src << sound('sound/AI/aimalf.ogg')
+
+					if(src.client)
+						message_admins("[key_name(usr)] just got a fake delta AI message from hallucinating! [formatJumpTo(get_turf(usr))]")
 				else
 					switch(rand(1,10))
 						if(1) src << "Your joints feel stiff."
