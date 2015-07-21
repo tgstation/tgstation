@@ -176,7 +176,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_is_always_random"] >> be_random_body
 	S["gender"]				>> gender
 	S["age"]				>> age
-	S["be_cloned"]		>> be_cloned
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
 	S["eye_color"]			>> eye_color
@@ -285,7 +284,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_is_always_random"] << be_random_body
 	S["gender"]				<< gender
 	S["age"]				<< age
-	S["be_cloned"]		<< be_cloned
 	S["hair_color"]			<< hair_color
 	S["facial_hair_color"]	<< facial_hair_color
 	S["eye_color"]			<< eye_color

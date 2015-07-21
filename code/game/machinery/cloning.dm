@@ -129,7 +129,6 @@
 		return 0
 	if(mess || attempting)
 		return 0
-
 	var/datum/mind/clonemind = locate(mindref)
 	if(!istype(clonemind))	//not a mind
 		return 0
@@ -138,6 +137,14 @@
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
 			return 0
+	else
+		for(var/mob/M in player_list)
+			if(M.ckey == ckey)
+				if(istype(M, /mob/dead/observer))
+					var/mob/dead/observer/G = M
+					if(G.can_reenter_corpse)
+						break
+				return 0
 
 	src.attempting = 1 //One at a time!!
 	src.locked = 1
@@ -174,12 +181,8 @@
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
-	var/list/candidates = get_candidates(BE_CLONE)
-	var/client/C = null
-	if(candidates.len)
-		C = pick(candidates)
-
-	H.ckey = C.ckey
+	clonemind.transfer_to(H)
+	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
 	hardset_dna(H, ui, se, null, null, mrace, features)
