@@ -1768,9 +1768,9 @@ mob/proc/walking()
 	if(mind && mind.assigned_role == "Chaplain")
 		pre_msg = "You hear the voice of [ticker.Bible_deity_name] in your head... "
 	if(src.hallucinating()) //If hallucinating, make subtle messages more fun
-		var/adjective = pick("an angry ","a funny ","a squeaky ","a disappointed ","your mother's ","your father's ","[ticker.Bible_deity_name]'s","an annoyed","a brittle","a loud","a very loud","a quiet")
-		var/location = pick("from above","from below","in your head")
-		pre_msg = pick("You hear [adjective] voice [location]...")
+		var/adjective = pick("an angry","a funny","a squeaky","a disappointed","your mother's","your father's","[ticker.Bible_deity_name]'s","an annoyed","a brittle","a loud","a very loud","a quiet")
+		var/location = pick(" from above"," from below"," in your head","")
+		pre_msg = pick("You hear [adjective] voice[location]...")
 
 	src << "<b>[pre_msg] <em>[msg]</em></b>"
 
