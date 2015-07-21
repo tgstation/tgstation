@@ -57,59 +57,39 @@
 #define SPUR_LOW_POWER 1
 #define SPUR_NO_POWER 0
 
-/obj/item/weapon/gun/energy/spur
-	name = "\improper Spur"
-	desc = "A masterpiece crafted by the legendary gunsmith of a far-away planet."
+/obj/item/weapon/gun/energy/polarstar
+	name = "\improper Polar Star"
+	desc = "Despite being incomplete, the severe wear on this gun shows to which extent it's been used already."
 	icon = 'icons/obj/gun_experimental.dmi'
-	icon_state = "spur"
+	icon_state = "polarstar"
 	item_state = null
+	fire_delay = 1
 	origin_tech = null
 	projectile_type = "/obj/item/projectile/spur"
 	charge_cost = 100
 	cell_type = "/obj/item/weapon/cell"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
-	fire_delay = 0
 	recoil = 1
-	var/charge_tick = 0
 	var/firelevel = SPUR_FULL_POWER
 
-/obj/item/weapon/gun/energy/spur/New()
-	..()
-	processing_objects.Add(src)
-
-
-/obj/item/weapon/gun/energy/spur/Destroy()
-	processing_objects.Remove(src)
-	..()
-
-/obj/item/weapon/gun/energy/spur/process()
-	charge_tick++
-	if(charge_tick < 2) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100)
-	levelChange()
-	return 1
-
-/obj/item/weapon/gun/energy/spur/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
+/obj/item/weapon/gun/energy/polarstar/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	levelChange()
 	..()
 
-/obj/item/weapon/gun/energy/spur/proc/levelChange()
+/obj/item/weapon/gun/energy/polarstar/proc/levelChange()
 	var/maxlevel = power_supply.maxcharge
 	var/level = power_supply.charge
 	var/newlevel = 0
-	switch(level)
-		if(maxlevel to INFINITY)
-			newlevel = SPUR_FULL_POWER
-		if(((maxlevel/3)*2) to maxlevel)
-			newlevel = SPUR_HIGH_POWER
-		if((maxlevel/3) to ((maxlevel/3)*2))
-			newlevel = SPUR_MEDIUM_POWER
-		if(charge_cost to (maxlevel/3))
-			newlevel = SPUR_LOW_POWER
-		else
-			newlevel = SPUR_NO_POWER
+	if(level == maxlevel)
+		newlevel = SPUR_FULL_POWER
+	else if(level >= ((maxlevel/3)*2))
+		newlevel = SPUR_HIGH_POWER
+	else if(level >= (maxlevel/3))
+		newlevel = SPUR_MEDIUM_POWER
+	else if(level >= charge_cost)
+		newlevel = SPUR_LOW_POWER
+	else
+		newlevel = SPUR_NO_POWER
 
 	if(firelevel >= newlevel)
 		firelevel = newlevel
@@ -136,7 +116,7 @@
 				M.playsound_local(M, levelupsound, 75, 0)
 
 
-/obj/item/weapon/gun/energy/spur/proc/set_firesound()
+/obj/item/weapon/gun/energy/polarstar/proc/set_firesound()
 	switch(firelevel)
 		if(SPUR_HIGH_POWER,SPUR_FULL_POWER)
 			fire_sound = 'sound/weapons/spur_high.ogg'
@@ -149,16 +129,33 @@
 			recoil = 0
 	return
 
-/obj/item/weapon/gun/energy/spur/update_icon()
+/obj/item/weapon/gun/energy/polarstar/update_icon()
 	return
 
-/obj/item/weapon/gun/energy/spur/polarstar
-	name = "\improper Polar Star"
-	desc = "Despite being incomplete, the severe wear on this gun shows to which extent it's been used already."
-	icon_state = "polarstar"
-	fire_delay = 1
+/obj/item/weapon/gun/energy/polarstar/spur
+	name = "\improper Spur"
+	desc = "A masterpiece crafted by the legendary gunsmith of a far-away planet."
+	icon_state = "spur"
+	item_state = null
+	fire_delay = 0
+	var/charge_tick = 0
 
-/obj/item/weapon/gun/energy/spur/polarstar/process()
+/obj/item/weapon/gun/energy/polarstar/spur/New()
+	..()
+	processing_objects.Add(src)
+
+
+/obj/item/weapon/gun/energy/polarstar/spur/Destroy()
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/gun/energy/polarstar/spur/process()
+	charge_tick++
+	if(charge_tick < 2) return 0
+	charge_tick = 0
+	if(!power_supply) return 0
+	power_supply.give(100)
+	levelChange()
 	return 1
 
 #undef SPUR_FULL_POWER
