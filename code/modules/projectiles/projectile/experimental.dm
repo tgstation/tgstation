@@ -664,7 +664,7 @@
 	..()
 
 /obj/item/projectile/spur/Bump(atom/A as mob|obj|turf|area)
-	var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+	var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
 	switch(get_dir(src,A))
 		if(NORTH)
 			impact.pixel_y = 16
@@ -684,7 +684,7 @@
 
 /obj/item/projectile/spur/process_step()
 	if(kill_count <= 0)
-		var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+		var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
 		impact.icon_state = "spur_2"
 	..()
 

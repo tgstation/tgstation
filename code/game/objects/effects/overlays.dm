@@ -25,16 +25,13 @@
 	mouse_opacity = 0
 	var/tmp/atom/BeamSource
 
-/obj/effect/overlay/beam/New(turf/loc, var/lifetime = 10, var/fade = 0)
+/obj/effect/overlay/beam/New(turf/loc, var/lifetime = 10, var/fade = 0, var/src_icon = 'icons/effects/beam.dmi')
 	..()
+	icon = src_icon
 	spawn if(fade)
 		animate(src, alpha=0, time=lifetime)
 	spawn(lifetime)
 		returnToPool(src)
-
-/obj/effect/overlay/beam/impact
-	icon='icons/obj/projectiles_impacts.dmi'
-	icon_state=""
 
 
 /obj/effect/overlay/palmtree_r
