@@ -54,6 +54,15 @@
 
 	var/inaccurate = 0
 
+	var/turf/target = null
+	var/dist_x = 0
+	var/dist_y = 0
+	var/dx = 0
+	var/dy = 0
+	var/error = 0
+
+	var/custom_impact = 0
+
 /obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/on_hit() called tick#: [world.time]")
 	if(blocked >= 2)		return 0//Full block
@@ -180,6 +189,32 @@
 				loc = A.loc
 			if(istype(permutated,/list)) permutated.Add(A)
 			return 0
+		else if(!custom_impact)
+			var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+			switch(get_dir(src,A))
+				if(NORTH)
+					impact.pixel_y = 16
+				if(SOUTH)
+					impact.pixel_y = -16
+				if(EAST)
+					impact.pixel_x = 16
+				if(WEST)
+					impact.pixel_x = -16
+			var/impact_icon = null
+			var/impact_sound = null
+			if(ismob(A))
+				if(issilicon(A))
+					impact_icon = "default_solid"
+					impact_sound = 'sound/items/metal_impact.ogg'
+				else
+					impact_icon = "default_mob"//todo: blood_colors
+					impact_sound = 'sound/weapons/pierce.ogg'
+			else
+				impact_icon = "default_solid"
+				impact_sound = 'sound/items/metal_impact.ogg'
+
+			impact.icon_state = impact_icon
+			playsound(impact, impact_sound, 30, 1)
 		if(istype(A,/turf))
 			for(var/obj/O in A)
 				O.bullet_act(src)
@@ -209,34 +244,73 @@
 
 /obj/item/projectile/proc/OnFired()	//if assigned, allows for code when the projectile gets fired
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/OnFired() called tick#: [world.time]")
+	target = get_turf(original)
+	dist_x = abs(target.x - starting.x)
+	dist_y = abs(target.y - starting.y)
+
+	if (target.x > starting.x)
+		dx = EAST
+	else
+		dx = WEST
+
+	if (target.y > starting.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+
+	if(dist_x > dist_y)
+		error = dist_x/2 - dist_y
+	else
+		error = dist_y/2 - dist_x
 	return 1
 
 /obj/item/projectile/proc/process_step()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/process_step() called tick#: [world.time]")
+	var/sleeptime = 1
 	if(src.loc)
-		if(step_delay)
-			sleep(step_delay)
-		if(kill_count < 1)
-			//del(src)
-			OnDeath()
-			loc = null
-			returnToPool(src)
-			return
-		kill_count--
-		if((!( current ) || loc == current))
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-			//del(src)
-			OnDeath()
-			loc = null
-			returnToPool(src)
-			return
-		step_towards(src, current)
-		if(!bumped && !isturf(original))
-			if(loc == get_turf(original))
-				if(!(original in permutated))
-					Bump(original)
-		sleep(1)
+		if(dist_x > dist_y)
+			sleeptime = bresenham_step(dist_x,dist_y,dx,dy)
+		else
+			sleeptime = bresenham_step(dist_y,dist_x,dy,dx)
+		sleep(sleeptime)
+
+
+/obj/item/projectile/proc/bresenham_step(var/distA, var/distB, var/dA, var/dB)
+	if(step_delay)
+		sleep(step_delay)
+	if(kill_count < 1)
+		bullet_die()
+		return 1
+	kill_count--
+	if(error < 0)
+		var/atom/step = get_step(src, dB)
+		if(!step)
+			bullet_die()
+		src.Move(step)
+		error += distA
+		bump_original_check()
+		return 0//so that bullets going in diagonals don't move twice slower
+	else
+		var/atom/step = get_step(src, dA)
+		if(!step)
+			bullet_die()
+		src.Move(step)
+		error -= distB
+		dir = dA
+		if(error < 0)
+			dir = dA + dB
+		bump_original_check()
+		return 1
+
+/obj/item/projectile/proc/bullet_die()
+	OnDeath()
+	returnToPool(src)
+
+/obj/item/projectile/proc/bump_original_check()
+	if(!bumped && !isturf(original))
+		if(loc == get_turf(original))
+			if(!(original in permutated))
+				Bump(original)
 
 /obj/item/projectile/process()
 	spawn while(loc)
@@ -272,7 +346,7 @@
 	invisibility = 101 //Nope!  Can't see me!
 	yo = null
 	xo = null
-	var/target = null
+	var/ttarget = null
 	var/result = 0 //To pass the message back to the gun.
 
 /obj/item/projectile/test/Bump(atom/A as mob|obj|turf|area)
@@ -289,7 +363,7 @@
 
 /obj/item/projectile/test/process()
 	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(target)
+	var/turf/targloc = get_turf(ttarget)
 	if(!curloc || !targloc)
 		return 0
 	yo = targloc.y - curloc.y
@@ -298,13 +372,13 @@
 	while(loc) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( target ) || loc == target))
-			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
-		step_towards(src, target)
+		if((!( ttarget ) || loc == ttarget))
+			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		step_towards(src, ttarget)
 		var/mob/living/M = locate() in get_turf(src)
 		if(istype(M)) //If there is someting living...
 			return 1 //Return 1
 		else
-			M = locate() in get_step(src,target)
+			M = locate() in get_step(src,ttarget)
 			if(istype(M))
 				return 1

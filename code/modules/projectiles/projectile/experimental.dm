@@ -145,6 +145,7 @@
 	src.loc = newspawn
 
 	update_icon()
+	..()
 
 /obj/item/projectile/ricochet/update_icon()//8 possible combinations
 	switch(pos_to)
@@ -421,24 +422,22 @@
 	//calculating the turfs that we go through
 	var/lastposition = loc
 
-	var/turf/target = get_turf(original)
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
+	target = get_turf(original)
+	dist_x = abs(target.x - src.x)
+	dist_y = abs(target.y - src.y)
 
-	var/dx
 	if (target.x > src.x)
 		dx = EAST
 	else
 		dx = WEST
 
-	var/dy
 	if (target.y > src.y)
 		dy = NORTH
 	else
 		dy = SOUTH
 
 	if(dist_x > dist_y)
-		var/error = dist_x/2 - dist_y
+		error = dist_x/2 - dist_y
 
 		spawn while(src && src.loc)
 			// only stop when we've hit something, or hit the end of the map
@@ -475,7 +474,7 @@
 						Bump(original)
 
 	else
-		var/error = dist_y/2 - dist_x
+		error = dist_y/2 - dist_x
 		spawn while(src && src.loc)
 			// only stop when we've hit something, or hit the end of the map
 			if(error < 0)
@@ -536,7 +535,7 @@
 		if(count >= kill_count)
 			break
 		count++
-		var/obj/effect/overlay/beam/X=new(T,current_timer)
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,T,current_timer,1)
 		X.BeamSource=src
 		current_timer += increment
 		if((N+64>(length+16)) && (N+32<=(length+16)))
@@ -628,3 +627,69 @@
 		return 1
 	else
 		return ..()
+
+#define SPUR_FULL_POWER 4
+#define SPUR_HIGH_POWER 3
+#define SPUR_MEDIUM_POWER 2
+#define SPUR_LOW_POWER 1
+#define SPUR_NO_POWER 0
+
+/obj/item/projectile/spur
+	name = "spur bullet"
+	damage_type = BRUTE
+	flag = "bullet"
+	kill_count = 100
+	layer = 13
+	damage = 30
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "spur_medium"
+	animate_movement = 2
+	custom_impact = 1
+
+/obj/item/projectile/spur/OnFired()
+	var/obj/item/weapon/gun/energy/polarstar/quote = shot_from
+	switch(quote.firelevel)
+		if(SPUR_FULL_POWER,SPUR_HIGH_POWER)
+			icon_state = "spur_high"
+			damage = 40
+			kill_count = 20
+		if(SPUR_MEDIUM_POWER)
+			icon_state = "spur_medium"
+			damage = 30
+			kill_count = 13
+		if(SPUR_LOW_POWER,SPUR_NO_POWER)
+			icon_state = "spur_low"
+			damage = 20
+			kill_count = 7
+	..()
+
+/obj/item/projectile/spur/Bump(atom/A as mob|obj|turf|area)
+	var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+	switch(get_dir(src,A))
+		if(NORTH)
+			impact.pixel_y = 16
+		if(SOUTH)
+			impact.pixel_y = -16
+		if(EAST)
+			impact.pixel_x = 16
+		if(WEST)
+			impact.pixel_x = -16
+	if(ismob(A))
+		impact.icon_state = "spur_3"
+		playsound(impact, 'sound/weapons/spur_hitmob.ogg', 30, 1)
+	else
+		impact.icon_state = "spur_1"
+		playsound(impact, 'sound/weapons/spur_hitmob.ogg', 30, 1)
+	return ..()
+
+/obj/item/projectile/spur/process_step()
+	if(kill_count <= 0)
+		var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+		impact.icon_state = "spur_2"
+	..()
+
+#undef SPUR_FULL_POWER
+#undef SPUR_HIGH_POWER
+#undef SPUR_MEDIUM_POWER
+#undef SPUR_LOW_POWER
+#undef SPUR_NO_POWER

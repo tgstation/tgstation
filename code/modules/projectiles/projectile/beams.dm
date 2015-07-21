@@ -69,7 +69,7 @@ var/list/beam_master = list()
 		if(count >= kill_count)
 			break
 		count++
-		var/obj/effect/overlay/beam/X=new(T)
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,T)
 		X.BeamSource=src
 		if((N+64>length) && (N+32<=length))
 			X.icon=Iend
@@ -225,22 +225,21 @@ var/list/beam_master = list()
 	var/frequency = 1
 
 /obj/item/projectile/beam/OnFired()
+	return ..()
 
 /obj/item/projectile/beam/process()
 	var/lastposition = loc
 	var/reference = "\ref[src]" //So we do not have to recalculate it a ton
 
-	var/turf/target = get_turf(original)
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
+	target = get_turf(original)
+	dist_x = abs(target.x - src.x)
+	dist_y = abs(target.y - src.y)
 
-	var/dx
 	if (target.x > src.x)
 		dx = EAST
 	else
 		dx = WEST
 
-	var/dy
 	if (target.y > src.y)
 		dy = NORTH
 	else
@@ -248,123 +247,74 @@ var/list/beam_master = list()
 	var/target_dir = SOUTH
 
 	if(dist_x > dist_y)
-		var/error = dist_x/2 - dist_y
+		error = dist_x/2 - dist_y
 
-		spawn while(src && src.loc)
-			// only stop when we've hit something, or hit the end of the map
-			if(error < 0)
-				var/atom/step = get_step(src, dy)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-					break
-				src.Move(step)
-				error += dist_x
-				target_dir = null
-			else
-				var/atom/step = get_step(src, dx)
-				if(!step)
-					break
-				src.Move(step)
-				error -= dist_y
-				target_dir = dx
-				if(error < 0)
-					target_dir = dx + dy
-
-			if(isnull(loc))
-				return
-			if(lastposition == loc)
-				kill_count = 0
-			lastposition = loc
-			if(kill_count < 1)
-				//del(src)
-				returnToPool(src)
-				return
-			kill_count--
-
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-
-			//If the icon has not been added yet
-			if( !("[icon_state][target_dir]" in beam_master) )
-				var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
-				beam_master["[icon_state][target_dir]"] = I //And cache it!
-
-			//Finally add the overlay
-			if(src.loc && target_dir)
-				src.loc.overlays += beam_master["[icon_state][target_dir]"]
-
-				//Add the turf to a list in the beam master so they can be cleaned up easily.
-				if(reference in beam_master)
-					var/list/turf_master = beam_master[reference]
-					if("[icon_state][target_dir]" in turf_master)
-						var/list/turfs = turf_master["[icon_state][target_dir]"]
-						turfs += loc
-					else
-						turf_master["[icon_state][target_dir]"] = list(loc)
-				else
-					var/list/turfs = list()
-					turfs["[icon_state][target_dir]"] = list(loc)
-					beam_master[reference] = turfs
+		spawn
+			reference = bresenham_step(dist_x,dist_y,dx,dy,lastposition,target_dir,reference)
 
 	else
-		var/error = dist_y/2 - dist_x
-		spawn while(src && src.loc)
-			// only stop when we've hit something, or hit the end of the map
-			if(error < 0)
-				var/atom/step = get_step(src, dx)
-				if(!step)
-					break
-				src.Move(step)
-				error += dist_y
-				target_dir = null
-			else
-				var/atom/step = get_step(src, dy)
-				if(!step)
-					break
-				src.Move(step)
-				error -= dist_x
-				target_dir = dy
-				if(error < 0)
-					target_dir = dy + dx
-
-			if(isnull(loc))
-				return
-			if(lastposition == loc)
-				kill_count = 0
-			lastposition = loc
-			if(kill_count < 1)
-				//del(src)
-				returnToPool(src)
-				return
-			kill_count--
-
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
-
-			if( !("[icon_state][target_dir]" in beam_master) )
-				var/image/I = image(icon,icon_state,10,target_dir)
-				beam_master["[icon_state][target_dir]"] = I
-
-			if(src.loc && target_dir)
-				src.loc.overlays += beam_master["[icon_state][target_dir]"]
-
-				if(reference in beam_master)
-					var/list/turf_master = beam_master[reference]
-					if("[icon_state][target_dir]" in turf_master)
-						var/list/turfs = turf_master["[icon_state][target_dir]"]
-						turfs += loc
-					else
-						turf_master["[icon_state][target_dir]"] = list(loc)
-				else
-					var/list/turfs = list()
-					turfs["[icon_state][target_dir]"] = list(loc)
-					beam_master[reference] = turfs
+		error = dist_y/2 - dist_x
+		spawn
+			reference = bresenham_step(dist_y,dist_x,dy,dx,lastposition,target_dir,reference)
 
 	cleanup(reference)
 	return
+
+/obj/item/projectile/beam/bresenham_step(var/distA, var/distB, var/dA, var/dB, var/lastposition, var/target_dir, var/reference)
+	while(src && src.loc)// only stop when we've hit something, or hit the end of the map
+		if(error < 0)
+			var/atom/step = get_step(src, dB)
+			if(!step)
+				bullet_die()
+			src.Move(step)
+			error += distA
+			target_dir = null
+		else
+			var/atom/step = get_step(src, dA)
+			if(!step)
+				bullet_die()
+			src.Move(step)
+			error -= distB
+			target_dir = dA
+			world << "dir is [dir]"
+			if(error < 0)
+				target_dir = dA + dB
+
+		if(isnull(loc))
+			return reference
+		if(lastposition == loc)
+			kill_count = 0
+		lastposition = loc
+		if(kill_count < 1)
+			returnToPool(src)
+			return reference
+		kill_count--
+		bump_original_check()
+
+		//If the icon has not been added yet
+		if( !("[icon_state][target_dir]" in beam_master) )
+			var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
+			beam_master["[icon_state][target_dir]"] = I //And cache it!
+
+		//Finally add the overlay
+		if(src.loc && target_dir)
+			src.loc.overlays += beam_master["[icon_state][target_dir]"]
+
+			//Add the turf to a list in the beam master so they can be cleaned up easily.
+			if(reference in beam_master)
+				var/list/turf_master = beam_master[reference]
+				if("[icon_state][target_dir]" in turf_master)
+					var/list/turfs = turf_master["[icon_state][target_dir]"]
+					turfs += loc
+				else
+					turf_master["[icon_state][target_dir]"] = list(loc)
+			else
+				var/list/turfs = list()
+				turfs["[icon_state][target_dir]"] = list(loc)
+				beam_master[reference] = turfs
+
+	return reference
+
 
 /obj/item/projectile/beam/dumbfire(var/dir)
 	var/reference = "\ref[src]" // So we do not have to recalculate it a ton.
