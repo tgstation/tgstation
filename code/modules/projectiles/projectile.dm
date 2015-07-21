@@ -190,7 +190,7 @@
 			if(istype(permutated,/list)) permutated.Add(A)
 			return 0
 		else if(!custom_impact)
-			var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+			var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
 			switch(get_dir(src,A))
 				if(NORTH)
 					impact.pixel_y = 16

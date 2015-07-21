@@ -276,7 +276,6 @@ var/list/beam_master = list()
 			src.Move(step)
 			error -= distB
 			target_dir = dA
-			world << "dir is [dir]"
 			if(error < 0)
 				target_dir = dA + dB
 

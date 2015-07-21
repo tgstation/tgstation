@@ -10,6 +10,7 @@
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "ricochet_head"
 	animate_movement = 0
+	custom_impact = 1
 	var/pos_from = EAST	//which side of the turf is the shot coming from
 	var/pos_to = SOUTH	//which side of the turf is the shot heading to
 	var/bouncin = 0
@@ -201,12 +202,24 @@
 				pos_to = NORTH
 			pos_from = WEST
 
-/obj/item/projectile/ricochet/proc/bulletdies()
+/obj/item/projectile/ricochet/proc/bulletdies(var/atom/A = null)
+	var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
+	if(A)
+		switch(get_dir(src,A))
+			if(NORTH)
+				impact.pixel_y = 16
+			if(SOUTH)
+				impact.pixel_y = -16
+			if(EAST)
+				impact.pixel_x = 16
+			if(WEST)
+				impact.pixel_x = -16
+	impact.icon_state = "ricochet_hit"
+	playsound(impact, 'sound/weapons/pierce.ogg', 30, 1)
+
 	spawn()
 		density = 0
 		invisibility = 101
-		//del(src)
-		loc = null
 		returnToPool(src)
 		OnDeath()
 
@@ -247,20 +260,23 @@
 			if(istype(A,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				if(istype(H.wear_suit,/obj/item/clothing/suit/armor/laserproof))// bwoing!!
+					visible_message("<span class='warning'>\the [src.name] bounces off \the [A.name]'s [H.wear_suit]!</span>")
 					bounce()
-
 				else
+					visible_message("<span class='warning'>\the [A.name] is hit by \the [src.name] in the [parse_zone(def_zone)]!</span>")
 					A.bullet_act(src, def_zone)
 					admin_warn(A)
-					bulletdies()
+					bulletdies(A)
 			else
+				visible_message("<span class='warning'>\the [A.name] is hit by \the [src.name] in the [parse_zone(def_zone)]!</span>")
 				A.bullet_act(src, def_zone)
 				admin_warn(A)
-				bulletdies()
+				bulletdies(A)
 
 		else if(is_type_in_list(A,ricochet_bump))//beware fuel tanks!
+			visible_message("<span class='warning'>\the [A.name] is hit by \the [src.name]!</span>")
 			A.bullet_act(src)
-			bulletdies()
+			bulletdies(A)
 
 		else if((istype(A,/obj/structure/window) || istype(A,/obj/machinery/door/window) || istype(A,/obj/machinery/door/firedoor/border_only)) && (A.loc == src.loc))
 							//all this part is to prevent a bug that causes the shot to go through walls
@@ -664,7 +680,7 @@
 	..()
 
 /obj/item/projectile/spur/Bump(atom/A as mob|obj|turf|area)
-	var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+	var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
 	switch(get_dir(src,A))
 		if(NORTH)
 			impact.pixel_y = 16
@@ -684,7 +700,7 @@
 
 /obj/item/projectile/spur/process_step()
 	if(kill_count <= 0)
-		var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src))
+		var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
 		impact.icon_state = "spur_2"
 	..()
 
