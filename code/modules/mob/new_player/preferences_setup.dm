@@ -19,7 +19,6 @@
 	backbag = 1
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
-	be_cloned = 1
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
 	del(preview_icon_front)
