@@ -5,6 +5,7 @@
 	projectile_type = /obj/item/projectile/energy
 	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
 	var/select_name = "energy"
+	var/mod_name = null
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
@@ -86,11 +87,13 @@
 
 /obj/item/ammo_casing/energy/flora/yield
 	projectile_type = /obj/item/projectile/energy/florayield
-	select_name = "yield"
+	select_name = "increase yield"
+	mod_name = "yield"
 
 /obj/item/ammo_casing/energy/flora/mut
 	projectile_type = /obj/item/projectile/energy/floramut
-	select_name = "mutation"
+	select_name = "induce mutations"
+	mod_name = "mut"
 
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/item/projectile/temp
