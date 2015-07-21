@@ -98,6 +98,7 @@ var/list/admin_verbs_spawn = list(
 var/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
+	/datum/admins/proc/end_round,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,

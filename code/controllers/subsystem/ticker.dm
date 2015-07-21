@@ -370,8 +370,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>"
 		if(station_evacuated)
 			world << "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>"
-		else
-			world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
+		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>"
 	world << "<BR>"
 
 	//Silicon laws report

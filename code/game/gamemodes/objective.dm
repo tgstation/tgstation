@@ -247,9 +247,11 @@
 		return 0
 	if(isbrain(owner.current))
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
-		return 0
 	if(!owner.current || owner.current.stat == DEAD)
+		return 0
+	if(ticker.force_ending) //This one isn't their fault, so lets just assume good faith
+		return 1
+	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
 		return 0
 	var/turf/location = get_turf(owner.current)
 	if(!location)

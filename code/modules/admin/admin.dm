@@ -418,6 +418,20 @@ var/global/floorIsLava = 0
 		feedback_add_details("admin_verb","R") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 
+/datum/admins/proc/end_round()
+	set category = "Server"
+	set name = "End Round"
+	set desc = "Attempts to produce a round end report and then restart the server organically."
+
+	if (!usr.client.holder)
+		return
+	var/confirm = alert("End the round and  restart the game world?", "End Round", "Yes", "Cancel")
+	if(confirm == "Cancel")
+		return
+	if(confirm == "Yes")
+		ticker.force_ending = 1
+		feedback_add_details("admin_verb","ER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /datum/admins/proc/announce()
 	set category = "Special Verbs"
