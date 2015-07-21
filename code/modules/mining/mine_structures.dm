@@ -19,6 +19,9 @@
 	icon_state = "hanginglantern-construct"
 	anchored = 1
 	layer = 5
+/obj/structure/hanging_lantern_hook/New(loc, newdir)
+	..()
+	dir = newdir
 
 /obj/structure/hanging_lantern_hook/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
