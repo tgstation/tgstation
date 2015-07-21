@@ -1,7 +1,7 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'icons/mob/mob.dmi'//
-	icon_state = "shadow"
+	icon = null
+	icon_state = null
 
 	emote_type = 2		// pAIs emotes are heard, not seen, so they can be seen through a container (eg. person)
 
