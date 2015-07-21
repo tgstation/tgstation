@@ -53,6 +53,7 @@
 
 	var/list/icon/pipes_shown = list()
 	var/last_played_vent
+	var/is_ventcrawling = 0
 
 	//
 	var/list/callOnLife = list() //

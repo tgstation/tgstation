@@ -6,7 +6,7 @@
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
 	//login during ventcrawl
-	if(istype(loc, /obj/machinery/atmospherics)) //attach us back into the pipes
+	if(is_ventcrawling && istype(loc, /obj/machinery/atmospherics)) //attach us back into the pipes
 		remove_ventcrawl()
 		add_ventcrawl(loc)
 
