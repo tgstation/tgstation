@@ -1764,7 +1764,7 @@ mob/proc/walking()
 
 /mob/proc/get_subtle_message(var/msg)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_subtle_message() called tick#: [world.time]")
-	var/pre_msg = "You hear a voice in your head... "
+	var/pre_msg = "You hear a voice in your head..."
 	if(mind && mind.assigned_role == "Chaplain")
 		pre_msg = "You hear the voice of [ticker.Bible_deity_name] in your head... "
 	if(src.hallucinating()) //If hallucinating, make subtle messages more fun
@@ -1772,7 +1772,7 @@ mob/proc/walking()
 		var/location = pick("from above","from below","in your head")
 		pre_msg = pick("You hear [adjective] voice [location]...")
 
-	src << "<b>[pre_msg]<em>[msg]</em></b>"
+	src << "<b>[pre_msg] <em>[msg]</em></b>"
 
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING
