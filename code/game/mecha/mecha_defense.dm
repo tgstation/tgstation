@@ -71,12 +71,12 @@
 			take_damage(damage)
 			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 			visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
-			add_logs(user, src, "attacked", admin=0)
+			add_logs(user, src, "attacked")
 		else
 			src.log_append_to_last("Armor saved.")
 			playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1, -1)
 			visible_message("<span class='notice'>The [user] rebounds off [src.name]'s armor!</span>")
-			add_logs(user, src, "attacked", admin=0)
+			add_logs(user, src, "attacked")
 	return
 
 /obj/mecha/attack_tk()

@@ -133,7 +133,11 @@
 	equipment.Cut()
 	cell = null
 	internal_tank = null
-	qdel(cabin_air)
+	if(loc)
+		loc.assume_air(cabin_air)
+		air_update_turf()
+	else
+		del(cabin_air)
 	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
@@ -234,6 +238,7 @@
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
 				if(loc)
 					loc.assume_air(leaked_gas)
+					air_update_turf()
 				else
 					del(leaked_gas)
 
