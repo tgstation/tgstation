@@ -8,7 +8,6 @@ var/const/SAFETY_COOLDOWN = 100
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
-	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
 	var/grinding = 0
 	var/icon_name = "grinder-o"
 	var/blood = 0
@@ -48,8 +47,6 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/machinery/recycler/examine(mob/user)
 	..()
 	user << "The power light is [(stat & NOPOWER) ? "off" : "on"]."
-	user << "The safety-mode light is [safety_mode ? "on" : "off"]."
-	user << "The safety-sensors status light is [emagged ? "off" : "on"]."
 
 /obj/machinery/recycler/power_change()
 	..()
@@ -74,15 +71,6 @@ var/const/SAFETY_COOLDOWN = 100
 	add_fingerprint(user)
 	return
 
-/obj/machinery/recycler/emag_act(mob/user)
-	if(!emagged)
-		emagged = 1
-		if(safety_mode)
-			safety_mode = 0
-			update_icon()
-		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
-
 /obj/machinery/recycler/update_icon()
 	..()
 	var/is_powered = !(stat & (BROKEN|NOPOWER))
@@ -101,16 +89,11 @@ var/const/SAFETY_COOLDOWN = 100
 
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(safety_mode)
-		return
 
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
 		if(isliving(AM))
-			if(emagged)
-				eat(AM)
-			else
-				stop(AM)
+			eat(AM)
 		else if(istype(AM, /obj/item))
 			recycle(AM)
 		else // Can't recycle
@@ -150,17 +133,6 @@ var/const/SAFETY_COOLDOWN = 100
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 
-
-/obj/machinery/recycler/proc/stop(mob/living/L)
-	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-	safety_mode = 1
-	update_icon()
-	L.loc = src.loc
-
-	spawn(SAFETY_COOLDOWN)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		safety_mode = 0
-		update_icon()
 
 /obj/machinery/recycler/proc/eat(mob/living/L)
 
