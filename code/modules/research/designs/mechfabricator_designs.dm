@@ -490,7 +490,7 @@
 	name = "Exosuit Engineering Equipment (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+	build_path = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -499,7 +499,7 @@
 	name = "Exosuit Engineering Equipment (Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
+	build_path = /obj/item/mecha_parts/mecha_equipment/drill
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -508,7 +508,7 @@
 	name = "Exosuit Engineering Equipement (Mining Scanner)"
 	id = "mech_mscanner"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/mining_scanner
+	build_path = /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	materials = list(MAT_METAL=5000,MAT_GLASS=2500)
 	construction_time = 50
 	category = list("Exosuit Equipment")
@@ -517,7 +517,7 @@
 	name = "Exosuit Engineering Equipment (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
+	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -526,7 +526,7 @@
 	name = "Exosuit Engineering Equipment (Cable Layer)"
 	id = "mech_cable_layer"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
+	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -535,7 +535,7 @@
 	name = "Exosuit Medical Equipment (Mounted Sleeper)"
 	id = "mech_sleeper"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
+	build_path = /obj/item/mecha_parts/mecha_equipment/sleeper
 	materials = list(MAT_METAL=5000,MAT_GLASS=10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -544,7 +544,7 @@
 	name = "Exosuit Medical Equipment (Syringe Gun)"
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
+	build_path = /obj/item/mecha_parts/mecha_equipment/syringe_gun
 	materials = list(MAT_METAL=3000,MAT_GLASS=2000)
 	construction_time = 200
 	category = list("Exosuit Equipment")
@@ -580,7 +580,7 @@
 	name = "H.O.N.K Mousetrap Mortar"
 	id = "mech_mousetrap_mortar"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=5000)
 	construction_time = 300
 	category = list("Exosuit Equipment")
@@ -589,7 +589,7 @@
 	name = "H.O.N.K Banana Mortar"
 	id = "mech_banana_mortar"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	materials = list(MAT_METAL=20000,MAT_BANANIUM=5000)
 	construction_time = 300
 	category = list("Exosuit Equipment")

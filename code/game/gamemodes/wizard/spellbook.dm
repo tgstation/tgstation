@@ -10,11 +10,12 @@
 	var/surplus = -1 // -1 for infinite, not used by anything atm
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
+	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
-	if(book.uses<cost)
+	if(book.uses<cost || limit == 0)
 		return 0
 	return 1
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
@@ -273,6 +274,12 @@
 	item_path = /obj/item/device/necromantic_stone
 	log_name = "NS"
 
+/datum/spellbook_entry/item/multiverse
+	name = "Multiverse Blade"
+	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
+	item_path = /obj/item/weapon/multisword
+	log_name = "MV"
+
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"
 	desc = "A collection of wands that allow for a wide variety of utility. Wands do not recharge, so be conservative in use. Comes in a handy belt."
@@ -302,6 +309,7 @@
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
 	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
 	log_name = "BB"
+	limit = 3
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -432,11 +440,17 @@
 			user << "<span class='warning'>The contract has been used, you can't get your points back now!</span>"
 		else
 			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
-			src.uses++
+			uses++
+			for(var/datum/spellbook_entry/item/contract/CT in entries)
+				if(!isnull(CT.limit))
+					CT.limit++
 			qdel(O)
 	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
 		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
-		src.uses++
+		uses++
+		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
+			if(!isnull(BB.limit))
+				BB.limit++
 		qdel(O)
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
@@ -545,12 +559,16 @@
 			E = entries[text2num(href_list["buy"])]
 			if(E && E.CanBuy(H,src))
 				if(E.Buy(H,src))
+					if(E.limit)
+						E.limit--
 					uses -= E.cost
 		else if(href_list["refund"])
 			E = entries[text2num(href_list["refund"])]
 			if(E && E.refundable)
 				var/result = E.Refund(H,src)
 				if(result > 0)
+					if(!isnull(E.limit))
+						E.limit += result
 					uses += result
 		else if(href_list["page"])
 			tab = sanitize(href_list["page"])

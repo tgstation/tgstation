@@ -148,7 +148,7 @@ Pipenet stuff; housekeeping
 			parents["p[I]"] = reference
 			break
 
-/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[NODE1]) //returns PARENT1 if called without argument
 	for(var/I = 1; I <= device_type; I++)
 		if(A == nodes["n[I]"])
 			return parents["p[I]"]
@@ -159,7 +159,7 @@ Pipenet stuff; housekeeping
 			P = New
 			break
 
-/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures) //untestable; I'll fix this last
+/obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
 	..()
 
 	var/turf/T = get_turf(src)
