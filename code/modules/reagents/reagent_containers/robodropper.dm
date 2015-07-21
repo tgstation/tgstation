@@ -26,11 +26,7 @@
 				return
 
 
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
-			if (src.reagents.total_volume<=0)
-				filled = 0
-				icon_state = "dropper[filled]"
+			var/trans
 
 			if(isobj(target))
 				// /vg/: Logging transfers of bad things
@@ -39,10 +35,16 @@
 					for(var/bad_reagent in reagents_to_log)
 						if(reagents.has_reagent(bad_reagent))
 							badshit += reagents_to_log[bad_reagent]
+
 					if(badshit.len)
 						var/hl="<span class='danger'>([english_list(badshit)])</span>"
 						message_admins("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].[hl] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 						log_game("[user.name] ([user.ckey]) added [trans]U to \a [target] with [src].")
+				trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+				user << "<span class='notice'>You transfer [trans] units of the solution.</span>"
+				if (src.reagents.total_volume<=0)
+					filled = 0
+					icon_state = "dropper[filled]"
 
 			else if(ismob(target))
 				if(istype(target , /mob/living/carbon/human))
