@@ -19,10 +19,10 @@
 /mob/living/silicon/robot/mommi/updateicon()
 	// Clear all overlays.
 	overlays.len = 0
-	
+
 	// Set the MoMMI's icon to its subtype
 	icon_state=subtype
-	
+
 	// Add a panel image if the MoMMI is open
 	if(opened) // TODO:  Open the front "head" panel
 		if(wiresexposed)
@@ -34,7 +34,7 @@
 
 	// Add the MoMMI eyes
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.
-	var/overlay_layer = LIGHTING_LAYER+1
+	var/overlay_layer = LIGHTING_LAYER + 1
 	if(layer != MOB_LAYER)
 		overlay_layer=TURF_LAYER+0.2
 	overlays += image(icon,"eyes-[subtype][emagged?"-emagged":""]",overlay_layer)

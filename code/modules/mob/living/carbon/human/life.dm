@@ -1052,10 +1052,8 @@ var/global/list/organ_damage_overlays = list(
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 		if(isturf(loc)) //else, there's considered to be no light
 			var/turf/T = loc
-			var/area/A = T.loc
-			if(A)
-				if(A.lighting_use_dynamic)	light_amount = min(10,T.lighting_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
-				else						light_amount =  5
+			light_amount = T.get_lumcount(0.5) * 10
+
 		nutrition += light_amount
 		traumatic_shock -= light_amount
 
@@ -1072,10 +1070,11 @@ var/global/list/organ_damage_overlays = list(
 		var/light_amount = 0
 		if(isturf(loc))
 			var/turf/T = loc
-			var/area/A = T.loc
-			if(A)
-				if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-				else						light_amount =  10
+			if(T.dynamic_lighting)
+				light_amount = T.get_lumcount() * 10
+			else
+				light_amount = 10
+
 		if(light_amount > 2) //if there's enough light, start dying
 			take_overall_damage(1,1)
 		else if (light_amount < 2) //heal in the dark
@@ -1665,8 +1664,8 @@ var/global/list/organ_damage_overlays = list(
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
-		var/turf/currentTurf = loc
-		if(!currentTurf.lighting_lumcount)
+		var/turf/T = get_turf(src)
+		if(!T.get_lumcount())
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 // separate proc so we can jump out of it when we've succeeded in spreading disease.

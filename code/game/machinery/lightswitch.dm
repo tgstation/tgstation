@@ -99,13 +99,12 @@
 	if(buildstage != 2) return
 	on = !on
 
-	for(var/area/A in areaMaster.related)
-		A.lightswitch = on
-		A.updateicon()
+	areaMaster.lightswitch = on
+	areaMaster.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in areaMaster)
+		L.on = on
+		L.updateicon()
 
 	areaMaster.power_change()
 

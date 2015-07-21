@@ -4,7 +4,7 @@
 	name = "stacking machine console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
-	l_color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_GREEN
 	circuit = "/obj/item/weapon/circuitboard/stacking_machine_console"
 
 	var/stacker_tag//The ID of the stacker this console should control

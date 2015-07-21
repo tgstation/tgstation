@@ -10,7 +10,7 @@
 	var/moving = 0
 	var/lastMove = 0
 
-	l_color = "#B40000"
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/salvage_ship/New()
 	curr_location= locate(/area/shuttle/salvage/start)

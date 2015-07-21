@@ -32,13 +32,13 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/turn_on() called tick#: [world.time]")
 	if(stat)	return 0
 	on = 1
-	SetLuminosity(initial(luminosity))
+	set_light(initial(luminosity))
 	return 1
 
 /obj/machinery/bot/proc/turn_off()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/turn_off() called tick#: [world.time]")
 	on = 0
-	SetLuminosity(0)
+	set_light(0)
 
 /obj/machinery/bot/proc/explode()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/proc/explode() called tick#: [world.time]")

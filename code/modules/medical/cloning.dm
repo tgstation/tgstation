@@ -28,21 +28,16 @@
 
 	machine_flags = EMAGGABLE | SCREWTOGGLE | CROWDESTROY | MULTITOOL_MENU
 
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
+	use_auto_lights = 1
+	light_range_on = 3
+	light_power_on = 2
 
 /obj/machinery/cloning/clonepod/full
 	biomass = CLONE_BIOMASS // * 3 - N3X
 
 /obj/machinery/cloning/clonepod/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return ""
-
-
-/obj/machinery/cloning/clonepod/power_change()
-	..()
-	if(!(stat & (BROKEN|NOPOWER)) && attempting)
-		SetLuminosity(2)
-	else
-		SetLuminosity(0)
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **

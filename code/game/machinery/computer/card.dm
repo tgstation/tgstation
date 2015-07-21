@@ -43,7 +43,7 @@
 		"ERT_medical",
 	)
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 	proc/is_centcom()
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/is_centcom() called tick#: [world.time]")

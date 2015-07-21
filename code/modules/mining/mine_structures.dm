@@ -50,20 +50,12 @@
 	icon_state = "hanginglantern"
 	anchored = 1
 	layer = 5
-	l_color = LIGHT_COLOR_TUNGSTEN
+	light_range = 6 //Luminosity of hanging lanterns
+	light_power = 2
+	light_color = LIGHT_COLOR_TUNGSTEN
 	ghost_write = 0 //Can't be too safe
 	ghost_read = 0
 	var/flickering = 0 //SPOOK
-
-/obj/structure/hanging_lantern/New()
-	..()
-	alllights += src
-	SetLuminosity(5)
-
-/obj/structure/hanging_lantern/Destroy()
-	alllights -= src
-	SetLuminosity(0)
-	..()
 
 /obj/structure/hanging_lantern/attack_hand(mob/user)
 
@@ -85,8 +77,8 @@
 	flickering = 1
 	spawn(0)
 		for(var/i = 0; i < amount; i++)
-			SetLuminosity(0)
+			set_light(0)
 			spawn(rand(5, 15))
-				SetLuminosity(5)
-		SetLuminosity(5)
+				set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
+		set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
 	flickering = 0

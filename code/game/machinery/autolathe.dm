@@ -29,7 +29,7 @@
 
 	research_flags = NANOTOUCH | TAKESMATIN | HASOUTPUT | IGNORE_CHEMS | HASMAT_OVER
 
-	l_color = LIGHT_COLOR_CYAN
+	light_color = LIGHT_COLOR_CYAN
 
 	part_sets = list(
 		"Tools"=list(

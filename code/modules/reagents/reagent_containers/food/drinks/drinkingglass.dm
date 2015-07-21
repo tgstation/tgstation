@@ -31,8 +31,8 @@
 			flammable = 0
 			if(!molotov)
 				lit = 0
-			l_color = null
-			SetLuminosity(0)
+			light_color = null
+			set_light(0)
 			isGlass = 1
 			switch(reagents.get_master_reagent_id())
 				if("beer")
@@ -203,7 +203,7 @@
 					icon_state = "b52glass"
 					name = "\improper B-52"
 					desc = "Kahlua, Irish Cream, and congac. You will get bombed."
-					l_color = "#000080"
+					light_color = "#000080"
 					if(!lit)
 						flammable = 1
 				if("atomicbomb")

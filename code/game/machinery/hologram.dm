@@ -98,8 +98,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = 1//So space wind cannot drag it.
 	hologram.name = "[A.name] (Hologram)"//If someone decides to right click.
-	hologram.SetLuminosity(2)	//hologram lighting
-	SetLuminosity(2)			//pad lighting
+	hologram.set_light(2)	//hologram lighting
+	set_light(2)			//pad lighting
 	icon_state = "holopad1"
 	A.current = src
 	master = A//AI is the master.
@@ -113,7 +113,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(master.current == src)
 		master.current = null
 	master = null//Null the master, since no-one is using it now.
-	SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+	set_light(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 	icon_state = "holopad0"
 	use_power = 1//Passive power usage.
 	return 1
@@ -130,7 +130,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 					var/area/holo_area = get_area(src)
 					var/area/eye_area = get_area(master.eyeobj)
 
-					if(eye_area in holo_area.master.related)
+					if(eye_area == holo_area)
 						return 1
 
 		clear_holo()//If not, we want to get rid of the hologram.

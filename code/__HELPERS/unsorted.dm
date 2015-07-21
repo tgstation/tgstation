@@ -800,13 +800,9 @@ proc/GaussRandRound(var/sigma,var/roundto)
 /proc/SortAreas()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SortAreas() called tick#: [world.time]")
 	for(var/area/A in areas)
-		if(A.lighting_subarea)
-			continue
 		sortedAreas.Add(A)
 
 	sortTim(sortedAreas, /proc/cmp_name_asc)
-
-
 
 /area/proc/addSorted()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/addSorted() called tick#: [world.time]")
@@ -1449,6 +1445,28 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 		dest_x = max(0, dest_x-distance)
 
 	return locate(dest_x,dest_y,dest_z)
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dview() called tick#: [world.time]")
+	if(!center)
+		return
+
+	var/global/mob/dview/DV
+	if(!DV)
+		DV = new
+
+	DV.loc = center
+
+	DV.see_in_dark = range
+	DV.see_invisible = invis_flags
+
+	. = view(range, DV)
+	DV.loc = null
+
+/mob/dview
+	invisibility = 101
+	density = 0
 
 //Gets the Z level datum for this atom's Z level
 /proc/get_z_level(var/atom/A)

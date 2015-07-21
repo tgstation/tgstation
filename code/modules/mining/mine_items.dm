@@ -5,7 +5,7 @@
 	name = "Light-emtter"
 	anchored = 1
 	unacidable = 1
-	luminosity = 8
+	light_range = 8
 
 /**********************Miner Lockers**************************/
 
@@ -121,7 +121,7 @@ proc/move_mining_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/location = 0 //0 = station, 1 = mining base
 	machine_flags = EMAGGABLE | SCREWTOGGLE
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
 	if(..(user))
@@ -164,6 +164,8 @@ proc/move_mining_shuttle()
 	icon_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
+	light_power = 2
+	light_color = LIGHT_COLOR_TUNGSTEN
 
 /*****************************Pickaxe********************************/
 

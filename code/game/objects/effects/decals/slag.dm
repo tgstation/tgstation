@@ -6,7 +6,7 @@
 	icon_state = "slagcold"
 	anchored = 1
 	melt_temperature=0
-	l_color="#FFA500"
+	light_color = LIGHT_COLOR_ORANGE
 
 	starting_materials = list()
 
@@ -25,10 +25,10 @@
 			molten=1
 			icon_state="slaghot"
 			processing_objects.Add(src)
-			SetLuminosity(2)
+			set_light(2)
 
 /obj/effect/decal/slag/Destroy()
-	SetLuminosity(0)
+	set_light(0)
 	processing_objects.Remove(src)
 	..()
 
@@ -63,11 +63,11 @@
 
 /obj/effect/decal/slag/solidify()
 	icon_state="slagcold"
-	SetLuminosity(0)
+	set_light(0)
 
 /obj/effect/decal/slag/melt()
 	icon_state="slaghot"
-	SetLuminosity(2)
+	set_light(2)
 
 /obj/effect/decal/slag/Crossed(M as mob)
 	..()

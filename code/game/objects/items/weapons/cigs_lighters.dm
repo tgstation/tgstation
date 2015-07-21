@@ -30,7 +30,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	w_class = 1.0
 	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
-	l_color = LIGHT_COLOR_FIRE
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/weapon/match/New()
 
@@ -74,18 +74,10 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 	if(lit == 1) //I wish I didn't need the == 1 part, but Dreamkamer is a dumb puppy
 		processing_objects.Add(src)
-		if(ismob(loc))
-			var/mob/carrier = loc
-			carrier.SetLuminosity(carrier.luminosity + brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	else
 		processing_objects.Remove(src)
-		if(ismob(loc))
-			var/mob/carrier = loc
-			carrier.SetLuminosity(carrier.luminosity - brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	update_icon()
 
 /obj/item/weapon/match/process()
@@ -98,16 +90,6 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	if(location)
 		location.hotspot_expose(heat_production, 5, surfaces = istype(loc, /turf))
 		return
-
-/obj/item/weapon/match/pickup(mob/user)
-	if(lit == 1)
-		user.SetLuminosity(user.luminosity + brightness_on)
-		SetLuminosity(0)
-
-/obj/item/weapon/match/dropped(mob/user)
-	if(lit == 1)
-		user.SetLuminosity(user.luminosity - brightness_on)
-		SetLuminosity(brightness_on)
 
 /obj/item/weapon/match/is_hot()
 	if(lit == 1)
@@ -169,7 +151,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	body_parts_covered = null
 	attack_verb = list("burnt", "singed")
 	heat_production = 1000
-	l_color = LIGHT_COLOR_FIRE
+	light_color = LIGHT_COLOR_FIRE
 	var/lit = 0
 	var/overlay_on = "ciglit" //Apparently not used
 	var/type_butt = /obj/item/weapon/cigbutt
@@ -210,29 +192,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 	if(lit)
 		processing_objects.Add(src)
-		if(ismob(loc))
-			var/mob/carrier = loc
-			carrier.SetLuminosity(carrier.luminosity + brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	else
 		processing_objects.Remove(src)
-		if(ismob(loc))
-			var/mob/carrier = loc
-			carrier.SetLuminosity(carrier.luminosity - brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	update_icon()
-
-/obj/item/clothing/mask/cigarette/pickup(mob/user)
-	if(lit)
-		user.SetLuminosity(user.luminosity + brightness_on)
-		SetLuminosity(0)
-
-/obj/item/clothing/mask/cigarette/dropped(mob/user)
-	if(lit)
-		user.SetLuminosity(user.luminosity - brightness_on)
-		SetLuminosity(brightness_on)
 
 /obj/item/clothing/mask/cigarette/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(lit)
@@ -618,7 +582,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	heat_production = 1500
 	slot_flags = SLOT_BELT
 	attack_verb = list("burnt", "singed")
-	l_color = LIGHT_COLOR_FIRE
+	light_color = LIGHT_COLOR_FIRE
 	var/lit = 0
 
 /obj/item/weapon/lighter/zippo
@@ -662,29 +626,11 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 
 	if(lit)
 		processing_objects.Add(src)
-		if(ismob(loc))
-			var/mob/carrier = loc
-			carrier.SetLuminosity(carrier.luminosity + brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	else
 		processing_objects.Remove(src)
-		if(ismob(loc))
-			var/mob/carrier = loc
-			carrier.SetLuminosity(carrier.luminosity - brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 	update_icon()
-
-/obj/item/weapon/lighter/pickup(mob/user)
-	if(lit)
-		user.SetLuminosity(user.luminosity + brightness_on)
-		SetLuminosity(0)
-
-/obj/item/weapon/lighter/dropped(mob/user)
-	if(lit)
-		user.SetLuminosity(user.luminosity - brightness_on)
-		SetLuminosity(brightness_on)
 
 /obj/item/weapon/lighter/afterattack(obj/O, mob/user, proximity)
 	if(!proximity)

@@ -1156,21 +1156,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness(var/mob/user = null)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/drinks/proc/update_brightness() called tick#: [world.time]")
 	if(lit)
-		SetLuminosity(src.brightness_lit)
+		set_light(src.brightness_lit)
 	else
-		SetLuminosity(0)
-
-/obj/item/weapon/reagent_containers/food/drinks/pickup(mob/user)
-	if(lit && molotov)
-		user.SetLuminosity(user.luminosity + brightness_lit)
-		SetLuminosity(0)
-
-
-/obj/item/weapon/reagent_containers/food/drinks/dropped(mob/user)
-	if(src && lit && molotov && !luminosity)
-		user.SetLuminosity(user.luminosity - brightness_lit)
-		SetLuminosity(brightness_lit)
-
+		set_light(0)
 
 /obj/item/weapon/reagent_containers/food/drinks/update_icon()
 	src.overlays.len = 0

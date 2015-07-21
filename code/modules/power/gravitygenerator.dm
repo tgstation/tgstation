@@ -52,8 +52,8 @@
 	for(var/area/A in range(src,effectiverange))
 		if(A.name == "Space")
 			continue // No (de)gravitizing space.
-		if(A.master && !( A.master in localareas) )
-			localareas += A.master
+		if(!(A in localareas))
+			localareas += A
 
 /obj/machinery/computer/gravity_control_computer/proc/findgenerator()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/gravity_control_computer/proc/findgenerator() called tick#: [world.time]")
@@ -132,7 +132,7 @@
 			for(var/area/A in gravity_generator:localareas)
 				var/obj/machinery/gravity_generator/G
 				for(G in machines)
-					if((A.master in G.localareas) && (G.on))
+					if((A in G.localareas) && (G.on))
 						break
 				if(!G)
 					A.gravitychange(0,A)

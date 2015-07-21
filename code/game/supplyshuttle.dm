@@ -19,20 +19,16 @@ var/list/mechtoys = list(
 	/obj/item/toy/prize/odysseus,
 	/obj/item/toy/prize/phazon
 )
-
-/area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+//Lighting STILL disabled, even with the new bay engine, because lighting doesn't play nice with our shuttles, might just be our shuttle code, or the small changes in the lighting engine we have from bay.
+/area/supply/station
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	luminosity = 1
-	lighting_use_dynamic = 0
 	requires_power = 0
 
 
-/area/supply/dock //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/dock
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	luminosity = 1
-	lighting_use_dynamic = 0
 	requires_power = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
@@ -126,7 +122,7 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
-	l_color = "#87421F"
+	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
@@ -138,7 +134,7 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
-	l_color = "#87421F"
+	light_color = LIGHT_COLOR_BROWN
 
 /*
 /obj/effect/marker/supplymarker
@@ -339,7 +335,7 @@ var/list/mechtoys = list(
 			if(T.density)	continue
 			var/contcount
 			for(var/atom/A in T.contents)
-				if(!A.simulated)
+				if(islightingoverlay(A))
 					continue
 				contcount++
 			if(contcount)

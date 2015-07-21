@@ -24,6 +24,7 @@
  	// Simulates stuff getting broken due to molecular bonds decaying.
  	var/decay_rate = 0
 
+
 // Actually decay the turf.
 /datum/universal_state/proc/DecayTurf(var/turf/T)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/proc/DecayTurf() called tick#: [world.time]")
@@ -45,7 +46,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/proc/OnShuttleCall() called tick#: [world.time]")
 	return 1
 
-// Processed per tick
+// This gets called by lighting overlay updates, lighting_overlays.dm line #62.
 /datum/universal_state/proc/OnTurfTick(var/turf/T)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/universal_state/proc/OnTurfTick() called tick#: [world.time]")
 	if(decay_rate && prob(decay_rate))

@@ -10,6 +10,10 @@
 	var/processing = 0
 	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | MULTITOOL_MENU
 
+	use_auto_lights = 1
+	light_power_on = 2
+	light_range_on = 3
+
 /obj/machinery/computer/cultify()
 	new /obj/structure/cult/tome(loc)
 	..()
@@ -59,7 +63,6 @@
 		set_broken()
 	..()
 
-
 /obj/machinery/computer/blob_act()
 	if (prob(75))
 		for(var/x in verbs)
@@ -78,16 +81,9 @@
 	else if(stat & NOPOWER)
 		icon_state = "[initial(icon_state)]0"
 
-
-
 /obj/machinery/computer/power_change()
-	..()
+	. = ..()
 	update_icon()
-	if(!(stat & (BROKEN|NOPOWER)))
-		SetLuminosity(2)
-	else
-		SetLuminosity(0)
-
 
 /obj/machinery/computer/proc/set_broken()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/proc/set_broken() called tick#: [world.time]")

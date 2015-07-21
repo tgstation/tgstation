@@ -14,8 +14,6 @@
 
 /area/turret_protected/Entered(O)
 	..()
-	if( master && master != src )
-		return master.Entered(O)
 
 	if( iscarbon(O) )
 		turretTargets |= O
@@ -31,9 +29,6 @@
 	return 1
 
 /area/turret_protected/Exited(O)
-	if( master && master != src )
-		return master.Exited(O)
-
 	if( ismob(O) && !issilicon(O) )
 		turretTargets -= O
 	// /vg/ vehicles
@@ -129,8 +124,6 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/get_protected_area() called tick#: [world.time]")
 	var/area/turret_protected/TP = get_area(src)
 	if(istype(TP))
-		if(TP.master && TP.master != TP)
-			TP = TP.master
 		return TP
 	return
 
@@ -353,7 +346,7 @@
 	var/enabled = 1
 	var/lethal = 0
 	var/locked = 1
-	var/control_area //can be area name, path or nothing.
+	var/area/turret_protected/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
@@ -364,11 +357,7 @@
 /obj/machinery/turretid/New()
 	..()
 	if(!control_area)
-		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
-			control_area = CA
+		control_area = get_area(src)
 	else if(istext(control_area))
 		for(var/area/A in areas)
 			if(A.name && A.name==control_area)
@@ -497,7 +486,8 @@
 /obj/machinery/turretid/proc/updateTurrets()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turretid/proc/updateTurrets() called tick#: [world.time]")
 	if(control_area)
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
+		//ASSERT(istype(control_area))
+		for(var/obj/machinery/turret/aTurret in control_area.contents)
 			aTurret.setState(enabled, lethal)
 	src.update_icons()
 
