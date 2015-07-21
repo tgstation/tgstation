@@ -68,7 +68,7 @@
 	charge_cost = 100
 	cell_type = "/obj/item/weapon/cell"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
-	fire_delay = 1
+	fire_delay = 0
 	recoil = 1
 	var/charge_tick = 0
 	var/firelevel = SPUR_FULL_POWER
@@ -89,7 +89,6 @@
 	if(!power_supply) return 0
 	power_supply.give(100)
 	levelChange()
-	update_icon()
 	return 1
 
 /obj/item/weapon/gun/energy/spur/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
@@ -151,6 +150,19 @@
 
 /obj/item/weapon/gun/energy/spur/update_icon()
 	return
+
+/obj/item/weapon/gun/energy/spur/polarstar
+	name = "\improper Polar Star"
+	desc = "Despite being incomplete, the severe wear on this gun shows to which extent it's been used already."
+	icon_state = "polarstar"
+	fire_delay = 1
+
+/obj/item/weapon/gun/energy/spur/polarstar/process()
+	charge_tick++
+	if(charge_tick < 2) return 0
+	charge_tick = 0
+	levelChange()
+	return 1
 
 #undef SPUR_FULL_POWER
 #undef SPUR_HIGH_POWER
