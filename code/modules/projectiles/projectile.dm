@@ -188,7 +188,7 @@
 			permutated.Add(A)
 			return 0
 		else if(!custom_impact)
-			var/obj/effect/overlay/beam/impact/impact = new(get_turf(src))
+			var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam/impact,get_turf(src))
 			switch(get_dir(src,A))
 				if(NORTH)
 					impact.pixel_y = 16

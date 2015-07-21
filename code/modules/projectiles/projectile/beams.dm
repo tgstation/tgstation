@@ -69,7 +69,7 @@ var/list/beam_master = list()
 		if(count >= kill_count)
 			break
 		count++
-		var/obj/effect/overlay/beam/X=new(T)
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam/impact,T)
 		X.BeamSource=src
 		if((N+64>length) && (N+32<=length))
 			X.icon=Iend

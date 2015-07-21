@@ -30,7 +30,7 @@
 	spawn if(fade)
 		animate(src, alpha=0, time=lifetime)
 	spawn(lifetime)
-		qdel(src)
+		returnToPool(src)
 
 /obj/effect/overlay/beam/impact
 	icon='icons/obj/projectiles_impacts.dmi'

@@ -535,7 +535,7 @@
 		if(count >= kill_count)
 			break
 		count++
-		var/obj/effect/overlay/beam/X=new(T,current_timer,1)
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam/impact,T,current_timer,1)
 		X.BeamSource=src
 		current_timer += increment
 		if((N+64>(length+16)) && (N+32<=(length+16)))
@@ -664,7 +664,7 @@
 	..()
 
 /obj/item/projectile/spur/Bump(atom/A as mob|obj|turf|area)
-	var/obj/effect/overlay/beam/impact/impact = new(get_turf(src))
+	var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam/impact,get_turf(src))
 	switch(get_dir(src,A))
 		if(NORTH)
 			impact.pixel_y = 16
@@ -684,7 +684,7 @@
 
 /obj/item/projectile/spur/process_step()
 	if(kill_count <= 0)
-		var/obj/effect/overlay/beam/impact/impact = new(get_turf(src))
+		var/obj/effect/overlay/beam/impact/impact = getFromPool(/obj/effect/overlay/beam/impact,get_turf(src))
 		impact.icon_state = "spur_2"
 	..()
 
