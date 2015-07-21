@@ -99,16 +99,17 @@
 	var/maxlevel = power_supply.maxcharge
 	var/level = power_supply.charge
 	var/newlevel = 0
-	if(level == maxlevel)
-		newlevel = SPUR_FULL_POWER
-	else if(level >= ((maxlevel/3)*2))
-		newlevel = SPUR_HIGH_POWER
-	else if(level >= (maxlevel/3))
-		newlevel = SPUR_MEDIUM_POWER
-	else if(level >= charge_cost)
-		newlevel = SPUR_LOW_POWER
-	else
-		newlevel = SPUR_NO_POWER
+	switch(level)
+		if(maxlevel to INFINITY)
+			newlevel = SPUR_FULL_POWER
+		if(((maxlevel/3)*2) to maxlevel)
+			newlevel = SPUR_HIGH_POWER
+		if((maxlevel/3) to ((maxlevel/3)*2))
+			newlevel = SPUR_MEDIUM_POWER
+		if(charge_cost to (maxlevel/3))
+			newlevel = SPUR_LOW_POWER
+		else
+			newlevel = SPUR_NO_POWER
 
 	if(firelevel >= newlevel)
 		firelevel = newlevel
