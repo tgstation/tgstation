@@ -173,8 +173,9 @@
 		if(cleared)
 			src << "--- [class] alarm in [A.name] has been cleared."
 
-/mob/living/simple_animal/drone/check_eye_prot()
-	return 2
-
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
+
+/mob/living/simple_animal/drone/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+	if(affect_silicon)
+		return ..()

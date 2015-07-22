@@ -194,7 +194,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?_src_=holder;secretsadmin=check_antagonist'>Check antagonists</a> - Kick <a href='?_src_=holder;secretsadmin=kick_all_from_lobby;afkonly=0'>everyone</a>/<a href='?_src_=holder;secretsadmin=kick_all_from_lobby;afkonly=1'>AFKers</a> in lobby
+					Hover over a line to see more information - <a href='?_src_=holder;check_antagonist=1'>Check antagonists</a> - Kick <a href='?_src_=holder;kick_all_from_lobby=1;afkonly=0'>everyone</a>/<a href='?_src_=holder;kick_all_from_lobby=1;afkonly=1'>AFKers</a> in lobby
 					<p>
 				</td>
 			</tr>
