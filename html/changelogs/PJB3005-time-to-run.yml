@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - tweak: Removed the small rocks dropped whilst excavating for xenoarch. (Note: these are not the strange rocks nor the rocky debrisq)
