@@ -92,7 +92,13 @@ REAGENT SCANNER
 	var/mode = 1;
 
 /obj/item/device/healthanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
-	healthanalyze(M, user, mode)
+	if(!user.hallucinating())
+		healthanalyze(M, user, mode)
+	else
+		if( (M.stat == DEAD || (M.status_flags & FAKEDEATH) ) && !user.is_deaf())
+			user << "<span class='notice'>The [name] glows black and says: </span><b>It's dead, Jim.</b>"
+		else
+			user << "<span class='notice'>The [name] glows [pick("red","green","blue","pink")] and beeps! You're pretty sure that was supposed to mean something, but you have no idea what.</span>"
 	src.add_fingerprint(user)
 
 proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)

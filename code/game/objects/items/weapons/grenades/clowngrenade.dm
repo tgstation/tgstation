@@ -70,13 +70,15 @@
 		var/mob/living/M = AM
 		if(M.lying)
 			M.take_overall_damage(0, max(0, (burned - 2)))
-			M << "<span class='danger'>Something burns your back!</span>"
+			M.simple_message("<span class='danger'>Something burns your back!</span>",\
+				"<span class='userdanger'>It's eating your back!</span>")
 			return
 		if(ishuman(M))
 			if(M.CheckSlip() < 1)
 				return
 			else
-				M << "<span class='warning'>Your feet feel like they're on fire!</span>"
+				M.simple_message("<span class='warning'>Your feet feel like they're on fire!</span>",\
+					"<span class='userdanger'>Egads! They bite your feet!</span>")
 				M.take_overall_damage(0, max(0, (burned - 2)))
 
 		if(!istype(M, /mob/living/carbon/slime) && !isrobot(M))

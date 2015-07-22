@@ -287,7 +287,7 @@ obj/machinery/gibber/New()
 	if(src.operating)
 		return
 	if(!victim)
-		visible_message("<span class='warning'>You hear a loud squelchy grinding sound.</span>", \
+		visible_message("<span class='warning'>You hear a loud metallic grinding sound.</span>", \
 			drugged_message = "<span class='warning'>You hear a band performance.</span>")
 		return
 	use_power(1000)

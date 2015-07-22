@@ -90,7 +90,10 @@
 	if(on)
 		user.visible_message("<span class='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",\
 		"<span class='warning'>You extend the baton.</span>",\
-		"You hear an ominous click.")
+		"You hear an ominous click.",\
+		"<span class='notice'>A tiny tree grows out of [user]'s hand! Fascinating!</span>",\
+		"<span class='notice'>You extend the fishing rod.</span>",\
+		"You hear a balloon exploding.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton_1"
 		w_class = 4
@@ -99,7 +102,10 @@
 	else
 		user.visible_message("<span class='notice'>[user] collapses their telescopic baton.</span>",\
 		"<span class='notice'>You collapse the baton.</span>",\
-		"You hear a click.")
+		"You hear a click.",\
+		"<span class='warning'>The tree growing out of [user]'s hand suddenly disappears!</span>",\
+		"<span class='warning'>The fishing rod shrinks.</span>",\
+		"You hear a balloon exploding.")
 		icon_state = "telebaton_0"
 		item_state = "telebaton_0"
 		w_class = 2
@@ -125,7 +131,8 @@
 /obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
 	if(on)
 		if ((M_CLUMSY in user.mutations) && prob(50))
-			user << "<span class='warning'>You club yourself over the head.</span>"
+			user.simple_message("<span class='warning'>You club yourself over the head.</span>",
+				"<span class='danger'>The fishing rod goes mad!</span>")
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -146,7 +153,8 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [target.name] ([target.ckey])</font>")
 			log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [target.name] ([target.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			src.add_fingerprint(user)
-			target.visible_message("<span class='danger'>[target] has been stunned with \the [src] by [user]!</span>")
+			target.visible_message("<span class='danger'>[target] has been stunned with \the [src] by [user]!</span>",\
+				drugged_message="<span class='notice'>[user] smacks [target] with the fishing rod!</span>")
 			if(!iscarbon(user))
 				target.LAssailant = null
 			else
