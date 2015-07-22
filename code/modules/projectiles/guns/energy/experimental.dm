@@ -173,7 +173,7 @@
 	origin_tech = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	recoil = 1
-	flags = TWOHANDABLE
+	flags = FPRINT | TWOHANDABLE
 	w_class = 5.0//we be fuckin huge maaan
 	fire_delay = 0
 	var/max_shells = 200
@@ -190,14 +190,15 @@
 		user << "<span class='warning'>You must dual-wield \the [src] before you can fire it!</span>"
 
 /obj/item/weapon/gun/gatling/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
-	..(target,user,params,reflex,struggle)
+	..()
 	var/list/turf/possible_turfs = list()
 	for(var/turf/T in orange(target,1))
 		possible_turfs += T
-	spawn() for(var/i = 1; i <= 3; i++)
-		sleep(1)
-		var/newturf = pick(possible_turfs)
-		..(newturf,user,params,reflex,struggle)
+	spawn()
+		for(var/i = 1; i <= 3; i++)
+			sleep(1)
+			var/newturf = pick(possible_turfs)
+			..(newturf,user,params,reflex,struggle)
 
 /obj/item/weapon/gun/gatling/update_wield(mob/user)
 	item_state = "minigun[wielded ? 1 : 0]"
