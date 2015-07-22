@@ -240,6 +240,7 @@
 	item_state = "hostrench"
 	burn_state = -1 //Not Burnable
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective)
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
