@@ -22,7 +22,7 @@
 
 /obj/item/weapon/gun/dartgun
 	name = "dart gun"
-	desc = "A small gas-powered dartgun, capable of delivering chemical cocktails swiftly across short distances."
+	desc = "A small gas-powered dartgun, capable of delivering chemical cocktails swiftly across short distances. Dials allow you to specify how much of the loaded chemicals to fire at once."
 	icon_state = "dartgun-empty"
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
@@ -31,7 +31,7 @@
 	var/obj/item/weapon/dart_cartridge/cartridge = null //Container of darts.
 	var/max_beakers = 3
 	var/dart_reagent_amount = 15
-	var/container_type = /obj/item/weapon/reagent_containers/glass/beaker/vial
+	var/container_type = /obj/item/weapon/reagent_containers/glass/beaker
 	var/list/starting_chems = null
 
 /obj/item/weapon/gun/dartgun/update_icon()
@@ -94,7 +94,7 @@
 			user << "<span class='notice'>[I] doesn't seem to fit into [src].</span>"
 			return
 		if(beakers.len >= max_beakers)
-			user << "<span class='warning'>[src] already has [max_beakers] vials in it - another one isn't going to fit!</span>"
+			user << "<span class='warning'>[src] already has [max_beakers] beakers in it - another one isn't going to fit!</span>"
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
 		user.drop_item(B, src)
