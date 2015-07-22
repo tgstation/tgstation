@@ -552,6 +552,8 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/send_html_resources() called tick#: [world.time]")
 	if(crewmonitor && minimapinit)
 		crewmonitor.sendResources(src)
+	if(adv_camera && minimapinit)
+		adv_camera.sendResources(src)
 
 /proc/get_role_desire_str(var/rolepref)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_role_desire_str() called tick#: [world.time]")

@@ -31,9 +31,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/interactive_map/proc/updateFor() called tick#: [world.time]")
 	// This check will succeed if updateFor is called after showing to the player, but will fail
 	// on regular updates. Since we only really need this once we don't care if it fails.
-
 	hi.callJavaScript("clearAll", new/list(), hclient_or_mob)
-
 	for (var/list/L in data)
 		hi.callJavaScript("add", L, hclient_or_mob)
 
@@ -45,7 +43,8 @@ var/const/ALLOW_CENTCOMM = FALSE
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/interactive_map/proc/hiIsValidClient() called tick#: [world.time]")
 	return (hclient.client.mob && hclient.client.mob.stat == CONSCIOUS)
 
-/datum/interactive_map/Topic(href, href_list[], datum/html_interface_client/hclient)
+/datum/interactive_map/Topic(href, href_list[], datum/html_interface_client/hclient, datum/html_interface/currui)
+	..()
 	if (istype(hclient))
 		if(hclient && hclient.client && hclient.client.mob)
 			var/mob/living/L = hclient.client.mob
@@ -54,7 +53,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 				if("changez")
 					var/newz = text2num(href_list["value"])
 					if(newz)
-						show(L,newz)
+						show(L,newz,currui)
 						return 1 //Tell children we handled the topic
 
 // Override this to queue an interface to be updated

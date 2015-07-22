@@ -62,6 +62,8 @@ var/list/camera_names=list()
 	if(!c_tag)
 		name_camera()
 	..()
+	if(adv_camera && adv_camera.initialized && !(src in adv_camera.camerasbyzlevel["[z]"]))
+		adv_camera.update(z, 0, src, adding=1)
 
 /obj/machinery/camera/proc/name_camera()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/name_camera() called tick#: [world.time]")
@@ -109,6 +111,7 @@ var/list/camera_names=list()
 				update_icon()
 				if(can_use())
 					cameranet.addCamera(src)
+					adv_camera.update(z, 0, src, adding=1)
 			for(var/mob/O in mob_list)
 				if (istype(O.machine, /obj/machinery/computer/security))
 					var/obj/machinery/computer/security/S = O.machine
@@ -274,9 +277,15 @@ var/list/camera_names=list()
 				O.unset_machine()
 				O.reset_view(null)
 				O << "The screen bursts into static."
+	if(choice && can_use()) //camera reactivated
+		adv_camera.update(z, 0, src, adding=1)
+	else //either deactivated OR being destroyed
+		adv_camera.update(z, 0, src, adding=2)
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/triggerCameraAlarm() called tick#: [world.time]")
+	if(!alarm_on)
+		adv_camera.update(z, 0, src, adding=4) //1 is alarming, 0 is nothing wrong
 	alarm_on = 1
 	for(var/mob/living/silicon/S in mob_list)
 		S.triggerAlarm("Camera", areaMaster, list(src), src)
@@ -284,6 +293,8 @@ var/list/camera_names=list()
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/cancelCameraAlarm() called tick#: [world.time]")
+	if(alarm_on)
+		adv_camera.update(z, 0, src, adding=4) //1 is alarming, 0 is nothing wrong
 	alarm_on = 0
 	for(var/mob/living/silicon/S in mob_list)
 		S.cancelAlarm("Camera", areaMaster, list(src), src)

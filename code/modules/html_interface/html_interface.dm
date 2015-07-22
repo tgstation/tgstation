@@ -181,7 +181,6 @@ mob/verb/test()
 /datum/html_interface/proc/callJavaScript(func, list/arguments, datum/html_interface_client/hclient = null)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface/proc/callJavaScript() called tick#: [world.time]")
 	if (!arguments) arguments = new/list()
-
 	if (hclient)
 		hclient = getClient(hclient)
 
@@ -214,7 +213,7 @@ mob/verb/test()
 
 		if (hclient && hclient.active)
 			spawn (-1) src._renderContent(id, hclient, ignore_cache)
-/datum/html_interface/proc/show(datum/html_interface_client/hclient)
+/datum/html_interface/proc/show(datum/html_interface_client/hclient, var/datum/html_interface/oldwindow)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface/proc/show() called tick#: [world.time]")
 	hclient = getClient(hclient, TRUE)
 
@@ -233,6 +232,8 @@ mob/verb/test()
 			hclient.is_loaded = FALSE
 			hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
 			winshow(hclient.client, "browser_\ref[src]", TRUE)
+		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
+			winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)
 
 		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 
@@ -376,4 +377,4 @@ mob/verb/test()
 
 				if ("onclose")
 					src.hide(hclient)
-		else if (src.ref && hclient.active) src.ref.Topic(href, href_list, hclient)
+		else if (src.ref) src.ref.Topic(href, href_list, hclient, src)

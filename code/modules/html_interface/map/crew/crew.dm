@@ -91,7 +91,7 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 
 	src.jobs = jobs
 
-/datum/interactive_map/crewmonitor/show(mob/mob, z)
+/datum/interactive_map/crewmonitor/show(mob/mob, z, datum/html_interface/currui = null)
 	if (!z) z = mob.z
 	if (z == CENTCOMM_Z) return
 
@@ -110,7 +110,7 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 			hi = src.interfaces["[z]"]
 
 		hi = src.interfaces["[z]"]
-		hi.show(mob)
+		hi.show(mob, currui)
 		src.updateFor(mob, hi, z)
 
 /datum/interactive_map/crewmonitor/updateFor(hclient_or_mob, datum/html_interface/hi, z)

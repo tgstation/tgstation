@@ -91,6 +91,7 @@ datum/controller/game_controller/proc/setup()
 	setup_economy()
 	SetupXenoarch()
 	cachedamageicons()
+	buildcamlist()
 	world << "<span class='danger'>Caching Jukebox playlists...</span>"
 	load_juke_playlists()
 	world << "<span class='danger'>Caching Jukebox playlists complete.</span>"
@@ -112,6 +113,28 @@ datum/controller/game_controller/proc/setup()
 
 	lighting_controller.Initialize()
 */
+datum/controller/game_controller/proc/buildcamlist()
+	adv_camera.camerasbyzlevel = list()
+	for(var/key in adv_camera.zlevels)
+		adv_camera.camerasbyzlevel["[key]"] = list()
+	//camerasbyzlevel = list("1" = list(), "5" = list())
+	if(!istype(cameranet) || !istype(cameranet.cameras) || !cameranet.cameras.len)
+		world.log << "cameranet has not been initialized before us, finding cameras manually."
+		for(var/obj/machinery/camera/C in world) //can't use machines list because cameras are removed from it.
+			if(C.z == 1 || C.z == 5)
+				var/list/ourlist = adv_camera.camerasbyzlevel["[C.z]"]
+				ourlist += C
+	else
+		for(var/obj/machinery/camera/C in cameranet.cameras) //can't use machines list because cameras are removed from it.
+			if(C.z == 1 || C.z == 5)
+				var/list/ourlist = adv_camera.camerasbyzlevel["[C.z]"]
+				ourlist += C
+	for(var/key in adv_camera.camerasbyzlevel)
+		var/list/keylist = adv_camera.camerasbyzlevel[key]
+		world.log << "[key] has [keylist.len] entries"
+
+	adv_camera.initialized = 1
+
 datum/controller/game_controller/proc/cachedamageicons()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/cachedamageicons() called tick#: [world.time]")
 	var/mob/living/carbon/human/H = new(locate(1,1,2))

@@ -239,70 +239,7 @@ var scale_x;
 var scale_y;
 var defaultzoom = 4;
 var html5compat = false;
-function disableSelection(){ return false; };
 
-$(window).on("onUpdateContent", function(){
-	$("#textbased").html("<table><colgroup><col id=\"name\" style=\"width: 24px;\" /><col id=\"pos\" style=\"width: 180px;\" /></colgroup><thead><tr><td><h3>Name</h3></td><td><h3>&nbsp;</h3></td><td><h3>Position</h3></td></tr></thead><tbody id=\"textbased-tbody\"></tbody></table>");
-
-	$("#uiMap").append("<img src=\"minimap_" + z + ".png\" id=\"uiMapImage\" width=\"256\" height=\"256\" unselectable=\"on\"/><div id=\"uiMapContent\" unselectable=\"on\"></div>");
-	$("#uiMapContainer").append("<div id=\"uiMapTooltip\"></div>");
-	if(!html5compat){
-		var i = document.createElement("input");
-		i.setAttribute("type", "range");
-		html5compat = i.type !== "text";
-	}
-	if(html5compat){
-	$("#switches").append("<div id='zoomcontainer' style='position: static; z-index: 9999; margin-bottom: -75px;'>Zoom: <div id='zoomslider' style='width: 75px; position: relative; top: -31px; right: -50px; z-index: 9999;'><input type=\"range\" onchange=\"setzoom(value);\" value=\"4\" step=\"0.5\" max=\"16\" min=\"0.5\" id=\"zoom\"></div><div id=\"zoomval\" style='position:relative; z-index: 9999; right: -135px; top: -80px; color: white;'>100%</div></div>");
-	}
-	else{
-			$("#switches").append(" Zoom: <a href='javascript:changeZoom(-2);'>--</a> <a href='javascript:changeZoom(2);'>++</a> <span id=\"zoomval\" style='color: white;'>100%</span>");
-
-	}
-	//$("body")[0].onselectstart = disableSelection;
-
-	var width = $("#uiMap").width();
-
-	scale_x = width / (maxx * tile_size);
-	scale_y = width / (maxy * tile_size); // height is assumed to be the same
-/*
-	$("#uiMap").on("click", function(e)
-	{
-		var x		= ((((e.clientX - 8) / scale_x) / tile_size) + 1).toFixed(0);
-		var y		= ((maxy - (((e.clientY - 8) / scale_y) / tile_size)) + 1).toFixed(0);
-
-		window.location.href = "byond://?src=" + hSrc + "&action=select_position&x=" + x + "&y=" + y;
-	});*/
-	$("#uiMap").css({	position: 'absolute',
-						top: '50%',
-						left: '50%',
-						margin: '-512px 0 0 -512px',
-						width: '256px',
-						height: '256px',
-						overflow: 'hidden',
-						zoom: '4'
-					});
-	$('#uiMap').drags({handle : '#uiMapImage'});
-	$('#uiMapTooltip')
-		.off('click')
-		.on('click', function (event) {
-			event.preventDefault();
-			$(this).fadeOut(400);
-		});
-	$('#uiMap').click(function(ev) {
-		var el = document.getElementById('uiMap');
-		var rect = el.getBoundingClientRect();
-		var tileX = (((ev.clientX - rect.left - el.clientLeft + el.scrollLeft)) / defaultzoom + 7).toFixed(0);
-		var tileY = (maxy-((ev.clientY - rect.top - el.clientTop + el.scrollTop)) / defaultzoom).toFixed(0);
-		var xx = ((ev.clientX - rect.left - el.clientLeft + el.scrollLeft) / defaultzoom).toFixed(0);
-		var yy = ((ev.clientY - rect.top - el.clientTop + el.scrollTop) / defaultzoom).toFixed(0);
-		//var dot = document.createElement('div');
-		//dot.setAttribute('style', 'position:absolute; width: 2px; height: 2px; top: '+top+'px; left: '+left+'px; background: red; z-index: 99999999;');
-		//el.appendChild(dot);
-		//alert(tileX + ' ' + tileY);
-		window.location.href = "byond://?src=" + hSrc + "&action=crewclick&x=" + tileX + "&y=" + tileY + "&z=" + z;
-	});
-}
-)
 function switchTo(i)
 {
 	if (i == 1)
