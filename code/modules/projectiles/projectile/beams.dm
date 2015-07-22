@@ -216,6 +216,7 @@ var/list/beam_master = list()
 	name = "laser"
 	icon_state = "laser"
 	invisibility = 101
+	animate_movement = 2
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
@@ -290,26 +291,38 @@ var/list/beam_master = list()
 		kill_count--
 		bump_original_check()
 
+		var/AX = (starting.x - src.x)*32
+		var/AY = (starting.y - src.y)*32
+		var/BX = (target.x - src.x)*32
+		var/BY = (target.y - src.y)*32
+		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
+
+		var/PixelX = round(BX+((BX-AX)*XX))
+		var/PixelY = round(BY+((BY-AY)*XX))
+
 		//If the icon has not been added yet
-		if( !("[icon_state][target_dir]" in beam_master) )
-			var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
-			beam_master["[icon_state][target_dir]"] = I //And cache it!
+		if( !("[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]" in beam_master) )
+			var/image/I = image(icon,"[icon_state]_pixel",10,target_dir) //Generate it.
+			I.transform = turn(I.transform, target_angle+45)
+			I.pixel_x = PixelX
+			I.pixel_y = PixelY
+			beam_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"] = I //And cache it!
 
 		//Finally add the overlay
 		if(src.loc && target_dir)
-			src.loc.overlays += beam_master["[icon_state][target_dir]"]
+			src.loc.overlays += beam_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"]
 
 			//Add the turf to a list in the beam master so they can be cleaned up easily.
 			if(reference in beam_master)
 				var/list/turf_master = beam_master[reference]
-				if("[icon_state][target_dir]" in turf_master)
-					var/list/turfs = turf_master["[icon_state][target_dir]"]
+				if("[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]" in turf_master)
+					var/list/turfs = turf_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"]
 					turfs += loc
 				else
-					turf_master["[icon_state][target_dir]"] = list(loc)
+					turf_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"] = list(loc)
 			else
 				var/list/turfs = list()
-				turfs["[icon_state][target_dir]"] = list(loc)
+				turfs["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"] = list(loc)
 				beam_master[reference] = turfs
 
 	return reference

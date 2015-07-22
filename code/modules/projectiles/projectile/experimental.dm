@@ -10,6 +10,7 @@
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "ricochet_head"
 	animate_movement = 0
+	linear_movement = 0
 	custom_impact = 1
 	var/pos_from = EAST	//which side of the turf is the shot coming from
 	var/pos_to = SOUTH	//which side of the turf is the shot heading to
@@ -661,6 +662,7 @@
 	icon_state = "spur_medium"
 	animate_movement = 2
 	custom_impact = 1
+	linear_movement = 0
 
 /obj/item/projectile/spur/OnFired()
 	var/obj/item/weapon/gun/energy/polarstar/quote = shot_from
@@ -680,28 +682,57 @@
 	..()
 
 /obj/item/projectile/spur/Bump(atom/A as mob|obj|turf|area)
-	var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
-	switch(get_dir(src,A))
-		if(NORTH)
-			impact.pixel_y = 16
-		if(SOUTH)
-			impact.pixel_y = -16
-		if(EAST)
-			impact.pixel_x = 16
-		if(WEST)
-			impact.pixel_x = -16
-	if(ismob(A))
-		impact.icon_state = "spur_3"
-		playsound(impact, 'sound/weapons/spur_hitmob.ogg', 30, 1)
-	else
-		impact.icon_state = "spur_1"
-		playsound(impact, 'sound/weapons/spur_hitmob.ogg', 30, 1)
+
+	if(loc)
+		var/turf/T = loc
+		var/impact_icon = null
+		var/impact_sound = null
+		var/PixelX = 0
+		var/PixelY = 0
+
+		switch(get_dir(src,A))
+			if(NORTH)
+				PixelY = 16
+			if(SOUTH)
+				PixelY = -16
+			if(EAST)
+				PixelX = 16
+			if(WEST)
+				PixelX = -16
+		if(ismob(A))
+			impact_icon = "spur_3"
+			impact_sound = 'sound/weapons/spur_hitmob.ogg'
+		else
+			impact_icon = "spur_1"
+			impact_sound = 'sound/weapons/spur_hitwall.ogg'
+
+		var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,impact_icon)
+		impact.pixel_x = PixelX
+		impact.pixel_y = PixelY
+		impact.layer = 13
+		T.overlays += impact
+		spawn(3)
+			T.overlays -= impact
+		playsound(impact, impact_sound, 30, 1)
+
+
+	if(istype(A, /turf/unsimulated/mineral))
+		var/turf/unsimulated/mineral/M = A
+		M.GetDrilled()
+	if(istype(A, /obj/structure/boulder))
+		qdel(A)
+
 	return ..()
 
 /obj/item/projectile/spur/process_step()
 	if(kill_count <= 0)
-		var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
-		impact.icon_state = "spur_2"
+		if(loc)
+			var/turf/T = loc
+			var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,"spur_2")
+			impact.layer = 13
+			T.overlays += impact
+			spawn(3)
+				T.overlays -= impact
 	..()
 
 #undef SPUR_FULL_POWER
@@ -709,3 +740,9 @@
 #undef SPUR_MEDIUM_POWER
 #undef SPUR_LOW_POWER
 #undef SPUR_NO_POWER
+
+
+/obj/item/projectile/bullet/gatling
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "minigun"
+	damage = 30
