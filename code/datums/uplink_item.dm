@@ -183,7 +183,7 @@ var/list/uplink_items = list()
 	name = "Toy Submachine Gun"
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r/toy
-	cost = 12
+	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -191,7 +191,7 @@ var/list/uplink_items = list()
 	name = "Toy Machine Gun"
 	desc = "A fully-loaded Donksoft belt-fed machine gun. This weapon has a massive 50-round magazine of devastating riot grade darts, that can briefly incapacitate someone in just one volley."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
-	cost = 30
+	cost = 12
 	gamemodes = list(/datum/game_mode/nuclear)
 	surplus = 0
 
@@ -355,9 +355,9 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
-	desc = "An innocent looking toy pistol designed to fire foam darts. Comes loaded with riot grade darts, to incapacitate a target."
+	desc = "An innocent looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
-	cost = 10
+	cost = 6
 	surplus = 10
 	excludefrom = list(/datum/game_mode/gang)
 
@@ -401,7 +401,7 @@ var/list/uplink_items = list()
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb taped inside of it. The timer needs to be set by opening the box; afterwards, opening the box again will trigger the detonation."
 	item = /obj/item/device/pizza_bomb
-	cost = 4
+	cost = 5
 	surplus = 8
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
@@ -415,7 +415,7 @@ var/list/uplink_items = list()
 	desc = "A small, easily concealable device. It can be applied to an open airlock panel, and the next person to open that airlock will be knocked down in an explosion. The airlock's maintenance panel will also be destroyed by this."
 	item = /obj/item/device/doorCharge
 	cost = 5
-	surplus = 6
+	surplus = 10
 	excludefrom = list(/datum/game_mode/nuclear)
 
 // STEALTHY TOOLS
@@ -427,7 +427,7 @@ var/list/uplink_items = list()
 	name = "Chameleon Jumpsuit"
 	desc = "A jumpsuit used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/clothing/under/chameleon
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/chameleon_stamp
 	name = "Chameleon Stamp"
@@ -437,23 +437,30 @@ var/list/uplink_items = list()
 	cost = 1
 	surplus = 35
 
-/datum/uplink_item/stealthy_tools/syndigolashes
+/datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Brown Shoes"
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/sneakers/syndigaloshes
-	cost = 4
+	cost = 2
+	excludefrom = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
+	name = "Tactical No-Slip Brown Shoes"
+	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces, and the maker swears they're better than normal ones, somehow."
+	cost = 4 //but they aren't
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
 	item = /obj/item/weapon/card/id/syndicate
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
 	item = /obj/item/clothing/mask/gas/voice
 	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
@@ -466,7 +473,7 @@ var/list/uplink_items = list()
 	name = "Camera Bug"
 	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
 	item = /obj/item/device/camera_bug
-	cost = 2
+	cost = 1
 	surplus = 90
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
@@ -480,7 +487,7 @@ var/list/uplink_items = list()
 	name = "Stimpack"
 	desc = "Stimpacks, a tool of many great heroes, make you nearly immune to stuns and knockdowns for about 5 minutes after injection."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
-	cost = 8
+	cost = 5
 	surplus = 90
 
 // DEVICE AND TOOLS
@@ -505,7 +512,7 @@ var/list/uplink_items = list()
 	name = "Syndicate Surgery Dufflebag"
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -515,17 +522,12 @@ var/list/uplink_items = list()
 	cost = 9
 	gamemodes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
-/datum/uplink_item/badass/syndiecigs
-	name = "Syndicate Smokes"
-	desc = "Strong flavor, dense smoke, infused with Omnizine."
-	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	cost = 4
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red and black syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
-	cost = 5
+	cost = 4
 	excludefrom = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/hardsuit
@@ -577,7 +579,7 @@ var/list/uplink_items = list()
 	desc = "A pair of magnetic boots with a Syndicate paintjob that assist with freer movement in space or on-station during gravitational generator failures. \
 	These reverse-engineered knockoffs of Nanotrasen's 'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
-	cost = 5
+	cost = 3
 	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/c4
@@ -616,7 +618,7 @@ var/list/uplink_items = list()
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a powerful burst of radiation, which, after a short delay, can incapitate all but the most protected of humanoids. \
 	It has two settings: intensity, which controls the power of the radiation, and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/rad_laser
-	cost = 6
+	cost = 5
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -732,6 +734,12 @@ var/list/uplink_items = list()
 	category = "(Pointless) Badassery"
 	surplus = 0
 	last = 1
+
+/datum/uplink_item/badass/syndiecigs
+	name = "Syndicate Smokes"
+	desc = "Strong flavor, dense smoke, infused with Omnizine."
+	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 2
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
