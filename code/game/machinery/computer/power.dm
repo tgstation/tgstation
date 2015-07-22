@@ -97,7 +97,6 @@
 	//user << browse(t, "window=powcomp;size=420x900")
 	//onclose(user, "powcomp")
 	var/datum/browser/popup = new(user, "powcomp", name, 500, 450)
-	popup.add_head_content("<META HTTP-EQUIV='Refresh' CONTENT='10'>")
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
