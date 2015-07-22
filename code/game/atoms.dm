@@ -395,13 +395,26 @@ its easier to just keep the beam vertical.
 			user << "<span class='info'>You can't make out the contents.</span>"
 		else
 			user << "It contains:"
-			if(reagents.reagent_list.len)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					user << "<span class='info'>[R.volume] units of [R.name]</span>"
+			if(!user.hallucinating())
+				if(reagents.reagent_list.len)
+					for(var/datum/reagent/R in reagents.reagent_list)
+						user << "<span class='info'>[R.volume] units of [R.name]</span>"
+				else
+					user << "<span class='info'>Nothing.</span>"
 			else
-				user << "<span class='info'>Nothing.</span>"
+				var/list/fake_reagents = list("Water", "Orange juice", "Banana juice", "Tungsten", "Chloral Hydrate", "Helium",\
+					"Sea water", "Energy drink", "Gushin' Granny", "Salt", "Sugar", "something yellow", "something red", "something blue",\
+					"something suspicious", "something smelly", "something sweet", "Soda", "something that reminds you of home",\
+					"Chef's Special")
+				for(var/i, i < rand(1,10), i++)
+					var/fake_amount = rand(1,30)
+					var/fake_reagent = pick(fake_reagents)
+					fake_reagents -= fake_reagent
+
+					user << "<span class='info'>[fake_amount] units of [fake_reagent]</span>"
 	if(on_fire)
-		user << "<span class='danger'>OH SHIT! IT'S ON FIRE!</span>"
+		user.simple_message("<span class='danger'>OH SHIT! IT'S ON FIRE!</span>",\
+			"<span class='info'>It's on fire, man.</span>")
 
 	if(min_harm_label && harm_labeled)
 		if(harm_labeled < min_harm_label)
