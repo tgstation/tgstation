@@ -79,7 +79,7 @@
 		returnToPool(C)
 	else
 		user.simple_message("<span class='notice'>You clean \the [target.name].</span>",
-			"<span class='notice'>You [pick("deface","ruin","stain")] \the [target.name].</span>")
+			"<span class='warning'>You [pick("deface","ruin","stain")] \the [target.name].</span>")
 		target.clean_blood()
 	return
 

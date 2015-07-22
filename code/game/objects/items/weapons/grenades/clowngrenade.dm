@@ -71,7 +71,7 @@
 		if(M.lying)
 			M.take_overall_damage(0, max(0, (burned - 2)))
 			M.simple_message("<span class='danger'>Something burns your back!</span>",\
-				"<span class='userdanger'>It's eating your back!</span>")
+				"<span class='userdanger'>They're eating your back!</span>")
 			return
 		if(ishuman(M))
 			if(M.CheckSlip() < 1)
@@ -89,7 +89,8 @@
 			spawn(3) step(M, M.dir)
 			spawn(4) step(M, M.dir)
 			M.take_organ_damage(2) // Was 5 -- TLE
-			M << "<span class='notice'>You slipped on \the [name]!</span>"
+			M.simple_message("<span class='notice'>You slipped on \the [name]!</span>",\
+				"<span class='userdanger'>Please, just end the pain!</span>")
 			playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 			M.Weaken(10)
 			M.take_overall_damage(0, burned)

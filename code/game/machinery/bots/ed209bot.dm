@@ -803,8 +803,8 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/proc/speak(var/message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/ed209/proc/speak() called tick#: [world.time]")
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+	visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",\
+		drugged_message="<span class='game say'><span class='name'>[src]</span> beeps, \"[pick("I-It's not like I like you or anything... baka!","You're s-so silly!","I-I'm only doing this because you asked me nicely, baka...","S-stop that!")]\"")
 	return
 
 /obj/machinery/bot/ed209/explode()
