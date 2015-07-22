@@ -59,6 +59,11 @@
 	var/list/sources = list() // Whoever served in emitting this beam. Used in prisms to prevent infinite loops.
 	var/_re_emit = 1 // Re-Emit from master when deleted? Set to 0 to not re-emit.
 
+/obj/effect/beam/resetVariables()
+	..("sources", "children", args)
+	children = list()
+	sources = list()
+
 // Listener for /atom/movable/on_moved
 /obj/effect/beam/proc/target_moved(var/list/args)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/target_moved() called tick#: [world.time]")
