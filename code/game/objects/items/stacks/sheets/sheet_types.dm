@@ -262,7 +262,6 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 		src.use(2)
 		R.use(1)
 		var/obj/item/weapon/picket_sign/P = new(get_turf(user))
-		user.put_in_hands(P)
 		user << "You create a picket sign!"
 	..()
 

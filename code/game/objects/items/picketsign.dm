@@ -26,7 +26,7 @@
 /obj/item/weapon/picket_sign/attack_self(mob/living/carbon/human/user)
 	if(spam_flag + 40 < world.timeofday)
 		if(label)
-			user.visible_message("<span class='warning'>[user] waves the \"[label]\" sign around.</span>")
+			user.visible_message("<span class='warning'>[user] waves \the \"[label]\" sign around.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] waves a blank sign around.</span>")
 
