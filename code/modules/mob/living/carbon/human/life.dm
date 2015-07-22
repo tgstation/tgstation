@@ -408,7 +408,13 @@ var/global/list/organ_damage_overlays = list(
 						"Don't tell Chase", \
 						"not so tough now huh", \
 						"WERE NOT BAY!!", \
-						"BLAME HOSHI!!!"))
+						"BLAME HOSHI!!!", \
+						"ARRPEE IZ DED!!!", \
+						"THERE ALL JUS MEATAFRIENDS!", \
+						"SOTP MESING WITH THE ROUNS SHITMAN!!!", \
+						"SKELINGTON IS 4 SHITERS!", \
+						"MOMMSI R THE WURST SCUM!!", \
+						"OMG I SED LAW 2 U FAG MOMIM LAW 2!!!"))
 				if(3)
 					emote("drool")
 
