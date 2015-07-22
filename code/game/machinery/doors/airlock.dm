@@ -752,6 +752,7 @@ About the new airlock wires panel:
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						src.locked = 1
+						log_attack("<font color='red'>[usr] ([usr.ckey]) bolted the [name] at [x] [y] [z]</font>")
 						update_icon()
 				if(5)
 					//un-electrify door
@@ -762,11 +763,13 @@ About the new airlock wires panel:
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						src.secondsElectrified = 0
+						log_attack("<font color='red'>[usr] ([usr.ckey]) un-electrified the [name] at [x] [y] [z]</font>")
 					else if(src.secondsElectrified>0)
 						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified"))
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						src.secondsElectrified = 0
+						log_attack("<font color='red'>[usr] ([usr.ckey]) un-electrified the [name] at [x] [y] [z]</font>")
 
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
@@ -777,6 +780,7 @@ About the new airlock wires panel:
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						safe = 0
+						log_attack("<font color='red'>[usr] ([usr.ckey]) removed the safeties on the [name] at [x] [y] [z]</font>")
 					else
 						usr << text("Firmware reports safeties already overriden.")
 
@@ -791,6 +795,7 @@ About the new airlock wires panel:
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						normalspeed = 0
+						log_attack("<font color='red'>[usr] ([usr.ckey]) disrupted door timing on the [name] at [x] [y] [z]</font>")
 					else
 						usr << text("Door timing circurity already accellerated.")
 
@@ -805,11 +810,13 @@ About the new airlock wires panel:
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						close()
+						log_attack("<font color='red'>[usr] ([usr.ckey]) closed the [name] at [x] [y] [z]</font>")
 					else
 						if(isobserver(usr) && !canGhostWrite(usr,src,"opened"))
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						open()
+						log_attack("<font color='red'>[usr] ([usr.ckey]) opened the [name] at [x] [y] [z]</font>")
 
 				if(10)
 					// Bolt lights
@@ -866,6 +873,7 @@ About the new airlock wires panel:
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						log_attack("<font color='red'>[usr] ([usr.ckey]) Temporarily electrified the [name] at [x] [y] [z]</font>")
 						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified (30sec)"))
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
@@ -888,6 +896,7 @@ About the new airlock wires panel:
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
+						log_attack("<font color='red'>[usr] ([usr.ckey]) Electrified the [name] at [x] [y] [z]</font>")
 						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified (permanent)"))
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
@@ -930,11 +939,13 @@ About the new airlock wires panel:
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						open()
+						log_attack("<font color='red'>[usr] ([usr.ckey]) opened the [name] at [x] [y] [z]</font>")
 					else
 						if(isobserver(usr) && !canGhostWrite(usr,src,"closed"))
 							usr << "<span class='warning'>Nope.</span>"
 							return 0
 						close()
+						log_attack("<font color='red'>[usr] ([usr.ckey]) closed the [name] at [x] [y] [z]</font>")
 
 				if(10)
 					// Bolt lights
