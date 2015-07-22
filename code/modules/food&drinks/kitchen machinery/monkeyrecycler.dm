@@ -1,6 +1,6 @@
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes. It requires [required_grind] monkeys per cube."
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently requires 5 monkeys per cube." // except it literally never does
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = 2.9
@@ -31,6 +31,7 @@
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
+	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently requires [required_grind] monkeys per cube."
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
