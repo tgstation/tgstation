@@ -22,6 +22,7 @@
 	cell_type = "/obj/item/weapon/cell"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	fire_delay = 8
+	fire_sound = 'sound/weapons/bison_fire.ogg'
 	var/pumping = 0
 
 /obj/item/weapon/gun/energy/bison/New()
@@ -36,7 +37,7 @@
 		playsound(get_turf(src), 'sound/machines/click.ogg', 25, 1)
 		user << "<span class='rose'>You pull the pump at the back of the gun.Looks like the Inner battery is fully charged now.</span>"
 	else
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/weapons/bison_reload.ogg', 25, 1)
 		user << "<span class='rose'>You pull the pump at the back of the gun.</span>"
 	sleep(5)
 	pumping = 0
@@ -176,6 +177,7 @@
 	flags = FPRINT | TWOHANDABLE
 	w_class = 5.0//we be fuckin huge maaan
 	fire_delay = 0
+	fire_sound = 'sound/weapons/gatling_fire.ogg'
 	var/max_shells = 200
 	var/current_shells = 200
 
@@ -234,3 +236,51 @@
 		unwield(user)
 	else
 		wield(user)
+/*
+/obj/item/weapon/gun/stickybomb
+	name = "stickybomb launcher"
+	desc = "Ya-ta-ta-ta-ta-ta-ta-ta ya-ta-ta-ta-ta-ta-ta-ta do-de-da-va-da-da-dada! Kaboom-Kaboom!"
+	icon = 'icons/obj/gun_experimental.dmi'
+	icon_state = "minigun"
+	item_state = "minigun0"
+	origin_tech = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
+	recoil = 1
+	flags = FPRINT | TWOHANDABLE
+	w_class = 5.0//we be fuckin huge maaan
+	fire_delay = 0
+	var/max_shells = 200
+	var/current_shells = 200
+
+/obj/item/stickybomb
+	name = "stickybomb"
+	desc = "."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "s-casing"
+	flags = FPRINT
+	siemens_coefficient = 1
+	slot_flags = SLOT_BELT
+	throwforce = 1
+	w_class = 1.0
+	var/live = 0
+
+/obj/item/stickybomb/New()
+	..()
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+
+/obj/item/stickybomb/proc/deactivate()
+	live = 0
+	update_icon()
+
+	if(!isturf(loc))
+		if()
+
+
+/obj/item/ammo_casing/update_icon()
+	icon_state = "[initial(icon_state)][live ? "-live" : ""]"
+	if(live)
+		desc = "That's a live stickybomb. You might want to stay away from it."
+	else
+		desc = "That's a stickybomb. Ammo for a stickybomb launcher."
+*/
