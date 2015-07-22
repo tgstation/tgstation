@@ -30,7 +30,7 @@
 	var/attack_faction = null //Put a faction string here to have a mob only ever attack a specific faction
 
 /mob/living/simple_animal/hostile/resetVariables()
-	..("wanted_objects", "friends")
+	..("wanted_objects", "friends", args)
 	wanted_objects = list()
 	friends = list()
 
