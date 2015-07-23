@@ -1,0 +1,10 @@
+author: NullQuery
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+changes: 
+  - tweak: "Crew monitoring: The minimap now supports scaling. You can zoom in and out using the buttons. Hovering over an entry in the table centers the minimap on that part of the screen."
+  - tweak: "Crew monitoring: If the window is wide enough the health indicator will expand to show full health data (if available)."
+  - tweak: "Crew monitoring: Clicking on the area name will now copy the coordinates to your clipboard."
+  - tweak: "Crew monitoring: The AI can view health information again, but there is a 5 second delay between updates for everyone watching."
