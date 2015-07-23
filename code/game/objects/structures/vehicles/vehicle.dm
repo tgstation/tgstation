@@ -94,27 +94,27 @@
 /obj/structure/stool/bed/chair/vehicle/relaymove(var/mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
 		unbuckle()
-		return
+		return 0
 	if(!check_key(user))
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [src].</span>"
-		return
+		return 0
 	if(empstun > 0)
 		if(user)
 			user << "<span class='warning'>\the [src] is unresponsive.</span>"
-		return
+		return 0
 	if(move_delayer.blocked())
-		return
+		return 0
 	if(istype(src.loc, /turf/space))
-		if(!src.Process_Spacemove(0))	return
+		if(!src.Process_Spacemove(0))	return 0
 
 	step(src, direction)
 	delayNextMove(getMovementDelay())
-	update_mob()
 	handle_rotation()
 	/*
 	if(istype(src.loc, /turf/space) && (!src.Process_Spacemove(0, user)))
 		var/turf/space/S = src.loc
 		S.Entered(src)*/
+	return 0
 
 /obj/structure/stool/bed/chair/vehicle/forceMove(var/atom/NewLoc)
 	..()
@@ -265,8 +265,7 @@
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			buckled_mob.buckled = src //Restoring
+			buckled_mob.forceMove(loc)
 
 	update_mob()
 
@@ -356,6 +355,8 @@
 	icon_state = "pussywagon_destroyed"
 
 /obj/structure/stool/bed/chair/vehicle/Bump(var/atom/movable/obstacle)
+	if(obstacle == src || obstacle == buckled_mob)
+		return
 	if(istype(obstacle, /obj/structure))// || istype(obstacle, /mob/living)
 		if(!obstacle.anchored)
 			obstacle.Move(get_step(obstacle,src.dir))

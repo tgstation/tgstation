@@ -101,7 +101,7 @@
 		for(var/obj/obstacle in src)
 			/*if(ismob(mover) && mover:client)
 				world << "<span class='danger'>EXIT</span>origin: checking exit of mob [obstacle]"*/
-			if(!obstacle.CheckExit(mover, target) && obstacle != mover && obstacle != target)
+			if(obstacle != mover && obstacle != target && !obstacle.CheckExit(mover, target))
 				/*if(ismob(mover) && mover:client)
 					world << "<span class='danger'>EXIT</span>Origin: We are bumping into [obstacle]"*/
 				mover.Bump(obstacle, 1)
@@ -121,7 +121,7 @@
 	if(isturf(mover.loc))
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
 		for(var/obj/obstacle in mover.loc)
-			if(!obstacle.CheckExit(mover, src) && obstacle != mover && obstacle != forget)
+			if(obstacle != mover && obstacle != forget && !obstacle.CheckExit(mover, src) )
 				mover.Bump(obstacle, 1)
 				return 0
 #endif

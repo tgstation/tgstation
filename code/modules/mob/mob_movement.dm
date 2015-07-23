@@ -220,10 +220,9 @@
 		Process_Incorpmove(dir)
 		return
 
-	if(locate(/obj/effect/stop/, mob.loc))
-		for(var/obj/effect/stop/S in mob.loc)
-			if(S.victim == mob)
-				return
+	for(var/obj/effect/stop/S in mob.loc)
+		if(S.victim == mob)
+			return
 
 	if(mob.stat == DEAD)
 		return

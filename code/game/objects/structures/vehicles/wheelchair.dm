@@ -91,7 +91,7 @@
 /obj/structure/stool/bed/chair/vehicle/wheelchair/relaymove(var/mob/user, direction)
 	if(!check_key(user))
 		user << "<span class='warning'>You need at least one hand to use [src]!</span>"
-		return
+		return 0
 	return ..()
 
 /obj/structure/stool/bed/chair/vehicle/wheelchair/handle_layer()
