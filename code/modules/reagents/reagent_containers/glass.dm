@@ -64,7 +64,7 @@
 		else if(M == user)
 			user << "<span class='notice'>You swallow a gulp of [src].</span>"
 			if(reagents.total_volume)
-				reagents.reaction(user, INGEST)
+				reagents.reaction(user, INGEST, 5)
 				spawn(5)
 					reagents.trans_to(user, 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
