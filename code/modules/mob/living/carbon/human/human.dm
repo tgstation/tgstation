@@ -791,11 +791,11 @@
 	var/mob/living/carbon/human/H = src
 	if(H.gloves)
 		if(H.gloves.clean_blood())
-			H.update_inv_gloves(0)
+			H.update_inv_gloves()
 	else
 		..() // Clear the Blood_DNA list
 		if(H.bloody_hands)
 			H.bloody_hands = 0
 			H.bloody_hands_mob = null
-			H.update_inv_gloves(0)
+			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
