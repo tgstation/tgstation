@@ -90,3 +90,4 @@ shadowlight213 = Game Master
 drovidicorv = Game Master
 Dunc = Game Master
 MMMiracles = Game Master
+bear1ake = Game Master
