@@ -8,8 +8,8 @@
 						put_in_active_hand(I)
 						visible_message("<span class='warning'>[src] catches [I]!</span>")
 						throw_mode_off()
-						return
-	..()
+						return 1
+	return ..()
 
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
@@ -43,7 +43,7 @@
 	return 0
 
 
-/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 	if(!istype(M, /mob/living/carbon))
 		return 0
 

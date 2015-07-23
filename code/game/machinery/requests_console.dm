@@ -121,7 +121,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0
 
-/obj/machinery/requests_console/attack_hand(var/mob/user)
+/obj/machinery/requests_console/attack_hand(mob/user)
 	if(..(user))
 		return
 	var/dat = ""
@@ -428,7 +428,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(var/input, list/spans)
+/obj/machinery/say_quote(input, list/spans)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
 		return "blares, \"attach_spans(input, spans)\""
@@ -473,7 +473,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			src.messages += "<b>From:</b> [linkedsender]<BR>[message]"
 	SetLuminosity(2)
 
-/obj/machinery/requests_console/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob, params)
+/obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/crowbar))
 		if(open)
 			user << "<span class='notice'>You close the maintenance panel.</span>"

@@ -26,7 +26,7 @@
 	if(ismob(user)) shock(user, 70)
 
 
-/obj/structure/grille/attack_paw(mob/user as mob)
+/obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
@@ -35,7 +35,7 @@
 	health -= 5
 	healthcheck()
 
-/obj/structure/grille/attack_hand(mob/living/user as mob)
+/obj/structure/grille/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -49,7 +49,7 @@
 		health -= rand(1,2)
 	healthcheck()
 
-/obj/structure/grille/attack_alien(mob/living/user as mob)
+/obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -63,7 +63,7 @@
 		healthcheck()
 		return
 
-/obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user as mob)
+/obj/structure/grille/attack_slime(mob/living/simple_animal/slime/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(!user.is_adult)	return
@@ -77,7 +77,7 @@
 	healthcheck()
 	return
 
-/obj/structure/grille/attack_animal(var/mob/living/simple_animal/M as mob)
+/obj/structure/grille/attack_animal(var/mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	if(M.melee_damage_upper == 0)	return
 	M.do_attack_animation(src)
@@ -133,7 +133,7 @@
 	var/obj/item/stack/rods/newrods = new(loc)
 	transfer_fingerprints_to(newrods)
 
-/obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/grille/attackby(obj/item/weapon/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -158,6 +158,8 @@
 			icon_state = "grille"
 			R.use(1)
 			return
+	else if(istype(W, /obj/item/weapon/rcd) && istype(loc, /turf/simulated)) //Do not attack the grille if the user is holding an RCD
+		return
 
 //window placing begin
 	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
@@ -223,7 +225,7 @@
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
 
-/obj/structure/grille/proc/shock(mob/user as mob, prb)
+/obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
 		return 0
 	if(!prob(prb))

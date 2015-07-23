@@ -45,7 +45,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 			if(body.real_name)
 				name = body.real_name
 			else
-				name = random_name(gender)
+				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
@@ -53,7 +53,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
-		name = random_name(gender)
+		name = random_unique_name(gender)
 	real_name = name
 
 	if(!fun_verbs)
@@ -78,7 +78,7 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(var/can_reenter_corpse = 1)
+/mob/proc/ghostize(can_reenter_corpse = 1)
 	if(key)
 		if(!cmptext(copytext(key,1,2),"@")) //aghost
 			var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
@@ -202,7 +202,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ManualFollow(target)
 
 // This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(var/atom/movable/target)
+/mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if(target && target != src)
 		if(following && following == target)
 			return

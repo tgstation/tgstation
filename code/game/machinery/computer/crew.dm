@@ -97,11 +97,15 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 			hi = src.interfaces["[z]"]
 
-			hi.updateContent("content", "<a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a><div id=\"minimap\"></div><div id=\"textbased\"></div>")
+			hi.updateContent("content", "<div id=\"minimap\"><a href=\"javascript:zoomIn();\" class=\"zoom in\">+</a><a href=\"javascript:zoomOut();\" class=\"zoom\">-</a></div><div id=\"textbased\"></div>")
 
 			src.update(z, TRUE)
 		else
 			hi = src.interfaces["[z]"]
+
+		// Debugging purposes
+		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
+		mob << browse_rsc(file("code/game/machinery/computer/crew.css"), "crew.css")
 
 		hi = src.interfaces["[z]"]
 		hi.show(mob)
@@ -110,12 +114,12 @@ var/global/datum/crewmonitor/crewmonitor = new
 /datum/crewmonitor/proc/updateFor(hclient_or_mob, datum/html_interface/hi, z)
 	// This check will succeed if updateFor is called after showing to the player, but will fail
 	// on regular updates. Since we only really need this once we don't care if it fails.
-	var/list/parameters = list(ismob(hclient_or_mob) && isAI(hclient_or_mob) ? "true" : "false")
-
-	hi.callJavaScript("clearAll", parameters, hclient_or_mob)
+	hi.callJavaScript("clearAll", null, hclient_or_mob)
 
 	for (var/list/L in data)
 		hi.callJavaScript("add", L, hclient_or_mob)
+
+	hi.callJavaScript("onAfterUpdate", null, hclient_or_mob)
 
 /datum/crewmonitor/proc/update(z, ignore_unused = FALSE)
 	if (src.interfaces["[z]"])
@@ -199,7 +203,14 @@ var/global/datum/crewmonitor/crewmonitor = new
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
 
-	return (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z) && ( isAI(hclient.client.mob) || (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents)) ) )
+	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
+		if (isAI(hclient.client.mob)) return TRUE
+		else if (isrobot(hclient.client.mob))
+			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+		else
+			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
+	else
+		return FALSE
 
 /datum/crewmonitor/Topic(href, href_list[], datum/html_interface_client/hclient)
 	if (istype(hclient))
@@ -227,17 +238,6 @@ var/global/datum/crewmonitor/crewmonitor = new
 							if (AI && AI.eyeobj && current_loc == AI.eyeobj.loc)
 								AI.switchCamera(C)
 
-/*
-/proc/crewscan()
-	var/list/tracked = list()
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(istype(H.w_uniform, /obj/item/clothing/under))
-			var/obj/item/clothing/under/U = H.w_uniform
-			if(U.has_sensor && U.sensor_mode)
-				tracked.Add(H)
-	return tracked
-*/
-
 /mob/living/carbon/human/Move()
 	if (src.w_uniform)
 		var/old_z = src.z
@@ -250,7 +250,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	procqueue.queue(crewmonitor, "update", z)
+	procqueue.schedule(50, crewmonitor, "update", z)
 
 /datum/crewmonitor/proc/generateMiniMaps()
 	spawn

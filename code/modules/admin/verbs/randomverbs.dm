@@ -1,4 +1,4 @@
-/client/proc/cmd_admin_drop_everything(mob/M as mob in mob_list)
+/client/proc/cmd_admin_drop_everything(mob/M in mob_list)
 	set category = null
 	set name = "Drop Everything"
 	if(!holder)
@@ -19,7 +19,7 @@
 	feedback_add_details("admin_verb","DEVR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/cmd_admin_subtle_message(mob/M as mob in mob_list)
+/client/proc/cmd_admin_subtle_message(mob/M in mob_list)
 	set category = "Special Verbs"
 	set name = "Subtle Message"
 
@@ -58,7 +58,7 @@
 	message_admins("<span class='adminnotice'><b> GlobalNarrate: [key_name_admin(usr)] :</b> [msg]<BR></span>")
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate(var/mob/M)
+/client/proc/cmd_admin_direct_narrate(mob/M)
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
@@ -82,7 +82,29 @@
 	message_admins("<span class='adminnotice'><b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
+/client/proc/cmd_admin_local_narrate(atom/A)
+	set category = "Special Verbs"
+	set name = "Local Narrate"
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+	if(!A)
+		return
+	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
+	if(!range)
+		return
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	if (!msg)
+		return
+	for(var/mob/living/M in view(range,A))
+		M << msg
+
+	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
+	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>[get_area(A)]</a>):</b> [msg]<BR></span>")
+	feedback_add_details("admin_verb","LN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_admin_godmode(mob/M in mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
 	if(!holder)
@@ -286,7 +308,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		A.copy_to(new_character)
 
 	if(!new_character.real_name)
-		new_character.real_name = random_name(new_character.gender)
+		new_character.real_name = new_character.dna.species.random_name(new_character.gender,1)
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -395,7 +417,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_rejuvenate(mob/living/M as mob in mob_list)
+/client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
 	if(!holder)
@@ -514,7 +536,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		return
 
-/client/proc/cmd_admin_gib(mob/M as mob in mob_list)
+/client/proc/cmd_admin_gib(mob/M in mob_list)
 	set category = "Special Verbs"
 	set name = "Gib"
 
@@ -552,7 +574,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_check_contents(mob/living/M as mob in mob_list)
+/client/proc/cmd_admin_check_contents(mob/living/M in mob_list)
 	set category = "Special Verbs"
 	set name = "Check Contents"
 
@@ -613,7 +635,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	return
 
-/client/proc/cmd_admin_attack_log(mob/M as mob in mob_list)
+/client/proc/cmd_admin_attack_log(mob/M in mob_list)
 	set category = "Special Verbs"
 	set name = "Attack Log"
 

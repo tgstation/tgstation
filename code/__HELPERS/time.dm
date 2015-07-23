@@ -2,10 +2,10 @@
 /proc/worldtime2text()
 	return gameTimestamp("hh:mm")
 
-/proc/time_stamp(var/format = "hh:mm:ss")
+/proc/time_stamp(format = "hh:mm:ss")
 	return time2text(world.timeofday, format)
 
-/proc/gameTimestamp(var/format = "hh:mm:ss") // Get the game time in text
+/proc/gameTimestamp(format = "hh:mm:ss") // Get the game time in text
 	return time2text(world.time - timezoneOffset + 432000, format)
 
 /* Preserving this so future generations can see how fucking retarded some people are
@@ -23,7 +23,7 @@ proc/time_stamp()
 */
 
 /* Returns 1 if it is the selected month and day */
-/proc/isDay(var/month, var/day)
+/proc/isDay(month, day)
 	if(isnum(month) && isnum(day))
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
 		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day

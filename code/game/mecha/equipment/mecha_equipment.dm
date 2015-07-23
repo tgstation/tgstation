@@ -8,22 +8,13 @@
 	icon_state = "mecha_equip"
 	force = 5
 	origin_tech = "materials=2"
-	var/equip_cooldown = 0
-	var/equip_ready = 1
+	var/equip_cooldown = 0 // cooldown after use
+	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
 	reliability = 1000
 	var/salvageable = 1
-
-
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
-	sleep(equip_cooldown)
-	set_ready_state(1)
-	if(target && chassis && chassis.occupant)
-		return 1
-	return 0
-
 
 /obj/item/mecha_parts/mecha_equipment/New()
 	..()
@@ -42,10 +33,9 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
+/obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
 		chassis.equipment -= src
-		listclearnulls(chassis.equipment)
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
@@ -55,13 +45,12 @@
 			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
 		else
 			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
-	qdel(src)
-	return
+		chassis = null
+	..()
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
 		log_message("Critical failure",1)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis) return
@@ -90,13 +79,31 @@
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M as obj)
-	if(istype(M))
-		if(M.equipment.len<M.max_equip)
-			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
+	set_ready_state(0)
+	chassis.use_power(energy_drain)
+	sleep(equip_cooldown)
+	set_ready_state(1)
+
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
+	if(!chassis)
+		return
+	var/C = chassis.loc
+	set_ready_state(0)
+	chassis.use_power(energy_drain)
+	. = do_after(chassis.occupant, equip_cooldown, target=target)
+	set_ready_state(1)
+	if(!chassis || 	chassis.loc != C || src != chassis.selected)
+		return 0
+
+
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
+	if(M.equipment.len<M.max_equip)
+		return 1
+
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
 	src.loc = M
@@ -121,9 +128,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
 	if(href_list["detach"])
-		src.detach()
-	return
-
+		detach()
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state

@@ -224,7 +224,7 @@
 		alert("Not before round-start!", "Alert")
 		return
 
-	var/out = ""
+	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
@@ -306,19 +306,18 @@
 			text += "|"
 			if(src in (G.bosses))
 				text += "<B>GANG LEADER</B>"
+				text += "|Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
+				var/list/L = current.get_contents()
+				var/obj/item/device/gangtool/gangtool = locate() in L
+				if (gangtool)
+					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
+
 			else
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
 			text += "<BR>"
 
-		if(gang_colors_pool)
+		if(gang_colors_pool.len)
 			text += "<a href='?src=\ref[src];gang=new'>Create New Gang</a>"
-
-		if(src in ticker.mode.get_gang_bosses())
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
 
 		sections["gang"] = text
 
@@ -584,9 +583,8 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	var/datum/browser/popup = new(usr, "edit_memory[src]", "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]", 500, 600)
-	popup.set_content(out)
-	popup.open()
+	usr << browse(out, "window=edit_memory[src];size=500x600")
+
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))	return
@@ -710,7 +708,7 @@
 						new_objective.explanation_text = "Download [target_number] research levels."
 					if("capture")
 						new_objective = new /datum/objective/capture
-						new_objective.explanation_text = "Accumulate [target_number] capture points."
+						new_objective.explanation_text = "Capture [target_number] lifeforms with an energy net. Live, rare specimens are worth more."
 					if("absorb")
 						new_objective = new /datum/objective/absorb
 						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
@@ -833,7 +831,7 @@
 				log_admin("[key_name(usr)] has de-gang'ed [current].")
 
 			if("equip")
-				switch(ticker.mode.equip_gang(current))
+				switch(ticker.mode.equip_gang(current,gang_datum))
 					if(1)
 						usr << "<span class='warning'>Unable to equip territory spraycan!</span>"
 					if(2)
@@ -1263,7 +1261,7 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-/datum/mind/proc/make_Nuke(var/turf/spawnloc,var/nuke_code,var/leader=0)
+/datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0)
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1387,14 +1385,14 @@
 	fail |= !ticker.mode.equip_revolutionary(current)
 
 
-/datum/mind/proc/make_Gang(var/datum/gang/G)
+/datum/mind/proc/make_Gang(datum/gang/G)
 	special_role = "[G.name] Gang Boss"
 	G.bosses += src
 	gang_datum = G
 	G.add_gang_hud(src)
 	ticker.mode.forge_gang_objectives(src)
 	ticker.mode.greet_gang(src)
-	ticker.mode.equip_gang(current)
+	ticker.mode.equip_gang(current,G)
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
@@ -1449,7 +1447,7 @@
 
 
 
-/datum/mind/proc/AddSpell(var/obj/effect/proc_holder/spell/spell)
+/datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
@@ -1460,7 +1458,7 @@
 		spell.action.background_icon_state = spell.action_background_icon_state
 	spell.action.Grant(current)
 	return
-/datum/mind/proc/transfer_actions(var/mob/living/new_character)
+/datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
 			A.Grant(new_character)

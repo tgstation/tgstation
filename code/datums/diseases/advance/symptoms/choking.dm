@@ -25,7 +25,7 @@ Bonus
 	level = 3
 	severity = 3
 
-/datum/symptom/choking/Activate(var/datum/disease/advance/A)
+/datum/symptom/choking/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

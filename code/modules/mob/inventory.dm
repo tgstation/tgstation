@@ -19,7 +19,7 @@
 	return 0
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(var/obj/item/W)
+/mob/proc/put_in_l_hand(obj/item/W)
 	if(!put_in_hand_check(W))
 		return 0
 	if(!l_hand)
@@ -30,7 +30,7 @@
 		W.equipped(src,slot_l_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_l_hand(0)
+		update_inv_l_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 		return 1
@@ -38,7 +38,7 @@
 
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(var/obj/item/W)
+/mob/proc/put_in_r_hand(obj/item/W)
 	if(!put_in_hand_check(W))
 		return 0
 	if(!r_hand)
@@ -49,25 +49,25 @@
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_r_hand(0)
+		update_inv_r_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 		return 1
 	return 0
 
-/mob/proc/put_in_hand_check(var/obj/item/W)
+/mob/proc/put_in_hand_check(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))			return 0
 	if(!istype(W))		return 0
 	return 1
 
 //Puts the item into our active hand if possible. returns 1 on success.
-/mob/proc/put_in_active_hand(var/obj/item/W)
+/mob/proc/put_in_active_hand(obj/item/W)
 	if(hand)	return put_in_l_hand(W)
 	else		return put_in_r_hand(W)
 
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
-/mob/proc/put_in_inactive_hand(var/obj/item/W)
+/mob/proc/put_in_inactive_hand(obj/item/W)
 	if(hand)	return put_in_r_hand(W)
 	else		return put_in_l_hand(W)
 
@@ -75,7 +75,7 @@
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(var/obj/item/W)
+/mob/proc/put_in_hands(obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))			return 1
 	else if(put_in_inactive_hand(W))	return 1

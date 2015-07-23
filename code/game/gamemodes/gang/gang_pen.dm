@@ -36,7 +36,7 @@
 	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
-	var/cooldown_time = 300+(900*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3.5mins, 3recruiters=5mins
+	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
 	cooldown = 1
 	icon_state = "pen_blink"
@@ -91,8 +91,13 @@
 		if(I != src)
 			qdel(I)
 
+	var/success
 	if(target.stat != DEAD)
-		ticker.mode.remove_gangster(target.mind,0,1)
+		if(target.mind in ticker.mode.get_gangsters())
+			if(ticker.mode.remove_gangster(target.mind,0,1))
+				success = 1	//Was not a gang boss, convert as usual
+		else
+			success = 1	//Not a gangster, convert as usual
 
 	if(!target.mind)
 		return
@@ -100,11 +105,14 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_implants()
-		if(ticker.mode.add_gangster(target.mind,gang))
+		if(success && ticker.mode.add_gangster(target.mind,gang,0))
 			target.Paralyse(5)
 		else
 			target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 	qdel(src)
+
+/obj/item/weapon/implanter/gang/
+	name = "implanter-gang"
 
 /obj/item/weapon/implanter/gang/New(loc,var/gang)
 	if(!gang)

@@ -17,6 +17,7 @@
 	parts = list(/obj/item/weapon/gun = 1)
 	tools = list(/obj/item/weapon/gun/energy/plasmacutter, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
 	time = 100
+	category = CAT_WEAPON
 
 /datum/table_recipe/IED
 	name = "IED"

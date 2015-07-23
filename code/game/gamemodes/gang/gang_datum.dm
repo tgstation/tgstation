@@ -55,26 +55,23 @@
 	ganghud.leave_hud(defector_mind.current)
 	ticker.mode.set_antag_hud(defector_mind.current, null)
 
-/datum/gang/proc/domination(var/modifier=1,var/obj/dominator)
-	dom_timer = max(300,900 - ((round((territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
-	if(dominator)
-		var/area/domloc = get_area(dominator.loc)
-		priority_announce("Network breach detected in [initial(domloc.name)]. The [src] Gang is attempting to seize control of the station!","Network Alert")
-		set_security_level("delta")
-		SSshuttle.emergencyNoEscape = 1
+/datum/gang/proc/domination(modifier=1)
+	dom_timer = get_domination_time(src) * modifier
+	set_security_level("delta")
+	SSshuttle.emergencyNoEscape = 1
 
 //////////////////////////////////////////// OUTFITS
 
 
 //Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/gang/proc/gang_outfit(mob/living/carbon/user,var/obj/item/device/gangtool/gangtool)
+/datum/gang/proc/gang_outfit(mob/living/carbon/user,obj/item/device/gangtool/gangtool)
 	if(!user || !gangtool)
 		return 0
 	if(!gangtool.can_use(user))
 		return 0
 
 	var/gang_style_list = list("Gang Colors","Black Suits","White Suits","Leather Jackets","Leather Overcoats","Puffer Jackets","Military Jackets","Tactical Turtlenecks","Soviet Uniforms")
-	if(!style && gangtool.boss)	//Only the boss gets to pick a style
+	if(!style && (user.mind in ticker.mode.get_gang_bosses()))	//Only the boss gets to pick a style
 		style = input("Pick an outfit style.", "Pick Style") as null|anything in gang_style_list
 
 	if(gangtool.can_use(user) && (gangtool.outfits >= 1))
@@ -93,7 +90,7 @@
 			if("Leather Overcoats")
 				outfit_path = /obj/item/clothing/suit/jacket/leather/overcoat
 			if("Military Jackets")
-				outfit_path = /obj/item/clothing/suit/miljacket
+				outfit_path = /obj/item/clothing/suit/jacket/miljacket
 			if("Soviet Uniforms")
 				outfit_path = /obj/item/clothing/under/soviet
 			if("Tactical Turtlenecks")
@@ -113,7 +110,7 @@
 //////////////////////////////////////////// MESSAGING
 
 
-/datum/gang/proc/message_gangtools(var/message,var/beep=1,var/warning)
+/datum/gang/proc/message_gangtools(message,beep=1,warning)
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
@@ -169,7 +166,7 @@
 	//Calculate and report influence growth
 	var/message = "<b>[src] Gang Status Report:</b><BR>*---------*<br>"
 	if(isnum(dom_timer))
-		var/new_time = max(300,dom_timer - ((territory.len + uniformed) * 2))
+		var/new_time = max(180,dom_timer - (uniformed * 4) - (territory.len * 2))
 		if(new_time < dom_timer)
 			message += "Takeover shortened by [dom_timer - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 			dom_timer = new_time

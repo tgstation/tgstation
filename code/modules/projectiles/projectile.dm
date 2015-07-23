@@ -80,9 +80,9 @@
 		for(var/datum/reagent/R in reagents.reagent_list)
 			reagent_note += R.id + " ("
 			reagent_note += num2text(R.volume) + ") "
-	add_logs(firer, L, "shot", object="[src]", addition=reagent_note)
 
 	L.on_hit(type)
+	add_logs(firer, L, "shot", src, reagent_note)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
@@ -92,7 +92,7 @@
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
 /obj/item/projectile/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
+	if(!yes) //prevents double bumps.
 		return
 	if(A == firer || A == src)
 		loc = A.loc
@@ -142,7 +142,7 @@
 			sleep(1)
 
 
-/obj/item/projectile/Crossed(atom/movable/AM as mob) //A mob moving on a tile with a projectile is hit by it.
+/obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	..()
 	if(isliving(AM) && AM.density && !checkpass(PASSMOB))
 		Bump(AM, 1)

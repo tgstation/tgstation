@@ -62,7 +62,7 @@
 				for(var/datum/reagent/A in src.reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
-			add_logs(user, M, "squirted", object="[R]")
+			add_logs(user, M, "squirted", R)
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution.</span>"

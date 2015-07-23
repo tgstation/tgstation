@@ -1,3 +1,10 @@
+/proc/lizard_name(gender)
+	if(gender == MALE)
+		return "[pick(lizard_names_male)]-[pick(lizard_names_male)]"
+	else
+		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
+
+
 var/church_name = null
 /proc/church_name()
 	if (church_name)
@@ -25,7 +32,7 @@ var/command_name = null
 	command_name = name
 	return name
 
-/proc/change_command_name(var/name)
+/proc/change_command_name(name)
 
 	command_name = name
 
@@ -68,6 +75,7 @@ var/religion_name = null
 	if (prob(10))
 		name = pick("Imperium", "Heretical", "Cuban", "Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique", "Houseruled", "Religious", "Atheist", "Traditional", "Houseruled", "Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death", "Zybourne", "Central", "Main", "Government", "Uoi", "Fat", "Automated", "Experimental", "Augmented")
 		new_station_name = name + " "
+		name = ""
 
 	// Prefix
 	for(var/holiday_name in SSevent.holidays)
@@ -185,9 +193,12 @@ var/syndicate_code_response//Code response for traitors.
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							code_phrase += pick(pick(first_names_male,first_names_female))
-							code_phrase += " "
-							code_phrase += pick(last_names)
+							if(prob(10))
+								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
+							else
+								code_phrase += pick(pick(first_names_male,first_names_female))
+								code_phrase += " "
+								code_phrase += pick(last_names)
 					if(2)
 						code_phrase += pick(get_all_jobs())//Returns a job.
 				safety -= 1

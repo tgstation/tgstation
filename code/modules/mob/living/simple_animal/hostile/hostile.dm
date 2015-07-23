@@ -11,6 +11,8 @@
 	var/casingtype
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
+	var/list/emote_taunt = list()
+	var/taunt_chance = 0
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the starting cooldown is on ranged attacks
@@ -95,10 +97,10 @@
 	GiveTarget(Target)
 	return Target //We now have a target
 
-/mob/living/simple_animal/hostile/proc/Found(var/atom/A)//This is here as a potential override to pick a specific target if available
+/mob/living/simple_animal/hostile/proc/Found(atom/A)//This is here as a potential override to pick a specific target if available
 	return
 
-/mob/living/simple_animal/hostile/proc/PickTarget(var/list/Targets)//Step 3, pick amongst the possible, attackable targets
+/mob/living/simple_animal/hostile/proc/PickTarget(list/Targets)//Step 3, pick amongst the possible, attackable targets
 	if(target != null)//If we already have a target, but are told to pick again, calculate the lowest distance between all possible, and pick from the lowest distance targets
 		for(var/atom/A in Targets)
 			var/target_dist = get_dist(src, target)
@@ -110,7 +112,7 @@
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
-/mob/living/simple_animal/hostile/CanAttack(var/atom/the_target)//Can we actually attack a possible target?
+/mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
 	if(search_objects < 2)
@@ -144,7 +146,7 @@
 			return 1
 	return 0
 
-/mob/living/simple_animal/hostile/proc/GiveTarget(var/new_target)//Step 4, give us our selected target
+/mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
 	if(target != null)
 		Aggro()
@@ -180,14 +182,14 @@
 			else
 				if(FindHidden())
 					return
-	LostTarget()
+	LoseTarget()
 
-/mob/living/simple_animal/hostile/proc/Goto(var/target, var/delay, var/minimum_distance)
+/mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
 
-/mob/living/simple_animal/hostile/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..(damage)
-	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(!client && !stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
@@ -205,7 +207,7 @@
 		LoseTarget()
 		return 0
 	if(!(target in ListTargets()))
-		LostTarget()
+		LoseTarget()
 		return 0
 	if(isturf(loc) && target.Adjacent(src))
 		AttackingTarget()
@@ -216,19 +218,19 @@
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
+	if(target && emote_taunt.len && prob(taunt_chance))
+		emote("me", 1, "[pick(emote_taunt)] at [target].")
+		taunt_chance = max(taunt_chance-7,2)
+
 
 /mob/living/simple_animal/hostile/proc/LoseAggro()
 	stop_automated_movement = 0
 	vision_range = idle_vision_range
+	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	stance = HOSTILE_STANCE_IDLE
 	target = null
-	walk(src, 0)
-	LoseAggro()
-
-/mob/living/simple_animal/hostile/proc/LostTarget()
-	stance = HOSTILE_STANCE_IDLE
 	walk(src, 0)
 	LoseAggro()
 
@@ -239,7 +241,7 @@
 	..(gibbed)
 	walk(src, 0)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(var/the_target)
+/mob/living/simple_animal/hostile/proc/OpenFire(the_target)
 
 	var/target = the_target
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [target]!</span>")
@@ -265,7 +267,7 @@
 	ranged_cooldown = ranged_cooldown_cap
 	return
 
-/mob/living/simple_animal/hostile/proc/Shoot(var/target, var/start, var/user, var/bullet = 0)
+/mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
 	if(target == start)
 		return
 
@@ -314,7 +316,7 @@
 			A.attack_animal(src)
 		return 1
 
-/mob/living/simple_animal/hostile/RangedAttack(var/atom/A, var/params) //Player firing
+/mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
 	if(ranged && ranged_cooldown <= 0)
 		target = A
 		OpenFire(A)
@@ -349,4 +351,4 @@
 /mob/living/simple_animal/hostile/proc/AIShouldSleep()
 	. = !(AIShouldWake())
 	if(. && stance != HOSTILE_STANCE_IDLE) //This proc was called before LoseTarget().
-		LostTarget()
+		LoseTarget()

@@ -8,9 +8,10 @@
 	icon_gib = "bear_gib"
 	speak = list("RAWR!","Rawr!","GRR!","Growl!")
 	speak_emote = list("growls", "roars")
-	emote_hear = list("rawrs","grumbles","grawls")
-	emote_see = list("stares ferociously", "stomps")
+	emote_hear = list("rawrs.","grumbles.","grawls.")
+	emote_taunt = list("stares ferociously", "stomps")
 	speak_chance = 1
+	taunt_chance = 25
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5)
@@ -46,16 +47,8 @@
 		else
 			icon_state = "bearfloor"
 
-/mob/living/simple_animal/hostile/bear/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space bears!
-
-/mob/living/simple_animal/hostile/bear/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "stares alertly at [.]")
-
-/mob/living/simple_animal/hostile/bear/LoseTarget()
-	..(5)
 
 
 

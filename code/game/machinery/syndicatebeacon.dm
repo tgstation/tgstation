@@ -19,7 +19,7 @@
 	var/selfdestructing = 0
 	var/charges = 1
 
-/obj/machinery/syndicate_beacon/attack_hand(var/mob/user as mob)
+/obj/machinery/syndicate_beacon/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
 	if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
@@ -142,11 +142,11 @@
 		user << "<span class='notice'>You deactivate the beacon.</span>"
 
 
-/obj/machinery/power/singularity_beacon/attack_ai(mob/user as mob)
+/obj/machinery/power/singularity_beacon/attack_ai(mob/user)
 	return
 
 
-/obj/machinery/power/singularity_beacon/attack_hand(var/mob/user as mob)
+/obj/machinery/power/singularity_beacon/attack_hand(mob/user)
 	if(anchored)
 		return active ? Deactivate(user) : Activate(user)
 	else
@@ -154,7 +154,7 @@
 		return
 
 
-/obj/machinery/power/singularity_beacon/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/power/singularity_beacon/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(active)
 			user << "<span class='warning'>You need to deactivate the beacon first!</span>"
@@ -207,7 +207,7 @@
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
 
-/obj/item/device/sbeacondrop/attack_self(mob/user as mob)
+/obj/item/device/sbeacondrop/attack_self(mob/user)
 	if(user)
 		user << "<span class='notice'>Locked In.</span>"
 		new droptype( user.loc )

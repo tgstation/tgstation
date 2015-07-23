@@ -33,7 +33,7 @@
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter
 	ME.attach(src)
@@ -41,7 +41,7 @@
 	ME.attach(src)
 	return
 
-/obj/mecha/combat/gygax/dark/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
+/obj/mecha/combat/gygax/dark/add_cell(obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -71,16 +71,16 @@
 	src.log_message("Toggled leg actuators overload.")
 	return
 
-/obj/mecha/combat/gygax/dyndomove(direction)
-	if(!..()) return
+/obj/mecha/combat/gygax/domove(direction)
+	if(!..())
+		return
 	if(overload)
 		health--
 		if(health < initial(health) - initial(health)/3)
 			overload = 0
 			step_in = initial(step_in)
 			step_energy_drain = initial(step_energy_drain)
-			src.occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
-	return
+			occupant_message("<span class='danger'>Leg actuators damage threshold exceded. Disabling overload.</span>")
 
 
 /obj/mecha/combat/gygax/get_stats_part()

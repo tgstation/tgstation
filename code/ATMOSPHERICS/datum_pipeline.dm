@@ -3,7 +3,7 @@
 	var/list/datum/gas_mixture/other_airs = list()
 
 	var/list/obj/machinery/atmospherics/pipe/members = list()
-	var/list/obj/machinery/atmospherics/other_atmosmch = list()
+	var/list/obj/machinery/atmospherics/components/other_atmosmch = list()
 
 	var/update = 1
 
@@ -16,8 +16,8 @@
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
-	for(var/obj/machinery/atmospherics/A in other_atmosmch)
-		A.nullifyPipenet(src)
+	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
+		C.nullifyPipenet(src)
 	..()
 
 /datum/pipeline/process()
@@ -77,9 +77,9 @@ var/pipenetwarnings = 10
 
 	air.volume = volume
 
-/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/A)
-	other_atmosmch |= A
-	var/datum/gas_mixture/G = A.returnPipenetAir(src)
+/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
+	other_atmosmch |= C
+	var/datum/gas_mixture/G = C.returnPipenetAir(src)
 	other_airs |= G
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
@@ -105,8 +105,8 @@ var/pipenetwarnings = 10
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
 		S.parent = src
 	air.merge(E.air)
-	for(var/obj/machinery/atmospherics/A in E.other_atmosmch)
-		A.replacePipenet(E, src)
+	for(var/obj/machinery/atmospherics/components/C in E.other_atmosmch)
+		C.replacePipenet(E, src)
 	other_atmosmch.Add(E.other_atmosmch)
 	other_airs.Add(E.other_airs)
 	E.members.Cut()
@@ -119,9 +119,10 @@ var/pipenetwarnings = 10
 /obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/A)
 	parent.addMember(A, src)
 
-/obj/machinery/atmospherics/addMember(obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
 	P.addMember(A, src)
+
 
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
@@ -205,11 +206,11 @@ var/pipenetwarnings = 10
 		var/datum/pipeline/P = PL[i]
 		GL += P.air
 		GL += P.other_airs
-		for(var/obj/machinery/atmospherics/binary/valve/V in P.other_atmosmch)
+		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
-				PL |= V.parent1
-				PL |= V.parent2
-		for(var/obj/machinery/atmospherics/unary/portables_connector/C in P.other_atmosmch)
+				PL |= V.parents["p1"]
+				PL |= V.parents["p2"]
+		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
 

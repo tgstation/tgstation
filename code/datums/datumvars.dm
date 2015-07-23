@@ -324,7 +324,7 @@ body
 
 	return
 
-/client/proc/debug_variable(name, value, level, var/datum/DA = null)
+/client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
 	if(DA)

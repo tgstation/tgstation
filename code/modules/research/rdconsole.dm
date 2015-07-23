@@ -52,7 +52,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/list/datum/design/matching_designs = list() //for the search function
 
 
-/obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
+/obj/machinery/computer/rdconsole/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
 	var/datum/tech/check_tech
 	var/return_name = null
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -66,7 +66,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	return return_name
 
-/obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
+/obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
 	if (copytext(ID, 1, 2) == "$")
@@ -144,7 +144,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob, params)
+/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
@@ -166,7 +166,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user as mob)
+/obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
@@ -603,7 +603,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user as mob)
+/obj/machinery/computer/rdconsole/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
@@ -1063,7 +1063,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 //helper proc, which return a table containing categories
-/obj/machinery/computer/rdconsole/proc/list_categories(var/list/categories, var/menu_num as num)
+/obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
 		return
 

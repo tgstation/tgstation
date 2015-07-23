@@ -24,7 +24,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		if(!user.drop_item())
 			return
@@ -35,7 +35,7 @@
 		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
 	if(..())
 		return
 	if(src.z > 6)
@@ -690,7 +690,7 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
+/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null
 	if(istype(user, /mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
@@ -711,7 +711,10 @@ What a mess.*/
 		if(prob(10/severity))
 			switch(rand(1,8))
 				if(1)
-					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+					if(prob(10))
+						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+					else
+						R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
 				if(2)
 					R.fields["sex"] = pick("Male", "Female")
 				if(3)

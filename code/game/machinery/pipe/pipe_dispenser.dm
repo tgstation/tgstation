@@ -6,10 +6,10 @@
 	anchored = 1
 	var/wait = 0
 
-/obj/machinery/pipedispenser/attack_paw(user as mob)
+/obj/machinery/pipedispenser/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/pipedispenser/attack_hand(user as mob)
+/obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
 		return 1
 	var/dat = {"
@@ -68,7 +68,7 @@
 				wait = 0
 	return
 
-/obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob, params)
+/obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
@@ -123,7 +123,7 @@ Nah
 */
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/pipe as obj, mob/usr as mob)
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
@@ -138,7 +138,7 @@ Nah
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
+/obj/machinery/pipedispenser/disposal/attack_hand(mob/user)
 	if(..())
 		return 1
 
@@ -189,7 +189,7 @@ Nah
 	density = 1
 	anchored = 1.0
 
-/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(user as mob)
+/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())
 		return 1
 

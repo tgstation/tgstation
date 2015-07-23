@@ -1,4 +1,4 @@
-/mob/living/silicon/robot/Process_Spacemove(var/movement_dir = 0)
+/mob/living/silicon/robot/Process_Spacemove(movement_dir = 0)
 	if(module)
 		for(var/obj/item/weapon/tank/jetpack/J in module.modules)
 			if(J && istype(J, /obj/item/weapon/tank/jetpack))

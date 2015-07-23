@@ -53,7 +53,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
-	var/backbag = 2						//backpack type
+	var/backbag = 1						//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -111,7 +111,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
-	real_name = random_name(gender)
+	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
@@ -516,7 +516,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		popup.open(0)
 		return
 
-	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
+	proc/SetJobPreferenceLevel(datum/job/job, level)
 		if (!job)
 			return 0
 
@@ -618,7 +618,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		job_engsec_low = 0
 
 
-	proc/GetJobDepartment(var/datum/job/job, var/level)
+	proc/GetJobDepartment(datum/job/job, level)
 		if(!job || !level)	return 0
 		switch(job.department_flag)
 			if(CIVILIAN)
@@ -674,7 +674,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if("random")
 				switch(href_list["preference"])
 					if("name")
-						real_name = random_name(gender)
+						real_name = pref_species.random_name(gender,1)
 					if("age")
 						age = rand(AGE_MIN, AGE_MAX)
 					if("hair")
@@ -696,7 +696,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if("s_tone")
 						skin_tone = random_skin_tone()
 					if("bag")
-						backbag = rand(1,3)
+						backbag = rand(1,2)
 					if("all")
 						random_character()
 
@@ -826,7 +826,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							var/temp_hsv = RGBtoHSV(new_mutantcolor)
 							if(new_mutantcolor == "#000000")
 								features["mcolor"] = pref_species.default_color
-							else if(MUTCOLORS_PARTSONLY in pref_species.specflags || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
+							else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 								features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 							else
 								user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
@@ -1017,7 +1017,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if("changeslot")
 						if(!load_character(text2num(href_list["num"])))
 							random_character()
-							real_name = random_name(gender)
+							real_name = random_unique_name(gender)
 							save_character()
 
 					if("tab")
@@ -1029,7 +1029,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	proc/copy_to(mob/living/carbon/human/character)
 		if(be_random_name)
-			real_name = random_name(gender)
+			real_name = pref_species.random_name(gender)
 
 		if(be_random_body)
 			random_character(gender)
@@ -1070,8 +1070,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 		character.features = features
 
-		if(backbag > 3 || backbag < 1)
-			backbag = 1 //Same as above
 		character.backbag = backbag
 
 		character.update_body()

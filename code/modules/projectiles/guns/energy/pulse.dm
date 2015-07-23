@@ -10,7 +10,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse"
 
-/obj/item/weapon/gun/energy/pulse/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/pulse/attack_self(mob/living/user)
 	select_fire(user)
 
 /obj/item/weapon/gun/energy/pulse/emp_act(severity)
@@ -28,6 +28,8 @@
 	item_state = "pulse"
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/carbine"
 	can_flashlight = 1
+	flight_x_offset = 18
+	flight_y_offset = 12
 
 /obj/item/weapon/gun/energy/pulse/carbine/loyalpin
 	pin = /obj/item/device/firing_pin/implant/loyalty
@@ -51,7 +53,7 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/infinite"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
 
-/obj/item/weapon/gun/energy/pulse/destroyer/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/energy/pulse/destroyer/attack_self(mob/living/user)
 	user << "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>"
 
 /obj/item/weapon/gun/energy/pulse/pistol/m1911
