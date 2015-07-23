@@ -170,10 +170,10 @@ emp_act
 						if(get_dist(H, src) <= 1)	//people with TK won't get smeared with blood
 							if(H.wear_suit)
 								H.wear_suit.add_blood(src)
-								H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+								H.update_inv_wear_suit()	//updates mob overlays to show the new blood (no refresh)
 							else if(H.w_uniform)
 								H.w_uniform.add_blood(src)
-								H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
+								H.update_inv_w_uniform()	//updates mob overlays to show the new blood (no refresh)
 							if (H.gloves)
 								var/obj/item/clothing/gloves/G = H.gloves
 								G.add_blood(H)
@@ -194,13 +194,13 @@ emp_act
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
-							update_inv_wear_mask(0)
+							update_inv_wear_mask()
 						if(head)
 							head.add_blood(src)
-							update_inv_head(0)
+							update_inv_head()
 						if(glasses && prob(33))
 							glasses.add_blood(src)
-							update_inv_glasses(0)
+							update_inv_glasses()
 
 				if("chest")	//Easier to score a stun but lasts less time
 					if(stat == CONSCIOUS && I.force && prob(I.force + 10))
@@ -211,10 +211,10 @@ emp_act
 					if(bloody)
 						if(wear_suit)
 							wear_suit.add_blood(src)
-							update_inv_wear_suit(0)
+							update_inv_wear_suit()
 						if(w_uniform)
 							w_uniform.add_blood(src)
-							update_inv_w_uniform(0)
+							update_inv_w_uniform()
 
 			if(Iforce > 10 || Iforce >= 5 && prob(33))
 				forcesay(hit_appends)	//forcesay checks stat already
@@ -455,4 +455,18 @@ emp_act
 	else
 		..()
 
-	return
+/mob/living/carbon/human/hitby(atom/movable/AM)
+	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if(istype(AM, /obj/item))
+			var/obj/item/I = AM
+			if(can_embed(I))
+				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
+					throw_alert("embeddedobject")
+					var/obj/item/organ/limb/L = pick(organs)
+					L.embedded_objects |= I
+					I.add_blood(src)//it embedded itself in you, of course it's bloody!
+					I.loc = src
+					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
+					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
+					return
+	return ..()
