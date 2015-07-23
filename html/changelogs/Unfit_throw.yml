@@ -1,5 +1,0 @@
-author: Unid
-delete-after: True
-changes: 
-  - bugfix: Damage of flying items is now properly affected by speed. This means that items thrown by hand deal less damage and items shot out of a pneumatic cannon deal more damage.
-  - bugfix: Getting hit by a fast enough item will now properly throw you a few tiles back.
