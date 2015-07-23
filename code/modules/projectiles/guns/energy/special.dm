@@ -52,6 +52,7 @@
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
 	var/charge_tick = 0
+	ammo_x_offset = 1
 
 /obj/item/weapon/gun/energy/floragun/New()
 	..()
