@@ -135,8 +135,8 @@
 /obj/mecha/working/ripley/get_stats_part()
 	var/output = ..()
 	output += "<b>Cargo Compartment Contents:</b><div style=\"margin-left: 15px;\">"
-	if(src.cargo.len)
-		for(var/obj/O in src.cargo)
+	if(cargo.len)
+		for(var/obj/O in cargo)
 			output += "<a href='?src=\ref[src];drop_from_cargo=\ref[O]'>Unload</a> : [O]<br>"
 	else
 		output += "Nothing"
