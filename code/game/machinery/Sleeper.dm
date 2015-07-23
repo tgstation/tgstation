@@ -160,13 +160,15 @@
 		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/manipulator
 	)
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
+	light_range_on = 3
+	light_power_on = 2
 	power_change()
 		..()
 		if(!(stat & (BROKEN|NOPOWER)) && occupant)
-			SetLuminosity(2)
+			set_light(light_range_on, light_power_on)
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 /obj/machinery/sleeper/New()
 	..()
@@ -278,7 +280,7 @@
 	if(user.pulling == L)
 		user.stop_pulling()
 	if(!(stat & (BROKEN|NOPOWER)))
-		SetLuminosity(2)
+		set_light(light_range_on, light_power_on)
 	sedativeblock = 1
 	sleep(SLEEPER_SOPORIFIC_DELAY)
 	sedativeblock = 0
@@ -327,7 +329,7 @@
 		for(var/atom/movable/A as mob|obj in src)
 			A.loc = src.loc
 			A.blob_act()
-		del(src)
+		qdel(src)
 	return
 
 /obj/machinery/sleeper/crowbarDestroy(mob/user)
@@ -385,7 +387,7 @@
 	src.add_fingerprint(user)
 	qdel(G)
 	if(!(stat & (BROKEN|NOPOWER)))
-		SetLuminosity(2)
+		set_light(light_range_on, light_power_on)
 	sedativeblock = 1
 	spawn(SLEEPER_SOPORIFIC_DELAY)
 	sedativeblock = 0
@@ -504,6 +506,7 @@
 		return
 	src.go_out()
 	add_fingerprint(usr)
+	set_light(0)
 	return
 
 
@@ -540,8 +543,10 @@
 		update_icon()
 
 		for(var/obj/O in src)
-			del(O)
+			qdel(O)
 		src.add_fingerprint(usr)
+		if(!(stat & (BROKEN|NOPOWER)))
+			set_light(light_range_on, light_power_on)
 		return
 	return
 

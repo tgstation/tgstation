@@ -5,7 +5,8 @@
 /turf/proc/reconsider_lights()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/reconsider_lights() called tick#: [world.time]")
 	for(var/datum/light_source/L in affecting_lights)
-		L.force_update()
+		L.vis_update()
+
 
 /turf/proc/lighting_clear_overlays()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_clear_overlays() called tick#: [world.time]")

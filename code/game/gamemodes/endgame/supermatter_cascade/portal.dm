@@ -10,7 +10,7 @@
 	announce=0
 	narnar=0
 
-	layer=LIGHTING_LAYER+2 // ITS SO BRIGHT
+	layer = LIGHTING_LAYER + 2 // ITS SO BRIGHT
 
 	consume_range = 6
 

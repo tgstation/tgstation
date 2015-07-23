@@ -2,20 +2,22 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
+	luminosity = 1
+
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
-	//Properties for open tiles (/floor)
+	//properties for open tiles (/floor)
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
 	var/toxins = 0
 
-	//Properties for airtight tiles (/wall)
+	//properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
 	var/heat_capacity = 1
 
-	//Properties for both
+	//properties for both
 	var/temperature = T20C
 
 	var/blocks_air = 0
@@ -275,7 +277,6 @@
 	if (!N)
 		return
 
-	var/initialOpacity = opacity
 #ifdef ENABLE_TRI_LEVEL
 // Fuck this, for now - N3X
 ///// Z-Level Stuff ///// This makes sure that turfs are not changed to space when one side is part of a zone
@@ -297,8 +298,12 @@
 ///// Z-Level Stuff
 #endif
 
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
 	var/datum/gas_mixture/env
+
+	var/old_opacity = opacity
+	var/old_dynamic_lighting = dynamic_lighting
+	var/list/old_affecting_lights = affecting_lights
+	var/old_lighting_overlay = lighting_overlay
 
 	//world << "Replacing [src.type] with [N]"
 
@@ -329,11 +334,6 @@
 		if(env)
 			W.air = env //Copy the old environment data over if both turfs were simulated
 
-		W.lighting_lumcount += old_lumcount
-		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
-			W.lighting_changed = 1
-			lighting_controller.changed_turfs += W
-
 		if (istype(W,/turf/simulated/floor))
 			W.RemoveLattice()
 
@@ -345,10 +345,7 @@
 
 		W.levelupdate()
 
-		if((opacity != initialOpacity) && W.lighting_lumcount)
-			UpdateAffectingLights()
-
-		return W
+		. = W
 
 	else
 		//if(zone)
@@ -357,10 +354,6 @@
 		//		zone.SetStatus(ZONE_ACTIVE)
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
-		W.lighting_lumcount += old_lumcount
-		if((old_lumcount != W.lighting_lumcount) || (loc.name != "Space" && force_lighting_update))
-			W.lighting_changed = 1
-			lighting_controller.changed_turfs += W
 
 		if(tell_universe)
 			universe.OnTurfChange(W)
@@ -370,10 +363,17 @@
 
 		W.levelupdate()
 
-		if((opacity != initialOpacity) && W.lighting_lumcount)
-			UpdateAffectingLights()
+		. = W
 
-		return W
+	lighting_overlay = old_lighting_overlay
+	affecting_lights = old_affecting_lights
+	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
+		reconsider_lights()
+	if(dynamic_lighting != old_dynamic_lighting)
+		if(dynamic_lighting)
+			lighting_build_overlays()
+		else
+			lighting_clear_overlays()
 
 /turf/proc/AddDecal(const/image/decal)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/AddDecal() called tick#: [world.time]")
@@ -611,6 +611,9 @@
 /turf/proc/dismantle_wall()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/dismantle_wall() called tick#: [world.time]")
 	return
+
+/turf/change_area(oldarea, newarea)
+	lighting_build_overlays()
 
 /////////////////////////////////////////////////////
 

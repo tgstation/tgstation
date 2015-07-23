@@ -4,7 +4,7 @@
 	icon_state = "store"
 	circuit = "/obj/item/weapon/circuitboard/merch"
 
-	l_color = "#993300"
+	light_color = LIGHT_COLOR_ORANGE
 
 /obj/item/weapon/circuitboard/merch
 	name = "\improper Merchandise Computer Circuitboard"

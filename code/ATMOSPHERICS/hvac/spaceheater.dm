@@ -11,7 +11,9 @@
 	var/heating_power = 40000
 	var/base_state = "sheater"
 
-	l_color = LIGHT_COLOR_ORANGE
+	light_power_on = 0.75
+	light_range_on = 2
+	light_color = LIGHT_COLOR_ORANGE
 
 	ghost_read = 0
 	ghost_write = 0
@@ -31,7 +33,7 @@
 /obj/machinery/space_heater/update_icon()
 	overlays.len = 0
 	icon_state = "[base_state][on]"
-	SetLuminosity(on ? 1 : 0)
+	set_light(on ? light_range_on : 0, light_power_on)
 	if(panel_open)
 		overlays  += "[base_state]-open"
 	return

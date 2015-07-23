@@ -21,7 +21,7 @@
 	var/parts = null
 	var/datum/wires/particle_acc/control_box/wires = null
 
-	l_color = "#0000FF"
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new(src)

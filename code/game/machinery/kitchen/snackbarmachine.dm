@@ -13,13 +13,13 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 	power_change()
 		..()
 		if(!(stat & (BROKEN|NOPOWER)))
-			SetLuminosity(2)
+			set_light(2)
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **

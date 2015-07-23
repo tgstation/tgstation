@@ -29,7 +29,9 @@
 
 /obj/item/blueprints/Topic(href, href_list)
 	. = ..()
-	if(.) return 1
+	if(.)
+		return
+
 	switch(href_list["action"])
 		if ("create_area")
 			if (get_area_type()!=AREA_SPACE)
@@ -79,7 +81,7 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/blueprints/proc/get_area_type() called tick#: [world.time]")
-	if (A.name == "Space" && A.tag)
+	if (A.name == "Space")
 		return AREA_SPACE
 	var/list/SPECIALS = list(
 		/area/shuttle,
@@ -124,8 +126,6 @@ move an amendment</a> to the drawing.</p>
 	var/area/oldarea = get_area(usr)
 	newarea.name = str
 	newarea.tag = "[newarea.type]/[md5(str)]"
-	newarea.tagbase = "[newarea.type]_[md5(str)]" // without this dynamic light system ruin everithing
-	newarea.master = newarea
 	newarea.power_equip = 0
 	newarea.power_light = 0
 	newarea.power_environ = 0
@@ -137,7 +137,6 @@ move an amendment</a> to the drawing.</p>
 		for(var/atom/allthings in T.contents)
 			allthings.change_area(oldarea,newarea)
 	newarea.addSorted()
-	newarea.SetDynamicLighting()
 
 	sleep(5)
 	interact()

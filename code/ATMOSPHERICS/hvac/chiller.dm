@@ -10,7 +10,7 @@
 	var/cooling_power = 40000
 	base_state = "aircond"
 
-	l_color = LIGHT_COLOR_CYAN
+	light_color = LIGHT_COLOR_CYAN
 
 	flags = FPRINT
 

@@ -261,7 +261,7 @@ var/global/list/bombermangear = list()
 	icon_state = "explosion_core"
 	density = 0
 	anchored = 1
-	layer = LIGHTING_LAYER+1
+	layer = LIGHTING_LAYER + 1
 	var/destroy_environnement = 0
 	var/hurt_players = 0
 
@@ -920,9 +920,7 @@ var/global/list/arenas = list()
 		//now we just need to add a thunderdome jukebox to every map
 		var/area/A = new
 		A.name = name
-		A.tagbase = "[A.type]_[md5(name)]"
 		A.tag = "[A.type]/[md5(name)]"
-		A.master = A
 		A.power_equip = 0
 		A.power_light = 0
 		A.power_environ = 0

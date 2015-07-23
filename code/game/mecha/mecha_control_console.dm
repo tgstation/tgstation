@@ -8,7 +8,7 @@
 	var/screen = 0
 	var/stored_data
 
-	l_color = "#CD00CD"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/mecha/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)

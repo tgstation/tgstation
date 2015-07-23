@@ -133,6 +133,11 @@ Class Procs:
 	var/panel_open = 0
 	var/state = 0 //0 is unanchored, 1 is anchored and unwelded, 2 is anchored and welded for most things
 
+	//These are some values to automatically set the light power/range on machines if they have power
+	var/light_range_on = 0
+	var/light_power_on = 0
+	var/use_auto_lights = 0//Incase you want to use it, set this to 0, defaulting to 1 so machinery with no lights doesn't call set_light()
+
 	/**
 	 * Machine construction/destruction/emag flags.
 	 */

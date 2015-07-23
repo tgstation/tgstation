@@ -9,7 +9,8 @@
 	var/list/tracked = list(  )
 	var/track_special_role
 
-	l_color = LIGHT_COLOR_BLUE
+	light_color = LIGHT_COLOR_BLUE
+	light_range_on = 2
 
 /obj/machinery/computer/crew/New()
 	tracked = list()

@@ -48,7 +48,7 @@ var/list/poddoors = list()
 			src.operating = 1
 			flick("pdoorc0", src)
 			src.icon_state = "pdoor0"
-			src.SetOpacity(0)
+			src.set_opacity(0)
 			sleep(15)
 			src.density = 0
 			src.operating = 0
@@ -64,7 +64,7 @@ var/list/poddoors = list()
 		src.operating = 1
 	flick("pdoorc0", src)
 	src.icon_state = "pdoor0"
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(10)
 	layer = initial(layer)
 	src.density = 0
@@ -85,7 +85,7 @@ var/list/poddoors = list()
 	flick("pdoorc1", src)
 	src.icon_state = "pdoor1"
 	src.density = 1
-	src.SetOpacity(initial(opacity))
+	src.set_opacity(initial(opacity))
 	update_nearby_tiles()
 
 	sleep(10)

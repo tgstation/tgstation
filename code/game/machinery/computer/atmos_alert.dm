@@ -11,7 +11,7 @@
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
 
-	l_color = "#7BF9FF"
+	light_color = LIGHT_COLOR_CYAN
 
 
 /obj/machinery/computer/atmos_alert/initialize()

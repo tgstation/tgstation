@@ -7,7 +7,7 @@
 	density = 1
 	anchored = 1
 	circuit = "/obj/item/weapon/circuitboard/smeltcomp"
-	l_color = LIGHT_COLOR_GREEN
+	light_color = LIGHT_COLOR_GREEN
 
 	var/frequency = FREQ_DISPOSAL //Same as conveyors.
 	var/smelter_tag = null
@@ -273,7 +273,9 @@
 	idle_power_usage = 50
 	active_power_usage = 500 //This shit's able to compress tiny little diamonds into really big diamonds, of course this uses a lot of power.
 	machine_flags = SCREWTOGGLE | CROWDESTROY | MULTITOOL_MENU
-	l_color = LIGHT_COLOR_ORANGE
+	light_power_on = 2
+	light_range_on = 3
+	light_color = LIGHT_COLOR_ORANGE
 
 	var/atom/movable/mover //Virtual atom used to check passing ability on the out turf.
 
@@ -308,10 +310,10 @@
 /obj/machinery/mineral/processing_unit/update_icon()
 	if(stat & (NOPOWER | BROKEN) || !on)
 		icon_state = "furnace_o"
-		SetLuminosity(0)
+		set_light(0)
 	else if(on)
 		icon_state = "furnace"
-		SetLuminosity(2)
+		set_light(light_range_on, light_power_on)
 
 /obj/machinery/mineral/processing_unit/RefreshParts()
 	var/i = 0
