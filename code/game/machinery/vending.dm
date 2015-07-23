@@ -51,6 +51,8 @@
 	var/obj/item/weapon/coin/coin
 	var/datum/wires/vending/wires = null
 
+	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
+
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/New()
@@ -83,6 +85,11 @@
 	qdel(coin)
 	coin = null
 	..()
+
+/obj/machinery/vending/snack/Destroy()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
+		S.loc = get_turf(src)
+	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
 	if(component_parts)
@@ -159,6 +166,72 @@
 			refill.charges[charge_type] -= restock
 			total += restock
 	return total
+
+/obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
+		if(!compartment_access_check(user))
+			return
+		if(junk_check(W))
+			if(!iscompartmentfull(user))
+				if(!user.drop_item())
+					return
+				W.loc = src
+				food_load(W)
+				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
+		else
+			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
+		return
+
+	if(istype(W, /obj/item/weapon/storage/bag/tray))
+		if(!compartment_access_check(user))
+			return
+		var/obj/item/weapon/storage/T = W
+		var/loaded = 0
+		var/denied_items = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			if(iscompartmentfull(user))
+				break
+			if(junk_check(S))
+				T.remove_from_storage(S, src)
+				food_load(S)
+				loaded++
+			else
+				denied_items++
+		if(denied_items)
+			user << "<span class='notice'>[src] refuses some items.</span>"
+		if(loaded)
+			user << "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>"
+		updateUsrDialog()
+		return
+
+	..()
+
+/obj/machinery/vending/snack/proc/compartment_access_check(user)
+	req_access_txt = chef_compartment_access
+	if(!allowed(user) && !emagged && scan_id)
+		user << "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>"
+		req_access_txt = "0"
+		return 0
+	req_access_txt = "0"
+	return 1
+
+/obj/machinery/vending/snack/proc/junk_check(obj/item/weapon/reagent_containers/food/snacks/S)
+	if(S.junkiness)
+		return 0
+	return 1
+
+/obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
+	if(contents.len >= 30) // no more than 30 dishes can fit inside
+		user << "<span class='warning'>[src]'s chef compartment is full.</span>"
+		return 1
+	return 0
+
+/obj/machinery/vending/snack/proc/food_load(obj/item/weapon/reagent_containers/food/snacks/S)
+	if(dish_quants[S.name])
+		dish_quants[S.name]++
+	else
+		dish_quants[S.name] = 1
+	sortList(dish_quants)
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user, params)
 	if(panel_open)
@@ -280,6 +353,15 @@
 				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 			else
 				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+		if(istype(src, /obj/machinery/vending/snack))
+			dat += "<h3>Chef's Food Selection</h3>"
+			dat += "<div class='statusDisplay'>"
+			for (var/O in dish_quants)
+				if(dish_quants[O] > 0)
+					var/N = dish_quants[O]
+					dat += "<a href='byond://?src=\ref[src];dispense=[sanitize(O)]'>Dispense</A> "
+					dat += "<B>[capitalize(O)]: [N]</B><br>"
+			dat += "</div>"
 	user.set_machine(src)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
@@ -326,6 +408,23 @@
 
 
 	usr.set_machine(src)
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/N = href_list["dispense"]
+		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+			return
+		vend_ready = 0
+		use_power(5)
+
+		spawn(vend_delay)
+			dish_quants[N] = max(dish_quants[N] - 1, 0)
+			for(var/obj/O in contents)
+				if(O.name == N)
+					O.loc = src.loc
+					break
+			vend_ready = 1
+			updateUsrDialog()
+		return
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
@@ -578,6 +677,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
+	var/chef_compartment_access = "28"
 
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
