@@ -1,0 +1,13 @@
+author: Iamgoofball
+
+delete-after: True
+
+changes: 
+  - experiment: "Adds Krav Maga gloves to the traitor uplink for 10tc. It has 4 move combos, check them out with the Access Tutorial verb in your Krav Mana section."
+  - rscadd: "You do a base 10 damage per punch, and you do bonus damage to weakened on the ground opponents. You sacrifice your chances to weaken people on hit for this."
+  - rscadd: "When disarming someone, you grab objects they are holding, instead of it hitting the ground. You sacrifice your knockdown with disarm for this."
+  - rscadd: "You also have a 25% chance to either counter or block hits directed at you in melee."
+  - rscadd: "It even comes with unique hit sounds!"
+  - experiment: "This is rather experimental, to see if this is a good direction for combat to go in. If you feel this is overpowered/underpowered when used, let me know."
+  - experiment: "If this goes well, I'll look into more martial art styles, such as either making Security a special one OR giving Security a tweaked Krav Maga."
+  - rscadd: "Also, bored Space Gods can spawn Hallway Brawler gloves. These gloves contain the power of long forgotten fighters. Use with caution."

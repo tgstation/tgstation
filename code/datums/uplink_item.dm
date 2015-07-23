@@ -418,6 +418,12 @@ var/list/uplink_items = list()
 	surplus = 6
 	excludefrom = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/krav_maga
+	name = "Krav Maga Gloves"
+	desc = "Gloves fitted with nanochips that can teach you the ways of Krav Maga."
+	item = /obj/item/clothing/gloves/krav_maga
+	cost = 10
+
 // STEALTHY TOOLS
 
 /datum/uplink_item/stealthy_tools

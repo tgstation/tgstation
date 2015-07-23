@@ -92,6 +92,7 @@ Warden
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+
 /datum/job/warden/get_access()
 	var/list/L = list()
 	L = ..() | check_config_for_sec_maint()
@@ -140,6 +141,7 @@ Detective
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+
 /*
 Security Officer
 */
@@ -181,6 +183,7 @@ Security Officer
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
+
 
 /datum/job/officer/get_access()
 	var/list/L = list()

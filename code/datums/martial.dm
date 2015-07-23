@@ -5,6 +5,7 @@
 	var/current_target = null
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
+	var/counter_prob = 0 // chance to counter
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -15,8 +16,10 @@
 /datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
-	if(D != current_target)
+/datum/martial_art/proc/on_hit(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	return 0
+
+/datum/martial_art/proc/add_to_streak(var/element,var/mob/living/carbon/human/D)	if(D != current_target)
 		current_target = D
 		streak = ""
 	streak = streak+element
@@ -57,7 +60,9 @@
 
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 								"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>")
-
+	var/datum/martial_art/MA = D.martial_art
+	if(MA.on_hit(D,A)) // they countered with something
+		return 1
 	D.apply_damage(damage, BRUTE, affecting, armor_block)
 
 	add_logs(A, D, "punched")
@@ -123,6 +128,9 @@
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
 
 
+	var/datum/martial_art/MA = D.martial_art
+	if(MA.on_hit(D,A)) // they countered with something
+		return 1
 	D.visible_message("<span class='danger'>[A] has hit [D] with a [atk_verb]!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")
 
@@ -372,6 +380,9 @@
 	add_to_streak("H")
 	if(check_streak(A,D))
 		return 1
+	var/datum/martial_art/MA = D.martial_art
+	if(MA.on_hit(D,A)) // they countered with something
+		return 1
 	D.visible_message("<span class='danger'>[A] [pick("punches", "kicks", "chops", "hits", "slams")] [D]!</span>", \
 					  "<span class='userdanger'>[A] hits you!</span>")
 	D.apply_damage(10, BRUTE)
@@ -554,3 +565,6 @@
 		return 1
 	else
 		return 0
+
+
+
