@@ -3,4 +3,4 @@ author: xxalpha
 delete-after: True
 
 changes: 
-  - tweak: "Agent IDs are now rewrittable. Use Ctrl+Click to forge!"
+  - tweak: "Agent IDs are now rewrittable."
