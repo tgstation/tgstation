@@ -186,7 +186,7 @@
 
 
 /datum/objective/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone."
+	explanation_text = "Hijack the emergency shuttle by ensuring that only syndicate agents escape aboard it."
 	dangerrating = 25
 	martyr_compatible = 0 //Technically you won't get both anyway.
 
