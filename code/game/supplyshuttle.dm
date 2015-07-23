@@ -19,16 +19,20 @@ var/list/mechtoys = list(
 	/obj/item/toy/prize/odysseus,
 	/obj/item/toy/prize/phazon
 )
-//Lighting STILL disabled, even with the new bay engine, because lighting doesn't play nice with our shuttles, might just be our shuttle code, or the small changes in the lighting engine we have from bay.
-/area/supply/station
+
+/area/supply/station //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
 	icon_state = "shuttle3"
+	luminosity = 1
+	lighting_use_dynamic = 0
 	requires_power = 0
 
 
-/area/supply/dock
+/area/supply/dock //DO NOT TURN THE lighting_use_dynamic STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
 	icon_state = "shuttle3"
+	luminosity = 1
+	lighting_use_dynamic = 0
 	requires_power = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
@@ -122,7 +126,7 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
-	light_color = LIGHT_COLOR_BROWN
+	l_color = "#87421F"
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
@@ -134,7 +138,7 @@ var/list/mechtoys = list(
 	var/last_viewed_group = "categories"
 	var/datum/money_account/current_acct
 
-	light_color = LIGHT_COLOR_BROWN
+	l_color = "#87421F"
 
 /*
 /obj/effect/marker/supplymarker
@@ -335,7 +339,7 @@ var/list/mechtoys = list(
 			if(T.density)	continue
 			var/contcount
 			for(var/atom/A in T.contents)
-				if(islightingoverlay(A))
+				if(!A.simulated)
 					continue
 				contcount++
 			if(contcount)
@@ -360,7 +364,8 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:298: slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-			slip.info = {"<h3>[command_name()] Shipping Manifest</h3><hr><br>
+			slip.name = "Shipping Manifest for [SO.orderedby]'s Order"
+			slip.info = {"<h3>[command_name()] Shipping Manifest for [SO.orderedby]'s Order</h3><hr><br>
 				Order #[SO.ordernum]<br>
 				Destination: [station_name]<br>
 				[supply_shuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>
@@ -521,7 +526,7 @@ var/list/mechtoys = list(
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "[P.name] Requisition Form - [idname], [idrank]"
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:425: reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
@@ -742,7 +747,7 @@ var/list/mechtoys = list(
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "[P.name] Requisition Form - [idname], [idrank]"
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:618: reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
