@@ -439,7 +439,7 @@
 				else
 					sound = pick('sound/ambience/ambigen1.ogg', 'sound/ambience/ambigen3.ogg', 'sound/ambience/ambigen4.ogg', 'sound/ambience/ambigen5.ogg', 'sound/ambience/ambigen6.ogg', 'sound/ambience/ambigen7.ogg', 'sound/ambience/ambigen8.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambigen11.ogg', 'sound/ambience/ambigen12.ogg', 'sound/ambience/ambigen14.ogg')
 
-			M << sound(sound, 0, 0, 0, 25)
+			M << sound(sound, 0, 0, SOUND_AMBIANCE, 25)
 
 			spawn (600) // Ewww - this is very very bad.
 				if (M && M.client)

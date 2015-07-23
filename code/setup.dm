@@ -1205,3 +1205,5 @@ var/proccalls = 1
 //Ore processing types for the ore processor
 #define ORE_PROCESSING_GENERAL 1
 #define ORE_PROCESSING_ALLOY 2
+
+#define SOUND_AMBIANCE			485	//Literally arbitrary.
