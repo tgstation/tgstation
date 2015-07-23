@@ -8,6 +8,8 @@
 #define ADD "add"
 #define SET "set"
 */
+var/list/bullet_master = list()
+var/list/impact_master = list()
 
 /obj/item/projectile
 	name = "projectile"
@@ -40,6 +42,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
+	var/total_steps = 0
 		//Effects
 	var/stun = 0
 	var/weaken = 0
@@ -60,21 +63,25 @@
 	var/dx = 0
 	var/dy = 0
 	var/error = 0
+	var/target_angle = 0
 
 	var/custom_impact = 0
 
-/obj/item/projectile/proc/on_hit(var/atom/target, var/blocked = 0)
+	animate_movement = 0
+	var/linear_movement = 1
+
+/obj/item/projectile/proc/on_hit(var/atom/atarget, var/blocked = 0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/proc/on_hit() called tick#: [world.time]")
 	if(blocked >= 2)		return 0//Full block
-	if(!isliving(target))	return 0
+	if(!isliving(atarget))	return 0
 	// FUCK mice. - N3X
-	if(ismouse(target) && (stun+weaken+paralyze+agony)>5)
-		var/mob/living/simple_animal/mouse/M=target
+	if(ismouse(atarget) && (stun+weaken+paralyze+agony)>5)
+		var/mob/living/simple_animal/mouse/M=atarget
 		M << "<span class='warning'>What would probably not kill a human completely overwhelms your tiny body.</span>"
 		M.splat()
 		return 1
-	if(isanimal(target))	return 0
-	var/mob/living/L = target
+	if(isanimal(atarget))	return 0
+	var/mob/living/L = atarget
 	if(L.flags & INVULNERABLE)			return 0
 	L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 	return 1
@@ -190,16 +197,6 @@
 			if(istype(permutated,/list)) permutated.Add(A)
 			return 0
 		else if(!custom_impact)
-			var/obj/effect/overlay/beam/impact = getFromPool(/obj/effect/overlay/beam,get_turf(src),10,0,'icons/obj/projectiles_impacts.dmi')
-			switch(get_dir(src,A))
-				if(NORTH)
-					impact.pixel_y = 16
-				if(SOUTH)
-					impact.pixel_y = -16
-				if(EAST)
-					impact.pixel_x = 16
-				if(WEST)
-					impact.pixel_x = -16
 			var/impact_icon = null
 			var/impact_sound = null
 			if(ismob(A))
@@ -212,9 +209,30 @@
 			else
 				impact_icon = "default_solid"
 				impact_sound = 'sound/items/metal_impact.ogg'
+			var/PixelX = 0
+			var/PixelY = 0
+			switch(get_dir(src,A))
+				if(NORTH)
+					PixelY = 16
+				if(SOUTH)
+					PixelY = -16
+				if(EAST)
+					PixelX = 16
+				if(WEST)
+					PixelX = -16
 
-			impact.icon_state = impact_icon
-			playsound(impact, impact_sound, 30, 1)
+			var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,impact_icon)
+			impact.pixel_x = PixelX
+			impact.pixel_y = PixelY
+
+			var/turf/T = src.loc
+			T.overlays += impact
+
+			spawn(3)
+				T.overlays -= impact
+
+			playsound(T, impact_sound, 30, 1)
+
 		if(istype(A,/turf))
 			for(var/obj/O in A)
 				O.bullet_act(src)
@@ -262,6 +280,17 @@
 		error = dist_x/2 - dist_y
 	else
 		error = dist_y/2 - dist_x
+
+	target_angle = round(Get_Angle(starting,target))
+
+	if(linear_movement)
+		//If the icon has not been added yet
+		if( !("[icon_state][target_angle]" in bullet_master) )
+			var/icon/I = new(icon,"[icon_state]_pixel") //Generate it.
+			I.Turn(target_angle+45)
+			bullet_master["[icon_state]_angle[target_angle]"] = I //And cache it!
+		src.icon = bullet_master["[icon_state]_angle[target_angle]"]
+
 	return 1
 
 /obj/item/projectile/proc/process_step()
@@ -272,6 +301,8 @@
 			sleeptime = bresenham_step(dist_x,dist_y,dx,dy)
 		else
 			sleeptime = bresenham_step(dist_y,dist_x,dy,dx)
+		if(linear_movement)
+			update_pixel()
 		sleep(sleeptime)
 
 
@@ -282,6 +313,7 @@
 		bullet_die()
 		return 1
 	kill_count--
+	total_steps++
 	if(error < 0)
 		var/atom/step = get_step(src, dB)
 		if(!step)
@@ -301,6 +333,19 @@
 			dir = dA + dB
 		bump_original_check()
 		return 1
+
+/obj/item/projectile/proc/update_pixel()
+	if(src && starting && target)
+		var/AX = (starting.x - src.x)*32
+		var/AY = (starting.y - src.y)*32
+		var/BX = (target.x - src.x)*32
+		var/BY = (target.y - src.y)*32
+		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
+
+		src.pixel_x = round(BX+((BX-AX)*XX))
+		src.pixel_y = round(BY+((BY-AY)*XX))
+
+	return
 
 /obj/item/projectile/proc/bullet_die()
 	OnDeath()
