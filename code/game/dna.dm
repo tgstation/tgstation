@@ -441,7 +441,7 @@
 
 			var/mob/dead/observer/ghost = occupant.get_ghost()
 			if(ghost)
-				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!</span> <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a>"
+				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned! <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 				ghost << sound('sound/effects/genetics.ogg')
 	return 1
 

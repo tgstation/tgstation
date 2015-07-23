@@ -639,7 +639,7 @@
 			if(!M)
 				return
 			if(ghost)
-				ghost << "<span class='ghostalert'>Someone is trying to revive you. Re-enter your corpse if you want to be revived!</span> <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a>"
+				ghost << "<span class='ghostalert'>Someone is trying to revive you. Re-enter your corpse if you want to be revived! <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 				ghost << sound('sound/effects/genetics.ogg')
 				spawn (100) //so the ghost has time to re-enter
 					return
