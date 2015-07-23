@@ -67,6 +67,10 @@ var/list/impact_master = list()
 
 	var/custom_impact = 0
 
+	//update_pixel stuff
+	var/PixelX = 0
+	var/PixelY = 0
+
 	animate_movement = 0
 	var/linear_movement = 1
 
@@ -303,6 +307,8 @@ var/list/impact_master = list()
 			sleeptime = bresenham_step(dist_y,dist_x,dy,dx)
 		if(linear_movement)
 			update_pixel()
+			pixel_x = PixelX
+			pixel_y = PixelY
 		sleep(sleeptime)
 
 
@@ -342,8 +348,8 @@ var/list/impact_master = list()
 		var/BY = (target.y - src.y)*32
 		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
 
-		src.pixel_x = round(BX+((BX-AX)*XX))
-		src.pixel_y = round(BY+((BY-AY)*XX))
+		PixelX = round(BX+((BX-AX)*XX))
+		PixelY = round(BY+((BY-AY)*XX))
 
 	return
 

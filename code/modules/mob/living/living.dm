@@ -390,6 +390,12 @@
 				// now with silicons
 
 /mob/living/emp_act(severity)
+	for(var/obj/item/stickybomb/B in src)
+		if(B.stuck_to)
+			visible_message("<span class='warning'>\the [B] stuck on \the [src] suddenly deactivates itself and falls to the ground.</span>")
+			B.deactivate()
+			B.unstick()
+
 	if(flags & INVULNERABLE)
 		return
 
@@ -706,6 +712,22 @@ Thanks.
 		del(H)
 		return
 
+	//Trying to unstick a stickybomb
+	for(var/obj/item/stickybomb/B in L)
+		if(B.stuck_to)
+			L.visible_message("<span class='danger'>\the [L] is trying to reach and pull off \the [B] stuck on his body!</span>",
+						  "<span class='warning'>You reach for \the [B] stuck on your body and start pulling.</span>")
+			if(do_after(L, src, 30, 10, FALSE))
+				L.visible_message("<span class='danger'>After struggling for an instant, \the [L] manages unstick \the [B] from his body!</span>",
+						  "<span class='warning'>It came off!</span>")
+				L.put_in_hands(B)
+				B.unstick(0)
+			else
+				L << "<span class='warning'>You need to stop moving around while you try to get a hold of \the [B]!</span>"
+			return
+		else
+			continue
+
 	//Resisting control by an alien mind.
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -843,9 +865,10 @@ Thanks.
 						BD.attack_hand(usr)
 					C.open()
 
-	//breaking out of handcuffs
+
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
+	//putting out a fire
 		if(CM.on_fire && CM.canmove)
 			CM.fire_stacks -= 5
 			CM.weakened = 5
@@ -856,6 +879,8 @@ Thanks.
 								   "<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
+
+	//breaking out of handcuffs
 		if(CM.handcuffed && CM.canmove && CM.special_delayer.blocked())
 			CM.delayNext(DELAY_ALL,100)
 			if(isalienadult(CM) || (M_HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -932,6 +957,7 @@ Thanks.
 						CM.update_inv_legcuffed()
 					else
 						CM << "<span class='warning'>Your unlegcuffing attempt was interrupted.</span>"
+
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"

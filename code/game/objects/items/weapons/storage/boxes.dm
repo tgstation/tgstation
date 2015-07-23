@@ -205,6 +205,37 @@
 		new /obj/item/weapon/grenade/smokebomb(src)
 		new /obj/item/weapon/grenade/smokebomb(src)
 
+/obj/item/weapon/storage/box/stickybombs
+	name = "box of stickybombs"
+	icon_state = "stickybomb"
+
+	New()
+		..()
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+		new /obj/item/stickybomb(src)
+
 /obj/item/weapon/storage/box/emps
 	name = "emp grenades"
 	desc = "A box with 5 emp grenades."

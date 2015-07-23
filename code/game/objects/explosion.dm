@@ -62,14 +62,25 @@
 					var/dist = get_dist(M_turf, epicenter)
 					//If inside the blast radius + world.view - 2
 					if(dist <= round(max_range + world.view - 2, 1))
-						M.playsound_local(epicenter, get_sfx("explosion"), 100, 1, frequency, falloff = 5) //get_sfx() is so that everyone gets the same sound
+						if(devastation_range > 0)
+							M.playsound_local(epicenter, get_sfx("explosion"), 100, 1, frequency, falloff = 5) // get_sfx() is so that everyone gets the same sound
+						else
+							M.playsound_local(epicenter, get_sfx("explosion_small"), 100, 1, frequency, falloff = 5)
+						spawn()
+							shake_camera(M, 10, 2)
 
 						//You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 
 					else if(dist <= far_dist)
-						var/far_volume = Clamp(far_dist, 30, 50) //Volume is based on explosion size and dist
-						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) //Add 50 volume if the mob is pretty close to the explosion
-						M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
+						var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
+						if(devastation_range > 0)
+							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
+						else
+							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
+						M << "<span class='warning'>You feel something shake the structure...</span>"
+						spawn()
+							shake_camera(M, 4, 1)
 
 		var/close = trange(world.view+round(devastation_range,1), epicenter)
 		//To all distanced mobs play a different sound
@@ -87,6 +98,10 @@
 
 		if(heavy_impact_range > 1)
 			var/datum/effect/system/explosion/E = new/datum/effect/system/explosion()
+			E.set_up(epicenter)
+			E.start()
+		else
+			var/datum/effect/system/small_explosion/E = new/datum/effect/system/small_explosion()
 			E.set_up(epicenter)
 			E.start()
 

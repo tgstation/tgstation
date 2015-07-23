@@ -171,6 +171,11 @@ var/global/list/obj/machinery/light/alllights = list()
 	new /obj/structure/cult/pylon(loc)
 	qdel(src)
 
+/obj/machinery/light/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet)||istype(Proj,/obj/item/projectile/ricochet))
+		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+			broken()
+
 /obj/machinery/light/small
 	icon_state = "lbulb1"
 	base_state = "bulb"

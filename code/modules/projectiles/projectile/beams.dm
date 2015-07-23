@@ -217,6 +217,7 @@ var/list/beam_master = list()
 	icon_state = "laser"
 	invisibility = 101
 	animate_movement = 2
+	linear_movement = 0
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
@@ -291,14 +292,7 @@ var/list/beam_master = list()
 		kill_count--
 		bump_original_check()
 
-		var/AX = (starting.x - src.x)*32
-		var/AY = (starting.y - src.y)*32
-		var/BX = (target.x - src.x)*32
-		var/BY = (target.y - src.y)*32
-		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
-
-		var/PixelX = round(BX+((BX-AX)*XX))
-		var/PixelY = round(BY+((BY-AY)*XX))
+		update_pixel()
 
 		//If the icon has not been added yet
 		if( !("[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]" in beam_master) )
