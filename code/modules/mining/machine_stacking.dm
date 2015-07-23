@@ -108,7 +108,7 @@
 /obj/machinery/computer/stacking_unit/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return {"
 		<ul>
-			<li><b>Frequency: </b><a href='?src=\ref[src];set_frequency=-1'>[format_frequency(frequency)]</a></li>
+			<li><b>Frequency: </b><a href='?src=\ref[src];set_freq=-1'>[format_frequency(frequency)]</a></li>
 			<li>[format_tag("Stacker ID Tag","stacker_tag")]</li>
 		</ul>
 	"}
@@ -307,7 +307,7 @@
 /obj/machinery/mineral/stacking_machine/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	return {"
 		<ul>
-			<li><b>Frequency: </b><a href='?src=\ref[src];set_frequency=-1'>[format_frequency(frequency)]</a></li>
+			<li><b>Frequency: </b><a href='?src=\ref[src];set_freq=-1'>[format_frequency(frequency)]</a></li>
 			<li>[format_tag("ID Tag","id_tag")]</li>
 			<li><b>Input: </b><a href='?src=\ref[src];changedir=1'>[capitalize(dir2text(in_dir))]</a></li>
 			<li><b>Output: </b><a href='?src=\ref[src];changedir=2'>[capitalize(dir2text(out_dir))]</a></li>
