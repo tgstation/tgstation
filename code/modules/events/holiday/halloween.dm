@@ -17,7 +17,7 @@
 			else
 				hardset_dna(H, null, null, null, null, /datum/species/zombie)
 
-	for(var/mob/living/simple_animal/pet/corgi/Ian/Ian in mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
 
 /datum/round_event/spooky/announce()

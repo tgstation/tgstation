@@ -92,7 +92,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
-	trackedIan = locate(/mob/living/simple_animal/pet/corgi/Ian) in mob_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in mob_list
 	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in mob_list
 	SetTypeReactions()
 	RefreshParts()
@@ -658,7 +658,7 @@
 
 /obj/item/weapon/relic/proc/corgicannon(mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
-	var/mob/living/simple_animal/pet/corgi/C = new/mob/living/simple_animal/pet/corgi(get_turf(user))
+	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)),10,rand(3,8))
 	throwSmoke(get_turf(C))
 	warn_admins(user, "Corgi Cannon", 0)

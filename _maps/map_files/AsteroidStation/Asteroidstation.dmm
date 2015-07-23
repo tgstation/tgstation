@@ -2868,7 +2868,7 @@
 "bdh" = (/obj/structure/noticeboard{dir = 8; pixel_x = 27},/turf/simulated/floor/plasteel{icon_state = "bot"},/area/hallway/primary/starboard{name = "Starboard Hallway"})
 "bdi" = (/obj/machinery/vending/cart,/turf/simulated/floor/wood,/area/crew_quarters/heads)
 "bdj" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/wood,/area/crew_quarters/heads)
-"bdk" = (/mob/living/simple_animal/pet/corgi/Ian,/turf/simulated/floor/wood,/area/crew_quarters/heads)
+"bdk" = (/mob/living/simple_animal/pet/dog/corgi/Ian,/turf/simulated/floor/wood,/area/crew_quarters/heads)
 "bdl" = (/obj/structure/table/wood,/obj/machinery/recharger,/turf/simulated/floor/wood,/area/crew_quarters/heads)
 "bdm" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/table/wood,/obj/item/device/flashlight/lamp/green{on = 0; pixel_x = -3; pixel_y = 8},/obj/item/weapon/paper_bin,/turf/simulated/floor/carpet,/area/security/hos)
 "bdn" = (/obj/machinery/light_switch{dir = 4; pixel_x = 22},/turf/simulated/floor/wood,/area/crew_quarters/heads)
