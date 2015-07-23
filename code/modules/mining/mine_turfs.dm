@@ -487,7 +487,7 @@ var/global/list/rockTurfEdgeCache
 			return
 /*	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)

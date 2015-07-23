@@ -12,6 +12,8 @@
 
 	can_unwrench = 1
 
+	welded = 0
+
 	var/area/initial_loc
 	var/id_tag = null
 	var/frequency = 1439
@@ -119,7 +121,7 @@
 		"widenet" = widenet,
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
-		"filter_NODE2o" = scrub_N2O,
+		"filter_n2o" = scrub_N2O,
 		"sigtype" = "status"
 	)
 	if(!initial_loc.air_scrub_names[id_tag])
@@ -263,9 +265,9 @@
 	if("toggle_tox_scrub" in signal.data)
 		scrub_Toxins = !scrub_Toxins
 
-	if("NODE2o_scrub" in signal.data)
+	if("n2o_scrub" in signal.data)
 		scrub_N2O = text2num(signal.data["n2o_scrub"])
-	if("toggle_NODE2o_scrub" in signal.data)
+	if("toggle_n2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
 	if("init" in signal.data)

@@ -2056,3 +2056,26 @@
 		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
+
+	else if(href_list["check_antagonist"])
+		if(!check_rights(R_ADMIN))
+			return
+		check_antagonists()
+
+	else if(href_list["kick_all_from_lobby"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+			var/afkonly = text2num(href_list["afkonly"])
+			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
+				usr << "Kick clients from lobby aborted"
+				return
+			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by an Administrator.</span>", afkonly)
+
+			var/strkicked = ""
+			for(var/name in listkicked)
+				strkicked += "[name], "
+			message_admins("[key_name_admin(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
+			log_admin("[key_name(usr)] has kicked [afkonly ? "all AFK" : "all"] clients from the lobby. [length(listkicked)] clients kicked: [strkicked ? strkicked : "--"]")
+		else
+			usr << "You may only use this when the game is running"

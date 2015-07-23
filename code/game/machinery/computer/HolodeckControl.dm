@@ -410,6 +410,7 @@
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
+		loc = get_turf(hit_atom) //drop at the target's feet
 		if(prob(5))
 			M.Weaken(3)
 			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>", 3)
@@ -421,7 +422,6 @@
 	icon_state = "hoop"
 	anchored = 1
 	density = 1
-	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)

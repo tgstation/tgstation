@@ -79,15 +79,20 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-
 	for(var/obj/O in src)
 		O.loc = loc
+		if(throwing) //you keep some momentum when getting out of a thrown closet
+			step(O, dir)
 
 	for(var/mob/M in src)
 		M.loc = loc
 		if(M.client)
 			M.client.eye = M.client.mob
 			M.client.perspective = MOB_PERSPECTIVE
+		if(throwing)
+			step(M, dir)
+	if(throwing)
+		throwing = 0
 
 /obj/structure/closet/proc/take_contents()
 
@@ -100,14 +105,13 @@
 		return 0
 	if(!can_open())
 		return 0
-	dump_contents()
-
 	opened = 1
 	if(istype(src, /obj/structure/closet/body_bag))
 		playsound(loc, 'sound/items/zip.ogg', 15, 1, -3)
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
 	density = 0
+	dump_contents()
 	update_icon()
 	return 1
 

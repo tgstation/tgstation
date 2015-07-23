@@ -76,7 +76,7 @@
 
 	if (getBrainLoss() >= 60 && stat != DEAD)
 		if (prob(3))
-			switch(pick(1,2,3,4))
+			switch(pick(1,2,3,4,5))
 				if(1)
 					say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse","kamelien","eksrey","glowey skin")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#", "shiggey diggey!!", "A PIRATE APPEAR"))
 				if(2)
@@ -85,6 +85,8 @@
 					say(pick("GEY AWAY FROM ME U GREIFING PRICK!!!!", "ur a fuckeing autist!", ";HELP SHITECIRTY MURDERIN  MEE!!!", "hwat dose tha [pick("g", "squid", "r")] mean?????", "CAL; TEH SHUTTLE!!!!!", "wearnig siNGUARLTY IS .... FIne xDDDDDDDDD", "AI laW 22 Open door", "this SI mY stATIon......", "who the HELL do u thenk u r?!!!!", "geT THE FUCK OUTTTT", "H U G B O X", ";;CRAGING THIS STTAYTION WITH NIO SURVIVROS", "[pick("bager", "syebl")] is down11!!!!!!!!!!!!!!!!!", "PSHOOOM"))
 				if(4)
 					emote("drool")
+				if(5)
+					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
@@ -302,7 +304,7 @@
 /mob/living/carbon/human/handle_changeling()
 	if(mind && hud_used)
 		if(mind.changeling)
-			mind.changeling.regenerate()
+			mind.changeling.regenerate(src)
 			hud_used.lingchemdisplay.invisibility = 0
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
 		else

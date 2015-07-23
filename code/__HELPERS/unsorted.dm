@@ -514,7 +514,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(atom/A, direction)
-
 	var/turf/target = locate(A.x, A.y, A.z)
 	if(!A || !target)
 		return 0
@@ -530,7 +529,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		target = locate(world.maxx, target.y, target.z)
 	if(direction & WEST)
 		target = locate(1, target.y, target.z)
-
 	return target
 
 // returns turf relative to A in given direction at set range
@@ -674,7 +672,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, stealth = 0) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -693,7 +691,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(user && user.client)
 				user.client.images -= progbar
 			return 0
-		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if (!uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
 			if(user && user.client)
 				user.client.images -= progbar
 			return 0

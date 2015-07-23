@@ -62,4 +62,15 @@
 		T.color = color
 	if(T.dir != dir)
 		T.dir = dir
+	T.transform = transform
 	return T
+
+/turf/simulated/wall/shuttle/copyTurf(turf/T)
+	. = ..()
+	T.transform = transform
+
+//why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way
+/turf/simulated/wall/shuttle/shuttleRotate(rotation)
+	var/matrix/M = transform
+	M.Turn(rotation)
+	transform = M

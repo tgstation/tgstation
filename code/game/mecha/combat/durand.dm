@@ -13,15 +13,7 @@
 	var/defence = 0
 	var/defence_deflect = 35
 	wreckage = /obj/structure/mecha_wreckage/durand
-
-/*
-/obj/mecha/combat/durand/New()
-	..()
-	weapons += new /datum/mecha_weapon/ballistic/lmg(src)
-	weapons += new /datum/mecha_weapon/ballistic/scattershot(src)
-	selected_weapon = weapons[1]
-	return
-*/
+	var/datum/action/mecha/mech_defence_mode/defense_action = new
 
 /obj/mecha/combat/durand/relaymove(mob/user,direction)
 	if(defence)
@@ -32,43 +24,33 @@
 	. = ..()
 	return
 
+/obj/mecha/combat/durand/GrantActions(var/mob/living/user, var/human_occupant = 0)
+	..()
+	defense_action.chassis = src
+	defense_action.Grant(user)
 
-/obj/mecha/combat/durand/verb/defence_mode()
-	set category = "Exosuit Interface"
-	set name = "Toggle defence mode"
-	set src = usr.loc
-	set popup_menu = 0
-	if(!can_use(usr))
-		return
-	defence = !defence
-	if(defence)
-		deflect_chance = defence_deflect
-		src.occupant_message("<span class='notice'>You enable [src] defence mode.</span>")
-	else
-		deflect_chance = initial(deflect_chance)
-		src.occupant_message("<span class='danger'>You disable [src] defence mode.</span>")
-	src.log_message("Toggled defence mode.")
-	return
-
+/obj/mecha/combat/durand/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+	..()
+	defense_action.Remove(user)
 
 /obj/mecha/combat/durand/get_stats_part()
 	var/output = ..()
 	output += "<b>Defence mode: [defence?"on":"off"]</b>"
 	return output
 
-/obj/mecha/combat/durand/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a>
-						</div>
-						</div>
-						"}
-	output += ..()
-	return output
+/datum/action/mecha/mech_defence_mode
+	name = "Toggle Defense Mode"
+	button_icon_state = "mech_toggle_defense_mode"
 
-/obj/mecha/combat/durand/Topic(href, href_list)
-	..()
-	if (href_list["toggle_defence_mode"])
-		src.defence_mode()
-	return
+/datum/action/mecha/mech_defence_mode/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/combat/durand/D = chassis
+	D.defence = !D.defence
+	if(D.defence)
+		D.deflect_chance = D.defence_deflect
+		D.occupant_message("<span class='notice'>You enable [D] defence mode.</span>")
+	else
+		D.deflect_chance = initial(D.deflect_chance)
+		D.occupant_message("<span class='danger'>You disable [D] defence mode.</span>")
+	D.log_message("Toggled defence mode.")

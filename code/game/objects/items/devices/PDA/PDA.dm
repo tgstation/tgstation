@@ -243,7 +243,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(user.stat || user.restrained() || user.paralysis || user.stunned || user.weakened)
+		if(user.incapacitated())
 			return 0
 		if(loc == user)
 			return 1

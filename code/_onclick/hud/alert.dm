@@ -228,6 +228,13 @@ office by your AI master or any qualified human may resolve this matter. Robotic
 so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
+//MECHS
+
+/obj/screen/alert/low_mech_integrity
+	name = "Mech Damaged"
+	desc = "Mech integrity is low."
+
+
 //OBJECT-BASED
 
 /obj/screen/alert/buckled
