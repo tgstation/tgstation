@@ -16,6 +16,7 @@
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
+	var/broken_hailer = 0
 
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
@@ -53,7 +54,7 @@
 				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			user << "<span class='danger'>You broke it!</span>"
+			user << "<span class='danger'>You broke the restrictor!</span>"
 			aggressiveness = 4
 	else
 		..()
@@ -74,6 +75,9 @@
 		return
 	if(!can_use(usr))
 		return
+	if(broken_hailer)
+		usr << "<span class='warning'>\The [src]'s hailing system is broken.</span>"
+		return
 
 	var/phrase = 0	//selects which phrase to use
 	var/phrase_text = null
@@ -85,14 +89,15 @@
 		if(cooldown_special < world.time - 180) //A better cooldown that burns jerks
 			recent_uses = initial(recent_uses)
 
-		if(recent_uses == 4)
-			usr << "<span class='warning'>\The [src] is heating up dangerously from overuse.</span>"
-
-		if(recent_uses >= 5) //YOU have the right to shut the fuck up
-			hailer_overload(usr)
-			cooldown = world.time
-			cooldown_special = world.time
-			return
+		switch(recent_uses)
+			if(3)
+				usr << "<span class='warning'>\The [src] is starting to heat up.</span>"
+			if(4)
+				usr << "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>"
+			if(5) //overload
+				broken_hailer = 1
+				usr << "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>"
+				return
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
 			if(1)
@@ -165,19 +170,6 @@
 		cooldown = world.time
 		cooldown_special = world.time
 
-/obj/item/clothing/mask/gas/sechailer/proc/hailer_overload(var/mob/living/user)
-	if(isliving(user))
-		user << "<span class='userdanger'>\The [src]'s boiling battery burns you!</span>"
-		var/hitzone = pick("r_hand", "l_hand")
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			if(C.wear_mask == src)
-				hitzone = "head"
-		user.apply_damage(5, BURN, hitzone)
-
-/obj/item/clothing/mask/gas/sechailer/cyborg/hailer_overload(var/mob/living/user)
-	empulse(src, 1, 1, 0)
-	user << "<span class='danger'>\The [src]'s power modulator overloads.</span>"
 
 
 
