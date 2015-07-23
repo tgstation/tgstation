@@ -242,7 +242,6 @@
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
 	color = "#0064C8" // rgb: 0, 100, 200
-	custom_metabolism = 0.01
 
 /datum/reagent/water/on_mob_life(var/mob/living/M as mob,var/alien)
 	if(ishuman(M))
