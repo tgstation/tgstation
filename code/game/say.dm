@@ -37,7 +37,7 @@ var/list/freqtoname = list(
 		return
 	if(message == "" || !message)
 		return
-	send_speech(message, speaking)
+	send_speech(message, world.view, speaking)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/Hear() called tick#: [world.time]")
