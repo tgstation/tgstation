@@ -119,7 +119,7 @@
 		user.drop_item(O)
 		del(O)
 
-		name = "Man-Machine Interface: [brainmob.real_name]"
+		name = "[initial(name)]: [brainmob.real_name]"
 		icon_state = "mmi_full"
 
 		locked = 1
@@ -156,7 +156,7 @@
 		brainmob = null//Set mmi brainmob var to null
 
 		icon_state = "mmi_empty"
-		name = "Man-Machine Interface"
+		name = initial(name)
 
 /obj/item/device/mmi/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/proc/transfer_identity() called tick#: [world.time]")
