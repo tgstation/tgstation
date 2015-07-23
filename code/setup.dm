@@ -1050,7 +1050,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 
 //COMMENT IF YOUR DREAMDAEMON VERSION IS BELOW 507.1248
-#define BORDER_USE_TURF_EXIT 1
+//#define BORDER_USE_TURF_EXIT 1
 
 ////////////////////////
 ////PDA APPS DEFINES////
