@@ -135,12 +135,15 @@
 	var/image/img
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
-		img = image(I.icon, src , I.icon_state)
+		overlays += I.appearance
+/*		img = image(I.icon, src , I.icon_state)
+		if(I.overlays.len)
+			overlays += I.overlays*/
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
-	img.pixel_x = 0
-	img.pixel_y = 0
-	overlays += img
+		img.pixel_x = 0
+		img.pixel_y = 0
+		overlays += img
 
 	if(!owner.IsAvailable())
 		color = rgb(128,0,0,128)
