@@ -1,0 +1,6 @@
+author: freerealestate
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added resist hotkeys for borgs and humans. With hotkeys mode, use CTRL+C or C as a human and CTRL+C, C or END as a borg. With hotkeys mode off, use CTRL+C as a human and END as a borg."

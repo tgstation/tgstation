@@ -352,7 +352,6 @@
 
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
 		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
-			spawn(200) //I wish you would step back from that ledge my friend
 			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
 				ticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished

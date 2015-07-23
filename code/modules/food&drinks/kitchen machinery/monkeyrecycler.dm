@@ -1,6 +1,6 @@
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine that recycles dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys stored." // except it literally never does
+	desc = "A machine that recycles dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys stored." // except roundstart updates mean it never does
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = 2.9
