@@ -582,8 +582,8 @@ var/list/admin_verbs_hideable = list(
 			var/error_extra = ""
 			if(!config.admin_legacy_system)
 				error_extra = " Check mysql DB connection."
-			error("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
 			src << "Error while re-adminning, admin rank ([rank]) does not exist.[error_extra]"
+			WARNING("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
 			return
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]
