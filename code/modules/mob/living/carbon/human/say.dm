@@ -2,6 +2,14 @@
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	verb_say = dna.species.say_mod
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
+		var/obj/item/clothing/mask/gas/voice/V = wear_mask
+		if(V.vchange && wear_id)
+			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
+			if(istype(idcard))
+				verb_say = idcard.registered_race.say_mod
+	if(mind && mind.changeling && mind.changeling.mimicing_accent)
+		verb_say = mind.changeling.mimicing_accent.say_mod
 	if(src.slurring)
 		input = attach_spans(input, spans)
 		return "slurs, \"[input]\""
@@ -9,6 +17,7 @@
 	return ..()
 
 /mob/living/carbon/human/treat_message(message)
+	var/original_message = message
 	if(dna)
 		message = dna.species.handle_speech(message,src)
 	if(viruses.len)
@@ -27,6 +36,14 @@
 	message = ..(message)
 	if(dna)
 		message = dna.mutations_say_mods(message)
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
+		var/obj/item/clothing/mask/gas/voice/V = wear_mask
+		if(V.vchange && wear_id)
+			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
+			if(istype(idcard))
+				message = idcard.registered_race.handle_speech(original_message,src)
+	if(mind && mind.changeling && mind.changeling.mimicing_accent)
+		message = mind.changeling.mimicing_accent.handle_speech(original_message,src)
 	return message
 
 /mob/living/carbon/human/get_spans()

@@ -80,6 +80,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
+	var/datum/species/registered_race = null // Roundstart species datum
 	slot_flags = SLOT_ID
 
 	var/assignment = null
@@ -93,6 +94,8 @@
 
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
+	if(registered_race && registered_race.id != "human")
+		user << "There's a mark on this card identifying its owner as a [registered_race.name]."
 	if(mining_points)
 		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 
@@ -157,6 +160,14 @@ update_label("John Doe", "Clowny")
 			src.registered_name = ""
 			return
 		src.assignment = u
+		var/list/choosable_races = list()
+		for(var/speciestype in typesof(/datum/species) - /datum/species)
+			var/datum/species/S = new speciestype()
+			choosable_races += S.id
+		var/racechoice = input(user, "What race would you like to list this card as?", "Agent card race") as null|anything in choosable_races
+		if(racechoice)
+			racechoice = species_list[racechoice]
+			src.registered_race = new racechoice
 		update_label()
 		user << "<span class='notice'>You successfully forge the ID card.</span>"
 	else
