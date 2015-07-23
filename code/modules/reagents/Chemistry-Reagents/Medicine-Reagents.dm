@@ -614,6 +614,12 @@
 	..()
 	return
 
+/datum/reagent/medicine/strange_reagent/Topic(href, href_list)
+	if(href_list["reenter"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			ghost.reenter_corpse(ghost)
+
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
@@ -630,9 +636,13 @@
 		var/mob/dead/observer/ghost = M.get_ghost()
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 		if(!M.suiciding && !(NOCLONE in M.mutations))
+			if(!M)
+				return
 			if(ghost)
-				ghost << "<span class='ghostalert'>Someone is trying to revive you. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
+				ghost << "<span class='ghostalert'>Someone is trying to revive you. Re-enter your corpse if you want to be revived!</span> <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a>"
 				ghost << sound('sound/effects/genetics.ogg')
+				spawn (100) //so the ghost has time to re-enter
+					return
 			else
 				M.stat = 1
 				M.adjustOxyLoss(-20)
