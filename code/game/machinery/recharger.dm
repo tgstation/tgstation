@@ -47,12 +47,10 @@
 	..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
-		return
+	if(issilicon(user) || ..())
+		return 1
 
-	add_fingerprint(user)
-
-	if(charging)
+	if(charging && Adjacent(user))
 		charging.update_icon()
 		charging.loc = loc
 		user.put_in_hands(charging)
