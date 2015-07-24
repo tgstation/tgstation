@@ -99,9 +99,7 @@
 			E.set_up(epicenter)
 			E.start()
 		else
-			var/datum/effect/system/small_explosion/E = new/datum/effect/system/small_explosion()
-			E.set_up(epicenter)
-			E.start()
+			epicenter.turf_animation('icons/effects/96x96.dmi',"explosion_small",-32, -32, 13)
 
 		var/x0 = epicenter.x
 		var/y0 = epicenter.y

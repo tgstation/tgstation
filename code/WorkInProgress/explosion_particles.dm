@@ -72,7 +72,7 @@
 		var/datum/effect/effect/system/smoke_spread/S = new/datum/effect/effect/system/smoke_spread()
 		S.set_up(5,0,location,null)
 		S.start()
-
+/*
 /obj/effect/small_explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'
@@ -107,3 +107,4 @@
 
 /datum/effect/system/small_explosion/proc/start()
 	new/obj/effect/small_explosion( location , ex_icon, pixel_x, pixel_y)
+*/
