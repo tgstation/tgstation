@@ -55,9 +55,9 @@
 
 /datum/holiday/new_year
 	name = NEW_YEAR
-	begin_day = 31
+	begin_day = 30
 	begin_month = DECEMBER
-	end_day = 1
+	end_day = 2
 	end_month = JANUARY
 
 /datum/holiday/new_year/getStationPrefix()
@@ -70,7 +70,8 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 14
+	begin_day = 13
+	end_day = 15
 	begin_month = FEBRUARY
 
 /datum/holiday/valentines/getStationPrefix()
@@ -128,6 +129,7 @@
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
 	begin_day = 1
+	end_day = 2
 	begin_month = APRIL
 
 /datum/holiday/fourtwenty
@@ -247,9 +249,9 @@
 
 /datum/holiday/halloween
 	name = HALLOWEEN
-	begin_day = 31
+	begin_day = 30
 	begin_month = OCTOBER
-	end_day = 1
+	end_day = 2
 	end_month = NOVEMBER
 
 /datum/holiday/halloween/greet()
@@ -293,7 +295,7 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 24
+	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 25
 
