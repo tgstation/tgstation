@@ -162,6 +162,7 @@
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
 	var/can_off_process = 0
+	var/light_intensity = 2 //how powerful the emitted light is when used.
 
 /obj/item/weapon/weldingtool/New()
 	..()
@@ -289,7 +290,7 @@
 		reagents.remove_reagent("welding_fuel", amount)
 		check_fuel()
 		if(M)
-			M.flash_eyes(2)
+			M.flash_eyes(light_intensity)
 		return 1
 	else
 		if(M)
@@ -409,7 +410,7 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
-	desc = "An experimental welder capable of self-fuel generation."
+	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
@@ -418,6 +419,7 @@
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1
+	light_intensity = 1
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve

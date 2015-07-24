@@ -48,15 +48,19 @@
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard)
+/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
 	canmove = 0
-	src.loc = paicard
-	card = paicard
+	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
+		var/newcardloc = P
+		P = new /obj/item/device/paicard(newcardloc)
+		P.setPersonality(src)
+	loc = P
+	card = P
 	sradio = new(src)
 	if(card)
 		if(!card.radio)
-			card.radio = new /obj/item/device/radio(src.card)
+			card.radio = new /obj/item/device/radio(card)
 		radio = card.radio
 
 	//PDA

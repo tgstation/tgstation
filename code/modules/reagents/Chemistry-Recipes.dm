@@ -67,8 +67,8 @@
 
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-		for(var/mob/living/carbon/human/H in viewers(get_turf(holder.my_atom), null))
-			H.flash_eyes()
+		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
+			C.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen = pick(critters)
 			var/mob/living/simple_animal/hostile/C = new chosen
@@ -78,15 +78,28 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range, pull_times)
+/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
-			continue  //stop pulling smoke and hotspots please
-		if(istype(X, /atom/movable))
-			if((X) && !X.anchored)
-				if(setting_type)
-					for(var/i = 0, i < pull_times, i++)
-						step_away(X,T)
+			continue
+		if(!X.anchored)
+			var/distance = get_dist(X, T)
+			var/moving_power = max(range - distance, 1)
+			spawn(0) //so everything moves at the same time.
+				if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+					if(setting_type)
+						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+						X.throw_at(throw_target, moving_power, 1)
+					else
+						X.throw_at(T, moving_power, 1)
 				else
-					for(var/i = 0, i < pull_times, i++)
-						step_towards(X,T)
+					if(setting_type)
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_away(X, T))
+								break
+					else
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_towards(X, T))
+								break

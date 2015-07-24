@@ -9,6 +9,7 @@
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/reinf = 0
 
 /obj/machinery/door/window/New()
 	..()
@@ -184,7 +185,7 @@
 	..()
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 800)
+	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
 		take_damage(round(exposed_volume / 200))
 	..()
 
@@ -380,6 +381,8 @@
 	base_state = "leftsecure"
 	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	reinf = 1
+	explosion_block = 1
 
 
 /obj/machinery/door/window/northleft

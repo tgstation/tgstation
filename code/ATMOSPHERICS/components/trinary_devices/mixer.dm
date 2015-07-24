@@ -119,7 +119,7 @@
 
 	return 1
 
-/obj/machinery/atmospherics/components/trinary/mxer/attack_hand(mob/user)
+/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(mob/user)
 	if(..())
 		return
 

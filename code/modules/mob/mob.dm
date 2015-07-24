@@ -421,12 +421,12 @@ var/list/slot_equipment_priority = list( \
 		var/obj/item/W = l_hand
 		if (W)
 			W.attack_self(src)
-			update_inv_l_hand(0)
+			update_inv_l_hand()
 	else
 		var/obj/item/W = r_hand
 		if (W)
 			W.attack_self(src)
-			update_inv_r_hand(0)
+			update_inv_r_hand()
 	return
 
 /*
@@ -964,3 +964,7 @@ var/list/slot_equipment_priority = list( \
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+//override to avoid rotating pixel_xy on mobs
+/mob/shuttleRotate(rotation)
+	dir = angle2dir(rotation+dir2angle(dir))

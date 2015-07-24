@@ -1,3 +1,7 @@
+#define STANDARD_CHARGE 1
+#define CONTRABAND_CHARGE 2
+#define COIN_CHARGE 3
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
@@ -82,11 +86,10 @@
 	coin = null
 	..()
 
-
 /obj/machinery/vending/snack/Destroy()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		S.loc = get_turf(src)
-	..()
+	return ..()
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
 	if(component_parts)
@@ -97,9 +100,9 @@
 		build_inventory(contraband, 1, start_empty = 1)
 		build_inventory(premium, 0, 1, start_empty = 1)
 		for(var/obj/item/weapon/vending_refill/VR in component_parts)
-			refill_inventory(VR, product_records)
-			refill_inventory(VR, coin_records)
-			refill_inventory(VR, hidden_records)
+			refill_inventory(VR, product_records, STANDARD_CHARGE)
+			refill_inventory(VR, coin_records, COIN_CHARGE)
+			refill_inventory(VR, hidden_records, CONTRABAND_CHARGE)
 
 /obj/machinery/vending/ex_act(severity, target)
 	..()
@@ -136,31 +139,31 @@
 		else
 			product_records += R
 
-/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine)
+/obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, datum/data/vending_product/machine, var/charge_type = STANDARD_CHARGE)
 	var/total = 0
-
 	var/to_restock = 0
+
 	for(var/datum/data/vending_product/machine_content in machine)
-		if(machine_content.amount == 0 && refill.charges > 0)
+		if(machine_content.amount == 0 && refill.charges[charge_type] > 0)
 			machine_content.amount++
-			refill.charges--
+			refill.charges[charge_type]--
 			total++
 		to_restock += machine_content.max_amount - machine_content.amount
-	if(to_restock <= refill.charges)
+	if(to_restock <= refill.charges[charge_type])
 		for(var/datum/data/vending_product/machine_content in machine)
 			machine_content.amount = machine_content.max_amount
-		refill.charges -= to_restock
+		refill.charges[charge_type] -= to_restock
 		total += to_restock
 	else
-		var/tmp_charges = refill.charges
+		var/tmp_charges = refill.charges[charge_type]
 		for(var/datum/data/vending_product/machine_content in machine)
-			if(refill.charges == 0)
+			if(refill.charges[charge_type] == 0)
 				break
 			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
-			if(restock > refill.charges)
-				restock = refill.charges
+			if(restock > refill.charges[charge_type])
+				restock = refill.charges[charge_type]
 			machine_content.amount += restock
-			refill.charges -= restock
+			refill.charges[charge_type] -= restock
 			total += restock
 	return total
 
@@ -263,7 +266,7 @@
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
-			if(canister.charges == 0)
+			if(canister.charges[STANDARD_CHARGE] == 0)
 				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
 				var/transfered = refill_inventory(canister,product_records,user)
@@ -279,21 +282,22 @@
 
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
-	var/list/all_products = product_records + hidden_records + coin_records
-	for(var/datum/data/vending_product/machine_content in all_products)
-		while(machine_content.amount !=0)
-			var/safety = 0 //to avoid infinite loop
-			for(var/obj/item/weapon/vending_refill/VR in component_parts)
-				safety++
-				if(VR.charges < initial(VR.charges))
-					VR.charges++
-					machine_content.amount--
-					if(!machine_content.amount)
-						break
-				else
-					safety--
-			if(safety <= 0)
-				break
+	var/product_list = list(product_records, hidden_records, coin_records)
+	for(var/i=1, i<=3, i++)
+		for(var/datum/data/vending_product/machine_content in product_list[i])
+			while(machine_content.amount !=0)
+				var/safety = 0 //to avoid infinite loop
+				for(var/obj/item/weapon/vending_refill/VR in component_parts)
+					safety++
+					if(VR.charges[i] < VR.init_charges[i])
+						VR.charges[i]++
+						machine_content.amount--
+						if(!machine_content.amount)
+							break
+					else
+						safety--
+				if(safety <= 0) // all refill canisters are full
+					break
 	..()
 
 /obj/machinery/vending/emag_act(mob/user)
@@ -637,8 +641,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 8)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 12)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
@@ -659,7 +663,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_vend = "coffee-vend"
 	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 12)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
 
 /obj/machinery/vending/snack
@@ -668,10 +672,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 5,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips =5,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 5,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 5,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 5)
-	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 7)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
 
@@ -720,7 +724,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Float like an astronaut, sting like a bullet!;Express your second ammendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
 	vend_reply = "Remember the name: Liberation Station!"
 	products = list(/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold = 2,/obj/item/weapon/gun/projectile/automatic/pistol/deagle/camo = 2,
-					/obj/item/weapon/gun/projectile/automatic/pistol/m1911 = 2,/obj/item/weapon/gun/projectile/automatic/proto = 2,
+					/obj/item/weapon/gun/projectile/automatic/pistol/m1911 = 2,/obj/item/weapon/gun/projectile/automatic/proto/unrestricted = 2,
 					/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 2,/obj/item/weapon/gun/projectile/automatic/gyropistol = 1,
 					/obj/item/weapon/gun/projectile/shotgun = 2,/obj/item/weapon/gun/projectile/automatic/ar = 2)
 	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2,/obj/item/ammo_box/magazine/m50 = 4,/obj/item/ammo_box/magazine/m45 = 2,/obj/item/ammo_box/magazine/m75 = 2)
@@ -735,14 +739,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "cigs"
 	products = list(/obj/item/weapon/storage/fancy/cigarettes = 5,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift = 3,
-					/obj/item/weapon/storage/fancy/cigarettes/cigpack_robust = 2,
+					/obj/item/weapon/storage/fancy/cigarettes/cigpack_robust = 3,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp = 3,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori = 3,
 					/obj/item/weapon/storage/box/matches = 10,
 					/obj/item/weapon/lighter/greyscale = 4,
 					/obj/item/weapon/storage/fancy/rollingpapers = 5)
-	contraband = list(/obj/item/weapon/lighter = 4)
-	premium = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 2, \
+	contraband = list(/obj/item/weapon/lighter = 3)
+	premium = list(/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold = 3, \
 	/obj/item/weapon/storage/fancy/cigarettes/cigars = 1, /obj/item/weapon/storage/fancy/cigarettes/cigars/havana = 1, /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
@@ -855,7 +859,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/fakemoustache = 1,/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,/obj/item/clothing/head/plaguedoctorhat = 1,/obj/item/clothing/mask/gas/plaguedoctor = 1,
 					/obj/item/clothing/suit/toggle/owlwings = 1, /obj/item/clothing/under/owl = 1,/obj/item/clothing/mask/gas/owl_mask = 1,
 					/obj/item/clothing/suit/toggle/owlwings/griffinwings = 1, /obj/item/clothing/under/griffin = 1, /obj/item/clothing/shoes/griffin = 1, /obj/item/clothing/head/griffin = 1,
-					/obj/item/clothing/suit/apron = 1,/obj/item/clothing/under/waiter = 1,/obj/item/clothing/suit/miljacket = 1,
+					/obj/item/clothing/suit/apron = 1,/obj/item/clothing/under/waiter = 1,/obj/item/clothing/suit/jacket/miljacket = 1,
 					/obj/item/clothing/under/pirate = 1,/obj/item/clothing/suit/pirate = 1,/obj/item/clothing/head/pirate = 1,/obj/item/clothing/head/bandana = 1,
 					/obj/item/clothing/head/bandana = 1,/obj/item/clothing/under/soviet = 1,/obj/item/clothing/head/ushanka = 1,/obj/item/clothing/suit/imperium_monk = 1,
 					/obj/item/clothing/mask/gas/cyborg = 1,/obj/item/clothing/suit/holidaypriest = 1,/obj/item/clothing/head/wizard/marisa/fake = 1,
@@ -867,8 +871,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/under/maid = 1, /obj/item/clothing/under/janimaid = 1,/obj/item/clothing/glasses/cold=1,/obj/item/clothing/glasses/heat=1,
 					/obj/item/clothing/suit/whitedress = 1,
 					/obj/item/clothing/under/jester = 1, /obj/item/clothing/head/jester = 1)
-	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 1,/obj/item/clothing/glasses/sunglasses/garb = 1)
-	premium = list(/obj/item/clothing/suit/hgpirate = 1, /obj/item/clothing/head/hgpiratecap = 1, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
+	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2)
+	premium = list(/obj/item/clothing/suit/hgpirate = 2, /obj/item/clothing/head/hgpiratecap = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
@@ -934,8 +938,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/internals/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
 
-//This one's from NTstation
-//don't forget to change the refill size if you change the machine's contents!
+
+//DON'T FORGET TO CHANGE THE REFILL SIZE IF YOU CHANGE THE MACHINE'S CONTENTS!
 /obj/machinery/vending/clothing
 	name = "ClothesMate" //renamed to make the slogan rhyme
 	desc = "A vending machine for clothing."
@@ -950,7 +954,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/under/sl_suit=1,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
 	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
 	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
-	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,/obj/item/clothing/suit/miljacket = 1,
+	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,/obj/item/clothing/suit/jacket/miljacket = 1,
 	/obj/item/clothing/tie/blue=1, /obj/item/clothing/tie/red=1, /obj/item/clothing/tie/black=1, /obj/item/clothing/tie/horrible=1,
 	/obj/item/clothing/tie/scarf/red=1,/obj/item/clothing/tie/scarf/green=1,/obj/item/clothing/tie/scarf/darkblue=1,
 	/obj/item/clothing/tie/scarf/purple=1,/obj/item/clothing/tie/scarf/yellow=1,/obj/item/clothing/tie/scarf/orange=1,
@@ -963,7 +967,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
 	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
+#undef STANDARD_CHARGE
+#undef CONTRABAND_CHARGE
+#undef COIN_CHARGE

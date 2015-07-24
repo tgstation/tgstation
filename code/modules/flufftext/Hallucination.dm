@@ -171,47 +171,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	name = "alien hunter ([rand(1, 1000)])"
 	return
 
-/obj/effect/hallucination/simple/xeno/throw_at(atom/target, range, speed) // TODO : Make diagonal trhow into proc/property
-	if(!target || !src || (flags & NODROP))	return 0
-
-	src.throwing = 1
-
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
-
-	var/tdist_x = dist_x;
-	var/tdist_y = dist_y;
-
-	if(dist_x <= dist_y)
-		tdist_x = dist_y;
-		tdist_y = dist_x;
-
-	var/error = tdist_x/2 - tdist_y
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x) || (src.x > target.x))) || ((dist_x <= dist_y) && ((src.y < target.y) || (src.y > target.y))) || (src.x > target.x)) && dist_travelled < range) || !has_gravity(src)))
-
-		if(!src.throwing) break
-		if(!istype(src.loc, /turf)) break
-
-		var/atom/step = get_step(src, get_dir(src,target))
-		if(!step)
-			break
-		src.Move(step, get_dir(src, step))
-		hit_check()
-		error += (error < 0) ? tdist_x : -tdist_y;
-		dist_travelled++
-		dist_since_sleep++
-		if(dist_since_sleep >= speed)
-			dist_since_sleep = 0
-			sleep(1)
-
-
-	src.throwing = 0
-	src.throw_impact(get_turf(src))
-
-	return 1
-
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
 	if(A == target)
@@ -232,10 +191,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	xeno = new(pump.loc,target)
 	sleep(10)
 	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(target,7,1)
+	xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
 	sleep(10)
 	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(pump,7,1)
+	xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
 	sleep(10)
 	var/xeno_name = xeno.name
 	target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
