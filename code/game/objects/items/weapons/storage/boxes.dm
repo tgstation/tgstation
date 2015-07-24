@@ -478,6 +478,21 @@
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 
+/obj/item/weapon/storage/box/alienhandcuffs
+	name = "box of spare handcuffs"
+	desc = "A box full of handcuffs."
+	icon_state = "alienboxCuffs"
+
+/obj/item/weapon/storage/box/alienhandcuffs/New()
+	..()
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."
