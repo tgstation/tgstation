@@ -50,6 +50,7 @@
 /mob/living/simple_animal/hostile/cultist/construct
 	name = "Artificer"
 	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies."
+	icon = 'icons/mob/mob.dmi'
 	icon_state = "artificer"
 	icon_living = "artificer"
 	icon_dead = null
@@ -85,8 +86,8 @@
 /mob/living/simple_animal/hostile/cultist/construct/juggernaut
 	name = "Juggernaut"
 	desc = "A possessed suit of armor driven by the will of the restless dead."
-	icon_state = "juggernaut"
-	icon_living = "juggernaut"
+	icon_state = "behemoth"
+	icon_living = "behemotht"
 	attacktext = "smashes their armored gauntlet into"
 	maxHealth = 250
 	health = 250
@@ -127,8 +128,8 @@
 /mob/living/simple_animal/hostile/cultist/construct/wraith
 	name = "Wraith"
 	desc = "A wicked bladed shell contraption piloted by a bound spirit"
-	icon_state = "wraith"
-	icon_living = "wraith"
+	icon_state = "floating"
+	icon_living = "floating"
 	maxHealth = 75
 	health = 75
 	melee_damage_lower = 25
