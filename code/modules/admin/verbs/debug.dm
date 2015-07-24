@@ -279,12 +279,14 @@ Pressure: [env.return_pressure()]"}
 	. = M.Animalize()
 
 
-/client/proc/makepAI(var/turf/T in mob_list)
+/client/proc/makepAI(var/turf/T)
 	set category = "Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/makepAI() called tick#: [world.time]")
 
+	if(!T)
+		T = get_turf(usr)
 	var/list/available = list()
 	for(var/mob/C in mob_list)
 		if(C.key)

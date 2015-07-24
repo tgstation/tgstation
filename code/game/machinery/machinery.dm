@@ -609,6 +609,18 @@ Class Procs:
 	if(!anchored && machine_flags & FIXED2WORK)
 		return user << "<span class='warning'>\The [src] must be anchored first!</span>"
 
+	if(istype(O, /obj/item/device/paicard) && machine_flags & WIREJACK)
+		for(var/mob/M in O)
+			wirejack(M)
+		return 1
+
+/obj/machinery/proc/wirejack(var/mob/living/silicon/pai/P)
+	if(!(machine_flags & WIREJACK))
+		return 0
+	if(!P.hackloop(src))
+		return 0
+	return 1
+
 /obj/machinery/proc/shock(mob/user, prb, var/siemenspassed = -1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/shock() called tick#: [world.time]")
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock

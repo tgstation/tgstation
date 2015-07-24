@@ -77,6 +77,8 @@
 
 	var/list/TLV = list()
 
+	machine_flags = WIREJACK
+
 /obj/machinery/alarm/xenobio
 	preset = AALARM_PRESET_HUMAN
 	req_one_access = list(access_rd, access_atmospherics, access_engine_equip, access_xenobiology)
@@ -820,7 +822,7 @@
 						user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the Air Alarm interface.</span>"
 					else
 						user << "<span class='warning'>Access denied.</span>"
-			return
+			return ..() //Sanity
 
 		if(1)
 			if(iscoil(W))
@@ -882,6 +884,13 @@
 /obj/machinery/alarm/change_area(oldarea, newarea)
 	..()
 	name = replacetext(name,oldarea,newarea)
+
+/obj/machinery/alarm/wirejack(var/mob/living/silicon/pai/P)
+	if(..())
+		locked = !locked
+		update_icon()
+		return 1
+	return 0
 
 /*
 FIRE ALARM

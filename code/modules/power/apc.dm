@@ -94,6 +94,8 @@
 
 	var/is_critical = 0 // Endgame scenarios will not destroy this APC.
 
+	machine_flags = WIREJACK
+
 /obj/machinery/power/apc/New(loc, var/ndir, var/building=0)
 	..(loc)
 	wires = new(src)
@@ -359,7 +361,6 @@
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
-
 	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	src.add_fingerprint(user)
@@ -579,9 +580,10 @@
 				(istype(W, /obj/item/device/multitool) || \
 				istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/assembly/signaler)))
 				return src.attack_hand(user)
-			user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
+			/*user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
 				"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
-				"You hear bang")
+				"You hear bang")*/
+			..() //Sanity
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -1300,5 +1302,12 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 /obj/machinery/power/apc/change_area(oldarea, newarea)
 	..()
 	name = replacetext(name,oldarea,newarea)
+
+/obj/machinery/power/apc/wirejack(var/mob/living/silicon/pai/P)
+	if(..())
+		locked = !locked
+		update_icon()
+		return 1
+	return 0
 
 #undef APC_UPDATE_ICON_COOLDOWN

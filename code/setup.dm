@@ -948,6 +948,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define WELD_FIXED		64 //if it is attacked by a welder and is anchored, it'll toggle between welded and unwelded to the floor
 #define MULTITOOL_MENU	128 //if it has multitool menu functionality inherently
 #define PURCHASER		256 //it connects to the centcom database at roundstart
+#define WIREJACK		512 //can we wirejack it? if flagged, machine calls wirejack()
 
 #define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
 
@@ -1204,4 +1205,3 @@ var/proccalls = 1
 //Ore processing types for the ore processor
 #define ORE_PROCESSING_GENERAL 1
 #define ORE_PROCESSING_ALLOY 2
-

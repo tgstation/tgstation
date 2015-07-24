@@ -7,7 +7,6 @@
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
-	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 
@@ -36,46 +35,40 @@
 		dat += "<a href='byond://?src=\ref[src];setdna=1'>Imprint Master DNA</a><br>"
 	if(pai)
 
-		// AUTOFIXED BY fix_string_idiocy.py
-		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:32: dat += "Installed Personality: [pai.name]<br>"
 		dat += {"Installed Personality: [pai.name]<br>
 			Prime directive: <br>[pai.pai_law0]<br>
 			Additional directives: <br>[pai.pai_laws]<br>
 			<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>
 			<br>
 			<h3>Device Settings</h3><br>"}
-		// END AUTOFIX
-		if(radio)
+		if(pai.radio)
 			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TRANSMIT]'>[(radio.wires.IsIndexCut(WIRE_TRANSMIT)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RECEIVE]'>[(radio.wires.IsIndexCut(WIRE_RECEIVE)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Transmit: <A href='byond://?src=\ref[src];wires=[WIRE_TRANSMIT]'>[(pai.radio.wires.IsIndexCut(WIRE_TRANSMIT)) ? "Disabled" : "Enabled"]</A><br>"
+			dat += "Receive: <A href='byond://?src=\ref[src];wires=[WIRE_RECEIVE]'>[(pai.radio.wires.IsIndexCut(WIRE_RECEIVE)) ? "Disabled" : "Enabled"]</A><br>"
 		else
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:44: dat += "<b>Radio Uplink</b><br>"
 			dat += {"<b>Radio Uplink</b><br>
 				<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"}
-		// END AUTOFIX
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		if(looking_for_personality)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:49: dat += "Searching for a personality..."
 			dat += {"Searching for a personality...
 				<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"}
-			// END AUTOFIX
 		else
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\paicard.dm:52: dat += "No personality is installed.<br>"
 			dat += {"No personality is installed.<br>
 				<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>
 				Each time this button is pressed, a request will be sent out to any available personalities. Check back often and alot time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."}
-			// END AUTOFIX
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
+
+/obj/item/device/paicard/attack_ghost(var/mob/dead/observer/O)
+	if(looking_for_personality&&paiController.check_recruit(O))
+		paiController.recruitWindow(O)
+	else
+		visible_message("<span class='notice'>\The [src] pings softly.</span>")
 
 /obj/item/device/paicard/Topic(href, href_list)
 
@@ -108,8 +101,8 @@
 			removePersonality()
 	if(href_list["wires"])
 		var/t1 = text2num(href_list["wires"])
-		if(radio)
-			radio.wires.CutWireIndex(t1)
+		if(pai.radio)
+			pai.radio.wires.CutWireIndex(t1)
 	if(href_list["setlaws"])
 		var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message),1,MAX_MESSAGE_LEN)
 		if(newlaws)
