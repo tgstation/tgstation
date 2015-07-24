@@ -23,7 +23,7 @@
 	icon_dead = "corgi_dead"
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3)
-	childtype = /mob/living/simple_animal/pet/dog/corgipuppy
+	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
@@ -473,7 +473,7 @@
 			back_icon = image('icons/mob/corgi_back.dmi', icon_state = inventory_back.icon_state)
 		overlays += back_icon
 	if(facehugger)
-		if(istype(src, /mob/living/simple_animal/pet/dog/corgipuppy))
+		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
 		else
 			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
@@ -485,20 +485,19 @@
 
 
 
-/mob/living/simple_animal/pet/dog/corgipuppy
+/mob/living/simple_animal/pet/dog/corgi/puppy
 	name = "\improper corgi puppy"
 	real_name = "corgi"
-	desc = "It's a corgi puppy."
+	desc = "It's a corgi puppy!"
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
-	var.shaved = 0
 	density = 0
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
 //puppies cannot wear anything.
-/mob/living/simple_animal/pet/dog/corgipuppy/Topic(href, href_list)
+/mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
 		usr << "<span class='warning'>You can't fit this on [src]!</span>"
 		return
