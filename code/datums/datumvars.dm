@@ -307,6 +307,8 @@ client
 			body += {"<option value>---</option>
 				<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"}
 			// END AUTOFIX
+		if(istype(D,/atom))
+			body += "<option value='?_src_=vars;delete=\ref[D]'>Delete</option>"
 		if(isobj(D))
 			body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 		if(isobj(D) || ismob(D) || isturf(D))
@@ -728,6 +730,24 @@ client
 			M.loc = T
 
 		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
+
+	else if(href_list["delete"])
+		if(!check_rights(0))	return
+
+		var/atom/A = locate(href_list["delete"])
+		if(!isobj(A) && !ismob(A))
+			usr << "This can only be done to instances of type /obj and /mob"
+			return
+
+		if(ismob(A))
+			var/mob/M = A
+			if(M.client)
+				if(alert("You sure?","Confirm","Yes","No") != "Yes")
+					return
+
+		log_admin("[key_name(usr)] deleted [A] at ([A.x],[A.y],[A.z])")
+		message_admins("<span class='notice'>[key_name(usr)] deleted [A] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>([A.x],[A.y],[A.z])</a></span>")
+		qdel(A)
 
 	else if(href_list["rotatedatum"])
 		if(!check_rights(0))	return
