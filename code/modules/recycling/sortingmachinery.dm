@@ -501,7 +501,7 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 	var/turf/out_T = get_step(src, output_dir)
 	var/turf/filter_T = get_step(src, filter_dir)
 
-	if(!in_T.CanPass(mover, in_T) || !in_T.Enter(mover) || !out_T.CanPass(mover, out_T) || !out_T.Enter(mover) || !filter_T.CanPass(mover, filter_T) || !filter_T.Enter(mover))
+	if(!out_T.CanPass(mover, out_T) || !out_T.Enter(mover) || !filter_T.CanPass(mover, filter_T) || !filter_T.Enter(mover))
 		return
 
 	var/affecting = in_T.contents

@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Taxi's sorting machinery doesn't choke on large parcels anymore.
