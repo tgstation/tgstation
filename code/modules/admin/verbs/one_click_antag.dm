@@ -450,7 +450,7 @@
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT", "Amber: Full ERT", "Red: Elite ERT", "Delta: Deathsquad")
+	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Guns)", "Amber: Full ERT (Energy Guns)", "Red: Elite ERT (Pulse Guns)", "Delta: Deathsquad")
 	if(!alert)
 		return
 	switch(alert)
