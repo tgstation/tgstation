@@ -21,7 +21,7 @@
 	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, CULT_OUTREACH)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -145,20 +145,20 @@
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/construct)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
 				if(prob(10))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/construct/juggernaut)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/construct/armored)
 
-				var/turf/C = pick(empty_shuttle_turfs)
-				empty_shuttle_turfs.Remove(C)
+				var/turf/T = pick(empty_shuttle_turfs)
+				empty_shuttle_turfs.Remove(T)
 
-				new /obj/effect/decal/remains/human(C)
-				new /obj/item/weapon/tome(C)
+				new /obj/effect/decal/remains/human(T)
+				new /obj/item/weapon/tome(T)
 
-				C = pick(empty_shuttle_turfs)
-				new /obj/structure/cult/talisman(C)
-				C = pick(empty_shuttle_turfs)
-				new /obj/structure/cult/pylon(C)
+				T = pick(empty_shuttle_turfs)
+				new /obj/structure/cult/talisman(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/structure/cult/pylon(T)
 
 			if(ANTIDOTE_NEEDED)
 				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
