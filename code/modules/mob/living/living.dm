@@ -112,9 +112,9 @@ Sorry Giacom. Please don't be mad :(
 		Move(oldMloc)
 
 		if(!src_passmob)
-			pass_flags -= PASSMOB
+			pass_flags &= ~PASSMOB
 		if(!M_passmob)
-			M.pass_flags -= PASSMOB
+			M.pass_flags &= ~PASSMOB
 
 		now_pushing = 0
 		return 1
