@@ -1113,7 +1113,7 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 
 	M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_in_backpack)
-	M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/hypospray/combat/nanites(M), slot_in_backpack)
+	M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(M), slot_in_backpack)
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(M), slot_in_backpack)
 	M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_in_backpack)
 
