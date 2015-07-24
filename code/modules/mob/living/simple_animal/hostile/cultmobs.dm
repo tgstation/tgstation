@@ -87,7 +87,7 @@
 	name = "Juggernaut"
 	desc = "A possessed suit of armor driven by the will of the restless dead."
 	icon_state = "behemoth"
-	icon_living = "behemotht"
+	icon_living = "behemoth"
 	attacktext = "smashes their armored gauntlet into"
 	maxHealth = 250
 	health = 250
