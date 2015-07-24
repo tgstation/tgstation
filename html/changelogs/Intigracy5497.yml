@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+changes: 
+  - tweak: Newscasters are now built in much the same was as almost every other wall mounted object. Click on wall to place, screwdriver to finish. Screwdriver + crowbar to remove.
+  - bugfix: Fixed floating newscasters everywhere
