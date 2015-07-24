@@ -301,7 +301,7 @@
 	..()
 	user << "<span class='info'>Has [loaded.len] stickybomb\s loaded, and [fired.len] stickybomb\s placed.</span>"
 
-/obj/item/weapon/gun/gatling/update_icon()
+/obj/item/weapon/gun/stickybomb/update_icon()
 	return
 
 /obj/item/weapon/gun/stickybomb/attack_self(mob/user)
@@ -367,6 +367,9 @@
 /obj/item/stickybomb/Destroy()
 	if(fired_from)
 		fired_from.fired -= src
+		fired_from = null
+	stuck_to = null
+	self_overlay = null
 	..()
 
 /obj/item/stickybomb/update_icon()
