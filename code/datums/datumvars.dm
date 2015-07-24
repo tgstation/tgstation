@@ -267,6 +267,9 @@ client
 		if(ismob(D))
 			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 
+		if(istype(D,/atom))
+			body += "<option value='?_src_=vars;teleport_here=\ref[D]'>Teleport Here</option>"
+
 		body += "<option value>---</option>"
 
 		if(ismob(D))
@@ -703,6 +706,28 @@ client
 
 		src.holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
+
+	else if(href_list["teleport_here"])
+		if(!check_rights(0))	return
+
+		var/atom/A = locate(href_list["teleport_here"])
+		if(!isobj(A) && !ismob(A))
+			usr << "This can only be done to instances of type /obj and /mob"
+			return
+
+		var/turf/T = get_turf(usr)
+		if(!T)
+			usr << "You cannot teleport something into nullspace. Well I mean technically you can but that's not what that option is for."
+			return
+
+		if(isobj(A))
+			var/obj/O = A
+			O.loc = T
+		else if(ismob(A))
+			var/mob/M = A
+			M.loc = T
+
+		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	else if(href_list["rotatedatum"])
 		if(!check_rights(0))	return
