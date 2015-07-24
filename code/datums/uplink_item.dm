@@ -702,12 +702,6 @@ var/list/uplink_items = list()
 	item = /obj/item/cybernetic_implant/brain/anti_stun
 	cost = 12
 
-/datum/uplink_item/cyber_implants/antidrop
-	name = "Anti-Drop Implant"
-	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
-	item = /obj/item/cybernetic_implant/brain/anti_drop
-	cost = 8
-
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness."
@@ -718,11 +712,11 @@ var/list/uplink_items = list()
 	name = "Nutriment Pump Implant PLUS"
 	desc = "This implant will pump you with nutriments and electrolytes so you don't go hungry in action."
 	item = /obj/item/cybernetic_implant/chest/nutriment/plus
-	cost = 5
+	cost = 2
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants."
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Does not include Nutriment Implant."
 	item = /obj/item/weapon/storage/box/cyber_implants
 	cost = 40
 
