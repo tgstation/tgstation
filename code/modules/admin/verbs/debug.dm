@@ -286,7 +286,7 @@ Pressure: [env.return_pressure()]"}
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/makepAI() called tick#: [world.time]")
 
 	if(!T)
-		T = usr.loc
+		T = get_turf(usr)
 	var/list/available = list()
 	for(var/mob/C in mob_list)
 		if(C.key)

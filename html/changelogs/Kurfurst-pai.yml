@@ -1,0 +1,18 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: pAI software prices adjusted
+ - tweak: Medical HUD merged with Medical Records
+ - tweak: Security HUD merged with Security Records
+ - tweak: Digital Messenger and Crew Manifest are now available for all pAIs automatically upon creation
+ - rscadd: Doorjack upgraded to Wirejack. Now compatible with Airlock, APC, Air Alarm, and Vendomat.
+ - tweak: Wirejack time lowered dramatically (from 10-100 seconds to 5-10 seconds)
+ - rscadd: Wirejacking a door now provides full silicon control
+ - tweak: Chance of AI detection for Wirejack lowered to 10% (from 100%)
+ - rscadd: New software: Redundant Threading provides an EMP shielding option, reduces death chance from 20 to 0%, reduces side effects from 33% wipe owner 33% directive scramble 33% nothing to 33% wipe owner 66% nothing; also reduces silence time by EMP from 2 minutes to 15 seconds, a drop of 88%
+ - rscadd: New software: Brightness Enhancer works as a flashlight
+ - rscadd: New software: Chem Synthesizer allows you to generate 15u of Tricordrazine, Coffee, or Smoke after 15 seconds of charging
+ - rscadd: New software: Food Synthesizer allows you to generate a donut, banana, or burned mess after 15 seconds of charging
+ - rscadd: If you click on a pAI as a ghost, it will sign you up (if searching) or softly ping (if not)
+ - bugfix: The radio interface now properly refreshes when you press buttons
+ - bugfix: Fixes #5373 by providing pAIs with a ghost sprite

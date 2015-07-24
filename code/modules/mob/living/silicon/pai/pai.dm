@@ -1,3 +1,16 @@
+#define SOFT_DM "digital messenger"
+#define SOFT_CM "crew manifest"
+#define SOFT_FL "flashlight"
+#define SOFT_RT "redundant threading"
+#define SOFT_RS "remote signaller"
+#define SOFT_WJ "wirejack"
+#define SOFT_CS "chem synth"
+#define SOFT_FS "food synth"
+#define SOFT_UT "universal translator"
+#define SOFT_MS "medical supplement"
+#define SOFT_SS "security supplement"
+#define SOFT_AS "atmosphere sensor"
+
 /mob/living/silicon/pai
 	name = "pAI"
 	icon = 'icons/obj/pda.dmi'
@@ -9,7 +22,7 @@
 	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities
-	var/list/software = list("crew manifest","digital messenger")
+	var/list/software = list(SOFT_CM,SOFT_DM)
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 

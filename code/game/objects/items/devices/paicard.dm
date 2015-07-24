@@ -68,9 +68,7 @@
 	if(looking_for_personality&&paiController.check_recruit(O))
 		paiController.recruitWindow(O)
 	else
-		var/turf/T = get_turf(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
+		visible_message("<span class='notice'>\The [src] pings softly.</span>")
 
 /obj/item/device/paicard/Topic(href, href_list)
 

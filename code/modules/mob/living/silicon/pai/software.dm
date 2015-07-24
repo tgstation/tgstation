@@ -2,15 +2,14 @@
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
-															"flashlight" = 15,
-															"redundant threading" = 15,
-															"remote signaller" = 15,
+															SOFT_FL = 15,
+															SOFT_RT = 15,
+															SOFT_RS = 15,
 
-
-															"wirejack" = 30,
-															"chem synth" = 30,
-															"food synth" = 30,
-															"universal translator" = 30,
+															SOFT_WJ = 30,
+															SOFT_CS = 30,
+															SOFT_FS = 30,
+															SOFT_UT = 30,
 
 															//"departmental assistance package" = 55
 															//Medical: access crew monitor, med records, gain med hud
@@ -22,9 +21,9 @@
 															//maybe later
 
 															//legacy, until the departmental is ready
-															"medical supplement" = 30, //records + HUD
-															"security supplement" = 30, //records + HUD
-															"atmosphere sensor" = 5
+															SOFT_MS = 30, //records + HUD
+															SOFT_SS = 30, //records + HUD
+															SOFT_AS = 5
 															)
 
 
@@ -341,34 +340,34 @@
 	// Basic
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.software)
-		if(s == "crew manifest")
+		if(s == SOFT_CM)
 			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
-		if(s == "digital messenger")
+		if(s == SOFT_DM)
 			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
-		if(s == "remote signaller")
+		if(s == SOFT_RS)
 			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
-		if(s == "atmosphere sensor")
+		if(s == SOFT_AS)
 			dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
-		if(s == "flashlight")
+		if(s == SOFT_FL)
 			dat += "<a href='byond://?src=\ref[src];software=flashlight;sub=0'>Brightness Enhancer</a> <br>"
-		if(s == "redundant threading")
+		if(s == SOFT_RT)
 			dat += "<a href='byond://?src=\ref[src];software=shielding;sub=0'>Redundant Threading</a> <br>"
 	dat += "<br>"
 
 	//Standard
 	dat += "<b>Standard</b> <br>"
 	for(var/s in src.software)
-		if(s == "medical supplement")
+		if(s == SOFT_MS)
 			dat += "<a href='byond://?src=\ref[src];software=medicalsupplement;sub=0'>Medical Package</a> <br>"
-		if(s == "security supplement")
+		if(s == SOFT_SS)
 			dat += "<a href='byond://?src=\ref[src];software=securitysupplement;sub=0'>Security Package</a> <br>"
-		if(s == "wirejack")
+		if(s == SOFT_WJ)
 			dat += "<a href='byond://?src=\ref[src];software=wirejack;sub=0'>Wire Jack</a> <br>"
-		if(s == "universal translator")
+		if(s == SOFT_UT)
 			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[(universal_understand) ? "<font color=#55FF55>•</font>" : "<font color=#FF5555>•</font>"] <br>"
-		if(s == "chem synth")
+		if(s == SOFT_CS)
 			dat += "<a href='byond://?src=\ref[src];software=chemsynth;sub=0'>Chemical Synthesizer</a> <br>"
-		if(s == "food synth")
+		if(s == SOFT_FS)
 			dat += "<a href='byond://?src=\ref[src];software=foodsynth;sub=0'>Nutrition Synthesizer</a> <br>"
 	dat += "<br>"
 
