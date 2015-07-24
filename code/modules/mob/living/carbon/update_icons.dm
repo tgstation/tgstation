@@ -123,7 +123,7 @@
 			standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 		return wear_mask
 
-/mob/living/carbon/human/update_inv_back()
+/mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 	if(back)
 		var/image/standing
@@ -136,7 +136,7 @@
 		return back
 
 
-/mob/living/carbon/human/update_inv_head()
+/mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
 		var/image/standing

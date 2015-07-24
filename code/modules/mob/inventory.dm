@@ -56,8 +56,8 @@
 	return 0
 
 /mob/proc/put_in_hand_check(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))			return 0
-	if(!istype(W))		return 0
+	if(lying && !(W.flags&ABSTRACT))	return 0
+	if(!istype(W))	return 0
 	return 1
 
 //Puts the item into our active hand if possible. returns 1 on success.
