@@ -712,9 +712,9 @@ client
 	else if(href_list["teleport_here"])
 		if(!check_rights(0))	return
 
-		var/atom/A = locate(href_list["teleport_here"])
-		if(!isobj(A) && !ismob(A))
-			usr << "This can only be done to instances of type /obj and /mob"
+		var/atom/movable/A = locate(href_list["teleport_here"])
+		if(!istype(A))
+			usr << "This can only be done to instances of movable atoms."
 			return
 
 		var/turf/T = get_turf(usr)
@@ -722,21 +722,15 @@ client
 			usr << "You cannot teleport something into nullspace. Well I mean technically you can but that's not what that option is for."
 			return
 
-		if(isobj(A))
-			var/obj/O = A
-			O.loc = T
-		else if(ismob(A))
-			var/mob/M = A
-			M.loc = T
-
+		A.forceMove(T)
 		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
 
 	else if(href_list["delete"])
 		if(!check_rights(0))	return
 
-		var/atom/A = locate(href_list["delete"])
-		if(!isobj(A) && !ismob(A))
-			usr << "This can only be done to instances of type /obj and /mob"
+		var/atom/movable/A = locate(href_list["delete"])
+		if(!istype(A))
+			usr << "This can only be done to instances of movable atoms."
 			return
 
 		if(ismob(A))
