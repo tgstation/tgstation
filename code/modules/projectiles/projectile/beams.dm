@@ -28,7 +28,7 @@
 
 /obj/item/projectile/beam/xray
 	name = "xray beam"
-	icon_state = "xray"
+	icon_state = "greenlaser"
 	damage = 15
 	irradiate = 30
 	range = 15
