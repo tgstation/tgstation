@@ -36,6 +36,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag"
 	var/foldedbag_path = /obj/item/bodybag
+	var/tagged = 0 // so closet code knows to put the tag overlay back
 	density = 0
 	mob_storage_capacity = 2
 
@@ -51,13 +52,15 @@
 			name = "body bag - "
 			name += t
 			overlays += "bodybag_label"
+			tagged = 1
 		else
 			name = "body bag"
 		return
 	else if(istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut the tag off of [src].</span>"
+		user << "<span class='notice'>You cut the tag off [src].</span>"
 		name = "body bag"
 		overlays.Cut()
+		tagged = 0
 
 
 /obj/structure/closet/body_bag/close()

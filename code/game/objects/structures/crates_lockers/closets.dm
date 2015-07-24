@@ -46,6 +46,11 @@
 					overlays += "unlocked"
 			else
 				overlays += "off"
+		if(istype(src, /obj/structure/closet/body_bag)) // GUESS WHAT BODY BAGS ARE CLOSETS
+			var/obj/structure/closet/body_bag/B = src
+			if (B.tagged)
+				overlays += "bodybag_label"
+
 	else
 		if(icon_door_override)
 			overlays += "[icon_door]_open"
