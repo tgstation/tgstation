@@ -352,7 +352,6 @@
 
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
 		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
-			spawn(200) //I wish you would step back from that ledge my friend
 			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
 				ticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
@@ -2056,6 +2055,13 @@
 		var/datum/newscaster/feed_message/FM = locate(href_list["ac_lock_comment"])
 		FM.locked ^= 1
 		src.access_news_network()
+
+	else if(href_list["memoeditlist"])
+		var/DBQuery/query_memoedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("memo")] WHERE (id = '[href_list["id"]]")
+		query_memoedits.Execute()
+		if(query_memoedits.NextRow())
+			var/edit_log = query_memoedits.item[6]
+			usr << browse(edit_log,"window=memoeditlist")
 
 	else if(href_list["check_antagonist"])
 		if(!check_rights(R_ADMIN))

@@ -186,9 +186,10 @@
 		dx = dy
 		dy = olddx
 
-	var/error = dist_x/2 - dist_y
+	var/error = dist_x/2 - dist_y //used to decide whether our next move should be forward or diagonal.
 	var/atom/finalturf = get_turf(target)
 	var/hit = 0
+	var/init_dir = get_dir(src, target)
 
 	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
 
@@ -196,9 +197,14 @@
 			hit = 1
 			break
 
-		var/atom/step = get_step(src, get_dir(src, target))
+		var/atom/step
+		if(dist_travelled < max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
+			step = get_step(src, get_dir(src, finalturf))
+		else
+			step = get_step(src, init_dir)
+
 		if(!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
-			if(error >= 0 && get_dist(src, finalturf) > 1)
+			if(error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
 				step = get_step(src, dx)
 			error += (error < 0) ? dist_x/2 : -dist_y
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -234,6 +240,7 @@
 		if(AM == src)
 			continue
 		if(AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
+			throwing = 0
 			throw_impact(AM)
 			return 1
 
