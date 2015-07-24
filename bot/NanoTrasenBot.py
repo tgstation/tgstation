@@ -1056,7 +1056,6 @@ while True:
                      conn.privmsg(targetchannel,sender+" : "+C_sarcasticball.sarcasticball(influx.lower(),debug,truesender,nonhighlight_names,prefix)) 
             elif influx.lower()[0:len(Name)] == lowname and not influx.lower()[len(Name):].isalpha() or \
                  influx.split(" ")[0].lower().replace(",","") in SName and not influx.lower()[len(influx.split(" ")[0].lower()):].isalpha():
-               conn.privmsg(targetchannel, random.choice(["Yea?","I'm here","Ya?","Yah?","Hm?","What?","Mmhm, what?","?","What now?","How may I assist?"]))
                comboer = truesender
                comboer_time = time.time()
             elif influx.lower()[-1] == "?" and comboer == truesender and looptime - discard_combo_messages_time < comboer_time:
