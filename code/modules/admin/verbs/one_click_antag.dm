@@ -456,11 +456,11 @@
 	switch(alert)
 		if("Delta: Deathsquad")
 			return makeDeathsquad()
-		if("Red: Elite ERT")
+		if("Red: Elite ERT (Pulse Guns)")
 			alert = "Red"
-		if("Amber: Full ERT")
+		if("Amber: Full ERT (Energy Guns)")
 			alert = "Amber"
-		if("Blue: Light ERT")
+		if("Blue: Light ERT (No Guns)")
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()
