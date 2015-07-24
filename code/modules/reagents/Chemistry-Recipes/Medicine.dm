@@ -63,7 +63,6 @@
 	id = "mine_salve"
 	result = "mine_salve"
 	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
-	mix_message = "The fine black particles dissolve into the oily substance."
 	result_amount = 3
 	
 /datum/chemical_reaction/mine_salve2
@@ -71,7 +70,6 @@
 	id = "mine_salve"
 	result = "mine_salve"
 	required_reagents = list("plasma" = 1, "water" = 1, "iron" = 1)
-	mix_message = "The iron adheres to the plasma and forms a thick goo."
 	result_amount = 5
 
 /datum/chemical_reaction/synthflesh

@@ -233,7 +233,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = 5
 	M.adjustBruteLoss(-0.25*REM)
@@ -243,7 +243,7 @@
 	
 	
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = 0
 	..()
