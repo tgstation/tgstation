@@ -569,7 +569,6 @@
 				user << "<span class='warning'>The cover is already unlocked!</span>"
 			return
 		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
 				user << "<span class='warning'>You must close the cover first!</span>"
 				return
