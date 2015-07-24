@@ -131,7 +131,6 @@
 			if(dispenser.spam_bomb)
 				dispenser.attack_self(src)
 
-		if(get_active_hand() && istype(get_active_hand(),/obj/item/weapon/rcl))
-			var/obj/item/weapon/rcl/R = get_active_hand()
-			if(R.active)
-				R.trigger(src)
+		var/obj/item/weapon/rcl/R = get_active_hand()
+		if(R && istype(R) && R.active)
+			R.trigger(src)

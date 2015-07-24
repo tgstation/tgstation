@@ -245,8 +245,9 @@ to destroy them and players will be able to make replacements.
 		if(do_after(user, src,40))
 			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 			var/boardType = allowed_boards[t]
-			new boardType(src.loc)
+			var/obj/item/I = new boardType(get_turf(user))
 			qdel(src)
+			user.put_in_hands(I)
 	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		if(WT.remove_fuel(1,user))
