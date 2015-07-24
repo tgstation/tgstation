@@ -14,7 +14,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
-	desc = "Oh god, why didn't anyone clean this up?  It smells terrible."
+	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
 
 /obj/effect/decal/cleanable/blood/gibs/old/New()
 	..()

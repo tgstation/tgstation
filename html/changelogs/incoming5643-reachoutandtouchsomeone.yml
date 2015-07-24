@@ -1,0 +1,7 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "The spells disintegrate and flesh to stone have had their mechanics changed. Using these spells will spawn a special touch weapon in a free hand (your dominant hand if possible) that can then be used to inflict the spell on the target of your choice. Having the touch weapon out is obvious, this is not a stealth based change. Clicking the spell while the hand is out will let you return the charge without using it."
+  - rscdel: "The spell won't begin to recharge until the hand attack is either used or returned. Additionally these changes mean you can no longer use these spells while stunned or handcuffed. As a suggestion remember that the mutate spell allows you to break out of cuffs very easily, and warping abilities will keep you from getting cuffed to begin with!"

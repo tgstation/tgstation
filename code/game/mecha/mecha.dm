@@ -143,7 +143,7 @@
 	spark_system = null
 
 	mechas_list -= src //global mech list
-	..()
+	return ..()
 
 ////////////////////////
 ////// Helpers /////////
