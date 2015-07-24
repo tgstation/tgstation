@@ -12,6 +12,7 @@
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
 	var/cargo_capacity = 15
+	var/hides = 0
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
@@ -23,15 +24,14 @@
 	update_pressure()
 
 /obj/mecha/working/ripley/Destroy()
-	var/hides = round((initial(damage_absorption["brute"]) - damage_absorption["brute"])*10)
-	for(var/i=0, i < hides, i++)
+	for(var/i=1, i <= hides, i++)
 		new /obj/item/asteroid/goliath_hide(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	damage_absorption["brute"] =  initial(damage_absorption["brute"])
 	for(var/atom/movable/A in cargo)
 		A.loc = loc
 		step_rand(A)
 	cargo.Cut()
-	..()
+	return ..()
 
 /obj/mecha/working/ripley/go_out()
 	..()
@@ -47,12 +47,12 @@
 
 /obj/mecha/working/ripley/update_icon()
 	..()
-	if (damage_absorption["brute"] < 0.6 && damage_absorption["brute"] > 0.3)
+	if (hides)
 		overlays = null
-		overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-open")
-	else if (damage_absorption.["brute"] == 0.3)
-		overlays = null
-		overlays += image("icon" = "mecha.dmi", "icon_state" = "ripley-g-full-open")
+		if(hides < 3)
+			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open")
+		else
+			overlays += image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open")
 
 
 /obj/mecha/working/ripley/firefighter
