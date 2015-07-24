@@ -79,6 +79,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
+	var/buildstage = 1 // 1 = complete, 0 = unscrewed
 
 	// Allow ghosts to send Topic()s.
 	ghost_write=1
@@ -103,7 +104,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		// 10 = censor feed story
 		// 11 = censor feed channel
 		//Holy shit this is outdated, made this when I was still starting newscasters :3
-	var/paper_remaining = 0
+	var/paper_remaining = 15 // There is no point to setting it to 0 here if you're setting it to 15 in New() ?????????
 	var/securityCaster = 0
 		// 0 = Caster cannot be used to issue wanted posters
 		// 1 = the opposite
@@ -132,18 +133,16 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	name = "Security Newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New(turf/loc, var/ndir=0)
-	if(ndir)
-		dir=ndir
-	else
-		dir = reverse_direction(dir) //Unfucks all maps
-	pixel_x = (dir & 3)? 0 : (dir == 4 ? 28 : -28)
-	pixel_y = (dir & 3)? (dir ==1 ? 33 : -28) : 0
+/obj/machinery/newscaster/New(var/loc, var/ndir, var/building = 1)
+	buildstage = building
+	if(!buildstage) //Already placed newscasters via mapping will not be affected by this
+		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 28 : -28)
+		pixel_y = (ndir & 3)? (ndir == 1 ? 28 : -28) : 0
+		dir = ndir
 	allCasters += src
-	src.paper_remaining = 15            // Will probably change this to something better
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters) // Let's give it an appropriate unit number
 		src.unit_no++
-	src.update_icon() //for any custom ones on the map...
+	update_icon()
 	..()
 
 /obj/machinery/newscaster/Destroy()
@@ -151,6 +150,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	..()
 
 /obj/machinery/newscaster/update_icon()
+	if(buildstage != 1)
+		icon_state = "newscaster_0"
+		return
+
 	if((stat & NOPOWER) || (stat & BROKEN))
 		icon_state = "newscaster_off"
 		if(stat & BROKEN) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
@@ -174,7 +177,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return
 
 /obj/machinery/newscaster/power_change()
-	if(stat & BROKEN) //Broken shit can't be powered.
+	if(stat & BROKEN || buildstage != 1) //Broken shit can't be powered.
 		return
 	if( src.powered() )
 		stat &= ~NOPOWER
@@ -209,7 +212,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return src.attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if((stat & NOPOWER) || (stat & BROKEN))
+	if((stat & NOPOWER) || (stat & BROKEN) || buildstage != 1)
 		return
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) || isobserver(user))
 		var/mob/M = user
@@ -947,44 +950,61 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 
 /obj/machinery/newscaster/attackby(obj/item/I as obj, mob/user as mob)
-	if(isscrewdriver(I) && !(stat & BROKEN))
-		user.visible_message("<span class='notice'>[user] takes down the [src]!</span>", "<span class='notice'>You take down the [src]</span>")
-		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
-		new /obj/item/mounted/frame/newscaster(src.loc)
-		qdel(src)
-		return
+	switch(buildstage)
+		if(0)
+			if(iscrowbar(I))
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				user.visible_message("<span class='notice'>[user] begins prying off the [src]!</span>", "<span class='notice'>You begin prying off the [src]</span>")
+				if(do_after(user, src,10))
+					user << "<span class='notice'>You pry off the [src]!.</span>"
+					new /obj/item/mounted/frame/newscaster(src.loc)
+					qdel(src)
+					return
 
-	if ((stat & BROKEN) && (istype(I, /obj/item/stack/sheet/glass/glass)))
-		var/obj/item/stack/sheet/glass/glass/stack = I
-		if ((stack.amount - 2) < 0)
-			user << "<span class='warning'>You need more glass to do that.</span>"
-		else
-			stack.use(2)
-			src.hitstaken = 0
-			stat &= ~BROKEN
-			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 80, 1)
+			if(isscrewdriver(I) && !(stat & BROKEN))
+				user.visible_message("<span class='notice'>[user] screws in the [src]!</span>", "<span class='notice'>You screw in the [src]</span>")
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
+				buildstage = 1
 
-	else if (stat & BROKEN)
-		playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
-		visible_message("<EM>[user.name]</EM> further abuses the shattered [src].")
+		if(1)
+			if(isscrewdriver(I) && !(stat & BROKEN))
+				user.visible_message("<span class='notice'>[user] unscrews the [src]!</span>", "<span class='notice'>You unscrew the [src]</span>")
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
+				buildstage = 0
+				src.update_icon()
+				return
 
-	else
-		if(istype(I, /obj/item/weapon) )
-			var/obj/item/weapon/W = I
-			if(W.force <15)
-				visible_message("[user.name] hits the [src] with the [W] with no visible effect." )
-				playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
-			else
-				src.hitstaken++
-				if(src.hitstaken==3)
-					visible_message("[user.name] smashes the [src]!")
-					stat |= BROKEN
-					playsound(get_turf(src), 'sound/effects/Glassbr3.ogg', 100, 1)
+			if ((stat & BROKEN) && (istype(I, /obj/item/stack/sheet/glass/glass)))
+				var/obj/item/stack/sheet/glass/glass/stack = I
+				if ((stack.amount - 2) < 0)
+					user << "<span class='warning'>You need more glass to do that.</span>"
 				else
-					visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
-					playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
-		else
-			user << "<span class='notice'>This does nothing.</span>"
+					stack.use(2)
+					src.hitstaken = 0
+					stat &= ~BROKEN
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 80, 1)
+
+			else if (stat & BROKEN)
+				playsound(get_turf(src), 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
+				visible_message("<EM>[user.name]</EM> further abuses the shattered [src].")
+
+			else
+				if(istype(I, /obj/item/weapon) )
+					var/obj/item/weapon/W = I
+					if(W.force <15)
+						visible_message("[user.name] hits the [src] with the [W] with no visible effect." )
+						playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
+					else
+						src.hitstaken++
+						if(src.hitstaken==3)
+							visible_message("[user.name] smashes the [src]!")
+							stat |= BROKEN
+							playsound(get_turf(src), 'sound/effects/Glassbr3.ogg', 100, 1)
+						else
+							visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
+							playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
+				else
+					user << "<span class='notice'>This does nothing.</span>"
 	src.update_icon()
 
 /obj/machinery/newscaster/attack_ai(mob/user as mob)
