@@ -458,10 +458,7 @@
 		if(ismob(stuck_to))
 			stuck_to.overlays -= self_overlay
 
-		var/datum/effect/system/small_explosion/E = new/datum/effect/system/small_explosion()
-		E.set_up(T,"explosion_sticky",pixel_x,pixel_y)
-		E.start()
-
+		T.turf_animation('icons/effects/96x96.dmi',"explosion_sticky",pixel_x-32, pixel_y-32, 13)
 		playsound(T, "explosion_small", 75, 1)
 
 		for(var/mob/living/L in range(T,3))
