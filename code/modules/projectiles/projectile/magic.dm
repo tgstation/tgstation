@@ -9,8 +9,6 @@
 /obj/item/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
-	legacy = 1 //No pixel travelling
-	animate_movement = SLIDE_STEPS //Reset movement to default
 
 /obj/item/projectile/magic/death/on_hit(target)
 	. = ..()
