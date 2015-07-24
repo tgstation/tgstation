@@ -223,6 +223,30 @@
 		M.adjustFireLoss(-0.5*REM)
 	..()
 	return
+	
+/datum/reagent/medicine/mine_salve
+	name = "Miner's Salve"
+	id = "mine_salve"
+	description = "Slowly heals burn and brute damage, and causes subject to believe they are fully healed."
+	reagent_state = LIQUID
+	color = "#6D6374"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/mine_salve/on_mob_life(mob/living/M)
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/N = M
+		N.hal_screwyhud = 5
+	M.adjustBruteLoss(-0.25*REM)
+	M.adjustFireLoss(-0.25*REM)
+	..()
+	return
+	
+	
+/datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/N = M
+		N.hal_screwyhud = 0
+	..()
 
 /datum/reagent/medicine/synthflesh
 	name = "Synthflesh"
