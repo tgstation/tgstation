@@ -27,6 +27,7 @@
 		req_access = list()
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
+		user << "<span class='warning'>You short out the access controller.</span>"
 
 /obj/machinery/doorButtons/proc/removeMe()
 
