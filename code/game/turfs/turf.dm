@@ -92,7 +92,7 @@
  * IF YOU HAVE BYOND VERSION BELOW 507.1248 OR ARE ABLE TO WALK THROUGH WINDOORS/BORDER WINDOWS COMMENT OUT
  * #define BORDER_USE_TURF_EXIT
  * FOR MORE INFORMATION SEE: http://www.byond.com/forum/?post=1666940
- */
+ *
 #ifdef BORDER_USE_TURF_EXIT
 /turf/Exit(atom/movable/mover, atom/target)
 	if(!mover)
@@ -113,12 +113,13 @@
 	#warn This compiler is too far out of date! You will experience issues with windows and windoors unles you update to atleast 507.1248 or comment out BORDER_USE_TURF_EXIT in global.dm!
 
 #endif
+*/
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
 		return 1
 
-#ifndef BORDER_USE_TURF_EXIT
-#warn BORDER_USE_TURF_EXIT is not defined, using possibly buggy turf/Enter code.
+//#ifndef BORDER_USE_TURF_EXIT
+//#warn BORDER_USE_TURF_EXIT is not defined, using possibly buggy turf/Enter code.
 	// First, make sure it can leave its square
 	if(isturf(mover.loc))
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
@@ -126,7 +127,7 @@
 			if(obstacle != mover && obstacle != forget && !obstacle.CheckExit(mover, src) )
 				mover.Bump(obstacle, 1)
 				return 0
-#endif
+//#endif
 	var/list/large_dense = list()
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
