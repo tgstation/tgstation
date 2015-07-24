@@ -42,7 +42,7 @@
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/pen))
+	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_hand() != I)
 			return
@@ -61,6 +61,11 @@
 		name = "body bag"
 		overlays.Cut()
 		tagged = 0
+
+/obj/structure/closet/body_bag/update_icon()
+	..()
+	if (tagged)
+		overlays += "bodybag_label"
 
 
 /obj/structure/closet/body_bag/close()
