@@ -17,24 +17,32 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
 	unset_machine()
-	qdel(hud_used)
+	if(mind && mind.current == src)
+		spellremove(src)
 	if(client)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
 			returnToPool(spell_master)
+		spell_masters = null
+		spells = null
 		remove_screen_obj_references()
 		for(var/atom/movable/AM in client.screen)
 			var/obj/screen/screenobj = AM
-			if(istype(screenobj) && screenobj.pool_on_reset())
-				returnToPool(AM)
+			if(istype(screenobj))
+				if(screenobj.pool_on_reset())
+					returnToPool(AM)
 			else
 				qdel(AM)
 		client.screen = list()
-	if(mind && mind.current == src)
-		spellremove(src)
 	mob_list.Remove(src)
 	dead_mob_list.Remove(src)
 	living_mob_list.Remove(src)
 	ghostize()
+	//Fuck datums amirite
+	click_delayer = null
+	attack_delayer = null
+	special_delayer = null
+	gui_icons = null
+	qdel(hud_used)
 	..()
 
 /mob/proc/remove_screen_obj_references()

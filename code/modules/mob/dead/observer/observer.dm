@@ -107,6 +107,7 @@
 	following = null
 	ghostMulti = null
 	canclone = null
+	observers.Remove(src)
 
 /mob/dead/observer/hasFullAccess()
 	return isAdminGhost(src)
