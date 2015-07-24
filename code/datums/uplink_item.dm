@@ -702,12 +702,6 @@ var/list/uplink_items = list()
 	item = /obj/item/cybernetic_implant/brain/anti_stun
 	cost = 12
 
-/datum/uplink_item/cyber_implants/antidrop
-	name = "Anti-Drop Implant"
-	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
-	item = /obj/item/cybernetic_implant/brain/anti_drop
-	cost = 8
-
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness."
