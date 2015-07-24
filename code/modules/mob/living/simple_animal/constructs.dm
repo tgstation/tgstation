@@ -246,7 +246,7 @@
 	melee_damage_upper = 5
 	attacktext = "rams"
 	speed = 0
-	environment_smash = 2
+	environment_smash = 1
 	attack_sound = 'sound/weapons/rapidslice.ogg'
 	construct_spells = list(/spell/aoe_turf/conjure/construct/lesser,
 							/spell/aoe_turf/conjure/wall,
@@ -255,6 +255,38 @@
 							/spell/aoe_turf/conjure/pylon,
 							///obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
 							)
+
+/mob/living/simple_animal/construct/builder/ClickOn( var/atom/A, var/params )
+	if(isturf(A))
+		var/turf/T = A
+		if((T.icon_state == "cult")||(T.icon_state == "cult-narsie"))
+			return ..()
+		var/dist = get_dist(get_turf(src),T)
+		if(dist > 3)
+			return ..()
+		if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/carpet))//carpets are cool!
+			var/spell/aoe_turf/conjure/floor/S = locate() in spell_list
+			S.perform(src,0,T)
+		else if(istype(T,/turf/simulated/wall) && !istype(T,/turf/simulated/wall/r_wall))
+			if(istype(T,/turf/simulated/wall/cult))
+				if(dist <= 1)
+					var/turf/simulated/wall/W = T
+					W.dismantle_wall(1)
+					return
+				else
+					return ..()
+			else
+				var/spell/aoe_turf/conjure/wall/S = locate() in spell_list
+				S.perform(src,0,T)
+		else
+			return ..()
+	else
+		return ..()
+
+	if(spell_masters && spell_masters.len)
+		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
+			spell_master.update_spells(0, src)
+
 
 
 /////////////////////////////Behemoth/////////////////////////

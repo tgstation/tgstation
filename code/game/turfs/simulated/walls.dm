@@ -32,6 +32,11 @@
 		user << src.engraving
 
 /turf/simulated/wall/dismantle_wall(devastated = 0, explode = 0)
+	var/cultwall = 0
+	if(istype(src, /turf/simulated/wall/cult))
+		cultwall = 1
+
+
 	if(istype(src, /turf/simulated/wall/r_wall)) //Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods
 		if(!devastated)
 			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
@@ -39,7 +44,7 @@
 		else
 			getFromPool(/obj/item/stack/rods, get_turf(src), 2)
 			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
-	else if(istype(src,/turf/simulated/wall/cult))
+	else if(cultwall)
 		if(!devastated)
 			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
 			B.New(src)
@@ -70,7 +75,11 @@
 			P.roll_and_drop(src)
 		else
 			O.loc = src
-	ChangeTurf(/turf/simulated/floor/plating)
+
+	if(cultwall)
+		ChangeTurf(/turf/simulated/floor/engine/cult)
+	else
+		ChangeTurf(/turf/simulated/floor/plating)
 
 /turf/simulated/wall/ex_act(severity)
 	if(rotting)
@@ -291,7 +300,10 @@
 	if(istype(src, /turf/simulated/wall/cult))
 		cultwall = 1
 
-	src.ChangeTurf(/turf/simulated/floor/plating)
+	if(cultwall)
+		src.ChangeTurf(/turf/simulated/floor/engine/cult)
+	else
+		src.ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
 	if(!F)
