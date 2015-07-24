@@ -1,12 +1,15 @@
 /obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
-		var/curloc = user.loc
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
-		if(distro)
-			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(targloc, user, params))
+		var/spread = 0
+		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
+			if(randomspread)
+				spread = (rand() - 0.5) * distro
+			else //Smart spread
+				spread = (i / pellets - 0.5) * distro
+		if(!throw_proj(targloc, user, params, spread))
 			return 0
 		if(i > 1)
 			newshot()
@@ -27,7 +30,7 @@
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets
 		qdel(reagents)
 
-/obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params)
+/obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params, spread)
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
@@ -47,7 +50,26 @@
 			BB.p_x = text2num(mouse_control["icon-x"])
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
+		if(mouse_control["screen-loc"])
+			//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
+			var/list/screen_loc_params = text2list(mouse_control["screen-loc"], ",")
 
+			//Split X+Pixel_X up into list(X, Pixel_X)
+			var/list/screen_loc_X = text2list(screen_loc_params[1],":")
+
+			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+			var/list/screen_loc_Y = text2list(screen_loc_params[2],":")
+			// world << "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]"
+			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
+			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
+			var/ox = round(480/2) //"origin" x - Basically center of the screen. This is a bad way of doing it because if you are able to view MORE than 15 tiles at a time your aim will get fucked.
+			var/oy = round(480/2) //"origin" y - Basically center of the screen.
+			// world << "Pixel position: [x] [y]"
+			var/angle = Atan2(y - oy, x - ox)
+			// world << "Angle: [angle]"
+			BB.Angle = angle
+	if(spread)
+		BB.Angle += spread
 	if(BB)
 		BB.fire()
 	BB = null
