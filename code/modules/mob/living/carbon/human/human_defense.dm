@@ -135,6 +135,12 @@ emp_act
 	return 0
 
 /mob/living/carbon/human/emp_act(severity)
+	for(var/obj/item/stickybomb/B in src)
+		if(B.stuck_to)
+			visible_message("<span class='warning'>\the [B] stuck on \the [src] suddenly deactivates itself and falls to the ground.</span>")
+			B.deactivate()
+			B.unstick()
+
 	if(flags & INVULNERABLE)
 		return
 
@@ -278,11 +284,11 @@ emp_act
 		w_uniform.add_blood(source)
 		update_inv_w_uniform(update)
 
-/mob/living/carbon/human/ex_act(severity)
+/mob/living/carbon/human/ex_act(severity,var/noblind = FALSE)
 	if(flags & INVULNERABLE)
 		return
 
-	if(!blinded)
+	if(!blinded && !noblind)
 		flick("flash", flash)
 
 	var/shielded = 0
@@ -329,13 +335,16 @@ emp_act
 
 		if(3.0)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
-				b_loss = b_loss/2
+			var/gotarmor = min(100,max(0,getarmor(null, "bomb")))
+
+			if (prob(gotarmor))
+				b_loss = (b_loss*((gotarmor-100)*-1))/100//equipments with armor[bomb]=100 will fully negate the damage of light explosives.
 			if (!earprot())
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)
-				Paralyse(10)
+				if (!prob((gotarmor-100)*-1))
+					Paralyse(10)
 
 	var/update = 0
 

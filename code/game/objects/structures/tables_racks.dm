@@ -589,6 +589,7 @@
 	anchored = 1.0
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
+	var/offset_step = 0
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
@@ -640,7 +641,21 @@
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		del(src)
 		return
-	user.drop_item(W, src.loc)
+
+	if(user.drop_item(W, src.loc))
+		if(W.loc == src.loc)
+			switch(offset_step)
+				if(1)
+					W.pixel_x = -3
+					W.pixel_y = 3
+				if(2)
+					W.pixel_x = 0
+					W.pixel_y = 0
+				if(3)
+					W.pixel_x = 3
+					W.pixel_y = -3
+					offset_step = 0
+			offset_step++
 	return 1
 
 /obj/structure/table/attack_hand(mob/user)

@@ -720,7 +720,7 @@
 		var/turf/unsimulated/mineral/M = A
 		M.GetDrilled()
 	if(istype(A, /obj/structure/boulder))
-		qdel(A)
+		returnToPool(A)
 
 	return ..()
 
@@ -746,3 +746,35 @@
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "minigun"
 	damage = 30
+
+/obj/item/projectile/stickybomb
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "stickybomb"
+	damage = 0
+	var/obj/item/stickybomb/sticky = null
+
+
+/obj/item/projectile/stickybomb/Bump(atom/A as mob|obj|turf|area)
+	if(bumped)	return 0
+	bumped = 1
+
+	if(A)
+		density = 0
+		invisibility = 101
+		kill_count = 0
+		if(isliving(A))
+			sticky.stick_to(A)
+		else if(loc)
+			var/turf/T = get_turf(src)
+			sticky.stick_to(T,get_dir(src,A))
+		bulletdies()
+
+/obj/item/projectile/stickybomb/proc/bulletdies()
+	returnToPool(src)
+	OnDeath()
+
+/obj/item/projectile/stickybomb/bump_original_check()//so players can aim at floors
+	if(!bumped)
+		if(loc == get_turf(original))
+			if(!(original in permutated))
+				Bump(original)
