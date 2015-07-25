@@ -770,9 +770,8 @@
 		bulletdies()
 
 /obj/item/projectile/stickybomb/proc/bulletdies()
-	spawn()
-		returnToPool(src)
-		OnDeath()
+	returnToPool(src)
+	OnDeath()
 
 /obj/item/projectile/stickybomb/bump_original_check()//so players can aim at floors
 	if(!bumped)
