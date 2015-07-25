@@ -197,7 +197,11 @@ var/datum/subsystem/air/SSair
 		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs.")
 
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)
-	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
+	for(var/obj/machinery/atmospherics/AM in atmos_machinery)
 		if (z_level && AM.z != z_level)
 			continue
 		AM.atmosinit()
+	for(var/obj/machinery/atmospherics/AM in atmos_machinery)
+		if (z_level && AM.z != z_level)
+			continue
+		AM.build_network()

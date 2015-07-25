@@ -53,7 +53,6 @@ Pipelines + Other Objects -> Pipe network
 //object initializion. done well after air is setup (build_network needs all pipes to be init'ed with atmosinit before hand)
 /obj/machinery/atmospherics/initialize()
 	..()
-	build_network() //make sure to build our pipe nets
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -171,8 +170,8 @@ Pipelines + Other Objects -> Pipe network
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
-		stored.dir = D				  //need to define them here, because the obj directions...
-		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
+		stored.dir = D
+		stored.pipe_type = pipe_type
 		stored.color = obj_color
 	var/turf/T = loc
 	level = T.intact ? 2 : 1

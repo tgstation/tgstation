@@ -134,7 +134,7 @@ Pipenet stuff; housekeeping
 		for(var/I = 1; I <= device_type; I++)
 			if(nodes["n[I]"])
 				if(parents["p[I]"] == reference)
-					return list("n" = nodes["n[I]"])
+					return list(nodes["n[I]"])
 
 	var/list/obj/machinery/atmospherics/return_nodes = list()
 	for(var/I = 1; I <= device_type; I++)
