@@ -34,12 +34,16 @@
 		return
 	if (!( istype(M, /mob) ))
 		return
-	if(M_CLUMSY in user.mutations)
-		if(prob(50))
-			user << "<span class='notice'>Oops!</span>"
-			M = user
+
+	var/inject_message = "<span class='notice'>You inject [M] with [src].</span>"
+	if(M == user)
+		inject_message = "<span class='notice'>You inject yourself with [src].</span>"
+	else if(M_CLUMSY in user.mutations && prob(50))
+		inject_message = "<span class='notice'>Oops! You inject yourself with [src] by accident.</span>"
+		M = user
+
 	if (reagents.total_volume)
-		user << "<span class='notice'>You inject [M] with [src].</span>"
+		user << inject_message
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		playsound(get_turf(src), 'sound/items/hypospray.ogg', 50, 1)
 
