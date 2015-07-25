@@ -21,7 +21,8 @@
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
 		message_admins("WARNING: Maximum number of gangs have been exceeded!")
-		ERROR("WARNING: Maximum number of gangs have been exceeded!")
+		throw EXCEPTION("Maximum number of gangs has been exceeded")
+		return
 	else
 		color = pick(gang_colors_pool)
 		gang_colors_pool -= color
