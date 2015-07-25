@@ -3581,7 +3581,7 @@
 "bqS" = (/obj/machinery/navbeacon{codes_txt = "delivery;dir=1"; freq = 1400; location = "Bar"},/obj/structure/plasticflaps{opacity = 1},/turf/simulated/floor/plasteel{icon_state = "bot"; dir = 1},/area/crew_quarters/bar)
 "bqT" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/structure/filingcabinet/chestdrawer{pixel_y = 3},/obj/machinery/alarm{dir = 4; pixel_x = -23; pixel_y = 0},/turf/simulated/floor/plasteel{dir = 9; icon_state = "darkblue"},/area/bridge)
 "bqU" = (/obj/machinery/light/small{dir = 8},/obj/item/weapon/vending_refill/cigarette,/turf/simulated/floor/wood,/area/crew_quarters/bar)
-"bqV" = (/mob/living/simple_animal/pet/corgi/Ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
+"bqV" = (/mob/living/simple_animal/pet/dog/corgi/Ian,/turf/simulated/floor/carpet,/area/crew_quarters/heads)
 "bqW" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "bqX" = (/obj/effect/landmark/start{name = "Bartender"},/turf/simulated/floor/wood,/area/crew_quarters/bar)
 "bqY" = (/obj/item/weapon/book/manual/wiki/security_space_law{pixel_x = -3; pixel_y = 5},/obj/structure/table/wood,/turf/simulated/floor/wood,/area/security/vacantoffice)
