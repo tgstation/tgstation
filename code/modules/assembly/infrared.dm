@@ -202,5 +202,6 @@
 
 /obj/effect/beam/infrared/spawn_child()
 	var/obj/effect/beam/infrared/B = ..()
+	if(!B) return null
 	B.visible=visible
 	return B

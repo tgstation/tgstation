@@ -125,6 +125,11 @@ var/list/obj/machinery/prism/prism_list = list()
 
 			spawners |= B.sources
 			beam.power += B.power
+
+			/// Propogate anti-recursion info
+			if(beam.steps<B.steps+1)
+				beam.steps=B.steps+1
+
 			var/beamdir=get_dir(B.loc,src)
 			overlays += image(icon=icon,icon_state="beam_arrow",dir=beamdir)
 		if(newbeam)

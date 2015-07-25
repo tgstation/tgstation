@@ -14,6 +14,8 @@
 // Uncomment to spam console with debug info.
 //#define BEAM_DEBUG
 
+#define BEAM_MAX_STEPS 100 // Or whatever
+
 #define BEAM_DEL(x) del(x)
 
 #ifdef BEAM_DEBUG
@@ -51,6 +53,7 @@
 
 	var/bumped=0
 	var/stepped=0
+	var/steps=0 // How many steps we've made from the emitter.  Used in infinite loop avoidance.
 	var/am_connector=0
 	var/targetMoveKey=null // Key for the on_moved listener.
 	var/targetDestroyKey=null // Key for the on_destroyed listener.
@@ -290,11 +293,15 @@
 	update_icon()
 
 	next = spawn_child()
-	next.emit(sources,_range)
+	if(next)
+		next.emit(sources,_range)
 
 /obj/effect/beam/proc/spawn_child()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/beam/proc/spawn_child() called tick#: [world.time]")
+	if(steps >= BEAM_MAX_STEPS)
+		return null // NOPE
 	var/obj/effect/beam/B = new type(src.loc)
+	B.steps = src.steps+1
 	B.dir=dir
 	B.master = get_master()
 	if(B.master != B)
