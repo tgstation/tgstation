@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Added an option in the View Variables's drop down menu that lets admins teleport a mob/object to where they are standing. Along with a small animation.
+  - rscadd: Added another option that lets admins delete a mob/object from the View Variables menu.
