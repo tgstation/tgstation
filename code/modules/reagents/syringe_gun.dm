@@ -49,6 +49,16 @@
 
 /obj/item/weapon/gun/syringe/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0)
 	if(syringes.len)
+		if(M_CLUMSY in user.mutations)
+			if(prob(50))
+				usr << "<span class='warning'>You accidentally shoot yourself!</span>"
+				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+				if((!S) || (!S.reagents))
+					usr << "<span class='notice'>Thankfully, nothing happens.</span>"
+					return
+				S.reagents.trans_to(user, S.reagents.total_volume)
+				return
+
 		spawn(0) fire_syringe(target,user)
 	else
 		usr << "<span class='warning'>[src] is empty.</span>"

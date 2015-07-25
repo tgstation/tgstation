@@ -34,6 +34,10 @@
 		return
 	if (!( istype(M, /mob) ))
 		return
+	if(M_CLUMSY in user.mutations)
+		if(prob(50))
+			user << "<span class='notice'>Oops!</span>"
+			M = user
 	if (reagents.total_volume)
 		user << "<span class='notice'>You inject [M] with [src].</span>"
 		M << "<span class='warning'>You feel a tiny prick!</span>"
@@ -63,7 +67,7 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
-	icon_state = "autoinjector"
+	icon_state = "autoinjector1"
 	item_state = "autoinjector"
 	amount_per_transfer_from_this = 5
 	volume = 5
