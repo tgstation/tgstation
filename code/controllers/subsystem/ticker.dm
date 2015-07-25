@@ -61,6 +61,7 @@ var/datum/subsystem/ticker/ticker
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
 	setupGenetics()
 	setupFactions()
+	setupPrototypes()
 	..()
 
 /datum/subsystem/ticker/fire()

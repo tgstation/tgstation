@@ -732,6 +732,22 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "transfer valves crate"
 	access = access_rd
 
+/datum/supply_packs/science/protoboards
+	name = "Protoboards Crate"
+	contains = list(/obj/item/protoboard,
+					/obj/item/protoboard,
+					/obj/item/protoboard,
+					/obj/item/protoboard,
+					/obj/item/protoboard,
+					/obj/item/protoboard,
+					/obj/item/protoboard,
+					/obj/item/protoboard)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "protoboards crate"
+	access = access_tox_storage
+
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
