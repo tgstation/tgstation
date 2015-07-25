@@ -81,9 +81,9 @@
 
 	spawn( 0 )
 		if (prob(20))
-			src.force = 15
+			src.force = initial(src.force) + rand(3,8)
 		else
-			src.force = 4
+			src.force = max(1, initial(src.force) - rand(1,4))
 		..()
 		return
 	return
