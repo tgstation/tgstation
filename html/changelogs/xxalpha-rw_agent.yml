@@ -1,0 +1,6 @@
+author: xxalpha
+
+delete-after: True
+
+changes: 
+  - tweak: "Agent IDs are now rewrittable."
