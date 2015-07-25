@@ -80,6 +80,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
+	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
 	switch(config.default_laws) //We don't want people metagaming malf, do we?
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
@@ -92,16 +93,16 @@
 
 				add_inherent_law(line)
 			if(!inherent.len)
-				ERROR("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
 				log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
 				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+				WARNING("Invalid custom AI laws, check silicon_laws.txt")
+				return
 		if(2)
 			var/datum/ai_laws/lawtype = pick(typesof(/datum/ai_laws/default) - /datum/ai_laws/default)
 			var/datum/ai_laws/templaws = new lawtype()
 			inherent = templaws.inherent
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
@@ -111,11 +112,12 @@
 
 		add_inherent_law(line)
 	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
-		ERROR("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
 		log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
 		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 		add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 		add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+		WARNING("Invalid custom AI laws, check silicon_laws.txt")
+		return
 
 /* General ai_law functions */
 
