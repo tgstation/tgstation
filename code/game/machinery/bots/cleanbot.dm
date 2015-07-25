@@ -209,7 +209,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			closest_loc = null
 			next_dest_loc = null
 
-			var/datum/signal/signal = new()
+			var/datum/signal/signal = getFromDPool(/datum/signal)
 			signal.source = src
 			signal.transmission_method = 1
 			signal.data = list("findbeacon" = "patrol")

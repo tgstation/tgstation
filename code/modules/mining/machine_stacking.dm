@@ -77,7 +77,7 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
+	var/datum/signal/signal = getFromDPool(/datum/signal)
 	signal.source = src
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = stacker_tag
@@ -257,7 +257,7 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
+	var/datum/signal/signal = getFromDPool(/datum/signal)
 	signal.source = src
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = id_tag
