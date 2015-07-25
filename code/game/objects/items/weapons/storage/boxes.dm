@@ -76,6 +76,16 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
+/obj/item/weapon/storage/box/security
+
+/obj/item/weapon/storage/box/security/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	return
+
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
@@ -477,6 +487,21 @@
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
+
+/obj/item/weapon/storage/box/alienhandcuffs
+	name = "box of spare handcuffs"
+	desc = "A box full of handcuffs."
+	icon_state = "alienboxCuffs"
+
+/obj/item/weapon/storage/box/alienhandcuffs/New()
+	..()
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
 
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"

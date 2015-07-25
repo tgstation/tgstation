@@ -195,9 +195,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_wear_mask(0)
-			M.update_inv_l_hand(0)
-			M.update_inv_r_hand(0)
+			M.update_inv_wear_mask()
+			M.update_inv_l_hand()
+			M.update_inv_r_hand()
 
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
@@ -365,7 +365,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
-			M.update_inv_wear_mask(0)
+			M.update_inv_wear_mask()
 			packeditem = 0
 			name = "empty [initial(name)]"
 		SSobj.processing.Remove(src)

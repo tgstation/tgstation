@@ -3,7 +3,7 @@
 	soundin = get_sfx(soundin) // same sound for everyone
 
 	if(isarea(source))
-		ERROR("[source] is an area and is trying to make the sound: [soundin]")
+		throw EXCEPTION("playsound(): source is an area")
 		return
 
 	var/frequency = get_rand_frequency() // Same frequency for everybody

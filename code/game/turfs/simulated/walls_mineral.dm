@@ -59,7 +59,7 @@
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
-	desc = "A wall with sandstone plating."
+	desc = "A wall with sandstone plating. Rough."
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
 	walltype = "sandstone"
@@ -103,7 +103,7 @@
 
 /turf/simulated/wall/mineral/plasma
 	name = "plasma wall"
-	desc = "A wall with plasma plating. This is definately a bad idea."
+	desc = "A wall with plasma plating. This is definitely a bad idea."
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
 	walltype = "plasma"

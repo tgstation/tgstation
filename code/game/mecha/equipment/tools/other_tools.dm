@@ -205,7 +205,7 @@
 	SSobj.processing.Remove(src)
 	if(chassis)
 		chassis.overlays -= droid_overlay
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M as obj)
 	..()

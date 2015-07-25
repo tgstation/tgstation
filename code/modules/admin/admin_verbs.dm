@@ -98,6 +98,7 @@ var/list/admin_verbs_spawn = list(
 var/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
+	/datum/admins/proc/end_round,
 	/datum/admins/proc/delay,
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
@@ -127,7 +128,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
-	/client/proc/populate_world
+	/client/proc/populate_world,
+	/client/proc/cmd_display_del_log
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -205,7 +207,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/reset_all_tcs,
 	/client/proc/panicbunker,
 	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke
+	/client/proc/toggle_nuke,
+	/client/proc/cmd_display_del_log
 	)
 
 /client/proc/add_admin_verbs()
@@ -582,8 +585,8 @@ var/list/admin_verbs_hideable = list(
 			var/error_extra = ""
 			if(!config.admin_legacy_system)
 				error_extra = " Check mysql DB connection."
-			error("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
 			src << "Error while re-adminning, admin rank ([rank]) does not exist.[error_extra]"
+			WARNING("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
 			return
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]

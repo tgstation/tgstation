@@ -85,7 +85,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		ERROR("There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
+		throw EXCEPTION("requestEvac(): There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
 		return
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
