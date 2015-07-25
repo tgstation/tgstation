@@ -114,7 +114,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 					if(!client)
 						return
 
-					if((contents.len && !allowed_carry)
+					if(contents.len && !allowed_carry)
 						for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
 							if(!(isInTypes(carried_item, canEnterVentWith)))
 								src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
