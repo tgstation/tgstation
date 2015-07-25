@@ -21,6 +21,10 @@ Note: Recent changes by aranclanos+carn:
 	the system is easier to use. update_icons() should not be called unless you absolutely -know- you need it.
 	IN ALL OTHER CASES it's better to just call the specific update_X procs.
 
+Note: The defines for layer numbers is now kept exclusvely in __DEFINES/misc.dm instead of being defined there,
+	then redefined and undefiend everywhere else. If you need to change the layering of sprites (or add a new layer)
+	that's where you should start.
+
 All of this means that this code is more maintainable, faster and still fairly easy to use.
 
 There are several things that need to be remembered:
@@ -47,28 +51,6 @@ If you have any questions/constructive-comments/bugs-to-report
 Please contact me on #coderbus IRC. ~Carnie x
 //Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 */
-// Human Overlays Indexes /////////////////
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_ADJ_LAYER			23
-#define MUTATIONS_LAYER			22		//Tk headglows etc.
-#define AUGMENTS_LAYER			21
-#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			19
-#define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
-#define EARS_LAYER				15
-#define SUIT_LAYER				14
-#define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		11
-#define HAIR_LAYER				10		//TODO: make part of head layer?
-#define BODY_FRONT_LAYER		9
-
-//KEEP THE TOTAL_LAYER DEFINE UPDATED !
-//////////////////////////////////////////
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	//var/race = dna ? dna.mutantrace : null
@@ -509,20 +491,3 @@ Please contact me on #coderbus IRC. ~Carnie x
 				continue
 			out += overlays_standing[i]
 	return out
-
-//Human Overlays Indexes/////////
-#undef SPECIES_LAYER
-#undef BODY_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef UNIFORM_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef HAIR_LAYER
-#undef TOTAL_LAYERS
