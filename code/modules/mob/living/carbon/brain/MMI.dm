@@ -31,6 +31,12 @@
 	else
 		icon_state = "mmi_empty"
 
+/obj/item/device/mmi/Topic(href, href_list)
+	if(href_list["reenter"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			ghost.reenter_corpse(ghost)
+
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
@@ -49,7 +55,7 @@
 			var/mob/dead/observer/ghost = B.get_ghost()
 			if(ghost)
 				if(ghost.client)
-					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI. Return to your body!</span> (Verbs -> Ghost -> Re-enter corpse)"
+					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI!</span> <a href=?src=\ref[src];reenter=1>(Click to enter)</a>"
 					ghost << sound('sound/effects/genetics.ogg')
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
