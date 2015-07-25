@@ -56,7 +56,9 @@
 				if((!S) || (!S.reagents))
 					usr << "<span class='notice'>Thankfully, nothing happens.</span>"
 					return
+				syringes -= S
 				S.reagents.trans_to(user, S.reagents.total_volume)
+				qdel(S)
 				return
 
 		spawn(0) fire_syringe(target,user)
