@@ -5,9 +5,13 @@ var/list/announcement_systems = list()
 	anchored = 1
 	name = "\improper Automated Announcement System"
 	desc = "An automated announcement system that handles minor announcements over the radio."
-	icon = 'icons/obj/machines/announcement_system.dmi'
-	icon_state = "AAS_on_closed"
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "AAS_On"
 	var/obj/item/device/radio/headset/radio
+
+	verb_say = "coldly states"
+	verb_ask = "queries"
+	verb_exclaim = "alarms"
 
 	var/broken = 0
 
@@ -19,9 +23,9 @@ var/list/announcement_systems = list()
 	var/newhead = "%PERSON, %RANK, is the department head."
 	var/newheadToggle = 1
 
-	var/greenlight = "green_light"
-	var/pinklight = "pink_light"
-	var/errorlight = "error_light"
+	var/greenlight = "Light_Green"
+	var/pinklight = "Light_Pink"
+	var/errorlight = "Error_Red"
 
 /obj/machinery/announcement_system/New()
 	..()
@@ -38,9 +42,9 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())
-		icon_state = (panel_open ? "AAS_on_open" : "AAS_on_closed")
+		icon_state = (panel_open ? "AAS_On_Open" : "AAS_On")
 	else
-		icon_state = (panel_open ? "AAS_off_open" : "AAS_off_closed")
+		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
 	overlays.Cut()
@@ -70,11 +74,11 @@ var/list/announcement_systems = list()
 	if(istype(P, /obj/item/weapon/screwdriver))
 		if(!panel_open)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You open the control panel of [src]."
+			user << "<span class='notice'>You open the maintenance hatch of [src].</span>"
 			panel_open = 1
 		else
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "You close the control panel of [src]."
+			user << "<span class='notice'>You close the maintenance hatch of [src].</span>"
 			panel_open = 0
 		update_icon()
 		return
@@ -82,12 +86,12 @@ var/list/announcement_systems = list()
 	if(panel_open)
 		default_deconstruction_crowbar(P)
 		if(istype(P, /obj/item/device/multitool) && broken)
-			user << "You reset [src]'s firmware."
+			user << "<span class='notice'>You reset [src]'s firmware.</span>"
 			broken = 0
 			update_icon()
 
 /obj/machinery/announcement_system/attack_hand(mob/user)
-	if((panel_open || isAI(user)) && can_be_used_by(user))
+	if(can_be_used_by(user))
 		Interact(user)
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
@@ -116,11 +120,11 @@ var/list/announcement_systems = list()
 //config stuff
 
 /obj/machinery/announcement_system/proc/Interact(mob/user)
-	if(!(panel_open || isAI(user)) || !can_be_used_by(user))
+	if(!can_be_used_by(user))
 		return
 
 	if(broken)
-		visible_message("[src] buzzes", "You hear a faint buzz.")
+		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
@@ -133,10 +137,10 @@ var/list/announcement_systems = list()
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
-	if(!(panel_open || isAI(usr)) || !can_be_used_by(usr) || usr.lying || usr.stat || usr.stunned)
+	if(!can_be_used_by(usr) || usr.lying || usr.stat || usr.stunned)
 		return
 	if(broken)
-		visible_message("[src] buzzes", "You hear a faint buzz.")
+		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
@@ -168,7 +172,7 @@ var/list/announcement_systems = list()
 	if(!isAI(user))
 		return
 	if(broken)
-		user << "[src]'s firmware appears to be malfunctioning!"
+		user << "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>"
 		return
 	Interact(user)
 
@@ -176,8 +180,8 @@ var/list/announcement_systems = list()
 	broken = 1
 	update_icon()
 
-	arrival = "#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!"
-	newhead = "OV#RL()D: \[UNKNOWN??\] DET*#CT)D!"
+	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
+	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
