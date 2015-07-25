@@ -21,21 +21,27 @@
 			log_admin("[key_name(src)] has set a memo: [memotext]")
 			message_admins("[key_name_admin(src)] has set a memo:<br>[memotext]")
 		if("Edit")
-			var/DBQuery/query_memolist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")])") //should select all memos there are
-			query_memolist.Execute()
+			var/DBQuery/query_memolist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")]")
+			if(!query_memolist.Execute())
+				var/err = query_memolist.ErrorMsg()
+				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
+				return
+			if(!query_memolist.NextRow())
+				src << "No memos found in database."
+				return
 			var/list/memolist = list()
 			while(query_memolist.NextRow())
 				var/ckey = query_memolist.item[2]
 				memolist += "[ckey]"
-			if(!memolist.len)
-				src << "No memos found in database."
-				return
 			var/target_ckey = input(src, "Select whose memo to edit", "Select memo") as null|anything in memolist
 			if(!target_ckey)
 				return
 			var/target_sql_ckey = sanitizeSQL(target_ckey)
 			var/DBQuery/query_memofind = dbcon.NewQuery("SELECT ckey, memotext FROM [format_table_name("memo")] WHERE (ckey = '[target_sql_ckey]')")
-			query_memofind.Execute()
+			if(!query_memofind.Execute())
+				var/err = query_memofind.ErrorMsg()
+				log_game("SQL ERROR obtaining ckey, memotext from memo table. Error : \[[err]\]\n")
+				return
 			if(query_memofind.NextRow())
 				var/old_memo = query_memofind.item[3]
 				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as null|text
@@ -70,12 +76,19 @@
 				output += "<br>[memotext]</span><br>"
 			src << output
 		if("Remove")
-			var/DBQuery/query_memolist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")])") //should select all memos there are
-			query_memolist.Execute()
-			if(!query_memolist.NextRow())
+			var/DBQuery/query_memodellist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")]")
+			if(!query_memodellist.Execute())
+				var/err = query_memodellist.ErrorMsg()
+				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
+				return
+			if(!query_memodellist.NextRow())
 				src << "No memos found in database."
 				return
-			var/target_ckey = input(src, "Select whose memo to delete", "Select memo") as null|anything in query_memolist //does this work? it's not initialized as an actual list
+			var/list/memolist = list()
+			while(query_memodellist.NextRow())
+				var/ckey = query_memodellist.item[2]
+				memolist += "[ckey]"
+			var/target_ckey = input(src, "Select whose memo to delete", "Select memo") as null|anything in memolist
 			if(!target_ckey)
 				return
 			var/target_sql_ckey = sanitizeSQL(target_ckey)
