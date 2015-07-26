@@ -203,3 +203,12 @@ var/datum/subsystem/air/SSair
 		if (z_level && AM.z != z_level)
 			continue
 		AM.atmosinit()
+
+//this can't be done with setup_atmos_machinery() because
+//	all atmos machinery has to initalize before the first
+//	pipenet can be built.
+/datum/subsystem/air/proc/setup_pipenets(z_level)
+	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
+		if (z_level && AM.z != z_level)
+			continue
+		AM.build_network()
