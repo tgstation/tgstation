@@ -267,7 +267,7 @@ var/global/datum/controller/radio/radio_controller
 
 	else
 		for (var/next_filter in devices)
-			var/list/obj/DDD = devices[next_filter]
+			//var/list/obj/DDD = devices[next_filter]
 			//Nt+=DDD.len
 			for(var/obj/device in devices[next_filter])
 				if(device == source)
