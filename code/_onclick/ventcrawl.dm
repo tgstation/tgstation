@@ -1,60 +1,63 @@
 var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump, /obj/machinery/atmospherics/unary/vent_scrubber)
 
-/mob/living/carbon/human/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery) && w_uniform && istype(w_uniform,/obj/item/clothing/under/contortionist))
+/mob/living/proc/can_ventcrawl()
+	return 0
+
+/mob/living/proc/ventcrawl_carry()
+	for(var/atom/A in src.contents)
+		if(!(isInTypes(A, canEnterVentWith)))
+			src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
+			return 0
+	return 1
+
+// Vent crawling whitelisted items, whoo
+/mob/living
+	var/canEnterVentWith = "/obj/item/weapon/implant=0&/obj/item/clothing/mask/facehugger=0&/obj/item/device/radio/borg=0&/obj/machinery/camera=0"
+
+/mob/living/AltClickOn(var/atom/A)
+	if(is_type_in_list(A,ventcrawl_machinery) && src.can_ventcrawl())
+		src.handle_ventcrawl(A)
+		return 1
+	return ..()
+
+/mob/living/carbon/human/can_ventcrawl()
+	return istype(w_uniform,/obj/item/clothing/under/contortionist)
+
+/mob/living/carbon/human/ventcrawl_carry()
+	if(istype(w_uniform,/obj/item/clothing/under/contortionist))
 		var/obj/item/clothing/under/contortionist/C = w_uniform
-		if(C.check_clothing(src))
-			src.handle_ventcrawl(A,1)
-			return
-	else
-		..(A)
+		return C.check_clothing(src)
+	return 1
 
-/mob/living/carbon/slime/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A)
-		return
-	..(A)
+/mob/living/carbon/slime/can_ventcrawl()
+	return 1
 
-/mob/living/carbon/monkey/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A)
-		return
-	..(A)
+/mob/living/carbon/monkey/can_ventcrawl()
+	return 1
 
-/mob/living/silicon/robot/mommi/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A,1)
-		return
-	..(A)
+/mob/living/silicon/robot/mommi/can_ventcrawl()
+	return 1
 
-/mob/living/simple_animal/borer/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A)
-		return
-	..(A)
+/mob/living/silicon/robot/mommi/ventcrawl_carry()
+	return 1
 
-/mob/living/simple_animal/mouse/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A)
-		return
-	..(A)
+/mob/living/simple_animal/borer/can_ventcrawl()
+	return 1
 
-/mob/living/simple_animal/spiderbot/AltClickOn(var/atom/A)
-	if(is_type_in_list(A,ventcrawl_machinery))
-		src.handle_ventcrawl(A)
-		return
-	..(A)
+/mob/living/simple_animal/mouse/can_ventcrawl()
+	return 1
 
-/mob/living/carbon/alien/AltClickOn(var/atom/A, var/ignore = 0)
-	if(is_type_in_list(A,ventcrawl_machinery) && !ignore)
-		src.handle_ventcrawl(A)
-		return
-	..(A)
+/mob/living/simple_animal/spiderbot/can_ventcrawl()
+	return 1
 
-/mob/living/carbon/alien/humanoid/queen/AltClickOn(var/atom/A)
-	..(A,1)
+/mob/living/carbon/alien/can_ventcrawl()
+	return 1
 
-/mob/living/proc/handle_ventcrawl(var/atom/clicked_on, var/allowed_carry=0) // Allowed carry is 1 if allowed to carry items inside.
+/mob/living/carbon/alien/humanoid/queen/can_ventcrawl()
+	return 0
+
+
+/mob/living/proc/handle_ventcrawl(var/atom/clicked_on)
 	diary << "[src] is ventcrawling."
 	if(!stat)
 		if(!lying)
@@ -114,11 +117,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 					if(!client)
 						return
 
-					if(contents.len && !allowed_carry)
-						for(var/obj/item/carried_item in contents)//If the ventcrawler got on objects.
-							if(!(isInTypes(carried_item, canEnterVentWith)))
-								src << "<SPAN CLASS='warning'>You can't be carrying items or have items equipped when vent crawling!</SPAN>"
-								return
+					if(!ventcrawl_carry())
+						return
 
 					visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
 
