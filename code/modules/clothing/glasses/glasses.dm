@@ -188,11 +188,13 @@
 		..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
-	name = "Optical Meson Scanner"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
-	icon_state = "meson"
+	name = "Chameleon Thermals"
+	desc = "A pair of thermal optic goggles with an onboard chameleon generator. Toggle to disguise."
 	origin_tech = "magnets=3;syndicate=4"
 	flash_protect = -1
+
+/obj/item/clothing/glasses/thermal/syndi/attack_self(mob/user)
+	chameleon(user)
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"
@@ -229,4 +231,28 @@
 	desc = "A sweet pair of red shades."
 	icon_state = "redglasses"
 	item_state = "redglasses"
+
+
+/obj/item/clothing/glasses/proc/chameleon(var/mob/user)
+	var/list/glasses_types = typesof(/obj/item/clothing/glasses) - src.type - /obj/item/clothing/glasses/hud - /obj/item/clothing/glasses/night/shadowling - /obj/item/clothing/glasses/hud/toggle - /obj/item/clothing/glasses
+	var/list/glasses = list()
+
+	// Generate them into a list
+	for(var/glasses_type in glasses_types)
+		var/obj/item/clothing/glasses/S = new glasses_type
+		glasses[capitalize(S.name)] = S
+
+	var/list/show_glasses = list("EXIT" = null) + sortList(glasses) // the list that will be shown to the user to pick from
+
+	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") in show_glasses
+
+	if(user && src in user.contents)
+
+		var/obj/item/clothing/glasses/chosen_glasses = glasses[capitalize(input_glasses)]
+
+		if(chosen_glasses)
+			name = chosen_glasses.name
+			icon_state = chosen_glasses.icon_state
+			item_state = chosen_glasses.item_state
+			desc = chosen_glasses.desc
 

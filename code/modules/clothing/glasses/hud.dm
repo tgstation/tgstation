@@ -46,6 +46,15 @@
 	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 
+/obj/item/clothing/glasses/hud/security/chameleon
+	name = "Chamleon Security HUD"
+	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
+	flash_protect = 1
+
+/obj/item/clothing/glasses/hud/security/chameleon/attack_self(mob/user)
+	chameleon(user)
+
+
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	name = "Eyepatch HUD"
 	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
