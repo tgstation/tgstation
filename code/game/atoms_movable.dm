@@ -13,15 +13,23 @@
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/pass_flags = 0
-	glide_size = 8
+
+	//pixel movement shizwa
+	glide_size = 0
+	animate_movement = 0
+	bound_x = 0
+	bound_y = 0
+	bound_width = 32
+	bound_height = 16
+	step_size = 8
 
 
-/atom/movable/Move(atom/newloc, direct = 0)
+/atom/movable/Move(atom/newloc,var/dir,var/newStep_x,var/newStep_y, direct = 0)
 	if(!loc || !newloc) return 0
 	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
+	if(step_x != newStep_x || step_y != newStep_y)
+		. = ..()
+		/*if (!(direct & (direct - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
 			if (direct & 1)
@@ -45,7 +53,7 @@
 					if (step(src, SOUTH))
 						. = step(src, WEST)
 					else if (step(src, WEST))
-						. = step(src, SOUTH)
+						. = step(src, SOUTH)*/
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0

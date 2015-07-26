@@ -87,17 +87,17 @@
 	return
 
 
-/client/Move(n, direct)
+/client/Move(n,var/dir,var/newStep_x,var/newStep_y, direct)
 	if(!mob)
 		return 0
 	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
-	if(world.time < move_delay)
+	if(world.time < (move_delay-world.fps))
 		return 0
 	if(!isliving(mob))
-		return mob.Move(n,direct)
+		return mob.Move(n,newStep_x,newStep_y,direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return 0
@@ -135,8 +135,6 @@
 		return 0
 
 	if(isturf(mob.loc))
-
-
 		var/turf/T = mob.loc
 		move_delay = world.time//set move delay
 
@@ -189,15 +187,15 @@
 				else
 					for(var/mob/M in L)
 						M.other_mobs = 1
-						if(mob != M)
-							M.animate_movement = 3
+						//if(mob != M)
+							//M.animate_movement = 3
 					for(var/mob/M in L)
 						spawn( 0 )
 							step(M, direct)
 							return
 						spawn( 1 )
 							M.other_mobs = null
-							M.animate_movement = 2
+							//M.animate_movement = 2
 							return
 
 		if(mob.confused && IsEven(world.time))
