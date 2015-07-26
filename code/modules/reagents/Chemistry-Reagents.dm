@@ -4892,4 +4892,4 @@ var/global/list/tonio_doesnt_remove=list(
 	description = "You like sports, and you don't care who knows."
 	sport = 5
 	color = "#CCFF66" //rgb: 204, 255, 51
-	custom_metabolism = .02
+	custom_metabolism =  0.01

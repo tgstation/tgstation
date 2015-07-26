@@ -20,6 +20,7 @@
 	var/tick_power = 0 //How much power did we produce last count?
 	var/power_efficiency = 1 //Based on parts
 	component_parts = newlist(
+		/obj/item/weapon/circuitboard/treadmill,
 		/obj/item/weapon/stock_parts/capacitor,
 		/obj/item/weapon/stock_parts/capacitor,
 		/obj/item/weapon/stock_parts/capacitor,
