@@ -295,18 +295,20 @@
 			return 0
 	return 1
 
-/obj/item/weapon/gun/energy/decloner/alien
+/obj/item/weapon/gun/energy/alien
+	name = "alien pistol"
+	desc = "A complicated gun that fires bursts of high-intensity radiation."
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = /obj/item/device/firing_pin/alien
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
-
-/obj/item/weapon/gun/energy/decloner/alien/update_icon() // No charge levels
-	return
+	origin_tech = "combat=5;materials=4;powerstorage=3"
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"
+	icon_state = "alienpaper_words"
 	info = {"<b>Dissection for Dummies</b><br>
+
 <br>
  1.Acquire fresh specimen.<br>
  2.Put the specimen on operating table<br>
@@ -322,6 +324,9 @@
 <br>
 Congratulations! You are now trained for xenobiology research!"}
 
+/obj/item/weapon/paper/abductor/update_icon()
+	return
+
 #define BATON_STUN 0
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
@@ -333,7 +338,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "wonderprod"
+	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=6;combat=5;biotech=7"
@@ -360,13 +365,17 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
 		if(BATON_STUN)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodStun"
+			item_state = "wonderprodStun"
 		if(BATON_SLEEP)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodSleep"
+			item_state = "wonderprodSleep"
 		if(BATON_CUFF)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodCuff"
+			item_state = "wonderprodCuff"
 		if(BATON_PROBE)
-			icon_state = "wonderprod"
+			icon_state = "wonderprodProbe"
+			item_state = "wonderprodProbe"
 
 /obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
 	if(!ishuman(user))

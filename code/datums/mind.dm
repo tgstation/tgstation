@@ -63,7 +63,8 @@
 
 /datum/mind/proc/transfer_to(mob/living/new_character)
 	if(!istype(new_character))
-		ERROR("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform coderbus")
+		throw EXCEPTION("transfer_to(): new_character must be mob/living")
+		return
 
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
@@ -1490,7 +1491,8 @@
 		if(ticker)
 			ticker.minds += mind
 		else
-			ERROR("mind_initialize(): No ticker ready yet! Please inform coderbus")
+			spawn(0)
+				throw EXCEPTION("mind_initialize(): No ticker ready")
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 

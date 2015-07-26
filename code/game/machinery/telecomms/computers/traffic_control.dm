@@ -143,7 +143,7 @@
 		if(auth)
 			id = "[auth.registered_name] ([auth.assignment])"
 		else
-			ERROR("There is a null auth while the user isn't a silicon! ([user.name], [user.type])")
+			throw EXCEPTION("null auth while the user isn't a silicon")
 			return
 	access_log += "\[[get_timestamp()]\] [id] [entry]"
 

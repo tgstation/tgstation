@@ -15,6 +15,7 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 	step_energy_drain = 3
+	var/datum/action/mecha/mech_overload_mode/overload_action = new
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
@@ -51,26 +52,6 @@
 	cell.maxcharge = 30000
 
 
-/obj/mecha/combat/gygax/verb/overload()
-	set category = "Exosuit Interface"
-	set name = "Toggle leg actuators overload"
-	set src = usr.loc
-	set popup_menu = 0
-	if(!can_use(usr))
-		return
-	if(overload)
-		overload = 0
-		step_in = initial(step_in)
-		step_energy_drain = initial(step_energy_drain)
-		src.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
-	else
-		overload = 1
-		step_in = min(1, round(step_in/2))
-		step_energy_drain = step_energy_drain*overload_coeff
-		src.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
-	src.log_message("Toggled leg actuators overload.")
-	return
-
 /obj/mecha/combat/gygax/domove(direction)
 	if(!..())
 		return
@@ -85,22 +66,51 @@
 
 /obj/mecha/combat/gygax/get_stats_part()
 	var/output = ..()
-	output += "<b>Leg actuators overload: [overload?"on":"off"]</b>"
+	output += "<b>Leg actuators overload:</b> [overload?"on":"off"]"
 	return output
 
-/obj/mecha/combat/gygax/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a>
-						</div>
-						</div>
-						"}
-	output += ..()
+/obj/mecha/combat/gygax/dark/get_stats_part()
+	var/output = ..()
+	output += "<br><b>Thrusters:</b> [thrusters?"on":"off"]"
 	return output
 
-/obj/mecha/combat/gygax/Topic(href, href_list)
+/obj/mecha/combat/gygax/GrantActions(var/mob/living/user, var/human_occupant = 0)
 	..()
-	if (href_list["toggle_leg_overload"])
-		src.overload()
-	return
+	overload_action.chassis = src
+	overload_action.Grant(user)
+
+/obj/mecha/combat/gygax/dark/GrantActions(var/mob/living/user, var/human_occupant = 0)
+	..()
+	thrusters_action.chassis = src
+	thrusters_action.Grant(user)
+
+
+/obj/mecha/combat/gygax/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+	..()
+	overload_action.Remove(user)
+
+/obj/mecha/combat/gygax/dark/RemoveActions(var/mob/living/user, var/human_occupant = 0)
+	..()
+	thrusters_action.Remove(user)
+
+/datum/action/mecha/mech_overload_mode
+	name = "Toggle leg actuators overload"
+	button_icon_state = "mech_overload_off"
+
+/datum/action/mecha/mech_overload_mode/Activate()
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	var/obj/mecha/combat/gygax/G = chassis
+	G.overload = !G.overload
+	button_icon_state = "mech_overload_[G.overload ? "on" : "off"]"
+	G.log_message("Toggled leg actuators overload.")
+	if(G.overload)
+		G.overload = 1
+		G.step_in = min(1, round(G.step_in/2))
+		G.step_energy_drain = G.step_energy_drain*G.overload_coeff
+		G.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
+	else
+		G.overload = 0
+		G.step_in = initial(G.step_in)
+		G.step_energy_drain = initial(G.step_energy_drain)
+		G.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")

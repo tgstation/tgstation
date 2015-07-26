@@ -133,7 +133,8 @@
 		else
 			src << "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
-			ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
+			spawn(0)
+				throw EXCEPTION("Borg MMI lacked a brainmob")
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
@@ -876,16 +877,16 @@
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
 								cleaned_human.head.clean_blood()
-								cleaned_human.update_inv_head(0)
+								cleaned_human.update_inv_head()
 							if(cleaned_human.wear_suit)
 								cleaned_human.wear_suit.clean_blood()
-								cleaned_human.update_inv_wear_suit(0)
+								cleaned_human.update_inv_wear_suit()
 							else if(cleaned_human.w_uniform)
 								cleaned_human.w_uniform.clean_blood()
-								cleaned_human.update_inv_w_uniform(0)
+								cleaned_human.update_inv_w_uniform()
 							if(cleaned_human.shoes)
 								cleaned_human.shoes.clean_blood()
-								cleaned_human.update_inv_shoes(0)
+								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return

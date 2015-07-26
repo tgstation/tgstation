@@ -34,6 +34,13 @@
 		. = ..()
 	return
 
+/obj/mecha/combat/phazon/get_stats_part()
+	var/output = ..()
+	output += {"<b>Phasing:</b> [phasing?"on":"off"]<br>
+				<b>Damage Type:</b> [damtype]
+					"}
+	return output
+
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
 		occupant_message("Unable to interact with objects while phasing")
@@ -58,7 +65,7 @@
 
 /datum/action/mecha/mech_switch_damtype
 	name = "Reconfigure arm microtool arrays"
-	button_icon_state = "mech_switch_damtype"
+	button_icon_state = "mech_damtype_brute"
 
 /datum/action/mecha/mech_switch_damtype/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -76,16 +83,19 @@
 			new_damtype = "tox"
 			P.occupant_message("A bone-chillingly thick plasteel needle protracts from the exosuit's palm.")
 	P.damtype = new_damtype.
+	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
 
 
 /datum/action/mecha/mech_toggle_phasing
-	name = "Enable Phasing"
-	button_icon_state = "mech_toggle_phasing"
+	name = "Toggle Phasing"
+	button_icon_state = "mech_phasing_off"
 
 /datum/action/mecha/mech_toggle_phasing/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/phazon/P = chassis
 	P.phasing = !P.phasing
+	button_icon_state = "mech_phasing_[P.phasing ? "on" : "off"]"
 	P.occupant_message("<font color=\"[P.phasing?"#00f\">En":"#f00\">Dis"]abled phasing.</font>")
+

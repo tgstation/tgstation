@@ -420,6 +420,12 @@
 
 		open_machine()
 
+/obj/machinery/dna_scannernew/Topic(href, href_list)
+	if(href_list["reenter"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			ghost.reenter_corpse(ghost)
+
 /obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
 		return 0
@@ -435,7 +441,7 @@
 
 			var/mob/dead/observer/ghost = occupant.get_ghost()
 			if(ghost)
-				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
+				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned! <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 				ghost << sound('sound/effects/genetics.ogg')
 	return 1
 

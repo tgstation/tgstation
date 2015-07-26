@@ -23,6 +23,16 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	category = CAT_FOOD
 
+/datum/table_recipe/corgiburger
+	name = "Corgi burger"
+	reqs = list(
+			/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/corgi
+	category = CAT_FOOD
+
 /datum/table_recipe/appendixburger
 	name = "Appendix burger"
 	reqs = list(

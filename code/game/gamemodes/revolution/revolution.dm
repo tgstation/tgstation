@@ -244,14 +244,19 @@
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
-	if(rev_mind in revolutionaries)
+	var/remove_head = 0
+	if(beingborged && (rev_mind in head_revolutionaries))
+		head_revolutionaries -= rev_mind
+		remove_head = 1
+
+	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
 		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
 
 		if(beingborged)
-			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</FONT></span>"
-			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a member of the revolution.")
+			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>"
+			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
 			rev_mind.current.Paralyse(5)

@@ -19,7 +19,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
-		var/volume = (timer <= 10 ? 30 : 5) // Tick louder when the bomb is closer to being detonated.
+		var/volume = (timer <= 10 ? 40 : 10) // Tick louder when the bomb is closer to being detonated.
 		playsound(loc, beepsound, volume, 0)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
@@ -188,7 +188,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src),2,5,11, flame_range = 11)
+	explosion(get_turf(src),3,9,17, flame_range = 17)
 	if(src.loc && istype(src.loc,/obj/machinery/syndicatebomb/))
 		qdel(src.loc)
 	qdel(src)

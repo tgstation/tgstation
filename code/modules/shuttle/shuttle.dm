@@ -222,7 +222,8 @@
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
 	if(canDock(S))
-		ERROR("[type](\"[name]\") cannot dock at [S]\")")
+		. = 1
+		throw EXCEPTION("request(): shuttle cannot dock")
 		return 1	//we can't dock at S
 
 	switch(mode)
@@ -294,7 +295,7 @@
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
 	. = canDock(S1)
 	if(.)
-		ERROR("[type](\"[name]\") cannot dock at [S1]")
+		throw EXCEPTION("dock(): shuttle cannot dock")
 		return .
 
 	if(canMove())
@@ -344,18 +345,6 @@
 		if(!T1)
 			continue
 
-
-		//lighting stuff
-		T1.redraw_lighting()
-		SSair.remove_from_active(T1)
-		T1.CalculateAdjacentTurfs()
-		SSair.add_to_active(T1,1)
-
-		T0.redraw_lighting()
-		SSair.remove_from_active(T0)
-		T0.CalculateAdjacentTurfs()
-		SSair.add_to_active(T0,1)
-
 		T0.copyTurf(T1)
 		areaInstance.contents += T1
 
@@ -403,9 +392,23 @@
 					if(!M.buckled)
 						M.Weaken(3)
 
-		T0.ChangeTurf(turf_type)
+
 		if (rotation)
 			T1.shuttleRotate(rotation)
+
+		//lighting stuff
+		T1.redraw_lighting()
+		SSair.remove_from_active(T1)
+		T1.CalculateAdjacentTurfs()
+		SSair.add_to_active(T1,1)
+
+		T0.ChangeTurf(turf_type)
+
+		T0.redraw_lighting()
+		SSair.remove_from_active(T0)
+		T0.CalculateAdjacentTurfs()
+		SSair.add_to_active(T0,1)
+
 	loc = S1.loc
 	dir = S1.dir
 

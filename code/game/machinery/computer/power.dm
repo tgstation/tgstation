@@ -68,19 +68,35 @@
 
 			t += "Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
+			var/list/S = list("<SPAN class='bad'> Off</SPAN>","<SPAN class='bad'>AOff</SPAN>","<SPAN class='good'>  On</SPAN>", "<SPAN class='good'> AOn</SPAN>")
+			var/list/chg = list("<SPAN class='bad'>N</SPAN>","<SPAN class='average'>C</SPAN>","<SPAN class='good'>F</SPAN>")
+
+			var/percent = 0
+			var/c = ""
 
 			for(var/obj/machinery/power/apc/A in L)
 
-				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+				t += copytext(add_tspace("[format_text(A.area.name)]", 30), 1, 30)
+				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]"
+
+				if (A.cell)
+					percent = round(A.cell.percent())
+
+					c = "bad"
+					if (percent > 50)
+						c = "good"
+					else if (percent > 25)
+						c = "average"
+
+					t += "<SPAN class='[c]'>[add_lspace(percent, 4)]%</SPAN> [chg[A.charging+1]]<BR>"
+				else
+					t += "   N/C<BR>"
 
 		t += "</FONT></PRE>"
 
 	//user << browse(t, "window=powcomp;size=420x900")
 	//onclose(user, "powcomp")
-	var/datum/browser/popup = new(user, "powcomp", name, 420, 450)
+	var/datum/browser/popup = new(user, "powcomp", name, 500, 450)
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
