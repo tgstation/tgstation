@@ -611,7 +611,6 @@ var/list/uplink_items = list()
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 11
-	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
