@@ -114,6 +114,8 @@
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	_color = "clown"
+
+	var/step_sound = "clownstep"
 	var/footstep = 1	//used for squeeks whilst walking
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
@@ -123,11 +125,104 @@
 		if(H.m_intent == "run")
 			if(footstep > 1)
 				footstep = 0
-				playsound(H, "clownstep", 50, 1) // this will get annoying very fast.
+				playsound(H, step_sound, 50, 1) // this will get annoying very fast.
 			else
 				footstep++
 		else
-			playsound(H, "clownstep", 20, 1)
+			playsound(H, step_sound, 20, 1)
+
+#define CLOWNSHOES_RANDOM_SOUND "random sound"
+
+/obj/item/clothing/shoes/clown_shoes/advanced
+	name = "advanced clown shoes"
+	desc = "Only granted to the most devout followers of Honkmother."
+	icon_state = "superclown"
+	item_state = "superclown"
+	flags = NOSLIP
+	var/list/sound_list = list(
+		"Clown squeak" = "clownstep",
+		"Bike horn" = 'sound/items/bikehorn.ogg',
+		"Air horn" = 'sound/items/AirHorn.ogg',
+		"Chewing" = 'sound/items/eatfood.ogg',
+		"Polaroid" = "polaroid",
+		"Gunshot" = 'sound/weapons/Gunshot.ogg',
+		"Ion gun" = 'sound/weapons/ion.ogg',
+		"Laser gun" = 'sound/weapons/Laser.ogg',
+		"Punch" = "punch",
+		"Shotgun" = 'sound/weapons/shotgun.ogg',
+		"Taser" = 'sound/weapons/Taser.ogg',
+		"Male scream" = "malescream",
+		"Female scream" = "femalescream",
+		"Sad trombone" = 'sound/misc/sadtrombone.ogg',
+		"Awooga" = 'sound/effects/awooga.ogg',
+		"Bubbles" = 'sound/effects/bubbles.ogg',
+		"EMP pulse" = 'sound/effects/EMPulse.ogg',
+		"Explosion" = "explosion",
+		"Glass" = 'sound/effects/glass_step.ogg',
+		"Mouse squeak" = 'sound/effects/mousesqueek.ogg',
+		"Meteor impact" = 'sound/effects/meteorimpact.ogg',
+		"Supermatter" = 'sound/effects/supermatter.ogg',
+		"Emitter" = 'sound/weapons/emitter.ogg',
+		"Laughter" = 'sound/effects/laughtrack.ogg',
+		"Mecha step" = 'sound/mecha/mechstep.ogg',
+		"Fart" = 'sound/misc/fart.ogg',
+		"Random" = CLOWNSHOES_RANDOM_SOUND)
+	var/random_sound = 0
+
+/obj/item/clothing/shoes/clown_shoes/advanced/attack_self(mob/user)
+	if(user.mind && user.mind.assigned_role != "Clown")
+		user << "<span class='danger'>These shoes are too powerful for you to handle!</span>"
+		if(prob(25))
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H << sound('sound/items/AirHorn.ogg')
+				H << "<font color='red' size='7'>HONK</font>"
+				H.sleeping = 0
+				H.stuttering += 20
+				H.ear_deaf += 30
+				H.Weaken(3) //Copied from honkerblast 5000
+				if(prob(30))
+					H.Stun(10)
+					H.Paralyse(4)
+				else
+					H.Jitter(500)
+		return
+
+	var/new_sound = input(user,"Select the new step sound!","Advanced clown shoes") in sound_list
+
+	if(Adjacent(user))
+		if(step_sound == CLOWNSHOES_RANDOM_SOUND)
+			step_sound = "clownstep"
+			user << "<span class='sinister'>You set [src]'s step sound to always be random!</span>"
+			random_sound = 1
+		else
+			step_sound = sound_list[new_sound]
+			user << "<span class='sinister'>You set [src]'s step sound to \"[new_sound]\"!</span>"
+			random_sound = 0
+
+/obj/item/clothing/shoes/clown_shoes/advanced/verb/ChangeSound()
+	set category = "Object"
+	set name = "Change Sound"
+
+	return src.attack_self(usr)
+
+/obj/item/clothing/shoes/clown_shoes/advanced/step_action()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+
+		if(H.mind && H.mind.assigned_role != "Clown")
+			if( ( H.mind.assigned_role == "Mime" ) )
+				playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
+				H.Stun(3)
+				H.Weaken(2)
+
+			return
+
+		if(random_sound)
+			step_sound = sound_list[pick(sound_list)]
+	..()
+
+#undef CLOWNSHOES_RANDOM_SOUND
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

@@ -10,6 +10,9 @@ var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pagetur
 var/list/mechstep_sound = list('sound/mecha/mechstep1.ogg', 'sound/mecha/mechstep2.ogg')
 var/list/gib_sound = list('sound/effects/gib1.ogg', 'sound/effects/gib2.ogg', 'sound/effects/gib3.ogg')
 var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voice/mommi_comment2.ogg', 'sound/voice/mommi_comment3.ogg', 'sound/voice/mommi_comment5.ogg', 'sound/voice/mommi_comment6.ogg', 'sound/voice/mommi_comment7.ogg', 'sound/voice/mommi_comment8.ogg')
+var/list/polaroid_sound = list('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg')
+var/list/male_scream_sound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg')
+var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
 //var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 
 //gas_modified controls if a sound is affected by how much gas there is in the atmosphere of the source
@@ -146,5 +149,8 @@ var/const/SURROUND_CAP = 7
 			if ("mechstep") soundin = pick(mechstep_sound)
 			if ("gib") soundin = pick(gib_sound)
 			if ("mommicomment") soundin = pick(mommicomment_sound)
+			if ("polaroid") soundin = pick(polaroid_sound)
+			if ("malescream") soundin = pick(male_scream_sound)
+			if ("femalescream") soundin = pick(female_scream_sound)
 			//if ("gunshot") soundin = pick(gun_sound)
 	return soundin
