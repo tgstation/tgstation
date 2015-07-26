@@ -241,6 +241,18 @@
 	..()
 	return
 	
+/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
+	if(iscarbon(M))
+		if(method == TOUCH)
+			if(show_message)
+				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+		if(method == INGEST)
+			if(show_message)
+				M << "<span class='notice'>That tasted horrible.</span>"
+			M.AdjustStunned(2)
+			M.AdjustWeakened(2)
+	..()
+	return
 	
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
 	if(iscarbon(M))

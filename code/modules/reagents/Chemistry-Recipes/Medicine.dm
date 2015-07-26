@@ -69,8 +69,8 @@
 	name = "Miner's Salve"
 	id = "mine_salve"
 	result = "mine_salve"
-	required_reagents = list("plasma" = 1, "water" = 1, "iron" = 1)
-	result_amount = 5
+	required_reagents = list("plasma" = 5, "iron" = 5, "sugar" = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
+	result_amount = 15
 
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"
