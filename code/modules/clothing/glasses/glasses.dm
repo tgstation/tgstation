@@ -234,25 +234,53 @@
 
 
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
-	var/list/glasses_types = typesof(/obj/item/clothing/glasses) - src.type - /obj/item/clothing/glasses/hud - /obj/item/clothing/glasses/night/shadowling - /obj/item/clothing/glasses/hud/toggle - /obj/item/clothing/glasses
-	var/list/glasses = list()
-
-	// Generate them into a list
-	for(var/glasses_type in glasses_types)
-		var/obj/item/clothing/glasses/S = new glasses_type
-		glasses[capitalize(S.name)] = S
-
-	var/list/show_glasses = list("EXIT" = null) + sortList(glasses) // the list that will be shown to the user to pick from
-
-	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") in show_glasses
+	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")
 
 	if(user && src in user.contents)
-
-		var/obj/item/clothing/glasses/chosen_glasses = glasses[capitalize(input_glasses)]
-
-		if(chosen_glasses)
-			name = chosen_glasses.name
-			icon_state = chosen_glasses.icon_state
-			item_state = chosen_glasses.item_state
-			desc = chosen_glasses.desc
-
+		switch(input_glasses)
+			if("Sunglasses")
+				desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
+				name = "sunglasses"
+				icon_state = "sun"
+				item_state = "sunglasses"
+			if("Medical HUD")	
+				name = "Health Scanner HUD"
+				desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+				icon_state = "healthhud"
+				item_state = "healthhud"
+			if("Mesons")
+				name = "Optical Meson Scanner"
+				desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
+				icon_state = "meson"
+				item_state = "meson"
+			if("Science Goggles")	
+				name = "Science Goggles"
+				desc = "A pair of snazzy goggles used to protect against chemical spills."
+				icon_state = "purple"
+				item_state = "glasses"	
+			if("Glasses")
+				name = "Prescription Glasses"
+				desc = "Made by Nerd. Co."
+				icon_state = "glasses"
+				item_state = "glasses"
+			if("Security Sunglasses")
+				name = "HUDSunglasses"
+				desc = "Sunglasses with a HUD."
+				icon_state = "sunhud"
+				item_state = "sunglasses"
+			if("Eyepatch")
+				name = "eyepatch"
+				desc = "Yarr."
+				icon_state = "eyepatch"
+				item_state = "eyepatch"
+			if("Welding")
+				name = "welding goggles"
+				desc = "Protects the eyes from welders; approved by the mad scientist association."
+				icon_state = "welding-g"
+				item_state = "welding-g"
+			if("Gar")
+				desc = "Just who the hell do you think I am?!"
+				name = "gar glasses"
+				icon_state = "gar"
+				item_state = "gar"
+				
