@@ -77,6 +77,8 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
 
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
@@ -89,6 +91,8 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
+			S.poison_type = poison_type
+			S.poison_per_bite = poison_per_bite
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -105,6 +109,8 @@
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
 
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
@@ -189,6 +195,8 @@
 			if(!grow_as)
 				grow_as = pick(typesof(/mob/living/simple_animal/hostile/poison/giant_spider))
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
+			S.poison_per_bite = poison_per_bite
+			S.poison_type = poison_type
 			if(player_spiders)
 				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 
