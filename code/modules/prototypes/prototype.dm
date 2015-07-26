@@ -229,6 +229,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /datum/prototype/effect/glass_fill
 	var/chem_id = "milk"
+	message = "Extends a vapour condensator."
 
 /datum/prototype/effect/glass_fill/turf_effect(var/turf/target)
 	for(var/obj/item/weapon/reagent_containers/glass/G in target)
@@ -245,7 +246,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	message = "emits a high-pitched sound."
 /datum/prototype/effect/glassbreak/turf_effect(var/turf/target)
 	for(var/obj/structure/window/W in target)
-		W.hit(40)
+		W.hit(50)
 
 /datum/prototype/effect/transmute/turf_effect(var/turf/target)
 	for(var/obj/item/stack/sheet/metal/S in target)
@@ -437,7 +438,6 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	flick_overlay(I,list(user.client),50)
 	return
 
-
 //Targeting datums
 /datum/prototype/target
 	var/cooldown_multiplier = 1
@@ -545,6 +545,14 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 			targets |= current
 	return targets
 
+/datum/prototype/target/aim/get_targets(mob/user)
+	var/list/targets = list()
+	for(var/mob/living/M in view(owner))
+		targets |= M
+		for(var/turf/T in range(1,M))
+			targets |= T
+	return targets
+
 /obj/structure/prototype
 	name = "Prototype"
 	desc = "Who knows what it does"
@@ -588,7 +596,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		target = new /datum/prototype/target(src)
 
 /obj/structure/prototype/random/New()
-	name = "Prototype [pick("A","B","C","D")]"
+	name = "Prototype [pick("Alpha","Omega","Zero","X")]"
 
 	var/acttype = pick(typesof(/datum/prototype/activator)-/datum/prototype/activator)
 	var/efftype = pick(typesof(/datum/prototype/effect)-/datum/prototype/effect)
@@ -607,8 +615,8 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	var/block = "A"
 
 /obj/item/protoboard/New()
-	block = pick("A","B","C","D","E","F","G")
-	var/list/block_colors = list("A"="#7f6240","B"="#269954","C"="#3385cc","D"="#ee00ff","E"="#f27979","F"="#ffcc00","G"="#00331b")
+	block = pick("A","B","C","D","E","F","G","H")
+	var/list/block_colors = list("A"="#7f6240","B"="#269954","C"="#3385cc","D"="#ee00ff","E"="#f27979","F"="#ffcc00","G"="#00331b","H"="#000000")
 	desc = initial(desc)+" Has a [block] stamp in the corner."
 	color = block_colors[block]
 
