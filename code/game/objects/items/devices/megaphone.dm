@@ -20,7 +20,8 @@
 	if(!ishuman(user) && (!isrobot(user) || isMoMMI(user))) //Non-humans can't use it, borgs can, mommis can't
 		user << "<span class='warning'>You don't know how to use this!</span>"
 		return
-	if(ishuman(user) && (user:miming || user:silent)) //Humans get their muteness checked
+	var/mob/living/carbon/human/H = user
+	if(istype(H) && (H.miming || H.silent)) //Humans get their muteness checked
 		user << "<span class='warning'>You find yourself unable to speak at all.</span>"
 		return
 	if(spamcheck)
