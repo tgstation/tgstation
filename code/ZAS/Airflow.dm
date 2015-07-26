@@ -51,7 +51,7 @@ atom/movable/RepelAirflowDest(n)
 mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/airflow_stun() called tick#: [world.time]")
-	if(stat == 2)
+	if(stat == 2 || (flags & INVULNERABLE))
 		return 0
 	if(last_airflow_stun > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_stun_cooldown))	return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
@@ -71,7 +71,7 @@ mob/living/carbon/metroid/airflow_stun()
 
 mob/living/carbon/human/airflow_stun()
 	if(last_airflow_stun > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_stun_cooldown))	return 0
-	if(buckled) return 0
+	if(buckled || (flags & INVULNERABLE)) return 0
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
@@ -101,6 +101,9 @@ mob/dead/observer/check_airflow_movable()
 	return 0
 
 mob/living/silicon/check_airflow_movable()
+	return 0
+
+mob/virtualhearer/check_airflow_movable()
 	return 0
 
 
@@ -256,14 +259,16 @@ proc/AirflowSpace(zone/A)
 	if(airflow_dest == loc)
 		return
 	if(ismob(src))
-		if(src:status_flags & GODMODE)
+		var/mob/M = src
+		if(M.status_flags & GODMODE || (flags & INVULNERABLE))
 			return
 		if(istype(src, /mob/living/carbon/human))
-			if(src:buckled)
+			var/mob/living/carbon/human/H = src
+			if(H.buckled)
 				return
-			if(src:shoes)
-				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
-					if(src:shoes:magpulse)
+			if(H.shoes)
+				if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
+					if(H.shoes.flags & NOSLIP)
 						return
 		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
@@ -316,14 +321,16 @@ proc/AirflowSpace(zone/A)
 	if(airflow_dest == loc)
 		step_away(src,loc)
 	if(ismob(src))
-		if(src:status_flags & GODMODE)
+		var/mob/M = src
+		if(M.status_flags & GODMODE || (flags & INVULNERABLE))
 			return
 		if(istype(src, /mob/living/carbon/human))
-			if(src:buckled)
+			var/mob/living/carbon/human/H = src
+			if(H.buckled)
 				return
-			if(src:shoes)
-				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
-					if(src:shoes.flags & NOSLIP)
+			if(H.shoes)
+				if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
+					if(H.shoes.flags & NOSLIP)
 						return
 		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
 		last_airflow = world.time

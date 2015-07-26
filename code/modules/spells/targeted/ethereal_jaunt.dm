@@ -30,6 +30,8 @@
 	var/mobloc = get_turf(target)
 	var/previncorp = target.incorporeal_move //This shouldn't ever matter under usual circumstances
 	var/prevalpha = target.alpha
+	if(target.incorporeal_move == 3) //they're already jaunting, we have another fix for this but this is sane)
+		return
 	if(target.buckled)
 		target.buckled.unbuckle()
 	//Begin jaunting with an animation
@@ -44,6 +46,10 @@
 	target.invisibility = INVISIBILITY_MAXIMUM
 	target.flags |= INVULNERABLE
 	target.alpha = 125 //Spoopy mode to know you are jaunting
+	for(var/obj/screen/movable/spell_master/SM in target.spell_masters)
+		SM.silence_spells(duration+25)
+	target.delayNextAttack(duration+25)
+	target.click_delayer.setDelay(duration+25)
 	sleep(duration)
 	//Begin unjaunting
 	mobloc = get_turf(target)
@@ -52,12 +58,15 @@
 		steam.set_up(10, 0, mobloc)
 		steam.start()
 	target.delayNextMove(25)
+	target.dir = SOUTH
 	sleep(20)
 	anim(location = mobloc, target = target, a_icon = 'icons/mob/mob.dmi', flick_anim = exitanim, direction = target.dir, name = "water")
 	sleep(5)
 	//Forcemove him onto the tile and make him visible and vulnerable
 	target.forceMove(mobloc)
 	target.invisibility = 0
+	for(var/obj/screen/movable/spell_master/SM in target.spell_masters)
+		SM.silence_spells(0)
 	target.flags &= ~INVULNERABLE
 	target.incorporeal_move = previncorp
 	target.alpha = prevalpha

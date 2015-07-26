@@ -32,6 +32,8 @@ proc/process_med_hud(var/mob/M, var/mob/eye)
 	else
 		T = get_turf(M)
 	for(var/mob/living/carbon/human/patient in range(T))
+		if(M.see_invisible < patient.invisibility)
+			continue
 		var/foundVirus = 0
 		for(var/datum/disease/D in patient.viruses)
 			if(!D.hidden[SCANNER])
@@ -76,6 +78,8 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 	else
 		T = get_turf(M)
 	for(var/mob/living/carbon/human/perp in range(T))
+		if(M.see_invisible < perp.invisibility)
+			continue
 		holder = perp.hud_list[ID_HUD]
 		if(!holder)
 			continue
