@@ -231,7 +231,7 @@
 	if(!frequency)
 		return
 
-	var/datum/signal/signal = new
+	var/datum/signal/signal = getFromDPool(/datum/signal)
 	signal.data["tag"] = smelter_tag
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
@@ -376,7 +376,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/send_signal(list/data)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mineral/processing_unit/proc/send_signal() called tick#: [world.time]")
-	var/datum/signal/signal = new
+	var/datum/signal/signal = getFromDPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 	signal.data["tag"] = id_tag
