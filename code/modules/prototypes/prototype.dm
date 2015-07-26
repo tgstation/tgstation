@@ -25,18 +25,20 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	return 0
 
 /datum/prototype/activator/proc/activate(user,type)
- if(activate_check(user,type) && owner.cooldown<world.time)
- 	log_game("[key_name(user)] activated prototype with [owner.effect.type] effect at ([owner.x], [owner.y], [owner.z]).")
- 	owner.cooldown = world.time + owner.effect.cooldown * owner.target.cooldown_multiplier
- 	owner.visible_message("<span class='warning'>[owner] activates!</span>")
- 	owner.visible_message("<span class='warning'>[owner] [owner.effect.message]</span>")
- 	if(owner.effect.no_target)
- 		owner.effect.activate(user)
- 	var/list/targets = owner.target.get_targets(user)
- 	if(targets)
- 		for(var/T in targets)
- 			owner.effect.apply(T)
- else
+	if(owner.cooldown<world.time)
+		if(activate_check(user,type))
+			log_game("[key_name(user)] activated prototype with [owner.effect.type] effect at ([owner.x], [owner.y], [owner.z]).")
+			owner.cooldown = world.time + owner.effect.cooldown * owner.target.cooldown_multiplier
+			owner.visible_message("<span class='warning'>[owner] activates!</span>")
+			owner.visible_message("<span class='warning'>[owner] [owner.effect.message]</span>")
+			if(owner.effect.no_target)
+				owner.effect.activate(user)
+			var/list/targets = owner.target.get_targets(user)
+			if(targets)
+				for(var/T in targets)
+					owner.effect.apply(T)
+	else
+		user << "<span class='notice'>[owner] is recharging.</span>"
 
 
 /datum/prototype/activator/simple/activate_check(user,type)
@@ -410,36 +412,42 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		if(cur_dir & WEST)
 			counts["W"]++
 	var/final = ""
-	final += counts["N"]>counts["S"]?"N":"S"
-	final += counts["E"]>counts["W"]?"E":"W"
+	var/max_value = max(counts["N"],counts["S"],counts["E"],counts["W"]) //I love byond
+	for(var/i=1,i<=counts.len,i++)
+		final = counts[i]
+		if(counts[final] == max_value)
+			break
 	var/image/I = image('icons/misc/mark.dmi',owner,"basic",FLOAT_LAYER)
 	var/matrix/M = matrix()
 	switch(final)
-		if("NE")
-			user << "<span class='notice'>The [owner] points north-east.</span>"
-			M.Turn(45)
-			I.transform = M 
-		if("NW")
-			user << "<span class='notice'>The [owner] points north-west.</span>"
-			M.Turn(-45)
+		if("N")
+			user << "<span class='notice'>The [owner] points north.</span>"
+		if("S")
+			user << "<span class='notice'>The [owner] points south.</span>"
+			M.Turn(180)
 			I.transform = M
-		if("SW")
-			user << "<span class='notice'>The [owner] points south-west.</span>"
-			M.Turn(-135)
+		if("W")
+			user << "<span class='notice'>The [owner] points west.</span>"
+			M.Turn(-90)
 			I.transform = M
-		if("SE")
-			user << "<span class='notice'>The [owner] points south-east.</span>"
-			M.Turn(135)
+		if("E")
+			user << "<span class='notice'>The [owner] points east.</span>"
+			M.Turn(90)
 			I.transform = M
 	flick_overlay(I,list(user.client),50)
 	return
+
 
 //Targeting datums
 /datum/prototype/target
 	var/cooldown_multiplier = 1
 
 /datum/prototype/target/proc/get_targets(mob/user)
-	return list(user,get_turf(user))
+	var/list/targets = list()
+	targets += user
+	for(var/turf/T in range(1,get_turf(owner)))
+		targets += T
+	return targets
 
 /datum/prototype/target/range
 	var/power = 1
@@ -540,8 +548,8 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 /obj/structure/prototype
 	name = "Prototype"
 	desc = "Who knows what it does"
-	icon = 'icons/obj/objects.dmi'
-	icon_state	= "borgcharger1(old)"
+	icon = 'icons/obj/machines/research.dmi'
+	icon_state	= "prototype"
 	density = 1
 
 	var/datum/prototype/activator/activator = null
@@ -600,19 +608,25 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /obj/item/protoboard/New()
 	block = pick("A","B","C","D","E","F","G")
+	var/list/block_colors = list("A"="#7f6240","B"="#269954","C"="#3385cc","D"="#ee00ff","E"="#f27979","F"="#ffcc00","G"="#00331b")
 	desc = initial(desc)+" Has a [block] stamp in the corner."
+	color = block_colors[block]
+
 
 /obj/item/protochassis
 	name = "prototype chassis"
 	desc = "work in progress"
-	icon = 'icons/obj/objects.dmi'
-	icon_state	= "borgcharger0(old)"
+	icon = 'icons/obj/machines/research.dmi'
+	icon_state	= "prototype_o"
 
 	var/list/effect_boards = list(null,null,null)
 	var/list/target_boards = list(null,null,null)
 
 /obj/item/protochassis/attackby(obj/item/W,mob/living/user, params)
 	if(istype(W,/obj/item/weapon/screwdriver))
+		if(!isturf(loc))
+			user << "span class='warning'>[src] must be on the floor to be finished.</span>"
+			return
 		var/effect = ""
 		var/target = ""
 		for(var/i=1,i<=3,i++)
@@ -623,10 +637,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 				var/obj/item/protoboard/board = effect_boards[i]
 				effect += board.block
 		for(var/i=1,i<=3,i++)
-			if(!target_boards[i])
-				user << "<span class='notice'>[src] is not complete yet!</span>"
-				return
-			else
+			if(target_boards[i])
 				var/obj/item/protoboard/board = target_boards[i]
 				target += board.block
 		user << "<span class='notice'>You finish the prototype.</span>"
@@ -734,7 +745,6 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 				target_boards[d] = I
 		interact()
 		return
-
 
 /obj/item/weapon/relic/attackby(obj/item/W,mob/living/user, params)
 	if(istype(W,/obj/item/weapon/screwdriver))
