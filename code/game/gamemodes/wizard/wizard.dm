@@ -248,6 +248,18 @@
 		qdel(spell_to_remove)
 		mind.spell_list -= spell_to_remove
 
+/datum/mind/proc/add_spell(var/obj/effect/proc_holder/spell/spell) //To add a specific spell to a mind
+	if(!spell)
+		return
+	spell_list += new spell
+
+/datum/mind/proc/remove_spell(var/obj/effect/proc_holder/spell/spell) //To remove a specific spell from a mind
+	if(!spell) return
+	for(var/obj/effect/proc_holder/spell/S in spell_list)
+		if(istype(S, spell))
+			qdel(S)
+			spell_list -= S
+
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/casting()
