@@ -176,6 +176,7 @@ var/datum/subsystem/air/SSair
 	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
+		T.excited = 0
 		if(!T.blocks_air)
 			T.update_visuals()
 			for(var/direction in cardinal)
