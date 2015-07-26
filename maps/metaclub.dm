@@ -22,10 +22,7 @@
 		/datum/zLevel/mining,
 		/datum/zLevel/space{
 			name = "spaceEmpty1" ;
-			},
-		/datum/zLevel/space{
-			name = "spaceEmpty2" ;
-			},
+			}
 		)
 
 ////////////////////////////////////////////////////////////////
