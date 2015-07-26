@@ -2,7 +2,7 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air
 	name = "Air"
-	priority = 20
+	priority = -3
 	wait = 5
 	dynamic_wait = 1
 	dwait_upper = 50
@@ -55,10 +55,9 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/Initialize(timeofday, zlevel)
 	setup_atmos_machinery(zlevel)
-	..()
-
-/datum/subsystem/air/AfterInitialize(zlevel)
 	setup_allturfs(zlevel)
+	setup_pipenets(zlevel)
+	..()
 
 #define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
 /datum/subsystem/air/fire()
