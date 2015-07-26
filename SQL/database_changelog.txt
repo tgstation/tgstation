@@ -1,3 +1,15 @@
+19 July 2015, by Jordie0608
+
+Added new table 'memo' for use with admin memos.
+
+To create this new table run the following command:
+
+CREATE TABLE `memo` (`id` int(11) NOT NULL AUTO_INCREMENT, `ckey` varchar(32) NOT NULL, `memotext` text NOT NULL, `timestamp` datetime NOT NULL, `last_editor` varchar(32), `edits` text, PRIMARY KEY (`id`))
+
+Remember to add prefix to the table name if you use them.
+
+----------------------------------------------------
+
 7 July 2015, by MrStonedOne
 
 Removed the privacy poll and related table. Existing codebases may safely delete the privacy table after updating:

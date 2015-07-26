@@ -35,18 +35,19 @@
 
 /obj/mecha/combat/durand/get_stats_part()
 	var/output = ..()
-	output += "<b>Defence mode: [defence?"on":"off"]</b>"
+	output += "<b>Defence mode:</b> [defence?"on":"off"]"
 	return output
 
 /datum/action/mecha/mech_defence_mode
 	name = "Toggle Defense Mode"
-	button_icon_state = "mech_toggle_defense_mode"
+	button_icon_state = "mech_defense_mode_off"
 
 /datum/action/mecha/mech_defence_mode/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/durand/D = chassis
 	D.defence = !D.defence
+	button_icon_state = "mech_defense_mode_[D.defence ? "on" : "off"]"
 	if(D.defence)
 		D.deflect_chance = D.defence_deflect
 		D.occupant_message("<span class='notice'>You enable [D] defence mode.</span>")

@@ -133,13 +133,17 @@
 	equipment.Cut()
 	cell = null
 	internal_tank = null
-	qdel(cabin_air)
+	if(loc)
+		loc.assume_air(cabin_air)
+		air_update_turf()
+	else
+		del(cabin_air)
 	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
 
 	mechas_list -= src //global mech list
-	..()
+	return ..()
 
 ////////////////////////
 ////// Helpers /////////
@@ -234,6 +238,7 @@
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
 				if(loc)
 					loc.assume_air(leaked_gas)
+					air_update_turf()
 				else
 					del(leaked_gas)
 
@@ -921,23 +926,20 @@ var/year_integer = text2num(year) // = 2013???
 
 /datum/action/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
-	button_icon_state = "mech_toggle_internals"
+	button_icon_state = "mech_internals_off"
 
 /datum/action/mecha/mech_toggle_internals/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.use_internal_tank = !chassis.use_internal_tank
-	if(chassis.use_internal_tank)
-		button_icon_state = "mech_toggle_internals_on"
-	else
-		button_icon_state = "mech_toggle_internals"
+	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.occupant_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 
 
 /datum/action/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
-	button_icon_state = "mech_cycle_equip"
+	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/mecha/mech_cycle_equip/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -949,6 +951,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.selected = chassis.equipment[1]
 		chassis.occupant_message("You select [chassis.selected]")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
+		button_icon_state = "mech_cycle_equip_on"
 		return
 	var/number = 0
 	for(var/A in chassis.equipment)
@@ -957,16 +960,18 @@ var/year_integer = text2num(year) // = 2013???
 			if(chassis.equipment.len == number)
 				chassis.selected = null
 				chassis.occupant_message("You switch to no equipment")
+				button_icon_state = "mech_cycle_equip_off"
 			else
 				chassis.selected = chassis.equipment[number+1]
 				chassis.occupant_message("You switch to [chassis.selected]")
+				button_icon_state = "mech_cycle_equip_on"
 			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 			return
 
 
 /datum/action/mecha/mech_toggle_lights
 	name = "Toggle Lights"
-	button_icon_state = "mech_toggle_lights"
+	button_icon_state = "mech_lights_off"
 
 /datum/action/mecha/mech_toggle_lights/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -974,10 +979,10 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.lights = !chassis.lights
 	if(chassis.lights)
 		chassis.AddLuminosity(chassis.lights_power)
-		button_icon_state = "mech_toggle_lights_on"
+		button_icon_state = "mech_lights_on"
 	else
 		chassis.AddLuminosity(-chassis.lights_power)
-		button_icon_state = "mech_toggle_lights"
+		button_icon_state = "mech_lights_off"
 	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
 

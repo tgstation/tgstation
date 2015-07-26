@@ -223,33 +223,36 @@
 
 /obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user, params)
 
-	if(!anchored && isturf(loc))
-		if(istype(W, /obj/item/weapon/wrench))
-			anchored = 1
+	if(istype(W, /obj/item/weapon/wrench) && isturf(loc))
+		if(isinspace())
+			user << "<span class='warning'>You can't secure [src] here.</span>"
+			return
+		anchored = !anchored
+		if(anchored)
 			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			return 1
-	else
-		if(istype(W, /obj/item/weapon/wrench))
-			anchored = 0
+		else
 			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			return 1
+		return 1
 
-		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
-			var/obj/item/stack/sheet/S = W
-			if(S.use(2))
-				glass_type = W.type
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
-				if(tracker)
-					new /obj/machinery/power/tracker(get_turf(src), src)
-				else
-					new /obj/machinery/power/solar(get_turf(src), src)
+	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+		if(!anchored)
+			user << "<span class='warning'>You need to secure the assembly before you can add glass.</span>"
+			return
+		var/obj/item/stack/sheet/S = W
+		if(S.use(2))
+			glass_type = W.type
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
+			if(tracker)
+				new /obj/machinery/power/tracker(get_turf(src), src)
 			else
-				user << "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>"
-				return
-			return 1
+				new /obj/machinery/power/solar(get_turf(src), src)
+		else
+			user << "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>"
+			return
+		return 1
 
 	if(!tracker)
 		if(istype(W, /obj/item/weapon/tracker_electronics))

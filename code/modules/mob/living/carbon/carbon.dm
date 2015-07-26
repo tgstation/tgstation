@@ -433,13 +433,13 @@ var/const/GALOSHES_DONT_HELP = 8
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
 					buckled.unbuckle_mob()
-				update_inv_handcuffed(0)
+				update_inv_handcuffed()
 				return
 			if(legcuffed)
 				legcuffed.loc = loc
 				legcuffed.dropped()
 				legcuffed = null
-				update_inv_legcuffed(0)
+				update_inv_legcuffed()
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
@@ -456,11 +456,11 @@ var/const/GALOSHES_DONT_HELP = 8
 
 			if(handcuffed)
 				handcuffed = null
-				update_inv_handcuffed(0)
+				update_inv_handcuffed()
 				return
 			else
 				legcuffed = null
-				update_inv_legcuffed(0)
+				update_inv_legcuffed()
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
@@ -470,7 +470,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob()
-		update_inv_handcuffed(0)
+		update_inv_handcuffed()
 		if (client)
 			client.screen -= W
 		if (W)
@@ -481,7 +481,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
-		update_inv_legcuffed(0)
+		update_inv_legcuffed()
 		if (client)
 			client.screen -= W
 		if (W)

@@ -21,7 +21,8 @@
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
 		message_admins("WARNING: Maximum number of gangs have been exceeded!")
-		ERROR("WARNING: Maximum number of gangs have been exceeded!")
+		throw EXCEPTION("Maximum number of gangs has been exceeded")
+		return
 	else
 		color = pick(gang_colors_pool)
 		gang_colors_pool -= color
@@ -90,7 +91,7 @@
 			if("Leather Overcoats")
 				outfit_path = /obj/item/clothing/suit/jacket/leather/overcoat
 			if("Military Jackets")
-				outfit_path = /obj/item/clothing/suit/miljacket
+				outfit_path = /obj/item/clothing/suit/jacket/miljacket
 			if("Soviet Uniforms")
 				outfit_path = /obj/item/clothing/under/soviet
 			if("Tactical Turtlenecks")
