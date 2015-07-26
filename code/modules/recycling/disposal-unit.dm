@@ -106,10 +106,12 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
+	if(target.buckled)
+		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(user == target)
 		user.visible_message("[user] starts climbing into [src].", \
 								"<span class='notice'>You start climbing into [src]...</span>")
@@ -117,7 +119,7 @@
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
 								"<span class='userdanger'>[user] starts putting you into [src]!</span>")
 	if(do_mob(user, target, 20))
-		if (!src.loc)
+		if (!loc)
 			return
 		if (target.client)
 			target.client.perspective = EYE_PERSPECTIVE
@@ -205,18 +207,23 @@
 /obj/machinery/disposal/proc/flush()
 	flushing = 1
 	flushAnimation()
-	var/obj/structure/disposalholder/H = new()
-	newHolderDestination(H)
 	sleep(10)
 	if(last_sound < world.time + 1)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		last_sound = world.time
 	sleep(5)
+	if(gc_destroyed)
+		return
+	var/obj/structure/disposalholder/H = new()
+	newHolderDestination(H)
 	H.init(src)
 	air_contents = new()
 	H.start(src)
 	flushing = 0
 	flush = 0
+
+/obj/machinery/disposal/bin/flush()
+	..()
 	if(mode == 2)
 		mode = 1
 	update()
@@ -254,21 +261,6 @@
 
 		H.vent_gas(loc)
 		qdel(H)
-
-/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0)
-	if (istype(mover,/obj/item) && mover.throwing)
-		var/obj/item/I = mover
-		if(istype(I, /obj/item/projectile))
-			return
-		if(prob(75))
-			I.loc = src
-			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
-			update()
-		else
-			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
-		return 0
-	else
-		return ..(mover, target, height)
 
 /obj/machinery/disposal/Deconstruct()
 	if(stored)
@@ -396,6 +388,21 @@
 		eject()
 	return
 
+/obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
+	if (istype(mover,/obj/item) && mover.throwing)
+		var/obj/item/I = mover
+		if(istype(I, /obj/item/projectile))
+			return
+		if(prob(75))
+			I.loc = src
+			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
+			update()
+		else
+			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
+		return 0
+	else
+		return ..(mover, target, height)
+
 /obj/machinery/disposal/bin/update()
 	overlays.Cut()
 	if(stat & BROKEN)
@@ -475,12 +482,14 @@
 	return
 
 
+//Delivery Chute
 
 /obj/machinery/disposal/deliveryChute
 	name = "delivery chute"
 	desc = "A chute for big and small packages alike!"
 	density = 1
 	icon_state = "intake"
+	mode = 0 // the chute doesn't need charging and always works
 
 /obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
 	..()
@@ -508,6 +517,9 @@
 		O.loc = src
 	else if(istype(AM, /mob))
 		var/mob/M = AM
+		if(prob(2)) // to prevent mobs being stuck in infinite loops
+			M << "<span class='warning'>You hit the edge of the chute.</span>"
+			return
 		M.loc = src
 	flush()
 
@@ -515,6 +527,9 @@
 	return 1
 
 /obj/item/projectile/disposalEnterTry()
+	return
+
+/obj/effect/disposalEnterTry()
 	return
 
 /obj/mecha/disposalEnterTry()

@@ -284,7 +284,7 @@
 				AM.pipe_eject(direction)
 				spawn(1)
 					if(AM)
-						AM.throw_at(target, 100, 1)
+						AM.throw_at(target, 10, 1)
 
 	else	// no specified direction, so throw in random direction
 

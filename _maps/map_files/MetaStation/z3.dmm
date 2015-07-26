@@ -136,7 +136,7 @@
 "cF" = (/obj/machinery/vending/snack,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cG" = (/obj/machinery/vending/cola,/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cH" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
-"cI" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 4},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
+"cI" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk{dir = 4},/turf/simulated/floor/plasteel/airless,/area/tcommsat/chamber)
 "cJ" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall/r_wall,/area/tcommsat/chamber)
 "cK" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall/r_wall,/area/space)
 "cL" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/grille{density = 0; icon_state = "brokengrille"},/turf/simulated/floor/plating/airless,/area/space)
