@@ -71,6 +71,8 @@
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/solar_control
 
+//Tcomms
+
 /datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
 	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
@@ -111,3 +113,44 @@
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/message_monitor
 
+//Best engine (design wise)
+
+/datum/design/rust_gyrotron_control
+	name = "Circuit Design (R-UST Mk. 7 gyrotron controller)"
+	desc = "Allows for the construction of circuit boards used to build a gyrotron control console for the R-UST Mk. 7 fusion engine."
+	id = "rust_gyrotron_control"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Misc"
+	build_path = "/obj/item/weapon/circuitboard/rust_gyrotron_control"
+
+/datum/design/rust_fuel_control
+	name = "Circuit Design (R-UST Mk. 7 fuel controller)"
+	desc = "Allows for the construction of circuit boards used to build a fuel injector control console for the R-UST Mk. 7 fusion engine."
+	id = "rust_fuel_control"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Misc"
+	build_path = "/obj/item/weapon/circuitboard/rust_fuel_control"
+
+/datum/design/rust_core_monitor
+	name = "Circuit Design (R-UST Mk. 7 core monitor)"
+	desc = "Allows for the construction of circuit boards used to build a core monitoring console for the R-UST Mk. 7 fusion engine."
+	id = "rust_core_monitor"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Misc"
+	build_path = "/obj/item/weapon/circuitboard/rust_core_monitor"
+
+/datum/design/rust_core_control
+	name = "Circuit Design (R-UST Mk. 7 core controller)"
+	desc = "Allows for the construction of circuit boards used to build a core control console for the R-UST Mk. 7 fusion engine."
+	id = "rust_core_control"
+	req_tech = list("programming" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Misc"
+	build_path = "/obj/item/weapon/circuitboard/rust_core_control"

@@ -1,4 +1,4 @@
-I//RIPLEY
+//RIPLEY
 
 /datum/design/ripley_main
 	name = "Circuit Design (APLU \"Ripley\" Central Control module)"
