@@ -27,6 +27,7 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	see_in_dark = 8
+	bloodcrawl = 2
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/playstyle_string = "<B>You are the Slaughter Demon, a terible creature from another existence. You have a single desire: To kill.  \
 						You may Ctrl+Click on blood pools to travel through them, appearing and dissaapearing from the station at will. \
