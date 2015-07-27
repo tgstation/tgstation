@@ -98,6 +98,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /datum/prototype/effect/spawner
 	var/path = /mob/living/simple_animal/mouse
+	message = "universal constructor activates."
 	no_target = 1
 
 /datum/prototype/effect/spawner/activate(mob/user)
@@ -154,6 +155,10 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 /datum/prototype/effect/boombox/human_effect(mob/living/carbon/human/target)
 	target << 'sound/effects/Explosion1.ogg'
 
+
+/datum/prototype/effect/tamer/human_effect(mob/living/carbon/human/target)
+	mob_effect(target)
+
 /datum/prototype/effect/tamer/mob_effect(mob/target)
 	target.faction |= "neutral"
 	target << "<span class='notice'>You feel calm.</span>"
@@ -173,11 +178,16 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		if(target.unEquip(target.head))
 			target << "<span class='warning'>Your headgear suddenly falls off!</span>"
 
+/datum/prototype/effect/growth
+	message = "sprays something into the air."
 /datum/prototype/effect/growth/turf_effect(turf/target)
 	for(var/obj/machinery/hydroponics/H in target)
 		H.adjustWater(100)
 		H.adjustNutri(10)
 		H.update_icon()
+
+/datum/prototype/effect/bolt
+	message = "pings."
 
 /datum/prototype/effect/bolt/turf_effect(var/turf/target)
 	for(var/obj/machinery/door/airlock/A in target)
@@ -205,6 +215,8 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	else
 		target << "<span class='notice'>Meow?</span>"
 
+/datum/prototype/effect/powergen
+	message = "hums loudly."
 /datum/prototype/effect/powergen/turf_effect(turf/target)
 	for(var/obj/machinery/power/apc/A in target)
 		A.cell.give(1000)
@@ -214,6 +226,8 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	target << "<span class='notice'>You feel eveything is going to be alright.</span>"
 	flick_overlay(image('icons/mob/animal.dmi',target,"heart-ani2",MOB_LAYER+1), list(target.client), 20)
 
+/datum/prototype/effect/robofixer
+	message = "sprays something into the air."
 /datum/prototype/effect/robofixer/mob_effect(mob/target)
 	if(isrobot(target))
 		var/mob/living/silicon/robot/R = target
@@ -430,6 +444,112 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 			I.transform = M
 	flick_overlay(I,list(user.client),50)
 	return
+
+/obj/effect/rift
+	name = "tear in the fabric of reality"
+	desc = "You should run now."
+	icon = 'icons/obj/biomass.dmi'
+	icon_state = "rift"
+	density = 1
+	unacidable = 1
+	anchored = 1.0
+	var/list/turf_paths = list()
+	var/list/mob_paths = list()
+	var/mobs_per_wave = 2
+	var/current_wave = 0
+	var/max_waves = 7
+	var/wave_delay = 450
+	var/wave_time = 0
+	var/obj/item/device/assembly/signaler/rift/aSignal = null
+
+/obj/effect/rift/attackby(obj/item/W,mob/living/user, params)
+	if(istype(W,/obj/item/weapon/nullrod))
+		for(var/obj/item/I in src)
+			I.loc = src.loc
+		user << "<span class='notice'>You disperse the [src] with the power of the [W]!</span>"
+		Neutralize()
+		
+	if(istype(W, /obj/item/device/analyzer))
+		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [aSignal.code]:[format_frequency(aSignal.frequency)].</span>"
+
+/obj/effect/rift/proc/wave(wave)
+	current_wave++
+	if(current_wave == max_waves)
+		SSobj.processing.Remove(src)
+		return
+	for(var/turf/T in circlerange(src,wave))
+		T.ChangeTurf(pick(turf_paths))
+	for(var/i=0,i<mobs_per_wave,i++)
+		var/mob_p = pick(mob_paths)
+		new mob_p(get_turf(src))
+
+/obj/effect/rift/proc/Neutralize()
+	visible_message("<span class='warning'>[src] collapses!</span>")
+	SSobj.processing.Remove(src)
+	qdel(src)
+
+/obj/effect/rift/Destroy()
+	qdel(aSignal)
+	..()
+
+/obj/effect/rift/New()
+	wave_time = world.time + wave_delay
+	SSobj.processing |= src
+
+	aSignal = new(src)
+	aSignal.code = rand(1,100)
+
+	aSignal.frequency = rand(1200, 1599)
+	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
+		aSignal.frequency++
+
+/obj/effect/rift/process()
+	if(world.time >= wave_time)
+		wave(current_wave)
+		wave_time = world.time + wave_delay
+
+/obj/item/device/assembly/signaler/rift
+	name = "rift signaler"
+	desc = "You probably shouldn't see this"
+
+/obj/item/device/assembly/signaler/rift/receive_signal(datum/signal/signal)
+	if(!signal)
+		return 0
+	if(signal.encryption != code)
+		return 0
+	var/obj/effect/rift/R = src.loc
+	if(!istype(R))
+		qdel(src)
+	else
+		R.Neutralize()
+
+/obj/effect/rift/cult
+	turf_paths = list(/turf/simulated/floor/engine/cult)
+	mob_paths =  list(/mob/living/simple_animal/hostile/faithless) //replace with constructs when they get turned into /hostile
+	mobs_per_wave = 1
+/obj/effect/rift/hivebot
+	turf_paths = list(/turf/simulated/floor/bluegrid,/turf/simulated/floor/greengrid)
+	mob_paths =  list(/mob/living/simple_animal/hostile/hivebot,/mob/living/simple_animal/hostile/hivebot/range,/mob/living/simple_animal/hostile/hivebot/strong)
+	mobs_per_wave = 3
+
+/obj/effect/rift/alien
+	turf_paths = list(/turf/simulated/floor/plating/asteroid)
+	mob_paths =  list(/mob/living/simple_animal/hostile/alien,/mob/living/simple_animal/hostile/alien/drone,/mob/living/simple_animal/hostile/alien/sentinel,/mob/living/simple_animal/hostile/alien/queen)
+	mobs_per_wave = 1
+
+/datum/prototype/effect/rift
+	no_target = 1
+	cooldown = 3000
+	message = "bluespace synchronizer activates."
+	var/list/rift_types = list(/obj/effect/rift/cult,/obj/effect/rift/hivebot,/obj/effect/rift/alien)
+
+/datum/prototype/effect/rift/activate(mob/user)
+	var/list/targets = list()
+	for(var/turf/T in range(1,get_turf(owner)))
+		targets += T
+	var/turf/T = pick(targets)
+	var/rift_type = pick(rift_types)
+	new rift_type(T)
 
 //Targeting datums
 /datum/prototype/target
