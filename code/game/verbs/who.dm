@@ -15,6 +15,9 @@
 				var/entry = "\t[C.key]"
 				if(C.holder && C.holder.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
+				if (isnewplayer(C.mob))
+					entry += " - <font color='darkgray'><b>In Lobby</b></font>"
+				else
 					entry += " - Playing as [C.mob.real_name]"
 					switch(C.mob.stat)
 						if(UNCONSCIOUS)
@@ -30,7 +33,7 @@
 								entry += " - <font color='black'><b>DEAD</b></font>"
 					if(is_special_character(C.mob))
 						entry += " - <b><font color='red'>Antagonist</font></b>"
-					entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
+				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins
 			for(var/client/C in clients)
