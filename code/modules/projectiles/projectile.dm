@@ -209,7 +209,7 @@
 				if(((original && original.layer>=2.75) || ismob(original)))
 					if(loc == get_turf(original))
 						if(!(original in permutated))
-							Bump(original)
+							Bump(original, 1)
 				Range()
 				sleep(max(1, speed))
 	else
