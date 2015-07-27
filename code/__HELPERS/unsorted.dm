@@ -672,7 +672,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, stealth = 0) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -691,7 +691,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(user && user.client)
 				user.client.images -= progbar
 			return 0
-		if ( user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if (!uninterruptible && (user.loc != user_loc || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying ))
 			if(user && user.client)
 				user.client.images -= progbar
 			return 0
@@ -1288,13 +1288,13 @@ var/list/WALLITEMS = list(
 	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
 	if(!ismob(target) || target.lying)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
-		return
+		return FACING_FAILED
 	if(initator.dir == target.dir) //mobs are facing the same direction
-		return 1
-	if(initator.dir + 4 == target.dir || initator.dir - 4 == target.dir) //mobs are facing each other
-		return 2
+		return FACING_SAME_DIR
+	if(is_A_facing_B(initator,target) && is_A_facing_B(target,initator)) //mobs are facing each other
+		return FACING_EACHOTHER
 	if(initator.dir + 2 == target.dir || initator.dir - 2 == target.dir || initator.dir + 6 == target.dir || initator.dir - 6 == target.dir) //Initating mob is looking at the target, while the target mob is looking in a direction perpendicular to the 1st
-		return 3
+		return FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR
 
 /proc/random_step(atom/movable/AM, steps, chance)
 	var/initial_chance = chance
@@ -1342,3 +1342,55 @@ var/list/WALLITEMS = list(
 		return 1
 	return 0
 
+
+
+//Get the dir to the RIGHT of dir if they were on a clock
+//NORTH --> NORTHEAST
+/proc/get_clockwise_dir(dir)
+	. = angle2dir(dir2angle(dir)+45)
+
+//Get the dir to the LEFT of dir if they were on a clock
+//NORTH --> NORTHWEST
+/proc/get_anticlockwise_dir(dir)
+	. = angle2dir(dir2angle(dir)-45)
+
+
+//Compare A's dir, the clockwise dir of A and the anticlockwise dir of A
+//To the opposite dir of the dir returned by get_dir(B,A)
+//If one of them is a match, then A is facing B
+/proc/is_A_facing_B(atom/A,atom/B)
+	if(!istype(A) || !istype(B))
+		return 0
+	if(istype(A, /mob/living))
+		var/mob/living/LA = A
+		if(LA.lying)
+			return 0
+	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
+	var/clockwise_A_dir = get_clockwise_dir(A.dir)
+	var/anticlockwise_A_dir = get_anticlockwise_dir(B.dir)
+
+	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
+		return 1
+	return 0
+
+
+/*
+rough example of the "cone" made by the 3 dirs checked
+
+ B
+  \
+   \
+    >
+      <
+       \
+        \
+B --><-- A
+        /
+       /
+      <
+     >
+    /
+   /
+ B
+
+*/

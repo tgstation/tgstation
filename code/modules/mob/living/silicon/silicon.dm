@@ -422,12 +422,13 @@
 /mob/living/silicon/setEarDamage()
 	return
 
-/mob/living/silicon/check_eye_prot()
-	return 2
-
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
 
 /mob/living/silicon/grabbedby(mob/living/user)
 	return
+
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+	if(affect_silicon)
+		return ..()

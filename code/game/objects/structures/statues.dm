@@ -199,10 +199,20 @@
 
 
 /obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
+	var/burn = FALSE
 	if(istype(Proj,/obj/item/projectile/beam))
 		PlasmaBurn(2500)
+		burn = TRUE
 	else if(istype(Proj,/obj/item/projectile/ion))
 		PlasmaBurn(500)
+		burn = TRUE
+	if(burn)
+		if(Proj.firer)
+			message_admins("Plasma statue ignited by [key_name_admin(Proj.firer)](<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("Plasma statue ignited by [key_name(Proj.firer)] in ([x],[y],[z])")
+		else
+			message_admins("Plasma statue ignited by [Proj]. No known firer.(<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("Plasma statue ignited by [Proj] in ([x],[y],[z]). No known firer.")	
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)

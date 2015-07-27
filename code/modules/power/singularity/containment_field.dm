@@ -43,7 +43,7 @@
 
 /obj/machinery/field/containment/Crossed(obj/mover)
 	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
-		bump(mover)
+		bump_field(mover)
 
 /obj/machinery/field/containment/proc/set_master(master1,master2)
 	if(!master1 || !master2)
@@ -77,7 +77,7 @@
 	if((istype(mover, /obj/machinery) && !istype(mover, /obj/singularity)) || \
 		istype(mover, /obj/structure) || \
 		istype(mover, /obj/mecha))
-		bump(mover)
+		bump_field(mover)
 		return 0
 	return ..()
 
@@ -106,13 +106,13 @@
 			"<span class='italics'>You hear an electrical crack.</span>")
 
 		user.updatehealth()
-		bump(user)
+		bump_field(user)
 
 		spawn(5)
 			hasShocked = 0
 	return
 
-/obj/machinery/field/proc/bump(atom/movable/AM as mob|obj)
+/obj/machinery/field/proc/bump_field(atom/movable/AM as mob|obj)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, AM.loc)
 	s.start()

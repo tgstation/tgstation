@@ -18,7 +18,9 @@
 		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
 			H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)
-			reagents.reaction(H, INGEST)
+			if(reagents.total_volume)
+				var/fraction = min(a_transfer/reagents.total_volume, 1)
+				reagents.reaction(H, INGEST, fraction)
 			reagents.trans_id_to(H, "radium", a_transfer)
 			H << "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>"
 		a_boost--

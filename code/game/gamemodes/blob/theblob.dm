@@ -183,7 +183,8 @@
 
 /obj/effect/blob/proc/change_to(type)
 	if(!ispath(type))
-		ERROR("[type] is an invalid type for the blob.")
+		throw EXCEPTION("change_to(): invalid type for blob")
+		return
 	var/obj/effect/blob/B = new type(src.loc)
 	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
 		B.color = color

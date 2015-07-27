@@ -82,11 +82,11 @@
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...
 		leaping = 1
 		update_icons()
-		throw_at(A,MAX_ALIEN_LEAP_DIST,1)
+		throw_at(A,MAX_ALIEN_LEAP_DIST,1, spin=0, diagonals_first = 1)
 		leaping = 0
 		update_icons()
 
-/mob/living/carbon/alien/humanoid/hunter/throw_impact(A)
+/mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/A)
 
 	if(!leaping)
 		return ..()
@@ -103,14 +103,14 @@
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
-		else
+		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
 			weakened = 2
 
 		if(leaping)
 			leaping = 0
+			update_icons()
 			update_canmove()
-
 
 
 /mob/living/carbon/alien/humanoid/float(on)
@@ -119,44 +119,3 @@
 	..()
 
 
-//Modified throw_at() that will use diagonal dirs where appropriate
-//instead of locking it to cardinal dirs
-/mob/living/carbon/alien/humanoid/throw_at(atom/target, range, speed)
-	if(!target || !src || (flags & NODROP))	return 0
-
-	src.throwing = 1
-
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dist_travelled = 0
-	var/dist_since_sleep = 0
-
-	var/tdist_x = dist_x;
-	var/tdist_y = dist_y;
-
-	if(dist_x <= dist_y)
-		tdist_x = dist_y;
-		tdist_y = dist_x;
-
-	var/error = tdist_x/2 - tdist_y
-	while(target && (((((dist_x > dist_y) && ((src.x < target.x) || (src.x > target.x))) || ((dist_x <= dist_y) && ((src.y < target.y) || (src.y > target.y))) || (src.x > target.x)) && dist_travelled < range) || !has_gravity(src)))
-
-		if(!src.throwing) break
-		if(!istype(src.loc, /turf)) break
-
-		var/atom/step = get_step(src, get_dir(src,target))
-		if(!step)
-			break
-		src.Move(step, get_dir(src, step))
-		hit_check()
-		error += (error < 0) ? tdist_x : -tdist_y;
-		dist_travelled++
-		dist_since_sleep++
-		if(dist_since_sleep >= speed)
-			dist_since_sleep = 0
-			sleep(1)
-
-
-	src.throwing = 0
-
-	return 1

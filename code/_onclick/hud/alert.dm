@@ -63,7 +63,7 @@
 	var/obj/screen/alert/path_as_obj = text2path("/obj/screen/alert/[id]")
 	// BYOND magic-fu - we'll be storing a path in this reference and retrieving vars from it.
 	if(!path_as_obj)
-		ERROR("[src] threw alert [category] with invalid path /obj/screen/alert/[id]")
+		throw EXCEPTION("throw_alert(): Invalid screen alert path") //check for obj/screen/alert/[id]
 		return 0
 	alert.name = initial(path_as_obj.name)
 	alert.desc = initial(path_as_obj.desc)
@@ -227,6 +227,13 @@ office by your AI master or any qualified human may resolve this matter. Robotic
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
 so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
+
+//MECHS
+
+/obj/screen/alert/low_mech_integrity
+	name = "Mech Damaged"
+	desc = "Mech integrity is low."
+
 
 //OBJECT-BASED
 

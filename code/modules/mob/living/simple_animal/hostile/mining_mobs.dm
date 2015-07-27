@@ -468,26 +468,21 @@
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
-			var/obj/mecha/D = target
+			var/obj/mecha/working/ripley/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption["brute"] > 0.3)
+			if(D.hides < 3)
+				D.hides++
 				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
-				if(D.icon_state == "ripley-open")
-					D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-open")
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				D.update_icon()
+				if(D.hides == 3)
+					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 				else
-					user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
-				if(damage_absorption.["brute"] == 0.3)
-					if(D.icon_state == "ripley-open")
-						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
-						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
-					else
-						user << "<span class='warning'>You can't add armour onto the mech while someone is inside!</span>"
+					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				qdel(src)
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return
