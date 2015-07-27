@@ -30,10 +30,17 @@
 	if(target_list.len && target_list[traitor]) // Is a double agent
 
 		// Assassinate
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = traitor
-		kill_objective.target = target_list[traitor]
-		traitor.objectives += kill_objective
+		var/datum/mind/target_mind = target_list[traitor]
+		if(issilicon(target_mind.current))
+			var/datum/objective/destroy/destroy_objective = new
+			destroy_objective.owner = traitor
+			destroy_objective.target = target_mind
+			traitor.objectives += destroy_objective
+		else
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.target = target_mind
+			traitor.objectives += kill_objective
 
 		// Escape
 		if(issilicon(traitor.current))
