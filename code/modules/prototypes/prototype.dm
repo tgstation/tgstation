@@ -70,22 +70,20 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	return
 
 //Effects proper
-/datum/prototype/effect/hunger/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/hunger/human_effect(mob/living/carbon/human/target)
 	target.nutrition -= 50
 	target << "<span class='warning'>You feel hungry</span>"
-	return
-
 
 /datum/prototype/effect/hallucination
 	var/halo_type = "xeno"
 /datum/prototype/effect/hallucination/New()
 	halo_type = pick("xeno","whispers","delusion")
 	..()
-/datum/prototype/effect/hallucination/human_effect(var/mob/living/carbon/human/target)
-	target.hallucinate(halo_type)
-	return
 
-/datum/prototype/effect/wall_rust/turf_effect(var/turf/target)	
+/datum/prototype/effect/hallucination/human_effect(mob/living/carbon/human/target)
+	target.hallucinate(halo_type)
+
+/datum/prototype/effect/wall_rust/turf_effect(turf/target)	
 	if(istype(target,/turf/simulated/wall/r_wall))
 		var/turf/simulated/wall/r_wall/W  = target
 		W.ChangeTurf(/turf/simulated/wall/r_wall/rust)
@@ -94,10 +92,9 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		W.ChangeTurf(/turf/simulated/wall/rust)
 	return
 
-/datum/prototype/effect/lube/turf_effect(var/turf/target)	
+/datum/prototype/effect/lube/turf_effect(turf/target)	
 	var/turf/simulated/T = target
 	T.MakeSlippery(2)
-	return
 
 /datum/prototype/effect/spawner
 	var/path = /mob/living/simple_animal/mouse
@@ -105,7 +102,6 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /datum/prototype/effect/spawner/activate(mob/user)
 	new path(get_turf(owner))
-	return
 
 /datum/prototype/effect/spawner/popcorn
 	path = /obj/item/weapon/reagent_containers/food/snacks/popcorn
@@ -114,10 +110,10 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	var/reagent = "ethanol"
 	var/amount = 5
 
-/datum/prototype/effect/injector/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/injector/human_effect(mob/living/carbon/human/target)
 	mob_effect(target)
 
-/datum/prototype/effect/injector/mob_effect(var/mob/target)
+/datum/prototype/effect/injector/mob_effect(mob/target)
 	if(isliving(target))
 		var/mob/living/M = target
 		var/datum/reagents/R = new(amount)
@@ -126,7 +122,6 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		R.reaction(M,INGEST)
 		R.trans_to(M,amount)
 		M << "<span class='warning'>You feel a tiny prick!</span>"
-	return
 
 /datum/prototype/effect/injector/drugs
 	reagent = "space_drugs"
@@ -136,7 +131,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	reagent = "mannitol"
 	amount = 10
 
-/datum/prototype/effect/grass/turf_effect(var/turf/target)
+/datum/prototype/effect/grass/turf_effect(turf/target)
 	if(istype(target,/turf/simulated/floor))
 		var/turf/simulated/floor/F = target
 		F.ChangeTurf(/turf/simulated/floor/grass)
@@ -144,7 +139,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 /datum/prototype/effect/painter
 	var/color = "C73232" //Red
 
-/datum/prototype/effect/painter/turf_effect(var/turf/target)
+/datum/prototype/effect/painter/turf_effect(turf/target)
 	target.color = "#" + color
 
 /datum/prototype/effect/painter/blue
@@ -153,13 +148,13 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	color = "2A9C3B" //Green
 
 
-/datum/prototype/effect/screamer/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/screamer/human_effect(mob/living/carbon/human/target)
 	target.emote("scream")
 
-/datum/prototype/effect/boombox/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/boombox/human_effect(mob/living/carbon/human/target)
 	target << 'sound/effects/Explosion1.ogg'
 
-/datum/prototype/effect/tamer/mob_effect(var/mob/target)
+/datum/prototype/effect/tamer/mob_effect(mob/target)
 	target.faction |= "neutral"
 	target << "<span class='notice'>You feel calm.</span>"
 
@@ -170,15 +165,15 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /datum/prototype/effect/bleedstop
 	message = "emits a soothing sound."
-/datum/prototype/effect/bleedstop/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/bleedstop/human_effect(mob/living/carbon/human/target)
 	target.suppress_bloodloss(600)
 
-/datum/prototype/effect/hatsoff/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/hatsoff/human_effect(mob/living/carbon/human/target)
 	if(target.head)
 		if(target.unEquip(target.head))
 			target << "<span class='warning'>Your headgear suddenly falls off!</span>"
 
-/datum/prototype/effect/growth/turf_effect(var/turf/target)
+/datum/prototype/effect/growth/turf_effect(turf/target)
 	for(var/obj/machinery/hydroponics/H in target)
 		H.adjustWater(100)
 		H.adjustNutri(10)
@@ -190,18 +185,18 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /datum/prototype/effect/zombie
 	message = "emits an omnious sound."
-/datum/prototype/effect/zombie/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/zombie/human_effect(mob/living/carbon/human/target)
 	if(target.stat == DEAD)
 		var/mob/living/simple_animal/hostile/blob/blobspore/B = new(target.loc)
 		B.Zombify(target)
 
-/datum/prototype/effect/cigar/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/cigar/human_effect(mob/living/carbon/human/target)
 	if(!target.wear_mask)
 		var/obj/item/clothing/mask/cigarette/cigar/I = new
 		target.equip_to_slot_or_del(I,slot_wear_mask)
 		target << "<span class='warning'>Suddenly [I] appears in your mouth!</span>"
 
-/datum/prototype/effect/thehorror/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/thehorror/human_effect(mob/living/carbon/human/target)
 	//Has science gone too far ?
 	if(target.dna && target.dna.species.id == "human" && prob(25))
 		target.dna.features["tail_human"] = "Cat"
@@ -209,19 +204,17 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		target.regenerate_icons()
 	else
 		target << "<span class='notice'>Meow?</span>"
-	return
 
-/datum/prototype/effect/powergen/turf_effect(var/turf/target)
+/datum/prototype/effect/powergen/turf_effect(turf/target)
 	for(var/obj/machinery/power/apc/A in target)
 		A.cell.give(1000)
 	return
 
-/datum/prototype/effect/hearts/human_effect(var/mob/living/carbon/human/target)
+/datum/prototype/effect/hearts/human_effect(mob/living/carbon/human/target)
 	target << "<span class='notice'>You feel eveything is going to be alright.</span>"
 	flick_overlay(image('icons/mob/animal.dmi',target,"heart-ani2",MOB_LAYER+1), list(target.client), 20)
-	return
 
-/datum/prototype/effect/robofixer/mob_effect(var/mob/target)
+/datum/prototype/effect/robofixer/mob_effect(mob/target)
 	if(isrobot(target))
 		var/mob/living/silicon/robot/R = target
 		R.adjustBruteLoss(-30)
@@ -231,24 +224,24 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	var/chem_id = "milk"
 	message = "Extends a vapour condensator."
 
-/datum/prototype/effect/glass_fill/turf_effect(var/turf/target)
+/datum/prototype/effect/glass_fill/turf_effect(turf/target)
 	for(var/obj/item/weapon/reagent_containers/glass/G in target)
 		G.reagents.add_reagent(chem_id,20)
 
 /datum/prototype/effect/autominer
 	message = "emits a high-pitched sound."
-/datum/prototype/effect/autominer/turf_effect(var/turf/target)
+/datum/prototype/effect/autominer/turf_effect(turf/target)
 	if(istype(target,/turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target
 		M.gets_drilled()
 
 /datum/prototype/effect/glassbreak
 	message = "emits a high-pitched sound."
-/datum/prototype/effect/glassbreak/turf_effect(var/turf/target)
+/datum/prototype/effect/glassbreak/turf_effect(turf/target)
 	for(var/obj/structure/window/W in target)
 		W.hit(50)
 
-/datum/prototype/effect/transmute/turf_effect(var/turf/target)
+/datum/prototype/effect/transmute/turf_effect(turf/target)
 	for(var/obj/item/stack/sheet/metal/S in target)
 		var/obj/item/stack/sheet/mineral/gold/G = new(target)
 		G.amount = S.amount
@@ -279,7 +272,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 		var/mob/living/L = user
 		L.electrocute_act(20)
 
-/datum/prototype/effect/webs/turf_effect/(var/turf/target)
+/datum/prototype/effect/webs/turf_effect/(turf/target)
 	var/obj/effect/spider/stickyweb/W = new(target)
 	W.color = "#5998FF"
 
@@ -338,7 +331,7 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 	no_target = 1
 	message = "prints something!"
 
-/datum/prototype/effect/oracle/activate(var/mob/user)
+/datum/prototype/effect/oracle/activate(mob/user)
 	var/text = "<h2>Stochastic Analyzer Projection:</h2><hr>"
 	var/prediction = ""
 	for(var/i=0,i<=rand(1,3),i++)
@@ -616,10 +609,9 @@ Prototype chassis can be printed at R&D, put one or two in experimentor lab
 
 /obj/item/protoboard/New()
 	block = pick("A","B","C","D","E","F","G","H")
-	var/list/block_colors = list("A"="#7f6240","B"="#269954","C"="#3385cc","D"="#ee00ff","E"="#f27979","F"="#ffcc00","G"="#00331b","H"="#000000")
+	var/list/block_colors = list("A"="#7f6240","B"="#269954","C"="#3385cc","D"="#ee00ff","E"="#f27979","F"="#ffcc00","G"="#00331b","H"="#10f0d2")
 	desc = initial(desc)+" Has a [block] stamp in the corner."
 	color = block_colors[block]
-
 
 /obj/item/protochassis
 	name = "prototype chassis"
