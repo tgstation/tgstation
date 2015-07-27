@@ -709,15 +709,9 @@ var/list/uplink_items = list()
 	item = /obj/item/cybernetic_implant/chest/reviver
 	cost = 8
 
-/datum/uplink_item/cyber_implants/nutriment
-	name = "Nutriment Pump Implant PLUS"
-	desc = "This implant will pump you with nutriments and electrolytes so you don't go hungry in action."
-	item = /obj/item/cybernetic_implant/chest/nutriment/plus
-	cost = 2
-
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Does not include Nutriment Implant."
+	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants."
 	item = /obj/item/weapon/storage/box/cyber_implants
 	cost = 40
 
