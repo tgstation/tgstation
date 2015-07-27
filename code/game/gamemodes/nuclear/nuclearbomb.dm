@@ -1,12 +1,3 @@
-#define NUKESTATE_INTACT		7
-#define NUKESTATE_OPEN			6
-#define NUKESTATE_OPEN_TRAP		5
-#define NUKESTATE_WIRES_TIED	4
-#define NUKESTATE_CUT_LINES		3
-#define NUKESTATE_BREACHED		2
-#define NUKESTATE_CORE_EXPOSED	1
-#define NUKESTATE_CORE_REMOVED	0
-
 #define NUKE_OFF_LOCKED		0
 #define NUKE_OFF_UNLOCKED	1
 #define NUKE_ON_TIMING		2
@@ -31,17 +22,10 @@ var/bomb_set
 	use_power = 0
 	var/previous_level = ""
 	var/lastentered = ""
-	var/obj/item/nuke_core/core = null
-	var/deconstruction_state = NUKESTATE_INTACT
-	var/image/lights = null
-	var/image/panel = null
-	var/image/interior = null
-	var/image/glow = null
 
 /obj/machinery/nuclearbomb/New()
 	..()
 	nuke_list += src
-	core = new /obj/item/nuke_core(src)
 	update_icon()
 	previous_level = get_security_level()
 
@@ -61,92 +45,7 @@ var/bomb_set
 		auth = I
 		add_fingerprint(user)
 		return
-
-	switch(deconstruction_state)
-		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/weapon/screwdriver/nuke))
-				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				user << "<span class='notice'>You start removing the front panel's screws...</span>"
-				if(do_after(user, 100,target=src))
-					deconstruction_state = NUKESTATE_OPEN
-					user << "<span class='notice'>You remove the screws and the front panel slides open.</span>"
-					update_icon()
-				return
-		if(NUKESTATE_OPEN,NUKESTATE_OPEN_TRAP)
-			if((deconstruction_state == NUKESTATE_OPEN) && istype(I, /obj/item/weapon/wirecutters))
-				playsound(loc, 'sound/effects/sparks4.ogg', 100, 1)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 100, 1)
-				user << "<span class='warning'>You must have cut the wrong wire!</span>"
-				for(var/mob/living/L in range(5,src))
-					L.irradiate(200)
-				deconstruction_state = NUKESTATE_OPEN_TRAP //cant cut wires no more
-			else
-				if(istype(I, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/S = I
-					user << "<span class='notice'>You start tying the wires...</span>"
-					if(do_after(user,30,target=src))
-						if(S.use(15))
-							user << "<span class='notice'>You tie the wires with some cable, clearing the insides of [src].</span>"
-							deconstruction_state = NUKESTATE_WIRES_TIED
-							update_icon()
-						else
-							user << "<span class='warning'>You need more cable to do that.</span>"
-				else
-					user << "<span class='warning'>You can't do anything with this tangle of cables in the way.</span>"
-				return
-		if(NUKESTATE_WIRES_TIED)
-			if(istype(I, /obj/item/weapon/pen))
-				user << "<span class='notice'>You start drawing cut lines...</span>"
-				if(do_after(user,30,target=src))
-					user << "<span class='notice'>You draw cut lines inside [src].</span>"
-					deconstruction_state = NUKESTATE_CUT_LINES
-					update_icon()
-				return
-		if(NUKESTATE_CUT_LINES)
-			if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/welder = I
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-				user << "<span class='notice'>You start cutting into [src]'s warhead...</span>"
-				if(welder.remove_fuel(1,user))
-					if(do_after(user,50,target=src))
-						playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
-						user << "<span class='notice'>You cut into [src]'s warhead. The last containment plate seems to be stuck...</span>"
-						deconstruction_state = NUKESTATE_BREACHED
-						update_icon()
-				return
-		if(NUKESTATE_BREACHED)
-			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, 'sound/effects/bang.ogg', 100, 1)
-				user << "<span class='notice'>You bang on the containment plate with [I].</span>"
-				if(do_after(user,15,target=src))
-					playsound(loc, 'sound/effects/bang.ogg', 100, 1)
-					user << "<span class='notice'>Again.</span>"
-					if(do_after(user,15,target=src))
-						playsound(loc, 'sound/effects/bang.ogg', 100, 1)
-						user << "<span class='notice'>And again.</span>"
-						if(do_after(user,15,target=src))
-							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
-							sleep(5)
-							playsound(loc, 'sound/effects/clang.ogg', 100, 1)
-							user << "<span class='notice'>The containment plate falls off! You can see the core's green glow.</span>"
-							deconstruction_state = NUKESTATE_CORE_EXPOSED
-							update_icon()
-							SSobj.processing += core
-				return
-		if(NUKESTATE_CORE_EXPOSED)
-			if(istype(I, /obj/item/nuke_core_container))
-				var/obj/item/nuke_core_container/core_box = I
-				user << "<span class='notice'>You start loading the plutonium core into [core_box]...</span>"
-				if(do_after(user,50,target=src))
-					if(core_box.load(core,src))
-						user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
-						deconstruction_state = NUKESTATE_CORE_REMOVED
-						update_icon()
-					else
-						user << "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>"
-				return
-		else
-			..()
+	return ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(timing < 0)
@@ -159,63 +58,21 @@ var/bomb_set
 		return NUKE_OFF_UNLOCKED
 
 /obj/machinery/nuclearbomb/update_icon()
-	if(deconstruction_state == NUKESTATE_INTACT)
-		switch(get_nuke_state())
-			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				update_icon_interior()
-				update_icon_lights()
-			if(NUKE_ON_TIMING)
-				overlays.Cut()
-				icon_state = "nuclearbomb_timing"
-			if(NUKE_ON_EXPLODING)
-				overlays.Cut()
-				icon_state = "nuclearbomb_exploding"
-	else
-		update_icon_interior()
-		update_icon_lights()
-
-/obj/machinery/nuclearbomb/proc/update_icon_interior()
-	overlays -= interior
-	overlays -= glow
-	switch(deconstruction_state)
-		if(NUKESTATE_OPEN_TRAP,NUKESTATE_OPEN)
-			glow = null
-			interior = image(icon,"panel-removed")
-		if(NUKESTATE_CORE_REMOVED,NUKESTATE_CUT_LINES,NUKESTATE_WIRES_TIED, NUKESTATE_BREACHED)
-			glow = null
-			interior = image(icon,"wires-sorted")
-		if(NUKESTATE_CORE_EXPOSED)
-			glow = image(icon,"core-exposed")
-			interior = image(icon,"wires-sorted")
-		if(NUKESTATE_INTACT)
-			glow = null
-			interior = image(icon,"panel-overlay")
-	overlays += interior
-	overlays += glow
+	overlays.Cut()
+	switch(get_nuke_state())
+		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
+			update_icon_lights()
+		if(NUKE_ON_TIMING)
+			icon_state = "nuclearbomb_timing"
+		if(NUKE_ON_EXPLODING)
+			icon_state = "nuclearbomb_exploding"
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
-	overlays -= lights
-	overlays -= panel
-	panel = null
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = image(icon,"lights-off")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-blue")
+			overlays += image(icon,"lights-off")
 		if(NUKE_OFF_UNLOCKED)
-			lights = image(icon,"lights-safety")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-blue")
-		if(NUKE_ON_TIMING)
-			lights = image(icon,"lights-timing")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-timing")
-		if(NUKE_ON_EXPLODING)
-			lights = image(icon,"lights-exploding")
-			if(deconstruction_state != NUKESTATE_INTACT)
-				panel = image(icon,"panel-removed-exploding")
-	overlays += lights
-	overlays += panel
+			overlays += image(icon,"lights-safety")
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
@@ -368,11 +225,6 @@ var/bomb_set
 	if (ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
-
-	if(!core)
-		ticker.station_explosion_cinematic(3,"no_core")
-		ticker.mode.explosion_in_progress = 0
-		return
 
 	enter_allowed = 0
 
