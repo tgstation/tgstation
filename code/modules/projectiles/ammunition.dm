@@ -27,7 +27,7 @@
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
+	desc += "[BB ? "" : " This one is spent."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, shotgun shells and wands (!).
 	if (!BB)
@@ -52,6 +52,14 @@
 			user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
 		else
 			user << "<span class='warning'>You fail to collect anything!</span>"
+
+/obj/item/ammo_casing/examine(mob/user)
+	if(in_range(user, src))
+		desc = "[initial(desc)]"
+		update_icon()
+	else if (!(istype(src, /obj/item/ammo_casing/shotgun) || istype(src, /obj/item/ammo_casing/caseless)))
+		desc = "A bullet casing." //only generically named/sprited casings have unspecific descriptions from a distance
+	..()
 
 //Boxes of ammo
 /obj/item/ammo_box
