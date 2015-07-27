@@ -21,7 +21,7 @@
 	var/obj/machinery/light/newlight = null
 	var/sheets_refunded = 2
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 		qdel(src)
@@ -94,7 +94,7 @@
 		if(3)
 			user << "The casing is closed."
 
-/obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user, params)
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
@@ -273,7 +273,7 @@
 	return
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(var/trigger = 1)
+/obj/machinery/light/proc/update(trigger = 1)
 
 	update_icon()
 	if(on)
@@ -307,7 +307,7 @@
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
-/obj/machinery/light/proc/seton(var/s)
+/obj/machinery/light/proc/seton(s)
 	on = (s && status == LIGHT_OK)
 	update()
 
@@ -471,7 +471,7 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/living/carbon/human/user)
-
+	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -550,7 +550,7 @@
 
 // break the light and make sparks if was on
 
-/obj/machinery/light/proc/broken(var/skip_sound_and_sparks = 0)
+/obj/machinery/light/proc/broken(skip_sound_and_sparks = 0)
 	if(status == LIGHT_EMPTY)
 		return
 
@@ -677,7 +677,7 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
-/obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/weapon/light/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I

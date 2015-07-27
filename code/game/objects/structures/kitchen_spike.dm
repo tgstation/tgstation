@@ -22,10 +22,10 @@
 	var/skin = 0
 	var/skintype = null
 
-/obj/structure/kitchenspike/attack_paw(mob/user as mob)
+/obj/structure/kitchenspike/attack_paw(mob/user)
 	return src.attack_hand(usr)
 
-/obj/structure/kitchenspike/attackby(obj/item/weapon/grab/G as obj, mob/user as mob, params)
+/obj/structure/kitchenspike/attackby(obj/item/weapon/grab/G, mob/user, params)
 	if(!istype(G, /obj/item/weapon/grab))
 		return
 	if(istype(G.affecting, /mob/living/carbon/monkey))
@@ -80,7 +80,7 @@
 //	else if(istype(C, /obj/mob/carbon/alien) && !istype(C, /mob/living/carbon/alien/larva/slime))
 //	else if(istype(C, /obj/livestock/spesscarp
 
-/obj/structure/kitchenspike/attack_hand(mob/user as mob)
+/obj/structure/kitchenspike/attack_hand(mob/user)
 	if(..())
 		return
 	if(src.occupied)

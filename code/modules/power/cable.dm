@@ -102,7 +102,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////
 
 //If underfloor, hide the cable
-/obj/structure/cable/hide(var/i)
+/obj/structure/cable/hide(i)
 
 	if(level == 1 && istype(loc, /turf))
 		invisibility = i ? 101 : 0
@@ -162,7 +162,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, var/siemens_coeff = 1.0)
+/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
@@ -189,7 +189,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(current_size >= STAGE_FIVE)
 		Deconstruct()
 
-/obj/structure/cable/proc/cableColor(var/colorC = "red")
+/obj/structure/cable/proc/cableColor(colorC = "red")
 	cable_color = colorC
 	switch(colorC)
 		if("red")
@@ -218,11 +218,11 @@ By design, d1 is the smallest direction and d2 is the highest
 // Power related
 ///////////////////////////////////////////
 
-/obj/structure/cable/proc/add_avail(var/amount)
+/obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
 
-/obj/structure/cable/proc/add_load(var/amount)
+/obj/structure/cable/proc/add_load(amount)
 	if(powernet)
 		powernet.load += amount
 
@@ -244,7 +244,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //handles merging diagonally matching cables
 //for info : direction^3 is flipping horizontally, direction^12 is flipping vertically
-/obj/structure/cable/proc/mergeDiagonalsNetworks(var/direction)
+/obj/structure/cable/proc/mergeDiagonalsNetworks(direction)
 
 	//search for and merge diagonally matching cables from the first direction component (north/south)
 	var/turf/T  = get_step(src, direction&3)//go north/south
@@ -288,7 +288,7 @@ By design, d1 is the smallest direction and d2 is the highest
 				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
 
 // merge with the powernets of power objects in the given direction
-/obj/structure/cable/proc/mergeConnectedNetworks(var/direction)
+/obj/structure/cable/proc/mergeConnectedNetworks(direction)
 
 	var/fdir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
@@ -362,7 +362,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //////////////////////////////////////////////
 
 //if powernetless_only = 1, will only get connections without powernet
-/obj/structure/cable/proc/get_connections(var/powernetless_only = 0)
+/obj/structure/cable/proc/get_connections(powernetless_only = 0)
 	. = list()	// this will be a list of all connected power objects
 	var/turf/T
 
@@ -514,7 +514,9 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 	if(affecting.status == ORGAN_ROBOTIC)
-		item_heal_robotic(H, user, 0, 30)
+		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.getDisplayName()].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.getDisplayName()].</span>")
+		if(!do_mob(user, H, 50))	return
+		item_heal_robotic(H, user, 0, 5)
 		src.use(1)
 		return
 	else
@@ -563,13 +565,13 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 			src.use(amt)
 			return
 
-/obj/item/stack/cable_coil/use(var/used)
+/obj/item/stack/cable_coil/use(used)
 	. = ..()
 	update_icon()
 	return
 
 //add cables to the stack
-/obj/item/stack/cable_coil/proc/give(var/extra)
+/obj/item/stack/cable_coil/proc/give(extra)
 	if(amount + extra > MAXCOIL)
 		amount = MAXCOIL
 	else
@@ -582,7 +584,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 // Cable laying procedures
 //////////////////////////////////////////////
 
-/obj/item/stack/cable_coil/proc/get_new_cable(var/location)
+/obj/item/stack/cable_coil/proc/get_new_cable(location)
 	var/path = "/obj/structure/cable" + (item_color == "red" ? "" : "/" + item_color)
 	return new path (location)
 

@@ -21,7 +21,7 @@
 	pixel_y = rand(-10,10)
 	icon_state = "giftcrate[rand(1,5)]"
 
-/obj/item/weapon/a_gift/attack_self(mob/M as mob)
+/obj/item/weapon/a_gift/attack_self(mob/M)
 	if(M && M.mind && M.mind.special_role == "Santa")
 		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
 		return

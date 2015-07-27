@@ -10,7 +10,7 @@
 	anchored = 0.0
 
 //wrapper for turn that changes the transit tube formatted icon_state instead of the dir
-/obj/structure/c_transit_tube/proc/tube_turn(var/angle)
+/obj/structure/c_transit_tube/proc/tube_turn(angle)
 	var/list/badtubes = list("W-E", "W-E-Pass", "S-N", "S-N-Pass", "SW-NE", "SE-NW")
 	var/list/split_text = text2list(icon_state, "-")
 	for(var/i=1; i<=split_text.len; i++)
@@ -77,7 +77,7 @@
 	R.generate_automatic_corners(R.tube_dirs)
 	return R
 
-/obj/structure/c_transit_tube/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You start attaching the [name]...</span>"
 		src.add_fingerprint(user)

@@ -20,7 +20,7 @@
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
-		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/machinery/atmospherics/components/unary/cryo_cell,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
@@ -34,52 +34,46 @@
 
 
 
-/obj/item/weapon/reagent_containers/glass/attack(mob/M as mob, mob/user as mob, obj/target)
+/obj/item/weapon/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
 	if(!canconsume(M, user))
+		return
+
+	if(!spillable)
 		return
 
 	if(!reagents || !reagents.total_volume)
 		user << "<span class='warning'>[src] is empty!</span>"
 		return
 
-	if(reagents && reagents.total_volume)
+	if(istype(M))
 		if(user.a_intent == "harm")
-			if(ismob(M))
-				var/R
-				M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-								"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
-				if(reagents)
-					for(var/datum/reagent/A in reagents.reagent_list)
-						R += A.id + " ("
-						R += num2text(A.volume) + "),"
-
-				reagents.reaction(M, TOUCH)
-				add_logs(user, M, "splashed", R)
-				reagents.clear_reagents()
-				return
-
-		else if(M == user)
-			user << "<span class='notice'>You swallow a gulp of [src].</span>"
-			if(reagents.total_volume)
-				reagents.reaction(user, INGEST)
-				spawn(5)
-					reagents.trans_to(user, 5)
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return
-
-		else if(ismob(M))
-			M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
+			var/R
+			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
+							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+			if(reagents)
+				for(var/datum/reagent/A in reagents.reagent_list)
+					R += A.id + " ("
+					R += num2text(A.volume) + "),"
+			reagents.reaction(M, TOUCH)
+			add_logs(user, M, "splashed", R)
+			reagents.clear_reagents()
+		else
+			if(M != user)
+				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
 							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
-			if(!do_mob(user, M)) return
-			if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
-			M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
-			add_logs(user, M, "fed", reagentlist(src))
-			if(reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				spawn(5)
-					reagents.trans_to(M, 5)
+				if(!do_mob(user, M))
+					return
+				if(!reagents || !reagents.total_volume)
+					return // The drink might be empty after the delay, such as by spam-feeding
+				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+				add_logs(user, M, "fed", reagentlist(src))
+			else
+				user << "<span class='notice'>You swallow a gulp of [src].</span>"
+			var/fraction = min(5/reagents.total_volume, 1)
+			reagents.reaction(M, INGEST, fraction)
+			spawn(5)
+				reagents.trans_to(M, 5)
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return
 
 /obj/item/weapon/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	if((!proximity) || !check_allowed_items(target,target_self=1)) return
@@ -125,7 +119,7 @@
 			reagents.reaction(target, TOUCH)
 			reagents.clear_reagents()
 
-/obj/item/weapon/reagent_containers/glass/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
 		return
 	var/hotness = is_hot(I)
@@ -265,7 +259,7 @@
 	volume = 70
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/bucket/attackby(var/obj/O, mob/user as mob, params)
+/obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
 			user << "<span class='warning'>[src] is out of water!</span>"

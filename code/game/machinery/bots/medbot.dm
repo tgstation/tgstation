@@ -133,10 +133,10 @@
 	text_dehack = "You reset [name]'s reagent processor circuits."
 	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
-/obj/machinery/bot/medbot/attack_paw(mob/user as mob)
+/obj/machinery/bot/medbot/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/medbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -259,7 +259,7 @@
 		if (health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/Emag(mob/user as mob)
+/obj/machinery/bot/medbot/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		declare_crit = 0
@@ -271,7 +271,7 @@
 		if(user)
 			oldpatient = user
 
-/obj/machinery/bot/medbot/process_scan(var/mob/living/carbon/human/H)
+/obj/machinery/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if (H.stat == 2)
 		return
 
@@ -362,7 +362,7 @@
 
 	return
 
-/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
 	if(C.stat == 2)
 		return 0 //welp too late for them!
@@ -409,7 +409,7 @@
 
 	return 0
 
-/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
 	if(!on)
 		return
 
@@ -504,7 +504,7 @@
 	reagent_id = null
 	return
 
-/obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag == "taser")
 		stunned = min(stunned+10,20)
 	..()
@@ -533,7 +533,7 @@
 	qdel(src)
 	return
 
-/obj/machinery/bot/medbot/proc/declare(var/crit_patient)
+/obj/machinery/bot/medbot/proc/declare(crit_patient)
 	if(declare_cooldown)
 		return
 	var/area/location = get_area(src)
@@ -546,7 +546,7 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob, params)
+/obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user, params)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -574,7 +574,7 @@
 	qdel(src)
 
 
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)

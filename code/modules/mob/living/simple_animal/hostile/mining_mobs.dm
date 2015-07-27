@@ -23,7 +23,7 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
@@ -86,7 +86,7 @@
 	flag = "energy"
 	temperature = 50
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		Aggro()
@@ -149,7 +149,7 @@
 	var/ore_eaten = 1
 	var/chase_time = 100
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
@@ -172,7 +172,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(var/atom/targeted_ore)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
@@ -202,7 +202,7 @@
 	ore_eaten = 0
 
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
@@ -211,7 +211,7 @@
 	Reward()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
 	idle_vision_range = 9
 	..()
 
@@ -247,7 +247,7 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
+/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
@@ -274,7 +274,7 @@
 		inert = 1
 		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
-/obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(inert)
@@ -388,7 +388,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()
@@ -468,26 +468,21 @@
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
-			var/obj/mecha/D = target
+			var/obj/mecha/working/ripley/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption["brute"] > 0.3)
+			if(D.hides < 3)
+				D.hides++
 				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
-				if(D.icon_state == "ripley-open")
-					D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-open")
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				D.update_icon()
+				if(D.hides == 3)
+					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 				else
-					user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
-				if(damage_absorption.["brute"] == 0.3)
-					if(D.icon_state == "ripley-open")
-						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
-						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
-					else
-						user << "<span class='warning'>You can't add armour onto the mech while someone is inside!</span>"
+					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				qdel(src)
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return

@@ -11,7 +11,7 @@
 	var/alt_desc = null
 	var/toggle_message = null
 	var/alt_toggle_message = null
-	var/activation_sound = null
+	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
 	var/obj/item/device/flashlight/F = null
@@ -77,7 +77,7 @@ BLIND     // can't see anything
 	put_on_delay = 40
 
 // Called just before an attack_hand(), in mob/UnarmedAttack()
-/obj/item/clothing/gloves/proc/Touch(var/atom/A, var/proximity)
+/obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return 0 // return 1 to cancel attack_hand()
 
 //Head
@@ -106,7 +106,7 @@ BLIND     // can't see anything
 	return message
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask(var/mob/user)
+/obj/item/clothing/mask/proc/adjustmask(mob/user)
 	if(!ignore_maskadjust)
 		if(user.incapacitated())
 			return
@@ -259,7 +259,7 @@ BLIND     // can't see anything
 
 			if(istype(loc, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform(0)
+				H.update_inv_w_uniform()
 
 			return 1
 
@@ -326,7 +326,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 
 	..()
 
-/obj/item/clothing/under/AltClick(var/mob/user)
+/obj/item/clothing/under/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"
@@ -390,7 +390,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform(0)
+			H.update_inv_w_uniform()
 
 /obj/item/clothing/proc/weldingvisortoggle()			//Malk: proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(can_use(usr))
@@ -414,11 +414,11 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			tint = 0
 
 	if(istype(src, /obj/item/clothing/head))			//makes the mob-overlays update
-		usr.update_inv_head(0)
+		usr.update_inv_head()
 	if(istype(src, /obj/item/clothing/glasses))
-		usr.update_inv_glasses(0)
+		usr.update_inv_glasses()
 	if(istype(src, /obj/item/clothing/mask))
-		usr.update_inv_wear_mask(0)
+		usr.update_inv_wear_mask()
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))

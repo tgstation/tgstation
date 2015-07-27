@@ -19,7 +19,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
-		var/volume = (timer <= 10 ? 30 : 5) // Tick louder when the bomb is closer to being detonated.
+		var/volume = (timer <= 10 ? 40 : 10) // Tick louder when the bomb is closer to being detonated.
 		playsound(loc, beepsound, volume, 0)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
@@ -48,7 +48,7 @@
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
 
-/obj/machinery/syndicatebomb/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!isturf(src.loc) || istype(src.loc, /turf/space))
@@ -100,13 +100,13 @@
 	else
 		..()
 
-/obj/machinery/syndicatebomb/attack_hand(var/mob/user)
+/obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/syndicatebomb/attack_ai()
 	return
 
-/obj/machinery/syndicatebomb/interact(var/mob/user)
+/obj/machinery/syndicatebomb/interact(mob/user)
 	if(wires)
 		wires.Interact(user)
 	if(!open_panel)
@@ -118,7 +118,7 @@
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
 			return
 
-/obj/machinery/syndicatebomb/proc/settings(var/mob/user)
+/obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
@@ -143,7 +143,7 @@
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
 
-/obj/machinery/syndicatebomb/proc/isWireCut(var/index)
+/obj/machinery/syndicatebomb/proc/isWireCut(index)
 	return wires.IsIndexCut(index)
 
 ///Bomb Subtypes///
@@ -188,7 +188,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src),2,5,11, flame_range = 11)
+	explosion(get_turf(src),3,9,17, flame_range = 17)
 	if(src.loc && istype(src.loc,/obj/machinery/syndicatebomb/))
 		qdel(src.loc)
 	qdel(src)
@@ -299,7 +299,7 @@
 	var/detonated =	0
 	var/existant =	0
 
-/obj/item/device/syndicatedetonator/attack_self(mob/user as mob)
+/obj/item/device/syndicatedetonator/attack_self(mob/user)
 	if(!cooldown)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)

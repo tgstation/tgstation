@@ -81,7 +81,7 @@ var/global/list/rockTurfEdgeCache
 		icon_state = "rock"
 	return
 
-/turf/simulated/mineral/proc/Spread(var/turf/T)
+/turf/simulated/mineral/proc/Spread(turf/T)
 	new src.type(T)
 
 /turf/simulated/mineral/random
@@ -246,7 +246,7 @@ var/global/list/rockTurfEdgeCache
 		defuse()
 	..()
 
-/turf/simulated/mineral/gibtonite/proc/explosive_reaction(var/mob/user = null, triggered_by_explosion = 0)
+/turf/simulated/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
 		icon_state = "rock_Gibtonite_active"
 		name = "gibtonite deposit"
@@ -292,7 +292,7 @@ var/global/list/rockTurfEdgeCache
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
 
-/turf/simulated/mineral/gibtonite/gets_drilled(var/mob/user, triggered_by_explosion = 0)
+/turf/simulated/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		explosive_reaction(user, triggered_by_explosion)
@@ -344,7 +344,7 @@ var/global/list/rockTurfEdgeCache
 	SpawnFloor(src)
 	..()
 
-/turf/simulated/floor/plating/asteroid/airless/cave/proc/make_tunnel(var/dir)
+/turf/simulated/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 
 	var/turf/simulated/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
@@ -382,7 +382,7 @@ var/global/list/rockTurfEdgeCache
 			dir = angle2dir(dir2angle(dir) + next_angle)
 
 
-/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(var/turf/T)
+/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2,T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/mine/explored))
 			sanity = 0
@@ -395,7 +395,7 @@ var/global/list/rockTurfEdgeCache
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 
-/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(var/turf/T)
+/turf/simulated/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
@@ -414,7 +414,7 @@ var/global/list/rockTurfEdgeCache
 				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
 	return
 
-/turf/simulated/mineral/attackby(var/obj/item/weapon/pickaxe/P as obj, mob/user as mob, params)
+/turf/simulated/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
 	if (!user.IsAdvancedToolUser())
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -452,7 +452,7 @@ var/global/list/rockTurfEdgeCache
 	N.fullUpdateMineralOverlays()
 	return
 
-/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user as mob)
+/turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
 		gets_drilled()
 	..()
@@ -487,7 +487,7 @@ var/global/list/rockTurfEdgeCache
 			return
 /*	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			src.attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
@@ -537,7 +537,7 @@ var/global/list/rockTurfEdgeCache
 			src.gets_dug()
 	return
 
-/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0

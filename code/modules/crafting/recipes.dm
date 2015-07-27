@@ -30,6 +30,15 @@
 	time = 80
 	category = CAT_WEAPON
 
+/datum/table_recipe/molotov
+	name = "Molotov"
+	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	reqs = list(/obj/item/weapon/reagent_containers/glass/rag = 1,
+				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
+	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
+	time = 80
+	category = CAT_WEAPON
+
 /datum/table_recipe/stunprod
 	name = "Stunprod"
 	result = /obj/item/weapon/melee/baton/cattleprod

@@ -6,7 +6,7 @@
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
-/datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
+/datum/reagent/thermite/reaction_turf(turf/T, volume)
 	src = null
 	if(volume >= 1 && istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/Wall = T
@@ -17,7 +17,7 @@
 		Wall.overlays = list()
 		Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 
-/datum/reagent/thermite/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1)
 	..()
 
@@ -42,12 +42,13 @@
 	color = "#FF0000"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/clf3/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
-	M.adjustFireLoss(0.3*M.fire_stacks)
+	var/burndmg = max(0.3*M.fire_stacks, 0.3)
+	M.adjustFireLoss(burndmg)
 	..()
 
-/datum/reagent/clf3/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/clf3/reaction_turf(turf/simulated/T, volume)
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
 		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
@@ -65,7 +66,7 @@
 		if(prob(volume/10))
 			W.ChangeTurf(/turf/simulated/floor/plating)
 
-/datum/reagent/clf3/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH && isliving(M))
 		M.adjust_fire_stacks(min(volume/5, 10))
 		M.IgniteMob()
@@ -128,7 +129,7 @@
 	reagent_state = LIQUID
 	color = "#FF9999"
 
-/datum/reagent/phlogiston/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/phlogiston/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	M.IgniteMob()
 	M.adjustFireLoss(0.2*M.fire_stacks)
@@ -142,11 +143,11 @@
 	reagent_state = LIQUID
 	color = "#FF9999"
 
-/datum/reagent/napalm/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/napalm/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	..()
 
-/datum/reagent/napalm/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(method == TOUCH && isliving(M))
 		M.adjust_fire_stacks(min(volume/4, 20))
 
@@ -158,7 +159,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 
-/datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
+/datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature -= 15
@@ -171,7 +172,7 @@
 		holder.handle_reactions()
 	..()
 
-/datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/cryostylane/reaction_turf(turf/simulated/T, volume)
 	if(volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
@@ -183,7 +184,7 @@
 	color = "#B20000" // rgb: 139, 166, 233
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/pyrosium/on_mob_life(mob/living/M)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature += 15

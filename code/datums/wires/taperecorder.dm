@@ -6,14 +6,14 @@ var/const/WIRE_PLAY = 1
 var/const/WIRE_RECORD = 2
 
 
-/datum/wires/taperecorder/UpdatePulsed(var/index)
+/datum/wires/taperecorder/UpdatePulsed(index)
 	switch(index)
 		if(WIRE_PLAY)
 			play()
 		if(WIRE_RECORD)
 			record()
 
-/datum/wires/taperecorder/CanUse(var/mob/living/L)
+/datum/wires/taperecorder/CanUse(mob/living/L)
 	var/obj/item/device/taperecorder/T = holder
 	if(T.open_panel)
 		return 1

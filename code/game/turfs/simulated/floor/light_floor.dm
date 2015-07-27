@@ -39,10 +39,10 @@
     else
         SetLuminosity(0)
         icon_state = "light_off"
-/turf/simulated/floor/light/ChangeTurf(turf/T as turf)
+/turf/simulated/floor/light/ChangeTurf(turf/T)
     SetLuminosity(0)
     ..()
-/turf/simulated/floor/light/attack_hand(mob/user as mob)
+/turf/simulated/floor/light/attack_hand(mob/user)
     if(!on)
         on = 1
         currentcolor = 1
@@ -59,7 +59,7 @@
 
 
 
-/turf/simulated/floor/light/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/light/attackby(obj/item/C, mob/user, params)
     if(..())
         return
     if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles

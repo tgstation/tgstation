@@ -153,7 +153,7 @@
 // wrench: (un)anchor
 // weldingtool: convert to real pipe
 
-/obj/structure/disposalconstruct/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/disposalconstruct/attackby(obj/item/I, mob/user, params)
 	var/nicetype = "pipe"
 	var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
 	add_fingerprint(user)

@@ -44,7 +44,7 @@ other types of metals and chemistry for reagents).
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-/datum/design/proc/CalcReliability(var/list/temp_techs)
+/datum/design/proc/CalcReliability(list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
@@ -336,6 +336,16 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200, MAT_GLASS = 300, MAT_PLASMA = 100)
 	build_path = /obj/item/clothing/glasses/meson/engine
+	category = list("Equipment")
+
+/datum/design/tray_goggles
+	name = "Optical T-Ray Scanners"
+	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
+	id = "tray_goggles"
+	req_tech = list("materials" = 3, "magnets" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 300)
+	build_path = /obj/item/clothing/glasses/meson/engine/tray
 	category = list("Equipment")
 
 /datum/design/nvgmesons

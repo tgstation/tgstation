@@ -33,7 +33,7 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( var/atom/A, var/params )
+/mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -67,8 +67,6 @@
 		return
 
 	if(istype(loc,/obj/mecha))
-		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
-			return
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
 
@@ -131,7 +129,7 @@
 	next_move = world.time + num
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
-/mob/proc/DblClickOn(var/atom/A, var/params)
+/mob/proc/DblClickOn(atom/A, params)
 	return
 
 
@@ -145,7 +143,7 @@
 	proximity_flag is not currently passed to attack_hand, and is instead used
 	in human click code to allow glove touches only at melee range.
 */
-/mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
+/mob/proc/UnarmedAttack(atom/A, proximity_flag)
 	if(ismob(A))
 		changeNext_move(CLICK_CD_MELEE)
 	return
@@ -158,36 +156,36 @@
 	for things like ranged glove touches, spitting alien acid/neurotoxin,
 	animals lunging, etc.
 */
-/mob/proc/RangedAttack(var/atom/A, var/params)
+/mob/proc/RangedAttack(atom/A, params)
 /*
 	Restrained ClickOn
 
 	Used when you are handcuffed and click things.
 	Not currently used by anything but could easily be.
 */
-/mob/proc/RestrainedClickOn(var/atom/A)
+/mob/proc/RestrainedClickOn(atom/A)
 	return
 
 /*
 	Middle click
 	Only used for swapping hands
 */
-/mob/proc/MiddleClickOn(var/atom/A)
+/mob/proc/MiddleClickOn(atom/A)
 	return
 
-/mob/living/carbon/MiddleClickOn(var/atom/A)
+/mob/living/carbon/MiddleClickOn(atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		swap_hand()
 
-/mob/living/simple_animal/drone/MiddleClickOn(var/atom/A)
+/mob/living/simple_animal/drone/MiddleClickOn(atom/A)
 	swap_hand()
 
 // In case of use break glass
 /*
-/atom/proc/MiddleClick(var/mob/M as mob)
+/atom/proc/MiddleClick(mob/M as mob)
 	return
 */
 
@@ -196,10 +194,10 @@
 	For most mobs, examine.
 	This is overridden in ai.dm
 */
-/mob/proc/ShiftClickOn(var/atom/A)
+/mob/proc/ShiftClickOn(atom/A)
 	A.ShiftClick(src)
 	return
-/atom/proc/ShiftClick(var/mob/user)
+/atom/proc/ShiftClick(mob/user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -208,13 +206,13 @@
 	Ctrl click
 	For most objects, pull
 */
-/mob/proc/CtrlClickOn(var/atom/A)
+/mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
-/atom/proc/CtrlClick(var/mob/user)
+/atom/proc/CtrlClick(mob/user)
 	return
 
-/atom/movable/CtrlClick(var/mob/user)
+/atom/movable/CtrlClick(mob/user)
 	if(Adjacent(user))
 		user.start_pulling(src)
 
@@ -222,18 +220,18 @@
 	Alt click
 	Unused except for AI
 */
-/mob/proc/AltClickOn(var/atom/A)
+/mob/proc/AltClickOn(atom/A)
 	A.AltClick(src)
 	return
 
-/mob/living/carbon/AltClickOn(var/atom/A)
+/mob/living/carbon/AltClickOn(atom/A)
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
 		..()
 
-/atom/proc/AltClick(var/mob/user)
+/atom/proc/AltClick(mob/user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -243,18 +241,18 @@
 			user.client.statpanel = T.name
 	return
 
-/mob/proc/TurfAdjacent(var/turf/T)
+/mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
 
 /*
 	Control+Shift click
 	Unused except for AI
 */
-/mob/proc/CtrlShiftClickOn(var/atom/A)
+/mob/proc/CtrlShiftClickOn(atom/A)
 	A.CtrlShiftClick(src)
 	return
 
-/atom/proc/CtrlShiftClick(var/mob/user)
+/atom/proc/CtrlShiftClick(mob/user)
 	return
 
 /*
@@ -292,7 +290,7 @@
 		src << "<span class='danger'>You're out of energy!  You need food!</span>"
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(var/atom/A)
+/mob/proc/face_atom(atom/A)
 	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y

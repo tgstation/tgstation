@@ -469,3 +469,6 @@
 		if(verbs.Find(/obj/item/weapon/storage/verb/quick_empty))
 			quick_empty()
 
+/obj/item/weapon/storage/handle_atom_del(atom/A)
+	if(A in contents)
+		remove_from_storage(A,null)

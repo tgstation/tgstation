@@ -140,7 +140,7 @@
 			rcdmod.uses --
 			for(var/obj/item/weapon/rcd/rcd in world)
 				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+			for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd in world)
 				rcd.disabled = 1
 			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
 		else src << "<span class='notice'>Out of uses.</span>"
@@ -225,7 +225,7 @@
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
-/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M as obj in world)
+/mob/living/silicon/ai/proc/overload_machine(obj/machinery/M in world)
 	set name = "Overload Machine"
 	set category = "Malfunction"
 
@@ -255,7 +255,7 @@
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
 
-/mob/living/silicon/ai/proc/override_machine(obj/machinery/M as obj in world)
+/mob/living/silicon/ai/proc/override_machine(obj/machinery/M in world)
 	set name = "Override Machine"
 	set category = "Malfunction"
 
@@ -380,7 +380,7 @@
 
 	power_type = /mob/living/silicon/ai/proc/reactivate_camera
 
-/mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C as obj in cameranet.cameras)
+/mob/living/silicon/ai/proc/reactivate_camera(obj/machinery/camera/C in cameranet.cameras)
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 
@@ -408,7 +408,7 @@
 
 	power_type = /mob/living/silicon/ai/proc/upgrade_camera
 
-/mob/living/silicon/ai/proc/upgrade_camera(obj/machinery/camera/C as obj in cameranet.cameras)
+/mob/living/silicon/ai/proc/upgrade_camera(obj/machinery/camera/C in cameranet.cameras)
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
 
@@ -458,13 +458,13 @@
 		if(AM.power_type != null)
 			src.possible_modules += AM
 
-/datum/module_picker/proc/remove_verbs(var/mob/living/silicon/ai/A)
+/datum/module_picker/proc/remove_verbs(mob/living/silicon/ai/A)
 
 	for(var/datum/AI_Module/AM in possible_modules)
 		A.verbs.Remove(AM.power_type)
 
 
-/datum/module_picker/proc/use(user as mob)
+/datum/module_picker/proc/use(mob/user)
 	var/dat
 	dat = "<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>"
 	dat += "<HR>"

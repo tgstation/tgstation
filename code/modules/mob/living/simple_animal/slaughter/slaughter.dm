@@ -11,6 +11,7 @@
 	response_harm   = "punches"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "daemon"
+	icon_living = "daemon"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -51,7 +52,7 @@
 
 ////////////////////The Powers
 
-/mob/living/simple_animal/slaughter/proc/phaseout(var/obj/effect/decal/cleanable/B)
+/mob/living/simple_animal/slaughter/proc/phaseout(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
 	var/turf/bloodloc = get_turf(B.loc)
 	if(Adjacent(bloodloc))
@@ -76,7 +77,7 @@
 			src.phased = TRUE
 			src.holder = holder
 			if(src.kidnapped)
-				src << "<B>You being to feast on [kidnapped]. You can not move while you are doing this.</B>"
+				src << "<B>You begin to feast on [kidnapped]. You can not move while you are doing this.</B>"
 				src.eating = TRUE
 				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)
@@ -93,7 +94,7 @@
 				src.eating = FALSE
 			src.notransform = 0
 
-/mob/living/simple_animal/slaughter/proc/phasein(var/obj/effect/decal/cleanable/B)
+/mob/living/simple_animal/slaughter/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.eating)
 		src << "<B>Finish eating first!</B>"
 	else
@@ -104,7 +105,7 @@
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 		qdel(src.holder)
 
-/obj/effect/decal/cleanable/blood/CtrlClick(var/mob/user)
+/obj/effect/decal/cleanable/blood/CtrlClick(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
@@ -114,7 +115,7 @@
 			S.phaseout(src)
 
 
-/obj/effect/decal/cleanable/trail_holder/CtrlClick(var/mob/user)
+/obj/effect/decal/cleanable/trail_holder/CtrlClick(mob/user)
 	..()
 	if(istype(user, /mob/living/simple_animal/slaughter))
 		var/mob/living/simple_animal/slaughter/S = user
@@ -147,7 +148,7 @@
 	anchored = 1
 	invisibility = 60
 
-obj/effect/dummy/slaughter/relaymove(var/mob/user, direction)
+obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	if (!src.canmove || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	loc = newLoc
