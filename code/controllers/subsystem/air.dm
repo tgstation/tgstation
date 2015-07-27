@@ -2,7 +2,7 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air
 	name = "Air"
-	priority = -3
+	priority = -1
 	wait = 5
 	dynamic_wait = 1
 	dwait_upper = 50
@@ -54,8 +54,8 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday, zlevel)
-	setup_atmos_machinery(zlevel)
 	setup_allturfs(zlevel)
+	setup_atmos_machinery(zlevel)
 	setup_pipenets(zlevel)
 	..()
 
@@ -166,7 +166,6 @@ var/datum/subsystem/air/SSair
 			EG.dismantle()
 
 /datum/subsystem/air/proc/setup_allturfs(z_level)
-	active_turfs.Cut()
 	var/z_start = 1
 	var/z_finish = world.maxz
 	if(1 <= z_level && z_level <= world.maxz)
@@ -177,6 +176,7 @@ var/datum/subsystem/air/SSair
 	for(var/turf/simulated/T in turfs_to_init)
 		T.CalculateAdjacentTurfs()
 		T.excited = 0
+		active_turfs -= T
 		if(!T.blocks_air)
 			T.update_visuals()
 			for(var/direction in cardinal)
