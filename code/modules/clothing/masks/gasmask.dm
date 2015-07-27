@@ -145,3 +145,8 @@
 	flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	burn_state = 0 //Burnable
+
+/obj/item/clothing/mask/gas/carp
+	name = "carp mask"
+	desc = "Gnash gnash."
+	icon_state = "carp_mask"
