@@ -56,3 +56,9 @@
 	desc="Summer up your office with this cheap vinyl beachball made by prisoners!"
 	typepath=/obj/item/weapon/beach_ball
 	cost = 500
+
+/datum/storeitem/boombox
+	name="Boombox"
+	desc="I ask you a question: is a man not entitled to the beats of his own smooth jazz?"
+	typepath=/obj/machinery/media/receiver/boombox
+	cost = 500

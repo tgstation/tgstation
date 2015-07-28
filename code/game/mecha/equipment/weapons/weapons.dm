@@ -124,7 +124,7 @@
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+			if(H.earprot())
 				continue
 		M << "<font color='red' size='7'>HONK</font>"
 		M.sleeping = 0

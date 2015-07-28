@@ -288,7 +288,9 @@
 		M.current.visible_message("<span class='warning'>[M.current.name] lets out an ear piercing shriek!</span>", "<span class='warning'>You let out a loud shriek.</span>", "<span class='warning'>You hear a loud painful shriek!</span>")
 		for(var/mob/living/carbon/C in hearers(4, M.current))
 			if(C == M.current) continue
-			if(ishuman(C) && C:is_on_ears(/obj/item/clothing/ears/earmuffs)) continue
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(H.earprot()) continue
 			if(!C.vampire_affected(M)) continue
 			C << "<span class='danger'><font size='3'>You hear a ear piercing shriek and your senses dull!</font></span>"
 			C.Weaken(8)
