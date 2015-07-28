@@ -270,6 +270,9 @@ client
 		if(istype(D,/atom/movable))
 			body += "<option value='?_src_=vars;teleport_here=\ref[D]'>Teleport Here</option>"
 
+		if(istype(D,/atom))
+			body += "<option value='?_src_=vars;teleport_to=\ref[D]'>Teleport To</option>"
+
 		body += "<option value>---</option>"
 
 		if(ismob(D))
@@ -735,6 +738,25 @@ client
 			if("Stealthy")
 				A.alpha = 0
 				animate(A, alpha = 255, time = stealthy_level)
+
+	else if(href_list["teleport_to"])
+		if(!check_rights(0))	return
+
+		var/atom/movable/user = usr
+		if(!istype(user))
+			user << "Only movable atoms can use this option. Wait a second, how can you even not be a movable atom anyway?"
+
+		var/atom/A = locate(href_list["teleport_to"])
+		if(!istype(A))
+			user << "This can only be done to instances of atoms."
+			return
+
+		var/turf/T = get_turf(A)
+		if(!T)
+			user << "You cannot teleport into nullspace. Well I mean technically you can but that's not what that option is for."
+			return
+
+		user.forceMove(T)
 
 	else if(href_list["delete"])
 		if(!check_rights(0))	return
