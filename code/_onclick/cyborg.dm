@@ -122,6 +122,9 @@
 		A.AIAltClick(src)
 		return
 	*/
+	. = ..()
+	if(.)
+		return
 	if(isturf(A))
 		A.AltClick(src)
 		return
