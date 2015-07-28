@@ -26,5 +26,7 @@ install:
   - cd ..
 
 script:
+  - shopt -s globstar
+  - (! grep 'step_[xy]' maps/**/*.dmm)
   - bash dm.sh -M${DM_MAPFILE} tgstation.dme
   - python tools/ss13_genchangelog.py html/changelog.html html/changelogs
