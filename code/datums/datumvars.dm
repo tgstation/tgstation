@@ -723,7 +723,18 @@ client
 			return
 
 		A.forceMove(T)
-		T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
+		switch(teleport_here_pref)
+			if("Flashy")
+				if(flashy_level > 0)
+					T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
+				if(flashy_level > 1)
+					for(var/mob/M in range(T,7))
+						shake_camera(M, 4, 1)
+				if(flashy_level > 2)
+					world << "<font size='15' color='red'><b>[uppertext(A.name)] HAS RISEN</b></font>"
+			if("Stealthy")
+				A.alpha = 0
+				animate(A, alpha = 255, time = stealthy_level)
 
 	else if(href_list["delete"])
 		if(!check_rights(0))	return

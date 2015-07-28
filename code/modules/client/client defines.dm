@@ -9,6 +9,10 @@
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 
+	var/teleport_here_pref = "Flashy"	//Flashy, teleports instantly; Stealthy, teleports with a discret fade-in
+	var/flashy_level = 1	//0 = no additional effect, 1 = visual effect and sound, 2 = shake the fucking screen!, 3 = [atom] HAS RISEN!
+	var/stealthy_level = 20	//how many tenth of seconds seconds do you want the fade-in to last?
+
 		/////////
 		//OTHER//
 		/////////
@@ -50,5 +54,5 @@
 	// /vg/: MEDIAAAAAAAA
 	// Set on login.
 	var/datum/media_manager/media = null
-	
+
 	var/filling = 0 //SOME STUPID SHIT POMF IS DOING
