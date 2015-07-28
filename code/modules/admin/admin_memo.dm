@@ -1,9 +1,20 @@
-/client/proc/admin_memo(task in list("Show","Write","Edit","Remove"))
+/client/proc/admin_memo()
 	set name = "Memo"
 	set category = "Server"
 	if(!check_rights(0))	return
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return
+	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
+	if(!memotask)
+		return
+	admin_memo_output(memotask)
+
+/client/proc/admin_memo_output(task)
+	if(!task)
+		return
+	if(!dbcon.IsConnected())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	switch(task)
