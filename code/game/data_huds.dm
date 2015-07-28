@@ -32,6 +32,8 @@ proc/process_med_hud(var/mob/M, var/mob/eye)
 	else
 		T = get_turf(M)
 	for(var/mob/living/carbon/human/patient in range(T))
+		if(patient.head && istype(patient.head,/obj/item/clothing/head/tinfoil)) //Tinfoil hat? Move along.
+			continue
 		if(M.see_invisible < patient.invisibility)
 			continue
 		var/foundVirus = 0

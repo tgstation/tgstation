@@ -31,6 +31,9 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 
 /spell/targeted/choose_targets(mob/user = usr)
+	if(mind_affecting && tinfoil_check(user))
+		user << "<span class='warning'>Something is interfering with your ability to target minds.</span>"
+		return
 	var/list/targets = list()
 
 	if(max_targets == 0) //unlimited
@@ -149,3 +152,8 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 	target.dizziness += amt_dizziness
 	target.confused += amt_confused
 	target.stuttering += amt_stuttering
+
+/spell/targeted/proc/tinfoil_check(mob/living/carbon/human/user)
+	if(user.head && istype(user.head,/obj/item/clothing/head/tinfoil))
+		return 1
+	return 0
