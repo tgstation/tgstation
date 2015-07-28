@@ -187,7 +187,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 				if(config.mutant_races)
-					dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+					if(config.paywall_mutant)
+						if(unlock_content)
+							dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+						else
+							dat += "<b>Species:</b> Human<BR>"
+					else
+						dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 				else
 					dat += "<b>Species:</b> Human<BR>"
 
@@ -1048,7 +1054,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		if(character.dna)
 			character.dna.real_name = character.real_name
 			if(pref_species != /datum/species/human && config.mutant_races)
-				hardset_dna(character, null, null, null, null, pref_species.type, features)
+				if(config.paywall_mutant)
+					if(unlock_content)
+						hardset_dna(character, null, null, null, null, pref_species.type, features)
+					else
+						hardset_dna(character, null, null, null, null, /datum/species/human, features)
+				else
+					hardset_dna(character, null, null, null, null, pref_species.type, features)
 			else
 				hardset_dna(character, null, null, null, null, /datum/species/human, features)
 			character.update_mutcolor()
