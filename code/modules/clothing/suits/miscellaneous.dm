@@ -220,21 +220,21 @@
 	flags = NODROP
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
-	name = "ian costume"
-	desc = "A costume that looks like someone made Ian human, it won't guarantee belly rubs."
+	name = "corgi costume"
+	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	//cold_protection = CHEST|GROIN|ARMS
-	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Uncomment if Ian's body warms you at night
+	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list(,)
 	hooded = 1
 	action_button_name = "Toggle Ian Hood"
 	hoodtype = /obj/item/clothing/head/ian_hood
 
 /obj/item/clothing/head/ian_hood
-	name = "ian hood"
-	desc = "A hood that looks just like Ian's head, it won't guarantee dog biscuits."
+	name = "corgi hood"
+	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
 	icon_state = "ian"
 	body_parts_covered = HEAD
 	//cold_protection = HEAD

@@ -22,7 +22,7 @@
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
 	gender = MALE
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
@@ -181,6 +181,7 @@
 						/obj/item/weapon/tank/internals/oxygen,
 						/obj/item/weapon/tank/internals/air,
 						/obj/item/weapon/extinguisher,
+						/obj/item/clothing/suit/hooded/ian_costume,
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
