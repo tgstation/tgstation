@@ -16,15 +16,6 @@
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
 
-datum/design/shield_gen_ex
-	name = "Circuit Design (Experimental hull shield generator)"
-	desc = "Allows for the construction of circuit boards used to build an experimental hull shield generator."
-	id = "shield_gen"
-	req_tech = list("bluespace" = 4, "plasmatech" = 3)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 10000, MAT_DIAMOND = 5000, MAT_GOLD = 10000)
-	build_path = "/obj/machinery/shield_gen/external"
-
 ////////////////////////////////////////
 // Shield Generator
 
@@ -42,15 +33,6 @@ datum/design/shield_gen_ex
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
 
-datum/design/shield_gen
-	name = "Circuit Design (Experimental shield generator)"
-	desc = "Allows for the construction of circuit boards used to build an experimental shield generator."
-	id = "shield_gen"
-	req_tech = list("bluespace" = 4, "plasmatech" = 3)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 10000, MAT_DIAMOND = 5000, MAT_GOLD = 10000)
-	build_path = "/obj/machinery/shield_gen/external"
-
 ////////////////////////////////////////
 // Shield Capacitor
 
@@ -67,12 +49,3 @@ datum/design/shield_gen
 							"/obj/item/weapon/stock_parts/subspace/analyzer" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
-
-datum/design/shield_cap
-	name = "Circuit Design (Experimental shield capacitor)"
-	desc = "Allows for the construction of circuit boards used to build an experimental shielding capacitor."
-	id = "shield_cap"
-	req_tech = list("magnets" = 3, "powerstorage" = 4)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_PLASMA = 10000, MAT_DIAMOND = 5000, MAT_SILVER = 10000)
-	build_path = "/obj/machinery/shield_gen/external"

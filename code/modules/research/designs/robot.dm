@@ -1,7 +1,3 @@
-//contains all the robot part and component designs
-
-#define MECHFAB		16 //from designs.dm
-
 /datum/design/robot/chassis
 	name = "Cyborg Component (Robot endoskeleton)"
 	desc = "Used to build a Robot endoskeleton."
