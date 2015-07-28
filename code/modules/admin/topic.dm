@@ -2058,10 +2058,14 @@
 		src.access_news_network()
 
 	else if(href_list["memoeditlist"])
-		var/DBQuery/query_memoedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("memo")] WHERE (id = '[href_list["id"]]")
-		query_memoedits.Execute()
+		var/sql_key = sanitizeSQL("[href_list["memoeditlist"]]")
+		var/DBQuery/query_memoedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("memo")] WHERE (ckey = '[sql_key]')")
+		if(!query_memoedits.Execute())
+			var/err = query_memoedits.ErrorMsg()
+			log_game("SQL ERROR obtaining edits from memo table. Error : \[[err]\]\n")
+			return
 		if(query_memoedits.NextRow())
-			var/edit_log = query_memoedits.item[6]
+			var/edit_log = query_memoedits.item[1]
 			usr << browse(edit_log,"window=memoeditlist")
 
 	else if(href_list["check_antagonist"])
