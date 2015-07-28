@@ -79,10 +79,7 @@
 /datum/objective_item/steal/nuke_core
 	name = "the plutonium core from the onboard self-destruct"
 	targetitem = /obj/item/nuke_core
-	difficulty = 15
-
-/datum/objective_item/steal/nuke_core/New()
-	special_equipment += new /obj/item/weapon/storage/box/syndie_kit/nuke()
+	difficulty = 10
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
