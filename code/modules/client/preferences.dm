@@ -187,13 +187,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 				if(config.mutant_races)
-					if(config.paywall_mutant)
-						if(unlock_content)
-							dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
-						else
-							dat += "<b>Species:</b> Human<BR>"
-					else
-						dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
+					dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 				else
 					dat += "<b>Species:</b> Human<BR>"
 
@@ -816,8 +810,14 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							eye_color = sanitize_hexcolor(new_eyes)
 
 					if("species")
-
-						var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+						var/result
+						if(config.paywall_mutant)
+							if(unlock_content)
+								result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+							else
+								user << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+						else
+							result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
 
 						if(result)
 							var/newtype = roundstart_species[result]
