@@ -89,11 +89,15 @@ public class MapMerge {
 			String[] passInto = { "-clean", backup_map, edited_map, to_save };
 			MapPatcher.main(passInto);
 			try{
-				Process process = new ProcessBuilder("C:\\Python27\\python.exe", "dmm2tgm.py", selected_map).start();
-			}catch(Exception e){
-				e.printStackTrace();
-				System.out.println("This was most likely caused by you not having python 2.7.x installed.");
-				System.out.println("Downloads can be found here: https://www.python.org/downloads/");
+				Process process = new ProcessBuilder("dmm2tgm\\dmm2tgm.exe", selected_map).start();
+			}catch(Exception e1){
+				System.out.println("You are not on a windows machine, trying the .py");
+				try{
+					Process process = new ProcessBuilder("dmm2tgm\\Source\\dmm2tgm.py", selected_map).start();
+				}catch(Exception e2){
+					System.out.println("You do not have python 2.7.x installed.");
+					System.out.println("Downloads can be found here: https://www.python.org/downloads/");
+				}
 			}
 			
 		}
