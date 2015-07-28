@@ -146,7 +146,7 @@
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
 				GM.loc = src
-				user.visible_message("<span class='warning'>[GM.name] has been placed in the [src] by [user].</span>, <span class='warning'>[GM.name] has been placed in the [src] by you.</span>", "<span class='warning'>You hear a loud clunk.</span>")
+				user.visible_message("<span class='warning'>[GM.name] has been placed in the [src] by [user].</span>", "<span class='warning'>[GM.name] has been placed in the [src] by you.</span>", "<span class='warning'>You hear a loud clunk.</span>")
 				qdel(G)
 				log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
 		return
