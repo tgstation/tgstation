@@ -620,7 +620,7 @@
 "lV" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 9},/area/syndicate_mothership)
 "lW" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/syndicate_mothership)
 "lX" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
-"lY" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
+"lY" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "lZ" = (/obj/machinery/computer/telecrystals/uplinker,/turf/simulated/floor/plasteel/podhatch{dir = 8},/area/syndicate_mothership)
 "ma" = (/obj/structure/showcase{desc = "A strange machine supposedly from another world. The Wizard Federation has been meddling with it for years."; icon_state = "processor"; name = "byond random number generator"},/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage7"},/area/wizard_station)
 "mb" = (/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage"},/area/wizard_station)
