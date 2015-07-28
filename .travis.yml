@@ -37,6 +37,6 @@ script:
   - (! grep 'step_[xy]' maps/**/*.dmm)
   - (! find nano/templates/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep nano)
   - md5sum -c - <<< "88490b460c26947f5ec1ab1bb9fa9f17 *html/changelogs/example.yml"
-  - python tools/GenerateChangelog/ss13_genchangelog.py html/changelog.html html/changelogs
+  - python tools/ss13_genchangelog.py html/changelog.html html/changelogs
   - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
   - bash dm.sh -M${DM_MAPFILE} tgstation.dme
