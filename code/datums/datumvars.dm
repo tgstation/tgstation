@@ -267,6 +267,12 @@ client
 		if(ismob(D))
 			body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 
+		if(istype(D,/atom/movable))
+			body += "<option value='?_src_=vars;teleport_here=\ref[D]'>Teleport Here</option>"
+
+		if(istype(D,/atom))
+			body += "<option value='?_src_=vars;teleport_to=\ref[D]'>Teleport To</option>"
+
 		body += "<option value>---</option>"
 
 		if(ismob(D))
@@ -304,6 +310,8 @@ client
 			body += {"<option value>---</option>
 				<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"}
 			// END AUTOFIX
+		if(istype(D,/atom))
+			body += "<option value='?_src_=vars;delete=\ref[D]'>Delete</option>"
 		if(isobj(D))
 			body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 		if(isobj(D) || ismob(D) || isturf(D))
@@ -703,6 +711,70 @@ client
 
 		src.holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
+
+	else if(href_list["teleport_here"])
+		if(!check_rights(0))	return
+
+		var/atom/movable/A = locate(href_list["teleport_here"])
+		if(!istype(A))
+			usr << "This can only be done to instances of movable atoms."
+			return
+
+		var/turf/T = get_turf(usr)
+		if(!T)
+			usr << "You cannot teleport something into nullspace. Well I mean technically you can but that's not what that option is for."
+			return
+
+		A.forceMove(T)
+		switch(teleport_here_pref)
+			if("Flashy")
+				if(flashy_level > 0)
+					T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
+				if(flashy_level > 1)
+					for(var/mob/M in range(T,7))
+						shake_camera(M, 4, 1)
+				if(flashy_level > 2)
+					world << "<font size='15' color='red'><b>[uppertext(A.name)] HAS RISEN</b></font>"
+			if("Stealthy")
+				A.alpha = 0
+				animate(A, alpha = 255, time = stealthy_level)
+
+	else if(href_list["teleport_to"])
+		if(!check_rights(0))	return
+
+		var/atom/movable/user = usr
+		if(!istype(user))
+			user << "Only movable atoms can use this option. Wait a second, how can you even not be a movable atom anyway?"
+
+		var/atom/A = locate(href_list["teleport_to"])
+		if(!istype(A))
+			user << "This can only be done to instances of atoms."
+			return
+
+		var/turf/T = get_turf(A)
+		if(!T)
+			user << "You cannot teleport into nullspace. Well I mean technically you can but that's not what that option is for."
+			return
+
+		user.forceMove(T)
+
+	else if(href_list["delete"])
+		if(!check_rights(0))	return
+
+		var/atom/movable/A = locate(href_list["delete"])
+		if(!istype(A))
+			usr << "This can only be done to instances of movable atoms."
+			return
+
+		if(ismob(A))
+			var/mob/M = A
+			if(M.client)
+				if(alert("You sure?","Confirm","Yes","No") != "Yes")
+					return
+
+		log_admin("[key_name(usr)] deleted [A] at ([A.x],[A.y],[A.z])")
+		message_admins("<span class='notice'>[key_name(usr)] deleted [A] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>([A.x],[A.y],[A.z])</a></span>")
+		qdel(A)
 
 	else if(href_list["rotatedatum"])
 		if(!check_rights(0))	return

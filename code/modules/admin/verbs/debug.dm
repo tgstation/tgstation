@@ -1753,6 +1753,18 @@ client/proc/check_bomb()
 	for (var/turf/T in wipe_colors)
 		T.color = null
 
+/client/proc/set_teleport_pref()
+	set name = "Set Teleport-Here Preferences"
+	set category = "Debug"
+
+	teleport_here_pref = alert("Do you want to teleport atoms in a flashy way or a discret way?","Teleport-Here Preferences", "Flashy","Stealthy")
+
+	switch(teleport_here_pref)
+		if("Flashy")
+			flashy_level =  input("How much flashy do you want it to be? 0=no effect; 1=flash; 2=screen-shake; 3=global X HAS RISEN announcement","Flashy Preferences") as num
+		if("Stealthy")
+			stealthy_level = input("How long do you want the fade-in to last? (in tenth of seconds)","Stealthy Preferences") as num
+
 client/proc/cure_disease()
 	set name = "Cure Disease"
 	set category = "Debug"
