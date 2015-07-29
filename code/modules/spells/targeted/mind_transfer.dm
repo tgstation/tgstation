@@ -8,6 +8,7 @@
 	invocation = "GIN'YU CAPAN"
 	invocation_type = SpI_WHISPER
 	max_targets = 1
+	mind_affecting = 1
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	compatible_mobs = list(/mob/living/carbon/human,/mob/living/carbon/monkey) //which types of mobs are affected by the spell. NOTE: change at your own risk
