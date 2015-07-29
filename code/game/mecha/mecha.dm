@@ -447,10 +447,8 @@
 
 /obj/mecha/Bump(var/atom/obstacle, yes)
 	if(yes)
-		if(throwing)
-			..()
+		if(..()) //mech was thrown
 			return
-		obstacle.Bumped(src)
 		if(istype(obstacle, /obj))
 			var/obj/O = obstacle
 			if(!O.anchored)
