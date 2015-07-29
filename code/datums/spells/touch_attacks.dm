@@ -1,6 +1,7 @@
-/obj/effect/proc_holder/spell/targeted/touch/
+/obj/effect/proc_holder/spell/targeted/touch
 	var/hand_path = "/obj/item/weapon/melee/touch_attack"
 	var/obj/item/weapon/melee/touch_attack/attached_hand = null
+	var/refund_coeff = 1 //how much of their charge they get back.
 	invocation_type = "none" //you scream on connecting, not summoning
 	include_user = 1
 	range = -1
@@ -8,7 +9,7 @@
 /obj/effect/proc_holder/spell/targeted/touch/Click(mob/user = usr)
 	if(attached_hand)
 		qdel(attached_hand)
-		charge_counter = charge_max
+		charge_counter = round(charge_max * refund_coeff, 1)
 		attached_hand = null
 		user << "<span class='notice'>You draw the power out of your hand.</span>"
 		return 0
@@ -48,6 +49,7 @@
 	name = "Disintegrate"
 	desc = "This spell charges your hand with vile energy that can be used to violently explode victims."
 	hand_path = "/obj/item/weapon/melee/touch_attack/disintegrate"
+	refund_coeff = .66
 
 	school = "evocation"
 	charge_max = 600
@@ -55,6 +57,15 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
+
+/obj/effect/proc_holder/spell/targeted/touch/disintegrate/cast(list/targets)
+	for(var/mob/living/carbon/user in targets)
+		visible_message("<span class='danger'>[user] starts gathering destructive energy...</span>", "<span class='danger'>You start gathering destructive energy...</span>")
+		playsound(user.loc, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+		if(!do_after(user, 15))
+			return 0
+		visible_message("<span class='userdanger'>[user] channels a large amount of destructive energy to his hand!</span>", "<span class='danger'>You channel a large amount of destructive energy to his hand!</span>")
+	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
 	name = "Flesh to Stone"
