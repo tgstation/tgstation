@@ -1,0 +1,5 @@
+author: Intigracy
+delete-after: True
+
+changes: 
+  - rscadd: You can now get monkey cubes from the biogenerator for 250 points each.
