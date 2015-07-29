@@ -1,0 +1,8 @@
+author: freerealestate
+
+delete-after: True
+
+changes: 
+  - bugfix: "Fixed bug where copying with ctrl+C didn't work due to it being assigned to resist."
+  - rscadd: "Changed resist to B (hotkeys mode) and ctrl+B (either mode) instead."
+  - rscdel: "Removed End resist from cyborgs."
