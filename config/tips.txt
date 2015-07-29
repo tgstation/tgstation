@@ -14,7 +14,7 @@ Grabbing someone and upgrading it to an aggressive grab will allow you to throw 
 You can destroy computers by shooting lasers at them.
 Holding alt and left clicking a tile will allow you to see its contents in the top right window pane, which is much faster than right clicking.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, and out of locked lockers. Whenever you're stuck, try resisting!
-You can move an item out of the way by dragging it and then clicking on an adjacent tile.
+You can move an item out of the way by dragging it and then clicking on an adjacent tile with an empty hand.
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your pants or your life are things to worry about.
