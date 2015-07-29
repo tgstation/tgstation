@@ -22,7 +22,7 @@
 #################################
 
 # Your name.  
-author: N3X15
+author: Gun Hog
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
 delete-after: True
@@ -33,5 +33,5 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Added a changelog editing system that should cause fewer conflicts and more accurate timestamps."
-  - rscdel: "Killed innocent kittens."
+  - tweak: "The Reactivate Camera power for Malfunctining AIs now costs 10 CPU, and works on the entire camera network, up to 30 cameras fixed.
+  - tweak: "The Upgrade Cameras power now costs 35 CPU, upgrades all cameras in the network to have EMP proofing, X-ray, and gives the AI night-vision."
