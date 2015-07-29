@@ -87,7 +87,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return Attach(AM)
 	return 0
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
