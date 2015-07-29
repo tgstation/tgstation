@@ -122,6 +122,14 @@
 	else icon_state = "foodbag1"
 
 // -----------------------------
+//          Borg Food bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/food/borg
+	name = "Food Transport Bag"
+	desc = "Useful for manipulating food items in the kitchen."
+
+// -----------------------------
 //          Pill Collector
 // -----------------------------
 

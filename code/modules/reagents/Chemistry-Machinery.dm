@@ -104,6 +104,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			stat |= NOPOWER
 	nanomanager.update_uis(src) // update all UIs attached to src
 
+/obj/machinery/chem_dispenser/proc/can_use(var/mob/living/silicon/robot/R)
+	if(!isMoMMI(R) && !istype(R.module,/obj/item/weapon/robot_module/medical)) //default chem dispenser can only be used by MoMMIs and Mediborgs
+		return 0
+	else
+		if(!isMoMMI(R))
+			targetMoveKey =  R.on_moved.Add(src, "user_moved")
+		return 1
+
 /obj/machinery/chem_dispenser/process()
 	if(recharged < 0)
 		recharge()
@@ -251,11 +259,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		return 1
 
 	if(isrobot(user))
-		// UNLESS MoMMI or medbutt.
-		var/mob/living/silicon/robot/R=user
-		if(!isMoMMI(user) && !istype(R.module,/obj/item/weapon/robot_module/medical))
+		if(!can_use(user))
 			return
-		targetMoveKey =  user.on_moved.Add(src, "user_moved")
 
 	if(istype(D, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
@@ -311,6 +316,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	max_energy = 100
 	energy = 100
 
+/obj/machinery/chem_dispenser/brewer/can_use(var/mob/living/silicon/robot/R)
+	if(!isMoMMI(R) && istype(R.module,/obj/item/weapon/robot_module/butler)) //bartending dispensers can be used only by service borgs
+		targetMoveKey =  R.on_moved.Add(src, "user_moved")
+		return 1
+	else
+		return 0
+
 //Soda/booze dispensers.
 
 /obj/machinery/chem_dispenser/soda_dispenser/
@@ -336,6 +348,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	max_energy = 100
 	energy = 100
 
+/obj/machinery/chem_dispenser/soda_dispenser/can_use(var/mob/living/silicon/robot/R)
+	if(!isMoMMI(R) && istype(R.module,/obj/item/weapon/robot_module/butler)) //bartending dispensers can be used only by service borgs
+		targetMoveKey =  R.on_moved.Add(src, "user_moved")
+		return 1
+	else
+		return 0
+
 /obj/machinery/chem_dispenser/booze_dispenser/
 	name = "Booze Dispenser"
 	icon_state = "booze_dispenser"
@@ -358,6 +377,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/booze_dispenser/mapping
 	max_energy = 100
 	energy = 100
+
+/obj/machinery/chem_dispenser/booze_dispenser/can_use(var/mob/living/silicon/robot/R)
+	if(!isMoMMI(R) && istype(R.module,/obj/item/weapon/robot_module/butler)) //bartending dispensers can be used only by service borgs
+		targetMoveKey =  R.on_moved.Add(src, "user_moved")
+		return 1
+	else
+		return 0
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

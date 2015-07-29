@@ -143,16 +143,16 @@
 	if(holdingitems && holdingitems.len >= limit)
 		usr << "The machine cannot hold anymore items."
 		return 1
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+	else if(istype(O, /obj/item/weapon/storage/bag/plants) || istype(O, /obj/item/weapon/storage/bag/food/borg))
 		var/obj/item/weapon/storage/bag/B = O
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+		for (var/obj/item/weapon/reagent_containers/food/snacks/G in O.contents)
 			B.remove_from_storage(G,src)
 			if(contents && contents.len >= limit) //Sanity checking so the microwave doesn't overfill
 				user << "You fill the Microwave to the brim."
 				break
 
 		if(!O.contents.len)
-			user << "You empty the plant bag into the Microwave."
+			user << "You empty \the [O] into the Microwave."
 			src.updateUsrDialog()
 			return 0
 			if (!is_type_in_list(O.contents))
@@ -201,7 +201,14 @@
 	return src.attack_hand(user)
 
 /obj/machinery/microwave/attack_ai(mob/user as mob)
-	return 0
+	if(istype(user,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = user
+		if(istype(R.module, /obj/item/weapon/robot_module/butler))
+			user.set_machine(src)
+			interact(user)
+			return 1
+		user << "<span class='warning'>You aren't equipped to interface with technology this old!</span>"
+		return 0
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
 	user.set_machine(src)

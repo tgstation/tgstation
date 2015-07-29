@@ -28,6 +28,16 @@
 	build_path = /obj/item/borg/upgrade/medical/surgery
 	category = "Robotic_Upgrade_Modules"
 
+/datum/design/borg_service_upgrade
+	name = "service module board"
+	desc = "Used to give a service cyborg cooking tools."
+	id = "borg_service_module"
+	req_tech = list("biotech" = 2, "engineering" = 3, "programming" = 2)
+	build_type = MECHFAB
+	materials = list(MAT_IRON = 60000, MAT_GLASS = 10000)
+	build_path = /obj/item/borg/upgrade/service
+	category = "Robotic_Upgrade_Modules"
+
 /datum/design/borg_reset_board
 	name = "cyborg reset module"
 	desc = "Used to reset cyborgs to their default module."

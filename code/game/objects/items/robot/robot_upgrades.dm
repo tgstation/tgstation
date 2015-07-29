@@ -240,3 +240,23 @@
 	R.module.modules += new/obj/item/weapon/wrench/socket(R.module)
 
 	return 1
+
+/obj/item/borg/upgrade/service
+	name = "service module board"
+	desc = "Used to give a service cyborg cooking tools."
+	icon_state = "cyborg_upgrade2"
+	require_module = 1
+
+/obj/item/borg/upgrade/service/action(var/mob/living/silicon/robot/R)
+	if(..()) return 0
+	if(!istype(R.module, /obj/item/weapon/robot_module/butler))
+		R << "Upgrade mounting error!  This module is reserved for service modules!"
+		usr << "There's no mounting point for the module!"
+		return 0
+	else
+		R.module.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large/cyborg(R.module,R.module)
+		R.module.modules += new /obj/item/weapon/kitchen/utensil/knife/large(R.module)
+		R.module.modules += new /obj/item/weapon/storage/bag/food/borg(R.module)
+
+		return 1
+		
