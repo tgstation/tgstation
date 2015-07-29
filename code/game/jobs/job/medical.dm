@@ -35,6 +35,8 @@ Chief Medical Officer
 	H.equip_to_slot_or_del(new /obj/item/device/flashlight/pen(H), slot_s_store)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
+	announce_head(H.mind, list("Medical")) //tell underlings (medical radio) they have a head
+
 /*
 Medical Doctor
 */
