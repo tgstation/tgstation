@@ -49,7 +49,7 @@
 	name = "Disintegrate"
 	desc = "This spell charges your hand with vile energy that can be used to violently explode victims."
 	hand_path = "/obj/item/weapon/melee/touch_attack/disintegrate"
-	refund_coeff = .66
+	refund_coeff = 0.66
 
 	school = "evocation"
 	charge_max = 600
