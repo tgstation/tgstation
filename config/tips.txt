@@ -94,7 +94,7 @@ As a Cargo Technician, you can hack mulebots to make them faster, run over peopl
 As a Cargo Technician, you can order contraband items from the supply shuttle console by deconstructing it and using a multitool on the circuit board, the re-assembling it.
 As a Shaft Miner, the west side of the asteroid has a lot more materials than on the right, but also has a lot of monsters in it.
 As a Shaft Miner, every monster on the west side of the asteroid has a pattern for you to learn, you can exploit this to minimize damage from the encounters.
-As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your armor with it, greatly reducing incoming melee damage. At maximum, the plating is incredibly effective, reducing melee damage by up to 90%.
+As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your rigsuit with it, greatly reducing incoming melee damage.
 As a Shaft Miner, you should always turn your jumpsuit sensors to maximum, a fellow miner or cyborg may come to save you if you die.
 As a Traitor, the cryptographic sequencer (emag) can not only open doors, but also lockers, crates, APCs and more. It can hack cyborgs, and even cause bots to go berserk. Experiment!
 As a Traitor, subverting the AI to serve you can make it an extremely powerful ally. However, be careful of the wording in the laws you give it, as it may use your poorly written laws against you!
