@@ -810,8 +810,14 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							eye_color = sanitize_hexcolor(new_eyes)
 
 					if("species")
-
-						var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+						var/result
+						if(config.paywall_mutant)
+							if(unlock_content)
+								result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+							else
+								user << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+						else
+							result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
 
 						if(result)
 							var/newtype = roundstart_species[result]
@@ -1048,7 +1054,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		if(character.dna)
 			character.dna.real_name = character.real_name
 			if(pref_species != /datum/species/human && config.mutant_races)
-				hardset_dna(character, null, null, null, null, pref_species.type, features)
+				if(config.paywall_mutant)
+					if(unlock_content)
+						hardset_dna(character, null, null, null, null, pref_species.type, features)
+					else
+						hardset_dna(character, null, null, null, null, /datum/species/human, features)
+				else
+					hardset_dna(character, null, null, null, null, pref_species.type, features)
 			else
 				hardset_dna(character, null, null, null, null, /datum/species/human, features)
 			character.update_mutcolor()
