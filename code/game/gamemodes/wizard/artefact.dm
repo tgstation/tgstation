@@ -471,17 +471,23 @@ var/global/list/multiverse = list()
 	var/obj/item/link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
+	burntime = 0
+	burnstate = 0
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
 		if(is_hot(I))
 			target << "<span class='userdanger'>You suddenly feel very hot</span>"
 			target.bodytemperature += 50
-			GiveHint(target,user)
+			GiveHint(target)
 		else if(is_pointed(I))
 			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
 			target.Weaken(2)
-			GiveHint(target,user)
+			GiveHint(target)
+		else if(istype(I,/obj/item/weapon/bikehorn))
+			target << "<span class='userdanger>HONK</span>"
+			target << 'sound/items/AirHorn.ogg'
+			target.adjustEarDamage(0,5)
 		cooldown = world.time +cooldown_time
 		return
 
@@ -529,7 +535,7 @@ var/global/list/multiverse = list()
 					var/mob/living/T = pick(nearby_mobs)
 					log_game("[user][user.key] made [target][target.key] click on [T] with a voodoo doll.")
 					target.ClickOn(T)
-					GiveHint(target,user)
+					GiveHint(target)
 			if("head")
 				user << "<span class='notice'>You smack the doll's head with your hand.</span>"
 				target.Dizzy(10)
@@ -552,13 +558,17 @@ var/global/list/multiverse = list()
 		if(md5(H.dna.uni_identity) in link.fingerprints)
 			possible |= H
 
-/obj/item/voodoo/proc/GiveHint(mob/victim,mob/user)
-	if(victim == user)
-		return
-	if(prob(50))
-		var/way = dir2text(get_dir(victim,user))
+/obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
+	if(prob(50) || force)
+		var/way = dir2text(get_dir(victim,get_turf(src)))
 		victim << "<span class='notice'>You feel a dark presence from [way]</span>"
-	if(prob(20))
-		var/area/A = get_area(user)
+	if(prob(20) || force)
+		var/area/A = get_area(src)
 		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
 
+/obj/item/voodoo/fire_act()
+	if(target)
+		target.adjust_fire_stacks(20)
+		target.IgniteMob()
+		GiveHint(target,1)
+	return ..()
