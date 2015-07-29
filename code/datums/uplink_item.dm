@@ -355,7 +355,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
-	desc = "An innocent looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
+	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
 	cost = 6
 	surplus = 10
@@ -399,14 +399,14 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/pizza_bomb
 	name = "Pizza Bomb"
-	desc = "A pizza box with a bomb taped inside of it. The timer needs to be set by opening the box; afterwards, opening the box again will trigger the detonation."
+	desc = "A pizza box with a bomb taped inside it. The timer needs to be set by opening the box; afterwards, opening the box again will trigger the detonation."
 	item = /obj/item/device/pizza_bomb
 	cost = 5
 	surplus = 8
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
-	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate before use."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 3
 
@@ -464,7 +464,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
+	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. Disguised users cannot run, and projectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 7
 	excludefrom = list(/datum/game_mode/gang)
@@ -485,7 +485,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, a tool of many great heroes, make you nearly immune to stuns and knockdowns for about 5 minutes after injection."
+	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about 5 minutes after injection."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
@@ -497,7 +497,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
-	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
+	desc = "The cryptographic sequencer, or emag, is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 6
 	excludefrom = list(/datum/game_mode/gang)
@@ -658,7 +658,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 10 telecrystals. \
-	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
+	The ability for an agent to open an uplink after their possessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 14
 	surplus = 0
@@ -703,23 +703,11 @@ var/list/uplink_items = list()
 	item = /obj/item/cybernetic_implant/brain/anti_stun
 	cost = 12
 
-/datum/uplink_item/cyber_implants/antidrop
-	name = "Anti-Drop Implant"
-	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
-	item = /obj/item/cybernetic_implant/brain/anti_drop
-	cost = 8
-
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness."
 	item = /obj/item/cybernetic_implant/chest/reviver
 	cost = 8
-
-/datum/uplink_item/cyber_implants/nutriment
-	name = "Nutriment Pump Implant PLUS"
-	desc = "This implant will pump you with nutriments and electrolytes so you don't go hungry in action."
-	item = /obj/item/cybernetic_implant/chest/nutriment/plus
-	cost = 5
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
