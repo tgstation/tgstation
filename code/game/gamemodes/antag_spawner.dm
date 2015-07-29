@@ -195,3 +195,121 @@
 	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
 	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"
+
+/obj/item/weapon/antag_spawner/elemental
+	name = "elemental figurine"
+	desc = "You have a feeling you shouldn't be seeing this in its current state..."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "construct"
+	var/summonType = "earth"
+	var/flavorText = "You activate the figurine!"
+	var/usedFlavorText = "The figure's powers are spent."
+
+/obj/item/weapon/antag_spawner/elemental/attack_self(mob/user as mob)
+	var/list/candidates = get_candidates(BE_WIZARD)
+	if(user.z != 1)
+		user << "<span class='notice'>[src] seems dormant here. Perhaps the aura here isn't strong enough.</span>"
+		return
+	if(used)
+		user << "<span class='notice'>[usedFlavorText]</span>"
+		return
+	if(candidates.len > 0)
+		used = 1
+		var/client/C = pick(candidates)
+		spawn_antag(C, get_turf(src.loc), summonType, user)
+		user << "<span class='notice'>[flavorText]</span>"
+	else
+		user << "<span class='notice'>[src] seems dormant at the moment. Perhaps it may work later.</span>"
+
+/obj/item/weapon/antag_spawner/elemental/spawn_antag(var/client/C, var/turf/T, var/type = "", var/mob/user)
+	if(!user)
+		return
+	switch(type)
+		if(null)
+			return
+		if("earth")
+			visible_message("<span class='warning'>[src] begins to expand!</span>")
+			var/mob/living/simple_animal/elemental/earth/E = new(get_turf(src))
+			E.key = C.key
+			E.master = user
+		if("air")
+			visible_message("<span class='warning'>The swirling clouds expand into a mass of airy bubbles.</span>")
+			var/mob/living/simple_animal/elemental/air/A = new(get_turf(src))
+			A.key = C.key
+			A.master = user
+		if("fire")
+			visible_message("<span class='warning'>The flame rapidly grows to a hovering ball of fire.</span>")
+			var/mob/living/simple_animal/elemental/fire/F = new(get_turf(src))
+			F.key = C.key
+			F.master = user
+		if("water")
+			visible_message("<span class='warning'>The puddle rises and takes a humanoid form.</span>")
+			var/mob/living/simple_animal/elemental/water/W = new(get_turf(src))
+			W.key = C.key
+			W.master = user
+		if("life")
+			visible_message("<span class='warning'>With the rustling of leaves, the sap grows into a new plant.</span>")
+			var/mob/living/simple_animal/elemental/life/L = new(get_turf(src))
+			L.key = C.key
+			L.master = user
+			if(prob(1))
+				L.say("I am Groot!")
+		if("arcane")
+			visible_message("<span class='warning'>The markings pulse and throb. The air shimmers. Glowing crystals form and swirl.</span>")
+			var/mob/living/simple_animal/elemental/arcane/AC = new(get_turf(src))
+			AC.key = C.key
+			AC.master = user
+		if("unbound")
+			visible_message("<span class='warning'>The twisted matter on the ground begins to expand and groan outward.</span>")
+			var/mob/living/simple_animal/elemental/unbound/U = new(get_turf(src))
+			U.key = C.key
+			U.master = user
+	qdel(src)
+
+/obj/item/weapon/antag_spawner/elemental/earth
+	name = "obsidian heart"
+	desc = "A small likeness of a human heart carved of black obsidian. It feels hot to the touch."
+	summonType = "earth"
+	flavorText = "You drop the heart to the ground, and it begins to break apart, lava seeping from its cracks."
+	usedFlavorText = "The heart is cold and dead."
+
+/obj/item/weapon/antag_spawner/elemental/air
+	name = "phial of cloud essence"
+	desc = "A sturdy glass phial filled with white, swirling mist. It strains to get out."
+	summonType = "air"
+	flavorText = "You uncap the vial. Its contents whirl into the air and begin to coalesce."
+	usedFlavorText = "This vial is empty."
+
+/obj/item/weapon/antag_spawner/elemental/fire
+	name = "everburning flame"
+	desc = "A flickering flame about the size of a lantern. It doesn't seem to produce much heat."
+	summonType = "fire"
+	flavorText = "You grip the flame in your hands. It immediately heats up and floats into the air, expanding rapidly."
+	usedFlavorText = "There's nothing but a pile of ashes."
+
+/obj/item/weapon/antag_spawner/elemental/water
+	name = "tidal globe"
+	desc = "A small enclosure of some gelatinous substance. Encapsuled within is a tiny, raging sea."
+	summonType = "water"
+	flavorText = "You gently apply pressure to the orb. It ruptures, the water within flooding out."
+	usedFlavorText = "The sac is deflated and empty."
+
+/obj/item/weapon/antag_spawner/elemental/life
+	name = "ever-blooming frond"
+	desc = "A gorgeous green plant dancing with small particles."
+	summonType = "life"
+	flavorText = "You crush the plant's leaves in your hand. Green sap seeps through your fingers and onto the ground."
+	usedFlavorText = "There is nothing but a pile of crushed detritus."
+
+/obj/item/weapon/antag_spawner/elemental/arcane
+	name = "invocationist's tablet"
+	desc = "Some strange chalk markings engraved on a limestone tablet."
+	summonType = "arcane"
+	flavorText = "After some fumbles, you manage to speak the words on the tablet. The markings begin to shift and turn."
+	usedFlavorText = "It's just a blank tablet."
+
+/obj/item/weapon/antag_spawner/elemental/unbound //The !!FUN!! elemental
+	name = "elemental amalgation"
+	desc = "An aberration of random debris encapsuled in a gently-vibrating glass container. Are you sure about this?"
+	summonType = "unbound"
+	flavorText = "You hold your breath and drop the bottle. The glass vanishes and its contents begin to pull together."
