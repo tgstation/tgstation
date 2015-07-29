@@ -350,6 +350,9 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
+	if (!subject.be_cloned)
+		scantemp = "<font class='bad'>Do Not Clone form on file.</font>"
+		return
 	if (!check_dna_integrity(subject) || !istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
@@ -362,7 +365,7 @@
 	if ((NOCLONE in subject.mutations) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		return
-	if ((!subject.ckey) || (!subject.client))
+	if (!subject.ckey)
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
 		return
 	if (find_record("ckey", subject.ckey, records))

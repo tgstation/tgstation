@@ -709,7 +709,7 @@
 
 		//Ghost Roles (light light gray)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='eeeeee'><th colspan='4'><a href='?src=\ref[src];jobban3=ghostroles;jobban4=\ref[M]'>Ghost Roles</a></th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='eeeeee'><th colspan='5'><a href='?src=\ref[src];jobban3=ghostroles;jobban4=\ref[M]'>Ghost Roles</a></th></tr><tr align='center'>"
 
 		//pAI
 		if(jobban_isbanned(M, "pAI"))
@@ -738,6 +738,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
 
+
+		//Clone
+		if(jobban_isbanned(M, "clone"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=clone;jobban4=\ref[M]'><font color=red>[replacetext("Clone", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=clone;jobban4=\ref[M]'>[replacetext("Clone", " ", "&nbsp")]</a></td>"
 		jobs += "</tr></table>"
 
 	//Antagonist (Orange)
