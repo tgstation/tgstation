@@ -1,9 +1,0 @@
-
-author: phil235
-
-
-delete-after: True
-
-changes: 
-  - bugfix: "Fixed the lizard gender bug."
-  - tweak: "Shaved a bit of fluff off character spawn in the process."
