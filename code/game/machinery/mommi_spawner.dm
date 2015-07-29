@@ -124,7 +124,7 @@
 				user << "<span class='warning'>\The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept \the [mmi].</span>"
 				return TRUE
 
-			if(jobban_isbanned(mmi.brainmob, "Cyborg"))
+			if(jobban_isbanned(mmi.brainmob, "Mobile MMI"))
 				user << "<span class='warning'>\The [src] lets out an annoyed buzz and rejects \the [mmi].</span>"
 				return TRUE
 
