@@ -25,7 +25,7 @@ As the Chief Medical Officer, coordinate and communicate with your doctors, chem
 As a Medical Doctor, you can eject someone from cloning early by disabling power in genetics. Note that they will suffer more genetic damage from this.
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
 As a Medical Doctor, charcoal will not only heal toxin damage dealt by poisons, but will actively remove them.
-As a Medical Doctor, you an surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
+As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
 As a Medical Doctor, you must target the correct limb and be on help intent when trying to perform surgery on someone.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents in the chemical heater.
