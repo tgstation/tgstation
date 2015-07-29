@@ -261,8 +261,8 @@
 	var/dat
 	if (you_are)
 		dat = "<span class='danger'>You are a Vampire!</br></span>"
-	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers.
-You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel and especially Holy Water."}
+	dat += {"To bite someone, target the head and use harm intent with an empty hand. Drink blood to gain new powers and use coffins to regenerate your body if injured.
+You are weak to holy things and starlight. Don't go into space and avoid the Chaplain, the chapel, and especially Holy Water."}
 	vampire.current << dat
 	vampire.current << "<B>You must complete the following tasks:</B>"
 
@@ -462,47 +462,65 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 
 /mob/proc/announce_new_power(list/old_powers, list/new_powers)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/announce_new_power() called tick#: [world.time]")
+	var/msg = ""
 	for(var/n in new_powers)
 		if(!(n in old_powers))
 			switch(n)
 				if(VAMP_SHAPE)
-					src << "<span class='notice'>You have gained the shapeshifting ability, at the cost of stored blood you can change your form permanently.</span>"
+					msg = "<span class='notice'>You have gained the shapeshifting ability, at the cost of stored blood you can change your form permanently.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_shapeshift
 				if(VAMP_VISION)
-					src << "<span class='notice'>Your vampiric vision has improved.</span>"
+					msg = "<span class='notice'>Your vampiric vision has improved.</span>"
+					src << "[msg]"
+					src.mind.store_memory("<font size = 1>[msg]</font>")
 					//no verb
 				if(VAMP_DISEASE)
-					src << "<span class='notice'>You have gained the Diseased Touch ability which causes those you touch to die shortly after unless treated medically.</span>"
+					msg = "<span class='notice'>You have gained the Diseased Touch ability which causes those you touch to die shortly after unless treated medically.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_disease
 				if(VAMP_CLOAK)
-					src << "<span class='notice'>You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness.</span>"
+					msg = "<span class='notice'>You have gained the Cloak of Darkness ability which when toggled makes you near invisible in the shroud of darkness.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_cloak
 				if(VAMP_BATS)
-					src << "<span class='notice'>You have gained the Summon Bats ability."
+					msg = "<span class='notice'>You have gained the Summon Bats ability."
+					src << "[msg]"
 					verbs += /client/proc/vampire_bats // work in progress
 				if(VAMP_SCREAM)
-					src << "<span class='notice'>You have gained the Chiroptean Screech ability which stuns anything with ears in a large radius and shatters glass in the process.</span>"
+					msg = "<span class='notice'>You have gained the Chiroptean Screech ability which stuns anything with ears in a large radius and shatters glass in the process.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_screech
 				if(VAMP_JAUNT)
-					src << "<span class='notice'>You have gained the Mist Form ability which allows you to take on the form of mist for a short period and pass over any obstacle in your path.</span>"
+					msg = "<span class='notice'>You have gained the Mist Form ability which allows you to take on the form of mist for a short period and pass over any obstacle in your path.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_jaunt
 				if(VAMP_SLAVE)
-					src << "<span class='notice'>You have gained the Enthrall ability which at a heavy blood cost allows you to enslave a human that is not loyal to any other for a random period of time.</span>"
+					msg = "<span class='notice'>You have gained the Enthrall ability which at a heavy blood cost allows you to enslave a human that is not loyal to any other for a random period of time.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_enthrall
 				if(VAMP_BLINK)
-					src << "<span class='notice'>You have gained the ability to shadowstep, which makes you disappear into nearby shadows at the cost of blood.</span>"
+					msg = "<span class='notice'>You have gained the ability to shadowstep, which makes you disappear into nearby shadows at the cost of blood.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_shadowstep
 				if(VAMP_MATURE)
-					src << "<span class='sinister'>You have reached physical maturity. You are more resistant to holy things, and your vision has been improved greatly.</span>"
+					msg = "<span class='sinister'>You have reached physical maturity. You are more resistant to holy things, and your vision has been improved greatly.</span>"
+					src << "[msg]"
+					src.mind.store_memory("<font size = 1>[msg]</font>")
 					//no verb
 				if(VAMP_SHADOW)
-					src << "<span class='notice'>You have gained mastery over the shadows. In the dark, you can mask your identity, instantly terrify non-vampires who approach you, and enter the chapel for a longer period of time.</span>"
+					msg = "<span class='notice'>You have gained mastery over the shadows. In the dark, you can mask your identity, instantly terrify non-vampires who approach you, and enter the chapel for a longer period of time.</span>"
+					src << "[msg]"
 					verbs += /client/proc/vampire_shadowmenace //also buffs Cloak of Shadows
 				if(VAMP_CHARISMA)
-					src << "<span class='notice'>You develop an uncanny charismatic aura that makes you difficult to disobey. Hypnotise and Enthrall take less time to perform, and Enthrall works on implanted targets.</span>"
+					msg = "<span class='sinister'>You develop an uncanny charismatic aura that makes you difficult to disobey. Hypnotise and Enthrall take less time to perform, and Enthrall works on implanted targets.</span>"
+					src << "[msg]"
+					src.mind.store_memory("<font size = 1>[msg]</font>")
 					//no verb
 				if(VAMP_UNDYING)
-					src << "<span class='sinister'>You have reached the absolute peak of your power. Your abilities cannot be nullified very easily, and you may return from the grave so long as your body is not burned, destroyed or sanctified. You can also spawn a rather nice cape.</span>"
+					msg = "<span class='sinister'>You have reached the absolute peak of your power. Your abilities cannot be nullified very easily, and you may return from the grave so long as your body is not burned, destroyed or sanctified. You can also spawn a rather nice cape.</span>"
+					src << "[msg]"
+					src.mind.store_memory("<font size = 1>[msg]</font>")
 					verbs += /client/proc/vampire_undeath
 					verbs += /client/proc/vampire_spawncape
 
