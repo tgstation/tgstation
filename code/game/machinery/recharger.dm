@@ -46,10 +46,8 @@
 	..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-
 	if(issilicon(user) || ..())
 		return 1
-
 
 	if(charging && Adjacent(user))
 		charging.update_icon()
