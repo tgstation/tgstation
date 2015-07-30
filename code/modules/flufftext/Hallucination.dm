@@ -15,7 +15,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/image/halimage
 	var/image/halbody
 	var/obj/halitem
-	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
+	var/hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator, 5 - perfect health
 	var/handling_hal = 0
 	var/hal_crit = 0
 

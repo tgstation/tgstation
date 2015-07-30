@@ -228,3 +228,8 @@
 	name = "jester hat"
 	desc = "A hat with bells, to add some merryness to the suit."
 	icon_state = "jester_hat"
+
+/obj/item/clothing/head/rice_hat
+	name = "rice hat"
+	desc = "Welcome to the rice fields, motherfucker."
+	icon_state = "rice_hat"

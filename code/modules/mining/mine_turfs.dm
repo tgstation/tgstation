@@ -457,6 +457,13 @@ var/global/list/rockTurfEdgeCache
 		gets_drilled()
 	..()
 
+/turf/simulated/mineral/attack_alien(mob/living/carbon/alien/M)
+	M << "<span class='notice'>You start digging into the rock...</span>"
+	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
+	if(do_after(M,40, target = src))
+		M << "<span class='notice'>You tunnel into the rock.</span>"
+		gets_drilled(M)
+
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
 	var/s = pickweight(list("uranium" = 5, "iron" = 50, "gold" = 5, "silver" = 5, "plasma" = 50, "diamond" = 1))

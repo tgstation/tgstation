@@ -702,6 +702,7 @@ obj/machinery/bot/proc/bot_reset()
 
 
 /obj/machinery/bot/Bump(M as mob|obj) //Leave no door unopened!
+	. = ..()
 	if((istype(M, /obj/machinery/door/airlock) ||  istype(M, /obj/machinery/door/window)) && (!isnull(botcard)))
 		var/obj/machinery/door/D = M
 		if(D.check_access(botcard))
@@ -711,4 +712,3 @@ obj/machinery/bot/proc/bot_reset()
 		var/mob/living/Mb = M
 		loc = Mb.loc
 		frustration = 0
-	return

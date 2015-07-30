@@ -149,9 +149,6 @@ Acts like a normal vent, but has an input AND output.
 	..()
 	if(frequency)
 		set_frequency(frequency)
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/initialize()
-	..()
 	broadcast_status()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)

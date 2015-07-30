@@ -12,6 +12,16 @@
 	build_path = /obj/item/weapon/circuitboard/smes
 	category = list ("Engineering Machinery")
 
+/datum/design/announcement_system
+	name = "Machine Design (Automated Announcement System Board)"
+	desc = "The circuit board for an automated announcement system."
+	id = "automated_announcement"
+	req_tech = list("programming" = 3, "bluespace" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/announcement_system
+	category = list("Subspace Telecomms")
+
 /datum/design/turbine_computer
 	name = "Computer Design (Power Turbine Console Board)"
 	desc = "The circuit board for a power turbine console."

@@ -63,6 +63,7 @@
 	var/braintype = "Cyborg"
 	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
+	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -990,7 +991,7 @@
 	set_autosay()
 
 /mob/living/silicon/robot/proc/control_headlamp()
-	if(stat)
+	if(stat || lamp_recharging)
 		src << "<span class='danger'>This function is currently offline.</span>"
 		return
 
@@ -999,12 +1000,15 @@
 	src << "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]"
 	update_headlamp()
 
-/mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0)
+/mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
 	SetLuminosity(0)
 
 	if(lamp_intensity && (turn_off || stat))
 		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
 		lamp_intensity = 0
+		lamp_recharging = 1
+		spawn(cooldown) //10 seconds by default, if the source of the deactivation does not keep stat that long.
+			lamp_recharging = 0
 	else
 		AddLuminosity(lamp_intensity)
 
