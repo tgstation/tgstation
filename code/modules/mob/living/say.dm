@@ -90,9 +90,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		src << "<span class='warning'>You find yourself unable to speak!</span>"
 		return
 
-	if(message_mode != MODE_WHISPER) { //whisper() calls treat_message(); double process results in "hisspering"
+	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
-	}
 	var/spans = list()
 	spans += get_spans()
 
