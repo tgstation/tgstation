@@ -172,7 +172,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)
 			//1% chance to skitter madly away
-			if(!busy && prob(1))
+			if(!busy && !(life_tick % 100))// Every 100 life ticks or prob(1)
 				/*var/list/move_targets = list()
 				for(var/turf/T in orange(20, src))
 					move_targets.Add(T)*/
