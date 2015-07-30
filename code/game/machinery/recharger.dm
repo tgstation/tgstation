@@ -22,10 +22,9 @@
 		if(charging)
 			return
 
-		//Checks to make sure he's not in space doing it, and that the area got proper power.
-		var/area/a = get_area(src)
-		if(!isarea(a) || a.power_equip == 0)
-			user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
+		//Checks to make sure the recharger is powered and functional
+		if(stat & (NOPOWER | BROKEN))
+			user << "<span class='notice'>[src] isn't connected to a power source.</span>"
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))

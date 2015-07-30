@@ -1,0 +1,4 @@
+author: Duny
+delete-after: True
+changes: 
+  - bugfix: Rechargers now properly check if they are powered before accepting items, they will no longer swallow them and become unusable when unwrenched.
