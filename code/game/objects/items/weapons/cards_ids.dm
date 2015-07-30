@@ -331,7 +331,7 @@
 			if("Show")
 				return ..()
 			if("Edit")
-				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account"))
+				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account","Blood type","DNA hash","Fingerprint hash"))
 					if("Name")
 						var/new_name = sanitize(stripped_input(user,"What name would you like to put on this card?","Agent card name", ishuman(user) ? user.real_name : user.name, 26))
 						if(!Adjacent(user)) return
@@ -368,7 +368,7 @@
 							"ERT_engineering",
 							"ERT_medical",
 						)
-						var/choice = input(user, "Select a skin for the [src].", "Choose.") in appearances
+						var/choice = input(user, "Select the appearance for this card.", "Choose.") in appearances
 						if(!Adjacent(user))
 							return
 						if(!choice)
