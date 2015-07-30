@@ -19,7 +19,7 @@ You can move an item out of the way by dragging it and then clicking on an adjac
 You can recolor certain items like jumpsuits and gloves in washing machines by also throwing in a crayon.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your pants or your life are things to worry about.
-As the Captain, always take the nuclear disk and pinpointer with you every shift. If you don't trust yourself, or you trust the Head of Security sufficiently, give either one or both to him.
+As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head who you can trust with keeping it safe, such as the Head of Security.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
 As the Chief Medical Officer, your hypospray is like an instant injection syringe that can hold 30 units as opposed to the standard 15.
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and geneticists during a nuclear emergency, blob, or some other crisis to keep people alive and fighting.
