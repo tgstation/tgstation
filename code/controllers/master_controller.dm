@@ -61,8 +61,7 @@ calculate the longest number of ticks the MC can wait between each cycle without
 	for(var/datum/subsystem/S in subsystems)
 		S.Initialize(world.timeofday, zlevel)
 		sleep(-1)
-	for(var/datum/subsystem/S in subsystems)
-		S.AfterInitialize(zlevel)
+
 	world << "<span class='boldannounce'>Initializations complete</span>"
 	world.log << "Initializations complete"
 

@@ -102,7 +102,7 @@
 						return
 					user << "<span class='notice'>You start building a false wall...</span>"
 					if(do_after(user, 20, target = src))
-						if(!src.loc || !S || S.amount < 2)
+						if(!src.loc || !S || S.get_amount() < 2)
 							return
 						S.use(2)
 						user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"

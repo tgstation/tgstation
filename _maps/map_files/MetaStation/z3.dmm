@@ -243,7 +243,7 @@
 "eI" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eJ" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eK" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/AIsattele)
-"eL" = (/obj/item/weapon/stock_parts/cell{step_x = 0},/turf/simulated/floor/plating/airless,/area/AIsattele)
+"eL" = (/obj/item/weapon/stock_parts/cell,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eM" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eN" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/simulated/floor/plating/airless,/area/AIsattele)
 "eO" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating/airless,/area/AIsattele)

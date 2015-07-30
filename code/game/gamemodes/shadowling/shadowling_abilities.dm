@@ -77,8 +77,7 @@
 		for(var/mob/living/H in T.contents)
 			extinguishMob(H)
 		for(var/mob/living/silicon/robot/borgie in T.contents)
-			borgie.update_headlamp(1)
-
+			borgie.update_headlamp(1, charge_max) //Shut down a borg's lamp for the entire cooldown of the ability! Plenty of time to escape or beat it to death.
 
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk
