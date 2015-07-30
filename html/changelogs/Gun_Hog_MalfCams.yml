@@ -1,8 +1,0 @@
-
-author: Gun Hog
-
-delete-after: True
-
-changes: 
-  - tweak: "The Reactivate Camera power for Malfunctining AIs now costs 10 CPU, and works on the entire camera network, up to 30 cameras fixed."
-  - tweak: "The Upgrade Cameras power now costs 35 CPU, upgrades all cameras in the network to have EMP proofing, X-ray, and gives the AI night-vision."
