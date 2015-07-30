@@ -1,5 +1,5 @@
 
-Dragging yourself or someone else onto a chair or bed will buckle them to it, imobilizing them. If handcuffed, it will take time to resist out.
+Dragging yourself or someone else onto a chair or bed will buckle them to it, immobilizing them. If handcuffed, it will take time to resist out.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 To crack the safe in the vault, you must use a stethoscope on it.
@@ -66,7 +66,7 @@ As the Head of Security, you can call for executions or forced cyborg-ing, but m
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
 As the Warden, your duty is to be the watchdog of the brig and handler of prisonners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.
 As the Warden, keep a close eye on the armory at all times, as it is a favored strike point of nuclear operatives and cocky traitors.
-As the Warden, if a prisonner's crimes are heinous enough you can put them in permabrig or the gulag. Make sure to check on them once in a while!
+As the Warden, if a prisoner's crimes are heinous enough you can put them in permabrig or the gulag. Make sure to check on them once in a while!
 As a Security Officer, you should communicate and coordinate with your fellow officers using the security channel :s to avoid confusion.
 As a Security Officer, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes. Anyone who wears these will be forced to walk.
 As a Security Officer, your sechuds or HUDsunglasses can not only see what job someone works in and their criminal status, but also if they are loyalty implanted or not. Use this to your advantage in a revolution to definitively tell who is on your side!
@@ -76,7 +76,7 @@ As a Security Officer, implanting a gang member the first time will deconvert th
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance.
 As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
-As the Head of Personnel, you are not higher ranking than other heads of staff, even though you are expeced to take the Captain's place first should he go missing. If the situation seems too rough for you, consider allowing another head to become temporary Captain.
+As the Head of Personnel, you are not higher ranking than other heads of staff, even though you are expected to take the Captain's place first should he go missing. If the situation seems too rough for you, consider allowing another head to become temporary Captain.
 As the Head of Personnel, you are often just as large a target as the Captain because of the potential power your ID and computer can hand out.
 As the Mime, you can place invisible walls that last for a short time to block other people. You can use it in a pinch to delay your pursuer.
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
@@ -92,7 +92,7 @@ As the Chef, you can rename your custom made food with a pen.
 As the Chef, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As a Cargo Technician, you can hack mulebots to make them faster, run over people in their way, and even let you ride them!
-As a Cargo Technician, you can order contraband items from the supply shuttle console by deconstructing it and using a multitool on the circuit board, the re-assembling it.
+As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
 As a Shaft Miner, the west side of the asteroid has a lot more minerals than on the east, but also has monsters there.
 As a Shaft Miner, every monster on the west side of the asteroid has a pattern for you to learn, you can exploit this to minimize damage from the encounters.
 As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your rigsuit with it, greatly reducing incoming melee damage.
@@ -119,7 +119,7 @@ As an Alien, resin floors not only regenerate your plasma supply, but also passi
 As an Alien, the facehugger is by far your most powerful weapon because of its ability to instantly win a fight. Remember however that certain helmets, such as biohoods or space helmets will completely block facehugger attacks.
 As an Alien, you are unable to pick up or use any human items or machinery. Instead, you should focus on sabotaging APCs, computers, cameras and either stowing, spacing, or melting any weapons you find.
 As the Blob, you will spawn from your character from between a minute to 5 minutes after the round starts. Use this time to find a safe and well hidden location and evaluate where you will strike!
-As the Blob, you can do various sabatoge before you spawn, such as spacing the armory or disabling R&D.
+As the Blob, you can do various sabotage before you spawn, such as spacing the armory or disabling R&D.
 As the Blob, keep your core some distance from space, as it is both expensive to expand onto space and easy to be attacked from. Emitter platforms built in space are especially dangerous.
 As the Blob, if you invest into the split consciousness ability, it will create a second blob core, from a node, controlled by another player with a different reagent of their own. Coordinate and communicate your attacks and reactions with them!
 As the Blob, you can randomly repick your reagent type if the crew has adapted and protected themselves against your current one.
