@@ -747,7 +747,7 @@ obj/machinery/bot/mulebot/bot_reset()
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
-	..()
+	return ..()
 
 /obj/machinery/bot/mulebot/alter_health()
 	return get_turf(src)
