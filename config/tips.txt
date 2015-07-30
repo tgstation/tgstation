@@ -1,3 +1,4 @@
+
 Dragging yourself or someone else onto a chair or bed will buckle them to it, imobilizing them. If handcuffed, it will take time to resist out.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
 You can catch thrown items by toggling on your throw mode with an empty hand active.

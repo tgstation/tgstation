@@ -175,20 +175,20 @@
 
 /obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
-	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
+	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,T)
 	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
-	S.phased = TRUE
+	S.holder = holder
 	S.key = C.key
 	S.mind.assigned_role = "Slaughter Demon"
 	S.mind.special_role = "Slaughter Demon"
 	ticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
-	new_objective.owner = S:mind
-	new_objective:target = usr:mind
+	new_objective.owner = S.mind
+	new_objective.target = usr.mind
 	new_objective.explanation_text = "Kill [usr.real_name], the one who summoned you."
 	S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
-	new_objective2.owner = S:mind
+	new_objective2.owner = S.mind
 	new_objective2.explanation_text = "Kill everyone else while you're at it."
 	S.mind.objectives += new_objective2
 	S << S.playstyle_string
