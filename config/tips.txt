@@ -92,7 +92,7 @@ As the Chef, any food you make will be much healthier than the junk food found i
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As a Cargo Technician, you can hack mulebots to make them faster, run over people in their way, and even let you ride them!
 As a Cargo Technician, you can order contraband items from the supply shuttle console by deconstructing it and using a multitool on the circuit board, the re-assembling it.
-As a Shaft Miner, the west side of the asteroid has a lot more materials than on the right, but also has a lot of monsters in it.
+As a Shaft Miner, the west side of the asteroid has a lot more minerals than on the east, but also has monsters there.
 As a Shaft Miner, every monster on the west side of the asteroid has a pattern for you to learn, you can exploit this to minimize damage from the encounters.
 As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your rigsuit with it, greatly reducing incoming melee damage.
 As a Shaft Miner, you should always turn your jumpsuit sensors to maximum, a fellow miner or cyborg may come to save you if you die.
