@@ -47,7 +47,7 @@
 
 //Hostile Mob AI Status
 #define AI_ON		1
-#define AI_SLEEP	2
+#define AI_IDLE	2
 #define AI_OFF		3
 
 

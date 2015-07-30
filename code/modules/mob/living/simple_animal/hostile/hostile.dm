@@ -31,39 +31,38 @@
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
 
-	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_SLEEP (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
+	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 
 /mob/living/simple_animal/hostile/Life()
+	. = ..()
+	if(!.) //dead
+		walk(src, 0) //stops walking
+		return 0
 
-	if(..()) //alive
-		if(ranged)
-			ranged_cooldown--
-		if(ckey) //player controlled
-			return 0
-		if(AIStatus == AI_OFF)
-			return 0
-		var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
+/mob/living/simple_animal/hostile/handle_automated_action()
+	if(AIStatus == AI_OFF)
+		return 0
+	if(ranged)
+		ranged_cooldown--
+	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
 
-		if(environment_smash)
-			EscapeConfinement()
+	if(environment_smash)
+		EscapeConfinement()
 
-		if(!AICanContinue(possible_targets))
-			return 0
-
+	if(AICanContinue(possible_targets))
 		DestroySurroundings()
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
-				AIStatus = AI_SLEEP				// otherwise we go to sleep
-	else //dead
-		walk(src, 0) //stops walking
-		return 0
+				AIStatus = AI_IDLE				// otherwise we go idle
+	return 1
+
+
 
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
-	world << "DEBUG: ListTargets()"
 	var/list/L = list()
 	if(!search_objects)
 		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
@@ -77,7 +76,6 @@
 	return L
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
-	world << "DEBUG: FindTarget()"
 	var/list/Targets = list()
 	if(!HasTargetsList)
 		possible_targets = ListTargets()
@@ -108,7 +106,6 @@
 	return chosen_target
 
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	world << "DEBUG: CanAttack()"
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
 	if(search_objects < 2)
@@ -149,7 +146,6 @@
 		return 1
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget(var/list/possible_targets)//Step 5, handle movement between us and our target
-	world << "DEBUG: MoveToTarget()"
 	stop_automated_movement = 1
 	if(!target || !CanAttack(target))
 		LoseTarget()
@@ -190,7 +186,7 @@
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
-		if(AIStatus == AI_SLEEP)
+		if(AIStatus == AI_IDLE)
 			AIStatus = AI_ON
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
@@ -212,7 +208,6 @@
 	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
-	world << "DEBUG: LoseTarget()"
 	target = null
 	walk(src, 0)
 	LoseAggro()
@@ -292,7 +287,6 @@
 	return
 
 /mob/living/simple_animal/hostile/proc/FindHidden()
-	world << "DEBUG: FindHidden()"
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		var/atom/A = target.loc
 		Goto(A,move_to_delay,minimum_distance)
@@ -313,7 +307,7 @@
 	switch(AIStatus)
 		if(AI_ON)
 			. = 1
-		if(AI_SLEEP)
+		if(AI_IDLE)
 			if(FindTarget(possible_targets, 1))
 				. = 1
 				AIStatus = AI_ON //Wake up for more than one Life() cycle.

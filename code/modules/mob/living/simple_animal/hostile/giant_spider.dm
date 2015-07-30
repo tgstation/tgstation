@@ -78,7 +78,9 @@
 	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
-	if(AIStatus == AI_SLEEP)
+	if(!..()) //AIStatus is off
+		return 0
+	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = 1

@@ -359,7 +359,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || AIStatus == AI_SLEEP)
+	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
