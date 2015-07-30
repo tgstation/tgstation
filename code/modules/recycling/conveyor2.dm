@@ -7,6 +7,7 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
+	fast_process = 1
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -16,6 +17,7 @@
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
+	var/obj/machinery/conveyor_switch/boss_switch
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -111,7 +113,7 @@
 				if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
 					step(A,movedir)
 					items_moved++
-			if(items_moved >= 10)
+			if(items_moved >= 25)
 				break
 
 // attack with item, place item on conveyor
@@ -124,6 +126,20 @@
 		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 		return
+	if(istype(I, /obj/item/device/multitool))
+		var/obj/item/device/multitool/T = I
+		if(istype(T.general_buffer, /obj/machinery/conveyor_switch))
+			var/obj/machinery/conveyor_switch/S = T.general_buffer
+			user << "You link [src] with the switch in [T]'s buffer."
+			if(boss_switch)
+				boss_switch.conveyors -= src
+			id = S.id
+			S.conveyors += src
+			boss_switch = S
+			return
+		else
+			user << "You need to have a conveyor switch in the buffer of [T]."
+			return
 	if(isrobot(user))	return //Carn: fix for borgs dropping their modules on conveyor belts
 	if(!user.drop_item())
 		user << "<span class='warning'>\The [I] is stuck to your hand, you cannot place it on the conveyor!</span>"
@@ -193,6 +209,7 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = 1
+	fast_process = 1
 
 
 
@@ -264,6 +281,10 @@
 		transfer_fingerprints_to(C)
 		user << "<span class='notice'>You deattach the conveyor switch.</span>"
 		qdel(src)
+	if(istype(I, /obj/item/device/multitool))
+		var/obj/item/device/multitool/T = I
+		user << "You copy [src]'s data to the buffer."
+		T.general_buffer = src
 
 /obj/machinery/conveyor_switch/oneway
 	convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)

@@ -47,7 +47,7 @@
 	var/autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/detonated = 0
-
+	rcd_deconstruct = 1
 	explosion_block = 1
 
 /obj/machinery/door/airlock/command

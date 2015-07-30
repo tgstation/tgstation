@@ -198,6 +198,7 @@
 	var/selected_iron = 0
 	var/selected_clown = 0
 	var/on = 0 //0 = off, 1 =... oh you know!
+	fast_process = 1
 
 /obj/machinery/mineral/processing_unit/process()
 	var/i
