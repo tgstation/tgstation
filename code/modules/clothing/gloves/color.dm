@@ -8,11 +8,6 @@
 	item_color="yellow"
 	burn_state = -1 //Won't burn in fires
 
-/obj/item/clothing/gloves/color/yellow/syndicate //Actually red, this is what you get when you just arbitrarily decide that one color is better than the rest!
-	icon_state = "red"
-	item_state = "redgloves"
-	item_color = "red"
-
 /obj/item/clothing/gloves/color/yellow/fake
 	desc = "These gloves will protect the wearer from electric shock. They don't feel like rubber..."
 	siemens_coefficient = 1
@@ -70,6 +65,13 @@
 	icon_state = "red"
 	item_state = "redgloves"
 	item_color = "red"
+
+/obj/item/clothing/gloves/color/red/insulated
+	name = "insulated gloves"
+	desc = "These gloves will protect the wearer from electric shock."
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/gloves/color/rainbow
 	name = "rainbow gloves"
