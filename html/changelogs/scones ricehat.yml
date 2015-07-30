@@ -1,0 +1,6 @@
+author: Scones
+
+delete-after: True
+
+changes: 
+  - rscadd: "Adds a Rice Hat to the biogenerator."
