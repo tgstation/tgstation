@@ -685,7 +685,34 @@
 									step_away(V,location,15)
 						else
 							usr << "<span class = 'notice'>You were interrupted and couldn't fart! Rude!</span>"
+
 					lastFart=world.time
+
+					var/obj/item/weapon/storage/bible/B = locate(/obj/item/weapon/storage/bible) in src.loc
+					if(B)
+						if(iscult(src))
+							src << "<span class='sinister'>Nar-Sie shields you from [B.deity_name]'s wrath!</span>"
+						else
+							if(istype(src.head, /obj/item/clothing/head/fedora))
+								src << "<span class='notice'>You feel incredibly enlightened after farting on [B]!</span>"
+								var/obj/item/clothing/head/fedora/F = src.head
+								if(F) F.tip_fedora()
+							else
+								src << "<span class='danger'>You feel incredibly guilty for farting on [B]!</span>"
+							if(prob(80)) //20% chance to escape God's justice
+								spawn(rand(10,30))
+									if(src && B)
+										src.show_message("<span class='game say'><span class='name'>[B.deity_name]</span> says, \"Thou hast angered me, mortal!\"",2)
+
+										sleep(10)
+
+										if(src && B)
+											src << "<span class='danger'>You were disintegrated by [B.deity_name]'s bolt of lightning.</span>"
+											src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Farted on a bible and suffered [B.deity_name]'s wrath.</font>")
+
+											explosion(get_turf(src),-1,-1,1,5) //Tiny explosion with flash
+
+											src.dust()
 				else
 					message = "<b>[src]</b> strains, and nothing happens."
 					m_type = VISIBLE
