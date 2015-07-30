@@ -51,6 +51,7 @@
 	var/area/territory = get_area(src)
 
 	if(gang)
+		gang.territory -= territory.type
 		gang.territory_new -= territory.type
 		gang.territory_lost |= list(territory.type = territory.name)
 	..()
