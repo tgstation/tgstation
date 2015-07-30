@@ -485,9 +485,10 @@ var/global/list/multiverse = list()
 			target.Weaken(2)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
-			target << "<span class='userdanger>HONK</span>"
+			target << "<span class='userdanger'>HONK</span>"
 			target << 'sound/items/AirHorn.ogg'
-			target.adjustEarDamage(0,5)
+			target.adjustEarDamage(0,3)
+			GiveHint(target)
 		cooldown = world.time +cooldown_time
 		return
 
