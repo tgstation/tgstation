@@ -1038,7 +1038,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				var/sticky = alert(usr,"Sticky Ban [M.ckey]? Use this only if you never intend to unban the player.","Sticky Icky","Yes", "No") == "Yes"
 				if(sticky)
-					world.SetConfig("APP/ban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&IP=[M.lastKnownIP]&computer_id=[M.computer_id]&admin=[ckey(usr.key)]")
+					world.SetConfig("APP/ban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&admin=[ckey(usr.key)]")
 					message_admins("[key_name_admin(usr)] has sticky banned [key_name(M)].")
 					log_admin("[key_name(usr)] has sticky banned [key_name(M)].")
 				M << "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
