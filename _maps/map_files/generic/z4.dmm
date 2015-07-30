@@ -35,7 +35,7 @@
 "aI" = (/obj/structure/stool/bed/chair/office/light,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/djstation)
 "aJ" = (/obj/machinery/door/airlock/glass{name = "Rest Room"},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/djstation)
 "aK" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/djstation)
-"aL" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
+"aL" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
 "aM" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
 "aN" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
 "aO" = (/obj/structure/table,/obj/effect/spawner/lootdrop/maintenance,/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/djstation)

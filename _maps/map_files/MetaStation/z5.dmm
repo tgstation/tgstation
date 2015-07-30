@@ -410,7 +410,7 @@
 "hT" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/simulated/floor/plating,/area/mine/west_outpost)
 "hU" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating/asteroid/airless,/area/mine/west_outpost)
 "hV" = (/obj/machinery/computer/arcade,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
-"hW" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
+"hW" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "hX" = (/obj/machinery/vending/cigarette,/obj/machinery/newscaster{pixel_y = 32},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "hY" = (/obj/machinery/vending/snack,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/mine/living_quarters)
 "hZ" = (/obj/machinery/light/small{dir = 4},/obj/machinery/door_control{id = "miningdorm3"; name = "Door Bolt Control"; normaldoorcontrol = 1; pixel_x = 25; pixel_y = 0; req_access_txt = "0"; specialfunctions = 4},/turf/simulated/floor/carpet,/area/mine/living_quarters)

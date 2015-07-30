@@ -233,7 +233,7 @@
 	if(user.stat || user.stunned || user.weakened || user.paralysis)
 		unbuckle_mob()
 	if(istype(user.l_hand, keytype) || istype(user.r_hand, keytype))
-		if(!Process_Spacemove(direction) || !has_gravity(src.loc) || move_delay)
+		if(!Process_Spacemove(direction) || !has_gravity(src.loc) || move_delay || !isturf(loc))
 			return
 		step(src, direction)
 		update_mob()
