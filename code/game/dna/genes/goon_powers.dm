@@ -227,7 +227,27 @@
 	hud_state = "gen_eat"
 
 	cast_sound = 'sound/items/eatfood.ogg'
-	compatible_mobs = list(/obj/item,/mob/living/simple_animal/hostile,/mob/living/simple_animal/parrot,/mob/living/simple_animal/cat,/mob/living/simple_animal/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/mouse, /mob/living/carbon/monkey, /mob/living/carbon/human)
+	compatible_mobs = list(
+		/obj/item,
+		/mob/living/simple_animal/hostile,
+		/mob/living/simple_animal/parrot,
+		/mob/living/simple_animal/cat,
+		/mob/living/simple_animal/corgi,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/mouse,
+		/mob/living/carbon/monkey,
+		/mob/living/carbon/human,
+		/mob/living/carbon/slime,
+		/mob/living/carbon/alien/larva,
+		/mob/living/simple_animal/slime,
+		/mob/living/simple_animal/adultslime,
+		/mob/living/simple_animal/tomato,
+		/mob/living/simple_animal/chick,
+		/mob/living/simple_animal/chicken,
+		/mob/living/simple_animal/lizard,
+		/mob/living/simple_animal/cow,
+		/mob/living/simple_animal/spiderbot
+		)
 
 /spell/targeted/eat/proc/doHeal(var/mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/targeted/eat/proc/doHeal() called tick#: [world.time]")
