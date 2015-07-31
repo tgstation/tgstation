@@ -16,6 +16,10 @@
 	name = "flesh"
 	flags = NODROP
 
+/obj/item/clothing/glasses/changeling
+	name = "flesh"
+	flags = NODROP
+
 /obj/item/clothing/head/changeling
 	name = "flesh"
 	flags = NODROP
@@ -50,97 +54,7 @@
 	if(!chosen_prof)
 		return
 
-	user.dna = chosen_prof.dna
-	user.real_name = chosen_prof.name
-	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
-	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
-
-	//im so sorry
-	if(!user.head)
-		var/obj/item/clothing/head/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["head"]
-		C.name = chosen_prof.name_list["head"]
-		C.flags_cover = chosen_prof.flags_cover_list["head"]
-		user.equip_to_slot_or_del(C, slot_head)
-
-	if(!user.wear_mask)
-		var/obj/item/clothing/mask/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["wear_mask"]
-		C.name = chosen_prof.name_list["wear_mask"]
-		C.flags_cover = chosen_prof.flags_cover_list["wear_mask"]
-		user.equip_to_slot_or_del(C, slot_wear_mask)
-
-	if(!user.back)
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["back"]
-		C.name = chosen_prof.name_list["back"]
-		user.equip_to_slot_or_del(C, slot_back)
-
-	if(!user.wear_suit)
-		var/obj/item/clothing/suit/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["wear_suit"]
-		C.name = chosen_prof.name_list["wear_suit"]
-		C.flags_cover = chosen_prof.flags_cover_list["wear_suit"]
-		user.equip_to_slot_or_del(C, slot_wear_suit)
-
-	if(!user.w_uniform)
-		var/obj/item/clothing/under/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["w_uniform"]
-		C.name = chosen_prof.name_list["w_uniform"]
-		C.flags_cover = chosen_prof.flags_cover_list["w_uniform"]
-		user.equip_to_slot_or_del(C, slot_w_uniform)
-
-	if(!user.shoes)
-		var/obj/item/clothing/shoes/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["shoes"]
-		C.name = chosen_prof.name_list["shoes"]
-		C.flags_cover = chosen_prof.flags_cover_list["shoes"]
-		user.equip_to_slot_or_del(C, slot_shoes)
-
-	if(!user.belt)
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["belt"]
-		C.name = chosen_prof.name_list["belt"]
-		user.equip_to_slot_or_del(C, slot_belt)
-
-	if(!user.gloves)
-		var/obj/item/clothing/gloves/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["gloves"]
-		C.name = chosen_prof.name_list["gloves"]
-		C.flags_cover = chosen_prof.flags_cover_list["gloves"]
-		user.equip_to_slot_or_del(C, slot_gloves)
-
-	if(!user.glasses)
-		var/obj/item/clothing/glasses/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["glasses"]
-		C.name = chosen_prof.name_list["glasses"]
-		C.flags_cover = chosen_prof.flags_cover_list["glasses"]
-		user.equip_to_slot_or_del(C, slot_glasses)
-
-	if(!user.ears)
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["ears"]
-		C.name = chosen_prof.name_list["ears"]
-		C.flags_cover = chosen_prof.flags_cover_list["ears"]
-		user.equip_to_slot_or_del(C, slot_ears)
-
-	if(!user.wear_id)
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["wear_id"]
-		C.name = chosen_prof.name_list["wear_id"]
-		C.flags_cover = chosen_prof.flags_cover_list["wear_id"]
-		user.equip_to_slot_or_del(C, slot_wear_id)
-
-	if(!user.s_store)
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["s_store"]
-		C.name = chosen_prof.name_list["s_store"]
-		C.flags_cover = chosen_prof.flags_cover_list["s_store"]
-		user.equip_to_slot_or_del(C, slot_s_store)
-
-
-	updateappearance(user)
-	domutcheck(user)
+	changeling_transform(user, chosen_prof)
 
 	feedback_add_details("changeling_powers","TR")
 	return 1

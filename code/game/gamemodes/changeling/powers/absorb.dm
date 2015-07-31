@@ -54,7 +54,7 @@
 	target << "<span class='userdanger'>You are absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.absorb_dna(target, user)
+		changeling.add_profile(target, user)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
@@ -88,7 +88,7 @@
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
 
-			target.mind.changeling.absorbed_dna.len = 1
+			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
 
 
@@ -152,9 +152,8 @@
 	target << "<span class='userdanger'>[user] tightens their grip as a painful sensation invades your body.</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.absorb_dna(target, user)
-	changeling.protected_dna -= user.dna
-	changeling.absorbed_dna -= user.dna
+		changeling.add_profile(target, user)
+	changeling.remove_profile(user)
 
 	var/mob/dead/observer/ghost = target.ghostize(0)
 	user.mind.transfer_to(target)

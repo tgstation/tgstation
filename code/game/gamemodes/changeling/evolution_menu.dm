@@ -371,7 +371,7 @@ var/list/sting_paths
 			S.on_purchase(src)
 
 	var/mob/living/carbon/C = src		//only carbons have dna now, so we have to typecaste
-	mind.changeling.absorbed_dna |= C.dna
+	mind.changeling.add_profile(C)
 	return 1
 
 /datum/changeling/proc/reset()

@@ -232,9 +232,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/stored_profiles = list() //list of datum/changelingprofile
-	var/list/absorbed_dna = list()
-	var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
-	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
+	//var/list/absorbed_dna = list()
+	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
+	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 1 //We would require at least 1 sample of compatible DNA to have taken on the form of a human.
 	var/chem_charges = 20
 	var/chem_storage = 50
@@ -263,7 +263,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
-	absorbed_dna.len = dna_max
+	stored_profiles.len = dna_max
 
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
@@ -278,7 +278,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/changeling/proc/get_dna(dna_owner)
 	for(var/datum/changelingprofile/prof in stored_profiles)
-		if(dna_owner == prof.real_name)
+		if(dna_owner == prof.name)
 			return prof
 
 /datum/changeling/proc/has_dna(datum/dna/tDNA)
@@ -307,7 +307,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		return
 	return 1
 
-/datum/changeling/proc/add_profile(var/mob/living/human/H)
+/datum/changeling/proc/add_profile(var/mob/living/carbon/human/H, var/mob/living/carbon/user, protect = 0)
+	if(stored_profiles.len > dna_max)
+		if(!push_out_profile())
+			return
+
 	var/datum/changelingprofile/prof = new()
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
@@ -320,6 +324,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	new_dna.blood_type = H.dna.blood_type
 	prof.dna = new_dna
 	prof.name = H.real_name
+	prof.protected = protect
 	
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -329,13 +334,132 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		prof.name_list[slot] = I.name
 		prof.appearance_list[slot] = I.appearance
 		prof.flags_cover_list[slot] = I.flags_cover
-	
+
 	stored_profiles += prof
 
-/datum/changelingprofile
-	name = "a bug"
+/datum/changeling/proc/remove_profile(var/mob/living/carbon/human/H, force = 0)
+	for(var/datum/changelingprofile/prof in stored_profiles)
+		if(H.real_name == prof.name)
+			if(prof.protected && !force)
+				continue
+			stored_profiles -= prof
+			qdel(prof)
 
-	var/datum/dna/DNA = null
+/datum/changeling/proc/get_profile_to_remove()
+	for(var/datum/changelingprofile/prof in stored_profiles)
+		if(!prof.protected)
+			return prof
+
+/datum/changeling/proc/push_out_profile()
+	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
+	if(removeprofile)
+		stored_profiles -= removeprofile
+		return 1
+	return 0
+
+/proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
+	user.dna = chosen_prof.dna
+	user.real_name = chosen_prof.name
+	hardset_dna(user, null, null, null, null, chosen_prof.dna.species.type, chosen_prof.dna.features)
+	//var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store") //just here as a reference.
+
+	//im so sorry
+	if(!user.head)
+		var/obj/item/clothing/head/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["head"]
+		C.name = chosen_prof.name_list["head"]
+		C.flags_cover = chosen_prof.flags_cover_list["head"]
+		user.equip_to_slot_or_del(C, slot_head)
+
+	if(!user.wear_mask)
+		var/obj/item/clothing/mask/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["wear_mask"]
+		C.name = chosen_prof.name_list["wear_mask"]
+		C.flags_cover = chosen_prof.flags_cover_list["wear_mask"]
+		user.equip_to_slot_or_del(C, slot_wear_mask)
+
+	if(!user.back)
+		var/obj/item/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["back"]
+		C.name = chosen_prof.name_list["back"]
+		user.equip_to_slot_or_del(C, slot_back)
+
+	if(!user.wear_suit)
+		var/obj/item/clothing/suit/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["wear_suit"]
+		C.name = chosen_prof.name_list["wear_suit"]
+		C.flags_cover = chosen_prof.flags_cover_list["wear_suit"]
+		user.equip_to_slot_or_del(C, slot_wear_suit)
+
+	if(!user.w_uniform)
+		var/obj/item/clothing/under/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["w_uniform"]
+		C.name = chosen_prof.name_list["w_uniform"]
+		C.flags_cover = chosen_prof.flags_cover_list["w_uniform"]
+		user.equip_to_slot_or_del(C, slot_w_uniform)
+
+	if(!user.shoes)
+		var/obj/item/clothing/shoes/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["shoes"]
+		C.name = chosen_prof.name_list["shoes"]
+		C.flags_cover = chosen_prof.flags_cover_list["shoes"]
+		user.equip_to_slot_or_del(C, slot_shoes)
+
+	if(!user.belt)
+		var/obj/item/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["belt"]
+		C.name = chosen_prof.name_list["belt"]
+		user.equip_to_slot_or_del(C, slot_belt)
+
+	if(!user.gloves)
+		var/obj/item/clothing/gloves/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["gloves"]
+		C.name = chosen_prof.name_list["gloves"]
+		C.flags_cover = chosen_prof.flags_cover_list["gloves"]
+		user.equip_to_slot_or_del(C, slot_gloves)
+
+	if(!user.glasses)
+		var/obj/item/clothing/glasses/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["glasses"]
+		C.name = chosen_prof.name_list["glasses"]
+		C.flags_cover = chosen_prof.flags_cover_list["glasses"]
+		user.equip_to_slot_or_del(C, slot_glasses)
+
+	if(!user.ears)
+		var/obj/item/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["ears"]
+		C.name = chosen_prof.name_list["ears"]
+		C.flags_cover = chosen_prof.flags_cover_list["ears"]
+		user.equip_to_slot_or_del(C, slot_ears)
+
+	if(!user.wear_id)
+		var/obj/item/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["wear_id"]
+		C.name = chosen_prof.name_list["wear_id"]
+		C.flags_cover = chosen_prof.flags_cover_list["wear_id"]
+		user.equip_to_slot_or_del(C, slot_wear_id)
+
+	if(!user.s_store)
+		var/obj/item/changeling/C = new(user)
+		C.appearance = chosen_prof.appearance_list["s_store"]
+		C.name = chosen_prof.name_list["s_store"]
+		C.flags_cover = chosen_prof.flags_cover_list["s_store"]
+		user.equip_to_slot_or_del(C, slot_s_store)
+
+
+	updateappearance(user)
+	domutcheck(user)
+
+
+/datum/changelingprofile
+	var/name = "a bug"
+	
+	var/protected = 0
+
+	var/datum/dna/dna = null
 	var/list/name_list = list() //associative list of slotname = itemname
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
+	
+/datum/changelingprofile/Destroy()
+	qdel(dna)
