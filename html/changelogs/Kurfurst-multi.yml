@@ -1,0 +1,4 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: The multitool menu for doors is now only displayed when using a multitool on a door with a closed panel (wires unexposed) -- this way you aren't cluttered while trying to hack.
