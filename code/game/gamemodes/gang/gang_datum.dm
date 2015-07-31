@@ -133,6 +133,12 @@
 	var/added_names = ""
 	var/lost_names = ""
 
+	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
+	var/list/reclaimed_territories = territory_new & territory_lost
+	territory |= reclaimed_territories
+	territory_new -= reclaimed_territories
+	territory_lost -= reclaimed_territories
+
 	//Process lost territories
 	for(var/area in territory_lost)
 		if(lost_names != "")
@@ -178,10 +184,6 @@
 			message += "Gang influence has increased by [points_new - points] for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 		points = points_new
 		message += "Your gang now has <b>[points] influence</b>.<BR>"
-
-
-	//Remove territories they already own from the buffer, so if they got tagged over, they can still earn income if they tag it back before the next status report
-	territory_new -= territory
 
 	//Process new territories
 	for(var/area in territory_new)

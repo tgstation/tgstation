@@ -43,7 +43,6 @@
 	color = G.color_hex
 	icon_state = G.name
 	G.territory_new |= list(territory.type = territory.name)
-	G.territory_lost -= territory.type
 
 	..(location, color, icon_state, e_name, rotation)
 
@@ -51,6 +50,7 @@
 	var/area/territory = get_area(src)
 
 	if(gang)
+		gang.territory -= territory.type
 		gang.territory_new -= territory.type
 		gang.territory_lost |= list(territory.type = territory.name)
 	..()

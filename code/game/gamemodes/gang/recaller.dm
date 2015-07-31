@@ -43,7 +43,7 @@
 		if(isnum(gang.dom_timer))
 			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
 
-		var/isboss = (user.mind in ticker.mode.get_gang_bosses())
+		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
@@ -57,7 +57,7 @@
 			dat += "<a href='?src=\ref[src];choice=outfit'>Create Armored Gang Outfit</a><br>"
 		else
 			dat += "<b>Create Gang Outfit</b> (Restocking)<br>"
-		if(user.mind in ticker.mode.get_gang_bosses())
+		if(isboss)
 			dat += "<a href='?src=\ref[src];choice=recall'>Recall Emergency Shuttle</a><br>"
 
 		dat += "<br>"
@@ -158,7 +158,7 @@
 			dat += "Recruitment Pen<br>"
 
 		var/gangtooltext = "Spare Gangtool"
-		if((user.mind in ticker.mode.get_gang_bosses()) && gang.bosses.len < 3)
+		if(isboss && gang.bosses.len < 3)
 			gangtooltext = "Promote a Gangster"
 		dat += "(10 Influence) "
 		if(points >= 10)
@@ -258,7 +258,7 @@
 					pointcost = 10
 			if("gangtool")
 				if(gang.points >= 10)
-					if(usr.mind in ticker.mode.get_gang_bosses())
+					if(usr.mind == gang.bosses[1])
 						item_type = /obj/item/device/gangtool/spare/lt
 						if(gang.bosses.len < 3)
 							usr << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
@@ -301,7 +301,7 @@
 	else if(href_list["choice"])
 		switch(href_list["choice"])
 			if("recall")
-				if(usr.mind in ticker.mode.get_gang_bosses())
+				if(usr.mind == gang.bosses[1])
 					recall(usr)
 			if("outfit")
 				if(outfits > 0)
@@ -326,7 +326,19 @@
 	members += gang.gangsters
 	members += gang.bosses
 	if(members.len)
-		var/ping = "<span class='danger'><B><i>[gang.name] [(user.mind in ticker.mode.get_gang_bosses()) ? "Gang Boss" : "Lieutenant"]</i>: [message]</B></span>"
+		var/gang_rank = gang.bosses.Find(user.mind)
+		switch(gang_rank)
+			if(1)
+				gang_rank = "Gang Boss"
+			if(2)
+				gang_rank = "1st Lieutenant"
+			if(3)
+				gang_rank = "2nd Lieutenant"
+			if(4)
+				gang_rank = "3rd Lieutenant"
+			else
+				gang_rank = "[gang_rank - 1]th Lieutenant"
+		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
