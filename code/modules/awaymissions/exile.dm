@@ -22,8 +22,8 @@
 	..()
 
 /obj/item/weapon/implantcase/exile
-	name = "glass case - 'Exile'"
-	desc = "A case containing an exile implant."
+	name = "implant case - 'Exile'"
+	desc = "A glass case containing an exile implant."
 
 /obj/item/weapon/implantcase/exile/New()
 	imp = new /obj/item/weapon/implant/exile(src)

@@ -68,8 +68,8 @@
 
 
 /obj/item/weapon/implantcase/tracking
-	name = "glass case - 'Tracking'"
-	desc = "A case containing a tracking implant."
+	name = "implant case - 'Tracking'"
+	desc = "A glass case containing a tracking implant."
 
 /obj/item/weapon/implantcase/tracking/New()
 	imp = new /obj/item/weapon/implant/tracking(src)
@@ -77,8 +77,8 @@
 
 
 /obj/item/weapon/implantcase/weapons_auth
-	name = "glass case - 'Firearms Authentication'"
-	desc = "A case containing a firearms authentication implant."
+	name = "implant case - 'Firearms Authentication'"
+	desc = "A glass case containing a firearms authentication implant."
 
 /obj/item/weapon/implantcase/weapons_auth/New()
 	imp = new /obj/item/weapon/implant/weapons_auth(src)

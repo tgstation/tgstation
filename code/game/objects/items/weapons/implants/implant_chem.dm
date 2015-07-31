@@ -46,8 +46,8 @@
 
 
 /obj/item/weapon/implantcase/chem
-	name = "glass case - 'Remote Chemical'"
-	desc = "A case containing a remote chemical implant."
+	name = "implant case - 'Remote Chemical'"
+	desc = "A glass case containing a remote chemical implant."
 
 /obj/item/weapon/implantcase/chem/New()
 	imp = new /obj/item/weapon/implant/chem(src)

@@ -34,3 +34,18 @@ No Implant Specifics"}
 	return dat
 
 
+/obj/item/weapon/implanter/freedom
+	name = "implanter (freedom)"
+
+/obj/item/weapon/implanter/freedom/New()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	..()
+
+
+/obj/item/weapon/implantcase/freedom
+	name = "implant case - 'Freedom'"
+	desc = "A glass case containing a freedom implant."
+
+/obj/item/weapon/implantcase/freedom/New()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	..()
