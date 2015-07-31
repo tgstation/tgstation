@@ -570,7 +570,8 @@ Sorry Giacom. Please don't be mad :(
 	else
 		stop_pulling()
 		. = ..()
-	if ((s_active && !( s_active in contents ) ))
+	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
+		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
 	for(var/mob/living/simple_animal/slime/M in oview(1,src))
