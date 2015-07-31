@@ -91,3 +91,4 @@ drovidicorv = Game Master
 Dunc = Game Master
 MMMiracles = Game Master
 bear1ake = Game Master
+CoreOverload = Game Master
