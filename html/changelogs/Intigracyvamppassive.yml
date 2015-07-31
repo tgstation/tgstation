@@ -1,0 +1,6 @@
+author: Intigracy
+delete-after: True
+
+changes: 
+  - tweak: Vampires now have their passive abilities added to their notes.
+  - tweak: It is now more clear to vampires that they can regenerate in coffins.
