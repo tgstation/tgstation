@@ -323,12 +323,6 @@
 	else
 		return 1
 
-/obj/item/weapon/twohanded/shockpaddles/Topic(href, href_list)
-	if(href_list["reenter"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.reenter_corpse(ghost)
-
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/user)
 	var/halfwaycritdeath = (config.health_threshold_crit + config.health_threshold_dead) / 2
 
@@ -404,10 +398,8 @@
 				busy = 0
 				update_icon()
 				return
-			var/mob/dead/observer/ghost = H.get_ghost()
-			if(ghost)
-				ghost << "<span class='ghostalert'>Your heart is being defibrillated. Re-enter your corpse if you want to be revived! <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
-				ghost << 'sound/effects/genetics.ogg'
+			H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!")
+
 			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
@@ -432,11 +424,10 @@
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
-						for(var/obj/item/organ/limb/O in H.organs)
-							total_brute	+= O.brute_dam
-							total_burn	+= O.burn_dam
-						ghost = H.get_ghost()
-						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
+						total_brute	= H.getBruteLoss()
+						total_burn	= H.getFireLoss()
+
+						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !H.get_ghost() && tplus < tlimit && !(NOCLONE in H.mutations))
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
 								H.adjustOxyLoss(H.health - halfwaycritdeath)

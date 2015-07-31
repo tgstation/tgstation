@@ -477,12 +477,6 @@ datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowl
 	include_user = 0
 	var/list/thralls_in_world = list()
 
-/obj/effect/proc_holder/spell/targeted/reviveThrall/Topic(href, href_list)
-	if(href_list["reenter"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.reenter_corpse(ghost)
-
 /obj/effect/proc_holder/spell/targeted/reviveThrall/cast(list/targets)
 	for(var/mob/living/carbon/human/thrallToRevive in targets)
 		if(!is_thrall(thrallToRevive))
@@ -495,10 +489,8 @@ datum/reagent/shadowling_blindness_smoke //Blinds non-shadowlings, heals shadowl
 			return
 		usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
 							"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
-		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
-		if(ghost)
-			ghost << "<span class='ghostalert'>Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.</span> <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a>"
-			ghost << 'sound/effects/genetics.ogg'
+		thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.")
+
 		if(!do_mob(usr, thrallToRevive, 100))
 			usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
 			charge_counter= charge_max
