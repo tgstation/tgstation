@@ -1,0 +1,14 @@
+delete-after: true
+author: PJB3005
+changes:
+  - rscdel: Removed dylan's Rapid Machine Component Exchanger (RMCE).
+  - rscadd: Ported the Rapid Part Exchangement Device (RPED) from /tg/, to replace the RMCE.
+  - tweak: The RPED has no delay.
+  - tweak: The RPED can be emptied into disposals bins.
+  - tweak: Mass removing items from the RPED will drop the lowest tier items first.
+  - tweak: The RPED can be used in construction of machines.
+  - tweak: Using the RPED on a machine with an open panel will replace parts, with a closed panel, will output a list of parts.
+  - soundadd: <i>Super fancy RPED sounds.</i>
+  - bugfix: The RPED does not have a couple of RMCE bugs (UI ghosting, dumb assumptions).
+  - tweak: The RPED does NOT fit in backpacks.
+  - tweak: The RPED can replace beakers in machines.

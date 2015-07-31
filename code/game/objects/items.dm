@@ -843,3 +843,6 @@
 			step_towards(src,S)
 		else ..()
 
+//Gets the rating of the item, used in stuff like machine construction.
+/obj/item/proc/get_rating()
+	return 0

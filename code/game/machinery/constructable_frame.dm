@@ -34,7 +34,11 @@
 		D += "."
 	desc = D
 
-/obj/machinery/constructable_frame/machine_frame
+/obj/machinery/constructable_frame/proc/get_req_components_amt()
+	var/amt = 0
+	for(var/path in req_components)
+		amt += req_components[path]
+	return amt
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
 	if(P.crit_fail)
@@ -153,46 +157,59 @@
 							components = null
 							qdel(src)
 					else
-						if(istype(P, /obj/item/weapon)||istype(P, /obj/item/stack))
-							for(var/I in req_components)
-								if(istype(P, text2path(I)) && (req_components[I] > 0))
-									playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-									if(istype(P, /obj/item/stack/cable_coil))
-										var/obj/item/stack/cable_coil/CP = P
-										if(CP.amount >= req_components[I])
-											var/camt = min(CP.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
-											var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src)
-											CC.amount = camt
-											CC.update_icon()
-											CP.use(camt)
-											components += CC
-											req_components[I] -= camt
-											update_desc()
-											break
-										else
-											user << "<span class='warning'>You do not have enough [P]!</span>"
-									if(istype(P, /obj/item/stack/rods))
-										var/obj/item/stack/rods/R = P
-										if(R.amount >= req_components[I])
-											var/camt = min(R.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
-											var/obj/item/stack/rods/RR = new /obj/item/stack/rods(src)
-											RR.amount = camt
-											RR.update_icon()
-											R.use(camt)
-											components += RR
-											req_components[I] -= camt
-											update_desc()
-											break
-										else
-											user << "<span class='warning'>You do not have enough [P]!</span>"
-									user.drop_item(P, src)
-									components += P
-									req_components[I]--
-									update_desc()
-									break
-							user << desc
-							if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-								user << "<span class='warning'>You cannot add that component to the machine!</span>"
+						if(istype(P, /obj/item/weapon/storage/bag/gadgets/part_replacer) && P.contents.len && get_req_components_amt())
+							var/obj/item/weapon/storage/bag/gadgets/part_replacer/replacer = P
+							var/list/added_components = list()
+							var/list/part_list = replacer.contents.Copy()
+
+							//Sort the parts. This ensures that higher tier items are applied first.
+							part_list = sortTim(part_list, /proc/cmp_rped_sort)
+
+							for(var/path in req_components)
+								while(req_components[path] > 0 && (locate(text2path(path)) in part_list))
+									var/obj/item/part = (locate(text2path(path)) in part_list)
+									if(!part.crit_fail)
+										added_components[part] = path
+										replacer.remove_from_storage(part, src)
+										req_components[path]--
+										part_list -= part
+
+							for(var/obj/item/weapon/stock_parts/part in added_components)
+								components += part
+								user << "<span class='notice'>[part.name] applied.</span>"
+							replacer.play_rped_sound()
+
+							update_desc()
+
+						else
+							if(istype(P, /obj/item/weapon) || istype(P, /obj/item/stack))
+								for(var/I in req_components)
+									if(istype(P, text2path(I)) && (req_components[I] > 0))
+										playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+										if(istype(P, /obj/item/stack))
+											var/obj/item/stack/CP = P
+											if(CP.amount >= req_components[I])
+												var/camt = min(CP.amount, req_components[I]) // amount of the stack to take, idealy amount required, but limited by amount provided
+												var/obj/item/stack/CC = getFromPool(text2path(I), src)
+												CC.amount = camt
+												CC.update_icon()
+												CP.use(camt)
+												components += CC
+												req_components[I] -= camt
+												update_desc()
+												break
+											else
+												user << "<span class='warning'>You do not have enough [P]!</span>"
+
+										user.drop_item(P, src)
+										components += P
+										req_components[I]--
+										update_desc()
+										break
+								user << desc
+
+								if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
+									user << "<span class='warning'>You cannot add that component to the machine!</span>"
 
 /obj/machinery/constructable_frame/machine_frame/proc/set_build_state(var/state)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/constructable_frame/machine_frame/proc/set_build_state() called tick#: [world.time]")
