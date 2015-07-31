@@ -1394,3 +1394,36 @@ B --><-- A
  B
 
 */
+
+
+/atom/movable/var/atom/orbiting = null
+//This is just so you can stop an orbit.
+//orbit() can run without it (swap orbiting for A)
+//but then you can never stop it and that's just silly.
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
+	if(!istype(A))
+		return
+	orbiting = A
+	var/angle = 0
+	spawn
+		while(orbiting)
+			loc = orbiting.loc
+
+			angle += angle_increment
+
+			var/matrix/shift = matrix()
+			shift.Translate(radius,0)
+			if(clockwise)
+				shift.Turn(angle)
+			else
+				shift.Turn(-angle)
+			transform = shift
+
+			sleep(0.6) //the effect breaks above 0.6 delay
+
+
+/atom/movable/proc/stop_orbit()
+	if(orbiting)
+		loc = get_turf(orbiting)
+		orbiting = null
