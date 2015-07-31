@@ -189,9 +189,9 @@
 	..()
 
 	spawn(30) //AWFULNESS AHOY
-	if(src && ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		SetOwnerInfo(H)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			SetOwnerInfo(H)
 
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
@@ -203,7 +203,8 @@
 		user.show_message("The fingerprint hash on the card is [fingerprint_hash].",1)
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
-	user.visible_message(text("[user] shows you: \icon[src] [src.name]: assignment: [src.assignment]"))
+	user.visible_message("[user] shows you: \icon[src] [src.name]: assignment: [src.assignment]",\
+		"You flash your ID card: \icon[src] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
 	return
 
@@ -288,15 +289,6 @@
 	origin_tech = "syndicate=3"
 	var/registered_user=null
 
-/obj/item/weapon/card/id/syndicate/New(mob/user as mob)
-	..()
-	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
-		registered_name = ishuman(user) ? user.real_name : user.name
-	else
-		registered_name = "Agent Card"
-	assignment = "Agent"
-	name = "[registered_name]'s ID Card ([assignment])"
-
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
@@ -314,7 +306,7 @@
 			return
 		src.registered_name = t
 
-		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent")),1,MAX_MESSAGE_LEN)
+		var u = sanitize(stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent", MAX_MESSAGE_LEN))
 		if(!u)
 			alert("Invalid assignment.")
 			src.registered_name = ""
@@ -333,11 +325,9 @@
 			if("Edit")
 				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account","Blood type","DNA hash","Fingerprint hash"))
 					if("Name")
-						var/new_name = sanitize(stripped_input(user,"What name would you like to put on this card?","Agent card name", ishuman(user) ? user.real_name : user.name, 26))
+						var/new_name = reject_bad_name(input(user,"What name would you like to put on this card?","Agent card name", ishuman(user) ? user.real_name : user.name))
 						if(!Adjacent(user)) return
-						if(new_name in list("Unknown","floor","wall","r-wall"))
-							user << "Invalid name."
-							return
+
 						src.registered_name = new_name
 						UpdateName()
 						user << "Name changed to [new_name]."
