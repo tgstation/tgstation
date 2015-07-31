@@ -30,7 +30,7 @@
 
 	var/list/locked = list("vars", "key", "ckey", "client")
 
-	if(!check_rights(R_PERMISSIONS))
+	if(holder && !(holder.rights & (R_PERMISSIONS)))
 		for(var/p in forbidden_varedit_object_types)
 			if( istype(O,p) )
 				usr << "<span class='warning'>It is forbidden to edit this object's variables.</span>"
