@@ -185,7 +185,7 @@ var/global/datum/interactive_map/camera/adv_camera = new
 
 /datum/interactive_map/camera/sendResources(client/C)
 	..()
-	C << browse_rsc('camera.js', "advcamera.js")
+	C << browse_rsc('advcamera.js')
 
 /obj/machinery/computer/security/advanced/Topic(href, href_list)
 	//world.log << "[src.type] topic call"
