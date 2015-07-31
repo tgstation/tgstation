@@ -943,4 +943,9 @@
 		user << "<span class='notice'>You paint the pipe yellow.</span>"
 		update_icon()
 		return 1
+	if(istype(W,/obj/item/device/analyzer))
+		var/obj/item/device/analyzer/A = W
+		var/datum/gas_mixture/environment = src.return_air()
+		user.show_message(A.output_gas_scan(environment,src,1))
+		return 1
 	return ..()

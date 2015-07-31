@@ -234,14 +234,16 @@ to destroy them and players will be able to make replacements.
 	desc = "A blank circuitboard ready for design."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "blank_mod"
-	var/datum/circuits/local_fuses = null
+	//var/datum/circuits/local_fuses = null
+	var/list/allowed_boards = list("autolathe"=/obj/item/weapon/circuitboard/autolathe,"intercom"=/obj/item/weapon/intercom_electronics,"conveyor"=/obj/item/weapon/circuitboard/conveyor,"air alarm"=/obj/item/weapon/circuitboard/air_alarm,"fire alarm"=/obj/item/weapon/circuitboard/fire_alarm,"airlock"=/obj/item/weapon/circuitboard/airlock,"APC"=/obj/item/weapon/circuitboard/power_control,"vendomat"=/obj/item/weapon/circuitboard/vendomat,"microwave"=/obj/item/weapon/circuitboard/microwave)
+	var/soldering = 0 //Busy check
 
 /obj/item/weapon/circuitboard/blank/New()
 	..()
-	local_fuses = new(src)
+	//local_fuses = new(src)
 
 /obj/item/weapon/circuitboard/blank/attackby(obj/item/O as obj, mob/user as mob)
-	if(ismultitool(O))
+	/*if(ismultitool(O))
 		var/boardType = local_fuses.assigned_boards["[local_fuses.localbit]"] //Localbit is an int, but this is an associative list organized by strings
 		if(boardType)
 			if(ispath(boardType))
@@ -253,8 +255,21 @@ to destroy them and players will be able to make replacements.
 				user << "<span class='warning'>A fatal error with the board type occurred. Report this message.</span>"
 		else
 			user << "<span class='warning'>The multitool flashes red briefly.</span>"
-	else if(issolder(O))
-		local_fuses.Interact(user)
+	else */if(!soldering&&issolder(O))
+		//local_fuses.Interact(user)
+		var/t = input(user, "Which board should be designed?") as null|anything in allowed_boards
+		if(!t) return
+		var/obj/item/weapon/solder/S = O
+		if(!S.remove_fuel(4,user)) return
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		soldering = 1
+		if(do_after(user, src,40))
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			var/boardType = allowed_boards[t]
+			var/obj/item/I = new boardType(get_turf(user))
+			qdel(src)
+			user.put_in_hands(I)
+		soldering = 0
 	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		if(WT.remove_fuel(1,user))
