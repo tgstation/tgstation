@@ -86,11 +86,11 @@
 	if(statpanel("Status"))
 		if(src.silence_time)
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
-			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			stat("Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]", null)
 		if(!src.stat)
-			stat(null, text("System integrity: [(src.health+100)/2]%"))
+			stat("System integrity: [(src.health+100)/2]%", null)
 		else
-			stat(null, text("Systems nonfunctional"))
+			stat("Systems nonfunctional", null)
 
 /mob/living/silicon/pai/check_eye(mob/user)
 	if (!src.current)

@@ -691,7 +691,7 @@ var/list/slot_equipment_priority = list( \
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
+		stat("Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]", null)
 		var/ETA
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL)
@@ -706,7 +706,7 @@ var/list/slot_equipment_priority = list( \
 				ETA = "ERR"
 		if(ETA)
 			var/timeleft = SSshuttle.emergency.timeLeft()
-			stat(null, "[ETA]-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			stat("[ETA] - [(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]", null)
 
 
 	if(client && client.holder)

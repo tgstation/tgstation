@@ -386,7 +386,7 @@
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Health: [round((health / maxHealth) * 100)]%")
+		stat("Health: [round((health / maxHealth) * 100)]%", null)
 		return 1
 
 /mob/living/simple_animal/death(gibbed)

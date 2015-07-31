@@ -56,24 +56,15 @@
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
 		if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
 			var/datum/game_mode/malfunction/malf = ticker.mode
 			if(malf.malf_mode_declared && (malf.apcs > 0))
-				stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
+				stat("Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]", null)
 
-		if (internal)
-			if (!internal.air_contents)
-				qdel(internal)
-			else
-				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.return_pressure())
-				stat("Distribution Pressure", internal.distribute_pressure)
 		if(mind)
 			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+				stat("Chemical Storage:", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
+				stat("Absorbed DNA:", mind.changeling.absorbedcount)
 
 
 	//NINJACODE

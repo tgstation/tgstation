@@ -131,7 +131,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Station Time: [worldtime2text()]")
+		stat("Station Time: [worldtime2text()]", null)
 		if(ticker)
 			if(ticker.mode)
 				//world << "DEBUG: ticker not null"
@@ -139,11 +139,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					var/datum/game_mode/malfunction/malf = ticker.mode
 					//world << "DEBUG: malf mode ticker test"
 					if(malf.malf_mode_declared && (malf.apcs > 0))
-						stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
+						stat("Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]", null)
 
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+						stat("[G.name] Gang Takeover: [max(G.dom_timer, 0)]", null)
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
