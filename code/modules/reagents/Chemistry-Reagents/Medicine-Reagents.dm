@@ -668,7 +668,7 @@
 		if(!M.suiciding && !(NOCLONE in M.mutations))
 			if(!M)
 				return
-			if(M.notify_ghost_cloning("Someone is trying to revive you. Re-enter your corpse if you want to be revived!"))
+			if(M.notify_ghost_cloning())
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
