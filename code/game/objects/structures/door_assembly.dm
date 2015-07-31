@@ -334,6 +334,15 @@
 	mineral = "glass"
 	icon_state = "door_as_gviro1"
 
+/obj/structure/door_assembly/door_assembly_centcom
+	icon_state = "door_as_ele1"
+	typetext = "centcom"
+	icontext = "ele"
+	airlock_type = /obj/machinery/door/airlock/centcom
+	anchored = 1
+	density = 1
+	state = 1
+
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
