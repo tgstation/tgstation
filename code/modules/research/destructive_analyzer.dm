@@ -95,6 +95,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item = null
 		icon_state = "d_analyzer"
 
+/obj/machinery/r_n_d/destructive_analyzer/attack_ghost(mob/user)
+	return
+
 //For testing purposes only.
 /*/obj/item/weapon/deconstruction_test
 	name = "Test Item"
