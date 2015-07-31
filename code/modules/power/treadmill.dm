@@ -53,15 +53,16 @@
 	if(!ismob(AM)) return //Can't walk on a treadmill if you aren't animated
 	if(get_turf(AM) != loc) return //Can't bump from the outside
 	var/mob/runner = AM
-	if(runner.bodytemperature <= 360)
+	if(!istype(runner,/mob/living/simple_animal)&&runner.bodytemperature <= 360)
 		runner.bodytemperature += 2 //Same heating pattern as being fat
 	if(runner.nutrition && runner.stat != DEAD)
 		runner.nutrition -= HUNGER_FACTOR*2 //Running on a treadmill makes you hungry fast
 	flick("treadmill-running", src)
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-	var/calc = DEFAULT_BUMP_ENERGY * power_efficiency
-	for(var/datum/reagent/R in runner.reagents.reagent_list)
-		calc *= R.sport
+	var/calc = DEFAULT_BUMP_ENERGY * power_efficiency * runner.treadmill_speed
+	if(runner.reagents) //Sanity
+		for(var/datum/reagent/R in runner.reagents.reagent_list)
+			calc *= R.sport
 	if(M_HULK in runner.mutations) calc *= 5
 	count_power += calc
 

@@ -34,6 +34,7 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	heat_damage_per_tick = 20
+	treadmill_speed = 4 //Not as insane as it seems, because of their slow default move rate, this is more like a functional 2x human
 
 
 /mob/living/simple_animal/hostile/alien/drone
