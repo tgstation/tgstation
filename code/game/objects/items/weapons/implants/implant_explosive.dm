@@ -34,8 +34,8 @@
 	imp_in << "<span class='notice'>You activate your microbomb implant.</span>"
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
-		imp_in.gib()
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
+		imp_in.gib()
 		qdel(src)
 		return
 	timed_explosion()
@@ -65,9 +65,9 @@
 	sleep(delay/4)
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay/4)
+	explosion(src,heavy,medium,weak,weak, flame_range = weak)
 	if(imp_in)
 		imp_in.gib()
-	explosion(src,heavy,medium,weak,weak, flame_range = weak)
 	qdel(src)
 
 /obj/item/weapon/implant/explosive/macro
