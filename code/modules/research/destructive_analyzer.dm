@@ -89,7 +89,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attack_hand(mob/user as mob)
 	if (..(user))
 		return
-	if (loaded_item && !panel_open && !busy)
+	if (loaded_item && !panel_open && !busy && !isobserver(user))
 		user << "<span class='notice'>You remove the [loaded_item.name] from the [src].</span>"
 		loaded_item.loc = src.loc
 		loaded_item = null
