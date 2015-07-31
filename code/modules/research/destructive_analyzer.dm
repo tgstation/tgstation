@@ -89,11 +89,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attack_hand(mob/user as mob)
 	if (..(user))
 		return
-	if (loaded_item && !panel_open && !busy && !isobserver(user))
+	if (loaded_item && !panel_open && !busy)
 		user << "<span class='notice'>You remove the [loaded_item.name] from the [src].</span>"
 		loaded_item.loc = src.loc
 		loaded_item = null
 		icon_state = "d_analyzer"
+
+/obj/machinery/r_n_d/destructive_analyzer/attack_ghost(mob/user)
+	return
 
 //For testing purposes only.
 /*/obj/item/weapon/deconstruction_test
