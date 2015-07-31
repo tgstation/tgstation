@@ -37,6 +37,7 @@
 			/mob/living/simple_animal/hostile/alien/queen/large,
 			/mob/living/simple_animal/hostile/mushroom,
 			/mob/living/simple_animal/hostile/asteroid,
+			/mob/living/simple_animal/hostile/retaliate,
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goldgrub,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
@@ -49,14 +50,14 @@
 			/mob/living/simple_animal/ascendant_shadowling
 			)//exclusion list for things you don't want the reaction to create.
 		var/list/meancritters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
-		var/list/nicecritters = list(typesof(/mob/living/simple_animal/pet),
-		                        /mob/living/simple_animal/crab,
+		var/list/nicecritters = list(/mob/living/simple_animal/crab,
 		                        /mob/living/simple_animal/mouse,
 		                        /mob/living/simple_animal/lizard,
 		                        /mob/living/simple_animal/parrot,
 		                        /mob/living/simple_animal/butterfly,
 		                        /mob/living/simple_animal/cow,
 		                        /mob/living/simple_animal/chicken) // and possible friendly mobs
+		nicecritters += typesof(/mob/living/simple_animal/pet) - /mob/living/simple_animal/pet
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
