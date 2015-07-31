@@ -2,12 +2,12 @@
 	name = "gender reassignment"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/reshape_genitals, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human)
-	location = "groin"
-	requires_organic_chest = 1
+	possible_locs = list("groin")
 
 
 //reshape_genitals
 /datum/surgery_step/reshape_genitals
+	name = "reshape genitals"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/hatchet = 50, /obj/item/weapon/wirecutters = 35)
 	time = 64
 

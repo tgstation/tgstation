@@ -60,8 +60,10 @@
 
 				"}
 	if(patient.surgeries.len)
-		dat += "<BR><B>Initiated Procedures</B><div class='statusDisplay'>"
+		dat += "<BR><BR><B>Initiated Procedures</B><div class='statusDisplay'>"
 		for(var/datum/surgery/procedure in patient.surgeries)
 			dat += "[capitalize(procedure.name)]<BR>"
+			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+			dat += "Next step: [capitalize(surgery_step.name)]<BR>"
 		dat += "</div>"
 	return dat

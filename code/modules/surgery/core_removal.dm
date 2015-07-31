@@ -7,6 +7,7 @@
 
 //extract brain
 /datum/surgery_step/extract_core
+	name = "extract core"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 100)
 	time = 16
 

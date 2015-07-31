@@ -5,12 +5,13 @@
 	user.visible_message("[user] begins to implant [target] with [implant].", "<span class='notice'>You begin to implant [target] with [implant]...</span>")
 
 //[[[[EYES]]]]
-/datum/surgery/eye_cybernetic_implant/eyes
+/datum/surgery/cybernetic_implant/eyes
 	name = "eye cybernetic implant"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/cybernetic_implant/eyes, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
-	location = "eyes"
+	possible_locs = list("eyes")
 
 /datum/surgery_step/cybernetic_implant/eyes
+	name = "insert eye cybernetic implant"
 	implements = list(/obj/item/cybernetic_implant/eyes = 100)
 	time = 32
 
@@ -23,12 +24,14 @@
 		return 1
 
 //[[[[BRAIN]]]]
-/datum/surgery/eye_cybernetic_implant/brain
+/datum/surgery/cybernetic_implant/brain
 	name = "brain cybernetic implant"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/cybernetic_implant/brain, /datum/surgery_step/close)
-	location = "head"
+	possible_locs = list("head")
+	requires_organic_bodypart = 0
 
 /datum/surgery_step/cybernetic_implant/brain
+	name = "insert brain cybernetic implant"
 	implements = list(/obj/item/cybernetic_implant/brain = 100)
 	time = 32
 
@@ -45,12 +48,14 @@
 		return 1
 
 //[[[[CHEST]]]]
-/datum/surgery/eye_cybernetic_implant/chest
+/datum/surgery/cybernetic_implant/chest
 	name = "torso cybernetic implant"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/cybernetic_implant/chest, /datum/surgery_step/close)
-	location = "chest"
+	possible_locs = list("chest")
+	requires_organic_bodypart = 0
 
 /datum/surgery_step/cybernetic_implant/chest
+	name = "insert torso cybernetic implant"
 	implements = list(/obj/item/cybernetic_implant/chest = 100)
 	time = 32
 
@@ -70,10 +75,9 @@
 	if(full)
 		user << "<span class='warning'>You can't seem to implant anything else into the [target]'s [target_zone]!</span>"
 	else
-		if(!user.drop_item())
-			return
 		user.visible_message("[user] inserts [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone]!", "<span class='notice'>You insert [implant] into the [target]'s [target_zone == "head" ? "brain" : target_zone].</span>")
 		implant.owner = target
 		implant.function()
+		user.drop_item()
 		target.internal_organs |= implant
 		implant.loc = target

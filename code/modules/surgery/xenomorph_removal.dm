@@ -2,13 +2,13 @@
 	name = "xenomorph removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/xenomorph_removal, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	location = "chest"
-	requires_organic_chest = 1
+	possible_locs = list("chest")
 
 
 
 //remove xeno from premises
 /datum/surgery_step/xenomorph_removal
+	name = "remove foregin body"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/shovel/spade = 65, /obj/item/weapon/cultivator = 50, /obj/item/weapon/crowbar = 35)
 	time = 64
 

@@ -1,6 +1,7 @@
 
 //make incision
 /datum/surgery_step/incise
+	name = "make incision"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchen/knife = 65, /obj/item/weapon/shard = 45)
 	time = 24
 
@@ -11,6 +12,7 @@
 
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
+	name = "clamp bleeders"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/wirecutters = 60, /obj/item/stack/cable_coil = 15)
 	time = 48
 
@@ -20,6 +22,7 @@
 
 //retract skin
 /datum/surgery_step/retract_skin
+	name = "retract skin"
 	implements = list(/obj/item/weapon/retractor = 100, /obj/item/weapon/screwdriver = 45, /obj/item/weapon/wirecutters = 35)
 	time = 32
 
@@ -30,6 +33,7 @@
 
 //close incision
 /datum/surgery_step/close
+	name = "mend incision"
 	implements = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	time = 32
 
@@ -55,14 +59,25 @@
 
 	return 0
 
+/datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(locate(/datum/surgery_step/saw) in surgery.steps)
+		target.heal_organ_damage(45,0)
+	return ..()
+
+
 
 //saw bone
 /datum/surgery_step/saw
+	name = "saw bone"
 	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to saw through the bone in [target]'s [parse_zone(target_zone)]...</span>")
 
-
-
+/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.apply_damage(50,"brute","[target_zone]")
+		user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
+	return 1

@@ -1,13 +1,22 @@
-/mob/proc/getorgan()
+mob/proc/getorgan()
 	return
-/mob/living/carbon/getorgan(typepath)
+
+mob/proc/getorgansloc()
+	return
+
+mob/living/carbon/getorgan(typepath)
 	return (locate(typepath) in internal_organs)
 
-/mob/proc/getlimb()
+mob/living/carbon/getorgansloc(zone)
+	var/list/returnorg = list()
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(zone == O.zone)
+			returnorg += O
+
+	return returnorg
+
+mob/proc/getlimb()
 	return
 
-/mob/living/carbon/human/getlimb(typepath)
+mob/living/carbon/human/getlimb(typepath)
 	return (locate(typepath) in organs)
-
-
-
