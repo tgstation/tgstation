@@ -25,7 +25,6 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	flag = "bullet"
 
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
 	..()
@@ -37,7 +36,6 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
 	damage = 60
-	flag = "bullet"
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
