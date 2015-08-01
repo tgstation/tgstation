@@ -376,8 +376,7 @@
 			text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			var/datum/changelingprofile/firstprof = changeling.stored_profiles[1]
-			if(changeling && changeling.stored_profiles.len && (current.real_name != firstprof.name) )
+			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
 				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
 		else
 			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
@@ -976,9 +975,8 @@
 					usr << "<span class='danger'>Resetting DNA failed!</span>"
 				else
 					var/mob/living/carbon/C = current
-					var/datum/changelingprofile/prof = changeling.stored_profiles[1]
-					C.dna = prof.dna
-					C.real_name = prof.name
+					C.dna = changeling.first_prof.dna
+					C.real_name = changeling.first_prof.name
 					updateappearance(C)
 					domutcheck(C)
 

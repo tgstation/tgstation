@@ -232,6 +232,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
 	var/list/stored_profiles = list() //list of datum/changelingprofile
+	var/datum/changelingprofile/first_prof = null
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
@@ -263,7 +264,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
-	stored_profiles.len = dna_max
 
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
@@ -316,12 +316,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
 	var/datum/dna/new_dna = new H.dna.type
-	new_dna.uni_identity = H.dna.uni_identity
-	new_dna.struc_enzymes = H.dna.struc_enzymes
-	new_dna.real_name = H.dna.real_name
-	new_dna.species = H.dna.species
-	new_dna.features = H.dna.features
-	new_dna.blood_type = H.dna.blood_type
+	H.dna.copy_dna(new_dna)
 	prof.dna = new_dna
 	prof.name = H.real_name
 	prof.protected = protect
@@ -334,8 +329,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		prof.name_list[slot] = I.name
 		prof.appearance_list[slot] = I.appearance
 		prof.flags_cover_list[slot] = I.flags_cover
+		prof.item_color_list[slot] = I.item_color
+		prof.exists_list[slot] = 1
 
 	stored_profiles += prof
+
+	return prof
 
 /datum/changeling/proc/remove_profile(var/mob/living/carbon/human/H, force = 0)
 	for(var/datum/changelingprofile/prof in stored_profiles)
@@ -358,98 +357,110 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return 0
 
 /proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
-	user.dna = chosen_prof.dna
+	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
-	hardset_dna(user, null, null, null, null, chosen_prof.dna.species.type, chosen_prof.dna.features)
+	user.dna = chosen_prof.dna
+	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
+	domutcheck(user)
+	updateappearance(user)
 	//var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store") //just here as a reference.
 
 	//im so sorry
-	if(!user.head)
+	if(!user.head && chosen_prof.exists_list["head"])
 		var/obj/item/clothing/head/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["head"]
 		C.name = chosen_prof.name_list["head"]
 		C.flags_cover = chosen_prof.flags_cover_list["head"]
+		C.item_color = chosen_prof.item_color_list["head"]
 		user.equip_to_slot_or_del(C, slot_head)
 
-	if(!user.wear_mask)
+	if(!user.wear_mask && chosen_prof.exists_list["wear_mask"])
 		var/obj/item/clothing/mask/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["wear_mask"]
 		C.name = chosen_prof.name_list["wear_mask"]
 		C.flags_cover = chosen_prof.flags_cover_list["wear_mask"]
+		C.item_color = chosen_prof.item_color_list["wear_mask"]
 		user.equip_to_slot_or_del(C, slot_wear_mask)
 
-	if(!user.back)
+	if(!user.back && chosen_prof.exists_list["back"])
 		var/obj/item/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["back"]
 		C.name = chosen_prof.name_list["back"]
+		C.item_color = chosen_prof.item_color_list["back"]
 		user.equip_to_slot_or_del(C, slot_back)
 
-	if(!user.wear_suit)
+	if(!user.wear_suit && chosen_prof.exists_list["wear_suit"])
 		var/obj/item/clothing/suit/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["wear_suit"]
 		C.name = chosen_prof.name_list["wear_suit"]
 		C.flags_cover = chosen_prof.flags_cover_list["wear_suit"]
+		C.item_color = chosen_prof.item_color_list["wear_suit"]
 		user.equip_to_slot_or_del(C, slot_wear_suit)
 
-	if(!user.w_uniform)
+	if(!user.w_uniform && chosen_prof.exists_list["w_uniform"])
 		var/obj/item/clothing/under/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["w_uniform"]
 		C.name = chosen_prof.name_list["w_uniform"]
 		C.flags_cover = chosen_prof.flags_cover_list["w_uniform"]
+		C.item_color = chosen_prof.item_color_list["w_uniform"]
 		user.equip_to_slot_or_del(C, slot_w_uniform)
 
-	if(!user.shoes)
+	if(!user.shoes && chosen_prof.exists_list["shoes"])
 		var/obj/item/clothing/shoes/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["shoes"]
 		C.name = chosen_prof.name_list["shoes"]
 		C.flags_cover = chosen_prof.flags_cover_list["shoes"]
+		C.item_color = chosen_prof.item_color_list["shoes"]
 		user.equip_to_slot_or_del(C, slot_shoes)
 
-	if(!user.belt)
+	if(!user.belt && chosen_prof.exists_list["belt"])
 		var/obj/item/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["belt"]
 		C.name = chosen_prof.name_list["belt"]
+		C.item_color = chosen_prof.item_color_list["belt"]
 		user.equip_to_slot_or_del(C, slot_belt)
 
-	if(!user.gloves)
+	if(!user.gloves && chosen_prof.exists_list["gloves"])
 		var/obj/item/clothing/gloves/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["gloves"]
 		C.name = chosen_prof.name_list["gloves"]
 		C.flags_cover = chosen_prof.flags_cover_list["gloves"]
+		C.item_color = chosen_prof.item_color_list["gloves"]
 		user.equip_to_slot_or_del(C, slot_gloves)
 
-	if(!user.glasses)
+	if(!user.glasses && chosen_prof.exists_list["glasses"])
 		var/obj/item/clothing/glasses/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["glasses"]
 		C.name = chosen_prof.name_list["glasses"]
 		C.flags_cover = chosen_prof.flags_cover_list["glasses"]
+		C.item_color = chosen_prof.item_color_list["glasses"]
 		user.equip_to_slot_or_del(C, slot_glasses)
 
-	if(!user.ears)
+	if(!user.ears && chosen_prof.exists_list["ears"])
 		var/obj/item/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["ears"]
 		C.name = chosen_prof.name_list["ears"]
 		C.flags_cover = chosen_prof.flags_cover_list["ears"]
+		C.item_color = chosen_prof.item_color_list["ears"]
 		user.equip_to_slot_or_del(C, slot_ears)
 
-	if(!user.wear_id)
+	if(!user.wear_id && chosen_prof.exists_list["wear_id"])
 		var/obj/item/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["wear_id"]
 		C.name = chosen_prof.name_list["wear_id"]
 		C.flags_cover = chosen_prof.flags_cover_list["wear_id"]
+		C.item_color = chosen_prof.item_color_list["wear_id"]
 		user.equip_to_slot_or_del(C, slot_wear_id)
 
-	if(!user.s_store)
+	if(!user.s_store && chosen_prof.exists_list["s_store"])
 		var/obj/item/changeling/C = new(user)
 		C.appearance = chosen_prof.appearance_list["s_store"]
 		C.name = chosen_prof.name_list["s_store"]
 		C.flags_cover = chosen_prof.flags_cover_list["s_store"]
+		C.item_color = chosen_prof.item_color_list["s_store"]
 		user.equip_to_slot_or_del(C, slot_s_store)
 
-
-	updateappearance(user)
-	domutcheck(user)
-
+	user.regenerate_icons()
 
 /datum/changelingprofile
 	var/name = "a bug"
@@ -460,6 +471,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/list/name_list = list() //associative list of slotname = itemname
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
+	var/list/exists_list = list()
+	var/list/item_color_list = list()
 	
 /datum/changelingprofile/Destroy()
 	qdel(dna)
