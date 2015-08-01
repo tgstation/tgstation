@@ -13,14 +13,6 @@
 	var/burntime = 10 //How long it takes to burn to ashes, in seconds
 	var/burn_world_time //What world time the object will burn up completely
 
-	var/buckletext1 = "buckles into"
-	var/buckletext2 = "buckle into"
-	var/buckletext3 = "buckled into"
-	var/unbuckletext1 = "unbuckles"
-	var/unbuckletext2 = "unbuckled from"
-	var/unbuckletext3 = "unbuckles from"
-	var/unbuckletext4 = "unbuckle from"
-
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
 		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
