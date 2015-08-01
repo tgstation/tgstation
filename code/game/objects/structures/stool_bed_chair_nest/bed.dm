@@ -15,6 +15,13 @@
 	buckle_lying = 1
 	burn_state = 0 //Burnable
 	burntime = 30
+	var/buckletext1 = "tucks into"
+	var/buckletext2 = "tuck into"
+	var/buckletext3 = "tucked into"
+	var/unbuckletext1 = "untucks"
+	var/unbuckletext2 = "untucked from"
+	var/unbuckletext3 = "untucks from"
+	var/unbuckletext4 = "untuck from"
 
 /obj/structure/stool/bed/alien
 	name = "resting contraption"
@@ -52,6 +59,48 @@
 		qdel(src)
 		return
 
+/obj/structure/stool/bed/user_buckle_mob(mob/living/M, mob/user)
+	if(!user.Adjacent(M) || user.restrained() || user.lying || user.stat)
+		return
+
+	add_fingerprint(user)
+	unbuckle_mob()
+
+	if(buckle_mob(M))
+		if(M == user)
+			M.visible_message(\
+				"[M.name] [buckletext1] [src].",\
+				"<span class='notice'>You [buckletext2] [src].</span>")
+		else
+			if(M.restrained())
+				M.visible_message(\
+					"<span class='warning'>[M.name] is handcuffed to [src] by [user.name]!</span>",\
+					"<span class='danger'>You are handcuffed to [src] by [user.name]!</span>",\
+					"<span class='italics'>You hear metal clicking.</span>")
+			else
+				M.visible_message(\
+					"<span class='warning'>[M.name] is [buckletext3] [src] by [user.name]!</span>",\
+					"<span class='danger'>You are [buckletext3] [src] by [user.name]!</span>")
+
+/obj/structure/stool/bed/user_unbuckle_mob(mob/user)
+	var/mob/living/M = unbuckle_mob()
+
+	if(M)
+		if(M != user)
+			if(M.restrained())
+				M.visible_message(\
+					"[user.name] uncuffs [M.name] from [src].",\
+					"<span class='notice'>You are uncuffed from [src] by [user.name].</span>")
+			else
+				M.visible_message(\
+					"[user.name] [unbuckletext1] [M.name] from [src].",\
+					"<span class='notice'>You are [unbuckletext2] [src] by [user.name].</span>")
+		else
+			M.visible_message(\
+				"<span class='notice'>[M.name] [unbuckletext3] [src].</span>",\
+				"<span class='notice'>You [unbuckletext4] [src].</span>")
+		add_fingerprint(user)
+	return M
 
 /*
  * Roller beds
@@ -62,6 +111,13 @@
 	icon_state = "down"
 	anchored = 0
 	burn_state = -1 //Not Burnable
+	buckletext1 = "rests on"
+	buckletext2 = "rest on"
+	buckletext3 = "rested on"
+	unbuckletext1 = "pulls"
+	unbuckletext2 = "pulled from"
+	unbuckletext3 = "stands up from"
+	unbuckletext4 = "stand up from"
 
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
@@ -142,7 +198,7 @@
 /obj/structure/stool/bed/dogbed
 	name = "dog bed"
 	icon_state = "dogbed"
-	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
+	desc = "A comfy-looking dog bed. You can even tuck your pet in."
 	anchored = 0
 
 /obj/structure/stool/bed/dogbed/attackby(obj/item/weapon/W, mob/user, params)

@@ -4,6 +4,13 @@
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = -1 //Not Burnable
+	buckletext1 = "sits on"
+	buckletext2 = "sit on"
+	buckletext3 = "seated on"
+	unbuckletext1 = "pulls"
+	unbuckletext2 = "pulled from"
+	unbuckletext3 = "stands up from"
+	unbuckletext4 = "stand up from"
 
 /obj/structure/stool/bed/chair/New()
 	..()
@@ -71,7 +78,6 @@
 		if(usr.stat || usr.restrained())
 			return
 		spin()
-
 
 // Chair types
 /obj/structure/stool/bed/chair/wood

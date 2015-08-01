@@ -171,6 +171,13 @@
 	var/move_delay = 0
 	var/floorbuffer = 0
 	var/keytype = /obj/item/key/janitor
+	buckletext1 = "steps onto"
+	buckletext2 = "step onto"
+	buckletext3 = "pushed onto"
+	unbuckletext1 = "pulls"
+	unbuckletext2 = "pulled from"
+	unbuckletext3 = "steps off"
+	unbuckletext4 = "step off"
 
 /obj/structure/stool/bed/chair/janicart/New()
 	handle_rotation()

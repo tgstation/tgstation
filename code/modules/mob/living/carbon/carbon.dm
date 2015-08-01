@@ -376,15 +376,15 @@ var/const/GALOSHES_DONT_HELP = 8
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
-		visible_message("<span class='warning'>[src] attempts to unbuckle themself!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
+		visible_message("<span class='warning'>[src] attempts to uncuff themself from [buckled]!</span>", \
+					"<span class='notice'>You attempt to uncuff yourself from [buckled]... (This will take around one minute and you need to stay still.)</span>")
 		if(do_after(src, 600, needhand = 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
 		else
 			if(src && buckled)
-				src << "<span class='warning'>You fail to unbuckle yourself!</span>"
+				src << "<span class='warning'>You fail to uncuff yourself from [buckled]!</span>"
 	else
 		buckled.user_unbuckle_mob(src,src)
 
