@@ -52,6 +52,50 @@
 		qdel(src)
 		return
 
+/obj/structure/stool/bed/user_buckle_mob(mob/living/M, mob/user)
+	if(!user.Adjacent(M) || user.restrained() || user.lying || user.stat)
+		return
+
+	add_fingerprint(user)
+	unbuckle_mob()
+
+	if(buckle_mob(M))
+		if(M == user)
+			M.visible_message(\
+				"[M.name] tucks into [src].",\
+				"<span class='notice'>You tuck into [src].</span>")
+		else
+			if(M.restrained())
+				M.visible_message(\
+					"<span class='warning'>[M.name] is handcuffed to [src] by [user.name]!</span>",\
+					"<span class='danger'>You are handcuffed to [src] by [user.name]!</span>",\
+					"<span class='italics'>You hear metal clicking.</span>")
+			else
+				M.visible_message(\
+					"<span class='warning'>[M.name] is tucked into [src] by [user.name]!</span>",\
+					"<span class='danger'>You are tucked into [src] by [user.name]!</span>")
+
+/obj/structure/stool/bed/user_unbuckle_mob(mob/user)
+	var/mob/living/M = unbuckle_mob()
+
+	if(M)
+		if(M != user)
+			if(M.restrained())
+				M.visible_message(\
+					"[user.name] uncuffs [M.name] from [src].",\
+					"<span class='notice'>You are uncuffed from [src] by [user.name].</span>",\
+					"<span class='italics'>You hear metal clicking.</span>")
+			else
+				M.visible_message(\
+					"[user.name] untucks [M.name] from [src].",\
+					"<span class='notice'>You are untucked from [src] by [user.name].</span>")
+		else
+			M.visible_message(\
+				"<span class='notice'>[M.name] untucks themselves from [src].</span>",\
+				"<span class='notice'>You untuck yourself from [src].</span>")
+		add_fingerprint(user)
+	return M
+
 
 /*
  * Roller beds
