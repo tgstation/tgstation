@@ -434,6 +434,7 @@ var/global/list/rockTurfEdgeCache
 		if(do_after(user,P.digspeed, target = src))
 			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
+				P.update_icon()
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.name]")
 	else
@@ -547,14 +548,31 @@ var/global/list/rockTurfEdgeCache
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
-	var/digging_speed = 0;
+
 	if ((istype(W, /obj/item/weapon/shovel)))
 		var/obj/item/weapon/shovel/S = W
-		digging_speed = S.digspeed
-	else if ((istype(W, /obj/item/weapon/pickaxe)))
+		var/turf/T = user.loc
+		
+		if (!( istype(T, /turf) ))
+			return
+
+		if (dug)
+			user << "<span class='warning'>This area has already been dug!</span>"
+			return
+
+		user << "<span class='notice'>You start digging...</span>"
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
+		
+		if(do_after(user,S.digspeed, target = src))
+			if(istype(src, /turf/simulated/floor/plating/asteroid)) //sanity check against turf being deleted during digspeed delay
+				user << "<span class='notice'>You dig a hole.</span>"
+				S.update_icon()
+				gets_dug()
+				feedback_add_details("pick_used_mining","[S.name]")
+		
+
+	if ((istype(W, /obj/item/weapon/pickaxe)))
 		var/obj/item/weapon/pickaxe/P = W
-		digging_speed = P.digspeed
-	if (digging_speed)
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -566,11 +584,13 @@ var/global/list/rockTurfEdgeCache
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 		
-		if(do_after(user,digging_speed, target = src))
+		if(do_after(user,P.digspeed, target = src))
 			if(istype(src, /turf/simulated/floor/plating/asteroid)) //sanity check against turf being deleted during digspeed delay
 				user << "<span class='notice'>You dig a hole.</span>"
+				P.update_icon()
 				gets_dug()
-				feedback_add_details("pick_used_mining","[W.name]")
+				feedback_add_details("pick_used_mining","[P.name]")
+		
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
