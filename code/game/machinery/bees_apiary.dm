@@ -183,7 +183,9 @@
 		for(var/obj/machinery/portable_atmospherics/hydroponics/H in view(7, src))
 			if(H.seed && !H.dead && prob(owned_bee_swarms.len * 10))
 				src.nutrilevel++
-				H.nutrilevel++
+				if(H.nutrilevel < 100)
+					H.nutrilevel++
+
 				if(mut < H.mutation_mod - 1)
 					mut = H.mutation_mod - 1
 				else if(mut > H.mutation_mod - 1)
