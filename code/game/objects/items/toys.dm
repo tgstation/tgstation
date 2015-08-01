@@ -868,7 +868,7 @@
 
 /obj/item/toy/gasha/mario
 	name = "toy plumber"
-	desc = "It's a toy of a popular plumber character.
+	desc = "It's a toy of a popular plumber character."
 	icon_state = "mario"
 
 /obj/item/toy/gasha/mario/luigi
