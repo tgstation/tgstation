@@ -17,7 +17,7 @@
 				<b>Implant Details:</b><BR>
 				<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
 				<b>Special Features:</b> Explodes<BR>
-				<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+				"}
 	return dat
 
 /obj/item/weapon/implant/explosive/trigger(emote, mob/source)

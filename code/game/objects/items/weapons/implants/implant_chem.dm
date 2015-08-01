@@ -18,8 +18,7 @@
 				<b>Special Features:</b>
 				<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
 				Can only be loaded while still in its original case.<BR>
-				<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
-				the implant may become unstable and either pre-maturely inject the subject or simply break."}
+				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
 /obj/item/weapon/implant/chem/New()

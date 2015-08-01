@@ -2,58 +2,58 @@
 	if(istype(M))
 		var/mob/living/carbon/human/H
 		var/obj/item/organ/limb/affecting
+		var/selected_zone = user.zone_sel.selecting
+
 		if(istype(M, /mob/living/carbon/human))
 			H = M
-			affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+			affecting = H.get_organ(check_zone(selected_zone))
 
 		if(M.lying || isslime(M))	//if they're prone or a slime
-			var/list/all_surgeries = surgeries_list.Copy()
-			var/list/available_surgeries = list()
-			for(var/i in all_surgeries)
-				var/datum/surgery/S = all_surgeries[i]
-				if(!S.possible_locs.Find(user.zone_sel.selecting))
-					continue
-				if(locate(S.type) in M.surgeries)
-					continue
-				if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
-					continue
-				if(!S.can_start(user, M))
-					continue
-
-				for(var/path in S.species)
-					if(istype(M, path))
-						available_surgeries[S.name] = S
-						break
+			var/datum/surgery/current_surgery
 
 			for(var/datum/surgery/S in M.surgeries)
-				if(S.status == 1 && !S.step_in_progress)
-					available_surgeries["cancel " + S.name] = S
+				if(S.location == selected_zone)
+					current_surgery = S
 
-			var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
-			if(P)
-				var/datum/surgery/S = available_surgeries[P]
-				if(S in M.surgeries)
-					M.surgeries -= S
-					qdel(S)
-					return 1
+			if(!current_surgery)
+				var/list/all_surgeries = surgeries_list.Copy()
+				var/list/available_surgeries = list()
+				for(var/i in all_surgeries)
+					var/datum/surgery/S = all_surgeries[i]
+					if(!S.possible_locs.Find(selected_zone))
+						continue
+					if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+						continue
+					if(!S.can_start(user, M))
+						continue
 
-				var/datum/surgery/procedure = new S.type
-				if(procedure)
-					procedure.location = user.zone_sel.selecting
-					if(procedure.ignore_clothes || get_location_accessible(M, procedure.location))
-						M.surgeries += procedure
-						if(affecting)
+					for(var/path in S.species)
+						if(istype(M, path))
+							available_surgeries[S.name] = S
+							break
+
+				var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+				if(P && user.Adjacent(M) && (I in user))
+					var/datum/surgery/S = available_surgeries[P]
+					var/datum/surgery/procedure = new S.type
+					if(procedure)
+						procedure.location = selected_zone
+						if(procedure.ignore_clothes || get_location_accessible(M, selected_zone))
+							M.surgeries += procedure
 							procedure.organ = affecting
-						user.visible_message("[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].", \
-							"<span class='notice'>You drape [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
+							user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+								"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
-						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
-						return 1
-					else
-						user << "<span class='warning'>You need to expose [M]'s [procedure.location] first!</span>"
-						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
-			else
-				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
+							add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
+						else
+							user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
+
+			else if(current_surgery.status == 1 && !current_surgery.step_in_progress)
+				M.surgeries -= current_surgery
+				user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+					"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+				qdel(current_surgery)
+			return 1
 	return 0
 
 
@@ -79,13 +79,13 @@ proc/get_location_modifier(mob/M)
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
 			covered_locations |= I.body_parts_covered
 			face_covered |= I.flags_inv
-			eyesmouth_covered |= I.flags
+			eyesmouth_covered |= I.flags_cover
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
 				covered_locations |= I.body_parts_covered
 				face_covered |= I.flags_inv
-				eyesmouth_covered |= I.flags
+				eyesmouth_covered |= I.flags_cover
 
 	switch(location)
 		if("head")

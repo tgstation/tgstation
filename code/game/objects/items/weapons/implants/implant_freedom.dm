@@ -28,8 +28,7 @@
 mechanisms<BR>
 <b>Special Features:</b><BR>
 <i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-<b>Integrity:</b> The battery is extremely weak and commonly after injection its
-life can drive down to only 1 use.<HR>
+<HR>
 No Implant Specifics"}
 	return dat
 
