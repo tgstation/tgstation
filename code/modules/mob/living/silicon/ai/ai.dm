@@ -41,7 +41,7 @@ var/list/ai_list = list()
 	var/datum/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
-	var/fire_res_on_core = 0
+	var/ai_flags = 0
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite

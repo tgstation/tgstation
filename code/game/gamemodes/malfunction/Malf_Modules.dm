@@ -47,8 +47,7 @@ rcd light flash thingy on matter drain
 	set name = "Fireproof Core"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/fireproof_core() called tick#: [world.time]")
 
-	for(var/mob/living/silicon/ai/ai in player_list)
-		ai.fire_res_on_core = 1
+	ai_flags |= COREFIRERESIST
 	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
 	src << "<span class='warning'>Core fireproofed.</span>"
 
@@ -182,6 +181,23 @@ rcd light flash thingy on matter drain
 	src.can_shunt = 0
 	PCT.uses -= 1
 	src << "You cannot shunt anymore."
+
+/datum/AI_Module/large/highrescams
+	module_name = "High Resolution Cameras"
+	mod_pick_name = "High Res Cameras"
+	description = "Allows the AI to read papers and the lips of crewmembers from his cameras!"
+	cost = 10
+
+	power_type = /mob/living/silicon/ai/proc/highrescameras
+
+/mob/living/silicon/ai/proc/highrescameras()
+	set category = "Malfunction"
+	set name = "High Res Cams"
+
+	ai_flags |= HIGHRESCAMS
+
+	eyeobj.addHear()
+	src.verbs -= /mob/living/silicon/ai/proc/highrescameras
 
 
 /datum/AI_Module/small/blackout

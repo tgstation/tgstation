@@ -33,6 +33,19 @@
 /mob/camera/aiEye/Move()
 	return 0
 
+//An AI eyeobj mob cant have a virtualhearer to hear with unless it gets one from a malf module
+/mob/camera/aiEye/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+	if(radio_freq) //HOW CAN IT POSSIBLY READ LIPS THROUGH RADIOS
+		return
+
+	var/mob/M = speaker
+	if(istype(M))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = speaker
+			if(H.check_body_part_coverage(MOUTH)) //OR MASKS
+				return
+		ai.Hear(args) //He can only read the lips of mobs, I cant think of objects using lips
+
 
 // AI MOVEMENT
 

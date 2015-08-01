@@ -1207,3 +1207,8 @@ var/proccalls = 1
 #define ORE_PROCESSING_ALLOY 2
 
 #define SOUND_AMBIANCE			485	//Literally arbitrary.
+
+
+//MALFUNCTION FLAGS
+#define COREFIRERESIST 1
+#define HIGHRESCAMS 2

@@ -164,7 +164,7 @@
 		health = maxHealth
 		stat = CONSCIOUS
 	else
-		if(fire_res_on_core)
+		if(ai_flags & COREFIRERESIST)
 			health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
 		else
 			health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()

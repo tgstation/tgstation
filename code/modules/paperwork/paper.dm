@@ -92,7 +92,7 @@
 		dist = get_dist(src, user.current)
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
-	if(dist < 2)
+	if(dist < 2 || (user.ai_flags & HIGHRESCAMS))
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY[color ? " bgcolor=[src.color]":""]>[info][stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	else
