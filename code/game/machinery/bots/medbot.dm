@@ -485,7 +485,7 @@
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		spawn(30)
-			if ((get_dist(src, patient) <= 1) && (on))
+			if ((get_dist(src, patient) <= 1) && (on) && assess_patient(patient)) //Must assess patient again to prevent overdose from stacked medibots, as THEY HUNT IN PACKS!!
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						var/fraction = min(injection_amount/reagent_glass.reagents.total_volume, 1)
