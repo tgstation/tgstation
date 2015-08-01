@@ -981,7 +981,7 @@ About the new airlock wires panel:
 						var/obj/structure/door_assembly/A = new src.doortype(src.loc)
 						A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 					else
-						var/obj/structure/door_assembly/A = new /obj/structure/door_assembly/door_assembly_0(src.loc)
+						new /obj/structure/door_assembly/door_assembly_0(src.loc)
 						//If you come across a null doortype, it will produce the default assembly instead of disintegrating.
 
 					if(emagged)
