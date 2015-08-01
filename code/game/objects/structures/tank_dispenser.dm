@@ -31,6 +31,9 @@
 		if(1 to 4)	overlays += "plasma-[plasmatanks]"
 		if(5 to INFINITY) overlays += "plasma-5"
 
+/obj/structure/dispenser/attack_ai(mob/user)
+	return src.attack_hand(user)
+
 /obj/structure/dispenser/attack_paw(mob/user)
 	return src.attack_hand(user)
 

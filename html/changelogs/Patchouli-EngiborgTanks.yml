@@ -1,0 +1,5 @@
+author: Patchouli
+
+delete-after: True
+
+  - rscadd: "Added a new engineering borg module that lets them pick up plasma tanks and insert them into things, i.e. engiborgs are now able to set up the singularity engine without human assistance."
