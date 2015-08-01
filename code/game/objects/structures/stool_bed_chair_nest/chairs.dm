@@ -4,6 +4,13 @@
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = -1 //Not Burnable
+	buckletext1 = "sits on"
+	buckletext2 = "sit on"
+	buckletext3 = "seated on"
+	unbuckletext1 = "pulls"
+	unbuckletext2 = "pulled from"
+	unbuckletext3 = "stands up from"
+	unbuckletext4 = "stand up from"
 
 /obj/structure/stool/bed/chair/New()
 	..()
@@ -71,49 +78,6 @@
 		if(usr.stat || usr.restrained())
 			return
 		spin()
-
-/obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
-	if(!user.Adjacent(M) || user.restrained() || user.lying || user.stat)
-		return
-
-	add_fingerprint(user)
-	unbuckle_mob()
-
-	if(buckle_mob(M))
-		if(M == user)
-			M.visible_message(\
-				"[M.name] sits on [src].",\
-				"<span class='notice'>You sit on [src].</span>")
-		else
-			if(M.restrained())
-				M.visible_message(\
-					"<span class='warning'>[M.name] is handcuffed to [src] by [user.name]!</span>",\
-					"<span class='danger'>You are handcuffed to [src] by [user.name]!</span>",\
-					"<span class='italics'>You hear metal clicking.</span>")
-			else
-				M.visible_message(\
-					"<span class='warning'>[M.name] is seated on [src] by [user.name]!</span>",\
-					"<span class='danger'>You are seated on [src] by [user.name]!</span>")
-
-/obj/structure/stool/bed/chair/user_unbuckle_mob(mob/user)
-	var/mob/living/M = unbuckle_mob()
-
-	if(M)
-		if(M != user)
-			if(M.restrained())
-				M.visible_message(\
-					"[user.name] uncuffs [M.name] from [src].",\
-					"<span class='notice'>You are uncuffed from [src] by [user.name].</span>")
-			else
-				M.visible_message(\
-					"[user.name] pushes [M.name] off [src].",\
-					"<span class='notice'>You are pushed off [src] by [user.name].</span>")
-		else
-			M.visible_message(\
-				"<span class='notice'>[M.name] stands up from [src].</span>",\
-				"<span class='notice'>You stand up from [src].</span>")
-		add_fingerprint(user)
-	return M
 
 // Chair types
 /obj/structure/stool/bed/chair/wood
