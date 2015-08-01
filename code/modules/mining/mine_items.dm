@@ -129,6 +129,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 8.0
+	var/digspeed = 20
 	throwforce = 4.0
 	item_state = "shovel"
 	w_class = 3.0

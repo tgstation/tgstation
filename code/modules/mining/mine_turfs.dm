@@ -550,7 +550,9 @@ var/global/list/rockTurfEdgeCache
 		return 0
 
 	if ((istype(W, /obj/item/weapon/shovel)))
+		var/obj/item/weapon/shovel/S = W
 		var/turf/T = user.loc
+		
 		if (!( istype(T, /turf) ))
 			return
 
@@ -560,12 +562,14 @@ var/global/list/rockTurfEdgeCache
 
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(20)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dig a hole.</span>"
-			gets_dug()
-			return
+		
+		if(do_after(user,S.digspeed, target = src))
+			if(istype(src, /turf/simulated/floor/plating/asteroid)) //sanity check against turf being deleted during digspeed delay
+				user << "<span class='notice'>You dig a hole.</span>"
+				S.update_icon()
+				gets_dug()
+				feedback_add_details("pick_used_mining","[S.name]")
+		
 
 	if ((istype(W, /obj/item/weapon/pickaxe)))
 		var/obj/item/weapon/pickaxe/P = W
@@ -579,12 +583,14 @@ var/global/list/rockTurfEdgeCache
 
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(P.digspeed)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dig a hole.</span>"
-			gets_dug()
-			return
+		
+		if(do_after(user,P.digspeed, target = src))
+			if(istype(src, /turf/simulated/floor/plating/asteroid)) //sanity check against turf being deleted during digspeed delay
+				user << "<span class='notice'>You dig a hole.</span>"
+				P.update_icon()
+				gets_dug()
+				feedback_add_details("pick_used_mining","[P.name]")
+		
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
