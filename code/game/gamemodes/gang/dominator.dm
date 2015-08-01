@@ -172,6 +172,10 @@
 		if (!tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
 			return 0
 
+		var/area/A = get_area(loc)
+		var/locname = initial(A.name)
+		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
+
 		gang = tempgang
 		gang.dom_attempts --
 		gang.domination()
@@ -179,9 +183,7 @@
 		healthcheck(0)
 		operating = 1
 		SSmachine.processing += src
-		var/area/A = get_area(loc)
-		var/locname = initial(A.name)
-		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
+
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)
 			if(G != gang)
