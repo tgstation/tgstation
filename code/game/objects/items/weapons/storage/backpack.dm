@@ -18,6 +18,7 @@
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
+	storage_slots = 21
 	burn_state = 0 //Burnable
 	burntime = 20
 
@@ -109,7 +110,6 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = 4.0
-	storage_slots = 20 //Can store a lot.
 	max_w_class = 3
 	max_combined_w_class = 60
 
@@ -292,12 +292,11 @@
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "dufflebag"
-	desc = "A large dufflebag for holding extra things"
+	desc = "A large dufflebag for holding extra things."
 	icon_state = "duffle"
 	item_state = "duffle"
-	storage_slots = 9
 	slowdown = 1
-	max_combined_w_class = 27
+	max_combined_w_class = 30
 
 /obj/item/weapon/storage/backpack/dufflebag/syndiemed
 	name = "medical dufflebag"
