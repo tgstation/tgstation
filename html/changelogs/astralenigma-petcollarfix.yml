@@ -1,0 +1,6 @@
+	author: Astralenigma
+   
+   delete-after: True
+   
+   changes: 
+     - bugfix: "Fixed a bug related to the Pet collar."
