@@ -547,11 +547,11 @@ var/global/list/rockTurfEdgeCache
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
-	var/digging_speed = 0;
-	if ((istype(W, /obj/item/weapon/shovel)))
+	var/digging_speed = 0
+	if (istype(W, /obj/item/weapon/shovel))
 		var/obj/item/weapon/shovel/S = W
 		digging_speed = S.digspeed
-	else if ((istype(W, /obj/item/weapon/pickaxe)))
+	else if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 		digging_speed = P.digspeed
 	if (digging_speed)
