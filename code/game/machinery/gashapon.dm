@@ -81,6 +81,10 @@
 		/obj/item/toy/gasha/mime,
 		/obj/item/toy/gasha/captain,
 		/obj/item/toy/gasha/comdom,
+		/obj/item/toy/gasha/maniac,
+		/obj/item/toy/gasha/doctor,
+		/obj/item/toy/gasha/defsquid,
+		/obj/item/toy/gasha/wizard,
 		/obj/item/toy/gasha/shade,
 		/obj/item/toy/gasha/wraith,
 		/obj/item/toy/gasha/juggernaut,
@@ -93,7 +97,17 @@
 		/obj/item/toy/gasha/beartoy,
 		/obj/item/toy/gasha/carptoy,
 		/obj/item/toy/gasha/monkeytoy,
-		/obj/item/toy/gasha/huggertoy)
+		/obj/item/toy/gasha/huggertoy,
+		/obj/item/toy/gasha/narnar,
+		/obj/item/toy/gasha/quote,
+		/obj/item/toy/gasha/quote/curly,
+		/obj/item/toy/gasha/mario,
+		/obj/item/toy/gasha/mario/luigi,
+		/obj/item/toy/gasha/mario/star,
+		/obj/item/toy/gasha/bomberman/white,
+		/obj/item/toy/gasha/bomberman/black,
+		/obj/item/toy/gasha/bomberman/red,
+		/obj/item/toy/gasha/bomberman/blue)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src, 0)
