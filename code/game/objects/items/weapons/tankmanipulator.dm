@@ -39,26 +39,22 @@
 		update_icon()
 	return
 
-/obj/item/weapon/tankmanip/afterattack(obj/item/I, mob/user, proximity)
+/obj/item/weapon/tankmanip/afterattack(obj/O, mob/user, proximity)
 	..()
-	if (istype(I, /obj/item/weapon/tank/internals/plasma))
+	if (istype(O, /obj/item/weapon/tank/internals/plasma))
 		if (tanks <= 2)
 			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
-			user << "<span class='notice'>You pick up [I].</span>"
-			storedtanks.Add(I)
-			I.loc = src
+			user << "<span class='notice'>You pick up [O].</span>"
+			storedtanks.Add(O)
+			O.loc = src
 			tanks++
-			update_icon()
-			return
 		else
 			user << "<span class='warning'>The manipulator is full!</span>"
 			return
 	//Picks up tanks from the world
 
-/obj/item/weapon/tankmanip/afterattack(obj/machinery/M, mob/user, proximity)
-	..()
-	if (istype(M, /obj/machinery/portable_atmospherics) && tanks)
-		var/obj/machinery/portable_atmospherics/PA = M
+	if (istype(O, /obj/machinery/portable_atmospherics) && tanks)
+		var/obj/machinery/portable_atmospherics/PA = O
 		if (PA.holding)
 			user << "<span class='warning'>There is already a tank inside!</span>"
 			return
@@ -72,13 +68,9 @@
 			PA.holding = P
 			tanks--
 			PA.update_icon()
-			update_icon()
-	return
 
-/obj/item/weapon/tankmanip/afterattack(obj/structure/S, mob/user, proximity)
-	..()
-	if (istype(S, /obj/structure/dispenser) && tanks)
-		var/obj/structure/dispenser/D = S
+	if (istype(O, /obj/structure/dispenser) && tanks)
+		var/obj/structure/dispenser/D = O
 		if(D.plasmatanks == 10)
 			user << "<span class='warning'>The dispenser is full!</span>"
 			return 1
@@ -92,6 +84,5 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 		D.update_icon()
 		D.updateUsrDialog()
-		update_icon()
 		user << "<span class='notice'>You unload some tanks into the dispenser.</span>"
-		return
+	update_icon()

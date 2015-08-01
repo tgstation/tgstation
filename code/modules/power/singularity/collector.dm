@@ -135,13 +135,11 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/internals/plasma/Z = src.ptank
-	if (!Z)
+	if (!ptank)
 		return
-	Z.loc = get_turf(src)
-	Z.layer = initial(Z.layer)
+	ptank.loc = get_turf(src)
+	ptank.layer = initial(ptank.layer)
 	src.ptank = null
-	Z = null
 	if(active)
 		toggle_power()
 	else
