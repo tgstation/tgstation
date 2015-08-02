@@ -88,7 +88,7 @@ NanoBaseCallbacks = function ()
                     });
                 });
                 
-                $('#uiMapImage').attr('src', 'nanomap' + updateData['config']['mapZLevel'] + '.png');
+                $('#uiMapImage').attr('src', 'minimap_' + updateData['config']['mapZLevel'] + '.png');
                 
                 return updateData;
         }
