@@ -66,6 +66,13 @@
 	item_state = "redgloves"
 	item_color = "red"
 
+/obj/item/clothing/gloves/color/red/insulated
+	name = "insulated gloves"
+	desc = "These gloves will protect the wearer from electric shock."
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	burn_state = -1 //Won't burn in fires
+
 /obj/item/clothing/gloves/color/rainbow
 	name = "rainbow gloves"
 	desc = "A pair of gloves, they don't look special in any way."
