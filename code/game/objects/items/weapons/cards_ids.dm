@@ -323,7 +323,7 @@
 			if("Show")
 				return ..()
 			if("Edit")
-				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account","Blood type","DNA hash","Fingerprint hash","Delete owner info"))
+				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account","Blood type","DNA hash","Fingerprint hash","Reset card"))
 					if("Name")
 						var/new_name = reject_bad_name(input(user,"What name would you like to put on this card?","Agent card name", ishuman(user) ? user.real_name : user.name))
 						if(!Adjacent(user)) return
@@ -418,7 +418,7 @@
 						src.fingerprint_hash = new_fingerprint_hash
 						user << "Fingerprint hash changed to [new_fingerprint_hash]."
 
-					if("Delete owner info")
+					if("Reset card")
 						name = initial(name)
 						registered_name = initial(registered_name)
 						icon_state = initial(icon_state)
