@@ -335,7 +335,7 @@
 	if(prob(20))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "Dem gainz."))
 	if(prob(33))
-		M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.  What a douchebag!</span>", "<b>[M]</b> flexes their arms.")
+		M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.  What a douchebag!</span>", "<b>[M]</b> flexes their arms."))
 	..()
 	return
 
