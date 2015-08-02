@@ -866,6 +866,31 @@
 /obj/item/toy/gasha/quote/curly
 	icon_state = "curly"
 
+/obj/item/toy/gasha/quote/malco
+	icon_state = "malco"
+
+/obj/item/toy/gasha/quote/scout
+	icon_state = "scout"
+
+/obj/item/toy/gasha/mimiga/
+	name = "toy mimiga"
+	desc = "It looks like some sort of rabbit-thing"
+	icon_state = ""
+
+/obj/item/toy/gasha/mimiga/sue
+	desc = "It looks like some sort of rabbit-thing, for some reason you get the feeling that this one is the 'best girl.'"
+	icon_state = "sue"
+
+/obj/item/toy/gasha/mimiga/toroko
+	icon_state = "toroko"
+
+/obj/item/toy/gasha/mimiga/king
+	icon_state = "king"
+
+/obj/item/toy/gasha/mimiga/chaco
+	desc = "It looks like some sort of rabbit-thing, for some reason you get the feeling that this one is the 'worst girl.'"
+	icon_state = "chaco"
+
 /obj/item/toy/gasha/mario
 	name = "toy plumber"
 	desc = "It's a toy of a popular plumber character."
