@@ -432,7 +432,7 @@ var/global/list/rockTurfEdgeCache
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
+			if(istype(src, /turf/simulated/mineral)) 
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.name]")
@@ -567,7 +567,7 @@ var/global/list/rockTurfEdgeCache
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 		
 		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/simulated/floor/plating/asteroid)) //sanity check against turf being deleted during digspeed delay
+			if(istype(src, /turf/simulated/floor/plating/asteroid)) 
 				user << "<span class='notice'>You dig a hole.</span>"
 				gets_dug()
 				feedback_add_details("pick_used_mining","[W.name]")
