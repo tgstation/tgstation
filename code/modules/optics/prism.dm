@@ -75,13 +75,20 @@ var/list/obj/machinery/prism/prism_list = list()
 	update_beams()
 	return 1
 
+/obj/machinery/prism/wrenchAnchor(var/mob/user)
+	. = ..()
+	if(. == 1)
+		if(beams && beams.len)
+			update_beams()
+	return .
+
 /obj/machinery/prism/beam_connect(var/obj/effect/beam/emitter/B)
 	if(istype(B))
 		if(B.HasSource(src))
 			return // Prevent infinite loops.
 		..()
 		powerchange_hooks[B]=B.power_change.Add(src,"on_power_change")
-		update_beams()
+		update_beams(B)
 
 /obj/machinery/prism/beam_disconnect(var/obj/effect/beam/emitter/B)
 	if(istype(B))
@@ -90,7 +97,7 @@ var/list/obj/machinery/prism/prism_list = list()
 		..()
 		B.power_change.Remove(powerchange_hooks[B])
 		powerchange_hooks.Remove(B)
-		update_beams()
+		update_beams(B)
 
 // When beam power changes
 /obj/machinery/prism/proc/on_power_change(var/list/args)
@@ -98,16 +105,17 @@ var/list/obj/machinery/prism/prism_list = list()
 	//Don't care about args, just update beam.
 	update_beams()
 
-/obj/machinery/prism/proc/update_beams()
+/obj/machinery/prism/proc/update_beams(var/obj/effect/beam/emitter/touching_beam)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/prism/proc/update_beams() called tick#: [world.time]")
 	overlays.len = 0
 	//testing("Beam count: [beams.len]")
+	if(get_dir(src, touching_beam) == dir) return 0 //Make no change for beams touching us on our emission side.
 	if(!beams)
 		if(loc || !gcDestroyed)
 			beams = list()
 		else
 			return
-	if(beams.len>0)
+	if(beams.len>0 && anchored)
 		var/newbeam=0
 		if(!beam)
 			beam = new (loc)
