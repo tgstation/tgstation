@@ -295,7 +295,7 @@
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
 				usr << "<span class='notice'>The card's microscanners activate as you pass it over \the [I], copying its access.</span>"
-				src.access |= I.access //Don't copy access if user isn't an antag -- to prevent metagaymer
+				src.access |= I.access //Don't copy access if user isn't an antag -- to prevent metagaym
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
@@ -323,7 +323,7 @@
 			if("Show")
 				return ..()
 			if("Edit")
-				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account","Blood type","DNA hash","Fingerprint hash"))
+				switch(input(user,"What would you like to edit on \the [src]?") in list("Name","Appearance","Occupation","Money account","Blood type","DNA hash","Fingerprint hash","Delete owner info"))
 					if("Name")
 						var/new_name = reject_bad_name(input(user,"What name would you like to put on this card?","Agent card name", ishuman(user) ? user.real_name : user.name))
 						if(!Adjacent(user)) return
@@ -390,7 +390,7 @@
 						var/new_blood_type = sanitize(input(user,"What blood type would you like to be written on this card?","Agent card blood type",default) as text)
 						if(!Adjacent(user)) return
 						src.blood_type = new_blood_type
-						user << "Blood type changed to [new_blood_type]"
+						user << "Blood type changed to [new_blood_type]."
 
 					if("DNA hash")
 						var/default = "\[UNSET\]"
@@ -403,7 +403,7 @@
 						var/new_dna_hash = sanitize(input(user,"What DNA hash would you like to be written on this card?","Agent card DNA hash",default) as text)
 						if(!Adjacent(user)) return
 						src.dna_hash = new_dna_hash
-						user << "DNA hash changed to [new_dna_hash]"
+						user << "DNA hash changed to [new_dna_hash]."
 
 					if("Fingerprint hash")
 						var/default = "\[UNSET\]"
@@ -416,7 +416,19 @@
 						var/new_fingerprint_hash = sanitize(input(user,"What fingerprint hash would you like to be written on this card?","Agent card fingerprint hash",default) as text)
 						if(!Adjacent(user)) return
 						src.fingerprint_hash = new_fingerprint_hash
-						user << "Fingerprint hash changed to [new_fingerprint_hash]"
+						user << "Fingerprint hash changed to [new_fingerprint_hash]."
+
+					if("Delete owner info")
+						registered_name = initial(registered_name)
+						icon_state = initial(icon_state)
+						assignment = initial(assignment)
+						associated_account_number = initial(associated_account_number)
+						blood_type = initial(blood_type)
+						dna_hash = initial(dna_hash)
+						fingerprint_hash = initial(fingerprint_hash)
+						registered_user = null
+
+						user << "<span class='notice'>All information has been deleted from \the [src].</span>"
 	else
 		..()
 
