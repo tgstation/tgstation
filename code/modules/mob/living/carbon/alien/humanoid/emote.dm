@@ -22,7 +22,7 @@
 				message = "<span class='name'>[src]</span> gnarls and shows its teeth.."
 				m_type = 2
 
-		if ("hiss")
+		if ("his")
 			if(!muzzled)
 				message = "<span class='name'>[src]</span> hisses."
 				m_type = 2
