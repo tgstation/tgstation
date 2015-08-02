@@ -1,7 +1,0 @@
-author: SvartaSvansen
-
-delete-after: True
-
-changes: 
-  - rscadd: "Our lizard engineers have worked hard and managed to improve Centcom airlocks so they no longer disintegrate when the electronics are removed!"
-  - tweak: "Put a safety net in place so future airlocks without assemblies produce the default assembly instead of disintegrating."
