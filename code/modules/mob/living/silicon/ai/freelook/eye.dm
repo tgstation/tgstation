@@ -17,7 +17,8 @@
 	if(ai)
 		if(!isturf(ai.loc))
 			return
-
+		if(!isturf(destination))
+			for(destination = destination.loc; !isturf(destination); destination = destination.loc);
 		forceEnter(destination)
 
 		cameranet.visibility(src)
