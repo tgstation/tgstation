@@ -332,10 +332,10 @@
 			N.dna.features["mcolor"] = "f80" 
 			N.regenerate_icons()
 		N.update_body()
-	if(prob(20))
-		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "Dem gainz."))
-	if(prob(33))
-		M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.  What a douchebag!</span>", "<b>[M]</b> flexes their arms."))
+	if(prob(10))
+		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!"))
+	if(prob(7))
+		M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
 	..()
 	return
 
