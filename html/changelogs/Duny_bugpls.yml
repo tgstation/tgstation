@@ -1,4 +1,0 @@
-author: Duny
-delete-after: True
-changes: 
-  - bugfix: Fixed ghosts being able to remove items from the destructive analyzer.

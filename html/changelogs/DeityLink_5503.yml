@@ -1,8 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Added an option in the View Variables's drop down menu that lets admins teleport a mob/object to where they are standing.
-  - rscadd: Admins can set the teleportation to be either flashy, with effects or even screen shaking, or stealthy with a fade-in.
-  - rscadd: Added another option that lets admins delete a mob/object from the View Variables menu.
-  - experiment: Added an admin spawnable "calm" Nar-Sie that by default doesn't move, doesn't consume atoms, and doesn't trigger Hell nor force a shuttle call. Mostly for debug and testing purposes.
-  - rscadd: Plastic Flaps are now replaced by cult grilles by Nar-Sie (which are airtight).
