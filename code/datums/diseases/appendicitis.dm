@@ -14,9 +14,11 @@
 	visibility_flags = HIDDEN_PANDEMIC
 	required_organs = list(/obj/item/organ/limb/chest)
 
-
 /datum/disease/appendicitis/stage_act()
-	..()
+	stage = min(stage, max_stages)
+
+	if(prob(stage_prob))
+		stage = min(stage + 1,max_stages)
 
 	switch(stage)
 		if(1)
