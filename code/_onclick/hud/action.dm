@@ -135,7 +135,10 @@
 	var/image/img
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
-		overlays += I.appearance
+		var/old = I.layer
+		I.layer = src.layer +1 //AAAH
+		overlays += I
+		I.layer = old
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
 		img.pixel_x = 0

@@ -160,6 +160,9 @@
 			return
 	target.attack_animal(src)
 
+/mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
+	return
+
 //Spawn Event
 
 /datum/round_event_control/morph
