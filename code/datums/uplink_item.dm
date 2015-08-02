@@ -688,25 +688,25 @@ var/list/uplink_items = list()
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision."
-	item = /obj/item/cybernetic_implant/eyes/thermals
+	item = /obj/item/organ/internal/cyberimp/eyes/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision."
-	item = /obj/item/cybernetic_implant/eyes/xray
+	item = /obj/item/organ/internal/cyberimp/eyes/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned."
-	item = /obj/item/cybernetic_implant/brain/anti_stun
+	item = /obj/item/organ/internal/cyberimp/brain/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness."
-	item = /obj/item/cybernetic_implant/chest/reviver
+	item = /obj/item/organ/internal/cyberimp/chest/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle

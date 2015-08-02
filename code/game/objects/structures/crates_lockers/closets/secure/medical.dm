@@ -72,7 +72,7 @@
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash/handheld(src)
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
-	new /obj/item/cybernetic_implant/eyes/hud/medical(src)
+	new /obj/item/organ/internal/cyberimp/eyes/hud/medical(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"

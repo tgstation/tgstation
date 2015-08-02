@@ -212,11 +212,31 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
 /datum/action/item_action/CheckRemoval(mob/living/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(target in C.internal_organs)
+			return 0
+
 	return !(target in user)
 
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
+/datum/action/organ_action
+	check_flags = AB_CHECK_ALIVE
+
+/datum/action/organ_action/CheckRemoval(mob/living/carbon/user)
+	if(!iscarbon(user))
+		return 1
+	if(target in user.internal_organs)
+		return 0
+	return 1
+
+/datum/action/organ_action/IsAvailable()
+	var/obj/item/organ/internal/I = target
+	if(!I.owner)
+		return 0
+	return ..()
 
 //Preset for spells
 /datum/action/spell_action

@@ -19,6 +19,11 @@
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to clamp bleeders in [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to clamp bleeders in [target]'s [parse_zone(target_zone)]...</span>")
 
+/datum/surgery_step/clamp_bleeders/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(locate(/datum/surgery_step/saw) in surgery.steps)
+		target.heal_organ_damage(20,0)
+	return ..()
+
 
 //retract skin
 /datum/surgery_step/retract_skin
@@ -79,5 +84,6 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.apply_damage(50,"brute","[target_zone]")
-		user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
+
+	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
 	return 1

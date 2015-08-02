@@ -20,6 +20,9 @@
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/brain
 
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
+
 	if(name == "monkey")
 		name = text("monkey ([rand(1, 1000)])")
 	real_name = name
@@ -273,3 +276,10 @@
 		protection = max(1 - wear_mask.permeability_coefficient, protection)
 	protection = protection/7 //the rest of the body isn't covered.
 	return protection
+
+/mob/living/carbon/monkey/check_eye_prot()
+	var/number = ..()
+	if(istype(src.wear_mask, /obj/item/clothing/mask))
+		var/obj/item/clothing/mask/MFP = src.wear_mask
+		number += MFP.flash_protect
+	return number

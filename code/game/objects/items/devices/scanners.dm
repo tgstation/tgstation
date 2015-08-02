@@ -192,7 +192,7 @@ MASS SPECTROMETER
 				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
 
 		var/implant_detect
-		for(var/obj/item/cybernetic_implant/CI in H.internal_organs)
+		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
 			implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
