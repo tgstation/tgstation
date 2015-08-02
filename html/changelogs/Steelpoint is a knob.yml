@@ -1,0 +1,7 @@
+author: Steelpoint
+
+delete-after: True
+
+changes: 
+  - bugfix: "Fixed multiple mapping errors for Boxstation and the mining base."
+  - resadd: "A circuit imprinter and exosuit fabrication board have been added to tech storage."
