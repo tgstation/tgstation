@@ -74,10 +74,10 @@
 	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
-	if(..())
-		if(!client && !stat)
+	if(..()) //alive
+		if(!ckey)
 			handle_automated_movement()
-
+			handle_automated_action()
 			handle_automated_speech()
 		return 1
 
@@ -113,6 +113,9 @@
 
 	if(druggy)
 		druggy = 0
+
+/mob/living/simple_animal/proc/handle_automated_action()
+	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
