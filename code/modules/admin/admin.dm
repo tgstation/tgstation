@@ -1408,7 +1408,7 @@ proc/formatJumpTo(location, where = "")
 	if (where == "")
 		where = formatLocation(loc)
 
-	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>[where]</a>"
+	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc ? loc.x : "mystery"];Y=[loc ? loc.y : "mystery"];Z=[loc ? loc.z : "mystery"]'>[where]</a>"
 
 proc/formatLocation(location)
 	//writepanic("[__FILE__].[__LINE__] \\/proc/formatLocation() called tick#: [world.time]")
