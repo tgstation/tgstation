@@ -253,6 +253,92 @@
 	if(volume >= 1)
 		T.MakeSlippery(2)
 
+/datum/reagent/spraytan
+	name = "Spray Tan"
+	id = "spraytan"
+	description = "A substance applied to the skin to darken the skin."
+	color = "#FFC080" // rgb: 255, 196, 128  Bright orange
+	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
+	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
+	
+/datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
+	if(istype(M, /mob/living/carbon/human))
+		if(method == TOUCH)
+			var/mob/living/carbon/human/N = M
+			if(N.dna.species.id == "human")
+				switch(N.skin_tone)
+					if("african1")
+						N.skin_tone = "african2"
+					if("indian")
+						N.skin_tone = "african1"
+					if("arab")
+						N.skin_tone = "indian"
+					if("asian2")
+						N.skin_tone = "arab"
+					if("asian1")
+						N.skin_tone = "asian2"
+					if("mediterranean")
+						N.skin_tone = "african1"
+					if("latino")
+						N.skin_tone = "mediterranean"
+					if("caucasian3")
+						N.skin_tone = "mediterranean"
+					if("caucasian2")
+						N.skin_tone = pick("caucasian3", "latino")
+					if("caucasian1")
+						N.skin_tone = "caucasian2"
+					if ("albino")
+						N.skin_tone = "caucasian1"
+						
+			if(MUTCOLORS in N.dna.species.specflags) //take current alien color and darken it slightly
+				var/newcolor = ""
+				var/len = length(N.dna.features["mcolor"])
+				for(var/i=1, i<=len, i+=1)
+					var/ascii = text2ascii(N.dna.features["mcolor"],i)
+					switch(ascii)
+						if(48)		newcolor += "0"
+						if(49 to 57)	newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+						if(97)		newcolor += "9"
+						if(98 to 102)	newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+						if(65)		newcolor +="9"
+						if(66 to 70)	newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+						else
+							break
+				N.dna.features["mcolor"] = newcolor
+				N.regenerate_icons()
+			N.update_body()
+			
+			
+			
+		if(method == INGEST)
+			if(show_message)
+				M << "<span class='notice'>That tasted horrible.</span>"
+			M.AdjustStunned(2)
+			M.AdjustWeakened(2)
+	..()
+	
+	
+/datum/reagent/spraytan/overdose_process(mob/living/M)
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/N = M
+		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
+			N.skin_tone = "orange"
+			N.hair_style = "Spiky"
+			N.hair_color = "000"
+			N.update_hair()
+		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
+			N.dna.features["mcolor"] = "f80" 
+			N.regenerate_icons()
+		N.update_body()
+	if(prob(20))
+		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "Dem gainz."))
+	if(prob(33))
+		M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.  What a douchebag!</span>", "<b>[M]</b> flexes their arms.")
+	..()
+	return
+
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
 	id = "mutationtoxin"

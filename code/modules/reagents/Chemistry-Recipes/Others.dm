@@ -12,6 +12,20 @@
 	result = "lube"
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
+	
+/datum/chemical_reaction/spraytan
+	name = "Spray Tan"
+	id = "spraytan"
+	result = "spraytan"
+	required_reagents = list("orangejuice" = 1, "oil" = 1)
+	result_amount = 2
+	
+/datum/chemical_reaction/spraytan2
+	name = "Spray Tan"
+	id = "spraytan"
+	result = "spraytan"
+	required_reagents = list("orangejuice" = 1, "cornoil" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
