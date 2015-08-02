@@ -6,43 +6,41 @@
 		//param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
 
 	var/m_type = 1
 	var/regenerate_icons
 	var/message
 
 	switch(act) //Alphabetical please
-		if("bounce")
+		if("bounce","bounces")
 			message = "<B>The [src.name]</B> bounces in place."
 			m_type = 1
 
-		if("jiggle")
+		if("jiggle","jiggles")
 			message = "<B>The [src.name]</B> jiggles!"
 			m_type = 1
 
-		if("light")
+		if("light","lights")
 			message = "<B>The [src.name]</B> lights up for a bit, then stops."
 			m_type = 1
 
-		if("moan")
+		if("moan","moans")
 			message = "<B>The [src.name]</B> moans."
 			m_type = 2
 
-		if("shiver")
+		if("shiver","shivers")
 			message = "<B>The [src.name]</B> shivers."
 			m_type = 2
 
-		if("sway")
+		if("sway","sways")
 			message = "<B>The [src.name]</B> sways around dizzily."
 			m_type = 1
 
-		if("twitch")
+		if("twitch","twitches")
 			message = "<B>The [src.name]</B> twitches."
 			m_type = 1
 
-		if("vibrate")
+		if("vibrate","vibrates")
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = 1
 
@@ -50,7 +48,7 @@
 			mood = null
 			regenerate_icons = 1
 
-		if("smile")
+		if("smile","smiles")
 			mood = "mischevous"
 			regenerate_icons = 1
 
@@ -58,15 +56,15 @@
 			mood = ":33"
 			regenerate_icons = 1
 
-		if("pout")
+		if("pout","pouts")
 			mood = "pout"
 			regenerate_icons = 1
 
-		if("frown")
+		if("frown","frowns")
 			mood = "sad"
 			regenerate_icons = 1
 
-		if("scowl")
+		if("scowl","scowls")
 			mood = "angry"
 			regenerate_icons = 1
 
