@@ -4,4 +4,6 @@ delete-after: True
 
 changes: 
   - rscadd: It's now possible to change the following parameters on agent IDs: linked money account, blood type, fingerprint, DNA hash, appearance
+  - tweak: Only owner of the agent ID can steal access from other ID cards now.
+  - tweak: Agent IDs can be reset, deleting all owner info and access.
   - rscdel: Read ID card verb is now gone, all the information it was providing is now available by examining the ID

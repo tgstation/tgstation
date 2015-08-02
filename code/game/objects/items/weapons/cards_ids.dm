@@ -419,6 +419,7 @@
 						user << "Fingerprint hash changed to [new_fingerprint_hash]."
 
 					if("Delete owner info")
+						name = initial(name)
 						registered_name = initial(registered_name)
 						icon_state = initial(icon_state)
 						assignment = initial(assignment)
@@ -426,6 +427,7 @@
 						blood_type = initial(blood_type)
 						dna_hash = initial(dna_hash)
 						fingerprint_hash = initial(fingerprint_hash)
+						access = initial(access)
 						registered_user = null
 
 						user << "<span class='notice'>All information has been deleted from \the [src].</span>"
