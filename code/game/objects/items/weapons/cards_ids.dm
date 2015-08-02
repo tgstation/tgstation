@@ -292,10 +292,10 @@
 /obj/item/weapon/card/id/syndicate/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
-		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
+				usr << "<span class='notice'>The card's microscanners activate as you pass it over \the [I], copying its access.</span>"
+				src.access |= I.access //Don't copy access if user isn't an antag -- to prevent metagaymer
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered_name)
@@ -369,15 +369,13 @@
 					if("Occupation")
 						var/new_job = sanitize(stripped_input(user,"What job would you like to put on this card?\nChanging occupation will not grant or remove any access levels.","Agent card occupation", "Assistant", MAX_MESSAGE_LEN))
 						if(!Adjacent(user)) return
-						if(new_job in list("Unknown","floor","wall","r-wall"))
-							user << "Invalid name."
-							return
 						src.assignment = new_job
 						user << "Occupation changed to [new_job]."
 						UpdateName()
 
 					if("Money account")
 						var/new_account = input(user,"What money account would you like to link to this card?","Agent card account",11111) as num
+						if(!Adjacent(user)) return
 						associated_account_number = new_account
 						user << "Linked money account changed to [new_account]."
 
@@ -389,7 +387,8 @@
 							if(H.dna)
 								default = H.dna.b_type
 
-						var/new_blood_type = input(user,"What blood type would you like to be written on this card?","Agent card blood type",default)
+						var/new_blood_type = sanitize(input(user,"What blood type would you like to be written on this card?","Agent card blood type",default) as text)
+						if(!Adjacent(user)) return
 						src.blood_type = new_blood_type
 						user << "Blood type changed to [new_blood_type]"
 
@@ -401,7 +400,8 @@
 							if(H.dna)
 								default = H.dna.unique_enzymes
 
-						var/new_dna_hash = input(user,"What DNA hash would you like to be written on this card?","Agent card DNA hash",default)
+						var/new_dna_hash = sanitize(input(user,"What DNA hash would you like to be written on this card?","Agent card DNA hash",default) as text)
+						if(!Adjacent(user)) return
 						src.dna_hash = new_dna_hash
 						user << "DNA hash changed to [new_dna_hash]"
 
@@ -413,7 +413,8 @@
 							if(H.dna)
 								default = md5(H.dna.uni_identity)
 
-						var/new_fingerprint_hash = input(user,"What fingerprint hash would you like to be written on this card?","Agent card fingerprint hash",default)
+						var/new_fingerprint_hash = sanitize(input(user,"What fingerprint hash would you like to be written on this card?","Agent card fingerprint hash",default) as text)
+						if(!Adjacent(user)) return
 						src.fingerprint_hash = new_fingerprint_hash
 						user << "Fingerprint hash changed to [new_fingerprint_hash]"
 	else
