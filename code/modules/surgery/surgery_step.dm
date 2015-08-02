@@ -39,7 +39,7 @@
 	surgery.step_in_progress = 1
 
 	preop(user, target, target_zone, tool, surgery)
-	if(do_after(user, time))
+	if(do_after(user, time, target = target))
 
 		var/advance = 0
 		var/prob_chance = 100
