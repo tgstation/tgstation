@@ -2,6 +2,9 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
+	if(digitalinvis)
+		handle_diginvis() //AI becomes unable to see mob
+
 	if (notransform)
 		return
 	if(!loc)
@@ -65,6 +68,13 @@
 
 /mob/living/proc/handle_chemicals_in_body()
 	return
+
+/mob/living/proc/handle_diginvis()
+	var/image/hide = image(loc = src)
+	hide.override = 1
+	for(var/mob/living/silicon/ai/AI in player_list)
+		AI.client.images += hide
+
 
 /mob/living/proc/handle_blood()
 	return
