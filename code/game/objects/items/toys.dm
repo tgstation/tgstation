@@ -818,10 +818,12 @@
 	desc = "This toy is not actually magical."
 	icon_state = "wiz"
 
+/*
 /obj/item/toy/gasha/bamshoot
 	name = "toy Bumshooter"
 	desc = "*fart"
 	icon_state = "bamshoot"
+*/ //No metaclub allowed ;_;
 
 /obj/item/toy/gasha/snowflake
 	name = "toy snowflake"
