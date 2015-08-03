@@ -136,7 +136,7 @@
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
 		var/old = I.layer
-		I.layer = src.layer +1 //AAAH
+		I.layer = FLOAT_LAYER //AAAH
 		overlays += I
 		I.layer = old
 	else if(owner.button_icon && owner.button_icon_state)
