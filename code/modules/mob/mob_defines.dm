@@ -140,7 +140,7 @@
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?
-	var/image/digitaldisguise = ""  //what does the AI see instead of them?
+	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
 	var/weakeyes = 0 //Are they vulnerable to flashes?
 
