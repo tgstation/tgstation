@@ -257,7 +257,7 @@
 	if(!Proj)
 		return
 	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
 /mob/living/simple_animal/adjustFireLoss(amount)
