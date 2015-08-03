@@ -266,16 +266,11 @@
 		ghost = pick(consenting_candidates)
 		if(C.contents.len) //If they used the soulstone on someone else in the meantime
 			return 0
-		if (T.client) //If the original returned in the alloted time
-			for(var/obj/item/W in T)
-				T.unEquip(W)
-			init_shade(C, T, U)
-			qdel(T)
-		else
-			T.client = ghost
-			for(var/obj/item/W in T)
-				T.unEquip(W)
-			init_shade(C, T, U)
-			qdel(T)
+		if(!T.client) //If the original returns in the alloted time
+    			T.client = ghost
+		for(var/obj/item/W in T)
+    			T.unEquip(W)
+		init_shade(C, T, U)
+		qdel(T)
 	else
 		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"
