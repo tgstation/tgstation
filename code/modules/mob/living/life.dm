@@ -70,10 +70,11 @@
 	return
 
 /mob/living/proc/handle_diginvis()
-	var/image/hide = image(loc = src)
-	hide.override = 1
+	if(!digitaldisguise)
+		src.digitaldisguise = image(loc = src)
+	src.digitaldisguise.override = 1
 	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images += hide
+		AI.client.images |= src.digitaldisguise
 
 
 /mob/living/proc/handle_blood()
