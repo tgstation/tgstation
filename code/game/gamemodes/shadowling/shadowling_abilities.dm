@@ -506,12 +506,6 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	include_user = 0
 	var/list/thralls_in_world = list()
 
-/obj/effect/proc_holder/spell/targeted/revive_thrall/Topic(href, href_list)
-	if(href_list["reenter"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.reenter_corpse(ghost)
-
 /obj/effect/proc_holder/spell/targeted/revive_thrall/cast(list/targets)
 	if(!shadowling_check(usr))
 		charge_counter = charge_max
