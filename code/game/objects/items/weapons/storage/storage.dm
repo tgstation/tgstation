@@ -1,8 +1,8 @@
-// To clarify:
-// For use_to_pickup and allow_quick_gather functionality,
-// see item/attackby() (/game/objects/items.dm)
-// Do not remove this functionality without good reason, cough reagent_containers cough.
-// -Sayu
+// External storage-related logic:
+// /mob/proc/ClickOn() in /_onclick/click.dm - clicking items in storages
+// /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
+// /item/attackby() in /game/objects/items.dm - use_to_pickup and allow_quick_gather functionality
+// -- c0
 
 
 /obj/item/weapon/storage
@@ -42,11 +42,11 @@
 			show_to(M)
 			return
 
-		if(!( M.restrained() ) && !( M.stat ))
-			if(!( istype(over_object, /obj/screen) ))
+		if(!M.restrained() && !M.stat)
+			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
-			if(!(loc == usr) || (loc && loc.loc == usr))
+			if(loc != usr || (loc && loc.loc == usr))
 				return
 
 			playsound(loc, "rustle", 50, 1, -5)
