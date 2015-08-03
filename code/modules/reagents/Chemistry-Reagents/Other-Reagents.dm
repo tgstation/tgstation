@@ -333,9 +333,13 @@
 			N.regenerate_icons()
 		N.update_body()
 	if(prob(10))
-		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!"))
+		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	if(prob(7))
-		M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
+		var/obj/item/I = M.get_active_hand()
+		if(M.w_uniform)
+			M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes their arms."))
+		else
+			M.visible_message("<b>[M]</b> flexes their arms.")
 	..()
 	return
 
