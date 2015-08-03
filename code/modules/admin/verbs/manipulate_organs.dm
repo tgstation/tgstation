@@ -27,10 +27,10 @@
 
 		if("drop organ/implant", "remove organ/implant")
 			for(var/obj/item/organ/internal/I in C.internal_organs)
-				organs["[I] ([I.type])"] = I
+				organs["[I.name] ([I.type])"] = I
 
 			for(var/obj/item/weapon/implant/I in C)
-				organs["[I] ([I.type])"] = I
+				organs["[I.name] ([I.type])"] = I
 
 			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
@@ -53,3 +53,4 @@
 				var/obj/item/weapon/implantcase/case = new(get_turf(C))
 				case.imp = I
 				I.loc = case
+				case.update_icon()
