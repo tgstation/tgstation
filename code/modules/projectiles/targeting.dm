@@ -270,18 +270,17 @@ client/proc/remove_gun_icons()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/remove_gun_icons() called tick#: [world.time]")
 	if(!usr)
 		return
-	screen -= usr.item_use_icon
-	screen -= usr.gun_move_icon
-	if (target_can_move)
-		screen -= usr.gun_run_icon
 	if(usr.gun_move_icon)
 		returnToPool(usr.gun_move_icon)
+		screen -= usr.gun_run_icon
 		usr.gun_move_icon = null
 	if(usr.item_use_icon)
 		returnToPool(usr.item_use_icon)
+		screen -= usr.item_use_icon
 		usr.item_use_icon = null
 	if(usr.gun_run_icon)
 		returnToPool(usr.gun_run_icon)
+		screen -= usr.gun_run_icon
 		usr.gun_run_icon = null
 
 client/verb/ToggleGunMode()
