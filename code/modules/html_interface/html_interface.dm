@@ -227,6 +227,8 @@ mob/verb/test()
 		if (winexists(hclient.client, "browser_\ref[src]"))
 			src._renderTitle(hclient, TRUE)
 			src._renderLayout(hclient)
+			if(winget(hclient.client, "browser_\ref[src]", "is-visible") == "false")
+				winshow(hclient.client, "browser_\ref[src]", TRUE)
 		else
 			src.createWindow(hclient)
 			hclient.is_loaded = FALSE
