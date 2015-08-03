@@ -16,14 +16,15 @@
 
 //#define UPDATE_QUEUE_DEBUG
 // If btime.dll is available, do this shit
-#define PRECISE_TIMER_AVAILABLE
+//#define PRECISE_TIMER_AVAILABLE
 
 #ifdef PRECISE_TIMER_AVAILABLE
 var/global/__btime__lastTimeOfHour = 0
 var/global/__btime__callCount = 0
 var/global/__btime__lastTick = 0
+var/global/__btime__dll = "[world.system_type==MS_WINDOWS ? "btime.dll":"./btime.so"]"
 #define TimeOfHour __btime__timeofhour()
-#define __extern__timeofhour text2num(call("btime.[world.system_type==MS_WINDOWS?"dll":"so"]", "gettime")())
+#define __extern__timeofhour text2num(call("[__btime__dll]", "gettime")())
 proc/__btime__timeofhour()
 	if (!(__btime__callCount++ % 50))
 		if (world.time > __btime__lastTick)
