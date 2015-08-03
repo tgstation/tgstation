@@ -212,11 +212,6 @@
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
 /datum/action/item_action/CheckRemoval(mob/living/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(target in C.internal_organs)
-			return 0
-
 	return !(target in user)
 
 /datum/action/item_action/hands_free

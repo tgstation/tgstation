@@ -26,12 +26,12 @@
 	M.sight |= sight_flags
 
 /obj/item/organ/internal/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
-	..()
 	M.sight ^= sight_flags
-	if(istype(owner,/mob/living/carbon/human) && eye_color)
+	if(istype(M,/mob/living/carbon/human) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
 		HMN.eye_color = old_eye_color
 		HMN.regenerate_icons()
+	..()
 
 /obj/item/organ/internal/cyberimp/eyes/on_life()
 	..()
@@ -88,11 +88,11 @@
 		M.permanent_huds |= H
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
-	..()
 	if(HUD_type)
 		var/datum/atom_hud/H = huds[HUD_type]
 		M.permanent_huds ^= H
 		H.remove_hud_from(M)
+	..()
 
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"

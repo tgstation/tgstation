@@ -1,27 +1,42 @@
 /obj/item/organ/internal
+	origin_tech = "biotech=2"
 	var/zone = "chest"
 	var/slot
 	var/vital = 0
 	var/organ_action_name = null
 
 /obj/item/organ/internal/proc/Insert(var/mob/living/carbon/M, special = 0)
+	if(!iscarbon(M))
+		return
+
+	var/obj/item/organ/internal/replaced = M.getorganslot(slot)
+	if(replaced)
+		replaced.Remove(M, special = 1)
+
+
 	owner = M
-	M.internal_organs += src
+	M.internal_organs |= src
 	loc = null
 	if(organ_action_name)
 		action_button_name = organ_action_name
 
 /obj/item/organ/internal/proc/Remove(var/mob/living/carbon/M, special = 0)
 	owner = null
-	M.internal_organs -= src
-	if(vital && !special)
-		M.death()
+	if(M)
+		M.internal_organs -= src
+		if(vital && !special)
+			M.death()
 
 	if(organ_action_name)
 		action_button_name = null
 
 /obj/item/organ/internal/proc/on_life()
 	return
+
+/obj/item/organ/internal/Destroy()
+	if(owner)
+		Remove(owner, 1)
+	..()
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
@@ -33,6 +48,7 @@
 	icon_state = "heart-on"
 	zone = "chest"
 	slot = "heart"
+	origin_tech = "biotech=3"
 	vital = 1
 	var/beating = 1
 
@@ -42,6 +58,16 @@
 	else
 		icon_state = "heart-off"
 
+/obj/item/organ/internal/heart/Insert(var/mob/living/carbon/M, special = 0)
+	..()
+	beating = 1
+	update_icon()
+
+/obj/item/organ/internal/heart/Remove(var/mob/living/carbon/M, special = 0)
+	..()
+	spawn(120)
+		beating = 0
+		update_icon()
 
 
 /obj/item/organ/internal/appendix

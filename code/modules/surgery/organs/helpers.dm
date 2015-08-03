@@ -28,3 +28,6 @@ mob/proc/getlimb()
 
 mob/living/carbon/human/getlimb(typepath)
 	return (locate(typepath) in organs)
+
+proc/isorgan(atom/A)
+	return istype(A, /obj/item/organ/internal)

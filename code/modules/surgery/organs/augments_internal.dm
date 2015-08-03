@@ -114,9 +114,9 @@
 		r_hand_obj.flags ^= NODROP
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(var/mob/living/carbon/M, special = 0)
-	..()
 	if(active)
 		ui_action_click()
+	..()
 
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun
@@ -166,8 +166,6 @@
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/on_life()
 	if(synthesizing)
-		return
-	if(owner.stat == DEAD)
 		return
 
 	if(owner.nutrition <= hunger_threshold)
