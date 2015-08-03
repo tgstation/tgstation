@@ -16,7 +16,7 @@
 
 //#define UPDATE_QUEUE_DEBUG
 // If btime.dll is available, do this shit
-//#define PRECISE_TIMER_AVAILABLE
+#define PRECISE_TIMER_AVAILABLE
 
 #ifdef PRECISE_TIMER_AVAILABLE
 var/global/__btime__lastTimeOfHour = 0
