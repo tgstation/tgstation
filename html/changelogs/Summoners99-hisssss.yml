@@ -1,0 +1,8 @@
+author: Summoner99
+  
+delete-after: True
+
+changes: 
+  - rscadd: "Added the *roar emote back to Alien Larva"
+  - bugfix: "Fixed aliens not being able to do the *hiss and *screech emotes"
+  - tweak: "Changed how the plural emote system works and now some emotes have plural versions, example is: *hiss and *hisses."
