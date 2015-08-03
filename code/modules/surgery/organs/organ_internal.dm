@@ -6,13 +6,12 @@
 	var/organ_action_name = null
 
 /obj/item/organ/internal/proc/Insert(var/mob/living/carbon/M, special = 0)
-	if(!iscarbon(M))
+	if(!iscarbon(M) || owner)
 		return
 
 	var/obj/item/organ/internal/replaced = M.getorganslot(slot)
 	if(replaced)
 		replaced.Remove(M, special = 1)
-
 
 	owner = M
 	M.internal_organs |= src

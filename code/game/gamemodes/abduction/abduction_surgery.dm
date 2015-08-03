@@ -41,7 +41,7 @@
 
 /datum/surgery_step/gland_insert
 	name = "insert gland"
-	implements = list(/obj/item/gland = 100)
+	implements = list(/obj/item/organ/internal/gland = 100)
 	time = 32
 
 /datum/surgery_step/gland_insert/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -50,6 +50,6 @@
 /datum/surgery_step/gland_insert/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] inserts [tool] into [target].", "<span class ='notice'>You insert [tool] into [target].</span>")
 	user.drop_item()
-	var/obj/item/gland/gland = tool
-	gland.Inject(target)
+	var/obj/item/organ/internal/gland/gland = tool
+	gland.Insert(target, 2)
 	return 1
