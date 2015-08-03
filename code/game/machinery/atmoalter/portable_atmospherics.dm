@@ -100,4 +100,15 @@
 	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
-	return
+	else if (istype(W, /obj/item/weapon/tankmanip))
+		var/obj/item/weapon/tankmanip/T = W
+		if ((T.tanks) && !( src.destroyed ))
+			if (src.holding)
+				user << "<span class='warning'>There is already a tank inside!</span>"
+				return
+			var/obj/item/weapon/tank/P = T.storedtanks[1]
+			P.loc = src
+			src.holding = P
+			update_icon()
+			T.tanks--
+			return

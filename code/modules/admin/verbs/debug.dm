@@ -1041,11 +1041,11 @@ var/global/list/g_fancy_list_of_types = null
 
 	for(var/obj/machinery/power/rad_collector/Rad in world)
 		if(Rad.anchored)
-			if(!Rad.P)
+			if(!Rad.ptank)
 				var/obj/item/weapon/tank/internals/plasma/Plasma = new/obj/item/weapon/tank/internals/plasma(Rad)
 				Plasma.air_contents.toxins = 70
 				Rad.drainratio = 0
-				Rad.P = Plasma
+				Rad.ptank = Plasma
 				Plasma.loc = Rad
 
 			if(!Rad.active)

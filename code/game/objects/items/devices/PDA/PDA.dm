@@ -1027,7 +1027,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				atmosanalyzer_scan(T.parent.air, user, T)
 			else if (istype(A, /obj/machinery/power/rad_collector))
 				var/obj/machinery/power/rad_collector/T = A
-				if(T.P) atmosanalyzer_scan(T.P.air_contents, user, T)
+				if(T.ptank) atmosanalyzer_scan(T.ptank.air_contents, user, T)
 			else if (istype(A, /obj/item/weapon/flamethrower))
 				var/obj/item/weapon/flamethrower/T = A
 				if(T.ptank) atmosanalyzer_scan(T.ptank.air_contents, user, T)

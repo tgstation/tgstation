@@ -10,7 +10,7 @@ var/global/list/rad_collectors = list()
 	density = 1
 	req_access = list(access_engine_equip)
 //	use_power = 0
-	var/obj/item/weapon/tank/internals/plasma/P = null
+	var/obj/item/weapon/tank/internals/plasma/ptank = null
 	var/last_power = 0
 	var/active = 0
 	var/locked = 0
@@ -25,13 +25,13 @@ var/global/list/rad_collectors = list()
 	..()
 
 /obj/machinery/power/rad_collector/process()
-	if(P)
-		if(P.air_contents.toxins <= 0)
+	if(ptank)
+		if(ptank.air_contents.toxins <= 0)
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")
-			P.air_contents.toxins = 0
+			ptank.air_contents.toxins = 0
 			eject()
 		else
-			P.air_contents.toxins -= 0.001*drainratio
+			ptank.air_contents.toxins -= 0.001*drainratio
 	return
 
 
@@ -43,7 +43,7 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [ptank?"Fuel: [round(ptank.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
 			user << "<span class='warning'>The controls are locked!</span>"
@@ -55,26 +55,26 @@ var/global/list/rad_collectors = list()
 	if(istype(W, /obj/item/device/multitool))
 		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
 		return 1
-	else if(istype(W, /obj/item/device/analyzer) && P)
-		atmosanalyzer_scan(P.air_contents, user)
+	else if(istype(W, /obj/item/device/analyzer) && ptank)
+		atmosanalyzer_scan(ptank.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(!src.anchored)
 			user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
 			return 1
-		if(src.P)
+		if(src.ptank)
 			user << "<span class='warning'>There's already a plasma tank loaded!</span>"
 			return 1
 		if(!user.drop_item())
 			return 1
-		src.P = W
+		src.ptank = W
 		W.loc = src
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
-		if(P && !src.locked)
+		if(ptank && !src.locked)
 			eject()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
-		if(P)
+		if(ptank)
 			user << "<span class='warning'>Remove the plasma tank first!</span>"
 			return 1
 		if(!anchored && !isinspace())
@@ -102,6 +102,25 @@ var/global/list/rad_collectors = list()
 		else
 			user << "<span class='danger'>Access denied.</span>"
 			return 1
+	else if(istype(W, /obj/item/weapon/tankmanip))
+		var/obj/item/weapon/tankmanip/T = W
+		if (T.tanks)
+			if(!src.anchored)
+				user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
+				return 1
+			if(src.ptank)
+				user << "<span class='warning'>There is already a tank in the collector!</span>"
+				return 1
+			playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
+			var/obj/item/weapon/tank/internals/plasma/intank = T.storedtanks[1]
+			src.ptank = intank
+			intank.loc = src
+			T.tanks--
+			T.storedtanks.Remove(intank)
+			intank = null
+			update_icons()
+			T.update_icon()
+			return
 	else
 		..()
 		return 1
@@ -116,21 +135,21 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/internals/plasma/Z = src.P
-	if (!Z)
+	if (!ptank)
 		return
-	Z.loc = get_turf(src)
-	Z.layer = initial(Z.layer)
-	src.P = null
+	ptank.loc = get_turf(src)
+	ptank.layer = initial(ptank.layer)
+	src.ptank = null
 	if(active)
 		toggle_power()
 	else
 		update_icons()
+	return
 
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
-	if(P && active)
+	if(ptank && active)
 		var/power_produced = 0
-		power_produced = P.air_contents.toxins*pulse_strength*20
+		power_produced = ptank.air_contents.toxins*pulse_strength*20
 		add_avail(power_produced)
 		last_power = power_produced
 		return
@@ -139,7 +158,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/update_icons()
 	overlays.Cut()
-	if(P)
+	if(ptank)
 		overlays += image('icons/obj/singularity.dmi', "ptank")
 	if(stat & (NOPOWER|BROKEN))
 		return
