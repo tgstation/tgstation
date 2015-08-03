@@ -383,8 +383,7 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(/obj/item/cybernetic_implant/eyes/xray,/obj/item/cybernetic_implant/eyes/thermals,
-						/obj/item/cybernetic_implant/brain/anti_drop, /obj/item/cybernetic_implant/brain/anti_stun,
-						/obj/item/cybernetic_implant/chest/nutriment/plus, /obj/item/cybernetic_implant/chest/reviver)
+						/obj/item/cybernetic_implant/brain/anti_stun, /obj/item/cybernetic_implant/chest/reviver)
 	var/amount = 5
 
 /obj/item/weapon/storage/box/cyber_implants/New()

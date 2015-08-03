@@ -707,6 +707,7 @@
 			switch(H.hal_screwyhud)
 				if(1)	H.healths.icon_state = "health6"
 				if(2)	H.healths.icon_state = "health7"
+				if(5)	H.healths.icon_state = "health0"
 				else
 					switch(H.health - H.staminaloss)
 						if(100 to INFINITY)		H.healths.icon_state = "health0"
@@ -737,6 +738,8 @@
 					icon_num = 4
 				if(damage > (comparison*4))
 					icon_num = 5
+				if(H.hal_screwyhud == 5)
+					icon_num = 0
 				if(icon_num)
 					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 

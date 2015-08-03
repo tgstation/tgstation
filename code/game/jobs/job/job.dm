@@ -168,3 +168,9 @@
 
 /datum/job/proc/config_check()
 	return 1
+
+/datum/job/proc/announce_head(var/datum/mind/o_mind, var/channels) //tells the given channel that the given mind is the new department head. See communications.dm for valid channels.
+	spawn(4) //to allow some initialization
+		if(announcement_systems.len)
+			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+			announcer.announce("NEWHEAD", o_mind.name, o_mind.assigned_role, channels)

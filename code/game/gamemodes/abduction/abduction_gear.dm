@@ -295,11 +295,14 @@
 			return 0
 	return 1
 
-/obj/item/weapon/gun/energy/decloner/alien
+/obj/item/weapon/gun/energy/alien
+	name = "alien pistol"
+	desc = "A complicated gun that fires bursts of high-intensity radiation."
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = /obj/item/device/firing_pin/alien
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
+	origin_tech = "combat=5;materials=4;powerstorage=3"
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"

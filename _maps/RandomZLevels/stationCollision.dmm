@@ -263,7 +263,7 @@
 "fc" = (/turf/simulated/floor/plasteel,/area/awaymission/northblock)
 "fd" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel/airless{icon_state = "floorscorched1"},/area/awaymission/northblock)
 "fe" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = ""},/turf/simulated/floor/plasteel/airless{icon_state = "floorscorched2"},/area/awaymission/northblock)
-"ff" = (/obj/structure/table,/obj/item/weapon/stock_parts/capacitor,/obj/item/weapon/stock_parts/capacitor{pixel_x = -3},/obj/item/weapon/stock_parts/scanning_module{pixel_x = 3; pixel_y = 3},/obj/item/weapon/stock_parts/scanning_module{pixel_y = -3; step_y = 0},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
+"ff" = (/obj/structure/table,/obj/item/weapon/stock_parts/capacitor,/obj/item/weapon/stock_parts/capacitor{pixel_x = -3},/obj/item/weapon/stock_parts/scanning_module{pixel_x = 3; pixel_y = 3},/obj/item/weapon/stock_parts/scanning_module{pixel_y = -3},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
 "fg" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
 "fh" = (/obj/structure/table,/obj/item/weapon/stock_parts/manipulator,/obj/item/weapon/stock_parts/manipulator{pixel_x = -3; pixel_y = 3},/obj/item/weapon/stock_parts/micro_laser{pixel_x = -3; pixel_y = -3},/obj/item/weapon/stock_parts/micro_laser{pixel_x = 3; pixel_y = 3},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
 "fi" = (/obj/machinery/computer/crew,/turf/simulated/floor/plasteel{dir = 4; icon_state = "bluecorner"},/area/awaymission/northblock)

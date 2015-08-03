@@ -10,7 +10,7 @@
 			var/override
 			switch(parameter)
 				if(1)
-					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("nuclear emergency","no override")
+					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("nuclear emergency","gang war","fake","no override")
 				if(0)
 					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("blob","nuclear emergency","AI malfunction","no override")
 			ticker.station_explosion_cinematic(parameter,override)

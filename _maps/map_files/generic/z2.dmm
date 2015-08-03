@@ -593,7 +593,7 @@
 "lu" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/tdome/tdomeobserve)
 "lv" = (/obj/machinery/computer/telecrystals/uplinker,/turf/simulated/floor/plasteel/podhatch{dir = 8},/area/syndicate_mothership)
 "lw" = (/obj/structure/stool,/obj/effect/landmark{name = "Syndicate-Spawn"},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
-"lx" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
+"lx" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "ly" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "lz" = (/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "lA" = (/obj/structure/stool,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
