@@ -354,7 +354,3 @@ var/global/list/PDA_Manifest = list()
 
 /obj/effect/spawner
 	name = "object spawner"
-
-/obj/proc/cultify()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/cultify() called tick#: [world.time]")
-	qdel(src)

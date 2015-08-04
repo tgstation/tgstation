@@ -1761,6 +1761,13 @@ mob/proc/walking()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")
 	return 0
 
+/mob/proc/isTeleViewing(var/client_eye)
+	if(istype(client_eye,/obj/machinery/camera))
+		return 1
+	if(istype(client_eye,/obj/item/projectile/nikita))
+		return 1
+	return 0
+
 /mob/proc/html_mob_check()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/html_mob_check() called tick#: [world.time]")
 	return 0

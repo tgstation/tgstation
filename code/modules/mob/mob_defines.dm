@@ -233,7 +233,9 @@
 
 
 
-	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+	var/obj/control_object = null	//Used by admins to possess objects. All mobs should have this var
+
+	var/obj/orient_object = null	//Similar to control object. But only lets the mob manipulate which direction the object is facing.
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
