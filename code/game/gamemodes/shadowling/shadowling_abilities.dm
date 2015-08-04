@@ -13,6 +13,7 @@
 	panel = "Shadowling Abilities"
 	charge_max = 300
 	clothes_req = 0
+	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
@@ -47,6 +48,7 @@
 	charge_max = 250 //Short cooldown because people can just turn the lights back on
 	clothes_req = 0
 	range = 5
+	action_icon_state = "veil"
 	var/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime)
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishItem(obj/item/I) //Does not darken items held by mobs due to mobs having separate luminosity, use extinguishMob() or write your own proc.
@@ -102,6 +104,7 @@
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "shadow_walk"
 	sound = 'sound/effects/bamf.ogg'
 
 /obj/effect/proc_holder/spell/targeted/shadow_walk/cast(list/targets)
@@ -130,6 +133,7 @@
 	range = 5
 	charge_max = 1200
 	clothes_req = 0
+	action_icon_state = "icy_veins"
 	sound = 'sound/effects/ghost2.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets)
@@ -161,6 +165,7 @@
 	charge_max = 0
 	clothes_req = 0
 	range = 1 //Adjacent to user
+	action_icon_state = "enthrall"
 	var/enthralling = 0
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
@@ -251,6 +256,7 @@
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind/cast(list/targets)
 	for(var/mob/living/user in targets)
@@ -274,6 +280,7 @@
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "regen_armor"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor/cast(list/targets)
 	for(var/mob/living/user in targets)
@@ -297,6 +304,7 @@
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "collective_mind"
 	var/blind_smoke_acquired
 	var/screech_acquired
 	var/drainLifeAcquired
@@ -357,7 +365,7 @@
 						M.mind.spell_list -= CM
 						qdel(CM)
 					M.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hatch)
-					M.mind.add_spell(/obj/effect/proc_holder/spell/targeted/shadowling_ascend)
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_ascend(null))
 					if(M == usr)
 						M << "<span class='shadowling'><i>You project this power to the rest of the shadowlings.</i></span>"
 					else
@@ -372,6 +380,7 @@
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "black_smoke"
 	sound = 'sound/effects/bamf.ogg'
 
 /obj/effect/proc_holder/spell/targeted/blindness_smoke/cast(list/targets) //Extremely hacky
@@ -426,6 +435,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = 7
 	charge_max = 300
 	clothes_req = 0
+	action_icon_state = "screech"
 	sound = 'sound/effects/screech.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
@@ -466,6 +476,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = 3
 	charge_max = 100
 	clothes_req = 0
+	action_icon_state = "drain_life"
 	var/targetsDrained
 	var/list/nearbyTargets
 
@@ -477,6 +488,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	nearbyTargets = list()
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/M in T.contents)
+			if(M == src) continue
 			targetsDrained++
 			nearbyTargets.Add(M)
 	if(!targetsDrained)
@@ -504,6 +516,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	charge_max = 3000
 	clothes_req = 0
 	include_user = 0
+	action_icon_state = "revive_thrall"
 	var/list/thralls_in_world = list()
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall/cast(list/targets)
@@ -548,6 +561,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	panel = "Thrall Abilities"
 	charge_max = 450
 	clothes_req = 0
+	action_icon_state = "glare"
 
 /obj/effect/proc_holder/spell/targeted/lesser_glare/cast(list/targets)
 	for(var/mob/living/carbon/human/target in targets)
@@ -580,6 +594,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/targeted/lesser_shadow_walk/cast(list/targets)
 	for(var/mob/living/user in targets)
@@ -605,6 +620,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = -1
 	include_user = 1
 	clothes_req = 0
+	action_icon_state = "collective_mind"
 	var/active = 0
 
 /obj/effect/proc_holder/spell/targeted/thrall_vision/cast(list/targets)
@@ -630,6 +646,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/targeted/lesser_shadowling_hivemind/cast(list/targets)
 	for(var/mob/living/user in targets)
@@ -655,6 +672,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = 7
 	charge_max = 0
 	clothes_req = 0
+	action_icon_state = "annihilate"
 	sound = 'sound/magic/Staff_Chaos.ogg'
 
 /obj/effect/proc_holder/spell/targeted/annihilate/cast(list/targets)
@@ -686,6 +704,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = 7
 	charge_max = 0
 	clothes_req = 0
+	action_icon_state = "enthrall"
 
 /obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets)
 	var/mob/living/simple_animal/ascendant_shadowling/SHA = usr
@@ -728,6 +747,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	include_user = 1
 	charge_max = 15
 	clothes_req = 0
+	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift/cast(list/targets)
 	var/mob/living/simple_animal/ascendant_shadowling/SHA = usr
@@ -752,6 +772,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = 6
 	charge_max = 100
 	clothes_req = 0
+	action_icon_state = "lightning_storm"
 	sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm/cast(list/targets)
@@ -773,7 +794,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 			playsound(target, 'sound/magic/LightningShock.ogg', 50, 1)
 			target.Weaken(8)
 			target.take_organ_damage(0,50)
-			usr.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=1)
+			usr.Beam(target,icon_state="red_lightning",icon='icons/effects/effects.dmi',time=1)
 
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant //Large, all-caps text in shadowling chat
@@ -784,6 +805,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant/cast(list/targets)
 	for(var/mob/living/user in targets)
@@ -804,6 +826,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	clothes_req = 0
 	range = -1
 	include_user = 1
+	action_icon_state = "commune"
 
 /obj/effect/proc_holder/spell/targeted/ascendant_transmit/cast(list/targets)
 	for(var/mob/living/user in targets)
