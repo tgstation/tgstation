@@ -363,7 +363,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master
-	name = "ChemMaster 3000"
+	name = "\improper ChemMaster 3000"
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -379,6 +379,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	//var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
 	var/client/has_sprites = list()
+	var/chem_board = /obj/item/weapon/circuitboard/chemmaster3000
 
 	light_color = LIGHT_COLOR_BLUE
 	light_range_on = 3
@@ -392,6 +393,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
 ********************************************************************/
+
 /obj/machinery/chem_master/New()
 	. = ..()
 
@@ -408,16 +410,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		/obj/item/weapon/stock_parts/console_screen
 	)
 
-	if(istype(src, /obj/machinery/chem_master/condimaster))
-		component_parts += new /obj/item/weapon/circuitboard/condimaster()
-	else
-		component_parts += new /obj/item/weapon/circuitboard/chemmaster3000()
-
+	component_parts += new chem_board
 
 	RefreshParts()
 
-	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
-	overlays += overlay
+	//This produces a greyscale overlay when unused, we don't want that
+	//var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
+	//overlays += overlay
 
 /obj/machinery/chem_master/proc/user_moved(var/list/args)
 	var/event/E = args["event"]
@@ -432,30 +431,28 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			E.holder.on_moved.Remove(targetMoveKey)
 		detach()
 
-
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 
 /obj/machinery/chem_master/blob_act()
-	if (prob(50))
+	if(prob(50))
 		qdel(src)
 
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
-
 	if(..())
 		return 1
 
 	else if(istype(B, /obj/item/weapon/reagent_containers/glass))
 
 		if(src.beaker)
-			user << "A beaker is already loaded into the machine."
+			user << "<span class='warning'>There already is a beaker loaded in the machine.</span>"
 			return
 		src.beaker = B
 		if(user.type == /mob/living/silicon/robot)
@@ -464,7 +461,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			targetMoveKey =  R.on_moved.Add(src, "user_moved")
 
 		user.drop_item(B, src)
-		user << "You add the beaker to the machine!"
+		user << "<span class='notice'>You add the beaker into \the [src]!</span>"
 		src.updateUsrDialog()
 		update_icon()
 		return 1
@@ -472,38 +469,36 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
 
 		if(src.loaded_pill_bottle)
-			user << "A pill bottle is already loaded into the machine."
+			user << "<span class='warning'>There already is a pill bottle loaded in the machine.</span>"
 			return
 
 		src.loaded_pill_bottle = B
 		user.drop_item(B, src)
-		user << "You add the pill bottle into the dispenser slot!"
+		user << "<span class='notice'>You add the pill bottle into \the [src]'s dispenser slot!</span>"
 		src.updateUsrDialog()
 		return 1
 
 /obj/machinery/chem_master/Topic(href, href_list)
-	if(..())
-		return
-	if(stat & (BROKEN|NOPOWER)) 		return
-	if(usr.stat || usr.restrained())	return
-	if(!in_range(src, usr)) 			return
 
-	src.add_fingerprint(usr)
+	if(..())
+		return 1
+
 	usr.set_machine(src)
 
-
-	if (href_list["ejectp"])
+	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
+		return 1
+
 	else if(href_list["close"])
 		usr << browse(null, "window=chemmaster")
 		usr.unset_machine()
-		return
+		return 1
 
 	if(beaker)
 		var/datum/reagents/R = beaker.reagents
-		if (href_list["analyze"])
+		if(href_list["analyze"])
 			var/dat = ""
 			if(!condi)
 				if(href_list["name"] == "Blood")
@@ -521,65 +516,79 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			else
 				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr << browse(dat, "window=chem_master;size=575x400")
-			return
+			return 1
 
-		else if (href_list["add"])
+		else if(href_list["add"])
 
 			if(href_list["amount"])
 				var/id = href_list["add"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
+				if(amount < 0)
+					return
 				R.trans_id_to(src, id, amount)
+			return 1
 
-		else if (href_list["addcustom"])
+		else if(href_list["addcustom"])
 
 			var/id = href_list["addcustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
 			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
+			return 1
 
-		else if (href_list["remove"])
+		else if(href_list["remove"])
 
 			if(href_list["amount"])
 				var/id = href_list["remove"]
 				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
+				if(amount < 0)
+					return
 				if(mode)
 					reagents.trans_id_to(beaker, id, amount)
 				else
 					reagents.remove_reagent(id, amount)
+			return 1
 
-
-		else if (href_list["removecustom"])
+		else if(href_list["removecustom"])
 
 			var/id = href_list["removecustom"]
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
+			return 1
 
-		else if (href_list["toggle"])
+		else if(href_list["toggle"])
 			mode = !mode
+			return 1
 
-		else if (href_list["main"])
+		else if(href_list["main"])
 			attack_hand(usr)
-			return
-		else if (href_list["eject"])
+			return 1
+
+		else if(href_list["eject"])
 			if(beaker)
 				detach()
-		else if (href_list["createpill"] || href_list["createpill_multiple"])
+			return 1
+
+		else if(href_list["createpill"] || href_list["createpill_multiple"])
 			var/count = 1
-			if (href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
-			if (count > 20) count = 20	//Pevent people from creating huge stacks of pills easily. Maybe move the number to defines?
-			if (!count) return
+			if(href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
+			if(count > 20)
+				count = 20	//Pevent people from creating huge stacks of pills easily. Maybe move the number to defines?
+			if(!count)
+				return
 			var/amount_per_pill = reagents.total_volume/count
-			if (amount_per_pill > 50) amount_per_pill = 50
+			if(amount_per_pill > 50)
+				amount_per_pill = 50
 			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)") as null|text)
-			if(!name) return
-			while (count--)
+			if(!name)
+				return
+			while(count--)
 				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-				if(!name) name = "[reagents.get_master_reagent_name()] ([amount_per_pill] units)"
+				if(!name)
+					name = "[reagents.get_master_reagent_name()] ([amount_per_pill] units)"
 				P.name = "[name] pill"
-				P.pixel_x = rand(-7, 7) //random position
+				P.pixel_x = rand(-7, 7) //Random position
 				P.pixel_y = rand(-7, 7)
 				P.icon_state = "pill"+pillsprite
 				reagents.trans_to(P,amount_per_pill)
@@ -587,42 +596,52 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					if(loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
 						P.loc = loaded_pill_bottle
 						src.updateUsrDialog()
+			return 1
+
 		else if (href_list["createbottle"] || href_list["createbottle_multiple"])
 			if(!condi)
-				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
-				if(!name) name = reagents.get_master_reagent_name()
+				var/name = reject_bad_text(input(usr,"Name:", "Name your bottle!", reagents.get_master_reagent_name()))
+				if(!name)
+					name = reagents.get_master_reagent_name()
 				var/count = 1
-				if (href_list["createbottle_multiple"])
+				if(href_list["createbottle_multiple"])
 					count = isgoodnumber(input("Select the number of bottles to make.", 10, count) as num)
-				if (count > 4) count = 4
-				if (count < 1) count = 1
+				if(count > 4)
+					count = 4
+				if(count < 1)
+					count = 1
 				var/amount_per_bottle = reagents.total_volume > 0 ? reagents.total_volume/count : 0
-				if (amount_per_bottle > 30) amount_per_bottle = 30
-				while (count--)
+				if(amount_per_bottle > 30)
+					amount_per_bottle = 30
+				while(count--)
 					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 					P.name = "[name] bottle"
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
 					//P.icon_state = "bottle"+bottlesprite
 					reagents.trans_to(P,amount_per_bottle)
+				return 1
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
-				reagents.trans_to(P,50)
+				reagents.trans_to(P, 50)
+				return 1
+
 		else if(href_list["change_pill"])
-			#define MAX_PILL_SPRITE 20 //max icon state of the pill sprites
+			#define MAX_PILL_SPRITE 20 //Max icon state of the pill sprites
 			var/dat = "<table>"
 			for(var/i = 1 to MAX_PILL_SPRITE)
-				if ( i%4==1 )
+				if(i%4 == 1)
 					dat += "<tr>"
 
 				dat += "<td><a href=\"?src=\ref[src]&pill_sprite=[i]\"><img src=\"pill[i].png\" /></a></td>"
 
-				if ( i%4==0 )
+				if (i%4 == 0)
 					dat +="</tr>"
 
 			dat += "</table>"
 			usr << browse(dat, "window=chem_master")
-			return
+			return 1
+
 		/*
 		else if(href_list["change_bottle"])
 			#define MAX_BOTTLE_SPRITE 20 //max icon state of the bottle sprites
@@ -640,8 +659,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			usr << browse(dat, "window=chem_master")
 			return
 		*/
+
 		else if(href_list["pill_sprite"])
 			pillsprite = href_list["pill_sprite"]
+			return 1
+
 		/*
 		else if(href_list["bottle_sprite"])
 			bottlesprite = href_list["bottle_sprite"]
@@ -672,8 +694,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	return src.attack_hand(user)
 
 /obj/machinery/chem_master/attack_hand(mob/user as mob)
-	if(stat & BROKEN)
+
+	. = ..()
+	if(.)
 		return
+
 	user.set_machine(src)
 	if(!(user.client in has_sprites))
 		spawn()
@@ -684,9 +709,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			for(var/i = 1 to MAX_BOTTLE_SPRITE)
 				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle" + num2text(i)), "bottle[i].png")
 			*/
+
 	var/dat = ""
 	if(!beaker)
-		dat = "Please insert beaker.<BR>"
+		dat = "Please insert a beaker.<BR>"
 		if(!condi)
 			if(src.loaded_pill_bottle)
 				dat += "<A href='?src=\ref[src];ejectp=1'>Eject Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\]</A><BR><BR>"
@@ -764,24 +790,47 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	else
 		return 0
 
-/obj/machinery/chem_master/condimaster
-	name = "CondiMaster 3000"
-	condi = 1
-
 /obj/machinery/chem_master/update_icon()
+
+	overlays.len = 0
+
 	if(beaker)
 		icon_state = "mixer1"
+
+		if(beaker.reagents.total_volume)
+			var/image/filling = image('icons/obj/reagentfillings.dmi', src, "mixbeaker")
+
+			var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
+			switch(percent)
+				if(0 to 24) 	filling.icon_state += "10" //Intentionally compressed
+				if(25 to 49)	filling.icon_state += "25"
+				if(50 to 74)	filling.icon_state += "50"
+				if(75 to 79)	filling.icon_state += "75"
+				if(80 to 90)	filling.icon_state += "80"
+				if(91 to INFINITY)	filling.icon_state += "100"
+
+			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
+			overlays += filling
+
+		if(!beaker.is_open_container())
+			var/image/lid = image('icons/obj/chemical.dmi', src, "lid_mixer")
+			overlays += lid
+
 	else
 		icon_state = "mixer0"
 
-	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 	if(reagents.total_volume)
+		var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
 		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
-	overlays.len = 0
-	overlays += overlay
+		overlays += overlay
 
 /obj/machinery/chem_master/on_reagent_change()
 	update_icon()
+
+/obj/machinery/chem_master/condimaster
+	name = "\improper CondiMaster 3000"
+	condi = 1
+	chem_board = /obj/item/weapon/circuitboard/condimaster
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////

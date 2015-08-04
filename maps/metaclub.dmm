@@ -5044,7 +5044,7 @@
 "bSZ" = (/obj/structure/closet/secure_closet/freezer/meat,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "bTa" = (/obj/machinery/chem_master/condimaster{name = "CondiMaster Neo"; pixel_x = -4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "bTb" = (/obj/machinery/gibber,/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
-"bTc" = (/obj/machinery/firealarm{dir = 4; pixel_x = 28},/obj/machinery/snackbar_machine,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
+"bTc" = (/obj/machinery/firealarm{dir = 4; pixel_x = 28},/obj/machinery/chem_master/snackbar_machine,/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "bTd" = (/obj/structure/table/woodentable,/obj/item/clothing/mask/pig,/obj/item/weapon/bikehorn{pixel_y = 3},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "bTe" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "bTf" = (/obj/effect/landmark/start{name = "Mime"},/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_Toxins = 0},/turf/simulated/floor/wood,/area/crew_quarters/theatre)

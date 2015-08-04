@@ -1,173 +1,50 @@
-/obj/machinery/snackbar_machine
-	name = "SnackBar Machine"
-	density = 1
-	anchored = 1
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
-	use_power = 1
-	idle_power_usage = 20
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
-	var/mode = 0
-	var/opened = 0
-	var/useramount = 30 // Last used amount
+/obj/machinery/chem_master/snackbar_machine
+	name = "\improper SnackBar Machine"
+	desc = "An explosion of flavour in every bite"
+	condi = 1
+	chem_board = /obj/item/weapon/circuitboard/snackbar_machine
+	//var/opened = 0
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
+/obj/machinery/chem_master/snackbar_machine/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
-	light_color = LIGHT_COLOR_CYAN
-	power_change()
-		..()
-		if(!(stat & (BROKEN|NOPOWER)))
-			set_light(2)
-		else
-			set_light(0)
+	if(istype(B, /obj/item/weapon/storage/pill_bottle))
+		user << "<span class='warning'>This condiment master does not come with a pill dispenser unit built-in.</span>"
+		return 1
 
-/********************************************************************
-**   Adding Stock Parts to VV so preconstructed shit has its candy **
-********************************************************************/
-/obj/machinery/snackbar_machine/New()
 	. = ..()
-	create_reagents(100)
 
-	component_parts = newlist(\
-		/obj/item/weapon/circuitboard/snackbar_machine,\
-		/obj/item/weapon/stock_parts/manipulator,\
-		/obj/item/weapon/stock_parts/manipulator,\
-		/obj/item/weapon/stock_parts/scanning_module,\
-		/obj/item/weapon/stock_parts/scanning_module,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/console_screen,\
-		/obj/item/weapon/stock_parts/console_screen\
-	)
-
-	RefreshParts()
-
-	overlays += image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
-
-/obj/machinery/snackbar_machine/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-
-/obj/machinery/snackbar_machine/blob_act()
-	if (prob(50))
-		qdel(src)
-
-/obj/machinery/snackbar_machine/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-
-/obj/machinery/snackbar_machine/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
-
-	if(istype(B, /obj/item/weapon/reagent_containers/glass))
-		if(src.beaker)
-			user << "A beaker is already loaded into the machine."
-			return
-		src.beaker = B
-		user.drop_item(B, src)
-		user << "You add the beaker to the machine!"
-		src.updateUsrDialog()
-		update_icon()
-
-	else
-		..()
-
-/obj/machinery/snackbar_machine/Topic(href, href_list)
-	if(..()) return 1
-
-	src.add_fingerprint(usr)
-	usr.set_machine(src)
+/obj/machinery/chem_master/snackbar_machine/Topic(href, href_list)
 
 	if(href_list["close"])
 		usr << browse(null, "window=snackbar_machine")
 		usr.unset_machine()
-		return
+		return 1
 
-	if(beaker)
-		var/datum/reagents/R = beaker.reagents
-		if (href_list["analyze"])
-			var/dat = ""
-			dat += "<TITLE>SnackBar Machine</TITLE>Reagent info:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
-			usr << browse(dat, "window=snackbar_machine;size=575x400")
-			return
+	if(href_list["createpill"] || href_list["createpill_multiple"] || href_list["ejectp"] || href_list["change_pill"])
+		return //No href exploits, fuck off
 
-		else if (href_list["add"])
+	if(..())
+		return 1
 
-			if(href_list["amount"])
-				var/id = href_list["add"]
-				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				R.trans_id_to(src, id, amount)
+	usr.set_machine(src)
 
-		else if (href_list["addcustom"])
-
-			var/id = href_list["addcustom"]
-			useramount = input("Select the amount to transfer.", 30, useramount) as num
-			useramount = isgoodnumber(useramount)
-			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
-
-		else if (href_list["remove"])
-
-			if(href_list["amount"])
-				var/id = href_list["remove"]
-				var/amount = text2num(href_list["amount"])
-				if (amount < 0) return
-				if(mode)
-					reagents.trans_id_to(beaker, id, amount)
-				else
-					reagents.remove_reagent(id, amount)
-
-		else if (href_list["removecustom"])
-
-			var/id = href_list["removecustom"]
-			useramount = input("Select the amount to transfer.", 30, useramount) as num
-			useramount = isgoodnumber(useramount)
-			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
-
-		else if (href_list["toggle"])
-			mode = !mode
-
-		else if (href_list["main"])
-			attack_hand(usr)
-			return
-
-		else if (href_list["eject"])
-			if(beaker)
-				beaker:loc = src.loc
-				beaker = null
-				reagents.clear_reagents()
-				update_icon()
-
-		else if (href_list["createbar"])
-			var/obj/item/weapon/reagent_containers/food/snacks/snackbar/SB = new/obj/item/weapon/reagent_containers/food/snacks/snackbar(src.loc)
-			reagents.trans_to(SB, 10)
+	if(beaker && href_list["createbar"])
+		var/obj/item/weapon/reagent_containers/food/snacks/snackbar/SB = new/obj/item/weapon/reagent_containers/food/snacks/snackbar(src.loc)
+		reagents.trans_to(SB, 10)
+		return 1
 
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/snackbar_machine/attack_ai(mob/user as mob)
-	src.add_hiddenprint(user)
-	return src.attack_hand(user)
-
-/obj/machinery/snackbar_machine/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/snackbar_machine/attack_hand(mob/user as mob)
+/obj/machinery/chem_master/snackbar_machine/attack_hand(mob/user as mob)
 	if(stat & BROKEN)
 		return
+
 	user.set_machine(src)
 
 	var/dat = ""
 	if(!beaker)
-		dat = "Please insert beaker.<BR>"
+		dat = "Please insert a beaker.<BR>"
 		dat += "<A href='?src=\ref[src];close=1'>Close</A>"
 	else
 		var/datum/reagents/R = beaker.reagents
@@ -202,31 +79,3 @@
 	user << browse("<TITLE>SnackBar Machine</TITLE>SnackBar Machine menu:<BR><BR>[dat]", "window=snackbar_machine;size=575x400")
 	onclose(user, "snackbar_machine")
 	return
-
-/obj/machinery/snackbar_machine/proc/isgoodnumber(var/num)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/snackbar_machine/proc/isgoodnumber() called tick#: [world.time]")
-	if(isnum(num))
-		if(num > 100)
-			num = 100
-		else if(num < 0)
-			num = 1
-		else
-			num = round(num)
-		return num
-	else
-		return 0
-
-/obj/machinery/snackbar_machine/update_icon()
-	if(beaker)
-		icon_state = "mixer1"
-	else
-		icon_state = "mixer0"
-
-	var/image/overlay = image('icons/obj/chemical.dmi', src, "[icon_state]_overlay")
-	if(reagents.total_volume)
-		overlay.icon += mix_color_from_reagents(reagents.reagent_list)
-	overlays.len = 0
-	overlays += overlay
-
-/obj/machinery/snackbar_machine/on_reagent_change()
-	update_icon()

@@ -504,7 +504,7 @@ obj/item/weapon/circuitboard/rdserver
 
 /obj/item/weapon/circuitboard/snackbar_machine
 	name = "Circuit Board (SnackBar Machine)"
-	build_path = "/obj/machinery/snackbar_machine"
+	build_path = "/obj/machinery/chem_master/snackbar_machine"
 	board_type = "machine"
 	origin_tech = "engineering=3;biotech=4"
 	frame_desc = "Requires 2 manipulator, 2 scanning modules, 2 micro-lasers, and 2 console screens."

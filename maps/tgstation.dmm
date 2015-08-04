@@ -2407,7 +2407,7 @@
 "aUo" = (/obj/structure/table/woodentable,/obj/item/device/megaphone,/obj/machinery/newscaster{pixel_x = 32},/obj/item/device/soundsynth,/obj/machinery/light{dir = 4},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "aUp" = (/obj/structure/closet/secure_closet/freezer/meat,/obj/machinery/light/small{dir = 8},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aUq" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
-"aUr" = (/obj/machinery/snackbar_machine,/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
+"aUr" = (/obj/machinery/chem_master/snackbar_machine,/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "aUs" = (/obj/structure/closet/crate/hydroponics,/obj/item/weapon/pickaxe/shovel/spade,/obj/item/weapon/wrench,/obj/item/weapon/screwdriver,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/paper/hydroponics,/obj/item/weapon/book/manual/hydroponics_beekeeping,/obj/item/device/eftpos{eftpos_name = "Botany EFTPOS scanner"},/obj/item/weapon/book/manual/hydroponics_pod_people,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aUt" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 4; on = 1},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aUu" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
