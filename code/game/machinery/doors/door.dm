@@ -283,7 +283,6 @@ var/list/all_doors = list()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/close() called tick#: [world.time]")
 	if (density || operating || jammed)
 		return
-
 	operating = 1
 	door_animate("closing")
 
