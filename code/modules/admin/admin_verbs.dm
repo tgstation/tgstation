@@ -141,6 +141,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/dump_chemreactions,
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/getSchedulerContext,
 	/client/proc/cmd_admin_list_open_jobs,
 	/proc/getbrokeninhands,
 	/client/proc/Debug2,

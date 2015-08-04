@@ -143,6 +143,7 @@
 #include "code\controllers\ProcessScheduler\core\processScheduler.dm"
 #include "code\controllers\ProcessScheduler\core\updateQueue.dm"
 #include "code\controllers\ProcessScheduler\core\updateQueueWorker.dm"
+#include "code\controllers\ProcessScheduler\test\processSchedulerView.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\circuits.dm"
