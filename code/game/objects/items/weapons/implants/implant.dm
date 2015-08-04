@@ -94,9 +94,7 @@
 				<b>Important Notes:</b> Explodes<BR>
 				<HR>
 				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-				<b>Special Features:</b> Explodes<BR>
-				<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+				<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>}
 	return dat
 
 /obj/item/weapon/implant/explosive/trigger(emote, mob/source)
@@ -120,8 +118,8 @@
 	imp_in << "<span class='notice'>You activate your microbomb implant.</span>"
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
-		imp_in.gib()
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)
+		imp_in.gib()
 		qdel(src)
 		return
 	timed_explosion()
@@ -139,8 +137,8 @@
 	sleep(delay/4)
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay/4)
-	imp_in.gib()
 	explosion(src,heavy,medium,weak,weak, flame_range = weak)
+	imp_in.gib()
 	qdel(src)
 
 /obj/item/weapon/implant/explosive/macro
@@ -180,9 +178,7 @@
 				the implant releases the chemicals directly into the blood stream.<BR>
 				<b>Special Features:</b>
 				<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
-				Can only be loaded while still in its original case.<BR>
-				<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
-				the implant may become unstable and either pre-maturely inject the subject or simply break."}
+				Can only be loaded while still in its original case.<BR>}
 	return dat
 
 /obj/item/weapon/implant/chem/New()
