@@ -1,9 +1,10 @@
 /datum/surgery/dethrall
 	name = "dethralling"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/dethrall)
-	location = "head"
+	possible_locs = list("head")
 
 /datum/surgery_step/dethrall
+	name = "search head"
 	accept_hand = 1
 	time = 70
 	var/obj/item/organ/brain/B = null
