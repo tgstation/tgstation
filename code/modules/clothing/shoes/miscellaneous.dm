@@ -98,6 +98,10 @@
 	name = "magic shoes"
 	icon_state = "black"
 
+/obj/item/clothing/shoes/sandal/marisa/leather
+	icon_state = "laceups"
+	item_state = "laceups"
+
 /obj/item/clothing/shoes/galoshes
 	desc = "Rubber boots"
 	name = "galoshes"

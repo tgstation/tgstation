@@ -51,6 +51,14 @@
 	item_state = "necrohood"
 	siemens_coefficient = 0.8
 
+/obj/item/clothing/head/wizard/magician
+	name = "Magical Tophat"
+	desc = "A magical tophat perfect for any magical performance."
+	icon_state = "tophat"
+	item_state = "tophat"
+	siemens_coefficient = 0.8
+
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
@@ -129,6 +137,20 @@
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	item_state = "marisarobe"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 1.0
+
+
+/obj/item/clothing/suit/wizrobe/magician
+	name = "Magical Suit"
+	desc = "A magical stage outfit, perfect attire for sawwing assistants in half."
+	icon_state = "magiciansuit"
+	item_state = "magiciansuit"
+	species_restricted = list("exclude","Vox") //this outfit wont work very well for Vox
+
+
+/obj/item/clothing/suit/wizrobe/magician/fake
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 1.0

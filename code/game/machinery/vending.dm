@@ -1435,6 +1435,9 @@
 		/obj/item/clothing/head/wizard/clown = 1,
 		/obj/item/clothing/suit/wizrobe/clown = 1,
 		/obj/item/clothing/mask/gas/clown_hat/wiz = 1,
+		/obj/item/clothing/suit/wizrobe/magician = 1,
+		/obj/item/clothing/head/wizard/magician = 1,
+		/obj/item/clothing/shoes/sandal/marisa/leather = 1,
 		/obj/item/clothing/shoes/sandal = 1,
 		/obj/item/weapon/staff = 2,
 		/obj/item/weapon/storage/bag/wiz_cards/full = 1,
@@ -1744,6 +1747,8 @@
 		/obj/item/weapon/shield/riot/proto = 3,
 		/obj/item/weapon/shield/riot/joe = 3,
 		/obj/item/clothing/under/darkholme = 3,
+		/obj/item/clothing/suit/wizrobe/magician/fake = 3,
+		/obj/item/clothing/head/wizard/magician = 3,
 		)
 
 	pack = /obj/structure/vendomatpack/autodrobe
