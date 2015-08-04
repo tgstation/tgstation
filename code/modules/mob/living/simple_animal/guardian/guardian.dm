@@ -267,7 +267,7 @@
 	var/use_message = "You shuffle the deck..."
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
-	var/list/guardiantypes = list("Fire", "Standard", "Scout", "Shield", "Ranged", "Healer", "Fast")
+	var/list/possible_guardians = list("Fire", "Standard", "Scout", "Shield", "Ranged", "Healer", "Fast")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -309,9 +309,9 @@
 /obj/item/weapon/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
 	var/gaurdiantype = "Standard"
 	if(random)
-		gaurdiantype = pick(guardiantypes)
+		gaurdiantype = pick(possible_guardians)
 	else
-		gaurdiantype = input(user, "Pick the type pf [mob_name]", "[mob_name] Creation") as null|anything in guardiantypes
+		gaurdiantype = input(user, "Pick the type pf [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
 	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
 	var/picked_color = randomColor(0)
 	switch(gaurdiantype)
@@ -339,14 +339,6 @@
 
 		if("Bluespace")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/bluespace
-			switch (theme)
-				if("magic")
-					user << "..And draw the Wizard, master of teleportation."
-				if("tech")
-					user << "Boot sequence complete. Experimental bluespace combat modules active. Nanoswarm online."
-				if("bio")
-					user << "Your scarab swarm finishes mutating and stirs to life, crackling with bluespace energy."
-
 
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
