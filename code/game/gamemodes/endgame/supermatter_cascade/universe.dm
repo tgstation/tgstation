@@ -82,11 +82,9 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 "}
 		command_alert(txt,"SUPERMATTER CASCADE DETECTED")
 
-		for(var/obj/machinery/computer/research_shuttle/C in machines)
-			C.req_access = null
-
-		for(var/obj/machinery/computer/mining_shuttle/C in machines)
-			C.req_access = null
+		for(var/obj/machinery/computer/shuttle_control/C in machines)
+			if(istype(C.shuttle,/datum/shuttle/mining) || istype(C.shuttle,/datum/shuttle/research))
+				C.req_access = null
 
 		sleep(5 MINUTES)
 		ticker.declare_completion()

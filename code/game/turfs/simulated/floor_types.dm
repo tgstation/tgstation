@@ -207,7 +207,7 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	layer = 2
-	dynamic_lighting = 0
+	dynamic_lighting = 1 //We dynamic lighting now
 
 	soot_type = null
 	melt_temperature = 0 // Doesn't melt.

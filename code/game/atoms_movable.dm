@@ -359,3 +359,6 @@
 		if(VH.attached == src)
 			returnToPool(VH)
 
+//Can it be moved by a shuttle?
+/atom/movable/proc/can_shuttle_move(var/datum/shuttle/S)
+	return 1

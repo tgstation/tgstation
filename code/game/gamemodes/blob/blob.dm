@@ -173,6 +173,9 @@ You must kill it all while minimizing the damage to the station."}
 					pre_escapees += M
 			send_intercept(1)
 			outbreak = 1
+
+			research_shuttle.lockdown = "Under directive 7-10, [station_name()] is quarantined until further notice." //LOCKDOWN THESE SHUTTLES
+			mining_shuttle.lockdown = "Under directive 7-10, [station_name()] is quarantined until further notice."
 		if (2)
 			command_alert("Biohazard outbreak containment status reaching critical mass, total quarantine failure is now possibile. As such, Directive 7-12 has now been authorized for [station_name()].", "Final Measure")
 			for(var/mob/camera/blob/B in player_list)

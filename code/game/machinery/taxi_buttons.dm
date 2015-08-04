@@ -1,6 +1,3 @@
-#define TAXI_ACCESS_TIME	20
-#define TAXI_NOACCESS_TIME	60
-
 /obj/machinery/door_control/taxi
 	name = "taxi caller"
 	desc = "TAXI!"
@@ -34,17 +31,24 @@
 		initialize() //Try connecting again
 		return
 
-	var/wait_time = TAXI_ACCESS_TIME
+	var/datum/shuttle/taxi/T = connected_computer.shuttle
+	if(!T)
+		user.show_message("<span class='warning'>The Taxi Computer was unable to enstablish connection with the taxi shuttle. Please contact tech support.</span>")
+		return
+
+	var/wait_time = T.move_time_access
 
 	if(!allowed(user) && (wires & 1))
-		wait_time = TAXI_NOACCESS_TIME
+		wait_time = T.move_time_no_access
 
 	use_power(5)
 	icon_state = "doorctrl1"
 	add_fingerprint(user)
 
-	spawn if(!connected_computer.callTo(destination, wait_time))
-		src.visible_message("Taxi engines are on cooldown for the next [round((TAXI_SHUTTLE_COOLDOWN - (world.time - connected_computer.lastMove)) / 10)] second\s. Please wait before trying again.")
+	spawn
+		if(!connected_computer.callTo(destination, wait_time))
+			if( (T.cooldown - (world.time - T.last_moved)) > 0) //If it's going to show a negative value, there's something else wrong
+				src.visible_message("Taxi engines are on cooldown for the next [round((T.cooldown - (world.time - T.last_moved)) / 10)] second\s. Please wait before trying again.")
 
 	spawn(30)
 		icon_state = initial(icon_state)

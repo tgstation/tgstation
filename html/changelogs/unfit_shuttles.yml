@@ -1,0 +1,15 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: The following shuttles have been moved to a new shuttle system which doesn't use areas: mining shuttle, research shuttle, syndicate shuttle, emergency shuttle, vox shuttle, salvage shuttle, centcom ferry
+  - rscadd: Added a new shuttle control console which can connect to any shuttle which allows it (by default - mining shuttle, research shuttle, salvage shuttle with password)
+  - rscadd: Added some new admin commands for abusing the new shuttle system, they can be found in the 'Admin' panel under the 'shuttle magic' verb.
+  - rscadd: The centcom ferry now contains a shuttle control console in its cockpit, it may only be accessed by a centcomm ID.
+  - rscadd: The arrivals shuttle can be moved by admins, and will move spawn points for latejoining players as well.
+  - rscdel: Areas of the shuttles using the new system no longer clutter the map, and are replaced by invisible docking ports which do not affect gameplay in any way (although they are visible to ghosts)
+  - rscdel: Mining and research shuttle computers have been removed
+  - tweak: All shuttles except for taxis now gib people and destroy items on collision
+  - experiment: Added dynamic lighting and lights to all shuttles
+  - experiment: Mining and research shuttles now throw all unanchored objects back when moving

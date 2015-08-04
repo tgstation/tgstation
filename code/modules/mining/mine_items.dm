@@ -41,7 +41,7 @@
 
 
 /**********************Shuttle Computer**************************/
-
+/*
 var/mining_shuttle_tickstomove = 10
 var/mining_shuttle_moving = 0
 var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
@@ -156,7 +156,7 @@ proc/move_mining_shuttle()
 	..()
 	src.req_access = list()
 	usr << "You disable the console's access requirement."
-
+*/
 /******************************Lantern*******************************/
 
 /obj/item/device/flashlight/lantern

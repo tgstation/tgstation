@@ -28,9 +28,7 @@
 				vents += temp_vent
 
 	var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
-	for(var/mob/M in candidates)
-		if(jobban_isbanned(M, "xenomorph"))
-			candidates -= M
+
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick(vents)
 		var/mob/candidate = pick(candidates)

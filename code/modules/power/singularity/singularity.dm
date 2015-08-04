@@ -559,6 +559,12 @@
 	qdel(src)
 	return(gain)
 
+/obj/machinery/singularity/shuttle_act() //Shuttles can't kill the singularity honk
+	return
+
+/obj/machinery/singularity/can_shuttle_move() //The days of destroying centcomm are gone
+	return
+
 /obj/machinery/singularity/Destroy()
 	..()
 	power_machines -= src

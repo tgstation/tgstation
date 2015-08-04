@@ -56,6 +56,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
 	/client/proc/secrets,
+	/client/proc/shuttle_magic,
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
@@ -241,6 +242,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/toggle_log_hrefs,
 	/datum/admins/proc/immreboot,
 	/client/proc/everyone_random,
+	/client/proc/shuttle_magic,
 	/datum/admins/proc/toggleAI,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
@@ -1017,3 +1019,13 @@ var/list/admin_verbs_mod = list(
 			M.add_static_overlays()
 		else
 			M.remove_static_overlays()
+
+/client/proc/shuttle_magic()
+	set name = "Shuttle Magic"
+	set desc = "Open a menu with magic"
+	set category = "Admin"
+
+	if(!holder || !config)
+		return
+
+	holder.shuttle_magic()

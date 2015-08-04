@@ -484,3 +484,243 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/remove_apc() called tick#: [world.time]")
 	if(areaapc == apctoremove)
 		areaapc = null
+
+/area/proc/get_turfs()
+	var/list/L = list()
+	for(var/turf/T in contents)
+		L |= T
+
+	return L
+
+/area/proc/get_atoms()
+	var/list/L = list()
+	for(var/atom/A in contents)
+		L |= A
+
+	return L
+
+/area/proc/get_shuttle()
+	for(var/datum/shuttle/S in shuttles)
+		if(S.linked_area == src) return S
+	return null
+
+/area/proc/displace_contents()
+	var/list/dstturfs = list()
+	var/throwy = world.maxy
+
+	for(var/turf/T in src)
+		dstturfs += T
+		if(T.y < throwy)
+			throwy = T.y
+
+	// hey you, get out of the way!
+	for(var/turf/T in dstturfs)
+			// find the turf to move things to
+		var/turf/D = locate(T.x, throwy - 1, 1)
+					//var/turf/E = get_step(D, SOUTH)
+		for(var/atom/movable/AM as mob|obj in T)
+			AM.Move(D)
+		if(istype(T, /turf/simulated))
+			qdel(T)
+
+//This proc adds all turfs in the list to the parent area, calling change_area on everything
+//Returns nothing
+/area/proc/add_turfs(var/list/L)
+	for(var/turf/T in L)
+		if(T in L) continue
+		var/area/old_area = get_area(T)
+
+		L += T
+
+		T.change_area(old_area,src)
+		for(var/atom/movable/AM in T.contents)
+			AM.change_area(old_area,src)
+
+var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group","contents","air","light","areaMaster","underlays","lighting_overlay")
+var/list/moved_landmarks = list(latejoin, wizardstart, meteor_materialkit,\
+	meteor_bombkit, meteor_bombkitextra, meteor_tankkit, meteor_canisterkit,\
+	meteor_buildkit, meteor_pizzakit, meteor_panickit, meteor_shieldkit,\
+	meteor_genkit, meteor_breachkit) //Landmarks that are moved by move_area_to and move_contents_to
+
+/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
+	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/move_contents_to() called tick#: [world.time]")
+	//Takes: Area. Optional: turf type to leave behind.
+	//Returns: Nothing.
+	//Notes: Attempts to move the contents of one area to another area.
+	//       Movement based on lower left corner. Tiles that do not fit
+	//		 into the new area will not be moved.
+
+	if(!A || !src) return 0
+
+	var/list/turfs_src = get_area_turfs(src.type)
+	var/list/turfs_trg = get_area_turfs(A.type)
+
+	var/src_min_x = 0
+	var/src_min_y = 0
+	for (var/turf/T in turfs_src)
+		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
+		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
+
+	var/trg_min_x = 0
+	var/trg_min_y = 0
+	for (var/turf/T in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
+
+	var/list/refined_src = new/list()
+	for(var/turf/T in turfs_src)
+		refined_src += T
+		refined_src[T] = new/datum/coords
+		var/datum/coords/C = refined_src[T]
+		C.x_pos = (T.x - src_min_x)
+		C.y_pos = (T.y - src_min_y)
+
+	var/list/refined_trg = new/list()
+	for(var/turf/T in turfs_trg)
+		refined_trg += T
+		refined_trg[T] = new/datum/coords
+		var/datum/coords/C = refined_trg[T]
+		C.x_pos = (T.x - trg_min_x)
+		C.y_pos = (T.y - trg_min_y)
+
+	var/list/fromupdate = new/list()
+	var/list/toupdate = new/list()
+
+	moving:
+		for (var/turf/T in refined_src)
+			var/area/AA = get_area(T)
+			var/datum/coords/C_src = refined_src[T]
+			for (var/turf/B in refined_trg)
+				var/datum/coords/C_trg = refined_trg[B]
+				if(C_src.x_pos == C_trg.x_pos && C_src.y_pos == C_trg.y_pos)
+
+					var/old_dir1 = T.dir
+					var/old_icon_state1 = T.icon_state
+					var/old_icon1 = T.icon
+					var/image/undlay = image("icon"=B.icon,"icon_state"=B.icon_state,"dir"=B.dir)
+					undlay.overlays = B.overlays
+					var/prevtype = B.type
+
+					var/turf/X = B.ChangeTurf(T.type)
+					for(var/key in T.vars)
+						if(key in ignored_keys) continue
+						if(istype(T.vars[key],/list))
+							var/list/L = T.vars[key]
+							X.vars[key] = L.Copy()
+						else
+							X.vars[key] = T.vars[key]
+					if(ispath(prevtype,/turf/space))//including the transit hyperspace turfs
+						if(ispath(AA.type, /area/syndicate_station/start) || ispath(AA.type, /area/syndicate_station/transit))//that's the snowflake to pay when people map their ships over the snow.
+							X.underlays += undlay
+						else if(T.underlays.len)
+							X.underlays = T.underlays
+						else
+							X.underlays += undlay
+					else
+						X.underlays += undlay
+					X.dir = old_dir1
+					X.icon_state = old_icon_state1
+					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+
+					var/turf/simulated/ST = T
+
+					if(istype(ST) && ST.zone)
+						var/turf/simulated/SX = X
+
+						if(!SX.air)
+							SX.make_air()
+
+						SX.air.copy_from(ST.zone.air)
+						ST.zone.remove(ST)
+
+					/* Quick visual fix for some weird shuttle corner artefacts when on transit space tiles */
+					if(direction && findtext(X.icon_state, "swall_s"))
+
+						// Spawn a new shuttle corner object
+						var/obj/corner = new()
+						corner.forceMove(X)
+						corner.density = 1
+						corner.anchored = 1
+						corner.icon = X.icon
+						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
+						corner.tag = "delete me"
+						corner.name = "wall"
+
+						// Find a new turf to take on the property of
+						var/turf/nextturf = get_step(corner, direction)
+						if(!nextturf || !istype(nextturf, /turf/space))
+							nextturf = get_step(corner, turn(direction, 180))
+
+
+						// Take on the icon of a neighboring scrolling space icon
+						X.icon = nextturf.icon
+						X.icon_state = nextturf.icon_state
+
+
+					for(var/obj/O in T)
+
+						// Reset the shuttle corners
+						if(O.tag == "delete me")
+							X.icon = 'icons/turf/shuttle.dmi'
+							X.icon_state = replacetext(O.icon_state, "_f", "_s") // revert the turf to the old icon_state
+							X.name = "wall"
+							del(O) // prevents multiple shuttle corners from stacking
+							continue
+						if(!istype(O,/obj)) continue
+						O.forceMove(X)
+					for(var/mob/M in T)
+						if(!M.can_shuttle_move())
+							continue
+						M.forceMove(X)
+
+//					var/area/AR = X.loc
+
+//					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn
+//						X.opacity = !X.opacity
+//						X.SetOpacity(!X.opacity)
+
+					toupdate += X
+
+					if(turftoleave)
+						fromupdate += T.ChangeTurf(turftoleave)
+					else
+						if(ispath(AA.type, /area/syndicate_station/start))
+							T.ChangeTurf(/turf/unsimulated/floor)
+							T.icon = 'icons/turf/snow.dmi'
+							T.icon_state = "snow"
+						else
+							T.ChangeTurf(get_base_turf(T.z))
+							if(istype(T, /turf/space))
+								switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
+									if("Hell Rising")
+										T.overlays += "hell01"
+									if("Supermatter Cascade")
+										T.overlays += "end01"
+
+
+					refined_src -= T
+					refined_trg -= B
+					continue moving
+
+	var/list/doors = new/list()
+
+	if(toupdate.len)
+		for(var/turf/simulated/T1 in toupdate)
+			for(var/obj/machinery/door/D2 in T1)
+				doors += D2
+			/*if(T1.parent)
+				air_master.groups_to_rebuild += T1.parent
+			else
+				air_master.mark_for_update(T1)*/
+
+	if(fromupdate.len)
+		for(var/turf/simulated/T2 in fromupdate)
+			for(var/obj/machinery/door/D2 in T2)
+				doors += D2
+			/*if(T2.parent)
+				air_master.groups_to_rebuild += T2.parent
+			else
+				air_master.mark_for_update(T2)*/
+
+	for(var/obj/machinery/door/D in doors)
+		D.update_nearby_tiles()

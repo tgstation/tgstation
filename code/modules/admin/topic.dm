@@ -757,13 +757,13 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'><font color=red>[replacetext("Malf AI", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'>[replacetext("Malf AI", " ", "&nbsp")]</a></td>"
-*/
+
 		//Alien
-		if(jobban_isbanned(M, "Xenomorph") || isbanned_dept)
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Xenomorph;jobban4=\ref[M]'><font color=red>[replacetext("Alien", " ", "&nbsp")]</font></a></td>"
+		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>[replacetext("Alien", " ", "&nbsp")]</font></a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Xenomorph;jobban4=\ref[M]'>[replacetext("Alien", " ", "&nbsp")]</a></td>"
-/*
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>[replacetext("Alien", " ", "&nbsp")]</a></td>"
+
 		//Infested Monkey
 		if(jobban_isbanned(M, "infested monkey") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=infested monkey;jobban4=\ref[M]'><font color=red>[replacetext("Infested Monkey", " ", "&nbsp")]</font></a></td>"
@@ -2305,14 +2305,6 @@
 					ticker.mode.finalize_traitor(A.mind)
 				message_admins("<span class='notice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>", 1)
 				log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
-			if("moveminingshuttle")
-				if(mining_shuttle_moving)
-					return
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","ShM")
-				move_mining_shuttle()
-				message_admins("<span class='notice'>[key_name_admin(usr)] moved mining shuttle</span>", 1)
-				log_admin("[key_name(usr)] moved the mining shuttle")
 			if("moveadminshuttle")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShA")
@@ -2322,7 +2314,12 @@
 			if("moveferry")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","ShF")
-				move_ferry()
+				if(!transport_shuttle || !transport_shuttle.linked_area)
+					usr << "There is no transport shuttle!"
+					return
+
+				transport_shuttle.move(usr)
+
 				message_admins("<span class='notice'>[key_name_admin(usr)] moved the centcom ferry</span>", 1)
 				log_admin("[key_name(usr)] moved the centcom ferry")
 			if("movealienship")
@@ -3255,4 +3252,513 @@
 				show_player_info(ckey)
 			if("list")
 				PlayerNotesPage(text2num(href_list["index"]))
+		return
+
+	if(href_list["shuttle_create_destination"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","DC")
+
+		var/name = input(usr,"What would you like to name this docking port?","Admin abuse","space [rand(100,999)]") as text|null
+		if(!name) return
+
+		var/obj/structure/docking_port/destination/D = new( get_turf(usr) )
+		D.dir = usr.dir
+		D.areaname = name
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) in [get_area(D)] [formatJumpTo(get_turf(D))]</span>", 1)
+		log_admin("[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) at [D.x];[D.y];[D.z]")
+
+	if(href_list["shuttle_add_destination"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","AD")
+
+		var/list/L = list()
+		for(var/obj/structure/docking_port/destination/D in get_turf(usr) )
+			var/name = "[D.name] ([D.areaname])"
+			L += name
+			L[name]=D
+
+		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a docking port to link to a shuttle","Admin abuse") as anything in L) ]
+		if(!port_to_link) return
+
+		var/datum/shuttle/shuttle_to_link = select_shuttle_from_all(usr,"Select a shuttle to link to [port_to_link] ([port_to_link.areaname])","Admin abuse")
+		if(!shuttle_to_link) return
+
+		var/choice = input(usr,"Would you like to make [port_to_link] ([port_to_link.areaname]) a transit area?","Admin abuse") in list("Yes","No")
+
+		switch(choice)
+			if("No")
+				shuttle_to_link.add_dock(port_to_link)
+			if("Yes")
+				shuttle_to_link.set_transit_dock(port_to_link)
+
+		message_admins("[key_name_admin(usr)] has added a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to [shuttle_to_link.name] ([shuttle_to_link.type]) [formatJumpTo(get_turf(port_to_link))]", 1)
+		log_admin("[key_name_admin(usr)] has added a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to [shuttle_to_link.name] ([shuttle_to_link.type])")
+
+	if(href_list["shuttle_create_shuttleport"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SC")
+
+		var/obj/structure/docking_port/shuttle/D = new(usr.loc)
+		D.dir = usr.dir
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has created a new shuttle docking port in [get_area(D)] [formatJumpTo(get_turf(D))]</span>", 1)
+		log_admin("[key_name_admin(usr)] has created a new shuttle docking port at [D.x];[D.y];[D.z]</span>")
+
+	if(href_list["shuttle_toggle_lockdown"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","LD")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to toggle lockdown on", "Shuttle lockdown", omit_shuttles=list(/datum/shuttle/escape), show_lockdown = 1)
+		if(!S) return
+
+		if(S.lockdown)
+			S.lockdown = 0
+			usr << "The lockdown from [S.name] has been lifted."
+			message_admins("<span class='notice'>[key_name_admin(usr)] has lifted [capitalize(S.name)]'s lockdown.</span>", 1)
+			log_admin("[key_name(usr)] has locked [capitalize(S.name)] down. [(length(S.lockdown)>=1) ? "Reason: [S.lockdown]" : ""]")
+		else
+			S.lockdown = 1
+			usr << "[S.name] has been locked down."
+			var/reason = input(usr,"Would you like to provide additional information, which will be shown on [capitalize(S.name)]'s control consoles?","Shuttle lockdown") in list("Yes","No")
+			if(reason == "Yes")
+				reason = input(usr,"Please type additional information about the lockdown of [capitalize(S.name)].","Shuttle lockdown")
+				if(length(reason)>=1)
+					S.lockdown = reason
+			message_admins("<span class='notice'>[key_name_admin(usr)] has locked [capitalize(S.name)] down. [(length(S.lockdown)>=1) ? "Reason: [S.lockdown]" : ""]</span>", 1)
+			log_admin("[key_name(usr)] has locked [capitalize(S.name)] down. [(length(S.lockdown)>=1) ? "Reason: [S.lockdown]" : ""]")
+
+	if(href_list["shuttle_move_to"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","MV")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to send", "Shuttle movement", show_lockdown = 1)
+		if(!S) return
+
+		var/list/possible_ports = list()
+		for(var/obj/structure/docking_port/destination/D in S.docking_ports)
+			var/name = D.areaname
+			possible_ports += name
+			possible_ports[name] = D
+
+		var/choice = input(usr, "Select a docking port for [capitalize(S.name)] to travel to", "Shuttle movement") in possible_ports
+		var/obj/structure/docking_port/destination/target_port = possible_ports[choice]
+
+		if(!target_port)
+			return
+
+		S.travel_to(target_port,,usr)
+
+		message_admins("[key_name_admin(usr)] has moved [capitalize(S.name)] to [target_port.areaname] ([target_port.x];[target_port.y];[target_port.z])")
+		log_admin("[key_name(usr)] has moved [capitalize(S.name)] to [target_port.areaname] ([target_port.x];[target_port.y];[target_port.z])")
+
+	if(href_list["shuttle_edit"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SE")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to edit", "Shuttle editing")
+		if(!S) return
+
+		var/list/options = list("cooldown","pre-flight delay","transit delay","use transit","can link to computer","innacuracy","name")
+		if(S.is_special()) options += "DEFINED LOCATIONS"
+		var/choice = input(usr,"What to edit in [capitalize(S.name)]?","Shuttle editing") in options
+
+		var/new_value
+		switch(choice)
+			if("cooldown")
+				new_value = input(usr,"Input new cooldown for [capitalize(S.name)] (in 1/10s of a second)","Shuttle editing",S.cooldown) as num
+				S.cooldown = new_value
+			if("pre-flight delay")
+				new_value = input(usr,"Input new pre-flight delay for [capitalize(S.name)] (in 1/10s of a second)","Shuttle editing",S.pre_flight_delay) as num
+				S.pre_flight_delay = new_value
+			if("transit delay")
+				new_value = input(usr,"Input new transit delay for [capitalize(S.name)] (in 1/10s of a second)","Shuttle editing",S.transit_delay) as num
+				S.transit_delay = new_value
+			if("use transit")
+				new_value = input(usr,"[NO_TRANSIT] -  no transit, [TRANSIT_ACROSS_Z_LEVELS] - only across z levels, [TRANSIT_ALWAYS] - always","Shuttle editing ([capitalize(S.name)])",S.use_transit) as num
+				if(new_value in list(NO_TRANSIT,TRANSIT_ACROSS_Z_LEVELS,TRANSIT_ALWAYS))
+					S.use_transit = new_value
+				else
+					usr << "Not valid!"
+					return
+			if("can link to computer")
+				new_value = input(usr,"[LINK_FREE] - can always link, [LINK_PASSWORD_ONLY] - can only link with password ([S.password]), [LINK_FORBIDDEN] - can't link at all","Shuttle editing ([capitalize(S.name)])",S.can_link_to_computer) as num
+				S.pre_flight_delay = new_value
+			if("direction")
+				new_value = input(usr,"[NORTH] - north, [SOUTH] - south, [WEST] - west, [EAST] - east","Shuttle editing ([capitalize(S.name)])",S.dir) as num
+				if(new_value in cardinal)
+					S.dir = new_value
+				else
+					usr << "Not valid!"
+					return
+			if("innacuracy")
+				new_value = input(usr,"Input new innacuracy value for [capitalize(S.name)] (when a shuttle moves, its final location is randomly offset by this value)","Shuttle editing",S.innacuracy) as num
+				S.innacuracy = new_value
+			if("name")
+				new_value = input(usr,"Input new name for [capitalize(S.name)]","Shuttle editing",S.innacuracy) as text
+				S.name = new_value
+			if("DEFINED LOCATIONS")
+				usr << "To prevent accidental mistakes, you can only set these locations to docking ports in the shuttle's memory (see \"Add a destination docking port to a shuttle\" command)"
+
+				var/list/locations = list("--Cancel--")
+				switch(S.type)
+					if(/datum/shuttle/vox)
+						locations += "Vox home"
+					if(/datum/shuttle/escape)
+						locations += list("Escape shuttle home","Escape shuttle centcom")
+					if(/datum/shuttle/taxi)
+						locations += list("Taxi medbay silicon","Taxi engineering cargo","Taxi security science","Taxi abandoned station")
+
+				var/choice2 = input(usr,"Select a location to modify","Shuttle editing") in locations
+				switch(choice2) //ew
+					if("Vox home")
+						var/datum/shuttle/vox/V = S
+						if(!V) return
+
+						V.dock_home = select_port_from_list(usr,"Select a new HOME location for the vox skipjack (MOVING TO IT WILL END THE ROUND IF THE GAMEMODE IS HEIST!)","Shuttle editing",V.docking_ports)
+					if("Escape shuttle home")
+						var/datum/shuttle/escape/E = S
+						if(!E) return
+
+						E.dock_station = select_port_from_list(usr,"Select a new HOME location for the emergency shuttle","Shuttle editing",E.docking_ports)
+					if("Escape shuttle centcom")
+						var/datum/shuttle/escape/E = S
+						if(!E) return
+
+						E.dock_centcom = select_port_from_list(usr,"Select a new CENTCOM location for the emergency shuttle","Shuttle editing",E.docking_ports)
+					if("Taxi medbay silicon")
+						var/datum/shuttle/taxi/T = S
+						if(!T) return
+
+						T.dock_medical_silicon = select_port_from_list(usr,"Select a new MEDBAY AND SILICON location for the [S.name]","Shuttle editing",T.docking_ports)
+					if("Taxi engineering cargo")
+						var/datum/shuttle/taxi/T = S
+						if(!T) return
+
+						T.dock_engineering_cargo = select_port_from_list(usr,"Select a new ENGINEERING AND CARGO location for the [S.name]","Shuttle editing",T.docking_ports)
+					if("Taxi security science")
+						var/datum/shuttle/taxi/T = S
+						if(!T) return
+
+						T.dock_security_science = select_port_from_list(usr,"Select a new SECURITY AND SCIENCE location for the [S.name]","Shuttle editing",T.docking_ports)
+					if("Taxi abandoned station")
+						var/datum/shuttle/taxi/T = S
+						if(!T) return
+
+						T.dock_abandoned = select_port_from_list(usr,"Select a new ABANDONED STATION location for the taxi [S.name]","Shuttle editing",T.docking_ports)
+				message_admins("<span class='notice'>[key_name_admin(usr)] has changed [capitalize(S.name)]'s [choice2] defined location!</span>", 1)
+				log_admin("[key_name_admin(usr)] has changed [capitalize(S.name)]'s [choice2] defined location!")
+
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has set [capitalize(S.name)]'s [choice] to [new_value]!</span>", 1)
+		log_admin("[key_name_admin(usr)] has set [capitalize(S.name)]'s [choice] to [new_value]!")
+
+	if(href_list["shuttle_delete"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","DEL")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to delete", "Shuttle deletion")
+		if(!S) return
+
+		var/killed_objs = 0
+
+		if( (input(usr,"Please type \"Yes\" to confirm that you want to delete [capitalize(S)]. This process can't be reverted!","Shuttle deletion","No") as text) != "Yes" )
+			return
+
+		if(S.is_special())
+			usr << "This shuttle can't be deleted. Use the lockdown function instead."
+			return
+
+		var/choice = (input(usr,"Would you like to delete all turfs and objects in the shuttle's current area? Mobs will not be affected.") in list("Yes","No","Cancel") )
+		if(choice == "Cancel")
+			return
+		else if(choice == "Yes")
+			killed_objs = 1
+
+		if(S.linked_area)
+			if(killed_objs == 1)
+				for(var/turf/T in S.linked_area)
+					if(istype(T, /turf/simulated))
+						qdel(T)
+				for(var/obj/O in S.linked_area)
+					if(istype(O, /obj/item) || istype(O, /obj/machinery) || istype(O, /obj/structure))
+						qdel(O)
+				usr << "All turfs and objects deleted from [S.linked_area]."
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has deleted [capitalize(S.name)] ([S.type]). Objects and turfs [(killed_objs) ? "deleted" : "not deleted"].</span>")
+		log_admin("[key_name(usr)]  has deleted [capitalize(S.name)]! Objects and turfs [(killed_objs) ? "deleted" : "not deleted"].")
+
+		qdel(S)
+
+	if(href_list["shuttle_teleport_to"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","TP")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to teleport to", "Finding a shuttle")
+		if(!S) return
+
+		if(!S.linked_area || !istype(S.linked_area, /area/))
+			usr << "The shuttle is in the middle of nowhere! (The 'linked_area' variable is either null or not an area, please report this)"
+			return
+
+		var/turf/T = locate(/turf/) in S.linked_area
+		usr.forceMove(T)
+		usr << "You have teleported to [capitalize(S.name)]"
+
+	if(href_list["shuttle_teleport_to_dock"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","TP2")
+
+		var/list/destinations = list()
+		for(var/obj/structure/docking_port/destination/D in all_docking_ports)
+			var/name = "[D.areaname][D.docked_with ? " (docked to [D.docked_with.areaname])" : ""]"
+			destinations += name
+			destinations[name]=D
+
+		var/choice = input(usr,"Select a docking port to teleport to","Finding a docking port") in destinations
+
+		var/obj/structure/docking_port/destination/target = destinations[choice]
+		if(!target) return
+
+		usr.forceMove(get_turf(target))
+		usr << "You have teleported to [choice]"
+
+	if(href_list["shuttle_get_console"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","GC")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle", "Shuttle control access")
+		if(!S) return
+
+		if(!S.control_consoles.len)
+
+			var/choice = input(usr,"There is no control console linked to [capitalize(S.name)]. Would you like to create one at your current location?","Shuttle control access") in list("Yes","No")
+			if(choice == "Yes")
+				var/turf/usr_loc = get_turf(usr)
+				var/obj/machinery/computer/shuttle_control/C = new(usr_loc)
+				if(C)
+					C.link_to(S)
+					usr << "A new shuttle control console has been created."
+					message_admins("[key_name_admin(usr)] has created a new shuttle control console connected to [capitalize(S.name)] in [get_area(usr_loc)].")
+					log_admin("[key_name(usr)] has created a new shuttle control console connected to [capitalize(S.name)] in [get_area(usr_loc)].")
+			else
+				return
+
+		else
+
+			var/obj/machinery/computer/shuttle_control/C = pick(S.control_consoles)
+			if(C)
+				usr.loc = C.loc
+
+	if(href_list["shuttle_shuttlify"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SHH")
+
+		var/area/A = get_area(usr)
+		if(!A)
+			usr << "You must be standing on an area!"
+			return
+		if(A.type == /area)
+			usr << "You can't shuttlify space."
+			return
+
+		var/datum/shuttle/conflict = A.get_shuttle()
+		if(conflict)
+			var/choice = input(usr,"This area is already used by [conflict]. Type \"Yes\" to continue and bring on the unintended features","Shuttlify","NO") as text
+			if(choice != "Yes")
+				return
+
+		if( !(locate(/obj/structure/docking_port/shuttle) in A) )
+			usr << "Please create a shuttle docking port (/obj/structure/docking_port/shuttle) in this area!"
+			return
+
+		var/name = input(usr, "Please name the new shuttle", "Shuttlify", A.name) as text
+
+		var/datum/shuttle/custom/S = new(starting_area = A)
+
+		S.name = name
+
+		usr << "Shuttle created!"
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has turned [A.name] into a shuttle named [S.name]. [formatJumpTo(get_turf(usr))]</span>")
+		log_admin("[key_name(usr)]  has turned [A.name] into a shuttle named [S.name].")
+
+	if(href_list["shuttle_move_to_self"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SMS")
+
+		var/turf/T = get_turf(usr)
+		var/area/A = get_area(usr)
+		if(!T || !A)
+			usr << "You must be standing on a turf!"
+			return
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to move to you", "Shuttle movement", show_lockdown = 1)
+		if(!S) return
+
+		var/obj/structure/docking_port/destination/temp = new(T)
+		temp.invisibility = 101
+		temp.areaname = A.name
+		temp.dir = usr.dir
+
+		S.travel_to(temp,,usr)
+
+		message_admins("[key_name_admin(usr)] has moved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
+		log_admin("[key_name(usr)] has moved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
+
+		qdel(temp)
+
+	if(href_list["shuttle_forcemove"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","FM")
+
+		var/list/L = list("!!YOUR CURRENT LOCATION!!")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to FORCEMOVE", "Shuttle FORCEmovement")
+		if(!S) return
+
+		for(var/obj/structure/docking_port/destination/D in S.docking_ports)
+			var/name = "[D.name] [D.areaname]"
+			L+=name
+			L[name]=D
+
+		L += "---other destinations---"
+
+		for(var/obj/structure/docking_port/destination/D in all_docking_ports - S.docking_ports)
+			var/name = D.areaname
+			L+=name
+			L[name]=D
+
+		var/choice = input(usr, "Select a location to FORCEmove [S.name]!", "Shuttle FORCEmovement") in L
+
+		if(choice == "!!YOUR CURRENT LOCATION!!")
+			var/area/A = get_area(usr)
+			var/turf/T = get_turf(usr)
+			if(!A) return
+			if(!T) return
+
+			var/obj/structure/docking_port/destination/temp = new(T)
+			temp.invisibility = 101
+			temp.areaname = A.name
+			temp.dir = usr.dir
+
+			S.move_to_dock(temp)
+
+			message_admins("[key_name_admin(usr)] has FORCEmoved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
+			log_admin("[key_name(usr)] has FORCEmoved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
+
+			qdel(temp)
+			return
+		else
+			var/obj/structure/docking_port/destination/D = L[choice]
+			if(!D) return
+
+			S.move_to_dock(D)
+
+			message_admins("<span class='notice'>[key_name_admin(usr)] has FORCEmoved [capitalize(S.name)] to [choice] ([D.x];[D.y];[D.z])</span>")
+			log_admin("[key_name(usr)] has FORCEmoved [capitalize(S.name)] to [choice] ([D.x];[D.y];[D.z])")
+
+			return
+
+	if(href_list["shuttle_reset"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SR")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to reset", "Somebody went too far")
+		if(!S) return
+
+		S.name = initial(S.name)
+		S.cooldown = initial(S.cooldown)
+		S.innacuracy = initial(S.innacuracy)
+		S.transit_delay = initial(S.transit_delay)
+		S.pre_flight_delay = initial(S.pre_flight_delay)
+		S.use_transit = initial(S.use_transit)
+		S.dir = initial(S.dir)
+
+		S.initialize()
+
+		message_admins("[key_name_admin(usr)] has reset [capitalize(S.name)]'s variables")
+		log_admin("[key_name(usr)] has reset [capitalize(S.name)]'s variables")
+
+	if(href_list["shuttle_supercharge"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SUP")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to SUPERCHARGE", "Admin abuse")
+		if(!S) return
+
+		S.supercharge()
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has SUPERCHARGED [capitalize(S.name)]</span>")
+		log_admin("[key_name(usr)] has SUPERCHARGED [capitalize(S.name)]")
+
+	if(href_list["shuttle_mass_lockdown"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","ML")
+
+		if( !(input(usr,"Please type \"Yes\" to confirm that you want to lockdown all shuttles.","IS IT LOOSE?","NO") == "Yes") )
+			return
+
+		for(var/datum/shuttle/S in shuttles)
+			S.lockdown = 1
+
+		usr << "All shuttles were locked down."
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has locked all shuttles down!</span>")
+		log_admin("[key_name(usr)] has locked all shuttles down!")
+
+	if(href_list["shuttle_show_overlay"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","SO")
+
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle", "Magic")
+		if(!S) return
+		if(!S.linked_port)
+			usr << "The shuttle must have a shuttle docking port!"
+			return
+
+		if(usr.dir != S.dir)
+			usr << "WARNING: You're not facing [dir2text(S.dir)]! The result may be <i>slightly</i> innacurate."
+
+		var/turf/user_turf = get_turf(usr)
+		if(!user_turf)
+			usr << "You must be standing on a turf!"
+			return
+
+		var/turf/original_center = get_turf(S.linked_port)
+		var/turf/new_center = get_step(user_turf,usr.dir)
+
+		if(!new_center)
+			usr << "The turf in front of you isn't a turf."
+			return
+
+		var/offsetX = new_center.x - original_center.x
+		var/offsetY = new_center.y - original_center.y
+		var/datum/coords/offset = new(offsetX,offsetY)
+
+		var/list/original_coords = list()
+		for(var/turf/T in S.linked_area.get_turfs())
+			var/datum/coords/C = new(T.x,T.y)
+			original_coords += C
+
+		var/list/new_coords = list()
+		for(var/datum/coords/C in original_coords)
+			var/datum/coords/NC = C.add(offset)
+			new_coords += NC
+
+		var/list/images = list()
+		for(var/datum/coords/C in new_coords)
+			var/turf/T = locate(C.x_pos,C.y_pos,new_center.z)
+			if(!T) continue
+
+			var/image/I = image('icons/turf/areas.dmi', icon_state="bluenew")
+			I.loc = T
+			images += I
+			usr << I
+
+		alert(usr,"Press \"Ok\" to remove the images","Magic","Ok")
+
+		if(usr.client)
+			for(var/image/I in images)
+				usr.client.images -= I
 		return

@@ -169,7 +169,7 @@
 
 /obj/item/weapon/pinpointer/nukeop
 	var/mode = 0	//Mode 0 locates disk, mode 1 locates the shuttle
-	var/obj/machinery/computer/syndicate_station/home = null
+	var/obj/machinery/computer/shuttle_control/syndicate/home = null
 
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)

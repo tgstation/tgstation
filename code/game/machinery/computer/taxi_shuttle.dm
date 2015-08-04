@@ -1,7 +1,3 @@
-#define TAXI_SHUTTLE_MOVE_TIME 120
-
-var/const/TAXI_SHUTTLE_COOLDOWN = 100
-
 ////////////////////
 // TAXI SHUTTLES  //
 ////////////////////
@@ -13,9 +9,9 @@ var/global/list/taxi_computers = list()
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	req_access = list(access_taxi)
-	var/area/curr_location
-	var/moving = 0
-	var/lastMove = 0
+
+	var/datum/shuttle/taxi/shuttle //The shuttle this computer is connected to
+
 	var/id_tag = ""
 	var/letter = ""
 	var/list/connected_buttons = list()
@@ -36,31 +32,36 @@ var/global/list/taxi_computers = list()
 	..()
 	icon_state = "syndishuttle"
 
-/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(area/destination as area, area/transit as area, var/wait_time)
+/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to(var/obj/structure/docking_port/destination/destination, var/wait_time)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/taxi_move_to() called tick#: [world.time]")
-	if(moving)
+	/*if(shuttle.moving)
 		return
-	if(lastMove + TAXI_SHUTTLE_COOLDOWN > world.time)
+	if(!shuttle.can_move())
 		return
-	var/area/dest_location = locate(destination)
-	if(curr_location == dest_location)
-		return 1 //we did it!
+	if(shuttle.current_port == destination)
+		return
 
-	moving = 1
-	broadcast("Taxi [letter] will move in [wait_time / 10] second\s.")
+	broadcast("[capitalize(shuttle.name)] will move in [wait_time / 10] second\s.")
+
 	sleep(wait_time)
-	lastMove = world.time
 
-	if(curr_location.z != dest_location.z)
-		var/area/transit_location = locate(transit)
-		curr_location.move_contents_to(transit_location)
-		curr_location = get_area(src)
-		sleep(TAXI_SHUTTLE_MOVE_TIME)
+	shuttle.move_to_dock(destination)
 
-	curr_location.move_contents_to(dest_location)
-	curr_location = get_area(src) //test code. Manually setting curr is bad
-	moving = 0
-	return 1
+	if(shuttle.current_port == destination)
+		return 1*/
+	if(shuttle.moving)
+		return
+	if(!shuttle.can_move())
+		return
+	if(shuttle.current_port == destination)
+		return
+
+	shuttle.pre_flight_delay = wait_time
+
+	broadcast("[capitalize(shuttle.name)] will move in [wait_time / 10] second\s.")
+
+	return shuttle.travel_to(destination)
+
 
 /obj/machinery/computer/taxi_shuttle/proc/broadcast(var/message = "")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/broadcast() called tick#: [world.time]")
@@ -87,21 +88,27 @@ var/global/list/taxi_computers = list()
 
 	user.set_machine(src)
 
-	var/dat = ""
-	if(allowed(user))
-		dat = {"Location: [curr_location]<br>
-		Ready to move[max(lastMove + TAXI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + TAXI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><br>
-		<a href='?src=\ref[src];med_sili=1'>Medical and Silicon Station</a><br>
-		<a href='?src=\ref[src];engi_cargo=1'>Engineering and Cargo Station</a><br>
-		<a href='?src=\ref[src];sec_sci=1'>Security and Science Station</a><br>
-		[emagged ? "<a href='?src=\ref[src];abandoned=1'>Abandoned Station</a><br>" : ""]"}
+	var/dat
+
+	if(shuttle.lockdown)
+		dat += "<h2><font color='red'>THIS TAXI IS LOCKED DOWN</font></h2><br>"
+		if(istext(shuttle.lockdown))
+			dat += shuttle.lockdown
+		else
+			dat += "Additional information has not been provided."
+	else if(!shuttle.linked_area)
+		dat = "<h2><font color='red'>UNABLE TO FIND [uppertext(shuttle.name)]</font></h2>"
+	else if(!shuttle.linked_port)	//User friendly interface
+		dat += "<h2><font color='red'>ERROR: Unable to find the docking port. Please contact tech support.</font></h2><br>"
+	else if(shuttle.moving)
+		dat += "<center><h3>Currently moving [shuttle.destination_port.areaname ? "to [shuttle.destination_port.areaname]" : ""]</h3></center>"
 	else
-		dat = {"Location: [curr_location]<br>
-		Ready to move[max(lastMove + TAXI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + TAXI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><br>
-		<a href='?src=\ref[src];unauthmed_sili=1'>Medical and Silicon Station</a><br>
-		<a href='?src=\ref[src];unauthengi_cargo=1'>Engineering and Cargo Station</a><br>
-		<a href='?src=\ref[src];unauthsec_sci=1'>Security and Science Station</a><br>
-		[emagged ? "<a href='?src=\ref[src];unauthabandoned=1'>Abandoned Station</a><br>" : ""]"}
+		dat = {"[shuttle.current_port ? "Location: [shuttle.current_port.areaname]" : "Location: UNKNOWN"]<br>
+			Ready to move[max(shuttle.last_moved + shuttle.cooldown - world.time, 0) ? " in [max(round((shuttle.last_moved + shuttle.cooldown - world.time) * 0.1), 0)] seconds" : ": now"]<br><br>
+			<a href='?src=\ref[src];med_sili=1'>[shuttle.dock_medical_silicon.areaname]</a><br>
+			<a href='?src=\ref[src];engi_cargo=1'>[shuttle.dock_engineering_cargo.areaname]</a><br>
+			<a href='?src=\ref[src];sec_sci=1'>[shuttle.dock_security_science.areaname]</a><br>
+			[emagged ? "<a href='?src=\ref[src];abandoned=1'>Abandoned Station</a><br>" : ""]"}
 
 	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
@@ -125,17 +132,30 @@ var/global/list/taxi_computers = list()
 
 	for(var/place in href_list)
 		if(href_list[place])
-			if(copytext(place, 1, 7) == "unauth") // if it's unauthorised, we take longer
-				callTo(copytext(place, 7), TAXI_NOACCESS_TIME)
+			if(!allowed(user))
+				callTo(place, shuttle.move_time_no_access)
 			else
-				callTo(place, TAXI_ACCESS_TIME) //otherwise, double quick time
+				callTo(place, shuttle.move_time_access) //otherwise, double quick time
 
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/taxi_shuttle/proc/callTo(var/place = "")
+/obj/machinery/computer/taxi_shuttle/proc/callTo(var/place = "", var/wait_time)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/taxi_shuttle/proc/callTo() called tick#: [world.time]")
+	switch(place)
+		if("med_sili")
+			if (taxi_move_to(shuttle.dock_medical_silicon, wait_time))
+				return 1
+		if("engi_cargo")
+			if (taxi_move_to(shuttle.dock_engineering_cargo, wait_time))
+				return 1
+		if("sec_sci")
+			if (taxi_move_to(shuttle.dock_security_science, wait_time))
+				return 1
+		if("abandoned")
+			if (taxi_move_to(shuttle.dock_abandoned, wait_time))
+				return 1
 	return
 
 /obj/machinery/computer/taxi_shuttle/bullet_act(var/obj/item/projectile/Proj)
@@ -152,23 +172,7 @@ var/global/list/taxi_computers = list()
 
 /obj/machinery/computer/taxi_shuttle/taxi_a/New()
 	..()
-	curr_location= locate(/area/shuttle/taxi_a/engineering_cargo_station)
-
-/obj/machinery/computer/taxi_shuttle/taxi_a/callTo(var/place = "", var/wait_time)
-	switch(place)
-		if("med_sili")
-			if (taxi_move_to(/area/shuttle/taxi_a/medcal_silicon_station, /area/shuttle/taxi_a/transit, wait_time))
-				return 1
-		if("engi_cargo")
-			if (taxi_move_to(/area/shuttle/taxi_a/engineering_cargo_station, /area/shuttle/taxi_a/transit, wait_time))
-				return 1
-		if("sec_sci")
-			if (taxi_move_to(/area/shuttle/taxi_a/security_science_station, /area/shuttle/taxi_a/transit, wait_time))
-				return 1
-		if("abandoned")
-			if (taxi_move_to(/area/shuttle/taxi_a/abandoned_station, /area/shuttle/taxi_a/transit, wait_time))
-				return 1
-	return
+	shuttle = taxi_a
 
 ////////////////////
 // TAXI SHUTTLE B //
@@ -181,20 +185,4 @@ var/global/list/taxi_computers = list()
 
 /obj/machinery/computer/taxi_shuttle/taxi_b/New()
 	..()
-	curr_location= locate(/area/shuttle/taxi_b/engineering_cargo_station)
-
-/obj/machinery/computer/taxi_shuttle/taxi_b/callTo(var/place = "", var/wait_time)
-	switch(place)
-		if("med_sili")
-			if (taxi_move_to(/area/shuttle/taxi_b/medcal_silicon_station, /area/shuttle/taxi_b/transit, wait_time))
-				return 1
-		if("engi_cargo")
-			if (taxi_move_to(/area/shuttle/taxi_b/engineering_cargo_station, /area/shuttle/taxi_b/transit, wait_time))
-				return 1
-		if("sec_sci")
-			if (taxi_move_to(/area/shuttle/taxi_b/security_science_station, /area/shuttle/taxi_b/transit, wait_time))
-				return 1
-		if("abandoned")
-			if (taxi_move_to(/area/shuttle/taxi_b/abandoned_station, /area/shuttle/taxi_b/transit, wait_time))
-				return 1
-	return
+	shuttle = taxi_b

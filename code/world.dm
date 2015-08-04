@@ -138,6 +138,7 @@ var/savefile/panicfile
 		master_controller.setup()
 
 		setup_species()
+		setup_shuttles()
 
 	for(var/plugin_type in typesof(/plugin))
 		var/plugin/P = new plugin_type()

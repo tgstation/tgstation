@@ -79,3 +79,13 @@
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/stacking_machine_console
+
+/datum/design/shuttle_control
+	name = "Circuit Design (Universal Shuttle Control)"
+	desc = "Allows for the construction of circuit boards used to build a Shuttle Control console."
+	id = "shuttlecontrol"
+	req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Console Boards"
+	build_path = /obj/item/weapon/circuitboard/shuttle_control

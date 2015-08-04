@@ -67,6 +67,11 @@
 					M.show_message("<span class='warning'> [user] gently taps [src] with [O].</span>")
 	return
 
+/mob/living/simple_animal/shade/shuttle_act()
+	if(!(src.flags & INVULNERABLE))
+		health -= rand(5,45) //These guys are like ghosts, a collision with a shuttle wouldn't destroy one outright
+	return
+
 ////////////////HUD//////////////////////
 
 /mob/living/simple_animal/shade/Life()

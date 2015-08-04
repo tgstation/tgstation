@@ -256,7 +256,21 @@ var/global/list/ghdel_profiling = list()
 			found += A.search_contents_for(path,filter_path)
 	return found
 
-
+/*
+ *	atom/proc/contains_atom_from_list(var/list/L)
+ *	Basically same as above but it takes a list of paths (like list(/mob/living/,/obj/machinery/something,...))
+ * RETURNS: a found atom
+ */
+/atom/proc/contains_atom_from_list(var/list/L)
+	for(var/atom/A in src)
+		for(var/T in L)
+			if(istype(A,T))
+				return A
+		if(A.contents.len)
+			var/atom/R = A.contains_atom_from_list(L)
+			if(R)
+				return R
+	return 0
 
 
 /*
@@ -492,6 +506,10 @@ its easier to just keep the beam vertical.
 
 /atom/proc/singularity_act()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/singularity_act() called tick#: [world.time]")
+	return
+
+//Called when a shuttle collides with an atom
+/atom/proc/shuttle_act(var/datum/shuttle/S)
 	return
 
 /atom/proc/singularity_pull()

@@ -918,6 +918,13 @@ Thanks.
 	if(!(src.flags & INVULNERABLE))
 		step_towards(src, S)
 
+//shuttle_act is called when a shuttle collides with the mob
+/mob/living/shuttle_act(datum/shuttle/S)
+	if(!(src.flags & INVULNERABLE))
+		src.attack_log += "\[[time_stamp()]\] was gibbed by a shuttle ([S.name], [S.type])!"
+		gib()
+	return
+
 /mob/living/proc/InCritical()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/InCritical() called tick#: [world.time]")
 	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)

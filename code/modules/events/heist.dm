@@ -252,6 +252,6 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 
 /datum/event/heist/proc/check_finished()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/event/heist/proc/check_finished() called tick#: [world.time]")
-	if (!(is_raider_crew_alive()) || (vox_shuttle_location && (vox_shuttle_location == "start")))
+	if (!(is_raider_crew_alive()) || (vox_shuttle && vox_shuttle.returned_home) )
 		return 1
 	return ..()

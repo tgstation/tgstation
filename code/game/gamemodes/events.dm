@@ -195,9 +195,7 @@
 				vents += temp_vent
 
 	var/list/candidates = get_active_candidates(ROLE_ALIEN,buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
-	for(var/mob/M in candidates)
-		if(jobban_isbanned(M, "xenomorph"))
-			candidates -= M
+
 	if(prob(40)) spawncount++ //sometimes, have two larvae spawn instead of one
 	while((spawncount >= 1) && vents.len && candidates.len)
 

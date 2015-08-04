@@ -788,7 +788,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 			<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
@@ -839,6 +838,57 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=secrets")
 	return
 
+/datum/admins/proc/shuttle_magic()
+	var/dat = "<b>WARNING:</b> abuse will result in hilarity and removal of your flags.<br><h3>GENERAL COMMANDS:</h3><br>"
+	dat +={"<a href='?src=\ref[src];shuttle_create_destination=1'> Create a destination docking port</a><br>
+	<i>This will create a destination docking port at your location, facing the direction you are currently facing.</i><br>
+
+	<a href='?src=\ref[src];shuttle_add_destination=1'> Add a destination docking port to a shuttle</a><br>
+	<i>This will allow the shuttle to move to it.</i><br>
+
+	<a href='?src=\ref[src];shuttle_create_shuttleport=1'> Create a shuttle docking port</a><br>
+	<i>This will create a shuttle docking port at your location, facing the direction you are currently facing. Shuttle docking ports are used by shuttles to dock to destination docking ports.</i><br>
+
+	<a href='?src=\ref[src];shuttle_get_console=1'> Teleport to shuttle's control console</a><br>
+	<i>If the shuttle has no control consoles linked to it, you'll have the option to create one at your location.</i><br>
+
+	<a href='?src=\ref[src];shuttle_move_to=1'> Send a shuttle</a><br>
+	<i>This command allows you to send any existing shuttle to any destination docking port in the world.</i><br>
+
+	<a href='?src=\ref[src];shuttle_teleport_to=1'> Teleport to a shuttle</a><br><br>
+
+	<a href='?src=\ref[src];shuttle_teleport_to_dock=1'> Teleport to a destination docking port</a><br><br>
+
+	<a href='?src=\ref[src];shuttle_edit=1'> Edit a shuttle's parameters</a><br><br>
+
+	<a href='?src=\ref[src];shuttle_show_overlay=1'> Show a shuttle's outline</a><br>
+	<i>This command will create a transparent overlay in the shape of a selected shuttle next to you. Its position is calculated as if it were docked at a docking port at your location. The overlay is only visible to you.</i><br>
+
+	<h3>FUN COMMANDS:</h3><br>
+
+	<a href='?src=\ref[src];shuttle_shuttlify=1'> Turn current area into a shuttle</a><br>
+
+	<a href='?src=\ref[src];shuttle_move_to_self=1'> Send a shuttle <b>to your current location</b></a><br>
+	<i>The shuttle will calculate its position as if you were a destination docking port (including the direction you're facing).</i><br>
+
+	<a href='?src=\ref[src];shuttle_forcemove=1'> Forcemove a shuttle</a><br>
+	<i>This command allows you to instantly move a shuttle to any destination docking port in the world OR to your location, with no regard for cooldowns and delays.</i><br>
+
+	<a href='?src=\ref[src];shuttle_supercharge=1'> SUPERCHARGE a shuttle</a><br>
+	<i>Once you select a shuttle, its cooldown and movement delay will become 0, but it will sometimes miss its destination.</i><br>
+
+	<h3>EMERGENCY STUFF:</h3><br>
+	<a href='?src=\ref[src];shuttle_toggle_lockdown=1'> Toggle lockdown on a shuttle</a><br>
+
+	<a href='?src=\ref[src];shuttle_delete=1'> Delete a shuttle</a><br>
+	<i>You'll have the option of deleting all of its objects and turfs.</i><br>
+
+	<a href='?src=\ref[src];shuttle_reset=1'> Reset a shuttle</a><br>
+	<i>Reset a shuttle to its initial state. Changes to turfs, objects and the shuttle's location won't be reverted.</i><br>
+
+	<a href='?src=\ref[src];shuttle_mass_lockdown=1'> LOCKDOWN ALL SHUTTLES</a><br>
+	<i>IT'S LOOSE</i><br>"}
+	usr << browse(dat, "window=shuttlemagic")
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
@@ -1352,27 +1402,6 @@ proc/move_admin_shuttle()
 		admin_shuttle_location = 0
 	else
 		admin_shuttle_location = 1
-	return
-
-/**********************Centcom Ferry**************************/
-
-var/ferry_location = 0 // 0 = centcom , 1 = station
-
-proc/move_ferry()
-	//writepanic("[__FILE__].[__LINE__] \\/proc/move_ferry() called tick#: [world.time]")
-	var/area/fromArea
-	var/area/toArea
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-	fromArea.move_contents_to(toArea)
-	if (ferry_location)
-		ferry_location = 0
-	else
-		ferry_location = 1
 	return
 
 /**********************Alien ship**************************/

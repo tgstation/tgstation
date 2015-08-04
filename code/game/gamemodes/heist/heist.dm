@@ -292,7 +292,7 @@ Use :V to voxtalk, :H to talk on your encrypted channel, and <b>don't forget to 
 	return 1
 
 /datum/game_mode/heist/check_finished()
-	if(!is_raider_crew_alive() || vox_shuttle_location == "start")
+	if(!is_raider_crew_alive() || (vox_shuttle && vox_shuttle.returned_home))
 		return 1
 
 	return ..()

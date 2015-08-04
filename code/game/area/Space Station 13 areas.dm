@@ -145,7 +145,8 @@ proc/process_adminbus_teleport_locs()
 
 /area/shuttle
 	requires_power = 0
-	lighting_use_dynamic = 0 //Lighting STILL disabled, even with the new bay engine, because lighting doesn't play nice with our shuttles, might just be our shuttle code, or the small changes in the lighting engine we have from bay.
+	lighting_use_dynamic = 1 //Lighting STILL disabled, even with the new bay engine, because lighting doesn't play nice with our shuttles, might just be our shuttle code, or the small changes in the lighting engine we have from bay.
+	//haha fuck you we dynamic lights now
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -277,8 +278,6 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Syndicate Elite Shuttle"
 	icon_state = "shuttlered2"
 
-/area/shuttle/administration/lighting_use_dynamic = 0
-
 /area/shuttle/administration/centcom
 	name = "\improper Administration Shuttle Centcom"
 	icon_state = "shuttlered"
@@ -289,6 +288,7 @@ proc/process_adminbus_teleport_locs()
 
 /area/shuttle/thunderdome
 	name = "honk"
+	lighting_use_dynamic = 0
 
 /area/shuttle/thunderdome/grnshuttle
 	name = "\improper Thunderdome GRN Shuttle"
