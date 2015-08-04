@@ -2,6 +2,7 @@
 	name = "bluespace pocket"
 	max_w_class = 3
 	max_combined_w_class = 6
+	cant_hold = list(/obj/item/weapon/disk/nuclear)
 	silent = 1
 
 
@@ -23,6 +24,8 @@
 /obj/item/weapon/implant/storage/removed(source)
 	if(..())
 		storage.close_all()
+		for(var/obj/item/I in storage)
+			storage.remove_from_storage(I, get_turf(source))
 		return 1
 
 /obj/item/weapon/implant/storage/implant(mob/source)
