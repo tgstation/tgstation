@@ -1,17 +1,17 @@
 # vgstation
 
-[Website](http://ss13.pomf.se) - [Code](http://github.com/d3athrow/vgstation13/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
+[Website](http://ss13.pomf.se) - [Code](http://gitlab.com/vgstation/vgstation/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
 
 ---
  
 ### GETTING THE CODE
 The simplest way to obtain the code is using the github .zip feature.
 
-Click [here](https://github.com/d3athrow/vgstation13/archive/master.zip) to get the latest stable code as a .zip file, then unzip it to wherever you want.
+Click [here](https://gitlab.com/vgstation/vgstation/repository/archive.zip?ref=Bleeding-Edge) to get the latest stable code as a .zip file, then unzip it to wherever you want.
 
 The more complicated and easier to update method is using git.  You'll need to download git or some client from [here](http://git-scm.com/).  When that's installed, right click in any folder and click on "Git Bash".  When that opens, type in:
 
-    git clone https://github.com/d3athrow/vgstation13.git
+    git clone https://gitlab.com/vgstation/vgstation.git
 
 (hint: hold down ctrl and press insert to paste into git bash)
 
@@ -86,4 +86,3 @@ We've included a web control panel with some sample data readouts.  It's recomme
 ### IRC Bot Setup
 
 Included in the repo is an IRC bot capable of relaying adminhelps to a specified IRC channel/server (replaces the older one by Skibiliano).  Instructions for bot setup are included in the /bot/ folder along with the bot/relay script itself.
- 
