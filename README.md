@@ -5,7 +5,7 @@
 ---
  
 ### GETTING THE CODE
-The simplest way to obtain the code is using the github .zip feature.
+The simplest way to obtain the code is using the gitlab .zip feature.
 
 Click [here](https://gitlab.com/vgstation/vgstation/repository/archive.zip?ref=Bleeding-Edge) to get the latest stable code as a .zip file, then unzip it to wherever you want.
 
