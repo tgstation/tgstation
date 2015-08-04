@@ -34,7 +34,12 @@
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
 	internal_organs += new /obj/item/organ/brain/alien
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
+
+
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
@@ -54,7 +59,7 @@
 	return storedPlasma
 
 /mob/living/carbon/alien/check_eye_prot()
-	return 2
+	return ..() + 2
 
 /mob/living/carbon/alien/getToxLoss()
 	return 0
@@ -185,7 +190,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/body_egg/alien_embryo/A = locate() in C
+				var/obj/item/organ/internal/body_egg/alien_embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return

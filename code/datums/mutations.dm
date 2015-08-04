@@ -334,7 +334,7 @@
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
@@ -345,7 +345,7 @@
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(..())
 		return
-	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 
 /datum/mutation/human/stealth
