@@ -1,6 +1,18 @@
 /datum/processSchedulerView
+	var/datum/html_interface/interface
+
+/datum/processSchedulerView/New()
+
+	var/const/head = "<link href='./common.css' rel='stylesheet' type='text/css'>"
+
+	src.interface = new/datum/html_interface(src, "Process Scheduler Detail", 800, 600, head)
+
+	html_machines += src
+
 
 /datum/processSchedulerView/Topic(href, href_list)
+	if(!check_rights(R_DEBUG)) return
+
 	if (!href_list["action"])
 		return
 
@@ -8,93 +20,81 @@
 		if ("kill")
 			var/toKill = href_list["name"]
 			processScheduler.killProcess(toKill)
-			refreshProcessTable()
+			src.refreshTable()
 		if ("enable")
 			var/toEnable = href_list["name"]
 			processScheduler.enableProcess(toEnable)
-			refreshProcessTable()
+			src.refreshTable()
 		if ("disable")
 			var/toDisable = href_list["name"]
 			processScheduler.disableProcess(toDisable)
-			refreshProcessTable()
+			src.refreshTable()
 		if ("refresh")
-			refreshProcessTable()
-
-/datum/processSchedulerView/proc/refreshProcessTable()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/refreshProcessTable() called tick#: [world.time]")
-	windowCall("handleRefresh", getProcessTable())
-
-/datum/processSchedulerView/proc/windowCall(var/function, var/data = null)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/windowCall() called tick#: [world.time]")
-	usr << output(data, "processSchedulerContext.browser:[function]")
+			src.refreshTable()
+			//src.interface.updateContent()
 
 /datum/processSchedulerView/proc/getProcessTable()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getProcessTable() called tick#: [world.time]")
-	var/text = "<table class=\"table table-striped\"><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
+	var/text = "<table><thead><tr><td>Name</td><td colspan=2>Avg(s)</td><td colspan=2>Last(s)</td><td colspan=2>Highest(s)</td><td colspan=2>Tickcount</td><td colspan=2>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
 	// and the context of each
 	for (var/list/data in processScheduler.getStatusData())
 		text += "<tr>"
 		text += "<td>[data["name"]]</td>"
-		text += "<td>[num2text(data["averageRunTime"]/10,3)]</td>"
-		text += "<td>[num2text(data["lastRunTime"]/10,3)]</td>"
-		text += "<td>[num2text(data["highestRunTime"]/10,3)]</td>"
-		text += "<td>[num2text(data["ticks"],4)]</td>"
-		text += "<td>[data["schedule"]]</td>"
+		text += "<td colspan=2>[num2text(data["averageRunTime"]/10,3)]</td>"
+		text += "<td colspan=2>[num2text(data["lastRunTime"]/10,3)]</td>"
+		text += "<td colspan=2>[num2text(data["highestRunTime"]/10,3)]</td>"
+		text += "<td colspan=2>[num2text(data["ticks"],4)]</td>"
+		text += "<td colspan=2>[data["schedule"]]</td>"
 		text += "<td>[data["status"]]</td>"
-		text += "<td><button class=\"btn kill-btn\" data-process-name=\"[data["name"]]\" id=\"kill-[data["name"]]\">Kill</button>"
+		text += "<td><a href=\"?src=\ref[src];action=kill;name=[data["name"]]\">Kill</a>"
 		if (data["disabled"])
-			text += "<button class=\"btn enable-btn\" data-process-name=\"[data["name"]]\" id=\"enable-[data["name"]]\">Enable</button>"
+			text += "<a href=\"?src=\ref[src];action=enable;name=[data["name"]]\">Enable</a>"
 		else
-			text += "<button class=\"btn disable-btn\" data-process-name=\"[data["name"]]\" id=\"disable-[data["name"]]\">Disable</button>"
+			text += "<a href=\"?src=\ref[src];action=disable;name=[data["name"]]\">Disable</a>"
 		text += "</td>"
 		text += "</tr>"
 
 	text += "</tbody></table>"
+
 	return text
+
+
+
+/datum/processSchedulerView/proc/refreshTable()
+	var/text = src.getProcessTable()
+	src.interface.updateContent("processTable", text)
+
+
 
 /**
  * getContext
  * Outputs an interface showing stats for all processes.
  */
+
+
 /datum/processSchedulerView/proc/getContext()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/getContext() called tick#: [world.time]")
-	bootstrap_browse()
-	usr << browse('processScheduler.js', "file=processScheduler.js;display=0")
 
-	var/text = {"<html><head>
-	<title>Process Scheduler Detail</title>
-	<script type="text/javascript">var ref = '\ref[src]';</script>
-	[bootstrap_includes()]
-	<script type="text/javascript" src="processScheduler.js"></script>
-	</head>
-	<body>
+	var/text = {"
 	<h2>Process Scheduler</h2>
-	<div class="btn-group">
-	<button id="btn-refresh" class="btn">Refresh</button>
-	</div>
-
+	<a href='?src=\ref[src];action=refresh'>Refresh</a>
 	<h3>The process scheduler controls [processScheduler.getProcessCount()] loops.<h3>"}
 
+	text += "<div class='statusDisplay'>"
+
 	text += "<div id=\"processTable\">"
-	text += getProcessTable()
-	text += "</div></body></html>"
+	text += src.getProcessTable()
+	text += "</div></div></body></html>"
 
-	usr << browse(text, "window=processSchedulerContext;size=800x600")
+	src.interface.updateLayout("<div id=\"content\"></div>")
+	src.interface.updateContent("content", text)
 
-/datum/processSchedulerView/proc/bootstrap_browse()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/bootstrap_browse() called tick#: [world.time]")
-	usr << browse('bower_components/jquery/dist/jquery.min.js', "file=jquery.min.js;display=0")
-	usr << browse('bower_components/bootstrap2.3.2/bootstrap/js/bootstrap.min.js', "file=bootstrap.min.js;display=0")
-	usr << browse('bower_components/bootstrap2.3.2/bootstrap/css/bootstrap.min.css', "file=bootstrap.min.css;display=0")
-	usr << browse('bower_components/bootstrap2.3.2/bootstrap/img/glyphicons-halflings-white.png', "file=glyphicons-halflings-white.png;display=0")
-	usr << browse('bower_components/bootstrap2.3.2/bootstrap/img/glyphicons-halflings.png', "file=glyphicons-halflings.png;display=0")
-	usr << browse('bower_components/json2/json2.js', "file=json2.js;display=0")
 
-/datum/processSchedulerView/proc/bootstrap_includes()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/processSchedulerView/proc/bootstrap_includes() called tick#: [world.time]")
-	return {"
-	<link rel="stylesheet" href="bootstrap.min.css" />
-	<script type="text/javascript" src="json2.js"></script>
-	<script type="text/javascript" src="jquery.min.js"></script>
-	<script type="text/javascript" src="bootstrap.js"></script>
-	"}
+/client/proc/getSchedulerContext()
+
+	set name = "Process Scheduler Debug"
+	set category = "Debug"
+
+	var/datum/processSchedulerView/processView = new /datum/processSchedulerView
+	processView.getContext()
+	processView.interface.show(usr)
+
