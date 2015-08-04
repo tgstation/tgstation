@@ -826,7 +826,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	clothes_req = 0
 	range = -1
 	include_user = 1
-	action_icon_state = "commune"
+	action_icon_state = "transmit"
 
 /obj/effect/proc_holder/spell/targeted/ascendant_transmit/cast(list/targets)
 	for(var/mob/living/user in targets)
