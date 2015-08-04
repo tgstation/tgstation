@@ -1,0 +1,42 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read. If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscadd (general adding of nice things)
+#   rscdel (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.  
+author: CoreOverload
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes: 
+  - rscadd: "Implants, implant cases and implanters got RnD levels and can be DA'ed for science."
+  - rscadd: "Surgically removed implant can be placed into an implant case. Remove implant with empty implant case in inactive hand."
+  - rscadd: "Surgical steps now got progress bars."
+  - rscadd: "You can cancel a surgery by using drape on operable body part again. This works only before you perform surgery's first step."
+  - rscadd: "Operating computer shows next step for surgeries. No more alt-tabbing to view next step on wiki while operating."
+  - tweak: "You cannot start two surgeries on one body part at once. You can start two multiloc surgeries (i.e. two augumentations) on diffirent body parts at once."
+  - tweak: "Monkey <-> Human transformations now keep your internal organs, cyberimplants and xeno embryos included."
