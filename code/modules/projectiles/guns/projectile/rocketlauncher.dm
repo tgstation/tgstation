@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/projectile/rocketlauncher
 	name = "rocket launcher"
 	desc = "Ranged explosions, science marches on."
-	fire_sound = 'sound/weapons/shotgun.ogg'
+	fire_sound = 'sound/weapons/rocket.ogg'
 	icon_state = "rpg"
 	item_state = "rpg"
 	max_shells = 1

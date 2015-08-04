@@ -55,6 +55,9 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 		return 1
 	return
 
+/obj/proc/cultify()
+	qdel(src)
+
 /obj/proc/is_sharp()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/is_sharp() called tick#: [world.time]")
 	return sharpness

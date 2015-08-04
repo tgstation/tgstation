@@ -309,7 +309,7 @@
 			if (!( src.machine.check_eye(src) ))
 				src.reset_view(null)
 		else
-			if(client && !client.adminobs && !iscamera(client.eye))
+			if(client && !client.adminobs && !iscamera(client.eye) && !isTeleViewing(client.eye))
 				reset_view(null)
 
 	return 1

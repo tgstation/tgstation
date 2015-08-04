@@ -1314,6 +1314,39 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 	. = map.zLevels[z]
 
+/proc/get_dir_cardinal(var/atom/T1,var/atom/T2)
+	if(!T1 || !T2)
+		return null
+
+	var/direc = get_dir(T1,T2)
+
+	if(direc in cardinal)
+		return direc
+
+	switch(direc)
+		if(NORTHEAST)
+			if((T2.x - T1.x) > (T2.y - T1.y))
+				return EAST
+			else
+				return NORTH
+		if(SOUTHEAST)
+			if((T2.x - T1.x) > ((T2.y - T1.y)*-1))
+				return EAST
+			else
+				return SOUTH
+		if(NORTHWEST)
+			if(((T2.x - T1.x)*-1) > (T2.y - T1.y))
+				return WEST
+			else
+				return NORTH
+		if(SOUTHWEST)
+			if((T2.x - T1.x) > (T2.y - T1.y))
+				return WEST
+			else
+				return SOUTH
+		else
+			return null
+
 /proc/adjustAngle(angle)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjustAngle() called tick#: [world.time]")
 	angle = round(angle) + 45
