@@ -299,51 +299,49 @@ var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
-// Recall time limit:  2 hours
-var/recall_time_limit=72000
+//Recall time limit:  2 hours
+var/recall_time_limit = 72000
 
 //Goonstyle scoreboard
-// NOW AN ASSOCIATIVE LIST
-// NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
+//NOW AN ASSOCIATIVE LIST
+//NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
 var/list/score=list(
-	"crewscore"      = 0, // this is the overall var/score for the whole round
-	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
-	"stuffharvested" = 0, // how many harvests have hydroponics done?
-	"oremined"       = 0, // obvious
-	"researchdone"   = 0,
-	"eventsendured"  = 0, // how many random events did the station survive?
-	"powerloss"      = 0, // how many APCs have poor charge?
-	"escapees"       = 0, // how many people got out alive?
-	"deadcrew"       = 0, // dead bodies on the station, oh no
-	"mess"           = 0, // how much poo, puke, gibs, etc went uncleaned
-	"meals"          = 0,
-	"disease"        = 0, // how many rampant, uncured diseases are on board the station
-	"deadcommand"    = 0, // used during rev, how many command staff perished
-	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
-	"traitorswon"    = 0, // how many traitors were successful?
-	"allarrested"    = 0, // did the crew catch all the enemies alive?
-	"opkilled"       = 0, // used during nuke mode, how many operatives died?
-	"disc"           = 0, // is the disc safe and secure?
-	"nuked"          = 0, // was the station blown into little bits?
+	"crewscore"      = 0, //This is the overall var/score for the whole round
+	"stuffshipped"   = 0, //How many useful items have cargo shipped out? Currently broken
+	"stuffharvested" = 0, //How many harvests have hydroponics done (per crop)?
+	"oremined"       = 0, //How many chunks of ore were smelted
+	"eventsendured"  = 0, //How many random events did the station endure?
+	"powerloss"      = 0, //How many APCs have alarms (under 30 %)?
+	"escapees"       = 0, //How many people got out alive?
+	"deadcrew"       = 0, //Humans who died during the round
+	"deadsilicon"	 = 0, //Silicons who died during the round
+	"mess"           = 0, //How much messes on the floor went uncleaned
+	"litter"		 = 0, //How much trash is laying on the station floor
+	"meals"          = 0, //How much food was actively cooked that day
+	"disease"        = 0, //How many disease vectors in the world (one disease on one person is one)
 
-	// these ones are mainly for the stat panel
-	"powerbonus"    = 0, // if all APCs on the station are running optimally, big bonus
-	"messbonus"     = 0, // if there are no messes on the station anywhere, huge bonus
-	"deadaipenalty" = 0, // is the AI dead? if so, big penalty
-	"foodeaten"     = 0, // nom nom nom
-	"clownabuse"    = 0, // how many times a clown was punched, struck or otherwise maligned
-	"richestname"   = null, // this is all stuff to show who was the richest alive on the shuttle
-	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
+	//These ones are mainly for the stat panel
+	"powerbonus"    = 0, //If all APCs on the station are running optimally, big bonus
+	"messbonus"     = 0, //If there are no messes on the station anywhere, huge bonus
+	"deadaipenalty" = 0, //AIs who died during the round
+	"foodeaten"     = 0, //How much food was consumed
+	"clownabuse"    = 0, //How many times a clown was punched, struck or otherwise maligned
+	"richestname"   = null, //This is all stuff to show who was the richest alive on the shuttle
+	"richestjob"    = null,  //Kinda pointless if you dont have a money system i guess
 	"richestcash"   = 0,
 	"richestkey"    = null,
-	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
+	"dmgestname"    = null, //Who had the most damage on the shuttle (but was still alive)
 	"dmgestjob"     = null,
 	"dmgestdamage"  = 0,
 	"dmgestkey"     = null,
+	"explosions"	= 0, //How many explosions happened total
 
 	"arenafights"   = 0,
 	"arenabest"		= null,
 )
+
+var/list/trash_items = list()
+var/list/decals = list()
 
 // Mostly used for ban systems.
 // Initialized on world/New()

@@ -9,6 +9,11 @@
 	w_type=NOT_RECYCLABLE
 	autoignition_temperature = AUTOIGNITION_PAPER
 	fire_fuel = 1
+	//var/global/list/trash_items = list()
+
+/obj/item/trash/New()
+	..()
+	trash_items += src
 
 /obj/item/trash/bustanuts
 	name = "Busta-Nuts"
@@ -103,3 +108,7 @@
 
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return
+
+/obj/item/trash/Destroy()
+	trash_items -= src
+	..()

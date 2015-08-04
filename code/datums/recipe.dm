@@ -107,6 +107,7 @@
 			O.reagents.trans_to(result_obj, O.reagents.total_volume) //If we have reagents in here, squeeze them into the end product
 		qdel(O) //Delete the object, he has outlived his usefulness
 	container.reagents.clear_reagents() //Clear all the reagents we haven't transfered, for instance if we need to cook in water
+	score["meals"]++ //Yes, it's a weird placement, but it's sure to work correctly as long as make_food() is used for food
 	return result_obj //Here we go, your result sire
 
 //Find what to do with all this shit in the microwave dynamically, without blowing up the station

@@ -447,6 +447,7 @@
 		while(R.checkIngredients(src)) //While we have materials for this
 			for(var/ore_id in R.ingredients)
 				ore.removeAmount(ore_id, 1)
+				score["oremined"] += 1 //Count this ore piece as processed for the scoreboard
 
 			getFromPool(R.yieldtype, out_T)
 

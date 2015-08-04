@@ -2,9 +2,9 @@
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/gameticker/proc/scoreboard() called tick#: [world.time]")
 
-	//calls auto_declare_completion_* for all modes
+	//Calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
+		if(findtext("[handler]","auto_declare_completion_"))
 			completions += "[call(mode, handler)()]"
 
 	completions += "<br>[ert_declare_completion()]"
@@ -21,7 +21,7 @@
 	//Look into all mobs in world, dead or alive
 	for(var/datum/mind/Mind in minds)
 		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
+		if(temprole)							//If they are an antagonist of some sort.
 			if(temprole in total_antagonists)	//If the role exists already, add the name to it
 				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
 			else
@@ -33,78 +33,72 @@
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
-	// Score Calculation and Display
+	//Score Calculation and Display
 
-	// Who is alive/dead, who escaped
-	for (var/mob/living/silicon/ai/I in mob_list)
-		if (I.stat == 2 && I.z == 1)
-			score["deadaipenalty"] = 1
-			score["deadcrew"] += 1
+	//Run through humans for diseases, also the Clown
+	for(var/mob/living/carbon/human/I in mob_list)
+		if(I.viruses) //Do this guy have any viruses ?
+			for(var/datum/disease/D in I.viruses) //Alright, start looping through those viruses
+				score["disease"]++ //One point for every disease
 
-	for (var/mob/living/carbon/human/I in mob_list)
-//		for (var/datum/ailment/disease/V in I.ailments)
-//			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
-		if (I.stat == 2 && I.z == 1) score["deadcrew"] += 1
-		if (I.job == "Clown")
+		if(I.job == "Clown")
 			for(var/thing in I.attack_log)
-				if(findtext(thing, "<font color='orange'>")) score["clownabuse"]++
+				if(findtext(thing, "<font color='orange'>")) //I just dropped 10 IQ points from seeing this
+					score["clownabuse"]++
 
-
-	for(var/mob/living/player in mob_list)
-		if (player.client)
-			if (player.stat != 2)
-				var/turf/location = get_turf(player.loc)
-				var/area/escape_zone = locate(/area/shuttle/escape/centcom)
-				if (location in escape_zone)
-					score["escapees"] += 1
+	for(var/mob/living/player in player_list)
+		if(player.stat != DEAD)
+			var/turf/T = get_turf(player)
+			if(istype(T.loc, /area/shuttle/escape/centcom) || istype(T.loc, /area/shuttle/escape_pod1/centcom) || istype(T.loc, /area/shuttle/escape_pod2/centcom) || istype(T.loc, /area/shuttle/escape_pod3/centcom) || istype(T.loc, /area/shuttle/escape_pod5/centcom))
+				score["escapees"]++
 //					player.unlock_medal("100M Dash", 1)
 //				player.unlock_medal("Survivor", 1)
-//				for (var/obj/item/weapon/gnomechompski/G in player.get_contents())
+//				for(var/obj/item/weapon/gnomechompski/G in player.get_contents())
 //					player.unlock_medal("Guardin' gnome", 1)
 
+				var/cashscore = 0
+				var/dmgscore = 0
 
-	var/cashscore = 0
-	var/dmgscore = 0
-	for(var/mob/living/carbon/human/E in mob_list)
-		cashscore = 0
-		dmgscore = 0
-		var/turf/location = get_turf(E.loc)
-		var/area/escape_zone = locate(/area/shuttle/escape/centcom)
-		if(E.stat != 2 && location in escape_zone) // Escapee Scores
-			for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
-				cashscore += C1.GetBalance()
 
-			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
-				cashscore += C2.worth
+				for(var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
+					cashscore += C1.GetBalance()
 
-//			for(var/datum/data/record/Ba in data_core.bank)
-//				if(Ba.fields["name"] == E.real_name) cashscore += Ba.fields["current_money"]
-			if (cashscore > score["richestcash"])
-				score["richestcash"] = cashscore
-				score["richestname"] = E.real_name
-				score["richestjob"] = E.job
-				score["richestkey"] = E.key
-			dmgscore = E.bruteloss + E.fireloss + E.toxloss + E.oxyloss
-			if (dmgscore > score["dmgestdamage"])
-				score["dmgestdamage"] = dmgscore
-				score["dmgestname"] = E.real_name
-				score["dmgestjob"] = E.job
-				score["dmgestkey"] = E.key
+				for(var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
+					cashscore += C2.worth
+
+//					for(var/datum/data/record/Ba in data_core.bank)
+//						if(Ba.fields["name"] == E.real_name)
+//							cashscore += Ba.fields["current_money"]
+				if(cashscore > score["richestcash"])
+					score["richestcash"] = cashscore
+					score["richestname"] = player.real_name
+					score["richestjob"] = player.job
+					score["richestkey"] = player.key
+				dmgscore = player.bruteloss + player.fireloss + player.toxloss + player.oxyloss
+				if(dmgscore > score["dmgestdamage"])
+					score["dmgestdamage"] = dmgscore
+					score["dmgestname"] = player.real_name
+					score["dmgestjob"] = player.job
+					score["dmgestkey"] = player.key
+
+	/*
 
 	var/nukedpenalty = 1000
-	if (ticker.mode.config_tag == "nuclear")
+	if(ticker.mode.config_tag == "nuclear")
 		var/foecount = 0
 		for(var/datum/mind/M in ticker.mode:syndicates)
 			foecount++
-			if (!M || !M.current)
+			if(!M || !M.current)
 				score["opkilled"]++
 				continue
 			var/turf/T = M.current.loc
-			if (T && istype(T.loc, /area/security/brig)) score["arrested"] += 1
-			else if (M.current.stat == 2) score["opkilled"]++
-		if(foecount == score["arrested"]) score["allarrested"] = 1
+			if(T && istype(T.loc, /area/security/brig))
+				score["arrested"]++
+			else if(M.current.stat == DEAD)
+				score["opkilled"]++
+		if(foecount == score["arrested"])
+			score["allarrested"] = 1
 
-/*
 		score["disc"] = 1
 		for(var/obj/item/weapon/disk/nuclear/A in world)
 			if(A.loc != /mob/living/carbon) continue
@@ -112,114 +106,157 @@
 			var/area/bad_zone1 = locate(/area)
 			var/area/bad_zone2 = locate(/area/syndicate_station)
 			var/area/bad_zone3 = locate(/area/wizard_station)
-			if (location in bad_zone1) score["disc"] = 0
-			if (location in bad_zone2) score["disc"] = 0
-			if (location in bad_zone3) score["disc"] = 0
-			if (A.loc.z != 1) score["disc"] = 0
-*/
-		if (score["nuked"])
-			for (var/obj/machinery/nuclearbomb/NUKE in machines)
-				if (NUKE.r_code == "Nope") continue
-				var/turf/T = NUKE.loc
-				if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar)) nukedpenalty = 1000
-				else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armory) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
-				else if (istype(T,/area/engine)) nukedpenalty = 100000
-				else nukedpenalty = 10000
+			if(location in bad_zone1)
+				score["disc"] = 0
+			if(location in bad_zone2)
+				score["disc"] = 0
+			if(location in bad_zone3)
+				score["disc"] = 0
+			if(A.loc.z != 1)
+				score["disc"] = 0
 
-	if (ticker.mode.config_tag == "revolution")
+		if(score["nuked"])
+			nukedpenalty = 50000 //Congratulations, your score was nuked
+
+			for(var/obj/machinery/nuclearbomb/nuke in machines)
+				if(nuke.r_code == "Nope")
+					continue
+				var/turf/T = get_turf(nuke)
+				if(istype(T, /area/syndicate_station) || istype(T, /area/wizard_station) || istype(T, /area/solar))
+					nukedpenalty = 1000
+				else if(istype(T, /area/security/main) || istype(T, /area/security/brig) || istype(T, /area/security/armory) || istype(T, /area/security/checkpoint2))
+					nukedpenalty = 50000
+				else if(istype(T, /area/engine))
+					nukedpenalty = 100000
+				else
+					nukedpenalty = 10000
+
+
+	if(ticker.mode.config_tag == "revolution")
 		var/foecount = 0
 		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
 			foecount++
-			if (!M || !M.current)
+			if(!M || !M.current)
 				score["opkilled"]++
 				continue
 			var/turf/T = M.current.loc
-			if (istype(T.loc, /area/security/brig)) score["arrested"] += 1
-			else if (M.current.stat == 2) score["opkilled"]++
-		if(foecount == score["arrested"]) score["allarrested"] = 1
+			if(istype(T.loc, /area/security/brig))
+				score["arrested"]++
+			else if (M.current.stat == DEAD)
+				score["opkilled"]++
+		if(foecount == score["arrested"])
+			score["allarrested"] = 1
 		for(var/mob/living/carbon/human/player in mob_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-					if (player.stat == 2) score["deadcommand"]++
+					if(player.stat == DEAD)
+						score["deadcommand"]++
 
-	// Check station's power levels
-	for (var/obj/machinery/power/apc/A in power_machines)
-		if (A.z != 1) continue
-		for (var/obj/item/weapon/cell/C in A.contents)
-			if (C.charge < 2300) score["powerloss"] += 1 // 200 charge leeway
+	*/
 
-	// Check how much uncleaned mess is on the station
-	for (var/obj/effect/decal/cleanable/M in world)
-		if (M.z != 1) continue
-		if (istype(M, /obj/effect/decal/cleanable/blood/gibs/)) score["mess"] += 3
-		if (istype(M, /obj/effect/decal/cleanable/blood/)) score["mess"] += 1
-//		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1
-//		if (istype(M, /obj/effect/decal/cleanable/poop)) score["mess"] += 1 // What the literal fuck Paradise. Jesus christ no. - Iamgoofball
-//		if (istype(M, /obj/decal/cleanable/urine)) score["mess"] += 1
-		if (istype(M, /obj/effect/decal/cleanable/vomit)) score["mess"] += 1
+	//Check station's power levels
+	for(var/obj/machinery/power/apc/A in power_machines)
+		if(A.z != map.zMainStation)
+			continue
+		for(var/obj/item/weapon/cell/C in A.contents)
+			if(C.percent() < 30)
+				score["powerloss"]++ //Enough to auto-cut equipment, so alarm
 
-	// Bonus Modifiers
+	var/roundlength = world.time/10 //Get a value in seconds
+	score["time"] = round(roundlength) //One point for every five seconds. One minute is 12 points, one hour 720 points
+
+	//Check how many uncleaned mess are on the station. We can't run through cleanable for reasons, so yeah, long
+	for(var/obj/effect/decal/cleanable/M in decals)
+		if(M.z != map.zMainStation) //Won't work on multi-Z stations, but will do for now
+			continue
+		if(M.messcheck())
+			score["mess"]++
+
+	for(var/obj/item/trash/T in trash_items)
+		if(T.z != map.zMainStation) //Won't work on multi-Z stations, but will do for now
+			continue
+		score["litter"]++
+
+	//Bonus Modifiers
 	//var/traitorwins = score["traitorswon"]
-	var/deathpoints = score["deadcrew"] * 25 //done
-	var/researchpoints = score["researchdone"] * 30
-	var/eventpoints = score["eventsendured"] * 50
-	var/escapoints = score["escapees"] * 25 //done
-	var/harvests = score["stuffharvested"] * 5 //done
-	var/shipping = score["stuffshipped"] * 5
-	var/mining = score["oremined"] * 2 //done
-	//var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
-	var/power = score["powerloss"] * 20
+	var/deathpoints = score["deadcrew"] * 100 //Human beans aren't free
+	var/siliconpoints = score["deadsilicon"] * 250 //Silicons certainly aren't either
+	//var/researchpoints = score["researchdone"] * 20 //One discovered design is 20 points. You'll usually find hundreds
+	var/eventpoints = score["eventsendured"] * 200 //Events fine every 10 to 15 and are uncommon
+	var/escapoints = score["escapees"] * 50 //Two rescued human beans are worth a dead one
+	var/harvests = score["stuffharvested"] * 1 //One harvest is one product. So 5 wheat is 5 points
+	//var/shipping = score["stuffshipped"] * 5 //Does not work currently
+	var/mining = score["oremined"] * 1 //Not actually counted at mining, but at processing. One ore smelted is one point
+	var/meals = score["meals"] * 5 //Every item cooked (needs to fire make_food()) awards five points
+	//var/drinks = score["drinks"] * 5 //All drinks that ever existed award five points. No better way to do it yet
+	var/power = score["powerloss"] * 50 //Power issues are BAD, they mean the Engineers aren't doing their job at all
+	var/litter = score["litter"] //Every item listed under /obj/item/trash will cost one point if it exists
+	var/time = round(score["time"] * 0.2) //Every five seconds the station survives is one point. One minute is 12, one hour 720
 	var/messpoints
-	if (score["mess"] != 0) messpoints = score["mess"] //done
-	var/plaguepoints = score["disease"] * 30
+	//var/atmos
+	if(score["mess"] != 0)
+		messpoints = score["mess"] //If there are any messes, let's count them
+	//if(score["airloss"] != 0)
+		//atmos = score["airloss"] * 20 //Air issues are bad, but since it's space, don't stress it too much
+	var/plaguepoints = score["disease"] * 50 //A diseased crewman is half-dead, as they say, and a double diseased is double half-dead
 
-	// Mode Specific
-	if (ticker.mode.config_tag == "nuclear")
-		if (score["disc"]) score["crewscore"] += 500
+	//Mode Specific
+	if(ticker.mode.config_tag == "nuclear")
+		if(score["disc"])
+			score["crewscore"] += 500
 		var/killpoints = score["opkilled"] * 250
 		var/arrestpoints = score["arrested"] * 1000
 		score["crewscore"] += killpoints
 		score["crewscore"] += arrestpoints
-		if (score["nuked"]) score["crewscore"] -= nukedpenalty
+		//if(score["nuked"])
+			//score["crewscore"] -= nukedpenalty
 
-	if (ticker.mode.config_tag == "revolution")
+	if(ticker.mode.config_tag == "revolution")
 		var/arrestpoints = score["arrested"] * 1000
 		var/killpoints = score["opkilled"] * 500
 		var/comdeadpts = score["deadcommand"] * 500
-		if (score["traitorswon"]) score["crewscore"] -= 10000
+		if(score["traitorswon"])
+			score["crewscore"] -= 10000
 		score["crewscore"] += arrestpoints
 		score["crewscore"] += killpoints
 		score["crewscore"] -= comdeadpts
 
-	// Good Things
-	score["crewscore"] += shipping
+	//Good Things
+	//score["crewscore"] += shipping
 	score["crewscore"] += harvests
 	score["crewscore"] += mining
-	score["crewscore"] += researchpoints
 	score["crewscore"] += eventpoints
 	score["crewscore"] += escapoints
+	score["crewscore"] += meals
+	score["crewscore"] += time
 
-	if (power == 0)
-		score["crewscore"] += 2500
+	if(!power) //No APCs with bad power
+		score["crewscore"] += 2500 //Give the Engineers a pat on the back for bothering
 		score["powerbonus"] = 1
-	if (score["mess"] == 0)
-		score["crewscore"] += 3000
+	if(!messpoints && !litter) //Not a single mess or litter on station
+		score["crewscore"] += 10000 //Congrats, not even a dirt patch or chips bag anywhere
 		score["messbonus"] = 1
-	//score["crewscore"] += meals
-	if (score["allarrested"]) score["crewscore"] *= 3 // This needs to be here for the bonus to be applied properly
+	//if(!atmos) //No air alarms anywhere
+		//score["crewscore"] += 5000 //Give the Atmospheric Technicians a good pat on the back for caring
+		//score["atmosbonus"] = 1
+	if(score["allarrested"])
+		score["crewscore"] *= 3 //This needs to be here for the bonus to be applied properly
 
-	// Bad Things
+	//Bad Things
 	score["crewscore"] -= deathpoints
-	if (score["deadaipenalty"]) score["crewscore"] -= 250
+	score["crewscore"] -= siliconpoints
+	if(score["deadaipenalty"])
+		score["crewscore"] -= 1000 //Give a harsh punishment for killing the AI
 	score["crewscore"] -= power
-	//if (score["crewscore"] != 0) // Dont divide by zero!
-	//	while (traitorwins > 0)
+	//score["crewscore"] -= atmos
+	//if(score["crewscore"] != 0) //Dont divide by zero!
+	//	while(traitorwins > 0)
 	//		score["crewscore"] /= 2
 	//		traitorwins -= 1
 	score["crewscore"] -= messpoints
+	score["crewscore"] -= litter
 	score["crewscore"] -= plaguepoints
-
 	score["arenafights"] = arena_rounds
 
 	arena_top_score = 0
@@ -230,8 +267,7 @@
 		if(arena_leaderboard[x] == arena_top_score)
 			score["arenabest"] += "[x] "
 
-
-	// Show the score - might add "ranks" later
+	//Show the score - might add "ranks" later
 	world << "<b>The crew's final score is:</b>"
 	world << "<b><font size='4'>[score["crewscore"]]</font></b>"
 
@@ -241,13 +277,14 @@
 			winset(E.client, "rpane.round_end", "is-visible=true")
 	return
 
-
-
 /mob/proc/scorestats(var/completions)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/scorestats() called tick#: [world.time]")
 	var/dat = completions
 	dat += {"<BR><h2>Round Statistics and Score</h2>"}
-	if (ticker.mode.name == "nuclear emergency")
+
+	/*
+
+	if(ticker.mode.name == "nuclear emergency")
 		var/foecount = 0
 		var/crewcount = 0
 		var/diskdat = ""
@@ -255,13 +292,17 @@
 		for(var/datum/mind/M in ticker.mode:syndicates)
 			foecount++
 		for(var/mob/living/C in mob_list)
-			if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai)) continue
-			if (C.stat == 2) continue
-			if (!C.client) continue
+			if(!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai))
+				continue
+			if(C.stat == DEAD)
+				continue
+			if(!C.client)
+				continue
 			crewcount++
 
 		for(var/obj/item/weapon/disk/nuclear/N in world)
-			if(!N) continue
+			if(!N)
+				continue
 			var/atom/disk_loc = N.loc
 			while(!istype(disk_loc, /turf))
 				if(istype(disk_loc, /mob))
@@ -273,17 +314,27 @@
 				disk_loc = disk_loc.loc
 			diskdat += "in [disk_loc.loc]"
 			break // Should only need one go-round, probably
-		var/nukedpenalty = 0
-		for(var/obj/machinery/nuclearbomb/NUKE in machines)
-			if (NUKE.r_code == "Nope") continue
+
+		for(var/obj/machinery/nuclearbomb/nuke in machines)
+			if(nuke.r_code == "Nope")
+				continue
 			var/turf/T = NUKE.loc
 			bombdat = T.loc
-			if (istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar/) || istype(T,/area)) nukedpenalty = 1000
-			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armory) || istype(T,/area/security/checkpoint2)) nukedpenalty = 50000
-			else if (istype(T,/area/engine)) nukedpenalty = 100000
-			else nukedpenalty = 10000
+			if(istype(T,/area/syndicate_station) || istype(T,/area/wizard_station) || istype(T,/area/solar/) || istype(T,/area))
+				nukedpenalty = 1000
+			else if (istype(T,/area/security/main) || istype(T,/area/security/brig) || istype(T,/area/security/armory) || istype(T,/area/security/checkpoint2))
+				nukedpenalty = 50000
+			else if (istype(T,/area/engine))
+				nukedpenalty = 100000
+			else
+				nukedpenalty = 10000
 			break
-		if (!diskdat) diskdat = "Uh oh. Something has fucked up! Report this."
+		if(!diskdat)
+			diskdat = "Uh oh. Something has fucked up! Report this."
+
+		<B>Final Location of Nuke:</B> [bombdat]<BR>
+		<B>Final Location of Disk:</B> [diskdat]<BR><BR>
+
 		dat += {"<B><U>MODE STATS</U></B><BR>
 		<B>Number of Operatives:</B> [foecount]<BR>
 		<B>Number of Surviving Crew:</B> [crewcount]<BR>
@@ -295,26 +346,33 @@
 		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
 //		<B>Nuclear Disk Secure:</B> [score["disc"] ? "Yes" : "No"] ([score["disc"] * 500] Points)<BR>
-	if (ticker.mode.name == "revolution")
+
+	if(ticker.mode.name == "revolution")
 		var/foecount = 0
 		var/comcount = 0
 		var/revcount = 0
 		var/loycount = 0
 		for(var/datum/mind/M in ticker.mode:head_revolutionaries)
-			if (M.current && M.current.stat != 2) foecount++
+			if(M.current && M.current.stat != 2)
+				foecount++
 		for(var/datum/mind/M in ticker.mode:revolutionaries)
-			if (M.current && M.current.stat != 2) revcount++
+			if(M.current && M.current.stat != 2)
+				revcount++
 		for(var/mob/living/carbon/human/player in mob_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
 				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-					if (player.stat != 2) comcount++
+					if(player.stat != 2)
+						comcount++
 				else
-					if(player.mind in ticker.mode:revolutionaries) continue
+					if(player.mind in ticker.mode:revolutionaries)
+						continue
 					loycount++
 		for(var/mob/living/silicon/X in mob_list)
-			if (X.stat != 2) loycount++
+			if (X.stat != 2)
+				loycount++
 		var/revpenalty = 10000
+
 		dat += {"<B><U>MODE STATS</U></B><BR>
 		<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
 		<B>Number of Surviving Command Staff:</B> [comcount]<BR>
@@ -326,23 +384,31 @@
 		<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
 		<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
+
+	*/
+
 //	var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
+
 	<U>THE GOOD:</U><BR>
-	<B>Useful Items Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 5] Points)<BR>
-	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 5] Points)<BR>
-	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"] * 2] Points)<BR>
-	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
-	dat += "<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 25] Points)<BR>"
-	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
+	<B>Length of Shift:</B> [round(world.time/600)] Minutes ([round(score["time"] * 0.2)] Points)<BR>
+	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 1] Points)<BR>
+	<B>Ore Smelted:</B> [score["oremined"]] ([score["oremined"] * 1] Points)<BR>
+	<B>Meals Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
+	<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 50] Points)<BR>
+	<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 200] Points)<BR>
 	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
-	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
+	<B>Ultra-Clean Station:</B> [score["messbonus"] ? "Yes" : "No"] ([score["messbonus"] * 5000] Points)<BR><BR>
+
 	<U>THE BAD:</U><BR>
-	<B>Dead Bodies on Station:</B> [score["deadcrew"]] (-[score["deadcrew"] * 25] Points)<BR>
+	<B>Dead Crewmen:</B> [score["deadcrew"]] (-[score["deadcrew"] * 100] Points)<BR>
+	<B>Destroyed Silicons:</B> [score["deadsilicon"]] (-[score["deadsilicon"] * 250] Points)<BR>
+	<B>AIs Destroyed:</B> [score["deadaipenalty"]] (-[score["deadaipenalty"] * 1000] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
-	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 20] Points)<BR>
-	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
-	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
+	<B>Trash on Station:</B> [score["litter"]] (-[score["litter"]] Points)<BR>
+	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 50] Points)<BR>
+	<B>Unique Disease Vectors:</B> [score["disease"]] (-[score["disease"] * 50] Points)<BR><BR>
+
 	<U>THE WEIRD</U><BR>"}
 /*	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
 	var/profit = totalfunds - 100000
@@ -350,21 +416,26 @@
 	else if (profit < 0) dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"}*/
 	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
 	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR>
+	<B>Number of Explosions This Shift:</B> [score["explosions"]]<BR>
 	<B>Number of Arena Rounds:</B> [score["arenafights"]]<BR>"}
-	if (arena_top_score)
+
+	if(arena_top_score)
 		dat += "<B>Best Arena Fighter (won [arena_top_score] rounds!):</B> [score["arenabest"]]<BR>"
-	if (score["escapees"])
+
+	if(score["escapees"])
 		if(score["dmgestdamage"])
 			dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
 		if(score["richestcash"])
 			dat += "<B>Richest Escapee:</B> [score["richestname"]], [score["richestjob"]]: [score["richestcash"]] space credits ([score["richestkey"]])<BR>"
 	else
-		dat += "The station wasn't evacuated or no one escaped!<BR>"
+		dat += "The station wasn't evacuated or there were no survivors!<BR>"
 	dat += {"<HR><BR>
+
 	<B><U>FINAL SCORE: [score["crewscore"]]</U></B><BR>"}
-	score["rating"] = "The Aristocrats!"
+	score["rating"] = "A Rating"
+
 	switch(score["crewscore"])
-		if(-99999 to -50000) score["rating"] = "Even the Singularity Deserves Better"
+		if(-INFINITY to -50000) score["rating"] = "Even the Singularity Deserves Better"
 		if(-49999 to -5000) score["rating"] = "Singularity Fodder"
 		if(-4999 to -1000) score["rating"] = "You're All Fired"
 		if(-999 to -500) score["rating"] = "A Waste of Perfectly Good Oxygen"
@@ -384,10 +455,10 @@
 		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
 	dat += "<B><U>RATING:</U></B> [score["rating"]]"
 
-	for(var/i=1;i<=end_icons.len;i++)
+	for(var/i = 1; i <= end_icons.len; i++)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
-	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
+	if(!endgame_info_logged) //So the End Round info only gets logged on the first player.
 		endgame_info_logged = 1
 		round_end_info = dat
 		log_game(dat)

@@ -48,7 +48,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/New()
 
 	..()
-	score["meals"]++
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)	//M is target of attack action, user is the one initiating it
 	if(!eatverb)

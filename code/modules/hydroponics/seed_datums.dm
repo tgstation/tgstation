@@ -616,6 +616,9 @@ proc/populate_seed_list()
 		for(var/i = 0;i<total_yield;i++)
 			var/product_type = pick(products)
 			var/obj/item/product = new product_type(get_turf(user))
+
+			score["stuffharvested"] += 1 //One point per product unit
+
 			if(mysterious)
 				product.name += "?"
 				product.desc += " On second thought, something about this one looks strange."
@@ -638,9 +641,6 @@ proc/populate_seed_list()
 			else if(istype(product,/obj/item/weapon/grown))
 				var/obj/item/weapon/grown/current_product = product
 				current_product.plantname = name
-
-			score["stuffharvested"] += 1
-
 
 // When the seed in this machine mutates/is modified, the tray seed value
 // is set to a new datum copied from the original. This datum won't actually

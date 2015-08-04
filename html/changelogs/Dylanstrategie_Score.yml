@@ -1,0 +1,5 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - experiment: Many score items have been refurbished, values have been tweaked and a few items were even added
+  - rscdel: Gamemode-specific score items have been removed due to being extremely problematic
