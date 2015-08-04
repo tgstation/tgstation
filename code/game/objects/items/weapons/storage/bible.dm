@@ -132,6 +132,7 @@
 	var/datum/organ/internal/brain/sponge = M.internal_organs_by_name["brain"]
 	if(sponge && sponge.damage >= 60) //Massive brain damage
 		user << "<span class='warning'>[M] responds to \the [src]'s blessing with drooling and an empty stare. [deity_name]'s teachings appear to be lost on this poor soul.</span>"
+		return //Brainfart
 	//TODO: Put code for followers right here
 	if(prob(20)) //1/5 chance of adding some brain damage. You can't just heal people for free
 		M.adjustBrainLoss(5)
