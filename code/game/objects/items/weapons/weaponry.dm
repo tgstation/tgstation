@@ -16,67 +16,6 @@
 		viewers(user) << "<span class='danger'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>"
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
-/obj/item/weapon/nullrod
-	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
-	icon_state = "nullrod"
-	item_state = "nullrod"
-	flags = FPRINT
-	slot_flags = SLOT_BELT
-	force = 15
-	throw_speed = 1
-	throw_range = 4
-	throwforce = 10
-	w_class = 1
-
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return (BRUTELOSS|FIRELOSS)
-
-/obj/item/weapon/nullrod/attack(mob/M as mob, mob/living/user as mob) //Paste from old-code to decult with a null rod.
-
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-	if(!iscarbon(user))
-		M.LAssailant = null
-	else
-		M.LAssailant = user
-
-	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return
-
-	if ((M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>The rod slips out of your hand and hits your head.</span>"
-		user.take_organ_damage(10)
-		user.Paralyse(20)
-		return
-	if(M.mind && M.mind.vampire && ishuman(M))
-		if(!(VAMP_MATURE in M.mind.vampire.powers))
-			M << "<span class='warning'>The nullrod's power interferes with your own!</span>"
-			M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
-			if(user.mind && user.mind.assigned_role == "Chaplain")
-				M.mind.vampire.smitecounter += 30
-	..()
-
-/obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob, prox_flag, params)
-	if(!prox_flag)
-		return
-	user.delayNextAttack(8)
-	if (istype(A, /turf/simulated/floor))
-		user << "<span class='notice'>You hit the floor with the [src].</span>"
-		call(/obj/effect/rune/proc/revealrunes)(src)
-
-/obj/item/weapon/nullrod/pickup(mob/living/user as mob)
-	if(user.mind)
-		if(user.mind.assigned_role == "Chaplain")
-			user << "<span class ='notice'>The obsidian rod is teeming with divine power. You feel like you could pulverize a horde of undead with this.</span>"
-		if(user.mind.vampire && !(VAMP_UNDYING in user.mind.vampire.powers))
-			user.mind.vampire.smitecounter += 60
-			user << "<span class ='warning'>You feel an unwanted presence as you pick up the rod.</span>"
-
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
