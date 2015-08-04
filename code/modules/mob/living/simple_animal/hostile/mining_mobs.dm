@@ -87,16 +87,12 @@
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
-	target = new_target
-	if(target != null)
-		Aggro()
-		stance = HOSTILE_STANCE_ATTACK
+	if(..()) //we have a target
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.bodytemperature > 200)
 				L.bodytemperature = 200
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
@@ -154,17 +150,14 @@
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
-			stance = HOSTILE_STANCE_ATTACK
-			return
-		if(isliving(target))
+
+		else if(isliving(target))
 			Aggro()
-			stance = HOSTILE_STANCE_ATTACK
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
 			Burrow()
-			return
-	return
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -366,7 +359,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 

@@ -12,7 +12,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "daemon"
 	icon_living = "daemon"
-	speed = 0
+	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
@@ -21,18 +21,26 @@
 	minbodytemp = 0
 	faction = list("slaughter")
 	attacktext = "wildly tears into"
-	maxHealth = 250
-	health = 250
+	maxHealth = 200
+	health = 200
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	see_in_dark = 8
+	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/playstyle_string = "<B>You are the Slaughter Demon, a terible creature from another existence. You have a single desire: To kill.  \
 						You may Ctrl+Click on blood pools to travel through them, appearing and dissaapearing from the station at will. \
-						Pulling a dead or critical mob while you enter a pool will pull them in with you, allowing you to feast. </B>"
+						Pulling a dead or critical mob while you enter a pool will pull them in with you, allowing you to feast. \
+						You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
 
+/mob/living/simple_animal/slaughter/Life()
+	..()
+	if(boost<world.time)
+		speed = 1
+	else
+		speed = 0
 
 /mob/living/simple_animal/slaughter/death()
 	..(1)
@@ -43,6 +51,12 @@
 	ghostize()
 	qdel(src)
 	return
+
+
+/mob/living/simple_animal/slaughter/phasein()
+	..()
+	speed = 0
+	boost = world.time + 30
 
 
 //////////The Loot
@@ -59,3 +73,4 @@
 	user << "You absorb some of the demon's power!"
 	user.bloodcrawl = BLOODCRAWL
 	qdel(src)
+
