@@ -24,7 +24,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 			returnToPool(spell_master)
 		spell_masters = null
 		spells = null
-		remove_screen_obj_references()
+		remove_screen_objs()
 		for(var/atom/movable/AM in client.screen)
 			var/obj/screen/screenobj = AM
 			if(istype(screenobj))
@@ -45,39 +45,101 @@ var/global/obj/screen/fuckstat/FUCK = new
 	qdel(hud_used)
 	..()
 
-/mob/proc/remove_screen_obj_references()
+/mob/proc/remove_screen_objs()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_screen_obj_references() called tick#: [world.time]")
-	flash = null
-	blind = null
-	hands = null
-	pullin = null
-	visible = null
-	purged = null
-	internals = null
-	oxygen = null
-	i_select = null
-	m_select = null
-	toxin = null
-	fire = null
-	bodytemp = null
-	healths = null
-	throw_icon = null
-	nutrition_icon = null
-	pressure = null
-	damageoverlay = null
-	pain = null
-	item_use_icon = null
-	gun_move_icon = null
-	gun_run_icon = null
-	gun_setting_icon = null
-	m_suitclothes = null
-	m_suitclothesbg = null
-	m_hat = null
-	m_hatbg = null
-	m_glasses = null
-	m_glassesbg = null
-	spell_masters = null
-	zone_sel = null
+	if(flash)
+		returnToPool(flash)
+		flash = null
+	if(blind)
+		returnToPool(blind)
+		blind = null
+	if(hands)
+		returnToPool(hands)
+		hands = null
+	if(pullin)
+		returnToPool(pullin)
+		pullin = null
+	if(visible)
+		returnToPool(visible)
+		visible = null
+	if(purged)
+		returnToPool(purged)
+		purged = null
+	if(internals)
+		returnToPool(internals)
+		internals = null
+	if(oxygen)
+		returnToPool(oxygen)
+		oxygen = null
+	if(i_select)
+		returnToPool(i_select)
+		i_select = null
+	if(m_select)
+		returnToPool(m_select)
+		m_select = null
+	if(toxin)
+		returnToPool(toxin)
+		toxin = null
+	if(fire)
+		returnToPool(fire)
+		fire = null
+	if(bodytemp)
+		returnToPool(bodytemp)
+		bodytemp = null
+	if(healths)
+		returnToPool(healths)
+		healths = null
+	if(throw_icon)
+		returnToPool(throw_icon)
+		throw_icon = null
+	if(nutrition_icon)
+		returnToPool(nutrition_icon)
+		nutrition_icon = null
+	if(pressure)
+		returnToPool(pressure)
+		pressure = null
+	if(damageoverlay)
+		returnToPool(damageoverlay)
+		damageoverlay = null
+	if(pain)
+		returnToPool(pain)
+		pain = null
+	if(item_use_icon)
+		returnToPool(item_use_icon)
+		item_use_icon = null
+	if(gun_move_icon)
+		returnToPool(gun_move_icon)
+		gun_move_icon = null
+	if(gun_run_icon)
+		returnToPool(gun_run_icon)
+		gun_run_icon = null
+	if(gun_setting_icon)
+		returnToPool(gun_setting_icon)
+		gun_setting_icon = null
+	if(m_suitclothes)
+		returnToPool(m_suitclothes)
+		m_suitclothes = null
+	if(m_suitclothesbg)
+		returnToPool(m_suitclothesbg)
+		m_suitclothesbg = null
+	if(m_hat)
+		returnToPool(m_hat)
+		m_hat = null
+	if(m_hatbg)
+		returnToPool(m_hatbg)
+		m_hatbg = null
+	if(m_glasses)
+		returnToPool(m_glasses)
+		m_glasses = null
+	if(m_glassesbg)
+		returnToPool(m_glassesbg)
+		m_glasses = null
+	if(m_glassesbg)
+		returnToPool(m_glassesbg)
+		m_glasses = null
+	if(zone_sel)
+		returnToPool(zone_sel)
+		zone_sel = null
 
 /mob/proc/cultify()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/cultify() called tick#: [world.time]")
