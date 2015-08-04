@@ -17,7 +17,7 @@
 		processing_objects.Add(src)
 
 		for(var/mob/dead/observer/O in get_active_candidates(ROLE_ALIEN,poll="[affected_mob] has been infected by \a [src]!"))
-			if(O.client && O.client.desires_role(ROLE_ALIEN))
+			if(O.client && O.client.desires_role(ROLE_ALIEN) && !jobban_isbanned(O, "xenomorph"))
 				if(check_observer(O))
 					O << "<span class=\"recruit\">You have automatically been signed up for \a [src]. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>)</span>"
 					ghost_volunteers += O
@@ -127,7 +127,10 @@
 		break
 	if(!ghostpicked || !istype(ghostpicked))
 		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
-		if(!candidates.len)
+		for(var/mob/M in candidates)
+			if(jobban_isbanned(M, "xenomorph"))
+				candidates -= M
+		if(!candidates.len && !jobban_isbanned(affected_mob, "xenomorph"))
 			picked = affected_mob.key //Pick the person who was infected
 		else
 			for(var/mob/dead/observer/O in candidates)
@@ -138,6 +141,9 @@
 	if(!picked)
 		stage = 4 // Let's try again later.
 		var/list/candidates = get_active_candidates(ROLE_ALIEN, buffer=ALIEN_SELECT_AFK_BUFFER, poll=1)
+		for(var/mob/M in candidates)
+			if(jobban_isbanned(M, "xenomorph"))
+				candidates -= M
 		for(var/mob/dead/observer/O in candidates) //Shiggy
 			O << "<span class=\"recruit\">[affected_mob] is about to burst from \a [src]!. (<a href='?src=\ref[O];jump=\ref[src]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign Up</a>)</span>"
 		return

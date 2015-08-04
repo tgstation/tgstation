@@ -187,12 +187,23 @@
 		mmi = null
 	..()
 
-/mob/living/silicon/robot/remove_screen_obj_references()
+/mob/living/silicon/robot/remove_screen_objs()
 	..()
-	cells = null //TODO: Move to mob level helper
-	inv1 = null
-	inv2 = null
-	inv3 = null
+	if(cells)
+		returnToPool(cells)
+		cells = null //TODO: Move to mob level helper
+	if(inv1)
+		returnToPool(inv1)
+		inv1 = null
+	if(inv2)
+		returnToPool(inv2)
+		inv2 = null
+	if(inv3)
+		returnToPool(inv3)
+		inv3 = null
+	if(robot_modules_background)
+		returnToPool(robot_modules_background)
+		robot_modules_background = null
 
 /proc/getAvailableRobotModules()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getAvailableRobotModules() called tick#: [world.time]")
