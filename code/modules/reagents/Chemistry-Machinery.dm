@@ -793,8 +793,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	overlays.len = 0
 
-	icon_state = "mixer" //This is what we'll be using
-
 	if(beaker)
 		beaker.pixel_x = -9 //Move it far to the left
 		beaker.pixel_y = 5 //Move it up
