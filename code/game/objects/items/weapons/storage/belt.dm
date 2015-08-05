@@ -136,7 +136,8 @@
 		"/obj/item/clothing/mask/surgical",
 		"/obj/item/clothing/gloves/latex",
         "/obj/item/weapon/reagent_containers/hypospray/autoinjector",
-		"/obj/item/device/mass_spectrometer"
+		"/obj/item/device/mass_spectrometer",
+		"/obj/item/device/gps/paramedic"
 	)
 
 
