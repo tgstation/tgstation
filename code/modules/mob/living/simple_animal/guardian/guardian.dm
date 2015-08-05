@@ -22,6 +22,7 @@
 	environment_smash = 0
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	var/cooldown = 0
 	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
@@ -32,16 +33,17 @@
 	var/bio_fluff_string = "Your scarabs fail to mutate. This shouldn't happen! Submit a bug report!"
 
 
-
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
+			visible_message("<span class='danger'>The [src] dies along with it's user!</span>")
 			ghostize()
 			qdel(src)
 	else
 		src << "<span class='danger'>Your summoner has died!</span>"
+		visible_message("<span class='danger'>The [src] dies along with it's user!</span>")
 		ghostize()
 		qdel(src)
 	if(summoner)
@@ -74,10 +76,10 @@
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
 		if (1.0)
-			gib()
 			if(src.summoner)
 				src.summoner << "<span class='danger'><B>Your [src.name] was blown up!</span></B>"
 				src.summoner.gib()
+			gib()
 			return
 		if (2.0)
 			adjustBruteLoss(60)
@@ -136,8 +138,8 @@
 
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
 	damage_transfer = 0.6
@@ -153,7 +155,7 @@
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
-			M.adjust_fire_stacks(10)
+			M.adjust_fire_stacks(20)
 			M.IgniteMob()
 
 //Standard
@@ -280,8 +282,8 @@
 /mob/living/simple_animal/hostile/guardian/bluespace
 	ranged = 1
 	range = 15
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	speed = -1
 	attack_sound = 'sound/weapons/emitter.ogg'
 	projectiletype = /obj/item/projectile/magic/teleport
@@ -298,6 +300,82 @@
 		if(!M.anchored && M != src.summoner)
 			do_teleport(M, M, 10)
 
+/mob/living/simple_animal/hostile/guardian/bomb
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	damage_transfer = 0.6
+	range = 13
+	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via shift click."
+	magic_fluff_string = "..And draw the Scientist, master of explosive death."
+	tech_fluff_string = "Boot sequence complete. Explosive modules active. Nanoswarm online."
+	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of stealthily booby trapping items."
+	var/bomb_cooldown = 0
+
+/mob/living/simple_animal/hostile/guardian/bomb/ShiftClickOn(atom/movable/A)
+	if(istype(A, /obj/))
+		if(bomb_cooldown <= world.time && !stat)
+			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
+			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
+			bomb_cooldown = world.time + 400
+			B.spawner = src
+			B.disguise (A)
+		else
+			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 40 seconds between bombs.</span></B>"
+
+/obj/item/weapon/guardian_bomb
+	name = "bomb"
+	desc = "You shouldn't be seeing this!"
+	var/obj/stored_obj
+	var/mob/living/spawner
+
+
+
+/obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
+	A.loc = src
+	stored_obj = A
+	name = A.name
+	desc = A.desc
+	icon = A.icon
+	icon_state = A.icon_state
+	overlays = A.overlays
+	anchored = A.anchored
+	density = A.density
+	pixel_y = A.pixel_y
+	pixel_x = A.pixel_x
+	spawn(600)
+		stored_obj.loc = get_turf(src.loc)
+		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
+		qdel(src)
+
+/obj/item/weapon/guardian_bomb/proc/detonate(var/mob/living/user)
+	user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
+	spawner << "<span class='danger'><B>Success! Your trap caught [user]</span></B>"
+	stored_obj.loc = get_turf(src.loc)
+	playsound(get_turf(src),'sound/effects/Explosion2.ogg', 200, 1)
+	user.ex_act(2)
+	qdel(src)
+
+/obj/item/weapon/guardian_bomb/attackby(mob/living/user)
+	detonate(user)
+	return
+
+/obj/item/weapon/guardian_bomb/pickup(mob/living/user)
+	detonate(user)
+	return
+
+/obj/item/weapon/guardian_bomb/examine(mob/user)
+	stored_obj.examine(user)
+	if(get_dist(user,src)<=2)
+		user << "<span class='notice'>Looks odd!</span>"
+
+
+
+
+
+
+
+
+
 
 
 ////////Creation
@@ -313,7 +391,7 @@
 	var/use_message = "You shuffle the deck..."
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
-	var/list/possible_guardians = list("Fire", "Standard", "Scout", "Shield", "Ranged", "Healer", "Fast")
+	var/list/possible_guardians = list("Fire", "Standard", "Scout", "Shield", "Ranged", "Healer", "Fast", "Explosive")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -385,6 +463,9 @@
 
 		if("Bluespace")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/bluespace
+
+		if("Explosive")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
 
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
