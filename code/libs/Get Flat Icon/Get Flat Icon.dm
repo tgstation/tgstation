@@ -35,6 +35,9 @@ var/list/directional = list(
 	/obj/machinery/door/airlock/multi_tile,
 	/obj/machinery/camera,
 	/obj/structure/bomberflame,
+	/obj/machinery/door/firedoor/border_only,
+	/obj/item/projectile,
+	/obj/effect/beam/emitter,
 	)
 
 var/list/exception = list(
