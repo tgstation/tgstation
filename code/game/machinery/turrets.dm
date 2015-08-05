@@ -231,6 +231,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/turret/proc/shootAt() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
+	var/fire_sound = 'sound/weapons/Laser.ogg'
 	if (!T || !U)
 		return
 	var/obj/item/projectile/A
@@ -240,28 +241,32 @@
 				A = getFromPool(/obj/item/projectile/beam, loc)
 			if(2)
 				A = getFromPool(/obj/item/projectile/beam/heavylaser, loc)
+				fire_sound = 'sound/weapons/lasercannonfire.ogg'
 			if(3)
 				A = getFromPool(/obj/item/projectile/beam/pulse, loc)
+				fire_sound = 'sound/weapons/pulse.ogg'
 			if(4)
 				A = getFromPool(/obj/item/projectile/change, loc)
+				fire_sound = 'sound/weapons/radgun.ogg'
 			if(5)
 				A = getFromPool(/obj/item/projectile/beam/lastertag/blue, loc)
 			if(6)
 				A = getFromPool(/obj/item/projectile/beam/lastertag/red, loc)
-		A.original = target
 		use_power(500)
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )
+		fire_sound = 'sound/weapons/Taser.ogg'
 		use_power(200)
 
 	A.original = target
+	A.target = U
 	A.current = T
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn()
-		A.OnFired()
-		A.process()
+	playsound(T, fire_sound, 50, 1)
+	A.OnFired()
+	A.process()
 	return
 
 
@@ -663,15 +668,10 @@
 			cur_target = null
 			return
 		src.dir = get_dir(src,target)
-		var/turf/targloc = get_turf(target)
-		var/target_x = targloc.x
-		var/target_y = targloc.y
-		var/target_z = targloc.z
-		targloc = null
 		spawn	for(var/i=1 to min(projectiles, projectiles_per_shot))
-			if(!src) break
+			if(!src || !target) break
 			var/turf/curloc = get_turf(src)
-			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
+			var/turf/targloc = get_turf(target)
 			if (!targloc || !curloc)
 				continue
 			if (targloc == curloc)
@@ -679,7 +679,9 @@
 			playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
 			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
+			A.original = target
 			A.current = curloc
+			A.target = targloc
 			A.starting = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
