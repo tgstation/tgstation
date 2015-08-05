@@ -226,7 +226,6 @@
 
 		// Radiation
 		for(var/mob/living/carbon/M in view(src,3))
-			// TODO: Standardize radiation damage.  Currently does not check for armor. (handle in apply_effect?)
 			var/rads = RADS_PER_TICK * sqrt( 1 / (get_dist(M, src) + 1) )
 			if(istype(M,/mob/living/carbon/human))
 				M.apply_effect((rads*count_rad_wires()),IRRADIATE)
