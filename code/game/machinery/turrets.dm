@@ -256,9 +256,11 @@
 
 	A.original = target
 	A.current = T
+	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
+	spawn()
+		A.OnFired()
 		A.process()
 	return
 
@@ -678,8 +680,10 @@
 			var/obj/item/projectile/A = new /obj/item/projectile(curloc)
 			src.projectiles--
 			A.current = curloc
+			A.starting = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
+			A.OnFired()
 			A.process()
 			sleep(2)
 		return
