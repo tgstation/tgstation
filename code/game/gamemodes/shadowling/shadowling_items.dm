@@ -97,7 +97,6 @@
 /obj/structure/shadow_vortex/Crossed(td)
 	..()
 	if(ismob(td))
-		td << "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \
-		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>" //A bit of spooking before they die
+		td << "<span class='userdanger'>You enter the rift. Deafening chimes jingle in your ears. You are swallowed in darkness.</span>"
 	playsound(loc, 'sound/effects/EMPulse.ogg', 25, 1)
 	qdel(td)
