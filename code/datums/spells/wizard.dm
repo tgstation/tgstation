@@ -165,6 +165,7 @@
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
 	range = 0
+	cooldown_min = 90
 	summon_amt = 1
 	action_icon_state = "time"
 
