@@ -562,7 +562,7 @@
 	var/mob/mob = get_mob_by_key(holder.my_atom.fingerprintslast)
 	var/obj/effect/timestop/T = new /obj/effect/timestop
 	T.loc = get_turf(holder.my_atom)
-	T.immune = mob
+	T.immune += mob
 	T.timestop()
 
 

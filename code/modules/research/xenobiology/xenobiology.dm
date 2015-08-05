@@ -410,7 +410,7 @@
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	if(prob(50))	G.gender = "female"
 	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
-	
+
 	G.set_cloned_appearance()
 	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 	G.dna.species.auto_equip(G)
@@ -477,6 +477,9 @@
 			return
 		sleep(1)
 
+
+/obj/effect/timestop/wizard
+	duration = 90
 
 
 /obj/item/stack/tile/bluespace

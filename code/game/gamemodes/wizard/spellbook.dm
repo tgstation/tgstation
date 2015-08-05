@@ -119,6 +119,11 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
 
+/datum/spellbook_entry/timestop
+	name = "Time Stop"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	log_name = "TS"
+
 /datum/spellbook_entry/smoke
 	name = "Smoke"
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
