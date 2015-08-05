@@ -7,8 +7,8 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "guardian"
-	icon_living = "guardian"
+	icon_state = "stand"
+	icon_living = "stand"
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
@@ -266,6 +266,7 @@
 	melee_damage_upper = 10
 	damage_transfer = 1.2
 	projectiletype = /obj/item/projectile/neurotox
+	ranged_cooldown_cap = 1
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	rapid = 1
@@ -292,8 +293,10 @@
 
 /mob/living/simple_animal/hostile/guardian/bluespace/AttackingTarget()
 	..()
-	if(target != anchored && target != src.summoner)
-		do_teleport(target, target, 10)
+	if(istype(target, /atom/movable))
+		var/atom/movable/M = target
+		if(!M.anchored && M != src.summoner)
+			do_teleport(M, M, 10)
 
 
 
@@ -386,8 +389,8 @@
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
 	G.key = key
-	G.name = "[color][mob_name]"
-	G.real_name = "[color][mob_name]"
+	G.name = "[mob_name] [capitalize(picked_color)]"
+	G.real_name = "[mob_name] [capitalize(picked_color)]"
 	G.color = color2hex(picked_color)
 	G << "You are a [mob_name] bound to serve [user.real_name]."
 	G << "You are capable of manifesting or recalling to your master with verbs in the Guardian tab. You will also find a verb to communicate with them privately there."
