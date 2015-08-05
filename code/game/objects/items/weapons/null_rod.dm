@@ -46,6 +46,8 @@
 			if(user.mind && user.mind.assigned_role == "Chaplain")
 				M.mind.vampire.smitecounter += 30 //Smithe the shit out of him. Four strikes and he's out
 
+	//A 25% chance to de-cult per hit that bypasses all protections? Is this some kind of joke? The last thing cult needs right now is that kind of nerfs. Jesus dylan.
+	/*
 	if(iscult(M) && user.mind && (user.mind.assigned_role == "Chaplain")) //Much higher chance of deconverting cultists per hit if Chaplain
 		if(prob(25))
 			M << "<span class='notice'>\The [src]'s intense field suddenly clears your mind of heresy. Your allegiance to Nar'Sie wanes!</span>"
@@ -53,7 +55,7 @@
 			ticker.mode.remove_cultist(M.mind)
 		else //We aren't deconverting him this time, give the Cultist a fair warning
 			M << "<span class='warning'>\The [src]'s intense field is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>"
-
+	*/
 	..() //Whack their shit regardless. It's an obsidian rod, it breaks skulls
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob, prox_flag, params)
