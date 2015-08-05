@@ -120,12 +120,14 @@
 	unset_machine()
 
 	if(src.eyeobj && src.loc)
-		src.eyeobj.loc = src.loc
+		//src.eyeobj.loc = src.loc
+		src.eyeobj.forceMove(src.loc)
 	else
 		src << "ERROR: Eyeobj not found. Creating new eye..."
 		src.eyeobj = new(src.loc)
 		src.eyeobj.ai = src
 		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+		src.eyeobj.forceMove(src.loc)
 
 	if(client && client.eye)
 		client.eye = src
