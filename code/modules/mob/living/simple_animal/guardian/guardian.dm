@@ -37,11 +37,11 @@
 	..()
 	if(summoner)
 		if(summoner.stat == DEAD)
-			src << "Your summoner has died!"
+			src << "<span class='danger'>Your summoner has died!</span>"
 			ghostize()
 			qdel(src)
 	else
-		src << "No summoner!"
+		src << "<span class='danger'>Your summoner has died!</span>"
 		ghostize()
 		qdel(src)
 	if(summoner)
@@ -49,6 +49,7 @@
 			return
 		else
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
+			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
@@ -58,8 +59,8 @@
 			return
 		else
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
+			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
-
 
 
 /mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
@@ -68,6 +69,21 @@
 		src.summoner.adjustBruteLoss(damage)
 		if(damage)
 			src.summoner << "<span class='danger'><B>Your [src.name] is under attack! You take damage!</span></B>"
+
+
+/mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
+	switch (severity)
+		if (1.0)
+			gib()
+			if(src.summoner)
+				src.summoner << "<span class='danger'><B>Your [src.name] was blown up!</span></B>"
+				src.summoner.gib()
+			return
+		if (2.0)
+			adjustBruteLoss(60)
+
+		if(3.0)
+			adjustBruteLoss(30)
 
 
 //Manifest, Recall, Communicate
@@ -151,6 +167,32 @@
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
 	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm stirs to life, ready to tear apart your enemies."
+	var/battlecry = "AT"
+
+/mob/living/simple_animal/hostile/guardian/punch/verb/Battlecry()
+	set name = "Set Battlecry"
+	set category = "Guardian"
+	set desc = "Choose what you shout as you punch"
+	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 6)
+	src.battlecry = input
+
+
+
+/mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
+	..()
+	src.say("<B>[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
+	[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]</B>")
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+	playsound(loc, src.attack_sound, 50, 1, 1)
+
+
 
 //Fast Standard. Does less damage, has less resistance, but moves faster, has higher range
 
@@ -160,6 +202,7 @@
 	damage_transfer = 0.6
 	speed = -1
 	range = 15
+	attacktext = "slices"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	playstyle_string = "As a fast standard type, you have no special abilities and only light damage resistance, but deal high damage at high speed."
 	environment_smash = 1
@@ -184,7 +227,6 @@
 //Scout. No damage, high range, high mobility, low resistance
 
 /mob/living/simple_animal/hostile/guardian/scout
-	ventcrawler = 1
 	range = 255
 	incorporeal_move = 1
 	damage_transfer = 1.2
@@ -240,6 +282,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	speed = -1
+	attack_sound = 'sound/weapons/emitter.ogg'
 	projectiletype = /obj/item/projectile/magic/teleport
 	projectilesound = 'sound/weapons/emitter.ogg'
 	playstyle_string = "As a bluespace type, you have only light damage resistance, but are capable of shooting teleporation bolts as well as flinging enemies away with your standard attack."
@@ -364,9 +407,12 @@
 			user << "[G.magic_fluff_string]."
 		if("tech")
 			user << "[G.tech_fluff_string]."
+			G.attacktext = "swarms"
+			G.speak_emote = list("states")
 		if("bio")
 			user << "[G.bio_fluff_string]."
-
+			G.attacktext = "swarms"
+			G.speak_emote = list("chitters")
 
 
 
