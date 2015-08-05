@@ -5293,7 +5293,7 @@
 "bXO" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor{icon_state = "dark vault full"},/area/crew_quarters/fitness)
 "bXP" = (/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/crew_quarters/fitness)
 "bXQ" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{icon_state = "green"; dir = 4},/area/crew_quarters/fitness)
-"bXR" = (/obj/structure/table,/obj/item/weapon/paper{info = "Brusies sustained in the holodeck can be healed simply by sleeping."; name = "Holodeck Disclaimer"},/turf/simulated/floor,/area/crew_quarters/fitness)
+"bXR" = (/obj/structure/table,/obj/item/weapon/paper{info = "Bruises sustained in the holodeck can be healed simply by sleeping."; name = "Holodeck Disclaimer"},/turf/simulated/floor,/area/crew_quarters/fitness)
 "bXS" = (/obj/machinery/door/airlock{name = "Unisex Restrooms"; req_access_txt = "0"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating,/area/derelictparts/apderelict)
 "bXT" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/item/weapon/light/bulb,/turf/simulated/floor/plating{icon_state = "platingdmg3"},/area/derelictparts/apderelict)
 "bXU" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/medical/medbay3)
