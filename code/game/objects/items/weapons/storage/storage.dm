@@ -1,8 +1,8 @@
-// To clarify:
-// For use_to_pickup and allow_quick_gather functionality,
-// see item/attackby() (/game/objects/items.dm)
-// Do not remove this functionality without good reason, cough reagent_containers cough.
-// -Sayu
+// External storage-related logic:
+// /mob/proc/ClickOn() in /_onclick/click.dm - clicking items in storages
+// /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
+// /item/attackby() in /game/objects/items.dm - use_to_pickup and allow_quick_gather functionality
+// -- c0
 
 
 /obj/item/weapon/storage
@@ -42,11 +42,11 @@
 			show_to(M)
 			return
 
-		if(!( M.restrained() ) && !( M.stat ))
-			if(!( istype(over_object, /obj/screen) ))
+		if(!M.restrained() && !M.stat)
+			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
-			if(!(loc == usr) || (loc && loc.loc == usr))
+			if(loc != usr || (loc && loc.loc == usr))
 				return
 
 			playsound(loc, "rustle", 50, 1, -5)
@@ -107,7 +107,7 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin)
 	close_all()
 	return ..()
 
@@ -168,6 +168,7 @@
 
 	if(display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
+			ND.sample_object.mouse_opacity = 2
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = 20
@@ -177,6 +178,7 @@
 				cy--
 	else
 		for(var/obj/O in contents)
+			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
 			O.layer = 20
@@ -310,6 +312,7 @@
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
+	W.mouse_opacity = 2 //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
 	return 1
 
@@ -339,6 +342,7 @@
 		W.maptext = ""
 	W.on_exit_storage(src)
 	update_icon()
+	W.mouse_opacity = initial(W.mouse_opacity)
 	return 1
 
 

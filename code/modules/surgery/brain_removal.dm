@@ -2,11 +2,13 @@
 	name = "brain removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/extract_brain)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	location = "head"
+	possible_locs = list("head")
+	requires_organic_bodypart = 0
 
 
 //extract brain
 /datum/surgery_step/extract_brain
+	name = "extract brain"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
 	time = 64
 	var/obj/item/organ/brain/B = null

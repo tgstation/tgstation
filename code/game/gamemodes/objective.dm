@@ -462,6 +462,7 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/steal/exchange
 	dangerrating = 10
+	martyr_compatible = 0
 
 /datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	target = otheragent

@@ -308,7 +308,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /mob/living/simple_animal/pet/corgi(location)
+	new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
 
 /datum/chemical_reaction/hair_dye

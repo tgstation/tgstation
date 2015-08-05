@@ -61,7 +61,7 @@
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
 /mob/living/simple_animal/construct/narsie_act()

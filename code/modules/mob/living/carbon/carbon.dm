@@ -531,3 +531,15 @@ var/const/GALOSHES_DONT_HELP = 8
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
+
+/mob/living/carbon/emp_act(severity)
+	for(var/obj/item/organ/internal/O in internal_organs)
+		O.emp_act(severity)
+	..()
+
+
+/mob/living/carbon/check_eye_prot()
+	var/number = ..()
+	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
+		number += EFP.flash_protect
+	return number
