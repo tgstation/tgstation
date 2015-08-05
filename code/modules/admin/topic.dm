@@ -3287,10 +3287,10 @@
 		if(!shuttle_to_link) return
 
 		if(shuttle_to_link.linked_port.must_rotate(port_to_link))
-			port_to_link.dir = turn(shuttle_to_link.linked_port.dir, 180)
-
 			if(alert(usr,"[port_to_link] ([port_to_link.areaname]) will be rotated to match [shuttle_to_link.name]'s direction. Continue?","Admin abuse","Yes","No") == "No")
 				return
+
+			port_to_link.dir = turn(shuttle_to_link.linked_port.dir, 180)
 
 		shuttle_to_link.add_dock(port_to_link)
 
@@ -3317,6 +3317,8 @@
 
 		if(choice == "Yes")
 			shuttle_to_link.set_transit_dock(port_to_link)
+		else
+			return
 
 		message_admins("[key_name_admin(usr)] has set a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to be [shuttle_to_link.name] ([shuttle_to_link.type])'s transit area [formatJumpTo(get_turf(port_to_link))]", 1)
 		log_admin("[key_name_admin(usr)] has set a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to be [shuttle_to_link.name] ([shuttle_to_link.type])'s transit area")
@@ -3640,7 +3642,7 @@
 
 		var/list/L = list("!!YOUR CURRENT LOCATION!!")
 
-		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to FORCEMOVE", "Shuttle FORCEmovement")
+		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to teleport", "Shuttle teleporting")
 		if(!S) return
 
 		for(var/obj/structure/docking_port/destination/D in S.docking_ports)
@@ -3655,7 +3657,7 @@
 			L+=name
 			L[name]=D
 
-		var/choice = input(usr, "Select a location to force [S.name] to move to!", "Shuttle ") in L
+		var/choice = input(usr, "Select a location to teleport [S.name] to!", "Shuttle teleporting") in L
 
 		if(choice == "!!YOUR CURRENT LOCATION!!")
 			var/area/A = get_area(usr)
