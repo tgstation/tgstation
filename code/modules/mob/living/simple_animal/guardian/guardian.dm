@@ -38,12 +38,12 @@
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
-			visible_message("<span class='danger'>The [src] dies along with it's user!</span>")
+			visible_message("<span class='danger'>The [src] dies along with its user!</span>")
 			ghostize()
 			qdel(src)
 	else
 		src << "<span class='danger'>Your summoner has died!</span>"
-		visible_message("<span class='danger'>The [src] dies along with it's user!</span>")
+		visible_message("<span class='danger'>The [src] dies along with its user!</span>")
 		ghostize()
 		qdel(src)
 	if(summoner)
