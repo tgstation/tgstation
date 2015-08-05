@@ -17,20 +17,10 @@ var/global/dmm_suite/preloader/_preloader = null
  *
  */
 
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num)
+/dmm_suite/load_map(dmm_file as file, x_offset = 1, y_offset = 1, z_offset as num)
 
 	if(!z_offset)//what z_level we are creating the map on
 		z_offset = world.maxz+1
-
-	if(!x_offset)
-		x_offset = 0
-
-	if(!y_offset)
-		y_offset = 0
-
-//	y_offset = 150
-
-//	x_offset = 150
 
 	var/quote = ascii2text(34)
 	var/tfile = file2text(dmm_file)//the map file we're creating
