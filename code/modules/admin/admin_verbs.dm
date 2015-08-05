@@ -117,7 +117,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/makepAI
 	)
 var/list/admin_verbs_spawn = list(
-	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
+	/datum/admins/proc/spawn_atom,		/*	Allows us to spawn instances.							*/
+	/client/proc/spawn_datum,		/*	Allows us to spawn datums to the marked datum buffer.	*/
 	/client/proc/respawn_character
 	)
 var/list/admin_verbs_server = list(
@@ -279,7 +280,8 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_mod_window,
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
-	/datum/admins/proc/show_skills
+	/datum/admins/proc/show_skills,
+	/client/proc/vv_marked_datum
 )
 /client/proc/add_admin_verbs()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/client/proc/add_admin_verbs()  called tick#: [world.time]")

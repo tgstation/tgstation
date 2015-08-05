@@ -66,6 +66,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
 
+		if(!hascall(target,procname))
+			usr << "<span style='color: red;'>Error: callproc(): target has no such call [procname].</span>"
+			return
+
 		var/argnum = input("Number of arguments","Number:",0) as num|null
 		if(!argnum && (argnum!=0))	return
 
@@ -75,10 +79,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		//this will protect us from a fair few errors ~Carn
 
 		var/i
-		for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
+		for(i = 1, i < argnum + 1, i++) // Lists indexed from 1 forwards in byond
 
 			// Make a list with each index containing one variable, to be given to the proc
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area", holder.marked_datum ? "marked datum ([holder.marked_datum.type])" : null, "CANCEL")
+
+			if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
+				class = "marked_datum"
+
 			switch(class)
 				if("CANCEL")
 					return
@@ -114,13 +122,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					var/mob/temp = input("Select mob", "Selection", usr) as mob in world
 					lst[i] = temp.loc
 
+				if("marked_datum")
+					lst[i] = holder.marked_datum
+
 		if(targetselected)
 			if(!target)
 				usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
 				return
-			if(!hascall(target,procname))
-				usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
-				return
+
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 		else
@@ -131,7 +140,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/callatomproc(var/atom/target as  anything)
+/client/proc/callatomproc(var/datum/target as anything)
 	set category = "Debug"
 	set name = "Atom ProcCall"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/callatomproc() called tick#: [world.time]")
@@ -147,6 +156,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
 
+		if(!hascall(target, procname))
+			usr << "<span style='color: red;'>Error: callatomproc(): target has no such call [procname].</span>"
+
 		var/argnum = input("Number of arguments","Number:",0) as num|null
 		if(!argnum && (argnum!=0))	return
 
@@ -156,10 +168,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		//this will protect us from a fair few errors ~Carn
 
 		var/i
-		for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
+		for(i = 1, i < argnum + 1, i++) // Lists indexed from 1 forwards in byond
 
 			// Make a list with each index containing one variable, to be given to the proc
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+			class = input("What kind of variable?","Variable Type") in list("text", "num", "type", "reference", "mob reference", "icon", "file", "client", "mob's area", holder.marked_datum ? "marked datum ([holder.marked_datum.type])" : null, "CANCEL")
+
+			if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
+				class = "marked_datum"
+
 			switch(class)
 				if("CANCEL")
 					return
@@ -194,6 +210,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				if("mob's area")
 					var/mob/temp = input("Select mob", "Selection", usr) as mob in world
 					lst[i] = temp.loc
+
+				if("marked_datum")
+					lst[i] = holder.marked_datum
 
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
@@ -1803,3 +1822,51 @@ client/proc/cure_disease()
 	src << "<span class='notice'>Cured [count] mob\s of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]</span>"
 	log_admin("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
 	message_admins("[src]/([ckey(src.key)] Cured all mobs of [disease_name == "-Cure All-" ? "all diseases." : "[disease_name]"]")
+
+/client/proc/spawn_datum(var/object as text)
+	set category = "Debug"
+	set desc = "(datum path) Spawn a datum (turfs NOT supported)"
+	set name = "Spawn Datum"
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/spawn_atom() called tick#: [world.time]")
+
+	if(!check_rights(R_SPAWN))
+		return
+
+	var/list/matches[0]
+
+	for(var/path in typesof(/datum) - typesof(/turf))
+		if(findtext("[path]", object))
+			matches += path
+
+	if(matches.len == 0)
+		usr << "Unable to find any matches."
+		return
+
+	var/chosen
+	if(matches.len == 1)
+		chosen = matches[1]
+	else
+		chosen = input("Select a datum type", "Spawn Datum", matches[1]) as null|anything in matches
+		if(!chosen)
+			return
+
+	holder.marked_datum = new chosen()
+
+	usr << "<span class='notify'>A reference to the new [chosen] has been stored in your marked datum.</span>"
+
+	log_admin("[key_name(usr)] spawned the datum [chosen] to his marked datum.")
+	feedback_add_details("admin_verb","SD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/vv_marked_datum()
+	set category	= "Debug"
+	set desc		= "Opens a VV menu for your marked datum."
+	set name		= "View Marked Datum's Vars"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(!holder.marked_datum)
+		usr << "<span class='warning'>You do not have a marked datum!</span>"
+		return
+
+	debug_variables(holder.marked_datum)
