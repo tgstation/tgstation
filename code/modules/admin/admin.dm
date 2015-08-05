@@ -846,6 +846,9 @@ var/global/floorIsLava = 0
 	<a href='?src=\ref[src];shuttle_add_destination=1'> Add a destination docking port to a shuttle</a><br>
 	<i>This will allow the shuttle to move to it.</i><br>
 
+	<a href='?src=\ref[src];shuttle_set_transit=1'> Set a destination docking port to be a shuttle's transit area</a><br>
+	<i>Use the \"Edit a shuttle's parameters\" option belo to change how the transit area is used</i>
+
 	<a href='?src=\ref[src];shuttle_create_shuttleport=1'> Create a shuttle docking port</a><br>
 	<i>This will create a shuttle docking port at your location, facing the direction you are currently facing. Shuttle docking ports are used by shuttles to dock to destination docking ports.</i><br>
 
@@ -853,7 +856,7 @@ var/global/floorIsLava = 0
 	<i>If the shuttle has no control consoles linked to it, you'll have the option to create one at your location.</i><br>
 
 	<a href='?src=\ref[src];shuttle_move_to=1'> Send a shuttle</a><br>
-	<i>This command allows you to send any existing shuttle to any destination docking port in the world.</i><br>
+	<i>This command allows you to send any existing shuttle to any destination docking port in the world. Cooldown, lockdown and other factors are respected.</i><br>
 
 	<a href='?src=\ref[src];shuttle_teleport_to=1'> Teleport to a shuttle</a><br><br>
 
@@ -864,20 +867,20 @@ var/global/floorIsLava = 0
 	<a href='?src=\ref[src];shuttle_show_overlay=1'> Show a shuttle's outline</a><br>
 	<i>This command will create a transparent overlay in the shape of a selected shuttle next to you. Its position is calculated as if it were docked at a docking port at your location. The overlay is only visible to you.</i><br>
 
-	<h3>FUN COMMANDS:</h3><br>
+	<h3>FUN BUTTONS:</h3><br>
 
 	<a href='?src=\ref[src];shuttle_shuttlify=1'> Turn current area into a shuttle</a><br>
 
 	<a href='?src=\ref[src];shuttle_move_to_self=1'> Send a shuttle <b>to your current location</b></a><br>
 	<i>The shuttle will calculate its position as if you were a destination docking port (including the direction you're facing).</i><br>
 
-	<a href='?src=\ref[src];shuttle_forcemove=1'> Forcemove a shuttle</a><br>
+	<a href='?src=\ref[src];shuttle_forcemove=1'> Teleport a shuttle</a><br>
 	<i>This command allows you to instantly move a shuttle to any destination docking port in the world OR to your location, with no regard for cooldowns and delays.</i><br>
 
 	<a href='?src=\ref[src];shuttle_supercharge=1'> SUPERCHARGE a shuttle</a><br>
 	<i>Once you select a shuttle, its cooldown and movement delay will become 0, but it will sometimes miss its destination.</i><br>
 
-	<h3>EMERGENCY STUFF:</h3><br>
+	<h3>EMERGENCY BUTTONS:</h3><br>
 	<a href='?src=\ref[src];shuttle_toggle_lockdown=1'> Toggle lockdown on a shuttle</a><br>
 
 	<a href='?src=\ref[src];shuttle_delete=1'> Delete a shuttle</a><br>

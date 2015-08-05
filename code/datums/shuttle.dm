@@ -79,7 +79,7 @@
 	var/password = 28011
 	var/can_link_to_computer = LINK_FORBIDDEN
 
-	//Whether the shuttle gibs or displaces stuff
+	//Whether the shuttle gibs or displaces stuff. Change this to COLLISION_DISPLACE to make all shuttles displace stuff by default
 	var/collision_type = COLLISION_DESTROY
 
 	var/list/control_consoles = list()
@@ -88,6 +88,7 @@
 
 /datum/shuttle/New(var/area/starting_area)
 	.=..()
+
 	shuttles |= src
 
 	if(starting_area)
@@ -97,7 +98,7 @@
 			linked_area = starting_area
 		else
 			linked_area = starting_area
-			warning("Unable to find area [starting_area] in world - [src.type] ([src.name]) will be broken.")
+			warning("Unable to find area [starting_area] in world - [src.type] ([src.name]) won't be able to function properly.")
 
 	password = rand(10000,99999)
 

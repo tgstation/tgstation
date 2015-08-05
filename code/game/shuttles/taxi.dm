@@ -30,6 +30,9 @@ var/global/datum/shuttle/taxi/b/taxi_b = new(starting_area = TAXI_B_STARTING_ARE
 
 	stable = 1 //Don't stun everyone and don't throw anything when moving
 
+/datum/shuttle/taxi/is_special()
+	return 1
+
 //TAXI A
 
 /datum/shuttle/taxi/a

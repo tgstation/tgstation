@@ -3254,6 +3254,8 @@
 				PlayerNotesPage(text2num(href_list["index"]))
 		return
 
+	//-------------------------------------------------------------Shuttle stuff-----------------------------------------------------------
+
 	if(href_list["shuttle_create_destination"])
 		feedback_inc("admin_shuttle_magic_used",1)
 		feedback_add_details("admin_shuttle_magic_used","DC")
@@ -3284,16 +3286,40 @@
 		var/datum/shuttle/shuttle_to_link = select_shuttle_from_all(usr,"Select a shuttle to link to [port_to_link] ([port_to_link.areaname])","Admin abuse")
 		if(!shuttle_to_link) return
 
-		var/choice = input(usr,"Would you like to make [port_to_link] ([port_to_link.areaname]) a transit area?","Admin abuse") in list("Yes","No")
+		if(shuttle_to_link.linked_port.must_rotate(port_to_link))
+			port_to_link.dir = turn(shuttle_to_link.linked_port.dir, 180)
 
-		switch(choice)
-			if("No")
-				shuttle_to_link.add_dock(port_to_link)
-			if("Yes")
-				shuttle_to_link.set_transit_dock(port_to_link)
+			if(alert(usr,"[port_to_link] ([port_to_link.areaname]) will be rotated to match [shuttle_to_link.name]'s direction. Continue?","Admin abuse","Yes","No") == "No")
+				return
+
+		shuttle_to_link.add_dock(port_to_link)
 
 		message_admins("[key_name_admin(usr)] has added a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to [shuttle_to_link.name] ([shuttle_to_link.type]) [formatJumpTo(get_turf(port_to_link))]", 1)
 		log_admin("[key_name_admin(usr)] has added a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to [shuttle_to_link.name] ([shuttle_to_link.type])")
+
+	if(href_list["shuttle_set_transit"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","AT")
+
+		var/list/L = list()
+		for(var/obj/structure/docking_port/destination/D in get_turf(usr) )
+			var/name = "[D.name] ([D.areaname])"
+			L += name
+			L[name]=D
+
+		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a new transit area for the shuttle","Admin abuse") as null|anything in L) ]
+		if(!port_to_link) return
+
+		var/datum/shuttle/shuttle_to_link = select_shuttle_from_all(usr,"Select a shuttle of which you want to change transit area to [port_to_link] ([port_to_link.areaname])","Admin abuse")
+		if(!shuttle_to_link) return
+
+		var/choice = input(usr,"Please confirm that you want to make [port_to_link] ([port_to_link.areaname]) a transit area for [shuttle_to_link.name] ([shuttle_to_link.type])?","Admin abuse") in list("Yes","No")
+
+		if(choice == "Yes")
+			shuttle_to_link.set_transit_dock(port_to_link)
+
+		message_admins("[key_name_admin(usr)] has set a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to be [shuttle_to_link.name] ([shuttle_to_link.type])'s transit area [formatJumpTo(get_turf(port_to_link))]", 1)
+		log_admin("[key_name_admin(usr)] has set a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to be [shuttle_to_link.name] ([shuttle_to_link.type])'s transit area")
 
 	if(href_list["shuttle_create_shuttleport"])
 		feedback_inc("admin_shuttle_magic_used",1)
@@ -3629,7 +3655,7 @@
 			L+=name
 			L[name]=D
 
-		var/choice = input(usr, "Select a location to FORCEmove [S.name]!", "Shuttle FORCEmovement") in L
+		var/choice = input(usr, "Select a location to force [S.name] to move to!", "Shuttle ") in L
 
 		if(choice == "!!YOUR CURRENT LOCATION!!")
 			var/area/A = get_area(usr)
@@ -3644,8 +3670,8 @@
 
 			S.move_to_dock(temp)
 
-			message_admins("[key_name_admin(usr)] has FORCEmoved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
-			log_admin("[key_name(usr)] has FORCEmoved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
+			message_admins("[key_name_admin(usr)] has teleported [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])!")
+			log_admin("[key_name(usr)] has teleported [capitalize(S.name)] to himself by ([A.name], [temp.x];[temp.y];[temp.z])")
 
 			qdel(temp)
 			return
@@ -3655,8 +3681,8 @@
 
 			S.move_to_dock(D)
 
-			message_admins("<span class='notice'>[key_name_admin(usr)] has FORCEmoved [capitalize(S.name)] to [choice] ([D.x];[D.y];[D.z])</span>")
-			log_admin("[key_name(usr)] has FORCEmoved [capitalize(S.name)] to [choice] ([D.x];[D.y];[D.z])")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has teleported [capitalize(S.name)] to [choice] ([D.x];[D.y];[D.z])</span>")
+			log_admin("[key_name(usr)] has teleported [capitalize(S.name)] to [choice] ([D.x];[D.y];[D.z])")
 
 			return
 
@@ -3762,3 +3788,5 @@
 			for(var/image/I in images)
 				usr.client.images -= I
 		return
+
+	//------------------------------------------------------------------Shuttle stuff end---------------------------------
