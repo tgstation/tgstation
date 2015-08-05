@@ -174,10 +174,10 @@
 
 		var/area/A = get_area(loc)
 		var/locname = initial(A.name)
-		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 
 		gang = tempgang
 		gang.dom_attempts --
+		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
 		src.name = "[gang.name] Gang [src.name]"
 		healthcheck(0)
