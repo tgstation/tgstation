@@ -32,7 +32,7 @@
 		return
 
 	if((M_CLUMSY in user.mutations) && prob(50))
-		user.visible_message("<span class='warning'>\The [src] slips out of [user]'s hands and hits his head.</span>",
+		user.visible_message("<span class='warning'>\The [src] slips out of [user]'s hands and hits \his head.</span>",
 		"<span class='warning'>\The [src] slips out of your hands and hits your head.</span>")
 		user.apply_damage(10, BRUTE, "head")
 		user.Stun(5)
@@ -43,8 +43,7 @@
 			M << "<span class='warning'>\The [src]'s power violently interferes with your own!</span>"
 			if(M.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
 				M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
-			if(user.mind && user.mind.assigned_role == "Chaplain")
-				M.mind.vampire.smitecounter += 30 //Smithe the shit out of him. Four strikes and he's out
+			M.mind.vampire.smitecounter += 30 //Smithe the shit out of him. Four strikes and he's out
 
 	//A 25% chance to de-cult per hit that bypasses all protections? Is this some kind of joke? The last thing cult needs right now is that kind of nerfs. Jesus dylan.
 	/*

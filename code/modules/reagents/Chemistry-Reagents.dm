@@ -741,7 +741,7 @@
 
 						else
 							if(!(VAMP_MATURE in M.mind.vampire.powers))
-								M << "<span class='danger'>You are doused with a frezzing liquid. You're melting!</span>"
+								M << "<span class='danger'>You are doused with a freezing liquid. You're melting!</span>"
 								M.take_organ_damage(min(15, volume * 2)) //Uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 								M.mind.vampire.smitecounter += volume * 2
 							else
