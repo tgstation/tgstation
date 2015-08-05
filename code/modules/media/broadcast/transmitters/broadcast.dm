@@ -5,8 +5,9 @@
 	icon = 'icons/obj/machines/broadcast.dmi'
 	icon_state = "broadcaster"
 	light_color = LIGHT_COLOR_BLUE
-	use_power = 1
+	use_power = 0 // We use power_connection for this.
 	density = 1
+	anchored = 1 // May need map updates idfk
 	idle_power_usage = 50
 	active_power_usage = 1000
 
@@ -17,23 +18,38 @@
 	var/list/autolink = null
 
 	var/datum/wires/transmitter/wires = null
+	var/datum/power_connection/consumer/cable/power_connection = null
 
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
-	machine_flags = MULTITOOL_MENU | SCREWTOGGLE
+	machine_flags = MULTITOOL_MENU | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/media/transmitter/broadcast/New()
 	..()
 	wires = new(src)
+	power_connection=new(src,LIGHT)
+	power_connection.idle_usage=idle_power_usage
+	power_connection.active_usage=active_power_usage
 
 /obj/machinery/media/transmitter/broadcast/Destroy()
 	if(wires)
 		wires.Destroy()
 		wires = null
+	if(power_connection)
+		power_connection.Destroy()
+		power_connection = null
 	..()
 
+/obj/machinery/media/transmitter/broadcast/proc/cable_power_change(var/list/args)
+	if(power_connection.powered())
+		stat &= ~NOPOWER
+	else
+		stat |= NOPOWER
+
+	update_icon()
+
 /obj/machinery/media/transmitter/broadcast/initialize()
-	testing("[type]/initialize() called!")
+	//testing("[type]/initialize() called!")
 	if(autolink && autolink.len)
 		for(var/obj/machinery/media/source in orange(20, src))
 			if(source.id_tag in autolink)
@@ -42,7 +58,20 @@
 		hook_media_sources()
 	if(on)
 		update_on()
+	power_connection.power_changed.Add(src,"cable_power_change")
+	power_connection.connect()
 	update_icon()
+
+/obj/machinery/media/transmitter/broadcast/wrenchAnchor(mob/user)
+	if(..())
+		if(anchored) // We are now anchored
+			power_connection.connect() // Connect to the powernet
+		else // We are now NOT anchored
+			power_connection.disconnect() // Ditch powernet.
+			on=0
+			update_on()
+		return 1
+	return
 
 /obj/machinery/media/transmitter/broadcast/proc/hook_media_sources()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/transmitter/broadcast/proc/hook_media_sources() called tick#: [world.time]")
@@ -122,20 +151,11 @@
 	return screen
 
 
-
-/obj/machinery/light_switch/power_change()
-	if(powered(LIGHT))
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-
-	updateicon()
-
-/obj/machinery/light_switch/emp_act(severity)
+/obj/machinery/media/transmitter/broadcast/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
-	power_change()
+	cable_power_change()
 	..(severity)
 
 /obj/machinery/media/transmitter/broadcast/update_icon()
@@ -169,6 +189,11 @@
 		return
 
 	if("power" in href_list)
+		if(!power_connection.powernet)
+			power_connection.connect()
+		if(!power_connection.powered())
+			usr << "<span class='warning'>This machine needs to be hooked up to a powered cable.</span>"
+			return
 		on = !on
 		update_on()
 		return
@@ -194,13 +219,14 @@
 /obj/machinery/media/transmitter/broadcast/process()
 	if(stat & (NOPOWER|BROKEN) || wires.IsIndexCut(TRANS_POWER))
 		return
-	if(on)
+	if(on && anchored)
 		if(integrity<=0 || count_rad_wires()==0) //Shut down if too damaged OR if no rad wires
 			on=0
 			update_on()
 
 		// Radiation
 		for(var/mob/living/carbon/M in view(src,3))
+			// TODO: Standardize radiation damage.  Currently does not check for armor. (handle in apply_effect?)
 			var/rads = RADS_PER_TICK * sqrt( 1 / (get_dist(M, src) + 1) )
 			if(istype(M,/mob/living/carbon/human))
 				M.apply_effect((rads*count_rad_wires()),IRRADIATE)

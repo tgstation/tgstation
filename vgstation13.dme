@@ -1389,6 +1389,7 @@
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cable_heavyduty.dm"
 #include "code\modules\power\cell.dm"
+#include "code\modules\power\components.dm"
 #include "code\modules\power\engine.dm"
 #include "code\modules\power\generator.dm"
 #include "code\modules\power\generator_type2.dm"

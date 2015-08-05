@@ -2,6 +2,7 @@
 /datum/powernet
 	var/list/obj/structure/cable/cables = list()	// all cables & junctions
 	var/list/obj/machinery/power/nodes = list()		// all connected machines
+	var/list/datum/power_connection/components = list()		// all connected components
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
 	var/avail = 0				// ...the current available power in the powernet
@@ -50,17 +51,22 @@ Powernet procs :
 		C.powernet = null
 	for(var/obj/machinery/power/P in nodes)
 		P.powernet = null
+	// Power components
+	for(var/datum/power_connection/C in components)
+		C.powernet = null
 	cables = null
 	nodes = null
+	components = null
 
 /datum/powernet/resetVariables()
 	..("cables","nodes")
 	cables = list()
 	nodes = list()
+	components = list()
 
 /datum/powernet/proc/is_empty()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/is_empty() called tick#: [world.time]")
-	return !cables.len && !nodes.len
+	return !cables.len && !nodes.len && !components.len
 
 // helper proc for removing cables from the current powernet
 // warning : this proc doesn't check if the cable exists, but don't worry a runtime should tell you if it doesn't
@@ -80,6 +86,15 @@ Powernet procs :
 	if(is_empty())
 		returnToDPool(src)
 
+// helper proc for removing a power machine from the current powernet
+// warning : this proc doesn't check if the machine exists, but don't worry a runtime should tell you if it doesn't
+/datum/powernet/proc/remove_component(var/datum/power_connection/C)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/remove_component() called tick#: [world.time]")
+	components -= C
+	C.powernet = null
+	if(is_empty())
+		returnToDPool(src)
+
 // add a cable to the current powernet
 /datum/powernet/proc/add_cable(obj/structure/cable/C)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/add_cable() called tick#: [world.time]")
@@ -93,7 +108,7 @@ Powernet procs :
 	cables += C
 
 // add a power machine to the current powernet
-/datum/powernet/proc/add_machine(obj/machinery/power/M)
+/datum/powernet/proc/add_machine(var/obj/machinery/power/M)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/add_machine() called tick#: [world.time]")
 	if(M.powernet)							// if M already has a powernet...
 		if(M.powernet == src)
@@ -103,6 +118,17 @@ Powernet procs :
 	M.build_status = 0 //Resetting build status because it has been added to a powernet
 	M.powernet = src
 	nodes += M
+
+/datum/powernet/proc/add_component(var/datum/power_connection/C)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/powernet/proc/add_component() called tick#: [world.time]")
+	if(C.powernet)							// if M already has a powernet...
+		if(C.powernet == src)
+			return
+		else
+			C.disconnect()		// ..remove it
+	C.build_status = 0 //Resetting build status because it has been added to a powernet
+	C.powernet = src
+	components += C
 
 // handles the power changes in the powernet
 // called every ticks by the powernet controller
@@ -118,6 +144,9 @@ Powernet procs :
 		for(var/obj/machinery/power/battery_port/BP in nodes) //Since portable batteries aren't in our nodes, we pass ourselves to restore them via their connectors
 			if(BP.connected)
 				BP.connected.restore()
+	if(netexcess > 100 && components && components.len) // Same deal as above, but with components.
+		for(var/datum/power_connection/C in components)
+			C.excess(netexcess)
 
 	// updates the viewed load (as seen on power computers)
 	viewload = 0.8 * viewload + 0.2 * load
@@ -144,6 +173,8 @@ Powernet procs :
 		C.oldnewavail = newavail
 	for(var/obj/machinery/power/P in nodes)
 		P.build_status = 1
+	for(var/datum/power_connection/C in components)
+		C.build_status = 1
 	returnToDPool(src)
 
 //Hopefully this will never ever have to be used
@@ -166,6 +197,8 @@ var/global/powernets_broke = 0
 			C.build_status = 0
 		for(var/obj/machinery/power/P in NewPN.nodes)
 			P.build_status = 0
+		for(var/datum/power_connection/C in NewPN.components)
+			C.build_status = 0
 		return 1
 	return 0
 
