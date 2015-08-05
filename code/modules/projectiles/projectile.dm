@@ -60,19 +60,20 @@
 	if(!isliving(target))
 		return 0
 	var/mob/living/L = target
-
-	var/organ_hit_text = ""
-	if(L.has_limbs)
-		organ_hit_text = " in \the [parse_zone(def_zone)]"
-	if(suppressed)
-		playsound(loc, hitsound, 5, 1, -1)
-		L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
-	else
-		if(hitsound)
-			var/volume = vol_by_damage()
-			playsound(loc, hitsound, volume, 1, -1)
-		L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-							"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+	if(blocked != 100) // not completely blocked
+		var/organ_hit_text = ""
+		if(L.has_limbs)
+			organ_hit_text = " in \the [parse_zone(def_zone)]"
+		if(suppressed)
+			playsound(loc, hitsound, 5, 1, -1)
+			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
+		else
+			if(hitsound)
+				var/volume = vol_by_damage()
+				playsound(loc, hitsound, volume, 1, -1)
+			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
+								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		L.on_hit(type)
 
 	var/reagent_note
 	if(reagents && reagents.reagent_list)
@@ -81,7 +82,6 @@
 			reagent_note += R.id + " ("
 			reagent_note += num2text(R.volume) + ") "
 
-	L.on_hit(type)
 	add_logs(firer, L, "shot", src, reagent_note)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
 

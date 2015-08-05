@@ -87,7 +87,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return Attach(AM)
 	return 0
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
@@ -116,7 +116,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(loc == L) return 0
 	if(stat != CONSCIOUS)	return 0
-	if(locate(/obj/item/body_egg/alien_embryo) in L) return 0
+	if(locate(/obj/item/organ/internal/body_egg/alien_embryo) in L) return 0
 	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
 	L.visible_message("<span class='danger'>[src] leaps at [L]'s face!</span>", \
@@ -176,8 +176,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
-			new /obj/item/body_egg/alien_embryo(target)
-
+			new /obj/item/organ/internal/body_egg/alien_embryo(target)
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target
