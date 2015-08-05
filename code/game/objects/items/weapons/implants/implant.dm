@@ -43,12 +43,12 @@
 
 	if(activated)
 		action_button_name = "Activate [src.name]"
-	if(istype(source, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = source
-		H.sec_hud_set_implants()
 	src.loc = source
 	imp_in = source
 	implanted = 1
+	if(istype(source, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = source
+		H.sec_hud_set_implants()
 
 	if(user)
 		add_logs(user, source, "implanted", object="[name]")
