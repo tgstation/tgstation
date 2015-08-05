@@ -3,7 +3,6 @@
 	desc = "An explosion of flavour in every bite"
 	condi = 1
 	chem_board = /obj/item/weapon/circuitboard/snackbar_machine
-	//var/opened = 0
 
 /obj/machinery/chem_master/snackbar_machine/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 
@@ -37,15 +36,15 @@
 	return
 
 /obj/machinery/chem_master/snackbar_machine/attack_hand(mob/user as mob)
-	if(stat & BROKEN)
-		return
+
+	if(..())
+		return 1
 
 	user.set_machine(src)
 
 	var/dat = ""
 	if(!beaker)
 		dat = "Please insert a beaker.<BR>"
-		dat += "<A href='?src=\ref[src];close=1'>Close</A>"
 	else
 		var/datum/reagents/R = beaker.reagents
 		dat += "<A href='?src=\ref[src];eject=1'>Eject beaker and Clear Buffer</A><BR>"
