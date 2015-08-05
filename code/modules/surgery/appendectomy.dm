@@ -24,6 +24,9 @@
 		user.visible_message("[user] successfully removes [target]'s appendix!", "<span class='notice'>You successfully removes [target]'s appendix.</span>")
 		A.loc = get_turf(target)
 		A.Remove(target)
+		for(var/datum/disease/appendicitis in target.viruses)
+			appendicitis.cure()
+		target.resistances += /datum/disease/appendicitis
 	else
 		user << "<span class='warning'>You can't find an appendix in [target]!</span>"
 	return 1
