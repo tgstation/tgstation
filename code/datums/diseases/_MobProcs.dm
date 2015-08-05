@@ -40,7 +40,7 @@
 		DD.carrier = 1
 
 	//Copy properties over. This is so edited diseases persist.
-	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars")
+	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
 	for(var/V in DD.vars)
 		if(V in skipped)
 			continue

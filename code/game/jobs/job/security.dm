@@ -52,6 +52,8 @@ Head of Security
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
+	announce_head(H.mind, list("Security")) //tell underlings (security radio) they have a head
+
 /*
 Warden
 */
@@ -160,6 +162,7 @@ Security Officer
 	default_headset = /obj/item/device/radio/headset/headset_sec/alt
 	default_backpack = /obj/item/weapon/storage/backpack/security
 	default_satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	default_storagebox = /obj/item/weapon/storage/box/security
 
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_weapons) //But see /datum/job/warden/get_access()

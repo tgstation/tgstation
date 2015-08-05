@@ -177,7 +177,7 @@
 	user.mind.transfer_to(target)
 	if(ghost && ghost.mind)
 		ghost.mind.transfer_to(user)
-	user.key = ghost.key
+		user.key = ghost.key
 
 	user.Paralyse(2)
 	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"

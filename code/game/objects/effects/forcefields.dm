@@ -8,7 +8,8 @@
 	density = 1
 	unacidable = 1
 
-
+/obj/effect/forcefield/CanAtmosPass(turf/T)
+	return !density
 
 
 

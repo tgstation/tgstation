@@ -9,7 +9,6 @@
 	max_temperature = 60000
 	infra_luminosity = 3
 	var/zoom = 0
-	var/thrusters = 0
 	var/smoke = 5
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
@@ -21,7 +20,6 @@
 	force = 45
 	max_equip = 4
 	var/datum/action/mecha/mech_smoke/smoke_action = new
-	var/datum/action/mecha/mech_toggle_thrusters/thrusters_action = new
 	var/datum/action/mecha/mech_zoom/zoom_action = new
 
 /obj/mecha/combat/marauder/New()
@@ -41,15 +39,6 @@
 			last_message = world.time
 		return 0
 	return ..()
-
-
-/obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
-	if(..())
-		return 1
-	if(thrusters && movement_dir && use_power(step_energy_drain))
-		return 1
-	return 0
-
 
 /obj/mecha/combat/marauder/GrantActions(var/mob/living/user, var/human_occupant = 0)
 	..()
@@ -78,9 +67,9 @@
 
 /obj/mecha/combat/marauder/get_stats_part()
 	var/output = ..()
-	output += {"<b>Smoke:</b> [smoke]
-					<br>
-					<b>Thrusters:</b> [thrusters?"on":"off"]
+	output += {"<b>Smoke:</b> [smoke]<br>
+				<b>Thrusters:</b> [thrusters?"on":"off"]<br>
+				<b>Zoom:</b> [zoom?"on":"off"]
 					"}
 	return output
 
@@ -128,6 +117,7 @@
 	icon_state = "mauler"
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/structure/mecha_wreckage/mauler
+	max_equip = 5
 
 /obj/mecha/combat/marauder/mauler/loaded/New()
 	..()
@@ -145,7 +135,7 @@
 
 /datum/action/mecha/mech_smoke
 	name = "Smoke"
-	button_icon_state = "smoke"
+	button_icon_state = "mech_smoke"
 
 /datum/action/mecha/mech_smoke/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -158,26 +148,9 @@
 		spawn(M.smoke_cooldown)
 			M.smoke_ready = 1
 
-/datum/action/mecha/mech_toggle_thrusters
-	name = "Toggle Thrusters"
-	button_icon_state = "mech_toggle_thrusters"
-
-/datum/action/mecha/mech_toggle_thrusters/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	var/obj/mecha/combat/marauder/M = chassis
-	if(M.get_charge() > 0)
-		M.thrusters = !M.thrusters
-		if(M.thrusters)
-			button_icon_state = "mech_toggle_thrusters_on"
-		else
-			button_icon_state = "mech_toggle_thrusters"
-		M.log_message("Toggled thrusters.")
-		M.occupant_message("<font color='[M.thrusters?"blue":"red"]'>Thrusters [M.thrusters?"en":"dis"]abled.")
-
 /datum/action/mecha/mech_zoom
 	name = "Zoom"
-	button_icon_state = "mech_zoom"
+	button_icon_state = "mech_zoom_off"
 
 /datum/action/mecha/mech_zoom/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -185,6 +158,7 @@
 	var/obj/mecha/combat/marauder/M = chassis
 	if(owner.client)
 		M.zoom = !M.zoom
+		button_icon_state = "mech_zoom_[M.zoom ? "on" : "off"]"
 		M.log_message("Toggled zoom mode.")
 		M.occupant_message("<font color='[M.zoom?"blue":"red"]'>Zoom mode [M.zoom?"en":"dis"]abled.</font>")
 		if(M.zoom)

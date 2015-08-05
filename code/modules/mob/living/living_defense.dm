@@ -44,12 +44,6 @@
 		else
 				return 0
 
-/mob/living/throw_impact(atom/hit_atom)
-	. = ..()
-	if(hit_atom.density)
-		Weaken(1)
-		take_organ_damage(10)
-
 /mob/living/hitby(atom/movable/AM)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM

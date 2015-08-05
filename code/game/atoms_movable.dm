@@ -76,6 +76,8 @@
 
 /atom/movable/Destroy()
 	. = ..()
+	if(loc)
+		loc.handle_atom_del(src)
 	if(reagents)
 		qdel(reagents)
 	for(var/atom/movable/AM in contents)

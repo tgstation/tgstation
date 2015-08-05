@@ -707,6 +707,7 @@
 			switch(H.hal_screwyhud)
 				if(1)	H.healths.icon_state = "health6"
 				if(2)	H.healths.icon_state = "health7"
+				if(5)	H.healths.icon_state = "health0"
 				else
 					switch(H.health - H.staminaloss)
 						if(100 to INFINITY)		H.healths.icon_state = "health0"
@@ -737,6 +738,8 @@
 					icon_num = 4
 				if(damage > (comparison*4))
 					icon_num = 5
+				if(H.hal_screwyhud == 5)
+					icon_num = 0
 				if(icon_num)
 					H.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[L.name][icon_num]")
 
@@ -1037,7 +1040,6 @@
 						H.apply_effect(20, PARALYZE, armor)
 					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
 						ticker.mode.remove_revolutionary(H.mind)
-						ticker.mode.remove_gangster(H.mind)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1098,7 +1100,7 @@
 	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
-	if(isorgan(def_zone))
+	if(islimb(def_zone))
 		organ = def_zone
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)

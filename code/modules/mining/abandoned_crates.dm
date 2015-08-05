@@ -114,7 +114,7 @@
 		if(89)
 			new /obj/item/organ/brain/alien(src)
 		if(90)
-			new /obj/item/organ/heart(src)
+			new /obj/item/organ/internal/heart(src)
 		if(91)
 			new /obj/item/device/soulstone/anybody(src)
 		if(92)

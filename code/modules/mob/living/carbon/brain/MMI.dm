@@ -46,11 +46,7 @@
 			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
-			var/mob/dead/observer/ghost = B.get_ghost()
-			if(ghost)
-				if(ghost.client)
-					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI. Return to your body!</span> (Verbs -> Ghost -> Re-enter corpse)"
-					ghost << sound('sound/effects/genetics.ogg')
+			B.notify_ghost_cloning("Someone has put your brain in a MMI!")
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
 		brainmob = newbrain.brainmob
