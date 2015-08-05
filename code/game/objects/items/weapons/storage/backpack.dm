@@ -270,7 +270,6 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = 3 //Can fit in backpacks itself.
-	storage_slots = 5
 	max_combined_w_class = 15
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
@@ -334,7 +333,6 @@
 	desc = "A menacingly looking dufflebag for holding surgery tools."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
-	storage_slots = 10
 
 /obj/item/weapon/storage/backpack/dufflebag/syndiesurgery/New()
 	..()
