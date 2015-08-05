@@ -284,3 +284,41 @@
 
 		effect_turf.Cut(idx, idx + 1)
 		effect_str.Cut(idx, idx + 1)
+
+//Whoop yet not another copy pasta because speed ~~~~BYOND.
+//Calculates lighting for an individual turf, used when a turf's lighting goes dynamic (construction of floors, for example.)
+//Assumes the turf is visible and such.
+//For the love of god don't call this proc when it's not needed! Lighting artifacts WILL happen!
+/datum/light_source/proc/calc_turf(var/turf/T)
+	var/idx = effect_turf.Find(T)
+	if(!idx)
+		return	//WHY.
+
+	if(T.lighting_overlay)
+	  #if LIGHTING_FALLOFF == 1 // circular
+		. = (T.lighting_overlay.x - source_turf.x)**2 + (T.lighting_overlay.y - source_turf.y)**2 + LIGHTING_HEIGHT
+	   #if LIGHTING_LAMBERTIAN == 1
+		. = CLAMP01((1 - CLAMP01(sqrt(.) / light_range)) * (1 / (sqrt(. + 1))))
+	   #else
+		. = 1 - CLAMP01(sqrt(.) / light_range)
+	   #endif
+
+	  #elif LIGHTING_FALLOFF == 2 // square
+		. = abs(T.lighting_overlay.x - source_turf.x) + abs(T.lighting_overlay.y - source_turf.y) + LIGHTING_HEIGHT
+	   #if LIGHTING_LAMBERTIAN == 1
+		. = CLAMP01((1 - CLAMP01(. / light_range)) * (1 / (sqrt(.)**2 + )))
+	   #else
+		. = 1 - CLAMP01(. / light_range)
+	   #endif
+	  #endif
+		. *= light_power
+
+		. = round(., LIGHTING_ROUND_VALUE)
+
+		effect_str[idx] = .
+
+		T.lighting_overlay.update_lumcount(
+			lum_r * .,
+			lum_g * .,
+			lum_b * .
+		)
