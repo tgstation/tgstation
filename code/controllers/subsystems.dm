@@ -42,7 +42,6 @@
 		testing(msg)
 		return
 	world << "<span class='boldannounce'>[msg]</span>"
-	world.log << msg
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
