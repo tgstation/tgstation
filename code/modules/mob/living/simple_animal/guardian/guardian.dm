@@ -335,8 +335,6 @@
 	A.loc = src
 	stored_obj = A
 	appearance = A.appearance
-	pixel_y = A.pixel_Y
-	pixel_x = A.pixel_x
 	spawn(600)
 		stored_obj.loc = get_turf(src.loc)
 		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
