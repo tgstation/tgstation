@@ -203,7 +203,7 @@ Pipelines + Other Objects -> Pipe network
 	if(!(direction & initialize_directions)) //cant go this way.
 		return
 
-	if(buckled_mob) // fixes buckle ventcrawl edgecase fuck bug
+	if(buckled_mob == user) // fixes buckle ventcrawl edgecase fuck bug
 		return
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
