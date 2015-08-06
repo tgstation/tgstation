@@ -214,6 +214,13 @@ var/global/powernets_broke = 0
 	. = list()
 	//var/fdir = (!d) ? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 
+	if(!cable_only)
+		for(var/datum/power_connection/C in T.power_connections)
+			if(!unmarked || !C.powernet)		// if unmarked=1 we only return things with no powernet
+				if(d == 0)
+					. += C
+
+
 	for(var/AM in T)
 		if(AM == source)						// we don't want to return source
 			continue
@@ -248,6 +255,7 @@ var/global/powernets_broke = 0
 	//world.log << "propagating new network"
 	var/list/worklist = list()
 	var/list/found_machines = list()
+	var/list/found_connections = list()
 	var/index = 1
 	var/obj/P = null
 
@@ -263,6 +271,10 @@ var/global/powernets_broke = 0
 				PN.add_cable(C)
 			worklist |= C.get_connections()	//get adjacents power objects, with or without a powernet
 
+		if(istype(P, /datum/power_connection))
+			var/datum/power_connection/C = P
+			found_connections |= C				    // we wait until the powernet is fully propagates to connect the machines
+
 		else if(P.anchored && istype(P, /obj/machinery/power))
 			var/obj/machinery/power/M = P
 			found_machines |= M						// we wait until the powernet is fully propagates to connect the machines
@@ -274,6 +286,9 @@ var/global/powernets_broke = 0
 	for(var/obj/machinery/power/PM in found_machines)
 		if(!PM.connect_to_network())				// couldn't find a node on its turf...
 			PM.disconnect_from_network()			//... so disconnect if already on a powernet
+	for(var/datum/power_connection/PC in found_connections)
+		if(!PC.connect())		    // couldn't find a node on its turf...
+			PC.disconnect()			//... so disconnect if already on a powernet
 
 // merge two powernets, the bigger (in cable length term) absorbing the other
 /proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
@@ -298,6 +313,9 @@ var/global/powernets_broke = 0
 		for(var/obj/machinery/power/Node in net2.nodes) // merge power machines
 			if(!Node.connect_to_network())
 				Node.disconnect_from_network() // if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
+		for(var/datum/power_connection/PC in net2.components)
+			if(!PC.connect())		    // couldn't find a node on its turf...
+				PC.disconnect()			//... so disconnect if already on a powernet
 
 	return net1
 
