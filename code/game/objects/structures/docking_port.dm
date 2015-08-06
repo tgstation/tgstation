@@ -53,6 +53,8 @@ var/global/list/all_docking_ports = list()
 		return 1
 
 /obj/structure/docking_port/proc/dock(var/obj/structure/docking_port/D)
+	undock()
+
 	D.docked_with = src
 	src.docked_with = D
 
@@ -108,6 +110,29 @@ var/global/list/all_docking_ports = list()
 	var/min_y = 0
 	var/max_y = 255
 
+	var/base_turf_type			= /turf/space
+	var/base_turf_icon			= null
+	var/base_turf_icon_state	= null
+
+/obj/structure/docking_port/destination/New()
+	.=..()
+
+	//The following few lines exist to make shuttle corners and the syndicate base Less Shit :*
+	if(src.z in (1 to map.zLevels.len))
+		base_turf_type = get_base_turf(src.z)
+
+	var/datum/zLevel/L = get_z_level(src)
+	if(istype(L,/datum/zLevel/centcomm)) //If the docking port is at z-level 2 (the one with the transit areas)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/space))	//Placed on space
+			base_turf_type = T.type //This ensures that once a shuttle leaves transit, its turfs are replaced with MOVING SPACE instead of STATIC SPACE
+		else			//Not placed on space
+			var/area/syndicate_mothership/A = get_area(src)
+			if(istype(A))
+				base_turf_type			= T.type
+				base_turf_icon			= T.icon
+				base_turf_icon_state	= T.icon_state
+
 /obj/structure/docking_port/destination/proc/calculate_bounds(var/from)
 	if(istype(from,/datum/shuttle))
 		var/datum/shuttle/S = from
@@ -123,11 +148,11 @@ var/global/list/all_docking_ports = list()
 			var/new_x = T.x + offset.x_pos
 			var/new_y = T.y + offset.y_pos
 
-			if(new_x > min_x) min_x = new_x
-			if(new_x < max_x) max_x = new_x
+			if(new_x < min_x) min_x = new_x
+			if(new_x > max_x) max_x = new_x
 
-			if(new_y > min_y) min_y = new_y
-			if(new_y < max_y) max_y = new_y
+			if(new_y < min_y) min_y = new_y
+			if(new_y > max_y) max_y = new_y
 
 	else if(istype(from,/obj/structure/docking_port/destination))
 		var/obj/structure/docking_port/destination/D = from

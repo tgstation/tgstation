@@ -169,10 +169,6 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 
-/area/shuttle/escape/transit // the area to pass through for 3 minute transit
-	name = "\improper Emergency Shuttle Transit"
-	icon_state = "shuttle"
-
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
 	music = "music/escape.ogg"
@@ -383,10 +379,6 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Trading Post"
 	icon_state = "yellow"
 
-/area/shuttle/salvage/transit
-	name = "\improper hyperspace"
-	icon_state = "shuttle"
-
 // Taxi Shuttle
 
 /area/shuttle/taxi_a
@@ -408,10 +400,6 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Abandoned Station"
 	icon_state = "bluenew"
 
-/area/shuttle/taxi_a/transit
-	name = "\improper hyperspace"
-	icon_state = "bluenew"
-
 // B
 
 /area/shuttle/taxi_b
@@ -431,10 +419,6 @@ proc/process_adminbus_teleport_locs()
 
 /area/shuttle/taxi_b/abandoned_station
 	name = "\improper Abandoned Station"
-	icon_state = "dk_yellow"
-
-/area/shuttle/taxi_b/transit
-	name = "\improper hyperspace"
 	icon_state = "dk_yellow"
 
 // End Taxi Shuttle
@@ -606,22 +590,11 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper north east of the mining asteroid"
 	icon_state = "north"
 
-/area/syndicate_station/transit
-	name = "\improper hyperspace"
-	icon_state = "shuttle"
-
 /area/wizard_station
 	name = "\improper Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
 	lighting_use_dynamic = 0
-
-/area/vox_station/lighting_use_dynamic = 0
-
-/area/vox_station/transit
-	name = "\improper hyperspace"
-	icon_state = "shuttle"
-	requires_power = 0
 
 /area/vox_station/southwest_solars
 	name = "\improper aft port solars"

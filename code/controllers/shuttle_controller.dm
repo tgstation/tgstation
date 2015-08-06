@@ -169,7 +169,8 @@ datum/shuttle_controller/emergency_shuttle/force_shutdown()
 			if(!E.move_to_dock(E.dock_station, throw_dir = E.dir)) //Throw everything forward
 				message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND THE STATION! PANIC PANIC PANIC")
 		else
-			move_pod(/area/shuttle/escape/transit,/area/shuttle/escape/station,NORTH,1)
+			message_admins("WARNING: THERE IS NO EMERGENCY SHUTTLE! PANIC")
+			//move_pod(/area/shuttle/escape/transit,/area/shuttle/escape/station,NORTH,1)
 
 		//pods
 		move_pod(/area/shuttle/escape_pod1/transit,/area/shuttle/escape_pod1/station, NORTH,1)
@@ -213,7 +214,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 						if(!E.move_to_dock(E.dock_centcom, throw_dir = E.dir)) //Throw everything forward
 							message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND CENTCOMM! PANIC PANIC PANIC")
 					else
-						move_pod(/area/shuttle/escape/transit,/area/shuttle/escape/centcom,NORTH,1)
+						message_admins("WARNING: THERE IS NO EMERGENCY SHUTTLE! PANIC")
+						//move_pod(/area/shuttle/escape/transit,/area/shuttle/escape/centcom,NORTH,1)
 
 					//pods
 					move_pod(/area/shuttle/escape_pod1/transit,/area/shuttle/escape_pod1/centcom, NORTH,1)
@@ -263,8 +265,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 
 			// Just before it leaves, close the damn doors!
 			if(timeleft == 2 || timeleft == 1)
-				var/area/start_location = locate(/area/shuttle/escape/station)
-				for(var/obj/machinery/door/unpowered/shuttle/D in start_location)
+				for(var/obj/machinery/door/unpowered/shuttle/D in shuttle.linked_area)
 					spawn(0)
 						D.close()
 						D.locked = 1
@@ -299,7 +300,8 @@ datum/shuttle_controller/emergency_shuttle/process()
 					if(!E.move_to_dock(E.transit_port, throw_dir = turn(E.dir,180))) //Throw everything backwards
 						message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND TRANSIT! PANIC PANIC PANIC")
 				else
-					move_pod(/area/shuttle/escape/station,/area/shuttle/escape/transit,NORTH,0)
+					message_admins("WARNING: THERE IS NO EMERGENCY SHUTTLE! PANIC")
+					//move_pod(/area/shuttle/escape/station,/area/shuttle/escape/transit,NORTH,0)
 
 				//pods
 				move_pod(/area/shuttle/escape_pod1/station,/area/shuttle/escape_pod1/transit,NORTH,0)

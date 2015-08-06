@@ -3611,31 +3611,6 @@
 		message_admins("<span class='notice'>[key_name_admin(usr)] has turned [A.name] into a shuttle named [S.name]. [formatJumpTo(get_turf(usr))]</span>")
 		log_admin("[key_name(usr)]  has turned [A.name] into a shuttle named [S.name].")
 
-	if(href_list["shuttle_move_to_self"])
-		feedback_inc("admin_shuttle_magic_used",1)
-		feedback_add_details("admin_shuttle_magic_used","SMS")
-
-		var/turf/T = get_turf(usr)
-		var/area/A = get_area(usr)
-		if(!T || !A)
-			usr << "You must be standing on a turf!"
-			return
-
-		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to move to you", "Shuttle movement", show_lockdown = 1)
-		if(!S) return
-
-		var/obj/structure/docking_port/destination/temp = new(T)
-		temp.invisibility = 101
-		temp.areaname = A.name
-		temp.dir = usr.dir
-
-		S.travel_to(temp,,usr)
-
-		message_admins("[key_name_admin(usr)] has moved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
-		log_admin("[key_name(usr)] has moved [capitalize(S.name)] to himself ([A.name], [temp.x];[temp.y];[temp.z])")
-
-		qdel(temp)
-
 	if(href_list["shuttle_forcemove"])
 		feedback_inc("admin_shuttle_magic_used",1)
 		feedback_add_details("admin_shuttle_magic_used","FM")

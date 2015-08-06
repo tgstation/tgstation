@@ -86,6 +86,8 @@
 
 	var/lockdown = 0
 
+	var/destroy_everything = 0
+
 /datum/shuttle/New(var/area/starting_area)
 	.=..()
 
@@ -237,8 +239,8 @@
 			user << "The shuttle can't move ([D.areaname] is used by another shuttle)"
 		return 0
 
-	if( D.must_rotate(linked_port) && !can_rotate )
-		return 0
+	//if( D.must_rotate(linked_port) && !can_rotate )
+	//	return 0
 
 	//Handle the message
 	var/time = "as soon as possible"
@@ -298,20 +300,20 @@
 
 	if(transit_port && get_transit_delay())
 		if(use_transit == TRANSIT_ALWAYS || (use_transit == TRANSIT_ACROSS_Z_LEVELS && (linked_area.z != destination_port.z)))
-			move_to_dock(transit_port, throw_dir = turn(src.dir,180)) //Throw everything backwards
+			move_to_dock(transit_port, throw_direction = turn(src.dir,180)) //Throw everything backwards
 			sleep(get_transit_delay())
 
 	if(destination_port)
-		move_to_dock(destination_port, throw_dir = src.dir) //Throw everything forwards
+		move_to_dock(destination_port, throw_direction = src.dir) //Throw everything forwards
 		current_port = destination_port
 		destination_port = null
 		moving = 0
 
 //This is the proc you want to use to FORCE a shuttle to move. It always moves it, unless the shuttle or its area don't exist. Transit is skipped
-/datum/shuttle/proc/move_to_dock(var/obj/structure/docking_port/D, var/ignore_innacuracy = 0, var/throw_dir) //A direct proc with no bullshit
+/datum/shuttle/proc/move_to_dock(var/obj/structure/docking_port/D, var/ignore_innacuracy = 0, var/throw_direction) //A direct proc with no bullshit
 	if(!D) return
 	if(!linked_port) return
-	if(!throw_dir) throw_dir = turn(src.dir,180)
+	if(!throw_direction) throw_direction = turn(src.dir,180)
 
 	//List of all shuttles docked to this shuttle. They will be moved together with their parent.
 	//In the list, shuttles are associated with the docking port they are docked to
@@ -340,7 +342,6 @@
 			turf_list|=T
 		target_turf = pick(turf_list)
 
-	linked_port.undock()
 	move_area_to(get_turf(linked_port),\
 		target_turf,rotate=0)
 	linked_port.dock(D)
@@ -354,7 +355,7 @@
 			moved_shuttles |= S
 			S.move_to_dock(our_moved_dock, ignore_innacuracy = 1)
 
-	after_flight(throw_dir = throw_dir)
+	after_flight(throw_direction)
 
 	return 1
 
@@ -373,7 +374,7 @@
 	for(var/atom/movable/AM in linked_area)
 		if(AM.anchored) continue
 
-		if(!src.stable)
+		if(!src.stable && throw_dir)
 			AM.throw_at(get_edge_target_turf(AM,throw_dir,8,20))
 
 		if(istype(AM,/mob/living))
@@ -486,6 +487,7 @@
 		//If any of the new turfs are in the moved shuttle's current area, EMERGENCY ABORT (this leads to the shuttle destroying itself & potentially gibbing everybody inside)
 		if("[new_coords.x_pos];[new_coords.y_pos];[new_center.z]" in coordinates)
 			warning("Invalid movement by shuttle ([src.name]; [src.type]). Offending turf: [new_coords.x_pos];[new_coords.y_pos];[new_center.z]")
+			message_admins("WARNING: A shuttle ([src.name]; [src.type]) has attempted to move to a location which overlaps with its current position. The shuttle will not be moved.")
 			return
 
 		new_turfs += new_coords
@@ -501,6 +503,15 @@
 		if(new_coords.y_pos < throwy)
 			throwy = new_coords.y_pos
 
+		var/area/A = get_area( locate(new_coords.x_pos, new_coords.y_pos, new_center.z) )
+
+		if(!A)
+			message_admins("<span class='notice'>WARNING: Unable to find an area at [new_coords.x_pos];[new_coords.y_pos];[new_center.z]. [src.name] ([src.type]) will not be moved.")
+			return
+		if(!destroy_everything && A.type != /area)
+			message_admins("<span class='notice'>WARNING: [src.name] ([src.type]) attempted to destroy [A] ([A.type]).</span> If you want [src.name] to be able to move freely and destroy areas, change its \"destroy_everything\" variable to 1.")
+			return
+
 
 	var/list/turfs_to_update = list()
 
@@ -510,31 +521,38 @@
 		var/datum/coords/old_C = new_turfs[C]
 		var/turf/old_turf = turfs_to_move[old_C]
 		var/turf/new_turf = locate(C.x_pos,C.y_pos,new_center.z)
+		var/add_underlay = 0
 
 		if(!old_turf)
-			warning("ERROR when moving [src.name] ([src.type]) - failed to get original turf at [old_C.x_pos];[old_C.y_pos];[our_center.z]")
+			message_admins("ERROR when moving [src.name] ([src.type]) - failed to get original turf at [old_C.x_pos];[old_C.y_pos];[our_center.z]")
 			continue
+		else if(istype(old_turf,/turf/simulated/shuttle/wall))
+			if(old_turf.icon_state in transparent_icons)
+				add_underlay = 1
+				if(old_turf.underlays.len) //this list is in code/game/area/areas.dm
+					var/image/I = locate(/image) in old_turf.underlays //bandaid
+					if(I.icon == 'icons/turf/shuttle.dmi') //Don't change corners that are over the shuttle floors
+						add_underlay = 0
 
 		if(!new_turf)
-			warning("ERROR when moving [src.name] ([src.type]) - failed to get new turf at [C.x_pos];[C.y_pos];[new_center.z]")
+			message_admins("ERROR when moving [src.name] ([src.type]) - failed to get new turf at [C.x_pos];[C.y_pos];[new_center.z]")
 			continue
 
-		if(collision_type != COLLISION_DESTROY)
-			var/turf/displace_to = locate(C.x_pos,throwy,new_center.z)
-			for(var/atom/movable/AM as mob|obj in new_turf.contents)
-				if(AM.anchored) continue
-
-				AM.forceMove(displace_to)
-
+		var/turf/displace_to = locate(C.x_pos,throwy,new_center.z)
 		for(var/atom/movable/AM as mob|obj in new_turf.contents)
-			src.collide(AM)
+			if(AM.anchored || src.collision_type == COLLISION_DESTROY)
+				src.collide(AM)
+			else
+				AM.forceMove(displace_to)
 
 		var/area/old_area = get_area(new_turf)
 		if(!old_area) old_area = space
 
-		var/image/undlay = image("icon"=new_turf.icon,"icon_state"=new_turf.icon_state,"dir"=new_turf.dir)
-		undlay.overlays = new_turf.overlays
-		var/replaced_turf_type = new_turf.type
+		//Get the turf's image before it's gone!
+		var/image/undlay
+		if(add_underlay)
+			undlay = image("icon"=new_turf.icon,"icon_state"=new_turf.icon_state,"dir"=new_turf.dir)
+			undlay.overlays = new_turf.overlays
 
 		//****Add the new turf to shuttle's area****
 
@@ -553,7 +571,6 @@
 			if(!AM.can_shuttle_move(src))
 				AM.change_area(linked_area,space)
 
-
 		//****Move all variables from the old turf over to the new turf****
 
 		for(var/key in old_turf.vars)
@@ -565,15 +582,20 @@
 				new_turf.vars[key] = L.Copy()
 			else if(old_turf.vars)
 				new_turf.vars[key] = old_turf.vars[key]
+
+		//****Prepare underlays****
+		if(add_underlay && undlay)
+			new_turf.underlays = list(undlay) //Remove all old underlays, add space
+		else
+			new_turf.underlays = old_turf.underlays
+		/*
 		if(ispath(replaced_turf_type,/turf/space))//including the transit hyperspace turfs
-			if(ispath(old_area.type, /area/syndicate_station/start) || ispath(old_area.type, /area/syndicate_station/transit))//that's the snowflake to pay when people map their ships over the snow.
-				new_turf.underlays += undlay
-			else if(old_turf.underlays.len)
+			if(old_turf.underlays.len)
 				new_turf.underlays = old_turf.underlays
 			else
 				new_turf.underlays += undlay
 		else
-			new_turf.underlays += undlay
+			new_turf.underlays += undlay*/
 
 		new_turf.dir = old_turf.dir
 		new_turf.icon_state = old_turf.icon_state
@@ -593,18 +615,11 @@
 			S_OLD.zone.remove(S_OLD)
 
 		//*****Move objects and mobs*****
-		for(var/obj/O in old_turf)
-			if(!istype(O,/obj))
-				continue
-			if(!O.can_shuttle_move(src))
+		for(var/atom/movable/AM in old_turf)
+			if(!AM.can_shuttle_move(src))
 				continue
 
-			O.forceMove(new_turf)
-
-		for(var/mob/M in old_turf)
-			if(!M.can_shuttle_move(src))
-				continue
-			M.forceMove(new_turf)
+			AM.forceMove(new_turf)
 
 		//Move landmarks - for moving the arrivals shuttle
 		for(var/list/L in moved_landmarks) //moved_landmarks: code/game/area/areas.dm, 527 (above the move_contents_to proc)
@@ -616,7 +631,19 @@
 		turfs_to_update += new_turf
 
 		//Delete the old turf
-		old_turf.ChangeTurf(get_base_turf(old_turf.z))
+		var/replacing_turf_type = get_base_turf(old_turf.z)
+		var/obj/structure/docking_port/destination/D = linked_port.docked_with
+
+		if(D && istype(D)) replacing_turf_type = D.base_turf_type
+
+		old_turf.ChangeTurf(replacing_turf_type)
+
+		if(D && istype(D))
+			if(D.base_turf_icon)
+				old_turf.icon = D.base_turf_icon
+			if(D.base_turf_icon_state)
+				old_turf.icon_state = D.base_turf_icon_state
+
 		if(istype(old_turf,/turf/space))
 			old_turf.lighting_clear_overlays() //A horrible band-aid fix for lighting overlays appearing over space
 
@@ -626,16 +653,11 @@
 			for(var/obj/machinery/door/D2 in T1)
 				D2.update_nearby_tiles()
 
-	//Add objects in all new turfs to the area
-	for(var/turf/T in linked_area.contents.Copy())
-		for(var/atom/allthings in T.contents)
-			allthings.change_area(space,linked_area)
-
 /proc/setup_shuttles()
 	world.log << "Setting up all shuttles..."
 
 	var/all_count = 0
-	var/count
+	var/count = 0
 	for(var/datum/shuttle/S in shuttles)
 		switch(S.initialize())
 			if(INIT_NO_AREA)
@@ -655,7 +677,7 @@
 					world.log << "[S.name] ([S.type]) couldn't connect to a destination port on init - unless this is intended, there might be problems."
 			else
 				count++
-			all_count++
+		all_count++
 
 	world.log << "[all_count] shuttles initialized, of them [count] were initialized properly."
 

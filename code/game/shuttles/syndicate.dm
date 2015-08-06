@@ -36,6 +36,7 @@ var/global/datum/shuttle/syndicate/syndicate_shuttle = new(starting_area = /area
 	icon_state = "syndishuttle"
 
 	light_color = LIGHT_COLOR_RED
+	machine_flags = EMAGGABLE //No screwtoggle because this computer can't be built
 
 /obj/machinery/computer/shuttle_control/syndicate/New() //Main shuttle_control code is in code/game/machinery/computer/shuttle_computer.dm
 	link_to(syndicate_shuttle)

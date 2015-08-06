@@ -24,12 +24,14 @@ var/list/mechtoys = list(
 	name = "supply shuttle"
 	icon_state = "shuttle3"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 
 /area/supply/dock
 	name = "supply shuttle"
 	icon_state = "shuttle3"
 	requires_power = 0
+	lighting_use_dynamic = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 

@@ -850,7 +850,8 @@ var/global/floorIsLava = 0
 	<i>Use the \"Edit a shuttle's parameters\" option below to change how the transit area is used</i><br>
 
 	<a href='?src=\ref[src];shuttle_create_shuttleport=1'> Create a shuttle docking port</a><br>
-	<i>This will create a shuttle docking port at your location, facing the direction you are currently facing. Shuttle docking ports are used by shuttles to dock to destination docking ports.</i><br>
+	<i>This will create a shuttle docking port at your location, facing the direction you are currently facing.</i><br>
+	<b>Please read</b>: <i>Shuttle docking ports are most optimally spawned on a border turf of a shuttle, facing AWAY from it.</i><br>
 
 	<a href='?src=\ref[src];shuttle_get_console=1'> Teleport to shuttle's control console</a><br>
 	<i>If the shuttle has no control consoles linked to it, you'll have the option to create one at your location.</i><br>
@@ -870,9 +871,6 @@ var/global/floorIsLava = 0
 	<h3>FUN BUTTONS:</h3><br>
 
 	<a href='?src=\ref[src];shuttle_shuttlify=1'> Turn current area into a shuttle</a><br>
-
-	<a href='?src=\ref[src];shuttle_move_to_self=1'> Send a shuttle <b>to your current location</b></a><br>
-	<i>The shuttle will calculate its position as if you were a destination docking port (including the direction you're facing).</i><br>
 
 	<a href='?src=\ref[src];shuttle_forcemove=1'> Teleport a shuttle</a><br>
 	<i>This command allows you to instantly move a shuttle to any destination docking port in the world OR to your location, with no regard for cooldowns and delays.</i><br>

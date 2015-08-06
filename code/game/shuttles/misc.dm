@@ -43,6 +43,9 @@ var/global/datum/shuttle/transport/transport_shuttle = new(starting_area = /area
 	add_dock(/obj/structure/docking_port/destination/transport/station)
 	add_dock(/obj/structure/docking_port/destination/transport/centcom)
 
+/obj/machinery/computer/shuttle_control/transport
+	machine_flags = EMAGGABLE //No screwtoggle because this computer can't be built
+
 /obj/machinery/computer/shuttle_control/transport/New()
 	link_to(transport_shuttle)
 	.=..()

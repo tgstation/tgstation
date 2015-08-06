@@ -42,10 +42,6 @@
 	if(shuttle && !shuttle.linked_port)
 		span_s = ""
 		span_e = ""
-	else if(!shuttle.can_rotate && shuttle.linked_port.must_rotate(D))
-		span_s = "<font color='red'>"
-		span_e = "</font>"
-		name += "(incompactible)"
 
 	return "[span_s][name][span_e]"
 

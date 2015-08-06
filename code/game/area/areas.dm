@@ -541,6 +541,7 @@ var/list/moved_landmarks = list(latejoin, wizardstart, meteor_materialkit,\
 	meteor_bombkit, meteor_bombkitextra, meteor_tankkit, meteor_canisterkit,\
 	meteor_buildkit, meteor_pizzakit, meteor_panickit, meteor_shieldkit,\
 	meteor_genkit, meteor_breachkit) //Landmarks that are moved by move_area_to and move_contents_to
+var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f9","swall_f10") //icon_states for which to prepare an underlay
 
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/area/proc/move_contents_to() called tick#: [world.time]")
@@ -610,9 +611,9 @@ var/list/moved_landmarks = list(latejoin, wizardstart, meteor_materialkit,\
 						else
 							X.vars[key] = T.vars[key]
 					if(ispath(prevtype,/turf/space))//including the transit hyperspace turfs
-						if(ispath(AA.type, /area/syndicate_station/start) || ispath(AA.type, /area/syndicate_station/transit))//that's the snowflake to pay when people map their ships over the snow.
+						/*if(ispath(AA.type, /area/syndicate_station/start) || ispath(AA.type, /area/syndicate_station/transit))//that's the snowflake to pay when people map their ships over the snow.
 							X.underlays += undlay
-						else if(T.underlays.len)
+						else */if(T.underlays.len)
 							X.underlays = T.underlays
 						else
 							X.underlays += undlay

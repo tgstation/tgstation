@@ -43,8 +43,8 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 					return
 	.=..()
 
-/datum/shuttle/vox/after_flight()
-	.=..()
+/datum/shuttle/vox/after_flight(throw_dir)
+	.=..(throw_dir)
 	if(current_port == dock_home)
 		returned_home = 1	//If the round type is heist, this will cause the round to end
 							//See code/game/gamemodes/heist/heist.dm, 294
@@ -55,6 +55,7 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 	req_access = list(access_syndicate)
 
 	light_color = LIGHT_COLOR_RED
+	machine_flags = EMAGGABLE //No screwtoggle because this computer can't be built
 
 /obj/machinery/computer/shuttle_control/vox/New() //Main shuttle_control code is in code/game/machinery/computer/shuttle_computer.dm
 	link_to(vox_shuttle)
