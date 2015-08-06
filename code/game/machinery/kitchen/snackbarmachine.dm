@@ -8,7 +8,7 @@
 
 	if(istype(B, /obj/item/weapon/storage/pill_bottle))
 		user << "<span class='warning'>This condiment master does not come with a pill dispenser unit built-in.</span>"
-		return 1
+		return ..()
 
 	. = ..()
 
