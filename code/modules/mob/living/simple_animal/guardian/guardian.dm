@@ -333,15 +333,7 @@
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
 	A.loc = src
 	stored_obj = A
-	name = A.name
-	desc = A.desc
-	icon = A.icon
-	icon_state = A.icon_state
-	overlays = A.overlays
-	anchored = A.anchored
-	density = A.density
-	pixel_y = A.pixel_y
-	pixel_x = A.pixel_x
+	appearance = A.appearance
 	spawn(600)
 		stored_obj.loc = get_turf(src.loc)
 		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
