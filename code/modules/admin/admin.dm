@@ -847,7 +847,7 @@ var/global/floorIsLava = 0
 	<i>This will allow the shuttle to move to it.</i><br>
 
 	<a href='?src=\ref[src];shuttle_set_transit=1'> Set a destination docking port to be a shuttle's transit area</a><br>
-	<i>Use the \"Edit a shuttle's parameters\" option belo to change how the transit area is used</i><br>
+	<i>Use the \"Edit a shuttle's parameters\" option below to change how the transit area is used</i><br>
 
 	<a href='?src=\ref[src];shuttle_create_shuttleport=1'> Create a shuttle docking port</a><br>
 	<i>This will create a shuttle docking port at your location, facing the direction you are currently facing. Shuttle docking ports are used by shuttles to dock to destination docking ports.</i><br>
