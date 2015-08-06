@@ -279,7 +279,7 @@
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spray shards of crystal."
+	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spraying shards of crystal."
 
 
 /mob/living/simple_animal/hostile/guardian/bluespace
