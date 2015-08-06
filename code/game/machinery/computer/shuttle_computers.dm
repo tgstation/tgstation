@@ -133,23 +133,8 @@
 		if(!allow_selecting_all && !(selected_port in shuttle.docking_ports))
 			return
 
-		//Handle the message
-		var/time = "as soon as possible"
-		switch(shuttle.pre_flight_delay)
-			if(0)
-				time = "immediately"
-			if(1 to 30)
-				time = "in a few seconds"
-			if(31 to 50)
-				time = "shortly"
-			if(51 to 80)
-				time = "after a short delay"
-			if(81 to INFINITY)
-				time = "in [max(round((shuttle.pre_flight_delay) / 10, 1), 0)] seconds"
-		announce("The shuttle has received your message and will be sent [time].")
-
 		//Send a message to the shuttle to move
-		shuttle.travel_to(selected_port, src, usr)
+		shuttle.travel_to(selected_port, src)
 
 		selected_port = null
 		src.updateUsrDialog()

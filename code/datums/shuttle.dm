@@ -216,22 +216,45 @@
 			user << "The shuttle is currently moving"
 		return 0 //shuttle already travelling
 
+	if(lockdown)
+		if(broadcast)
+			broadcast.announce( "This shuttle is locked down." )
+		else if(user)
+			user << "The shuttle can't move (locked down)"
+		return 0
+
 	if(!can_move())
 		if(broadcast)
-			broadcast.announce( "Unable to access the shuttle's engines. Either this shuttle is locked down, or the engines are still cooling down from the previous trip." )
+			broadcast.announce( "The engines are still cooling down from the previous trip." )
 		else if(user)
-			user << "The shuttle can't move (on cooldown or locked down)"
+			user << "The shuttle can't move (on cooldown)"
 		return 0
 
 	if(D.docked_with)
 		if(broadcast)
-			broadcast.announce( "[capitalize(D.areaname)] is currently used by another shuttle. Please wait until the docking port is free, or select another docking port." )
+			broadcast.announce( "[capitalize(D.areaname)] is currently used by another shuttle. Please wait until the docking port is free, or select another destination." )
 		else if(user)
 			user << "The shuttle can't move ([D.areaname] is used by another shuttle)"
 		return 0
 
 	if( D.must_rotate(linked_port) && !can_rotate )
 		return 0
+
+	//Handle the message
+	var/time = "as soon as possible"
+	switch(pre_flight_delay)
+		if(0)
+			time = "immediately"
+		if(1 to 30)
+			time = "in a few seconds"
+		if(31 to 50)
+			time = "shortly"
+		if(51 to 80)
+			time = "after a short delay"
+		if(81 to INFINITY)
+			time = "in [max(round((pre_flight_delay) / 10, 1), 0)] seconds"
+	if(broadcast)
+		broadcast.announce("The shuttle has received your message and will be sent [time].")
 
 	//If moving to another zlevel, check for items which can't leave the zlevel (nuke disk, primarily)
 	if(linked_port.z != D.z)
@@ -594,6 +617,8 @@
 
 		//Delete the old turf
 		old_turf.ChangeTurf(get_base_turf(old_turf.z))
+		if(istype(old_turf,/turf/space))
+			old_turf.lighting_clear_overlays() //A horrible band-aid fix for lighting overlays appearing over space
 
 	//Update doors
 	if(turfs_to_update.len)
