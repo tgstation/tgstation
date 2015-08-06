@@ -182,8 +182,8 @@
 
 /mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
 	..()
-	src.say("<B>[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
-	[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]</B>")
+	src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
+	[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
 	playsound(loc, src.attack_sound, 50, 1, 1)
 	playsound(loc, src.attack_sound, 50, 1, 1)
 	playsound(loc, src.attack_sound, 50, 1, 1)
