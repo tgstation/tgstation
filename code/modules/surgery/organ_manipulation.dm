@@ -1,15 +1,15 @@
 /datum/surgery/organ_manipulation
 	name = "organ manipulation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/saw,
-		 /datum/surgery_step/manipulate_organs, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest", "head")
 	requires_organic_bodypart = 0
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/incise,
-	/datum/surgery_step/manipulate_organs, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs)
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
