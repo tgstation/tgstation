@@ -5,7 +5,7 @@
 	spread_flags = CONTACT_GENERAL
 	cure_text = "Ryetalyn"
 	cures = list("ryetalyn")
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	agent = "S4E1 retrovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/list/original_dna = list()

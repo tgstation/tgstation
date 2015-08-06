@@ -7,7 +7,7 @@
 	cures = list("alkysine")
 	agent = "Cryptococcus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	cure_chance = 15//higher chance to cure, since two reagents are required
 	desc = "This disease destroys the braincells, causing brain fever, brain necrosis and general intoxication."
 	required_organs = list(/obj/item/organ/limb/head)
