@@ -32,7 +32,6 @@
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
 	var/bio_fluff_string = "Your scarabs fail to mutate. This shouldn't happen! Submit a bug report!"
 
-
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
 	if(summoner)
@@ -164,7 +163,7 @@
 /mob/living/simple_animal/hostile/guardian/punch
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	damage_transfer = 0.4
+	damage_transfer = 0.5
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
@@ -261,21 +260,26 @@
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5)
 
+/obj/item/projectile/guardian
+	name = "crystal spray"
+	icon_state = "guardian"
+	damage = 4
+	damage_type = BRUTE
+
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = "help"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_transfer = 1.2
-	projectiletype = /obj/item/projectile/neurotox
-	ranged_cooldown_cap = 1
-	projectilesound = 'sound/weapons/pierce.ogg'
+	projectiletype = /obj/item/projectile/guardian
+	ranged_cooldown_cap = 0
+	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
-	rapid = 1
 	range = 13
-	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying neurotoxin."
+	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spitting neurotoxin."
+	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spray shards of crystal."
 
 
 /mob/living/simple_animal/hostile/guardian/bluespace
