@@ -16,15 +16,62 @@
 	var/machine_flags = 0 // Emulate machinery flags.
 	var/inMachineList = 0
 
+	var/parentMoveKey = null
+	var/turf/turf = null // Updated in addToTurf()/removeFromTurf()
+
 /datum/power_connection/New(var/obj/parent)
 	src.parent = parent
 	power_machines |= src
 
+	// Used for updating turf power_connection lists when moved.
+	parentMoveKey = parent.on_moved.Add(src, "parent_moved")
+	addToTurf()
+
 /datum/power_connection/Destroy()
 	disconnect()
 	power_machines -= parent
+
+	// Remember to tell our turf that we're gone.
+	removeFromTurf()
+	parent.on_moved.Remove(parentMoveKey)
+
 	..()
 
+// CALLBACK from parent.on_moved.
+// This should never happen, except when Singuloth is doing its shenanigans, as rebuilding
+//  powernets is extremely slow.
+/datum/power_connection/proc/parent_moved(var/list/args)
+	removeFromTurf() // Removes old ref
+	addToTurf() // Adds new one
+
+// Powernets need to know what power equipment is on a turf when adding a cable to it.
+// So, we tell the turf to tell the powernet about us, since we don't have a loc.
+/datum/power_connection/proc/addToTurf()
+	// Get AND REMEMBER the turf that's going to hold the ref.
+	turf = get_turf(parent)
+	if(!turf)
+		// We've been sucked into a black hole, god help us
+		return
+	if(turf.power_connections == null)
+		turf.power_connections = list(src)
+	else
+		turf.power_connections += src
+
+/datum/power_connection/proc/removeFromTurf()
+	if(!turf)
+		return
+	// We don't grab the current turf here because we're removing the reference from the turf that has it.
+	turf.power_connections -= src
+
+	// Clean up after ourselves.
+	if(turf.power_connections.len == 0)
+		turf.power_connections = null
+
+	// Tell the rest of the code that we're turfless.
+	// EVEN THOUGH THE REST OF THE CODE SHOULDN'T CARE.
+	turf=null
+
+// Called when powernet reports excess watts.
 /datum/power_connection/proc/excess(var/netexcess)
 	return
 

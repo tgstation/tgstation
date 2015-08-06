@@ -35,6 +35,9 @@
 	// Flick animation shit
 	var/atom/movable/overlay/c_animation = null
 
+	// Powernet /datum/power_connections.  *Uninitialized until used to conserve memory*
+	var/list/power_connections = null
+
 	// holy water
 	var/holy = 0
 
