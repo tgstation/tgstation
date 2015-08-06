@@ -3,6 +3,10 @@
 #define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
 
 var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
+var/list/slot2slot = list("head" = slot_head, "wear_mask" = slot_wear_mask, "back" = slot_back, "wear_suit" = slot_wear_suit, "w_uniform" = slot_w_uniform, "shoes" = slot_shoes, "belt" = slot_belt, "gloves" = slot_gloves, "glasses" = slot_glasses, "ears" = slot_ears, "wear_id" = slot_wear_id, "s_store" = slot_s_store)
+var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mask" = /obj/item/clothing/mask/changeling, "back" = /obj/item/changeling, "wear_suit" = /obj/item/clothing/suit/changeling, "w_uniform" = /obj/item/clothing/under/changeling, "shoes" = /obj/item/clothing/shoes/changeling, "belt" = /obj/item/changeling, "gloves" = /obj/item/clothing/gloves/changeling, "glasses" = /obj/item/clothing/glasses/changeling, "ears" = /obj/item/changeling, "wear_id" = /obj/item/changeling, "s_store" = /obj/item/changeling)
+
 
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
@@ -359,106 +363,29 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 /proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
-	user.dna = chosen_prof.dna
+	user.dna = chosen_dna
 	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
 	domutcheck(user)
 	updateappearance(user)
-	//var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store") //just here as a reference.
 
-	//im so sorry
-	if(!user.head && chosen_prof.exists_list["head"])
-		var/obj/item/clothing/head/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["head"]
-		C.name = chosen_prof.name_list["head"]
-		C.flags_cover = chosen_prof.flags_cover_list["head"]
-		C.item_color = chosen_prof.item_color_list["head"]
-		user.equip_to_slot_or_del(C, slot_head)
+	//vars hackery. not pretty, but better than the alternative.
+	for(var/slot in slots)
+		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !chosen_prof.exists_list[slot])
+			continue
 
-	if(!user.wear_mask && chosen_prof.exists_list["wear_mask"])
-		var/obj/item/clothing/mask/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["wear_mask"]
-		C.name = chosen_prof.name_list["wear_mask"]
-		C.flags_cover = chosen_prof.flags_cover_list["wear_mask"]
-		C.item_color = chosen_prof.item_color_list["wear_mask"]
-		user.equip_to_slot_or_del(C, slot_wear_mask)
+		var/obj/item/C
+		if(!user.vars[slot])
+			var/thetype = slot2type[slot]
+			C = new thetype(user)
 
-	if(!user.back && chosen_prof.exists_list["back"])
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["back"]
-		C.name = chosen_prof.name_list["back"]
-		C.item_color = chosen_prof.item_color_list["back"]
-		user.equip_to_slot_or_del(C, slot_back)
+		else if(istype(user.vars[slot], slot2type[slot]))
+			C = user.vars[slot]
 
-	if(!user.wear_suit && chosen_prof.exists_list["wear_suit"])
-		var/obj/item/clothing/suit/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["wear_suit"]
-		C.name = chosen_prof.name_list["wear_suit"]
-		C.flags_cover = chosen_prof.flags_cover_list["wear_suit"]
-		C.item_color = chosen_prof.item_color_list["wear_suit"]
-		user.equip_to_slot_or_del(C, slot_wear_suit)
-
-	if(!user.w_uniform && chosen_prof.exists_list["w_uniform"])
-		var/obj/item/clothing/under/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["w_uniform"]
-		C.name = chosen_prof.name_list["w_uniform"]
-		C.flags_cover = chosen_prof.flags_cover_list["w_uniform"]
-		C.item_color = chosen_prof.item_color_list["w_uniform"]
-		user.equip_to_slot_or_del(C, slot_w_uniform)
-
-	if(!user.shoes && chosen_prof.exists_list["shoes"])
-		var/obj/item/clothing/shoes/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["shoes"]
-		C.name = chosen_prof.name_list["shoes"]
-		C.flags_cover = chosen_prof.flags_cover_list["shoes"]
-		C.item_color = chosen_prof.item_color_list["shoes"]
-		user.equip_to_slot_or_del(C, slot_shoes)
-
-	if(!user.belt && chosen_prof.exists_list["belt"])
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["belt"]
-		C.name = chosen_prof.name_list["belt"]
-		C.item_color = chosen_prof.item_color_list["belt"]
-		user.equip_to_slot_or_del(C, slot_belt)
-
-	if(!user.gloves && chosen_prof.exists_list["gloves"])
-		var/obj/item/clothing/gloves/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["gloves"]
-		C.name = chosen_prof.name_list["gloves"]
-		C.flags_cover = chosen_prof.flags_cover_list["gloves"]
-		C.item_color = chosen_prof.item_color_list["gloves"]
-		user.equip_to_slot_or_del(C, slot_gloves)
-
-	if(!user.glasses && chosen_prof.exists_list["glasses"])
-		var/obj/item/clothing/glasses/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["glasses"]
-		C.name = chosen_prof.name_list["glasses"]
-		C.flags_cover = chosen_prof.flags_cover_list["glasses"]
-		C.item_color = chosen_prof.item_color_list["glasses"]
-		user.equip_to_slot_or_del(C, slot_glasses)
-
-	if(!user.ears && chosen_prof.exists_list["ears"])
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["ears"]
-		C.name = chosen_prof.name_list["ears"]
-		C.flags_cover = chosen_prof.flags_cover_list["ears"]
-		C.item_color = chosen_prof.item_color_list["ears"]
-		user.equip_to_slot_or_del(C, slot_ears)
-
-	if(!user.wear_id && chosen_prof.exists_list["wear_id"])
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["wear_id"]
-		C.name = chosen_prof.name_list["wear_id"]
-		C.flags_cover = chosen_prof.flags_cover_list["wear_id"]
-		C.item_color = chosen_prof.item_color_list["wear_id"]
-		user.equip_to_slot_or_del(C, slot_wear_id)
-
-	if(!user.s_store && chosen_prof.exists_list["s_store"])
-		var/obj/item/changeling/C = new(user)
-		C.appearance = chosen_prof.appearance_list["s_store"]
-		C.name = chosen_prof.name_list["s_store"]
-		C.flags_cover = chosen_prof.flags_cover_list["s_store"]
-		C.item_color = chosen_prof.item_color_list["s_store"]
-		user.equip_to_slot_or_del(C, slot_s_store)
+		C.appearance = chosen_prof.appearance_list[slot]
+		C.name = chosen_prof.name_list[slot]
+		C.flags_cover = chosen_prof.flags_cover_list[slot]
+		C.item_color = chosen_prof.item_color_list[slot]
+		user.equip_to_slot_or_del(C, slot2slot[slot])
 
 	user.regenerate_icons()
 
