@@ -178,7 +178,7 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ### RANDOM EVENTS ###
 
 ## Comment this to disable random events during the round.
-ALLOW_RANDOM_EVENTS
+#ALLOW_RANDOM_EVENTS
 
 
 ### AI ###
