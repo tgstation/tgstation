@@ -1,11 +1,5 @@
 //TODO: Flash range does nothing currently
 
-//A very crude linear approximatiaon of pythagoras theorem.
-/proc/cheap_pythag(dx, dy)
-	dx = abs(dx); dy = abs(dy);
-	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
-	else		return dy + (0.5*dx)
-
 /proc/trange(Dist=0,turf/Center=null)//alternative to range (ONLY processes turfs and thus less intensive)
 	if(Center==null) return
 
@@ -89,7 +83,7 @@
 
 		for(var/turf/T in trange(max_range, epicenter))
 
-			var/dist = cheap_pythag(T.x - x0,T.y - y0)
+			var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
 			if(config.reactionary_explosions)
 				var/turf/Trajectory = T
@@ -123,7 +117,8 @@
 				if(flame_dist && prob(40) && !istype(T, /turf/space) && !T.density)
 					PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 				if(dist > 0)
-					T.ex_act(dist)
+					spawn(0)
+						T.ex_act(dist)
 
 			//--- THROW ITEMS AROUND ---
 
@@ -196,7 +191,7 @@
 	var/list/wipe_colours = list()
 	for(var/turf/T in trange(max_range, epicenter))
 		wipe_colours += T
-		var/dist = cheap_pythag(T.x - x0, T.y - y0)
+		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
 		if(newmode == "Yes")
 			var/turf/TT = T
