@@ -16,7 +16,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
-	recommended_enemies = 2
+	recommended_enemies = 3
 	enemy_minimum_age = 14
 	var/gangs_to_create = 3
 
