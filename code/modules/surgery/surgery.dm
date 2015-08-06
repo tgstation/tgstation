@@ -5,7 +5,6 @@
 	var/step_in_progress = 0									//Actively performing a Surgery
 	var/list/species = list(/mob/living/carbon/human)			//Acceptable Species
 	var/location = "chest"										//Surgery location
-	var/target_must_be_dead = 0									//Needs to be dead
 	var/requires_organic_bodypart = 1							//Prevents you from performing an operation on robotic limbs
 	var/list/possible_locs = list() 							//Multiple locations -- c0
 	var/ignore_clothes = 0										//This surgery ignores clothes
