@@ -18,6 +18,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	var/gangs_to_create = 3
 
 ///////////////////////////
 //Announces the game type//
@@ -36,11 +37,6 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-
-	//Spawn more bosses depending on server population
-	var/gangs_to_create = 2
-	if(prob(num_players() * 2))
-		gangs_to_create ++
 
 	for(var/i=1 to gangs_to_create)
 		if(!antag_candidates.len)
