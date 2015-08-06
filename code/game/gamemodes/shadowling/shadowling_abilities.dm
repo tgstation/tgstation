@@ -172,10 +172,11 @@
 	var/mob/living/carbon/human/user = usr
 	listclearnulls(ticker.mode.thralls)
 	if(!shadowling_check(usr)) return
-	if(ticker.mode.thralls.len >= 5)
-		user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
-		charge_counter = charge_max
-		return
+	if(user.dna.species.id != "shadowling")
+		if(ticker.mode.thralls.len >= 5)
+			user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
+			charge_counter = charge_max
+			return
 	for(var/mob/living/carbon/human/target in targets)
 		if(!in_range(usr, target))
 			usr << "<span class='warning'>You need to be closer to enthrall [target].</span>"
