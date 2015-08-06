@@ -118,6 +118,7 @@
 	for(var/mob/M in mob_list)
 		if(M == src.summoner)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -128,7 +129,7 @@
 	for(var/mob/living/simple_animal/hostile/guardian/M in mob_list)
 		if(M.summoner == src)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-
+	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 
 
 //////////////////////////TYPES OF GUARDIANS
@@ -142,7 +143,7 @@
 	melee_damage_upper = 15
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
-	damage_transfer = 0.6
+	damage_transfer = 0.7
 	range = 10
 	playstyle_string = "As a fire type, you have only light damage resistance, but will ignite any enemy you bump into."
 	environment_smash = 1
@@ -155,7 +156,7 @@
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
-			M.adjust_fire_stacks(20)
+			M.adjust_fire_stacks(10)
 			M.IgniteMob()
 
 //Standard
@@ -183,17 +184,14 @@
 
 /mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
 	..()
-	src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
-	[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
+	if(istype(target, /mob/living))
+		src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
+		[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
+		playsound(loc, src.attack_sound, 50, 1, 1)
+		playsound(loc, src.attack_sound, 50, 1, 1)
+		playsound(loc, src.attack_sound, 50, 1, 1)
+		playsound(loc, src.attack_sound, 50, 1, 1)
+
 
 
 
@@ -334,6 +332,8 @@
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
 	A.loc = src
 	stored_obj = A
+	anchored = A.anchored
+	density = A.density
 	appearance = A.appearance
 	spawn(600)
 		stored_obj.loc = get_turf(src.loc)
