@@ -3784,6 +3784,11 @@
 			images += I
 			usr << I
 
+		var/image/center_img = image('icons/turf/areas.dmi', icon_state="blue") //This is actually RED, honk
+		center_img.loc = new_center
+		images += center_img
+		usr << center_img
+
 		alert(usr,"Press \"Ok\" to remove the images","Magic","Ok")
 
 		if(usr.client)
