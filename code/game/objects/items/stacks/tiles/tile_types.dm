@@ -13,6 +13,12 @@
 	name = "broken tile"
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 60
 	var/turf_type = null
 	var/mineralType = null
 
@@ -74,12 +80,6 @@
 	singular_name = "grass floor tile"
 	desc = "A patch of grass like they often use on golf courses."
 	icon_state = "tile_grass"
-	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 3
-	throw_range = 7
-	max_amount = 60
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/grass
 	burn_state = 0 //Burnable
@@ -92,12 +92,6 @@
 	singular_name = "wood floor tile"
 	desc = "an easy to fit wood floor tile."
 	icon_state = "tile-wood"
-	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 3
-	throw_range = 7
-	max_amount = 60
 	origin_tech = "biotech=1"
 	turf_type = /turf/simulated/floor/wood
 	burn_state = 0 //Burnable
@@ -110,13 +104,17 @@
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
-	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 3
-	throw_range = 7
-	max_amount = 60
 	turf_type = /turf/simulated/floor/carpet
+	burn_state = 0 //Burnable
+
+
+/obj/item/stack/tile/fakespace
+	name = "astral carpet"
+	singular_name = "astral carpet"
+	desc = "A piece of carpet with a convincing star pattern."
+	icon_state = "tile_space"
+	amount = 30
+	turf_type = /turf/simulated/floor/fakespace
 	burn_state = 0 //Burnable
 
 /*
@@ -127,11 +125,5 @@
 	singular_name = "high-traction floor tile"
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
-	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
-	throw_speed = 3
-	throw_range = 7
-	max_amount = 60
 	turf_type = /turf/simulated/floor/noslip
 	origin_tech = "material=3"
