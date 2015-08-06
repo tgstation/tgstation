@@ -118,7 +118,7 @@
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 500)
-	build_path = /obj/item/cybernetic_implant/eyes/hud/medical
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_security_hud
@@ -128,7 +128,7 @@
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 4, "combat" = 2)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 750, MAT_GOLD = 750)
-	build_path = /obj/item/cybernetic_implant/eyes/hud/security
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_xray
@@ -138,7 +138,7 @@
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6, "magnets" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/cybernetic_implant/eyes/xray
+	build_path = /obj/item/organ/internal/cyberimp/eyes/xray
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_thermals
@@ -148,7 +148,7 @@
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5, "magnets" = 5, "syndicate" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/cybernetic_implant/eyes/thermals
+	build_path = /obj/item/organ/internal/cyberimp/eyes/thermals
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_antidrop
@@ -158,7 +158,7 @@
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
-	build_path = /obj/item/cybernetic_implant/brain/anti_drop
+	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_antistun
@@ -168,7 +168,7 @@
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
-	build_path = /obj/item/cybernetic_implant/brain/anti_stun
+	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_nutriment
@@ -178,7 +178,7 @@
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
-	build_path = /obj/item/cybernetic_implant/chest/nutriment
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
@@ -188,7 +188,7 @@
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
-	build_path = /obj/item/cybernetic_implant/chest/nutriment/plus
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
 	category = list("Medical Designs")
 
 /datum/design/cyberimp_reviver
@@ -198,5 +198,5 @@
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 7, "syndicate" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/cybernetic_implant/chest/reviver
+	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
 	category = list("Medical Designs")

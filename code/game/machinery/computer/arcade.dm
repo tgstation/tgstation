@@ -80,6 +80,9 @@
 	explosion(src.loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 
+// ** BATTLE ** //
+
+
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
@@ -292,7 +295,7 @@
 		src.updateUsrDialog()
 
 
-
+// *** THE ORION TRAIL ** //
 
 
 /obj/machinery/computer/arcade/orion_trail

@@ -2,22 +2,19 @@
 	name = "implant removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	location = "chest"
-	requires_organic_chest = 1
-
+	possible_locs = list("chest")
+	requires_organic_bodypart = 0
 
 
 //extract implant
 /datum/surgery_step/extract_implant
+	name = "extract implant"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 65)
 	time = 64
 	var/obj/item/weapon/implant/I = null
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/obj/item/weapon/implant/W in target)
-		if(W.imp_in == target)	//Checking that it's actually implanted, not just in his pocket
-			I = W
-			break
+	I = locate(/obj/item/weapon/implant) in target
 	if(I)
 		user.visible_message("[user] begins to extract [I] from [target]'s [target_zone].", "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>")
 	else
@@ -26,10 +23,25 @@
 /datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(I)
 		user.visible_message("[user] successfully removes [I] from [target]'s [target_zone]!", "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>")
-		qdel(I)
-		if(istype(target, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = target
-			H.sec_hud_set_implants()
+		I.removed(target)
+
+		var/obj/item/weapon/implantcase/case
+
+		if(istype(user.get_item_by_slot(slot_l_hand), /obj/item/weapon/implantcase))
+			case = user.get_item_by_slot(slot_l_hand)
+		else if(istype(user.get_item_by_slot(slot_r_hand), /obj/item/weapon/implantcase))
+			case = user.get_item_by_slot(slot_r_hand)
+		else
+			case = locate(/obj/item/weapon/implantcase) in get_turf(target)
+
+		if(case && !case.imp)
+			case.imp = I
+			I.loc = case
+			case.update_icon()
+			user.visible_message("[user] places [I] into [case]!", "<span class='notice'>You place [I] into [case].</span>")
+		else
+			qdel(I)
+
 	else
 		user << "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>"
 	return 1

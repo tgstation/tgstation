@@ -264,6 +264,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
 	activated = 1
+	origin_tech = "materials=2;biotech=3;magnets=4;bluespace=5"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30
 
@@ -281,6 +282,29 @@
 		cooldown++
 		if(cooldown == initial(cooldown))
 			SSobj.processing.Remove(src)
+
+/obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
+	if(..())
+		var/obj/machinery/abductor/console/console
+		if(ishuman(source))
+			var/mob/living/carbon/human/H = source
+			if(H.dna && istype(H.dna.species, /datum/species/abductor))
+				var/datum/species/abductor/S = H.dna.species
+				console = get_team_console(S.team)
+				home = console.pad
+
+		if(!home)
+			console = get_team_console(pick(1, 2, 3, 4))
+			home = console.pad
+		return 1
+
+/obj/item/weapon/implant/abductor/proc/get_team_console(var/team)
+	var/obj/machinery/abductor/console/console
+	for(var/obj/machinery/abductor/console/c in machines)
+		if(c.team == team)
+			console = c
+			break
+	return console
 
 
 /obj/item/device/firing_pin/alien
