@@ -176,7 +176,8 @@
 	set category = "Guardian"
 	set desc = "Choose what you shout as you punch"
 	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 6)
-	src.battlecry = input
+	if(input)
+		src.battlecry = input
 
 
 
@@ -334,6 +335,8 @@
 	A.loc = src
 	stored_obj = A
 	appearance = A.appearance
+	pixel_y = A.pixel_Y
+	pixel_x = A.pixel_x
 	spawn(600)
 		stored_obj.loc = get_turf(src.loc)
 		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
