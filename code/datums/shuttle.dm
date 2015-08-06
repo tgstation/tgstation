@@ -453,7 +453,7 @@
 		coordinates += "[T.x];[T.y];[T.z]"
 
 	//Remove all stuff from the area
-	linked_area.contents = list()
+	//linked_area.contents = list()
 
 	//Calculate new coordinates
 	var/list/new_turfs = list() //Coordinates of turfs that WILL be created
@@ -515,15 +515,14 @@
 
 		//****Add the new turf to shuttle's area****
 
-		linked_area.contents += new_turf
+		linked_area.contents.Add(new_turf)
 		new_turf.change_area(old_area,linked_area)
 		new_turf.ChangeTurf(old_turf.type)
 		new_turfs[C] = new_turf
 
 		//***Remove old turf from shuttle's area****
 
-		space.contents += old_turf
-		linked_area.contents -= old_turf
+		space.contents.Add(old_turf)
 		old_turf.change_area(linked_area,space)
 
 		//All objects which aren't going to be moved by the shuttle have their area changed to space!
@@ -535,7 +534,9 @@
 		//****Move all variables from the old turf over to the new turf****
 
 		for(var/key in old_turf.vars)
-			if(key in ignored_keys) continue //ignored_keys: code/game/area/areas.dm, 526 (above the move_contents_to proc)
+			if(key in ignored_keys) continue
+			//ignored_keys: code/game/area/areas.dm, 526 (above the move_contents_to proc)
+			//as of 06/08/2015: list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group","contents","air","light","areaMaster","underlays","lighting_overlay")
 			if(istype(old_turf.vars[key],/list))
 				var/list/L = old_turf.vars[key]
 				new_turf.vars[key] = L.Copy()

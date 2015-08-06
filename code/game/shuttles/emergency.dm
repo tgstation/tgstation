@@ -9,6 +9,8 @@ var/global/datum/shuttle/escape/escape_shuttle = new(starting_area=/area/shuttle
 	transit_delay = 100 //This has NO effect outside of adminbus
 	pre_flight_delay = 30 //This has NO effect outside of adminbus
 
+	stable = 0
+
 	var/obj/structure/docking_port/destination/dock_centcom
 	var/obj/structure/docking_port/destination/dock_station
 
