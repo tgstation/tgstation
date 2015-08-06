@@ -347,6 +347,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/mergeConnectedNetworksOnTurf() called tick#: [world.time]")
 	var/list/to_connect = list()
+	var/list/connections = list()
 
 	if(!powernet) // if we somehow have no powernet, make one (should not happen for cables)
 		var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
@@ -354,6 +355,12 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// first let's add turf cables to our powernet
 	// then we'll connect machines on turf with a node cable is present
+
+	for(var/datum/power_connection/C in get_turf(src))
+		if(C.powernet == powernet)
+			continue
+		connections += C //we'll connect the machines after all cables are merged
+
 	for(var/AM in loc)
 		if(istype(AM, /obj/structure/cable))
 			var/obj/structure/cable/C = AM
@@ -383,6 +390,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/obj/machinery/power/PM in to_connect)
 		if(!PM.connect_to_network())
 			PM.disconnect_from_network() // if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
+	for(var/datum/power_connection/PC in connections)
+		if(!PC.connect())
+			PC.disconnect() // if we somehow can't connect the machine to the new powernet, remove it from the old nonetheless
 
 //////////////////////////////////////////////
 // Powernets handling helpers
