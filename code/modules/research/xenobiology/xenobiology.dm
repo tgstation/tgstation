@@ -436,13 +436,17 @@
 	pixel_x = -64
 	pixel_y = -64
 	unacidable = 1
-	var/mob/living/immune = null // the one who creates the timestop is immune
+	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
 	alpha = 125
 
 /obj/effect/timestop/New()
 	..()
+	for(var/mob/M in player_list)
+		for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list) //People with timestop are immune to all timestops
+			if(istype(S, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop))
+				immune += M
 	timestop()
 
 
@@ -451,7 +455,7 @@
 	while(loc)
 		if(duration)
 			for(var/mob/living/M in orange (freezerange, src.loc))
-				if(M == immune)
+				if(M in immune)
 					continue
 				M.stunned = 10
 				M.anchored = 1
