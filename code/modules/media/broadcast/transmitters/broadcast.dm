@@ -33,9 +33,11 @@
 
 /obj/machinery/media/transmitter/broadcast/Destroy()
 	if(wires)
-		del(wires)
+		wires.Destroy()
+		wires = null
 	if(power_connection)
-		del(power_connection)
+		power_connection.Destroy()
+		power_connection = null
 	..()
 
 /obj/machinery/media/transmitter/broadcast/proc/cable_power_change(var/list/args)
