@@ -1,8 +1,5 @@
-#define NUKESTATE_INTACT		6
-#define NUKESTATE_OPEN			5
-#define NUKESTATE_OPEN_TRAP		4
-#define NUKESTATE_WIRES_TIED	3
-#define NUKESTATE_CUT_LINES		2
+#define NUKESTATE_INTACT		3
+#define NUKESTATE_OPEN			2
 #define NUKESTATE_CORE_EXPOSED	1
 #define NUKESTATE_CORE_REMOVED	0
 
@@ -63,7 +60,7 @@ var/bomb_set
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/weapon/screwdriver/nuke))
+			if(istype(I, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user << "<span class='notice'>You start removing the front panel's screws...</span>"
 				if(do_after(user, 100,target=src))
@@ -71,60 +68,30 @@ var/bomb_set
 					user << "<span class='notice'>You remove the screws and the front panel slides open.</span>"
 					update_icon()
 				return
-		if(NUKESTATE_OPEN,NUKESTATE_OPEN_TRAP)
-			if((deconstruction_state == NUKESTATE_OPEN) && istype(I, /obj/item/weapon/wirecutters))
-				playsound(loc, 'sound/effects/sparks4.ogg', 100, 1)
-				playsound(loc, 'sound/effects/EMPulse.ogg', 100, 1)
-				user << "<span class='warning'>You must have cut the wrong wire!</span>"
-				for(var/mob/living/L in range(5,src))
-					L.irradiate(200)
-				deconstruction_state = NUKESTATE_OPEN_TRAP //cant cut wires no more
-			else
-				if(istype(I, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/S = I
-					user << "<span class='notice'>You start tying the wires...</span>"
-					if(do_after(user,30,target=src))
-						if(S.use(15))
-							user << "<span class='notice'>You tie the wires with some cable, clearing the insides of [src].</span>"
-							deconstruction_state = NUKESTATE_WIRES_TIED
-							update_icon()
-						else
-							user << "<span class='warning'>You need more cable to do that.</span>"
-				else
-					user << "<span class='warning'>You can't do anything with this tangle of cables in the way.</span>"
-				return
-		if(NUKESTATE_WIRES_TIED)
-			if(istype(I, /obj/item/weapon/pen))
-				user << "<span class='notice'>You start drawing cut lines...</span>"
-				if(do_after(user,30,target=src))
-					user << "<span class='notice'>You draw cut lines inside [src].</span>"
-					deconstruction_state = NUKESTATE_CUT_LINES
-					update_icon()
-				return
-		if(NUKESTATE_CUT_LINES)
+		if(NUKESTATE_OPEN)
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/welder = I
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 				user << "<span class='notice'>You start cutting into [src]'s warhead...</span>"
 				if(welder.remove_fuel(1,user))
-					if(do_after(user,50,target=src))
+					if(do_after(user,150,target=src))
 						playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
-						user << "<span class='notice'>You cut into [src]'s warhead. You can see the core's green glow.</span>"
+						user << "<span class='notice'>You cut into [src]'s warhead.</span>"
 						deconstruction_state = NUKESTATE_CORE_EXPOSED
 						update_icon()
-						SSobj.processing += core
 				return
 		if(NUKESTATE_CORE_EXPOSED)
-			if(istype(I, /obj/item/nuke_core_container))
-				var/obj/item/nuke_core_container/core_box = I
-				user << "<span class='notice'>You start loading the plutonium core into [core_box]...</span>"
-				if(do_after(user,50,target=src))
-					if(core_box.load(core,src))
-						user << "<span class='notice'>You load the plutonium core into [core_box].</span>"
-						deconstruction_state = NUKESTATE_CORE_REMOVED
-						update_icon()
-					else
-						user << "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>"
+			if(istype(I, /obj/item/weapon/crowbar))
+				user << "<span class='notice'>You start prying off the core...</span>"
+				if(do_after(user,75,target=src))
+					user << "<span class='notice'>You pry off the core!</span>"
+					playsound(loc, 'sound/effects/clang.ogg', 100, 1)
+					var/obj/item/nuke_core_container/nuke_container = new /obj/item/nuke_core_container(get_turf(src))
+					core.loc = nuke_container
+					nuke_container.core = core
+					core = null
+					deconstruction_state = NUKESTATE_CORE_REMOVED
+					update_icon()
 				return
 		else
 			..()
@@ -159,15 +126,12 @@ var/bomb_set
 	overlays -= interior
 	overlays -= glow
 	switch(deconstruction_state)
-		if(NUKESTATE_OPEN_TRAP,NUKESTATE_OPEN)
+		if(NUKESTATE_OPEN, NUKESTATE_CORE_REMOVED)
 			glow = null
-			interior = image(icon,"panel-removed")
-		if(NUKESTATE_CORE_REMOVED,NUKESTATE_CUT_LINES,NUKESTATE_WIRES_TIED)
-			glow = null
-			interior = image(icon,"wires-sorted")
+			interior = image(icon,"interior")
 		if(NUKESTATE_CORE_EXPOSED)
 			glow = image(icon,"core-exposed")
-			interior = image(icon,"wires-sorted")
+			interior = image(icon,"interior")
 		if(NUKESTATE_INTACT)
 			glow = null
 			interior = image(icon,"panel-overlay")
