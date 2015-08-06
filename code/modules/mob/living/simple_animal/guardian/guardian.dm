@@ -244,6 +244,7 @@
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = "help"
 	friendly = "heals"
+	speed = 1
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	playstyle_string = "As a healer type, you are incapable of attacking, but can mend any wound simply by touching a target."
@@ -253,6 +254,9 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	..()
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to heal!.</span></B>"
+		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
@@ -315,6 +319,9 @@
 	var/bomb_cooldown = 0
 
 /mob/living/simple_animal/hostile/guardian/bomb/ShiftClickOn(atom/movable/A)
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to create bombs!.</span></B>"
+		return
 	if(istype(A, /obj/))
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
