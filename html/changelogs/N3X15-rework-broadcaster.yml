@@ -1,5 +1,0 @@
-author: N3X15
-delete-after: True
-changes:
-  - bugfix: Broadcaster now requires a direct connection to a power cable.  Will not work without it.
-  - bugfix: Broadcaster can be unwrenched for moving, but will not operate until re-anchored over a power cable.

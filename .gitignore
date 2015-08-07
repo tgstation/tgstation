@@ -38,3 +38,7 @@ players2.sqlite
 
 # Backup maps created by maptools
 *.dmm.backup
+
+# Changelog dry runs
+/html/changelog.dry.html
+/html/changelogs/.dry_changelog.yml

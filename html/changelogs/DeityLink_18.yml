@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Cult Hoods now also protect from bible deconvertion
-  - rscdel: Null Rods no longer deconvert. I mean seriously what the fuck? 25% chance per hit to deconvert that bypasses all protections? Who thought that was a good idea? The Null Rod has already way enough uses against cult (fighting constructs, removing runes, protecting from runes and talismans,...)
