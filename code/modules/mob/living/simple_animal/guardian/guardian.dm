@@ -255,7 +255,7 @@
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	..()
 	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to heal!.</span></B>"
+		src << "<span class='danger'><B>You must be manifested to heal!</span></B>"
 		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -320,7 +320,7 @@
 
 /mob/living/simple_animal/hostile/guardian/bomb/ShiftClickOn(atom/movable/A)
 	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to create bombs!.</span></B>"
+		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
 		return
 	if(istype(A, /obj/))
 		if(bomb_cooldown <= world.time && !stat)
