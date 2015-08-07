@@ -63,7 +63,6 @@ calculate the longest number of ticks the MC can wait between each cycle without
 		sleep(-1)
 
 	world << "<span class='boldannounce'>Initializations complete</span>"
-	world.log << "Initializations complete"
 
 	world.sleep_offline = 1
 	world.fps = config.fps
