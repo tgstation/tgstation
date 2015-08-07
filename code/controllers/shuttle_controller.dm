@@ -166,7 +166,7 @@ datum/shuttle_controller/emergency_shuttle/force_shutdown()
 		if(shuttle && istype(shuttle,/datum/shuttle/escape))
 			var/datum/shuttle/escape/E = shuttle
 			E.open_all_doors()
-			if(!E.move_to_dock(E.dock_station, throw_dir = E.dir)) //Throw everything forward
+			if(!E.move_to_dock(E.dock_station, 0, E.dir)) //Throw everything forward
 				message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND THE STATION! PANIC PANIC PANIC")
 		else
 			message_admins("WARNING: THERE IS NO EMERGENCY SHUTTLE! PANIC")
@@ -211,7 +211,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 					if(shuttle && istype(shuttle,/datum/shuttle/escape))
 						var/datum/shuttle/escape/E = shuttle
 						E.open_all_doors()
-						if(!E.move_to_dock(E.dock_centcom, throw_dir = E.dir)) //Throw everything forward
+						if(!E.move_to_dock(E.dock_centcom, 0, E.dir)) //Throw everything forward
 							message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND CENTCOMM! PANIC PANIC PANIC")
 					else
 						message_admins("WARNING: THERE IS NO EMERGENCY SHUTTLE! PANIC")
@@ -247,7 +247,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 				if(shuttle && istype(shuttle,/datum/shuttle/escape))
 					var/datum/shuttle/escape/E = shuttle
 					E.open_all_doors()
-					if(!E.move_to_dock(E.dock_station, throw_dir = E.dir)) //Throw everything forward, on chance that there's anybody in the shuttle
+					if(!E.move_to_dock(E.dock_station, 0, E.dir)) //Throw everything forward, on chance that there's anybody in the shuttle
 						message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND THE STATION! PANIC PANIC PANIC")
 
 				settimeleft(SHUTTLELEAVETIME)
@@ -297,7 +297,7 @@ datum/shuttle_controller/emergency_shuttle/process()
 				if(shuttle && istype(shuttle,/datum/shuttle/escape))
 					var/datum/shuttle/escape/E = shuttle
 					E.close_all_doors()
-					if(!E.move_to_dock(E.transit_port, throw_dir = turn(E.dir,180))) //Throw everything backwards
+					if(!E.move_to_dock(E.transit_port, 0, turn(E.dir,180))) //Throw everything backwards
 						message_admins("WARNING: THE EMERGENCY SHUTTLE FAILED TO FIND TRANSIT! PANIC PANIC PANIC")
 				else
 					message_admins("WARNING: THERE IS NO EMERGENCY SHUTTLE! PANIC")
