@@ -34,8 +34,11 @@ var/global/list/all_docking_ports = list()
 /obj/structure/docking_port/cultify()
 	return //we are eternal
 
-/obj/structure/docking_port/shuttle_act()
-	return
+/obj/structure/docking_port/shuttle_act(datum/shuttle/S)
+	if(istype(src,/obj/structure/docking_port/shuttle))
+		var/obj/structure/docking_port/shuttle/D = src
+		message_admins("<span class='notice'>WARNING: A shuttle docking port linked to [D.linked_shuttle ? "[D.linked_shuttle.name] ([D.linked_shuttle.type])" : "nothing"] has been destroyed by [S.name] ([S.type]). The linked shuttle will be broken! [formatJumpTo(get_turf(src))]</span>")
+	return ..()
 
 /obj/structure/docking_port/proc/link_to_shuttle(var/datum/shuttle/S)
 	used_by_shuttles |= S
@@ -173,6 +176,9 @@ var/global/list/all_docking_ports = list()
 /obj/structure/docking_port/destination/can_shuttle_move(datum/shuttle/S)
 	if(src in S.docking_ports_aboard)
 		return 1
+	return 0
+
+/obj/structure/docking_port/destination/shuttle_act() //These guys don't get destroyed
 	return 0
 
 //SILLY PROC
