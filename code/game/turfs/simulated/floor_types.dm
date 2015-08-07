@@ -220,6 +220,7 @@
 	blocks_air = 1
 	explosion_block = 2
 
+/*
 /turf/simulated/shuttle/wall/lighting_build_overlays()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_build_overlays() called tick#: [world.time]")
 	var/atom/movable/lighting_overlay/O = ..()
@@ -243,7 +244,7 @@
 					O.icon_state = "light1_corner"
 					O.dir = NORTH
 
-	return O
+	return O*/
 
 /turf/simulated/shuttle/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)
