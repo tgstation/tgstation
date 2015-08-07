@@ -1133,12 +1133,15 @@ var/global/list/organ_damage_overlays = list(
 
 	confused = max(0, confused - 1)
 	// decrement dizziness counter, clamped to 0
+	var/is_jittery = jitteriness
 	if(resting)
 		dizziness = max(0, dizziness - 15)
 		jitteriness = max(0, jitteriness - 15)
 	else
 		dizziness = max(0, dizziness - 3)
 		jitteriness = max(0, jitteriness - 3)
+	if(is_jittery && !jitteriness)
+		animate(src)
 
 	handle_trace_chems()
 
@@ -1309,23 +1312,19 @@ var/global/list/organ_damage_overlays = list(
 			var/pixel_y_diff = rand(-amplitude, amplitude)
 
 
-			jitteriness = max(jitteriness-1, 0)
-			if(!jitteriness)
-				animate(src)
-			else
-				spawn()
-					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
-					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+			spawn()
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
 
-					pixel_x_diff = rand(-amplitude, amplitude)
-					pixel_y_diff = rand(-amplitude, amplitude)
-					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
-					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+				pixel_x_diff = rand(-amplitude, amplitude)
+				pixel_y_diff = rand(-amplitude, amplitude)
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
 
-					pixel_x_diff = rand(-amplitude, amplitude)
-					pixel_y_diff = rand(-amplitude, amplitude)
-					animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
-					animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
+				pixel_x_diff = rand(-amplitude, amplitude)
+				pixel_y_diff = rand(-amplitude, amplitude)
+				animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 1, loop = -1)
+				animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 1, loop = -1, easing = BOUNCE_EASING)
 
 		//Flying
 		if(flying)
