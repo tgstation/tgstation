@@ -138,8 +138,8 @@
 
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
 	damage_transfer = 0.7
@@ -197,9 +197,9 @@
 //Fast Standard. Does less damage, has less resistance, but moves faster, has higher range
 
 /mob/living/simple_animal/hostile/guardian/fast
-	melee_damage_lower = 25
-	melee_damage_upper = 25
-	damage_transfer = 0.6
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	damage_transfer = 0.7
 	speed = -1
 	range = 15
 	attacktext = "slices"
