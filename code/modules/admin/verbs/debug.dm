@@ -1826,7 +1826,7 @@ client/proc/cure_disease()
 /client/proc/spawn_datum(var/object as text)
 	set category = "Debug"
 	set desc = "(datum path) Spawn a datum (turfs NOT supported)"
-	set name = "Spawn Datum"
+	set name = "Create Datum"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/admins/proc/spawn_atom() called tick#: [world.time]")
 
 	if(!check_rights(R_SPAWN))
