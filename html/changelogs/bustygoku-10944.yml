@@ -1,6 +1,0 @@
-author: bustygoku
-
-delete-after: True
-
-changes: 
-  - rscdel: "Removed the chance for a disease to make you a carrier on transfer."

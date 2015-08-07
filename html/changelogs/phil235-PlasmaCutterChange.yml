@@ -1,8 +1,0 @@
-
-author: phil235
-
-delete-after: True
-
-changes: 
-  - tweak: "The plasma cutter's fire rate is now a bit lower but its projectile can pierce multiple asteroid walls and its range isn't lowered in pressurized environment anymore."
-
