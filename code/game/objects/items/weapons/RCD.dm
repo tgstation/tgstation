@@ -199,7 +199,7 @@ RCD
 
 
 /obj/item/weapon/rcd/New()
-	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -294,7 +294,7 @@ RCD
 		if(1)
 			if(istype(A, /turf/space))
 				var/turf/space/S = A
-				if(useResource(1, user))
+				if(useResource(2, user))
 					user << "<span class='notice'>You start building floor...</span>"
 					activate()
 					S.ChangeTurf(/turf/simulated/floor/plating)
@@ -303,11 +303,11 @@ RCD
 
 			if(istype(A, /turf/simulated/floor))
 				var/turf/simulated/floor/F = A
-				if(checkResource(3, user))
+				if(checkResource(16, user))
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 20, target = A))
-						if(!useResource(3, user)) return 0
+						if(!useResource(16, user)) return 0
 						activate()
 						F.ChangeTurf(/turf/simulated/wall)
 						return 1
@@ -315,7 +315,7 @@ RCD
 
 		if(2)
 			if(istype(A, /turf/simulated/floor))
-				if(checkResource(10, user))
+				if(checkResource(16, user))
 					var/door_check = 1
 					for(var/obj/machinery/door/D in A)
 						if(!D.sub_door)
@@ -326,7 +326,7 @@ RCD
 						user << "<span class='notice'>You start building airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50, target = A))
-							if(!useResource(10, user)) return 0
+							if(!useResource(16, user)) return 0
 							activate()
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 
@@ -345,7 +345,7 @@ RCD
 
 							if(!T.checkForMultipleDoors())
 								qdel(T)
-								useResource(-10, user)
+								useResource(-16, user)
 								return 0
 							T.autoclose = 1
 							return 1
@@ -360,11 +360,11 @@ RCD
 				var/turf/simulated/wall/W = A
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
-				if(checkResource(5, user))
+				if(checkResource(27, user))
 					user << "<span class='notice'>You start deconstructing wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40, target = A))
-						if(!useResource(5, user)) return 0
+						if(!useResource(27, user)) return 0
 						activate()
 						W.ChangeTurf(/turf/simulated/floor/plating)
 						return 1
@@ -375,44 +375,44 @@ RCD
 				if(istype(F, F.baseturf))
 					user << "<span class='notice'>You can't dig any deeper!</span>"
 					return 0
-				else if(checkResource(5, user))
+				else if(checkResource(12, user))
 					user << "<span class='notice'>You start deconstructing floor...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50, target = A))
-						if(!useResource(5, user)) return 0
+						if(!useResource(12, user)) return 0
 						activate()
 						F.ChangeTurf(F.baseturf)
 						return 1
 				return 0
 
 			if(istype(A, /obj/machinery/door/airlock))
-				if(checkResource(20, user))
+				if(checkResource(32, user))
 					user << "<span class='notice'>You start deconstructing airlock...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50, target = A))
-						if(!useResource(20, user)) return 0
+						if(!useResource(32, user)) return 0
 						activate()
 						qdel(A)
 						return 1
 				return	0
 
 			if(istype(A, /obj/structure/window))
-				if(checkResource(5, user))
+				if(checkResource(8, user))
 					user << "<span class='notice'>You start deconstructing the window...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50, target = A))
-						if(!useResource(5, user)) return 0
+						if(!useResource(8, user)) return 0
 						activate()
 						qdel(A)
 						return 1
 				return	0
 
 			if(istype(A, /obj/structure/grille))
-				if(checkResource(5, user))
+				if(checkResource(4, user))
 					user << "<span class='notice'>You start deconstructing the grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50, target = A))
-						if(!useResource(5, user)) return 0
+						if(!useResource(4, user)) return 0
 						activate()
 						qdel(A)
 						return 1
@@ -421,14 +421,14 @@ RCD
 
 		if (4)
 			if(istype(A, /turf/simulated/floor))
-				if(checkResource(5, user))
+				if(checkResource(4, user))
 					for(var/obj/structure/grille/GRILLE in A)
 						user << "<span class='warning'>There is already a grille there!</span>"
 						return 0
 					user << "<span class='notice'>You start building a grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40, target = A))
-						if(!useResource(5, user)) return 0
+						if(!useResource(4, user)) return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
 						G.anchored = 1
@@ -436,12 +436,12 @@ RCD
 					return 0
 				return 0
 			if(istype(A, /obj/structure/grille))
-				if(checkResource(5, user))
+				if(checkResource(8, user))
 					user << "<span class='notice'>You start building a window...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40, target = A))
 						if(locate(/obj/structure/window) in A.loc) return 0
-						if(!useResource(5, user)) return 0
+						if(!useResource(8, user)) return 0
 						activate()
 						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
 						WD.anchored = 1
@@ -457,7 +457,7 @@ RCD
 	if(matter < amount)
 		return 0
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
@@ -496,8 +496,8 @@ RCD
 	density = 0
 	anchored = 0.0
 	origin_tech = "materials=2"
-	materials = list(MAT_METAL=16000, MAT_GLASS=8000)
-	var/ammoamt = 20
+	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
+	var/ammoamt = 40
 
 /obj/item/weapon/rcd_ammo/large
-	ammoamt = 100
+	ammoamt = 200
