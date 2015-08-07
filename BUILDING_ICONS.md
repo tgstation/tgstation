@@ -54,8 +54,7 @@ buildIcons.bat in the root folder of this repository will do steps 3-4 for you, 
 Adding More Output Targets
 --------------------------
 
-If you've run into the problem mentioned above with another
-DMI, have no fear:  Just edit dmi_config.yml
+If you've run into the problem mentioned above with another DMI, have no fear:  Just edit dmi_config.yml
 
 License
 -------
