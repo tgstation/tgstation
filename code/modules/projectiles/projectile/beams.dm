@@ -5,6 +5,7 @@
 	damage = 20
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
 
@@ -27,7 +28,7 @@
 
 /obj/item/projectile/beam/xray
 	name = "xray beam"
-	icon_state = "xray"
+	icon_state = "greenlaser"
 	damage = 15
 	irradiate = 30
 	range = 15

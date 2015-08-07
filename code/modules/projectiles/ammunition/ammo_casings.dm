@@ -46,7 +46,7 @@
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/pellet
 	pellets = 5
-	variance = 0.8
+	variance = 25
 
 /obj/item/ammo_casing/shotgun/rubbershot
 	name = "rubber shot"
@@ -54,7 +54,7 @@
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/rpellet
 	pellets = 5
-	variance = 0.8
+	variance = 30
 	materials = list(MAT_METAL=4000)
 
 
@@ -73,7 +73,7 @@
 	projectile_type = /obj/item/projectile/bullet/pellet/weak
 	materials = list(MAT_METAL=250)
 	pellets = 5
-	variance = 0.8
+	variance = 35
 
 
 /obj/item/ammo_casing/shotgun/improvised/overload
@@ -84,7 +84,7 @@
 	projectile_type = /obj/item/projectile/bullet/pellet/random
 	materials = list(MAT_METAL=250)
 	pellets = 5
-	variance = 1.0
+	variance = 45
 
 /obj/item/ammo_casing/shotgun/improvised/overload/New()
 	..()
@@ -131,7 +131,7 @@
 	icon_state = "ishell2"
 	projectile_type = /obj/item/projectile/bullet/incendiary/shell/dragonsbreath
 	pellets = 4
-	variance = 0.9
+	variance = 25
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
@@ -140,7 +140,7 @@
 	icon_state = "ionshell"
 	projectile_type = /obj/item/projectile/ion/weak
 	pellets = 4
-	variance = 0.9
+	variance = 25
 
 /obj/item/ammo_casing/shotgun/laserslug
 	name = "laser slug"
