@@ -39,7 +39,7 @@ Ideally, things that should be logically grouped together should be in their own
 How to Compile
 --------------
 
-1. [Install BYONDTools](http://ss13.nexisonline.net/wiki/User:N3X15/Guide_to_BYONDTools).
+1. [Install BYONDTools](http://ss13.pomf.se/wiki/index.php/User:N3X15/Guide_to_BYONDTools).
 2. Dump your DMIs into the appropriate folder. (Left-hand crap into the left-hand folder, etc.)
 3. Open your command prompt. (cmd.exe on Windows)
 4. Run the following (with the correct paths, of course):
