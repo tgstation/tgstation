@@ -552,7 +552,7 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Syndicate Station"
 	icon_state = "yellow"
 	requires_power = 0
-	lighting_use_dynamic = 0
+	lighting_use_dynamic = 1
 
 /area/syndicate_station/start
 	name = "\improper Syndicate Forward Operating Base"
