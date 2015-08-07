@@ -54,6 +54,8 @@ var/list/impact_master = list()
 	var/agony = 0
 	var/jittery = 0
 
+	var/destroy = 0	//if set to 1, will destroy wall, tables and racks on impact (or at least, has a chance to)
+
 	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
 
 	var/inaccurate = 0
@@ -418,6 +420,66 @@ var/list/impact_master = list()
 
 /obj/item/projectile/bullet_act(/obj/item/projectile/bullet)
 	return -1
+
+/obj/item/projectile/proc/rebound(var/atom/A)//Projectiles bouncing off walls and obstacles
+	var/turf/T = get_turf(src)
+	var/turf/W = get_turf(A)
+	var/orientation = SOUTH
+	if(T == W)
+		orientation = dir
+	else
+		orientation = get_dir(T,W)
+	last_bump = orientation
+	switch(orientation)
+		if(NORTH)
+			dy = SOUTH
+			override_starting_Y = (W.y * 2) - override_starting_Y
+			override_target_Y = (W.y * 2) - override_target_Y
+		if(SOUTH)
+			dy = NORTH
+			override_starting_Y = (W.y * 2) - override_starting_Y
+			override_target_Y = (W.y * 2) - override_target_Y
+		if(EAST)
+			dx = WEST
+			override_starting_X = (W.x * 2) - override_starting_X
+			override_target_X = (W.x * 2) - override_target_X
+		if(WEST)
+			dx = EAST
+			override_starting_X = (W.x * 2) - override_starting_X
+			override_target_X = (W.x * 2) - override_target_X
+	var/newdiffX = override_target_X - override_starting_X
+	var/newdiffY = override_target_Y - override_starting_Y
+
+	override_starting_X = W.x
+	override_starting_Y = W.y
+	override_target_X = W.x + newdiffX
+	override_target_Y = W.y + newdiffY
+
+	var/disty
+	var/distx
+	var/newangle
+	disty = (32 * override_target_Y)-(32 * override_starting_Y)
+	distx = (32 * override_target_X)-(32 * override_starting_X)
+	if(!disty)
+		if(distx >= 0)
+			newangle = 90
+		else
+			newangle = 270
+	else
+		newangle = arctan(distx/disty)
+		if(disty < 0)
+			newangle += 180
+		else if(distx < 0)
+			newangle += 360
+
+	target_angle = round(newangle)
+
+	if(linear_movement)
+		if( !("[icon_state][target_angle]" in bullet_master) )
+			var/icon/I = new(initial(icon),"[icon_state]_pixel")
+			I.Turn(target_angle+45)
+			bullet_master["[icon_state]_angle[target_angle]"] = I
+		src.icon = bullet_master["[icon_state]_angle[target_angle]"]
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

@@ -218,6 +218,7 @@ var/list/beam_master = list()
 	invisibility = 101
 	animate_movement = 2
 	linear_movement = 0
+	layer = 13
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
@@ -296,7 +297,7 @@ var/list/beam_master = list()
 
 		//If the icon has not been added yet
 		if( !("[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]" in beam_master) )
-			var/image/I = image(icon,"[icon_state]_pixel",10,target_dir) //Generate it.
+			var/image/I = image(icon,"[icon_state]_pixel",13,target_dir) //Generate it.
 			I.transform = turn(I.transform, target_angle+45)
 			I.pixel_x = PixelX
 			I.pixel_y = PixelY
@@ -406,7 +407,7 @@ var/list/beam_master = list()
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-
+	destroy = 1
 
 /obj/item/projectile/beam/deathlaser
 	name = "death laser"

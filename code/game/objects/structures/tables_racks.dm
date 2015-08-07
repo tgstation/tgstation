@@ -46,6 +46,12 @@
 	update_adjacent()
 	..()
 
+/obj/structure/table/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.destroy)
+		src.ex_act(1)
+	..()
+	return 0
+
 /obj/structure/table/proc/destroy()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/table/proc/destroy() called tick#: [world.time]")
 	new parts(loc)
@@ -590,6 +596,12 @@
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 	var/offset_step = 0
+
+/obj/structure/rack/bullet_act(var/obj/item/projectile/Proj)
+	if(Proj.destroy)
+		src.ex_act(1)
+	..()
+	return 0
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)

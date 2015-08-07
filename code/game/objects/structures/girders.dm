@@ -266,7 +266,7 @@
 		qdel(src)
 
 /obj/structure/girder/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/pulse))
+	if(Proj.destroy)
 		src.ex_act(2)
 	..()
 	return 0
