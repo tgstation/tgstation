@@ -231,12 +231,14 @@ div.notice
 	border: 1px solid #40628a;
 	padding: 4px;
 	margin: 3px 0;
+	text-align: center;
+
 }
 
 .statusLabel
 {
 	width: 138px;
-	float: left;
+	float: center;
 	overflow: hidden;
 	color: #98B0C3;
 }
