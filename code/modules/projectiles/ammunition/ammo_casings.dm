@@ -184,7 +184,7 @@
 	desc = "A 7.62mm bullet casing."
 	icon_state = "762-casing"
 	caliber = "a762"
-	projectile_type = /obj/item/projectile/bullet
+	projectile_type = /obj/item/projectile/bullet/midbullet2 //4 shots to crit
 
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."
