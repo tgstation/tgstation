@@ -112,6 +112,9 @@
 /atom/movable/lighting_overlay/shuttle_act()
 	return 0
 
+/atom/movable/lighting_overlay/can_shuttle_move()
+	return 0
+
 //Override here to prevent things accidentally moving around overlays.
 /atom/movable/lighting_overlay/forceMove(atom/destination, var/harderforce = 0)
 	if(harderforce)

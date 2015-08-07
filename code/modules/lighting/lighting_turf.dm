@@ -13,20 +13,24 @@
 	if(lighting_overlay)
 		returnToPool(lighting_overlay)
 
+//This proc is extended in code/game/turfs/simulated/floor_types.dm
 /turf/proc/lighting_build_overlays()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_build_overlays() called tick#: [world.time]")
 	if(lighting_overlay)
 		return
 
+	var/atom/movable/lighting_overlay/O
 	var/area/A = loc
 	if(A.lighting_use_dynamic)
-		var/atom/movable/lighting_overlay/O = getFromPool(/atom/movable/lighting_overlay, src)
+		O = getFromPool(/atom/movable/lighting_overlay, src)
 		lighting_overlay = O
 		all_lighting_overlays |= O
 
 	//Make the light sources recalculate us so the lighting overlay updates INSTANTLY.
 	for(var/datum/light_source/L in affecting_lights)
 		L.calc_turf(src)
+
+	return O
 
 /turf/proc/get_lumcount(var/minlum = 0, var/maxlum = 1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/get_lumcount() called tick#: [world.time]")

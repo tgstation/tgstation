@@ -220,6 +220,17 @@
 	blocks_air = 1
 	explosion_block = 2
 
+/turf/simulated/shuttle/wall/lighting_build_overlays()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_build_overlays() called tick#: [world.time]")
+	var/atom/movable/lighting_overlay/O = ..()
+
+	if(O)
+		if(icon_state in transparent_icons)
+			O.icon_state = "light1_corner"
+			O.dir = src.dir
+
+	return O
+
 /turf/simulated/shuttle/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)
 	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
