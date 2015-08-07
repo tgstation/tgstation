@@ -228,6 +228,20 @@
 		if(icon_state in transparent_icons)
 			O.icon_state = "light1_corner"
 			O.dir = src.dir
+		else
+			switch(icon_state) //For incorrectly mapped corners
+				if("swall_s5")
+					O.icon_state = "light1_corner"
+					O.dir = SOUTH
+				if("swall_s6")
+					O.icon_state = "light1_corner"
+					O.dir = WEST
+				if("swall_s9")
+					O.icon_state = "light1_corner"
+					O.dir = EAST
+				if("swall_s10")
+					O.icon_state = "light1_corner"
+					O.dir = NORTH
 
 	return O
 
