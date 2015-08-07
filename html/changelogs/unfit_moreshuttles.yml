@@ -4,7 +4,7 @@ delete-after: True
 
 changes: 
   - tweak: Shuttles can move the singularity once again
-  - bugfix: Fixed the cargo shuttle having dynamic lighting when it wasn't intended
+  - bugfix: Fixed the cargo shuttle having dynamic lighting
   - bugfix: Fixed emergency shuttle doors not getting locked after departing from station
   - bugfix: Fixed the syndicate shuttle leaving space turfs when leaving the base, instead of snow/sand
-  - bugfix: Fixed the vox shuttle not triggering round end (after going home)
+  - bugfix: Fixed the vox shuttle not triggering round end after going home
