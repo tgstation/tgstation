@@ -357,8 +357,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "stickybomb"
 	flags = FPRINT
-	siemens_coefficient = 1
-	slot_flags = SLOT_BELT
+	force = 1
 	throwforce = 1
 	w_class = 1.0
 	var/obj/item/weapon/gun/stickybomb/fired_from = null
@@ -366,6 +365,11 @@
 	var/atom/stuck_to = null
 	var/image/self_overlay = null
 	var/signal = 0
+
+/obj/item/stickybomb/New()
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/stickybomb/Destroy()
 	if(fired_from)
@@ -566,3 +570,68 @@
 	icon_state = "nikita"
 	caliber = "nikita"
 	projectile_type = "/obj/item/projectile/nikita"
+
+
+/obj/item/weapon/gun/osipr
+	name = "\improper Overwatch Standard Issue Pulse Rifle"
+	desc = "Centuries ago those weapons striked fear in all of humanity when the Combine attacked the Earth. Nowadays these are just the best guns that the Syndicate can provide to its Elite Troops with its tight budget."
+	icon = 'icons/obj/gun_experimental.dmi'
+	icon_state = "osipr"
+	item_state = "osipr"
+	origin_tech = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
+	recoil = 1
+	w_class = 3.0
+	fire_sound = 'sound/weapons/osipr_fire.ogg'
+	var/obj/item/osipr_magazine/magazine = null
+	var/energy_balls = 2
+
+/obj/item/weapon/gun/osipr/New()
+	..()
+	magazine = new(src)
+
+/obj/item/weapon/gun/osipr/Destroy()
+	if(magazine)
+		qdel(magazine)
+	..()
+
+#define OSIPR_MAG_FULL 30
+
+/obj/item/osipr_magazine
+	name = "pulse magazine"
+	desc = "Primary ammo for OSIPR."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "osipr-magfull"
+	flags = FPRINT
+	force = 1
+	throwforce = 1
+	w_class = 3.0
+	var/bullets = OSIPR_MAG_FULL
+
+/obj/item/osipr_magazine/New()
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+
+/obj/item/osipr_magazine/update_icon()
+	if(bullets == OSIPR_MAG_FULL)
+		icon_state = "osipr-magfull"
+	else
+		icon_state = "osipr-mag"
+
+#undef OSIPR_MAG_FULL
+
+/obj/item/osipr_core
+	name = "dark energy core"
+	desc = "Secondary ammo for OSIPR."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "osipr-core"
+	flags = FPRINT
+	force = 1
+	throwforce = 1
+	w_class = 3.0
+
+/obj/item/osipr_core/New()
+	..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)

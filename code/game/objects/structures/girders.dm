@@ -274,23 +274,38 @@
 /obj/structure/girder/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			qdel(src)
+			if(prob(25) && state == 2) //Strong enough to have a chance to stand if finished, but not in one piece
+				getFromPool(/obj/item/stack/rods, get_turf(src)) //Lose one rod
+				state = 0
+				update_icon()
+			else //Not finished or not lucky
+				qdel(src) //No scraps
 			return
 		if(2.0)
 			if(prob(30))
-				if(prob(50))
+				if(state == 2)
+					state = 1
+					update_icon()
+				if(state == 1)
 					getFromPool(/obj/item/stack/rods, get_turf(src))
+					state = 0
+					update_icon()
 				else
 					getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
-				qdel(src)
+					qdel(src)
 			return
 		if(3.0)
-			if(prob(5))
-				if(prob(50))
-					getFromPool(/obj/item/stack/rods, get_turf(src))
-				else
-					getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
+			if((state == 0) && prob(5))
+				getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 				qdel(src)
+			else if(prob(15))
+				if(state == 2)
+					state = 1
+					update_icon()
+				if(state == 1)
+					getFromPool(/obj/item/stack/rods, get_turf(src), 2)
+					state = 0
+					update_icon()
 			return
 	return
 
@@ -325,50 +340,6 @@
 	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = 2
-
-/obj/structure/girder/reinforced/ex_act(severity)
-
-	switch(severity)
-		if(1.0)
-			if(prob(25) && state == 2) //Strong enough to have a chance to stand if finished, but not in one piece
-				getFromPool(/obj/item/stack/rods, get_turf(src)) //Lose one rod
-				state = 0
-				update_icon()
-			else //Not finished or not lucky
-				qdel(src) //No scraps
-			return
-		if(2.0)
-			if(prob(30)) //Hit it nicely
-				if(state == 2)
-					state = 1
-					update_icon()
-				if(state == 1)
-					getFromPool(/obj/item/stack/rods, get_turf(src)) //Still some loss
-					state = 0
-					update_icon()
-			return
-		if(3.0)
-			if(prob(15)) //Scrap the painting off
-				if(state == 2)
-					state = 1
-					update_icon()
-				if(state == 1)
-					getFromPool(/obj/item/stack/rods, get_turf(src), 2)
-					state = 0
-					update_icon()
-			return
-	return
-
-/obj/structure/girder/attack_animal(var/mob/living/simple_animal/M)
-	M.delayNextAttack(8)
-	if(M.environment_smash >= 2)
-		var/turf/T = get_turf(src)
-		if(state >= 1)
-			getFromPool(/obj/item/stack/rods, T)
-		getFromPool(/obj/item/stack/sheet/metal, T)
-		M.visible_message("<span class='danger'>[M] smashes through \the [src].</span>", \
-		"<span class='attack'>You smash through \the [src].</span>")
-		qdel(src)
 
 /obj/structure/cultgirder
 	name = "cult girder"

@@ -52,6 +52,7 @@ var/list/impact_master = list()
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/agony = 0
+	var/jittery = 0
 
 	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
 
@@ -64,6 +65,12 @@ var/list/impact_master = list()
 	var/dy = 0
 	var/error = 0
 	var/target_angle = 0
+
+	var/override_starting_X = 0
+	var/override_starting_Y = 0
+	var/override_target_X = 0
+	var/override_target_Y = 0
+	var/last_bump = null
 
 	var/custom_impact = 0
 
@@ -88,6 +95,8 @@ var/list/impact_master = list()
 	var/mob/living/L = atarget
 	if(L.flags & INVULNERABLE)			return 0
 	L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
+	if(jittery)
+		L.Jitter(jittery)
 	return 1
 
 /obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
@@ -249,6 +258,7 @@ var/list/impact_master = list()
 			//del(src)
 			returnToPool(src)
 			OnDeath()
+
 	return 1
 
 
@@ -269,6 +279,11 @@ var/list/impact_master = list()
 	target = get_turf(original)
 	dist_x = abs(target.x - starting.x)
 	dist_y = abs(target.y - starting.y)
+
+	override_starting_X = starting.x
+	override_starting_Y = starting.y
+	override_target_X = target.x
+	override_target_Y = target.y
 
 	if (target.x > starting.x)
 		dx = EAST
@@ -309,6 +324,9 @@ var/list/impact_master = list()
 			update_pixel()
 			pixel_x = PixelX
 			pixel_y = PixelY
+
+		bumped = 0
+
 		sleep(sleeptime)
 
 
@@ -342,15 +360,23 @@ var/list/impact_master = list()
 
 /obj/item/projectile/proc/update_pixel()
 	if(src && starting && target)
-		var/AX = (starting.x - src.x)*32
-		var/AY = (starting.y - src.y)*32
-		var/BX = (target.x - src.x)*32
-		var/BY = (target.y - src.y)*32
+		var/AX = (override_starting_X - src.x)*32
+		var/AY = (override_starting_Y - src.y)*32
+		var/BX = (override_target_X - src.x)*32
+		var/BY = (override_target_Y - src.y)*32
 		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
 
 		PixelX = round(BX+((BX-AX)*XX))
 		PixelY = round(BY+((BY-AY)*XX))
-
+		switch(last_bump)
+			if(NORTH)
+				PixelY -= 16
+			if(SOUTH)
+				PixelY += 16
+			if(EAST)
+				PixelX -= 16
+			if(WEST)
+				PixelX += 16
 	return
 
 /obj/item/projectile/proc/bullet_die()
