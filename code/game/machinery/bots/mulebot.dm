@@ -486,11 +486,12 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)
-	density = 0
-	var/can_step = step_towards(M, T)
-	density = 1
-	if(!can_step)
-		return 0
+	if(M.loc != T)
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = 1
+		if(!can_step)
+			return 0
 	return ..()
 
 
@@ -802,11 +803,10 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 
 // player on mulebot attempted to move
 /obj/machinery/bot/mulebot/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	if(load == user)
 		unload(0)
-	return
 
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
