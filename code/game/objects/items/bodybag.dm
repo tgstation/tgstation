@@ -49,23 +49,24 @@
 		if(!in_range(src, user) && loc != user)
 			return
 		if(t)
-			name = "body bag - "
-			name += t
-			overlays += "bodybag_label"
+			name = "body bag - [t]"
 			tagged = 1
+			update_icon()
 		else
 			name = "body bag"
 		return
 	else if(istype(I, /obj/item/weapon/wirecutters))
 		user << "<span class='notice'>You cut the tag off [src].</span>"
 		name = "body bag"
-		overlays.Cut()
 		tagged = 0
+		update_icon()
 
 /obj/structure/closet/body_bag/update_icon()
 	..()
 	if (tagged)
 		overlays += "bodybag_label"
+	else
+		overlays.Cut()
 
 
 /obj/structure/closet/body_bag/close()
