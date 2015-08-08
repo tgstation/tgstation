@@ -33,7 +33,7 @@ var/global/datum/shuttle/escape/escape_shuttle = new(starting_area=/area/shuttle
 	areaname = "central command"
 
 /obj/structure/docking_port/destination/escape/shuttle/transit
-	areaname = "hyperspace"
+	areaname = "hyperspace (emergency shuttle)"
 
 //pods later
 /*

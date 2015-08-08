@@ -86,7 +86,7 @@ var/global/datum/shuttle/salvage/salvage_shuttle = new(starting_area=/area/shutt
 	areaname = "abandoned ship"
 
 /obj/structure/docking_port/destination/salvage/transit
-	areaname = "hyperspace"
+	areaname = "hyperspace (salvage shuttle)"
 
 #undef SALVAGE_SHIP_MOVE_TIME
 #undef SALVAGE_SHIP_COOLDOWN

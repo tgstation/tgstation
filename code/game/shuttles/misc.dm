@@ -56,7 +56,7 @@ var/global/datum/shuttle/transport/transport_shuttle = new(starting_area = /area
 //code/game/objects/structures/docking_port.dm
 
 /obj/structure/docking_port/destination/transport/station
-	areaname = "station arrivals"
+	areaname = "station arrivals (docking port 1)"
 
 /obj/structure/docking_port/destination/transport/centcom
 	areaname = "central command"

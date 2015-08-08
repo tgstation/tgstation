@@ -3304,12 +3304,6 @@
 		var/datum/shuttle/shuttle_to_link = select_shuttle_from_all(usr,"Select a shuttle to link to [port_to_link] ([port_to_link.areaname])","Admin abuse")
 		if(!shuttle_to_link) return
 
-		if(shuttle_to_link.linked_port.must_rotate(port_to_link))
-			if(alert(usr,"[port_to_link] ([port_to_link.areaname]) will be rotated to match [shuttle_to_link.name]'s direction. Continue?","Admin abuse","Yes","No") == "No")
-				return
-
-			port_to_link.dir = turn(shuttle_to_link.linked_port.dir, 180)
-
 		shuttle_to_link.add_dock(port_to_link)
 
 		message_admins("[key_name_admin(usr)] has added a destination docking port ([port_to_link.areaname]) at [port_to_link.x];[port_to_link.y];[port_to_link.z] to [shuttle_to_link.name] ([shuttle_to_link.type]) [formatJumpTo(get_turf(port_to_link))]", 1)
@@ -3345,7 +3339,7 @@
 		feedback_inc("admin_shuttle_magic_used",1)
 		feedback_add_details("admin_shuttle_magic_used","SC")
 
-		var/obj/structure/docking_port/shuttle/D = new(usr.loc)
+		var/obj/structure/docking_port/shuttle/D = new(get_turf(usr.loc))
 		D.dir = usr.dir
 
 		message_admins("<span class='notice'>[key_name_admin(usr)] has created a new shuttle docking port in [get_area(D)] [formatJumpTo(get_turf(D))]</span>", 1)
@@ -3618,10 +3612,14 @@
 			usr << "Please create a shuttle docking port (/obj/structure/docking_port/shuttle) in this area!"
 			return
 
-		var/name = input(usr, "Please name the new shuttle", "Shuttlify", A.name) as text
+		var/name = input(usr, "Please name the new shuttle", "Shuttlify", A.name) as text|null
+
+		if(!name)
+			usr << "Shuttlifying cancelled."
+			return
 
 		var/datum/shuttle/custom/S = new(starting_area = A)
-
+		S.initialize()
 		S.name = name
 
 		usr << "Shuttle created!"
@@ -3633,7 +3631,7 @@
 		feedback_inc("admin_shuttle_magic_used",1)
 		feedback_add_details("admin_shuttle_magic_used","FM")
 
-		var/list/L = list("!!YOUR CURRENT LOCATION!!")
+		var/list/L = list("YOUR CURRENT LOCATION")
 
 		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to teleport", "Shuttle teleporting")
 		if(!S) return
@@ -3652,7 +3650,7 @@
 
 		var/choice = input(usr, "Select a location to teleport [S.name] to!", "Shuttle teleporting") in L
 
-		if(choice == "!!YOUR CURRENT LOCATION!!")
+		if(choice == "YOUR CURRENT LOCATION")
 			var/area/A = get_area(usr)
 			var/turf/T = get_turf(usr)
 			if(!A) return
@@ -3741,52 +3739,7 @@
 		if(usr.dir != S.dir)
 			usr << "WARNING: You're not facing [dir2text(S.dir)]! The result may be <i>slightly</i> innacurate."
 
-		var/turf/user_turf = get_turf(usr)
-		if(!user_turf)
-			usr << "You must be standing on a turf!"
-			return
+		S.show_movable_outline(usr)
 
-		var/turf/original_center = get_turf(S.linked_port)
-		var/turf/new_center = get_step(user_turf,usr.dir)
-
-		if(!new_center)
-			usr << "The turf in front of you isn't a turf."
-			return
-
-		var/offsetX = new_center.x - original_center.x
-		var/offsetY = new_center.y - original_center.y
-		var/datum/coords/offset = new(offsetX,offsetY)
-
-		var/list/original_coords = list()
-		for(var/turf/T in S.linked_area.get_turfs())
-			var/datum/coords/C = new(T.x,T.y)
-			original_coords += C
-
-		var/list/new_coords = list()
-		for(var/datum/coords/C in original_coords)
-			var/datum/coords/NC = C.add(offset)
-			new_coords += NC
-
-		var/list/images = list()
-		for(var/datum/coords/C in new_coords)
-			var/turf/T = locate(C.x_pos,C.y_pos,new_center.z)
-			if(!T) continue
-
-			var/image/I = image('icons/turf/areas.dmi', icon_state="bluenew")
-			I.loc = T
-			images += I
-			usr << I
-
-		var/image/center_img = image('icons/turf/areas.dmi', icon_state="blue") //This is actually RED, honk
-		center_img.loc = new_center
-		images += center_img
-		usr << center_img
-
-		alert(usr,"Press \"Ok\" to remove the images","Magic","Ok")
-
-		if(usr.client)
-			for(var/image/I in images)
-				usr.client.images -= I
-		return
 
 	//------------------------------------------------------------------Shuttle stuff end---------------------------------

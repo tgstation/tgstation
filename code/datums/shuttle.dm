@@ -48,7 +48,7 @@
 	var/dir = NORTH
 
 	//Whether the shuttle can rotate. This feature is B R O K E N
-	var/can_rotate = 0
+	var/can_rotate = 1
 
 	//This is the time it takes for the shuttle to depart (if there's a transit area) or to travel (if there are no transit areas)
 	var/pre_flight_delay = 50
@@ -239,9 +239,6 @@
 			user << "The shuttle can't move ([D.areaname] is used by another shuttle)"
 		return 0
 
-	//if( D.must_rotate(linked_port) && !can_rotate )
-	//	return 0
-
 	//Handle the message
 	var/time = "as soon as possible"
 	switch(pre_flight_delay)
@@ -335,17 +332,33 @@
 			docked_shuttles |= S.linked_shuttle
 			docked_shuttles[S.linked_shuttle]=dock
 
+	//******Handle rotation*********
+	var/rotate = 0
+	if(src.can_rotate)
+
+		if(linked_port.dir != turn(D.dir,180))
+
+			rotate = (dir2angle(D.dir) - dir2angle(linked_port.dir))
+			if(rotate < 0)
+				rotate += 360
+
+	//******Get the turf to move to**
 	var/turf/target_turf = D.get_docking_turf()
-	if(!ignore_innacuracy && innacuracy)
+
+	if(!ignore_innacuracy && innacuracy) //Handle innacuracy
 		var/list/turf_list = list()
+
 		for(var/turf/T in orange(innacuracy,D.get_docking_turf()))
 			turf_list|=T
+
 		target_turf = pick(turf_list)
 
+	//****Finally, move the area***
 	move_area_to(get_turf(linked_port),\
-		target_turf,rotate=0)
+		target_turf,rotate)
 	linked_port.dock(D)
 
+	//****Move shuttles docked to us**
 	if(docked_shuttles.len)
 		for(var/datum/shuttle/S in docked_shuttles)
 			if(S in moved_shuttles) continue
@@ -444,8 +457,6 @@
 /datum/shuttle/proc/move_area_to(var/turf/our_center, var/turf/new_center, var/rotate = 0)
 	if(!our_center) return
 	if(!new_center) return
-	//if(!rotate % 90) rotate = 0 //if not divisible by 90, make it 0
-	if(rotate) return //not yet
 
 	var/datum/coords/our_center_coords = new(our_center.x,our_center.y)
 	var/datum/coords/new_center_coords = new(new_center.x,new_center.y)
@@ -476,8 +487,8 @@
 
 		coordinates += "[T.x];[T.y];[T.z]"
 
-	//Remove all stuff from the area
-	//linked_area.contents = list()
+	var/cosine	= cos(rotate)
+	var/sine	= sin(rotate)
 
 	//Calculate new coordinates
 	var/list/new_turfs = list() //Coordinates of turfs that WILL be created
@@ -494,12 +505,14 @@
 		new_turfs[new_coords] = C //Associate the old coordinates with the new ones for an easier time
 
 		if(rotate != 0)
-			var/datum/coords/relative_coords = new_coords.subtract(new_center_coords)
-			var/x_after_rotation = relative_coords.x_pos * cos(rotate)
-			var/y_after_rotation = relative_coords.y_pos * sin(rotate)
+			//Oh god this works
 
-			new_coords.x_pos = x_after_rotation
-			new_coords.y_pos = y_after_rotation
+			var/newX = (cosine	* (new_coords.x_pos - new_center.x))	- (sine		* (new_coords.y_pos - new_center.y))	+ new_center.x
+			var/newY = (sine	* (new_coords.x_pos - new_center.x))	- (cosine	* (new_coords.y_pos - new_center.y))	+ new_center.y
+
+			new_coords.x_pos = newX
+			new_coords.y_pos = newY
+
 		if(new_coords.y_pos < throwy)
 			throwy = new_coords.y_pos
 
@@ -600,6 +613,9 @@
 		new_turf.dir = old_turf.dir
 		new_turf.icon_state = old_turf.icon_state
 		new_turf.icon = old_turf.icon
+		if(rotate)
+			spawn
+				new_turf.shuttle_rotate(rotate)
 
 		//*****Move air*****
 
@@ -620,6 +636,9 @@
 				continue
 
 			AM.forceMove(new_turf)
+			if(rotate)
+				spawn
+					AM.shuttle_rotate(rotate)
 
 		//Move landmarks - for moving the arrivals shuttle
 		for(var/list/L in moved_landmarks) //moved_landmarks: code/game/area/areas.dm, 527 (above the move_contents_to proc)
@@ -652,6 +671,9 @@
 		for(var/turf/simulated/T1 in turfs_to_update)
 			for(var/obj/machinery/door/D2 in T1)
 				D2.update_nearby_tiles()
+
+	//Update shuttle's direction
+	src.dir = turn(linked_port.dir,180)
 
 /proc/setup_shuttles()
 	world.log << "Setting up all shuttles..."
@@ -692,6 +714,133 @@
 //Custom shuttles
 /datum/shuttle/custom
 	name = "custom shuttle"
+
+/datum/shuttle/proc/show_outline(var/mob/user, var/turf/centered_at)
+	if(!user)
+		return
+
+	if(!centered_at)
+		var/turf/user_turf = get_turf(user)
+		if(!user_turf)
+			user << "You must be standing on a turf!"
+			return
+
+		centered_at = get_step(user_turf,usr.dir)
+
+	var/turf/original_center = get_turf(linked_port)
+
+	if(!centered_at)
+		user << "ERROR: Unable to find center turf!"
+		return
+
+	var/offsetX = centered_at.x - original_center.x
+	var/offsetY = centered_at.y - original_center.y
+	var/datum/coords/offset = new(offsetX,offsetY)
+
+	var/list/original_coords = list()
+	for(var/turf/T in linked_area.get_turfs())
+		var/datum/coords/C = new(T.x,T.y)
+		original_coords += C
+
+	var/list/new_coords = list()
+	for(var/datum/coords/C in original_coords)
+		var/datum/coords/NC = C.add(offset)
+		new_coords += NC
+
+	var/list/images = list()
+	for(var/datum/coords/C in new_coords)
+		var/turf/T = locate(C.x_pos,C.y_pos,centered_at.z)
+		if(!T) continue
+
+		var/image/I = image('icons/turf/areas.dmi', icon_state="bluenew")
+		I.loc = T
+		images += I
+		user << I
+
+	var/image/center_img = image('icons/turf/areas.dmi', icon_state="blue") //This is actually RED, honk
+	center_img.loc = centered_at
+	images += center_img
+	user << center_img
+
+	alert(usr,"Press \"Ok\" to remove the images","Magic","Ok")
+
+	if(usr.client)
+		for(var/image/I in images)
+			usr.client.images -= I
+	return
+
+/datum/shuttle/proc/show_movable_outline(var/mob/user)
+	if(!user)
+		return
+
+	var/turf/user_turf = get_turf(user)
+	if(!user_turf)
+		user << "You must be standing on a turf!"
+		return
+
+	var/turf/original_center = get_turf(linked_port)
+	var/turf/new_center = get_step(user_turf,usr.dir)
+
+	if(!new_center)
+		user << "The turf in front of you isn't a turf."
+		return
+	else if(!original_center)
+		user << "Unable to find the shuttle docking port's turf."
+
+	var/list/images = list()
+	for(var/turf/T in linked_area.get_turfs())
+		var/image/I = image(T.icon, T.icon_state)
+
+		I.alpha = 200
+		I.loc = user
+		I.pixel_x = 32 * (T.x - original_center.x)
+		I.pixel_y = 32 * (T.y - original_center.y)
+		images += I
+		user << I
+
+	var/image/center_img = image('icons/turf/areas.dmi', icon_state="blue") //This is actually RED, honk
+	center_img.loc = user
+	images += center_img
+	user << center_img
+
+	var/moving_with_user = 1
+	while(1)
+		switch(alert(usr,"Select one of the options below.","Magic","[moving_with_user ? "Stop moving the overlay" : "Center the overlay on user"]","Cancel"))
+			if("Cancel")
+				break
+			if("Stop moving the overlay")
+				if(moving_with_user)
+					user_turf = get_turf(user)
+					if(!user_turf)
+						user << "You must be standing on a turf!"
+					else
+						for(var/image/I in images)
+							var/turf/new_loc = locate ( user_turf.x + (round(I.pixel_x / 32)), user_turf.y + (round(I.pixel_y / 32)), user_turf.z )
+							I.pixel_x = 0
+							I.pixel_y = 0
+							I.loc = new_loc
+						moving_with_user = 0
+						user << "The overlay will now be centered at [user_turf.x];[user_turf.y];[user_turf.z]"
+			if("Center the overlay on user")
+				if(!moving_with_user)
+					var/turf/old_center_loc = center_img.loc
+
+					for(var/image/I in (images - center_img))
+						var/turf/old_loc = I.loc
+						if(!old_loc) continue
+
+						I.pixel_x = 32 * (old_loc.x - old_center_loc.x)
+						I.pixel_y = 32 * (old_loc.y - old_center_loc.y)
+
+						I.loc = user
+
+					moving_with_user = 1
+					user << "The overlay will now be moving with you"
+
+	if(usr.client)
+		for(var/image/I in images)
+			usr.client.images -= I
+	return
 
 #undef INIT_SUCCESS
 #undef INIT_NO_AREA

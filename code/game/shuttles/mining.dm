@@ -17,7 +17,7 @@ var/global/datum/shuttle/mining/mining_shuttle = new(starting_area = /area/shutt
 //code/game/objects/structures/docking_port.dm
 
 /obj/structure/docking_port/destination/mining/station
-	areaname = "cargo bay"
+	areaname = "mining dock"
 
 /obj/structure/docking_port/destination/mining/outpost
 	areaname = "mining outpost"

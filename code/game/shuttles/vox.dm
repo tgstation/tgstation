@@ -34,7 +34,7 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 /datum/shuttle/vox/travel_to(var/obj/structure/docking_port/D, var/obj/machinery/computer/shuttle_control/broadcast = null, var/mob/user)
 	if(D == dock_home)
 		if(ticker && istype(ticker.mode, /datum/game_mode/heist))
-			switch(alert(usr,"Returning to dark space will end your raid and report your success or failure. Are you sure?","Vox Skipjack","Yes","No"))
+			switch(alert(usr,"Returning to the deep space will end your raid and report your success or failure. Are you sure?","Vox Skipjack","Yes","No"))
 				if("Yes")
 					var/location = get_turf(user)
 					message_admins("[key_name_admin(user)] attempts to end the raid - [formatJumpTo(location)]")
@@ -67,19 +67,19 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 	areaname = "deep space"
 
 /obj/structure/docking_port/destination/vox/northeast_solars
-	areaname = "north east of the station"
+	areaname = "north east solars"
 
 /obj/structure/docking_port/destination/vox/northwest_solars
-	areaname = "north west of the station"
+	areaname = "north west solars"
 
 /obj/structure/docking_port/destination/vox/southeast_solars
-	areaname = "south east of the station"
+	areaname = "south east solars"
 
 /obj/structure/docking_port/destination/vox/southwest_solars
-	areaname = "south west of the station"
+	areaname = "south west solars"
 
 /obj/structure/docking_port/destination/vox/mining
-	areaname = "mining asteroid"
+	areaname = "vox trading outpost"
 
 /obj/structure/docking_port/destination/vox/transit
-	areaname = "hyperspace"
+	areaname = "hyperspace (vox skipjack)"

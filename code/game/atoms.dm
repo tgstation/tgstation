@@ -540,6 +540,18 @@ its easier to just keep the beam vertical.
 /atom/proc/shuttle_act(var/datum/shuttle/S)
 	return
 
+//Called when a shuttle rotates
+/atom/proc/shuttle_rotate(var/angle)
+	src.dir = turn(src.dir, angle)
+
+	if(canSmoothWith) //Smooth the smoothable
+		relativewall()
+		relativewall_neighbours()
+
+	if(pixel_x || pixel_y)
+		pixel_x = pixel_x * cos(angle)
+		pixel_y = pixel_y * sin(angle)
+
 /atom/proc/singularity_pull()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/singularity_pull() called tick#: [world.time]")
 	return

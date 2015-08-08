@@ -64,10 +64,6 @@ var/global/list/all_docking_ports = list()
 /obj/structure/docking_port/proc/get_docking_turf()
 	return get_step(get_turf(src),src.dir)
 
-/obj/structure/docking_port/proc/must_rotate(var/obj/structure/docking_port/D) //Returns the angle by which src must rotate to face D
-	if(!D) return 0
-	return ( (dir2angle(turn(src.dir, 180)) - dir2angle(D.dir)) % 360)
-
 //SHUTTLE PORTS
 
 /obj/structure/docking_port/shuttle //this guy is installed on shuttles and connects to obj/structure/docking_port/destination

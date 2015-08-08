@@ -72,4 +72,4 @@ var/global/datum/shuttle/syndicate/syndicate_shuttle = new(starting_area = /area
 	areaname = "north east of the mining asteroid"
 
 /obj/structure/docking_port/destination/syndicate/transit
-	areaname = "hyperspace"
+	areaname = "hyperspace (syndicate shuttle)"
