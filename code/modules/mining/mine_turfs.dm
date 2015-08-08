@@ -137,7 +137,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 35, "Diamond" = 30,
 		"Gold" = 45, "Silver" = 50, "Plasma" = 50,
-		"BScrystal" = 20, "Bananium" = 1)
+		"BScrystal" = 20, "Bananium" = 5)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
