@@ -1,0 +1,17 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Any projectile may now have the pulse beam's destroying properties
+  - rscadd: Any projectile may now bounce at any angle off walls, windows, objects, mobs, or many of those at once, either a certain number of times or until they despawn.
+  - rscadd: Any projectile may now bounce phase through walls, windows, objects, mobs, or many of those at once, either a certain number of times or until they despawn.
+  - rscadd: Projectiles that can destroy such as pulse beams can now break tables
+  - rscadd: Projectiles may now make mobs jittery
+  - bugfix: Fixed a bug where girders produced by destroyed Reinforced Walls wouldn't be destroyable by destroying projectiles
+  - bugfix: Fixed a bug where burst fire being toggled on then off on automatic weapons would leave the gun unable to shoot at its normal speed.
+  - rscadd: Experimental gun 7, the Overwatch Standard Issue Pulse Rifle, OSIPR for short. Also known as AR2. Primary fire mode fires pulse bullets that can destroy walls and tables, bounces once off walls and windows. Secondary fire mode fires dark energy orbs that bounce until the projectile expires (after 100 cycles) and phase through machines and mobs, potentially hitting multiple mobs. clicking on the gun in your active hand will toggle modes. Clicking on the gun with your other empty hand will remove the magazine. pulse magazines can be replenished in rechargers.
+  - tweak: Slightly increased the size of items stored in display cases.
+  - tweak: Ablative Armor Vests can now reflect both beams and energy-based projectiles (such as the OSIPR's dark energy balls, taser shots, and a few others) and have a slightly higher chance to succeed at it. Projectiles reflected by the armor now actually bounce off it.
+  - imageadd: New recharge sprite, including idle, charging, fully charged, unpowered and unanchored sprites.
+  - tweak: Unwrenching a recharger now sets its pixel offsets back to 0, as a countermeasure to rechargers on the stations often being offset into walls, and looking as if they are on an adjacent tile once unwrenched and pulled.
+  - rscadd: Rechargers now show the gun that's in them.
+  - bugfix: You can no longer put a gun inside an unanchored recharger.
