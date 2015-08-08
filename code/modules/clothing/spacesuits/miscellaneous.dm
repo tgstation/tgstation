@@ -267,7 +267,7 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
-	desc = "A slimming piece of dubious space carp technology."
+	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
 	icon_state = "carp_suit"
 	item_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
