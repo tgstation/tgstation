@@ -19,6 +19,10 @@
 					qdel(src)
 
 			else if(!anchored) //Unanchored, anchor it
+				if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring shit to shuttles / space
+					user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
+					return
+
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("<span class='notice'>[user] starts securing \the [src]</span>", \
 				"<span class='notice'>You start securing \the [src]</span>")

@@ -343,7 +343,7 @@
 		//Look for that player! They better be dead!
 		if(istype(C))
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
-			if(!pod1)
+			if(!pod1 || !canLink(pod1)) //If the pod exists BUT it's too far away from the console
 				temp = "Error: No Clonepod detected."
 			else if(pod1.occupant)
 				temp = "Error: Clonepod is currently occupied."

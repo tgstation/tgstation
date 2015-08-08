@@ -508,6 +508,12 @@ Class Procs:
 		if(other.anchored == 1 && other.density == 1 && density && !anchored)
 			user << "\The [other] is already anchored in this location."
 			return -1 //other machines are already taking up all the space in this location
+
+	if(!anchored)
+		if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring shit to shuttles / space
+			user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
+			return
+
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")
 	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
