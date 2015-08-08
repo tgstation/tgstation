@@ -146,9 +146,6 @@ var/const/SAFETY_COOLDOWN = 100
 		if(prob(2 + probability_mod))
 			var/obj/item/stack/sheet/mineral/silver/S = new /obj/item/stack/sheet/mineral/silver(loc)
 			S.amount = amount_produced
-		if(prob(1 + probability_mod))
-			var/obj/item/stack/sheet/mineral/bananium/B = new /obj/item/stack/sheet/mineral/bananium(loc)
-			B.amount = amount_produced
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 

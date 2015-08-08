@@ -91,6 +91,7 @@ var/global/list/rockTurfEdgeCache
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
 		"Silver" = 12, "Plasma" = 20, "Iron" = 40,
 		"Gibtonite" = 4, "Cave" = 2, "BScrystal" = 1,
+		"Bananium" = 1
 		/*, "Adamantine" =5*/)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
@@ -136,7 +137,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 35, "Diamond" = 30,
 		"Gold" = 45, "Silver" = 50, "Plasma" = 50,
-		"BScrystal" = 20)
+		"BScrystal" = 20, "Bananium" = 1)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -148,7 +149,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 2, "Diamond" = 1, "Gold" = 4,
 		"Silver" = 6, "Plasma" = 15, "Iron" = 40,
-		"Gibtonite" = 2, "BScrystal" = 1)
+		"Gibtonite" = 2, "BScrystal" = 1, "Bananium" = 1)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -210,7 +211,8 @@ var/global/list/rockTurfEdgeCache
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
-	hidden = 0
+	hidden = 1
+	scan_state = "rock_Clown"
 
 /turf/simulated/mineral/bscrystal
 	name = "bluespace crystal deposit"
@@ -432,7 +434,7 @@ var/global/list/rockTurfEdgeCache
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/simulated/mineral)) 
+			if(istype(src, /turf/simulated/mineral))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.name]")
@@ -565,13 +567,13 @@ var/global/list/rockTurfEdgeCache
 
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-		
+
 		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/simulated/floor/plating/asteroid)) 
+			if(istype(src, /turf/simulated/floor/plating/asteroid))
 				user << "<span class='notice'>You dig a hole.</span>"
 				gets_dug()
 				feedback_add_details("pick_used_mining","[W.name]")
-		
+
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
