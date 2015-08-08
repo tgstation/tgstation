@@ -1153,9 +1153,10 @@ About the new airlock wires panel:
 		A.throw_at(get_edge_target_turf(src, direction),10,4)
 	return DA //Returns the new assembly
 
-/obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
-	if(C)
-		ignite(is_hot(C))
+/obj/machinery/door/airlock/plasma/attackby(obj/C, mob/user)
+	var/heat = C.is_hot()
+	if(heat > 300)
+		ignite(heat)
 	..()
 
 /obj/machinery/door/airlock/open(var/forced=0)
