@@ -32,6 +32,7 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
-changes: 
-  - rscadd: "You can eat all organs raw now, with exception for brains and cyberimplants."
+changes:
   - tweak: "Changed the way most of the surgical operations work. See wiki for new steps."
+  - rscadd: "You can eat all organs raw now, with exception for brains and cyberimplants."
+  - rscadd: "Some xenos abilities are linked to their organs. Play with xenos' guts for fun and profit!"
