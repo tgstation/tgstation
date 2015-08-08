@@ -1,6 +1,6 @@
 var/global/list/machines = list()
 /datum/controller/process/machinery
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 23 // every 2 seconds
 
 /datum/controller/process/machinery/setup()
 	name = "machinery"

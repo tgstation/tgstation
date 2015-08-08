@@ -1,7 +1,7 @@
 //Mob_List located in global_lists.dm
 
 /datum/controller/process/mob
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 19 // every 2 seconds
 
 /datum/controller/process/mob/setup()
 	name = "mob"

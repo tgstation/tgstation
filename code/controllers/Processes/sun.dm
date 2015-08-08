@@ -1,5 +1,5 @@
 /datum/controller/process/sun
-	schedule_interval = 40 // every 2 seconds
+	schedule_interval = 300 // every 2 seconds
 /datum/controller/process/sun/setup()
 	name = "sun"
 

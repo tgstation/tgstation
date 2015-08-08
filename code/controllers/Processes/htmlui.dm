@@ -1,7 +1,7 @@
 var/global/list/html_machines = new/list() //for checking when we should update a mob based on race specific conditions
 
 /datum/controller/process/html
-	schedule_interval = 20
+	schedule_interval = 17
 	var/list/update = list()
 
 /datum/controller/process/html/setup()

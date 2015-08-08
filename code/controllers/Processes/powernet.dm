@@ -2,7 +2,7 @@ var/global/list/datum/powernet/powernets = list() //Holds all powernet datums in
 var/global/list/cable_list = list() //Index for all cables, so that powernets don't have to look through the entire world all the time
 
 /datum/controller/process/powernet
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 37 // every 2 seconds
 /datum/controller/process/powernet/setup()
 	name = "powernet"
 

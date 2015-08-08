@@ -1,5 +1,5 @@
 /datum/controller/process/garbage
-	schedule_interval = 20 // every 2 seconds
+	schedule_interval = 61 // every 2 seconds
 
 
 /datum/controller/process/garbage/setup()
