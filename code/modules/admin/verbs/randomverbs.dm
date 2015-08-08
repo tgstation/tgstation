@@ -750,11 +750,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/reset_latejoin_spawns()
 	set category = "Debug"
-	set name = "Reset Latejoin Spawns"
+	set name = "Remove Latejoin Spawns"
 
 	if(!check_rights(R_DEBUG))	return
 
 	latejoin.Cut()
 
-	log_admin("[key_name(usr)] reset latejoin spawnpoints.")
-	message_admins("[key_name_admin(usr)] reset latejoin spawnpoints.")
+	log_admin("[key_name(usr)] removed latejoin spawnpoints.")
+	message_admins("[key_name_admin(usr)] removed latejoin spawnpoints.")
