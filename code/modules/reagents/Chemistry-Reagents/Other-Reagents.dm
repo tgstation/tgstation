@@ -260,7 +260,7 @@
 	color = "#FFC080" // rgb: 255, 196, 128  Bright orange
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
-	
+
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
 	if(istype(M, /mob/living/carbon/human))
 		if(method == TOUCH)
@@ -289,7 +289,7 @@
 						N.skin_tone = "caucasian2"
 					if ("albino")
 						N.skin_tone = "caucasian1"
-						
+
 			if(MUTCOLORS in N.dna.species.specflags) //take current alien color and darken it slightly
 				var/newcolor = ""
 				var/len = length(N.dna.features["mcolor"])
@@ -307,20 +307,20 @@
 				N.dna.features["mcolor"] = newcolor
 				N.regenerate_icons()
 			N.update_body()
-			
-			
-			
+
+
+
 		if(method == INGEST)
 			if(show_message)
 				M << "<span class='notice'>That tasted horrible.</span>"
 			M.AdjustStunned(2)
 			M.AdjustWeakened(2)
 	..()
-	
-	
+
+
 /datum/reagent/spraytan/overdose_process(mob/living/M)
 	metabolization_rate = 1 * REAGENTS_METABOLISM
-	
+
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/N = M
 		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
@@ -329,7 +329,7 @@
 			N.hair_color = "000"
 			N.update_hair()
 		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
-			N.dna.features["mcolor"] = "f80" 
+			N.dna.features["mcolor"] = "f80"
 			N.regenerate_icons()
 		N.update_body()
 		if(prob(7))
@@ -880,6 +880,13 @@
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+
+/datum/reagent/stable_plasma/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(10)
+	..()
+	return
 
 /datum/reagent/iodine
 	name = "Iodine"

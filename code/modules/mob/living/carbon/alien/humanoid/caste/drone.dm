@@ -4,21 +4,15 @@
 	maxHealth = 100
 	health = 100
 	icon_state = "aliend_s"
-	plasma_rate = 15
 
 
 /mob/living/carbon/alien/humanoid/drone/New()
-	create_reagents(100)
-	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
-	src.real_name = src.name
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	internal_organs += new /obj/item/organ/internal/alien/resinspinner
+	internal_organs += new /obj/item/organ/internal/alien/acid
 
-	AddAbility(new/obj/effect/proc_holder/alien/resin(null))
-	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
-
 	..()
-//Drones use the same base as generic humanoids.
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()
