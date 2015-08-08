@@ -30,6 +30,7 @@
 	var/leaping = 0
 	var/list/obj/effect/proc_holder/alien/abilities = list()
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	unique_name = 1
 
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
