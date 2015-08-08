@@ -465,33 +465,19 @@
 	if (href_list["continue"]) //Continue your travels
 		if(turns >= ORION_TRAIL_WINTURN)
 			win()
-		else if(turns == 2)
-			if(prob(30))
-				event = ORION_TRAIL_COLLISION
-				event()
-				food -= (alive+lings_aboard)*2
-				fuel -= 5
-				turns += 1
-			else
-				food -= (alive+lings_aboard)*2
-				fuel -= 5
-				turns += 1
-				if(prob(75))
-					event = pickweight(events)
-					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55))
-							event = ORION_TRAIL_LING_ATTACK
-					event()
 		else
 			food -= (alive+lings_aboard)*2
 			fuel -= 5
-			turns += 1
-			if(prob(75))
+			if(turns == 2 && prob(30))
+				event = ORION_TRAIL_COLLISION
+				event()
+			else if(prob(75))
 				event = pickweight(events)
 				if(lings_aboard)
-					if(event == ORION_TRAIL_LING || prob(75))
+					if(event == ORION_TRAIL_LING || prob(55))
 						event = ORION_TRAIL_LING_ATTACK
-				event()
+						event()
+			turns += 1
 		if(emagged)
 			var/mob/living/carbon/M = usr //for some vars
 			switch(event)
