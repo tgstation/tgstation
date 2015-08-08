@@ -12,14 +12,20 @@
 
 	var/obj/item/weapon/charging = null
 
+	var/image/occupant_overlay=null
+
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/osipr_magazine))
 		if(charging)
+			user << "<span class='warning'>There's \a [charging] already charging inside!</span>"
+			return
+		if(!anchored)
+			user << "<span class='warning'>You must anchor \the [src] before you can make use of it!</span>"
 			return
 
 		//Checks to make sure the recharger is powered and functional
@@ -43,7 +49,10 @@
 	if(charging)
 		user << "<span class='notice'>Remove the charging item first!</span>"
 		return
-	..()
+	if(..() == 1)
+		pixel_x = 0
+		pixel_y = 0
+		update_icon()
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(issilicon(user) || ..())
@@ -55,13 +64,19 @@
 		user.put_in_hands(charging)
 		charging = null
 		use_power = 1
+		occupant_overlay=null
 		update_icon()
 
 /obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
 obj/machinery/recharger/process()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(!anchored)
+		icon_state = "recharger4"
+		return
+
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = "recharger3"
 		return
 
 	if(charging)
@@ -72,9 +87,20 @@ obj/machinery/recharger/process()
 				icon_state = "recharger1"
 				use_power(250)
 			else
+				update_icon()
 				icon_state = "recharger2"
 			return
-		if(istype(charging, /obj/item/weapon/melee/baton))
+		else if(istype(charging, /obj/item/osipr_magazine))//pulse bullet casings
+			var/obj/item/osipr_magazine/M = charging
+			if(M.bullets < initial(M.bullets))
+				M.bullets = min(initial(M.bullets),M.bullets+3)
+				icon_state = "recharger1"
+				use_power(250)
+			else
+				update_icon()
+				icon_state = "recharger2"
+			return
+		else if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
 				if(B.bcell.give(175))
@@ -83,7 +109,7 @@ obj/machinery/recharger/process()
 				else
 					icon_state = "recharger2"
 			else
-				icon_state = "recharger3"
+				icon_state = "recharger0"
 
 obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -103,9 +129,21 @@ obj/machinery/recharger/emp_act(severity)
 
 obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
+		if(icon_state != "recharger2")
+			overlays = 0
 		icon_state = "recharger1"
 	else
+		overlays = 0
 		icon_state = "recharger0"
+
+	if(charging)
+		charging.update_icon()
+		var/icon/occupant_icon=getFlatIcon(charging)
+		occupant_icon.Scale(20,20)
+		occupant_overlay = image(occupant_icon)
+		occupant_overlay.pixel_x=6
+		occupant_overlay.pixel_y=12
+		overlays += occupant_overlay
 
 obj/machinery/recharger/wallcharger
 	name = "wall recharger"

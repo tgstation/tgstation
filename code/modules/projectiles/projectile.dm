@@ -56,6 +56,15 @@ var/list/impact_master = list()
 
 	var/destroy = 0	//if set to 1, will destroy wall, tables and racks on impact (or at least, has a chance to)
 
+	var/reflected = 0
+
+	var/bounce_sound = 'sound/items/metal_impact.ogg'
+	var/bounce_type = null//BOUNCEOFF_WALLS, BOUNCEOFF_WINDOWS, BOUNCEOFF_OBJS, BOUNCEOFF_MOBS
+	var/bounces = 0	//if set to -1, will always bounce off obstacles
+
+	var/phase_type = null//PHASEHTROUGH_WALLS, PHASEHTROUGH_WINDOWS, PHASEHTROUGH_OBJS, PHASEHTROUGH_MOBS
+	var/phases = 0	//if set to -1, will always phase through obstacles
+
 	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
 
 	var/inaccurate = 0
@@ -123,9 +132,9 @@ var/list/impact_master = list()
 	..("permutated")
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
-	if(A == firer)
+	if((A == firer) && !reflected)
 		loc = A.loc
-		return 0 //cannot shoot yourself
+		return 0 //cannot shoot yourself, unless an ablative armor sent back the projectile
 
 	if(bumped)	return 0
 	var/forcedodge = 0 // force the projectile to pass
@@ -183,6 +192,9 @@ var/list/impact_master = list()
 				msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 				log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
 
+	if(!A)
+		return 1
+
 	if(A)
 		if(firer && istype(A, /obj/structure/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
 			var/obj/structure/bed/chair/vehicle/JC = A
@@ -195,72 +207,104 @@ var/list/impact_master = list()
 					msg_admin_attack("[key_name(firer)] shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 					if(!iscarbon(firer))
 						BM.LAssailant = null
-					else
-						BM.LAssailant = firer
 				else
-					BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
-					log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
-					msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
-		if (!forcedodge)
-			forcedodge = A.bullet_act(src, def_zone) // searches for return value
-		if(forcedodge == -1) // the bullet passes through a dense object!
-			bumped = 0 // reset bumped variable!
-			if(istype(A, /turf))
-				loc = A
+					BM.LAssailant = firer
 			else
-				loc = A.loc
-			if(istype(permutated,/list)) permutated.Add(A)
-			return 0
-		else if(!custom_impact)
-			var/impact_icon = null
-			var/impact_sound = null
-			if(ismob(A))
-				if(issilicon(A))
-					impact_icon = "default_solid"
-					impact_sound = 'sound/items/metal_impact.ogg'
-				else
-					impact_icon = "default_mob"//todo: blood_colors
-					impact_sound = 'sound/weapons/pierce.ogg'
-			else
+				BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+				log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
+				msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
+	if (!forcedodge)
+		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+	if(forcedodge == -1) // the bullet passes through a dense object!
+		bumped = 0 // reset bumped variable!
+		if(istype(A, /turf))
+			loc = A
+		else
+			loc = A.loc
+		permutated.Add(A)
+		return 0
+	else if(!custom_impact)
+		var/impact_icon = null
+		var/impact_sound = null
+		if(ismob(A))
+			if(issilicon(A))
 				impact_icon = "default_solid"
 				impact_sound = 'sound/items/metal_impact.ogg'
-			var/PixelX = 0
-			var/PixelY = 0
-			switch(get_dir(src,A))
-				if(NORTH)
-					PixelY = 16
-				if(SOUTH)
-					PixelY = -16
-				if(EAST)
-					PixelX = 16
-				if(WEST)
-					PixelX = -16
+			else
+				impact_icon = "default_mob"//todo: blood_colors
+				impact_sound = 'sound/weapons/pierce.ogg'
+		else
+			impact_icon = "default_solid"
+			impact_sound = 'sound/items/metal_impact.ogg'
+		var/PixelX = 0
+		var/PixelY = 0
+		switch(get_dir(src,A))
+			if(NORTH)
+				PixelY = 16
+			if(SOUTH)
+				PixelY = -16
+			if(EAST)
+				PixelX = 16
+			if(WEST)
+				PixelX = -16
 
-			var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,impact_icon)
-			impact.pixel_x = PixelX
-			impact.pixel_y = PixelY
+		var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,impact_icon)
+		impact.pixel_x = PixelX
+		impact.pixel_y = PixelY
 
-			var/turf/T = src.loc
-			T.overlays += impact
+		var/turf/T = src.loc
+		T.overlays += impact
 
-			spawn(3)
-				T.overlays -= impact
+		spawn(3)
+			T.overlays -= impact
 
-			playsound(T, impact_sound, 30, 1)
+		playsound(T, impact_sound, 30, 1)
 
-		if(istype(A,/turf))
-			for(var/obj/O in A)
-				O.bullet_act(src)
-			for(var/mob/M in A)
-				M.bullet_act(src, def_zone)
-		loc = null
-		spawn()//if(!istype(src, /obj/item/projectile/beam/lightning))
-			density = 0
-			invisibility = 101
-			//del(src)
-			returnToPool(src)
-			OnDeath()
+	if(istype(A,/turf))
+		for(var/obj/O in A)
+			O.bullet_act(src)
+		for(var/mob/M in A)
+			M.bullet_act(src, def_zone)
 
+	if(bounces || phases)
+		//the bullets first checks if it can bounce off the obstacle, and if it cannot it then checks if it can phase through it, if it cannot either then it dies.
+		if(isturf(A) || (istype(A,/obj/machinery/door) && A.opacity))
+			if(bounce_type & BOUNCEOFF_WALLS)
+				rebound(A)
+				bounces--
+				return 1
+			else if(phase_type & PHASEHTROUGH_WALLS)
+				src.forceMove(get_step(src.loc,dir))
+				phases--
+				return 1
+		else if(istype(A,/obj/structure/window) || (istype(A,/obj/machinery/door/) && !A.opacity))
+			if(bounce_type & BOUNCEOFF_WINDOWS)
+				rebound(A)
+				bounces--
+				return 1
+			else if(phase_type & PHASEHTROUGH_WINDOWS)
+				src.forceMove(get_step(src.loc,dir))
+				phases--
+				return 1
+		else if(istype(A,/obj) && !istype(A,/obj/effect))
+			if(bounce_type & BOUNCEOFF_OBJS)
+				rebound(A)
+				bounces--
+				return 1
+			else if(phase_type & PHASEHTROUGH_OBJS)
+				src.forceMove(get_step(src.loc,dir))
+				phases--
+				return 1
+		else if(ismob(A))
+			if(bounce_type & BOUNCEOFF_MOBS)
+				rebound(A)
+				bounces--
+				return 1
+			else if(phase_type & PHASEHTROUGH_MOBS)
+				src.forceMove(get_step(src.loc,dir))
+				phases--
+				return 1
+	bullet_die()
 	return 1
 
 
@@ -382,8 +426,11 @@ var/list/impact_master = list()
 	return
 
 /obj/item/projectile/proc/bullet_die()
-	OnDeath()
-	returnToPool(src)
+	spawn()
+		density = 0
+		invisibility = 101
+		OnDeath()
+		returnToPool(src)
 
 /obj/item/projectile/proc/bump_original_check()
 	if(!bumped && !isturf(original))
@@ -424,6 +471,7 @@ var/list/impact_master = list()
 /obj/item/projectile/proc/rebound(var/atom/A)//Projectiles bouncing off walls and obstacles
 	var/turf/T = get_turf(src)
 	var/turf/W = get_turf(A)
+	playsound(T, bounce_sound, 30, 1)
 	var/orientation = SOUTH
 	if(T == W)
 		orientation = dir
@@ -450,6 +498,8 @@ var/list/impact_master = list()
 	var/newdiffX = override_target_X - override_starting_X
 	var/newdiffY = override_target_Y - override_starting_Y
 
+	if(!W)
+		W = T
 	override_starting_X = W.x
 	override_starting_Y = W.y
 	override_target_X = W.x + newdiffX
