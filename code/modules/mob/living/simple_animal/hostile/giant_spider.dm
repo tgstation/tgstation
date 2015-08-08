@@ -17,7 +17,7 @@
 
 /mob/living/simple_animal/hostile/poison/New()
 	if(name == "giant spider")
-		name = text("giant spider ([rand(1, 1000)])")
+		name = ("giant spider ([rand(1, 1000)])")
 
 
 
