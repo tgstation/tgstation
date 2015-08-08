@@ -42,7 +42,6 @@
 		if (V.get_amount() >= 1 && src.get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 			RG.add_fingerprint(user)
-			RG.add_to_stacks(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
 			var/replace = (user.get_inactive_hand()==G)

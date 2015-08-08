@@ -653,7 +653,7 @@
 "mE" = (/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage"},/area/wizard_station)
 "mF" = (/obj/structure/showcase{desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."; icon = 'icons/mob/mob.dmi'; icon_state = "nim"; name = "wizard of yendor showcase"},/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage4"},/area/wizard_station)
 "mG" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
-"mH" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
+"mH" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "mI" = (/turf/indestructible/fakedoor{name = "Thunderdome"},/area/tdome/tdomeobserve)
 "mJ" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,/turf/simulated/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "mK" = (/turf/simulated/wall/shuttle{icon_state = "swall12"; dir = 2},/area/wizard_station)

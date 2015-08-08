@@ -167,7 +167,7 @@
 	attacked += 10
 	if((Proj.damage_type == BURN))
 		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
-		Proj.on_hit(src, 0)
+		Proj.on_hit(src)
 	else
 		..(Proj)
 	return 0
