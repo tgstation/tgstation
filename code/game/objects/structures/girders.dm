@@ -13,7 +13,7 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 
-/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver) && state == GIRDER_DISPLACED)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -102,7 +102,7 @@
 						return
 					user << "<span class='notice'>You start building a false wall...</span>"
 					if(do_after(user, 20, target = src))
-						if(!src.loc || !S || S.amount < 2)
+						if(!src.loc || !S || S.get_amount() < 2)
 							return
 						S.use(2)
 						user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
@@ -284,7 +284,7 @@
 	density = 1
 	layer = 2
 
-/obj/structure/cultgirder/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/cultgirder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

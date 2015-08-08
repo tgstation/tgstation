@@ -21,7 +21,7 @@
 	burn_state = 0 //Burnable
 	burntime = 20
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
 	..()
 
@@ -86,7 +86,7 @@
 		return
 	..()
 
-/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user as mob)
+/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
 		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure

@@ -19,7 +19,7 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/brain/gib(var/animation = 0)
+/mob/living/carbon/brain/gib(animation = 0)
 	if(container && istype(container, /obj/item/device/mmi))
 		qdel(container)//Gets rid of the MMI if there is one
 	if(loc)

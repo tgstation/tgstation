@@ -140,7 +140,14 @@
 			if(ismob(target) && target != user)
 				target.visible_message("<span class='danger'>[user] is trying to inject [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to inject [target]!</span>")
-				if(!do_mob(user, target)) return
+				if(!do_mob(user, target))
+					return
+				//Sanity checks after sleep
+				if(!reagents.total_volume)
+					return
+				if(target.reagents.total_volume >= target.reagents.maximum_volume)
+					return
+
 				target.visible_message("<span class='danger'>[user] injects [target] with the syringe!", \
 								"<span class='userdanger'>[user] injects [target] with the syringe!")
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.

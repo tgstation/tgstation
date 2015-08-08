@@ -17,7 +17,7 @@
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
 
 
-/obj/effect/proc_holder/changeling/proc/on_purchase(var/mob/user)
+/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
 	return
 
 /obj/effect/proc_holder/changeling/Click()
@@ -26,7 +26,7 @@
 		return
 	try_to_sting(user)
 
-/obj/effect/proc_holder/changeling/proc/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
 		return
 	var/datum/changeling/c = user.mind.changeling
@@ -34,18 +34,18 @@
 		sting_feedback(user, target)
 		take_chemical_cost(c)
 
-/obj/effect/proc_holder/changeling/proc/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/proc/sting_action(mob/user, mob/target)
 	return 0
 
-/obj/effect/proc_holder/changeling/proc/sting_feedback(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/proc/sting_feedback(mob/user, mob/target)
 	return 0
 
-/obj/effect/proc_holder/changeling/proc/take_chemical_cost(var/datum/changeling/changeling)
+/obj/effect/proc_holder/changeling/proc/take_chemical_cost(datum/changeling/changeling)
 	changeling.chem_charges -= chemical_cost
 	changeling.geneticdamage += genetic_damage
 
 //Fairly important to remember to return 1 on success >.<
-/obj/effect/proc_holder/changeling/proc/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
@@ -70,7 +70,7 @@
 	return 1
 
 //used in /mob/Stat()
-/obj/effect/proc_holder/changeling/proc/can_be_used_by(var/mob/user)
+/obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
 	if(!ishuman(user) && !ismonkey(user))
 		return 0
 	if(req_human && !ishuman(user))

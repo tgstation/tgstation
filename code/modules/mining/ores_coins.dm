@@ -7,7 +7,7 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
-/obj/item/weapon/ore/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15))
@@ -38,7 +38,7 @@
 	points = 1
 	refined_type = /obj/item/stack/sheet/glass
 
-/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob)
+/obj/item/weapon/ore/glass/attack_self(mob/living/user)
 	user << "<span class='notice'>You use the sand to make sandstone.</span>"
 	var/sandAmt = 1
 	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
@@ -64,7 +64,7 @@
 	points = 36
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 
-/obj/item/weapon/ore/plasma/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/item/weapon/ore/plasma/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
@@ -153,7 +153,7 @@
 	else
 		..()
 
-/obj/item/weapon/twohanded/required/gibtonite/bullet_act(var/obj/item/projectile/P)
+/obj/item/weapon/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
 	..()
 
@@ -291,7 +291,7 @@
 /obj/item/weapon/coin/antagtoken/New()
 	return
 
-/obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
@@ -319,7 +319,7 @@
 		user << "<span class='notice'>You detach the string from the coin.</span>"
 	else ..()
 
-/obj/item/weapon/coin/attack_self(mob/user as mob)
+/obj/item/weapon/coin/attack_self(mob/user)
 	if(cooldown < world.time - 15)
 		var/coinflip = pick(sideslist)
 		cooldown = world.time

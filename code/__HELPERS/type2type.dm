@@ -235,7 +235,7 @@
 	return
 
 //Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(var/degree)
+/proc/angle2dir(degree)
 
 	degree = SimplifyDegrees(degree)
 
@@ -250,7 +250,7 @@
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
-/proc/dir2angle(var/D)
+/proc/dir2angle(D)
 	switch(D)
 		if(NORTH)		return 0
 		if(SOUTH)		return 180
@@ -263,7 +263,7 @@
 		else			return null
 
 //Returns the angle in english
-/proc/angle2text(var/degree)
+/proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
 //Converts a blend_mode constant to one acceptable to icon.Blend()
@@ -460,7 +460,7 @@ for(var/t in test_times)
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this)
-/proc/body_parts_covered2organ_names(var/bpc)
+/proc/body_parts_covered2organ_names(bpc)
 	var/list/covered_parts = list()
 
 	if(!bpc)
@@ -544,7 +544,7 @@ for(var/t in test_times)
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-/proc/color2hex(var/color)	//web colors
+/proc/color2hex(color)	//web colors
 	if(!color)
 		return "#000000"
 

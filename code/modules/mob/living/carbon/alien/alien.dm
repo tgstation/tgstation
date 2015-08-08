@@ -34,7 +34,12 @@
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
 	internal_organs += new /obj/item/organ/brain/alien
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
+
+
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
@@ -54,12 +59,12 @@
 	return storedPlasma
 
 /mob/living/carbon/alien/check_eye_prot()
-	return 2
+	return ..() + 2
 
 /mob/living/carbon/alien/getToxLoss()
 	return 0
 
-/mob/living/carbon/alien/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some toxins
 	if(locate(/obj/structure/alien/weeds) in loc)
@@ -132,7 +137,7 @@
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
 	return
 
-/mob/living/carbon/alien/reagent_check(var/datum/reagent/R) //can metabolize all reagents
+/mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
 
 /mob/living/carbon/alien/IsAdvancedToolUser()
@@ -148,7 +153,7 @@
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/alien/proc/AddAbility(var/obj/effect/proc_holder/alien/A)
+/mob/living/carbon/alien/proc/AddAbility(obj/effect/proc_holder/alien/A)
 	abilities.Add(A)
 	A.on_gain(src)
 	if(A.has_action)
@@ -185,7 +190,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/body_egg/alien_embryo/A = locate() in C
+				var/obj/item/organ/internal/body_egg/alien_embryo/A = locate() in C
 				var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 				client.images += I
 	return

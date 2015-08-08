@@ -45,7 +45,7 @@
 	return
 
 
-/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
+/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!(src.on))
 		return 0
 	if((num < 0.005 || src.air_contents.total_moles() < num))

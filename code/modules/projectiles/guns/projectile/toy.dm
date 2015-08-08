@@ -13,7 +13,7 @@
 	clumsy_check = 0
 	needs_permit = 0
 
-/obj/item/weapon/gun/projectile/automatic/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/toy/pistol
@@ -74,7 +74,7 @@
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
 
-/obj/item/weapon/gun/projectile/automatic/c20r/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/c20r/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/toy
@@ -85,5 +85,5 @@
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/m762
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/process_chamber(var/eject_casing = 0, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/automatic/l6_saw/toy/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()

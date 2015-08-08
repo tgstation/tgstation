@@ -63,7 +63,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 //add an element in the list,
 //immediatly ordering it to its position using Insertion sort
-/PriorityQueue/proc/Enqueue(var/atom/A)
+/PriorityQueue/proc/Enqueue(atom/A)
 	var/i
 	L.Add(A)
 	i = L.len -1
@@ -80,7 +80,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	return .
 
 //removes an element
-/PriorityQueue/proc/Remove(var/atom/A)
+/PriorityQueue/proc/Remove(atom/A)
 	return L.Remove(A)
 
 //returns a copy of the elements list
@@ -89,17 +89,17 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	return ret
 
 //return the position of an element or 0 if not found
-/PriorityQueue/proc/Seek(var/atom/A)
+/PriorityQueue/proc/Seek(atom/A)
 	return L.Find(A)
 
 //return the element at the i_th position
-/PriorityQueue/proc/Get(var/i)
+/PriorityQueue/proc/Get(i)
 	if(i > L.len || i < 1)
 		return 0
 	return L[i]
 
 //replace the passed element at it's right position using the cmp proc
-/PriorityQueue/proc/ReSort(var/atom/A)
+/PriorityQueue/proc/ReSort(atom/A)
 	var/i = Seek(A)
 	if(i == 0)
 		return
@@ -144,7 +144,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	return a.f - b.f
 
 //search if there's a PathNode that points to turf T in the Priority Queue
-/proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
+/proc/SeekTurf(var/PriorityQueue/Queue, turf/T)
 	var/i = 1
 	var/PathNode/PN
 	while(i < Queue.L.len + 1)
@@ -162,7 +162,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	return path
 
 //the actual algorithm
-/proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, var/turf/exclude=null)
+/proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, turf/exclude=null)
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any

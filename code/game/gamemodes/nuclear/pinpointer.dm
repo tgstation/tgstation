@@ -167,7 +167,7 @@
 	var/obj/docking_port/mobile/home
 
 
-/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user as mob)
+/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	if(!active)
 		active = 1
 		var/mode_text = "Authentication Disk Locator mode"

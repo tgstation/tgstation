@@ -6,7 +6,7 @@
 //Disease Flags
 #define CURABLE		1
 #define CAN_CARRY	2
-#define CAN_RESIST	3
+#define CAN_RESIST	4
 
 //Spread Flags
 #define SPECIAL 1
@@ -97,7 +97,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			break //One missing cure is enough to fail
 
 
-/datum/disease/proc/spread(var/atom/source, var/force_spread = 0)
+/datum/disease/proc/spread(atom/source, force_spread = 0)
 	if((spread_flags & SPECIAL || spread_flags & NON_CONTAGIOUS || spread_flags & BLOOD) && !force_spread)
 		return
 
@@ -172,7 +172,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	SSdisease.processing += src
 
 
-/datum/disease/proc/IsSame(var/datum/disease/D)
+/datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(src, D.type))
 		return 1
 	return 0

@@ -95,7 +95,7 @@
 	remove_radio_all(src) //Just to be sure
 	..()
 
-/obj/item/device/radio/MouseDrop(obj/over_object as obj, src_location, over_location)
+/obj/item/device/radio/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && src.loc == M)
 		return attack_self(M)
@@ -117,11 +117,11 @@
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
 
 
-/obj/item/device/radio/attack_self(mob/user as mob)
+/obj/item/device/radio/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/radio/interact(mob/user as mob)
+/obj/item/device/radio/interact(mob/user)
 	if(!on)
 		return
 
@@ -166,7 +166,7 @@
 	return
 
 
-/obj/item/device/radio/proc/text_sec_channel(var/chan_name, var/chan_stat)
+/obj/item/device/radio/proc/text_sec_channel(chan_name, chan_stat)
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
 	return {"
 			<B>[chan_name]</B>: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
@@ -215,7 +215,7 @@
 			updateDialog()
 	add_fingerprint(usr)
 
-/obj/item/device/radio/proc/isWireCut(var/index)
+/obj/item/device/radio/proc/isWireCut(index)
 	return wires.IsIndexCut(index)
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
@@ -526,7 +526,7 @@
 	else
 		user << "<span class='notice'>[name] can not be modified or attached.</span>"
 
-/obj/item/device/radio/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
@@ -574,7 +574,7 @@
 	..()
 	set_frequency(SYND_FREQ)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
 //	..()
 	user.set_machine(src)
 	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
@@ -628,7 +628,7 @@
 		usr << "Subspace Transmission is [(subspace_transmission) ? "enabled" : "disabled"]"
 	..()
 
-/obj/item/device/radio/borg/interact(mob/user as mob)
+/obj/item/device/radio/borg/interact(mob/user)
 	if(!on)
 		return
 

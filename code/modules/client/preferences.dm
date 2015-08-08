@@ -53,7 +53,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
-	var/backbag = 2						//backpack type
+	var/backbag = 1						//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -516,7 +516,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		popup.open(0)
 		return
 
-	proc/SetJobPreferenceLevel(var/datum/job/job, var/level)
+	proc/SetJobPreferenceLevel(datum/job/job, level)
 		if (!job)
 			return 0
 
@@ -618,7 +618,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		job_engsec_low = 0
 
 
-	proc/GetJobDepartment(var/datum/job/job, var/level)
+	proc/GetJobDepartment(datum/job/job, level)
 		if(!job || !level)	return 0
 		switch(job.department_flag)
 			if(CIVILIAN)
@@ -696,7 +696,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if("s_tone")
 						skin_tone = random_skin_tone()
 					if("bag")
-						backbag = rand(1,3)
+						backbag = rand(1,2)
 					if("all")
 						random_character()
 
@@ -1045,14 +1045,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		character.real_name = real_name
 		character.name = character.real_name
 
-		if(character.dna)
-			character.dna.real_name = character.real_name
-			if(pref_species != /datum/species/human && config.mutant_races)
-				hardset_dna(character, null, null, null, null, pref_species.type, features)
-			else
-				hardset_dna(character, null, null, null, null, /datum/species/human, features)
-			character.update_mutcolor()
-
 		character.gender = gender
 		character.age = age
 		character.blood_type = blood_type
@@ -1070,9 +1062,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 		character.features = features
 
-		if(backbag > 3 || backbag < 1)
-			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		character.update_body()
-		character.update_hair()
+		if(character.dna)
+			var/datum/species/chosen_species
+
+			character.dna.real_name = character.real_name
+			if(pref_species != /datum/species/human && config.mutant_races)
+				chosen_species = pref_species.type
+			else
+				chosen_species = /datum/species/human
+			hardset_dna(character, null, null, null, null, chosen_species, features)
+		else
+			character.update_body()
+			character.update_hair()

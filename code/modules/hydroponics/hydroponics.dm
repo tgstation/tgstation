@@ -94,7 +94,7 @@
 	return connected
 
 
-/obj/machinery/hydroponics/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+/obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!planted)
 		..()
 		return
@@ -335,7 +335,7 @@
 	visible_message("<span class='info'>[oldPlantName] overtaken by [myseed.plantname].</span>")
 
 
-/obj/machinery/hydroponics/proc/mutate(var/lifemut = 2, var/endmut = 5, var/productmut = 1, var/yieldmut = 2, var/potmut = 25) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
 	if(!planted)
 		return
 	adjustSLife(rand(-lifemut,lifemut))
@@ -416,7 +416,7 @@
 	else
 		usr << "The pests seem to behave oddly, but quickly settle down..."
 
-/obj/machinery/hydroponics/proc/applyChemicals(var/datum/reagents/S)
+/obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S)
 
 	if(myseed)
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
@@ -590,7 +590,7 @@
 			if(1   to 32)	mutatepest()
 			else 			usr << "Nothing happens..."
 
-/obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
@@ -765,7 +765,7 @@
 
 	return
 
-/obj/machinery/hydroponics/attack_hand(mob/user as mob)
+/obj/machinery/hydroponics/attack_hand(mob/user)
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
@@ -899,41 +899,41 @@
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
-/obj/machinery/hydroponics/proc/adjustNutri(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
 	nutrilevel += adjustamt
 	nutrilevel = max(nutrilevel, 0)
 	nutrilevel = min(nutrilevel, maxnutri)
 
-/obj/machinery/hydroponics/proc/adjustWater(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustWater(adjustamt)
 	waterlevel += adjustamt
 	waterlevel = max(waterlevel, 0)
 	waterlevel = min(waterlevel, maxwater)
 	if(adjustamt>0)
 		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
-/obj/machinery/hydroponics/proc/adjustHealth(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(planted && !dead)
 		health += adjustamt
 		health = max(health, 0)
 		health = min(health, myseed.endurance)
 
-/obj/machinery/hydroponics/proc/adjustToxic(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
 	toxic += adjustamt
 	toxic = max(toxic, 0)
 	toxic = min(toxic, 100)
 
-/obj/machinery/hydroponics/proc/adjustPests(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustPests(adjustamt)
 	pestlevel += adjustamt
 	pestlevel = max(pestlevel, 0)
 	pestlevel = min(pestlevel, 10)
 
-/obj/machinery/hydroponics/proc/adjustWeeds(var/adjustamt)
+/obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
 	weedlevel += adjustamt
 	weedlevel = max(weedlevel, 0)
 	weedlevel = min(weedlevel, 10)
 
 /// Seed Setters ///
-/obj/machinery/hydroponics/proc/adjustSYield(var/adjustamt)//0,10
+/obj/machinery/hydroponics/proc/adjustSYield(adjustamt)//0,10
 	if(myseed && myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		myseed.yield += adjustamt
 		myseed.yield = max(myseed.yield, 0)
@@ -941,25 +941,25 @@
 		if(myseed.yield <= 0 && myseed.plant_type == 2)
 			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
-/obj/machinery/hydroponics/proc/adjustSLife(var/adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSLife(adjustamt)//10,100
 	if(myseed)
 		myseed.lifespan += adjustamt
 		myseed.lifespan = max(myseed.lifespan, 10)
 		myseed.lifespan = min(myseed.lifespan, 100)
 
-/obj/machinery/hydroponics/proc/adjustSEnd(var/adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSEnd(adjustamt)//10,100
 	if(myseed)
 		myseed.endurance += adjustamt
 		myseed.endurance = max(myseed.endurance, 10)
 		myseed.endurance = min(myseed.endurance, 100)
 
-/obj/machinery/hydroponics/proc/adjustSProduct(var/adjustamt)//2,10
+/obj/machinery/hydroponics/proc/adjustSProduct(adjustamt)//2,10
 	if(myseed)
 		myseed.production += adjustamt
 		myseed.production = max(myseed.production, 2)
 		myseed.production = min(myseed.production, 10)
 
-/obj/machinery/hydroponics/proc/adjustSPot(var/adjustamt)//0,100
+/obj/machinery/hydroponics/proc/adjustSPot(adjustamt)//0,100
 	if(myseed && myseed.potency != -1) //Not all plants have a potency
 		myseed.potency += adjustamt
 		myseed.potency = max(myseed.potency, 0)
@@ -1000,7 +1000,7 @@
 		SetLuminosity(0)
 	return
 
-/obj/machinery/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
 	..()
 	if(istype(O, /obj/item/weapon/shovel))
 		user << "<span class='notice'>You clear up [src]!</span>"

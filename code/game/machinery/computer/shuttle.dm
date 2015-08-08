@@ -7,7 +7,7 @@
 	var/list/authorized = list()
 
 
-/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob, params)
+/obj/machinery/computer/emergency_shuttle/attackby(obj/item/weapon/card/W, mob/user, params)
 	if(stat & (BROKEN|NOPOWER))	return
 	if(!istype(W, /obj/item/weapon/card))
 		return
@@ -65,7 +65,7 @@
 					minor_announce("All authorizations to launch the shuttle early have been revoked.")
 					authorized.Cut()
 
-/obj/machinery/computer/emergency_shuttle/emag_act(mob/user as mob)
+/obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
 	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
 		var/time = SSshuttle.emergency.timeLeft()
 		message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has emagged the emergency shuttle  [time] seconds before launch.",0,1)

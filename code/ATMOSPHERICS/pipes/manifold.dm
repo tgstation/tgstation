@@ -108,7 +108,7 @@
 	if(node3)
 		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src,node3))
 
-/obj/machinery/atmospherics/pipe/manifold/hide(var/i)
+/obj/machinery/atmospherics/pipe/manifold/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()

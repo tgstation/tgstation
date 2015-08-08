@@ -1,4 +1,4 @@
-/client/proc/cmd_mass_modify_object_variables(atom/A, var/var_name)
+/client/proc/cmd_mass_modify_object_variables(atom/A, var_name)
 	set category = "Debug"
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
@@ -23,7 +23,7 @@
 	feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
+/client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))	return
 
 	for(var/p in forbidden_varedit_object_types)

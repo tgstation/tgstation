@@ -26,7 +26,7 @@
 
 	var/on = 1
 
-/obj/machinery/embedded_controller/interact(mob/user as mob)
+/obj/machinery/embedded_controller/interact(mob/user)
 	//user << browse(return_text(), "window=computer")
 	//onclose(user, "computer")
 	user.set_machine(src)
@@ -35,7 +35,7 @@
 	popup.set_content(return_text())
 	popup.open()
 
-/obj/machinery/embedded_controller/attack_hand(mob/user as mob)
+/obj/machinery/embedded_controller/attack_hand(mob/user)
 	interact(user)
 
 /obj/machinery/embedded_controller/update_icon()

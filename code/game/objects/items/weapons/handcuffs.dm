@@ -94,7 +94,10 @@
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
 
-/obj/item/weapon/restraints/handcuffs/cable/attackby(var/obj/item/I, mob/user as mob, params)
+/obj/item/weapon/restraints/handcuffs/alien
+	icon_state = "handcuffAlien"
+
+/obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
@@ -172,7 +175,7 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/weapon/restraints/legcuffs/beartrap/attack_self(mob/user as mob)
+/obj/item/weapon/restraints/legcuffs/beartrap/attack_self(mob/user)
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
@@ -193,7 +196,7 @@
 					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
 						C.legcuffed = src
 						src.loc = C
-						C.update_inv_legcuffed(0)
+						C.update_inv_legcuffed()
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L

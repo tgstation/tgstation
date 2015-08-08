@@ -343,7 +343,7 @@
 			eater.say("Nom")
 		qdel(src)
 
-/obj/effect/spacevine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user, params)
 	if (!W || !user || !W.type)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -381,13 +381,13 @@
 		for(var/datum/spacevine_mutation/SM in mutations)
 			SM.on_cross(src, crosser)
 
-/obj/effect/spacevine/attack_hand(mob/user as mob)
+/obj/effect/spacevine/attack_hand(mob/user)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user, user)
 
 
-/obj/effect/spacevine/attack_paw(mob/living/user as mob)
+/obj/effect/spacevine/attack_paw(mob/living/user)
 	user.do_attack_animation(src)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
@@ -426,7 +426,7 @@
 	SSobj.processing.Remove(src)
 	..()
 
-/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(var/turf/location, obj/effect/spacevine/parent, list/muts)
+/obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/effect/spacevine/parent, list/muts)
 	var/obj/effect/spacevine/SV = new(location)
 	growth_queue += SV
 	vines += SV

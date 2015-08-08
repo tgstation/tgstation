@@ -1101,6 +1101,19 @@ while True:
                   comboer = ""
                   if "evening" in influx.lower() and "all" in influx.lower() and len(influx.lower().split(" ")) > 3:
                      pass
+
+                  talking_about_me = False
+                  if Name.lower() in influx.lower():
+                     talking_about_me = True
+
+                  for bot_name in SName:
+                     if bot_name.lower() in influx.lower():
+                        talking_about_me = True
+                        break
+
+                  if not talking_about_me:
+                     continue #it got annoying REAL FAST when it'd interject any time a greeting was used, regardless of context
+
                   elif truesender not in operators:
                      if debug:
                         print truesender+":<GREET>:"+influx

@@ -9,7 +9,7 @@
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
-/turf/simulated/floor/wood/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/screwdriver))
@@ -33,7 +33,7 @@
 	spawn(1)
 		update_icon()
 
-/turf/simulated/floor/grass/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/weapon/shovel))

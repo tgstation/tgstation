@@ -73,7 +73,7 @@
 
 	return null
 
-/obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			if(!user.drop_item())
@@ -349,7 +349,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
+/obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
 	if (!check_dna_integrity(subject) || !istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return

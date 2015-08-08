@@ -15,17 +15,14 @@
 	if(isanimal(AM))
 		var/mob/living/simple_animal/SA = AM
 		if(!SA.flying)
-			Bumped(SA)
+			triggermine(SA)
 	else
-		Bumped(AM)
-
-/obj/effect/mine/Bumped(AM as mob|obj)
-
-	if(triggered) return
-	visible_message("<span class='danger'>[AM] sets off \icon[src] [src]!</span>")
-	triggermine(AM)
+		triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
+	if(triggered)
+		return
+	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()

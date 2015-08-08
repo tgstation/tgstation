@@ -141,7 +141,7 @@
 		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
 
 
-/mob/living/simple_animal/drone/proc/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
 	if(stat != DEAD)
@@ -157,7 +157,7 @@
 		src << "--- [class] alarm detected in [A.name]!"
 
 
-/mob/living/simple_animal/drone/proc/cancelAlarm(var/class, area/A as area, obj/origin)
+/mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)
 		var/list/L = alarms[class]
 		var/cleared = 0
@@ -173,8 +173,9 @@
 		if(cleared)
 			src << "--- [class] alarm in [A.name] has been cleared."
 
-/mob/living/simple_animal/drone/check_eye_prot()
-	return 2
-
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
+
+/mob/living/simple_animal/drone/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+	if(affect_silicon)
+		return ..()

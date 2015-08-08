@@ -273,7 +273,7 @@
 	dat += "</tr></table></div>"
 	return dat
 
-/obj/machinery/autolathe/proc/category_win(mob/user,var/selected_category)
+/obj/machinery/autolathe/proc/category_win(mob/user,selected_category)
 	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
@@ -330,7 +330,7 @@
 	dat += "</div>"
 	return dat
 
-/obj/machinery/autolathe/proc/can_build(var/datum/design/D)
+/obj/machinery/autolathe/proc/can_build(datum/design/D)
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] / coeff)))
@@ -339,7 +339,7 @@
 		return 0
 	return 1
 
-/obj/machinery/autolathe/proc/get_design_cost(var/datum/design/D)
+/obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
 	var/dat
 	if(D.materials[MAT_METAL])
@@ -361,7 +361,7 @@
 	else
 		return 0
 
-/obj/machinery/autolathe/proc/adjust_hacked(var/hack)
+/obj/machinery/autolathe/proc/adjust_hacked(hack)
 	hacked = hack
 
 	if(hack)

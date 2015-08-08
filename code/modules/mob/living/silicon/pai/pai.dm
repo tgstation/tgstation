@@ -48,15 +48,19 @@
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard)
+/mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
 	canmove = 0
-	src.loc = paicard
-	card = paicard
+	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
+		var/newcardloc = P
+		P = new /obj/item/device/paicard(newcardloc)
+		P.setPersonality(src)
+	loc = P
+	card = P
 	sradio = new(src)
 	if(card)
 		if(!card.radio)
-			card.radio = new /obj/item/device/radio(src.card)
+			card.radio = new /obj/item/device/radio(card)
 		radio = card.radio
 
 	//PDA
@@ -88,7 +92,7 @@
 		else
 			stat(null, text("Systems nonfunctional"))
 
-/mob/living/silicon/pai/check_eye(var/mob/user as mob)
+/mob/living/silicon/pai/check_eye(mob/user)
 	if (!src.current)
 		return null
 	user.reset_view(src.current)
@@ -153,7 +157,7 @@
 
 ///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
 
-/mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
+/mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	usr:cameraFollow = null
 	if (!C)
 		src.unset_machine()
@@ -176,10 +180,10 @@
 	src.unset_machine()
 	src:cameraFollow = null
 
-/mob/living/silicon/pai/UnarmedAttack(var/atom/A)//Stops runtimes due to attack_animal being the default
+/mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
 	return
 
-/mob/living/silicon/pai/on_forcemove(var/atom/newloc)
+/mob/living/silicon/pai/on_forcemove(atom/newloc)
 	if(card)
 		card.loc = newloc
 	else //something went very wrong.

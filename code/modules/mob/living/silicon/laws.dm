@@ -5,12 +5,12 @@
 	if (!laws)
 		make_laws()
 
-/mob/living/silicon/proc/set_zeroth_law(var/law, var/law_borg)
+/mob/living/silicon/proc/set_zeroth_law(law, law_borg)
 	throw_alert("newlaw")
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
 
-/mob/living/silicon/proc/add_inherent_law(var/law)
+/mob/living/silicon/proc/add_inherent_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_inherent_law(law)
@@ -20,7 +20,7 @@
 	laws_sanity_check()
 	laws.clear_inherent_laws()
 
-/mob/living/silicon/proc/add_supplied_law(var/number, var/law)
+/mob/living/silicon/proc/add_supplied_law(number, law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
@@ -30,7 +30,7 @@
 	laws_sanity_check()
 	laws.clear_supplied_laws()
 
-/mob/living/silicon/proc/add_ion_law(var/law)
+/mob/living/silicon/proc/add_ion_law(law)
 	throw_alert("newlaw")
 	laws_sanity_check()
 	laws.add_ion_law(law)
@@ -49,6 +49,6 @@
 			laws = new lawtype()
 	laws.associate(src)
 
-/mob/living/silicon/proc/clear_zeroth_law(var/force)
+/mob/living/silicon/proc/clear_zeroth_law(force)
 	laws_sanity_check()
 	laws.clear_zeroth_law(force)

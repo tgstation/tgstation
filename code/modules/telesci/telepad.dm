@@ -54,7 +54,7 @@
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
-/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
@@ -89,7 +89,7 @@
 	item_state = "signaler"
 	origin_tech = "bluespace=3"
 
-/obj/item/device/telepad_beacon/attack_self(mob/user as mob)
+/obj/item/device/telepad_beacon/attack_self(mob/user)
 	if(user)
 		user << "<span class='caution'>Locked In</span>"
 		new /obj/machinery/telepad_cargo(user.loc)
@@ -148,7 +148,7 @@
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 			user << "<span class='caution'>You calibrate the telepad locator.</span>"
 
-/obj/item/weapon/rcs/emag_act(mob/user as mob)
+/obj/item/weapon/rcs/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

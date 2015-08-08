@@ -112,7 +112,7 @@
 	floor = 1
 	return 1
 
-/obj/effect/glowshroom/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/effect/glowshroom/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	endurance -= W.force
 	CheckEndurance()
@@ -142,7 +142,7 @@
 	if(endurance <= 0)
 		qdel(src)
 
-/obj/effect/glowshroom/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/obj/effect/glowshroom/acid_act(acidpwr, toxpwr, acid_volume)
 	visible_message("<span class='danger'>[src] melts away!</span>")
 	var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."

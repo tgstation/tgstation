@@ -30,10 +30,10 @@
 	if(!height) return 0
 	else return ..()
 
-/obj/machinery/shield/CanAtmosPass(var/turf/T)
+/obj/machinery/shield/CanAtmosPass(turf/T)
 	return !density
 
-/obj/machinery/shield/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/shield/attackby(obj/item/weapon/W, mob/user, params)
 	if(!istype(W)) return
 
 	//Calculate damage
@@ -54,7 +54,7 @@
 	spawn(20) if(src) opacity = 0
 	..()
 
-/obj/machinery/shield/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <=0)
@@ -207,7 +207,7 @@
 				malfunction = 1
 	checkhp()
 
-/obj/machinery/shieldgen/attack_hand(mob/user as mob)
+/obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)
 		user << "<span class='warning'>The machine is locked, you are unable to use it!</span>"
 		return
@@ -230,7 +230,7 @@
 			user << "<span class='warning'>The device must first be secured to the floor!</span>"
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		if(is_open)
@@ -345,7 +345,7 @@
 //		message_admins("[PN.load]")
 //		use_power(250) //uses APC power
 
-/obj/machinery/shieldwallgen/attack_hand(mob/user as mob)
+/obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(!anchored)
 		user << "<span class='warning'>The shield generator needs to be firmly secured to the floor first!</span>"
 		return 1
@@ -403,7 +403,7 @@
 			src.cleanup(4)
 			src.cleanup(8)
 
-/obj/machinery/shieldwallgen/proc/setup_field(var/NSEW = 0)
+/obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
 	var/turf/T = src.loc
 	var/turf/T2 = src.loc
 	var/obj/machinery/shieldwallgen/G
@@ -477,7 +477,7 @@
 		add_fingerprint(user)
 		..()
 
-/obj/machinery/shieldwallgen/proc/cleanup(var/NSEW)
+/obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G
 	var/turf/T = src.loc
@@ -502,7 +502,7 @@
 	src.cleanup(8)
 	..()
 
-/obj/machinery/shieldwallgen/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj)
 	storedpower -= Proj.damage
 	..()
 	return
@@ -534,7 +534,7 @@
 	if(A && B)
 		needs_power = 1
 
-/obj/machinery/shieldwall/attack_hand(mob/user as mob)
+/obj/machinery/shieldwall/attack_hand(mob/user)
 	return
 
 
@@ -554,7 +554,7 @@
 			gen_secondary.storedpower -=10
 
 
-/obj/machinery/shieldwall/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))

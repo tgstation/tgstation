@@ -18,7 +18,7 @@ Chaplain
 	access = list(access_morgue, access_chapel_office, access_crematorium)
 	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
 
-/datum/job/chaplain/equip_items(var/mob/living/carbon/human/H)
+/datum/job/chaplain/equip_items(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(H), slot_shoes)
 

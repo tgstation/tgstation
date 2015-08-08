@@ -1,3 +1,8 @@
+
+#define LING_FAKEDEATH_TIME					400 //40 seconds
+#define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
+#define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
+
 var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
 
 /datum/game_mode
@@ -76,7 +81,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 	return
 
-/datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+/datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
 	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
@@ -87,7 +92,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 
-/datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
+/datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
@@ -147,7 +152,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			changeling.objectives += identity_theft
 	return
 
-/datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
+/datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
 		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
 	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
@@ -261,23 +266,28 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorbed_dna.len = dna_max
 
 
-/datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
-	geneticdamage = max(0, geneticdamage-1)
+/datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
+	if(istype(the_ling))
+		if(the_ling.stat == DEAD)
+			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
+			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
+		else //not dead? no chem/geneticdamage caps.
+			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
+			geneticdamage = max(0, geneticdamage-1)
 
 
-/datum/changeling/proc/get_dna(var/dna_owner)
+/datum/changeling/proc/get_dna(dna_owner)
 	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
 		if(dna_owner == DNA.real_name)
 			return DNA
 
-/datum/changeling/proc/has_dna(var/datum/dna/tDNA)
+/datum/changeling/proc/has_dna(datum/dna/tDNA)
 	for(var/datum/dna/D in (absorbed_dna+protected_dna))
 		if(tDNA.is_same_as(D))
 			return 1
 	return 0
 
-/datum/changeling/proc/can_absorb_dna(var/mob/living/carbon/user, var/mob/living/carbon/target)
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/target)
 	if(absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return

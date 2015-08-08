@@ -8,7 +8,7 @@
 	max_genetic_damage = 3
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/datum/dna/chosen_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 

@@ -61,7 +61,7 @@ var/const/INGEST = 2
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
-/datum/reagents/proc/remove_any(var/amount=1)
+/datum/reagents/proc/remove_any(amount=1)
 	var/total_transfered = 0
 	var/current_list_element = 1
 
@@ -103,7 +103,7 @@ var/const/INGEST = 2
 
 	return the_id
 
-/datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if (!target )
 		return
 	var/datum/reagents/R
@@ -133,7 +133,7 @@ var/const/INGEST = 2
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)
+/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	if(!target)
 		return
 	if(!target.reagents || src.total_volume<=0)
@@ -154,7 +154,7 @@ var/const/INGEST = 2
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(var/obj/target, var/reagent, var/amount=1, var/preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
 	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
@@ -211,7 +211,7 @@ var/const/INGEST = 2
 				return total_transfered
 */
 
-/datum/reagents/proc/metabolize(var/mob/M)
+/datum/reagents/proc/metabolize(mob/M)
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
@@ -270,12 +270,12 @@ var/const/INGEST = 2
 		R.on_tick()
 	return
 
-/datum/reagents/proc/conditional_update_move(var/atom/A, var/Running = 0)
+/datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_move (A, Running)
 	update_total()
 
-/datum/reagents/proc/conditional_update(var/atom/A)
+/datum/reagents/proc/conditional_update(atom/A)
 	for(var/datum/reagent/R in reagent_list)
 		R.on_update (A)
 	update_total()
@@ -367,14 +367,14 @@ var/const/INGEST = 2
 	update_total()
 	return 0
 
-/datum/reagents/proc/isolate_reagent(var/reagent)
+/datum/reagents/proc/isolate_reagent(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id != reagent)
 			del_reagent(R.id)
 			update_total()
 
-/datum/reagents/proc/del_reagent(var/reagent)
+/datum/reagents/proc/del_reagent(reagent)
 	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			if(istype(my_atom, /mob/living))
@@ -389,21 +389,21 @@ var/const/INGEST = 2
 			check_goreallyfast(my_atom)
 	return 1
 
-/datum/reagents/proc/check_ignoreslow(var/mob/M)
+/datum/reagents/proc/check_ignoreslow(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
-/datum/reagents/proc/check_gofast(var/mob/M)
+/datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST
 
-/datum/reagents/proc/check_goreallyfast(var/mob/M)
+/datum/reagents/proc/check_goreallyfast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
@@ -425,7 +425,7 @@ var/const/INGEST = 2
 		del_reagent(R.id)
 	return 0
 
-/datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=1,var/show_message=1)
+/datum/reagents/proc/reaction(atom/A, method=TOUCH, volume_modifier=1,show_message=1)
 	if(isliving(A))
 		var/mob/living/L = A
 		var/touch_protection = 0
@@ -440,7 +440,7 @@ var/const/INGEST = 2
 		for(var/datum/reagent/R in reagent_list)
 			R.reaction_obj(A, R.volume*volume_modifier, show_message)
 
-/datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300, var/no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return 1
 	update_total()
@@ -483,12 +483,12 @@ var/const/INGEST = 2
 
 	return 1
 
-/datum/reagents/proc/add_reagent_list(var/list/list_reagents, var/list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
 
-/datum/reagents/proc/remove_reagent(var/reagent, var/amount, var/safety)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
 
 	if(!isnum(amount)) return 1
 
@@ -504,7 +504,7 @@ var/const/INGEST = 2
 
 	return 1
 
-/datum/reagents/proc/has_reagent(var/reagent, var/amount = -1)
+/datum/reagents/proc/has_reagent(reagent, amount = -1)
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -516,7 +516,7 @@ var/const/INGEST = 2
 
 	return 0
 
-/datum/reagents/proc/get_reagent_amount(var/reagent)
+/datum/reagents/proc/get_reagent_amount(reagent)
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if (R.id == reagent)
@@ -532,7 +532,7 @@ var/const/INGEST = 2
 
 	return res
 
-/datum/reagents/proc/remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1
 
 	var/has_removed_reagent = 0
@@ -554,19 +554,19 @@ var/const/INGEST = 2
 	return has_removed_reagent
 
 			//two helper functions to preserve data across reactions (needed for xenoarch)
-/datum/reagents/proc/get_data(var/reagent_id)
+/datum/reagents/proc/get_data(reagent_id)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
 			//world << "proffering a data-carrying reagent ([reagent_id])"
 			return D.data
 
-/datum/reagents/proc/set_data(var/reagent_id, var/new_data)
+/datum/reagents/proc/set_data(reagent_id, new_data)
 	for(var/datum/reagent/D in reagent_list)
 		if(D.id == reagent_id)
 			//world << "reagent data set ([reagent_id])"
 			D.data = new_data
 
-/datum/reagents/proc/copy_data(var/datum/reagent/current_reagent)
+/datum/reagents/proc/copy_data(datum/reagent/current_reagent)
 	if (!current_reagent || !current_reagent.data) return null
 	if (!istype(current_reagent.data, /list)) return current_reagent.data
 
@@ -591,7 +591,7 @@ var/const/INGEST = 2
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/atom/proc/create_reagents(var/max_vol)
+/atom/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
 	reagents = new/datum/reagents(max_vol)

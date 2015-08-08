@@ -24,7 +24,7 @@ Bonus
 	transmittable = -4
 	level = 6
 
-/datum/symptom/oxygen/Activate(var/datum/disease/advance/A)
+/datum/symptom/oxygen/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 		var/mob/living/M = A.affected_mob

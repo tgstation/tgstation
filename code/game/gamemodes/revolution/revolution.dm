@@ -95,7 +95,7 @@
 	return 0
 
 
-/datum/game_mode/proc/forge_revolutionary_objectives(var/datum/mind/rev_mind)
+/datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/mutiny/rev_obj = new
@@ -104,7 +104,7 @@
 		rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
 		rev_mind.objectives += rev_obj
 
-/datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)
+/datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
@@ -150,7 +150,7 @@
 /////////////////////////////////
 //Gives head revs their targets//
 /////////////////////////////////
-/datum/game_mode/revolution/proc/mark_for_death(var/datum/mind/rev_mind, var/datum/mind/head_mind)
+/datum/game_mode/revolution/proc/mark_for_death(datum/mind/rev_mind, datum/mind/head_mind)
 	var/datum/objective/mutiny/rev_obj = new
 	rev_obj.owner = rev_mind
 	rev_obj.target = head_mind
@@ -244,14 +244,19 @@
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
-	if(rev_mind in revolutionaries)
+	var/remove_head = 0
+	if(beingborged && (rev_mind in head_revolutionaries))
+		head_revolutionaries -= rev_mind
+		remove_head = 1
+
+	if((rev_mind in revolutionaries) || remove_head)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
 		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
 
 		if(beingborged)
-			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</FONT></span>"
-			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a member of the revolution.")
+			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>"
+			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
 			rev_mind.current.Paralyse(5)

@@ -8,7 +8,7 @@
 	req_stat = UNCONSCIOUS
 
 //Recover from stuns.
-/obj/effect/proc_holder/changeling/adrenaline/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/user)
 	user << "<span class='notice'>Energy rushes through us.[user.lying ? " We arise." : ""]</span>"
 	user.stat = 0
 	user.SetParalysis(0)
@@ -29,7 +29,7 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/changelingAdrenaline/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
 	M.AdjustWeakened(-1)
@@ -37,7 +37,7 @@
 	..()
 	return
 
-/datum/reagent/medicine/changelingAdrenaline/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/changelingAdrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1)
 	..()
 	return
@@ -49,7 +49,7 @@
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
-/datum/reagent/medicine/changelingAdrenaline2/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/changelingAdrenaline2/on_mob_life(mob/living/M as mob)
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.adjustToxLoss(2)
 	..()

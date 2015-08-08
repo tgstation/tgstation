@@ -1,7 +1,7 @@
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
 
-/datum/atom_hud/antag/proc/join_hud(var/mob/living/M)
+/datum/atom_hud/antag/proc/join_hud(mob/living/M)
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a living mob!")
 	if(M.mind.antag_hud)
@@ -11,7 +11,7 @@
 	add_hud_to(M)
 	M.mind.antag_hud = src
 
-/datum/atom_hud/antag/proc/leave_hud(var/mob/living/M)
+/datum/atom_hud/antag/proc/leave_hud(mob/living/M)
 	if(!istype(M))
 		CRASH("leave_hud(): [M] ([M.type]) is not a living mob!")
 	remove_from_hud(M)
@@ -21,7 +21,7 @@
 
 //GAME_MODE PROCS
 //called to set a mob's antag icon state
-/datum/game_mode/proc/set_antag_hud(var/mob/living/M, var/new_icon_state)
+/datum/game_mode/proc/set_antag_hud(mob/living/M, new_icon_state)
 	if(!istype(M))
 		CRASH("set_antag_hud(): [M] ([M.type]) is not a living mob!")
 	var/image/holder = M.hud_list[ANTAG_HUD]
@@ -31,7 +31,7 @@
 
 //MIND PROCS
 //this is called by mind.transfer_to()
-/datum/mind/proc/transfer_antag_huds(var/mob/living/M)
+/datum/mind/proc/transfer_antag_huds(mob/living/M)
 	for(var/datum/atom_hud/antag/hud in huds)
 		if(M in hud.hudusers)
 			hud.leave_hud(M)

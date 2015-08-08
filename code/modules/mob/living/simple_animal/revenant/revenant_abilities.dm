@@ -10,7 +10,7 @@
 	var/draining
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 
-/obj/effect/proc_holder/spell/targeted/revenant_harvest/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/targeted/revenant_harvest/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(!user.castcheck(0))
 		charge_counter = charge_max
 		return
@@ -82,7 +82,7 @@
 	include_user = 1
 	var/locked = 1
 
-/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(!user.castcheck(-5))
 		charge_counter = charge_max
 		return
@@ -114,7 +114,7 @@
 	range = 1
 	var/locked = 1
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant_light/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant_light/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(!user.castcheck(-25))
 		charge_counter = charge_max
 		return
@@ -152,7 +152,7 @@
 	range = 1
 	var/locked = 1
 
-/obj/effect/proc_holder/spell/aoe_turf/revenantDefile/cast(list/targets, var/mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenantDefile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(!user.castcheck(-30))
 		charge_counter = charge_max
 		return

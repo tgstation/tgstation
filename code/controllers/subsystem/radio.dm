@@ -9,7 +9,7 @@ var/datum/subsystem/radio/radio_controller
 /datum/subsystem/radio/New()
 	NEW_SS_GLOBAL(radio_controller)
 
-/datum/subsystem/radio/proc/add_object(obj/device as obj, var/new_frequency as num, var/filter = null as text|null)
+/datum/subsystem/radio/proc/add_object(obj/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 
@@ -34,7 +34,7 @@ var/datum/subsystem/radio/radio_controller
 
 	return 1
 
-/datum/subsystem/radio/proc/return_frequency(var/new_frequency as num)
+/datum/subsystem/radio/proc/return_frequency(new_frequency as num)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 

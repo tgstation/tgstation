@@ -13,13 +13,13 @@
 		unset_sting(user)
 	return
 
-/obj/effect/proc_holder/changeling/sting/proc/set_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	user << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
 	user.mind.changeling.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
-/obj/effect/proc_holder/changeling/sting/proc/unset_sting(var/mob/user)
+/obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
@@ -29,7 +29,7 @@
 	if(mind && mind.changeling && mind.changeling.chosen_sting)
 		src.mind.changeling.chosen_sting.unset_sting(src)
 
-/obj/effect/proc_holder/changeling/sting/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if(!user.mind.changeling.chosen_sting)
@@ -48,7 +48,7 @@
 		return
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/sting_feedback(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
 	user << "<span class='notice'>We stealthily sting [target.name].</span>"
@@ -78,7 +78,7 @@
 		return
 	..()
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !check_dna_integrity(target))
@@ -86,7 +86,7 @@
 		return 0
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/transformation/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna
 	if(ismonkey(target))
@@ -119,14 +119,10 @@
 	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
 	force = 5 //Basically as strong as a punch
 
-/obj/item/weapon/melee/arm_blade/false/dropped(mob/user)
-	qdel(src)
-	return
-
 /obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
 	return
 
-/obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !check_dna_integrity(target))
@@ -134,7 +130,7 @@
 		return 0
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", object="falso armblade sting")
 
 	if(!target.drop_item())
@@ -151,7 +147,7 @@
 
 	spawn(600)
 		playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms his [blade] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms their [blade.name] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		qdel(blade)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
@@ -168,11 +164,11 @@
 	chemical_cost = 25
 	dna_cost = 0
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())
 		return user.mind.changeling.can_absorb_dna(user, target)
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(var/mob/user, var/mob/living/carbon/human/target)
+/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.absorb_dna(target, user)
@@ -187,7 +183,7 @@
 	chemical_cost = 20
 	dna_cost = 2
 
-/obj/effect/proc_holder/changeling/sting/mute/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
 	target.silent += 30
 	feedback_add_details("changeling_powers","MS")
@@ -201,7 +197,7 @@
 	chemical_cost = 25
 	dna_cost = 1
 
-/obj/effect/proc_holder/changeling/sting/blind/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "blind sting")
 	target << "<span class='danger'>Your eyes burn horrifically!</span>"
 	target.disabilities |= NEARSIGHT
@@ -218,7 +214,7 @@
 	chemical_cost = 10
 	dna_cost = 1
 
-/obj/effect/proc_holder/changeling/sting/LSD/sting_action(var/mob/user, var/mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
 	spawn(rand(300,600))
 		if(target)
@@ -234,7 +230,7 @@
 	chemical_cost = 15
 	dna_cost = 2
 
-/obj/effect/proc_holder/changeling/sting/cryo/sting_action(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)

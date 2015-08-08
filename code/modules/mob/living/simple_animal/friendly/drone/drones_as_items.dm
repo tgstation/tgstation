@@ -62,7 +62,7 @@
 	uncurl()
 
 
-/obj/item/clothing/head/drone_holder/proc/updateVisualAppearence(var/mob/living/simple_animal/drone/D)
+/obj/item/clothing/head/drone_holder/proc/updateVisualAppearence(mob/living/simple_animal/drone/D)
 	if(!D)
 		return
 	icon_state = "[D.visualAppearence]_hat"

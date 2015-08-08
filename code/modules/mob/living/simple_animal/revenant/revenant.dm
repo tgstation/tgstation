@@ -54,7 +54,7 @@
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
-/mob/living/simple_animal/revenant/ClickOn(var/atom/A, var/params) //Copypaste from ghost code - revenants can't interact with the world directly.
+/mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -158,7 +158,7 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/castcheck(var/essence_cost)
+/mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
 	var/mob/living/simple_animal/revenant/user = usr
 	if(!istype(user) || !user)
 		return
@@ -176,7 +176,7 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null)
+/mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = 0, source = null)
 	var/mob/living/simple_animal/revenant/user = usr
 	if(!istype(usr) || !usr)
 		return
@@ -193,7 +193,7 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/reveal(var/time, var/stun)
+/mob/living/simple_animal/revenant/proc/reveal(time, stun)
 	var/mob/living/simple_animal/revenant/R = usr
 	if(!istype(usr) || !usr)
 		return

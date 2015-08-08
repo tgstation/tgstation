@@ -62,7 +62,7 @@
 	if(creator)
 		src.creator = creator
 
-/mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
+/mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
 			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
@@ -96,7 +96,7 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
+/mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
 	// Check for darkness
@@ -131,13 +131,13 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib(var/animation = 0)
+/mob/living/simple_animal/hostile/statue/gib(animation = 0)
 	dust(animation)
 
 
 // Stop attacking clientless mobs
 
-/mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
+/mob/living/simple_animal/hostile/statue/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
@@ -198,10 +198,19 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
 	for(var/mob/living/target in targets)
-		if(target.see_invisible == SEE_INVISIBLE_LIVING)
-			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
-			name = "Toggle Nightvision \[ON\]"
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
+				H.dna.species.invis_sight = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"
+
 		else
-			target.see_invisible = SEE_INVISIBLE_LIVING
-			name = "Toggle Nightvision \[OFF\]"
-	return
+			if(target.see_invisible == SEE_INVISIBLE_LIVING)
+				target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				target.see_invisible = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"

@@ -26,7 +26,7 @@
 	return pick(finalpick)
 
 // Gets/Sets a value at a key in the list
-/proc/n_listpos(var/list/L, var/pos, var/value)
+/proc/n_listpos(list/L, pos, value)
 	if(!istype(L, /list)) return
 	if(isnum(pos))
 		if(!value)
@@ -42,7 +42,7 @@
 			L[pos] = value
 
 // Copies the list into a new one
-/proc/n_listcopy(var/list/L, var/start, var/end)
+/proc/n_listcopy(list/L, start, end)
 	if(!istype(L, /list)) return
 	return L.Copy(start, end)
 
@@ -75,25 +75,25 @@
 				chosenlist.Remove(e)
 
 // Cuts out a copy of a list
-/proc/n_listcut(var/list/L, var/start, var/end)
+/proc/n_listcut(list/L, start, end)
 	if(!istype(L, /list)) return
 	return L.Cut(start, end)
 
 // Swaps two values in the list
-/proc/n_listswap(var/list/L, var/firstindex, var/secondindex)
+/proc/n_listswap(list/L, firstindex, secondindex)
 	if(!istype(L, /list)) return
 	if(L.len >= secondindex && L.len >= firstindex)
 		return L.Swap(firstindex, secondindex)
 
 // Inserts a value into the list
-/proc/n_listinsert(var/list/L, var/index, var/element)
+/proc/n_listinsert(list/L, index, element)
 	if(!istype(L, /list)) return
 	return L.Insert(index, element)
 
 // --- String methods ---
 
 //If list, finds a value in it, if text, finds a substring in it
-/proc/n_smartfind(var/haystack, var/needle, var/start = 1, var/end = 0)
+/proc/n_smartfind(haystack, needle, start = 1, end = 0)
 	if(haystack && needle)
 		if(isobject(haystack))
 			if(istype(haystack, /list))
@@ -107,40 +107,40 @@
 					return findtext(haystack, needle, start, end)
 
 //Returns a substring of the string
-/proc/n_substr(var/string, var/start = 1, var/end = 0)
+/proc/n_substr(string, start = 1, end = 0)
 	if(istext(string) && isnum(start) && isnum(end))
 		if(start > 0)
 			return copytext(string, start, end)
 
 //Returns the length of the string or list
-/proc/n_smartlength(var/container)
+/proc/n_smartlength(container)
 	if(container)
 		if(istype(container, /list) || istext(container))
 			return length(container)
 	return 0
 
 //Lowercase all characters
-/proc/n_lower(var/string)
+/proc/n_lower(string)
 	if(istext(string))
 		return lowertext(string)
 
 //Uppercase all characters
-/proc/n_upper(var/string)
+/proc/n_upper(string)
 	if(istext(string))
 		return uppertext(string)
 
 //Converts a string to a list
-/proc/n_explode(var/string, var/separator = "")
+/proc/n_explode(string, separator = "")
 	if(istext(string) && (istext(separator) || isnull(separator)))
 		return text2list(string, separator)
 
 //Converts a list to a string
-/proc/n_implode(var/list/li, var/separator)
+/proc/n_implode(list/li, separator)
 	if(istype(li) && (istext(separator) || isnull(separator)))
 		return list2text(li, separator)
 
 //Repeats the string x times
-/proc/n_repeat(var/string, var/amount)
+/proc/n_repeat(string, amount)
 	if(istext(string) && isnum(amount))
 		var/i
 		var/newstring = ""
@@ -154,7 +154,7 @@
 		return newstring
 
 //Reverses the order of the string. "Clown" becomes "nwolC"
-/proc/n_reverse(var/string)
+/proc/n_reverse(string)
 	if(istext(string))
 		var/newstring = ""
 		var/i
@@ -166,11 +166,11 @@
 		return newstring
 
 // String -> Number
-/proc/n_str2num(var/string)
+/proc/n_str2num(string)
 	if(istext(string))
 		return text2num(string)
 
-/proc/n_proper(var/string)
+/proc/n_proper(string)
 	if(!istext(string))
 		return ""
 
@@ -203,53 +203,53 @@
 
 	return min
 
-/proc/n_prob(var/chance)
+/proc/n_prob(chance)
 	return prob(chance)
 
-/proc/n_randseed(var/seed)
+/proc/n_randseed(seed)
 	rand_seed(seed)
 	return 0
 
-/proc/n_rand(var/low, var/high)
+/proc/n_rand(low, high)
 	if(isnull(low) && isnull(high))
 		return rand()
 
 	return rand(low, high)
 
 // Number -> String
-/proc/n_num2str(var/num)
+/proc/n_num2str(num)
 	if(isnum(num))
 		return num2text(num)
 
 // Squareroot
-/proc/n_sqrt(var/num)
+/proc/n_sqrt(num)
 	if(isnum(num))
 		return sqrt(num)
 
 // Magnitude of num
-/proc/n_abs(var/num)
+/proc/n_abs(num)
 	if(isnum(num))
 		return abs(num)
 
 // Round down
-/proc/n_floor(var/num)
+/proc/n_floor(num)
 	if(isnum(num))
 		return round(num)
 
 // Round up
-/proc/n_ceil(var/num)
+/proc/n_ceil(num)
 	if(isnum(num))
 		return round(num)+1
 
 // Round to nearest integer
-/proc/n_round(var/num)
+/proc/n_round(num)
 	if(isnum(num))
 		if(num-round(num)<0.5)
 			return round(num)
 		return n_ceil(num)
 
 // Clamps N between min and max
-/proc/n_clamp(var/num, var/min=-1, var/max=1)
+/proc/n_clamp(num, min=-1, max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		if(num<=min)
 			return min
@@ -258,32 +258,32 @@
 		return num
 
 // Returns 1 if N is inbetween Min and Max
-/proc/n_inrange(var/num, var/min=-1, var/max=1)
+/proc/n_inrange(num, min=-1, max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		return ((min <= num) && (num <= max))
 
 // Returns the sine of num
-/proc/n_sin(var/num)
+/proc/n_sin(num)
 	if(isnum(num))
 		return sin(num)
 
 // Returns the cosine of num
-/proc/n_cos(var/num)
+/proc/n_cos(num)
 	if(isnum(num))
 		return cos(num)
 
 // Returns the arcsine of num
-/proc/n_asin(var/num)
+/proc/n_asin(num)
 	if(isnum(num)&&-1<=num&&num<=1)
 		return arcsin(num)
 
 // Returns the arccosine of num
-/proc/n_acos(var/num)
+/proc/n_acos(num)
 	if(isnum(num)&&-1<=num&&num<=1)
 		return arccos(num)
 
 // Returns the natural log of num
-/proc/n_log(var/num)
+/proc/n_log(num)
 	if(isnum(num)&&0<num)
 		return log(num)
 
@@ -315,5 +315,5 @@
 	return world.timeofday
 
 // Clone of sleep()
-/proc/n_delay(var/time)
+/proc/n_delay(time)
 	sleep(time)

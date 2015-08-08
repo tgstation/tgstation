@@ -8,7 +8,7 @@
 
 
 // Fake Voice
-/obj/effect/proc_holder/changeling/mimicvoice/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/mimicvoice/sting_action(mob/user)
 	var/datum/changeling/changeling=user.mind.changeling
 	if(changeling.mimicing)
 		changeling.mimicing = ""

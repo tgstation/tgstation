@@ -14,7 +14,7 @@
 	var/last_configurator = null
 	var/locked = 1
 
-/obj/item/weapon/airlock_electronics/attack_self(mob/user as mob)
+/obj/item/weapon/airlock_electronics/attack_self(mob/user)
 	if (!ishuman(user))
 		return ..(user)
 
@@ -95,7 +95,7 @@
 
 	attack_self(usr)
 
-/obj/item/weapon/airlock_electronics/proc/toggle_access(var/acc)
+/obj/item/weapon/airlock_electronics/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
 	else if(acc == "one")

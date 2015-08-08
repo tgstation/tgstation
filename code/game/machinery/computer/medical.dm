@@ -20,7 +20,7 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-/obj/machinery/computer/med_data/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		if(!user.drop_item())
 			return
@@ -30,7 +30,7 @@
 	else
 		..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat

@@ -37,7 +37,7 @@
 	..()
 	if(gang && isnum(gang.dom_timer))
 		if(gang.dom_timer > 0)
-			playsound(loc, 'sound/items/timer.ogg', 30, 0)
+			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (gang.dom_timer < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
@@ -48,7 +48,7 @@
 		else
 			SSmachine.processing -= src
 
-/obj/machinery/dominator/proc/healthcheck(var/damage)
+/obj/machinery/dominator/proc/healthcheck(damage)
 	var/iconname = "dominator"
 	if(gang)
 		iconname += "-[gang.color]"
@@ -128,7 +128,7 @@
 			healthcheck(30)
 	return
 
-/obj/machinery/dominator/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/dominator/bullet_act(obj/item/projectile/Proj)
 	if(Proj.damage)
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			var/damage = Proj.damage
@@ -142,7 +142,7 @@
 /obj/machinery/dominator/blob_act()
 	healthcheck(110)
 
-/obj/machinery/dominator/attackby(I as obj, user as mob, params)
+/obj/machinery/dominator/attackby(obj/I, mob/user, params)
 
 	return
 
@@ -167,25 +167,27 @@
 		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
 		return
 
-	var/time = max(300,900 - ((round((tempgang.territory.len/start_state.num_territories)*200, 1) - 60) * 15))
-	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] seconds.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
-		if (!tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
+	var/time = round(get_domination_time(tempgang)/60,0.1)
+	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
+		if (isnum(tempgang.dom_timer) || !tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
 			return 0
+
+		var/area/A = get_area(loc)
+		var/locname = initial(A.name)
 
 		gang = tempgang
 		gang.dom_attempts --
+		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
 		src.name = "[gang.name] Gang [src.name]"
 		healthcheck(0)
 		operating = 1
 		SSmachine.processing += src
-		var/area/A = get_area(loc)
-		var/locname = initial(A.name)
-		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
-		gang.message_gangtools("Hostile takeover in progress: Estimated [time] seconds until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
+
+		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)
 			if(G != gang)
-				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] seconds until our defeat.",1,1)
+				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
@@ -195,7 +197,7 @@
 	"<span class='italics'>You hear metal scraping.</span>")
 	healthcheck(15)
 
-/obj/machinery/dominator/attack_animal(mob/living/user as mob)
+/obj/machinery/dominator/attack_animal(mob/living/user)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
@@ -218,7 +220,7 @@
 	"<span class='italics'>You hear metal being slammed.</span>")
 	healthcheck(5)
 
-/obj/machinery/dominator/attackby(obj/item/weapon/I as obj, mob/living/user as mob, params)
+/obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon))
 		add_fingerprint(user)
 		user.changeNext_move(CLICK_CD_MELEE)

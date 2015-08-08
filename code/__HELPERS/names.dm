@@ -32,7 +32,7 @@ var/command_name = null
 	command_name = name
 	return name
 
-/proc/change_command_name(var/name)
+/proc/change_command_name(name)
 
 	command_name = name
 
@@ -75,6 +75,7 @@ var/religion_name = null
 	if (prob(10))
 		name = pick("Imperium", "Heretical", "Cuban", "Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique", "Houseruled", "Religious", "Atheist", "Traditional", "Houseruled", "Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death", "Zybourne", "Central", "Main", "Government", "Uoi", "Fat", "Automated", "Experimental", "Augmented")
 		new_station_name = name + " "
+		name = ""
 
 	// Prefix
 	for(var/holiday_name in SSevent.holidays)

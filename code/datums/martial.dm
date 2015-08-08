@@ -6,16 +6,16 @@
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
 
-/datum/martial_art/proc/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/add_to_streak(var/element,var/mob/living/carbon/human/D)
+/datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
 	if(D != current_target)
 		current_target = D
 		streak = ""
@@ -24,7 +24,7 @@
 		streak = copytext(streak,2)
 	return
 
-/datum/martial_art/proc/basic_hit(var/mob/living/carbon/human/A,var/mob/living/carbon/human/D)
+/datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
 	A.do_attack_animation(D)
 	var/damage = rand(0,9)
@@ -71,7 +71,7 @@
 		D.forcesay(hit_appends)
 	return 1
 
-/datum/martial_art/proc/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
+/datum/martial_art/proc/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(make_temporary)
 		temporary = 1
 	if(H.martial_art && H.martial_art.temporary)
@@ -82,7 +82,7 @@
 			return
 	H.martial_art = src
 
-/datum/martial_art/proc/remove(var/mob/living/carbon/human/H)
+/datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.martial_art != src)
 		return
 	H.martial_art = base
@@ -90,15 +90,15 @@
 /datum/martial_art/boxing
 	name = "Boxing"
 
-/datum/martial_art/boxing/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A << "<span class='warning'>Can't disarm while boxing!</span>"
 	return 1
 
-/datum/martial_art/boxing/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/boxing/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A << "<span class='warning'>Can't grab while boxing!</span>"
 	return 1
 
-/datum/martial_art/boxing/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/boxing/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
 	A.do_attack_animation(D)
 
@@ -143,7 +143,7 @@
 /datum/martial_art/wrestling
 	name = "Wrestling"
 
-/datum/martial_art/wrestling/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.grabbedby(A,1)
 	var/obj/item/weapon/grab/G = A.get_active_hand()
 	if(G && prob(50))
@@ -156,7 +156,7 @@
 	return 1
 
 
-/datum/martial_art/wrestling/proc/Suplex(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/Suplex(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
 	D.visible_message("<span class='danger'>[A] suplexes [D]!</span>", \
 								"<span class='userdanger'>[A] suplexes [D]!</span>")
@@ -174,7 +174,7 @@
 		A.apply_effect(4, WEAKEN, armor_block)
 	return
 
-/datum/martial_art/wrestling/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(istype(A.get_inactive_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = A.get_inactive_hand()
 		if(G.affecting == D)
@@ -183,7 +183,7 @@
 	harm_act(A,D)
 	return 1
 
-/datum/martial_art/wrestling/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.grabbedby(A,1)
 	D.visible_message("<span class='danger'>[A] holds [D] down!</span>", \
 								"<span class='userdanger'>[A] holds [D] down!</span>")
@@ -199,7 +199,7 @@
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
 
-/datum/martial_art/plasma_fist/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
 		streak = ""
 		Tornado(A,D)
@@ -214,7 +214,7 @@
 		return 1
 	return 0
 
-/datum/martial_art/plasma_fist/proc/Tornado(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("TORNADO SWEEP!")
 	spawn(0)
 		for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
@@ -228,7 +228,7 @@
 	R.cast(turfs)
 	return
 
-/datum/martial_art/plasma_fist/proc/Throwback(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	D.visible_message("<span class='danger'>[A] has hit [D] with Plasma Punch!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with Plasma Punch!</span>")
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
@@ -237,7 +237,7 @@
 	A.say("HYAH!")
 	return
 
-/datum/martial_art/plasma_fist/proc/Plasma(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D)
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
 	A.say("PLASMA FIST!")
@@ -251,21 +251,21 @@
 	D.gib()
 	return
 
-/datum/martial_art/plasma_fist/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H")
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
-/datum/martial_art/plasma_fist/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D")
 	if(check_streak(A,D))
 		return 1
 	basic_hit(A,D)
 	return 1
 
-/datum/martial_art/plasma_fist/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G")
 	if(check_streak(A,D))
 		return 1
@@ -282,7 +282,7 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 
-/datum/martial_art/the_sleeping_carp/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
 		streak = ""
 		wristWrench(A,D)
@@ -305,7 +305,7 @@
 		return 1
 	return 0
 
-/datum/martial_art/the_sleeping_carp/proc/wristWrench(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.stunned && !D.weakened)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
@@ -317,7 +317,7 @@
 		return 1
 	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/proc/backKick(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/backKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(A.dir == D.dir && !D.stat && !D.weakened)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
@@ -327,7 +327,7 @@
 		return 1
 	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/proc/kneeStomach(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
 						  "<span class'userdanger'>[A] winds you with a knee in the stomach!</span>")
@@ -338,7 +338,7 @@
 		return 1
 	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/proc/headKick(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/headKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
@@ -348,7 +348,7 @@
 		return 1
 	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/proc/elbowDrop(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/elbowDrop(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(D.weakened || D.resting || D.stat)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
@@ -359,7 +359,7 @@
 		return 1
 	return basic_hit(A,D)
 
-/datum/martial_art/the_sleeping_carp/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G")
 	if(check_streak(A,D))
 		return 1
@@ -368,7 +368,7 @@
 	if(G)
 		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
 
-/datum/martial_art/the_sleeping_carp/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H")
 	if(check_streak(A,D))
 		return 1
@@ -379,7 +379,7 @@
 	return 1
 
 
-/datum/martial_art/the_sleeping_carp/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D")
 	if(check_streak(A,D))
 		return 1
@@ -445,7 +445,7 @@
 	icon_state ="scroll2"
 	var/used = 0
 
-/obj/item/weapon/plasma_fist_scroll/attack_self(mob/user as mob)
+/obj/item/weapon/plasma_fist_scroll/attack_self(mob/user)
 	if(!ishuman(user))
 		return
 	if(!used)
@@ -464,7 +464,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 
-/obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user as mob)
+/obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	user << "<span class='notice'>You begin to read the scroll...</span>"

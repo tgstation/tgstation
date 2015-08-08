@@ -5,7 +5,7 @@
 
 	action_icon_state = "alien_hide"
 
-/obj/effect/proc_holder/alien/hide/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/hide/fire(mob/living/carbon/alien/user)
 	if(user.stat != CONSCIOUS)
 		return
 
@@ -27,7 +27,7 @@
 
 	action_icon_state = "alien_evolve_larva"
 
-/obj/effect/proc_holder/alien/larva_evolve/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/larva_evolve/fire(mob/living/carbon/alien/user)
 	if(!islarva(user))
 		return
 	var/mob/living/carbon/alien/larva/L = user

@@ -107,7 +107,7 @@
 	category = list("initial", "Electronics")
 
 /datum/design/apc_board
-	name = "APC Power Control Module"
+	name = "APC module"
 	id = "power control"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
@@ -120,6 +120,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/airlock_electronics
+	category = list("initial", "Electronics")
+
+/datum/design/firelock_board
+	name = "Firelock circuitry"
+	id = "firelock_board"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/weapon/firelock_board
 	category = list("initial", "Electronics")
 
 /datum/design/airalarm_electronics

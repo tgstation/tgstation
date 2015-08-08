@@ -129,7 +129,7 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 
 //A logarithm that converts an integer to a number scaled between 0 and 1 (can be tweaked to be higher).
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
-/proc/TransformUsingVariable(var/input, var/inputmaximum, var/scaling_modifier = 0)
+/proc/TransformUsingVariable(input, inputmaximum, scaling_modifier = 0)
 
 		var/inputToDegrees = (input/inputmaximum)*180 //Converting from a 0 -> 100 scale to a 0 -> 180 scale. The 0 -> 180 scale corresponds to degrees
 		var/size_factor = ((-cos(inputToDegrees) +1) /2) //returns a value from 0 to 1

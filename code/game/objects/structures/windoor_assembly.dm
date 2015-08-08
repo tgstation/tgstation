@@ -53,13 +53,13 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CanAtmosPass(var/turf/T)
+/obj/structure/windoor_assembly/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
@@ -68,7 +68,7 @@
 		return 1
 
 
-/obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	switch(state)

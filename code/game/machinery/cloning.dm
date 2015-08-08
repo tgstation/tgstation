@@ -60,7 +60,7 @@
 
 
 //Find a dead mob with a brain and client.
-/proc/find_dead_player(var/find_key)
+/proc/find_dead_player(find_key)
 	if (isnull(find_key))
 		return
 
@@ -83,7 +83,7 @@
 	..()
 	icon_state = "datadisk[pick(0,1,2)]"
 
-/obj/item/weapon/disk/data/attack_self(mob/user as mob)
+/obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
 	user << "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>"
 
@@ -109,11 +109,11 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user as mob)
+/obj/machinery/clonepod/attack_ai(mob/user)
 	return attack_hand(user)
-/obj/machinery/clonepod/attack_paw(mob/user as mob)
+/obj/machinery/clonepod/attack_paw(mob/user)
 	return attack_hand(user)
-/obj/machinery/clonepod/attack_hand(mob/user as mob)
+/obj/machinery/clonepod/attack_hand(mob/user)
 	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
@@ -124,7 +124,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(var/ckey, var/clonename, var/ui, var/se, var/mindref, var/datum/species/mrace, var/list/features, var/factions)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
@@ -244,7 +244,7 @@
 	return
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
-/obj/machinery/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/clonepod/attackby(obj/item/weapon/W, mob/user, params)
 	if(!(occupant || mess || locked))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
@@ -269,7 +269,7 @@
 	else
 		..()
 
-/obj/machinery/clonepod/emag_act(user as mob)
+/obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(src.occupant))
 		return
 	user << "<span class='notice'>You force an emergency ejection.</span>"
@@ -277,7 +277,7 @@
 	src.go_out()
 
 //Put messages in the connected computer's temp var for display.
-/obj/machinery/clonepod/proc/connected_message(var/message)
+/obj/machinery/clonepod/proc/connected_message(message)
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
 	if (!message)
@@ -343,7 +343,7 @@
 			qdel(src.occupant)
 	return
 
-/obj/machinery/clonepod/relaymove(mob/user as mob)
+/obj/machinery/clonepod/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.go_out()

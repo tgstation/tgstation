@@ -1,30 +1,41 @@
-#pretending we're C because otherwise ruby/rvm will initialize, even with "language: dm".
+#pretending we're C because otherwise ruby will initialize, even with "language: dm".
 language: c
+sudo: false
 
 env:
     global:
-    - BYOND_MAJOR="507"
-    - BYOND_MINOR="1286"
+    - BYOND_MAJOR="508"
+    - BYOND_MINOR="1293"
     matrix:
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
-
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install libc6:i386 libgcc1:i386 libstdc++6:i386 -qq
-  - sudo apt-get install python -qq
-  - sudo apt-get install python-pip -qq
-  - sudo pip install PyYaml -q
-  - sudo pip install beautifulsoup4 -q
-
+  
+cache:
+  directories:
+    - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+  
+addons:
+  apt:
+    packages:
+      - libc6-i386
+      - libgcc1:i386
+      - libstdc++6:i386
+      - python
+      - python-pip
+  
 install:
-  - curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
-  - unzip byond.zip
-  - cd byond
-  - sudo make install
-  - cd ..
+  - pip install --user PyYaml -q
+  - pip install --user beautifulsoup4 -q
+
+before_script:
+  - chmod +x ./install-byond.sh
+  - ./install-byond.sh
 
 script:
-  - bash dm.sh -M${DM_MAPFILE} tgstation.dme
+  - shopt -s globstar
+  - (! grep 'step_[xy]' _maps/**/*.dmm)
+  - md5sum -c - <<< "29d5a6e23d172846354505e60ecfe7e7 *html/changelogs/example.yml"
   - python tools/ss13_genchangelog.py html/changelog.html html/changelogs
+  - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+  - bash dm.sh -M${DM_MAPFILE} tgstation.dme

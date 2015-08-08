@@ -1,6 +1,6 @@
 // Point controlling procs
 
-/mob/camera/blob/proc/can_buy(var/cost = 15)
+/mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		src << "<span class='warning'>You cannot afford this!</span>"
 		return 0
@@ -39,7 +39,7 @@
 	var/turf/T = get_turf(src)
 	create_shield(T)
 
-/mob/camera/blob/proc/create_shield(var/turf/T)
+/mob/camera/blob/proc/create_shield(turf/T)
 
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
@@ -255,7 +255,7 @@
 	var/turf/T = get_turf(src)
 	expand_blob(T)
 
-/mob/camera/blob/proc/expand_blob(var/turf/T)
+/mob/camera/blob/proc/expand_blob(turf/T)
 	if(!T)
 		return
 
@@ -290,7 +290,7 @@
 	var/turf/T = get_turf(src)
 	rally_spores(T)
 
-/mob/camera/blob/proc/rally_spores(var/turf/T)
+/mob/camera/blob/proc/rally_spores(turf/T)
 
 	if(!can_buy(5))
 		return

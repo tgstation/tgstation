@@ -496,7 +496,7 @@
 "jB" = (/turf/indestructible/fakeglass{icon_state = "fakewindows"; dir = 9},/area/syndicate_mothership)
 "jC" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 8},/area/syndicate_mothership)
 "jD" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,/turf/simulated/floor/plasteel/bar,/area/syndicate_mothership)
-"jE" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2; step_x = 0},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar,/area/syndicate_mothership)
+"jE" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = 5; pixel_y = -2},/obj/item/toy/cards/deck/syndicate{icon_state = "deck_syndicate_full"; pixel_x = -6; pixel_y = 6},/turf/simulated/floor/plasteel/bar,/area/syndicate_mothership)
 "jF" = (/obj/machinery/computer/telecrystals/uplinker,/turf/simulated/floor/plasteel/cult{tag = "icon-podhatch (WEST)"; icon_state = "podhatch"; dir = 8},/area/syndicate_mothership)
 "jG" = (/turf/simulated/floor/plasteel{icon_state = "red"; dir = 2},/area/tdome/tdomeobserve)
 "jH" = (/turf/simulated/floor/plasteel{icon_state = "red"; dir = 10},/area/tdome/tdomeobserve)

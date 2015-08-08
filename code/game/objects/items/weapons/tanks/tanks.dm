@@ -48,6 +48,8 @@
 		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
+	user << "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>"
+
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
 
@@ -77,7 +79,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	src.add_fingerprint(user)
@@ -90,7 +92,7 @@
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 
-/obj/item/weapon/tank/attack_self(mob/user as mob)
+/obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))
 		return
 

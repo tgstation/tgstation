@@ -59,14 +59,14 @@
 	health = maxHealth
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(var/damage)//Possibility to flee from a fight just to make it more visually interesting
+/mob/living/simple_animal/hostile/mushroom/adjustBruteLoss(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
 		spawn(30)
 			retreat_distance = null
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_animal(var/mob/living/L)
+/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
 		var/mob/living/simple_animal/hostile/mushroom/M = L
 		if(faint_ticker < 2)
@@ -110,7 +110,7 @@
 	spawn(300)
 		recovery_cooldown = 0
 
-/mob/living/simple_animal/hostile/mushroom/proc/LevelUp(var/level_gain)
+/mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)
 		powerlevel += level_gain
 		if(prob(25))
@@ -125,7 +125,7 @@
 		src.visible_message("The [src.name] was bruised!")
 		bruised = 1
 
-/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I as obj, mob/user as mob, params)
+/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
@@ -137,7 +137,7 @@
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
 	..()
 	if(M.a_intent == "harm")
 		Bruise()

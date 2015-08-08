@@ -31,7 +31,7 @@
 	..()
 	user << text("The service panel is [src.open ? "open" : "closed"].")
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
 		if (istype(W, /obj/item/weapon/screwdriver))
 			if (do_after(user, 20, target = src))
@@ -61,7 +61,7 @@
 	// -> storage/attackby() what with handle insertion, etc
 	..()
 
-/obj/item/weapon/storage/secure/emag_act(mob/user as mob)
+/obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)
 		if(!emagged)
 			emagged = 1
@@ -79,7 +79,7 @@
 		return 0
 	..()
 
-/obj/item/weapon/storage/secure/attack_self(mob/user as mob)
+/obj/item/weapon/storage/secure/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -163,7 +163,7 @@
 	new /obj/item/weapon/pen(src)
 	return ..()
 
-/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
 		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
 	else if ((src.loc == user) && (!src.locked))
@@ -213,7 +213,7 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/secure/safe/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
 	return attack_self(user)
 
 /obj/item/weapon/storage/secure/safe/HoS/New()

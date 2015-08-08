@@ -27,7 +27,7 @@
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
 // oct is 1-8 (or 9 for C)
-/datum/song/proc/playnote(var/note, var/acc as text, var/oct)
+/datum/song/proc/playnote(note, acc as text, oct)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -63,7 +63,7 @@
 			continue
 		M.playsound_local(source, soundfile, 100, falloff = 5)
 
-/datum/song/proc/updateDialog(mob/user as mob)
+/datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise
 
 /datum/song/proc/shouldStopPlaying(mob/user)
@@ -74,7 +74,7 @@
 	else
 		return 1
 
-/datum/song/proc/playsong(mob/user as mob)
+/datum/song/proc/playsong(mob/user)
 	while(repeat >= 0)
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -119,7 +119,7 @@
 	repeat = 0
 	updateDialog(user)
 
-/datum/song/proc/interact(mob/user as mob)
+/datum/song/proc/interact(mob/user)
 	var/dat = ""
 
 	if(lines.len > 0)
@@ -285,7 +285,7 @@
 // subclass for handheld instruments, like violin
 /datum/song/handheld
 
-/datum/song/handheld/updateDialog(mob/user as mob)
+/datum/song/handheld/updateDialog(mob/user)
 	instrumentObj.interact(user)
 
 /datum/song/handheld/shouldStopPlaying()
@@ -328,23 +328,23 @@
 	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
 	..()
 
-/obj/structure/piano/attack_hand(mob/user as mob)
+/obj/structure/piano/attack_hand(mob/user)
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 	interact(user)
 
-/obj/structure/piano/attack_paw(mob/user as mob)
+/obj/structure/piano/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/piano/interact(mob/user as mob)
+/obj/structure/piano/interact(mob/user)
 	if(!user || !anchored)
 		return
 
 	user.set_machine(src)
 	song.interact(user)
 
-/obj/structure/piano/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/structure/piano/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)

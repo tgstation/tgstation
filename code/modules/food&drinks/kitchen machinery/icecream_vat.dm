@@ -19,7 +19,7 @@
 	flags = OPENCONTAINER | NOREACT
 	reagents = new()
 
-/obj/machinery/icecream_vat/proc/get_ingredient_list(var/type)
+/obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
 		if(ICECREAM_CHOCOLATE)
 			return list("milk", "ice", "cocoa")
@@ -35,7 +35,7 @@
 			return list("milk", "ice")
 
 
-/obj/machinery/icecream_vat/proc/get_flavour_name(var/flavour_type)
+/obj/machinery/icecream_vat/proc/get_flavour_name(flavour_type)
 	switch(flavour_type)
 		if(ICECREAM_CHOCOLATE)
 			return "chocolate"
@@ -61,11 +61,11 @@
 	reagents.add_reagent("sugar", 5)
 	reagents.add_reagent("ice", 5)
 
-/obj/machinery/icecream_vat/attack_hand(mob/user as mob)
+/obj/machinery/icecream_vat/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/machinery/icecream_vat/interact(mob/user as mob)
+/obj/machinery/icecream_vat/interact(mob/user)
 	var/dat
 	dat += "<b>ICECREAM</b><br><div class='statusDisplay'>"
 	dat += "<b>Dispensing: [flavour_name] icecream </b> <br><br>"
@@ -87,7 +87,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/icecream_vat/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/icecream_vat/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/icecream))
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
@@ -110,7 +110,7 @@
 	else
 		..()
 
-/obj/machinery/icecream_vat/proc/make(var/mob/user, var/make_type, var/amount)
+/obj/machinery/icecream_vat/proc/make(mob/user, make_type, amount)
 	for(var/R in get_ingredient_list(make_type))
 		if(reagents.has_reagent(R, amount))
 			continue

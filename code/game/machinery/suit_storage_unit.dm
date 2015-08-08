@@ -158,7 +158,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	var/dat
 	if(..())
 		return
@@ -259,7 +259,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen)
@@ -285,7 +285,7 @@
 		return
 
 
-/obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen) //Needed check due to bugs
@@ -337,7 +337,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggle_open(mob/user)
 	if(src.islocked || src.isUV)
 		user << "<span class='warning'>You're unable to open unit!</span>"
 		return 0
@@ -348,7 +348,7 @@
 	return 1
 
 
-/obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
 	if(src.OCCUPANT && src.safetieson)
 		user << "<span class='warning'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
 		return
@@ -358,7 +358,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/start_UV(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
@@ -415,7 +415,7 @@
 	return src.cycletime_left
 
 
-/obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user)
 	if (src.islocked)
 		return
 
@@ -466,10 +466,10 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/machinery/suit_storage_unit/MouseDrop_T(mob/M, mob/user)
 	store_mob(M, user)
 
-/obj/machinery/suit_storage_unit/proc/store_mob(mob/living/M as mob, mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/store_mob(mob/living/M, mob/user)
 	if(!istype(M))
 		return
 	if (user.stat != 0)
@@ -503,7 +503,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(!src.ispowered)
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))
@@ -587,11 +587,11 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_ai(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/suit_storage_unit/attack_paw(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	user << "<span class='warning'>The console controls are far too complicated for your tiny brain!</span>"
 	return
 

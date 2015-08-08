@@ -52,7 +52,7 @@
 			step_away(src,user,15)
 		return 1
 
-/mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		var/damage = rand(1, 9)
 		if (prob(90))

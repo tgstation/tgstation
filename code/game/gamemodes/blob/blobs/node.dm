@@ -11,7 +11,7 @@
 	SSobj.processing |= src
 	..(loc, h)
 
-/obj/effect/blob/node/adjustcolors(var/a_color)
+/obj/effect/blob/node/adjustcolors(a_color)
 	overlays.Cut()
 	color = null
 	var/image/I = new('icons/mob/blob.dmi', "blob")

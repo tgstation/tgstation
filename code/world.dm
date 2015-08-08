@@ -181,7 +181,7 @@
 			master_mode = Lines[1]
 			diary << "Saved mode is '[master_mode]'"
 
-/world/proc/save_mode(var/the_mode)
+/world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode

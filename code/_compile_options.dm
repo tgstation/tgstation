@@ -59,11 +59,9 @@ var/list/del_counter = list()
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
-//SYSTEM TOGGLES - these allow you to compile the game without some of the laggier systems if your server cannot cope with demand
-/* Not yet coded
-#define USE_DYNAMIC_GRAVITY		//Enables the dynamic gravity system
-#define USE_DYNAMIC_LIGHTING	//Enables the dynamic lighting system
-#define USE_DYNAMIC_ATMOS		//Enables the dynamic atmos system
-*/
+#define MIN_COMPILER_VERSION 508
+#if DM_VERSION < MIN_COMPILER_VERSION //Update this whenever you need to take advantage of more recent byond features
+#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
+#endif
 
 #define USE_BYGEX

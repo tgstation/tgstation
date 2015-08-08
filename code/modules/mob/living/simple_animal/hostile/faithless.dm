@@ -27,7 +27,7 @@
 
 	faction = list("faithless")
 
-/mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/hostile/faithless/Process_Spacemove(movement_dir = 0)
 	return 1
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()

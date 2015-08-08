@@ -240,6 +240,7 @@
 	item_state = "hostrench"
 	burn_state = -1 //Not Burnable
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective)
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -263,6 +264,13 @@
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
+
+/obj/item/clothing/suit/jacket/miljacket
+	name = "military jacket"
+	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
+	icon_state = "militaryjacket"
+	item_state = "militaryjacket"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective)
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
@@ -347,8 +355,3 @@
 	allowed = list(/obj/item/weapon/pickaxe,/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/miljacket
-	name = "military jacket"
-	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
-	icon_state = "militaryjacket"
-	item_state = "militaryjacket"

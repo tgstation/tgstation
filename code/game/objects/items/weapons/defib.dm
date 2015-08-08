@@ -76,7 +76,7 @@
 		usr << "<span class='warning'>Put the defibrillator on your back first!</span>"
 	return
 
-/obj/item/weapon/defibrillator/attack_hand(mob/user as mob)
+/obj/item/weapon/defibrillator/attack_hand(mob/user)
 	if(src.loc == user)
 		ui_action_click()
 		return
@@ -128,7 +128,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/emag_act(mob/user as mob)
+/obj/item/weapon/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = 0
 		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer."
@@ -197,7 +197,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/proc/deductcharge(var/chrgdeductamt)
+/obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (paddles.revivecost+chrgdeductamt))
 			powered = 0
@@ -209,7 +209,7 @@
 			update_icon()
 			return 0
 
-/obj/item/weapon/defibrillator/proc/cooldowncheck(var/mob/user)
+/obj/item/weapon/defibrillator/proc/cooldowncheck(mob/user)
 	spawn(50)
 		if(bcell)
 			if(bcell.charge >= paddles.revivecost)
@@ -304,7 +304,7 @@
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	return (OXYLOSS)
 
-/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user as mob)
+/obj/item/weapon/twohanded/shockpaddles/dropped(mob/user)
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
@@ -315,7 +315,7 @@
 		defib.update_icon()
 	return unwield(user)
 
-/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, var/mob/living/carbon/human/M, var/obj/O)
+/obj/item/weapon/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/human/M, obj/O)
 	if (!mainunit || !istype(mainunit, /obj/item/weapon/defibrillator))	//To avoid weird issues from admin spawns
 		M.unEquip(O)
 		qdel(O)
@@ -398,10 +398,8 @@
 				busy = 0
 				update_icon()
 				return
-			var/mob/dead/observer/ghost = H.get_ghost()
-			if(ghost)
-				ghost << "<span class='ghostalert'>Your heart is being defibrillated. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
-				ghost << 'sound/effects/genetics.ogg'
+			H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!")
+
 			user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You begin to place [src] on [M.name]'s chest...</span>")
 			busy = 1
 			update_icon()
@@ -426,11 +424,10 @@
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
-						for(var/obj/item/organ/limb/O in H.organs)
-							total_brute	+= O.brute_dam
-							total_burn	+= O.burn_dam
-						ghost = H.get_ghost()
-						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
+						total_brute	= H.getBruteLoss()
+						total_burn	= H.getFireLoss()
+
+						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !H.get_ghost() && tplus < tlimit && !(NOCLONE in H.mutations))
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
 								H.adjustOxyLoss(H.health - halfwaycritdeath)

@@ -74,7 +74,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
 	..()
 	update_icon()
 	return

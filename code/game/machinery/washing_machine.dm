@@ -181,7 +181,7 @@
 /obj/machinery/washing_machine/update_icon()
 	icon_state = "wm_[state][panel]"
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	/*if(istype(W,/obj/item/weapon/screwdriver))
 		panel = !panel
 		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
@@ -269,7 +269,7 @@
 		..()
 	update_icon()
 
-/obj/machinery/washing_machine/attack_hand(mob/user as mob)
+/obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)
 		if(1)
 			state = 2

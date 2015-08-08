@@ -172,7 +172,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(var/turf/T)
+/obj/machinery/power/smes/proc/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.dir = get_dir(T,src)
 	terminal.master = src
@@ -306,7 +306,7 @@
 	return
 
 
-/obj/machinery/power/smes/add_load(var/amount)
+/obj/machinery/power/smes/add_load(amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
@@ -322,7 +322,7 @@
 	ui_interact(user)
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -412,7 +412,7 @@
 		output_level = Clamp(output_level, 0, output_level_max)
 		log_smes(usr.ckey)
 
-/obj/machinery/power/smes/proc/log_smes(var/user = "")
+/obj/machinery/power/smes/proc/log_smes(user = "")
 	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]","singulo")
 
 

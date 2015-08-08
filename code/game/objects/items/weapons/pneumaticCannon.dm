@@ -117,7 +117,7 @@
 	time = 300
 	category = CAT_WEAPON
 
-/obj/item/weapon/pneumatic_cannon/proc/updateTank(var/obj/item/weapon/tank/internals/thetank, var/removing = 0, var/mob/living/carbon/human/user)
+/obj/item/weapon/pneumatic_cannon/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
 		if(!src.tank)
 			return
