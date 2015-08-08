@@ -23,6 +23,7 @@
 
 /obj/machinery/computer/security/advanced/check_eye(var/mob/user as mob)
 	if (( ( get_dist(user, src) > 1 ) || !( user.canmove ) || ( user.blinded )) && (!istype(user, /mob/living/silicon)))
+		if(user.machine == src) user.machine = null
 		return null
 	if(stat & (NOPOWER|BROKEN)) return null
 	user.reset_view(current)
