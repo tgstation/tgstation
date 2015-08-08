@@ -81,7 +81,7 @@ Pipenet stuff; housekeeping
 		var/obj/machinery/atmospherics/N = nodes["n[I]"]
 		if(N)
 			N.disconnect(src)
-			N = null
+			nodes["n[I]"] = null
 			nullifyPipenet(parents["p[I]"])
 	..()
 
@@ -111,7 +111,7 @@ Pipenet stuff; housekeeping
 		if(reference == nodes["n[I]"])
 			if(istype(nodes["n[I]"], /obj/machinery/atmospherics/pipe))
 				qdel(parents["p[I]"])
-			parents["p[I]"] = null
+			nodes["n[I]"] = null
 			break
 	update_icon()
 
@@ -121,8 +121,7 @@ Pipenet stuff; housekeeping
 		if(reference == parents["p[I]"])
 			var/datum/pipeline/P = parents["p[I]"]
 			P.other_airs -= airs["a[I]"]
-			P = null
-			break
+			parents["p[I]"] = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
 	for(var/I = 1; I <= device_type; I++)
@@ -132,15 +131,13 @@ Pipenet stuff; housekeeping
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
 	if(reference)
 		for(var/I = 1; I <= device_type; I++)
-			if(nodes["n[I]"])
-				if(parents["p[I]"] == reference)
-					return list("n" = nodes["n[I]"])
-
-	var/list/obj/machinery/atmospherics/return_nodes = list()
-	for(var/I = 1; I <= device_type; I++)
-		return_nodes += nodes["n[I]"]
-
-	return return_nodes
+			if(parents["p[I]"] == reference)
+				return list(nodes["n[I]"])
+	else
+		var/list/obj/machinery/atmospherics/return_nodes = list()
+		for(var/I = 1; I <= device_type; I++)
+			return_nodes += nodes["n[I]"]
+		return return_nodes
 
 /obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
 	for(var/I = 1; I <= device_type; I++)
@@ -154,10 +151,9 @@ Pipenet stuff; housekeeping
 			return parents["p[I]"]
 
 /obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	for(var/datum/pipeline/P in parents)
-		if(Old == P)
-			P = New
-			break
+	for(var/I = 1; I <= device_type; I++)
+		if(parents["p[I]"] == Old)
+			parents["p[I]"] = New
 
 /obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
 	..()
@@ -199,7 +195,6 @@ Helpers
 */
 
 /obj/machinery/atmospherics/components/proc/update_parents()
-	for(var/P in parents)
-		var/datum/pipeline/parent = parents["[P]"]
-		if (parent && istype(parent))
-			parent.update = 1
+	for(var/I = 1; I <= device_type; I++)
+		var/datum/pipeline/parent = parents["p[I]"]
+		parent.update = 1

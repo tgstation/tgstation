@@ -239,7 +239,7 @@
 		V.flags |= NODROP
 	agent.equip_to_slot_or_del(V, slot_wear_suit)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), slot_belt)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/alien(agent), slot_belt)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
 
@@ -257,10 +257,7 @@
 	scientist.equip_to_slot_or_del(G, slot_in_backpack)
 
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
-	beamplant.imp_in = scientist
-	beamplant.implanted = 1
-	beamplant.implanted(scientist)
-	beamplant.home = console.pad
+	beamplant.implant(scientist)
 
 
 /datum/game_mode/abduction/check_finished()

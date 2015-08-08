@@ -57,6 +57,20 @@
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
+	
+/datum/chemical_reaction/mine_salve
+	name = "Miner's Salve"
+	id = "mine_salve"
+	result = "mine_salve"
+	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
+	result_amount = 3
+	
+/datum/chemical_reaction/mine_salve2
+	name = "Miner's Salve"
+	id = "mine_salve"
+	result = "mine_salve"
+	required_reagents = list("plasma" = 5, "iron" = 5, "sugar" = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
+	result_amount = 15
 
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"

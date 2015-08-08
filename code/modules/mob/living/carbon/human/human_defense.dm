@@ -11,7 +11,7 @@ emp_act
 	var/organnum = 0
 
 	if(def_zone)
-		if(isorgan(def_zone))
+		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
 		return checkarmor(affecting, type)
@@ -190,7 +190,6 @@ emp_act
 							apply_effect(20, PARALYZE, armor)
 						if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-							ticker.mode.remove_gangster(mind)
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)

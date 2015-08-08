@@ -35,11 +35,13 @@
 			var/datum/objective/destroy/destroy_objective = new
 			destroy_objective.owner = traitor
 			destroy_objective.target = target_mind
+			destroy_objective.update_explanation_text()
 			traitor.objectives += destroy_objective
 		else
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = traitor
 			kill_objective.target = target_mind
+			kill_objective.update_explanation_text()
 			traitor.objectives += kill_objective
 
 		// Escape

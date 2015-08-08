@@ -80,7 +80,7 @@
 ///checkeyeprot()
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/check_eye_prot()
-	var/number = 0
+	var/number = ..()
 	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
 		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
 		number += HFP.flash_protect
@@ -90,9 +90,6 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
-	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
-	if(EFP)
-		number += EFP.flash_protect
 	return number
 
 /mob/living/carbon/human/check_ear_prot()

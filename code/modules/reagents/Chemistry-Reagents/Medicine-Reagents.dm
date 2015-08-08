@@ -224,6 +224,42 @@
 	..()
 	return
 
+/datum/reagent/medicine/mine_salve
+	name = "Miner's Salve"
+	id = "mine_salve"
+	description = "Slowly heals burn and brute damage, and causes subject to believe they are fully healed."
+	reagent_state = LIQUID
+	color = "#6D6374"
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/mine_salve/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/N = M
+		N.hal_screwyhud = 5
+	M.adjustBruteLoss(-0.25*REM)
+	M.adjustFireLoss(-0.25*REM)
+	..()
+	return
+
+/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
+	if(iscarbon(M))
+		if(method == TOUCH)
+			if(show_message)
+				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+		if(method == INGEST)
+			if(show_message)
+				M << "<span class='notice'>That tasted horrible.</span>"
+			M.AdjustStunned(2)
+			M.AdjustWeakened(2)
+	..()
+	return
+
+/datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/N = M
+		N.hal_screwyhud = 0
+	..()
+
 /datum/reagent/medicine/synthflesh
 	name = "Synthflesh"
 	id = "synthflesh"
@@ -614,11 +650,6 @@
 	..()
 	return
 
-/datum/reagent/medicine/strange_reagent/Topic(href, href_list)
-	if(href_list["reenter"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.reenter_corpse(ghost)
 
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
@@ -633,14 +664,11 @@
 		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
-		var/mob/dead/observer/ghost = M.get_ghost()
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
 		if(!M.suiciding && !(NOCLONE in M.mutations))
 			if(!M)
 				return
-			if(ghost)
-				ghost << "<span class='ghostalert'>Someone is trying to revive you. Re-enter your corpse if you want to be revived! <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
-				ghost << sound('sound/effects/genetics.ogg')
+			if(M.notify_ghost_cloning())
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
