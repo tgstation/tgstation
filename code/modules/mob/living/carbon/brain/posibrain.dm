@@ -11,7 +11,6 @@ var/global/posibrain_notif_cooldown = 0
 	var/askDelay = 10 * 60 * 1
 	brainmob = null
 	req_access = list(access_robotics)
-	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 

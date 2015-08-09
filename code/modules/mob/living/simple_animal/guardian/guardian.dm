@@ -32,7 +32,6 @@
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
 	var/bio_fluff_string = "Your scarabs fail to mutate. This shouldn't happen! Submit a bug report!"
 
-
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
 	if(summoner)
@@ -118,6 +117,7 @@
 	for(var/mob/M in mob_list)
 		if(M == src.summoner)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -128,7 +128,7 @@
 	for(var/mob/living/simple_animal/hostile/guardian/M in mob_list)
 		if(M.summoner == src)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-
+	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 
 
 //////////////////////////TYPES OF GUARDIANS
@@ -138,11 +138,11 @@
 
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
-	damage_transfer = 0.6
+	damage_transfer = 0.7
 	range = 10
 	playstyle_string = "As a fire type, you have only light damage resistance, but will ignite any enemy you bump into."
 	environment_smash = 1
@@ -155,7 +155,7 @@
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
-			M.adjust_fire_stacks(20)
+			M.adjust_fire_stacks(10)
 			M.IgniteMob()
 
 //Standard
@@ -163,7 +163,7 @@
 /mob/living/simple_animal/hostile/guardian/punch
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	damage_transfer = 0.4
+	damage_transfer = 0.5
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
@@ -183,26 +183,23 @@
 
 /mob/living/simple_animal/hostile/guardian/punch/AttackingTarget()
 	..()
-	src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
-	[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
-	playsound(loc, src.attack_sound, 50, 1, 1)
+	if(istype(target, /mob/living))
+		src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
+		[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
+		playsound(loc, src.attack_sound, 50, 1, 1)
+		playsound(loc, src.attack_sound, 50, 1, 1)
+		playsound(loc, src.attack_sound, 50, 1, 1)
+		playsound(loc, src.attack_sound, 50, 1, 1)
+
 
 
 
 //Fast Standard. Does less damage, has less resistance, but moves faster, has higher range
 
 /mob/living/simple_animal/hostile/guardian/fast
-	melee_damage_lower = 25
-	melee_damage_upper = 25
-	damage_transfer = 0.6
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	damage_transfer = 0.7
 	speed = -1
 	range = 15
 	attacktext = "slices"
@@ -247,6 +244,7 @@
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = "help"
 	friendly = "heals"
+	speed = 1
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	playstyle_string = "As a healer type, you are incapable of attacking, but can mend any wound simply by touching a target."
@@ -256,6 +254,9 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	..()
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to heal!</span></B>"
+		return
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
@@ -263,21 +264,26 @@
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5)
 
+/obj/item/projectile/guardian
+	name = "crystal spray"
+	icon_state = "guardian"
+	damage = 4
+	damage_type = BRUTE
+
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = "help"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_transfer = 1.2
-	projectiletype = /obj/item/projectile/neurotox
-	ranged_cooldown_cap = 1
-	projectilesound = 'sound/weapons/pierce.ogg'
+	projectiletype = /obj/item/projectile/guardian
+	ranged_cooldown_cap = 0
+	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
-	rapid = 1
 	range = 13
-	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying neurotoxin."
+	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spitting neurotoxin."
+	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spraying shards of crystal."
 
 
 /mob/living/simple_animal/hostile/guardian/bluespace
@@ -313,6 +319,9 @@
 	var/bomb_cooldown = 0
 
 /mob/living/simple_animal/hostile/guardian/bomb/ShiftClickOn(atom/movable/A)
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
+		return
 	if(istype(A, /obj/))
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
@@ -334,6 +343,8 @@
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
 	A.loc = src
 	stored_obj = A
+	anchored = A.anchored
+	density = A.density
 	appearance = A.appearance
 	spawn(600)
 		stored_obj.loc = get_turf(src.loc)

@@ -29,9 +29,6 @@
 		return 0
 
 	set_ready_state(0)
-	chassis.can_move = 0
-	spawn(shot_delay*projectiles_per_shot)
-		chassis.can_move = 1
 	for(var/i=1 to get_shot_amount())
 		var/obj/item/projectile/A = new projectile(curloc)
 		A.firer = chassis.occupant
