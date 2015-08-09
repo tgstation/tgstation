@@ -8,5 +8,8 @@ var/global/list/active_diseases = list()
 
 /datum/controller/process/disease/doWork()
 	for(var/d in active_diseases)
-		d:process()
-		scheck()
+		if(d)
+			d:process()
+			scheck()
+			continue
+		active_diseases -= d
