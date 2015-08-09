@@ -1,18 +1,8 @@
-/* Diffrent misc types of tiles & the tile prototype
- * Contains:
- 		Tile
- *		Grass
- *		Wood
- *		Carpet
- */
-
-/*
- * Tile
- */
 /obj/item/stack/tile
 	name = "broken tile"
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
+	icon = 'icons/obj/tiles.dmi'
 	w_class = 3.0
 	force = 1.0
 	throwforce = 1.0
@@ -72,9 +62,7 @@
 	else
 		..()
 
-/*
- * Grass
- */
+//Grass
 /obj/item/stack/tile/grass
 	name = "grass tile"
 	singular_name = "grass floor tile"
@@ -84,9 +72,8 @@
 	turf_type = /turf/simulated/floor/grass
 	burn_state = 0 //Burnable
 
-/*
- * Wood
- */
+
+//Wood
 /obj/item/stack/tile/wood
 	name = "wood floor tile"
 	singular_name = "wood floor tile"
@@ -96,9 +83,8 @@
 	turf_type = /turf/simulated/floor/wood
 	burn_state = 0 //Burnable
 
-/*
- * Carpets
- */
+
+//Carpets
 /obj/item/stack/tile/carpet
 	name = "carpet"
 	singular_name = "carpet"
@@ -117,9 +103,8 @@
 	turf_type = /turf/simulated/floor/fakespace
 	burn_state = 0 //Burnable
 
-/*
- * High-traction
- */
+
+//High-traction
 /obj/item/stack/tile/noslip
 	name = "high-traction floor tile"
 	singular_name = "high-traction floor tile"
@@ -127,3 +112,24 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/simulated/floor/noslip
 	origin_tech = "material=3"
+
+
+//Plasteel (normal)
+/obj/item/stack/tile/plasteel
+	name = "floor tile"
+	singular_name = "floor tile"
+	desc = "Those could work as a pretty decent throwing weapon."
+	icon_state = "tile"
+	force = 6.0
+	materials = list(MAT_METAL=937.5)
+	throwforce = 10.0
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/plasteel
+	mineralType = "metal"
+
+/obj/item/stack/tile/plasteel/cyborg
+	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
+	materials = list() // All other Borg versions of items have no Metal or Glass - RR
+	is_cyborg = 1
+	cost = 125
