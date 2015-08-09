@@ -291,7 +291,8 @@ var/list/beam_master = list()
 			returnToPool(src)
 			return reference
 		kill_count--
-		bump_original_check()
+		if(bump_original_check())
+			return reference
 
 		update_pixel()
 

@@ -409,6 +409,8 @@ var/list/impact_master = list()
 		if(loc == get_turf(original))
 			if(!(original in permutated))
 				Bump(original)
+				return 1//so laser beams visually stop when they hit their target
+	return 0
 
 /obj/item/projectile/process()
 	spawn while(loc)
