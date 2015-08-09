@@ -38,7 +38,7 @@ the same HTML if scripts cause the content to change. In this case set the ignor
 
 	hi.executeJavaScript(jscript, client = null)
 
-Executes Javascript on the browser.
+Executes Javascript on the browser. Note: parentheses are needed in the jscript parameter.
 
 The client is optional and may be a /mob, /client or /html_interface_client object. If not specified the code is executed on all clients.
 

@@ -1219,3 +1219,5 @@ var/proccalls = 1
 #define SIZE_NORMAL	3 //Humanoids, robots, small slimes and most of the other animals
 #define SIZE_BIG	4 //The AI, large slimes, wizard 'creatures', goliaths, hivebots
 #define SIZE_HUGE	5 //Pine trees
+
+#define ADIABATIC_EXPONENT		0.667	//This means something g-guys
