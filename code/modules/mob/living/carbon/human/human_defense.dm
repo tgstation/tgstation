@@ -12,25 +12,14 @@ emp_act
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			var/reflectchance = 40 - round(P.damage/3)
+			var/reflectchance = 60 - round(P.damage/3)
 			if(!(def_zone in list("chest", "groin")))
 				reflectchance /= 2
 			if(prob(reflectchance))
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
 
-				// Find a turf near or on the original location to bounce to
-				if(P.starting)
-					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/turf/curloc = get_turf(src)
-
-					// redirect the projectile
-					P.original = locate(new_x, new_y, P.z)
-					P.starting = curloc
-					P.current = curloc
-					P.firer = src
-					P.yo = new_y - curloc.y
-					P.xo = new_x - curloc.x
+				P.reflected = 1
+				P.rebound(src)
 
 				return -1 // complete projectile permutation
 

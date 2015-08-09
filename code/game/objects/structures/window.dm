@@ -40,6 +40,9 @@
 	update_nearby_icons()
 	update_icon()
 
+/obj/structure/window/projectile_check()
+	return PROJREACT_WINDOWS
+
 /obj/structure/window/examine(mob/user)
 
 	..()

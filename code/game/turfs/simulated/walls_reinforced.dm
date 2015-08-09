@@ -402,12 +402,12 @@
 			else
 				dismantle_wall(1,1) //Fuck it up nicely
 		if(2.0)
-			if(prob(25)) //Fairly likely to stand, point-blank damage is "gone"
-				dismantle_wall(0,1)
-			else
+			if(prob(75) && (d_state == WALLCOMPLETED))//No more infinite plasteel generation!
 				src.d_state = WALLCOVERREMOVED
 				update_icon()
 				getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src)) //Lose the plasteel needed to get there
+			else
+				dismantle_wall(0,1)
 		if(3.0)
 			if(prob(15))
 				dismantle_wall(0,1)

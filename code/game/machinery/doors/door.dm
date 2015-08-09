@@ -56,6 +56,12 @@ var/list/all_doors = list()
 	var/explosion_block = 0 //regular airlocks are 1, blast doors are 3, higher values mean increasingly effective at blocking explosions.
 	forceinvertredraw = 1
 
+/obj/machinery/door/projectile_check()
+	if(opacity)
+		return PROJREACT_WALLS
+	else
+		return PROJREACT_WINDOWS
+
 /obj/machinery/door/Bumped(atom/AM)
 	if (ismob(AM))
 		var/mob/M = AM

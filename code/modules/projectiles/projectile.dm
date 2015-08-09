@@ -52,6 +52,18 @@ var/list/impact_master = list()
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/agony = 0
+	var/jittery = 0
+
+	var/destroy = 0	//if set to 1, will destroy wall, tables and racks on impact (or at least, has a chance to)
+
+	var/reflected = 0
+
+	var/bounce_sound = 'sound/items/metal_impact.ogg'
+	var/bounce_type = null//BOUNCEOFF_WALLS, BOUNCEOFF_WINDOWS, BOUNCEOFF_OBJS, BOUNCEOFF_MOBS
+	var/bounces = 0	//if set to -1, will always bounce off obstacles
+
+	var/phase_type = null//PHASEHTROUGH_WALLS, PHASEHTROUGH_WINDOWS, PHASEHTROUGH_OBJS, PHASEHTROUGH_MOBS
+	var/phases = 0	//if set to -1, will always phase through obstacles
 
 	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
 
@@ -64,6 +76,12 @@ var/list/impact_master = list()
 	var/dy = 0
 	var/error = 0
 	var/target_angle = 0
+
+	var/override_starting_X = 0
+	var/override_starting_Y = 0
+	var/override_target_X = 0
+	var/override_target_Y = 0
+	var/last_bump = null
 
 	var/custom_impact = 0
 
@@ -88,6 +106,8 @@ var/list/impact_master = list()
 	var/mob/living/L = atarget
 	if(L.flags & INVULNERABLE)			return 0
 	L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
+	if(jittery)
+		L.Jitter(jittery)
 	return 1
 
 /obj/item/projectile/proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
@@ -112,9 +132,9 @@ var/list/impact_master = list()
 	..("permutated")
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
-	if(A == firer)
+	if((A == firer) && !reflected)
 		loc = A.loc
-		return 0 //cannot shoot yourself
+		return 0 //cannot shoot yourself, unless an ablative armor sent back the projectile
 
 	if(bumped)	return 0
 	var/forcedodge = 0 // force the projectile to pass
@@ -172,6 +192,9 @@ var/list/impact_master = list()
 				msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
 				log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
 
+	if(!A)
+		return 1
+
 	if(A)
 		if(firer && istype(A, /obj/structure/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
 			var/obj/structure/bed/chair/vehicle/JC = A
@@ -184,71 +207,78 @@ var/list/impact_master = list()
 					msg_admin_attack("[key_name(firer)] shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 					if(!iscarbon(firer))
 						BM.LAssailant = null
-					else
-						BM.LAssailant = firer
 				else
-					BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
-					log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
-					msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
-		if (!forcedodge)
-			forcedodge = A.bullet_act(src, def_zone) // searches for return value
-		if(forcedodge == -1) // the bullet passes through a dense object!
-			bumped = 0 // reset bumped variable!
-			if(istype(A, /turf))
-				loc = A
+					BM.LAssailant = firer
 			else
-				loc = A.loc
-			if(istype(permutated,/list)) permutated.Add(A)
-			return 0
-		else if(!custom_impact)
-			var/impact_icon = null
-			var/impact_sound = null
-			if(ismob(A))
-				if(issilicon(A))
-					impact_icon = "default_solid"
-					impact_sound = 'sound/items/metal_impact.ogg'
-				else
-					impact_icon = "default_mob"//todo: blood_colors
-					impact_sound = 'sound/weapons/pierce.ogg'
-			else
+				BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
+				log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
+				msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
+	if (!forcedodge)
+		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+	if(forcedodge == -1) // the bullet passes through a dense object!
+		bumped = 0 // reset bumped variable!
+		if(istype(A, /turf))
+			loc = A
+		else
+			loc = A.loc
+		permutated.Add(A)
+		return 0
+	else if(!custom_impact)
+		var/impact_icon = null
+		var/impact_sound = null
+		if(ismob(A))
+			if(issilicon(A))
 				impact_icon = "default_solid"
 				impact_sound = 'sound/items/metal_impact.ogg'
-			var/PixelX = 0
-			var/PixelY = 0
-			switch(get_dir(src,A))
-				if(NORTH)
-					PixelY = 16
-				if(SOUTH)
-					PixelY = -16
-				if(EAST)
-					PixelX = 16
-				if(WEST)
-					PixelX = -16
+			else
+				impact_icon = "default_mob"//todo: blood_colors
+				impact_sound = 'sound/weapons/pierce.ogg'
+		else
+			impact_icon = "default_solid"
+			impact_sound = 'sound/items/metal_impact.ogg'
+		var/PixelX = 0
+		var/PixelY = 0
+		switch(get_dir(src,A))
+			if(NORTH)
+				PixelY = 16
+			if(SOUTH)
+				PixelY = -16
+			if(EAST)
+				PixelX = 16
+			if(WEST)
+				PixelX = -16
 
-			var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,impact_icon)
-			impact.pixel_x = PixelX
-			impact.pixel_y = PixelY
+		var/image/impact = image('icons/obj/projectiles_impacts.dmi',loc,impact_icon)
+		impact.pixel_x = PixelX
+		impact.pixel_y = PixelY
 
-			var/turf/T = src.loc
-			T.overlays += impact
+		var/turf/T = src.loc
+		T.overlays += impact
 
-			spawn(3)
-				T.overlays -= impact
+		spawn(3)
+			T.overlays -= impact
 
-			playsound(T, impact_sound, 30, 1)
+		playsound(T, impact_sound, 30, 1)
 
-		if(istype(A,/turf))
-			for(var/obj/O in A)
-				O.bullet_act(src)
-			for(var/mob/M in A)
-				M.bullet_act(src, def_zone)
-		loc = null
-		spawn()//if(!istype(src, /obj/item/projectile/beam/lightning))
-			density = 0
-			invisibility = 101
-			//del(src)
-			returnToPool(src)
-			OnDeath()
+	if(istype(A,/turf))
+		for(var/obj/O in A)
+			O.bullet_act(src)
+		for(var/mob/M in A)
+			M.bullet_act(src, def_zone)
+
+	if(bounces || phases)
+		//the bullets first checks if it can bounce off the obstacle, and if it cannot it then checks if it can phase through it, if it cannot either then it dies.
+		var/reaction_type = A.projectile_check()
+		if(bounces && (bounce_type & reaction_type))
+			rebound(A)
+			bounces--
+			return 1
+		else if(phases && (phase_type & reaction_type))
+			src.forceMove(get_step(src.loc,dir))
+			phases--
+			return 1
+
+	bullet_die()
 	return 1
 
 
@@ -269,6 +299,11 @@ var/list/impact_master = list()
 	target = get_turf(original)
 	dist_x = abs(target.x - starting.x)
 	dist_y = abs(target.y - starting.y)
+
+	override_starting_X = starting.x
+	override_starting_Y = starting.y
+	override_target_X = target.x
+	override_target_Y = target.y
 
 	if (target.x > starting.x)
 		dx = EAST
@@ -309,6 +344,9 @@ var/list/impact_master = list()
 			update_pixel()
 			pixel_x = PixelX
 			pixel_y = PixelY
+
+		bumped = 0
+
 		sleep(sleeptime)
 
 
@@ -342,26 +380,37 @@ var/list/impact_master = list()
 
 /obj/item/projectile/proc/update_pixel()
 	if(src && starting && target)
-		var/AX = (starting.x - src.x)*32
-		var/AY = (starting.y - src.y)*32
-		var/BX = (target.x - src.x)*32
-		var/BY = (target.y - src.y)*32
+		var/AX = (override_starting_X - src.x)*32
+		var/AY = (override_starting_Y - src.y)*32
+		var/BX = (override_target_X - src.x)*32
+		var/BY = (override_target_Y - src.y)*32
 		var/XX = (((BX-AX)*(-BX))+((BY-AY)*(-BY)))/(((BX-AX)*(BX-AX))+((BY-AY)*(BY-AY)))
 
 		PixelX = round(BX+((BX-AX)*XX))
 		PixelY = round(BY+((BY-AY)*XX))
-
+		switch(last_bump)
+			if(NORTH)
+				PixelY -= 16
+			if(SOUTH)
+				PixelY += 16
+			if(EAST)
+				PixelX -= 16
+			if(WEST)
+				PixelX += 16
 	return
 
 /obj/item/projectile/proc/bullet_die()
-	OnDeath()
-	returnToPool(src)
+	spawn()
+		OnDeath()
+		returnToPool(src)
 
 /obj/item/projectile/proc/bump_original_check()
 	if(!bumped && !isturf(original))
 		if(loc == get_turf(original))
 			if(!(original in permutated))
 				Bump(original)
+				return 1//so laser beams visually stop when they hit their target
+	return 0
 
 /obj/item/projectile/process()
 	spawn while(loc)
@@ -392,6 +441,69 @@ var/list/impact_master = list()
 
 /obj/item/projectile/bullet_act(/obj/item/projectile/bullet)
 	return -1
+
+/obj/item/projectile/proc/rebound(var/atom/A)//Projectiles bouncing off walls and obstacles
+	var/turf/T = get_turf(src)
+	var/turf/W = get_turf(A)
+	playsound(T, bounce_sound, 30, 1)
+	var/orientation = SOUTH
+	if(T == W)
+		orientation = dir
+	else
+		orientation = get_dir(T,W)
+	last_bump = orientation
+	switch(orientation)
+		if(NORTH)
+			dy = SOUTH
+			override_starting_Y = (W.y * 2) - override_starting_Y
+			override_target_Y = (W.y * 2) - override_target_Y
+		if(SOUTH)
+			dy = NORTH
+			override_starting_Y = (W.y * 2) - override_starting_Y
+			override_target_Y = (W.y * 2) - override_target_Y
+		if(EAST)
+			dx = WEST
+			override_starting_X = (W.x * 2) - override_starting_X
+			override_target_X = (W.x * 2) - override_target_X
+		if(WEST)
+			dx = EAST
+			override_starting_X = (W.x * 2) - override_starting_X
+			override_target_X = (W.x * 2) - override_target_X
+	var/newdiffX = override_target_X - override_starting_X
+	var/newdiffY = override_target_Y - override_starting_Y
+
+	if(!W)
+		W = T
+	override_starting_X = W.x
+	override_starting_Y = W.y
+	override_target_X = W.x + newdiffX
+	override_target_Y = W.y + newdiffY
+
+	var/disty
+	var/distx
+	var/newangle
+	disty = (32 * override_target_Y)-(32 * override_starting_Y)
+	distx = (32 * override_target_X)-(32 * override_starting_X)
+	if(!disty)
+		if(distx >= 0)
+			newangle = 90
+		else
+			newangle = 270
+	else
+		newangle = arctan(distx/disty)
+		if(disty < 0)
+			newangle += 180
+		else if(distx < 0)
+			newangle += 360
+
+	target_angle = round(newangle)
+
+	if(linear_movement)
+		if( !("[icon_state][target_angle]" in bullet_master) )
+			var/icon/I = new(initial(icon),"[icon_state]_pixel")
+			I.Turn(target_angle+45)
+			bullet_master["[icon_state]_angle[target_angle]"] = I
+		src.icon = bullet_master["[icon_state]_angle[target_angle]"]
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

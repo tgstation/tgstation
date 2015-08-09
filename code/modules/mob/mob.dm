@@ -49,6 +49,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	qdel(hud_used)
 	..()
 
+/mob/projectile_check()
+	return PROJREACT_MOBS
+
 /mob/proc/remove_screen_objs()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_screen_obj_references() called tick#: [world.time]")
 	if(flash)

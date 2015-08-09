@@ -417,7 +417,7 @@
 	icon_state = "heatray"
 	animate_movement = 0
 	pass_flags = PASSTABLE
-
+	var/drawn = 0
 	var/tang = 0
 	var/turf/last = null
 /obj/item/projectile/beam/bison/proc/adjustAngle(angle)
@@ -438,7 +438,6 @@
 /obj/item/projectile/beam/bison/process()
 	//calculating the turfs that we go through
 	var/lastposition = loc
-
 	target = get_turf(original)
 	dist_x = abs(target.x - src.x)
 	dist_y = abs(target.y - src.y)
@@ -485,7 +484,7 @@
 			kill_count--
 
 			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
+				if(loc == target)
 					if(!(original in permutated))
 						draw_ray(target)
 						Bump(original)
@@ -528,8 +527,13 @@
 
 	return
 
+/obj/item/projectile/beam/bison/bullet_die()
+	draw_ray(loc)
+	..()
 
 /obj/item/projectile/beam/bison/proc/draw_ray(var/turf/lastloc)
+	if(drawn) return
+	drawn = 1
 	var/atom/curr = lastloc
 	var/Angle=round(Get_Angle(firer,curr))
 	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
@@ -915,3 +919,37 @@
 		mob.orient_object = null
 		mob.canmove = 1
 		mob = null
+
+/obj/item/projectile/bullet/osipr
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "osipr"
+	damage = 50
+	stun = 2
+	weaken = 2
+	destroy = 1
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
+	bounces = 1
+
+/obj/item/projectile/energy/osipr
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "dark"
+	kill_count = 100
+	damage = 50
+	stun = 10
+	weaken = 10
+	stutter = 10
+	jittery = 30
+	destroy = 0
+	bounce_sound = 'sound/weapons/osipr_altbounce.ogg'
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
+	bounces = -1
+	phase_type = PROJREACT_OBJS|PROJREACT_MOBS
+	phases = -1
+
+/obj/item/projectile/energy/osipr/Destroy()
+	var/turf/T = loc
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(4, 0, T)
+	s.start()
+	T.turf_animation('icons/obj/projectiles_impacts.dmi',"dark_explosion",0, 0, 13, 'sound/weapons/osipr_altexplosion.ogg')
+	..()

@@ -84,7 +84,7 @@
 
 
 /turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/pulse))
+	if(Proj.destroy)
 		src.ex_act(2)
 	..()
 	return 0
@@ -587,6 +587,9 @@
 	if(istype(src, get_base_turf(src.z))) //Don't cultify the base turf, ever
 		return
 	ChangeTurf(get_base_turf(src.z))
+
+/turf/projectile_check()
+	return PROJREACT_WALLS
 
 /turf/singularity_act()
 	if(istype(src, get_base_turf(src.z))) //Don't singulo the base turf, ever

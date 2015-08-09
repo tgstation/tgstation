@@ -247,6 +247,9 @@ var/global/list/ghdel_profiling = list()
 		return 1
 	return
 
+/atom/proc/projectile_check()
+	return
+
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
  //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \ *	atom/proc/search_contents_for() called tick#: [world.time]")
