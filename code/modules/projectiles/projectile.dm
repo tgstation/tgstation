@@ -268,42 +268,16 @@ var/list/impact_master = list()
 
 	if(bounces || phases)
 		//the bullets first checks if it can bounce off the obstacle, and if it cannot it then checks if it can phase through it, if it cannot either then it dies.
-		if(isturf(A) || (istype(A,/obj/machinery/door) && A.opacity))
-			if(bounce_type & BOUNCEOFF_WALLS)
-				rebound(A)
-				bounces--
-				return 1
-			else if(phase_type & PHASEHTROUGH_WALLS)
-				src.forceMove(get_step(src.loc,dir))
-				phases--
-				return 1
-		else if(istype(A,/obj/structure/window) || (istype(A,/obj/machinery/door/) && !A.opacity))
-			if(bounce_type & BOUNCEOFF_WINDOWS)
-				rebound(A)
-				bounces--
-				return 1
-			else if(phase_type & PHASEHTROUGH_WINDOWS)
-				src.forceMove(get_step(src.loc,dir))
-				phases--
-				return 1
-		else if(istype(A,/obj) && !istype(A,/obj/effect))
-			if(bounce_type & BOUNCEOFF_OBJS)
-				rebound(A)
-				bounces--
-				return 1
-			else if(phase_type & PHASEHTROUGH_OBJS)
-				src.forceMove(get_step(src.loc,dir))
-				phases--
-				return 1
-		else if(ismob(A))
-			if(bounce_type & BOUNCEOFF_MOBS)
-				rebound(A)
-				bounces--
-				return 1
-			else if(phase_type & PHASEHTROUGH_MOBS)
-				src.forceMove(get_step(src.loc,dir))
-				phases--
-				return 1
+		var/reaction_type = A.projectile_check()
+		if(bounces && (bounce_type & reaction_type))
+			rebound(A)
+			bounces--
+			return 1
+		else if(phases && (phase_type & reaction_type))
+			src.forceMove(get_step(src.loc,dir))
+			phases--
+			return 1
+
 	bullet_die()
 	return 1
 
@@ -427,8 +401,6 @@ var/list/impact_master = list()
 
 /obj/item/projectile/proc/bullet_die()
 	spawn()
-		density = 0
-		invisibility = 101
 		OnDeath()
 		returnToPool(src)
 

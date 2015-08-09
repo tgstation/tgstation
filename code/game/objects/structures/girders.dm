@@ -331,6 +331,9 @@
 			name = "displaced girder"
 			icon_state = "displaced"
 
+/obj/structure/girder/projectile_check()
+	return PROJREACT_WALLS
+
 /obj/structure/girder/displaced
 	name = "displaced girder"
 	icon_state = "displaced"

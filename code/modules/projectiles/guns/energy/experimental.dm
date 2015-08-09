@@ -577,7 +577,6 @@
 	pixel_y = rand(-10.0, 10)
 
 
-#define OSIPR_MAG_FULL 30
 #define OSIPR_MAX_CORES 3
 #define OSIPR_PRIMARY_FIRE 1
 #define OSIPR_SECONDARY_FIRE 2
@@ -594,7 +593,7 @@
 	fire_delay = 0
 	w_class = 3.0
 	fire_sound = 'sound/weapons/osipr_fire.ogg'
-	var/obj/item/osipr_magazine/magazine = null
+	var/obj/item/energy_magazine/osipr/magazine = null
 	var/energy_balls = 2
 	var/mode = OSIPR_PRIMARY_FIRE
 
@@ -622,7 +621,7 @@
 			if(!magazine || !magazine.bullets) return 0
 			magazine.bullets--
 			update_icon()
-			in_chamber = new/obj/item/projectile/bullet/osipr()
+			in_chamber = new magazine.bullet_type()
 			return 1
 		if(OSIPR_SECONDARY_FIRE)
 			if(!energy_balls) return 0
@@ -632,7 +631,7 @@
 	return 0
 
 /obj/item/weapon/gun/osipr/attackby(var/obj/item/A as obj, mob/user as mob)
-	if(istype(A, /obj/item/osipr_magazine))
+	if(istype(A, /obj/item/energy_magazine/osipr))
 		if(magazine)
 			user << "There is another magazine already inserted. Remove it first."
 		else
@@ -687,36 +686,49 @@
 		item_state = "osipr-empty"
 	else
 		item_state = "osipr"
-		var/bullets = round(magazine.bullets/(OSIPR_MAG_FULL/10))
+		var/bullets = round(magazine.bullets/(magazine.max_bullets/10))
 		icon_state = "osipr[bullets]0"
 
-/obj/item/osipr_magazine
-	name = "pulse magazine"
-	desc = "Primary ammo for OSIPR. Can be replenished by a recharger."
+/obj/item/energy_magazine
+	name = "energy magazine"
+	desc = "Can be replenished by a recharger"
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "osipr-magfull"
 	flags = FPRINT
 	force = 1
 	throwforce = 1
 	w_class = 3.0
-	var/bullets = OSIPR_MAG_FULL
+	var/bullets = 10
+	var/max_bullets = 10
+	var/caliber = "osipr"	//base icon name
+	var/bullet_type = /obj/item/projectile/bullet/osipr
 
-/obj/item/osipr_magazine/New()
+/obj/item/energy_magazine/New()
 	..()
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+	update_icon()
 
-/obj/item/osipr_magazine/examine(mob/user)
+/obj/item/energy_magazine/examine(mob/user)
 	..()
-	user << "<span class='info'>Has [bullets] pulse bullet\s remaining.</span>"
+	user << "<span class='info'>Has [bullets] bullet\s remaining.</span>"
 
-/obj/item/osipr_magazine/update_icon()
-	if(bullets == OSIPR_MAG_FULL)
-		icon_state = "osipr-magfull"
+/obj/item/energy_magazine/update_icon()
+	if(bullets == max_bullets)
+		icon_state = "[caliber]-magfull"
 	else
-		icon_state = "osipr-mag"
+		icon_state = "[caliber]-mag"
 
-#undef OSIPR_MAG_FULL
+/obj/item/energy_magazine/osipr
+	name = "pulse magazine"
+	desc = "Primary ammo for OSIPR. Can be replenished by a recharger."
+	icon_state = "osipr-magfull"
+	w_class = 3.0
+	bullets = 30
+	max_bullets = 30
+	caliber = "osipr"
+	bullet_type = /obj/item/projectile/bullet/osipr
+
 #undef OSIPR_PRIMARY_FIRE
 #undef OSIPR_SECONDARY_FIRE
 

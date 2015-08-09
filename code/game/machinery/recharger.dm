@@ -27,7 +27,7 @@
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/osipr_magazine))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/energy_magazine))
 		if(charging)
 			user << "<span class='warning'>There's \a [charging] already charging inside!</span>"
 			return
@@ -97,9 +97,9 @@ obj/machinery/recharger/process()
 				update_icon()
 				icon_state = "recharger2"
 			return
-		else if(istype(charging, /obj/item/osipr_magazine))//pulse bullet casings
-			var/obj/item/osipr_magazine/M = charging
-			if(M.bullets < initial(M.bullets))
+		else if(istype(charging, /obj/item/energy_magazine))//pulse bullet casings
+			var/obj/item/energy_magazine/M = charging
+			if(M.bullets < M.max_bullets)
 				M.bullets = min(initial(M.bullets),M.bullets+3)
 				icon_state = "recharger1"
 				use_power(250)
@@ -136,21 +136,19 @@ obj/machinery/recharger/emp_act(severity)
 
 obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
-		if(icon_state != "recharger2")
-			overlays = 0
+		if(icon_state != "recharger2")	//the only instances in which this would happen are when the gun is first placed, and when it reaches max charge.
+			overlays = 0				//(since update_icon isn't called while the gun is still charging) so there shouldn't be any getFlatIcon spam.
+			charging.update_icon()
+			var/icon/occupant_icon=getFlatIcon(charging)
+			occupant_icon.Scale(20,20)
+			occupant_overlay = image(occupant_icon)
+			occupant_overlay.pixel_x=6
+			occupant_overlay.pixel_y=12
+			overlays += occupant_overlay
 		icon_state = "recharger1"
 	else
 		overlays = 0
 		icon_state = "recharger0"
-
-	if(charging)
-		charging.update_icon()
-		var/icon/occupant_icon=getFlatIcon(charging)
-		occupant_icon.Scale(20,20)
-		occupant_overlay = image(occupant_icon)
-		occupant_overlay.pixel_x=6
-		occupant_overlay.pixel_y=12
-		overlays += occupant_overlay
 
 obj/machinery/recharger/wallcharger
 	name = "wall recharger"

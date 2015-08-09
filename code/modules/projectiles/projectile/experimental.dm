@@ -923,7 +923,7 @@
 	stun = 2
 	weaken = 2
 	destroy = 1
-	bounce_type = BOUNCEOFF_WALLS|BOUNCEOFF_WINDOWS
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
 	bounces = 1
 
 /obj/item/projectile/energy/osipr
@@ -937,12 +937,15 @@
 	jittery = 30
 	destroy = 0
 	bounce_sound = 'sound/weapons/osipr_altbounce.ogg'
-	bounce_type = BOUNCEOFF_WALLS|BOUNCEOFF_WINDOWS
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
 	bounces = -1
-	phase_type = PHASEHTROUGH_OBJS|PHASEHTROUGH_MOBS
+	phase_type = PROJREACT_OBJS|PROJREACT_MOBS
 	phases = -1
 
 /obj/item/projectile/energy/osipr/Destroy()
 	var/turf/T = loc
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(4, 0, T)
+	s.start()
 	T.turf_animation('icons/obj/projectiles_impacts.dmi',"dark_explosion",0, 0, 13, 'sound/weapons/osipr_altexplosion.ogg')
 	..()

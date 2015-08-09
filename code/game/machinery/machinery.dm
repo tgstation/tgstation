@@ -194,6 +194,9 @@ Class Procs:
 
 	..()
 
+/obj/machinery/projectile_check()
+	return PROJREACT_OBJS
+
 /obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL
 
