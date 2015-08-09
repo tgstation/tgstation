@@ -74,3 +74,15 @@
 /turf/simulated/floor/carpet/burn_tile()
 	burnt = 1
 	update_icon()
+
+
+
+/turf/simulated/floor/fakespace
+	icon = 'icons/turf/space.dmi'
+	icon_state = "0"
+	floor_tile = /obj/item/stack/tile/fakespace
+	broken_states = list("damaged")
+
+/turf/simulated/floor/fakespace/New()
+	..()
+	icon_state = "[rand(0,25)]"
