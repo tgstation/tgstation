@@ -98,23 +98,25 @@ obj/machinery/recharger/process()
 	if(charging)
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
-			if(E.power_supply.charge < E.power_supply.maxcharge)
+			if((E.power_supply.charge + 100) < E.power_supply.maxcharge)
 				E.power_supply.give(100)
 				icon_state = "recharger1"
 				use_power(250)
 				update_icon()
 			else
+				E.power_supply.charge = E.power_supply.maxcharge
 				update_icon()
 				icon_state = "recharger2"
 			return
 		else if(istype(charging, /obj/item/energy_magazine))//pulse bullet casings
 			var/obj/item/energy_magazine/M = charging
-			if(M.bullets < M.max_bullets)
+			if((M.bullets + 3) < M.max_bullets)
 				M.bullets = min(M.max_bullets,M.bullets+3)
 				icon_state = "recharger1"
 				use_power(250)
 				update_icon()
 			else
+				M.bullets = M.max_bullets
 				update_icon()
 				icon_state = "recharger2"
 			return
@@ -147,12 +149,12 @@ obj/machinery/recharger/emp_act(severity)
 
 obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
-		overlays = 0
+		overlays.len = 0
 		charging.update_icon()
 		overlays += charging.appearance
 		icon_state = "recharger1"
 	else
-		overlays = 0
+		overlays.len = 0
 		icon_state = "recharger0"
 
 obj/machinery/recharger/wallcharger

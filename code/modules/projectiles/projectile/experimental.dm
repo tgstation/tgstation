@@ -416,6 +416,7 @@
 	icon = 'icons/obj/lightning.dmi'
 	icon_state = "heatray"
 	animate_movement = 0
+	linear_movement = 0
 	pass_flags = PASSTABLE
 	var/drawn = 0
 	var/tang = 0
