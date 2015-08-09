@@ -51,9 +51,9 @@
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH)
+	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(volume / 15)
-		return
+	..()
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

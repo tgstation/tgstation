@@ -34,7 +34,7 @@
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	src = null
-	if((method==TOUCH && prob(min(33, volume))) || method==INGEST)
+	if((method==VAPOR && prob(min(33, volume))) || method==INGEST || method == PATCH)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -42,13 +42,12 @@
 			randmutg(M)
 		domutcheck(M, null)
 		updateappearance(M)
-	return
+	..()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
 		M.apply_effect(5,IRRADIATE,0)
 	..()
-	return
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -81,9 +80,10 @@
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH)
+	if(method == TOUCH || method == VAPOR)
 		M.adjust_fire_stacks(volume / 5)
 		return
+	..()
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
@@ -191,11 +191,13 @@
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
 	src = null
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			var/damage = min(round(0.4*volume, 0.1),10)
-			C.adjustToxLoss(damage)
+	if(method == VAPOR)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(!C.wear_mask) // If not wearing a mask
+				var/damage = min(round(0.4*volume, 0.1),10)
+				C.adjustToxLoss(damage)
+
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
@@ -212,11 +214,12 @@
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, volume)
 	src = null
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			var/damage = min(round(0.4*volume, 0.1),10)
-			C.adjustToxLoss(damage)
+	if(method == VAPOR)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(!C.wear_mask) // If not wearing a mask
+				var/damage = min(round(0.4*volume, 0.1),10)
+				C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -454,9 +457,8 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method != INGEST)
 		M.reagents.add_reagent("itching_powder", volume)
-		return
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
 	if(prob(15))
@@ -624,17 +626,24 @@
 	if(!istype(C))
 		return
 	volume = round(volume,0.1)
-	if(method != TOUCH)
+	if(method == INGEST)
 		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
 		return
-
 	C.acid_act(acidpwr, toxpwr, volume)
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
 		return
 	volume = round(volume,0.1)
-	O.acid_act(acidpwr, toxpwr, volume)
+	O.acid_act(acidpwr, volume)
+
+/datum/reagent/toxin/acid/reaction_turf(turf/T, volume)
+	if (!istype(T))
+		return
+	src = null
+	volume = round(volume,0.1)
+	for(var/obj/O in T)
+		O.acid_act(acidpwr, volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"

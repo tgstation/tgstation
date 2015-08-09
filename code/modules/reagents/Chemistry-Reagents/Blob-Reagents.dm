@@ -12,7 +12,7 @@
 	message = "The blob splashes you with burning oil"
 
 /datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BURN)
 		M.adjust_fire_stacks(2*ratio)
@@ -28,7 +28,7 @@
 	message_living = ", and you feel sick and nauseated"
 
 /datum/reagent/blob/toxic_goop/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(20*ratio, TOX)
 
@@ -40,7 +40,7 @@
 	message_living = ", and you feel your skin ripping and tearing off"
 
 /datum/reagent/blob/skin_ripper/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(20*ratio, BRUTE)
 		if(iscarbon(M))
@@ -56,7 +56,7 @@
 	message_living = ", and you feel your skin char and melt"
 
 /datum/reagent/blob/skin_melter/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(10*ratio, BRUTE)
 		M.apply_damage(10*ratio, BURN)
@@ -73,7 +73,7 @@
 	message_living = ", and your lungs feel heavy and weak"
 
 /datum/reagent/blob/lung_destroying_toxin/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(20* ratio, OXY)
 		M.losebreath += 15*ratio
@@ -89,7 +89,7 @@
 	message_living = ", and your skin feels papery and everything hurts"
 
 /datum/reagent/blob/radioactive_liquid/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(10*ratio, BRUTE)
 		if(istype(M, /mob/living/carbon/human))
@@ -109,7 +109,7 @@
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
 /datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BRUTE)
 		reagent_vortex(M, 0)
@@ -123,7 +123,7 @@
 	message = "The blob slams into you, and sends you flying"
 
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BRUTE)
 		reagent_vortex(M, 1)
@@ -137,7 +137,7 @@
 	message = "The blob strikes you, and its tendrils explode"
 
 /datum/reagent/blob/explosive/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		if(prob(75*ratio))
 			explosion(M.loc, 0, 0, 1, 0, 0)
@@ -151,7 +151,7 @@
 	message_living = ", and you feel great"
 
 /datum/reagent/blob/omnizine/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.reagents.add_reagent("omnizine", 11*ratio)
 
@@ -164,7 +164,7 @@
 	message_living = ", and you feel funny"
 
 /datum/reagent/blob/spacedrugs/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
+	if(method == PATCH)
 		var/ratio = volume/25
 		M.hallucination += 20*ratio
 		M.reagents.add_reagent("space_drugs", 15*ratio)

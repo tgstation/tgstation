@@ -67,10 +67,11 @@
 			W.ChangeTurf(/turf/simulated/floor/plating)
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(min(volume/5, 10))
-		M.IgniteMob()
-		PoolOrNew(/obj/effect/hotspot, M.loc)
+	if(istype(M))
+		if(method != INGEST)
+			M.adjust_fire_stacks(min(volume/5, 10))
+			M.IgniteMob()
+			PoolOrNew(/obj/effect/hotspot, M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"
@@ -148,8 +149,9 @@
 	..()
 
 /datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(min(volume/4, 20))
+	if(istype(M))
+		if(method != INGEST)
+			M.adjust_fire_stacks(min(volume/4, 20))
 
 /datum/reagent/cryostylane
 	name = "Cryostylane"

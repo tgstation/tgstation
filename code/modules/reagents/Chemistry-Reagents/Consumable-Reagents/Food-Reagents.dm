@@ -168,7 +168,7 @@
 		return
 
 	var/mob/living/carbon/victim = M
-	if(method == TOUCH)
+	if(method == TOUCH || method == VAPOR)
 		//check for protection
 		var/mouth_covered = 0
 		var/eyes_covered = 0
