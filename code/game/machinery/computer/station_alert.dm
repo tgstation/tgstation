@@ -139,8 +139,11 @@
 
 
 /obj/machinery/computer/station_alert/process()
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & NOPOWER)
 		icon_state = "atmos0"
+		return
+	else if(stat & BROKEN)
+		icon_state = "atmosb"
 		return
 	var/active_alarms = 0
 	for (var/cat in src.alarms)
