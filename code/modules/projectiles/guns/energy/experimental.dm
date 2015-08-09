@@ -692,7 +692,7 @@
 
 /obj/item/osipr_magazine
 	name = "pulse magazine"
-	desc = "Primary ammo for OSIPR."
+	desc = "Primary ammo for OSIPR. Can be replenished by a recharger."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "osipr-magfull"
 	flags = FPRINT
@@ -705,6 +705,10 @@
 	..()
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+
+/obj/item/osipr_magazine/examine(mob/user)
+	..()
+	user << "<span class='info'>Has [bullets] pulse bullet\s remaining.</span>"
 
 /obj/item/osipr_magazine/update_icon()
 	if(bullets == OSIPR_MAG_FULL)

@@ -16,6 +16,13 @@
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
+/obj/machinery/recharger/Destroy()
+	if(charging)
+		charging.update_icon()
+		charging.loc = loc
+		charging = null
+	occupant_overlay=null
+	..()
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
