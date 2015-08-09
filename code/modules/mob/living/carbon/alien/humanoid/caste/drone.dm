@@ -8,15 +8,9 @@
 
 
 /mob/living/carbon/alien/humanoid/drone/New()
-	create_reagents(100)
-	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
-	src.real_name = src.name
-
 	AddAbility(new/obj/effect/proc_holder/alien/resin(null))
 	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
-
 	..()
 //Drones use the same base as generic humanoids.
 

@@ -17,10 +17,6 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
-	create_reagents(100)
-	if(name == "alien larva")
-		name = "alien larva ([rand(1, 1000)])"
-	real_name = name
 	regenerate_icons()
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))

@@ -13,11 +13,7 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	create_reagents(1000)
-	if(name == "alien")
-		name = text("alien ([rand(1, 1000)])")
-	real_name = name
-
+	create_reagents(100)
 	AddAbility(new/obj/effect/proc_holder/alien/plant(null))
 	AddAbility(new/obj/effect/proc_holder/alien/whisper(null))
 	AddAbility(new/obj/effect/proc_holder/alien/transfer(null))
@@ -147,5 +143,5 @@
 /mob/living/carbon/alien/humanoid/check_ear_prot()
 	return 1
 
-/mob/living/carbon/alien/carbon/alien/humanoid/get_permeability_protection()
+/mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8

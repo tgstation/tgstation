@@ -11,23 +11,18 @@
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
-	create_reagents(100)
-
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
 		if(Q == src)		continue
 		if(Q.stat == DEAD)	continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess"	//if this is too cutesy feel free to change it/remove it.
 			break
-
-	real_name = src.name
 
 	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
 	AddAbility(new/obj/effect/proc_holder/alien/neurotoxin(null))
 	AddAbility(new/obj/effect/proc_holder/alien/resin(null))
 	AddAbility(new/obj/effect/proc_holder/alien/lay_egg(null))
-
 	..()
 
 /mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
