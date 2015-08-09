@@ -12,16 +12,17 @@
 
 	var/obj/item/weapon/charging = null
 
-	var/image/occupant_overlay=null
+	var/appearance_backup = null
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/recharger/Destroy()
 	if(charging)
+		charging.appearance = appearance_backup
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-	occupant_overlay=null
+	appearance_backup=null
 	..()
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
@@ -45,6 +46,11 @@
 			return
 		if (istype(G, /obj/item/weapon/gun/energy/staff))
 			return
+		appearance_backup = G.appearance
+		var/matrix/M = matrix()
+		M.Scale(0.625)
+		M.Translate(0,6)
+		G.transform = M
 		user.drop_item(G, src)
 		charging = G
 		use_power = 2
@@ -65,13 +71,16 @@
 	if(issilicon(user) || ..())
 		return 1
 
+	add_fingerprint(user)
+
 	if(charging && Adjacent(user))
+		charging.appearance = appearance_backup
 		charging.update_icon()
 		charging.loc = loc
 		user.put_in_hands(charging)
 		charging = null
 		use_power = 1
-		occupant_overlay=null
+		appearance_backup=null
 		update_icon()
 
 /obj/machinery/recharger/attack_paw(mob/user)
@@ -93,6 +102,7 @@ obj/machinery/recharger/process()
 				E.power_supply.give(100)
 				icon_state = "recharger1"
 				use_power(250)
+				update_icon()
 			else
 				update_icon()
 				icon_state = "recharger2"
@@ -103,6 +113,7 @@ obj/machinery/recharger/process()
 				M.bullets = min(M.max_bullets,M.bullets+3)
 				icon_state = "recharger1"
 				use_power(250)
+				update_icon()
 			else
 				update_icon()
 				icon_state = "recharger2"
@@ -136,15 +147,9 @@ obj/machinery/recharger/emp_act(severity)
 
 obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
-		if(icon_state != "recharger2")	//the only instances in which this would happen are when the gun is first placed, and when it reaches max charge.
-			overlays = 0				//(since update_icon isn't called while the gun is still charging) so there shouldn't be any getFlatIcon spam.
-			charging.update_icon()
-			var/icon/occupant_icon=getFlatIcon(charging)
-			occupant_icon.Scale(20,20)
-			occupant_overlay = image(occupant_icon)
-			occupant_overlay.pixel_x=6
-			occupant_overlay.pixel_y=12
-			overlays += occupant_overlay
+		overlays = 0
+		charging.update_icon()
+		overlays += charging.appearance
 		icon_state = "recharger1"
 	else
 		overlays = 0
