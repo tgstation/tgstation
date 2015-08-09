@@ -417,7 +417,7 @@
 	icon_state = "heatray"
 	animate_movement = 0
 	pass_flags = PASSTABLE
-
+	var/drawn = 0
 	var/tang = 0
 	var/turf/last = null
 /obj/item/projectile/beam/bison/proc/adjustAngle(angle)
@@ -438,7 +438,6 @@
 /obj/item/projectile/beam/bison/process()
 	//calculating the turfs that we go through
 	var/lastposition = loc
-
 	target = get_turf(original)
 	dist_x = abs(target.x - src.x)
 	dist_y = abs(target.y - src.y)
@@ -485,7 +484,7 @@
 			kill_count--
 
 			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
+				if(loc == target)
 					if(!(original in permutated))
 						draw_ray(target)
 						Bump(original)
@@ -528,8 +527,13 @@
 
 	return
 
+/obj/item/projectile/beam/bison/bullet_die()
+	draw_ray(loc)
+	..()
 
 /obj/item/projectile/beam/bison/proc/draw_ray(var/turf/lastloc)
+	if(drawn) return
+	drawn = 1
 	var/atom/curr = lastloc
 	var/Angle=round(Get_Angle(firer,curr))
 	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
