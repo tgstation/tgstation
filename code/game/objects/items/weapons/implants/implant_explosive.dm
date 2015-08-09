@@ -3,9 +3,9 @@
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
 	origin_tech = "materials=2;combat=3;biotech=4;syndicate=4"
-	var/weak = 1.6
-	var/medium = 0.8
-	var/heavy = 0.4
+	var/weak = 2
+	var/medium = 1
+	var/heavy = 0.5
 	var/delay = 7
 
 /obj/item/weapon/implant/explosive/get_data()
@@ -42,7 +42,7 @@
 
 /obj/item/weapon/implant/explosive/implant(mob/source)
 	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		imp_e.heavy += heavy
 		imp_e.medium += medium
 		imp_e.weak += weak
@@ -89,10 +89,10 @@
 
 /obj/item/weapon/implant/explosive/macro/implant(mob/source)
 	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		return 0
 	imp_e = locate(/obj/item/weapon/implant/explosive) in source
-	if(imp_e)
+	if(imp_e && imp_e != src)
 		heavy += imp_e.heavy
 		medium += imp_e.medium
 		weak += imp_e.weak
