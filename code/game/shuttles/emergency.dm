@@ -10,6 +10,7 @@ var/global/datum/shuttle/escape/escape_shuttle = new(starting_area=/area/shuttle
 	pre_flight_delay = 30 //This has NO effect outside of adminbus
 
 	stable = 0
+	can_rotate = 0 //Sleepers, body scanners and multi-tile airlocks aren't rotated properly
 
 	var/obj/structure/docking_port/destination/dock_centcom
 	var/obj/structure/docking_port/destination/dock_station

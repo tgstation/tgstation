@@ -119,6 +119,13 @@ proc/process_adminbus_teleport_locs()
 /area/station//TODO: make every area in the MAIN station inherit from this.
 	name = "Station"
 
+/area/station/custom //For blueprints!
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+	always_unpowered = 0
+	lighting_use_dynamic = 1
+
 /area/engineering/
 
 /area/turret_protected/
@@ -332,7 +339,6 @@ proc/process_adminbus_teleport_locs()
 	requires_power = 0
 
 /area/shuttle/salvage/start
-	name = "\improper Middle of Nowhere"
 	icon_state = "yellow"
 
 /area/shuttle/salvage/arrivals
@@ -385,19 +391,15 @@ proc/process_adminbus_teleport_locs()
 	requires_power = 0
 
 /area/shuttle/taxi_a/medcal_silicon_station
-	name = "\improper Medical and Silicon Station"
 	icon_state = "bluenew"
 
 /area/shuttle/taxi_a/engineering_cargo_station
-	name = "\improper Engineering and Cargo Station"
 	icon_state = "bluenew"
 
 /area/shuttle/taxi_a/security_science_station
-	name = "\improper Security and Science Station"
 	icon_state = "bluenew"
 
 /area/shuttle/taxi_a/abandoned_station
-	name = "\improper Abandoned Station"
 	icon_state = "bluenew"
 
 // B
@@ -406,19 +408,15 @@ proc/process_adminbus_teleport_locs()
 	requires_power = 0
 
 /area/shuttle/taxi_b/medcal_silicon_station
-	name = "\improper Medical and Silicon Station"
 	icon_state = "dk_yellow"
 
 /area/shuttle/taxi_b/engineering_cargo_station
-	name = "\improper Engineering and Cargo Station"
 	icon_state = "dk_yellow"
 
 /area/shuttle/taxi_b/security_science_station
-	name = "\improper Security and Science Station"
 	icon_state = "dk_yellow"
 
 /area/shuttle/taxi_b/abandoned_station
-	name = "\improper Abandoned Station"
 	icon_state = "dk_yellow"
 
 // End Taxi Shuttle
@@ -549,13 +547,12 @@ proc/process_adminbus_teleport_locs()
 
 //names are used
 /area/syndicate_station
-	name = "\improper Syndicate Station"
+	name = "\improper Syndicate Shuttle"
 	icon_state = "yellow"
 	requires_power = 0
 	lighting_use_dynamic = 1
 
 /area/syndicate_station/start
-	name = "\improper Syndicate Forward Operating Base"
 	icon_state = "yellow"
 
 /area/syndicate_station/southwest

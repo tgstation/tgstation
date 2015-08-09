@@ -16,6 +16,7 @@ var/global/datum/shuttle/syndicate/syndicate_shuttle = new(starting_area = /area
 	cooldown = 200
 
 	stable = 1 //Don't stun everyone and don't throw anything when moving
+	can_rotate = 0 //Sleepers, body scanners and multi-tile airlocks aren't rotated properly
 
 	req_access = list(access_syndicate)
 

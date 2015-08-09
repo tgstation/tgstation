@@ -549,8 +549,13 @@ its easier to just keep the beam vertical.
 		relativewall_neighbours()
 
 	if(pixel_x || pixel_y)
-		pixel_x = pixel_x * cos(angle)
-		pixel_y = pixel_y * sin(angle)
+		var/cosine	= cos(angle)
+		var/sine	= sin(angle)
+		var/newX = (cosine	* pixel_x) - (sine	* pixel_y)
+		var/newY = (sine	* pixel_x) - (cosine* pixel_y)
+
+		pixel_x = newX
+		pixel_y = newY
 
 /atom/proc/singularity_pull()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/singularity_pull() called tick#: [world.time]")

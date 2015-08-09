@@ -477,7 +477,7 @@
 
 	//Now here's the dumb part - since there's no fast way I know to check if a coord datum has a coord datum with the same values in a list,
 	//this coordinates list stores every coordinate of a moved turf as a string (example: "52;61").
-	var/list/coordinates = list()
+	var/list/our_own_turfs = list()
 
 	//Go through all turfs in our area
 	for(var/turf/T in linked_area.get_turfs())
@@ -485,7 +485,7 @@
 		turfs_to_move += C
 		turfs_to_move[C] = T
 
-		coordinates += "[T.x];[T.y];[T.z]"
+		our_own_turfs += "[T.x];[T.y];[T.z]"
 
 	var/cosine	= cos(rotate)
 	var/sine	= sin(rotate)
@@ -494,12 +494,6 @@
 	var/list/new_turfs = list() //Coordinates of turfs that WILL be created
 	for(var/datum/coords/C in turfs_to_move)
 		var/datum/coords/new_coords = C.add(offset) //Get the coordinates of new turfs by adding offset
-
-		//If any of the new turfs are in the moved shuttle's current area, EMERGENCY ABORT (this leads to the shuttle destroying itself & potentially gibbing everybody inside)
-		if("[new_coords.x_pos];[new_coords.y_pos];[new_center.z]" in coordinates)
-			warning("Invalid movement by shuttle ([src.name]; [src.type]). Offending turf: [new_coords.x_pos];[new_coords.y_pos];[new_center.z]")
-			message_admins("WARNING: A shuttle ([src.name]; [src.type]) has attempted to move to a location which overlaps with its current position. The shuttle will not be moved.")
-			return
 
 		new_turfs += new_coords
 		new_turfs[new_coords] = C //Associate the old coordinates with the new ones for an easier time
@@ -521,8 +515,13 @@
 		if(!A)
 			message_admins("<span class='notice'>WARNING: Unable to find an area at [new_coords.x_pos];[new_coords.y_pos];[new_center.z]. [src.name] ([src.type]) will not be moved.")
 			return
-		if(!destroy_everything && A.type != /area)
+		if(!destroy_everything && !(A.type in list(/area, /area/station/custom))) //Breaking blueprint areas and space is fine, breaking the station is not
 			message_admins("<span class='notice'>WARNING: [src.name] ([src.type]) attempted to destroy [A] ([A.type]).</span> If you want [src.name] to be able to move freely and destroy areas, change its \"destroy_everything\" variable to 1.")
+			return
+		//If any of the new turfs are in the moved shuttle's current area, EMERGENCY ABORT (this leads to the shuttle destroying itself & potentially gibbing everybody inside)
+		if("[new_coords.x_pos];[new_coords.y_pos];[new_center.z]" in our_own_turfs)
+			warning("Invalid movement by shuttle ([src.name]; [src.type]). Offending turf: [new_coords.x_pos];[new_coords.y_pos];[new_center.z]")
+			message_admins("WARNING: A shuttle ([src.name]; [src.type]) has attempted to move to a location which overlaps with its current position. The shuttle will not be moved.")
 			return
 
 
@@ -595,6 +594,8 @@
 				new_turf.vars[key] = L.Copy()
 			else if(old_turf.vars)
 				new_turf.vars[key] = old_turf.vars[key]
+		if(old_turf.transform)
+			new_turf.transform = old_turf.transform
 
 		//****Prepare underlays****
 		if(add_underlay && undlay)

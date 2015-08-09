@@ -3285,6 +3285,15 @@
 		D.dir = usr.dir
 		D.areaname = name
 
+		var/area/A = get_area(D)
+		if(A)
+			var/datum/shuttle/S = A.get_shuttle()
+			if(S)
+				if((input(usr,"Would you like the new docking port to be a part of [S.name] ([S.type])? Any shuttles docked to it will be moved together with [S.name].","Admin abuse") in list("Yes","No")) == "Yes")
+					if(get_area(D) == A) //If the shuttle didn't move -- that would probably lead to weird shit
+						S.docking_ports_aboard |= D
+						usr << "The docking port is now considered a part of [S.name] ([S.type])."
+
 		message_admins("<span class='notice'>[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) in [get_area(D)] [formatJumpTo(get_turf(D))]</span>", 1)
 		log_admin("[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) at [D.x];[D.y];[D.z]")
 
@@ -3298,8 +3307,8 @@
 			L += name
 			L[name]=D
 
-		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a docking port to link to a shuttle","Admin abuse") as anything in L) ]
-		if(!port_to_link) return
+		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a docking port to link to a shuttle","Admin abuse") as anything in (L + list("Cancel"))) ]
+		if(!istype(port_to_link)) return
 
 		var/datum/shuttle/shuttle_to_link = select_shuttle_from_all(usr,"Select a shuttle to link to [port_to_link] ([port_to_link.areaname])","Admin abuse")
 		if(!shuttle_to_link) return
@@ -3319,8 +3328,8 @@
 			L += name
 			L[name]=D
 
-		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a new transit area for the shuttle","Admin abuse") as null|anything in L) ]
-		if(!port_to_link) return
+		var/obj/structure/docking_port/port_to_link = L[ (input(usr,"Select a new transit area for the shuttle","Admin abuse") as null|anything in (L + list("Cancel"))) ]
+		if(!istype(port_to_link)) return
 
 		var/datum/shuttle/shuttle_to_link = select_shuttle_from_all(usr,"Select a shuttle of which you want to change transit area to [port_to_link] ([port_to_link.areaname])","Admin abuse")
 		if(!shuttle_to_link) return
@@ -3381,7 +3390,7 @@
 			possible_ports += name
 			possible_ports[name] = D
 
-		var/choice = input(usr, "Select a docking port for [capitalize(S.name)] to travel to", "Shuttle movement") in possible_ports
+		var/choice = input(usr, "Select a docking port for [capitalize(S.name)] to travel to", "Shuttle movement") in (possible_ports + list("Cancel"))
 		var/obj/structure/docking_port/destination/target_port = possible_ports[choice]
 
 		if(!target_port)
@@ -3399,7 +3408,7 @@
 		var/datum/shuttle/S = select_shuttle_from_all(usr, "Select a shuttle to edit", "Shuttle editing")
 		if(!S) return
 
-		var/list/options = list("cooldown","pre-flight delay","transit delay","use transit","can link to computer","innacuracy","name")
+		var/list/options = list("cooldown","pre-flight delay","transit delay","use transit","can link to computer","innacuracy","name","destroy areas","can rotate")
 		if(S.is_special()) options += "DEFINED LOCATIONS"
 		var/choice = input(usr,"What to edit in [capitalize(S.name)]?","Shuttle editing") in options
 
@@ -3438,56 +3447,67 @@
 				new_value = input(usr,"Input new name for [capitalize(S.name)]","Shuttle editing",S.innacuracy) as text
 				S.name = new_value
 			if("DEFINED LOCATIONS")
-				usr << "To prevent accidental mistakes, you can only set these locations to docking ports in the shuttle's memory (see \"Add a destination docking port to a shuttle\" command)"
+				usr << "To prevent accidental mistakes, you can only set these locations to docking ports in the shuttle's memory (use the \"Add a destination docking port to a shuttle\" command)"
 
 				var/list/locations = list("--Cancel--")
 				switch(S.type)
 					if(/datum/shuttle/vox)
-						locations += "Vox home"
+						locations += list("Vox home" = "dock_home")
 					if(/datum/shuttle/escape)
-						locations += list("Escape shuttle home","Escape shuttle centcom")
+						locations += list("Escape shuttle home" = "dock_station","Escape shuttle centcom" = "dock_centcom")
 					if(/datum/shuttle/taxi)
-						locations += list("Taxi medbay silicon","Taxi engineering cargo","Taxi security science","Taxi abandoned station")
+						locations += list("Taxi medbay silicon" = "dock_medical_silicon","Taxi engineering cargo" = "dock_engineering_cargo","Taxi security science" = "dock_security_science","Taxi abandoned station" = "dock_abandoned")
 
 				var/choice2 = input(usr,"Select a location to modify","Shuttle editing") in locations
+				var/variable_to_edit = locations[choice2]
+
+				world << variable_to_edit
+				/*
 				switch(choice2) //ew
 					if("Vox home")
 						var/datum/shuttle/vox/V = S
 						if(!V) return
 
-						V.dock_home = select_port_from_list(usr,"Select a new HOME location for the vox skipjack (MOVING TO IT WILL END THE ROUND IF THE GAMEMODE IS HEIST!)","Shuttle editing",V.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new HOME location for the vox skipjack (MOVING TO IT WILL END THE ROUND IF THE GAMEMODE IS HEIST!)","Shuttle editing",V.docking_ports)
+						if(istype(D)) V.dock_home = D
 					if("Escape shuttle home")
 						var/datum/shuttle/escape/E = S
 						if(!E) return
 
-						E.dock_station = select_port_from_list(usr,"Select a new HOME location for the emergency shuttle","Shuttle editing",E.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new HOME location for the emergency shuttle","Shuttle editing",E.docking_ports)
+						if(istype(D)) E.dock_station = D
 					if("Escape shuttle centcom")
 						var/datum/shuttle/escape/E = S
 						if(!E) return
 
-						E.dock_centcom = select_port_from_list(usr,"Select a new CENTCOM location for the emergency shuttle","Shuttle editing",E.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new CENTCOM location for the emergency shuttle","Shuttle editing",E.docking_ports)
+						if(istype(D)) E.dock_centcom = D
 					if("Taxi medbay silicon")
 						var/datum/shuttle/taxi/T = S
 						if(!T) return
 
-						T.dock_medical_silicon = select_port_from_list(usr,"Select a new MEDBAY AND SILICON location for the [S.name]","Shuttle editing",T.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new MEDBAY AND SILICON location for the [S.name]","Shuttle editing",T.docking_ports)
+						if(istype(D)) T.dock_medical_silicon = D
 					if("Taxi engineering cargo")
 						var/datum/shuttle/taxi/T = S
 						if(!T) return
 
-						T.dock_engineering_cargo = select_port_from_list(usr,"Select a new ENGINEERING AND CARGO location for the [S.name]","Shuttle editing",T.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new ENGINEERING AND CARGO location for the [S.name]","Shuttle editing",T.docking_ports)
+						if(istype(D)) T.dock_engineering_cargo = D
 					if("Taxi security science")
 						var/datum/shuttle/taxi/T = S
 						if(!T) return
 
-						T.dock_security_science = select_port_from_list(usr,"Select a new SECURITY AND SCIENCE location for the [S.name]","Shuttle editing",T.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new SECURITY AND SCIENCE location for the [S.name]","Shuttle editing",T.docking_ports)
+						if(istype(D)) T.dock_securi
 					if("Taxi abandoned station")
 						var/datum/shuttle/taxi/T = S
 						if(!T) return
 
-						T.dock_abandoned = select_port_from_list(usr,"Select a new ABANDONED STATION location for the taxi [S.name]","Shuttle editing",T.docking_ports)
+						var/obj/structure/docking_port/destination/D = select_port_from_list(usr,"Select a new ABANDONED STATION location for the [S.name]","Shuttle editing",T.docking_ports)
+						if(istype(D)) T.dock_abandoned = D
 				message_admins("<span class='notice'>[key_name_admin(usr)] has changed [capitalize(S.name)]'s [choice2] defined location!</span>", 1)
-				log_admin("[key_name_admin(usr)] has changed [capitalize(S.name)]'s [choice2] defined location!")
+				log_admin("[key_name_admin(usr)] has changed [capitalize(S.name)]'s [choice2] defined location!")*/
 
 
 		message_admins("<span class='notice'>[key_name_admin(usr)] has set [capitalize(S.name)]'s [choice] to [new_value]!</span>", 1)

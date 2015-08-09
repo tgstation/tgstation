@@ -14,6 +14,7 @@ var/global/datum/shuttle/salvage/salvage_shuttle = new(starting_area=/area/shutt
 	can_link_to_computer = LINK_PASSWORD_ONLY
 
 	stable = 1 //Don't stun everyone and don't throw anything when moving
+	can_rotate = 0 //Sleepers, body scanners and multi-tile airlocks aren't rotated properly
 
 	req_access = list(access_salvage_captain)
 

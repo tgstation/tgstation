@@ -122,15 +122,10 @@ move an amendment</a> to the drawing.</p>
 	if(length(str) > 50)
 		usr << "<span class='warning'>Name too long.</span>"
 		return
-	var/area/newarea = new
+	var/area/station/custom/newarea = new
 	var/area/oldarea = get_area(usr)
 	newarea.name = str
 	newarea.tag = "[newarea.type]/[md5(str)]"
-	newarea.power_equip = 0
-	newarea.power_light = 0
-	newarea.power_environ = 0
-	newarea.always_unpowered = 0
-	newarea.lighting_use_dynamic = 1
 	newarea.contents.Add(turfs)
 	for(var/turf/T in turfs)
 		T.change_area(oldarea,newarea)

@@ -14,6 +14,7 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 	pre_flight_delay = 30
 
 	stable = 1 //Don't stun everyone and don't throw anything when moving
+	can_rotate = 0 //Sleepers, body scanners and multi-tile airlocks aren't rotated properly
 
 	var/returned_home = 0
 	var/obj/structure/docking_port/destination/dock_home
