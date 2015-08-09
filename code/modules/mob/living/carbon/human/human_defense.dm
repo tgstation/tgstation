@@ -455,7 +455,7 @@ emp_act
 		..()
 
 /mob/living/carbon/human/hitby(atom/movable/AM)
-	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+	if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(can_embed(I))
