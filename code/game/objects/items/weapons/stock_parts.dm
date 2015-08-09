@@ -78,7 +78,7 @@
 /obj/item/weapon/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
-	icon_state = "scan_module"
+	icon_state = "adv_scan_module"
 	origin_tech = "magnets=3"
 	rating = 2
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
@@ -120,6 +120,7 @@
 /obj/item/weapon/stock_parts/scanning_module/phasic
 	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
+	icon_state = "super_scan_module"
 	origin_tech = "magnets=5"
 	rating = 3
 	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
