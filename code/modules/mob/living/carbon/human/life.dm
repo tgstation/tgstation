@@ -141,6 +141,7 @@ var/global/list/organ_damage_overlays = list(
 	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
 	if(in_stasis) loc:used++
 
+	var/is_jittery = jitteriness
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !in_stasis)
 		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
@@ -1133,7 +1134,6 @@ var/global/list/organ_damage_overlays = list(
 
 	confused = max(0, confused - 1)
 	// decrement dizziness counter, clamped to 0
-	var/is_jittery = jitteriness
 	if(resting)
 		dizziness = max(0, dizziness - 15)
 		jitteriness = max(0, jitteriness - 15)
