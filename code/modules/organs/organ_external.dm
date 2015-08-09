@@ -755,6 +755,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 				T.status &= ~ORGAN_ROBOT
 				T.wounds.len = 0
 
+/datum/organ/external/proc/fleshify()
+	src.status &= ~ORGAN_BROKEN
+	src.status &= ~ORGAN_BLEEDING
+	src.status &= ~ORGAN_SPLINTED
+	src.status &= ~ORGAN_CUT_AWAY
+	src.status &= ~ORGAN_ATTACHABLE
+	src.status &= ~ORGAN_DESTROYED
+	src.status &= ~ORGAN_PEG
+	src.status &= ~ORGAN_ROBOT
+	src.destspawn = 0
+
 /datum/organ/external/proc/mutate()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/mutate() called tick#: [world.time]")
 	src.status |= ORGAN_MUTATED
@@ -1109,6 +1120,7 @@ obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 	var/datum/organ/internal/organ_data
 	var/datum/dna/owner_dna
+	var/part = "organ"
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
@@ -1154,27 +1166,35 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
+	part = "l_arm"
 obj/item/weapon/organ/l_foot
 	name = "left foot"
 	icon_state = "l_foot"
+	part = "l_foot"
 obj/item/weapon/organ/l_hand
 	name = "left hand"
 	icon_state = "l_hand"
+	part = "l_hand"
 obj/item/weapon/organ/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
+	part = "l_leg"
 obj/item/weapon/organ/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
+	part = "r_arm"
 obj/item/weapon/organ/r_foot
 	name = "right foot"
 	icon_state = "r_foot"
+	part = "r_foot"
 obj/item/weapon/organ/r_hand
 	name = "right hand"
 	icon_state = "r_hand"
+	part = "r_hand"
 obj/item/weapon/organ/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
+	part = "r_leg"
 
 obj/item/weapon/organ/head
 	dir = NORTH
