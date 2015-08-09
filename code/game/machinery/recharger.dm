@@ -100,7 +100,7 @@ obj/machinery/recharger/process()
 		else if(istype(charging, /obj/item/energy_magazine))//pulse bullet casings
 			var/obj/item/energy_magazine/M = charging
 			if(M.bullets < M.max_bullets)
-				M.bullets = min(initial(M.bullets),M.bullets+3)
+				M.bullets = min(M.max_bullets,M.bullets+3)
 				icon_state = "recharger1"
 				use_power(250)
 			else
