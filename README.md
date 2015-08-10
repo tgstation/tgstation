@@ -73,8 +73,8 @@ and the server should start up and be ready to join.
 
 ###HOSTING ON LINUX
 We use BYGEX for some of our text replacement related code. Unfortunately, we
-only have a windows dll included right now. If you're up to it, you can head
-over to https://code.google.com/p/byond-regex/ and compile it for linux.
+only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
+https://github.com/optimumtact/byond-regex
 
 Otherwise, edit the file `code/_compile_options.dm`, and comment out:
 `#define USE_BYGEX`
