@@ -319,8 +319,9 @@
 	MASK = null
 
 /obj/machinery/suit_storage_unit/proc/eject_storage()
-	eject(STORAGE)
-	STORAGE = null
+	if(STORAGE)
+		eject(STORAGE)
+		STORAGE = null
 
 /obj/machinery/suit_storage_unit/proc/eject(atom/movable/ITEM)
 	ITEM.loc = src.loc
