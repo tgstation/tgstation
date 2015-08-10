@@ -160,6 +160,21 @@
 		return 1
 	return ..()
 
+/obj/item/weapon/storage/pill_bottle/verb/change()
+	var/obj/item/weapon/storage/pill_bottle/A
+	set name = "Change Colour"
+	set category = "Object"
+	set src in usr
+	var/list/colour_choices = list("blue","darkblue","green","orange","purple","red","default")
+	A = input("Select Colour to change it to", "Pill Bottle Colour", A) in colour_choices
+	if(!A)
+		return
+	if(A != "default")
+		icon_state = "pill-[A]"
+	else
+		icon_state = "pill_canister"
+
+
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
 	desc = "Contains pills used to treat burns."

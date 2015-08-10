@@ -1,0 +1,5 @@
+author: DrCelt
+delete-after: True
+  - rscadd: Added a system of changing the colour of pill bottles to easily manage chemistry
+  -imageadd: Added new sprites for these pill bottles
+  -imageadd: Changed the sprites for potatoes to be more realistic
