@@ -46,7 +46,7 @@
 		user.drop_item(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>Now disassembling bookcase</span>"
+		user << "<span class='notice'>Now disassembling [src]</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, src,50))
 			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 5)

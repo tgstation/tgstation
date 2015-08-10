@@ -25,13 +25,13 @@
 author: Zth
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
-#delete-after: True
+delete-after: True
 
 # Any changes you've made.  See valid prefix list above.
 # INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - tweak: Bookcase can now be wrenched/unwrenched.
+  - tweak: Bookcases can now be wrenched/unwrenched.
   - tweak: Bookcases are now disassembled with a screwdriver.
   - bugfix: Bookcases now drop a stack of wood instead of 5 planks.
