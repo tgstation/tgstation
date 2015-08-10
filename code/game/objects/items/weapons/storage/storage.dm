@@ -454,6 +454,9 @@
 
 
 /obj/item/weapon/storage/Destroy()
+	for(var/obj/O in contents)
+		O.mouse_opacity = initial(O.mouse_opacity)
+
 	close_all()
 	qdel(boxes)
 	qdel(closer)
