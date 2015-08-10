@@ -45,18 +45,18 @@
 	else if(istype(O, /obj/item/weapon/storage/bible))
 		user.drop_item(O, src)
 		update_icon()
-	else if(istype(O, /obj/item/weapon/wrench))
-		user << "<span class='notice'> Now disassembling bookcase</span>"
+	else if(istype(O, /obj/item/weapon/screwdriver))
+		user << "<span class='notice'>Now disassembling bookcase</span>"
 		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, src,50))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
+			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 5)
 			density = 0
 			qdel(src)
 		return
+	else if(istype(O, /obj/item/weapon/wrench))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user << (anchored ? "<span class='notice'>You unfasten the [src] from the floor.</span>" : "<span class='notice'>You secure the [src] to the floor.</span>")
+		anchored = !anchored
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
 		if(!newname)
@@ -72,9 +72,7 @@
 			else
 		if (src.health <= 0)
 			visible_message("<span class=warning>The bookcase is smashed apart!</span>")
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
+			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 3)
 			qdel(src)
 		..()
 
