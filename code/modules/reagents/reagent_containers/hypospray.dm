@@ -92,9 +92,9 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = "autoinjector1"
 	else
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "autoinjector0"
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/examine(mob/user)
 	..()
