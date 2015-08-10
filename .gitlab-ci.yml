@@ -1,4 +1,5 @@
 before_script:
+  - $wololo
   - BYOND_MAJOR="508"
   - BYOND_MINOR="1293"
   - apt-get update
