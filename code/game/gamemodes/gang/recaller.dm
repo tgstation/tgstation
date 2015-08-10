@@ -113,9 +113,9 @@
 
 			dat += "(20 Influence) "
 			if(points >= 20)
-				dat += "<a href='?src=\ref[src];purchase=wrestlingbelt'>Wrestling Belt</a><br>"
+				dat += "<a href='?src=\ref[src];purchase=carphidevest'>Carphide Vest</a><br>"
 			else
-				dat += "Wrestling Belt<br>"
+				dat += "Carphide Vest<br>"
 
 			dat += "(30 Influence) "
 			if(points >= 30)
@@ -228,16 +228,20 @@
 			if("scroll")
 				if(gang.points >= 30)
 					item_type = /obj/item/weapon/sleeping_carp_scroll
-					usr << "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
+					usr << "<span class='notice'>Anyone who reads the <b>Sleeping Carp scroll</b> will learn secrets of the Sleeping Carp's ancient pugilism techniques, learning powerful martial arts. \
+					The reader will also have the ability to recall these combos at any time.</span>"
 					pointcost = 30
-			if("wrestlingbelt")
+			if("carphidevest")
 				if(gang.points >= 20)
-					item_type = /obj/item/weapon/storage/belt/champion/wrestling
-					usr << "<span class='notice'>Anyone wearing the <b>wresting belt</b> will know how to be effective with wrestling.</span>"
+					item_type = /obj/item/clothing/suit/sleeping_carp
+					usr << "<span class='notice'>The <b>carphide vest</b> can only be worn by Sleeping Carp members. It is excellent at absorbing ballistics, electrodes, and blunt weaponry, but it is not \
+					effective against lasers. Note that this item is suspicious and a dead giveaway to your status as one of the Sleeping Carp!</span>"
 					pointcost = 20
 			if("bostaff")
 				if(gang.points >= 10)
 					item_type = /obj/item/weapon/twohanded/bostaff
+					usr << "<span class='notice'>The <b>bo staff</b> is a light, two-handed melee weapon. While very effective in traditional combat, it can also be used in disarm intent to weaken your \
+					opponent, eventually knocking them out nonlethally.</span>"
 					pointcost = 10
 			if("C4")
 				if(gang.points >= 10)

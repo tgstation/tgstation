@@ -330,7 +330,7 @@
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
-						  "<span class'userdanger'>[A] winds you with a knee in the stomach!</span>")
+						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
 		D.Stun(1)
@@ -352,8 +352,8 @@
 	if(D.weakened || D.resting || D.stat)
 		D.visible_message("<span class='warning'>[A] elbow drops [D]!</span>", \
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
-		if(D.stat)
-			D.death() //FINISH HIM!
+		if(D.stat) D.death() //FINISH HIM!
+		else D.emote("scream")
 		D.apply_damage(50, BRUTE, "chest")
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 100, 1, -1)
 		return 1
@@ -364,9 +364,6 @@
 	if(check_streak(A,D))
 		return 1
 	..()
-	var/obj/item/weapon/grab/G = A.get_active_hand()
-	if(G)
-		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H")
@@ -374,7 +371,7 @@
 		return 1
 	D.visible_message("<span class='danger'>[A] [pick("punches", "kicks", "chops", "hits", "slams")] [D]!</span>", \
 					  "<span class='userdanger'>[A] hits you!</span>")
-	D.apply_damage(10, BRUTE)
+	D.apply_damage(rand(10,15), BRUTE)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 	return 1
 
@@ -483,7 +480,7 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-	w_class = 4
+	w_class = 3 //Was bulky, changed for balance
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 24
@@ -554,3 +551,47 @@
 		return 1
 	else
 		return 0
+
+/obj/item/clothing/suit/sleeping_carp
+	name = "carphide vest"
+	desc = "A strange armor vest formed of toughened space carp hide. Excellent at deflecting ballistics and electrodes. <span class='warning'>The collar is lined with a circlet of razor-sharp teeth.</span>"
+	icon_state = "carpvest"
+	item_state = "armor"
+	armor = list(melee = 60, bullet = 80, laser = 25, energy = 100, bomb = 5, bio = 0, rad = 0) //High blunt trauma protection and complete stun protection
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS //Protects the full body except for the head
+	flags = THICKMATERIAL|STOPSPRESSUREDMAGE
+	cold_protection = CHEST|GROIN //Made of carp hide, so it's somewhat spaceworthy although it doesn't protect limbs
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	siemens_coefficient = 1
+
+/obj/item/clothing/suit/sleeping_carp/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/clothing/suit/sleeping_carp/Destroy()
+	SSobj.processing &= src
+	..()
+
+/obj/item/clothing/suit/sleeping_carp/process()
+	if(!ishuman(src.loc)) return
+	var/mob/living/carbon/human/H = src.loc
+	if(src.loc == H && H.get_item_by_slot(slot_wear_suit) == src)
+		if(H.mind in ticker.mode.get_all_gangsters())
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.name == "Sleeping Carp" && ((H.mind in G.bosses) || (H.mind in G.gangsters)))
+					return
+		playsound(H, 'sound/weapons/bite.ogg', 50, 1)
+		H.apply_damage(10,BRUTE,"head")
+
+/obj/item/clothing/suit/sleeping_carp/equipped(mob/user, slot)
+	add_fingerprint(user)
+	if(!ishuman(user))
+		user << "<span class='warning'>You can't get [src] to fit!</span>"
+		return
+	if(slot && slot == slot_wear_suit)
+		if(user.mind in ticker.mode.get_all_gangsters())
+			for(var/datum/gang/G in ticker.mode.gangs)
+				if(G.name == "Sleeping Carp" && ((user.mind in G.bosses) || (user.mind in G.gangsters)))
+					return ..()
+		user << "<span class='boldannounce'><b>As you put on [src], the teeth in the collar begin to rip and tear at your neck. You need to get this thing off!</b></span>"
+		return ..()
