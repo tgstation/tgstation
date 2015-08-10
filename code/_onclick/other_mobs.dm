@@ -168,3 +168,19 @@
 */
 /mob/new_player/ClickOn()
 	return
+
+/*
+	Constructs
+*/
+
+/mob/living/simple_animal/construct/UnarmedAttack(atom/A)
+	if(ismob(A))
+		delayNextAttack(10)
+	if(!A.attack_construct(src))//does attack_construct do something to that atom? if no, just do attack_animal
+		A.attack_animal(src)
+
+/mob/living/simple_animal/construct/RangedAttack(atom/A)
+	A.attack_construct(src)
+
+/atom/proc/attack_construct(mob/user as mob,var/dist = null)
+	return 0

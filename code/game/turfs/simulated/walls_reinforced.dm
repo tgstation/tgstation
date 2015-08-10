@@ -16,6 +16,7 @@
 	hardness = 90
 
 	explosion_block = 2
+	girder_type = /obj/structure/girder/reinforced
 
 	var/d_state = WALLCOMPLETED
 
@@ -369,10 +370,27 @@
 		return attack_hand(user)
 	return
 
+/turf/simulated/wall/r_wall/attack_construct(mob/user as mob)
+	return 0
+
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/r_wall/dismantle_wall(devastated = 0, explode = 0)
+	if(!devastated)
+		getFromPool(/obj/item/stack/sheet/plasteel, src)//Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods
+	else
+		getFromPool(/obj/item/stack/rods, src, 2)
+		getFromPool(/obj/item/stack/sheet/plasteel, src)
+
+	for(var/obj/O in src.contents) //Eject contents!
+		if(istype(O,/obj/structure/sign/poster))
+			var/obj/structure/sign/poster/P = O
+			P.roll_and_drop(src)
+
+	ChangeTurf(dismantle_type)
 
 /turf/simulated/wall/r_wall/ex_act(severity)
 	if(rotting)

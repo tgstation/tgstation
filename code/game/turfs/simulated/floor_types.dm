@@ -145,6 +145,9 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/cult/attack_construct(mob/user as mob)
+	return 0
+
 /turf/simulated/floor/engine/cult/cultify()
 	return
 
@@ -370,7 +373,6 @@
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding get updated properly
-
 /turf/simulated/floor/carpet/cultify()
 	return
 

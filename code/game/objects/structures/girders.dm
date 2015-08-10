@@ -359,6 +359,17 @@
 			return
 	return
 
+/obj/structure/girder/attack_animal(var/mob/living/simple_animal/M)
+	M.delayNextAttack(8)
+	if(M.environment_smash >= 2)
+		var/turf/T = get_turf(src)
+		if(state >= 1)
+			getFromPool(/obj/item/stack/rods, T)
+		getFromPool(/obj/item/stack/sheet/metal, T)
+		M.visible_message("<span class='danger'>[M] smashes through \the [src].</span>", \
+		"<span class='attack'>You smash through \the [src].</span>")
+		qdel(src)
+
 /obj/structure/cultgirder
 	name = "cult girder"
 	icon = 'icons/obj/cult.dmi'
@@ -391,7 +402,7 @@
 			new /obj/effect/decal/remains/human(loc)
 			del(src)
 
-/obj/structure/cultgirder/attack_animal(mob/user as mob)
+/obj/structure/cultgirder/attack_construct(mob/user as mob)
 	if(istype(user, /mob/living/simple_animal/construct/builder))
 		user << "You start repairing the girder."
 		if(do_after(user,src,30))
@@ -400,6 +411,16 @@
 			if(!istype(Tsrc)) return 0
 			Tsrc.ChangeTurf(/turf/simulated/wall/cult)
 			qdel(src)
+		return 1
+	return 0
+
+/obj/structure/cultgirder/attack_animal(var/mob/living/simple_animal/M)
+	M.delayNextAttack(8)
+	if(M.environment_smash >= 2)
+		new /obj/effect/decal/remains/human(get_turf(src))
+		M.visible_message("<span class='danger'>[M] smashes through \the [src].</span>", \
+		"<span class='attack'>You smash through \the [src].</span>")
+		qdel(src)
 
 /obj/structure/cultgirder/blob_act()
 	if(prob(40))

@@ -16,6 +16,9 @@
 	var/engraving, engraving_quality //engraving on the wall
 	var/del_suppress_resmoothing = 0 // Do not resmooth neighbors on Destroy. (smoothwall.dm)
 
+	var/dismantle_type = /turf/simulated/floor/plating
+	var/girder_type = /obj/structure/girder
+
 	canSmoothWith = "/turf/simulated/wall=0&/obj/structure/falsewall=0&/obj/structure/rfalsewall=0"
 
 	soot_type = null
@@ -32,54 +35,26 @@
 		user << src.engraving
 
 /turf/simulated/wall/dismantle_wall(devastated = 0, explode = 0)
-	var/cultwall = 0
-	if(istype(src, /turf/simulated/wall/cult))
-		cultwall = 1
-
-
-	if(istype(src, /turf/simulated/wall/r_wall)) //Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods
-		if(!devastated)
-			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
-			new /obj/structure/girder/reinforced(src)
-		else
-			getFromPool(/obj/item/stack/rods, get_turf(src), 2)
-			getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src))
-	else if(cultwall)
-		if(!devastated)
-			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
-			B.New(src)
-			new /obj/structure/cultgirder(src)
-		else
-			var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
-			B.New(src)
-			new /obj/effect/decal/remains/human(src)
-
+	if(mineral == "metal")
+		getFromPool(/obj/item/stack/sheet/metal, src, 2)
+	else if(mineral == "wood")
+		getFromPool(/obj/item/stack/sheet/wood, src, 2)
 	else
-		if(mineral == "metal")
-			getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 2)
-		else if(mineral == "wood")
-			getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 2)
-		else
-			var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			if(M)
-				getFromPool(M, get_turf(src), 2)
+		var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+		if(M)
+			getFromPool(M, src, 2)
 
-		if(devastated)
-			getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
-		else
-			new /obj/structure/girder(src)
+	if(devastated)
+		getFromPool(/obj/item/stack/sheet/metal, src)
+	else
+		new girder_type(src)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
-		else
-			O.loc = src
 
-	if(cultwall)
-		ChangeTurf(/turf/simulated/floor/engine/cult)
-	else
-		ChangeTurf(/turf/simulated/floor/plating)
+	ChangeTurf(dismantle_type)
 
 /turf/simulated/wall/ex_act(severity)
 	if(rotting)
@@ -357,6 +332,15 @@
 	ChangeTurf(/turf/simulated/wall/cult)
 	turf_animation('icons/effects/effects.dmi',"cultwall", 0, 0, MOB_LAYER-1)
 	return
+
+/turf/simulated/wall/attack_construct(mob/user as mob)
+	if(istype(user,/mob/living/simple_animal/construct/builder) && (get_dist(src,user) <= 3))
+		var/spell/aoe_turf/conjure/wall/S = locate() in user.spell_list
+		S.perform(user,0,src)
+		var/obj/screen/spell/SS = S.connected_button
+		SS.update_charge(1)
+		return 1
+	return 0
 
 /turf/simulated/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

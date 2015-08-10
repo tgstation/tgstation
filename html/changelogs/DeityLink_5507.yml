@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Artificers can now click on floors and walls up to 3 tiles away to convert them. Allowing them to convert floors with machines on top of them, and convert walls without having to deal with tons of metal sheet byproducts.
+  - tweak: Artificers cannot destroy regular walls anymore, however they can still destroy cult walls.
+  - rscadd: Destroyed/Thermited cult walls leave a cult floor behind (reminder that those are basically reinforced floors, you remove them with a wrench, not with a crowbar).
+  - rscadd: Artificers can now attack a cult girder to repair it.
+  - bugfix: Fixed simple_animals, such as constructs, being unable to attack Window-doors.

@@ -169,13 +169,29 @@
 		user.delayNextAttack(8)
 		src.health = max(0, src.health - 25)
 		playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("<span class='warning'>[user] smashes against the [src.name].</span>", 1)
+		visible_message("<span class='warning'>\The [user] smashes against \the [src.name].</span>", 1)
 		if (src.health <= 0)
 			getFromPool(shard, loc)
 			getFromPool(/obj/item/stack/cable_coil, loc, 2)
 			qdel(src)
 	else
 		return src.attack_hand(user)
+
+
+/obj/machinery/door/window/attack_animal(mob/user as mob)
+	if(src.operating)
+		return
+	var/mob/living/simple_animal/M = user
+	if(M.melee_damage_upper <= 0)
+		return
+	user.delayNextAttack(8)
+	src.health = max(0, src.health - M.melee_damage_upper)
+	playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 75, 1)
+	visible_message("<span class='warning'>\The [M] [M.attacktext] against \the [src.name].</span>", 1)
+	if (src.health <= 0)
+		getFromPool(shard, loc)
+		getFromPool(/obj/item/stack/cable_coil, loc, 2)
+		qdel(src)
 
 
 /obj/machinery/door/window/attack_hand(mob/user as mob)
