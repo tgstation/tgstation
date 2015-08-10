@@ -212,7 +212,7 @@
 				J = "Trial Admin"
 				deity_name = "The Adminbus"
 			if("coding", "coder", "coders")
-				B.name = "Guide to Github"
+				B.name = "Guide to GitLab"
 				J = "Coder"
 				deity_name = "The Coderbus"
 			if("42")
