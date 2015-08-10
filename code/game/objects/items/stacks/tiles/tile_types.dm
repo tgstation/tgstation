@@ -103,6 +103,8 @@
 	turf_type = /turf/simulated/floor/fakespace
 	burn_state = 0 //Burnable
 
+/obj/item/stack/tile/fakespace/loaded
+	amount = 30
 
 //High-traction
 /obj/item/stack/tile/noslip
