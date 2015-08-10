@@ -141,7 +141,6 @@ var/global/list/organ_damage_overlays = list(
 	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
 	if(in_stasis) loc:used++
 
-	var/is_jittery = jitteriness
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !in_stasis)
 		if(air_master.current_cycle%4==2 || failed_last_breath) 	//First, resolve location and get a breath
@@ -1035,6 +1034,8 @@ var/global/list/organ_damage_overlays = list(
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/handle_chemicals_in_body() called tick#: [world.time]")
+	var/jittery_time = jitteriness
+
 	if(reagents)
 
 		var/alien = 0 //Not the best way to handle it, but neater than checking this for every single reagent proc.
@@ -1140,7 +1141,7 @@ var/global/list/organ_damage_overlays = list(
 	else
 		dizziness = max(0, dizziness - 3)
 		jitteriness = max(0, jitteriness - 3)
-	if(is_jittery && !jitteriness)
+	if(jittery_time && !jitteriness)
 		animate(src)
 
 	handle_trace_chems()
