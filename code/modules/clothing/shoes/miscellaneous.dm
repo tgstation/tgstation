@@ -34,14 +34,14 @@
 	return 0
 
 /obj/item/clothing/shoes/syndigaloshes/verb/change()
-	set name = "Change Color"
+	set name = "Change Colour"
 	set category = "Object"
 	set src in usr
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/shoes/syndigaloshes/verb/change()  called tick#: [world.time]")
 
 	var/obj/item/clothing/shoes/A
 	A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
-	if(!A)
+	if(!A ||(usr.stat))
 		return
 
 	desc = null

@@ -167,7 +167,7 @@
 	set src in usr
 	var/list/colour_choices = list("blue","darkblue","green","orange","purple","red","default")
 	A = input("Select Colour to change it to", "Pill Bottle Colour", A) in colour_choices
-	if(!A)
+	if(!A||(usr.stat))
 		return
 	if(A != "default")
 		icon_state = "pill-[A]"
