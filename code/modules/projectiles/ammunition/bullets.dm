@@ -127,6 +127,12 @@
 	projectile_type = "/obj/item/projectile/bullet"
 	w_type = RECYK_METAL
 
+/obj/item/ammo_casing/BMG50
+	desc = "A .50 BMG bullet casing."
+	caliber = ".50BMG"
+	projectile_type = "/obj/item/projectile/bullet/hecate"
+	w_type = RECYK_METAL
+	icon_state = "l-casing"
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/bullet

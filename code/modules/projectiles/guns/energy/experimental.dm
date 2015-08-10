@@ -112,9 +112,9 @@
 
 	if(levelupsound)
 		for(var/mob/M in get_turf(src))
-			M.playsound_local(M, levelupsound, 100, 0)
+			M.playsound_local(M, levelupsound, 100, 0, null, FALLOFF_SOUNDS, 0)
 			spawn(1)
-				M.playsound_local(M, levelupsound, 75, 0)
+				M.playsound_local(M, levelupsound, 75, 0, null, FALLOFF_SOUNDS, 0)
 
 
 /obj/item/weapon/gun/energy/polarstar/proc/set_firesound()
@@ -174,6 +174,7 @@
 	origin_tech = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	recoil = 1
+	slot_flags = null
 	flags = FPRINT | TWOHANDABLE
 	w_class = 5.0//we be fuckin huge maaan
 	fire_delay = 0
@@ -521,6 +522,7 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
 	recoil = 1
 	flags = FPRINT
+	slot_flags = null
 	w_class = 4.0
 	fire_delay = 2
 	caliber = list("nikita" = 1)
@@ -747,49 +749,54 @@
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
 
-/obj/item/weapon/gun/hecate
-	name = "\improper Overwatch Standard Issue Pulse Rifle"
-	desc = "Centuries ago those weapons striked fear in all of humanity when the Combine attacked the Earth. Nowadays these are just the best guns that the Syndicate can provide to its Elite Troops with its tight budget."
+/obj/item/weapon/gun/projectile/hecate
+	name = "\improper PGM Hécate II"
+	desc = "An Anti-Materiel Rifle. You can read \"Fabriqué en Haute-Savoie\" on the receiver. Whatever that means..."
 	icon = 'icons/obj/gun_experimental.dmi'
-	icon_state = "hecateII"
-	item_state = "hecateII"
+	icon_state = "hecate"
+	item_state = null
 	origin_tech = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
-	recoil = 1
-	fire_delay = 0
-	w_class = 3.0
-	fire_sound = 'sound/weapons/osipr_fire.ogg'
+	recoil = 2
+	slot_flags = null
+	fire_delay = 30
+	w_class = 4.0
+	fire_sound = 'sound/weapons/hecate_fire.ogg'
+	caliber = list(".50BMG" = 1)
+	ammo_type = "/obj/item/ammo_casing/BMG50"
+	max_shells = 1
+	load_method = 0
 	var/backup_view = 7
 
-/obj/item/weapon/gun/hecate/update_wield(mob/user)
-	item_state = "minigun[wielded ? 1 : 0]"
+/obj/item/weapon/gun/projectile/hecate/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
+	if(flag)	return //we're placing gun on a table or in backpack
+	if(harm_labeled >= min_harm_label)
+		user << "<span class='warning'>A label sticks the trigger to the trigger guard!</span>" //Such a new feature, the player might not know what's wrong if it doesn't tell them.
+		return
+	if(wielded)
+		Fire(A,user,params, "struggle" = struggle)
+	else
+		user << "<span class='warning'>You must dual-wield \the [src] before you can fire it!</span>"
+
+/obj/item/weapon/gun/projectile/hecate/update_wield(mob/user)
 	if(wielded)
 		slowdown = 10
+		inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_64x64.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_64x64.dmi')
+		if(user && user.client)
+			user.regenerate_icons()
+			var/client/C = user.client
+			backup_view = C.view
+			C.view = C.view * 2
 	else
 		slowdown = 0
+		inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
+		if(user && user.client)
+			user.regenerate_icons()
+			var/client/C = user.client
+			C.view = backup_view
 
-/obj/item/weapon/gun/hecate/process_chambered()
-	if(in_chamber) return 1
-	if(current_shells)
-		current_shells--
-		update_icon()
-		in_chamber = new/obj/item/projectile/bullet/gatling()//We create bullets as we are about to fire them. No other way to remove them from the gatling.
-		new/obj/item/ammo_casing_gatling(get_turf(src))
-		return 1
-	return 0
-
-/obj/item/weapon/gun/hecate/attack_self(mob/user)
+/obj/item/weapon/gun/projectile/hecate/attack_self(mob/user)
 	if(wielded)
 		unwield(user)
 	else
 		wield(user)
-
-/obj/item/weapon/gun/hecate/wield(mob/user)
-	if(user && user.client)
-
-	..()
-
-/obj/item/weapon/gun/hecate/unwield(mob/user)
-	if(user && user.client)
-
-	..()

@@ -79,8 +79,11 @@ var/const/SURROUND_CAP = 7
 #define MIN_SOUND_PRESSURE	2 //2 kPa of pressure required to at least hear sound
 /mob/proc/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, gas_modified)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/playsound_local() called tick#: [world.time]")
-	if(!src.client || ear_deaf > 0)
+	if(!src.client)
 		return
+
+	if(ear_deaf > 0)
+		vol = vol / (1 + ear_deaf)
 
 	if(gas_modified)
 		var/turf/current_turf = get_turf(src)

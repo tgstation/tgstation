@@ -266,6 +266,9 @@ var/list/impact_master = list()
 		for(var/mob/M in A)
 			M.bullet_act(src, def_zone)
 
+	if(!A)
+		return 1
+
 	//the bullets first checks if it can bounce off the obstacle, and if it cannot it then checks if it can phase through it, if it cannot either then it dies.
 	var/reaction_type = A.projectile_check()
 	if(bounces && (bounce_type & reaction_type))
@@ -274,7 +277,20 @@ var/list/impact_master = list()
 		return 1
 	else if(phases && (phase_type & reaction_type))
 		src.forceMove(get_step(src.loc,dir))
+		if(linear_movement)
+			update_pixel()
+			pixel_x = PixelX
+			pixel_y = PixelY
 		phases--
+		if(isturf(A))//if the bullet goes through a wall, we leave a nice mark on it
+			damage -= (damage/4)//and diminish the bullet's damage a bit
+			var/turf/T = A
+			var/icon/I = icon(T.icon, T.icon_state)
+			var/icon/trace = icon('icons/effects/96x96.dmi',"trace")
+			trace.Turn(target_angle+45)
+			trace.Crop(33-pixel_x,33-pixel_y,64-pixel_x,64-pixel_y)
+			I.Blend(trace,ICON_MULTIPLY ,1 ,1)
+			T.icon = I
 		return 1
 
 	bullet_die()

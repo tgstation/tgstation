@@ -954,3 +954,42 @@
 	s.start()
 	T.turf_animation('icons/obj/projectiles_impacts.dmi',"dark_explosion",0, 0, 13, 'sound/weapons/osipr_altexplosion.ogg')
 	..()
+
+/obj/item/projectile/bullet/hecate
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "hecate"
+	damage = 101//you're going to crit, lad
+	kill_count = 255//oh boy, we're crossing through the entire Z level!
+	stun = 5
+	weaken = 5
+	stutter = 5
+	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS
+	phases = 2//goes through up to two obstacle. That also means it can potentially hit three mobs at once. dayumm
+	var/superspeed = 1
+
+/obj/item/projectile/bullet/hecate/OnFired()
+	..()
+	for (var/mob/M in player_list)
+		if(M && M.client)
+			var/turf/M_turf = get_turf(M)
+			if(M_turf && (M_turf.z == starting.z))
+				M.playsound_local(starting, 'sound/weapons/hecate_fire_far.ogg', 25, 1)
+	for (var/mob/living/carbon/human/H in range(src,1))
+		if(!H.is_on_ears(/obj/item/clothing/ears/earmuffs))//TODO BEFORE MERGING ON THE MAIN SERVER: replace with H.earprot()
+			H.Weaken(2)
+			H.Stun(2)
+			H.ear_damage += rand(3, 5)
+			H.ear_deaf = max(H.ear_deaf,15)
+			H << "<span class='warning'>Your ears ring!</span>"
+
+
+/obj/item/projectile/bullet/hecate/bresenham_step(var/distA, var/distB, var/dA, var/dB)
+	if(..())
+		if(superspeed)
+			superspeed = 0
+			return 1
+		else
+			superspeed = 1
+			return 0
+	else
+		return 0
