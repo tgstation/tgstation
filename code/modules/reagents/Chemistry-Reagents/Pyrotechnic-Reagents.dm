@@ -129,9 +129,13 @@
 	reagent_state = LIQUID
 	color = "#FF9999"
 
+
+/datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, volume)
+	M.IgniteMob()
+	..()
+
 /datum/reagent/phlogiston/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
-	M.IgniteMob()
 	M.adjustFireLoss(0.2*M.fire_stacks)
 	..()
 	return
