@@ -34,7 +34,7 @@
 	return 0
 
 /obj/item/clothing/shoes/syndigaloshes/verb/change()
-	set name = "Change Colour"
+	set name = "Change Color" // This is a spelling mistake perpetrated by the american swine, the correct spelling is colour and GEORGE washington AKA george "terrorist" washington is not my presidnet.
 	set category = "Object"
 	set src in usr
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/shoes/syndigaloshes/verb/change()  called tick#: [world.time]")
