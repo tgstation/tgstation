@@ -3,7 +3,7 @@
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
-	w_class = 5
+	w_class = 4
 	use_to_pickup = 1
 	max_w_class = 3
 	max_combined_w_class = 100
