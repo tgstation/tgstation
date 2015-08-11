@@ -128,9 +128,10 @@
 	var/image/colour_overlay
 
 /obj/item/weapon/storage/pill_bottle/New()
+	..()
 	colour_overlay = image('icons/obj/chemical.dmi',"bottle_colour")
 	overlays += colour_overlay
-	..()
+
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
@@ -253,6 +254,7 @@
 
 /obj/item/weapon/storage/pill_bottle/dice/New()
 	..()
+	overlays -= colour_overlay
 	colour_overlay = null
 	new /obj/item/weapon/dice/d4( src )
 	new /obj/item/weapon/dice( src )
