@@ -953,6 +953,8 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[R_HAND_LAYER]
 		O.icon = t_inhand_state
 		O.icon_state = t_state
+		O.pixel_x = (t_inhand_state.Width - 32)/2
+		O.pixel_y = (t_inhand_state.Height - 32)/2
 		overlays += O
 		obj_overlays[R_HAND_LAYER] = O
 		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
@@ -973,6 +975,8 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[L_HAND_LAYER]
 		O.icon = t_inhand_state
 		O.icon_state = t_state
+		O.pixel_x = (t_inhand_state.Width - 32)/2
+		O.pixel_y = (t_inhand_state.Height - 32)/2
 		overlays += O
 		obj_overlays[L_HAND_LAYER] = O
 		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")

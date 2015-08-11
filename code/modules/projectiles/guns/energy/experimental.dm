@@ -746,3 +746,50 @@
 	..()
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/gun/hecate
+	name = "\improper Overwatch Standard Issue Pulse Rifle"
+	desc = "Centuries ago those weapons striked fear in all of humanity when the Combine attacked the Earth. Nowadays these are just the best guns that the Syndicate can provide to its Elite Troops with its tight budget."
+	icon = 'icons/obj/gun_experimental.dmi'
+	icon_state = "hecateII"
+	item_state = "hecateII"
+	origin_tech = null
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guns_experimental.dmi', "right_hand" = 'icons/mob/in-hand/right/guns_experimental.dmi')
+	recoil = 1
+	fire_delay = 0
+	w_class = 3.0
+	fire_sound = 'sound/weapons/osipr_fire.ogg'
+	var/backup_view = 7
+
+/obj/item/weapon/gun/hecate/update_wield(mob/user)
+	item_state = "minigun[wielded ? 1 : 0]"
+	if(wielded)
+		slowdown = 10
+	else
+		slowdown = 0
+
+/obj/item/weapon/gun/hecate/process_chambered()
+	if(in_chamber) return 1
+	if(current_shells)
+		current_shells--
+		update_icon()
+		in_chamber = new/obj/item/projectile/bullet/gatling()//We create bullets as we are about to fire them. No other way to remove them from the gatling.
+		new/obj/item/ammo_casing_gatling(get_turf(src))
+		return 1
+	return 0
+
+/obj/item/weapon/gun/hecate/attack_self(mob/user)
+	if(wielded)
+		unwield(user)
+	else
+		wield(user)
+
+/obj/item/weapon/gun/hecate/wield(mob/user)
+	if(user && user.client)
+
+	..()
+
+/obj/item/weapon/gun/hecate/unwield(mob/user)
+	if(user && user.client)
+
+	..()
