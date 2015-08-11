@@ -166,7 +166,7 @@
 	set category = "Object"
 	set src in usr
 	var/list/colour_choices = list("blue","darkblue","green","orange","purple","red","default")
-	A = input("Select Colour to change it to", "Pill Bottle Colour", A) in colour_choices
+	A = input("Select Colour to change it to", "Pill Bottle Colour", A) as null|anything in colour_choices
 	if(!A||(usr.stat))
 		return
 	if(A != "default")

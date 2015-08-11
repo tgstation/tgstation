@@ -40,7 +40,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/item/clothing/shoes/syndigaloshes/verb/change()  called tick#: [world.time]")
 
 	var/obj/item/clothing/shoes/A
-	A = input("Select Colour to change it to", "BOOYEA", A) in clothing_choices
+	A = input("Select Colour to change it to", "BOOYEA", A) as null|anything in clothing_choices
 	if(!A ||(usr.stat))
 		return
 
