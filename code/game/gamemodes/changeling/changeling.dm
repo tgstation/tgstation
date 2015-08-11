@@ -172,7 +172,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		team_objective.owner = changeling
 		changeling.objectives += team_objective
 
-	..(changeling,1)
+		..(changeling,1)
+	else
+		..(changeling,0)
 
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)

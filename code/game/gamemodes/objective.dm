@@ -687,6 +687,8 @@ var/global/list/possible_items_special = list()
 	needed_heads = min(command_positions.len,needed_heads)
 
 	for(var/datum/mind/possible_head in ticker.minds)
+		if(possible_head in ticker.mode.changelings) //Looking at you HoP.
+			continue
 		if(possible_head.assigned_job.title in command_positions)
 			if(needed_heads)
 				head_minds += possible_head
