@@ -33,11 +33,26 @@
 	update_explanation_text()
 	return target
 
-/datum/objective/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
+/datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
 	for(var/datum/mind/possible_target in ticker.minds)
-		if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
-			target = possible_target
-			break
+		if((possible_target != owner) && ishuman(possible_target.current))
+			var/is_role = 0
+			if(role_type)
+				if(possible_target.special_role == role)
+					is_role++
+			else
+				if(possible_target.assigned_role == role)
+					is_role++
+
+			if(invert)
+				if(is_role)
+					continue
+				target = possible_target
+				break
+			else if(is_role)
+				target = possible_target
+				break
+
 	update_explanation_text()
 
 /datum/objective/proc/update_explanation_text()
@@ -50,8 +65,9 @@
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/assassinate/find_target_by_role(role, role_type=0)
-	target_role_type = role_type
+/datum/objective/assassinate/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
 	..(role, role_type)
 	return target
 
@@ -70,13 +86,13 @@
 		explanation_text = "Free Objective"
 
 
-
 /datum/objective/mutiny
 	var/target_role_type=0
 	martyr_compatible = 1
 
-/datum/objective/mutiny/find_target_by_role(role, role_type=0)
-	target_role_type = role_type
+/datum/objective/mutiny/find_target_by_role(role, role_type=0,invert=0)
+	if(!invert)
+		target_role_type = role_type
 	..(role, role_type)
 	return target
 
@@ -104,8 +120,9 @@
 	dangerrating = 5
 	martyr_compatible = 1
 
-/datum/objective/maroon/find_target_by_role(role, role_type=0)
-	target_role_type = role_type
+/datum/objective/maroon/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
 	..(role, role_type)
 	return target
 
@@ -129,8 +146,9 @@
 	var/target_role_type=0
 	dangerrating = 20
 
-/datum/objective/debrain/find_target_by_role(role, role_type=0)
-	target_role_type = role_type
+/datum/objective/debrain/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
 	..(role, role_type)
 	return target
 
@@ -162,8 +180,9 @@
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/protect/find_target_by_role(role, role_type=0)
-	target_role_type = role_type
+/datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
 	..(role, role_type)
 	return target
 
@@ -639,4 +658,85 @@ var/global/list/possible_items_special = list()
 		return 0
 	return 0
 
+
+
+////////////////////////////////
+// Changeling team objectives //
+////////////////////////////////
+
+/datum/objective/changeling_team_objective //Abstract type
+	martyr_compatible = 0	//Suicide is not teamwork!
+	explanation_text = "Changeling Friendship!"
+	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
+
+
+/datum/objective/changeling_team_objective/impersonate_heads
+	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
+	var/list/head_minds = list()
+	var/list/head_real_names = list()
+
+
+/datum/objective/changeling_team_objective/impersonate_heads/New(var/text)
+	..()
+
+	var/needed_heads = 0
+
+	//Heads amount is between min lings and the amount of heads possible
+	var/max_lings = ticker.mode.changelings.len
+	needed_heads = Clamp(needed_heads,min_lings,max_lings)
+	needed_heads = min(command_positions.len,needed_heads)
+
+	for(var/datum/mind/possible_head in ticker.minds)
+		if(possible_head.assigned_job.title in command_positions)
+			if(needed_heads)
+				head_minds += possible_head
+				head_real_names += possible_head.current.real_name
+				needed_heads--
+
+	if(!head_minds.len) //No heads, bail, you saw nothing, you never had a team objective, hahaha!
+		owner.objectives -= src
+		qdel(src)
+		return
+
+	explanation_text = "Ensure changelings impersonate and escape as the following heads of staff: "
+
+	var/first = 1
+	for(var/datum/mind/M in head_minds)
+		var/string = "[M.name] the [M.assigned_role]" //John the Head of Personnel
+		if(!first)
+			string = ", [M.name] the [M.assigned_role]" //Fred the Head of Security
+		else
+			first--
+		explanation_text += string
+
+	explanation_text += ", while the real heads are dead. This is a team objective."
+
+
+/datum/objective/changeling_team_objective/impersonate_heads/check_completion()
+	//Check each head mind to see if any of them made it to centcomm alive, if they did it's an automatic fail
+	for(var/datum/mind/HM in head_minds)
+		if(HM.current)
+			var/turf/hloc = get_turf(HM.current)
+			if(hloc.onCentcom() && (HM.current.stat != DEAD))
+				return 0 //A Non-ling living head-target got to centcom, fail
+
+	//Check each head has been replaced, by cross referencing changeling minds, changeling current dna, the heads minds and their original DNA names
+	var/success = 0
+	changelings:
+		for(var/datum/mind/changeling in ticker.mode.changelings)
+			if(success >= head_minds.len) //We did it, stop here!
+				return 1
+			if(ishuman(changeling.current))
+				var/mob/living/carbon/human/H = changeling.current
+				var/turf/cloc = get_turf(changeling.current)
+				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
+					for(var/name in head_real_names) //Is he (disguised as) a head?
+						if(H.dna && H.dna.real_name == name)
+							head_real_names -= name //This head is accounted for, remove them, so the team don't succeed by escape as 7 John the HoPs
+							success++ //A living changeling head made it to centcomm
+							continue changelings
+
+	if(success >= head_minds.len)
+		return 1
+	return 0
 
