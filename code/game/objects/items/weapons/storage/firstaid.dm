@@ -125,6 +125,12 @@
 	use_to_pickup = 1
 	storage_slots = 14
 	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 60)
+	var/image/colour_overlay
+
+/obj/item/weapon/storage/pill_bottle/New()
+	colour_overlay = image('icons/obj/chemical.dmi',"bottle_colour")
+	overlays += colour_overlay
+	..()
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
@@ -161,18 +167,38 @@
 	return ..()
 
 /obj/item/weapon/storage/pill_bottle/verb/change()
-	var/obj/item/weapon/storage/pill_bottle/A
-	set name = "Change Colour"
+	set name = "Add Coloured Label"
 	set category = "Object"
 	set src in usr
-	var/list/colour_choices = list("blue","darkblue","green","orange","purple","red","default")
-	A = input("Select Colour to change it to", "Pill Bottle Colour", A) as null|anything in colour_choices
-	if(!A||(usr.stat))
+	if(!colour_overlay)
 		return
-	if(A != "default")
-		icon_state = "pill-[A]"
-	else
-		icon_state = "pill_canister"
+	var/bottle_colour
+	var/list/colour_choices = list("Blue","Dark Blue","Green","Orange","Purple","Red","Grey","White")
+	bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as null|anything in colour_choices
+	if(!bottle_colour||(usr.stat))
+		return
+	switch(bottle_colour)
+		if("Blue")
+			bottle_colour = "#0094FF"
+		if("Dark Blue")
+			bottle_colour = "#00137F"
+		if("Green")
+			bottle_colour = "#129E0A"
+		if("Orange")
+			bottle_colour = "#FF6A00"
+		if("Purple")
+			bottle_colour = "#A17FFF"
+		if("Red")
+			bottle_colour = "#BE0000"
+		if("Yellow")
+			bottle_colour = "#FFD800"
+		if("Grey")
+			bottle_colour = "#9F9F9F"
+		if("White")
+			bottle_colour = "#FFFFFF"
+	overlays -= colour_overlay
+	colour_overlay.color = "[bottle_colour]"
+	overlays += colour_overlay
 
 
 /obj/item/weapon/storage/pill_bottle/kelotane
@@ -224,8 +250,10 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
+
 /obj/item/weapon/storage/pill_bottle/dice/New()
 	..()
+	colour_overlay = null
 	new /obj/item/weapon/dice/d4( src )
 	new /obj/item/weapon/dice( src )
 	new /obj/item/weapon/dice/d8( src )
