@@ -127,3 +127,35 @@
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/targeting
+
+//HONKER FUK U PJB
+
+/datum/design/honker_main
+	name = "Circuit Design (\"H.O.N.K\" Central Control module)"
+	desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
+	id = "honker_main"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Mecha Boards"
+	build_path = /obj/item/weapon/circuitboard/mecha/honker/main
+
+/datum/design/honker_peri
+	name = "Circuit Design (\"H.O.N.K\" Peripherals Control module)"
+	desc = "Allows for the construction of a \"H.O.N.K\" Peripheral Control module."
+	id = "honker_peri"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Mecha Boards"
+	build_path = /obj/item/weapon/circuitboard/mecha/honker/peripherals
+
+/datum/design/honker_targ
+	name = "Circuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
+	desc = "Allows for the construction of a \"H.O.N.K\" Weapons & Targeting Control module."
+	id = "honker_targ"
+	req_tech = list("programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Mecha Boards"
+	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
