@@ -134,7 +134,7 @@
 	..()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/M)
-	M.adjust_fire_stacks(2)
+	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg)
 	..()
