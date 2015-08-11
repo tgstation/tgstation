@@ -7,6 +7,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	penetration_dampening = 17
 	var/health = 20
 	var/health_timestamp = 0
 	var/brute_resist = 4

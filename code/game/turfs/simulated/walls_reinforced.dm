@@ -18,6 +18,8 @@
 	explosion_block = 2
 	girder_type = /obj/structure/girder/reinforced
 
+	penetration_dampening = 20
+
 	var/d_state = WALLCOMPLETED
 
 /turf/simulated/wall/r_wall/examine(mob/user)

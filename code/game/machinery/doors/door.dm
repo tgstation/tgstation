@@ -17,6 +17,7 @@ var/list/all_doors = list()
 	opacity = 1
 	density = 1
 	layer = DOOR_LAYER
+	penetration_dampening = 10
 	var/base_layer = DOOR_LAYER
 
 	var/secondsElectrified = 0
@@ -423,3 +424,4 @@ var/list/all_doors = list()
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/morgue.dmi'
 	animation_delay = 15
+	penetration_dampening = 15

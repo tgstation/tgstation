@@ -63,7 +63,8 @@ var/list/impact_master = list()
 	var/bounces = 0	//if set to -1, will always bounce off obstacles
 
 	var/phase_type = null//PHASEHTROUGH_WALLS, PHASEHTROUGH_WINDOWS, PHASEHTROUGH_OBJS, PHASEHTROUGH_MOBS
-	var/phases = 0	//if set to -1, will always phase through obstacles
+	var/penetration = 0	//if set to -1, will always phase through obstacles
+	var/mark_type = "trace"	//what marks will the bullet leave on a wall that it penetrates? from 'icons/effects/96x96.dmi'
 
 	var/step_delay = 0 //how long it goes between moving. You should probably leave this as 0 for a lot of things
 
@@ -275,27 +276,32 @@ var/list/impact_master = list()
 		rebound(A)
 		bounces--
 		return 1
-	else if(phases && (phase_type & reaction_type))
+	else if(penetration && (phase_type & reaction_type))
+		if((penetration > 0) && (penetration < A.penetration_dampening))	//if the obstacle is too resistant, we don't go through it.
+			penetration = 0
+			bullet_die()
+			return 1
+		A.visible_message("<span class='warning'>\The [src] goes right through \the [A]!</span>")
 		src.forceMove(get_step(src.loc,dir))
 		if(linear_movement)
 			update_pixel()
 			pixel_x = PixelX
 			pixel_y = PixelY
-		phases--
-		if(isturf(A))//if the bullet goes through a wall, we leave a nice mark on it
-			damage -= (damage/4)//and diminish the bullet's damage a bit
+		penetration = max(0, penetration - A.penetration_dampening)
+		if(isturf(A))				//if the bullet goes through a wall, we leave a nice mark on it
+			damage -= (damage/4)	//and diminish the bullet's damage a bit
 			var/turf/T = A
+			T.bullet_marks++
 			var/icon/I = icon(T.icon, T.icon_state)
-			var/icon/trace = icon('icons/effects/96x96.dmi',"trace")
-			trace.Turn(target_angle+45)
-			trace.Crop(33-pixel_x,33-pixel_y,64-pixel_x,64-pixel_y)
-			I.Blend(trace,ICON_MULTIPLY ,1 ,1)
+			var/icon/trace = icon('icons/effects/96x96.dmi',mark_type)	//first we take the 96x96 icon with the overlay we want to blend on the wall
+			trace.Turn(target_angle+45)									//then we rotate it so it matches the bullet's angle
+			trace.Crop(33-pixel_x,33-pixel_y,64-pixel_x,64-pixel_y)		//lastly we crop a 32x32 square in the icon whose offset matches the projectile's pixel offset *-1
+			I.Blend(trace,ICON_MULTIPLY ,1 ,1)							//we can now blend our resulting icon on the wall
 			T.icon = I
 		return 1
 
 	bullet_die()
 	return 1
-
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0)) return 1

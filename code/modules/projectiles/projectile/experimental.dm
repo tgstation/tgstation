@@ -945,7 +945,7 @@
 	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
 	bounces = -1
 	phase_type = PROJREACT_OBJS|PROJREACT_MOBS
-	phases = -1
+	penetration = -1
 
 /obj/item/projectile/energy/osipr/Destroy()
 	var/turf/T = loc
@@ -956,6 +956,7 @@
 	..()
 
 /obj/item/projectile/bullet/hecate
+	name = "high penetration bullet"
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "hecate"
 	damage = 101//you're going to crit, lad
@@ -963,8 +964,8 @@
 	stun = 5
 	weaken = 5
 	stutter = 5
-	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS
-	phases = 2//goes through up to two obstacle. That also means it can potentially hit three mobs at once. dayumm
+	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_MOBS|PROJREACT_BLOB
+	penetration = 20//can hit 3 mobs at once, or go through a wall and hit 2 more mobs, or go through an rwall/blast door and hit 1 mob
 	var/superspeed = 1
 
 /obj/item/projectile/bullet/hecate/OnFired()

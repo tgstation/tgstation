@@ -116,6 +116,8 @@ Class Procs:
 
 	w_type = NOT_RECYCLABLE
 
+	penetration_dampening = 5
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1

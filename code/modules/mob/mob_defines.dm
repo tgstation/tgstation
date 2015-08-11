@@ -267,6 +267,8 @@
 
 	var/iscorpse = 0 //Keeps track of whether this was spawned from a landmark or not.
 
+	penetration_dampening = 7
+
 	var/list/languages[0]
 	var/stat_fucked = 0
 	var/event/on_uattack

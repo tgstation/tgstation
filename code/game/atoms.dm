@@ -20,6 +20,7 @@ var/global/list/ghdel_profiling = list()
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 	var/pressure_resistance = ONE_ATMOSPHERE
+	var/penetration_dampening = 5 //drains some of a projectile's penetration power whenever it goes through the atom
 
 	///Chemistry.
 	var/datum/reagents/reagents = null

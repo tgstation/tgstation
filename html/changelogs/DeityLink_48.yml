@@ -1,0 +1,9 @@
+author: Deity Link
+delete-after: true
+changes:
+ - rscadd: Experimental gun 8, the PGM Hecate II. An anti-materiel rifle. Just like the Gatling Gun you have to dual-wield it to fire it. While dual-wielding, your vision is doubled. Can only hold a single bullet, has a 3 seconds cooldown on top of that, but that bullet deals very high damage, enough to bring a naked human to near-crit. On top of that, the projectile can penetrate through obstacles, leaving marks on walls and losing a bit of damage each time. This gun makes a very loud noise that can be heard from anywhere on the Z level, similarly to explosions. People standing near the gun when it fires without any sort of ear protection will suffer ear damage and be briefly stunned.
+ - rscadd: Projectile that can phase through walls lose a bit of damage after every wall crossed. They also leave marks on them.
+ - rscadd: You can remove bullet marks on a wall by using a soldering iron on it.
+ - bugfix: Fixed a bug that caused humans' damage overlays to not update after being hit by a projectile.
+ - bugfix: a bug that caused players wearing earmuffs to have their ear protection toggled at every life procs.
+ - rscadd: Sounds are now muffled instead of being outright blocked by ear deafness. The more deafness, the less you hear them.
