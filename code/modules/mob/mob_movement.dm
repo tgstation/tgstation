@@ -136,12 +136,6 @@
 
 	if(isturf(mob.loc))
 
-
-		var/turf/T = mob.loc
-		move_delay = world.time//set move delay
-
-		move_delay += T.slowdown
-
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
@@ -152,6 +146,13 @@
 					else
 						M.stop_pulling()
 
+		//We are now going to move
+		moving = 1
+		move_delay = 0
+
+		var/turf/T = mob.loc
+		move_delay += T.slowdown
+
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
@@ -159,18 +160,12 @@
 				move_delay += config.run_speed
 			if("walk")
 				move_delay += config.walk_speed
+
 		move_delay += mob.movement_delay()
 
-		if(config.Tickcomp)
-			move_delay -= 1.3
-			var/tickcomp = (1 / (world.tick_lag)) * 1.3
-			move_delay = move_delay + tickcomp
-
-		//We are now going to move
-		moving = 1
-		//Something with pulling things
+		//Something with pulling things //This really needs to be redone by someone, NOT ME THOUGH HA HA!
 		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
+			move_delay = max(move_delay, 7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -200,6 +195,21 @@
 							M.animate_movement = 2
 							return
 
+
+		var/san_tick_lag = round(world.tick_lag, 0.1) //floating point imprecision means 0.9 != 0.9
+		var/rounded = round(move_delay, san_tick_lag) //Round move_delay up to the nearest multiple of tick_lag
+		if(rounded < move_delay)
+			rounded += san_tick_lag
+		move_delay = rounded
+
+		if(move_delay <= 0)
+			glide_size = 0
+		else
+			glide_size = world.icon_size / move_delay * san_tick_lag //assume icons are square
+		mob.glide_size = glide_size
+
+		move_delay += (world.time - 0.01) //Floating point imprecision again
+
 		if(mob.confused && IsEven(world.time))
 			step(mob, pick(cardinal))
 		else
@@ -208,8 +218,6 @@
 		moving = 0
 		if(mob && .)
 			mob.throwing = 0
-
-		return .
 
 
 ///Process_Grab()
