@@ -364,7 +364,8 @@
 	if(T.lighting_lumcount <= 2)
 		owner.alpha -= 25
 	else
-		owner.alpha = round(255 * 0.80)
+		if(!owner.dna.check_mutation("Chameleon"))
+			owner.alpha = round(255 * 0.80)
 
 /datum/mutation/human/stealth/on_losing(mob/living/carbon/human/owner)
 	if(..())
