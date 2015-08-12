@@ -896,7 +896,7 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 
 /datum/reagent/medicine/stablilized_omnizine
 	name = "Stabilized Omnizine"
-	id = "omnizine"
+	id = "stabilized_omnizine"
 	description = "Heals 1 of each damage type a cycle. A safe variation to prevent overdosing."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
