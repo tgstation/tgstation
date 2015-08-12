@@ -277,7 +277,7 @@
 	imp_in.update_canmove()
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
-	imp_in.reagents.add_reagent("omnizine", 10)
+	imp_in.reagents.add_reagent("stabilized_omnizine", 10)
 	imp_in.reagents.add_reagent("stimulants", 10)
 
 
