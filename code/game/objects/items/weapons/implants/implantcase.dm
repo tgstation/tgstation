@@ -83,3 +83,11 @@
 /obj/item/weapon/implantcase/weapons_auth/New()
 	imp = new /obj/item/weapon/implant/weapons_auth(src)
 	..()
+
+/obj/item/weapon/implantcase/adrenaline
+	name = "implant case - 'Adrenaline'"
+	desc = "A glass case containing an adrenaline implant."
+
+/obj/item/weapon/implantcase/adrenaline/New()
+	imp = new /obj/item/weapon/implant/adrenalin(src)
+	..()
