@@ -116,16 +116,10 @@ var/datum/subsystem/vote/SSvote
 					else
 						master_mode = .
 	if(restart)
-		if(!admins.len)
-			return
-		var/total_admins
-		var/afk_admins
+		var/active_admins = 0
 		for(var/client/C in admins)
-			total_admins++
-			if(C.is_afk())
-				afk_admins++
-		var/active_admins
-		active_admins = total_admins - afk_admins
+			if(!C.is_afk())
+				active_admins++
 		if(active_admins <= 0)
 			world.Reboot("Restart vote successful.", "end_error", "restart vote")
 
