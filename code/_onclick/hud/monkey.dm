@@ -12,13 +12,6 @@
 	adding += using
 	action_intent = using
 
-	using = new /obj/screen/mov_intent()
-	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	adding += using
-	move_intent = using
-
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
@@ -95,6 +88,11 @@
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
+	mymob.move_icon = new /obj/screen/mov_intent()
+	mymob.move_icon.icon = ui_style
+	mymob.move_icon.screen_loc = ui_movi
+	mymob.move_icon.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+
 	mymob.internals = new /obj/screen/internals()
 	mymob.internals.screen_loc = ui_internal
 
@@ -149,6 +147,6 @@
 	using.screen_loc = ui_pull_resist
 	adding += using
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.move_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 	mymob.client.screen += mymob.client.void

@@ -54,6 +54,12 @@
 	if(mob)
 		mob.swap_hand()
 
+/client/verb/Toggle_speed()
+	set hidden = 1
+	var/mob/living/carbon/C = usr
+	if(isalien(C) || ismonkey(C) || ishuman(C))
+		C.toggle_move_intent()
+
 /client/verb/attack_self()
 	set hidden = 1
 	if(mob)

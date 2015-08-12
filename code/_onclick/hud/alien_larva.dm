@@ -11,13 +11,6 @@
 	adding += using
 	action_intent = using
 
-	using = new /obj/screen/mov_intent()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	adding += using
-	move_intent = using
-
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen_alien.dmi'
 	mymob.healths.icon_state = "health0"
@@ -26,6 +19,11 @@
 
 	nightvisionicon = new /obj/screen/alien/nightvision()
 	nightvisionicon.screen_loc = ui_alien_nightvision
+
+	mymob.move_icon = new /obj/screen/mov_intent()
+	mymob.move_icon.icon = 'icons/mob/screen_alien.dmi'
+	mymob.move_icon.screen_loc = ui_movi
+	mymob.move_icon.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_alien.dmi'
@@ -53,6 +51,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.zone_sel, mymob.healths, nightvisionicon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.move_icon, mymob.zone_sel, mymob.healths, nightvisionicon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 	mymob.client.screen += mymob.client.void

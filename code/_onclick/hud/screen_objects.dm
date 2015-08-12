@@ -150,14 +150,8 @@
 	icon_state = "running"
 
 /obj/screen/mov_intent/Click()
-	switch(usr.m_intent)
-		if("run")
-			usr.m_intent = "walk"
-			icon_state = "walking"
-		if("walk")
-			usr.m_intent = "run"
-			icon_state = "running"
-	usr.update_icons()
+	var/mob/living/carbon/C = usr
+	C.toggle_move_intent()
 
 /obj/screen/pull
 	name = "stop pulling"

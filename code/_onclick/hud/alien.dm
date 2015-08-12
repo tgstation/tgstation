@@ -85,13 +85,6 @@
 		mymob.leap_icon.screen_loc = ui_alien_storage_r
 		adding += mymob.leap_icon
 
-	using = new /obj/screen/mov_intent()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	adding += using
-	move_intent = using
-
 	using = new /obj/screen/drop()
 	using.icon = 'icons/mob/screen_alien.dmi'
 	using.screen_loc = ui_drop_throw
@@ -105,6 +98,11 @@
 	mymob.throw_icon = new /obj/screen/throw_catch()
 	mymob.throw_icon.icon = 'icons/mob/screen_alien.dmi'
 	mymob.throw_icon.screen_loc = ui_drop_throw
+
+	mymob.move_icon = new /obj/screen/mov_intent()
+	mymob.move_icon.icon = 'icons/mob/screen_alien.dmi'
+	mymob.move_icon.screen_loc = ui_movi
+	mymob.move_icon.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_alien.dmi'
@@ -149,6 +147,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.move_icon, mymob.zone_sel, mymob.healths, nightvisionicon, alien_plasma_display, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
 	mymob.client.screen += mymob.client.void

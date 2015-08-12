@@ -88,6 +88,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tq = drop
 \te = equip
 \tr = throw
+\tv = toggle run/walk
 \tm = me
 \tt = say
 \to = OOC
@@ -126,6 +127,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tPGUP = swap-hand
 \tPGDN = activate held object
 \tEND = throw
+\tPAUSE = toggle run/walk
 </font>"}
 
 	src << hotkey_mode
