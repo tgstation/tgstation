@@ -893,3 +893,19 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustFireLoss(2*REM)
 	..()
 	return
+
+/datum/reagent/medicine/stablilized_omnizine
+	name = "Stabilized Omnizine"
+	id = "omnizine"
+	description = "Heals 1 of each damage type a cycle. A safe variation to prevent overdosing."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/stablilized_omnizine/on_mob_life(mob/living/M)
+	M.adjustToxLoss(-0.5*REM)
+	M.adjustOxyLoss(-0.5*REM)
+	M.adjustBruteLoss(-0.5*REM)
+	M.adjustFireLoss(-0.5*REM)
+	..()
+	return
