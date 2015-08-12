@@ -89,14 +89,13 @@
 		dmm_text += "\n(1,1,[++z_level]) = {\"\n"
 
 		var/z_block = copytext(template_buffer, z_pos, findtext(template_buffer, ".", z_pos))
-
-		for(var/y_pos=1, TRUE, y_pos = findtext(z_block, "; ",y_pos) + 1)
+		for(var/y_pos = 1, TRUE, y_pos = findtext(z_block, ";", y_pos) + 1)
 			if(y_pos >= length(z_block))
 				break
 
 			var/y_block = copytext(z_block, y_pos, findtext(z_block, ";", y_pos))
-			for(var/x_pos = 1, TRUE, x_pos = findtext(y_block, ",", x_pos) + 1)
 
+			for(var/x_pos = 1, TRUE, x_pos = findtext(y_block, ",", x_pos) + 1)
 				if(x_pos >= length(y_block))
 					break
 
@@ -104,6 +103,7 @@
 				var/key_number = text2num(x_block)
 				var/temp_key = keys[key_number]
 				dmm_text += temp_key
+
 				sleep(-1)
 
 			dmm_text += "\n"
