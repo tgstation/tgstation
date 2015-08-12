@@ -34,7 +34,7 @@
 							/obj/item/toy/owl										= 2,
 							/obj/item/toy/griffin									= 2,
 							/obj/item/weapon/coin/antagtoken						= 2,
-							/obj/item/stack/tile/fakespace							= 2,
+							/obj/item/stack/tile/fakespace/loaded					= 2,
 							)
 
 /obj/machinery/computer/arcade/New()
