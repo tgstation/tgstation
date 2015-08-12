@@ -78,3 +78,5 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+
+var/list/prototype_mapping = list()

@@ -415,3 +415,13 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+/datum/design/protochassis
+	name = "Prototype chassis"
+	desc = "Allows for the construction of a Prototype chassis."
+	id = "protochassis"
+	req_tech = list("materials" = 5,"programming" = 5,"engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 3000, MAT_METAL = 5000, MAT_SILVER = 1500, MAT_GOLD = 1500)
+	build_path = /obj/item/protochassis
+	category = list("Electronics")
