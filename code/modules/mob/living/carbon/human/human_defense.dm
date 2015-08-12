@@ -455,9 +455,7 @@ emp_act
 		..()
 
 /mob/living/carbon/human/hitby(atom/movable/AM)
-	var/hitpush = 1
-	var/skipcatch = 0
-	if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(can_embed(I))
@@ -469,6 +467,5 @@ emp_act
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
-					hitpush = 0
-					skipcatch = 1 //can't catch the now embedded item
-	return ..(AM, skipcatch, hitpush)
+					return
+	return ..()
