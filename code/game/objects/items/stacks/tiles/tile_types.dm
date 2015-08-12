@@ -99,11 +99,10 @@
 	singular_name = "astral carpet"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
+	amount = 30
 	turf_type = /turf/simulated/floor/fakespace
 	burn_state = 0 //Burnable
 
-/obj/item/stack/tile/fakespace/loaded
-	amount = 30
 
 //High-traction
 /obj/item/stack/tile/noslip
