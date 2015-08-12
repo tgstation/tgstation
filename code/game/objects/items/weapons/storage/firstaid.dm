@@ -174,7 +174,7 @@
 	if(!colour_overlay)
 		return
 	var/bottle_colour
-	var/list/colour_choices = list("Blue","Dark Blue","Green","Orange","Purple","Red","Grey","White")
+	var/list/colour_choices = list("Blue","Dark Blue","Green","Orange","Purple","Red","Grey","White","Custom")
 	bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as null|anything in colour_choices
 	if(!bottle_colour||(usr.stat))
 		return
@@ -197,6 +197,8 @@
 			bottle_colour = "#9F9F9F"
 		if("White")
 			bottle_colour = "#FFFFFF"
+		if ("Custom")
+			bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as color
 	overlays -= colour_overlay
 	colour_overlay.color = "[bottle_colour]"
 	overlays += colour_overlay
