@@ -4,8 +4,8 @@
 	icon_state = "explosive"
 	origin_tech = "materials=2;combat=3;biotech=4;syndicate=4"
 	var/weak = 2
-	var/medium = 1
-	var/heavy = 0.5
+	var/medium = 0.8
+	var/heavy = 0.4
 	var/delay = 7
 
 /obj/item/weapon/implant/explosive/get_data()

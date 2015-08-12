@@ -3,6 +3,7 @@
 	var/status = 1
 	var/list/steps = list()										//Steps in a surgery
 	var/step_in_progress = 0									//Actively performing a Surgery
+	var/can_cancel = 1											//Can cancel this surgery after step 1 with cautery
 	var/list/species = list(/mob/living/carbon/human)			//Acceptable Species
 	var/location = "chest"										//Surgery location
 	var/requires_organic_bodypart = 1							//Prevents you from performing an operation on robotic limbs
