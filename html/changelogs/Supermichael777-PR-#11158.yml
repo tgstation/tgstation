@@ -1,0 +1,8 @@
+author: Supermichael777
+
+delete-after: True
+
+changes: 
+  - bugfix: "Added an ooc hotkey for borgs = O. They simply didn't have one and it was a consistency issue"
+  - rscadd: "Also added Ctrl+O as an any mode keycombo so you dont have to backspace and type ooc. Added to hotkey mode to remain consistent with all other Ctrl combos"
+  
