@@ -679,12 +679,12 @@ var/global/list/possible_items_special = list()
 /datum/objective/changeling_team_objective/impersonate_heads/New(var/text)
 	..()
 
-	var/needed_heads = 0
+	//Needed heads is between min_lings and the maximum possible amount of command roles
+	//So at the time of writing, rand(3,5), it's also capped by the amount of lings there are
+	//Because you can't fill 5 head roles with 3 lings
 
-	//Heads amount is between min lings and the amount of heads possible
-	var/max_lings = ticker.mode.changelings.len
-	needed_heads = Clamp(needed_heads,min_lings,max_lings)
-	needed_heads = min(command_positions.len,needed_heads)
+	var/needed_heads = rand(min_lings,command_positions.len)
+	needed_heads = min(ticker.mode.changelings.len,needed_heads)
 
 	for(var/datum/mind/possible_head in ticker.minds)
 		if(possible_head in ticker.mode.changelings) //Looking at you HoP.

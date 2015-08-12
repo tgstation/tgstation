@@ -80,7 +80,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/list/team_objectives = typesof(/datum/objective/changeling_team_objective) - /datum/objective/changeling_team_objective
 	var/list/possible_team_objectives = list()
 	for(var/datum/objective/changeling_team_objective/T in team_objectives)
-		if(changelings.len > initial(T.min_lings))
+		if(changelings.len >= initial(T.min_lings))
 			possible_team_objectives += T
 
 	if(possible_team_objectives.len && prob(20*changelings.len))
