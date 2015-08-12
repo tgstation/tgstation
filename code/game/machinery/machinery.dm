@@ -279,7 +279,6 @@ Class Procs:
 		var/re_init=0
 		if("set_tag" in href_list)
 			if(!(href_list["set_tag"] in multitool_var_whitelist))
-				var/current_tag = src.vars[href_list["set_tag"]]
 				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID tag", src) as null|text),1,MAX_MESSAGE_LEN)
 				log_admin("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
 				message_admins("[usr] ([formatPlayerPanel(usr,usr.ckey)]) attempted to modify variable(var = [href_list["set_tag"]], value = [newid]) using multitool - [formatJumpTo(usr)]")
