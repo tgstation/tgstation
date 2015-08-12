@@ -128,15 +128,11 @@
 	if(C.canmove && !C.stat && !C.restrained())
 		if(src.up)
 			src.up = !src.up
-			body_parts_covered |= EYES
-			flags_inv |= HIDEEYES
 			eyeprot = 2
 			icon_state = initial(icon_state)
 			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.body_parts_covered &= ~EYES
-			flags_inv &= ~HIDEEYES
 			eyeprot = 0
 			icon_state = "[initial(icon_state)]up"
 			C << "You push the [src] up out of your face."

@@ -174,8 +174,10 @@ Implant Specifics:<BR>"}
 		message_admins("Explosive implant triggered in [T] ([T.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
 		log_game("Explosive implant triggered in [T] ([T.key]).")
 
-		T.gib()
-	explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
+		if(prob(75))
+			explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
+		else
+			T.gib()
 	var/turf/t = get_turf(imp_in)
 
 	if(t)
