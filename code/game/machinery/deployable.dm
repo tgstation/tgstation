@@ -87,7 +87,7 @@ for reference:
 			if (src.health <= 0)
 				visible_message("<span class='danger'>The barricade is smashed apart!</span>")
 				new /obj/item/stack/sheet/wood(get_turf(src, 5))
-				del(src)
+				qdel(src)
 			..()
 
 	ex_act(severity)
@@ -160,20 +160,12 @@ for reference:
 /obj/machinery/deployable/barrier/emag(mob/user)
 	if (src.emagged == 0)
 		src.emagged = 1
-		src.req_access = null
+		src.req_access = 0
 		user << "You break the ID authentication lock on the [src]."
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
-		visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
-		return
-	else if (src.emagged == 1)
-		src.emagged = 2
-		user << "You short out the anchoring mechanism on the [src]."
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(2, 1, src)
-		s.start()
-		visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
+		desc = "A deployable barrier. Swipe your ID card to lock/unlock it. Seems like it's malfunctioning"
 		return
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -194,21 +186,7 @@ for reference:
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-				visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
 				return
-		return
-	else if (istype(W, /obj/item/weapon/wrench))
-		if (src.health < src.maxhealth)
-			src.health = src.maxhealth
-			src.emagged = 0
-			src.req_access = list(access_security)
-			visible_message("<span class='warning'>[user] repairs the [src]!</span>")
-			return
-		else if (src.emagged > 0)
-			src.emagged = 0
-			src.req_access = list(access_security)
-			visible_message("<span class='warning'>[user] repairs the [src]!</span>")
-			return
 		return
 	else
 		switch(W.damtype)
