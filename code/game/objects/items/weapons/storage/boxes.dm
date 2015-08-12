@@ -119,7 +119,7 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
+	desc = "A biohazard warning is printed on the box."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
@@ -176,7 +176,7 @@
 
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
-	desc = "This box contains injectors it seems."
+	desc = "This box contains injectors, it seems."
 
 /obj/item/weapon/storage/box/injectors/New()
 	..()
@@ -189,7 +189,7 @@
 
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
-	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</B>"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness or deafness with repeated use.</B>"
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/flashbangs/New()
@@ -204,7 +204,7 @@
 
 /obj/item/weapon/storage/box/flashes
 	name = "box of flashbulbs"
-	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
+	desc = "<B>WARNING: Flashes can cause serious eye damage. Protective eyewear is required for use.</B>"
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/flashes/New()
@@ -218,7 +218,7 @@
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
-	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</B>"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause skin irritation and blindness.</B>"
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/teargas/New()
@@ -232,8 +232,8 @@
 	new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 
 /obj/item/weapon/storage/box/emps
-	name = "box of emp grenades"
-	desc = "A box with 5 emp grenades."
+	name = "box of EMP grenades"
+	desc = "A box of five EMP grenades."
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/emps/New()
@@ -246,7 +246,7 @@
 
 /obj/item/weapon/storage/box/trackimp
 	name = "boxed tracking implant kit"
-	desc = "Box full of scum-bag tracking utensils."
+	desc = "Box full of scumbag tracking utensils."
 	icon_state = "implant"
 
 /obj/item/weapon/storage/box/trackimp/New()
@@ -276,7 +276,7 @@
 
 /obj/item/weapon/storage/box/exileimp
 	name = "boxed exile implant kit"
-	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
+	desc = "Box of exile implants. It has a picture of a clown being booted through a Gateway on the front."
 	icon_state = "implant"
 
 /obj/item/weapon/storage/box/exileimp/New()
@@ -331,7 +331,7 @@
 
 /obj/item/weapon/storage/box/cups
 	name = "box of paper cups"
-	desc = "It has pictures of paper cups on the front."
+	desc = "It has a picture of paper cups on the front."
 
 /obj/item/weapon/storage/box/cups/New()
 	..()
@@ -373,7 +373,7 @@
 
 /obj/item/weapon/storage/box/permits
 	name = "box of construction permits"
-	desc = "A box for containing construction permits, used to officially declare built rooms as additions to the station."
+	desc = "A box containing construction permits, used to officially declare newly built rooms as additions to the station."
 	icon_state = "id"
 
 /obj/item/weapon/storage/box/permits/New() //There's only a few, so blueprints are still useful beyond setting every room's name to PRIMARY FART STORAGE
@@ -415,7 +415,7 @@
 
 /obj/item/weapon/storage/box/prisoner
 	name = "box of prisoner IDs"
-	desc = "Take away their last shred of dignity, their name."
+	desc = "Take away their last shred of dignity: their name."
 	icon_state = "id"
 
 /obj/item/weapon/storage/box/prisoner/New()
@@ -529,7 +529,7 @@
 
 /obj/item/weapon/storage/box/pillbottles
 	name = "box of pill bottles"
-	desc = "It has pictures of pill bottles on its front."
+	desc = "It has pictures of pill bottles on the front."
 	icon_state = "pillbox"
 
 /obj/item/weapon/storage/box/pillbottles/New()
@@ -616,7 +616,7 @@
 
 /obj/item/weapon/storage/box/deputy
 	name = "box of deputy armbands"
-	desc = "To be issued to those authorized to act as deputy of security."
+	desc = "To be issued to those authorized to act as deputies of security."
 
 /obj/item/weapon/storage/box/deputy/New()
 	..()
@@ -630,7 +630,7 @@
 
 /obj/item/weapon/storage/box/metalfoam
 	name = "box of metal foam grenades"
-	desc = "To be used to rapidly seal hull breaches"
+	desc = "To be used to rapidly seal hull breaches."
 	icon_state = "flashbang"
 
 /obj/item/weapon/storage/box/metalfoam/New()
@@ -649,13 +649,18 @@
 	desc = "A special box for sensitive people."
 	icon_state = "hugbox"
 	foldable = null
+	var/cooldown = 0
 
 /obj/item/weapon/storage/box/hug/attack_self(mob/user)
-	..()
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
-	user.visible_message("<span class='notice'>[user] hugs the [src].</span>","<span class='notice'>You hug the [src].</span>")
-	return
+	if (cooldown < world.time)
+		cooldown = (world.time + 10) // Sets cooldown at 1 second
+		..()
+		user.changeNext_move(CLICK_CD_MELEE)
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -5)
+		user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
+		return
+	else
+		return
 
 /obj/item/weapon/storage/box/hug/medical/New()
 	..()
