@@ -127,7 +127,9 @@
 	if(exchange_parts(user, O))
 		return
 
-	default_deconstruction_crowbar(O)
+	if(panel_open && istype(O, /obj/item/weapon/crowbar))
+		default_deconstruction_crowbar(O)
+		return
 
 	if(!checkCircumstances(O))
 		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
@@ -138,10 +140,10 @@
 	if (!linked_console)
 		user << "<span class='warning'>The [src] must be linked to an R&D console first!</span>"
 		return
-	if (busy)
-		user << "<span class='warning'>The [src] is busy right now.</span>"
+	if (loaded_item)
+		user << "<span class='warning'>The [src] is already loaded.</span>"
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if (istype(O, /obj/item))
 		if(!O.origin_tech)
 			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
@@ -154,7 +156,6 @@
 			return
 		if(!user.drop_item())
 			return
-		busy = 1
 		loaded_item = O
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
@@ -544,7 +545,6 @@
 
 	spawn(resetTime)
 		icon_state = "h_lathe"
-		busy = 0
 		recentlyExperimented = 0
 
 /obj/machinery/r_n_d/experimentor/Topic(href, href_list)
@@ -562,7 +562,6 @@
 		if(D)
 			linked_console = D
 	else if(scantype == "eject")
-		busy = 0
 		ejectItem()
 	else if(scantype == "refresh")
 		src.updateUsrDialog()
@@ -578,7 +577,7 @@
 		experiment(dotype,process)
 		use_power(750)
 		if(dotype != FAIL)
-			if(process.origin_tech)
+			if(process && process.origin_tech)
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
