@@ -183,6 +183,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
+	storage_slots = 14
 
 /obj/item/weapon/storage/box/syndie_kit/chemical/New()
 	..()
