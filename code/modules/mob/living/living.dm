@@ -1,3 +1,6 @@
+/mob/proc/CheckSlip()
+	return 0
+
 /mob/living/New()
 	. = ..()
 	generate_static_overlay()

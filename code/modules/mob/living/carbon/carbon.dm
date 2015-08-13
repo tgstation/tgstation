@@ -632,3 +632,6 @@
 			if(Adjacent(AM))
 				return 1
 	return 0
+
+/mob/living/carbon/CheckSlip()
+	return !buckled && !lying

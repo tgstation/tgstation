@@ -107,7 +107,7 @@
 		prob_slip = 0 // Changing this to zero to make it line up with the comment, and also, make more sense.
 
 	//Do we have magboots or such on if so no slip
-	if(istype(shoes, /obj/item/clothing/shoes/magboots) && (shoes.flags & NOSLIP))
+	if(CheckSlip() < 0)
 		prob_slip = 0
 
 	//Check hands and mod slip
@@ -139,3 +139,9 @@
 		var/obj/item/weapon/rcl/R = get_active_hand()
 		if(R && istype(R) && R.active)
 			R.trigger(src)
+
+/mob/living/carbon/human/CheckSlip()
+	. = ..()
+	if(. && shoes && shoes.flags & NOSLIP)
+		. = (istype(shoes, /obj/item/clothing/shoes/magboots) ? -1 : 0)
+	return .

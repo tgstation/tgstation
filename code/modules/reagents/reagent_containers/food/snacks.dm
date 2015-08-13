@@ -3366,7 +3366,7 @@
 	if (istype(O, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = O
 
-		if (H.shoes && H.shoes.flags & NOSLIP)
+		if (H.CheckSlip() < 1)
 			return
 
 		H.stop_pulling()

@@ -2113,7 +2113,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
-		if ((istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || M.m_intent == "walk" || M.lying)
+		if ( M.CheckSlip() < 1 || M.m_intent == "walk" || M.lying)
 			return
 
 		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))

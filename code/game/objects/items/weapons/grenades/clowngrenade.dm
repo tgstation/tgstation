@@ -73,9 +73,8 @@
 			M << "<span class='danger'>Something burns your back!</span>"
 			return
 		if(ishuman(M))
-			if(isobj(M:shoes))
-				if(M:shoes.flags&NOSLIP)
-					return
+			if(M.CheckSlip() < 1)
+				return
 			else
 				M << "<span class='warning'>Your feet feel like they're on fire!</span>"
 				M.take_overall_damage(0, max(0, (burned - 2)))

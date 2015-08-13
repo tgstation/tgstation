@@ -73,7 +73,7 @@ mob/living/carbon/human/airflow_stun()
 	if(last_airflow_stun > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_stun_cooldown))	return 0
 	if(buckled || (flags & INVULNERABLE)) return 0
 	if(shoes)
-		if(shoes.flags & NOSLIP) return 0
+		if(CheckSlip() < 1) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		src << "<span class='notice'>You stay upright as the air rushes past you.</span>"
 		return 0
@@ -267,9 +267,8 @@ proc/AirflowSpace(zone/A)
 			if(H.buckled)
 				return
 			if(H.shoes)
-				if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
-					if(H.shoes.flags & NOSLIP)
-						return
+				if(H.CheckSlip() < 0)
+					return
 		src << "<SPAN CLASS='warning'>You are sucked away by airflow!</SPAN>"
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
 	if(airflow_falloff < 1)
@@ -329,9 +328,8 @@ proc/AirflowSpace(zone/A)
 			if(H.buckled)
 				return
 			if(H.shoes)
-				if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
-					if(H.shoes.flags & NOSLIP)
-						return
+				if(H.CheckSlip() < 0)
+					return
 		src << "<SPAN CLASS='warning'>You are pushed away by airflow!</SPAN>"
 		last_airflow = world.time
 	var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.

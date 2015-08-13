@@ -813,7 +813,7 @@ steam.start() -- spawns the effect
 
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP))
+		if (istype(M, /mob/living/carbon/human) && M.CheckSlip() < 1)
 			return
 
 		M.stop_pulling()

@@ -12,7 +12,7 @@
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if(!M.walking()) return
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
+		if (M.CheckSlip() < 1)
 			return
 
 		M.stop_pulling()
@@ -28,7 +28,7 @@
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if(!M.walking()) return
-		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
+		if (M.CheckSlip() < 1)
 			return
 
 		M.stop_pulling()
