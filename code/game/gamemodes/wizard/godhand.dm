@@ -46,7 +46,7 @@
 	var/mob/M = target
 	if(ishuman(M) || ismonkey(M))
 		var/mob/living/carbon/C_target = M
-		var/obj/item/organ/brain/B = C_target.getorgan(/obj/item/organ/brain)
+		var/obj/item/organ/internal/brain/B = C_target.getorgan(/obj/item/organ/internal/brain)
 		if(B)
 			B.loc = get_turf(C_target)
 			B.transfer_identity(C_target)
