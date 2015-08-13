@@ -2,13 +2,13 @@
 	name = "xenomorph removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/xenomorph_removal, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	location = "chest"
-	requires_organic_chest = 1
+	possible_locs = list("chest")
 
 
 
 //remove xeno from premises
 /datum/surgery_step/xenomorph_removal
+	name = "remove foregin body"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/shovel/spade = 65, /obj/item/weapon/cultivator = 50, /obj/item/weapon/crowbar = 35)
 	time = 64
 
@@ -23,7 +23,7 @@
 	return 1
 
 /datum/surgery_step/xenomorph_removal/proc/remove_xeno(mob/user, mob/living/carbon/target)
-	var/obj/item/body_egg/alien_embryo/A = locate() in target.contents
+	var/obj/item/organ/internal/body_egg/alien_embryo/A = target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
 	if(A)
 		user << "<span class='notice'>You found an unknown alien organism in [target]'s chest!</span>"
 		if(A.stage < 4)
@@ -33,12 +33,13 @@
 			if(prob(10))
 				A.AttemptGrow()
 
+		A.Remove(target)
 		A.loc = get_turf(target)
 		return 1
 
 
 /datum/surgery_step/xenomorph_removal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/body_egg/alien_embryo/A = locate() in target.contents
+	var/obj/item/organ/internal/body_egg/alien_embryo/A = target.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
 	if(A)
 		if(prob(50))
 			A.AttemptGrow(0)

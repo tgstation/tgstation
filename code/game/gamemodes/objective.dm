@@ -186,7 +186,7 @@
 
 
 /datum/objective/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone."
+	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
 	dangerrating = 25
 	martyr_compatible = 0 //Technically you won't get both anyway.
 
@@ -462,6 +462,7 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/steal/exchange
 	dangerrating = 10
+	martyr_compatible = 0
 
 /datum/objective/steal/exchange/proc/set_faction(faction,otheragent)
 	target = otheragent

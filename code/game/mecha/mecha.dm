@@ -445,23 +445,17 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle)
-//	src.inertia_dir = null
-	if(istype(obstacle, /obj))
-		var/obj/O = obstacle
-		if(istype(O, /obj/effect/portal)) //derpfix
-			anchored = 0
-			O.Crossed(src)
-			src.anchored = 1
-		else if(!O.anchored)
+/obj/mecha/Bump(var/atom/obstacle, yes)
+	if(yes)
+		if(..()) //mech was thrown
+			return
+		if(istype(obstacle, /obj))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(istype(obstacle, /mob))
 			step(obstacle, dir)
-		else //I have no idea why I disabled this
-			obstacle.Bumped(src)
-	else if(istype(obstacle, /mob))
-		step(obstacle, dir)
-	else
-		obstacle.Bumped(src)
-	return
+
 
 ///////////////////////////////////
 ////////  Internal damage  ////////

@@ -11,7 +11,7 @@ emp_act
 	var/organnum = 0
 
 	if(def_zone)
-		if(isorgan(def_zone))
+		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
 		return checkarmor(affecting, type)
@@ -190,7 +190,6 @@ emp_act
 							apply_effect(20, PARALYZE, armor)
 						if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 							ticker.mode.remove_revolutionary(mind)
-							ticker.mode.remove_gangster(mind)
 					if(bloody)	//Apply blood
 						if(wear_mask)
 							wear_mask.add_blood(src)
@@ -456,7 +455,9 @@ emp_act
 		..()
 
 /mob/living/carbon/human/hitby(atom/movable/AM)
-	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+	var/hitpush = 1
+	var/skipcatch = 0
+	if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(can_embed(I))
@@ -468,5 +469,6 @@ emp_act
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
-					return
-	return ..()
+					hitpush = 0
+					skipcatch = 1 //can't catch the now embedded item
+	return ..(AM, skipcatch, hitpush)

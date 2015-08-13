@@ -1,11 +1,11 @@
 /datum/surgery/plastic_surgery
 	name = "plastic surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/reshape_face, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human)
-	location = "head"
+	possible_locs = list("head")
 
 //reshape_face
 /datum/surgery_step/reshape_face
+	name = "reshape face"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchen/knife = 50, /obj/item/weapon/wirecutters = 35)
 	time = 64
 

@@ -172,7 +172,7 @@
 			if(blocked <= 0)	return 0
 
 			var/obj/item/organ/limb/organ = null
-			if(isorgan(def_zone))
+			if(islimb(def_zone))
 				organ = def_zone
 			else
 				if(!def_zone)	def_zone = ran_zone(def_zone)

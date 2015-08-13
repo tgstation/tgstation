@@ -138,7 +138,7 @@
 		if(DISP_END_TRUNK)
 			return /obj/structure/disposalpipe/trunk
 		if(DISP_END_BIN)
-			return /obj/machinery/disposal
+			return /obj/machinery/disposal/bin
 		if(DISP_END_OUTLET)
 			return /obj/structure/disposaloutlet
 		if(DISP_END_CHUTE)
@@ -240,9 +240,9 @@
 							SortP.updatedir()
 
 					else if(ptype == DISP_END_BIN)
-						var/obj/machinery/disposal/P = new /obj/machinery/disposal(loc,src)
-						P.mode = 0 // start with pump off
-						transfer_fingerprints_to(P)
+						var/obj/machinery/disposal/bin/B = new /obj/machinery/disposal/bin(loc,src)
+						B.mode = 0 // start with pump off
+						transfer_fingerprints_to(B)
 
 					else if(ptype == DISP_END_OUTLET)
 						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(loc,src)

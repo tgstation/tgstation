@@ -264,7 +264,11 @@
 				M_job = "New player"
 
 			else if(isobserver(M))
-				M_job = "Ghost"
+				var/mob/dead/observer/O = M
+				if(O.started_as_observer)//Did they get BTFO or are they just not trying?
+					M_job = "Observer"
+				else
+					M_job = "Ghost"
 
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)

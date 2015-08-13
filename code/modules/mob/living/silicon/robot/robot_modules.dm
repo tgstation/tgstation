@@ -54,8 +54,10 @@
 /obj/item/weapon/robot_module/proc/fix_modules()
 	for(var/obj/item/I in modules)
 		I.flags |= NODROP
+		I.mouse_opacity = 2
 	if(emag)
 		emag.flags |= NODROP
+		emag.mouse_opacity = 2
 
 /obj/item/weapon/robot_module/proc/on_emag()
 	return

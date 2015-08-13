@@ -25,7 +25,7 @@
 		return 0
 	user << "<span class='notice'>We transform our appearance.</span>"
 
-	user.humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSRC), chosen_prof.name)
+	user.humanize((TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPSRC), chosen_prof.name)
 
 	changeling_transform(user, chosen_prof)
 
