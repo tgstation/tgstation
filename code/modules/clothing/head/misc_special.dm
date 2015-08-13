@@ -151,3 +151,25 @@
 	action_button_name = "Toggle Nose Light"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
+
+/obj/item/clothing/head/butt
+	name = "butt"
+	desc = "So many butts, so little time."
+	icon_state = "butt"
+	item_state = "butt"
+	flags = 0
+	force = 4.0
+	w_class = 1.0
+	throwforce = 2
+	throw_speed = 3
+	throw_range = 5
+
+	var/s_tone = 0.0
+	var/created_name = "Buttbot"
+
+/obj/item/clothing/head/tinfoil
+	name = "tinfoil hat"
+	desc = "There's no evidence that the security staff is NOT out to get you."
+	icon_state = "foilhat"
+	item_state = "paper"
+	siemens_coefficient = 2

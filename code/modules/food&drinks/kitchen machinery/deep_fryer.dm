@@ -80,6 +80,7 @@
 	return
 
 /obj/machinery/cooking/deepfryer/proc/check_oil()
+	oil_current_volume = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.id == "cornoil")
 			oil_current_volume = R.volume

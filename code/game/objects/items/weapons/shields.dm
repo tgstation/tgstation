@@ -50,53 +50,6 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
-//////////////////////////////////
-//dakimakuras
-//////////////////////////////////
-
-/obj/item/weapon/shield/riot/daki
-	name = "dakimakura"
-	var/custom_name = null
-	desc = "A large pillow depicting a girl in a compromising position. Featuring as many dimensions as you."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "daki"
-	slot_flags = SLOT_BACK
-	force = 1
-	throwforce = 1
-	throw_speed = 2
-	throw_range = 3
-	w_class = 4
-	materials = list(MAT_METAL=0, MAT_GLASS=0)
-	attack_verb = list("shoved", "bashed")
-	block_chance = 10
-
-/obj/item/weapon/shield/riot/daki/attack_self(mob/living/user)
-	var/body_choice
-	if(!custom_name)
-		body_choice = input("Pick a body.") in list("Naked","Red Dress","Blue Dress","Green Dress")
-		switch(body_choice)
-			if("Naked")
-				icon_state = "daki"
-			if("Red Dress")
-				icon_state = "daki_r"
-			if("Blue Dress")
-				icon_state = "daki_b"
-			if("Green Dress")
-				icon_state = "daki_g"
-
-		custom_name = input("What's her name?") as text
-		name = custom_name + " " + name
-		desc = "A large pillow depicting [custom_name] in a compromising position. Featuring as many dimensions as you."
-	else
-		if(user.a_intent == "help")
-			user.visible_message("<span class='notice'>[user] hugs the [name].</span>")
-		if(user.a_intent == "disarm")
-			user.visible_message("<span class='notice'>[user] kisses the [name].</span>")
-		if(user.a_intent == "grab")
-			user.visible_message("<span class='warning'>[user] gropes the [name]!</span>")
-		if(user.a_intent == "harm")
-			user.visible_message("<span class='danger'>[user] violently humps the [name]!</span>")
-////////////////////////////
 
 /obj/item/weapon/shield/energy/IsShield()
 	return (active)
