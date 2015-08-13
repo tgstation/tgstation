@@ -125,6 +125,13 @@
 	use_to_pickup = 1
 	storage_slots = 14
 	starting_materials = list(MAT_IRON = 10, MAT_GLASS = 60)
+	var/image/colour_overlay
+
+/obj/item/weapon/storage/pill_bottle/New()
+	..()
+	colour_overlay = image('icons/obj/chemical.dmi',"bottle_colour")
+	overlays += colour_overlay
+
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object as obj) //Quick pillbottle fix. -Agouri
 
@@ -159,6 +166,25 @@
 				handle_item_insertion(O, 1)
 		return 1
 	return ..()
+var/global/list/bottle_colour_choices = list("Blue" = "#0094FF","Dark Blue" = "#00137F","Green" = "#129E0A","Orange" = "#FF6A00","Purple" = "A17FFF","Red" = "#BE0000","Yellow" = "#FFD800","Grey" = "#9F9F9F","White" = "#FFFFFF","Custom" = "#FFFFFF",)
+/obj/item/weapon/storage/pill_bottle/verb/change()
+	set name = "Add Coloured Label"
+	set category = "Object"
+	set src in usr
+	if(!colour_overlay)
+		return
+	var/bottle_colour
+	bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as null|anything in bottle_colour_choices
+	if(!bottle_colour||(usr.stat))
+		return
+	if(bottle_colour == "Custom")
+		bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as color
+	else
+		bottle_colour = bottle_colour_choices[bottle_colour]
+	overlays -= colour_overlay
+	colour_overlay.color = "[bottle_colour]"
+	overlays += colour_overlay
+
 
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
@@ -209,8 +235,11 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
+
 /obj/item/weapon/storage/pill_bottle/dice/New()
 	..()
+	overlays -= colour_overlay
+	colour_overlay = null
 	new /obj/item/weapon/dice/d4( src )
 	new /obj/item/weapon/dice( src )
 	new /obj/item/weapon/dice/d8( src )
