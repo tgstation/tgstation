@@ -176,6 +176,7 @@
 		Item.fire_act() //Set them on fire, too
 	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
 	A.desc = "Looks like this used to be a [name] some time ago."
+	SSobj.burning -= src
 	qdel(src)
 
 /obj/proc/extinguish()

@@ -58,6 +58,7 @@
 			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/adrenalin(src)
 			new /obj/item/weapon/implanter/explosive(src)
+			new /obj/item/weapon/implanter/storage(src)
 			return
 
 		if("hacker")
@@ -145,6 +146,15 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/adrenalin(O)
 	O.update_icon()
+	return
+
+
+/obj/item/weapon/storage/box/syndie_kit/imp_storage
+	name = "boxed storage implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
+	..()
+	new /obj/item/weapon/implanter/storage(src)
 	return
 
 

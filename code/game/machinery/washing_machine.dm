@@ -50,6 +50,10 @@
 		WL.amount = HH.amount
 		qdel(HH)
 
+	//Corgi costume says goodbye
+	for(var/obj/item/clothing/suit/hooded/ian_costume/IC in contents)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+		qdel(IC)
 
 	if(crayon)
 		var/wash_color
@@ -199,7 +203,7 @@
 	else if(istype(W,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
-			if(ishuman(G.assailant) && iscorgi(G.affecting))
+			if(iscorgi(G.affecting))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3
