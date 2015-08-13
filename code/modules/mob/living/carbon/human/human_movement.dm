@@ -45,7 +45,7 @@
 	return shoes && shoes.negates_gravity()
 
 /mob/living/carbon/human/Move(NewLoc, direct)
-	..()
+	. =	..()
 	if(dna)
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_move(src, NewLoc)

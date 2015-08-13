@@ -97,7 +97,21 @@
 /obj/structure/shadow_vortex/Crossed(td)
 	..()
 	if(ismob(td))
-		td << "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \
-		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>" //A bit of spooking before they die
+		td << "<span class='userdanger'>You enter the rift. Deafening chimes jingle in your ears. You are swallowed in darkness.</span>"
 	playsound(loc, 'sound/effects/EMPulse.ogg', 25, 1)
 	qdel(td)
+
+
+/obj/item/organ/internal/shadowtumor
+	name = "black tumor"
+	icon_state = "blacktumor"
+	origin_tech = "biotech=4"
+	w_class = 1
+	zone = "head"
+	slot = "brain_tumor"
+
+/obj/item/organ/internal/shadowtumor/on_find(mob/living/finder)
+	finder << "<span class='warning'>You locate a small, pulsing black tumor in [owner]'s head!</span>"
+	owner << "<span class='boldannounce'>A small part of your head pulses with agony as the light impacts it!</span>"
+
+// TODO: replace dethrall surgery with this + organ manipulation, somehow.

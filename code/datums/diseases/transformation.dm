@@ -94,7 +94,7 @@
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
 		ticker.mode.add_monkey(affected_mob.mind)
-		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
@@ -217,7 +217,7 @@
 	stage3	= list("<span class='danger'>Must... eat... chocolate....</span>", "<span class='danger'>YAP</span>")
 	stage4	= list("<span class='danger'>Visions of washing machines assail your mind!</span>")
 	stage5	= list("<span class='danger'>AUUUUUU!!!</span>")
-	new_form = /mob/living/simple_animal/pet/corgi
+	new_form = /mob/living/simple_animal/pet/dog/corgi
 
 /datum/disease/transformation/corgi/stage_act()
 	..()

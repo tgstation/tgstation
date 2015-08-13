@@ -38,7 +38,7 @@
 		else
 			icon_state = "[item_color]soft"
 			user << "<span class='notice'>You flip the hat back in normal position.</span>"
-		usr.update_inv_head(0)	//so our mob-overlays update
+		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	..()

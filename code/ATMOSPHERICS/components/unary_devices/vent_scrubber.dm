@@ -44,10 +44,6 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
-		src.atmosinit()
-		src.initialize()
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	if(radio_controller)
@@ -121,7 +117,7 @@
 		"widenet" = widenet,
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
-		"filter_NODE2o" = scrub_N2O,
+		"filter_n2o" = scrub_N2O,
 		"sigtype" = "status"
 	)
 	if(!initial_loc.air_scrub_names[id_tag])
@@ -138,12 +134,9 @@
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if (frequency)
 		set_frequency(frequency)
+	broadcast_status()
 	check_turfs()
 	..()
-/obj/machinery/atmospherics/components/unary/vent_scrubber/initialize()
-	..()
-	broadcast_status()
-
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()
@@ -265,9 +258,9 @@
 	if("toggle_tox_scrub" in signal.data)
 		scrub_Toxins = !scrub_Toxins
 
-	if("NODE2o_scrub" in signal.data)
+	if("n2o_scrub" in signal.data)
 		scrub_N2O = text2num(signal.data["n2o_scrub"])
-	if("toggle_NODE2o_scrub" in signal.data)
+	if("toggle_n2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
 	if("init" in signal.data)

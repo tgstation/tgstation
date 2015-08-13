@@ -133,9 +133,8 @@
 	desc = "We force ourselves into the body of another form, pushing their consciousness into the form we left behind."
 	helptext = "We will bring all our abilities with us, but we will lose our old form DNA in exchange for the new one. The process will seem suspicious to any observers."
 	chemical_cost = 40
-	dna_cost = 2
+	dna_cost = 1
 	req_human = 1 //Monkeys can't grab
-	genetic_damage = 50
 
 /obj/effect/proc_holder/changeling/swap_form/can_sting(mob/living/carbon/user)
 	if(!..())
@@ -178,7 +177,7 @@
 	user.mind.transfer_to(target)
 	if(ghost && ghost.mind)
 		ghost.mind.transfer_to(user)
-	user.key = ghost.key
+		user.key = ghost.key
 
 	user.Paralyse(2)
 	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"

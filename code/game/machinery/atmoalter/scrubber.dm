@@ -181,6 +181,7 @@ Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\
 
 	var/static/gid = 1
 	var/id = 0
+	var/stationary = 0
 
 /obj/machinery/portable_atmospherics/scrubber/huge/New()
 	..()
@@ -202,6 +203,9 @@ Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\
 
 /obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
+		if(stationary)
+			user << "<span class='warning'>The bolts are too tight for you to unscrew!</span>"
+			return
 		if(on)
 			user << "<span class='warning'>Turn it off first!</span>"
 			return
@@ -210,16 +214,10 @@ Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>"
 
-		return
+	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+		atmosanalyzer_scan(air_contents, user)
 
-	..()
 
 /obj/machinery/portable_atmospherics/scrubber/huge/stationary
 	name = "stationary air scrubber"
-
-/obj/machinery/portable_atmospherics/scrubber/huge/stationary/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		user << "<span class='warning'>The bolts are too tight for you to unscrew!</span>"
-		return
-
-	..()
+	stationary = 0

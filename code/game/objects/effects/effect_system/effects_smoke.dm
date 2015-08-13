@@ -31,7 +31,7 @@
 /obj/effect/effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	lifetime += rand(-1,1)
 
 /obj/effect/effect/smoke/Destroy()
@@ -276,8 +276,9 @@
 	lifetime = 10
 
 /obj/effect/effect/smoke/sleeping/process()
-	for(var/mob/living/carbon/M in range(1,src))
-		smoke_mob(M)
+	if(..())
+		for(var/mob/living/carbon/M in range(1,src))
+			smoke_mob(M)
 
 /obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())

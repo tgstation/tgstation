@@ -21,7 +21,8 @@
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
 		message_admins("WARNING: Maximum number of gangs have been exceeded!")
-		ERROR("WARNING: Maximum number of gangs have been exceeded!")
+		throw EXCEPTION("Maximum number of gangs has been exceeded")
+		return
 	else
 		color = pick(gang_colors_pool)
 		gang_colors_pool -= color
@@ -90,7 +91,7 @@
 			if("Leather Overcoats")
 				outfit_path = /obj/item/clothing/suit/jacket/leather/overcoat
 			if("Military Jackets")
-				outfit_path = /obj/item/clothing/suit/miljacket
+				outfit_path = /obj/item/clothing/suit/jacket/miljacket
 			if("Soviet Uniforms")
 				outfit_path = /obj/item/clothing/under/soviet
 			if("Tactical Turtlenecks")
@@ -131,6 +132,12 @@
 
 	var/added_names = ""
 	var/lost_names = ""
+
+	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
+	var/list/reclaimed_territories = territory_new & territory_lost
+	territory |= reclaimed_territories
+	territory_new -= reclaimed_territories
+	territory_lost -= reclaimed_territories
 
 	//Process lost territories
 	for(var/area in territory_lost)
@@ -177,10 +184,6 @@
 			message += "Gang influence has increased by [points_new - points] for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 		points = points_new
 		message += "Your gang now has <b>[points] influence</b>.<BR>"
-
-
-	//Remove territories they already own from the buffer, so if they got tagged over, they can still earn income if they tag it back before the next status report
-	territory_new -= territory
 
 	//Process new territories
 	for(var/area in territory_new)

@@ -226,7 +226,7 @@ Crematorium Switch
 	layer = 2.9
 	var/obj/structure/bodycontainer/connected = null
 	anchored = 1.0
-	throwpass = 1
+	pass_flags = LETPASSTHROW
 
 /obj/structure/tray/Destroy()
 	if(connected)
@@ -278,3 +278,12 @@ Crematorium Switch
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
 
+/obj/structure/tray/m_tray/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0) return 1
+
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return 1
+	if(locate(/obj/structure/table) in get_turf(mover))
+		return 1
+	else
+		return 0

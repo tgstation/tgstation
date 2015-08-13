@@ -87,16 +87,12 @@
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
-	target = new_target
-	if(target != null)
-		Aggro()
-		stance = HOSTILE_STANCE_ATTACK
+	if(..()) //we have a target
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.bodytemperature > 200)
 				L.bodytemperature = 200
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
@@ -154,17 +150,14 @@
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
-			stance = HOSTILE_STANCE_ATTACK
-			return
-		if(isliving(target))
+
+		else if(isliving(target))
 			Aggro()
-			stance = HOSTILE_STANCE_ATTACK
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
 			Burrow()
-			return
-	return
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -366,7 +359,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
@@ -468,26 +461,21 @@
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
-			var/obj/mecha/D = target
+			var/obj/mecha/working/ripley/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption["brute"] > 0.3)
+			if(D.hides < 3)
+				D.hides++
 				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
-				if(D.icon_state == "ripley-open")
-					D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-open")
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				D.update_icon()
+				if(D.hides == 3)
+					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 				else
-					user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
-				if(damage_absorption.["brute"] == 0.3)
-					if(D.icon_state == "ripley-open")
-						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
-						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
-					else
-						user << "<span class='warning'>You can't add armour onto the mech while someone is inside!</span>"
+					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				qdel(src)
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return

@@ -235,7 +235,9 @@
 	return ""
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
-/proc/trim(text)
+/proc/trim(text, max_length)
+	if(max_length)
+		text = copytext(text, 1, max_length)
 	return trim_left(trim_right(text))
 
 //Returns a string with the first element of the string capitalized.

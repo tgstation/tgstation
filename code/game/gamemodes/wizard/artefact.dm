@@ -280,8 +280,8 @@ var/global/list/multiverse = list()
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
-		new_objective.owner = M:mind
-		new_objective:target = usr:mind
+		new_objective.owner = M.mind
+		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
 		M.mind.objectives += new_objective
 		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
@@ -295,7 +295,7 @@ var/global/list/multiverse = list()
 	sword.faction = list("[assigned]")
 	sword.evil = evil
 
-	var/randomize = pick("mobster","roman","wizard","cyborg","syndicate","assistant", "animu", "cultist", "highlander", "clown", "killer", "pirate", "soviet")
+	var/randomize = pick("mobster","roman","wizard","cyborg","syndicate","assistant", "animu", "cultist", "highlander", "clown", "killer", "pirate", "soviet", "officer", "gladiator")
 
 	switch(randomize)
 		if("mobster")
@@ -340,6 +340,7 @@ var/global/list/multiverse = list()
 			M.organs += new /obj/item/organ/limb/robot/r_leg
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("syndicate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
@@ -349,29 +350,34 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M),slot_wear_mask)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("animu")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl/red(M), slot_w_uniform)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("cultist")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("highlander")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("clown")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/clown(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
@@ -379,6 +385,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_l_store)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("killer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/overalls(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(M), slot_shoes)
@@ -393,13 +400,15 @@ var/global/list/multiverse = list()
 			for(var/obj/item/carried_item in M.contents)
 				if(!istype(carried_item, /obj/item/weapon/implant))
 					carried_item.add_blood(M)
+
 		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/bandana(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 		if("soviet")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
@@ -407,6 +416,26 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/hgpirate(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
+			M.equip_to_slot_or_del(sword, slot_r_hand)
+
+		if("officer")
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/beret(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/cigarette/cigar/havana(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/jacket/miljacket(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
+			M.equip_to_slot_or_del(sword, slot_r_hand)
+
+		if("gladiator")
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/gladiator(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/gladiator(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
+			M.equip_to_slot_or_del(sword, slot_r_hand)
+
 
 		else
 			return
@@ -420,6 +449,7 @@ var/global/list/multiverse = list()
 				all_species += speciestype
 		hardset_dna(M, null, null, null, null, pick(all_species))
 	M.update_icons()
+	M.update_augments()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
@@ -428,3 +458,118 @@ var/global/list/multiverse = list()
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
 	M.equip_to_slot_or_del(W, slot_wear_id)
+
+
+/obj/item/voodoo
+	name = "wicker doll"
+	desc = "Something creepy about it."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "voodoo"
+	item_state = "electronic"
+	var/mob/living/carbon/human/target = null
+	var/list/mob/living/carbon/human/possible = list()
+	var/obj/item/link = null
+	var/cooldown_time = 30 //3s
+	var/cooldown = 0
+	burntime = 0
+	burn_state = 0
+
+/obj/item/voodoo/attackby(obj/item/I, mob/user, params)
+	if(target && cooldown < world.time)
+		if(is_hot(I))
+			target << "<span class='userdanger'>You suddenly feel very hot</span>"
+			target.bodytemperature += 50
+			GiveHint(target)
+		else if(is_pointed(I))
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
+			target.Weaken(2)
+			GiveHint(target)
+		else if(istype(I,/obj/item/weapon/bikehorn))
+			target << "<span class='userdanger'>HONK</span>"
+			target << 'sound/items/AirHorn.ogg'
+			target.adjustEarDamage(0,3)
+			GiveHint(target)
+		cooldown = world.time +cooldown_time
+		return
+
+	if(!link)
+		if(I.loc == user && istype(I) && I.w_class <= 2)
+			user.drop_item()
+			I.loc = src
+			link = I
+			user << "You attach [I] to the doll."
+			update_targets()
+	..()
+
+/obj/item/voodoo/check_eye(mob/user)
+	return src.loc == user
+
+/obj/item/voodoo/attack_self(mob/user)
+	if(!target)
+		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
+		return
+	if(target && cooldown < world.time)
+		switch(user.zone_sel.selecting)
+			if("mouth")
+				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
+				target.say(wgw)
+				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
+			if("eyes")
+				user.set_machine(src)
+				if(user.client)
+					user.client.eye = target
+					user.client.perspective = EYE_PERSPECTIVE
+				spawn(100)
+					user.reset_view()
+					user.unset_machine()
+			if("r_leg","l_leg")
+				user << "<span class='notice'>You move the doll's legs around.</span>"
+				var/turf/T = get_step(target,pick(cardinal))
+				target.Move(T)
+			if("r_arm","l_arm")
+				//use active hand on random nearby mob
+				var/list/nearby_mobs = list()
+				for(var/mob/living/L in range(target,1))
+					if(L!=target)
+						nearby_mobs |= L
+				if(nearby_mobs.len)
+					var/mob/living/T = pick(nearby_mobs)
+					log_game("[user][user.key] made [target][target.key] click on [T] with a voodoo doll.")
+					target.ClickOn(T)
+					GiveHint(target)
+			if("head")
+				user << "<span class='notice'>You smack the doll's head with your hand.</span>"
+				target.Dizzy(10)
+				target << "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>"
+				GiveHint(target,user)
+			if("chest")
+				if(link)
+					target = null
+					link.loc = get_turf(src)
+					user << "<span class='notice'>You remove the [link] from the doll.</span>"
+					link = null
+					update_targets()
+		cooldown = world.time + cooldown_time
+
+/obj/item/voodoo/proc/update_targets()
+	possible = list()
+	if(!link)
+		return
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(md5(H.dna.uni_identity) in link.fingerprints)
+			possible |= H
+
+/obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
+	if(prob(50) || force)
+		var/way = dir2text(get_dir(victim,get_turf(src)))
+		victim << "<span class='notice'>You feel a dark presence from [way]</span>"
+	if(prob(20) || force)
+		var/area/A = get_area(src)
+		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
+
+/obj/item/voodoo/fire_act()
+	if(target)
+		target.adjust_fire_stacks(20)
+		target.IgniteMob()
+		GiveHint(target,1)
+	return ..()

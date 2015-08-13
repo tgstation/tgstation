@@ -56,10 +56,10 @@ var/pipenetwarnings = 10
 
 							if(item.parent)
 								if(pipenetwarnings > 0)
-									error("[item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										error("further messages about pipenets will be supressed")
+										warning("build_pipeline(): further messages about pipenets will be supressed")
 							members += item
 							possible_expansions += item
 
@@ -121,11 +121,7 @@ var/pipenetwarnings = 10
 
 /obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
-	for(var/I = 1; I <= parents.len; I++)
-		if(parents["p[I]"] == P)
-			P.addMember(A, src)
-			break
-
+	P.addMember(A, src)
 
 
 /datum/pipeline/proc/temporarily_store_air()

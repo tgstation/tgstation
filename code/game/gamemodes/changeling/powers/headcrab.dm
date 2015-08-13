@@ -6,13 +6,21 @@
 	req_human = 1
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
+	var/datum/mind/M = user.mind
+	var/list/organs = user.getorganszone("head", 1)
+
+	for(var/obj/item/organ/internal/I in organs)
+		I.Remove(user, 1)
+
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	var/turf = get_turf(user)
 	spawn(5) // So it's not killed in explosion
 		var/mob/living/simple_animal/hostile/headcrab/crab = new(turf)
-		crab.origin = user.mind
-		if(user.mind)
-			user.mind.transfer_to(crab)
+		for(var/obj/item/organ/internal/I in organs)
+			I.loc = crab
+		crab.origin = M
+		if(M)
+			M.transfer_to(crab)
 			crab << "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>"
 	user.gib()
 	feedback_add_details("changeling_powers","LR")

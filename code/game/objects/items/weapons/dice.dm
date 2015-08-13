@@ -56,7 +56,7 @@
 /obj/item/weapon/dice/attack_self(mob/user)
 	diceroll(user)
 
-/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user)
+/obj/item/weapon/dice/throw_at(atom/target, range, speed, mob/user, spin=1)
 	if(!..())
 		return
 	diceroll(user)

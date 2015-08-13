@@ -207,33 +207,176 @@
  * Crew manifest script
  */
 
-var isAI = null;
+var minimap_height = 480;
 var scale_x;
 var scale_y;
+var zoom_factor = null;
+var minimap_mousedown = false;
+var minimap_mousedown_scrollLeft;
+var minimap_mousedown_scrollTop;
+var minimap_mousedown_clientX;
+var minimap_mousedown_clientY;
+var minimap_mousedown_counter = 0;
 
 function disableSelection(){ return false; };
 
 $(window).on("onUpdateContent", function()
 {
-	$("#textbased").html("<table><colgroup><col /><col style=\"width: 24px;\" /><col style=\"width: 180px;\" /></colgroup><thead><tr><td><h3>Name</h3></td><td><h3>&nbsp;</h3></td><td><h3>Position</h3></td></tr></thead><tbody id=\"textbased-tbody\"></tbody></table>");
+	$("#textbased").html("<table><colgroup><col /><col style=\"width: 24px;\" class=\"colhealth\" /><col style=\"width: 180px;\" /></colgroup><thead><tr><td><h3>Name</h3></td><td><h3>&nbsp;</h3></td><td><h3>Position</h3></td></tr></thead><tbody id=\"textbased-tbody\"></tbody></table>");
 
-	$("#minimap").append("<img src=\"minimap_" + z + ".png\" id=\"map\" style=\"width: auto; height: 480px;\" />");
+	$("#minimap").append("<img src=\"minimap_" + z + ".png\" id=\"map\" style=\"width: auto; height: " + minimap_height + "px;\" />");
 
 	$("body")[0].onselectstart = disableSelection;
 
-	var width = $("#minimap").width();
-
-	scale_x = width / (maxx * tile_size);
-	scale_y = width / (maxy * tile_size); // height is assumed to be the same
-
 	$("#minimap").on("click", function(e)
 	{
-		var x		= ((((e.clientX - 8) / scale_x) / tile_size) + 1).toFixed(0);
-		var y		= ((maxy - (((e.clientY - 8) / scale_y) / tile_size)) + 1).toFixed(0);
+		if (!$(e.target).is(".zoom,.dot"))
+		{
+			var x		= ((((e.clientX + this.scrollLeft - 8) / scale_x) / tile_size) + 1).toFixed(0);
+			var y		= ((maxy - (((e.clientY + this.scrollTop - 8) / scale_y) / tile_size)) + 1).toFixed(0);
 
-		window.location.href = "byond://?src=" + hSrc + "&action=select_position&x=" + x + "&y=" + y;
+			window.location.href = "byond://?src=" + hSrc + "&action=select_position&x=" + x + "&y=" + y;
+		}
+	}).on("mousedown", function(e)
+	{
+		minimap_mousedown_scrollLeft = this.scrollLeft;
+		minimap_mousedown_scrollTop = this.scrollTop;
+		minimap_mousedown_clientX = e.clientX;
+		minimap_mousedown_clientY = e.clientY;
+		
+		var c = ++minimap_mousedown_counter;
+		setTimeout(function()
+		{
+			if (c == minimap_mousedown_counter)
+			{
+				minimap_mousedown = true;
+				$("#minimap").css("cursor", "move");
+			}
+		}, 100);
 	});
+	
+	$(document).on("mousemove", function(e)
+	{
+		if (minimap_mousedown)
+		{
+			var offsetX = minimap_mousedown_clientX - e.clientX;
+			var offsetY = minimap_mousedown_clientY - e.clientY;
+			
+			var minimap = document.getElementById("minimap");
+			minimap.scrollLeft = minimap_mousedown_scrollLeft + offsetX;
+			minimap.scrollTop = minimap_mousedown_scrollTop + offsetY;
+		}
+	}).on("mouseup", function()
+	{
+		++minimap_mousedown_counter;
+		if (minimap_mousedown)
+		{
+			document.body.focus();
+			minimap_mousedown = false;
+			$("#minimap").css("cursor", "");
+		}
+	});
+
+	$(window).on("resize", onResize);
+
+	scaleMinimap(1.00);
 });
+
+function zoomIn()
+{
+	scaleMinimap(Math.min(6.00, zoom_factor + 1.00));
+}
+
+function zoomOut()
+{
+	scaleMinimap(Math.max(1.00, zoom_factor - 1.00));
+}
+
+function scaleMinimap(factor)
+{
+	var $minimap					= $("#minimap");
+
+	if (factor != zoom_factor)
+	{
+		zoom_factor					= factor;
+
+		var old_map_width			= $minimap.width();
+		var old_map_height			= $minimap.height();
+		var old_canvas_size			= $("#minimap > img").height(); // height is assumed to be the same
+		var new_canvas_size			= minimap_height * factor;      // ditto
+
+		var old_scrollLeft			= $minimap[0].scrollLeft;
+		var old_scrollTop			= $minimap[0].scrollTop;
+
+		var old_factor				= old_canvas_size / minimap_height;
+		var diff_factor				= factor - old_factor;
+
+		var old_centerX				= ((old_map_width  / 2) * diff_factor) + old_scrollLeft;
+		var old_centerY				= ((old_map_height / 2) * diff_factor) + old_scrollTop;
+
+		$("#minimap > img").css("height", new_canvas_size + "px");
+		$minimap.css("max-width", new_canvas_size + "px");
+
+		var new_map_width			= $minimap.width();
+		var new_map_height			= $minimap.height();
+
+		var new_centerX				= (new_map_width  / 2) + old_centerX;
+		var new_centerY				= (new_map_height / 2) + old_centerY;
+
+		var scrollLeft				= new_centerX - (new_map_width  / 2);
+		var scrollTop				= new_centerY - (new_map_height / 2);
+
+		scale_x						= new_canvas_size / (maxx * tile_size);
+		scale_y						= new_canvas_size / (maxy * tile_size);
+
+		onResize();
+
+		$minimap[0].scrollLeft		= scrollLeft;
+		$minimap[0].scrollTop		= scrollTop;
+
+		$(".dot").each(function()
+		{
+			var $this				= $(this);
+			var tx					= translateX(parseInt($this.attr("data-x")));
+			var ty					= translateY(parseInt($this.attr("data-y")));
+
+			// Workaround for IE bug where it doesn't modify the positions.
+			setTimeout(function(){ $this.css({ "top": ty + "px", "left": tx + "px" });}, 0);
+		});
+	}
+}
+
+function onResize()
+{
+	if (zoom_factor == 1.00)
+	{
+		$(".zoom").css("left", "442px");
+		$("#minimap").css("max-height", Math.min($(window).height() - 16, 480) + "px");
+	}
+	else
+	{
+		$(".zoom").css("left", ($("#minimap").width() - 34) + "px");
+		$("#minimap").css("max-height", Math.min($(window).height() - 16, $("#minimap > img").height()) + "px");
+	}
+
+	if (expandHealth())
+	{
+		$(".colhealth").css("width", "150px");
+		$(".health").removeClass("tt");
+	}
+	else
+	{
+		$(".colhealth").css("width", "24px");
+		$(".health").addClass("tt");
+	}
+
+	$("body").css("padding-left", Math.min($(window).width() - 400, $("#minimap").width() - 10) + "px");
+}
+
+function expandHealth()
+{
+	return $("#textbased").width() > 510;
+}
 
 var updateMap = true;
 
@@ -251,11 +394,18 @@ function switchTo(i)
 	}
 }
 
-function clearAll(ai)
+var orig_scrollTop = 0;
+
+function clearAll()
 {
-	if (isAI === null)					{ isAI = (ai == "true"); }
+	orig_scrollTop = $(window).scrollTop();
 	$("#textbased-tbody").empty();
 	$("#minimap .dot").remove();
+}
+
+function onAfterUpdate()
+{
+	$(window).scrollTop(orig_scrollTop);
 }
 
 function isHead(ijob)
@@ -291,21 +441,17 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 		var avg_dam				= parseInt(dam1) + parseInt(dam2) + parseInt(dam3) + parseInt(dam4);
 		var i;
 
-		if (isAI)				{ i = -1; }
-		else
-		{
-			if		(avg_dam <= 0)	{ i = 5; }
-			else if (avg_dam <= 25)	{ i = 4; }
-			else if (avg_dam <= 50)	{ i = 3; }
-			else if (avg_dam <= 75)	{ i = 2; }
-			else					{ i = 0; }
-		}
+		if		(avg_dam <= 0)	{ i = 5; }
+		else if (avg_dam <= 25)	{ i = 4; }
+		else if (avg_dam <= 50)	{ i = 3; }
+		else if (avg_dam <= 75)	{ i = 2; }
+		else					{ i = 0; }
 
-		healthHTML = "<div class=\"health health-" + i + " tt\"><div><span>(<font color=\"#3498db\">" + dam1 + "</font>/<font color=\"#2ecc71\">" + dam2 + "</font>/<font color=\"#e67e22\">" + dam3 + "</font>/<font color=\"#e74c3c\">" + dam4 + "</font>)</span></div></div>";
+		healthHTML = "<div class=\"health health-" + i + (expandHealth() ? "" : " tt") + "\"><div><span>(<font color=\"#3498db\">" + dam1 + "</font>/<font color=\"#2ecc71\">" + dam2 + "</font>/<font color=\"#e67e22\">" + dam3 + "</font>/<font color=\"#e74c3c\">" + dam4 + "</font>)</span></div></div>";
 	}
 	else
 	{
-		healthHTML = "<div class=\"health health-" + (life_status == "" ? -1 : (life_status == "true" ? 4 : 0)) + " tt\"><div><span>Not Available</span></div></div>";
+		healthHTML = "<div class=\"health health-" + (life_status == "" ? -1 : (life_status == "true" ? 4 : 0)) + (expandHealth() ? "" : " tt") + "\"><div><span>Not Available</span></div></div>";
 	}
 
 	var trElem					= $("<tr></tr>").attr("data-ijob", ijob);
@@ -341,14 +487,21 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 
 	trElem.append(tdElem);
 
-	tdElem						= $("<td style=\"text-align: center; vertical-align: top; cursor: default;\"></td>");
+	tdElem						= $("<td style=\"vertical-align: top; cursor: default;\"></td>");
 	tdElem.html(healthHTML);
 
 	trElem.append(tdElem);
 
 	tdElem						= $("<td style=\"cursor: default;\"></td>");
 
-	if (area && pos_x && pos_y)	{ tdElem.append($("<div></div>").text(area).addClass("tt").append($("<div></div>").append($("<span></span>").text("(" + pos_x + ", " + pos_y + ")")))); }
+	if (area && pos_x && pos_y)
+	{
+		tdElem.append($("<div></div>").text(area).addClass("tt").append($("<div></div>").append($("<span></span>").text("(" + pos_x + ", " + pos_y + ")"))));
+		tdElem.css("cursor", "pointer").on("click", function()
+		{
+			window.clipboardData.setData("Text", pos_x + ", " + pos_y);
+		});
+	}
 	else						{ tdElem.text("Not Available"); }
 
 	trElem.append(tdElem);
@@ -363,20 +516,24 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 		var x					= parseInt(pos_x);
 		var y					= maxy - parseInt(pos_y);
 
-		var tx					= (translate(x - 1, scale_x) - 1.5).toFixed(0);
-		var ty					= (translate(y - 1, scale_y) + 3).toFixed(0);
+		var tx					= translateX(x);
+		var ty					= translateY(y);
 
-		var dotElem				= $("<div class=\"dot\" style=\"top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; z-index: " + ijob + ";\"></div>");
+		var dotElem				= $("<div class=\"dot\" style=\"top: " + ty + "px; left: " + tx + "px; background-color: " + color + "; z-index: " + ijob + ";\" data-x=\"" + x + "\" data-y=\"" + y + "\"></div>");
 
 		$("#minimap").append(dotElem);
 
+		var counter = 0;
+
 		function enable()
 		{
+			++counter;
 			dotElem.addClass("active").css({ "border-color": color });
 		}
 
 		function disable()
 		{
+			++counter;
 			dotElem.removeClass("active").css({ "border-color": "transparent" });
 		}
 
@@ -388,7 +545,27 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 			window.location.href = "byond://?src=" + hSrc + "&action=select_person&name=" + encodeURIComponent(name);
 		}
 
-		trElem.on("mouseover", enable).on("mouseout", disable).on("click", click);
+		trElem.on("mouseover", function()
+		{
+			enable();
+
+			if (zoom_factor > 1.00)
+			{
+				var c = counter;
+				setTimeout(function()
+				{
+					if (c == counter)
+					{
+						var minimap	= document.getElementById("minimap");
+						var half	= $(minimap).height() / 2;
+						var offset	= $(dotElem).offset();
+
+						minimap.scrollLeft = offset.left + minimap.scrollLeft - half;
+						minimap.scrollTop = offset.top + minimap.scrollTop - half;
+					}
+				}, 100);
+			}
+		}).on("mouseout", disable).on("click", click);
 		dotElem.on("mouseover", function()
 		{
 			trElem.addClass("hover");
@@ -401,6 +578,9 @@ function add(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, 
 		}).on("click", click);
 	}
 }
+
+function translateX(n)	{ return (translate(n - 1.5, scale_x) ).toFixed(0); }
+function translateY(n)	{ return (translate(n + 0.75, scale_y) ).toFixed(0); }
 
 function translate(n, scale)
 {

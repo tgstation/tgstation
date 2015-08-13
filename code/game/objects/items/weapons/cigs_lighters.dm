@@ -120,7 +120,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(!lit && smoketime > 0)
+	if(!lit && smoketime > 0 && is_hot(W))
 		var/lighting_text = is_lighter(W,user)
 		if(lighting_text)
 			light(lighting_text)
@@ -143,10 +143,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lighting_text = null
 	if(istype(O, /obj/item/weapon/weldingtool))
 		lighting_text = "<span class='notice'>[user] casually lights the [name] with [O], what a badass.</span>"
+	else if(istype(O, /obj/item/weapon/lighter/greyscale)) // we have to check for this first -- zippo lighters are default
+		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [O].</span>"
 	else if(istype(O, /obj/item/weapon/lighter))
 		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights their [name] with [O]. Damn they're cool.</span>"
-	else if(istype(O, /obj/item/weapon/lighter/greyscale))
-		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light their [name] with [O].</span>"
 	else if(istype(O, /obj/item/weapon/melee/energy))
 		lighting_text = "<span class='warning'>[user] swings their [O], barely missing their nose. They light their [name] in the process.</span>"
 	else if(istype(O, /obj/item/device/assembly/igniter))
@@ -195,9 +195,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		//can't think of any other way to update the overlays :<
 		if(ismob(loc))
 			var/mob/M = loc
-			M.update_inv_wear_mask(0)
-			M.update_inv_l_hand(0)
-			M.update_inv_r_hand(0)
+			M.update_inv_wear_mask()
+			M.update_inv_l_hand()
+			M.update_inv_r_hand()
 
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
@@ -365,7 +365,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
-			M.update_inv_wear_mask(0)
+			M.update_inv_wear_mask()
 			packeditem = 0
 			name = "empty [initial(name)]"
 		SSobj.processing.Remove(src)

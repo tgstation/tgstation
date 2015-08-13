@@ -25,7 +25,6 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	flag = "bullet"
 
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
 	..()
@@ -37,7 +36,6 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
 	damage = 60
-	flag = "bullet"
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
@@ -206,29 +204,31 @@ obj/item/projectile/kinetic/New()
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 1
+	range = 3
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure < 30)
-		name = "full strength plasma blast"
-		damage *= 3
-		range += 3
+	if(environment)
+		var/pressure = environment.return_pressure()
+		if(pressure < 30)
+			name = "full strength plasma blast"
+			damage *= 3
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
+	. = ..()
 	if(istype(target, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target
 		M.gets_drilled(firer)
-	return ..()
+		range = max(range - 1, 1)
+		return -1
 
 /obj/item/projectile/plasma/adv
-	range = 2
+	range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 3
+	range = 6

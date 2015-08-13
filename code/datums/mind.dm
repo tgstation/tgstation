@@ -63,7 +63,8 @@
 
 /datum/mind/proc/transfer_to(mob/living/new_character)
 	if(!istype(new_character))
-		ERROR("transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform coderbus")
+		throw EXCEPTION("transfer_to(): new_character must be mob/living")
+		return
 
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
@@ -1065,12 +1066,10 @@
 					src.spell_list = null
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
-					current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
-					current.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
+					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hatch)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_ascend)
 				else if(src in ticker.mode.thralls)
-					ticker.mode.thralls -= src
-					special_role = null
-					current << "<span class='userdanger'>You have been brainwashed! You are no longer a thrall!</span>"
+					ticker.mode.remove_thrall(src,0)
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
 					log_admin("[key_name(usr)] has de-thrall'ed [current].")
 			if("shadowling")
@@ -1079,9 +1078,9 @@
 					return
 				ticker.mode.shadows += src
 				special_role = "shadowling"
-				current << "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
-				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
-				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>"
+				current << "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
+				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
+				</b></span>"
 				ticker.mode.finalize_shadowling(src)
 				ticker.mode.update_shadow_icons_added(src)
 			if("thrall")
@@ -1089,10 +1088,6 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				ticker.mode.add_thrall(src)
-				special_role = "thrall"
-				current << "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
-				living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>"
-				current << "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>"
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 
@@ -1160,7 +1155,7 @@
 								sleep(0) //because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
-						H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
+						H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
 						if(H)
 							src = H.mind
 
@@ -1490,7 +1485,8 @@
 		if(ticker)
 			ticker.minds += mind
 		else
-			ERROR("mind_initialize(): No ticker ready yet! Please inform coderbus")
+			spawn(0)
+				throw EXCEPTION("mind_initialize(): No ticker ready")
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
@@ -1562,7 +1558,7 @@
 	mind.assigned_role = "Animal"
 	mind.special_role = "Animal"
 
-/mob/living/simple_animal/pet/corgi/mind_initialize()
+/mob/living/simple_animal/pet/dog/corgi/mind_initialize()
 	..()
 	mind.assigned_role = "Corgi"
 	mind.special_role = "Corgi"

@@ -58,14 +58,14 @@
 				flags_inv |= (visor_flags_inv)
 				icon_state = initial(icon_state)
 				usr << "[toggle_message] \the [src]."
-				usr.update_inv_head(0)
+				usr.update_inv_head()
 			else
 				up = !up
 				flags &= ~(visor_flags)
 				flags_inv &= ~(visor_flags_inv)
 				icon_state = "[initial(icon_state)]up"
 				usr << "[alt_toggle_message] \the [src]"
-				usr.update_inv_head(0)
+				usr.update_inv_head()
 				if(active_sound)
 					while(up)
 						playsound(src.loc, "[active_sound]", 100, 0, 4)
@@ -180,7 +180,7 @@
 
 	if(istype(loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = loc
-		H.update_inv_head(0)
+		H.update_inv_head()
 
 	return
 
@@ -214,7 +214,7 @@
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()
-				usr.update_inv_head(0)
+				usr.update_inv_head()
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
 			return
 

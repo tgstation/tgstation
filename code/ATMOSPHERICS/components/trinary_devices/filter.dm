@@ -28,7 +28,7 @@ Filter types:
  1: Oxygen: Oxygen ONLY
  2: Nitrogen: Nitrogen ONLY
  3: Carbon Dioxide: Carbon Dioxide ONLY
- 4: Sleeping Agent (NODE2O)
+ 4: Sleeping Agent (N2O)
 */
 
 	var/frequency = 0

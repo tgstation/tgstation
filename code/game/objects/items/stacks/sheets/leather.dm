@@ -12,6 +12,14 @@
 	icon_state = "sheet-corgi"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/corgi_recipes = list ( \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/corgi/New(var/loc, var/amount=null)
+	recipes = corgi_recipes
+	return ..()
+
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
 	desc = "The by-product of cat farming."

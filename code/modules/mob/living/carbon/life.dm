@@ -9,6 +9,8 @@
 
 	if(..())
 		. = 1
+		for(var/obj/item/organ/internal/O in internal_organs)
+			O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -259,7 +261,7 @@
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
 			death()
 			return
 
@@ -456,7 +458,6 @@
 	return 1
 
 /mob/living/carbon/update_sight()
-
 	if(stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
@@ -521,3 +522,8 @@
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
+
+/mob/living/carbon/handle_actions()
+	..()
+	for(var/obj/item/I in internal_organs)
+		give_action_button(I, 1)

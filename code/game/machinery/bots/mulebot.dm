@@ -14,11 +14,11 @@ var/global/mulebot_count = 0
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
+	health = 150
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/atom/movable/load = null		// the loaded crate (usually)
+	var/atom/movable/load = null
 	bot_type = MULE_BOT
 	model = "MULE"
 	blood_DNA = list()
@@ -28,7 +28,7 @@ var/global/mulebot_count = 0
 	var/turf/target				// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(access_cargo) 
 
 	mode = BOT_IDLE
 
@@ -62,7 +62,6 @@ var/global/mulebot_count = 0
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	botcard.access = J.get_access()
 	prev_access = botcard.access
-//	botcard.access += access_robotics //Why --Ikki
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -747,7 +746,7 @@ obj/machinery/bot/mulebot/bot_reset()
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
-	..()
+	return ..()
 
 /obj/machinery/bot/mulebot/alter_health()
 	return get_turf(src)

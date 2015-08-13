@@ -79,10 +79,10 @@
 	reagents.handle_reactions()
 	..()
 
-/obj/item/weapon/reagent_containers/throw_impact(atom/target,mob/thrower)
-	..()
+/obj/item/weapon/reagent_containers/throw_impact(atom/target)
+	. = ..()
 
-	if(!reagents.total_volume || !spillable)
+	if(!reagents || !reagents.total_volume || !spillable)
 		return
 
 	if(ismob(target) && target.reagents)
@@ -91,17 +91,15 @@
 		var/R
 		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
 						"<span class='userdanger'>[M] has been splashed with something!</span>")
-		if(reagents)
-			for(var/datum/reagent/A in reagents.reagent_list)
-				R += A.id + " ("
-				R += num2text(A.volume) + "),"
+		for(var/datum/reagent/A in reagents.reagent_list)
+			R += A.id + " ("
+			R += num2text(A.volume) + "),"
 
-
+		if(thrownby)
+			add_logs(thrownby, M, "splashed", R)
 		reagents.reaction(target, TOUCH)
-		if(thrower)
-			add_logs(thrower, M, "splashed", R)
 
-	else if((!target.density || target.throwpass) && thrower && thrower.mind && thrower.mind.assigned_role == "Bartender")
+	else if((target.CanPass(src, get_turf(src))) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
 		return
 

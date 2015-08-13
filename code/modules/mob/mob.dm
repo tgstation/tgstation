@@ -421,12 +421,12 @@ var/list/slot_equipment_priority = list( \
 		var/obj/item/W = l_hand
 		if (W)
 			W.attack_self(src)
-			update_inv_l_hand(0)
+			update_inv_l_hand()
 	else
 		var/obj/item/W = r_hand
 		if (W)
 			W.attack_self(src)
-			update_inv_r_hand(0)
+			update_inv_r_hand()
 	return
 
 /*
@@ -946,6 +946,14 @@ var/list/slot_equipment_priority = list( \
 					return G
 				break
 
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg')
+	var/mob/dead/observer/ghost = get_ghost()
+	if(ghost)
+		ghost.notify_cloning(message, sound)
+		return ghost
+
+
+
 /mob/proc/adjustEarDamage()
 	return
 
@@ -964,3 +972,7 @@ var/list/slot_equipment_priority = list( \
 	if(isliving(src))
 		spell.action.Grant(src)
 	return
+
+//override to avoid rotating pixel_xy on mobs
+/mob/shuttleRotate(rotation)
+	dir = angle2dir(rotation+dir2angle(dir))

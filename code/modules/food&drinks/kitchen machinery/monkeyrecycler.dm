@@ -1,6 +1,6 @@
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes. It requires 5 monkeys per cube."
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted." // except it literally never does
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = 2.9
@@ -31,6 +31,7 @@
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
+	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
@@ -63,7 +64,7 @@
 				if(!user.drop_item())
 					return
 				qdel(target)
-				user << "<span class='notice'>You stuff the monkey in the machine.</span>"
+				user << "<span class='notice'>You stuff the monkey into the machine.</span>"
 				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 				var/offset = prob(50) ? -2 : 2
 				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking

@@ -21,7 +21,9 @@
 		return
 	icon_state = "off"
 
-
+//prevents shuttles attempting to rotate this since it messes up sprites
+/obj/machinery/gateway/shuttleRotate()
+	return
 
 //this is da important part wot makes things go
 /obj/machinery/gateway/centerstation

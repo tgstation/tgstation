@@ -34,8 +34,7 @@
 		M.Stun(15)
 		M.eye_stat += 8
 
-	if(M.flash_eyes())
-		M.eye_stat += rand(1, 3)
+	if(M.flash_eyes(affect_silicon = 1))
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
 

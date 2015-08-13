@@ -123,6 +123,23 @@
 
 		chemical_mob_spawn(holder, 1, "Lesser Gold Slime", "neutral")
 
+/datum/chemical_reaction/slimecritfriendly
+	name = "Slime Crit Friendly"
+	id = "m_tele5"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/gold
+	required_other = 1
+
+/datum/chemical_reaction/slimecritfriendly/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
+		O.show_message(text("<span class='danger'>The slime extract begins to vibrate adorably !</span>"), 1)
+	spawn(50)
+
+		chemical_mob_spawn(holder, 1, "Friendly Gold Slime", "neutral")
+
 //Silver
 /datum/chemical_reaction/slimebork
 	name = "Slime Bork"
@@ -159,8 +176,8 @@
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
-		M.flash_eyes()
+	for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
+		C.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)
 		var/chosen = pick(borks)
@@ -191,7 +208,7 @@
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
-	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom), null))
+	for(var/mob/living/carbon/M in viewers(get_turf(holder.my_atom), null))
 		M.flash_eyes()
 
 	for(var/i = 1, i <= 4 + rand(1,2), i++)

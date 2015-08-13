@@ -529,8 +529,8 @@ var/list/sacrificed = list()
 			if(!(iscultist(V)))
 				victims += V//Checks for cult status and mob type
 	for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
-		if(istype(I,/obj/item/organ/brain))
-			var/obj/item/organ/brain/B = I
+		if(istype(I,/obj/item/organ/internal/brain))
+			var/obj/item/organ/internal/brain/B = I
 			victims += B.brainmob
 		else if(istype(I,/obj/item/device/mmi))
 			var/obj/item/device/mmi/B = I
@@ -635,7 +635,7 @@ var/list/sacrificed = list()
 			if(prob(30))
 				ticker.mode.grant_runeword(usr)
 		stone_or_gib(M)
-	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/pet/corgi/sac_act for an example
+	for(var/mob/victim in src.loc)			//TO-DO: Move the shite above into the mob's own sac_act - see /mob/living/simple_animal/pet/dog/corgi/sac_act for an example
 		victim.sac_act(src, victim)			//Sacrifice procs are now seperate per mob, this allows us to allow sacrifice on as many mob types as we want without making an already clunky system worse
 
 /obj/effect/rune/proc/sac_grant_word(mob/living/C)	//The proc that which chooses a word rewarded for a successful sacrifice, sacrifices always give a currently unknown word if the normal checks pass
@@ -750,11 +750,11 @@ var/list/sacrificed = list()
 		if (cultist.handcuffed)
 			cultist.handcuffed.loc = cultist.loc
 			cultist.handcuffed = null
-			cultist.update_inv_handcuffed(0)
+			cultist.update_inv_handcuffed()
 		if (cultist.legcuffed)
 			cultist.legcuffed.loc = cultist.loc
 			cultist.legcuffed = null
-			cultist.update_inv_legcuffed(0)
+			cultist.update_inv_legcuffed()
 		if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 			cultist.unEquip(cultist.wear_mask)
 		if(istype(cultist.loc, /obj/structure/closet)&&cultist.loc:welded)

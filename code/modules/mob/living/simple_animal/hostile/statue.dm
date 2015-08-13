@@ -198,10 +198,19 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
 	for(var/mob/living/target in targets)
-		if(target.see_invisible == SEE_INVISIBLE_LIVING)
-			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
-			name = "Toggle Nightvision \[ON\]"
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
+				H.dna.species.invis_sight = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"
+
 		else
-			target.see_invisible = SEE_INVISIBLE_LIVING
-			name = "Toggle Nightvision \[OFF\]"
-	return
+			if(target.see_invisible == SEE_INVISIBLE_LIVING)
+				target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				target.see_invisible = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"

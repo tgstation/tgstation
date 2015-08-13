@@ -153,7 +153,7 @@
 /mob/living/silicon/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src,2)
+	Proj.on_hit(src)
 	return 2
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
@@ -422,12 +422,13 @@
 /mob/living/silicon/setEarDamage()
 	return
 
-/mob/living/silicon/check_eye_prot()
-	return 2
-
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
 
 /mob/living/silicon/grabbedby(mob/living/user)
 	return
+
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+	if(affect_silicon)
+		return ..()

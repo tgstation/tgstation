@@ -125,9 +125,9 @@
 		return
 	if(equip_to_appropriate_slot(I))
 		if(hand)
-			update_inv_l_hand(0)
+			update_inv_l_hand()
 		else
-			update_inv_r_hand(0)
+			update_inv_r_hand()
 	else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
 		s_active.handle_item_insertion(I)
 	else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand

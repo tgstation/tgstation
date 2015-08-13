@@ -90,7 +90,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		src << "<span class='warning'>You find yourself unable to speak!</span>"
 		return
 
-	message = treat_message(message)
+	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
+		message = treat_message(message)
 	var/spans = list()
 	spans += get_spans()
 
@@ -219,6 +220,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
 				return 1
+	if(message_mode == MODE_ALIEN)
+		if(hivecheck())
+			alien_talk(message)
+			return 1
 	return 0
 
 /mob/living/proc/treat_message(message)

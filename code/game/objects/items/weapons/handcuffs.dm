@@ -94,6 +94,9 @@
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
 
+/obj/item/weapon/restraints/handcuffs/alien
+	icon_state = "handcuffAlien"
+
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
@@ -193,7 +196,7 @@
 					if(!C.legcuffed) //beartrap can't cuff your leg if there's already a beartrap or legcuffs.
 						C.legcuffed = src
 						src.loc = C
-						C.update_inv_legcuffed(0)
+						C.update_inv_legcuffed()
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L

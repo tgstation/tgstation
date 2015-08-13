@@ -31,8 +31,9 @@
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
-	if(targloc == curloc)			//Fire the projectile
-		user.bullet_act(BB)
+	if(targloc == curloc)
+		if(BB.original == user) //if we target ourselves we go straight to bullet_act()
+			user.bullet_act(BB)
 		del(BB)
 		return 1
 	BB.loc = get_turf(user)
