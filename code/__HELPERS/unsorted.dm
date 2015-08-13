@@ -1279,27 +1279,26 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 	return locate(dest_x,dest_y,dest_z)
 
+/var/mob/dview/dview_mob = new
+
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
 /proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/dview() called tick#: [world.time]")
 	if(!center)
 		return
 
-	var/global/mob/dview/DV
-	if(!DV)
-		DV = new
+	dview_mob.loc = center
 
-	DV.loc = center
+	dview_mob.see_invisible = invis_flags
 
-	DV.see_in_dark = range
-	DV.see_invisible = invis_flags
-
-	. = view(range, DV)
-	DV.loc = null
+	. = view(range, dview_mob)
+	dview_mob.loc = null
 
 /mob/dview
 	invisibility = 101
 	density = 0
+	see_in_dark = 1e6
+	anchored = 1
 
 //Gets the Z level datum for this atom's Z level
 /proc/get_z_level(var/atom/A)

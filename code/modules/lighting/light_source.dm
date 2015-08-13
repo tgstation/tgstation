@@ -156,7 +156,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/light_source/proc/apply_lum() called tick#: [world.time]")
 	applied = 1
 	if(istype(source_turf))
-		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
+		FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
 			if(T.lighting_overlay)
 
 			  #if LIGHTING_FALLOFF == 1 // circular
@@ -222,7 +222,7 @@
 //Stupid dumb copy pasta because BYOND and speed.
 /datum/light_source/proc/smart_vis_update()
 	var/list/view[0]
-	for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
+	FOR_DVIEW(var/turf/T, light_range, source_turf, 0)	//We're only looking for turfs.
 		view += T	//Filter out turfs.
 
 	//This is the part where we calculate new turfs (if any)
