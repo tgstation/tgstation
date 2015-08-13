@@ -166,7 +166,7 @@
 				handle_item_insertion(O, 1)
 		return 1
 	return ..()
-
+var/global/list/bottle_colour_choices = list("Blue" = "#0094FF","Dark Blue" = "#00137F","Green" = "#129E0A","Orange" = "#FF6A00","Purple" = "A17FFF","Red" = "#BE0000","Yellow" = "#FFD800","Grey" = "#9F9F9F","White" = "#FFFFFF","Custom" = "#FFFFFF",)
 /obj/item/weapon/storage/pill_bottle/verb/change()
 	set name = "Add Coloured Label"
 	set category = "Object"
@@ -174,31 +174,13 @@
 	if(!colour_overlay)
 		return
 	var/bottle_colour
-	var/list/colour_choices = list("Blue","Dark Blue","Green","Orange","Purple","Red","Grey","White","Custom")
-	bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as null|anything in colour_choices
+	bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as null|anything in bottle_colour_choices
 	if(!bottle_colour||(usr.stat))
 		return
-	switch(bottle_colour)
-		if("Blue")
-			bottle_colour = "#0094FF"
-		if("Dark Blue")
-			bottle_colour = "#00137F"
-		if("Green")
-			bottle_colour = "#129E0A"
-		if("Orange")
-			bottle_colour = "#FF6A00"
-		if("Purple")
-			bottle_colour = "#A17FFF"
-		if("Red")
-			bottle_colour = "#BE0000"
-		if("Yellow")
-			bottle_colour = "#FFD800"
-		if("Grey")
-			bottle_colour = "#9F9F9F"
-		if("White")
-			bottle_colour = "#FFFFFF"
-		if ("Custom")
-			bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as color
+	if(bottle_colour == "Custom")
+		bottle_colour = input("Select Colour to change it to", "Pill Bottle Colour", bottle_colour) as color
+	else
+		bottle_colour = bottle_colour_choices[bottle_colour]
 	overlays -= colour_overlay
 	colour_overlay.color = "[bottle_colour]"
 	overlays += colour_overlay
