@@ -383,7 +383,9 @@
 		var/new_index = (diff == FORWARD ? index - 1 : index + 1)
 		if(new_index == 0)
 			message_admins("Holy shit [src]/([src.type]) is trying to set its new index to 0! how the fuck did this happen? I don't know, our direction is [diff==FORWARD?"forward":"backward"] old index was [index]. User is [formatPlayerPanel(user,user.ckey)], itemused [used_atom], step [given_step]")
-			CRASH("Holy shit [src]/([src.type]) is trying to set its new index to 0! how the fuck did this happen? I don't know, our direction is [diff==FORWARD?"forward":"backward"] old index was [index]. User is [user], itemused [used_atom], step [given_step]")
+			spawn_result(user)
+			return 1
+			//CRASH("Holy shit [src]/([src.type]) is trying to set its new index to 0! how the fuck did this happen? I don't know, our direction is [diff==FORWARD?"forward":"backward"] old index was [index]. User is [user], itemused [used_atom], step [given_step]")
 		if(diff == FORWARD)
 			spawn_step = get_backward_step(new_index)
 		else if(diff == BACKWARD)

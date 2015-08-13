@@ -43,7 +43,8 @@
 					),
 					Co_NEXTSTEP = list(
 						Co_KEY      = /obj/item/weapon/weldingtool,
-						Co_VIS_MSG  = "{USER} weld{s} {HOLDER}'s armor."
+						Co_VIS_MSG  = "{USER} weld{s} {HOLDER}'s armor.",
+						Co_AMMOUNT = 3
 					)
 				),
 				// 11. Loose armor

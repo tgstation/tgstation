@@ -473,7 +473,9 @@
 	result = "/obj/mecha/combat/honker"
 	steps = list(
 					 list(
-					 	Co_NEXTSTEP = list(Co_KEY=/obj/item/weapon/bikehorn),
+					 	Co_NEXTSTEP = list(Co_KEY=/obj/item/weapon/bikehorn,
+					 		Co_VIS_MSG = "{USER} adds the bike horn to {HOLDER}",
+					 		Co_AMOUNT = 1),
 					 	Co_BACKSTEP = list(Co_KEY = /obj/item/weapon/crowbar,
 					 		Co_VIS_MSG = "{USER} remove{s} the clown boots from {HOLDER}.")
 					 	),//1
