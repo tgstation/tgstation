@@ -44,11 +44,15 @@
 				deity_name = "Space Jesus"
 			if("catholic", "catholicism", "roman catholicism")
 				B.name = "The Catholic Bible"
+				/*
 				if(H.gender == FEMALE)
 					J = "Nun"
 				else
 					J = "Priest"
+				*/
+				J = "Bishop"
 				deity_name = "Jesus Christ"
+				H.equip_or_collect(new /obj/item/clothing/head/mitre(H), slot_head)
 			if("theist", "gnosticism", "theism")
 				B.name = pick("The Gnostic Bible", "The Dead Seas Scrolls")
 				deity_name = "God"
@@ -59,9 +63,9 @@
 				else
 					J = "Magister"
 				deity_name = "Satan"
-			if("cthulu", "outer gods", "elder gods", "esoteric order of dagon")
+			if("cthulhu", "outer gods", "elder gods", "esoteric order of dagon")
 				B.name = pick("The Necronomicon", "The Book of Eibon", "De Vermis Mysteriis", "Unaussprechlichen Kulten")
-				deity_name = "Cthulu" //I hope it's spelt correctly
+				deity_name = "Cthulhu" //I hope it's spelt correctly
 			if("islam", "muslim")
 				B.name = "The Quran"
 				J = "Imam"
@@ -81,7 +85,7 @@
 				B.name = pick("The Vedas", "The Mahabharata")
 				J = "Guru"
 				deity_name = pick("Brahma", "Vishnu", "Shiva", "Ganesha") //The major ones at least, and yes it's polytheist
-			if("buddha", "buddahism")
+			if("buddha", "buddhism")
 				B.name = "The Tripitaka"
 				J = "Monk"
 				deity_name = "Buddha"

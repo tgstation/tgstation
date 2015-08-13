@@ -1723,6 +1723,7 @@
 		/obj/item/clothing/head/maidhat =3,
 		/obj/item/clothing/under/maid = 3,
 		/obj/item/clothing/suit/maidapron = 3,
+		/obj/item/clothing/head/mitre = 3,
 		) //Pretty much everything that had a chance to spawn.
 	contraband = list(
 		/obj/item/clothing/suit/cardborg = 3,

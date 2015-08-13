@@ -92,21 +92,21 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(istype(H.head, /obj/item/clothing/head/helmet) || istype(H.head, /obj/item/clothing/head/hardhat) || istype(H.head, /obj/item/clothing/head/fedora) || istype(H.head, /obj/item/clothing/head/culthood)) //Blessing blocked
-			user.visible_message("<span class='warning'>[user] [attack_verb]s [H]'s head with \the [src], but their headgear blocks the hit.</span>",
-			"<span class='warning'>You [attack_verb] [H]'s head with \the [src], but their headgear blocks the blessing. Blasphemy!</span>")
+			user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [H]'s head with \the [src], but their headgear blocks the hit.</span>",
+			"<span class='warning'>You [pick(attack_verb)] [H]'s head with \the [src], but their headgear blocks the blessing. Blasphemy!</span>")
 			return //That's it. Helmets are very haram
 
 	if(M.stat == DEAD) //Our target is dead. RIP in peace
-		user.visible_message("<span class='warning'>[user] [attack_verb]s [M]'s lifeless body with \the [src].</span>",
-		"<span class='warning'>You [attack_verb] [M]'s lifeless body with \the [src], trying to conjure [deity_name]'s mercy on them.</span>")
+		user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [M]'s lifeless body with \the [src].</span>",
+		"<span class='warning'>You [pick(attack_verb)] [M]'s lifeless body with \the [src], trying to conjure [deity_name]'s mercy on them.</span>")
 		playsound(get_turf(src), "punch", 25, 1, -1)
 
 		//TODO : Way to bring people back from death if they are your followers
 		return //Otherwise, there's so little we can do
 
 	//Our target is alive, prepare the blessing
-	user.visible_message("<span class='warning'>[user] [attack_verb]s [M]'s head with \the [src].</span>",
-	"<span class='warning'>You [attack_verb] [M]'s head with \the [src]. In the name of [deity_name], bless thee!</span>")
+	user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [M]'s head with \the [src].</span>",
+	"<span class='warning'>You [pick(attack_verb)] [M]'s head with \the [src]. In the name of [deity_name], bless thee!</span>")
 	playsound(get_turf(src), "punch", 25, 1, -1)
 
 	if(isvampire(M) && !(VAMP_MATURE in M.mind.vampire.powers)) //The user is a "young" Vampire, fuck up his vampiric powers and hurt his head

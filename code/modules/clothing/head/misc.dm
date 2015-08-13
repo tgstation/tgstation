@@ -337,3 +337,16 @@
 	icon_state = "maidhat"
 	item_state = "maidhat"
 	flags = FPRINT
+
+/obj/item/clothing/head/maidhat
+	name = "Maid Headband"
+	desc = "Do these even do anything besides look cute?"
+	icon_state = "maidhat"
+	item_state = "maidhat"
+	flags = FPRINT
+
+/obj/item/clothing/head/mitre
+	name = "mitre"
+	desc = "A funny hat worn by extremely boring people."
+	icon_state = "mitre"
+	item_state = "mitre"
