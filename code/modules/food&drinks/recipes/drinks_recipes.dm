@@ -567,5 +567,5 @@
 	name = "Purple Drank"
 	id = "purple_drank"
 	result = "purple_drank"
-	required_reagents = list("morphine" = 2, "synaptizine" = 2, "space_mountain_wind" = 1)
+	required_reagents = list("morphine" = 2, "synaptizine" = 2, "spacemountainwind" = 1)
 	result_amount = 5
