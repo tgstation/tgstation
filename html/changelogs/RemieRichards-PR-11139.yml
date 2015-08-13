@@ -1,9 +1,0 @@
- 
-author: RemieRichards
-
-delete-after: True
-
-
-changes: 
-  - rscadd: "Modifying a string (Text) variable with View Variables or View Variables Mass Modify now allows you to embed variables like real byond strings, For example the variable real_name; you could set a text var to [real_name] and it would be replaced with the actual contents of the var,
-  This allows for Mass fixing of certain variables but it's also useful for badmin gimmickery"
