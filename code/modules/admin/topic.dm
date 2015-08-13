@@ -3318,9 +3318,25 @@
 		message_admins("<span class='notice'>[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) in [get_area(D)] [formatJumpTo(get_turf(D))]</span>", 1)
 		log_admin("[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) at [D.x];[D.y];[D.z]")
 
-	if(href_list["shuttle_add_destination"])
+	if(href_list["shuttle_modify_destination"])
 		feedback_inc("admin_shuttle_magic_used",1)
-		feedback_add_details("admin_shuttle_magic_used","AD")
+		feedback_add_details("admin_shuttle_magic_used","MD")
+
+		var/datum/shuttle/S = selected_shuttle
+		if(!istype(S)) return
+
+		var/list/docking_ports_to_pick_from = all_docking_ports.Copy()
+		var/list/options = list()
+		for(var/obj/structure/docking_port/destination/D in (docking_ports_to_pick_from - S.docking_ports))
+			var/name = D.areaname
+			options += name
+			options[name] = D
+
+		var/obj/structure/docking_port/destination/choice = options[(input(usr,"Select a docking port to add to [S.name]","Admin abuse") in options)]
+		if(!istype(choice)) return
+
+		S.docking_ports |= choice
+		usr << "Added [choice.areaname] to [S.name]!"
 
 	if(href_list["shuttle_set_transit"])
 		feedback_inc("admin_shuttle_magic_used",1)

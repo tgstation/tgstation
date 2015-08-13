@@ -12,6 +12,8 @@ var/global/datum/shuttle/escape/escape_shuttle = new(starting_area=/area/shuttle
 	stable = 0
 	can_rotate = 0 //Sleepers, body scanners and multi-tile airlocks aren't rotated properly
 
+	destroy_everything = 1 //Can't stop us
+
 	var/obj/structure/docking_port/destination/dock_centcom
 	var/obj/structure/docking_port/destination/dock_station
 

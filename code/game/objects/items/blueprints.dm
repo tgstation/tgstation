@@ -1,7 +1,8 @@
-# define AREA_ERRNONE 0
-# define AREA_STATION 1
-# define AREA_SPACE   2
-# define AREA_SPECIAL 3
+# define AREA_ERRNONE	0
+# define AREA_STATION	1
+# define AREA_SPACE		2
+# define AREA_SPECIAL	3
+# define AREA_BLUEPRINTS 4
 
 # define BORDER_ERROR   0
 # define BORDER_NONE    1
@@ -39,10 +40,15 @@
 				return 1
 			create_area()
 		if ("edit_area")
-			if (get_area_type()!=AREA_STATION)
+			if (!(get_area_type() in list(AREA_STATION, AREA_BLUEPRINTS)))
 				interact()
 				return 1
 			edit_area()
+		if ("delete_area")
+			if (get_area_type()!=AREA_BLUEPRINTS)
+				interact()
+				return 1
+			delete_area(usr)
 
 /obj/item/blueprints/interact()
 	var/area/A = get_area()
@@ -53,12 +59,12 @@
 	switch (get_area_type())
 		if (AREA_SPACE)
 			text += {"
-<p>According the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
+<p>According to the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
 <p><a href='?src=\ref[src];action=create_area'>Mark this place as new area.</a></p>
 "}
 		if (AREA_STATION)
 			text += {"
-<p>According the blueprints, you are now in <b>\"[A.name]\"</b>.</p>
+<p>According to the blueprints, you are now in <b>\"[A.name]\"</b>.</p>
 <p>You may <a href='?src=\ref[src];action=edit_area'>
 move an amendment</a> to the drawing.</p>
 "}
@@ -66,6 +72,11 @@ move an amendment</a> to the drawing.</p>
 			text += {"
 <p>This place isn't noted on the blueprint.</p>
 "}
+		if (AREA_BLUEPRINTS)
+			text += {"
+<p>According to the blueprints, you are now <b>\"[A.name]\"</b> This place seems to be relatively new on the blueprints.</p>"}
+			text += "<p>You may <a href='?src=\ref[src];action=edit_area'>move an amendment</a> to the drawing.</p>"//, or <a href='?src=\ref[src];action=delete_area'>erase</a> this place from the blueprints."
+
 		else
 			return
 	text += "</BODY></HTML>"
@@ -81,8 +92,11 @@ move an amendment</a> to the drawing.</p>
 
 /obj/item/blueprints/proc/get_area_type(var/area/A = get_area())
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/blueprints/proc/get_area_type() called tick#: [world.time]")
-	if (A.name == "Space")
+	if (A.type == /area && A.name == "Space")
 		return AREA_SPACE
+	else if(istype(A, /area/station/custom))
+		return AREA_BLUEPRINTS
+
 	var/list/SPECIALS = list(
 		/area/shuttle,
 		/area/admin,
@@ -152,6 +166,27 @@ move an amendment</a> to the drawing.</p>
 		allthings.change_area(prevname,areachanged)
 	usr << "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>"
 	interact()
+
+/obj/item/blueprints/proc/delete_area(var/mob/user)
+	var/area/station/custom/areadeleted = get_area()
+	var/area/space = get_area(locate(1,1,2)) //xd
+
+	if(alert(usr,"Are you sure you want to erase \"[areadeleted]\" from the blueprints?","Blueprint Editing","Yes","No") != "Yes")
+		return
+	else
+		if(!Adjacent(user)) return
+		if(!(areadeleted == get_area())) return //if the blueprints are no longer in the area, return
+		if(!istype(areadeleted)) return //to make sure AGAIN that the area we're deleting is blueprint
+
+	var/list/C = areadeleted.contents.Copy() //because areadeleted.contents is slow
+	for(var/turf/T in C)
+		space.contents.Add(T)
+		T.change_area(areadeleted,space)
+
+		for(var/atom/movable/AM in T.contents)
+			AM.change_area(areadeleted,space)
+	usr << "You've erased the \"[areadeleted]\" from the blueprints."
+	qdel(areadeleted) //Because the area is empty now, it can be safely deleted
 
 /obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/blueprints/proc/check_tile_is_border() called tick#: [world.time]")

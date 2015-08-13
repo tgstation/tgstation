@@ -852,7 +852,7 @@ var/global/floorIsLava = 0
 		rotation [selected_shuttle.can_rotate ? "<b>ENABLED</b>" : "<b>DISABLED</b>"] | transit [selected_shuttle.use_transit ? "ENABLED" : "DISABLED"]<hr>
 
 		<a href='?src=\ref[src];shuttle_create_destination=1'>Create a destination docking port</a><br>
-		<a href='?src=\ref[src];shuttle_modify_destination=1'>Modify destinations</a><br>
+		<a href='?src=\ref[src];shuttle_modify_destination=1'>Add a destination docking port</a><br>
 		<a href='?src=\ref[src];shuttle_set_transit=1'>Modify transit area</a><br>
 		<a href='?src=\ref[src];shuttle_get_console=1'>Get control console</a><br>
 		<a href='?src=\ref[src];shuttle_edit=1'>Modify parameters[selected_shuttle.is_special() ? " and pre-defined areas" : ""]</a>

@@ -85,12 +85,10 @@
 
 	var/lockdown = 0
 
-	var/destroy_everything = 1
+	var/destroy_everything = 0
 
 /datum/shuttle/New(var/area/starting_area)
 	.=..()
-
-	shuttles |= src
 
 	if(starting_area)
 		if(ispath(starting_area))
@@ -100,6 +98,9 @@
 		else
 			linked_area = starting_area
 			warning("Unable to find area [starting_area] in world - [src.type] ([src.name]) won't be able to function properly.")
+
+	if(istype(linked_area) && linked_area.contents.len) //Only add the shuttle to the list if its area exists and it has something in it
+		shuttles |= src
 
 	password = rand(10000,99999)
 
@@ -343,7 +344,6 @@
 				rotate += 360
 			else if(rotate >= 360)
 				rotate -= 360
-	usr << "Rotating by [rotate]"
 
 	//******Get the turf to move to**
 	var/turf/target_turf = D.get_docking_turf()
@@ -460,6 +460,8 @@
 /datum/shuttle/proc/move_area_to(var/turf/our_center, var/turf/new_center, var/rotate = 0)
 	if(!our_center) return
 	if(!new_center) return
+	if((rotate % 90) != 0) //If not divisible by 90, make it
+		rotate += (rotate % 90)
 
 	var/datum/coords/our_center_coords = new(our_center.x,our_center.y)
 	var/datum/coords/new_center_coords = new(new_center.x,new_center.y)
@@ -719,7 +721,7 @@
 /datum/shuttle/custom
 	name = "custom shuttle"
 
-/datum/shuttle/proc/show_outline(var/mob/user, var/turf/centered_at, var/rotate = 0)
+/datum/shuttle/proc/show_outline(var/mob/user, var/turf/centered_at)
 	if(!user)
 		return
 
@@ -741,6 +743,8 @@
 	var/offsetY = centered_at.y - original_center.y
 	var/datum/coords/offset = new(offsetX,offsetY)
 
+	var/rotate = dir2angle(turn(user.dir,180)) - dir2angle(linked_port.dir)
+
 	var/list/original_coords = list()
 	for(var/turf/T in linked_area.get_turfs())
 		var/datum/coords/C = new(T.x,T.y)
@@ -757,7 +761,7 @@
 
 		if(rotate)
 			var/newX = (cosine	* (NC.x_pos - centered_at.x))	+ (sine		* (NC.y_pos - centered_at.y))	+ centered_at.x
-			var/newY = (sine	* (NC.x_pos - centered_at.x))	+ (cosine	* (NC.y_pos - centered_at.y))	+ centered_at.y
+			var/newY = -(sine	* (NC.x_pos - centered_at.x))	+ (cosine	* (NC.y_pos - centered_at.y))	+ centered_at.y
 
 			NC.x_pos = newX
 			NC.y_pos = newY
@@ -778,79 +782,6 @@
 	user << center_img
 
 	alert(usr,"Press \"Ok\" to remove the images","Magic","Ok")
-
-	if(usr.client)
-		for(var/image/I in images)
-			usr.client.images -= I
-	return
-
-/datum/shuttle/proc/show_movable_outline(var/mob/user)
-	if(!user)
-		return
-
-	var/turf/user_turf = get_turf(user)
-	if(!user_turf)
-		user << "You must be standing on a turf!"
-		return
-
-	var/turf/original_center = get_turf(linked_port)
-	var/turf/new_center = get_step(user_turf,usr.dir)
-
-	if(!new_center)
-		user << "The turf in front of you isn't a turf."
-		return
-	else if(!original_center)
-		user << "Unable to find the shuttle docking port's turf."
-
-	var/list/images = list()
-	for(var/turf/T in linked_area.get_turfs())
-		var/image/I = image(T.icon, T.icon_state)
-
-		I.alpha = 200
-		I.loc = user
-		I.pixel_x = 32 * (T.x - original_center.x)
-		I.pixel_y = 32 * (T.y - original_center.y)
-		images += I
-		user << I
-
-	var/image/center_img = image('icons/turf/areas.dmi', icon_state="blue") //This is actually RED, honk
-	center_img.loc = user
-	images += center_img
-	user << center_img
-
-	var/moving_with_user = 1
-	while(1)
-		switch(alert(usr,"Select one of the options below.","Magic","[moving_with_user ? "Stop moving the overlay" : "Center the overlay on user"]","Cancel"))
-			if("Cancel")
-				break
-			if("Stop moving the overlay")
-				if(moving_with_user)
-					user_turf = get_turf(user)
-					if(!user_turf)
-						user << "You must be standing on a turf!"
-					else
-						for(var/image/I in images)
-							var/turf/new_loc = locate ( user_turf.x + (round(I.pixel_x / 32)), user_turf.y + (round(I.pixel_y / 32)), user_turf.z )
-							I.pixel_x = 0
-							I.pixel_y = 0
-							I.loc = new_loc
-						moving_with_user = 0
-						user << "The overlay will now be centered at [user_turf.x];[user_turf.y];[user_turf.z]"
-			if("Center the overlay on user")
-				if(!moving_with_user)
-					var/turf/old_center_loc = center_img.loc
-
-					for(var/image/I in (images - center_img))
-						var/turf/old_loc = I.loc
-						if(!old_loc) continue
-
-						I.pixel_x = 32 * (old_loc.x - old_center_loc.x)
-						I.pixel_y = 32 * (old_loc.y - old_center_loc.y)
-
-						I.loc = user
-
-					moving_with_user = 1
-					user << "The overlay will now be moving with you"
 
 	if(usr.client)
 		for(var/image/I in images)

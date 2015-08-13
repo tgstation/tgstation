@@ -388,6 +388,7 @@ proc/process_adminbus_teleport_locs()
 // Taxi Shuttle
 
 /area/shuttle/taxi_a
+	name = "Taxi A"
 	requires_power = 0
 
 /area/shuttle/taxi_a/medcal_silicon_station
@@ -405,6 +406,7 @@ proc/process_adminbus_teleport_locs()
 // B
 
 /area/shuttle/taxi_b
+	name = "Taxi B"
 	requires_power = 0
 
 /area/shuttle/taxi_b/medcal_silicon_station
