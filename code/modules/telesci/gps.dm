@@ -59,6 +59,10 @@ var/list/SPS_list = list()
 			var/tracked_gpstag = G.gpstag
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
+			else if(!pos || !gps_area)
+				t += "<BR>[tracked_gpstag]: UNKNOWN"
+			else if(pos.z > WORLD_X_OFFSET.len)
+				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] (UNKNOWN, UNKNOWN, UNKNOWN)"
 			else
 				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x-WORLD_X_OFFSET[pos.z]], [pos.y-WORLD_Y_OFFSET[pos.z]], [pos.z])"
 
@@ -133,15 +137,23 @@ var/global/secure_GPS_count = 0
 
 
 /obj/item/device/gps/secure/OnMobDeath(mob/wearer as mob)
+	if(emped) return
+
 	for(var/E in SPS_list)
 		var/obj/item/device/gps/secure/S  = E //No idea why casting it like this makes it work better instead of just defining it in the for each
 		S.announce(wearer, src, "died")
 
 /obj/item/device/gps/secure/stripped(mob/wearer as mob)
+	if(emped) return
+
 	for(var/E in SPS_list)
 		var/obj/item/device/gps/secure/S  = E
 		S.announce(wearer, src, "been stripped of [wearer.gender == FEMALE ? "her" : "his"] SPS")
 
 /obj/item/device/gps/secure/proc/announce(var/mob/wearer, var/obj/item/device/gps/secure/SPS, var/reason)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/gps/secure/proc/announce() called tick#: [world.time]")
-	visible_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")
+	if(istype(src.loc, /mob/living))
+		var/mob/living/L = src.loc
+		L.show_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>",MESSAGE_HEAR)
+	else if(isturf(src.loc))
+		src.visible_message("[gpstag] beeps: <span class='warning'>Warning! [wearer] has [reason] at [get_area(SPS)].</span>")

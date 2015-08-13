@@ -234,6 +234,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 	usr.show_message(t, 1)
 
+#define MESSAGE_SEE		1
+#define MESSAGE_HEAR	2
+
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/show_message() called tick#: [world.time]")
@@ -246,26 +249,26 @@ var/global/obj/screen/fuckstat/FUCK = new
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if((type & 1) && (sdisabilities & BLIND || blinded || paralysis)) //Vision related //We can't see all those emotes no-one ever does !
+		if((type & MESSAGE_SEE) && (sdisabilities & BLIND || blinded || paralysis)) //Vision related //We can't see all those emotes no-one ever does !
 			if(!(alt))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if((type & 2) && (sdisabilities & DEAF || ear_deaf)) //Hearing related //We can't hear what the person is saying. Too bad
+		if((type & MESSAGE_HEAR) && (sdisabilities & DEAF || ear_deaf)) //Hearing related //We can't hear what the person is saying. Too bad
 			if(!(alt))
 				src << "<span class='notice'>You can almost hear someone talking.</span>" //Well, not THAT deaf
 				return //And that does it
 			else
 				msg = alt
 				type = alt_type
-				if((type & 1) && (sdisabilities & BLIND || blinded || paralysis)) //Since the alternative is sight-related, make sure we can see
+				if((type & MESSAGE_SEE) && (sdisabilities & BLIND || blinded || paralysis)) //Since the alternative is sight-related, make sure we can see
 					return
 	//Added voice muffling for Issue 41.
 	//This has been changed to only work with audible messages, because you can't hear a frown
 	//This blocks "audible" emotes like gasping and screaming, but that's such a small loss. Who wants to hear themselves gasping to death ? I don't
 	if(stat == UNCONSCIOUS || sleeping > 0) //No-one's home
-		if((type & 1)) //This is an emote
+		if((type & MESSAGE_SEE)) //This is an emote
 			if(!(alt)) //No alternative message
 				return //We can't see it, we're a bit too dying over here
 			else //Hey look someone passed an alternative message
