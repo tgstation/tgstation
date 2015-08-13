@@ -25,6 +25,7 @@
 	status_flags = 0
 	wander = 0
 	density = 0
+	anchored = 1
 
 	var/essence = 25 //The resource of revenants. Max health is equal to three times this amount
 	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.

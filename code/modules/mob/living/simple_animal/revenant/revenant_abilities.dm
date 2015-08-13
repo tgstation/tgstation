@@ -192,7 +192,7 @@
 				robot.emp_act(2)
 				playsound(robot, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			for(var/obj/structure/window/window in T.contents)
-				window.hit(rand(20,50))
+				window.hit(rand(50,200))
 			for(var/obj/machinery/light/light in T.contents)
 				light.flicker() //spooky
 	user.reveal(100)
