@@ -32,6 +32,7 @@
 	var/essence_regenerating = 1 //If the revenant regenerates essence or not; 1 for yes, 0 for no
 	var/essence_regen_amount = 2 //How much essence regenerates
 	var/essence_min = 1 //The minimum amount of essence a revenant can have; by default, it never drops below one
+	var/essence_accumulated = 0 //How much essence the revenant has stolen
 	var/strikes = 0 //How many times a revenant can die before dying for good
 	var/revealed = 0 //If the revenant can take damage from normal sources.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
@@ -45,13 +46,13 @@
 			src << "<span class='boldannounce'>Your essence has dropped below critical levels. You barely manage to save yourself - [strikes ? "you can't keep this up!" : "next time, it's death."]</span>"
 		else if(strikes <= 0)
 			death()
-	maxHealth = essence * 3
-	if(!revealed)
-		health = maxHealth //Heals to full when not revealed
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence += essence_regen_amount
 		if(essence > essence_regen_cap)
 			essence = essence_regen_cap
+	maxHealth = essence * 3
+	if(!revealed)
+		health = maxHealth //Heals to full when not revealed
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -86,6 +87,7 @@
 	..()
 	if(statpanel("Status"))
 		stat(null, "Current essence: [essence]E")
+		stat(null, "Stolen essence: [essence_accumulated]E")
 
 /mob/living/simple_animal/revenant/New()
 	..()
@@ -186,6 +188,9 @@
 		return
 	user.essence += essence_amt
 	user.essence = Clamp(user.essence, 0, INFINITY)
+	if(essence_amt > 0)
+		user.essence_accumulated += essence_amt
+		user.essence_accumulated = Clamp(user.essence_accumulated, 0, INFINITY)
 	if(!silent)
 		if(essence_amt > 0)
 			user << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
@@ -217,17 +222,17 @@
 
 /datum/objective/revenant/New()
 	targetAmount = rand(100,200)
-	explanation_text = "Absorb [targetAmount] points of essence."
+	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 
 /datum/objective/revenant/check_completion()
-	if(!istype(owner.current, /mob/living/simple_animal/revenant) || !owner.current)
+	if(!istype(owner, /mob/living/simple_animal/revenant) || !owner)
 		return 0
-	var/mob/living/simple_animal/revenant/R = owner.current
+	var/mob/living/simple_animal/revenant/R = owner
 	if(!R || R.stat == DEAD)
 		return 0
-	var/essenceAccumulated = R.essence
-	if(essenceAccumulated < targetAmount)
+	var/essence_stolen = R.essence_accumulated
+	if(essence_stolen < targetAmount)
 		return 0
 	return 1
 
