@@ -104,6 +104,12 @@
 			if((lasercolor == "r") && (name == "ED-209 Security Robot"))
 				name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
+/obj/machinery/bot/ed209/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover,/obj/machinery/bot/ed209))
+		return 1
+	else
+		return ..()
+
 /obj/machinery/bot/ed209/turn_on()
 	. = ..()
 	src.icon_state = "[lasercolor]ed209[src.on]"
