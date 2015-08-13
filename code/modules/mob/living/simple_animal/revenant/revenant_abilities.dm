@@ -108,8 +108,8 @@
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
 /obj/effect/proc_holder/spell/aoe_turf/revenant_light
-	name = "Overload Light (30E)"
-	desc = "Directs a large amount of essence into an electrical light, causing lights to shock those nearby."
+	name = "Overload Lights (30E)"
+	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
 	panel = "Revenant Abilities (Locked)"
 	charge_max = 200
 	clothes_req = 0
@@ -121,8 +121,8 @@
 		if(!user.castcheck(-30))
 			charge_counter = charge_max
 			return
-		user << "<span class='info'>You have unlocked Overload Light!</span>"
-		name = "Overload Light (20E)"
+		user << "<span class='info'>You have unlocked Overload Lights!</span>"
+		name = "Overload Lights (20E)"
 		panel = "Revenant Abilities"
 		locked = 0
 		range = 5
@@ -177,12 +177,11 @@
 		spawn(0)
 			if(T.flags & NOJAUNT)
 				T.flags -= NOJAUNT
-			for(var/obj/machinery/bot/secbot/secbot in T.contents) //Not including ED-209
-				secbot.emagged = 2
-				secbot.Emag(null)
-			for(var/obj/machinery/bot/cleanbot/cleanbot in T.contents)
-				cleanbot.emagged = 2
-				cleanbot.Emag(null)
+			for(var/obj/machinery/bot/bot in T.contents)
+				bot.locked = 0
+				bot.open = 1
+				bot.emagged = 2
+				bot.Emag(null)
 			for(var/mob/living/carbon/human/human in T.contents)
 				human << "<span class='warning'>You suddenly feel tired.</span>"
 				human.adjustStaminaLoss(50)
