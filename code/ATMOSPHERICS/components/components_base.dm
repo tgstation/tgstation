@@ -21,7 +21,6 @@ On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components/
 	var/welded //Used on pumps and scrubbers
-	var/showpipe = 0
 
 	var/device_type = 0//used for initialization stuff
 		//UNARY = 1
@@ -61,7 +60,8 @@ Iconnery
 	update_icon_nopipes()
 
 	underlays.Cut()
-	if(!showpipe)
+
+	if(!(level == 2 || istype(loc, /turf/simulated/floor/plating))) //shows pipes when laid on plating, too
 		return //no need to update the pipes if they aren't showing
 
 	var/connected = 0
@@ -91,8 +91,6 @@ Pipenet stuff; housekeeping
 			if(target.initialize_directions & get_dir(target,src))
 				nodes["n[I]"] = target
 				break
-	if(level == 2)
-		showpipe = 1
 	update_icon()
 
 /obj/machinery/atmospherics/components/construction()
