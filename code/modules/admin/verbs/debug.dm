@@ -66,7 +66,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
 
-		if(!hascall(target,procname))
+		if(target && !hascall(target, procname))
 			usr << "<span style='color: red;'>Error: callproc(): target has no such call [procname].</span>"
 			return
 
