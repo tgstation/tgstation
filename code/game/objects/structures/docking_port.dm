@@ -181,7 +181,7 @@ var/global/list/all_docking_ports = list()
 /proc/select_port_from_list(var/mob/user, var/message="Select a docking port", var/title="Admin abuse", var/list/list) //like input
 	if(!list || !user) return
 
-	var/list/choices = list()
+	var/list/choices = list("Cancel")
 	for(var/obj/structure/docking_port/destination/D in list)
 		var/name = "[D.name] ([D.areaname])"
 		choices += name
@@ -190,5 +190,5 @@ var/global/list/all_docking_ports = list()
 	var/choice = input(user,message,title) in choices as text|null
 
 	var/obj/structure/docking_port/destination/D = choices[choice]
-	if(D) return D
+	if(istype(D)) return D
 	return 0

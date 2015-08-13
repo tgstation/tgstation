@@ -21,9 +21,6 @@
 	density = 1
 	anchored = 1.0
 
-/obj/structure/shuttle/engine/shuttle_rotate(angle)
-	..(angle + 180) //because a propulsion engine/heater with dir=NORTH is facing south
-
 /obj/structure/shuttle/engine/heater
 	name = "heater"
 	icon_state = "heater"

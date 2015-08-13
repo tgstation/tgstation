@@ -839,33 +839,39 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=secrets")
 	return
 
+/datum/admins/var/datum/shuttle/selected_shuttle
 /datum/admins/proc/shuttle_magic()
-	var/dat = {"<b>WARNING:</b> server may explode!<hr><br>
+	var/dat = "<b>WARNING:</b> server may explode!<hr><br>"
 
-	<b> Shuttle construction & improvement: </b><br>
-	<a href='?src=\ref[src];shuttle_create_destination=1'>Create a destination docking port</a> |
-	<a href='?src=\ref[src];shuttle_create_shuttleport=1'>Create a shuttle docking port</a> |
-	<a href='?src=\ref[src];shuttle_add_destination=1'>Modify a shuttle's linked docking ports</a> |
-	<a href='?src=\ref[src];shuttle_set_transit=1'>Modify a shuttle's transit area</a> |
-	<a href='?src=\ref[src];shuttle_get_console=1'>Get a shuttle's control console</a> |
-	<a href='?src=\ref[src];shuttle_edit=1'>Modify a shuttle's parameters</a><hr><br>
+	if(!istype(selected_shuttle))
+		dat += "<a href='?src=\ref[src];shuttle_select=1'>Select a shuttle</a><hr>"
+	else
+		dat += {"Selected shuttle: <b>[selected_shuttle.name]</b> (<i>[selected_shuttle.type]</i>)<br>
+		<a href='?_src_=vars;Vars=\ref[selected_shuttle]'>view variables</A> | <a href='?src=\ref[src];shuttle_teleport_to=1'>teleport to</a> | <a href='?src=\ref[src];shuttle_select=1'>select another shuttle</a><br>
+		cooldown: [selected_shuttle.cooldown] | pre-flight delay: [selected_shuttle.pre_flight_delay] | transit delay: [selected_shuttle.transit_delay]<br>
+		rotation [selected_shuttle.can_rotate ? "<b>ENABLED</b>" : "<b>DISABLED</b>"] | transit [selected_shuttle.use_transit ? "ENABLED" : "DISABLED"]<hr>
 
-	<b> Moving shuttles: </b><br>
-	<a href='?src=\ref[src];shuttle_move_to=1'>Send a shuttle</a> |
-	<a href='?src=\ref[src];shuttle_forcemove=1'>Teleport a shuttle</a><hr><br>
+		<a href='?src=\ref[src];shuttle_create_destination=1'>Create a destination docking port</a><br>
+		<a href='?src=\ref[src];shuttle_modify_destination=1'>Modify destinations</a><br>
+		<a href='?src=\ref[src];shuttle_set_transit=1'>Modify transit area</a><br>
+		<a href='?src=\ref[src];shuttle_get_console=1'>Get control console</a><br>
+		<a href='?src=\ref[src];shuttle_edit=1'>Modify parameters[selected_shuttle.is_special() ? " and pre-defined areas" : ""]</a>
+		<hr>
+		<a href='?src=\ref[src];shuttle_move_to=1'>Send</a><br>
+		<a href='?src=\ref[src];shuttle_forcemove=1'>Teleport</a><br>
+		<a href='?src=\ref[src];shuttle_supercharge=1'>Make movement instant</a><br>
+		<a href='?src=\ref[src];shuttle_show_overlay=1'>Draw outline</a>
+		<hr>
+		<a href='?src=\ref[src];shuttle_lockdown=1'>[selected_shuttle.lockdown ? "Lift lockdown" : "Lock down"]</a><br>
+		<a href='?src=\ref[src];shuttle_reset=1'>Reset</a><br>
+		<a href='?src=\ref[src];shuttle_delete=1'>Delete</a>
+		<hr>
+		"}
 
-	<b> Other stuff: </b><br>
-	<a href='?src=\ref[src];shuttle_show_overlay=1'>Draw a shuttle's outline</a> |
-	<a href='?src=\ref[src];shuttle_teleport_to_dock=1'>Teleport to a destination docking port</a> |
-	<a href='?src=\ref[src];shuttle_teleport_to=1'>Teleport to a shuttle</a> |<hr><br>
-
-	<b> In case of emergency: </b><br>
-	<a href='?src=\ref[src];shuttle_toggle_lockdown=1'>Toggle lockdown on a shuttle</a> |
-	<a href='?src=\ref[src];shuttle_delete=1'>Delete a shuttle</a> |
-	<a href='?src=\ref[src];shuttle_reset=1'>Reset a shuttle</a> |
-	<a href='?src=\ref[src];shuttle_mass_lockdown=1'><b>LOCKDOWN ALL SHUTTLES </b></a><hr><br>
-
-
+	//The following commands don't need a selected shuttle
+	dat += {"
+	<a href='?src=\ref[src];shuttle_shuttlify=1'>Turn current area into a shuttle</a><br>
+	<a href='?src=\ref[src];shuttle_mass_lockdown=1'>Lock down all shuttles</a>
 	"}
 	usr << browse(dat, "window=shuttlemagic")
 

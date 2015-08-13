@@ -47,7 +47,6 @@
 
 	var/dir = NORTH
 
-	//Whether the shuttle can rotate. This feature is B R O K E N
 	var/can_rotate = 1
 
 	//This is the time it takes for the shuttle to depart (if there's a transit area) or to travel (if there are no transit areas)
@@ -86,7 +85,7 @@
 
 	var/lockdown = 0
 
-	var/destroy_everything = 0
+	var/destroy_everything = 1
 
 /datum/shuttle/New(var/area/starting_area)
 	.=..()
@@ -338,9 +337,13 @@
 
 		if(linked_port.dir != turn(D.dir,180))
 
-			rotate = (dir2angle(D.dir) - dir2angle(linked_port.dir))
+			rotate = dir2angle(turn(D.dir,180)) - dir2angle(linked_port.dir)
+
 			if(rotate < 0)
 				rotate += 360
+			else if(rotate >= 360)
+				rotate -= 360
+	usr << "Rotating by [rotate]"
 
 	//******Get the turf to move to**
 	var/turf/target_turf = D.get_docking_turf()
@@ -501,8 +504,8 @@
 		if(rotate != 0)
 			//Oh god this works
 
-			var/newX = (cosine	* (new_coords.x_pos - new_center.x))	- (sine		* (new_coords.y_pos - new_center.y))	+ new_center.x
-			var/newY = (sine	* (new_coords.x_pos - new_center.x))	- (cosine	* (new_coords.y_pos - new_center.y))	+ new_center.y
+			var/newX = (cosine	* (new_coords.x_pos - new_center.x))	+ (sine		* (new_coords.y_pos - new_center.y))	+ new_center.x
+			var/newY = -(sine	* (new_coords.x_pos - new_center.x))	+ (cosine	* (new_coords.y_pos - new_center.y))	+ new_center.y
 
 			new_coords.x_pos = newX
 			new_coords.y_pos = newY
@@ -716,7 +719,7 @@
 /datum/shuttle/custom
 	name = "custom shuttle"
 
-/datum/shuttle/proc/show_outline(var/mob/user, var/turf/centered_at)
+/datum/shuttle/proc/show_outline(var/mob/user, var/turf/centered_at, var/rotate = 0)
 	if(!user)
 		return
 
@@ -744,9 +747,20 @@
 		original_coords += C
 
 	var/list/new_coords = list()
+
+	var/cosine	= cos(rotate)
+	var/sine	= sin(rotate)
+
 	for(var/datum/coords/C in original_coords)
 		var/datum/coords/NC = C.add(offset)
 		new_coords += NC
+
+		if(rotate)
+			var/newX = (cosine	* (NC.x_pos - centered_at.x))	+ (sine		* (NC.y_pos - centered_at.y))	+ centered_at.x
+			var/newY = (sine	* (NC.x_pos - centered_at.x))	+ (cosine	* (NC.y_pos - centered_at.y))	+ centered_at.y
+
+			NC.x_pos = newX
+			NC.y_pos = newY
 
 	var/list/images = list()
 	for(var/datum/coords/C in new_coords)

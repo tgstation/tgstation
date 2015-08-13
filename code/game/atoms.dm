@@ -542,7 +542,7 @@ its easier to just keep the beam vertical.
 
 //Called when a shuttle rotates
 /atom/proc/shuttle_rotate(var/angle)
-	src.dir = turn(src.dir, angle)
+	src.dir = turn(src.dir, -angle)
 
 	if(canSmoothWith) //Smooth the smoothable
 		relativewall()
@@ -551,8 +551,8 @@ its easier to just keep the beam vertical.
 	if(pixel_x || pixel_y)
 		var/cosine	= cos(angle)
 		var/sine	= sin(angle)
-		var/newX = (cosine	* pixel_x) - (sine	* pixel_y)
-		var/newY = (sine	* pixel_x) - (cosine* pixel_y)
+		var/newX = (cosine	* pixel_x) + (sine	* pixel_y)
+		var/newY = -(sine	* pixel_x) + (cosine* pixel_y)
 
 		pixel_x = newX
 		pixel_y = newY

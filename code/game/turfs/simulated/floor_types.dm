@@ -224,7 +224,7 @@
 	explosion_block = 2
 
 /turf/simulated/shuttle/wall/shuttle_rotate(angle) //delete this when autosmooth is added
-	src.transform = turn(src.transform, -angle)
+	src.transform = turn(src.transform, angle)
 
 /turf/simulated/shuttle/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)
