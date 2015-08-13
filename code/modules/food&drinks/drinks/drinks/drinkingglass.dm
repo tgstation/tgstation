@@ -475,6 +475,10 @@
 				icon_state = "glass_brown" //placeholder, tg still doesn't have a sprite/description for this
 				name = "Triple Citrus"
 				desc = "A mix of lemon juice, lime juice and orange juice"
+			if("purple_drank")
+				icon_state = "purple_drank"
+				name = "Purple Drank"
+				desc = "I'mma grip an' sip!"
 
 			else
 				icon_state ="glass_brown"
