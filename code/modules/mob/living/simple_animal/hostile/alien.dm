@@ -82,6 +82,7 @@
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
+	pixel_x = -16
 
 /obj/item/projectile/neurotox
 	damage = 30
