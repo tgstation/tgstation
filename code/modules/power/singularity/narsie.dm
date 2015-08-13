@@ -41,7 +41,7 @@
 	if(!(src in view()))
 		user << "Your soul is too far away."
 		return
-	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 1)
 	PoolOrNew(/obj/effect/effect/smoke/sleeping, user.loc)
 
 

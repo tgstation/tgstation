@@ -3,6 +3,7 @@
 #define SPIDER_GIFT 3
 #define DEPARTMENT_RESUPPLY 4
 #define ANTIDOTE_NEEDED 5
+#define CULT_OUTREACH 6
 
 
 /datum/round_event_control/shuttle_loan
@@ -20,7 +21,7 @@
 	announceWhen	= 1
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, CULT_OUTREACH)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -37,6 +38,9 @@
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
+		if(CULT_OUTREACH)
+			priority_announce("Cargo: A group of traveling religious preachers has asked if they could borrow your shuttle to help spread the good word of their diety. Up to you if you want to listen to their preachings.", "Centcom Religious Outreach Program")
+			thanks_msg = "Alright, we'll let them know you're interested. Shuttle should return in 5 minutes."
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
@@ -65,6 +69,8 @@
 			SSshuttle.centcom_message += "Department resupply incoming."
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
+		if(CULT_OUTREACH)
+			SSshuttle.centcom_message += "Religious preachers incoming."
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -134,6 +140,25 @@
 				T = pick(empty_shuttle_turfs)
 				new /obj/effect/spider/stickyweb(T)
 
+			if(CULT_OUTREACH)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
+				if(prob(50))
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/cultist/human)
+				if(prob(10))
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/construct/armored)
+
+				var/turf/T = pick(empty_shuttle_turfs)
+				empty_shuttle_turfs.Remove(T)
+
+				new /obj/effect/decal/remains/human(T)
+				new /obj/item/weapon/tome(T)
+
+				T = pick(empty_shuttle_turfs)
+				new /obj/structure/cult/talisman(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/structure/cult/pylon(T)
 
 			if(ANTIDOTE_NEEDED)
 				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
@@ -199,3 +224,4 @@
 #undef RUSKY_PARTY
 #undef SPIDER_GIFT
 #undef DEPARTMENT_RESUPPLY
+#undef CULT_OUTREACH

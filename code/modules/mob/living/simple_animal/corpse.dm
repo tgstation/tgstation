@@ -117,6 +117,36 @@
 
 
 
+/obj/effect/landmark/mobcorpse/cultist
+	name = "Cultist"
+	corpseuniform = /obj/item/clothing/under/color/purple
+	corpsesuit = /obj/item/clothing/suit/cultrobes/alt
+	corpseshoes = /obj/item/clothing/shoes/cult
+	corpseradio = /obj/item/device/radio/headset
+	corpsehelmet = /obj/item/clothing/head/culthood/alt
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseid = 0
+	corpseidjob = null
+	corpseidaccess = null
+
+
+
+/obj/effect/landmark/mobcorpse/cultist/space
+	name = "Spacebound Cultist"
+	corpseuniform = /obj/item/clothing/under/color/purple
+	corpsesuit = /obj/item/clothing/suit/space/cult
+	corpseshoes = /obj/item/clothing/shoes/cult
+	corpseradio = /obj/item/device/radio/headset
+	corpsehelmet = /obj/item/clothing/head/helmet/space/cult
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsepocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseid = 0
+	corpseidjob = null
+	corpseidaccess = null
+
+
+
 /obj/effect/landmark/mobcorpse/clown
 	name = "Clown"
 	corpseuniform = /obj/item/clothing/under/rank/clown

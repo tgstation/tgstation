@@ -1,4 +1,4 @@
-/mob/living/simple_animal/construct
+/mob/living/simple_animal/hostile/construct
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
@@ -21,14 +21,14 @@
 	var/list/construct_spells = list()
 	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 
-/mob/living/simple_animal/construct/New()
+/mob/living/simple_animal/hostile/construct/New()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 
-/mob/living/simple_animal/construct/death()
+/mob/living/simple_animal/hostile/construct/death()
 	..(1)
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
@@ -36,7 +36,7 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/construct/examine(mob/user)
+/mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
@@ -49,14 +49,14 @@
 
 	user << msg
 
-/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/construct/builder))
+/mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
 		adjustBruteLoss(-5)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()
 
-/mob/living/simple_animal/construct/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/construct/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
@@ -64,14 +64,14 @@
 	Proj.on_hit(src)
 	return 0
 
-/mob/living/simple_animal/construct/narsie_act()
+/mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
 /////////////////Juggernaut///////////////
 
 
 
-/mob/living/simple_animal/construct/armored
+/mob/living/simple_animal/hostile/construct/armored
 	name = "Juggernaut"
 	real_name = "Juggernaut"
 	desc = "A possessed suit of armor driven by the will of the restless dead."
@@ -85,6 +85,7 @@
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
 	speed = 3
+	move_to_delay = 10
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
@@ -94,7 +95,7 @@
 	playstyle_string = "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 
-/mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -127,7 +128,7 @@
 
 
 
-/mob/living/simple_animal/construct/wraith
+/mob/living/simple_animal/hostile/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
 	desc = "A wicked bladed shell contraption piloted by a bound spirit"
@@ -148,7 +149,7 @@
 
 /////////////////////////////Artificer/////////////////////////
 
-/mob/living/simple_animal/construct/builder
+/mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
 	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies"
@@ -176,7 +177,7 @@
 
 /////////////////////////////Harvester/////////////////////////
 
-/mob/living/simple_animal/construct/harvester
+/mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A harbinger of Nar-Sie's enlightenment. It'll be all over soon."
@@ -195,5 +196,5 @@
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/hostile/construct/hostile/harvester/Process_Spacemove(movement_dir = 0)
 	return 1
