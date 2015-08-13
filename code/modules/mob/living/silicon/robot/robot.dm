@@ -191,23 +191,28 @@
 	..()
 	if(cells)
 		returnToPool(cells)
-		client.screen -= cells
+		if(client)
+			client.screen -= cells
 		cells = null //TODO: Move to mob level helper
 	if(inv1)
 		returnToPool(inv1)
-		client.screen -= inv1
+		if(client)
+			client.screen -= inv1
 		inv1 = null
 	if(inv2)
 		returnToPool(inv2)
-		client.screen -= inv2
+		if(client)
+			client.screen -= inv2
 		inv2 = null
 	if(inv3)
 		returnToPool(inv3)
-		client.screen -= inv3
+		if(client)
+			client.screen -= inv3
 		inv3 = null
 	if(robot_modules_background)
 		returnToPool(robot_modules_background)
-		client.screen -= robot_modules_background
+		if(client)
+			client.screen -= robot_modules_background
 		robot_modules_background = null
 
 /proc/getAvailableRobotModules()
