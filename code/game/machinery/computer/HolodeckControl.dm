@@ -1,7 +1,8 @@
 /obj/machinery/computer/HolodeckControl
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
-	icon_state = "holocontrol"
+	icon_screen = "holocontrol"
+	icon_keyboard = "tech_key"
 	var/area/linkedholodeck = null
 	var/area/target = null
 	var/active = 0
@@ -9,7 +10,7 @@
 	var/damaged = 0
 	var/last_change = 0
 
-/obj/machinery/computer/HolodeckControl/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
 
 	if(..())
 		return
@@ -114,18 +115,14 @@
 
 
 
-/obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+/obj/machinery/computer/HolodeckControl/emag_act(mob/user)
+	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>"
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
-		log_game("[key_name(usr)] emagged the Holodeck Control Console")
+		log_game("[key_name(user)] emagged the Holodeck Control Console")
 		src.updateUsrDialog()
-	else
-		..()
-	return
 
 /obj/machinery/computer/HolodeckControl/New()
 	..()
@@ -146,7 +143,7 @@
 	..()
 
 
-/obj/machinery/computer/HolodeckControl/ex_act(severity)
+/obj/machinery/computer/HolodeckControl/ex_act(severity, target)
 	emergencyShutdown()
 	..()
 
@@ -187,7 +184,7 @@
 
 
 
-/obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_items.Remove(obj)
 
 	if(obj == null)
@@ -203,7 +200,7 @@
 		visible_message("The [oldobj.name] fades away!")
 	qdel(obj)
 
-/obj/machinery/computer/HolodeckControl/proc/checkInteg(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
 		if(istype(T, /turf/space))
 			return 0
@@ -215,7 +212,7 @@
 	if(stat & NOPOWER)
 		emergencyShutdown()
 
-/obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
+/obj/machinery/computer/HolodeckControl/proc/loadProgram(area/A)
 
 	if(world.time < (last_change + 25))
 		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
@@ -230,12 +227,6 @@
 
 	for(var/item in holographic_items)
 		derez(item)
-
-	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
-		qdel(B)
-
-	for(var/mob/living/simple_animal/hostile/carp/C in linkedholodeck)
-		qdel(C)
 
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
@@ -282,51 +273,47 @@
 // Holographic Items!
 
 /turf/simulated/floor/holofloor
+	icon_state = "floor"
 	thermal_conductivity = 0
 
-/turf/simulated/floor/holofloor/grass
-	gender = PLURAL
-	name = "lush grass"
-	icon_state = "grass1"
-	floor_tile = /obj/item/stack/tile/grass
-
-/turf/simulated/floor/holofloor/grass/New()
-	..()
-	icon_state = "grass[pick("1","2","3","4")]"
-	spawn(1)
-		if(src)
-			update_icon()
-			fancy_update(type)
-
-/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/turf/simulated/floor/holofloor/attackby(obj/item/weapon/W, mob/user, params)
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
+
+/turf/simulated/floor/grass/holo
+	thermal_conductivity = 0
+	gender = PLURAL
+	name = "lush grass"
+
+/turf/simulated/floor/grass/holo/attackby(obj/item/weapon/W, mob/user, params)
+	return
+	// HOLOGRASS DOES NOT GIVE A FUCK
 
 /obj/structure/table/holotable
 	name = "table"
 
-/obj/structure/table/holotable/attack_paw(mob/user as mob)
+/obj/structure/table/holotable/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/table/holotable/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+/obj/structure/table/holotable/attack_alien(mob/user) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	return attack_hand(user)
 
-/obj/structure/table/holotable/attack_animal(mob/living/simple_animal/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
+/obj/structure/table/holotable/attack_animal(mob/living/simple_animal/user) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	return attack_hand(user)
 
-/obj/structure/table/holotable/attack_hand(mob/user as mob)
+/obj/structure/table/holotable/attack_hand(mob/user)
 	return // HOLOTABLE DOES NOT GIVE A FUCK
 
 
-/obj/structure/table/holotable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/table/holotable/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='danger'> You need a better grip to do that!</span>"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("<span class='danger'> [G.assailant] puts [G.affecting] on the table.</span>")
+		visible_message("<span class='danger'>[G.assailant] puts [G.affecting] on the table.</span>")
 		qdel(W)
 		return
 
@@ -378,13 +365,13 @@
 		return 1
 	return 0
 
-/obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
+/obj/item/weapon/holo/esword/attack(mob/target, mob/user)
 	..()
 
 /obj/item/weapon/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
 
-/obj/item/weapon/holo/esword/attack_self(mob/living/user as mob)
+/obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
@@ -404,26 +391,26 @@
 
 //BASKETBALL OBJECTS
 
-/obj/item/weapon/beach_ball/holoball
+/obj/item/toy/beach_ball/holoball
 	name = "basketball"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
 
-/obj/item/weapon/beach_ball/holoball/dodgeball
+/obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"
 	icon_state = "dodgeball"
 	item_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
 
-/obj/item/weapon/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+/obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
+		loc = get_turf(hit_atom) //drop at the target's feet
 		if(prob(5))
 			M.Weaken(3)
 			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>", 3)
@@ -435,22 +422,21 @@
 	icon_state = "hoop"
 	anchored = 1
 	density = 1
-	throwpass = 1
 
-/obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='danger'>You need a better grip to do that!</span>"
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
-		visible_message("<span class='danger'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
+		visible_message("<span class='danger'>[G.assailant] dunks [G.affecting] into \the [src]!</span>", 3)
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
 		user.drop_item(src)
-		visible_message("<span class='warning'> [user] dunks [W] into the [src]!</span>", 3)
+		visible_message("<span class='warning'>[user] dunks [W] into \the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
@@ -460,9 +446,9 @@
 			return
 		if(prob(50))
 			I.loc = src.loc
-			visible_message("<span class='warning'> Swish! \the [I] lands in \the [src].</span>", 3)
+			visible_message("<span class='warning'>Swish! \the [I] lands in \the [src].</span>", 3)
 		else
-			visible_message("<span class='danger'> \the [I] bounces off of \the [src]'s rim!</span>", 3)
+			visible_message("<span class='danger'>\the [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
 		return ..(mover, target, height)
@@ -483,24 +469,24 @@
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/readybutton/attack_ai(mob/user as mob)
+/obj/machinery/readybutton/attack_ai(mob/user)
 	user << "The station AI is not to interact with these devices"
 	return
 
-/obj/machinery/readybutton/attack_paw(mob/user as mob)
-	user << "You are too primitive to use this device"
+/obj/machinery/readybutton/attack_paw(mob/user)
+	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
 /obj/machinery/readybutton/New()
 	..()
 
 
-/obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user, params)
 	user << "The device is a solid button, there's nothing you can do with it!"
 
-/obj/machinery/readybutton/attack_hand(mob/user as mob)
+/obj/machinery/readybutton/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		user << "<span class='warning'>This device is not powered!</span>"
 		return
 
 	currentarea = get_area(src.loc)
@@ -508,7 +494,7 @@
 		qdel(src)
 
 	if(eventstarted)
-		usr << "The event has already begun!"
+		usr << "<span class='warning'>The event has already begun!</span>"
 		return
 
 	ready = !ready

@@ -17,7 +17,7 @@
 	var/icon_broken = "lockbox+b"
 
 
-/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
 	if (W.GetID())
 		if(src.broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
@@ -35,36 +35,41 @@
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-		broken = 1
-		locked = 0
-		desc = "It appears to be broken."
-		icon_state = src.icon_broken
-		if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("<span class='notice'>\The [src] has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='danger'>You hear metal being sliced and sparks flying.</span>"), 2)
-			return
-		else
-			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("<span class='notice'>\The [src] has been broken by [] with an electromagnetic card!</span>", user), 1, text("You hear a faint electrical spark."), 2)
-			return
 	if(!locked)
 		..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
 	return
 
-/obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
+/obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
+	if (locked)
+		src.add_fingerprint(usr)
+		usr << "<span class='warning'>It's locked!</span>"
+		return 0
+	..()
+
+/obj/item/weapon/storage/lockbox/emag_act(mob/user)
+	if(!broken)
+		broken = 1
+		locked = 0
+		desc += "It appears to be broken."
+		icon_state = src.icon_broken
+		for(var/mob/O in viewers(user, 3))
+			O.show_message(text("\The [src] has been broken by [] with an electromagnetic card!", user), 1, text("<span class='italics'>You hear a faint electrical spark.</span>"), 2)
+			return
+/obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
-		user << "<span class='danger'>It's locked!</span>"
+		user << "<span class='warning'>It's locked!</span>"
 	else
 		..()
 	return
+
+//Check the destination item type for contentto.
+/obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(locked)
+		user << "<span class='warning'>It's locked!</span>"
+		return 0
+	return ..()
 
 /obj/item/weapon/storage/lockbox/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
@@ -90,7 +95,7 @@
 
 /obj/item/weapon/storage/lockbox/clusterbang/New()
 	..()
-	new /obj/item/weapon/grenade/flashbang/clusterbang(src)
+	new /obj/item/weapon/grenade/clusterbuster(src)
 
 /obj/item/weapon/storage/lockbox/medal
 	name = "medal box"

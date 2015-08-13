@@ -30,14 +30,14 @@ var/list/modules = list(			// global associative list
 	status = needed
 	installed = needed
 
-/datum/moduletypes/proc/addmod(var/type, var/modtextlist)
+/datum/moduletypes/proc/addmod(type, modtextlist)
 	modules += type	// index by type text
 	modules[type] = modtextlist
 
-/datum/moduletypes/proc/inmodlist(var/type)
+/datum/moduletypes/proc/inmodlist(type)
 	return ("[type]" in modules)
 
-/datum/moduletypes/proc/getbitmask(var/type)
+/datum/moduletypes/proc/getbitmask(type)
 	var/count = modcount["[type]"]
 	if(count)
 		return 2**count-1

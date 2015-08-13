@@ -5,12 +5,14 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
 	name = "ore box"
-	desc = "It's heavy"
+	desc = "A heavy wooden box, which can be filled with a lot of ores."
 	density = 1
+	pressure_resistance = 5*ONE_ATMOSPHERE
 
-/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/ore))
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		W.loc = src
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
@@ -20,7 +22,7 @@
 		user << "<span class='notice'>You empty the satchel into the box.</span>"
 	return
 
-/obj/structure/ore_box/attack_hand(mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -83,20 +85,6 @@
 	src.updateUsrDialog()
 	return
 
-obj/structure/ore_box/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/ore/O in contents)
-				O.loc = src.loc
-				O.ex_act(severity++)
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/obj/item/weapon/ore/O in contents)
-					O.loc = src.loc
-					O.ex_act(severity++)
-				qdel(src)
-				return
-		if(3.0)
-			return
+obj/structure/ore_box/ex_act(severity, target)
+	if(prob(100 / severity) && severity < 3)
+		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them

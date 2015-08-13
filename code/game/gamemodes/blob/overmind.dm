@@ -14,17 +14,46 @@
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0
 	var/max_blob_points = 100
+	var/last_attack = 0
+	var/datum/reagent/blob/blob_reagent_datum = new/datum/reagent/blob()
+	var/list/blob_mobs = list()
+	var/ghostimage = null
 
 /mob/camera/blob/New()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	last_attack = world.time
+	var/list/possible_reagents = list()
+	for(var/type in (typesof(/datum/reagent/blob) - /datum/reagent/blob))
+		possible_reagents.Add(new type)
+	blob_reagent_datum = pick(possible_reagents)
+	if(blob_core)
+		blob_core.adjustcolors(blob_reagent_datum.color)
+
+	ghostimage = image(src.icon,src,src.icon_state)
+	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
+	updateallghostimages()
+	..()
+
+/mob/camera/blob/Life()
+	if(!blob_core)
+		qdel(src)
+	..()
+
+/mob/camera/blob/Destroy()
+	if (ghostimage)
+		ghost_darkness_images -= ghostimage
+		qdel(ghostimage)
+		ghostimage = null;
+		updateallghostimages()
 	..()
 
 /mob/camera/blob/Login()
 	..()
 	sync_mind()
 	src << "<span class='notice'>You are the overmind!</span>"
+	src << "Your randomly chosen reagent is: <b>[blob_reagent_datum.name]</b>!"
 	src << "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as..."
 	src << "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions."
 	src << "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires."
@@ -36,14 +65,14 @@
 
 /mob/camera/blob/proc/update_health()
 	if(blob_core)
-		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#e36600'>[blob_core.health]</font></div>"
+		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
-/mob/camera/blob/proc/add_points(var/points)
+/mob/camera/blob/proc/add_points(points)
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
-		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#82ed00'>[src.blob_points]</font></div>"
+		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
 
-/mob/camera/blob/say(var/message)
+/mob/camera/blob/say(message)
 	if (!message)
 		return
 
@@ -68,33 +97,32 @@
 		return
 
 	var/message_a = say_quote(message)
-	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
+	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]([blob_reagent_datum.name])</span> <span class='message'>[message_a]</span></span></i></font>"
 
 	for (var/mob/M in mob_list)
 		if(isovermind(M) || isobserver(M))
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(var/act,var/m_type=1,var/message = null)
+/mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
 /mob/camera/blob/blob_act()
 	return
 
 /mob/camera/blob/Stat()
-
-	statpanel("Status")
 	..()
-	if (client.statpanel == "Status")
+	if(statpanel("Status"))
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-	return
 
-/mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
+/mob/camera/blob/Move(NewLoc, Dir = 0)
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
 	if(B)
 		loc = NewLoc
 	else
 		return 0
 
+/mob/camera/blob/proc/can_attack()
+	return (world.time > (last_attack + CLICK_CD_RANGE))
 

@@ -32,24 +32,35 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	radio_frequency = MED_FREQ //Medical frequency
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute = "tricordrazine"
-	var/treatment_oxy = "tricordrazine"
-	var/treatment_fire = "tricordrazine"
-	var/treatment_tox = "tricordrazine"
+	var/treatment_brute = "bicaridine"
+	var/treatment_oxy = "dexalin"
+	var/treatment_fire = "kelotane"
+	var/treatment_tox = "antitoxin"
 	var/treatment_virus = "spaceacillin"
 	var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 	bot_type = MED_BOT
-	bot_filter = RADIO_MEDBOT
+	model = "Medibot"
 
 /obj/machinery/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "dexalinp"
-	treatment_brute = "bicaridine"
-	treatment_fire = "kelotane"
-	treatment_tox = "anti_toxin"
+	treatment_oxy = "tricordrazine"
+	treatment_brute = "tricordrazine"
+	treatment_fire = "tricordrazine"
+	treatment_tox = "tricordrazine"
+
+/obj/machinery/bot/medbot/derelict
+	name = "\improper Old Medibot"
+	desc = "Looks like it hasn't been modified since the late 2080s."
+	skin = "bezerk"
+	heal_threshold = 0
+	declare_crit = 0
+	treatment_oxy = "pancuronium"
+	treatment_brute = "pancuronium"
+	treatment_fire = "sodium_thiopental"
+	treatment_tox = "sodium_thiopental"
 
 /obj/item/weapon/firstaid_arm_assembly
 	name = "incomplete medibot assembly."
@@ -87,13 +98,10 @@
 		if(skin)
 			overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
 
-		if(isnull(botcard_access) || (botcard_access.len < 1))
-			var/datum/job/doctor/J = new/datum/job/doctor
-			botcard.access = J.get_access()
-		else
-			botcard.access = botcard_access
+		var/datum/job/doctor/J = new/datum/job/doctor
+		botcard.access += J.get_access()
 		prev_access = botcard.access
-		add_to_beacons(bot_filter)
+
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -113,16 +121,22 @@
 	last_found = world.time
 	declare_cooldown = 0
 
+/obj/machinery/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
+	path = list()
+	patient = null
+	mode = BOT_IDLE
+	last_found = world.time
+
 /obj/machinery/bot/medbot/set_custom_texts()
 
 	text_hack = "You corrupt [name]'s reagent processor circuits."
 	text_dehack = "You reset [name]'s reagent processor circuits."
 	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
-/obj/machinery/bot/medbot/attack_paw(mob/user as mob)
+/obj/machinery/bot/medbot/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/medbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -209,7 +223,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/medbot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (allowed(user) && !open && !emagged)
 			locked = !locked
@@ -219,19 +233,20 @@
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"
 			if(open)
-				user << "<span class='warning'>Please close the access panel before locking it.</span>"
+				user << "<span class='warning'>Please close the access panel before locking it!</span>"
 			else
 				user << "<span class='warning'>Access denied.</span>"
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(locked)
-			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
+			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
 			return
 		if(!isnull(reagent_glass))
-			user << "<span class='notice'>There is already a beaker loaded.</span>"
+			user << "<span class='warning'>There is already a beaker loaded!</span>"
+			return
+		if(!user.drop_item())
 			return
 
-		user.drop_item()
 		W.loc = src
 		reagent_glass = W
 		user << "<span class='notice'>You insert [W].</span>"
@@ -244,23 +259,23 @@
 		if (health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/Emag(mob/user as mob)
+/obj/machinery/bot/medbot/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
+			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
 		spawn(0)
 			audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		if(user)
 			oldpatient = user
 
-/obj/machinery/bot/medbot/process_scan(var/mob/living/carbon/human/H)
+/obj/machinery/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if (H.stat == 2)
 		return
 
-	if ((H == oldpatient) && (world.time < last_found + 100))
+	if ((H == oldpatient) && (world.time < last_found + 200))
 		return
 
 	if(assess_patient(H))
@@ -295,10 +310,7 @@
 
 	if(frustration > 8)
 		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
-		path = list()
+		soft_reset()
 
 	if(!patient)
 		if(!shut_up && prob(1))
@@ -317,23 +329,25 @@
 		return
 
 	//Patient has moved away from us!
-	else if(patient && path && path.len && (get_dist(patient,path[path.len]) > 2))
+	else if(patient && path.len && (get_dist(patient,path[path.len]) > 2))
 		path = list()
 		mode = BOT_IDLE
 		last_found = world.time
 
-	if(!stationary_mode && patient && path.len == 0 && (get_dist(src,patient) > 1))
-		spawn(0)
-			path = AStar(loc, get_turf(patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
-			if(!path)
-				path = list()
+	else if(stationary_mode && patient) //Since we cannot move in this mode, ignore the patient and wait for another.
+		soft_reset()
+		return
+
+	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
+		path = get_path_to(loc, get_turf(patient), src, /turf/proc/Distance_cardinal, 0, 30,id=botcard)
+		mode = BOT_MOVING
+		if(!path.len) //Do not chase a patient we cannot reach.
+			soft_reset()
 
 	if(path.len > 0 && patient)
 		if(!bot_move(patient))
 			oldpatient = patient
-			patient = null
-			mode = BOT_IDLE
-			last_found = world.time
+			soft_reset()
 		return
 
 	if(path.len > 8 && patient)
@@ -348,7 +362,7 @@
 
 	return
 
-/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
 	if(C.stat == 2)
 		return 0 //welp too late for them!
@@ -395,7 +409,7 @@
 
 	return 0
 
-/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
 	if(!on)
 		return
 
@@ -468,18 +482,22 @@
 		return
 	else
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
-			"<span class='userdanger'>[src] is trying to inject [patient]!</span>")
+			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		spawn(30)
-			if ((get_dist(src, patient) <= 1) && (on))
+			if ((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
+						var/fraction = min(injection_amount/reagent_glass.reagents.total_volume, 1)
+						reagent_glass.reagents.reaction(patient, INGEST, fraction)
 						reagent_glass.reagents.trans_to(patient,injection_amount) //Inject from beaker instead.
-						reagent_glass.reagents.reaction(patient, 2)
 				else
 					patient.reagents.add_reagent(reagent_id,injection_amount)
-				C.visible_message("<span class='danger'>[src] injects [patient] with the syringe!</span>", \
-					"<span class='userdanger'>[src] injects [patient] with the syringe!</span>")
+				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
+					"<span class='userdanger'>[src] injects you with its syringe!</span>")
+				patient = null
+			else
+				visible_message("[src] retracts its syringe.")
 
 			mode = BOT_IDLE
 			updateicon()
@@ -488,14 +506,14 @@
 	reagent_id = null
 	return
 
-/obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag == "taser")
 		stunned = min(stunned+10,20)
 	..()
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/storage/firstaid(Tsec)
@@ -517,20 +535,20 @@
 	qdel(src)
 	return
 
-/obj/machinery/bot/medbot/proc/declare(var/crit_patient)
+/obj/machinery/bot/medbot/proc/declare(crit_patient)
 	if(declare_cooldown)
 		return
 	var/area/location = get_area(src)
 	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_frequency)
 	declare_cooldown = 1
 	spawn(200) //Twenty seconds
-	declare_cooldown = 0
+		declare_cooldown = 0
 
 /*
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+/obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user, params)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -538,7 +556,7 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		user << "<span class='notice'>You need to empty [src] out first.</span>"
+		user << "<span class='warning'>You need to empty [src] out first!</span>"
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
@@ -548,6 +566,8 @@
 		A.skin = "tox"
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
+	else if(istype(src,/obj/item/weapon/storage/firstaid/brute))
+		A.skin = "brute"
 
 	qdel(S)
 	user.put_in_hands(A)
@@ -556,7 +576,7 @@
 	qdel(src)
 
 
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
@@ -569,7 +589,8 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-					user.drop_item()
+					if(!user.unEquip(W))
+						return
 					qdel(W)
 					build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
@@ -578,10 +599,11 @@
 
 			if(1)
 				if(isprox(W))
-					user.drop_item()
+					if(!user.unEquip(W))
+						return
 					qdel(W)
 					build_step++
-					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
+					user << "<span class='notice'>You complete the Medibot. Beep boop!</span>"
 					var/turf/T = get_turf(src)
 					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 					S.skin = skin

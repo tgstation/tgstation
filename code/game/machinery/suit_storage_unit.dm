@@ -33,8 +33,8 @@
 //The units themselves/////////////////
 
 /obj/machinery/suit_storage_unit/standard_unit
-	SUIT_TYPE = /obj/item/clothing/suit/space
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space
+	SUIT_TYPE = /obj/item/clothing/suit/space/eva
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/eva
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/captain
@@ -44,42 +44,59 @@
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen
 
 /obj/machinery/suit_storage_unit/engine
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/ce
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/elite
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/elite
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	MASK_TYPE = /obj/item/clothing/mask/breath
 	STORAGE_TYPE= /obj/item/clothing/shoes/magboots/advance
 
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/security
+	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+
+/obj/machinery/suit_storage_unit/hos
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/security/hos
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
 
 /obj/machinery/suit_storage_unit/atmos
-	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/atmos
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	MASK_TYPE = /obj/item/clothing/mask/gas
 	STORAGE_TYPE = /obj/item/weapon/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/mining
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/mining
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/cmo
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/medical
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/syndicate
 	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/syndi
-	HELMET_TYPE = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
 	STORAGE_TYPE = /obj/item/weapon/tank/jetpack/oxygen/harness
+
+/obj/machinery/suit_storage_unit/ertCom
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/ertSec
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert/sec
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/ertEngi
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert/engi
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
+
+/obj/machinery/suit_storage_unit/ertMed
+	SUIT_TYPE = /obj/item/clothing/suit/space/hardsuit/ert/med
+	MASK_TYPE = /obj/item/clothing/mask/breath
+	STORAGE_TYPE = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
 	src.update_icon()
@@ -124,7 +141,7 @@
 		dump_everything()
 	update_icon()
 
-/obj/machinery/suit_storage_unit/ex_act(severity)
+/obj/machinery/suit_storage_unit/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
 			if(prob(50))
@@ -141,7 +158,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	var/dat
 	if(..())
 		return
@@ -151,7 +168,7 @@
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<B>Maintenance panel controls</B><HR>"
 		dat+= "The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"
-		dat+= text("A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
+		dat+= text("A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'>Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
 		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A href='?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
 		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
 		//user << browse(dat, "window=ssu_m_panel;size=400x500")
@@ -242,7 +259,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen)
@@ -260,15 +277,15 @@
 		return*/
 	else  //welp, the guy is protected, we can continue
 		if(src.issuperUV)
-			user << "You slide the dial back towards \"185nm\"."
+			user << "<span class='notice'>You slide the dial back towards \"185nm\".</span>"
 			src.issuperUV = 0
 		else
-			user << "You crank the dial all the way up to \"15nm\"."
+			user << "<span class='notice'>You crank the dial all the way up to \"15nm\".</span>"
 			src.issuperUV = 1
 		return
 
 
-/obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
 //	var/protected = 0
 //	var/mob/living/carbon/human/H = user
 	if(!src.panelopen) //Needed check due to bugs
@@ -285,7 +302,7 @@
 		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
 		return*/
 	else
-		user << "You push the button. The coloured LED next to it changes."
+		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
 		src.safetieson = !src.safetieson
 
 
@@ -320,9 +337,9 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/toggle_open(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggle_open(mob/user)
 	if(src.islocked || src.isUV)
-		user << "<font color='red'>Unable to open unit.</font>"
+		user << "<span class='warning'>You're unable to open unit!</span>"
 		return 0
 	if(src.OCCUPANT)
 		src.eject_occupant(user)
@@ -331,9 +348,9 @@
 	return 1
 
 
-/obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
 	if(src.OCCUPANT && src.safetieson)
-		user << "<font color='red'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</font>"
+		user << "<span class='warning'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
 		return
 	if(src.isopen)
 		return
@@ -341,7 +358,7 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/proc/start_UV(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
@@ -350,7 +367,7 @@
 	if(!src.HELMET && !src.MASK && !src.SUIT && !src.STORAGE && !src.OCCUPANT ) //shit's empty yo
 		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
 		return
-	user << "You start the Unit's cauterisation cycle."
+	user << "<span class='notice'>You start the Unit's cauterisation cycle.</span>"
 	src.cycletime_left = 20
 	src.isUV = 1
 	if(src.OCCUPANT && !src.islocked)
@@ -398,7 +415,7 @@
 	return src.cycletime_left
 
 
-/obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/eject_occupant(mob/user)
 	if (src.islocked)
 		return
 
@@ -428,17 +445,17 @@
 	var/mob/living/user = usr
 	if(islocked)
 		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT 
+		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/breakout_time = 2
-		user << "<span class='notice'>You start kicking against the doors to escape! (This will take about [breakout_time] minutes.)</span>"
-		visible_message("You see [user] kicking against the doors of the [src]!")
-		if(do_after(user,(breakout_time*60*10)))
+		user << "<span class='notice'>You start kicking against the doors to escape... (This will take about [breakout_time] minutes.)</span>"
+		visible_message("You see [user] kicking against the doors of \the [src]!")
+		if(do_after(user,(breakout_time*60*10), target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || isopen || !islocked)
 				return
 			else
 				isopen = 1
 				islocked = 0
-				visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+				visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 
 		else
 			return
@@ -449,27 +466,27 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/machinery/suit_storage_unit/MouseDrop_T(mob/M, mob/user)
 	store_mob(M, user)
 
-/obj/machinery/suit_storage_unit/proc/store_mob(mob/living/M as mob, mob/user as mob)
+/obj/machinery/suit_storage_unit/proc/store_mob(mob/living/M, mob/user)
 	if(!istype(M))
 		return
 	if (user.stat != 0)
 		return
 	if (!src.isopen)
-		user << "<font color='red'>The unit's doors are shut.</font>"
+		user << "<span class='warning'>The unit's doors are shut!</span>"
 		return
 	if (!src.ispowered || src.isbroken)
-		user << "<font color='red'>The unit is not operational.</font>"
+		user << "<span class='warning'>The unit is not operational!</span>"
 		return
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) || (src.STORAGE))
-		user << "<font color='red'>It's too cluttered inside to fit in!</font>"
+		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 	if(M == user)
 		visible_message("[user] starts squeezing into the suit storage unit!", 3)
 	else
-		visible_message("[user] starts putting [M.name] into the Suit Storage Unit.", 3)
+		visible_message("[user] starts putting [M.name] into the Suit Storage Unit!", 3)
 	if(do_mob(user, M, 10))
 		user.stop_pulling()
 		if(M.client)
@@ -486,12 +503,12 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(!src.ispowered)
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))
 				dump_everything()
-				user << text("<span class='notice'>You pry the [src] open.</span>")
+				user << text("<span class='notice'>You pry \the [src] open.</span>")
 				update_icon()
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -512,9 +529,9 @@
 			user << "<span class='notice'>The unit already contains a suit.</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [S.name] into the suit storage compartment."
+		user << "<span class='notice'>You load the [S.name] into the suit storage compartment.</span>"
 		S.loc = src
 		src.SUIT = S
 		src.update_icon()
@@ -525,12 +542,12 @@
 			return
 		var/obj/item/clothing/head/helmet/H = I
 		if(src.HELMET)
-			user << "<font color='blue'>The unit already contains a helmet.</font>"
+			user << "<span class='warning'>The unit already contains a helmet!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [H.name] into the helmet storage compartment."
+		user << "<span class='notice'>You load the [H.name] into the helmet storage compartment.</span>"
 		H.loc = src
 		src.HELMET = H
 		src.update_icon()
@@ -541,12 +558,12 @@
 			return
 		var/obj/item/clothing/mask/M = I
 		if(src.MASK)
-			user << "<font color='blue'>The unit already contains a mask.</font>"
+			user << "<span class='warning'>The unit already contains a mask!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [M.name] into the mask storage compartment."
+		user << "<span class='notice'>You load the [M.name] into the mask storage compartment.</span>"
 		M.loc = src
 		src.MASK = M
 		src.update_icon()
@@ -557,12 +574,12 @@
 			return
 		var/obj/item/ITEM = I
 		if(src.STORAGE)
-			user << "<font color='blue'>The auxiliary storage compartment is full.</font>"
+			user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='notice'>\The [ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>\The [ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "You load the [ITEM.name] into the auxiliary storage compartment."
+		user << "<span class='notice'>You load the [ITEM.name] into the auxiliary storage compartment.</span>"
 		ITEM.loc = src
 		src.STORAGE = ITEM
 	src.update_icon()
@@ -570,12 +587,12 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_ai(mob/user as mob)
+/obj/machinery/suit_storage_unit/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/suit_storage_unit/attack_paw(mob/user as mob)
-	user << "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>"
+/obj/machinery/suit_storage_unit/attack_paw(mob/user)
+	user << "<span class='warning'>The console controls are far too complicated for your tiny brain!</span>"
 	return
 
 

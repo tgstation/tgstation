@@ -109,7 +109,7 @@
 					<div id=\"rightmenu\">[right_part]</div>
 				</div>
 			</body>
-			</html>"}
+			</html>"} //"
 	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
@@ -167,6 +167,8 @@
 					pID = 8
 				if("What")
 					pID = 9
+				if("Null")
+					pID = 10
 			src.card.setEmotion(pID)
 
 		if("signaller")
@@ -238,13 +240,19 @@
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				remove_med_sec_hud()
+				if(secHUD)
+					add_sec_hud()
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				remove_med_sec_hud()
+				if(medHUD)
+					add_med_hud()
 		if("translator")
 			if(href_list["toggle"])
-				languages = languages == ALL ? HUMAN & ROBOT : ALL
+				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -256,7 +264,7 @@
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				for (var/mob/M in viewers(T))
-					M.show_message("<span class='danger'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='danger'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
+					M.show_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", 3, "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>", 2)
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -624,9 +632,9 @@
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br>
+	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
 	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br><br>"}
+	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
@@ -639,6 +647,5 @@
 	return dat
 
 /mob/living/silicon/pai/proc/chatroom()
-
 	pda.mode = 5
-	pda.attack_self()
+	pda.attack_self(src)

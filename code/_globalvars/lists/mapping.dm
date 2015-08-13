@@ -5,7 +5,7 @@
 
 var/list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 var/list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-
+var/list/diagonals = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
@@ -26,6 +26,8 @@ var/global/list/global_map = null
 	//5 - empty space
 
 var/list/landmarks_list = list()				//list of all landmarks created
+var/list/start_landmarks_list = list()			//list of all spawn points created
+var/list/department_security_spawns = list()	//list of all department security spawns
 
 var/list/monkeystart = list()
 var/list/wizardstart = list()
@@ -43,7 +45,10 @@ var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 var/list/secequipment = list()
 var/list/deathsquadspawn = list()
-var/list/global_activeturfs
+var/list/emergencyresponseteamspawn = list()
 
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
+
+	//used by jump-to-area etc. Updated by area/updateName()
+var/list/sortedAreas = list()

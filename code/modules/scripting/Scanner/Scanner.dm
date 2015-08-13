@@ -118,13 +118,14 @@
 		for(, src.codepos<=lentext(code), src.codepos++)
 
 			var/char=copytext(code, codepos, codepos+1)
+			var/nextchar=copytext(code, codepos+1, codepos+2)
 			if(char=="\n")
 				line++
 				linepos=codepos
 
 			if(ignore.Find(char))
 				continue
-			else if(char == "/")
+			else if(char == "/" && (nextchar == "/" || nextchar == "*"))
 				ReadComment()
 			else if(end_stmt.Find(char))
 				tokens+=new /token/end(char, line, COL)

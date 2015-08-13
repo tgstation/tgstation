@@ -1,7 +1,8 @@
 /obj/machinery/computer/area_atmos
 	name = "area air control computer"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
-	icon_state = "area_atmos"
+	icon_screen = "area_atmos"
+	icon_keyboard = "atmos_key"
 	circuit = "/obj/item/weapon/circuitboard/area_atmos"
 
 	var/list/connectedscrubbers = new()
@@ -18,7 +19,7 @@
 	spawn(10)
 		scanscrubbers()
 
-/obj/machinery/computer/area_atmos/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/area_atmos/attack_hand(mob/user)
 	if(..(user))
 		return
 	src.add_fingerprint(usr)
@@ -102,7 +103,7 @@
 		scrubber.on = text2num(href_list["toggle"])
 		scrubber.update_icon()
 
-/obj/machinery/computer/area_atmos/proc/validscrubber( var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber as obj )
+/obj/machinery/computer/area_atmos/proc/validscrubber( obj/machinery/portable_atmospherics/scrubber/huge/scrubber )
 	if(!isobj(scrubber) || get_dist(scrubber.loc, src.loc) > src.range || scrubber.loc.z != src.loc.z)
 		return 0
 
@@ -126,7 +127,7 @@
 /obj/machinery/computer/area_atmos/area
 	zone = "This computer is working in a wired network limited to this area."
 
-	validscrubber( var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber as obj )
+	validscrubber( obj/machinery/portable_atmospherics/scrubber/huge/scrubber )
 		if(!isobj(scrubber))
 			return 0
 

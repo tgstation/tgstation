@@ -1,8 +1,0 @@
-author: GunHog
-delete-after: True
-changes: 
-  - rscadd: "Our top Nanotrasen scientists have provided improved specifications for the Rapid Part Exchange Device (RPED)! The RPED can now contain up to 50 machine components, and will display identical items in groups when using its inventory interface."
-  - rscadd: "Note that power cells, being somewhat bulkier, will take up more space inside the device. In addition, the RPED's firmware has also been updated to assist in new machine construction! Simply have the required components inside the RPED, apply it to an unfinished machine with its circuit board installed, and watch as the device does the work!"
-  - rscadd: "Nanotrasen has updated station bound Artificial Intelligence unit design specifications to include an integrated subspace radio transmitter. The transmitter is programmed with all standard department channels, along with the inclusion of its private channel. It is accessed using :o in its interface."
-  - rscadd: "{INCOMING CLASSIFIED SYNDICATE TRANSMISSION} Greetings, agents! Today, we are happy to announce that we have successfully reverse engineered the new subspace radio found in Nanotrasen's newest AI build plans. We have included our encryption data into these transmitters. "
-  - rscadd: "Should you be deployed with one of our agent AIs, it may be wise of you to purchase a syndicate encryption key in order to contact it securely. Remember, as with other agents, a Syndicate AI is unlikely to be of the same Syndicate corporation as you, and you both may actually have conflicting mission parameters! Your channel, as always, is accessed using :t."

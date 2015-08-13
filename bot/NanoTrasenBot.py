@@ -281,7 +281,7 @@ if nudgeable:
                client.close() #Throw the bum out!
                truedata = pickle.loads(data)
                if truedata["ip"][0] == "#":
-                  conn.privmsg(truedata["ip"],"PRIVATE ANNOUNCEMENT : "+str(" ".join(truedata["data"])))
+                  conn.privmsg(truedata["ip"],"AUTOMATIC ANNOUNCEMENT : "+str(" ".join(truedata["data"])))
                else:
                   conn.privmsg(channel,"AUTOMATIC ANNOUNCEMENT : "+str(truedata["ip"])+" | "+str(" ".join(truedata["data"])))
          thread.start_new_thread(nudgereceiver,())
@@ -1101,6 +1101,19 @@ while True:
                   comboer = ""
                   if "evening" in influx.lower() and "all" in influx.lower() and len(influx.lower().split(" ")) > 3:
                      pass
+
+                  talking_about_me = False
+                  if Name.lower() in influx.lower():
+                     talking_about_me = True
+
+                  for bot_name in SName:
+                     if bot_name.lower() in influx.lower():
+                        talking_about_me = True
+                        break
+
+                  if not talking_about_me:
+                     continue #it got annoying REAL FAST when it'd interject any time a greeting was used, regardless of context
+
                   elif truesender not in operators:
                      if debug:
                         print truesender+":<GREET>:"+influx
@@ -1300,17 +1313,7 @@ while True:
             print sender+" Has now joined"
             users.append(sender)
             #####
-            if ".fi" in data[0] and sender.lower() == "skibiliano":
-               operators.append(sender)
             if sender.lower() not in peopleheknows[0]:
-               if data[0].split("!")[1] in peopleheknows[1]:
-                  appendion = "...you do seem familiar however"
-               else:
-                  appendion = ""
-               if data[1][1].lower() == channel or data[1][1].lower() == channel[1:]:
-                   conn.privmsg(data[1][1],CORE_DATA.greeting.replace("USER",sender)+" "+appendion)
-               else:
-                  conn.privmsg(data[1][1],"Hello! Haven't seen you here before! Happy to meet you! %s" %(appendion))
                peopleheknows[0].append(sender.lower())
                peopleheknows[1].append(data[0].split("!")[1])
                with open("peopleheknows.cache","w") as peoplehecache:

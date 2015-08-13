@@ -1,15 +1,15 @@
 /obj/machinery/computer/mecha
 	name = "exosuit control console"
 	desc = "Used to remotely locate or lockdown exosuits."
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "mecha"
+	icon_screen = "mecha"
+	icon_keyboard = "tech_key"
 	req_access = list(access_robotics)
 	circuit = "/obj/item/weapon/circuitboard/mecha_control"
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/mecha/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/mecha/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -55,19 +55,16 @@
 		screen = 1
 	if(href_list["return"])
 		screen = 0
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
-
-
 
 /obj/item/mecha_parts/mecha_tracking
 	name = "exosuit tracking beacon"
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
+	w_class = 2
 	origin_tech = "programming=2;magnets=2"
-	construction_time = 50
-	construction_cost = list("metal"=500)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())

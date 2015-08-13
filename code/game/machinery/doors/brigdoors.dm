@@ -24,9 +24,10 @@
 	var/id = null     		// id of door it controls.
 	var/releasetime = 0		// when world.time reaches it - release the prisoneer
 	var/timelength = 0		// the length of time this door will be set for
-	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = 0    		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
 	var/list/obj/machinery/targets = list()
+	var/obj/item/device/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
@@ -34,19 +35,22 @@
 /obj/machinery/door_timer/New()
 	..()
 
+	Radio = new/obj/item/device/radio(src)
+	Radio.listening = 0
+
 	pixel_x = ((src.dir & 3)? (0) : (src.dir == 4 ? 32 : -32))
 	pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
 
 	spawn(20)
-		for(var/obj/machinery/door/window/brigdoor/M in world)
+		for(var/obj/machinery/door/window/brigdoor/M in range(20, src))
 			if (M.id == src.id)
 				targets += M
 
-		for(var/obj/machinery/flasher/F in world)
+		for(var/obj/machinery/flasher/F in range(20, src))
 			if(F.id == src.id)
 				targets += F
 
-		for(var/obj/structure/closet/secure_closet/brig/C in world)
+		for(var/obj/structure/closet/secure_closet/brig/C in range(20, src))
 			if(C.id == src.id)
 				targets += C
 
@@ -64,7 +68,8 @@
 	if(stat & (NOPOWER|BROKEN))	return
 	if(timing)
 		if(world.time > src.releasetime)
-			broadcast_hud_message("[src]'s timer has expired. Releasing prisoner.", src)
+			Radio.set_frequency(SEC_FREQ)
+			Radio.talk_into(src, "Timer has expired. Releasing prisoner.", SEC_FREQ)
 			src.timer_end() // open doors, reset timer, clear status screen
 			timing = 0
 			timeset(0)
@@ -96,7 +101,7 @@
 		if(C.broken)	continue
 		if(C.opened && !C.close())	continue
 		C.locked = 1
-		C.icon_state = C.icon_locked
+		C.update_icon()
 	return 1
 
 
@@ -112,7 +117,7 @@
 		if(C.broken)	continue
 		if(C.opened)	continue
 		C.locked = 0
-		C.icon_state = C.icon_closed
+		C.update_icon()
 
 	return 1
 
@@ -123,7 +128,7 @@
 		. = 0
 
 
-/obj/machinery/door_timer/proc/timeset(var/seconds)
+/obj/machinery/door_timer/proc/timeset(seconds)
 	if(timing)
 		releasetime=world.time+seconds*10
 	else
@@ -131,7 +136,7 @@
 	return
 
 //Allows AIs to use door_timer, see human attack_hand function below
-/obj/machinery/door_timer/attack_ai(var/mob/user as mob)
+/obj/machinery/door_timer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
@@ -139,7 +144,7 @@
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
-/obj/machinery/door_timer/attack_hand(var/mob/user as mob)
+/obj/machinery/door_timer/attack_hand(mob/user)
 	if(..())
 		return
 	var/second = round(timeleft() % 60)
@@ -232,7 +237,7 @@
 
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
-/obj/machinery/door_timer/proc/set_picture(var/state)
+/obj/machinery/door_timer/proc/set_picture(state)
 	if(maptext)	maptext = ""
 	picture_state = state
 	overlays.Cut()
@@ -245,48 +250,6 @@
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
-
-
-/obj/machinery/door_timer/cell_1
-	name = "Cell 1"
-	id = "Cell 1"
-	dir = 2
-	pixel_y = -32
-
-
-/obj/machinery/door_timer/cell_2
-	name = "Cell 2"
-	id = "Cell 2"
-	dir = 2
-	pixel_y = -32
-
-
-/obj/machinery/door_timer/cell_3
-	name = "Cell 3"
-	id = "Cell 3"
-	dir = 2
-	pixel_y = -32
-
-
-/obj/machinery/door_timer/cell_4
-	name = "Cell 4"
-	id = "Cell 4"
-	dir = 2
-	pixel_y = -32
-
-
-/obj/machinery/door_timer/cell_5
-	name = "Cell 5"
-	id = "Cell 5"
-	dir = 2
-	pixel_y = -32
-
-
-/obj/machinery/door_timer/cell_6
-	name = "Cell 6"
-	id = "Cell 6"
-	dir = 4
-	pixel_x = 32
 
 #undef FONT_SIZE
 #undef FONT_COLOR

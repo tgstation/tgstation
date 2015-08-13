@@ -20,10 +20,13 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 10
+	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
+	return(BRUTELOSS)
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -41,16 +44,17 @@
 	colour = "white"
 
 
-/obj/item/weapon/pen/attack(mob/living/M, mob/user)
+/obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
 		return
 
 	if(M.can_inject(user, 1))
 		user << "<span class='warning'>You stab [M] with the pen.</span>"
-		M << "<span class='danger'>You feel a tiny prick!</span>"
+		if(!stealth)
+			M << "<span class='danger'>You feel a tiny prick!</span>"
 		. = 1
 
-	add_logs(user, M, "stabbed", object="[name]")
+	add_logs(user, M, "stabbed", src)
 
 /*
  * Sleepypens
@@ -65,12 +69,12 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.trans_to(M, 50)
+				reagents.trans_to(M, reagents.total_volume)
 
 
 /obj/item/weapon/pen/sleepy/New()
-	create_reagents(55)
-	reagents.add_reagent("stoxin", 30)
+	create_reagents(45)
+	reagents.add_reagent("morphine", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()

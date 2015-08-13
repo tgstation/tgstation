@@ -22,15 +22,15 @@
 
 //Academy Items
 
-/obj/machinery/singularity/academy
+/obj/singularity/academy
 	dissipate = 0
 	move_self = 0
 	grav_pull = 1
 
-/obj/machinery/singularity/academy/admin_investigate_setup()
+/obj/singularity/academy/admin_investigate_setup()
 	return
 
-/obj/machinery/singularity/academy/process()
+/obj/singularity/academy/process()
 	eat()
 	if(prob(1))
 		mezzer()

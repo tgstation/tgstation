@@ -30,7 +30,7 @@ var/list/GPS_list = list()
 		overlays -= "emp"
 		overlays += "working"
 
-/obj/item/device/gps/attack_self(mob/user as mob)
+/obj/item/device/gps/attack_self(mob/user)
 
 	var/obj/item/device/gps/t = ""
 	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show

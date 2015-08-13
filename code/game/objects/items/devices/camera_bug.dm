@@ -42,14 +42,15 @@
 
 /obj/item/device/camera_bug/New()
 	..()
-	processing_objects += src
+	SSobj.processing += src
 
 /obj/item/device/camera_bug/Destroy()
 	if(expansion)
 		qdel(expansion)
 		expansion = null
 	del(src)
-/* Easier to just call del() than this nonsense
+//Easier to just call del() than this nonsense
+// ya no, del() takes 0.8ds to run on avg. this takes less than 0.01
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -59,19 +60,19 @@
 	if(tracking)
 		tracking = null
 	..()
-*/
 
-/obj/item/device/camera_bug/interact(var/mob/user = usr)
+
+/obj/item/device/camera_bug/interact(mob/user = usr)
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
 	popup.set_content(menu(get_cameras()))
 	popup.open()
 
-/obj/item/device/camera_bug/attack_self(mob/user as mob)
+/obj/item/device/camera_bug/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/camera_bug/check_eye(var/mob/user as mob)
-	if (user.stat || loc != user || !user.canmove || user.blinded || !current)
+/obj/item/device/camera_bug/check_eye(mob/user)
+	if (user.stat || loc != user || !user.canmove || user.eye_blind || !current)
 		user.reset_view(null)
 		user.unset_machine()
 		return null
@@ -107,7 +108,7 @@
 	return bugged_cameras
 
 
-/obj/item/device/camera_bug/proc/menu(var/list/cameras)
+/obj/item/device/camera_bug/proc/menu(list/cameras)
 	if(!cameras || !cameras.len)
 		return "No bugged cameras found."
 
@@ -169,7 +170,7 @@
 	if(current && current.can_use())
 		var/list/seen = current.can_see()
 		var/list/names = list()
-		for(var/obj/machinery/singularity/S in seen) // god help you if you see more than one
+		for(var/obj/singularity/S in seen) // god help you if you see more than one
 			if(S.name in names)
 				names[S.name]++
 				dat += "[S.name] ([names[S.name]])"
@@ -208,7 +209,7 @@
 	else
 		return "Camera Offline<br>"
 
-/obj/item/device/camera_bug/Topic(var/href,var/list/href_list)
+/obj/item/device/camera_bug/Topic(href,list/href_list)
 	if(usr != loc)
 		usr.unset_machine()
 		usr.reset_view(null)
@@ -249,11 +250,11 @@
 		var/obj/machinery/camera/C = locate(href_list["view"])
 		if(istype(C))
 			if(!C.can_use())
-				usr << "<span class='danger'>Something's wrong with that camera.  You can't get a feed.</span>"
+				usr << "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>"
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "<span class='danger'>You can't get a signal.</span>"
+				usr << "<span class='warning'>You can't get a signal!</span>"
 				return
 			current = C
 			spawn(6)
@@ -308,10 +309,10 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob)
+/obj/item/device/camera_bug/attackby(obj/item/W,mob/living/user, params)
 	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
 		expansion.loc = get_turf(loc)
-		user << "You unscrew [expansion]."
+		user << "<span class='notice'>You unscrew [expansion].</span>"
 		user.put_in_inactive_hand(expansion)
 		expansion = null
 		bugtype = VANILLA_BUG
@@ -348,11 +349,12 @@
 
 	for(var/entry in expandables)
 		if(istype(W,entry))
+			if(!user.unEquip(W))
+				return
 			bugtype = expandables[entry]
-			user.drop_item()
 			W.loc = src
 			expansion = W
-			user << "You add [W] to [src]."
+			user << "<span class='notice'>You add [W] to [src].</span>"
 			get_cameras() // the tracking code will want to know the new camera list
 			if(bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG))
 				skip_bugcheck = 1

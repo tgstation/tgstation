@@ -5,7 +5,7 @@
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
-	icon_state = "forensic1"
+	icon_state = "forensicnew"
 	w_class = 3.0
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
@@ -13,7 +13,7 @@
 	var/scanning = 0
 	var/list/log = list()
 
-/obj/item/device/detective_scanner/attack_self(var/mob/user)
+/obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
 		scanning = 1
 		user << "<span class='notice'>Printing report, please wait...</span>"
@@ -39,14 +39,14 @@
 	else
 		user << "<span class='notice'>The scanner has no logs or is in use.</span>"
 
-/obj/item/device/detective_scanner/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/device/detective_scanner/attack(mob/living/M, mob/user)
 	return
 
 
-/obj/item/device/detective_scanner/afterattack(atom/A, mob/user as mob, proximity)
+/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, proximity)
 	scan(A, user)
 
-/obj/item/device/detective_scanner/proc/scan(var/atom/A, var/mob/user)
+/obj/item/device/detective_scanner/proc/scan(atom/A, mob/user)
 
 	if(!scanning)
 		// Can remotely scan objects and mobs.
@@ -151,7 +151,7 @@
 			if(!found_something)
 				add_log("<I># No forensic traces found #</I>", 0) // Don't display this to the holder user
 				if(holder)
-					holder << "<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!</span>"
+					holder << "<span class='warning'>Unable to locate any fingerprints, materials, fibers, or blood on \the [target_name]!</span>"
 			else
 				if(holder)
 					holder << "<span class='notice'>You finish scanning \the [target_name].</span>"
@@ -160,7 +160,7 @@
 			scanning = 0
 			return
 
-/obj/item/device/detective_scanner/proc/add_log(var/msg, var/broadcast = 1)
+/obj/item/device/detective_scanner/proc/add_log(msg, broadcast = 1)
 	if(scanning)
 		if(broadcast && ismob(loc))
 			var/mob/M = loc

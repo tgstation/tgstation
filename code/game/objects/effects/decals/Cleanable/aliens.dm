@@ -11,14 +11,15 @@
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	var/list/viruses = list()
-	blood_DNA = list()
+	blood_DNA = list("UNKNOWN DNA" = "X*")
 
 /obj/effect/decal/cleanable/xenoblood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
+	viruses = null
 	..()
 
-/obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(var/list/directions)
+/obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	spawn (0)
 		var/direction = pick(directions)
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
@@ -64,3 +65,4 @@
 /obj/effect/decal/cleanable/blood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
+	blood_DNA = list("UNKNOWN DNA" = "X*")

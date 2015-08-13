@@ -112,7 +112,7 @@
 				src.icon_state = "grey_target_prism"
 				stat |= NOPOWER
 
-/obj/machinery/turret/proc/setState(var/enabled, var/lethal)
+/obj/machinery/turret/proc/setState(enabled, lethal)
 	src.enabled = enabled
 	src.lasers = lethal
 	src.power_change()
@@ -126,7 +126,7 @@
 		return TP
 	return
 
-/obj/machinery/turret/proc/check_target(var/atom/movable/T as mob|obj)
+/obj/machinery/turret/proc/check_target(atom/movable/T as mob|obj)
 	if( T && T in protected_area.turretTargets )
 		var/area/area_T = get_area(T)
 		if( !area_T || (area_T.type != protected_area.type) )
@@ -207,7 +207,7 @@
 		sleep(shot_delay)
 	return
 
-/obj/machinery/turret/proc/shootAt(var/atom/movable/target)
+/obj/machinery/turret/proc/shootAt(atom/movable/target)
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if (!T || !U)
@@ -235,8 +235,7 @@
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
-		A.process()
+	A.fire()
 	return
 
 
@@ -264,7 +263,7 @@
 				invisibility = INVISIBILITY_LEVEL_TWO
 				popping = 0
 
-/obj/machinery/turret/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/turret/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		src.health -= Proj.damage
 		..()
@@ -274,7 +273,7 @@
 			src.die()
 	return
 
-/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user)//I can't believe no one added this before/N
+/obj/machinery/turret/attackby(obj/item/weapon/W, mob/user, params)//I can't believe no one added this before/N
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/smash.ogg', 60, 1)
@@ -292,7 +291,7 @@
 			power_change()
 	..()
 
-/obj/machinery/turret/ex_act(severity)
+/obj/machinery/turret/ex_act(severity, target)
 	if(severity < 3)
 		src.die()
 
@@ -309,13 +308,13 @@
 		qdel(src)
 
 
-/obj/machinery/turret/attack_animal(mob/living/simple_animal/M as mob)
+/obj/machinery/turret/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)	return
 	if(!(stat & BROKEN))
-		visible_message("<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
+		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
+		add_logs(M, src, "attacked")
 		//src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		src.health -= M.melee_damage_upper
 		if (src.health <= 0)
@@ -327,7 +326,7 @@
 
 
 
-/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(!(stat & BROKEN))
@@ -355,14 +354,18 @@
 	var/atom/cur_target = null
 	var/scan_range = 9 //You will never see them coming
 	var/health = 200 //Because it lacks a cover, and is mostly to keep people from touching the syndie shuttle.
+	var/base_icon_state = "syndieturret"
+	var/projectile_type = /obj/item/projectile/bullet
+	var/fire_sound = 'sound/weapons/Gunshot.ogg'
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "syndieturret0"
 
 /obj/machinery/gun_turret/New()
 	..()
 	take_damage(0) //check your health
+	icon_state = "[base_icon_state]" + "0"
 
-/obj/machinery/gun_turret/ex_act(severity)
+/obj/machinery/gun_turret/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			die()
@@ -378,7 +381,7 @@
 /obj/machinery/gun_turret/update_icon()
 	if(state > 2 || state < 0) //someone fucked up the vars so fix them
 		take_damage(0)
-	icon_state = "syndieturret" + "[state]"
+	icon_state = "[base_icon_state]" + "[state]"
 	return
 
 
@@ -398,7 +401,7 @@
 	return
 
 
-/obj/machinery/gun_turret/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/gun_turret/bullet_act(obj/item/projectile/Proj)
 	take_damage(Proj.damage)
 	return
 
@@ -413,10 +416,10 @@
 	return attack_hand(user)
 
 
-/obj/machinery/gun_turret/attack_alien(mob/living/user as mob)
+/obj/machinery/gun_turret/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	user.visible_message("<span class='danger'>[user] slashes at [src]</span>", "<span class='danger'>You slash at [src]</span>")
+	user.visible_message("<span class='danger'>[user] slashes at [src]!</span>", "<span class='danger'>You slash at [src]!</span>")
 	take_damage(15)
 	return
 
@@ -480,13 +483,12 @@
 		return
 	if (targloc == curloc)
 		return
-	playsound(src, 'sound/weapons/Gunshot.ogg', 50, 1)
-	var/obj/item/projectile/A = new /obj/item/projectile/bullet(curloc)
+	playsound(src, fire_sound, 50, 1)
+	var/obj/item/projectile/A = new projectile_type(curloc)
 	A.current = curloc
 	A.yo = targloc.y - curloc.y
 	A.xo = targloc.x - curloc.x
-	spawn(0)
-		A.process()
+	A.fire()
 	return
 
 
@@ -525,19 +527,10 @@
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
 	return
 
-/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/areaturretid/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
-
-	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
-		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
-		emagged = 1
-		locked = 0
-		if(user.machine==src)
-			src.attack_hand(user)
-
-		return
 
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
@@ -557,13 +550,21 @@
 		else
 			user << "<span class='warning'>Access denied.</span>"
 
-/obj/machinery/areaturretid/attack_ai(mob/user as mob)
+/obj/machinery/areaturretid/emag_act(mob/user)
+	if(!emagged)
+		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
+		emagged = 1
+		locked = 0
+		if(user.machine==src)
+			src.attack_hand(user)
+
+/obj/machinery/areaturretid/attack_ai(mob/user)
 	if(!ailock)
 		return attack_hand(user)
 	else
 		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
-/obj/machinery/areaturretid/attack_hand(mob/user as mob)
+/obj/machinery/areaturretid/attack_hand(mob/user)
 	if ( get_dist(src, user) > 0 )
 		if ( !issilicon(user) )
 			user << "<span class='notice'>You are too far away.</span>"

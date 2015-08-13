@@ -7,12 +7,12 @@
 	req_stat = UNCONSCIOUS
 
 //Heals the things that the other regenerative abilities don't.
-/obj/effect/proc_holder/changeling/panacea/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
 
 	user << "<span class='notice'>We cleanse impurities from our form.</span>"
-	user.reagents.add_reagent("ryetalyn", 10)
-	user.reagents.add_reagent("hyronalin", 10)
-	user.reagents.add_reagent("anti_toxin", 20)
+	user.reagents.add_reagent("mutadone", 10)
+	user.reagents.add_reagent("potass_iodide", 10)
+	user.reagents.add_reagent("charcoal", 20)
 
 	for(var/datum/disease/D in user.viruses)
 		D.cure()

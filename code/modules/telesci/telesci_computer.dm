@@ -1,7 +1,8 @@
 /obj/machinery/computer/telescience
 	name = "\improper Telepad Control Console"
 	desc = "Used to teleport objects to and from the telescience telepad."
-	icon_state = "teleport"
+	icon_screen = "teleport"
+	icon_keyboard = "teleport_key"
 	circuit = /obj/item/weapon/circuitboard/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
@@ -50,31 +51,32 @@
 		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "You are too primitive to use this computer."
+	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
-/obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
+/obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			user << "<span class='warning'>There are not enough crystal slots.</span>"
 			return
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		crystals += W
 		W.loc = null
-		user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s crystal slot.</span>")
+		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
 		updateDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
 			user.unEquip(W)
 			W.loc = src
-			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
+			user.visible_message("[user] inserts [W] into \the [src]'s GPS device slot.", "<span class='notice'>You insert [W] into \the [src]'s GPS device slot.</span>")
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			telepad = M.buffer
 			M.buffer = null
-			user << "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>"
+			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 	else
 		..()
 
@@ -334,15 +336,16 @@
 		z_co = Clamp(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
-		inserted_gps.loc = loc
-		inserted_gps = null
+		if(inserted_gps)
+			inserted_gps.loc = loc
+			inserted_gps = null
 
 	if(href_list["setMemory"])
-		if(last_target)
+		if(last_target && inserted_gps)
 			inserted_gps.locked_location = last_target
 			temp_msg = "Location saved."
 		else
-			temp_msg = "ERROR!<BR>No data stored."
+			temp_msg = "ERROR!<BR>No data was stored."
 
 	if(href_list["send"])
 		sending = 1

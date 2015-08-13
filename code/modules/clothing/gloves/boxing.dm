@@ -17,13 +17,3 @@
 /obj/item/clothing/gloves/boxing/yellow
 	icon_state = "boxingyellow"
 	item_state = "boxingyellow"
-
-/obj/item/clothing/gloves/white
-	name = "white gloves"
-	desc = "These look pretty fancy."
-	icon_state = "latex"
-	item_state = "lgloves"
-	item_color="mime"
-
-	redcoat
-		item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.

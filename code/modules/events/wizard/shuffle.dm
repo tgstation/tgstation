@@ -28,7 +28,7 @@
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/smoke = new
 		smoke.set_up(max(1,1), 0, H.loc)
 		smoke.start()
 
@@ -60,7 +60,7 @@
 		mobnames.len -= 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/smoke = new
 		smoke.set_up(max(1,1), 0, H.loc)
 		smoke.start()
 
@@ -92,6 +92,6 @@
 		mobs -= mobs[mobs.len]
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+		var/datum/effect/effect/system/smoke_spread/smoke = new
 		smoke.set_up(max(1,1), 0, H.loc)
 		smoke.start()

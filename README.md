@@ -71,6 +71,18 @@ compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join.
 
+###HOSTING ON LINUX
+We use BYGEX for some of our text replacement related code. Unfortunately, we
+only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
+https://github.com/optimumtact/byond-regex
+
+Otherwise, edit the file `code/_compile_options.dm`, and comment out:
+`#define USE_BYGEX`
+at the bottom, so that it looks like this:
+`//#define USE_BYGEX`
+Recompile the codebase afterwards.
+
+
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
@@ -87,8 +99,8 @@ the new version.
 /tg/station currently comes equipped with three maps.
 
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
-* [MetaStation](http://tgstation13.org/wiki/MetaStation)
 * [MiniStation](http://tgstation13.org/wiki/MiniStation)
+* [AsteroidStation](https://tgstation13.org/wiki/AsteroidStation)
 
 All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
@@ -123,7 +135,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ##LICENSE
 
-All code is under a GNU GPL v3 license (http://www.gnu.org/licenses/gpl.html),
-including tools unless their readme specifies otherwise.
+All code after commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU AGPL v3 (http://www.gnu.org/licenses/agpl-3.0.html).
+All code before commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST (https://github.com/tgstation/-tg-station/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under GNU GPL v3 (https://www.gnu.org/licenses/gpl-3.0.html).
+
+including tools unless their readme specifies otherwise. See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 All content including icons and sound is under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/).

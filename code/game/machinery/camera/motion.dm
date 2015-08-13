@@ -25,7 +25,7 @@
 					// If they aren't in range, lose the target.
 					lostTarget(target)
 
-/obj/machinery/camera/proc/newTarget(var/mob/target)
+/obj/machinery/camera/proc/newTarget(mob/target)
 	if (istype(target, /mob/living/silicon/ai)) return 0
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
@@ -33,7 +33,7 @@
 		motionTargets += target
 	return 1
 
-/obj/machinery/camera/proc/lostTarget(var/mob/target)
+/obj/machinery/camera/proc/lostTarget(mob/target)
 	if (target in motionTargets)
 		motionTargets -= target
 	if (motionTargets.len == 0)
@@ -42,14 +42,16 @@
 /obj/machinery/camera/proc/cancelAlarm()
 	if (detectTime == -1)
 		for (var/mob/living/silicon/aiPlayer in player_list)
-			if (status) aiPlayer.cancelAlarm("Motion", src.loc.loc)
+			if (status)
+				aiPlayer.cancelAlarm("Motion", get_area(src), src)
 	detectTime = 0
 	return 1
 
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime) return 0
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		if (status) aiPlayer.triggerAlarm("Motion", src.loc.loc, src)
+		if (status)
+			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
 	detectTime = -1
 	return 1
 

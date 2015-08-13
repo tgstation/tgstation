@@ -1,29 +1,48 @@
 /obj/item/device/aicard
-	name = "inteliCard"
+	name = "intelliCard"
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
 	w_class = 2.0
 	slot_flags = SLOT_BELT
+	flags = NOBLUDGEON
 	var/flush = null
 	origin_tech = "programming=4;materials=4"
 
 
-/obj/item/device/aicard/attack(mob/living/silicon/ai/M as mob, mob/user as mob)
-	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
-		return ..()
+/obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
+	..()
+	if(!proximity || !target)
+		return
+	var/mob/living/silicon/ai/AI = locate(/mob/living/silicon/ai) in src
+	if(AI) //AI is on the card, implies user wants to upload it.
+		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
+		add_logs(user, AI, "carded", src)
+	else //No AI on the card, therefore the user wants to download one.
+		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
+	update_state() //Whatever happened, update the card's state (icon, name) to match.
 
-	add_logs(user, M, "carded", object="[src.name]")
 
-	transfer_ai("AICORE", "AICARD", M, user)
-	return
+/obj/item/device/aicard/proc/update_state()
+	var/mob/living/silicon/ai/AI = locate(/mob/living/silicon/ai) in src //AI is inside.
+	if(AI)
+		name = "intelliCard - [AI.name]"
+		if (AI.stat == DEAD)
+			icon_state = "aicard-404"
+		else
+			icon_state = "aicard-full"
+		AI.cancel_camera() //AI are forced to move when transferred, so do this whenver one is downloaded.
+	else
+		icon_state = "aicard"
+		name = "intelliCard"
+		overlays.Cut()
 
 /obj/item/device/aicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Intelicard</B><BR>"
+	var/dat = "<TT><B>Intellicard</B><BR>"
 	var/laws
 	for(var/mob/living/silicon/ai/A in src)
 		dat += "Stored AI: [A.name]<br>System integrity: [(A.health+100)/2]%<br>"
@@ -65,7 +84,7 @@
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.radio_enabled ? "Disable" : "Enable"] Subspace Radio</a>"}
 			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+			dat += {"<a href='byond://?src=\ref[src];choice=Close'>Close</a>"}
 	user << browse(dat, "window=aicard")
 	onclose(user, "aicard")
 	return
@@ -107,7 +126,7 @@
 		if ("Wireless")
 			for(var/mob/living/silicon/ai/A in src)
 				A.control_disabled = !A.control_disabled
-				A << "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
+				A << "The intellicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!"
 				if (A.control_disabled)
 					overlays -= image('icons/obj/aicards.dmi', "aicard-on")
 				else

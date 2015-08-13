@@ -94,7 +94,7 @@ DEBUG
 	return 0
 
 /*
-proc/DB_ban_isappearancebanned(var/playerckey)
+/proc/DB_ban_isappearancebanned(var/playerckey)
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return

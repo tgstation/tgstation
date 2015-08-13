@@ -114,6 +114,22 @@ var/intercom_range_display_status = 0
 					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_show_at_list()
+	set category = "Mapping"
+	set name = "Show roundstart AT list"
+	set desc = "Displays a list of active turfs coordinates at roundstart"
+
+	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
+	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
+
+	for(var/i=1; i<=active_turfs_startlist.len; i++)
+		dat += active_turfs_startlist[i]
+		dat += "<br>"
+
+	usr << browse(dat, "window=at_list")
+
+	feedback_add_details("admin_verb","mATL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/enable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs"
@@ -132,20 +148,19 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/count_objects_all
 	src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
 	src.verbs += /client/proc/startSinglo
-	src.verbs += /client/proc/ticklag	//allows you to set the ticklag.
+	src.verbs += /client/proc/fps	//allows you to set the ticklag.
 	src.verbs += /client/proc/cmd_admin_grantfullaccess
-	src.verbs += /client/proc/kaboom
 	src.verbs += /client/proc/cmd_admin_areatest
 	src.verbs += /client/proc/cmd_admin_rejuvenate
 	src.verbs += /datum/admins/proc/show_traitor_panel
 	src.verbs += /client/proc/print_jobban_old
 	src.verbs += /client/proc/print_jobban_old_filter
-	src.verbs += /client/proc/kill_pipe_processing
-	src.verbs += /client/proc/kill_air_processing
 	src.verbs += /client/proc/disable_communication
 	src.verbs += /client/proc/print_pointers
 	src.verbs += /client/proc/count_movable_instances
-	src.verbs += /client/proc/cmd_display_del_log
+	src.verbs += /client/proc/cmd_show_at_list
+	src.verbs += /client/proc/cmd_show_at_list
+	src.verbs += /client/proc/manipulate_organs
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -235,25 +250,6 @@ var/intercom_range_display_status = 0
 	world << "There are [count] objects of type [type_path] in the game world"
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/kill_pipe_processing()
-	set category = "Mapping"
-	set name = "Kill pipe processing"
-
-	pipe_processing_killed = !pipe_processing_killed
-	if(pipe_processing_killed)
-		message_admins("[src.ckey] used 'kill pipe processing', stopping all pipe processing.")
-	else
-		message_admins("[src.ckey] used 'kill pipe processing', restoring all pipe processing.")
-
-/client/proc/kill_air_processing()
-	set category = "Mapping"
-	set name = "Kill air processing"
-
-	air_processing_killed = !air_processing_killed
-	if(air_processing_killed)
-		message_admins("[src.ckey] used 'kill air processing', stopping all air processing.")
-	else
-		message_admins("[src.ckey] used 'kill air processing', restoring all air processing.")
 
 //This proc is intended to detect lag problems relating to communication procs
 var/global/say_disabled = 0

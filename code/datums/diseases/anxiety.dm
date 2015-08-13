@@ -4,6 +4,7 @@
 	max_stages = 4
 	spread_text = "On contact"
 	spread_flags = CONTACT_GENERAL
+	cure_text = "Ethanol"
 	cures = list("ethanol")
 	agent = "Excess Lepidopticides"
 	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
@@ -15,7 +16,7 @@
 	switch(stage)
 		if(2) //also changes say, see say.dm
 			if(prob(5))
-				affected_mob << "<span class='notice'>Your feel anxious.</span>"
+				affected_mob << "<span class='notice'>You feel anxious.</span>"
 		if(3)
 			if(prob(10))
 				affected_mob << "<span class='notice'>Your stomach flutters.</span>"

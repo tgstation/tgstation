@@ -13,6 +13,8 @@
 #define BACKGROUND_ENABLED 0    // The default value for all uses of set background. Set background can cause gradual lag and is recommended you only turn this on if necessary.
 								// 1 will enable set background. 0 will disable set background.
 
+#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
+
 //ADMIN STUFF
 #define ROUNDSTART_LOGOUT_REPORT_TIME	6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
 
@@ -29,7 +31,7 @@
 #define AGE_MAX				85	//oldest a character can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
-#define DOOR_CRUSH_DAMAGE	10	//the amount of damage that airlocks deal when they crush you
+#define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
@@ -57,9 +59,9 @@ var/list/del_counter = list()
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
-//SYSTEM TOGGLES - these allow you to compile the game without some of the laggier systems if your server cannot cope with demand
-/* Not yet coded
-#define USE_DYNAMIC_GRAVITY		//Enables the dynamic gravity system
-#define USE_DYNAMIC_LIGHTING	//Enables the dynamic lighting system
-#define USE_DYNAMIC_ATMOS		//Enables the dynamic atmos system
-*/
+#define MIN_COMPILER_VERSION 508
+#if DM_VERSION < MIN_COMPILER_VERSION //Update this whenever you need to take advantage of more recent byond features
+#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
+#endif
+
+#define USE_BYGEX

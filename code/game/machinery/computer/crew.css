@@ -1,0 +1,154 @@
+body
+{
+	padding-left: 53%;
+	cursor: default;
+}
+
+#ntbgcenter
+{
+	background-position: 550px 0px !important;
+}
+
+#minimap
+{
+	position: fixed;
+	top: 8px;
+	left: 8px;
+	border: 2px inset #888;
+	overflow: hidden;
+	min-width: 480px;
+	min-height: 480px;
+	width: 53%;
+	height: 100%;
+	max-width: 480px;
+	max-height: 480px;
+}
+
+#textbased
+{
+	width: 100%;
+	padding-left: 20px;
+}
+
+#textbased table
+{
+	min-width: 380px;
+	width: 100%;
+	table-layout: fixed;
+}
+
+#textbased td
+{
+	vertical-align: top;
+	padding: 2px;
+}
+
+#textbased tbody td
+{
+	transition: .2s all;
+}
+
+#textbased tbody tr:hover td, #textbased tbody tr.hover td
+{
+	background-color: #515151;
+}
+
+#textarea:after
+{
+	content: "";
+	clear: both;
+}
+
+.health
+{
+	width: 16px;
+	height: 16px;
+	background-color: #FFF;
+	border: 1px solid #434343;
+	position: relative;
+	top: 2px;
+}
+
+.health-5 { background-color: #17d568; }
+.health-4 { background-color: #2ecc71; }
+.health-3 { background-color: #e67e22; }
+.health-2 { background-color: #ed5100; }
+.health-1 { background-color: #e74c3c; }
+.health-0 { background-color: #ed2814; }
+
+.health > div
+{
+	margin-left: 20px;
+	margin-top: -4px;
+}
+
+.tt
+{
+	position: relative;
+	display: inline-block;
+	height: 16px;
+}
+
+.tt > div
+{
+	display: none;
+}
+
+.tt:hover > div
+{
+	position: absolute;
+	bottom: -30px;
+	left: 50%;
+	margin-left: -64px;
+
+	display: block;
+	width: 128px;
+	height: 24px;
+	border: 1px solid #313131;
+	background-color: #434343;
+	padding: 4px;
+	z-index: 999;
+	text-align: center;
+}
+
+.tt > div > span
+{
+	position: relative;
+	top: -2px;
+}
+
+.dot
+{
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	margin-top: 0px;
+	margin-left: 0px;
+	border: 1px solid transparent;
+}
+
+.dot.active
+{
+	z-index: 9999 !important;
+	width: 8px;
+	height: 8px;
+	margin-top: -2px;
+	margin-left: -3px;
+}
+
+.zoom
+{
+	position: fixed;
+	left: 53%;
+	top: 10px;
+	display: block;
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	margin-left: 20px !important;
+}
+
+.zoom.in
+{
+	margin-left: -3px !important;
+}

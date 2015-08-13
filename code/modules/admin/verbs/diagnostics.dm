@@ -1,4 +1,4 @@
-/client/proc/air_status(turf/target as turf)
+/client/proc/air_status(turf/target)
 	set category = "Debug"
 	set name = "Display Air Status"
 
@@ -90,6 +90,9 @@
 	set category = "Admin"
 
 	if(!src.holder)	return
+
+	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
+	if(confirm !="Yes") return
 
 	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()

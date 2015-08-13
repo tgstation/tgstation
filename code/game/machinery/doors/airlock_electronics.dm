@@ -5,8 +5,7 @@
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	w_class = 2.0 //It should be tiny! -Agouri
-	m_amt = 50
-	g_amt = 50
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 	req_access = list(access_maint_tunnels)
 
@@ -15,7 +14,7 @@
 	var/last_configurator = null
 	var/locked = 1
 
-/obj/item/weapon/airlock_electronics/attack_self(mob/user as mob)
+/obj/item/weapon/airlock_electronics/attack_self(mob/user)
 	if (!ishuman(user))
 		return ..(user)
 
@@ -96,7 +95,7 @@
 
 	attack_self(usr)
 
-/obj/item/weapon/airlock_electronics/proc/toggle_access(var/acc)
+/obj/item/weapon/airlock_electronics/proc/toggle_access(acc)
 	if (acc == "all")
 		conf_access = null
 	else if(acc == "one")

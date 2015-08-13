@@ -11,7 +11,7 @@
 
 	src.drawmap(usr)
 
-/obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
+/obj/machinery/computer/security/proc/drawmap(mob/user)
 
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
@@ -69,12 +69,6 @@
 
 					if("/turf/simulated/wall/r_wall")
 						colour = rgb(128,96,96)
-
-					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
-
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
 
 					else
 						colour = rgb(0,40,0)
@@ -225,12 +219,6 @@
 					if("/turf/simulated/wall/r_wall")
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
-						colour  = rgb(240,240,240)
-
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
-						colour  = rgb(140,140,140)
-
 					else
 						colour = rgb(0,40,0)
 
@@ -340,13 +328,13 @@
 
 		return
 
-proc/getr(col)
+/proc/getr(col)
 	return hex2num( copytext(col, 2,4))
 
-proc/getg(col)
+/proc/getg(col)
 	return hex2num( copytext(col, 4,6))
 
-proc/getb(col)
+/proc/getb(col)
 	return hex2num( copytext(col, 6))
 
 

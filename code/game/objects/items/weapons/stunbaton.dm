@@ -33,7 +33,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
+/obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
@@ -43,6 +43,9 @@
 			return 1
 		else
 			return 0
+
+
+
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
@@ -59,7 +62,7 @@
 	if(!bcell)
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
-/obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
@@ -68,7 +71,8 @@
 			if(C.maxcharge < hitcost)
 				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
-			user.drop_item()
+			if(!user.unEquip(W))
+				return
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
@@ -79,7 +83,7 @@
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
-			user << "<span class='notice'>You remove the cell from the [src].</span>"
+			user << "<span class='notice'>You remove the cell from [src].</span>"
 			status = 0
 			update_icon()
 			return
@@ -100,9 +104,10 @@
 	update_icon()
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/attack(mob/M, mob/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
+/obj/item/weapon/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+	if(status && user.disabilities & CLUMSY && prob(50))
+		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
+							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -115,35 +120,45 @@
 
 	var/mob/living/L = M
 
-	if(user.a_intent == "harm")
-		..()
-	else if(!status)
-		L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
-		return
-
-	if(status)
-		user.lastattacked = L
-		L.lastattacker = user
-
-		L.Stun(stunforce)
-		L.Weaken(stunforce)
-		L.apply_effect(STUTTER, stunforce)
-
-		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>")
-		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-
-		if(isrobot(loc))
-			var/mob/living/silicon/robot/R = loc
-			if(R && R.cell)
-				R.cell.use(hitcost)
+	if(user.a_intent != "harm")
+		if(status)
+			user.do_attack_animation(L)
+			baton_stun(L, user)
 		else
-			deductcharge(hitcost)
+			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+			return
+	else
+		if(status)
+			baton_stun(L, user)
+		..()
 
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			H.forcesay(hit_appends)
 
-		add_logs(user, L, "stunned")
+
+/obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+	user.lastattacked = L
+	L.lastattacker = user
+
+	L.Stun(stunforce)
+	L.Weaken(stunforce)
+	L.apply_effect(STUTTER, stunforce)
+
+	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
+							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			R.cell.use(hitcost)
+	else
+		deductcharge(hitcost)
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.forcesay(hit_appends)
+
+	add_logs(user, L, "stunned")
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	if(bcell)

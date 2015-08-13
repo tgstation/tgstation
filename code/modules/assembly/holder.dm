@@ -9,37 +9,31 @@
 	throw_speed = 2
 	throw_range = 7
 
-	var/secured = 0
 	var/obj/item/device/assembly/a_left = null
 	var/obj/item/device/assembly/a_right = null
-
-/obj/item/device/assembly_holder/proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
-	return
-
-/obj/item/device/assembly_holder/proc/process_activation(var/obj/item/device/D)
-	return
 
 /obj/item/device/assembly_holder/IsAssemblyHolder()
 	return 1
 
 
-/obj/item/device/assembly_holder/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
-	if((!D)||(!D2))	return 0
-	if((!isassembly(D))||(!isassembly(D2)))	return 0
-	if((D:secured)||(D2:secured))	return 0
-	if(user)
-		user.remove_from_mob(D)
-		user.remove_from_mob(D2)
-	D:holder = src
-	D2:holder = src
-	D.loc = src
-	D2.loc = src
-	a_left = D
-	a_right = D2
-	name = "[D.name]-[D2.name] assembly"
+/obj/item/device/assembly_holder/proc/assemble(obj/item/device/assembly/A, obj/item/device/assembly/A2, mob/user)
+	attach(A,user)
+	attach(A2,user)
+	name = "[A.name]-[A2.name] assembly"
 	update_icon()
-	return 1
+	feedback_add_details("assembly_made","[name]")
 
+/obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
+	if(!A.remove_item_from_storage(src))
+		if(user)
+			user.remove_from_mob(A)
+		A.loc = src
+	A.holder = src
+	A.toggle_secure()
+	if(!a_left)
+		a_left = A
+	else
+		a_right = A
 
 /obj/item/device/assembly_holder/update_icon()
 	overlays.Cut()
@@ -54,16 +48,6 @@
 	if(master)
 		master.update_icon()
 
-
-/obj/item/device/assembly_holder/examine(mob/user)
-	..()
-	if(secured)
-		user << "\The [src] is secured and ready to be used."
-	else
-		user << "\The [src] can be attached to other things."
-
-
-
 /obj/item/device/assembly_holder/HasProximity(atom/movable/AM as mob|obj)
 	if(a_left)
 		a_left.HasProximity(AM)
@@ -77,7 +61,7 @@
 	if(a_right)
 		a_right.Crossed(AM)
 
-/obj/item/device/assembly_holder/on_found(mob/finder as mob)
+/obj/item/device/assembly_holder/on_found(mob/finder)
 	if(a_left)
 		a_left.on_found(finder)
 	if(a_right)
@@ -97,55 +81,39 @@
 	..()
 	return
 
-
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
-		if(!a_left || !a_right)
-			user << "<span class='danger'>BUG:Assembly part missing, please report this!</span>"
-			return
-		a_left.toggle_secure()
-		a_right.toggle_secure()
-		secured = !secured
-		if(secured)
-			user << "<span class='notice'>\The [src] is ready!</span>"
-		else
-			user << "<span class='notice'>\The [src] can now be taken apart!</span>"
-		update_icon()
-		return
-	else
-		..()
-	return
-
-
-/obj/item/device/assembly_holder/attack_self(mob/user as mob)
-	src.add_fingerprint(user)
-	if(src.secured)
-		if(!a_left || !a_right)
-			user << "<span class='danger'>Assembly part missing!</span>"
-			return
-		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
-			switch(alert("Which side would you like to use?",,"Left","Right"))
-				if("Left")	a_left.attack_self(user)
-				if("Right")	a_right.attack_self(user)
-			return
-		else
-			a_left.attack_self(user)
-			a_right.attack_self(user)
-	else
 		var/turf/T = get_turf(src)
-		if(!T)	return 0
+		if(!T)
+			return 0
 		if(a_left)
-			a_left:holder = null
+			a_left.holder = null
 			a_left.loc = T
 		if(a_right)
-			a_right:holder = null
+			a_right.holder = null
 			a_right.loc = T
 		qdel(src)
-	return
+	else
+		..()
+
+/obj/item/device/assembly_holder/attack_self(mob/user)
+	src.add_fingerprint(user)
+	if(!a_left || !a_right)
+		user << "<span class='danger'>Assembly part missing!</span>"
+		return
+	if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
+		switch(alert("Which side would you like to use?",,"Left","Right"))
+			if("Left")	a_left.attack_self(user)
+			if("Right")	a_right.attack_self(user)
+		return
+	else
+		a_left.attack_self(user)
+		a_right.attack_self(user)
 
 
-/obj/item/device/assembly_holder/process_activation(var/obj/D, var/normal = 1, var/special = 1)
-	if(!D)	return 0
+/obj/item/device/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
+	if(!D)
+		return 0
 	if((normal) && (a_right) && (a_left))
 		if(a_right != D)
 			a_right.pulsed(0)

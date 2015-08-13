@@ -4,8 +4,12 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
+	var/alt_icon = 'icons/mob/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
-	update_icon = 1
+	var/pounce_cooldown = 0
+	var/pounce_cooldown_time = 30
+	var/custom_pixel_x_offset = 0 //for admin fuckery.
+	var/custom_pixel_y_offset = 0
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
@@ -13,32 +17,13 @@
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
+
+	AddAbility(new/obj/effect/proc_holder/alien/plant(null))
+	AddAbility(new/obj/effect/proc_holder/alien/whisper(null))
+	AddAbility(new/obj/effect/proc_holder/alien/transfer(null))
+	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
+
 	..()
-
-//This is fine, works the same as a human
-/mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-
-	if (ismob(AM))
-		var/mob/tmob = AM
-		tmob.LAssailant = src
-
-	if (!now_pushing)
-		now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
@@ -51,78 +36,22 @@
 	if(l_store) l_store.emp_act(severity)
 	..()
 
-/mob/living/carbon/alien/humanoid/ex_act(severity)
-	..()
+/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
+	if(user.a_intent == "harm")
+		..(user, 1)
+		adjustBruteLoss(14 + rand(1,9))
+		Paralyse(1)
+		step_away(src,user,15)
+		sleep(1)
+		step_away(src,user,15)
+		return 1
 
-	var/shielded = 0
-
-	var/b_loss = null
-	var/f_loss = null
-	switch (severity)
-		if (1.0)
-			gib()
-			return
-
-		if (2.0)
-			if (!shielded)
-				b_loss += 60
-
-			f_loss += 60
-
-			ear_damage += 30
-			ear_deaf += 120
-
-		if(3.0)
-			b_loss += 30
-			if (prob(50) && !shielded)
-				Paralyse(1)
-			ear_damage += 15
-			ear_deaf += 60
-
-	adjustBruteLoss(b_loss)
-	adjustFireLoss(f_loss)
-
-	updatehealth()
-
-/mob/living/carbon/alien/humanoid/blob_act()
-	if (stat == 2)
-		return
-	var/shielded = 0
-	var/damage = null
-	if (stat != 2)
-		damage = rand(30,40)
-
-	if(shielded)
-		damage /= 4
-
-	show_message("<span class='userdanger'>The blob attacks!</span>")
-	adjustFireLoss(damage)
-	return
-
-
-/mob/living/carbon/alien/humanoid/attack_slime(mob/living/carbon/slime/M as mob)
-	..()
-	var/damage = rand(5, 35)
-	if(M.is_adult)
-		damage = rand(10, 40)
-	adjustBruteLoss(damage)
-	add_logs(M, src, "attacked", admin=0)
-	updatehealth()
-	return
-
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 9)
 				if (prob(90))
-					if (HULK in M.mutations)//HULK SMASH
-						damage += 14
-						spawn(0)
-							Paralyse(1)
-							step_away(src,M,15)
-							sleep(3)
-							step_away(src,M,15)
 					playsound(loc, "punch", 25, 1, -1)
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 							"<span class='userdanger'>[M] has punched [src]!</span>")
@@ -131,7 +60,7 @@
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 					adjustBruteLoss(damage)
-					add_logs(M, src, "attacked", admin=0)
+					add_logs(M, src, "attacked")
 					updatehealth()
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -142,7 +71,7 @@
 					if (prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed", admin=0)
+						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
@@ -159,10 +88,6 @@
 	if (handcuffed)
 		return 1
 	return 0
-
-
-/mob/living/carbon/alien/humanoid/var/co2overloadtime = null
-/mob/living/carbon/alien/humanoid/var/temperature_resistance = T0C+75
 
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
@@ -198,3 +123,29 @@
 			if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
 				unEquip(r_store)
 				unEquip(l_store)
+
+/mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
+	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
+	..(I, cuff_break = 1)
+
+/mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
+	if(leaping)
+		return -32
+	else if(custom_pixel_y_offset)
+		return custom_pixel_y_offset
+	else
+		return initial(pixel_y)
+
+/mob/living/carbon/alien/humanoid/get_standard_pixel_x_offset(lying = 0)
+	if(leaping)
+		return -32
+	else if(custom_pixel_x_offset)
+		return custom_pixel_x_offset
+	else
+		return initial(pixel_x)
+
+/mob/living/carbon/alien/humanoid/check_ear_prot()
+	return 1
+
+/mob/living/carbon/alien/carbon/alien/humanoid/get_permeability_protection()
+	return 0.8

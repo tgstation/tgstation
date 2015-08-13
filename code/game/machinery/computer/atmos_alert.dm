@@ -5,7 +5,8 @@
 	name = "atmospheric alert console"
 	desc = "Used to access the station's atmospheric sensors."
 	circuit = /obj/item/weapon/circuitboard/atmos_alert
-	icon_state = "alert:0"
+	icon_screen = "alert:0"
+	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
@@ -17,7 +18,8 @@
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()
-	radio_controller.remove_object(src, receive_frequency)
+	if(radio_controller)
+		radio_controller.remove_object(src, receive_frequency)
 	..()
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
@@ -60,21 +62,13 @@
 		src.updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
-	if(stat & BROKEN)
-		icon_state = "alert:b"
+	..()
+	if(stat & (NOPOWER|BROKEN))
 		return
-	else if (stat & NOPOWER)
-		icon_state = "alert:O"
-		return
-	else if(priority_alarms.len)
-		icon_state = "alert:2"
-
+	if(priority_alarms.len)
+		overlays += "alert:2"
 	else if(minor_alarms.len)
-		icon_state = "alert:1"
-
-	else
-		icon_state = "alert:0"
-	return
+		overlays += "alert:1"
 
 
 /obj/machinery/computer/atmos_alert/proc/return_text()

@@ -8,4 +8,4 @@
 /datum/round_event/wizard/blobies/start()
 
 	for(var/mob/living/carbon/human/H in dead_mob_list)
-		new /mob/living/simple_animal/hostile/blobspore(H.loc)
+		new /mob/living/simple_animal/hostile/blob/blobspore(H.loc)

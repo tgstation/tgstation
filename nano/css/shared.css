@@ -29,9 +29,18 @@ a, a:link, a:visited, a:active, .link, .linkOn, .linkOff, .selected, .disabled
 
 .link
 {
-	float: left;
-	min-width: 40px;
-	height: 16px;
+    float: left;
+    min-width: 15px;
+    height: 16px;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    background: #40628a;
+    border: 1px solid #161616;
+    padding: 0px 4px 4px 4px;
+    margin: 0 2px 2px 0;
+    cursor: default;
+    white-space: nowrap;
 }
 
 a:hover, .linkActive:hover
@@ -218,6 +227,10 @@ h4
 	font-weight: bold;
 }
 
+.redButton {
+    background: #ea0000;
+}
+
 .highlight
 {
 	color: #8BA5C4;
@@ -226,6 +239,15 @@ h4
 .dark
 {
 	color: #272727;
+}
+
+.noticePlaceholder {
+    position: relative;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+    padding: 3px 4px 3px 4px;
+    margin: 4px 0 4px 0;
 }
 
 .notice

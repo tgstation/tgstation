@@ -1,3 +1,8 @@
+
+#define LING_FAKEDEATH_TIME					400 //40 seconds
+#define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
+#define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
+
 var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
 
 /datum/game_mode
@@ -13,6 +18,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
+	reroll_friendly = 1
 
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
@@ -53,17 +59,13 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
-
 	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)
 			if(!antag_candidates.len) break
 			var/datum/mind/changeling = pick(antag_candidates)
 			antag_candidates -= changeling
 			changelings += changeling
+			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
 		return 1
 	else
@@ -79,18 +81,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 	return
 
-/datum/game_mode/changeling/make_antag_chance(var/mob/living/carbon/human/character) //Assigns changeling to latejoiners
+/datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
-	if(changelings.len >= changelingcap) //Caps number of latejoin antagonists
+	if(ticker.mode.changelings.len >= changelingcap) //Caps number of latejoin antagonists
 		return
-	if(changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
+	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 - (config.changeling_scaling_coeff*2)))
 		if(character.client.prefs.be_special & BE_CHANGELING)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
-				if(!(character.job in ticker.mode.restricted_jobs))
-					character.mind.make_Changling()
-	..()
+				if(age_check(character.client))
+					if(!(character.job in restricted_jobs))
+						character.mind.make_Changling()
 
-/datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
+/datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
@@ -150,16 +152,17 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			changeling.objectives += identity_theft
 	return
 
-/datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
+/datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
-		changeling.current << "<span class='userdanger'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
-	changeling.current << "<span class='userdanger'>Use say \":g message\" to communicate with your fellow changelings.</span>"
+		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
+	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
 	changeling.current << "<b>You must complete the following tasks:</b>"
 
 	if (changeling.current.mind)
-		if (changeling.current.mind.assigned_role == "Clown")
-			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
-			changeling.current.mutations.Remove(CLUMSY)
+		var/mob/living/carbon/human/H = changeling.current
+		if(H.mind.assigned_role == "Clown")
+			H << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
+			H.dna.remove_mutation(CLOWNMUT)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
@@ -219,7 +222,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
 				feedback_add_details("changeling_success","SUCCESS")
 			else
-				text += "<br><span class='userdanger'>The changeling has failed.</span>"
+				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
 				feedback_add_details("changeling_success","FAIL")
 			text += "<br>"
 
@@ -263,29 +266,34 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	absorbed_dna.len = dna_max
 
 
-/datum/changeling/proc/regenerate()
-	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
-	geneticdamage = max(0, geneticdamage-1)
+/datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
+	if(istype(the_ling))
+		if(the_ling.stat == DEAD)
+			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
+			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
+		else //not dead? no chem/geneticdamage caps.
+			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
+			geneticdamage = max(0, geneticdamage-1)
 
 
-/datum/changeling/proc/get_dna(var/dna_owner)
+/datum/changeling/proc/get_dna(dna_owner)
 	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
 		if(dna_owner == DNA.real_name)
 			return DNA
 
-/datum/changeling/proc/has_dna(var/datum/dna/tDNA)
+/datum/changeling/proc/has_dna(datum/dna/tDNA)
 	for(var/datum/dna/D in (absorbed_dna+protected_dna))
 		if(tDNA.is_same_as(D))
 			return 1
 	return 0
 
-/datum/changeling/proc/can_absorb_dna(var/mob/living/carbon/user, var/mob/living/carbon/target)
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/target)
 	if(absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return
 	if(!target)
 		return
-	if(NOCLONE in target.mutations || HUSK in target.mutations)
+	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!

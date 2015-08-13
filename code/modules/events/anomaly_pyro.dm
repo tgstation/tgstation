@@ -30,7 +30,7 @@
 	if(newAnomaly.loc)
 		explosion(get_turf(newAnomaly), -1,0,3, flame_range = 4)
 
-		var/mob/living/carbon/slime/S = new/mob/living/carbon/slime(get_turf(newAnomaly))
+		var/mob/living/simple_animal/slime/S = new/mob/living/simple_animal/slime(get_turf(newAnomaly))
 		S.colour = pick("red", "orange")
 
 		qdel(newAnomaly)

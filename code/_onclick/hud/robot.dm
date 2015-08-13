@@ -53,6 +53,14 @@
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
+/obj/screen/robot/lamp
+	name = "headlamp"
+	icon_state = "lamp0"
+
+/obj/screen/robot/lamp/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.control_headlamp()
+
 
 /datum/hud/proc/robot_hud()
 	adding = list()
@@ -102,6 +110,12 @@
 	using.screen_loc = ui_borg_sensor
 	adding += using
 
+//Headlamp control
+	using = new /obj/screen/robot/lamp()
+	using.screen_loc = ui_borg_lamp
+	adding += using
+	mymobR.lamp_button = using
+
 //Intent
 	using = new /obj/screen/act_intent()
 	using.icon = 'icons/mob/screen_cyborg.dmi'
@@ -109,13 +123,6 @@
 	using.screen_loc = ui_borg_intents
 	adding += using
 	action_intent = using
-
-//Cell
-	mymobR.cells = new /obj/screen()
-	mymobR.cells.icon = 'icons/mob/screen_cyborg.dmi'
-	mymobR.cells.icon_state = "charge-empty"
-	mymobR.cells.name = "cell"
-	mymobR.cells.screen_loc = ui_toxin
 
 //Health
 	mymob.healths = new /obj/screen()
@@ -132,28 +139,9 @@
 	mymob.throw_icon = new /obj/screen/robot/store()
 	mymob.throw_icon.screen_loc = ui_borg_store
 
-//Temp
-	mymob.bodytemp = new /obj/screen()
-	mymob.bodytemp.icon_state = "temp0"
-	mymob.bodytemp.name = "body temperature"
-	mymob.bodytemp.screen_loc = ui_temp
-
-
-	mymob.oxygen = new /obj/screen()
-	mymob.oxygen.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.oxygen.icon_state = "oxy0"
-	mymob.oxygen.name = "oxygen"
-	mymob.oxygen.screen_loc = ui_oxygen
-
-	mymob.fire = new /obj/screen()
-	mymob.fire.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.fire.icon_state = "fire0"
-	mymob.fire.name = "fire"
-	mymob.fire.screen_loc = ui_fire
-
 	mymob.pullin = new /obj/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_borg_pull
 
 	mymob.blind = new /obj/screen()
@@ -162,9 +150,10 @@
 	mymob.blind.name = " "
 	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
 	mymob.blind.layer = 0
+	mymob.blind.mouse_opacity = 0
 
 	mymob.flash = new /obj/screen()
-	mymob.flash.icon = 'icons/mob/screen_cyborg.dmi'
+	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
 	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -174,10 +163,11 @@
 	mymob.zone_sel.icon = 'icons/mob/screen_cyborg.dmi'
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = null
+	mymob.client.screen = list()
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymobR.cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += adding + other
+	mymob.client.screen += mymob.client.void
 
 	return
 

@@ -2,12 +2,10 @@
 /obj/machinery/computer/station_alert
 	name = "station alert console"
 	desc = "Used to access the station's automated alert system."
-	icon_state = "alert:0"
+	icon_screen = "alert:0"
+	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-
-
-
 
 /obj/machinery/computer/station_alert/attack_hand(mob/user)
 	if(..())
@@ -51,7 +49,9 @@
 	return
 
 
-/obj/machinery/computer/station_alert/proc/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
+	if(alarmsource.z != z)
+		return
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]
@@ -70,11 +70,11 @@
 			C = CL[1]
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
+	L[A.name] = list(A, (C ? C : O), list(alarmsource))
 	return 1
 
 
-/obj/machinery/computer/station_alert/proc/cancelAlarm(var/class, area/A as area, obj/origin)
+/obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]
@@ -97,18 +97,12 @@
 	return
 
 /obj/machinery/computer/station_alert/update_icon()
-	if(stat & BROKEN)
-		icon_state = "alert:b"
-		return
-	else if (stat & NOPOWER)
-		icon_state = "alert:O"
+	..()
+	if(stat & (NOPOWER|BROKEN))
 		return
 	var/active_alarms = 0
 	for (var/cat in src.alarms)
 		var/list/L = src.alarms[cat]
 		if(L.len) active_alarms = 1
 	if(active_alarms)
-		icon_state = "alert:2"
-	else
-		icon_state = "alert:0"
-	return
+		overlays += "alert:2"

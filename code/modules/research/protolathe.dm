@@ -25,6 +25,19 @@ Note: Must be placed west/left of and R&D console to function.
 	var/adamantine_amount = 0.0
 	var/efficiency_coeff
 
+	var/list/categories = list(
+								"Power Designs",
+								"Medical Designs",
+								"Bluespace Designs",
+								"Stock Parts",
+								"Equipment",
+								"Mining Designs",
+								"Electronics",
+								"Weapons",
+								"Ammo",
+								"Firing Pins"
+								)
+
 	reagents = new()
 
 
@@ -57,31 +70,31 @@ Note: Must be placed west/left of and R&D console to function.
 		T += (M.rating/3)
 	efficiency_coeff = max(T, 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/A = 0
 	switch(M)
-		if("$metal")
+		if(MAT_METAL)
 			A = m_amount
-		if("$glass")
+		if(MAT_GLASS)
 			A = g_amount
-		if("$gold")
+		if(MAT_GOLD)
 			A = gold_amount
-		if("$silver")
+		if(MAT_SILVER)
 			A = silver_amount
-		if("$plasma")
+		if(MAT_PLASMA)
 			A = plasma_amount
-		if("$uranium")
+		if(MAT_URANIUM)
 			A = uranium_amount
-		if("$diamond")
+		if(MAT_DIAMOND)
 			A = diamond_amount
-		if("$clown")
+		if(MAT_BANANIUM)
 			A = clown_amount
 		else
 			A = reagents.get_reagent_amount(M)
 	A = A / max(1, (being_built.materials[M]/efficiency_coeff))
 	return A
 
-/obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/protolathe/attackby(obj/item/O, mob/user, params)
 	if (shocked)
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
@@ -127,15 +140,15 @@ Note: Must be placed west/left of and R&D console to function.
 			default_deconstruction_crowbar(O)
 			return 1
 		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
+			user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
 			return 1
 	if (disabled)
 		return
 	if (!linked_console)
-		user << "<span class='warning'> The [src.name] must be linked to an R&D console first!</span>"
+		user << "<span class='warning'>The [src.name] must be linked to an R&D console first!</span>"
 		return 1
 	if (busy)
-		user << "<span class='warning'>The [src.name] is busy. Please wait for completion of previous operation.</span>"
+		user << "<span class='warning'>The [src.name] is busy! Please wait for completion of previous operation.</span>"
 		return 1
 	if (O.is_open_container())
 		return
@@ -147,23 +160,21 @@ Note: Must be placed west/left of and R&D console to function.
 	if(istype(O,/obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='warning'>The [src.name]'s material bin is full. Please remove material before adding more.</span>"
+			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
 			return 1
 
 	var/obj/item/stack/sheet/stack = O
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-	if(!stack || stack.amount <= 0 || amount <= 0)
+	if(!stack || stack.amount <= 0 || amount <= 0 || !in_range(src, stack) || !user.Adjacent(src))
 		return
 	if(amount > stack.amount)
 		amount = stack.amount
 	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
 		amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
-	icon_state = "protolathe"
 	busy = 1
 	use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount/10)))
 	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
-	icon_state = "protolathe"
 	if(istype(stack, /obj/item/stack/sheet/metal))
 		m_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/glass))
@@ -183,11 +194,10 @@ Note: Must be placed west/left of and R&D console to function.
 	else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
 		adamantine_amount += amount * MINERAL_MATERIAL_AMOUNT
 	stack.use(amount)
-	busy = 0
-	src.updateUsrDialog()
+	updateUsrDialog()
 
-	src.overlays += "protolathe_[stack.name]"
+	overlays += "protolathe_[stack.name]"
 	sleep(10)
-	src.overlays -= "protolathe_[stack.name]"
+	overlays -= "protolathe_[stack.name]"
+	busy = 0
 
-	return

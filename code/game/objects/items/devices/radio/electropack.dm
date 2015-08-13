@@ -7,36 +7,37 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = 5.0
-	g_amt = 2500
-	m_amt = 10000
+	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/initialize()
-	radio_controller.add_object(src, frequency, RADIO_CHAT)
-
-/obj/item/device/electropack/New()
 	if(radio_controller)
 		radio_controller.add_object(src, frequency, RADIO_CHAT)
+
+/obj/item/device/electropack/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			user << "<span class='notice'>You need help taking this off!</span>"
+			user << "<span class='warning'>You need help taking this off!</span>"
 			return
 	..()
 
-/obj/item/device/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/electropack/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.unEquip(W))
-			user << "<span class='notice'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
+			user << "<span class='warning'>\the [W] is stuck to your hand, you cannot attach it to \the [src]!</span>"
 			return
 		W.loc = A
 		W.master = A
@@ -54,7 +55,8 @@
 
 /obj/item/device/electropack/Topic(href, href_list)
 	//..()
-	if(usr.stat || usr.restrained())
+	var/mob/living/carbon/C = usr
+	if(usr.stat || usr.restrained() || C.back == src)
 		return
 	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
 		usr.set_machine(src)

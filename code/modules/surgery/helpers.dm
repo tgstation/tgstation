@@ -1,53 +1,59 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
 	if(istype(M))
+		var/mob/living/carbon/human/H
+		var/obj/item/organ/limb/affecting
+		var/selected_zone = user.zone_sel.selecting
+
+		if(istype(M, /mob/living/carbon/human))
+			H = M
+			affecting = H.get_organ(check_zone(selected_zone))
+
 		if(M.lying || isslime(M))	//if they're prone or a slime
-			var/list/all_surgeries = surgeries_list.Copy()
-			var/list/available_surgeries = list()
-			for(var/i in all_surgeries)
-				var/datum/surgery/S = all_surgeries[i]
+			var/datum/surgery/current_surgery
 
-				if(locate(S.type) in M.surgeries)
-					continue
-				if(S.target_must_be_dead && M.stat != DEAD)
-					continue
-				if(S.target_must_be_fat && !(FAT in M.mutations))
-					continue
+			for(var/datum/surgery/S in M.surgeries)
+				if(S.location == selected_zone)
+					current_surgery = S
 
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M //So we can use get_organ and not some terriblly long Switch or something worse - RR
-
-					if(S.requires_organic_chest && H.getlimb(/obj/item/organ/limb/robot/chest)) //This a seperate case to below, see "***" in surgery.dm - RR
+			if(!current_surgery)
+				var/list/all_surgeries = surgeries_list.Copy()
+				var/list/available_surgeries = list()
+				for(var/i in all_surgeries)
+					var/datum/surgery/S = all_surgeries[i]
+					if(!S.possible_locs.Find(selected_zone))
+						continue
+					if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+						continue
+					if(!S.can_start(user, M))
 						continue
 
+					for(var/path in S.species)
+						if(istype(M, path))
+							available_surgeries[S.name] = S
+							break
 
-					var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+				var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+				if(P && user.Adjacent(M) && (I in user))
+					var/datum/surgery/S = available_surgeries[P]
+					var/datum/surgery/procedure = new S.type
+					if(procedure)
+						procedure.location = selected_zone
+						if(procedure.ignore_clothes || get_location_accessible(M, selected_zone))
+							M.surgeries += procedure
+							procedure.organ = affecting
+							user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+								"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
-					if(affecting.status == ORGAN_ROBOTIC && affecting.body_part != HEAD) //Cannot operate on Robotic organs except for the head. - RR
-						continue
+							add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
+						else
+							user << "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>"
 
-				for(var/path in S.species)
-					if(istype(M, path))
-						available_surgeries[S.name] = S
-						break
-
-			var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
-			if(P)
-				var/datum/surgery/S = available_surgeries[P]
-				var/datum/surgery/procedure = new S.type
-				if(procedure)
-					if(get_location_accessible(M, procedure.location))
-						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
-							procedure.location = user.zone_sel.selecting
-						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
-
-						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
-						return 1
-					else
-						user << "<span class='notice'>You need to expose [M]'s [procedure.location] first.</span>"
-						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
-			else
-				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
+			else if(current_surgery.status == 1 && !current_surgery.step_in_progress)
+				M.surgeries -= current_surgery
+				user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+					"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+				qdel(current_surgery)
+			return 1
 	return 0
 
 
@@ -70,16 +76,16 @@ proc/get_location_modifier(mob/M)
 	var/eyesmouth_covered	= 0	//based on flags
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		for(var/obj/item/clothing/I in list(C.back, C.wear_mask))
+		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
 			covered_locations |= I.body_parts_covered
 			face_covered |= I.flags_inv
-			eyesmouth_covered |= I.flags
+			eyesmouth_covered |= I.flags_cover
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.head, H.ears))
+			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
 				covered_locations |= I.body_parts_covered
 				face_covered |= I.flags_inv
-				eyesmouth_covered |= I.flags
+				eyesmouth_covered |= I.flags_cover
 
 	switch(location)
 		if("head")
@@ -89,7 +95,7 @@ proc/get_location_modifier(mob/M)
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
 				return 0
 		if("mouth")
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH)
+			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
 				return 0
 		if("chest")
 			if(covered_locations & CHEST)

@@ -1,5 +1,4 @@
 	//These are macros used to reduce on proc calls
-#define moveElement(L, fromIndex, toIndex) if((fromIndex) > (toIndex)){L.Insert((toIndex), null);L.Swap((fromIndex)+1, (toIndex));L.Cut((fromIndex)+1, (fromIndex)+2);}else{L.Insert((toIndex)+1, null);L.Swap((fromIndex), (toIndex)+1);L.Cut((fromIndex), (fromIndex)+1);}
 #define fetchElement(L, i) (associative) ? L[L[i]] : L[i]
 
 	//Minimum sized sequence that will be merged. Anything smaller than this will use binary-insertion sort.
@@ -115,7 +114,7 @@ var/datum/sortInstance/sortInstance = new()
 			//in other words, find where the pivot element should go using bisection search
 			while(left < right)
 				var/mid = (left + right) >> 1	//round((left+right)/2)
-				if(call(cmp)(pivot, fetchElement(L,mid)) < 0)
+				if(call(cmp)(fetchElement(L,mid), pivot) > 0)
 					right = mid
 				else
 					left = mid+1
@@ -372,22 +371,22 @@ var/datum/sortInstance/sortInstance = new()
 	proc/mergeLo(base1, len1, base2, len2)
 		//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
+		var/cursor1 = base1
+		var/cursor2 = base2
+
 		//degenerate cases
 		if(len2 == 1)
-			moveElement(L, base2, base1)
+			moveElement(L, cursor2, cursor1)
 			return
 
 		if(len1 == 1)
-			moveElement(L, base1, base2+len2-1)
+			moveElement(L, cursor1, cursor2+len2)
 			return
 
 
 		//Move first element of second run
-		moveElement(L, base2, base1)	//L[dest++] = L[cursor2++]
+		moveElement(L, cursor2++, cursor1++)
 		--len2
-
-		var/cursor1 = base1+1
-		var/cursor2 = base2+1
 
 		outer:
 			while(1)
@@ -399,9 +398,7 @@ var/datum/sortInstance/sortInstance = new()
 				do
 					//ASSERT(len1 > 1 && len2 > 0)
 					if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
-						moveElement(L, cursor2, cursor1)
-						++cursor2
-						++cursor1
+						moveElement(L, cursor2++, cursor1++)
 						--len2
 
 						++count2
@@ -466,8 +463,7 @@ var/datum/sortInstance/sortInstance = new()
 
 		if(len1 == 1)
 			//ASSERT(len2 > 0)
-
-			moveRange(L, cursor2, cursor1, len2)
+			moveElement(L, cursor1, cursor2+len2)
 
 		//else
 			//ASSERT(len2 == 0)
@@ -477,22 +473,20 @@ var/datum/sortInstance/sortInstance = new()
 	proc/mergeHi(base1, len1, base2, len2)
 		//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
+		var/cursor1 = base1 + len1 - 1	//start at end of sublists
+		var/cursor2 = base2 + len2 - 1
+
 		//degenerate cases
 		if(len2 == 1)
 			moveElement(L, base2, base1)
 			return
 
 		if(len1 == 1)
-			moveElement(L, base1, base2+len2-1)
+			moveElement(L, base1, cursor2+1)
 			return
 
-		var/cursor1 = base1 + len1 - 1
-		var/cursor2 = base2 + len2 - 1
-
-		moveElement(L, cursor1, cursor2)
+		moveElement(L, cursor1--, cursor2-- + 1)
 		--len1
-		--cursor1
-		--cursor2
 
 		outer:
 			while(1)
@@ -503,10 +497,7 @@ var/datum/sortInstance/sortInstance = new()
 				do
 					//ASSERT(len1 > 0 && len2 > 1)
 					if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
-						moveElement(L, cursor1, cursor2)
-
-						--cursor1
-						--cursor2
+						moveElement(L, cursor1--, cursor2-- + 1)
 						--len1
 
 						++count1
@@ -533,10 +524,11 @@ var/datum/sortInstance/sortInstance = new()
 					count1 = len1 - gallopRight(fetchElement(L,cursor2), base1, len1, len1-1)	//should cursor1 be base1?
 					if(count1)
 						cursor1 -= count1
+
+						moveRange(L, cursor1+1, cursor2+1, count1)	//cursor1+1 == cursor2 by definition
+
 						cursor2 -= count1
 						len1 -= count1
-
-						moveRange(L, cursor1+1, cursor2+1, count1)
 
 						if(len1 == 0)
 							break outer
@@ -546,7 +538,7 @@ var/datum/sortInstance/sortInstance = new()
 					if(--len2 == 1)
 						break outer
 
-					count2 = len2 - gallopLeft(fetchElement(L,cursor1), base1+len1, len2, len2-1)
+					count2 = len2 - gallopLeft(fetchElement(L,cursor1), cursor1+1, len2, len2-1)
 					if(count2)
 						cursor2 -= count2
 						len2 -= count2
@@ -554,9 +546,7 @@ var/datum/sortInstance/sortInstance = new()
 						if(len2 <= 1)
 							break outer
 
-					moveElement(L, cursor1, cursor2)
-					--cursor1
-					--cursor2
+					moveElement(L, cursor1--, cursor2-- + 1)
 					--len1
 
 					if(len1 == 0)
@@ -573,7 +563,6 @@ var/datum/sortInstance/sortInstance = new()
 			//ASSERT(len1 > 0)
 
 			cursor1 -= len1
-			cursor2 -= len1
 			moveRange(L, cursor1+1, cursor2+1, len1)
 
 		//else
@@ -664,5 +653,4 @@ var/datum/sortInstance/sortInstance = new()
 #undef MIN_GALLOP
 #undef MIN_MERGE
 
-#undef moveElement
 #undef fetchElement

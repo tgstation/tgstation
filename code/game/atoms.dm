@@ -6,35 +6,54 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
-	var/last_bumped = 0
-	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
-	//var/chem_is_open_container = 0
-	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
-	///Chemistry.
+	//This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = list()
+	//HUD images that this atom can provide.
+	var/list/hud_possible
 
-/atom/proc/throw_impact(atom/hit_atom)
-	if(istype(hit_atom,/mob/living))
-		var/mob/living/M = hit_atom
-		M.hitby(src)
+	//Value used to increment ex_act() if reactionary_explosions is on
+	var/explosion_block = 0
 
-	else if(isobj(hit_atom))
-		var/obj/O = hit_atom
-		if(!O.anchored)
-			step(O, src.dir)
-		O.hitby(src)
+/atom/proc/onCentcom()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
 
-	else if(isturf(hit_atom))
-		var/turf/T = hit_atom
-		if(T.density)
-			spawn(2)
-				step(src, turn(src.dir, 180))
-			if(istype(src,/mob/living))
-				var/mob/living/M = src
-				M.take_organ_damage(20)
+	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+		return 0
+
+	//check for centcomm shuttles
+	for(var/centcom_shuttle in list("emergency", "pod1", "pod2", "pod3", "pod4", "ferry"))
+		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(centcom_shuttle)
+		if(T in M.areaInstance)
+			return 1
+
+	//finally check for centcom itself
+	return istype(T.loc,/area/centcom)
+
+/atom/proc/onSyndieBase()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return 0
+
+	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
+		return 0
+
+	if(istype(T.loc,/area/shuttle/syndicate) || istype(T.loc,/area/syndicate_mothership))
+		return 1
+
+	return 0
+
+/atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
+	if(do_attack_animation)
+		hulk.changeNext_move(CLICK_CD_MELEE)
+		add_logs(hulk, src, "punched", "hulk powers")
+		hulk.do_attack_animation(src)
+	return
 
 /atom/proc/CheckParts()
 	return
@@ -52,7 +71,7 @@
 	else
 		return null
 
-/atom/proc/check_eye(user as mob)
+/atom/proc/check_eye(mob/user)
 	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
@@ -88,12 +107,11 @@
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
-/atom/proc/emp_act(var/severity)
+/atom/proc/emp_act(severity)
 	return
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	P.on_hit(src, 0, def_zone)
-	. = 0
+	. = P.on_hit(src, 0, def_zone)
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
@@ -227,8 +245,12 @@ its easier to just keep the beam vertical.
 /atom/proc/relaymove()
 	return
 
-/atom/proc/ex_act()
-	return
+/atom/proc/contents_explosion(severity, target)
+	for(var/atom/A in contents)
+		A.ex_act(severity, target)
+
+/atom/proc/ex_act(severity, target)
+	contents_explosion(severity, target)
 
 /atom/proc/blob_act()
 	return
@@ -236,9 +258,10 @@ its easier to just keep the beam vertical.
 /atom/proc/fire_act()
 	return
 
-/atom/proc/hitby(atom/movable/AM as mob|obj)
-	return
-
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush)
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
+		spawn(2)
+			step(AM,  turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -246,7 +269,7 @@ var/list/blood_splatter_icons = list()
 	return "\ref[initial(icon)]-[initial(icon_state)]"
 
 /atom/proc/add_blood_list(mob/living/carbon/M)
-	// Returns 1 if we had blood already
+	// Returns 0 if we have that blood already
 	if(!istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 	//if this blood isn't already in the list, add it
@@ -267,15 +290,17 @@ var/list/blood_splatter_icons = list()
 		return 0
 	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
 		return 0					//no dna!
-	return
+	return 1
 
 /obj/add_blood(mob/living/carbon/M)
-	if(..() == 0)   return 0
+	if(..() == 0)
+		return 0
 	return add_blood_list(M)
 
 /obj/item/add_blood(mob/living/carbon/M)
 	var/blood_count = blood_DNA == null ? 0 : blood_DNA.len
-	if(..() == 0)	return 0
+	if(..() == 0)
+		return 0
 	//apply the blood-splatter overlay if it isn't already in there
 	if(!blood_count && initial(icon) && initial(icon_state))
 		//try to find a pre-processed blood-splatter. otherwise, make a new one
@@ -291,21 +316,26 @@ var/list/blood_splatter_icons = list()
 	return 1 //we applied blood to the item
 
 /obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
-	if(..() == 0) return 0
+	if(..() == 0)
+		return 0
 	transfer_blood = rand(2, 4)
 	bloody_hands_mob = M
 	return 1
 
-/turf/simulated/add_blood(mob/living/carbon/M)
-	if(..() == 0)	return 0
+/turf/simulated/add_blood(mob/living/carbon/human/M)
+	if(..() == 0)
+		return 0
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
-	if(!B)	B = new /obj/effect/decal/cleanable/blood(src)			//make a bloood splatter if we couldn't find one
+	if(!B)
+		blood_splatter(src,M.get_blood(M.vessel),1)
+		B = locate(/obj/effect/decal/cleanable/blood) in contents
 	B.add_blood_list(M)
 	return 1 //we bloodied the floor
 
 /mob/living/carbon/human/add_blood(mob/living/carbon/M)
-	if(..() == 0)	return 0
+	if(..() == 0)
+		return 0
 	add_blood_list(M)
 	bloody_hands = rand(2, 4)
 	bloody_hands_mob = M
@@ -315,10 +345,11 @@ var/list/blood_splatter_icons = list()
 /atom/proc/rejects_blood()
 	return 0
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-
+		if(M.reagents)
+			M.reagents.trans_to(this, M.reagents.total_volume / 10)
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
@@ -329,11 +360,13 @@ var/list/blood_splatter_icons = list()
 			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
-/atom/proc/add_blood_floor(mob/living/carbon/M as mob)
+/atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
-			if(!B)	B = new(src)
+			if(!B)
+				blood_splatter(src,M,1)
+				B = locate(/obj/effect/decal/cleanable/blood) in contents
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
 			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
@@ -382,5 +415,17 @@ var/list/blood_splatter_icons = list()
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/atom/proc/acid_act(acidpwr, toxpwr, acid_volume)
 	return
+
+/atom/proc/emag_act()
+	return
+
+/atom/proc/narsie_act()
+	return
+
+/atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+    return 0
+
+//This proc is called on the location of an atom when the atom is Destroy()'d
+/atom/proc/handle_atom_del(atom/A)

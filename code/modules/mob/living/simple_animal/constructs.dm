@@ -1,30 +1,23 @@
-
 /mob/living/simple_animal/construct
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails.","screeches.")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
-	icon_dead = "shade_dead"
+	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	faction = list("cult")
+	flying = 1
 	var/list/construct_spells = list()
 	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 
@@ -35,8 +28,8 @@
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 
-/mob/living/simple_animal/construct/Die()
-	..()
+/mob/living/simple_animal/construct/death()
+	..(1)
 	new /obj/item/weapon/ectoplasm (src.loc)
 	visible_message("<span class='danger'>[src] collapses in a shattered heap.</span>")
 	ghostize()
@@ -56,50 +49,23 @@
 
 	user << msg
 
-/mob/living/simple_animal/construct/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(!(tmob.status_flags & CANPUSH))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
-
-
-/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
-		health += 5
+		adjustBruteLoss(-5)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()
 
-/mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/construct/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
-
+/mob/living/simple_animal/construct/narsie_act()
+	return
 
 /////////////////Juggernaut///////////////
 
@@ -122,13 +88,13 @@
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
-	mob_size = 2
+	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 	playstyle_string = "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 
-/mob/living/simple_animal/construct/armored/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -229,5 +195,5 @@
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return 1

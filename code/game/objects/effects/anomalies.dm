@@ -27,7 +27,7 @@
 
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	new /obj/effect/effect/bad_smoke(loc)
+	PoolOrNew(/obj/effect/effect/smoke/bad, loc)
 
 	for(var/atom/movable/O in src)
 		O.loc = src.loc
@@ -35,7 +35,7 @@
 	qdel(src)
 
 
-/obj/effect/anomaly/attackby(obj/item/I, mob/user)
+/obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [aSignal.code]:[format_frequency(aSignal.frequency)].</span>"
 
@@ -44,7 +44,7 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "shield2"
-	density = 1
+	density = 0
 	var/boing = 0
 
 /obj/effect/anomaly/grav/New()
@@ -60,6 +60,12 @@
 			step_towards(O,src)
 	for(var/mob/living/M in orange(4, src))
 		step_towards(M,src)
+	for(var/obj/O in orange(1,src))
+		if(!O.anchored)
+			var/mob/living/target = locate() in view(10,src)
+			if(!target)
+				O.throw_at(target, 5, 10)
+
 
 /obj/effect/anomaly/grav/Bump(mob/A)
 	gravShock(A)
@@ -69,7 +75,7 @@
 	gravShock(A)
 	return
 
-/obj/effect/anomaly/grav/proc/gravShock(var/mob/A)
+/obj/effect/anomaly/grav/proc/gravShock(mob/A)
 	if(boing && isliving(A) && !A.stat)
 		A.Weaken(2)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
@@ -150,7 +156,7 @@
 		else
 			O.ex_act(2)
 
-/obj/effect/anomaly/bhole/proc/grav(var/r, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
+/obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
 		affect_coord(x+t, y-r, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x-t, y+r, ex_act_force, pull_chance, turf_removal_chance)
@@ -158,7 +164,7 @@
 		affect_coord(x-r, y-t, ex_act_force, pull_chance, turf_removal_chance)
 	return
 
-/obj/effect/anomaly/bhole/proc/affect_coord(var/x, var/y, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
+/obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
 	var/turf/T = locate(x, y, z)
 	if(isnull(T))	return

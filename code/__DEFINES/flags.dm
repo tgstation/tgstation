@@ -19,11 +19,8 @@
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
 
-#define GLASSESCOVERSEYES	1024
-#define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
-#define HEADCOVERSEYES		1024		// feel free to realloc these numbers for other purposes
-#define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
-#define HEADCOVERSMOUTH		2048
+#define HEADBANGPROTECT		4096
+#define EARBANGPROTECT		1024
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
@@ -45,26 +42,31 @@
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE	1
-#define PASSGLASS	2
-#define PASSGRILLE	4
-#define PASSBLOB	8
-#define PASSMOB		16
+#define PASSTABLE		1
+#define PASSGLASS		2
+#define PASSGRILLE		4
+#define PASSBLOB		8
+#define PASSMOB			16
+#define LETPASSTHROW	32
 
 //flags for species
 
-#define MUTCOLORS	1
-#define HAIR		2
-#define FACEHAIR	4
-#define EYECOLOR	8
-#define LIPS		16
-#define COLDRES		32
-#define HEATRES		64
-#define RADIMMUNE	128
-#define NOBREATH	256
-#define NOGUNS		512
-#define NOBLOOD		1024
-#define NOFIRE		2048
+#define MUTCOLORS		1
+#define HAIR			2
+#define FACEHAIR		4
+#define EYECOLOR		8
+#define LIPS			16
+#define COLDRES			32
+#define HEATRES			64
+#define RADIMMUNE		128
+#define NOBREATH		256
+#define NOGUNS			512
+#define NOBLOOD			1024
+#define NOFIRE			2048
+#define VIRUSIMMUNE		4096
+#define PIERCEIMMUNE	8192
+
+#define MUTCOLORS_PARTSONLY 	16384	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

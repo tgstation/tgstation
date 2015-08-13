@@ -1,55 +1,39 @@
-var/global/list/datum/pipeline/pipe_networks = list()
-
 /datum/pipeline
 	var/datum/gas_mixture/air
 	var/list/datum/gas_mixture/other_airs = list()
 
 	var/list/obj/machinery/atmospherics/pipe/members = list()
-	var/list/obj/machinery/atmospherics/other_atmosmch = list()
+	var/list/obj/machinery/atmospherics/components/other_atmosmch = list()
 
 	var/update = 1
 
-	var/alert_pressure = 0
-
 /datum/pipeline/New()
-	pipe_networks += src
+	SSair.networks += src
 
 /datum/pipeline/Destroy()
-	pipe_networks -= src
+	SSair.networks -= src
 	if(air && air.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
-	for(var/obj/machinery/atmospherics/A in other_atmosmch)
-		A.nullifyPipenet(src)
+	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
+		C.nullifyPipenet(src)
 	..()
 
-/datum/pipeline/proc/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()
 	if(update)
 		update = 0
 		reconcile_air()
-	return
-	/*
-	//Check to see if pressure is within acceptable limits
-	var/pressure = air.return_pressure()
-	if(pressure > alert_pressure)
-		for(var/obj/machinery/atmospherics/pipe/member in members)
-			if(!member.check_pressure(pressure))
-				break //Only delete 1 pipe per process
-	//Allow for reactions
-	//air.react() //Should be handled by pipe_network now
-	*/
 
+	return
 
 var/pipenetwarnings = 10
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
-	base.setPipenet(src)
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
 		volume = E.volume
-		alert_pressure = E.alert_pressure
 		members += E
 		if(E.air_temporary)
 			air = E.air_temporary
@@ -72,17 +56,15 @@ var/pipenetwarnings = 10
 
 							if(item.parent)
 								if(pipenetwarnings > 0)
-									error("[item.type] added to a pipenet while still having one. ([item.x], [item.y], [item.z])")
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										error("further messages about pipenets will be supressed")
+										warning("build_pipeline(): further messages about pipenets will be supressed")
 							members += item
 							possible_expansions += item
 
 							volume += item.volume
 							item.parent = src
-
-							alert_pressure = min(alert_pressure, item.alert_pressure)
 
 							if(item.air_temporary)
 								air.merge(item.air_temporary)
@@ -95,9 +77,9 @@ var/pipenetwarnings = 10
 
 	air.volume = volume
 
-/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/A)
-	other_atmosmch |= A
-	var/datum/gas_mixture/G = A.returnPipenetAir(src)
+/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
+	other_atmosmch |= C
+	var/datum/gas_mixture/G = C.returnPipenetAir(src)
 	other_airs |= G
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
@@ -110,9 +92,9 @@ var/pipenetwarnings = 10
 				continue
 			var/datum/pipeline/E = I.parent
 			merge(E)
-			if(!members.Find(P))
-				members += P
-				air.volume += P.volume
+		if(!members.Find(P))
+			members += P
+			air.volume += P.volume
 	else
 		A.setPipenet(src, N)
 		addMachineryMember(A)
@@ -123,8 +105,8 @@ var/pipenetwarnings = 10
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
 		S.parent = src
 	air.merge(E.air)
-	for(var/obj/machinery/atmospherics/A in E.other_atmosmch)
-		A.replacePipenet(E, src)
+	for(var/obj/machinery/atmospherics/components/C in E.other_atmosmch)
+		C.replacePipenet(E, src)
 	other_atmosmch.Add(E.other_atmosmch)
 	other_airs.Add(E.other_airs)
 	E.members.Cut()
@@ -137,9 +119,10 @@ var/pipenetwarnings = 10
 /obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/A)
 	parent.addMember(A, src)
 
-/obj/machinery/atmospherics/addMember(obj/machinery/atmospherics/A)
+/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
 	P.addMember(A, src)
+
 
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
@@ -223,11 +206,11 @@ var/pipenetwarnings = 10
 		var/datum/pipeline/P = PL[i]
 		GL += P.air
 		GL += P.other_airs
-		for(var/obj/machinery/atmospherics/binary/valve/V in P.other_atmosmch)
+		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
-				PL |= V.parent1
-				PL |= V.parent2
-		for(var/obj/machinery/atmospherics/unary/portables_connector/C in P.other_atmosmch)
+				PL |= V.parents["p1"]
+				PL |= V.parents["p2"]
+		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
 
@@ -362,7 +345,7 @@ var/pipenetwarnings = 10
 					corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
 	return 1
 
-proc/equalize_gases(datum/gas_mixture/list/gases)
+/proc/equalize_gases(datum/gas_mixture/list/gases)
 	//Perfectly equalize all gases members instantly
 
 	//Calculate totals from individual components

@@ -8,7 +8,7 @@
 
 
 // Fake Voice
-/obj/effect/proc_holder/changeling/mimicvoice/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/mimicvoice/sting_action(mob/user)
 	var/datum/changeling/changeling=user.mind.changeling
 	if(changeling.mimicing)
 		changeling.mimicing = ""
@@ -16,7 +16,7 @@
 		user << "<span class='notice'>We return our vocal glands to their original position.</span>"
 		return
 
-	var/mimic_voice = input("Enter a name to mimic.", "Mimic Voice", null) as text
+	var/mimic_voice = stripped_input(user, "Enter a name to mimic.", "Mimic Voice", null, MAX_NAME_LEN)
 	if(!mimic_voice)
 		return
 

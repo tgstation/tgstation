@@ -17,11 +17,11 @@
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 
 /obj/item/weapon/twohanded/singularityhammer/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 
 
@@ -35,7 +35,7 @@
 	return
 
 
-/obj/item/weapon/twohanded/singularityhammer/proc/vortex(var/turf/pull as turf, mob/wielder as mob)
+/obj/item/weapon/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(istype(X, /atom/movable))
 			if(X == wielder) continue
@@ -57,7 +57,7 @@
 
 
 
-/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	if(wielded)
 		if(charged == 5)
@@ -85,20 +85,20 @@
 	//var/charged = 5
 	origin_tech = "combat=5;powerstorage=5"
 
-/obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target as mob)
+/obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
 	var/datum/effect/effect/system/lightning_spread/s = new /datum/effect/effect/system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
 	target.take_organ_damage(0,30)
 	target.visible_message("<span class='danger'>[target.name] was shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
-		"<span class='danger'>You hear a heavy electrical crack.</span>")
+		"<span class='italics'>You hear a heavy electrical crack!</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 	return
 
 
-/obj/item/weapon/twohanded/mjollnir/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/twohanded/mjollnir/attack(mob/M, mob/user)
 	..()
 	spawn(0)
 	if(wielded)

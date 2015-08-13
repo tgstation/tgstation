@@ -1,110 +1,3 @@
-/* The old single tank bombs that dont really work anymore
-/obj/effect/spawner/bomb
-	name = "bomb"
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "x"
-	var/btype = 0  //0 = radio, 1= prox, 2=time
-	var/explosive = 1	// 0= firebomb
-	var/btemp = 500	// bomb temperature (degC)
-	var/active = 0
-
-/obj/effect/spawner/bomb/radio
-	btype = 0
-
-/obj/effect/spawner/bomb/proximity
-	btype = 1
-
-/obj/effect/spawner/bomb/timer
-	btype = 2
-
-/obj/effect/spawner/bomb/timer/syndicate
-	btemp = 450
-
-/obj/effect/spawner/bomb/suicide
-	btype = 3
-
-/obj/effect/spawner/bomb/New()
-	..()
-
-	switch (src.btype)
-		// radio
-		if (0)
-			var/obj/item/assembly/r_i_ptank/R = new /obj/item/assembly/r_i_ptank(src.loc)
-			var/obj/item/weapon/tank/plasma/p3 = new /obj/item/weapon/tank/plasma(R)
-			var/obj/item/device/radio/signaler/p1 = new /obj/item/device/radio/signaler(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			R.status = explosive
-			p1.b_stat = 0
-			p2.secured = 1
-			p3.air_contents.temperature = btemp + T0C
-
-		// proximity
-		if (1)
-			var/obj/item/assembly/m_i_ptank/R = new /obj/item/assembly/m_i_ptank(src.loc)
-			var/obj/item/weapon/tank/plasma/p3 = new /obj/item/weapon/tank/plasma(R)
-			var/obj/item/device/prox_sensor/p1 = new /obj/item/device/prox_sensor(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			R.status = explosive
-
-			p3.air_contents.temperature = btemp + T0C
-			p2.secured = 1
-
-			if(src.active)
-				R.part1.secured = 1
-				R.part1.icon_state = text("motion[]", 1)
-				R.c_state(1, src)
-
-		// timer
-		if (2)
-			var/obj/item/assembly/t_i_ptank/R = new /obj/item/assembly/t_i_ptank(src.loc)
-			var/obj/item/weapon/tank/plasma/p3 = new /obj/item/weapon/tank/plasma(R)
-			var/obj/item/device/timer/p1 = new /obj/item/device/timer(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			R.status = explosive
-
-			p3.air_contents.temperature = btemp + T0C
-			p2.secured = 1
-		//bombvest
-		if(3)
-			var/obj/item/clothing/suit/armor/a_i_a_ptank/R = new /obj/item/clothing/suit/armor/a_i_a_ptank(src.loc)
-			var/obj/item/weapon/tank/plasma/p4 = new /obj/item/weapon/tank/plasma(R)
-			var/obj/item/device/healthanalyzer/p1 = new /obj/item/device/healthanalyzer(R)
-			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
-			var/obj/item/clothing/suit/armor/vest/p3 = new /obj/item/clothing/suit/armor/vest(R)
-			R.part1 = p1
-			R.part2 = p2
-			R.part3 = p3
-			R.part4 = p4
-			p1.master = R
-			p2.master = R
-			p3.master = R
-			p4.master = R
-			R.status = explosive
-
-			p4.air_contents.temperature = btemp + T0C
-			p2.secured = 1
-
-	qdel(src)
-*/
-
 /obj/effect/spawner/newbomb
 	name = "bomb"
 	icon = 'icons/mob/screen_gen.dmi'
@@ -135,8 +28,8 @@
 		if (0)
 
 			var/obj/item/device/transfer_valve/V = new(src.loc)
-			var/obj/item/weapon/tank/plasma/PT = new(V)
-			var/obj/item/weapon/tank/oxygen/OT = new(V)
+			var/obj/item/weapon/tank/internals/plasma/PT = new(V)
+			var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
 
 			var/obj/item/device/assembly/signaler/S = new(V)
 
@@ -158,8 +51,8 @@
 		if (1)
 
 			var/obj/item/device/transfer_valve/V = new(src.loc)
-			var/obj/item/weapon/tank/plasma/PT = new(V)
-			var/obj/item/weapon/tank/oxygen/OT = new(V)
+			var/obj/item/weapon/tank/internals/plasma/PT = new(V)
+			var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
 
 			var/obj/item/device/assembly/prox_sensor/P = new(V)
 
@@ -182,8 +75,8 @@
 		// timer
 		if (2)
 			var/obj/item/device/transfer_valve/V = new(src.loc)
-			var/obj/item/weapon/tank/plasma/PT = new(V)
-			var/obj/item/weapon/tank/oxygen/OT = new(V)
+			var/obj/item/weapon/tank/internals/plasma/PT = new(V)
+			var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
 
 			var/obj/item/device/assembly/timer/T = new(V)
 

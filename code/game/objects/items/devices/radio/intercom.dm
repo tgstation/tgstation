@@ -12,22 +12,22 @@
 
 /obj/item/device/radio/intercom/New()
 	..()
-	processing_objects += src
+	SSobj.processing += src
 
 /obj/item/device/radio/intercom/Destroy()
-	processing_objects -= src
+	SSobj.processing -= src
 	..()
 
-/obj/item/device/radio/intercom/attack_ai(mob/user as mob)
+/obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
 
-/obj/item/device/radio/intercom/attack_paw(mob/user as mob)
+/obj/item/device/radio/intercom/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/item/device/radio/intercom/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
@@ -50,7 +50,7 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(!anyai && !(speaker in ai))
 		return
 	..()

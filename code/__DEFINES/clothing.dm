@@ -80,3 +80,17 @@
 #define THERMAL_PROTECTION_ARM_RIGHT	0.075
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
+
+//flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
+
+#define NO_FEMALE_UNIFORM			0
+#define FEMALE_UNIFORM_FULL			1
+#define FEMALE_UNIFORM_TOP			2
+
+
+//flags for covering body parts
+#define GLASSESCOVERSEYES	1
+#define MASKCOVERSEYES		2		// get rid of some of the other retardation in these flags
+#define HEADCOVERSEYES		4		// feel free to realloc these numbers for other purposes
+#define MASKCOVERSMOUTH		8		// on other items, these are just for mask/head
+#define HEADCOVERSMOUTH		16

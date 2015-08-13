@@ -1,6 +1,6 @@
-/obj/machinery/atmospherics/trinary/mixer
+/obj/machinery/atmospherics/components/trinary/mixer
 	icon_state = "mixer_off"
-	density = 1
+	density = 0
 
 	name = "gas mixer"
 
@@ -16,33 +16,52 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-/obj/machinery/atmospherics/trinary/mixer/flipped
+/obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
 	flipped = 1
 
+/obj/machinery/atmospherics/components/trinary/mixer/update_icon()
+	overlays.Cut()
+	for(var/direction in cardinal)
+		if(direction & initialize_directions)
+			var/obj/machinery/atmospherics/node = findConnecting(direction)
+			if(node)
+				overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction, node.pipe_color)
+				continue
+			overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction)
+	..()
 
-/obj/machinery/atmospherics/trinary/mixer/update_icon_nopipes()
-	if(!(stat & NOPOWER) && on && node1 && node2 && node3)
+/obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
+	if(!(stat & NOPOWER) && on && nodes[NODE1] && nodes[NODE2] && nodes[NODE3])
 		icon_state = "mixer_on[flipped?"_f":""]"
 		return
 
-	on = 0
 	icon_state = "mixer_off[flipped?"_f":""]"
 
-/obj/machinery/atmospherics/trinary/mixer/power_change()
+/obj/machinery/atmospherics/components/trinary/mixer/power_change()
 	var/old_stat = stat
 	..()
+	if(stat & NOPOWER)
+		on = 0
 	if(old_stat != stat)
 		update_icon()
 
-/obj/machinery/atmospherics/trinary/mixer/New()
+/obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
+	var/datum/gas_mixture/air3 = airs[AIR3]
 	air3.volume = 300
+	airs[AIR3] = air3
 
-/obj/machinery/atmospherics/trinary/mixer/process()
+/obj/machinery/atmospherics/components/trinary/mixer/process_atmos()
 	..()
 	if(!on)
 		return 0
+	if(!(nodes[NODE1] && nodes[NODE2] && nodes[NODE3]))
+		return 0
+
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air3 = airs[AIR3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -88,61 +107,65 @@
 		air3.merge(removed2)
 
 	if(transfer_moles1)
+		var/datum/pipeline/parent1 = parents[PARENT1]
 		parent1.update = 1
 
 	if(transfer_moles2)
+		var/datum/pipeline/parent2 = parents[PARENT2]
 		parent2.update = 1
 
+	var/datum/pipeline/parent3 = parents[PARENT3]
 	parent3.update = 1
 
 	return 1
 
-/obj/machinery/atmospherics/trinary/mixer/attack_hand(user as mob)
+/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(usr)
+
 	if(!src.allowed(user))
 		user << "<span class='danger'>Access denied.</span>"
 		return
-	usr.set_machine(src)
-	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
-				<b>Desirable output pressure: </b>
-				[target_pressure]kPa | <a href='?src=\ref[src];set_press=1'>Change</a>
-				<br>
-				<b>Node 1 Concentration:</b>
-				<a href='?src=\ref[src];node1_c=-0.1'><b>-</b></a>
-				<a href='?src=\ref[src];node1_c=-0.01'>-</a>
-				[node1_concentration]([node1_concentration*100]%)
-				<a href='?src=\ref[src];node1_c=0.01'><b>+</b></a>
-				<a href='?src=\ref[src];node1_c=0.1'>+</a>
-				<br>
-				<b>Node 2 Concentration:</b>
-				<a href='?src=\ref[src];node2_c=-0.1'><b>-</b></a>
-				<a href='?src=\ref[src];node2_c=-0.01'>-</a>
-				[node2_concentration]([node2_concentration*100]%)
-				<a href='?src=\ref[src];node2_c=0.01'><b>+</b></a>
-				<a href='?src=\ref[src];node2_c=0.1'>+</a>
-				"}
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_mixer")
-	onclose(user, "atmo_mixer")
-	return
+	ui_interact(user)
 
-/obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
+/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+	if(stat & (BROKEN|NOPOWER))
+		return
+
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_mixer.tmpl", name, 400, 320, 0)
+
+/obj/machinery/atmospherics/components/trinary/mixer/get_ui_data()
+	var/data = list()
+	data["on"] = on
+	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
+	data["max_pressure"] = MAX_OUTPUT_PRESSURE
+	data["node1_concentration"] = round(node1_concentration*100)
+	data["node2_concentration"] = round(node2_concentration*100)
+	return data
+
+/obj/machinery/atmospherics/components/trinary/mixer/Topic(href,href_list)
 	if(..()) return
 	if(href_list["power"])
 		on = !on
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 	if(href_list["set_press"])
-		var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-		src.target_pressure = max(0, min(4500, new_pressure))
+		switch(href_list["set_press"])
+			if ("max")
+				target_pressure = MAX_OUTPUT_PRESSURE
+			if ("set")
+				target_pressure = max(0, min(MAX_OUTPUT_PRESSURE, safe_input("Pressure control", "Enter new output pressure (0-[MAX_OUTPUT_PRESSURE] kPa)", target_pressure)))
+		investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	if(href_list["node1_c"])
 		var/value = text2num(href_list["node1_c"])
 		src.node1_concentration = max(0, min(1, src.node1_concentration + value))
 		src.node2_concentration = max(0, min(1, src.node2_concentration - value))
+		investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", "atmos")
 	if(href_list["node2_c"])
 		var/value = text2num(href_list["node2_c"])
 		src.node2_concentration = max(0, min(1, src.node2_concentration + value))
 		src.node1_concentration = max(0, min(1, src.node1_concentration - value))
+		investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", "atmos")
 	src.update_icon()
 	src.updateUsrDialog()
 	return

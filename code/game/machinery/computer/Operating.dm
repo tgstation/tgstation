@@ -1,9 +1,8 @@
 /obj/machinery/computer/operating
 	name = "operating computer"
 	desc = "Used to monitor the vitals of a patient during surgery."
-	icon_state = "operating"
-	density = 1
-	anchored = 1.0
+	icon_screen = "crew"
+	icon_keyboard = "med_key"
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/patient = null
 	var/obj/structure/optable/table = null
@@ -61,8 +60,10 @@
 
 				"}
 	if(patient.surgeries.len)
-		dat += "<BR><B>Initiated Procedures</B><div class='statusDisplay'>"
+		dat += "<BR><BR><B>Initiated Procedures</B><div class='statusDisplay'>"
 		for(var/datum/surgery/procedure in patient.surgeries)
 			dat += "[capitalize(procedure.name)]<BR>"
+			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+			dat += "Next step: [capitalize(surgery_step.name)]<BR>"
 		dat += "</div>"
 	return dat

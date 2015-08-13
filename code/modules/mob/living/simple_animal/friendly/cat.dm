@@ -1,7 +1,8 @@
 //Cat
-/mob/living/simple_animal/cat
+/mob/living/simple_animal/pet/cat
 	name = "cat"
 	desc = "Kitty!!"
+	icon = 'icons/mob/pets.dmi'
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
@@ -13,16 +14,15 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	species = /mob/living/simple_animal/cat
-	childtype = /mob/living/simple_animal/cat/kitten
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 3
+	species = /mob/living/simple_animal/pet/cat
+	childtype = /mob/living/simple_animal/pet/cat/kitten
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
-/mob/living/simple_animal/cat/Runtime
+/mob/living/simple_animal/pet/cat/Runtime
 	name = "Runtime"
 	desc = "GCAT"
 	icon_state = "cat"
@@ -32,7 +32,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 
-/mob/living/simple_animal/cat/Runtime/Life()
+/mob/living/simple_animal/pet/cat/Runtime/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
@@ -67,14 +67,32 @@
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
 
-/mob/living/simple_animal/cat/Proc
+/mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
 
-/mob/living/simple_animal/cat/kitten
+/mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww"
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	gender = NEUTER
-	mob_size = 0
+	density = 0
+	pass_flags = PASSMOB
+	mob_size = MOB_SIZE_SMALL
+
+/mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	switch(M.a_intent)
+		if("help")	wuv(1,M)
+		if("harm")	wuv(-1,M)
+
+/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
+	if(change)
+		if(change > 0)
+			if(M && stat != DEAD)
+				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				emote("me", 1, "purrs!")
+		else
+			if(M && stat != DEAD)
+				emote("me", 1, "hisses!")

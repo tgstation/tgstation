@@ -7,13 +7,14 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	name = "\improper Telecrystal assignment station"
 	desc = "A device used to manage telecrystals during group operations. You shouldn't be looking at this particular one..."
 	icon_state = "tcstation"
+	icon_keyboard = "tcstation_key"
+	icon_screen = "syndie"
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
-	name = "\improper Telecrystal upload/recieve station"
+	name = "\improper Telecrystal upload/receive station"
 	desc = "A device used to manage telecrystals during group operations. To use, simply insert your uplink. With your uplink installed \
 	you can upload your telecrystals to the group's pool using the console, or be assigned additional telecrystals by your lieutenant."
-	icon_state = "tcstation"
 	var/obj/item/uplinkholder = null
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
@@ -29,7 +30,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		name = "[name] [rand(1,999)]"
 
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item))
 
 		if(uplinkholder)
@@ -38,7 +39,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 		if(O.hidden_uplink)
 			var/obj/item/P = user.get_active_hand()
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			uplinkholder = P
 			P.loc = src
 			P.add_fingerprint(user)
@@ -50,7 +52,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
-	overlays.Cut()
+	..()
 	if(uplinkholder)
 		overlays += "[initial(icon_state)]-closed"
 
@@ -61,7 +63,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		uplinkholder = null
 		update_icon()
 
-/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(var/amt, var/addLog = 1)
+/obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= uplinkholder.hidden_uplink.uses)
 			uplinkholder.hidden_uplink.uses -= amt
@@ -69,17 +71,17 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
-/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(var/amt, var/addLog = 1)
+/obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
 		if(amt <= linkedboss.storedcrystals)
 			uplinkholder.hidden_uplink.uses += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
-				linkedboss.logTransfer("[src] recieved [amt] telecrystals from [linkedboss].")
+				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
 
 ///////
 
-/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user as mob)
+/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(user)
@@ -98,7 +100,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
 
 
-	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Recieve Station", 700, 500)
+	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Receive Station", 700, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -126,14 +128,16 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	desc = "A device used to manage telecrystals during group operations. To use, simply initialize the machine by scanning for nearby uplink stations. \
 	Once the consoles are linked up, you can assign any telecrystals amongst your operatives; be they donated by your agents or rationed to the squad \
 	based on the danger rating of the mission."
-	icon_state = "tcboss"
+	icon_state = "computer"
+	icon_screen = "tcboss"
+	icon_keyboard = "syndie_key"
 	var/virgin = 1
 	var/scanrange = 10
 	var/storedcrystals = 0
 	var/list/TCstations = list()
 	var/list/transferlog = list()
 
-/obj/machinery/computer/telecrystals/boss/proc/logTransfer(var/logmessage)
+/obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
 	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
@@ -152,12 +156,12 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	while(!IsMultiple(++danger,10))//Just round up to the nearest multiple of ten.
 	scaleTC(danger)
 
-/obj/machinery/computer/telecrystals/boss/proc/scaleTC(var/amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
+/obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
 	storedcrystals += amt * NUKESCALINGMODIFIER
 
 /////////
 
-/obj/machinery/computer/telecrystals/boss/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(user)

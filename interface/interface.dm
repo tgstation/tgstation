@@ -66,7 +66,7 @@
 	var/adminhotkeys = {"<font color='purple'>
 Admin:
 \tF5 = Aghost (admin-ghost)
-\tF6 = player-panel-new
+\tF6 = player-panel
 \tF7 = admin-pm
 \tF8 = Invisimin
 </font>"}
@@ -88,7 +88,10 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tq = drop
 \te = equip
 \tr = throw
+\tm = me
 \tt = say
+\to = OOC
+\tb = resist
 \tx = swap-hand
 \tz = activate held object (or y)
 \tf = cycle-intents-left
@@ -108,6 +111,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+q = drop
 \tCtrl+e = equip
 \tCtrl+r = throw
+\tCtrl+b = resist
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
@@ -138,6 +142,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tq = unequip active module
 \tt = say
 \tx = cycle active modules
+\tb = resist
 \tz = activate held object (or y)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
@@ -155,6 +160,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+w = up
 \tCtrl+q = unequip active module
 \tCtrl+x = cycle active modules
+\tCtrl+b = resist
 \tCtrl+z = activate held object (or Ctrl+y)
 \tCtrl+f = cycle-intents-left
 \tCtrl+g = cycle-intents-right
@@ -170,3 +176,10 @@ Any-Mode: (hotkey doesn't need to be on)
 
 	src << hotkey_mode
 	src << other
+
+// Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
+// Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)
+/client/verb/_swinset(var/x as text)
+	set name = ".swinset"
+	set hidden = 1
+	winset(src, null, x)

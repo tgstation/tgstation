@@ -97,7 +97,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 				//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
 				if(A.secondsElectrified != -1)
 					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-					add_logs(usr, A, "electrified", admin=0, addition="at [A.x],[A.y],[A.z]")
+					add_logs(usr, A, "electrified", addition="at [A.x],[A.y],[A.z]")
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)
@@ -118,7 +118,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 			A.update_icon()
 
 
-/datum/wires/airlock/UpdatePulsed(var/index)
+/datum/wires/airlock/UpdatePulsed(index)
 
 	var/obj/machinery/door/airlock/A = holder
 	switch(index)
@@ -137,11 +137,11 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 			//raises them if they are down (only if power's on)
 			if(!A.locked)
 				A.locked = 1
-				A.audible_message("You hear a click from the bottom of the door.", null,  1)
+				A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 			else
 				if(A.hasPower()) //only can raise bolts if power's on
 					A.locked = 0
-					A.audible_message("You hear a click from the bottom of the door.", null, 1)
+					A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null, 1)
 			A.update_icon()
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1 || AIRLOCK_WIRE_BACKUP_POWER2)
@@ -164,7 +164,7 @@ var/const/AIRLOCK_WIRE_LIGHT = 2048
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
 			if(A.secondsElectrified==0)
 				A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-				add_logs(usr, A, "electrified", admin=0, addition="at [A.x],[A.y],[A.z]")
+				add_logs(usr, A, "electrified", addition="at [A.x],[A.y],[A.z]")
 				A.secondsElectrified = 30
 				spawn(10)
 					if(A)

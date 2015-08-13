@@ -8,10 +8,14 @@
 	w_class = 1.0
 	throw_speed = 3
 	throw_range = 7
-	m_amt = 60
+	materials = list(MAT_METAL=60)
 	item_color = "cargo"
 	pressure_resistance = 2
 	attack_verb = list("stamped")
+
+/obj/item/weapon/stamp/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on \his forehead, then promptly falls over, dead.</span>")
+	return (OXYLOSS)
 
 /obj/item/weapon/stamp/qm
 	name = "quartermaster's rubber stamp"
@@ -68,7 +72,7 @@
 
 // Syndicate stamp to forge documents.
 
-/obj/item/weapon/stamp/chameleon/attack_self(mob/user as mob)
+/obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 
 	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
 	var/list/stamps = list()

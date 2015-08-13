@@ -16,6 +16,13 @@
 	icon_state = "ash"
 	anchored = 1
 
+/obj/effect/decal/cleanable/ash/New()
+	..()
+	reagents.add_reagent("ash", 30)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+
+
 /obj/effect/decal/cleanable/greenglow
 	name = "green glow"
 
@@ -67,6 +74,10 @@
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
+	burntime = 1
+
+/obj/effect/decal/cleanable/cobweb/fire_act()
+	qdel(src)
 
 /obj/effect/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -102,6 +113,7 @@
 /obj/effect/decal/cleanable/vomit/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
+	viruses = null
 	..()
 
 /obj/effect/decal/cleanable/tomato_smudge
@@ -130,3 +142,26 @@
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
+
+/obj/effect/decal/cleanable/chem_pile
+	name = "chemical pile"
+	desc = "A pile of chemicals. You can't quite tell what's inside it."
+	gender = PLURAL
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "ash"
+	anchored = 1
+
+/obj/effect/decal/cleanable/shreds
+	name = "shreds"
+	desc = "The shredded remains of what appears to be clothing."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shreds"
+	gender = PLURAL
+	density = 0
+	anchored = 1
+	layer = 2
+
+/obj/effect/decal/cleanable/shreds/New()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
+	..()

@@ -26,14 +26,6 @@
 	return
 */
 
-
-/obj/mecha/combat/honker/melee_action(target)
-	if(!melee_can_hit)
-		return
-	else if(istype(target, /mob))
-		step_away(target,src,15)
-	return
-
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
@@ -145,7 +137,7 @@
 			squeak = 0
 	return result
 
-obj/mecha/combat/honker/Topic(href, href_list)
+/obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
@@ -153,7 +145,7 @@ obj/mecha/combat/honker/Topic(href, href_list)
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	return
 
-proc/rand_hex_color()
+/proc/rand_hex_color()
 	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
 	var/color=""
 	for (var/i=0;i<6;i++)

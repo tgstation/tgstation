@@ -50,7 +50,7 @@
 		else
 			dat += "No personality is installed.<br>"
 			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and alot time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
+			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
@@ -62,14 +62,14 @@
 
 	if(href_list["request"])
 		src.looking_for_personality = 1
-		paiController.findPAI(src, usr)
+		SSpai.findPAI(src, usr)
 
 	if(pai)
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='notice'>You don't have any DNA, or your DNA is incompatible with this device.</span>"
+				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
@@ -105,14 +105,14 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-happy"
+	src.overlays += "pai-null"
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
 	src.overlays.Cut()
 	src.overlays += "pai-off"
 
-/obj/item/device/paicard/proc/setEmotion(var/emotion)
+/obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
 		src.overlays.Cut()
 		switch(emotion)
@@ -125,6 +125,7 @@
 			if(7) src.overlays += "pai-sad"
 			if(8) src.overlays += "pai-angry"
 			if(9) src.overlays += "pai-what"
+			if(10) src.overlays += "pai-null"
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", 3, "<span class='notice'>[src] bleeps electronically.</span>", 2)

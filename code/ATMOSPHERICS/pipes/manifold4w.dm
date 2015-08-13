@@ -3,7 +3,7 @@
 4-way manifold
 */
 /obj/machinery/atmospherics/pipe/manifold4w
-	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
+	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifold4w"
 
 	name = "4-way pipe manifold"
@@ -25,7 +25,10 @@
 	color = pipe_color
 	..()
 
-/obj/machinery/atmospherics/pipe/manifold4w/initialize()
+/obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
+	return
+
+/obj/machinery/atmospherics/pipe/manifold4w/atmosinit()
 	for(var/D in cardinal)
 		for(var/obj/machinery/atmospherics/target in get_step(src, D))
 			if(target.initialize_directions & get_dir(target,src))
@@ -42,8 +45,9 @@
 	var/turf/T = src.loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
+	..()
 
-/obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
+/obj/machinery/atmospherics/pipe/manifold4w/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -108,16 +112,27 @@
 
 	//Add non-broken pieces
 	if(node1)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", NORTH)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", NORTH)
 
 	if(node2)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", SOUTH)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", SOUTH)
 
 	if(node3)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", EAST)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", EAST)
 
 	if(node4)
-		overlays += getpipeimage('icons/obj/atmospherics/pipe_manifold.dmi', "manifold_full[invis]", WEST)
+		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", WEST)
+
+/obj/machinery/atmospherics/pipe/manifold4w/update_node_icon()
+	..()
+	if(node1)
+		node1.update_icon()
+	if(node2)
+		node2.update_icon()
+	if(node3)
+		node3.update_icon()
+	if(node4)
+		node4.update_icon()
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold4w/general

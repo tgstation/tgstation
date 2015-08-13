@@ -31,35 +31,17 @@
 	..()
 	user << text("The service panel is [src.open ? "open" : "closed"].")
 
-/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(locked)
-		if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
-			emagged = 1
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
-			sleep(6)
-			src.overlays = null
-			overlays += image('icons/obj/storage.dmi', icon_locking)
-			locked = 0
-			if(istype(W, /obj/item/weapon/melee/energy/blade))
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, src.loc)
-				spark_system.start()
-				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-				playsound(src.loc, "sparks", 50, 1)
-				user << "You slice through the lock on [src]."
-			else
-				user << "You short out the lock on [src]."
-			return
-
 		if (istype(W, /obj/item/weapon/screwdriver))
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				src.open =! src.open
 				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
 			src.l_hacking = 1
-			if (do_after(usr, 100))
+			if (do_after(usr, 100, target = src))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
@@ -79,15 +61,25 @@
 	// -> storage/attackby() what with handle insertion, etc
 	..()
 
+/obj/item/weapon/storage/secure/emag_act(mob/user)
+	if(locked)
+		if(!emagged)
+			emagged = 1
+			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+			sleep(6)
+			src.overlays = null
+			overlays += image('icons/obj/storage.dmi', icon_locking)
+			locked = 0
+			user << "<span class='notice'>You short out the lock on [src].</span>"
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
-		return
+		usr << "<span class='warning'>It's locked!</span>"
+		return 0
 	..()
 
-
-/obj/item/weapon/storage/secure/attack_self(mob/user as mob)
+/obj/item/weapon/storage/secure/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
@@ -136,6 +128,12 @@
 			return
 	return
 
+/obj/item/weapon/storage/secure/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(locked)
+		user << "<span class='warning'>It's locked!</span>"
+		return 0
+	return ..()
+
 /obj/item/weapon/storage/secure/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(locked)
 		return 0
@@ -161,13 +159,13 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/storage/secure/briefcase/New()
-	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+	return ..()
 
-/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
-		usr << "<span class='danger'>[src] is locked and cannot be opened!</span>"
+		usr << "<span class='warning'>[src] is locked and cannot be opened!</span>"
 	else if ((src.loc == user) && (!src.locked))
 		playsound(src.loc, "rustle", 50, 1, -5)
 		if (user.s_active)
@@ -181,6 +179,16 @@
 		src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
+
+//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+/obj/item/weapon/storage/secure/briefcase/syndie
+	force = 15.0
+
+/obj/item/weapon/storage/secure/briefcase/syndie/New()
+	for(var/i = 0, i < storage_slots - 2, i++)
+		new /obj/item/stack/spacecash/c1000(src)
+	return ..()
+
 
 // -----------------------------
 //        Secure Safe
@@ -205,7 +213,7 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/secure/safe/attack_hand(mob/user as mob)
+/obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
 	return attack_self(user)
 
 /obj/item/weapon/storage/secure/safe/HoS/New()

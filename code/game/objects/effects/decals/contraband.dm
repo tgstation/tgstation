@@ -1,9 +1,9 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
 
-#define NUM_OF_POSTER_DESIGNS 32 //subtype 0-contraband posters
+#define NUM_OF_POSTER_DESIGNS 33 //subtype 0-contraband posters
 
-#define NUM_OF_POSTER_DESIGNS_LEGIT 32 //subtype 1-corporate approved posters
+#define NUM_OF_POSTER_DESIGNS_LEGIT 33 //subtype 1-corporate approved posters
 
 /obj/item/weapon/contraband
 	name = "contraband item"
@@ -72,7 +72,7 @@
 
 //############################## THE ACTUAL DECALS ###########################
 
-obj/structure/sign/poster
+/obj/structure/sign/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
@@ -81,7 +81,7 @@ obj/structure/sign/poster
 	var/ruined = 0
 	var/subtype = 0
 
-obj/structure/sign/poster/New(serial,subtype)
+/obj/structure/sign/poster/New(serial,subtype)
 	serial_number = serial
 
 	if(serial_number == loc)
@@ -174,8 +174,8 @@ obj/structure/sign/poster/New(serial,subtype)
 				name += " - D-Day Promotional Poster"
 				desc += " A promotional poster for some rapper."
 			if(28)
-				name += " - Stetchkin Pistol Advertisment"
-				desc += " A poster advertising Stetchkin pistols as being 'Classy as fuck'."
+				name += " - Syndicate Pistol Advertisment"
+				desc += " A poster advertising syndicate pistols as being 'Classy as fuck'."
 			if(29)
 				name += " - E-sword Rainbow"
 				desc += " All the colors of bloody murder rainbow."
@@ -188,6 +188,9 @@ obj/structure/sign/poster/New(serial,subtype)
 			if(32)
 				name += " - Punch Shit"
 				desc += " Fight things for no reason, like a man!"
+			if(33)
+				name += " - The Griffin"
+				desc += " The Griffin commands you to be the worst you can be. Will you?"
 			else
 				name += " - Error (subtype 0 serial_number)"
 				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/tgstation/-tg-station/issues."
@@ -291,12 +294,15 @@ obj/structure/sign/poster/New(serial,subtype)
 			if(32)
 				name += " - High-Class Martini"
 				desc += " I told you to shake it, no stirring"
+			if(33)
+				name += " - The Owl"
+				desc += " The Owl would do his best to protect the station. Will you?"
 			else
 				name += " - Error (subtype 1 serial_number)"
 				desc += " This is a bug, please report the circumstances under which you encountered this poster at https://github.com/NTStation/NTstation13/issues."
 	..()
 
-obj/structure/sign/poster/attackby(obj/item/I, mob/user)
+/obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
@@ -314,9 +320,9 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 	var/temp_loc = user.loc
 	switch(alert("Do I want to rip the poster from the wall?","You think...","Yes","No"))
 		if("Yes")
-			if(user.loc != temp_loc)
+			if( user.loc != temp_loc || ruined )
 				return
-			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
+			visible_message("[user] rips [src] in a single, decisive motion!" )
 			playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
 			ruined = 1
 			icon_state = "poster_ripped"
@@ -340,11 +346,11 @@ obj/structure/sign/poster/attackby(obj/item/I, mob/user)
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O,/obj/structure/sign/poster))
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			user << "<span class='notice'>The wall is far too cluttered to place a poster!</span>"
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
 			return
 
 	user << "<span class='notice'>You start placing the poster on the wall...</span>"	//Looks like it's uncluttered enough. Place the poster.

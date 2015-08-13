@@ -25,7 +25,7 @@
 /obj/machinery/power/compressor
 	name = "compressor"
 	desc = "The compressor stage of a gas turbine generator."
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
@@ -43,7 +43,7 @@
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
 	desc = "A gas turbine used for backup power generation."
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
@@ -56,10 +56,8 @@
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "turbinecomp"
-	anchored = 1
-	density = 1
+	icon_screen = "turbinecomp"
+	icon_keyboard = "tech_key"
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
@@ -84,7 +82,7 @@
 	inturf = get_step(src, dir)
 
 	spawn(5)
-		turbine = locate() in get_step(src, get_dir(inturf, src))
+		locate_machinery()
 		if(!turbine)
 			stat |= BROKEN
 
@@ -98,20 +96,27 @@
 // /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0)
 // 		return !density
 
+/obj/machinery/power/compressor/locate_machinery()
+	if(turbine)
+		return
+	turbine = locate() in get_step(src, get_dir(inturf, src))
+	if(turbine)
+		turbine.locate_machinery()
+
 /obj/machinery/power/compressor/RefreshParts()
 	var/E = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E / 6
 
-/obj/machinery/power/compressor/attackby(obj/item/I, mob/user)
+/obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
 
 	if(default_change_direction_wrench(user, I))
 		turbine = null
 		inturf = get_step(src, dir)
-		turbine = locate() in get_step(src, get_dir(inturf, src))
+		locate_machinery()
 		if(turbine)
 			user << "<span class='notice'>Turbine connected.</span>"
 			stat &= ~BROKEN
@@ -125,18 +130,18 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/compressor/CanAtmosPass(var/turf/T)
+/obj/machinery/power/compressor/CanAtmosPass(turf/T)
 	return !density
 
 /obj/machinery/power/compressor/process()
+	if(!turbine)
+		stat = BROKEN
+	if(stat & BROKEN || panel_open)
+		return
 	if(!starter)
 		return
 	overlays.Cut()
-	if(stat & BROKEN)
-		return
-	if(!turbine)
-		stat |= BROKEN
-		return
+
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
 
@@ -163,13 +168,13 @@
 
 
 	if(rpm>50000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o4", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER)
 	else if(rpm>10000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o3", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER)
 	else if(rpm>2000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o2", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER)
 	else if(rpm>500)
-		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
@@ -199,7 +204,7 @@
 
 // compressor is found in the opposite direction
 
-		compressor = locate() in get_step(src, get_dir(outturf, src))
+		locate_machinery()
 		if(!compressor)
 			stat |= BROKEN
 
@@ -218,15 +223,22 @@
 		P += C.rating
 	productivity = P / 6
 
-/obj/machinery/power/turbine/CanAtmosPass(var/turf/T)
+/obj/machinery/power/turbine/locate_machinery()
+	if(compressor)
+		return
+	compressor = locate() in get_step(src, get_dir(outturf, src))
+	if(compressor)
+		compressor.locate_machinery()
+
+/obj/machinery/power/turbine/CanAtmosPass(turf/T)
 	return !density
 
 /obj/machinery/power/turbine/process()
 
-	if(stat & BROKEN)
-		return
 	if(!compressor)
-		stat |= BROKEN
+		stat = BROKEN
+
+	if((stat & BROKEN) || panel_open)
 		return
 	if(!compressor.starter)
 		return
@@ -256,7 +268,7 @@
 // If it works, put an overlay that it works!
 
 	if(lastgen > 100)
-		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER)
 
 	updateDialog()
 
@@ -267,14 +279,14 @@
 
 	interact(user)
 
-/obj/machinery/power/turbine/attackby(obj/item/I, mob/user)
+/obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
 
 	if(default_change_direction_wrench(user, I))
 		compressor = null
 		outturf = get_step(src, dir)
-		compressor = locate() in get_step(src, get_dir(outturf, src))
+		locate_machinery()
 		if(compressor)
 			user << "<span class='notice'>Compressor connected.</span>"
 			stat &= ~BROKEN
@@ -341,9 +353,9 @@
 /obj/machinery/computer/turbine_computer/New()
 	..()
 	spawn(5)
-		search_turbine()
+		locate_machinery()
 
-/obj/machinery/computer/turbine_computer/proc/search_turbine()
+/obj/machinery/computer/turbine_computer/locate_machinery()
 	compressor = locate(/obj/machinery/power/compressor) in range(5)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
@@ -356,17 +368,20 @@
 
 	var/dat
 	if(compressor && compressor.turbine)
-		dat += {"<BR><B>Gas turbine remote control system</B><HR>
-		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
-		\n<BR>
-		\nTurbine speed: [src.compressor.rpm]rpm<BR>
-		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
-		\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
-		\n<BR>
-		\n"}
+		dat += "<BR><B>Gas turbine remote control system</B><HR>"
+		if(compressor.stat || compressor.turbine.stat)
+			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
+		else
+			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+			\n<BR>
+			\nTurbine speed: [src.compressor.rpm]rpm<BR>
+			\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
+			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
+			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
+			\n<BR>
+			\n"}
 	else
-		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " and no turbine" : ""]"].</B><BR>"
+		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " but no turbine" : ""]"].</B><BR>"
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
@@ -380,14 +395,14 @@
 		return
 
 	else if( href_list["str"] )
-		if(compressor)
+		if(compressor && compressor.turbine)
 			compressor.starter = !compressor.starter
 	else if( href_list["close"] )
 		usr << browse(null, "window=turbinecomputer")
 		usr.unset_machine(src)
 		return
 	else if(href_list["search"])
-		search_turbine()
+		locate_machinery()
 
 	src.updateUsrDialog()
 	return

@@ -15,10 +15,9 @@
 	)
 	var/mode = "grey"
 
-	m_amt = 5000
-	g_amt = 2000
+	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 
-/obj/item/device/pipe_painter/afterattack(atom/A, mob/user as mob, proximity_flag)
+/obj/item/device/pipe_painter/afterattack(atom/A, mob/user, proximity_flag)
 	//Make sure we only paint adjacent items
 	if(proximity_flag!= 1)
 		return
@@ -29,39 +28,11 @@
 	var/obj/machinery/atmospherics/pipe/P = A
 	P.color = modes[mode]
 	P.pipe_color = modes[mode]
+	P.stored.color = modes[mode]
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
-	//P.update_icon()
+	P.update_node_icon() //updates the neighbors
 
-	if(istype(A,/obj/machinery/atmospherics/pipe/simple))
-		var/obj/machinery/atmospherics/pipe/simple/pipe = A
-
-		if(pipe.node1)
-			pipe.node1.update_icon()
-		if(pipe.node2)
-			pipe.node2.update_icon()
-	else if(istype(A,/obj/machinery/atmospherics/pipe/manifold))
-		var/obj/machinery/atmospherics/pipe/manifold/pipe = A
-
-		if(pipe.node1)
-			pipe.node1.update_icon()
-		if(pipe.node2)
-			pipe.node2.update_icon()
-		if(pipe.node3)
-			pipe.node3.update_icon()
-	else if(istype(A,/obj/machinery/atmospherics/pipe/manifold4w))
-		var/obj/machinery/atmospherics/pipe/manifold4w/pipe = A
-
-		if(pipe.node1)
-			pipe.node1.update_icon()
-		if(pipe.node2)
-			pipe.node2.update_icon()
-		if(pipe.node3)
-			pipe.node3.update_icon()
-		if(pipe.node4)
-			pipe.node4.update_icon()
-
-
-/obj/item/device/pipe_painter/attack_self(mob/user as mob)
+/obj/item/device/pipe_painter/attack_self(mob/user)
 	mode = input("Which colour do you want to use?","Pipe painter") in modes
 
 /obj/item/device/pipe_painter/examine()

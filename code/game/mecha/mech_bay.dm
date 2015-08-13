@@ -65,7 +65,7 @@
 			recharge_console.update_icon()
 
 
-/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user)
+/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
 		return
 
@@ -81,10 +81,8 @@
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Used to control mechbay power ports."
-	density = 1
-	anchored = 1
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "recharge_comp"
+	icon_screen = "recharge_comp"
+	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
@@ -107,7 +105,10 @@
 			data += "<div class='statusDisplay'>No mech detected.</div>"
 		else
 			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
+			if(recharge_port.recharging_mech.cell.crit_fail)
+				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+			else
+				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
 
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)
@@ -144,10 +145,10 @@
 
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
-	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
-		icon_state = "recharge_comp"
-	else
-		icon_state = "recharge_comp_on"
+	..()
+	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
+		return
+	overlays += "recharge_comp_on"
 
 /obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()

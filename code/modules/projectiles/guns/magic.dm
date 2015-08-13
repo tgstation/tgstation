@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/magic
 	name = "staff of nothing"
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
-	icon = 'icons/obj/gun.dmi'
+	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
@@ -17,8 +17,12 @@
 	origin_tech = null
 	clumsy_check = 0
 	trigger_guard = 0
+	pin = /obj/item/device/firing_pin/magic
 
-/obj/item/weapon/gun/magic/afterattack(atom/target as mob, mob/living/user as mob, flag)
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+/obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
 	newshot()
 	if(no_den_usage)
 		var/area/A = get_area(user)
@@ -28,6 +32,9 @@
 		else
 			no_den_usage = 0
 	..()
+
+/obj/item/weapon/gun/magic/can_shoot()
+	return charges
 
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)
@@ -43,11 +50,12 @@
 	..()
 	charges = max_charges
 	chambered = new ammo_type(src)
-	if(can_charge)	processing_objects.Add(src)
+	if(can_charge)
+		SSobj.processing |= src
 
 
 /obj/item/weapon/gun/magic/Destroy()
-	if(can_charge)	processing_objects.Remove(src)
+	if(can_charge)	SSobj.processing.Remove(src)
 	..()
 
 
@@ -64,3 +72,8 @@
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	user << "<span class='warning'>The [name] whizzles quietly.<span>"
 	return
+
+/obj/item/weapon/gun/magic/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is casting a spell on themself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	playsound(loc, fire_sound, 50, 1, -1)
+	return (FIRELOSS)

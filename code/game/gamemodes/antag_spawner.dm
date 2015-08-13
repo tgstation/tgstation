@@ -4,10 +4,10 @@
 	w_class = 1.0
 	var/used = 0
 
-/obj/item/weapon/antag_spawner/proc/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/proc/spawn_antag(client/C, turf/T, type = "")
 	return
 
-/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target as mob)
+/obj/item/weapon/antag_spawner/proc/equip_antag(mob/target)
 	return
 
 /obj/item/weapon/antag_spawner/contract
@@ -16,7 +16,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
 
-/obj/item/weapon/antag_spawner/contract/attack_self(mob/user as mob)
+/obj/item/weapon/antag_spawner/contract/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
 	if(used)
@@ -58,32 +58,34 @@
 				src.used = 1
 				var/client/C = pick(candidates)
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
+				if(H.mind)
+					ticker.mode.update_wiz_icons_added(H.mind)
 			else
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
-/obj/item/weapon/antag_spawner/contract/spawn_antag(var/client/C, var/turf/T, var/type = "")
-	new /obj/effect/effect/harmless_smoke(T)
+/obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
+	PoolOrNew(/obj/effect/effect/smoke, T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
 	M << "<B>You are the [usr.real_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals."
 	switch(type)
 		if("destruction")
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null)
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/dumbfire/fireball(null)
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball."
 		if("bluespace")
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null)
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null)
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt."
 		if("healing")
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/charge(null)
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null)
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(null))
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/healing(M), slot_r_hand)
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall."
 		if("robeless")
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(null)
-			M.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/mind_transfer(null)
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
 
 	equip_antag(M)
@@ -103,9 +105,10 @@
 	M.mind.objectives += new_objective
 	ticker.mode.traitors += M.mind
 	M.mind.special_role = "apprentice"
+	ticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
 
-/obj/item/weapon/antag_spawner/contract/equip_antag(mob/target as mob)
+/obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
 	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
 	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), slot_w_uniform)
 	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(target), slot_shoes)
@@ -122,7 +125,7 @@
 	icon_state = "locator"
 	var/TC_cost = 0
 
-/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user as mob)
+/obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
 		user << "The teleporter is out of power."
 		return
@@ -134,7 +137,7 @@
 	else
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
-/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(var/client/C, var/turf/T, var/type = "")
+/obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
@@ -144,3 +147,51 @@
 	ticker.mode.update_synd_icons_added(R.mind)
 	R.mind.special_role = "syndicate"
 	R.faction = list("syndicate")
+
+
+/obj/item/weapon/antag_spawner/slaughter_demon //Warning edgiest item in the game
+	name = "vial of blood"
+	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+
+/obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
+	var/list/demon_candidates = get_candidates(BE_ALIEN)
+	if(user.z != 1)
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
+	if(demon_candidates.len > 0)
+		used = 1
+		var/client/C = pick(demon_candidates)
+		spawn_antag(C, get_turf(src.loc), "Slaughter Demon")
+		user << "<span class='notice'>You shatter the bottle, no turning back now!</span>"
+		user << "<span class='notice'>You sense a dark presence lurking just beyond the veil...</span>"
+		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+		qdel(src)
+	else
+		user << "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>"
+
+
+/obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
+
+	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,T)
+	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
+	S.holder = holder
+	S.key = C.key
+	S.mind.assigned_role = "Slaughter Demon"
+	S.mind.special_role = "Slaughter Demon"
+	ticker.mode.traitors += S.mind
+	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
+	new_objective.owner = S.mind
+	new_objective.target = usr.mind
+	new_objective.explanation_text = "Kill [usr.real_name], the one who summoned you."
+	S.mind.objectives += new_objective
+	var/datum/objective/new_objective2 = new /datum/objective
+	new_objective2.owner = S.mind
+	new_objective2.explanation_text = "Kill everyone else while you're at it."
+	S.mind.objectives += new_objective2
+	S << S.playstyle_string
+	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
+	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
+	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"

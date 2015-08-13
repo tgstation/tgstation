@@ -20,7 +20,7 @@
 
 /obj/machinery/implantchair/proc
 	go_out()
-	put_mob(mob/living/carbon/M as mob)
+	put_mob(mob/living/carbon/M)
 	implant(var/mob/M)
 	add_implants()
 
@@ -30,7 +30,7 @@
 	add_implants()
 
 
-/obj/machinery/implantchair/attack_hand(mob/user as mob)
+/obj/machinery/implantchair/attack_hand(mob/user)
 	user.set_machine(src)
 	var/health_text = ""
 	if(src.occupant)
@@ -73,11 +73,11 @@
 	return
 
 
-/obj/machinery/implantchair/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob)
+/obj/machinery/implantchair/attackby(obj/item/weapon/G, mob/user, params)
 	if(istype(G, /obj/item/weapon/grab))
 		if(!ismob(G:affecting))
 			return
-		for(var/mob/living/carbon/slime/M in range(1,G:affecting))
+		for(var/mob/living/simple_animal/slime/M in range(1,G:affecting))
 			if(M.Victim == G:affecting)
 				usr << "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
 				return
@@ -88,7 +88,7 @@
 	return
 
 
-/obj/machinery/implantchair/go_out(var/mob/M)
+/obj/machinery/implantchair/go_out(mob/M)
 	if(!( src.occupant ))
 		return
 	if(M == occupant) // so that the guy inside can't eject himself -Agouri
@@ -105,12 +105,12 @@
 	return
 
 
-/obj/machinery/implantchair/put_mob(mob/living/carbon/M as mob)
+/obj/machinery/implantchair/put_mob(mob/living/carbon/M)
 	if(!iscarbon(M))
-		usr << "<span class='userdanger'>The [src.name] cannot hold this!</span>"
+		usr << "<span class='warning'>The [src.name] cannot hold this!</span>"
 		return
 	if(src.occupant)
-		usr << "<span class='userdanger'>The [src.name] is already occupied!</span>"
+		usr << "<span class='warning'>The [src.name] is already occupied!</span>"
 		return
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
@@ -123,20 +123,17 @@
 	return 1
 
 
-/obj/machinery/implantchair/implant(var/mob/M)
+/obj/machinery/implantchair/implant(mob/M)
 	if (!istype(M, /mob/living/carbon))
 		return
 	if(!implant_list.len)	return
 	for(var/obj/item/weapon/implant/loyalty/imp in implant_list)
 		if(!imp)	continue
 		if(istype(imp, /obj/item/weapon/implant/loyalty))
-			M.visible_message("<span class='danger'>[M] has been implanted by the [src.name].</span>")
+			M.visible_message("<span class='warning'>[M] has been implanted by the [src.name].</span>")
 
-			if(imp.implanted(M))
-				imp.loc = M
-				imp.imp_in = M
-				imp.implanted = 1
-			implant_list -= imp
+			if(imp.implant(M))
+				implant_list -= imp
 			break
 	return
 

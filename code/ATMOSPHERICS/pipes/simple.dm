@@ -5,7 +5,7 @@ The regular pipe you see everywhere, including bent ones.
 */
 
 /obj/machinery/atmospherics/pipe/simple
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "intact"
 
 	name = "pipe"
@@ -19,13 +19,6 @@ The regular pipe you see everywhere, including bent ones.
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 
-	var/minimum_temperature_difference = 300
-	var/thermal_conductivity = 0 //WALL_HEAT_TRANSFER_COEFFICIENT No
-
-	var/maximum_pressure = 70*ONE_ATMOSPHERE
-	var/fatigue_pressure = 55*ONE_ATMOSPHERE
-	alert_pressure = 55*ONE_ATMOSPHERE
-
 	level = 1
 
 /obj/machinery/atmospherics/pipe/simple/New()
@@ -33,10 +26,16 @@ The regular pipe you see everywhere, including bent ones.
 
 	..()
 
+
+/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	switch(dir)
-		if(SOUTH || NORTH)
+		if(NORTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST || WEST)
+		if(SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST)
+			initialize_directions = EAST|WEST
+		if(WEST)
 			initialize_directions = EAST|WEST
 		if(NORTHEAST)
 			initialize_directions = NORTH|EAST
@@ -47,7 +46,7 @@ The regular pipe you see everywhere, including bent ones.
 		if(SOUTHWEST)
 			initialize_directions = SOUTH|WEST
 
-/obj/machinery/atmospherics/pipe/simple/initialize()
+/obj/machinery/atmospherics/pipe/simple/atmosinit()
 	normalize_dir()
 	var/N = 2
 	for(var/D in cardinal)
@@ -64,6 +63,7 @@ The regular pipe you see everywhere, including bent ones.
 	var/turf/T = loc			// hide if turf is not intact
 	hide(T.intact)
 	update_icon()
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/Destroy()
 	if(node1)
@@ -90,29 +90,10 @@ The regular pipe you see everywhere, including bent ones.
 		node2 = null
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/simple/check_pressure(pressure)
-	var/datum/gas_mixture/environment = loc.return_air()
-	var/pressure_difference = pressure - environment.return_pressure()
-	if(pressure_difference > maximum_pressure)
-		burst()
-	else if(pressure_difference > fatigue_pressure)
-		//TODO: leak to turf, doing pfshhhhh
-		if(prob(5))
-			burst()
-	else return 1
-
-/obj/machinery/atmospherics/pipe/simple/proc/burst()
-	src.visible_message("<span class='userdanger'>[src] bursts!</span>");
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-	smoke.set_up(1,0, src.loc, 0)
-	smoke.start()
-	qdel(src)
-
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
-	if(dir==3)
+	if(dir==2)
 		dir = 1
-	else if(dir==12)
+	else if(dir==8)
 		dir = 4
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
@@ -123,7 +104,7 @@ The regular pipe you see everywhere, including bent ones.
 		var/have_node2 = node2?1:0
 		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
-/obj/machinery/atmospherics/pipe/simple/hide(var/i)
+/obj/machinery/atmospherics/pipe/simple/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
 	update_icon()
@@ -131,15 +112,12 @@ The regular pipe you see everywhere, including bent ones.
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
 
-/obj/machinery/atmospherics/pipe/simple/insulated
-	icon = 'icons/obj/atmospherics/red_pipe.dmi'
-	icon_state = "intact"
-	minimum_temperature_difference = 10000
-	thermal_conductivity = 0
-	maximum_pressure = 1000*ONE_ATMOSPHERE
-	fatigue_pressure = 900*ONE_ATMOSPHERE
-	alert_pressure = 900*ONE_ATMOSPHERE
-	level = 2
+/obj/machinery/atmospherics/pipe/simple/update_node_icon()
+	..()
+	if(node1)
+		node1.update_icon()
+	if(node2)
+		node2.update_icon()
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/simple/general

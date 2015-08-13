@@ -34,22 +34,21 @@
 	if(requires_power)
 		luminosity = 0
 	else
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
+		power_light = 1			//rastaf0
+		power_equip = 1			//rastaf0
+		power_environ = 1		//rastaf0
 		luminosity = 1
 		lighting_use_dynamic = 0
 
 	..()
 
-//	spawn(15)
 	power_change()		// all machines set to current power level, also updates lighting icon
-	InitializeLighting()
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
 
 
-/area/proc/poweralert(var/state, var/obj/source as obj)
+
+/area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
@@ -57,55 +56,52 @@
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
 			for (var/mob/living/silicon/aiPlayer in player_list)
-				if(aiPlayer.z == source.z)
-					if (state == 1)
-						aiPlayer.cancelAlarm("Power", src, source)
-					else
-						aiPlayer.triggerAlarm("Power", src, cameras, source)
+				if (state == 1)
+					aiPlayer.cancelAlarm("Power", src, source)
+				else
+					aiPlayer.triggerAlarm("Power", src, cameras, source)
+
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				if(a.z == source.z)
-					if(state == 1)
-						a.cancelAlarm("Power", src, source)
-					else
-						a.triggerAlarm("Power", src, cameras, source)
+				if(state == 1)
+					a.cancelAlarm("Power", src, source)
+				else
+					a.triggerAlarm("Power", src, cameras, source)
+
 			for(var/mob/living/simple_animal/drone/D in mob_list)
-				if(D.z == source.z)
-					if(state == 1)
-						D.cancelAlarm("Power", src, source)
-					else
-						D.triggerAlarm("Power", src, cameras, source)
+				if(state == 1)
+					D.cancelAlarm("Power", src, source)
+				else
+					D.triggerAlarm("Power", src, cameras, source)
 	return
 
-/area/proc/atmosalert(danger_level)
-//	if(src.type==/area) //No atmos alarms in space
-//		return 0 //redudant
-	if(danger_level != src.atmosalm)
-		//src.updateicon()
-		//src.mouse_opacity = 0
+/area/proc/atmosalert(danger_level, obj/source)
+	if(danger_level != atmosalm)
 		if (danger_level==2)
 			var/list/cameras = list()
-			for(var/area/RA in src.related)
-				//src.updateicon()
+			for(var/area/RA in related)
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
+
 			for(var/mob/living/silicon/aiPlayer in player_list)
-				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
+				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				a.triggerAlarm("Atmosphere", src, cameras, src)
+				a.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
-				D.triggerAlarm("Atmosphere", src, cameras, src)
+				D.triggerAlarm("Atmosphere", src, cameras, source)
+
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
-				aiPlayer.cancelAlarm("Atmosphere", src, src)
+				aiPlayer.cancelAlarm("Atmosphere", src, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
-				a.cancelAlarm("Atmosphere", src, src)
+				a.cancelAlarm("Atmosphere", src, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
-				D.cancelAlarm("Atmosphere", src, src)
+				D.cancelAlarm("Atmosphere", src, source)
+
 		src.atmosalm = danger_level
 		return 1
 	return 0
 
-/area/proc/firealert()
+/area/proc/firealert(obj/source)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 
@@ -127,14 +123,14 @@
 			cameras += C
 
 	for (var/obj/machinery/computer/station_alert/a in machines)
-		a.triggerAlarm("Fire", src, cameras, src)
+		a.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		aiPlayer.triggerAlarm("Fire", src, cameras, src)
+		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
-		D.triggerAlarm("Fire", src, cameras, src)
+		D.triggerAlarm("Fire", src, cameras, source)
 	return
 
-/area/proc/firereset()
+/area/proc/firereset(obj/source)
 	for(var/area/RA in related)
 		if (RA.fire)
 			RA.fire = 0
@@ -151,14 +147,14 @@
 				F.update_icon()
 
 	for (var/mob/living/silicon/aiPlayer in player_list)
-		aiPlayer.cancelAlarm("Fire", src, src)
+		aiPlayer.cancelAlarm("Fire", src, source)
 	for (var/obj/machinery/computer/station_alert/a in machines)
-		a.cancelAlarm("Fire", src, src)
+		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
-		D.cancelAlarm("Fire", src, src)
+		D.cancelAlarm("Fire", src, source)
 	return
 
-/area/proc/burglaralert(var/obj/trigger)
+/area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
 
@@ -178,11 +174,10 @@
 			cameras += C
 
 	for (var/mob/living/silicon/SILICON in player_list)
-		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
-	//Cancel silicon alert after 1 minute
-	spawn(600)
-		for (var/mob/living/silicon/SILICON in player_list)
-			SILICON.cancelAlarm("Burglar", src, trigger)
+		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
+			//Cancel silicon alert after 1 minute
+			spawn(600)
+				SILICON.cancelAlarm("Burglar", src, trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -227,7 +222,7 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ) && !lighting_space)//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -242,6 +237,8 @@
 	//	new lighting behaviour with obj lights
 		icon_state = null
 
+/area/space/updateicon()
+	icon_state = null
 
 /*
 #define EQUIP 1
@@ -249,14 +246,12 @@
 #define ENVIRON 3
 */
 
-/area/proc/powered(var/chan)		// return true if the area has power to given channel
+/area/proc/powered(chan)		// return true if the area has power to given channel
 
 	if(!master.requires_power)
 		return 1
 	if(master.always_unpowered)
 		return 0
-	if(src.lighting_space)
-		return 0 // Nope sorry
 	switch(chan)
 		if(EQUIP)
 			return master.power_equip
@@ -265,6 +260,9 @@
 		if(ENVIRON)
 			return master.power_environ
 
+	return 0
+
+/area/space/powered(chan) //Nope.avi
 	return 0
 
 // called when power status changes
@@ -276,7 +274,7 @@
 		if (fire || eject || party)
 			RA.updateicon()
 
-/area/proc/usage(var/chan)
+/area/proc/usage(chan)
 	var/used = 0
 	switch(chan)
 		if(LIGHT)
@@ -310,7 +308,7 @@
 	master.used_light = 0
 	master.used_environ = 0
 
-/area/proc/use_power(var/amount, var/chan)
+/area/proc/use_power(amount, chan)
 
 	switch(chan)
 		if(EQUIP)
@@ -334,11 +332,11 @@
 	L.lastarea = newarea
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
-
-	if(!L.client.ambience_playing)
+	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
 		L << sound('sound/ambience/shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+
+	if(!(L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return //General ambience check is below the ship ambience so one can play without the other
 
 	if(prob(35))
 		var/sound = pick(ambientsounds)
@@ -349,9 +347,6 @@
 			spawn(600)			//ewww - this is very very bad
 				if(L.&& L.client)
 					L.client.played = 0
-
-/area/proc/mob_activate(var/mob/living/L)
-	return
 
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)
@@ -366,7 +361,7 @@
 		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
 			return 1
 	return 0
-
+/*
 /area/proc/clear_docking_area()
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
@@ -402,3 +397,4 @@
 		if(ismob(bug))
 			continue
 		qdel(bug)*/
+*/

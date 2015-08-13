@@ -1,12 +1,12 @@
 
-/mob/proc/HasDisease(var/datum/disease/D)
+/mob/proc/HasDisease(datum/disease/D)
 	for(var/datum/disease/DD in viruses)
-		if(D.IsSame(D))
+		if(D.IsSame(DD))
 			return 1
 	return 0
 
 
-/mob/proc/CanContractDisease(var/datum/disease/D)
+/mob/proc/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
 		return 0
 
@@ -25,22 +25,33 @@
 	return 1
 
 
-/mob/proc/ContractDisease(var/datum/disease/D)
+/mob/proc/ContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
 	AddDisease(D)
 
 
-/mob/proc/AddDisease(var/datum/disease/D)
-	var/datum/disease/DD = new D.type()
+/mob/proc/AddDisease(datum/disease/D)
+	var/datum/disease/DD = new D.type(1, D, 0)
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
-	if(DD.disease_flags & CAN_CARRY && prob(5))
-		DD.carrier++
+
+	//Copy properties over. This is so edited diseases persist.
+	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
+	for(var/V in DD.vars)
+		if(V in skipped)
+			continue
+		if(istype(DD.vars[V],/list))
+			var/list/L = D.vars[V]
+			DD.vars[V] = L.Copy()
+		else
+			DD.vars[V] = D.vars[V]
+
+	DD.affected_mob.med_hud_set_status()
 
 
-/mob/living/carbon/ContractDisease(var/datum/disease/D)
+/mob/living/carbon/ContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
 
@@ -64,6 +75,9 @@
 		feet_ch = 100
 
 	if(prob(15/D.permeability_mod))
+		return
+
+	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
@@ -119,7 +133,13 @@
 
 
 //Same as ContractDisease, except never overidden clothes checks
-/mob/proc/ForceContractDisease(var/datum/disease/D)
+/mob/proc/ForceContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
 	AddDisease(D)
+
+
+/mob/living/carbon/human/CanContractDisease(datum/disease/D)
+	if(dna && VIRUSIMMUNE in dna.species.specflags)
+		return 0
+	return ..()

@@ -4,7 +4,7 @@ var/datum/map_config/MiniStation = new()
 
 /datum/map_config/New()
 	..()
-	accessable_z_levels = list("1" = 20, "4" = 40, "5" = 40) // Restrict the map to the non-empty z levels, which were all combined in MiniStation
+	accessable_z_levels = list(1,4,5) // Restrict the map to the non-empty z levels, which were all combined in MiniStation
 
 // Enable all headsets by default in MiniStation, we don't worry about spam here.
 // Also both heads are in charge of everything, give them all department channels.

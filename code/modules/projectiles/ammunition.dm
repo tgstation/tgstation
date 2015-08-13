@@ -13,7 +13,7 @@
 	var/obj/item/projectile/BB = null 			//The loaded bullet
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
-
+	var/delay = 0								//Delay for energy weapons
 
 /obj/item/ammo_casing/New()
 	..()
@@ -34,7 +34,24 @@
 		BB = new projectile_type(src)
 	return
 
-
+/obj/item/ammo_casing/attackby(obj/item/ammo_box/box, mob/user, params)
+	if (!istype(box, /obj/item/ammo_box))
+		return
+	if(isturf(src.loc))
+		var/boolets = 0
+		for(var/obj/item/ammo_casing/bullet in src.loc)
+			if (box.stored_ammo.len >= box.max_ammo)
+				break
+			if (bullet.BB)
+				if (box.give_round(bullet, 0))
+					boolets++
+			else
+				continue
+		if (boolets > 0)
+			box.update_icon()
+			user << "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>"
+		else
+			user << "<span class='warning'>You fail to collect anything!</span>"
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -45,7 +62,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
-	m_amt = 30000
+	materials = list(MAT_METAL=30000)
 	throwforce = 2
 	w_class = 1.0
 	throw_speed = 3
@@ -57,13 +74,12 @@
 	var/caliber
 	var/multiload = 1
 
-
 /obj/item/ammo_box/New()
 	for(var/i = 1, i <= max_ammo, i++)
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(var/keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = 0)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -73,21 +89,35 @@
 			stored_ammo.Insert(1,b)
 		return b
 
-/obj/item/ammo_box/proc/give_round(var/obj/item/ammo_casing/r)
-	var/obj/item/ammo_casing/rb = r
-	if (rb)
-		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
-			stored_ammo += rb
-			rb.loc = src
-			return 1
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
+	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
+		return 0
+
+	if (stored_ammo.len < max_ammo)
+		stored_ammo += R
+		R.loc = src
+		return 1
+
+	//for accessibles magazines (e.g internal ones) when full, start replacing spent ammo
+	else if(replace_spent)
+		for(var/obj/item/ammo_casing/AC in stored_ammo)
+			if(!AC.BB)//found a spent ammo
+				stored_ammo -= AC
+				AC.loc = get_turf(src.loc)
+
+				stored_ammo += R
+				R.loc = src
+				return 1
+
 	return 0
 
-/obj/item/ammo_box/attackby(var/obj/item/A as obj, mob/user as mob, var/silent = 0)
+/obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = 0, replace_spent = 0)
 	var/num_loaded = 0
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
-			var/did_load = give_round(AC)
+			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
 				AM.stored_ammo -= AC
 				num_loaded++
@@ -95,19 +125,20 @@
 				break
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
-		if(give_round(AC))
+		if(give_round(AC, replace_spent))
 			user.drop_item()
 			AC.loc = src
 			num_loaded++
+
 	if(num_loaded)
-		if (!silent)
+		if(!silent)
 			user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		A.update_icon()
 		update_icon()
-		return num_loaded
-	return 0
 
-/obj/item/ammo_box/attack_self(mob/user as mob)
+	return num_loaded
+
+/obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		user.put_in_hands(A)

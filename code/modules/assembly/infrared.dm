@@ -2,11 +2,8 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	m_amt = 1000
-	g_amt = 500
+	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 	origin_tech = "magnets=2"
-
-	secured = 0
 
 	var/on = 0
 	var/visible = 0
@@ -25,11 +22,11 @@
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
-		processing_objects.Add(src)
+		SSobj.processing |= src
 	else
 		on = 0
 		if(first)	qdel(first)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 	update_icon()
 	return secured
 
@@ -90,21 +87,21 @@
 	if((!secured)||(!on)||(cooldown > 0))
 		return 0
 	pulse(0)
-	visible_message("\icon[src] *beep* *beep*")
+	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
 	return
 
-/obj/item/device/assembly/infra/interact(mob/user as mob)//TODO: change this this to the wire control panel
-	if(!secured)	return
-	user.set_machine(src)
-	var/dat = text("<TT><B>Infrared Laser</B>\n<B>Status</B>: []<BR>\n<B>Visibility</B>: []<BR>\n</TT>", (on ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
-	dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-	dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
-	user << browse(dat, "window=infra")
-	onclose(user, "infra")
-	return
+/obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
+	if(is_secured(user))
+		user.set_machine(src)
+		var/dat = text("<TT><B>Infrared Laser</B>\n<B>Status</B>: []<BR>\n<B>Visibility</B>: []<BR>\n</TT>", (on ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
+		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
+		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
+		user << browse(dat, "window=infra")
+		onclose(user, "infra")
+		return
 
 /obj/item/device/assembly/infra/Topic(href, href_list)
 	..()

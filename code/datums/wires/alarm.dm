@@ -9,9 +9,9 @@ var/const/AALARM_WIRE_AI_CONTROL = 8
 var/const/AALARM_WIRE_AALARM = 16
 
 
-/datum/wires/alarm/CanUse(var/mob/living/L)
+/datum/wires/alarm/CanUse(mob/living/L)
 	var/obj/machinery/alarm/A = holder
-	if(A.panel_open)
+	if(A.panel_open && A.buildstage == 2)
 		return 1
 	return 0
 
@@ -20,7 +20,7 @@ var/const/AALARM_WIRE_AALARM = 16
 	. += ..()
 	. += text("<br>\n[(A.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked.")]<br>\n[((A.shorted || (A.stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!")]<br>\n[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
 
-/datum/wires/alarm/UpdateCut(var/index, var/mended)
+/datum/wires/alarm/UpdateCut(index, mended)
 	var/obj/machinery/alarm/A = holder
 	switch(index)
 		if(AALARM_WIRE_IDSCAN)
@@ -46,11 +46,11 @@ var/const/AALARM_WIRE_AALARM = 16
 				//world << "Syphon Wire Cut"
 
 		if(AALARM_WIRE_AALARM)
-			if (A.alarm_area.atmosalert(2))
+			if (A.alarm_area.atmosalert(2,holder))
 				A.post_alert(2)
 			A.update_icon()
 
-/datum/wires/alarm/UpdatePulsed(var/index)
+/datum/wires/alarm/UpdatePulsed(index)
 	var/obj/machinery/alarm/A = holder
 	switch(index)
 		if(AALARM_WIRE_IDSCAN)
@@ -88,6 +88,6 @@ var/const/AALARM_WIRE_AALARM = 16
 
 		if(AALARM_WIRE_AALARM)
 		//	world << "Aalarm wire pulsed"
-			if (A.alarm_area.atmosalert(0))
+			if (A.alarm_area.atmosalert(0,holder))
 				A.post_alert(0)
 			A.update_icon()

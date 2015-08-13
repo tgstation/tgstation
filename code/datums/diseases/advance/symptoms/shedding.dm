@@ -24,7 +24,7 @@ BONUS
 	level = 4
 	severity = 1
 
-/datum/symptom/shedding/Activate(var/datum/disease/advance/A)
+/datum/symptom/shedding/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

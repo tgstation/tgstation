@@ -24,9 +24,9 @@
 
 	loot = list(
 				/obj/item/weapon/gun/projectile/automatic/pistol = 8,
-				/obj/item/weapon/gun/projectile/shotgun/combat = 5,
+				/obj/item/weapon/gun/projectile/shotgun/automatic/combat = 5,
 				/obj/item/weapon/gun/projectile/revolver/mateba,
-				/obj/item/weapon/gun/projectile/automatic/deagle
+				/obj/item/weapon/gun/projectile/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/maintenance
@@ -61,7 +61,7 @@
 				/obj/item/bodybag = 1,
 				/obj/item/clothing/glasses/meson = 2,
 				/obj/item/clothing/glasses/sunglasses = 1,
-				/obj/item/clothing/gloves/white{color = "yellow"; desc = "The colors are a bit dodgy."; icon_state = "yellow"; item_color = "yellow"; item_state = "ygloves"; name = "insulated gloves"} = 1,
+				/obj/item/clothing/gloves/color/yellow/fake = 1,
 				/obj/item/clothing/head/hardhat = 1,
 				/obj/item/clothing/head/hardhat/red = 1,
 				/obj/item/clothing/head/that{throwforce = 1; throwing = 1} = 1,
@@ -101,19 +101,31 @@
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,
 				/obj/item/weapon/reagent_containers/spray/pestspray = 1,
+				/obj/item/weapon/reagent_containers/glass/rag = 3,
 				/obj/item/weapon/stock_parts/cell = 3,
 				/obj/item/weapon/storage/belt/utility = 2,
 				/obj/item/weapon/storage/box = 2,
 				/obj/item/weapon/storage/box/cups = 1,
 				/obj/item/weapon/storage/box/donkpockets = 1,
 				/obj/item/weapon/storage/box/lights/mixed = 3,
+				/obj/item/weapon/storage/box/hug/medical = 1,
 				/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 				/obj/item/weapon/storage/toolbox/mechanical = 1,
 				/obj/item/weapon/screwdriver = 3,
-				/obj/item/weapon/tank/emergency_oxygen = 2,
+				/obj/item/weapon/tank/internals/emergency_oxygen = 2,
 				/obj/item/weapon/vending_refill/cola = 1,
 				/obj/item/weapon/weldingtool = 3,
 				/obj/item/weapon/wirecutters = 1,
 				/obj/item/weapon/wrench = 4,
+				/obj/item/weapon/relic = 3,
 				"" = 11
+				)
+
+/obj/effect/spawner/lootdrop/crate_spawner
+	name = "lootcrate spawner"
+	lootdoubles = 0
+
+	loot = list(
+				/obj/structure/closet/crate/secure/loot = 20,
+				"" = 80
 				)

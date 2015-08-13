@@ -17,7 +17,7 @@
 	icon_state = "film"
 	item_state = "electropack"
 	w_class = 1.0
-
+	burn_state = 0 //Burnable
 
 /*
  * Photo
@@ -28,6 +28,8 @@
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 1.0
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -38,7 +40,7 @@
 	user.examinate(src)
 
 
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
+/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
@@ -53,7 +55,7 @@
 	if(in_range(user, src))
 		show(user)
 	else
-		user << "You need to get closer to get a good look at this photo."
+		user << "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
 
 
 /obj/item/weapon/photo/proc/show(mob/user)
@@ -77,7 +79,7 @@
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
-/obj/item/weapon/photo/proc/photocreate(var/inicon, var/inimg, var/indesc, var/inblueprints)
+/obj/item/weapon/photo/proc/photocreate(inicon, inimg, indesc, inblueprints)
 	icon = inicon
 	img = inimg
 	desc = indesc
@@ -92,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-
+	burn_state = 0 //Burnable
 
 /*
  * Camera
@@ -106,7 +108,7 @@
 	w_class = 2.0
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	m_amt = 2000
+	materials = list(MAT_METAL=2000)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
@@ -135,13 +137,14 @@
 	return
 
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user)
+/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
+		if(!user.unEquip(I))
+			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
-		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
 		return
@@ -249,8 +252,9 @@
 
 
 /obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	user.put_in_hands(P)
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(get_turf(src))
+	if(Adjacent(user)) //needed because of TK
+		user.put_in_hands(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
@@ -295,7 +299,7 @@
 	var/list/fields = list()
 
 
-/obj/item/device/camera/proc/injectaialbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	for(var/datum/picture in src.aipictures)
 		numberer++
@@ -311,7 +315,7 @@
 	aipictures += P
 	usr << "<span class='unconscious'>Image recorded</span>"	//feedback to the AI player that the picture was taken
 
-/obj/item/device/camera/proc/injectmasteralbum(var/icon, var/img, var/desc, var/pixel_x, var/pixel_y, var/blueprintsinject) //stores image information to a list similar to that of the datacore
+/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
 	var/numberer = 1
 	var/mob/living/silicon/robot/C = src.loc
 	if(C.connected_ai)
@@ -331,31 +335,32 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-
-obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/selectpicture(obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
-	var/datum/picture/selection
 	if(targetloc.aipictures.len == 0)
-		usr << "<span class='userdanger'>No images saved</span>"
+		usr << "<span class='boldannounce'>No images saved</span>"
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
 	find = input("Select image (numbered in order taken)") in nametemp
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
-			selection = q
-			break  	// just in case some AI decides to take 10 thousand pictures in a round
-	P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-	P.pixel_x = selection.fields["pixel_x"]
-	P.pixel_y = selection.fields["pixel_y"]
+			return q
 
-	P.show(usr)
-	usr << P.desc
+/obj/item/device/camera/siliconcam/proc/viewpichelper(obj/item/device/camera/siliconcam/targetloc)
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	var/datum/picture/selection = selectpicture(targetloc)
+	if(selection)
+		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		P.pixel_x = selection.fields["pixel_x"]
+		P.pixel_y = selection.fields["pixel_y"]
+
+		P.show(usr)
+		usr << P.desc
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
-obj/item/device/camera/siliconcam/proc/viewpictures(user)
+/obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	if(isrobot(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
@@ -397,7 +402,7 @@ obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	src.in_camera_mode = 1
 	usr << "<B>Camera Mode activated</B>"
 
-obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
+/obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection
@@ -426,4 +431,4 @@ obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
-	usr << "You print a photograph."
+	usr << "<span class='notice'>You print a photograph.</span>"

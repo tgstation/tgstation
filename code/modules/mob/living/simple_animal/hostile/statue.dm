@@ -23,14 +23,7 @@
 	attacktext = "claws"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 	faction = list("statue")
@@ -69,7 +62,7 @@
 	if(creator)
 		src.creator = creator
 
-/mob/living/simple_animal/hostile/statue/Move(var/turf/NewLoc)
+/mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
 			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
@@ -88,35 +81,31 @@
 				GiveTarget(watching)
 
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
-	if(!can_be_seen())
+	if(can_be_seen(get_turf(loc)))
+		if(client)
+			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
+			return
+	else
 		..()
 
 /mob/living/simple_animal/hostile/statue/DestroySurroundings()
-	if(!can_be_seen())
+	if(!can_be_seen(get_turf(loc)))
 		..()
 
 /mob/living/simple_animal/hostile/statue/face_atom()
-	if(!can_be_seen())
+	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/UnarmedAttack()
-	if(can_be_seen())
-		if(client)
-			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
-		return
-	..()
-
-/mob/living/simple_animal/hostile/statue/proc/can_be_seen(var/turf/destination)
+/mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
 	if(T && destination)
-		// Don't check it twice if our destination is the tile we are on or we can't even get to our destination
+		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+			return null
 		if(T == destination)
 			destination = null
-		else if(!T.lighting_lumcount && !destination.lighting_lumcount) // No one can see us in the darkness, right?
-			return null
 
 	// We aren't in darkness, loop for viewers.
 	var/list/check_list = list(src)
@@ -127,8 +116,12 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !issilicon(M))
-				if(!M.blinded && !(sdisabilities & BLIND))
+				if(!M.eye_blind)
 					return M
+		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			if(M.occupant && M.occupant.client)
+				if(!M.occupant.eye_blind)
+					return M.occupant
 	return null
 
 // Cannot talk
@@ -138,13 +131,13 @@
 
 // Turn to dust when gibbed
 
-/mob/living/simple_animal/hostile/statue/gib(var/animation = 0)
+/mob/living/simple_animal/hostile/statue/gib(animation = 0)
 	dust(animation)
 
 
 // Stop attacking clientless mobs
 
-/mob/living/simple_animal/hostile/statue/CanAttack(var/atom/the_target)
+/mob/living/simple_animal/hostile/statue/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
@@ -205,10 +198,19 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
 	for(var/mob/living/target in targets)
-		if(target.see_invisible == SEE_INVISIBLE_LIVING)
-			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
-			name = "Toggle Nightvision \[ON\]"
+		if(istype(target, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target
+			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
+				H.dna.species.invis_sight = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"
+
 		else
-			target.see_invisible = SEE_INVISIBLE_LIVING
-			name = "Toggle Nightvision \[OFF\]"
-	return
+			if(target.see_invisible == SEE_INVISIBLE_LIVING)
+				target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+				name = "Toggle Nightvision \[ON]"
+			else
+				target.see_invisible = SEE_INVISIBLE_LIVING
+				name = "Toggle Nightvision \[OFF]"

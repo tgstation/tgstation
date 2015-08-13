@@ -35,15 +35,15 @@
 	..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
-	
+
 	toggle_reel_spin(1) //The reels won't spin unless we activate them
-		
+
 	var/list/reel = reels[1]
 	for(var/i = 0, i < reel.len, i++) //Populate the reels.
 		randomize_reels()
-	
+
 	toggle_reel_spin(0)
-	
+
 	for(var/cointype in typesof(/obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = new cointype(src)
 		coinvalues["[cointype]"] = C.value
@@ -53,13 +53,13 @@
 	. = ..() //Sanity checks.
 	if(!.)
 		return .
-	
+
 	money++ //SPESSH MAJICKS
 
 /obj/machinery/computer/slot_machine/update_icon()
 	if(stat & NOPOWER)
 		icon_state = "slots0"
-	
+
 	else if(stat & BROKEN)
 		icon_state = "slotsb"
 
@@ -73,41 +73,43 @@
 	..()
 	update_icon()
 
-/obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user)
+/obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = I
 		if(prob(2))
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
 			user << "<span class='warning'>[src] spits your coin back out!</span>"
-			
+
 		else
-			user.drop_item()
+			if(!user.drop_item())
+				return
 			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
 			balance += C.value
 			qdel(C)
-			
+
 		return
-		
-	else if(istype(I, /obj/item/weapon/card/emag) && !emagged)
+
+	else if(!balance) //to prevent coins from magically disappearing
+		..()
+
+/obj/machinery/computer/slot_machine/emag_act()
+	if(!emagged)
 		emagged = 1
-		
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(4, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
-		
-	else if(!balance) //to prevent coins from magically disappearing
-		..()
 
 /obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
 	. = ..() //Sanity checks.
 	if(.)
 		return .
-		
+
 	interact(user)
 
 /obj/machinery/computer/slot_machine/interact(mob/living/user)
@@ -118,11 +120,11 @@
 	| \[[reels[1][3]]\] | \[[reels[2][3]]\] | \[[reels[3][3]]\] | \[[reels[4][3]]\] | \[[reels[5][3]]\] |<BR>
 	\\*****v*****v*****v*****v*****/<BR>
 	</center></font>"}
-	
+
 	var/dat
 	if(working)
 		dat = reeltext
-		
+
 	else
 		dat = {"Five credits to play!<BR>
 		<B>Prize Money Available:</B> [money] (jackpot payout is ALWAYS 100%!)<BR>
@@ -168,7 +170,7 @@
 /obj/machinery/computer/slot_machine/proc/spin(mob/user)
 	if(!can_spin(user))
 		return
-	
+
 	var/the_name
 	if(user)
 		the_name = user.real_name
@@ -184,13 +186,13 @@
 	toggle_reel_spin(1)
 	update_icon()
 	updateDialog()
-		
+
 	spawn(0)
 		while(working)
 			randomize_reels()
 			updateDialog()
 			sleep(2)
-				
+
 	spawn(SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len)) //WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
 		toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
 		working = 0
@@ -217,7 +219,7 @@
 		sleep(delay)
 
 /obj/machinery/computer/slot_machine/proc/randomize_reels()
-	
+
 	for(var/reel in reels)
 		if(reels[reel])
 			reel[3] = reel[2]
@@ -226,32 +228,32 @@
 
 /obj/machinery/computer/slot_machine/proc/give_prizes(usrname, mob/user)
 	var/linelength = get_lines()
-	
+
 	if(reels[1][2] + reels[2][2] + reels[3][2] + reels[4][2] + reels[5][2] == "[SEVEN][SEVEN][SEVEN][SEVEN][SEVEN]")
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [money] credits worth of coins!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
 		jackpots += 1
 		balance += money - give_coins(JACKPOT)
 		money = 0
-			
+
 		for(var/i = 0, i < 5, i++)
 			var/cointype = pick(typesof(/obj/item/weapon/coin) - /obj/item/weapon/coin)
 			var/obj/item/weapon/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
-					
+
 	else if(linelength == 5)
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand credits worth of coins!'")
 		give_money(BIG_PRIZE)
-					
+
 	else if(linelength == 4)
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits worth of coins!'")
 		give_money(SMALL_PRIZE)
-					
+
 	else if(linelength == 3)
 		user << "<span class='notice'>You win three free games!</span>"
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
-					
+
 	else
 		user << "<span class='warning'>No luck!</span>"
 
@@ -268,7 +270,7 @@
 					amountthesame = max(j, amountthesame)
 				j++
 				symboltext += symbol
-			
+
 			if(amountthesame)
 				break
 
@@ -282,25 +284,25 @@
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
 	var/cointype = emagged ? /obj/item/weapon/coin/iron : /obj/item/weapon/coin/silver
-	
+
 	if(!emagged)
 		amount = dispense(amount, cointype, null, 0)
 
 	else
 		var/mob/living/target = locate() in range(src, 2)
-		
+
 		amount = dispense(amount, cointype, target, 1)
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throw = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwit = 0)
 	var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
 		var/obj/item/weapon/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
-		if(throw && target)
+		if(throwit && target)
 			C.throw_at(target, 3, 10)
 		else
 			random_step(C, 2, 40)

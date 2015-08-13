@@ -5,20 +5,8 @@
 	density = 0
 	layer = 3.5
 
-/obj/structure/sign/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			qdel(src)
-			return
-		if(3.0)
-			qdel(src)
-			return
-		else
-	return
-
+/obj/structure/sign/ex_act(severity, target)
+	qdel(src)
 
 /obj/structure/sign/blob_act()
 	qdel(src)
@@ -136,3 +124,28 @@
 	name = "\improper HYDROPONICS"
 	desc = "A warning sign which reads 'HYDROPONICS'"
 	icon_state = "hydro1"
+
+/obj/structure/sign/directions/science
+	name = "science department"
+	desc = "A direction sign, pointing out which way the Science department is."
+	icon_state = "direction_sci"
+
+/obj/structure/sign/directions/engineering
+	name = "engineering department"
+	desc = "A direction sign, pointing out which way the Engineering department is."
+	icon_state = "direction_eng"
+
+/obj/structure/sign/directions/security
+	name = "security department"
+	desc = "A direction sign, pointing out which way the Security department is."
+	icon_state = "direction_sec"
+
+/obj/structure/sign/directions/medical
+	name = "medical bay"
+	desc = "A direction sign, pointing out which way the Medical Bay is."
+	icon_state = "direction_med"
+
+/obj/structure/sign/directions/evac
+	name = "escape arm"
+	desc = "A direction sign, pointing out which way the escape shuttle dock is."
+	icon_state = "direction_evac"

@@ -4,11 +4,14 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
+	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	action_button_name = "Change"
 	origin_tech = "syndicate=3"
+	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	random_sensor = 0
 	var/list/clothing_choices = list()
 	var/malfunctioning = 0
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/under/chameleon/New()
 	..()
@@ -22,7 +25,7 @@
 	return
 
 
-/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+/obj/item/clothing/under/chameleon/attackby(obj/item/clothing/under/U, mob/user, params)
 	..()
 	if(istype(U, /obj/item/clothing/under/chameleon))
 		user << "\<span class='notice'>Nothing happens.</span>"
@@ -80,6 +83,7 @@
 	icon_state = A.icon_state
 	item_state = A.item_state
 	item_color = A.item_color
+	suit_color = A.suit_color
 	usr.update_inv_w_uniform()	//so our overlays update.
 
 

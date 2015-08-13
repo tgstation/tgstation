@@ -29,7 +29,7 @@
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes
-	client.screen = null				//remove hud items just in case
+	client.screen = list()				//remove hud items just in case
 	if(hud_used)	del(hud_used)		//remove the hud objects
 	hud_used = new /datum/hud(src)
 
@@ -48,6 +48,13 @@
 	if(isobj(loc))
 		var/obj/Loc=loc
 		Loc.on_log()
+
+	//readd this mob's HUDs (antag, med, etc)
+	reload_huds()
+	if(ckey in deadmins)
+		verbs += /client/proc/readmin
+
+	client.screen += client.void
 
 // Calling update_interface() in /mob/Login() causes the Cyborg to immediately be ghosted; because of winget().
 // Calling it in the overriden Login, such as /mob/living/Login() doesn't cause this.

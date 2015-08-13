@@ -12,8 +12,12 @@
 /turf/simulated/New()
 	..()
 	levelupdate()
+	if(smooth)
+		smooth_icon(src)
 
-/turf/simulated/proc/MakeSlippery(var/wet_setting = 1) // 1 = Water, 2 = Lube
+/turf/simulated/proc/burn_tile()
+
+/turf/simulated/proc/MakeSlippery(wet_setting = 1) // 1 = Water, 2 = Lube
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
@@ -21,7 +25,11 @@
 		if(wet_overlay)
 			overlays -= wet_overlay
 			wet_overlay = null
-		wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+		var/turf/simulated/floor/F = src
+		if(istype(F))
+			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+		else
+			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
 		overlays += wet_overlay
 
 	spawn(rand(790, 820)) // Purely so for visual effect
@@ -37,12 +45,14 @@
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
-
 		switch (src.wet)
 			if(1) //wet floor
 				if(!M.slip(4, 2, null, (NO_SLIP_WHEN_WALKING|STEP)))
 					M.inertia_dir = 0
 				return
-
 			if(2) //lube
 				M.slip(0, 7, null, (STEP|SLIDE|GALOSHES_DONT_HELP))
+
+/turf/simulated/ChangeTurf(var/path)
+	. = ..()
+	smooth_icon_neighbors(src)

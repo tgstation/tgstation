@@ -32,7 +32,7 @@
 
 // Like view but bypasses luminosity check
 
-/proc/get_hear(var/range, var/atom/source)
+/proc/get_hear(range, atom/source)
 
 	var/lum = source.luminosity
 	source.luminosity = 6
@@ -42,7 +42,7 @@
 
 	return heard
 
-/proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
+/proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area_master(the_area)
 	for(var/C in living_mob_list)
 		if(!istype(C, check_type))
@@ -53,18 +53,10 @@
 			return 0
 	return 1
 
-
-//Magic constants obtained by using linear regression on right-angled triangles of sides 0<x<1, 0<y<1
-//They should approximate pythagoras theorem well enough for our needs.
-#define k1 0.934
-#define k2 0.427
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By) // T is just the second atom to check distance to center with
-	var/dx = abs(Ax - Bx)	//sides of right-angled triangle
-	var/dy = abs(Ay - By)
-	if(dx>=dy)	return (k1*dx) + (k2*dy)	//No sqrt or powers :)
-	else		return (k2*dx) + (k1*dy)
-#undef k1
-#undef k2
+//We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
+//And lo and behold, it is, and it's more accurate to boot.
+/proc/cheap_hypotenuse(Ax,Ay,Bx,By)
+	return sqrt(abs(Ax - Bx)**2 + abs(Ay - By)**2) //A squared + B squared = C squared
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -133,7 +125,7 @@
 
 //This is the new version of recursive_mob_check, used for say().
 //The other proc was left intact because morgue trays use it.
-/proc/recursive_hear_check(var/atom/O)
+/proc/recursive_hear_check(atom/O)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
 	var/list/found_atoms = list()
@@ -155,7 +147,7 @@
 
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
-/proc/recursive_mob_check(var/atom/O,var/client_check=1,var/sight_check=1,var/include_radio=1)
+/proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
 
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
@@ -195,7 +187,7 @@
 	return found_mobs
 
 
-/proc/get_hearers_in_view(var/R, var/atom/source)
+/proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
@@ -210,7 +202,7 @@
 	return hear
 
 
-/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
+/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
 
 	set background = BACKGROUND_ENABLED
 
@@ -255,7 +247,7 @@
 #undef SIGN
 
 
-/proc/isInSight(var/atom/A, var/atom/B)
+/proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
@@ -290,7 +282,7 @@
 		if(AM.Move(get_step(T, direction)))
 			break
 
-/proc/get_mob_by_key(var/key)
+/proc/get_mob_by_key(key)
 	for(var/mob/M in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
@@ -331,9 +323,9 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	sleep(duration)
-	for(var/client/C in show_to)
-		C.images -= I
+	spawn(duration)
+		for(var/client/C in show_to)
+			C.images -= I
 
 /proc/get_active_player_count()
 	// Get active players who are playing in the round
@@ -371,7 +363,7 @@
 	src.dest_x = dest_x
 	src.dest_y = dest_y
 
-/proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
+/proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
 
 	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
 	// rotated at [rotation] and with the power of [power]
@@ -387,3 +379,4 @@
 	var/dest_y = src_y + distance*cos(rotation);
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
+

@@ -17,11 +17,11 @@
 
 
 /datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
-	if(!Init(arglist(args)))
+	if(!initTeleport(arglist(args)))
 		return 0
 	return 1
 
-/datum/teleport/proc/Init(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))
@@ -100,7 +100,10 @@
 	var/area/destarea = get_area(destination)
 	if(precision)
 		var/list/posturfs = list()
-		for(var/turf/T in range(precision,destination))
+		var/center = get_turf(destination)
+		if(!center)
+			center = destination
+		for(var/turf/T in range(precision,center))
 			posturfs.Add(T)
 		destturf = safepick(posturfs)
 	else
@@ -121,7 +124,7 @@
 	if(isliving(teleatom))
 		var/mob/living/L = teleatom
 		if(L.buckled)
-			L.buckled.unbuckle()
+			L.buckled.unbuckle_mob()
 
 	destarea.Entered(teleatom)
 

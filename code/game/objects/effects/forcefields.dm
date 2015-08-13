@@ -8,7 +8,8 @@
 	density = 1
 	unacidable = 1
 
-
+/obj/effect/forcefield/CanAtmosPass(turf/T)
+	return !density
 
 
 
@@ -24,10 +25,10 @@
 /obj/effect/forcefield/mime/New()
 	..()
 	last_process = world.time
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 /obj/effect/forcefield/mime/process()
 	timeleft -= (world.time - last_process)
 	if(timeleft <= 0)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		qdel(src)

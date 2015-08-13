@@ -27,7 +27,7 @@
 		E += C.rating
 	efficiency = E
 
-/obj/machinery/telepad/attackby(obj/item/I, mob/user)
+/obj/machinery/telepad/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "pad-idle-o", "pad-idle", I))
 		return
 
@@ -35,7 +35,7 @@
 		if(istype(I, /obj/item/device/multitool))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
-			user << "<span class = 'caution'>You save the data in the [I.name]'s buffer.</span>"
+			user << "<span class='caution'>You save the data in the [I.name]'s buffer.</span>"
 
 	if(exchange_parts(user, I))
 		return
@@ -54,28 +54,28 @@
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
-/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
-			user << "<span class = 'caution'> The [src] can now be moved.</span>"
+			user << "<span class='caution'>\The [src] can now be moved.</span>"
 		else if(!anchored)
 			anchored = 1
-			user << "<span class = 'caution'> The [src] is now secured.</span>"
+			user << "<span class='caution'>\The [src] is now secured.</span>"
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class = 'caution'> You unscrew the telepad's tracking beacon.</span>"
+			user << "<span class='caution'>You unscrew the telepad's tracking beacon.</span>"
 			stage = 1
 		else if(stage == 1)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			user << "<span class = 'caution'> You screw in the telepad's tracking beacon.</span>"
+			user << "<span class='caution'>You screw in the telepad's tracking beacon.</span>"
 			stage = 0
 	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user << "<span class = 'caution'> You disassemble the telepad.</span>"
+		user << "<span class='caution'>You disassemble the telepad.</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		qdel(src)
@@ -89,9 +89,9 @@
 	item_state = "signaler"
 	origin_tech = "bluespace=3"
 
-/obj/item/device/telepad_beacon/attack_self(mob/user as mob)
+/obj/item/device/telepad_beacon/attack_self(mob/user)
 	if(user)
-		user << "<span class = 'caution'> Locked In</span>"
+		user << "<span class='caution'>Locked In</span>"
 		new /obj/machinery/telepad_cargo(user.loc)
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -119,14 +119,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	user << "There are [rcharges] charge\s left."
 
 /obj/item/weapon/rcs/Destroy()
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 	..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)
@@ -142,17 +142,16 @@
 		if(mode == 0)
 			mode = 1
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "<span class = 'caution'> The telepad locator has become uncalibrated.</span>"
+			user << "<span class='caution'>The telepad locator has become uncalibrated.</span>"
 		else
 			mode = 0
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-			user << "<span class = 'caution'> You calibrate the telepad locator.</span>"
+			user << "<span class='caution'>You calibrate the telepad locator.</span>"
 
-/obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
+/obj/item/weapon/rcs/emag_act(mob/user)
+	if(!emagged)
 		emagged = 1
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		user << "<span class = 'caution'> You emag the RCS. Click on it to toggle between modes.</span>"
-		return
+		user << "<span class='caution'>You emag the RCS. Click on it to toggle between modes.</span>"

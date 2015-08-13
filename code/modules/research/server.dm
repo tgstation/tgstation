@@ -80,7 +80,7 @@
 	..()
 
 
-/obj/machinery/r_n_d/server/ex_act(severity)
+/obj/machinery/r_n_d/server/ex_act(severity, target)
 	griefProtection()
 	..()
 
@@ -121,7 +121,7 @@
 				env.merge(removed)
 				air_update_turf()
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/server/attackby(obj/item/O, mob/user, params)
 	if (disabled)
 		return
 	if (shocked)
@@ -177,7 +177,8 @@
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	desc = "Used to manage access to research and manufacturing databases."
-	icon_state = "rdcomp"
+	icon_screen = "rdcomp"
+	icon_keyboard = "rd_key"
 	var/screen = 0
 	var/obj/machinery/r_n_d/server/temp_server
 	var/list/servers = list()
@@ -192,7 +193,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "<span class='danger'> You do not have the required access level.</span>"
+		usr << "<span class='danger'>You do not have the required access level.</span>"
 		return
 
 	if(href_list["main"])
@@ -255,7 +256,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
+/obj/machinery/computer/rdservercontrol/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -269,7 +270,7 @@
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
 				dat += "[S.name] || "
-				dat += "<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | "
+				dat += "<A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A> | "
 				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
@@ -310,22 +311,22 @@
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += "Send Data to what server?<BR>"
 			for(var/obj/machinery/r_n_d/server/S in servers)
-				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
+				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'>(Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 	user << browse("<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
 	onclose(user, "server_control")
 	return
 
-/obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "<span class='notice'> You you disable the security protocols.</span>"
-	else
-		..()
+/obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
+	..()
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'>You you disable the security protocols.</span>"
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

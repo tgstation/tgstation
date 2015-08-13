@@ -1,6 +1,6 @@
 /datum/round_event_control/wizard/deprevolt //stationwide!
 	name = "Departmental Uprising"
-	weight = 2
+	weight = 0 //An order that requires order in a round of chaos was maybe not the best idea. Requiescat in pace departmental uprising August 2014 - March 2015
 	typepath = /datum/round_event/wizard/deprevolt/
 	max_occurrences = 1
 	earliest_start = 0
@@ -30,7 +30,7 @@
 			jobs_to_revolt = list("Quartermaster", "Cargo Technician", "Shaft Miner")
 			nation = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 		if("whatevercolorrepresentstheservicepeople") //the few, the proud, the technically aligned
-			jobs_to_revolt = list("Bartender", "Chef", "Botanist", "Clown", "Mime", "Janitor", "Chaplain")
+			jobs_to_revolt = list("Bartender", "Cook", "Botanist", "Clown", "Mime", "Janitor", "Chaplain")
 			nation = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
 	nation += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")

@@ -52,7 +52,7 @@
 			return
 
 
-/obj/machinery/mineral/mint/attack_hand(user as mob) //TODO: Adamantine coins! -Durandan
+/obj/machinery/mineral/mint/attack_hand(mob/user) //TODO: Adamantine coins! -Durandan
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -206,7 +206,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mineral/mint/proc/create_coins(var/P)
+/obj/machinery/mineral/mint/proc/create_coins(P)
 	var/turf/T = get_step(src,output_dir)
 	if(T)
 		var/obj/item/O = new P(src)

@@ -1,6 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Syringes.
-////////////////////////////////////////////////////////////////////////////////
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 
@@ -14,8 +11,14 @@
 	possible_transfer_amounts = null	//list(5, 10, 15)
 	volume = 15
 	var/mode = SYRINGE_DRAW
-	g_amt = 20
-	m_amt = 10
+	var/busy = 0		// needed for delayed drawing of blood
+	materials = list(MAT_METAL=10, MAT_GLASS=20)
+
+/obj/item/weapon/reagent_containers/syringe/New()
+	..()
+	if(list_reagents) //syringe starts in inject mode if its already got something inside
+		mode = SYRINGE_INJECT
+		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/on_reagent_change()
 	update_icon()
@@ -39,10 +42,12 @@
 /obj/item/weapon/reagent_containers/syringe/attack_paw()
 	return attack_hand()
 
-/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user)
+/obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user , proximity)
+	if(busy)
+		return
 	if(!proximity) return
 	if(!target.reagents) return
 
@@ -62,68 +67,53 @@
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
 					if(H.dna)
-						if(NOBLOOD in H.dna.species.specflags)
-							user << "<span class='notice'>You are unable to locate any blood.</span>"
+						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
+							user << "<span class='warning'>You are unable to locate any blood!</span>"
 							return
 				if(reagents.has_reagent("blood"))
-					user << "<span class='notice'>There is already a blood sample in this syringe.</span>"
+					user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 					return
 				if(istype(target, /mob/living/carbon))	//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
-					var/datum/reagent/B = new /datum/reagent/blood
 					if(!check_dna_integrity(T))
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
-					if(NOCLONE in T.mutations)	//target done been et, no more blood in him
-						user << "<span class='notice'>You are unable to locate any blood.</span>"
+					if(NOCLONE in T.mutations)	//target done been eat, no more blood in him
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)
-						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from  [target]!</span>", \
+						target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
+						busy = 1
 						if(!do_mob(user, target))
+							busy = 0
 							return
-					B.holder = src
-					B.volume = amount
-					//set reagent data
-					B.data["donor"] = T
+					busy = 0
+					var/datum/reagent/B
+					B = T.take_blood(src,amount)
 
-					/*
-					if(T.virus && T.virus.spread_type != SPECIAL)
-						B.data["virus"] = new T.virus.type(0)
-					*/
-
-					for(var/datum/disease/D in T.viruses)
-						if(!B.data["viruses"])
-							B.data["viruses"] = list()
-
-						B.data["viruses"] += new D.type(0, D, 1)
-
-					B.data["blood_DNA"] = copytext(T.dna.unique_enzymes,1,0)
-					if(T.resistances&&T.resistances.len)
-						B.data["resistances"] = T.resistances.Copy()
-					if(istype(target, /mob/living/carbon/human))//I wish there was some hasproperty operation...
-						var/mob/living/carbon/human/HT = target
-						B.data["blood_type"] = copytext(HT.dna.blood_type,1,0)
-					var/list/temp_chem = list()
-					for(var/datum/reagent/R in target.reagents.reagent_list)
-						temp_chem += R.name
-						temp_chem[R.name] = R.volume
-					B.data["trace_chem"] = list2params(temp_chem)
-
-					reagents.reagent_list += B
-					reagents.update_total()
-					on_reagent_change()
-					reagents.handle_reactions()
-					user.visible_message("<span class='notice'>[user] takes a blood sample from [target].</span>")
+					if(!B && ishuman(target))
+						var/mob/living/carbon/human/H = target
+						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
+							target.reagents.trans_to(src, amount)
+						else
+							user << "<span class='warning'>You are unable to locate any blood!</span>"
+							return
+					if (B)
+						src.reagents.reagent_list += B
+						src.reagents.update_total()
+						src.on_reagent_change()
+						src.reagents.handle_reactions()
+					user.visible_message("[user] takes a blood sample from [target].")
 
 			else //if not mob
 				if(!target.reagents.total_volume)
-					user << "<span class='notice'>[target] is empty.</span>"
+					user << "<span class='warning'>[target] is empty!</span>"
 					return
 
 				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
-					user << "<span class='notice'>You cannot directly remove reagents from [target].</span>"
+					user << "<span class='warning'>You cannot directly remove reagents from [target]!</span>"
 					return
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
@@ -141,7 +131,7 @@
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
-				user << "<span class='notice'>You cannot directly fill [target].</span>"
+				user << "<span class='warning'>You cannot directly fill [target]!</span>"
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
 				user << "<span class='notice'>[target] is full.</span>"
@@ -150,7 +140,14 @@
 			if(ismob(target) && target != user)
 				target.visible_message("<span class='danger'>[user] is trying to inject [target]!</span>", \
 										"<span class='userdanger'>[user] is trying to inject [target]!</span>")
-				if(!do_mob(user, target)) return
+				if(!do_mob(user, target))
+					return
+				//Sanity checks after sleep
+				if(!reagents.total_volume)
+					return
+				if(target.reagents.total_volume >= target.reagents.maximum_volume)
+					return
+
 				target.visible_message("<span class='danger'>[user] injects [target] with the syringe!", \
 								"<span class='userdanger'>[user] injects [target] with the syringe!")
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
@@ -159,8 +156,9 @@
 					rinject += R.name
 				var/contained = english_list(rinject)
 				var/mob/M = target
-				add_logs(user, M, "injected", object="[src.name]", addition="which had [contained]")
-				reagents.reaction(target, INGEST)
+				add_logs(user, M, "injected", src, addition="which had [contained]")
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			if(ismob(target) && target == user)
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
 				var/list/rinject = list()
@@ -170,19 +168,26 @@
 				var/mob/M = target
 				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>")
-
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			spawn(5)
-				target.add_fingerprint(user)
-				var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You inject [trans] unit\s of the solution. [src] now contains [reagents.total_volume] unit\s.</span>"
-				if(reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
+				var/datum/reagent/blood/B
+				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
+					B = d
+					break
+				if(B && istype(target,/mob/living/carbon))
+					var/mob/living/carbon/C = target
+					C.inject_blood(src,5)
+				else
+					src.reagents.trans_to(target, amount_per_transfer_from_this)
+				user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
 
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
-	var/rounded_vol = round(reagents.total_volume,5)
+	var/rounded_vol = min(max(round(reagents.total_volume,5),5),15)
 	overlays.Cut()
 	if(ismob(loc))
 		var/injoverlay
@@ -197,15 +202,36 @@
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
-
-		switch(rounded_vol)
-			if(5)	filling.icon_state = "syringe5"
-			if(10)	filling.icon_state = "syringe10"
-			if(15)	filling.icon_state = "syringe15"
-
+		filling.icon_state = "syringe[rounded_vol]"
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
 
+/obj/item/weapon/reagent_containers/syringe/epinephrine
+	name = "syringe (epinephrine)"
+	desc = "Contains epinephrine - used to stabilize patients."
+	list_reagents = list("epinephrine" = 15)
+
+/obj/item/weapon/reagent_containers/syringe/charcoal
+	name = "syringe (charcoal)"
+	desc = "Contains charcoal."
+	list_reagents = list("charcoal" = 15)
+
+/obj/item/weapon/reagent_containers/syringe/antiviral
+	name = "syringe (spaceacillin)"
+	desc = "Contains antiviral agents."
+	list_reagents = list("spaceacillin" = 15)
+
+/obj/item/weapon/reagent_containers/syringe/stimulants
+	name = "Stimpack"
+	desc = "Contains stimulants."
+	amount_per_transfer_from_this = 50
+	volume = 50
+	list_reagents = list("stimulants" = 50)
+
+/obj/item/weapon/reagent_containers/syringe/calomel
+	name = "syringe (calomel)"
+	desc = "Contains calomel."
+	list_reagents = list("calomel" = 15)
 
 /obj/item/weapon/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
@@ -213,73 +239,5 @@
 	amount_per_transfer_from_this = 50
 	volume = 50
 
-////////////////////////////////////////////////////////////////////////////////
-/// Syringes. END
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-/obj/item/weapon/reagent_containers/syringe/inaprovaline
-	name = "syringe (inaprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
-
-/obj/item/weapon/reagent_containers/syringe/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
-
-/obj/item/weapon/reagent_containers/syringe/antiviral
-	name = "syringe (spaceacillin)"
-	desc = "Contains antiviral agents."
-	New()
-		..()
-		reagents.add_reagent("spaceacillin", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
-
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
-	New()
-		..()
-		reagents.add_reagent("chloralhydrate", 50)
-		mode = SYRINGE_INJECT
-		update_icon()
-
-
-//Robot syringes
-//Not special in any way, code wise. They don't have added variables or procs.
-/obj/item/weapon/reagent_containers/syringe/robot/antitoxin
-	name = "syringe (anti-toxin)"
-	desc = "Contains anti-toxins."
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
-
-/obj/item/weapon/reagent_containers/syringe/robot/inoprovaline
-	name = "syringe (inoprovaline)"
-	desc = "Contains inaprovaline - used to stabilize patients."
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
-
-/obj/item/weapon/reagent_containers/syringe/robot/mixed
-	name = "syringe (mixed)"
-	desc = "Contains inaprovaline & anti-toxins."
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 7)
-		reagents.add_reagent("anti_toxin", 8)
-		mode = SYRINGE_INJECT
-		update_icon()
+	list_reagents = list("chloralhydrate" = 50)

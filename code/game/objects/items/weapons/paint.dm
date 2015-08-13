@@ -10,6 +10,8 @@
 	item_color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3.0
+	burn_state = 0 //Burnable
+	burntime = 5
 	var/paintleft = 10
 
 /obj/item/weapon/paint/red
@@ -53,7 +55,7 @@
 	name = "any color"
 	icon_state = "paint_neutral"
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
 		if ((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
@@ -77,7 +79,7 @@
 		return
 
 
-/obj/item/weapon/paint/afterattack(turf/target, mob/user as mob, proximity)
+/obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
 	if(!proximity) return
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
@@ -92,7 +94,7 @@
 	name = "paint remover"
 	icon_state = "paint_neutral"
 
-	afterattack(turf/target, mob/user as mob,proximity)
+	afterattack(turf/target, mob/user,proximity)
 		if(!proximity) return
 		if(istype(target) && target.color != initial(target.color))
 			target.color = initial(target.color)

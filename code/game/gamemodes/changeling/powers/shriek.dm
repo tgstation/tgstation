@@ -7,11 +7,11 @@
 	req_human = 1
 
 //A flashy ability, good for crowd control and sewing chaos.
-/obj/effect/proc_holder/changeling/resonant_shriek/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
-				M.ear_deaf += 30
+				M.adjustEarDamage(0,30)
 				M.confused += 20
 				M.Jitter(50)
 			else
@@ -35,7 +35,7 @@
 	dna_cost = 1
 
 //A flashy ability, good for crowd control and sewing chaos.
-/obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1
 		L.broken()

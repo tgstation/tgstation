@@ -6,10 +6,10 @@
 	anchored = 1
 	var/wait = 0
 
-/obj/machinery/pipedispenser/attack_paw(user as mob)
+/obj/machinery/pipedispenser/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/pipedispenser/attack_hand(user as mob)
+/obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
 		return 1
 	var/dat = {"
@@ -17,27 +17,24 @@
 <A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=17;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=18;dir=1'>Digital Valve</A><BR>
+<A href='?src=\ref[src];make=16;dir=1'>Digital Valve</A><BR>
 <b>Devices:</b><BR>
 <A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
 <A href='?src=\ref[src];make=7;dir=1'>Vent</A><BR>
 <A href='?src=\ref[src];make=9;dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=15;dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=16;dir=1'>Volume Pump</A><BR>
+<A href='?src=\ref[src];make=13;dir=1'>Passive Gate</A><BR>
+<A href='?src=\ref[src];make=14;dir=1'>Volume Pump</A><BR>
 <A href='?src=\ref[src];make=10;dir=1'>Scrubber</A><BR>
 <A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
+<A href='?src=\ref[src];make=11;dir=1'>Gas Filter</A><BR>
+<A href='?src=\ref[src];make=12;dir=1'>Gas Mixer</A><BR>
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
 <A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
-<b>Insulated pipes:</b><BR>
-<A href='?src=\ref[src];make=11;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=15;dir=1'>Heat Exchanger</A><BR>
 "}
 
 
@@ -71,23 +68,24 @@
 				wait = 0
 	return
 
-/obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
+/obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "<span class='notice'>You put [W] back into [src].</span>"
-		user.drop_item()
+		if(!user.drop_item())
+			return
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to fasten \the [src] to the floor...</span>"
-			if (do_after(user, 40))
+			if (do_after(user, 40, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] fastens \the [src].", \
-					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
-					"You hear ratchet.")
+					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 				stat &= MAINT
 				if (usr.machine==src)
@@ -95,12 +93,12 @@
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user << "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>"
-			if (do_after(user, 20))
+			if (do_after(user, 20, target = src))
 				add_fingerprint(user)
 				user.visible_message( \
 					"[user] unfastens \the [src].", \
-					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
-					"You hear ratchet.")
+					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
+					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 				stat |= ~MAINT
 				power_change()
@@ -125,7 +123,7 @@ Nah
 */
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/pipe as obj, mob/usr as mob)
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
@@ -140,26 +138,24 @@ Nah
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
+/obj/machinery/pipedispenser/disposal/attack_hand(mob/user)
 	if(..())
 		return 1
 
 	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=8'>Sort Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
+<A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
-
-// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
@@ -170,29 +166,13 @@ Nah
 	if(href_list["dmake"])
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (src.loc)
-			switch(p_type)
-				if(0)
-					C.ptype = 0
-				if(1)
-					C.ptype = 1
-				if(2)
-					C.ptype = 2
-				if(3)
-					C.ptype = 4
-				if(4)
-					C.ptype = 5
-				if(5)
-					C.ptype = 6
-					C.density = 1
-				if(6)
-					C.ptype = 7
-					C.density = 1
-				if(7)
-					C.ptype = 8
-					C.density = 1
-				if(8)
-					C.ptype = 9
+			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
+
+			if(!C.can_place())
+				usr << "<span class='warning'>There's not enough room to build that here!</span>"
+				qdel(C)
+				return
+
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
@@ -209,7 +189,7 @@ Nah
 	density = 1
 	anchored = 1.0
 
-/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(user as mob)
+/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())
 		return 1
 

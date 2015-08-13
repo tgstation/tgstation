@@ -1,0 +1,51 @@
+<div class="item">
+	<div class="itemLabel">
+		Power:
+	</div>
+	<div class="itemContent">
+		{{:~link(on? 'On' : 'Off', null, {'power' : 1})}}
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Output pressure:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('MAX', null, {'set_press' : 'max'}, null)}}
+			{{:~link('SET', null, {'set_press' : 'set'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:(pressure_set/100)}} kPa&nbsp;</div>
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Node 1 Concentration:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('-', null, {'node1_c' : '-0.1'}, null)}}
+			{{:~link('-', null, {'node1_c' : '-0.01'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:node1_concentration}} %&nbsp;</div>
+			{{:~link('+', null, {'node1_c' : '0.01'}, null)}}
+			{{:~link('+', null, {'node1_c' : '0.1'}, null)}}
+		</div>
+	</div>
+</div>
+
+<div class="item">
+	<div class="itemLabel">
+		Node 2 Concentration:
+	</div>
+	<div class="itemContent">
+		<div style="clear: both; padding-top: 4px;">
+			{{:~link('-', null, {'node2_c' : '-0.1'}, null)}}
+			{{:~link('-', null, {'node2_c' : '-0.01'}, null)}}
+			<div style="float: left; width: 80px; text-align: center;">&nbsp;{{:node2_concentration}} %&nbsp;</div>
+			{{:~link('+', null, {'node2_c' : '0.01'}, null)}}
+			{{:~link('+', null, {'node2_c' : '0.1'}, null)}}
+		</div>
+	</div>
+</div>

@@ -6,8 +6,7 @@
 	w_class = 2
 	anchored = 0
 
-	m_amt = 400
-	g_amt = 250
+	materials = list(MAT_METAL=400, MAT_GLASS=250)
 
 	//	Motion, EMP-Proof, X-Ray
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)
@@ -22,7 +21,7 @@
 				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/item/weapon/camera_assembly/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/item/weapon/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 
 	switch(state)
 
@@ -30,7 +29,7 @@
 			// State 0
 			if(istype(W, /obj/item/weapon/wrench) && isturf(src.loc))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				user << "You wrench the assembly into place."
+				user << "<span class='notice'>You wrench the assembly into place.</span>"
 				anchored = 1
 				state = 1
 				update_icon()
@@ -41,14 +40,14 @@
 			// State 1
 			if(istype(W, /obj/item/weapon/weldingtool))
 				if(weld(W, user))
-					user << "You weld the assembly securely into place."
+					user << "<span class='notice'>You weld the assembly securely into place.</span>"
 					anchored = 1
 					state = 2
 				return
 
 			else if(istype(W, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				user << "You unattach the assembly from its place."
+				user << "<span class='notice'>You unattach the assembly from its place.</span>"
 				anchored = 0
 				update_icon()
 				state = 0
@@ -62,14 +61,14 @@
 					user << "<span class='notice'>You add wires to the assembly.</span>"
 					state = 3
 				else
-					user << "<span class='warning'>You need two lengths of cable to wire a camera.</span>"
+					user << "<span class='warning'>You need two lengths of cable to wire a camera!</span>"
 					return
 				return
 
 			else if(istype(W, /obj/item/weapon/weldingtool))
 
 				if(weld(W, user))
-					user << "You unweld the assembly from its place."
+					user << "<span class='notice'>You unweld the assembly from its place.</span>"
 					state = 1
 					anchored = 1
 				return
@@ -82,12 +81,12 @@
 
 				var/input = stripped_input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
 				if(!input)
-					usr << "No input found please hang up and try your call again."
+					usr << "<span class='warning'>No input found, please hang up and try your call again!</span>"
 					return
 
 				var/list/tempnetwork = text2list(input, ",")
 				if(tempnetwork.len < 1)
-					usr << "No network found please hang up and try your call again."
+					usr << "<span class='warning'>No network found, please hang up and try your call again!</span>"
 					return
 
 				state = 4
@@ -115,15 +114,16 @@
 
 				new/obj/item/stack/cable_coil(get_turf(src), 2)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "You cut the wires from the circuits."
+				user << "<span class='notice'>You cut the wires from the circuits.</span>"
 				state = 2
 				return
 
 	// Upgrades!
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		user << "You attach the [W] into the assembly inner circuits."
+		if(!user.unEquip(W))
+			return
+		user << "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>"
 		upgrades += W
-		user.drop_item()
 		W.loc = src
 		return
 
@@ -131,7 +131,7 @@
 	else if(istype(W, /obj/item/weapon/crowbar) && upgrades.len)
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
-			user << "You unattach an upgrade from the assembly."
+			user << "<span class='notice'>You unattach an upgrade from the assembly.</span>"
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			U.loc = get_turf(src)
 			upgrades -= U
@@ -145,22 +145,21 @@
 	else
 		icon_state = "cameracase"
 
-/obj/item/weapon/camera_assembly/attack_hand(mob/user as mob)
+/obj/item/weapon/camera_assembly/attack_hand(mob/user)
 	if(!anchored)
 		..()
 
-/obj/item/weapon/camera_assembly/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/user)
+/obj/item/weapon/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 
 	if(busy)
 		return 0
-	if(!WT.isOn())
+	if(!WT.remove_fuel(0, user))
 		return 0
 
-	user << "<span class='notice'>You start to weld the [src]..</span>"
+	user << "<span class='notice'>You start to weld \the [src]...</span>"
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-	WT.eyecheck(user)
 	busy = 1
-	if(do_after(user, 20))
+	if(do_after(user, 20, target = src))
 		busy = 0
 		if(!WT.isOn())
 			return 0

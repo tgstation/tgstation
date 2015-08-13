@@ -7,7 +7,7 @@
 	var/list/cult_objectives = list()
 
 
-/proc/iscultist(mob/living/M as mob)
+/proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
@@ -19,6 +19,26 @@
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
+/proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
+	if(!message)
+		return
+	if(say)
+		user.say("O bidai nabora se[pick("'","`")]sma!")
+	else
+		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+	sleep(10)
+	if(say)
+		user.say(message)
+	else
+		user.whisper(message)
+	for(var/mob/M in mob_list)
+		if(iscultist(M) || (M in dead_mob_list))
+			if(clear || !ishuman(user))
+				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
+			else //Emergency comms
+				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+
+
 
 /datum/game_mode/cult
 	name = "cult"
@@ -29,6 +49,7 @@
 	required_players = 20
 	required_enemies = 6
 	recommended_enemies = 6
+	enemy_minimum_age = 14
 
 
 	var/finished = 0
@@ -65,10 +86,6 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing heads and such from the list
-			if(player.assigned_role == job)
-				antag_candidates -= player
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -77,6 +94,7 @@
 		antag_candidates -= cultist
 		cult += cultist
 		cultist.special_role = "Cultist"
+		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
 	return (cult.len>=required_enemies)
@@ -110,7 +128,7 @@
 	..()
 
 
-/datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
+/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
 		var/explanation
 		switch(cult_objectives[obj_count])
@@ -139,7 +157,7 @@
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-			mob.mutations.Remove(CLUMSY)
+			mob.dna.remove_mutation(CLOWNMUT)
 
 
 	var/obj/item/weapon/paper/talisman/supply/T = new(mob)
@@ -156,6 +174,10 @@
 	else
 		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
 		mob.update_icons()
+		if(where == "backpack")
+			var/obj/item/weapon/storage/B = mob.back
+			B.orient2hud(mob)
+			B.show_to(mob)
 		return 1
 
 
@@ -173,7 +195,7 @@
 //			startwords -= word
 //	return ..(cult_mob,word)
 
-/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if(!wordtravel)
 		runerandom()
 	if (!word)
@@ -215,6 +237,7 @@
 	if (!istype(cult_mind))
 		return 0
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+		cult_mind.current.Paralyse(5)
 		cult += cult_mind
 		cult_mind.current.cult_add_comm()
 		update_cult_icons_added(cult_mind)
@@ -232,7 +255,8 @@
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
-		cult_mind.current << "<span class='userdanger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</FONT></span>"
+		cult_mind.current.Paralyse(5)
+		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span>"
 		cult_mind.memory = ""
 		cult_mind.cult_words = initial(cult_mind.cult_words)
 		update_cult_icons_removed(cult_mind)
@@ -241,52 +265,15 @@
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
 
-/datum/game_mode/proc/update_all_cult_icons()
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult")
-							del(I)
-
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/datum/mind/cultist_1 in cult)
-						if(cultist_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
-							cultist.current.client.images += I
-
-
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
-					cultist.current.client.images += I
-			if(cult_mind.current)
-				if(cult_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
-					cult_mind.current.client.images += J
-
+	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	culthud.join_hud(cult_mind.current)
+	set_antag_hud(cult_mind.current, "cult")
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							del(I)
-
-		if(cult_mind.current)
-			if(cult_mind.current.client)
-				for(var/image/I in cult_mind.current.client.images)
-					if(I.icon_state == "cult")
-						del(I)
-
+	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
+	culthud.leave_hud(cult_mind.current)
+	set_antag_hud(cult_mind.current, null)
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
@@ -312,9 +299,8 @@
 /datum/game_mode/cult/proc/check_survive()
 	acolytes_survived = 0
 	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat!=2)
-			var/area/A = get_area(cult_mind.current )
-			if ( is_type_in_list(A, centcom_areas))
+		if (cult_mind.current && cult_mind.current.stat != DEAD)
+			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
 				acolytes_survived++
 	if(acolytes_survived>=acolytes_needed)
 		return 0

@@ -1,5 +1,5 @@
 	//////////////
-var/NEARSIGHTEDBLOCK = 0
+var/NEARSIGHTBLOCK = 0
 var/EPILEPSYBLOCK = 0
 var/COUGHBLOCK = 0
 var/TOURETTESBLOCK = 0
@@ -23,3 +23,6 @@ var/NULLED_UI
 
 var/list/global_mutations = list() // list of hidden mutation things
 
+var/list/bad_mutations = list()
+var/list/good_mutations = list()
+var/list/not_good_mutations = list()

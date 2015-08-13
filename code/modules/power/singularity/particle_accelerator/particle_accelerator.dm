@@ -129,7 +129,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 
 
-/obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
+/obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	if(istool(W))
 		if(src.process_tool_hit(W,user))
 			return
@@ -142,23 +142,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if(master && master.active)
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
-
-/obj/structure/particle_accelerator/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
-				return
-		else
-	return
-
 
 /obj/structure/particle_accelerator/blob_act()
 	if(prob(50))
@@ -185,7 +168,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return 0
 
 
-/obj/structure/particle_accelerator/proc/report_ready(var/obj/O)
+/obj/structure/particle_accelerator/proc/report_ready(obj/O)
 	if(O && (O == master))
 		if(construction_state >= 3)
 			return 1
@@ -198,7 +181,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/connect_master(var/obj/O)
+/obj/structure/particle_accelerator/proc/connect_master(obj/O)
 	if(O && istype(O,/obj/machinery/particle_accelerator/control_box))
 		if(O.dir == src.dir)
 			master = O
@@ -206,7 +189,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/process_tool_hit(var/obj/O, var/mob/user)
+/obj/structure/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -235,7 +218,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 				else
-					user << "<span class='warning'>You need one length of cable to wire the [src.name].</span>"
+					user << "<span class='warning'>You need one length of cable to wire the [src.name]!</span>"
 					return
 		if(2)
 			if(istype(O, /obj/item/weapon/wirecutters))//TODO:Shock user if its on?
@@ -325,29 +308,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	..()
 
 
-/obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
+/obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user, params)
 	if(istool(W))
 		if(src.process_tool_hit(W,user))
 			return
 	..()
 	return
-
-/obj/machinery/particle_accelerator/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
-				return
-		else
-	return
-
 
 /obj/machinery/particle_accelerator/blob_act()
 	if(prob(50))
@@ -359,7 +325,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/machinery/particle_accelerator/proc/process_tool_hit(var/obj/O, var/mob/user)
+/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))

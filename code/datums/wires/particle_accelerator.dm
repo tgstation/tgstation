@@ -8,13 +8,13 @@ var/const/PARTICLE_INTERFACE_WIRE = 4 // Determines the interface showing up.
 var/const/PARTICLE_LIMIT_POWER_WIRE = 8 // Determines how strong the PA can be.
 //var/const/PARTICLE_NOTHING_WIRE = 16 // Blank wire
 
-/datum/wires/particle_acc/control_box/CanUse(var/mob/living/L)
+/datum/wires/particle_acc/control_box/CanUse(mob/living/L)
 	var/obj/machinery/particle_accelerator/control_box/C = holder
 	if(C.construction_state == 2)
 		return 1
 	return 0
 
-/datum/wires/particle_acc/control_box/UpdatePulsed(var/index)
+/datum/wires/particle_acc/control_box/UpdatePulsed(index)
 	var/obj/machinery/particle_accelerator/control_box/C = holder
 	switch(index)
 
@@ -30,7 +30,7 @@ var/const/PARTICLE_LIMIT_POWER_WIRE = 8 // Determines how strong the PA can be.
 		if(PARTICLE_LIMIT_POWER_WIRE)
 			C.visible_message("\icon[C]<b>[C]</b> makes a large whirring noise.")
 
-/datum/wires/particle_acc/control_box/UpdateCut(var/index, var/mended)
+/datum/wires/particle_acc/control_box/UpdateCut(index, mended)
 	var/obj/machinery/particle_accelerator/control_box/C = holder
 	switch(index)
 

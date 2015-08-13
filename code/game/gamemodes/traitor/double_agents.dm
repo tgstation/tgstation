@@ -1,12 +1,10 @@
 /datum/game_mode/traitor/double_agents
 	name = "double agents"
 	config_tag = "double_agents"
-	restricted_jobs = list("Cyborg", "AI", "Captain", "Head of Personnel", "Chief Medical Officer", "Research Director", "Chief Engineer", "Head of Security") // Human / Minor roles only.
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
-
-	traitor_name = "double agent"
+	reroll_friendly = 0
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 6 // Six additional traitors
@@ -27,27 +25,40 @@
 		target_list[traitor] = traitors[i + 1]
 	..()
 
-/datum/game_mode/traitor/double_agents/forge_traitor_objectives(var/datum/mind/traitor)
+/datum/game_mode/traitor/double_agents/forge_traitor_objectives(datum/mind/traitor)
 
 	if(target_list.len && target_list[traitor]) // Is a double agent
 
 		// Assassinate
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = traitor
-		kill_objective.target = target_list[traitor]
-		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.assigned_role], the double agent."
-		traitor.objectives += kill_objective
+		var/datum/mind/target_mind = target_list[traitor]
+		if(issilicon(target_mind.current))
+			var/datum/objective/destroy/destroy_objective = new
+			destroy_objective.owner = traitor
+			destroy_objective.target = target_mind
+			destroy_objective.update_explanation_text()
+			traitor.objectives += destroy_objective
+		else
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.target = target_mind
+			kill_objective.update_explanation_text()
+			traitor.objectives += kill_objective
 
 		// Escape
-		var/datum/objective/escape/escape_objective = new
-		escape_objective.owner = traitor
-		traitor.objectives += escape_objective
+		if(issilicon(traitor.current))
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
+		else
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = traitor
+			traitor.objectives += escape_objective
 
 	else
 		..() // Give them standard objectives.
 	return
 
-/datum/game_mode/traitor/double_agents/add_latejoin_traitor(var/datum/mind/character)
+/datum/game_mode/traitor/double_agents/add_latejoin_traitor(datum/mind/character)
 
 	check_potential_agents()
 

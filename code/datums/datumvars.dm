@@ -184,6 +184,7 @@
 			OXY:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
 			CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=clone'>[M.getCloneLoss()]</a>
 			BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=brain'>[M.getBrainLoss()]</a>
+			STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
 			</font>
 
 
@@ -236,6 +237,7 @@
 
 
 	body += "<option value='?_src_=vars;mark_object=\ref[D]'>Mark Object</option>"
+	body += "<option value='?_src_=vars;proc_call=\ref[D]'>Call Proc</option>"
 	if(ismob(D))
 		body += "<option value='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</option>"
 
@@ -250,14 +252,17 @@
 		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
-		if(ishuman(D))
+		if(iscarbon(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;editorgans=\ref[D]'>Modify organs</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
+		if(ishuman(D))
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
+			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
+			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 	if(isobj(D))
@@ -321,7 +326,7 @@ body
 
 	return
 
-/client/proc/debug_variable(name, value, level, var/datum/DA = null)
+/client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
 	if(DA)
@@ -442,6 +447,14 @@ body
 		src.holder.marked_datum = D
 		href_list["datumrefresh"] = href_list["mark_object"]
 
+	else if(href_list["proc_call"])
+		if(!check_rights(0))	return
+
+		var/T = locate(href_list["proc_call"])
+
+		if(T)
+			callproc_datum(T)
+
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return
 
@@ -466,7 +479,7 @@ body
 				usr << "This can only be used on instances of type /mob"
 				return
 
-			var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null),1,MAX_NAME_LEN)
+			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
 			if( !new_name || !M )	return
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
@@ -689,6 +702,17 @@ body
 				if("left")	A.dir = turn(A.dir, 45)
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
+		else if(href_list["editorgans"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/C = locate(href_list["editorgans"])
+			if(!istype(C))
+				usr << "This can only be done to instances of type /mob/living/carbon"
+				return
+
+			manipulate_organs(C)
+			href_list["datumrefresh"] = href_list["editorgans"]
+
 		else if(href_list["makehuman"])
 			if(!check_rights(R_SPAWN))	return
 
@@ -762,9 +786,9 @@ body
 		else if(href_list["makeai"])
 			if(!check_rights(R_SPAWN))	return
 
-			var/mob/living/carbon/human/H = locate(href_list["makeai"])
+			var/mob/living/carbon/H = locate(href_list["makeai"])
 			if(!istype(H))
-				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				usr << "This can only be done to instances of type /mob/living/carbon"
 				return
 
 			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
@@ -789,8 +813,40 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				H.dna.species = new newtype()
+				hardset_dna(H, null, null, null, null, newtype)
 				H.regenerate_icons()
+
+		else if(href_list["purrbation"])
+			if(!check_rights(R_SPAWN))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["purrbation"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				return
+
+			if(!H)
+				usr << "Mob doesn't exist anymore"
+				return
+
+			if(H.dna && H.dna.species.id == "human")
+				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
+					usr << "Put [H] on purrbation."
+					H << "You suddenly feel valid."
+					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
+					H.dna.features["tail_human"] = "Cat"
+					H.dna.features["ears"] = "Cat"
+				else
+					usr << "Removed [H] from purrbation."
+					H << "You suddenly don't feel valid anymore."
+					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
+					H.dna.features["tail_human"] = "None"
+					H.dna.features["ears"] = "None"
+				H.regenerate_icons()
+				return
+
+			usr << "You can only put humans on purrbation."
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))	return
@@ -813,6 +869,7 @@ body
 				if("oxygen")L.adjustOxyLoss(amount)
 				if("brain")	L.adjustBrainLoss(amount)
 				if("clone")	L.adjustCloneLoss(amount)
+				if("stamina") L.adjustStaminaLoss(amount)
 				else
 					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
 					return

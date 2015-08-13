@@ -11,18 +11,10 @@
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
-
+	O.mouse_opacity = 2
 	if(istype(O,/obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
-	else if(O.is_open_container()) // Like a drinking glass
-		var/obj/item/weapon/reagent_containers/C = O
-		C.reagents.clear_reagents() // It's now empty
-	else if(istype(O, /obj/item/device/flashlight))
-		var/obj/item/device/flashlight/F = O
-		if(F.on)
-			F.on = 0
-			F.update_brightness(src)
 	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
 		var/obj/item/weapon/storage/bag/tray/T = O
 		T.do_quick_empty()
@@ -46,13 +38,14 @@
 	hud_used.update_robot_modules_display()
 	return 1
 
-/mob/living/silicon/robot/proc/activate_module(var/obj/item/O)
+/mob/living/silicon/robot/proc/activate_module(obj/item/O)
 	if(!(locate(O) in src.module.modules) && O != src.module.emag)
 		return
 	if(activated(O))
 		src << "<span class='notice'>Already activated</span>"
 		return
 	if(!module_state_1)
+		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_1 = O
 		O.layer = 20
 		O.screen_loc = inv1.screen_loc
@@ -60,6 +53,7 @@
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode |= module_state_1:sight_mode
 	else if(!module_state_2)
+		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_2 = O
 		O.layer = 20
 		O.screen_loc = inv2.screen_loc
@@ -67,6 +61,7 @@
 		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode |= module_state_2:sight_mode
 	else if(!module_state_3)
+		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_3 = O
 		O.layer = 20
 		O.screen_loc = inv3.screen_loc
@@ -74,7 +69,7 @@
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode |= module_state_3:sight_mode
 	else
-		src << "<span class='notice'>You need to disable a module first!</span>"
+		src << "<span class='warning'>You need to disable a module first!</span>"
 
 /mob/living/silicon/robot/proc/uneq_active()
 	uneq_module(module_active)
@@ -98,11 +93,11 @@
 //These are hackish but they help clean up code elsewhere.
 
 //module_selected(module) - Checks whether the module slot specified by "module" is currently selected.
-/mob/living/silicon/robot/proc/module_selected(var/module) //Module is 1-3
+/mob/living/silicon/robot/proc/module_selected(module) //Module is 1-3
 	return module == get_selected_module()
 
 //module_active(module) - Checks whether there is a module active in the slot specified by "module".
-/mob/living/silicon/robot/proc/module_active(var/module) //Module is 1-3
+/mob/living/silicon/robot/proc/module_active(module) //Module is 1-3
 	if(module < 1 || module > 3) return 0
 
 	switch(module)
@@ -129,7 +124,7 @@
 	return 0
 
 //select_module(module) - Selects the module slot specified by "module"
-/mob/living/silicon/robot/proc/select_module(var/module) //Module is 1-3
+/mob/living/silicon/robot/proc/select_module(module) //Module is 1-3
 	if(module < 1 || module > 3) return
 
 	if(!module_active(module)) return
@@ -159,7 +154,7 @@
 	return
 
 //deselect_module(module) - Deselects the module slot specified by "module"
-/mob/living/silicon/robot/proc/deselect_module(var/module) //Module is 1-3
+/mob/living/silicon/robot/proc/deselect_module(module) //Module is 1-3
 	if(module < 1 || module > 3) return
 
 	switch(module)
@@ -181,7 +176,7 @@
 	return
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
-/mob/living/silicon/robot/proc/toggle_module(var/module) //Module is 1-3
+/mob/living/silicon/robot/proc/toggle_module(module) //Module is 1-3
 	if(module < 1 || module > 3) return
 
 	if(module_selected(module))

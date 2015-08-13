@@ -22,7 +22,7 @@
 	return T
 
 
-/mob/living/silicon/ai/proc/ai_camera_list(var/camera)
+/mob/living/silicon/ai/proc/ai_camera_list(camera)
 	if (!camera)
 		return 0
 
@@ -49,36 +49,13 @@
 		return list()
 
 	for(var/mob/living/M in mob_list)
-		// Easy checks first.
-		// Don't detect mobs on Centcom. Since the wizard den is on Centcom, we only need this.
-		var/turf/T = get_turf(M)
-		if(!T)
-			continue
-		if(T.z == 2)
-			continue
-		if(T.z > 6)
-			continue
-		if(M == usr)
-			continue
-		if(M.invisibility)//cloaked
-			continue
-		if(M.digitalcamo)
+		if(!M.can_track(usr))
 			continue
 
 		// Human check
 		var/human = 0
 		if(istype(M, /mob/living/carbon/human))
 			human = 1
-			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or a ninja hood.
-			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				continue
-		 	if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && (H.head.flags & NODROP))
-		 		continue
-
-		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
-		if(!near_camera(M))
-			continue
 
 		var/name = M.name
 		if (name in track.names)
@@ -96,7 +73,7 @@
 
 	return targets
 
-/mob/living/silicon/ai/verb/ai_camera_track(var/target_name as null|anything in trackable_mobs())
+/mob/living/silicon/ai/verb/ai_camera_track(target_name in trackable_mobs())
 	set name = "track"
 	set hidden = 1 //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
 
@@ -107,53 +84,60 @@
 
 	ai_actual_track(target)
 
-/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target as mob)
+/mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
 	if(!istype(target))	return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
-	//U << text("Now tracking [] on camera.", target.name)
-	//if (U.machine == null)
-	//	U.machine = U
-	U << "Now tracking [target.get_visible_name()] on camera."
+	U.tracking = 1
 
-	spawn (0)
-		while (U.cameraFollow == target)
-			if (U.cameraFollow == null)
-				return
-			if (istype(target, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = target
-				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					U << "Follow camera mode terminated."
-					U.cameraFollow = null
-					return
-		 		if(istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja) && (H.head.flags & NODROP))
-		 			U << "Follow camera mode terminated."
-					U.cameraFollow = null
-					return
-				if(H.digitalcamo)
-					U << "Follow camera mode terminated."
-					U.cameraFollow = null
-					return
+	U << "<span class='notice'>Attempting to track [target.get_visible_name()]...</span>"
+	sleep(min(30, get_dist(target, U.eyeobj) / 4))
+	spawn(15) //give the AI a grace period to stop moving.
+		U.tracking = 0
 
-			if(istype(target.loc,/obj/effect/dummy))
-				U << "Follow camera mode ended."
-				U.cameraFollow = null
+	if(!target || !target.can_track(usr))
+		U << "<span class='warning'>Target is not near any active cameras.</span>"
+		U.cameraFollow = null
+		return
+
+	U << "<span class='notice'>Now tracking [target.get_visible_name()] on camera.</span>"
+
+	var/cameraticks = 0
+	spawn(0)
+		while(U.cameraFollow == target)
+			if(U.cameraFollow == null)
 				return
 
-			if (!near_camera(target))
-				U << "Target is not near any active cameras."
-				sleep(100)
-				continue
+			if(!target.can_track(usr))
+				U.tracking = 1
+				if(!cameraticks)
+					U << "<span class='warning'>Target is not near any active cameras. Attempting to reacquire...</span>"
+				cameraticks++
+				if(cameraticks > 9)
+					U.cameraFollow = null
+					U << "<span class='warning'>Unable to reacquire, cancelling track...</span>"
+					tracking = 0
+					return
+				else
+					sleep(10)
+					continue
+
+			else
+				cameraticks = 0
+				U.tracking = 0
 
 			if(U.eyeobj)
 				U.eyeobj.setLoc(get_turf(target))
+
 			else
 				view_core()
+				U.cameraFollow = null
 				return
+
 			sleep(10)
 
-/proc/near_camera(var/mob/living/M)
+/proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
 		return 0
 	if(isrobot(M))
@@ -164,7 +148,7 @@
 		return 0
 	return 1
 
-/obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
+/obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
 	if (!src.can_use())
@@ -172,7 +156,7 @@
 	user.eyeobj.setLoc(get_turf(src))
 
 
-/mob/living/silicon/ai/attack_ai(var/mob/user as mob)
+/mob/living/silicon/ai/attack_ai(mob/user)
 	ai_camera_list()
 
 /proc/camera_sort(list/L)

@@ -37,11 +37,9 @@ What are the archived variables for?
 
 	var/volume = CELL_VOLUME
 
-	var/temperature = 0 //in Kelvin, use calculate_temperature() to modify
+	var/temperature = 0 //in Kelvin
 
 	var/last_share
-
-	var/graphic
 
 	var/list/datum/gas/trace_gases = list()
 
@@ -53,7 +51,6 @@ What are the archived variables for?
 
 	var/tmp/temperature_archived
 
-	var/tmp/graphic_archived
 	var/tmp/fuel_burnt = 0
 
 	//PV=nRT - related procedures
@@ -103,19 +100,7 @@ What are the archived variables for?
 
 
 //Procedures used for very specific events
-/datum/gas_mixture/proc/check_tile_graphic()
-	//returns 1 if graphic changed
-	graphic = null
-	if(toxins > MOLES_PLASMA_VISIBLE)
-		graphic = "plasma"
-	else
-		var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
-		if(sleeping_agent && (sleeping_agent.moles > 1))
-			graphic = "sleeping_agent"
-		else
-			graphic = null
 
-	return graphic != graphic_archived
 
 /datum/gas_mixture/proc/react(atom/dump_location)
 	var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
@@ -290,8 +275,6 @@ What are the archived variables for?
 			trace_gas.moles_archived = trace_gas.moles
 
 	temperature_archived = temperature
-
-	graphic_archived = graphic
 
 	return 1
 
@@ -548,7 +531,7 @@ What are the archived variables for?
 
 	return 1
 
-/datum/gas_mixture/share(datum/gas_mixture/sharer, var/atmos_adjacent_turfs = 4)
+/datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	if(!sharer)	return 0
 	var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/(atmos_adjacent_turfs+1)
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/(atmos_adjacent_turfs+1)
@@ -677,7 +660,7 @@ What are the archived variables for?
 		var/delta_pressure = temperature_archived*(total_moles() + moved_moles) - sharer.temperature_archived*(sharer.total_moles() - moved_moles)
 		return delta_pressure*R_IDEAL_GAS_EQUATION/volume
 
-/datum/gas_mixture/mimic(turf/model, border_multiplier, var/atmos_adjacent_turfs = 4)
+/datum/gas_mixture/mimic(turf/model, border_multiplier, atmos_adjacent_turfs = 4)
 	var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/(atmos_adjacent_turfs+1)
 	var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/(atmos_adjacent_turfs+1)
 	var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/(atmos_adjacent_turfs+1)
@@ -746,7 +729,7 @@ What are the archived variables for?
 			if(border_multiplier)
 				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
 			else
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*temperature_archived)/new_self_heat_capacity
+				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*temperature_archived)/new_self_heat_capacity
 
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
@@ -948,3 +931,36 @@ What are the archived variables for?
 				else
 					return 0
 	return 1
+
+
+
+
+//Takes the amount of the gas you want to PP as an argument
+//So I don't have to do some hacky switches/defines/magic strings
+
+//eg:
+//Tox_PP = get_partial_pressure(gas_mixture.toxins)
+//O2_PP = get_partial_pressure(gas_mixture.oxygen)
+
+//Does handle trace gases!
+
+/datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
+	var/breath_pressure = (total_moles()*R_IDEAL_GAS_EQUATION*temperature)/BREATH_VOLUME
+	return (gas_pressure/total_moles())*breath_pressure
+
+
+//Reverse of the above
+/datum/gas_mixture/proc/get_true_breath_pressure(breath_pp)
+	var/breath_pressure = (total_moles()/R_IDEAL_GAS_EQUATION/temperature)*BREATH_VOLUME
+	return (breath_pp/breath_pressure*total_moles())
+
+//Mathematical proofs:
+/*
+
+get_breath_partial_pressure(gas_pp) --> gas_pp/total_moles()*breath_pp = pp
+get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
+
+10/20*5 = 2.5
+10 = 2.5/5*20
+
+*/

@@ -13,10 +13,30 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
-	var/global/max_n_of_items = 999 // Sorry but the BYOND infinite loop detector doesn't like things over 1000.
+	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
-	var/item_quants = list()
+	var/list/item_quants = list()
+
+/obj/machinery/smartfridge/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	RefreshParts()
+
+/obj/machinery/smartfridge/construction()
+	item_quants.Cut()
+	for(var/datum/A in contents)
+		qdel(A)
+
+/obj/machinery/smartfridge/deconstruction()
+	for(var/atom/movable/A in contents)
+		A.loc = loc
+
+/obj/machinery/smartfridge/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/power_change()
 	..()
@@ -34,20 +54,32 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+		return
+
+	if(exchange_parts(user, O))
+		return
+
+	if(default_pry_open(O))
+		return
+
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
+
+	default_deconstruction_crowbar(O)
+
 	if(stat)
 		return 0
 
 	if(contents.len >= max_n_of_items)
-		user << "<span class='notice'>\The [src] is full.</span>"
+		user << "<span class='warning'>\The [src] is full!</span>"
 		return 0
 
 	if(accept_check(O))
 		load(O)
-		user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].")
+		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 		updateUsrDialog()
 		return 1
 
@@ -62,7 +94,7 @@
 				load(G)
 				loaded++
 	else
-		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
+		user << "<span class='warning'>\The [src] smartly refuses [O].</span>"
 		updateUsrDialog()
 		return 0
 
@@ -70,15 +102,15 @@
 	// this code follows storage items and trays only.
 	if(loaded)
 		if(contents.len >= max_n_of_items)
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+			user.visible_message("[user] loads \the [src] with \the [O].", \
 							 "<span class='notice'>You fill \the [src] with \the [O].</span>")
 		else
-			user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
+			user.visible_message("[user] loads \the [src] with \the [O].", \
 								 "<span class='notice'>You load \the [src] with \the [O].</span>")
 		if(O.contents.len > 0)
-			user << "<span class='notice'>Some items are refused.</span>"
+			user << "<span class='warning'>Some items are refused.</span>"
 	else
-		user << "There is nothing in [O] to put in [src]."
+		user << "<span class='warning'>There is nothing in [O] to put in [src]!</span>"
 		return 0
 
 	updateUsrDialog()
@@ -86,16 +118,16 @@
 
 
 
-/obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
 		return 1
 	return 0
 
-/obj/machinery/smartfridge/proc/load(var/obj/item/O as obj)
+/obj/machinery/smartfridge/proc/load(obj/item/O)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
 		if(!M.unEquip(O))
-			usr << "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>"
+			usr << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 			return
 	else if(istype(O.loc,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = O.loc
@@ -110,13 +142,13 @@
 		item_quants[n] = 1
 	sortList(item_quants)
 
-/obj/machinery/smartfridge/attack_paw(mob/user as mob)
+/obj/machinery/smartfridge/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/smartfridge/attack_ai(mob/user as mob)
+/obj/machinery/smartfridge/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/smartfridge/attack_hand(mob/user as mob)
+/obj/machinery/smartfridge/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -124,7 +156,7 @@
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/interact(mob/user as mob)
+/obj/machinery/smartfridge/interact(mob/user)
 	if(stat)
 		return 0
 
@@ -186,7 +218,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack_on"
 	use_power = 1
 	idle_power_usage = 5
@@ -195,7 +227,7 @@
 	icon_off = "drying_rack"
 	var/drying = 0
 
-/obj/machinery/smartfridge/drying_rack/interact(mob/user as mob)
+/obj/machinery/smartfridge/drying_rack/interact(mob/user)
 	var/dat = ..()
 	if(dat)
 		dat += "<br>"
@@ -203,7 +235,7 @@
 		user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
 	onclose(user, "smartfridge")
 
-/obj/machinery/smartfridge/drying_rack/Topic(var/href, var/list/href_list)
+/obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
 	..()
 	if(href_list["dry"])
 		toggle_drying()
@@ -217,7 +249,7 @@
 		toggle_drying(1)
 	update_icon()
 
-obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 	..()
 	update_icon()
 
@@ -235,14 +267,14 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 		if(rack_dry())//no need to update unless something got dried
 			update_icon()
 
-/obj/machinery/smartfridge/drying_rack/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
 			return 1
 	return 0
 
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(var/forceoff = 0)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
 	if(drying || forceoff)
 		drying = 0
 		use_power = 1
@@ -276,7 +308,7 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 	name = "drink showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
-/obj/machinery/smartfridge/drinks/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(!istype(O,/obj/item/weapon/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
 		return 0
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
@@ -290,7 +322,7 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 	name = "smart slime extract storage"
 	desc = "A refrigerated storage unit for slime extracts."
 
-/obj/machinery/smartfridge/extract/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
 		return 1
 	if(istype(O,/obj/item/device/slime_scanner))
@@ -310,8 +342,8 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
-	var/list/spawn_meds = list(/obj/item/weapon/reagent_containers/pill/inaprovaline = 12,/obj/item/weapon/reagent_containers/pill/antitox = 1,
-								/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 1, /obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 1)
+	var/list/spawn_meds = list(/obj/item/weapon/reagent_containers/pill/epinephrine = 12,/obj/item/weapon/reagent_containers/pill/charcoal = 1,
+								/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
 
 /obj/machinery/smartfridge/chemistry/New()
 	..()
@@ -323,7 +355,7 @@ obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
 			load(I)
 			amount--
 
-/obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
 		if(O.contents.len)
 			for(var/obj/item/I in O)

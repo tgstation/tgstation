@@ -8,12 +8,12 @@
 			new /obj/item/clothing/mask/gas/voice(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
+			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
 			new /obj/item/device/camera_bug(src)
 			return
 
 		if("stealth")
-			new /obj/item/weapon/gun/energy/crossbow(src)
+			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
 			new /obj/item/device/chameleon(src)
 			return
@@ -40,27 +40,25 @@
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/c4(src)
+			new /obj/item/clothing/gloves/color/latex/nitrile(src)
+			new /obj/item/clothing/mask/gas/clown_hat(src)
+			new /obj/item/clothing/under/suit_jacket/really_black(src)
 			return
 
 		if("murder")
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/card/emag(src)
-			new /obj/item/clothing/shoes/syndigaloshes(src)
+			new /obj/item/clothing/shoes/sneakers/syndigaloshes(src)
 			return
 
 		if("implant")
-			var/obj/item/weapon/implanter/F = new /obj/item/weapon/implanter(src)
-			F.imp = new /obj/item/weapon/implant/freedom(F)
-			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
-			U.imp = new /obj/item/weapon/implant/uplink(U)
-			var/obj/item/weapon/implanter/C = new /obj/item/weapon/implanter(src)
-			C.imp = new /obj/item/weapon/implant/emp(C)
-			var/obj/item/weapon/implanter/K = new /obj/item/weapon/implanter(src)
-			K.imp = new /obj/item/weapon/implant/adrenalin(K)
-			var/obj/item/weapon/implanter/S = new /obj/item/weapon/implanter(src)
-			S.imp = new /obj/item/weapon/implant/explosive(S)
-			S.name += " (explosive)"
+			new /obj/item/weapon/implanter/freedom(src)
+			new /obj/item/weapon/implanter/uplink(src)
+			new /obj/item/weapon/implanter/emp(src)
+			new /obj/item/weapon/implanter/adrenalin(src)
+			new /obj/item/weapon/implanter/explosive(src)
+			new /obj/item/weapon/implanter/storage(src)
 			return
 
 		if("hacker")
@@ -81,8 +79,7 @@
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/weapon/melee/energy/sword/saber(src)
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
-			new /obj/item/clothing/head/chaplain_hood(src)
-			new /obj/item/clothing/suit/chaplain_hoodie(src)
+			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			return
 
@@ -104,21 +101,31 @@
 /*/obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "Compressed Matter Implant (with injector)"
 
-/obj/item/weapon/storage/syndie_kit/imp_compress/New()
+/obj/item/weapon/storage/box/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
 	..()
 	return
+*/
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive
-	name = "Explosive Implant (with injector)"
+/obj/item/weapon/storage/box/syndie_kit/imp_microbomb
+	name = "Microbomb Implant (with injector)"
 
-/obj/item/weapon/storage/syndie_kit/imp_explosive/New()
-	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
+/obj/item/weapon/storage/box/syndie_kit/imp_microbomb/New()
+	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
-	O.name = "(BIO-HAZARD) BIO-detpack"
 	O.update_icon()
 	..()
-	return*/
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
+	name = "Macrobomb Implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_macrobomb/New()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/explosive/macro(O)
+	O.update_icon()
+	..()
+	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
@@ -142,6 +149,15 @@
 	return
 
 
+/obj/item/weapon/storage/box/syndie_kit/imp_storage
+	name = "boxed storage implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
+	..()
+	new /obj/item/weapon/implanter/storage(src)
+	return
+
+
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
@@ -153,6 +169,7 @@
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 	return
 
+
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
 
@@ -160,6 +177,35 @@
 	..()
 	new /obj/item/weapon/grenade/empgrenade(src)
 	new /obj/item/weapon/grenade/empgrenade(src)
-	new /obj/item/weapon/implanter/emp/(src)
-	new /obj/item/device/flashlight/emp/(src)
+	new /obj/item/weapon/implanter/emp(src)
+	new /obj/item/device/flashlight/emp(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/chemical
+	name = "boxed chemical kit"
+
+/obj/item/weapon/storage/box/syndie_kit/chemical/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/polonium(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/venom(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/formaldehyde(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/initropidril(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/pancuronium(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/sodium_thiopental(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/coniine(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/curare(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/nuke
+	name = "box"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/New()
+	..()
+	new /obj/item/weapon/screwdriver/nuke(src)
+	new /obj/item/nuke_core_container(src)
+	new /obj/item/weapon/paper/nuke_instructions(src)
+	new /obj/item/weapon/paper/nuke_plans(src)

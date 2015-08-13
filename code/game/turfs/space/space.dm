@@ -15,23 +15,48 @@
 /turf/space/New()
 	if(!istype(src, /turf/space/transit))
 		icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
+	if(config)
+		if(config.starlight)
+			update_starlight()
+/turf/space/Destroy()
+	return QDEL_HINT_LETMELIVE
 
-/turf/space/attack_paw(mob/user as mob)
+/turf/space/proc/update_starlight()
+	if(config)
+		if(config.starlight)
+			for(var/turf/T in orange(src,1))
+				if(istype(T,/turf/simulated))
+					SetLuminosity(3)
+					return
+			SetLuminosity(0)
+
+/turf/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/turf/space/attackby(obj/item/C, mob/user)
+/turf/space/attackby(obj/item/C, mob/user, params)
+	..()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
+		if(W)
+			user << "<span class='warning'>There is already a catwalk here!</span>"
+			return
 		if(L)
-			user << "<span class='warning'>There is already a lattice.</span>"
+			if(R.use(1))
+				user << "<span class='notice'>You begin constructing catwalk...</span>"
+				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				qdel(L)
+				ReplaceWithCatwalk()
+			else
+				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
 			return
 		if(R.use(1))
 			user << "<span class='notice'>Constructing support lattice...</span>"
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
-			user << "<span class='warning'>You need one rod to build lattice.</span>"
+			user << "<span class='warning'>You need one rod to build a lattice.</span>"
 		return
 	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -43,9 +68,9 @@
 				user << "<span class='notice'>You build a floor.</span>"
 				ChangeTurf(/turf/simulated/floor/plating)
 			else
-				user << "<span class='warning'>You need one floor tile to build a floor.</span>"
+				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
 		else
-			user << "<span class='danger'>The plating is going to need some support. Place metal rods first.</span>"
+			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
 
 /turf/space/Entered(atom/movable/A)
 	..()
@@ -136,7 +161,7 @@
   Note that all maps except F are oriented with north towards A. A and F are oriented with north towards D.
   The characters on the second cube should be upside down in this illustration, but aren't because of a lack of unicode support.
 */
-proc/setup_map_transitions() //listamania
+/proc/setup_map_transitions() //listamania
 
 	var/list/unplaced_z_levels = 			accessable_z_levels
 	var/list/free_zones = 					list("A", "B", "C", "D", "E", "F")
@@ -160,7 +185,7 @@ proc/setup_map_transitions() //listamania
 		set background = 1
 
 	while(free_zones.len != 0) //Assign the sides of the cube
-		if(!unplaced_z_levels) //if we're somehow unable to fill the cube, pad with deep space
+		if(!unplaced_z_levels || !unplaced_z_levels.len) //if we're somehow unable to fill the cube, pad with deep space
 			z_level =  6
 		else
 			z_level = pick(unplaced_z_levels)
@@ -210,3 +235,8 @@ proc/setup_map_transitions() //listamania
 
 /turf/space/singularity_act()
 	return
+
+/turf/space/can_have_cabling()
+	if(locate(/obj/structure/lattice/catwalk, src))
+		return 1
+	return 0

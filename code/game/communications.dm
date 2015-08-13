@@ -64,17 +64,17 @@
 	so i made radios not use the radio controller.
 */
 var/list/all_radios = list()
-/proc/add_radio(var/obj/item/radio, freq)
+/proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
 		all_radios["[freq]"] = list(radio)
 		return freq
-	
+
 	all_radios["[freq]"] |= radio
 	return freq
 
-/proc/remove_radio(var/obj/item/radio, freq)
+/proc/remove_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
 	if(!all_radios["[freq]"])
@@ -82,7 +82,7 @@ var/list/all_radios = list()
 
 	all_radios["[freq]"] -= radio
 
-/proc/remove_radio_all(var/obj/item/radio)
+/proc/remove_radio_all(obj/item/radio)
 	for(var/freq in all_radios)
 		all_radios["[freq]"] -= radio
 
@@ -97,7 +97,7 @@ Radio:
 1355 - Medical
 1357 - Engineering
 1359 - Security
-1441 - death squad
+1337 - death squad
 1443 - Confession Intercom
 1349 - Miners
 1347 - Cargo techs
@@ -130,7 +130,7 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Deathsquad" = 1441,
+	"Centcom" = 1337,
 	"Syndicate" = 1213,
 	"Supply" = 1347,
 	"Service" = 1349,
@@ -144,7 +144,7 @@ var/list/radiochannelsreverse = list(
 	"1355" = "Medical",
 	"1357" = "Engineering",
 	"1359" = "Security",
-	"1441" = "Deathsquad",
+	"1337" = "Centcom",
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
@@ -160,7 +160,7 @@ var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/MED_FREQ = 1355 //medical, coloured blue in chat window
 var/const/ENG_FREQ = 1357 //engineering, coloured orange in chat window
 var/const/SEC_FREQ = 1359 //security, coloured red in chat window
-var/const/DSQUAD_FREQ = 1441 //death squad frequency, coloured grey in chat window
+var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
 #define TRANSMISSION_WIRE	0
@@ -173,139 +173,67 @@ var/const/RADIO_CHAT = "3" //deprecated
 var/const/RADIO_ATMOSIA = "4"
 var/const/RADIO_NAVBEACONS = "5"
 var/const/RADIO_AIRLOCK = "6"
-var/const/RADIO_SECBOT = "7"
-var/const/RADIO_MULEBOT = "8"
 var/const/RADIO_MAGNETS = "9"
-var/const/RADIO_CLEANBOT = "10"
-var/const/RADIO_FLOORBOT = "11"
-var/const/RADIO_MEDBOT = "12"
 
-var/global/datum/controller/radio/radio_controller
+/datum/radio_frequency
 
-datum/controller/radio
-	var/list/datum/radio_frequency/frequencies = list()
-
-	proc/add_object(obj/device as obj, var/new_frequency as num, var/filter = null as text|null)
-		var/f_text = num2text(new_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
-
-		if(!frequency)
-			frequency = new
-			frequency.frequency = new_frequency
-			frequencies[f_text] = frequency
-
-		frequency.add_listener(device, filter)
-		return frequency
-
-	proc/remove_object(obj/device, old_frequency)
-		var/f_text = num2text(old_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
-
-		if(frequency)
-			frequency.remove_listener(device)
-
-			if(frequency.devices.len == 0)
-				del(frequency)
-				frequencies -= f_text
-
-		return 1
-
-	proc/return_frequency(var/new_frequency as num)
-		var/f_text = num2text(new_frequency)
-		var/datum/radio_frequency/frequency = frequencies[f_text]
-
-		if(!frequency)
-			frequency = new
-			frequency.frequency = new_frequency
-			frequencies[f_text] = frequency
-
-		return frequency
-
-datum/radio_frequency
 	var/frequency as num
 	var/list/list/obj/devices = list()
 
-	proc
-		post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
-			//log_admin("DEBUG \[[world.timeofday]\]: post_signal {source=\"[source]\", [signal.debug_print()], filter=[filter]}")
-//			var/N_f=0
-//			var/N_nf=0
-//			var/Nt=0
-			var/turf/start_point
+//If range > 0, only post to devices on the same z_level and within range
+//Use range = -1, to restrain to the same z_level without limiting range
+/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
+
+	//Apply filter to the signal. If none supply, broadcast to every devices
+	//_default channel is always checked
+	var/list/filter_list
+
+	if(filter)
+		filter_list = list(filter,"_default")
+	else
+		filter_list = devices
+
+	//If checking range, find the source turf
+	var/turf/start_point
+	if(range)
+		start_point = get_turf(source)
+		if(!start_point)
+			return 0
+
+	//Send the data
+	for(var/current_filter in filter_list)
+		for(var/obj/device in devices[current_filter])
+			if(device == source)
+				continue
 			if(range)
-				start_point = get_turf(source)
-				if(!start_point)
-//					del(signal)
-					return 0
-			if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
-				for(var/obj/device in devices[filter])
-					if(device == source)
-						continue
-					if(range)
-						var/turf/end_point = get_turf(device)
-						if(!end_point)
-							continue
-						//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
-						if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
-							continue
-					device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-				for(var/obj/device in devices["_default"])
-					if(device == source)
-						continue
-					if(range)
-						var/turf/end_point = get_turf(device)
-						if(!end_point)
-							continue
-						//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
-						if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
-							continue
-					device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-//					N_f++
-			else
-				for (var/next_filter in devices)
-//					var/list/obj/DDD = devices[next_filter]
-//					Nt+=DDD.len
-					for(var/obj/device in devices[next_filter])
-						if(device == source)
-							continue
-						if(range)
-							var/turf/end_point = get_turf(device)
-							if(!end_point)
-								continue
-							//if(max(abs(start_point.x-end_point.x), abs(start_point.y-end_point.y)) <= range)
-							if(start_point.z!=end_point.z || get_dist(start_point, end_point) > range)
-								continue
-						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
-//						N_nf++
+				var/turf/end_point = get_turf(device)
+				if(!end_point)
+					continue
+				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
+					continue
+			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-//			log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y], [source.z]),filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
+/datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
+	if (!filter)
+		filter = "_default"
+
+	var/list/devices_line = devices[filter]
+	if(!devices_line)
+		devices_line = list()
+		devices[filter] = devices_line
+	devices_line += device
 
 
-//			del(signal)
+/datum/radio_frequency/proc/remove_listener(obj/device)
+	for(var/devices_filter in devices)
+		var/list/devices_line = devices[devices_filter]
+		if(!devices_line)
+			devices -= devices_filter
+		devices_line -= device
+		if(!devices_line.len)
+			devices -= devices_filter
 
-		add_listener(obj/device as obj, var/filter as text|null)
-			if (!filter)
-				filter = "_default"
-			//log_admin("add_listener(device=[device],filter=[filter]) frequency=[frequency]")
-			var/list/obj/devices_line = devices[filter]
-			if (!devices_line)
-				devices_line = new
-				devices[filter] = devices_line
-			devices_line+=device
-//			var/list/obj/devices_line___ = devices[filter_str]
-//			var/l = devices_line___.len
-			//log_admin("DEBUG: devices_line.len=[devices_line.len]")
-			//log_admin("DEBUG: devices(filter_str).len=[l]")
 
-		remove_listener(obj/device)
-			for (var/devices_filter in devices)
-				var/list/devices_line = devices[devices_filter]
-				devices_line-=device
-				while (null in devices_line)
-					devices_line -= null
-				if (devices_line.len==0)
-					devices -= devices_filter
-					del(devices_line)
 
 
 var/list/pointers = list()
@@ -371,4 +299,4 @@ var/list/pointers = list()
 	for(var/d in data)
 		var/val = data[d]
 		if(istext(val))
-			data[d] = strip_html_properly(val)
+			data[d] = html_encode(val)

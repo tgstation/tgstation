@@ -25,16 +25,7 @@
 	var/arrest_type = 0 //If true, don't handcuff
 	radio_frequency = SEC_FREQ //Security channel
 	bot_type = SEC_BOT
-	bot_filter = RADIO_SECBOT
-
-	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice,\
-		/obj/item/weapon/melee/telebaton,\
-		/obj/item/weapon/gun/energy/kinetic_accelerator)
-
+	model = "Securitron"
 
 /obj/machinery/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -65,9 +56,8 @@
 	spawn(3)
 
 		var/datum/job/detective/J = new/datum/job/detective
-		botcard.access = J.get_access()
+		botcard.access += J.get_access()
 		prev_access = botcard.access
-		add_to_beacons(bot_filter)
 
 
 /obj/machinery/bot/secbot/turn_on()
@@ -94,14 +84,14 @@
 	text_dehack = "You reboot [name] and restore the target identification."
 	text_dehack_fail = "[name] refuses to accept your authority!"
 
-/obj/machinery/bot/secbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/secbot/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user)
 	var/dat
 	dat += hack(user)
 	dat += text({"
@@ -155,7 +145,7 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -166,7 +156,7 @@ Auto Patrol: []"},
 			if(open)
 				user << "<span class='danger'>Please close the access panel before locking it.</span>"
 			else
-				user << "<span class='danger'> Access denied.</span>"
+				user << "<span class='danger'>Access denied.</span>"
 	else
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm") // Any intent but harm will heal, so we shouldn't get angry.
@@ -178,16 +168,27 @@ Auto Patrol: []"},
 				target = user
 				mode = BOT_HUNT
 
-/obj/machinery/bot/secbot/Emag(mob/user as mob)
+/obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 
 	if(emagged == 2)
 		if(user)
-			user << "<span class='danger'> You short out [src]'s target assessment circuits.</span>"
+			user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		declare_arrests = 0
 		icon_state = "secbot[on]"
+
+/obj/machinery/bot/secbot/bullet_act(obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+			if (!Proj.nodamage && Proj.damage < src.health)
+				threatlevel = Proj.firer.assess_threat(src)
+				threatlevel += 6
+				if(threatlevel >= 4)
+					target = Proj.firer
+					mode = BOT_HUNT
+	..()
 
 /obj/machinery/bot/secbot/bot_process()
 	if (!..())
@@ -218,8 +219,7 @@ Auto Patrol: []"},
 						icon_state = "secbot[on]"
 					var/mob/living/carbon/M = target
 					if(istype(M, /mob/living/carbon/human))
-						if( M.stuttering < 5 && !(HULK in M.mutations) )
-							M.stuttering = 5
+						M.stuttering = 5
 						M.Stun(5)
 						M.Weaken(5)
 					else
@@ -230,8 +230,8 @@ Auto Patrol: []"},
 					if(declare_arrests)
 						var/area/location = get_area(src)
 						speak("[arrest_type ? "Detaining" : "Arresting"] level [threatlevel] scumbag <b>[target]</b> in [location].", radio_frequency)
-					target.visible_message("<span class='danger'>[target] has been stunned by [src]!</span>",\
-											"<span class='userdanger'>[target] has been stunned by [src]!</span>")
+					target.visible_message("<span class='danger'>[src] has stunned [target]!</span>",\
+											"<span class='userdanger'>[src] has stunned you!</span>")
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -261,7 +261,7 @@ Auto Patrol: []"},
 						mode = BOT_ARREST
 						playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 						target.visible_message("<span class='danger'>[src] is trying to put zipties on [target]!</span>",\
-											"<span class='userdanger'>[src] is trying to put zipties on [target]!</span>")
+											"<span class='userdanger'>[src] is trying to put zipties on you!</span>")
 						spawn(60)
 							if( !Adjacent(target) || !isturf(target.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 								return
@@ -351,15 +351,14 @@ Auto Patrol: []"},
 		else
 			continue
 /obj/machinery/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
-	if(istype(slot_item, /obj/item/weapon/gun) || istype(slot_item, /obj/item/weapon/melee))
-		if(!(slot_item.type in safe_weapons))
-			return 1
+	if(slot_item && slot_item.needs_permit)
+		return 1
 	return 0
 
 /obj/machinery/bot/secbot/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='userdanger'>[src] blows apart!</span>")
+	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
@@ -385,15 +384,35 @@ Auto Patrol: []"},
 		target = user
 		mode = BOT_HUNT
 
+/obj/machinery/bot/secbot/Crossed(atom/movable/AM)
+	if(ismob(AM) && target)
+		var/mob/living/carbon/C = AM
+		if(!istype(C) || !C || in_range(src, target))
+			return
+		C.visible_message("<span class='warning'>[pick( \
+						  "[C] dives out of [src]'s way!", \
+						  "[C] stumbles over [src]!", \
+						  "[C] jumps out of [src]'s path!", \
+						  "[C] trips over [src] and falls!", \
+						  "[C] topples over [src]!", \
+						  "[C] leaps out of [src]'s way!")]</span>")
+		C.Weaken(2)
+		return
+	..()
+
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob)
+/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
 	..()
 	if(!issignaler(S))
 		..()
 		return
 
-	if(type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
+	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
+		return
+
+	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
 		return
 
 	if(S.secured)
@@ -406,7 +425,7 @@ Auto Patrol: []"},
 	else
 		return
 
-/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user)
+/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(!build_step)
@@ -423,7 +442,8 @@ Auto Patrol: []"},
 				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
 
 	else if(isprox(I) && (build_step == 1))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
 		overlays += "hs_eye"
@@ -431,7 +451,8 @@ Auto Patrol: []"},
 		qdel(I)
 
 	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
@@ -439,7 +460,8 @@ Auto Patrol: []"},
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
-		user.drop_item()
+		if(!user.unEquip(I))
+			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
@@ -459,7 +481,7 @@ Auto Patrol: []"},
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!build_step)
 			new /obj/item/device/assembly/signaler(get_turf(src))
-			new /obj/item/clothing/head/helmet(get_turf(src))
+			new /obj/item/clothing/head/helmet/sec(get_turf(src))
 			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
 			qdel(src)
 

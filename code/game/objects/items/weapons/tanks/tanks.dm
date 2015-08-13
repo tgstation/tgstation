@@ -1,3 +1,6 @@
+#define TANK_MAX_RELEASE_PRESSURE (3*ONE_ATMOSPHERE)
+#define TANK_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE*O2STANDARD)
+
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -24,7 +27,7 @@
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
 
-	processing_objects.Add(src)
+	SSobj.processing |= src
 
 	return
 
@@ -32,7 +35,7 @@
 	if(air_contents)
 		del(air_contents)
 
-	processing_objects.Remove(src)
+	SSobj.processing.Remove(src)
 
 	..()
 
@@ -44,6 +47,8 @@
 	if (!in_range(src, user))
 		if (icon == src) user << "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
+
+	user << "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>"
 
 	var/celsius_temperature = src.air_contents.temperature-T0C
 	var/descriptive
@@ -74,7 +79,7 @@
 
 		qdel(src)
 
-/obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 
 	src.add_fingerprint(user)
@@ -83,35 +88,52 @@
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
-	else if (istype(W,/obj/item/latexballon))
-		var/obj/item/latexballon/LB = W
-		LB.blow(src)
-		src.add_fingerprint(user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 
-/obj/item/weapon/tank/attack_self(mob/user as mob)
+/obj/item/weapon/tank/attack_self(mob/user)
 	if (!(src.air_contents))
 		return
-	user.set_machine(src)
 
-	var/using_internal
-	if(istype(loc,/mob/living/carbon))
-		var/mob/living/carbon/location = loc
-		if(location.internal==src)
-			using_internal = 1
+	ui_interact(user)
 
-	var/message = {"
-<b>Tank</b><BR>
-<FONT color='blue'><b>Tank Pressure:</b> [air_contents.return_pressure()]</FONT><BR>
-<BR>
-<b>Mask Release Pressure:</b> <A href='?src=\ref[src];dist_p=-10'>-</A> <A href='?src=\ref[src];dist_p=-1'>-</A> [distribute_pressure] <A href='?src=\ref[src];dist_p=1'>+</A> <A href='?src=\ref[src];dist_p=10'>+</A><BR>
-<b>Mask Release Valve:</b> <A href='?src=\ref[src];stat=1'>[using_internal?("Open"):("Closed")]</A>
-"}
-	user << browse(message, "window=tank;size=600x300")
-	onclose(user, "tank")
-	return
+/obj/item/weapon/tank/interact(mob/user, ui_key = "main")
+	SSnano.try_update_ui(user, src, ui_key, null, src.get_ui_data())
+
+/obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "tanks.tmpl", "Tank", 500, 300, 0)
+
+/obj/item/weapon/tank/get_ui_data()
+	var/mob/living/carbon/location = null
+
+	if(istype(loc, /mob/living/carbon))
+		location = loc
+	else if(istype(loc.loc, /mob/living/carbon))
+		location = loc.loc
+
+	var/data = list()
+	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
+	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	data["valveOpen"] = 0
+	data["maskConnected"] = 0
+
+	if(istype(location))
+		var/mask_check = 0
+
+		if(location.internal == src)	// if tank is current internal
+			mask_check = 1
+			data["valveOpen"] = 1
+		else if(src in location)		// or if tank is in the mobs possession
+			if(!location.internal)		// and they do not have any active internals
+				mask_check = 1
+
+		if(mask_check)
+			if(location.wear_mask && (location.wear_mask.flags & MASKINTERNALS))
+				data["maskConnected"] = 1
+	return data
 
 /obj/item/weapon/tank/Topic(href, href_list)
 	..()
@@ -120,8 +142,13 @@
 	if (src.loc == usr)
 		usr.set_machine(src)
 		if (href_list["dist_p"])
-			var/cp = text2num(href_list["dist_p"])
-			src.distribute_pressure += cp
+			if (href_list["dist_p"] == "reset")
+				src.distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+			else if (href_list["dist_p"] == "max")
+				src.distribute_pressure = TANK_MAX_RELEASE_PRESSURE
+			else
+				var/cp = text2num(href_list["dist_p"])
+				src.distribute_pressure += cp
 			src.distribute_pressure = min(max(round(src.distribute_pressure), 0), 3*ONE_ATMOSPHERE)
 		if (href_list["stat"])
 			if(istype(loc,/mob/living/carbon))
@@ -139,7 +166,7 @@
 						if (location.internals)
 							location.internals.icon_state = "internal1"
 					else
-						usr << "<span class='notice'>You need something to connect to \the [src].</span>"
+						usr << "<span class='warning'>You need something to connect to \the [src]!</span>"
 
 		src.add_fingerprint(usr)
 /*

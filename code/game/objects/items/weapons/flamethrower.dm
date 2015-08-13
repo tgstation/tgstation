@@ -10,7 +10,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	m_amt = 500
+	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
 	var/throw_amount = 100
@@ -18,7 +18,7 @@
 	var/operating = 0//cooldown
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
-	var/obj/item/weapon/tank/plasma/ptank = null
+	var/obj/item/weapon/tank/internals/plasma/ptank = null
 
 
 /obj/item/weapon/flamethrower/Destroy()
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		processing_objects.Remove(src)
+		SSobj.processing.Remove(src)
 		return null
 	var/turf/location = loc
 	if(istype(location, /mob/))
@@ -65,9 +65,10 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
+			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
@@ -94,17 +95,19 @@
 		var/obj/item/device/assembly/igniter/I = W
 		if(I.secured)	return
 		if(igniter)		return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		I.loc = src
 		igniter = I
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/plasma))
+	if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
-		user.drop_item()
+		if(!user.unEquip(W))
+			return
 		ptank = W
 		W.loc = src
 		update_icon()
@@ -116,7 +119,7 @@
 	return
 
 
-/obj/item/weapon/flamethrower/attack_self(mob/user as mob)
+/obj/item/weapon/flamethrower/attack_self(mob/user)
 	if(user.stat || user.restrained() || user.lying)	return
 	user.set_machine(src)
 	if(!ptank)
@@ -140,7 +143,7 @@
 		if(!status)	return
 		lit = !lit
 		if(lit)
-			processing_objects.Add(src)
+			SSobj.processing |= src
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
@@ -157,6 +160,13 @@
 	update_icon()
 	return
 
+/obj/item/weapon/flamethrower/CheckParts()
+	weldtool = locate(/obj/item/weapon/weldingtool) in contents
+	igniter = locate(/obj/item/device/assembly/igniter) in contents
+	weldtool.status = 0
+	igniter.secured = 0
+	status = 1
+	update_icon()
 
 //Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower/proc/flame_turf(turflist)
@@ -189,20 +199,22 @@
 	//Burn it based on transfered gas
 	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
-	air_master.add_to_active(target, 0)
+	SSair.add_to_active(target, 0)
 	return
 
 
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()
-	weldtool = new /obj/item/weapon/weldingtool(src)
+	if(!weldtool)
+		weldtool = new /obj/item/weapon/weldingtool(src)
 	weldtool.status = 0
-	igniter = new /obj/item/device/assembly/igniter(src)
+	if(!igniter)
+		igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
 	update_icon()
 
 /obj/item/weapon/flamethrower/full/tank/New(var/loc)
 	..()
-	ptank = new /obj/item/weapon/tank/plasma/full(src)
+	ptank = new /obj/item/weapon/tank/internals/plasma/full(src)
 	update_icon()

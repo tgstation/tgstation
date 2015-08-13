@@ -12,7 +12,7 @@
 /datum/round_event/wizard/lava/start()
 
 	for(var/turf/simulated/floor/F in world)
-		if(F.z == 1)
+		if(F.z == ZLEVEL_STATION)
 			F.name = "lava"
 			F.desc = "The floor is LAVA!"
 			F.overlays += "lava"
@@ -34,7 +34,7 @@
 /datum/round_event/wizard/lava/end()
 
 	for(var/turf/simulated/floor/F in world) // Reset everything.
-		if(F.z == 1)
+		if(F.z == ZLEVEL_STATION)
 			F.name = initial(F.name)
 			F.desc = initial(F.desc)
 			F.overlays.Cut()
