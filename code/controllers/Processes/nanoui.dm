@@ -6,4 +6,8 @@
 
 /datum/controller/process/nanoui/doWork()
 	for(var/p in nanomanager.processing_uis)
-		p:process()
+		if(p)
+			p:process()
+			scheck()
+			continue
+		nanomanager.processing_uis -= p

@@ -170,7 +170,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	..()
 	if(inv_tool)
 		returnToPool(inv_tool)
-		client.screen -= inv_tool
+		if(client) client.screen -= inv_tool
 		inv_tool = null
 
 /mob/living/silicon/robot/mommi/updatename(var/prefix as text)

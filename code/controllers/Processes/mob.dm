@@ -14,5 +14,8 @@
 /datum/controller/process/mob/doWork()
 	if (mob_list)
 		for(var/m in mob_list)
-			m:Life()
-			scheck()
+			if(m)
+				m:Life()
+				scheck()
+				continue
+			mob_list -= m

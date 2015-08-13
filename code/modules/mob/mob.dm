@@ -49,123 +49,123 @@ var/global/obj/screen/fuckstat/FUCK = new
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_screen_obj_references() called tick#: [world.time]")
 	if(flash)
 		returnToPool(flash)
-		client.screen -= flash
+		if(client) client.screen -= flash
 		flash = null
 	if(blind)
 		returnToPool(blind)
-		client.screen -= blind
+		if(client) client.screen -= blind
 		blind = null
 	if(hands)
 		returnToPool(hands)
-		client.screen -= hands
+		if(client) client.screen -= hands
 		hands = null
 	if(pullin)
 		returnToPool(pullin)
-		client.screen -= pullin
+		if(client) client.screen -= pullin
 		pullin = null
 	if(visible)
 		returnToPool(visible)
-		client.screen -= visible
+		if(client) client.screen -= visible
 		visible = null
 	if(purged)
 		returnToPool(purged)
-		client.screen -= purged
+		if(client) client.screen -= purged
 		purged = null
 	if(internals)
 		returnToPool(internals)
-		client.screen -= internals
+		if(client) client.screen -= internals
 		internals = null
 	if(oxygen)
 		returnToPool(oxygen)
-		client.screen -= oxygen
+		if(client) client.screen -= oxygen
 		oxygen = null
 	if(i_select)
 		returnToPool(i_select)
-		client.screen -= i_select
+		if(client) client.screen -= i_select
 		i_select = null
 	if(m_select)
 		returnToPool(m_select)
-		client.screen -= m_select
+		if(client) client.screen -= m_select
 		m_select = null
 	if(toxin)
 		returnToPool(toxin)
-		client.screen -= toxin
+		if(client) client.screen -= toxin
 		toxin = null
 	if(fire)
 		returnToPool(fire)
-		client.screen -= fire
+		if(client) client.screen -= fire
 		fire = null
 	if(bodytemp)
 		returnToPool(bodytemp)
-		client.screen -= bodytemp
+		if(client) client.screen -= bodytemp
 		bodytemp = null
 	if(healths)
 		returnToPool(healths)
-		client.screen -= healths
+		if(client) client.screen -= healths
 		healths = null
 	if(throw_icon)
 		returnToPool(throw_icon)
-		client.screen -= throw_icon
+		if(client) client.screen -= throw_icon
 		throw_icon = null
 	if(nutrition_icon)
 		returnToPool(nutrition_icon)
-		client.screen -= nutrition_icon
+		if(client) client.screen -= nutrition_icon
 		nutrition_icon = null
 	if(pressure)
 		returnToPool(pressure)
-		client.screen -= pressure
+		if(client) client.screen -= pressure
 		pressure = null
 	if(damageoverlay)
 		returnToPool(damageoverlay)
-		client.screen -= damageoverlay
+		if(client) client.screen -= damageoverlay
 		damageoverlay = null
 	if(pain)
 		returnToPool(pain)
-		client.screen -= pain
+		if(client) client.screen -= pain
 		pain = null
 	if(item_use_icon)
 		returnToPool(item_use_icon)
-		client.screen -= item_use_icon
+		if(client) client.screen -= item_use_icon
 		item_use_icon = null
 	if(gun_move_icon)
 		returnToPool(gun_move_icon)
-		client.screen -= gun_move_icon
+		if(client) client.screen -= gun_move_icon
 		gun_move_icon = null
 	if(gun_run_icon)
 		returnToPool(gun_run_icon)
-		client.screen -= gun_run_icon
+		if(client) client.screen -= gun_run_icon
 		gun_run_icon = null
 	if(gun_setting_icon)
 		returnToPool(gun_setting_icon)
-		client.screen -= gun_setting_icon
+		if(client) client.screen -= gun_setting_icon
 		gun_setting_icon = null
 	if(m_suitclothes)
 		returnToPool(m_suitclothes)
-		client.screen -= m_suitclothes
+		if(client) client.screen -= m_suitclothes
 		m_suitclothes = null
 	if(m_suitclothesbg)
 		returnToPool(m_suitclothesbg)
-		client.screen -= m_suitclothesbg
+		if(client) client.screen -= m_suitclothesbg
 		m_suitclothesbg = null
 	if(m_hat)
 		returnToPool(m_hat)
-		client.screen -= m_hat
+		if(client) client.screen -= m_hat
 		m_hat = null
 	if(m_hatbg)
 		returnToPool(m_hatbg)
-		client.screen -= m_hatbg
+		if(client) client.screen -= m_hatbg
 		m_hatbg = null
 	if(m_glasses)
 		returnToPool(m_glasses)
-		client.screen -= m_glasses
+		if(client) client.screen -= m_glasses
 		m_glasses = null
 	if(m_glassesbg)
 		returnToPool(m_glassesbg)
-		client.screen -= m_glassesbg
+		if(client) client.screen -= m_glassesbg
 		m_glasses = null
 	if(zone_sel)
 		returnToPool(zone_sel)
-		client.screen -= zone_sel
+		if(client) client.screen -= zone_sel
 		zone_sel = null
 
 /mob/proc/cultify()

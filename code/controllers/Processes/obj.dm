@@ -15,5 +15,8 @@ var/global/list/processing_objects = list()
 /datum/controller/process/obj/doWork()
 	if(processing_objects)
 		for(var/o in processing_objects)
-			o:process()
-			scheck()
+			if(o)
+				o:process()
+				scheck()
+				continue
+			processing_objects -= o

@@ -15,11 +15,23 @@
 			supply_shuttle.process()
 			feedback_add_details("admin_verb","RSupply")
 		if("Process Scheduler")
-			del(processScheduler)
 			var/datum/controller/processScheduler/psched = new
+			psched.processes = processScheduler.processes.Copy()
+			psched.idle = processScheduler.idle.Copy()
+			psched.idle = processScheduler.idle.Copy()
+			psched.last_start = processScheduler.last_start.Copy()
+			psched.last_run_time = processScheduler.last_run_time.Copy()
+			psched.last_twenty_run_times = processScheduler.last_twenty_run_times.Copy()
+			psched.highest_run_time = processScheduler.highest_run_time.Copy()
+			psched.nameToProcessMap = processScheduler.nameToProcessMap.Copy()
+			psched.last_start = processScheduler.last_start.Copy()
+			for(var/datum/controller/process/P in psched.processes)
+				P.main = psched
+			del(processScheduler)
 			processScheduler = psched
-			processScheduler.deferSetupFor(/datum/controller/process/ticker)
-			processScheduler.setup()
+			//processScheduler.deferSetupFor(/datum/controller/process/ticker)
+			processScheduler.start()
+			world << "<h1><span class='warning'>Process Scheduler was restarted</span></h1>"
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 	return
 
