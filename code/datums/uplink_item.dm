@@ -514,6 +514,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 4
 
+/datum/uplink_item/device_tools/military_belt
+	name = "Military Belt"
+	desc = "A robust seven-slot red belt made for carrying a broad variety of weapons, ammunition and explosives"
+	item = /obj/item/weapon/storage/belt/military
+	cost = 5
+	excludefrom = list(/datum/game_mode/nuclear)
+	
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
