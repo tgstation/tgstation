@@ -1,9 +1,12 @@
-
 #define LING_FAKEDEATH_TIME					400 //40 seconds
 #define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
 #define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
 
 var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
+var/list/slot2slot = list("head" = slot_head, "wear_mask" = slot_wear_mask, "back" = slot_back, "wear_suit" = slot_wear_suit, "w_uniform" = slot_w_uniform, "shoes" = slot_shoes, "belt" = slot_belt, "gloves" = slot_gloves, "glasses" = slot_glasses, "ears" = slot_ears, "wear_id" = slot_wear_id, "s_store" = slot_s_store)
+var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mask" = /obj/item/clothing/mask/changeling, "back" = /obj/item/changeling, "wear_suit" = /obj/item/clothing/suit/changeling, "w_uniform" = /obj/item/clothing/under/changeling, "shoes" = /obj/item/clothing/shoes/changeling, "belt" = /obj/item/changeling, "gloves" = /obj/item/clothing/gloves/changeling, "glasses" = /obj/item/clothing/glasses/changeling, "ears" = /obj/item/changeling, "wear_id" = /obj/item/changeling, "s_store" = /obj/item/changeling)
+
 
 /datum/game_mode
 	var/list/datum/mind/changelings = list()
@@ -257,9 +260,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
-	var/list/absorbed_dna = list()
-	var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
-	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
+	var/list/stored_profiles = list() //list of datum/changelingprofile
+	var/datum/changelingprofile/first_prof = null
+	//var/list/absorbed_dna = list()
+	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
+	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 1 //We would require at least 1 sample of compatible DNA to have taken on the form of a human.
 	var/chem_charges = 20
 	var/chem_storage = 75
@@ -288,7 +293,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
-	absorbed_dna.len = dna_max
 
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
@@ -302,18 +306,19 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 
 /datum/changeling/proc/get_dna(dna_owner)
-	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
-		if(dna_owner == DNA.real_name)
-			return DNA
+	for(var/datum/changelingprofile/prof in stored_profiles)
+		if(dna_owner == prof.name)
+			return prof
 
 /datum/changeling/proc/has_dna(datum/dna/tDNA)
-	for(var/datum/dna/D in (absorbed_dna+protected_dna))
-		if(tDNA.is_same_as(D))
+	for(var/datum/changelingprofile/prof in stored_profiles)
+		if(tDNA.is_same_as(prof.dna))
 			return 1
 	return 0
 
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/target)
-	if(absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target)
+	var/datum/changelingprofile/prof = stored_profiles[1]
+	if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return
 	if(!target)
@@ -330,3 +335,106 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
 		return
 	return 1
+
+/datum/changeling/proc/add_profile(var/mob/living/carbon/human/H, var/mob/living/carbon/user, protect = 0)
+	if(stored_profiles.len > dna_max)
+		if(!push_out_profile())
+			return
+
+	var/datum/changelingprofile/prof = new()
+
+	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
+	var/datum/dna/new_dna = new H.dna.type
+	H.dna.copy_dna(new_dna)
+	prof.dna = new_dna
+	prof.name = H.real_name
+	prof.protected = protect
+	
+	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
+	for(var/slot in slots)
+		var/obj/item/I = H.vars[slot]
+		if(!I)
+			continue
+		prof.name_list[slot] = I.name
+		prof.appearance_list[slot] = I.appearance
+		prof.flags_cover_list[slot] = I.flags_cover
+		prof.item_color_list[slot] = I.item_color
+		prof.item_state_list[slot] = I.item_state
+		prof.exists_list[slot] = 1
+
+	stored_profiles += prof
+
+	return prof
+
+/datum/changeling/proc/remove_profile(var/mob/living/carbon/human/H, force = 0)
+	for(var/datum/changelingprofile/prof in stored_profiles)
+		if(H.real_name == prof.name)
+			if(prof.protected && !force)
+				continue
+			stored_profiles -= prof
+			qdel(prof)
+
+/datum/changeling/proc/get_profile_to_remove()
+	for(var/datum/changelingprofile/prof in stored_profiles)
+		if(!prof.protected)
+			return prof
+
+/datum/changeling/proc/push_out_profile()
+	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
+	if(removeprofile)
+		stored_profiles -= removeprofile
+		return 1
+	return 0
+
+/proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
+	var/datum/dna/chosen_dna = chosen_prof.dna
+	user.real_name = chosen_prof.name
+	user.dna = chosen_dna
+	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
+	domutcheck(user)
+	updateappearance(user)
+
+	//vars hackery. not pretty, but better than the alternative.
+	for(var/slot in slots)
+		if(istype(user.vars[slot], slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
+			qdel(user.vars[slot])
+			continue
+
+		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !(chosen_prof.exists_list[slot]))
+			continue
+
+		var/obj/item/C
+		var/equip = 0
+		if(!user.vars[slot])
+			var/thetype = slot2type[slot]
+			equip = 1
+			C = new thetype(user)
+
+		else if(istype(user.vars[slot], slot2type[slot]))
+			C = user.vars[slot]
+
+		C.appearance = chosen_prof.appearance_list[slot]
+		C.name = chosen_prof.name_list[slot]
+		C.flags_cover = chosen_prof.flags_cover_list[slot]
+		C.item_color = chosen_prof.item_color_list[slot]
+		C.item_state = chosen_prof.item_state_list[slot]
+		if(equip)
+			user.equip_to_slot_or_del(C, slot2slot[slot])
+
+	user.regenerate_icons()
+
+/datum/changelingprofile
+	var/name = "a bug"
+	
+	var/protected = 0
+
+	var/datum/dna/dna = null
+	var/list/name_list = list() //associative list of slotname = itemname
+	var/list/appearance_list = list()
+	var/list/flags_cover_list = list()
+	var/list/exists_list = list()
+	var/list/item_color_list = list()
+	var/list/item_state_list = list()
+	
+/datum/changelingprofile/Destroy()
+	qdel(dna)
