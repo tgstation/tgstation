@@ -5,3 +5,4 @@ delete-after: True
 
 changes: 
   - tweak: "Removes the slowdown on Captain's Space Suit."
+  - tweak: "Reduces the armor values of Captain's space suit and helmet to match that of Captain's Carapace"
