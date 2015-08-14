@@ -589,3 +589,28 @@ datum/reagent/consumable/hippies_delight/on_mob_life(var/mob/living/M as mob)
 			if(prob(30)) M.adjustToxLoss(2)
 	..()
 	return
+
+datum/reagent/consumable/purple_drank
+	name = "Purple Drank"
+	id = "purple_drank"
+	description = "I'mma grip an' sip!"
+	color = "#FF99FF" // rgb: 255, 153, 255
+
+datum/reagent/consumable/purple_drank/on_mob_life(var/mob/living/M as mob)
+	if (prob(3))
+		switch(pick(1,2))
+			if(1)
+				M.say(pick("Sheeit...","What's up mah niggah?","Yo dawg wassup?", "Real nigga shit, no fuccbois allowed!","Yo dawg check out may mixtape!"))
+			if(2)
+				M.say(pick("Bix nood muffuguh!","I din do nuffin!","Niggggaaaaahhhh!","Sheeeeeeeeeeeeeeeeit...", "Fuck da police!"))
+	switch(current_cycle)
+		if(1 to 12)
+			M.eye_blurry = max(M.eye_blurry, 10)
+			if(prob(5))
+				M.emote("yawn")
+		if(12 to 25)
+			M.druggy = max(M.druggy, 15)
+		if(25 to INFINITY)
+			M.drowsyness  = max(M.drowsyness, 20)
+	..()
+	return
