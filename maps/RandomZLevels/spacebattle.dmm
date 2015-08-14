@@ -125,7 +125,7 @@
 "cu" = (/turf/simulated/shuttle/wall{tag = "icon-swall7"; icon_state = "swall7"},/area/awaymission/spacebattle/cruiser)
 "cv" = (/turf/simulated/shuttle/wall{tag = "icon-swallc1"; icon_state = "swallc1"},/area/awaymission/spacebattle/cruiser)
 "cw" = (/turf/simulated/shuttle/wall{tag = "icon-swallc2"; icon_state = "swallc2"},/area/awaymission/spacebattle/cruiser)
-"cx" = (/obj/machinery/power/smes/magical{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/turf/simulated/floor,/area/awaymission/spacebattle/cruiser)
+"cx" = (/obj/machinery/power/battery/smes/infinite{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/turf/simulated/floor,/area/awaymission/spacebattle/cruiser)
 "cy" = (/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/turf/simulated/floor{tag = "icon-damaged2"; icon_state = "damaged2"},/area/awaymission/spacebattle/cruiser)
 "cz" = (/obj/item/stack/sheet/metal,/obj/item/ammo_casing/a12mm,/turf/simulated/floor,/area/awaymission/spacebattle/cruiser)
 "cA" = (/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/obj/item/ammo_casing/a12mm,/turf/simulated/floor,/area/awaymission/spacebattle/cruiser)

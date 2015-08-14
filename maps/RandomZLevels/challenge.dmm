@@ -172,7 +172,7 @@
 "dp" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor{icon_state = "dark"},/area/awaymission/challenge/end)
 "dq" = (/obj/machinery/light,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
 "dr" = (/obj/structure/closet/emcloset,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
-"ds" = (/obj/structure/cable,/obj/machinery/power/smes/magical,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
+"ds" = (/obj/structure/cable,/obj/machinery/power/battery/smes/infinite,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
 "dt" = (/obj/machinery/power/terminal{dir = 8},/obj/structure/cable,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
 "du" = (/obj/structure/closet/l3closet/general,/turf/simulated/floor/bluegrid,/area/awaymission/challenge/end)
 

@@ -94,7 +94,7 @@
 "bP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5; health = 1e+007},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = ""},/turf/simulated/floor/plating,/area/awaymission/academy/headmaster)
 "bQ" = (/obj/effect/landmark{name = "awaystart"},/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/academy/headmaster)
 "bR" = (/turf/simulated/floor{icon_state = "showroomfloor"},/area/awaymission/academy/headmaster)
-"bS" = (/obj/machinery/autolathe,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"bS" = (/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "bT" = (/turf/simulated/floor{icon_state = "floorgrime"},/area/awaymission/academy/classrooms)
 "bU" = (/turf/simulated/shuttle/wall{tag = "icon-swall3"; icon_state = "swall3"; dir = 2},/area/awaymission/academy/classrooms)
 "bV" = (/obj/effect/decal/cleanable/ash,/turf/simulated/floor/engine,/area/awaymission/academy/classrooms)

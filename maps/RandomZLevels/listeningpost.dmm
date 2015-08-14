@@ -2,7 +2,7 @@
 "b" = (/turf/unsimulated/mineral,/area/mine/unexplored)
 "c" = (/turf/simulated/wall/r_wall,/area/awaymission/listeningpost)
 "d" = (/turf/simulated/floor/plating,/area/awaymission/listeningpost)
-"e" = (/obj/machinery/power/smes/magical{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/turf/simulated/floor/plating,/area/awaymission/listeningpost)
+"e" = (/obj/machinery/power/battery/smes/infinite{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/turf/simulated/floor/plating,/area/awaymission/listeningpost)
 "f" = (/obj/machinery/door/airlock,/turf/simulated/floor,/area/awaymission/listeningpost)
 "g" = (/turf/simulated/wall,/area/awaymission/listeningpost)
 "h" = (/obj/structure/table,/obj/item/weapon/paper/monitorkey,/obj/item/device/radio/intercom{desc = "Talk through this. Evilly"; freerange = 1; frequency = 1213; name = "Syndicate Intercom"; pixel_x = 32; subspace_transmission = 1; syndie = 1},/obj/item/clothing/glasses/regular,/turf/simulated/floor,/area/awaymission/listeningpost)
