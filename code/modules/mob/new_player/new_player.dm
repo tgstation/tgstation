@@ -82,13 +82,6 @@
 
 	if(!client)	return 0
 
-	//Determines Relevent Population Cap
-	var/relevant_cap
-	if(config.hard_popcap && config.extreme_popcap)
-		relevant_cap = min(config.hard_popcap, config.extreme_popcap)
-	else
-		relevant_cap = max(config.hard_popcap, config.extreme_popcap)
-
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
 		return 1
@@ -133,22 +126,13 @@
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
-
-		if(href_list["late_join"] == "override")
-			LateChoices()
-			return
-
-		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
+		var/relevant_cap
+		if(config.hard_popcap && config.extreme_popcap)
+			relevant_cap = min(config.hard_popcap, config.extreme_popcap)
+		else
+			relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		if(relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums))
 			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
-
-			var/queue_position = ticker.queued_players.Find(usr)
-			if(queue_position == 1)
-				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
-			else if(queue_position)
-				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
-			else
-				ticker.queued_players += usr
-				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
 			return
 		LateChoices()
 
@@ -160,11 +144,6 @@
 		if(!enter_allowed)
 			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 			return
-
-		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
-			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
-				usr << "<span class='warning'>Server is full.</span>"
-				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
@@ -255,10 +234,6 @@
 		src << alert("[rank] is not available. Please try another.")
 		return 0
 
-	//Remove the player from the join queue if he was in one and reset the timer
-	ticker.queued_players -= src
-	ticker.queue_delay = 4
-
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
@@ -300,11 +275,14 @@
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if (ticker.current_state == GAME_STATE_PLAYING)
-		if(announcement_systems.len)
+		var/ailist[] = list()
+		for (var/mob/living/silicon/ai/A in living_mob_list)
+			ailist += A
+		if (ailist.len)
+			var/mob/living/silicon/ai/announcer = pick(ailist)
 			if(character.mind)
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+					announcer.say("[announcer.radiomod] [character.real_name] has signed up as [rank].")
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever

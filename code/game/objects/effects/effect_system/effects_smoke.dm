@@ -31,7 +31,7 @@
 /obj/effect/effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing |= src
+	SSobj.processing.Add(src)
 	lifetime += rand(-1,1)
 
 /obj/effect/effect/smoke/Destroy()
@@ -149,10 +149,11 @@
 	icon = 'icons/effects/chemsmoke.dmi'
 	icon_state = ""
 	lifetime = 10
+	var/max_lifetime = 10
 
 /obj/effect/effect/smoke/chem/process()
 	if(..())
-		var/fraction = 1/initial(lifetime)
+		var/fraction = 1/max_lifetime
 		for(var/obj/O in range(1,src))
 			if(O.type == src.type)
 				continue
@@ -172,7 +173,7 @@
 		return 0
 	if(!istype(M))
 		return 0
-	var/fraction = 1/initial(lifetime)
+	var/fraction = 1/max_lifetime
 	reagents.reaction(M, TOUCH, fraction)
 	lifetime--
 	return 1
@@ -206,7 +207,7 @@
 		location = get_turf(loca)
 	if(direct)
 		direction = direct
-	carry.copy_to(chemholder, 4*carry.total_volume) //The smoke holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, carry.total_volume)
 
 	if(!silent)
 		var/contained = ""
@@ -255,6 +256,8 @@
 		else
 			S.steps = pick(0,1,1,1,2,2,2,3)
 
+		S.max_lifetime = S.lifetime
+
 		if(chemholder.reagents.total_volume > 1) // can't split 1 very well
 			chemholder.reagents.copy_to(S, chemholder.reagents.total_volume/number) // copy reagents to each smoke, divide evenly
 
@@ -276,9 +279,8 @@
 	lifetime = 10
 
 /obj/effect/effect/smoke/sleeping/process()
-	if(..())
-		for(var/mob/living/carbon/M in range(1,src))
-			smoke_mob(M)
+	for(var/mob/living/carbon/M in range(1,src))
+		smoke_mob(M)
 
 /obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())

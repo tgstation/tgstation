@@ -1,17 +1,14 @@
 /datum/surgery/lipoplasty
 	name = "lipoplasty"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/cut_fat, /datum/surgery_step/remove_fat, /datum/surgery_step/close)
-	possible_locs = list("chest")
-
-/datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(target.disabilities & FAT)
-		return 1
-	return 0
+	species = list(/mob/living/carbon/human)
+	target_must_be_fat = 1
+	location = "chest"
+	requires_organic_chest = 1
 
 
 //cut fat
 /datum/surgery_step/cut_fat
-	name = "cut excess fat"
 	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 64
 
@@ -24,7 +21,6 @@
 
 //remove fat
 /datum/surgery_step/remove_fat
-	name = "remove loose fat"
 	implements = list(/obj/item/weapon/retractor = 100, /obj/item/weapon/screwdriver = 45, /obj/item/weapon/wirecutters = 35)
 	time = 32
 

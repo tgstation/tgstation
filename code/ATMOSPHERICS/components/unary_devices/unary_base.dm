@@ -28,18 +28,20 @@ Housekeeping and pipe network stuff below
 	..(node_connects)
 
 /obj/machinery/atmospherics/components/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
-	if(!..())
-		return
-	SetInitDirections()
+	if(..())
+		return 0
+	initialize_directions = dir
 	var/obj/machinery/atmospherics/node = nodes[NODE1]
 	if(node)
 		node.disconnect(src)
 	node = null
 	nullifyPipenet(parents[PARENT1])
 	atmosinit()
-	node = nodes[NODE1]
+	initialize()
 	if(node)
 		node.atmosinit()
+		node.initialize()
 		node.addMember(src)
 	build_network()
 	. = 1
+	nodes[NODE1] = node

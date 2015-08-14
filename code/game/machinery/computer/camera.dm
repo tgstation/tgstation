@@ -23,10 +23,10 @@
 	if(!stat)
 
 		if (!network)
-			throw EXCEPTION("No camera network")
+			ERROR("A computer lacks a network at [x],[y],[z].")
 			return
 		if (!(istype(network,/list)))
-			throw EXCEPTION("Camera network is not a list")
+			ERROR("The computer at [x],[y],[z] has a network that is not a list!")
 			return
 
 		if(..())
@@ -44,12 +44,10 @@
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
 			if(!C.network)
-				spawn(0)
-					throw EXCEPTION("Camera in a cameranet has no camera network")
+				ERROR("[C.c_tag] has no camera network.")
 				continue
 			if(!(istype(C.network,/list)))
-				spawn(0)
-					throw EXCEPTION("Camera in a cameranet has a non-list camera network")
+				ERROR("[C.c_tag]'s camera network is not a list!")
 				continue
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)

@@ -428,6 +428,5 @@ This is here to make the tiles around the station mininuke change when it's arme
 		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([NEWDISK.x], [NEWDISK.y], [NEWDISK.z]).")
 		return QDEL_HINT_HARDDEL_NOW
 	else
-		. = QDEL_HINT_LETMELIVE // Cancel destruction
-		throw EXCEPTION("Unable to find a blobstart landmark")
-		return
+		ERROR("[src] was supposed to be destroyed, but we were unable to locate a blobstart landmark to spawn a new one.")
+	return QDEL_HINT_LETMELIVE // Cancel destruction.

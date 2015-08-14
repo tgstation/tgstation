@@ -262,9 +262,6 @@
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	action_button_name = null
 
-/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted
-	pin = /obj/item/device/firing_pin
-
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/New()
 	..()
 	update_icon()

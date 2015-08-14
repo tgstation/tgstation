@@ -165,16 +165,18 @@ Note: Must be placed west/left of and R&D console to function.
 
 	var/obj/item/stack/sheet/stack = O
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-	if(!stack || stack.amount <= 0 || amount <= 0 || !in_range(src, stack) || !user.Adjacent(src))
+	if(!stack || stack.amount <= 0 || amount <= 0)
 		return
 	if(amount > stack.amount)
 		amount = stack.amount
 	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
 		amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
+	icon_state = "protolathe"
 	busy = 1
 	use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount/10)))
 	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+	icon_state = "protolathe"
 	if(istype(stack, /obj/item/stack/sheet/metal))
 		m_amount += amount * MINERAL_MATERIAL_AMOUNT
 	else if(istype(stack, /obj/item/stack/sheet/glass))
@@ -194,10 +196,11 @@ Note: Must be placed west/left of and R&D console to function.
 	else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
 		adamantine_amount += amount * MINERAL_MATERIAL_AMOUNT
 	stack.use(amount)
-	updateUsrDialog()
-
-	overlays += "protolathe_[stack.name]"
-	sleep(10)
-	overlays -= "protolathe_[stack.name]"
 	busy = 0
+	src.updateUsrDialog()
 
+	src.overlays += "protolathe_[stack.name]"
+	sleep(10)
+	src.overlays -= "protolathe_[stack.name]"
+
+	return

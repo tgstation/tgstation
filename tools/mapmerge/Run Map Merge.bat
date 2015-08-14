@@ -1,4 +1,5 @@
 @echo off
-call java -jar MapMerge.jar "../../_maps/" /wait
+
+java -jar MapMerge.jar ../../_maps/
 
 pause

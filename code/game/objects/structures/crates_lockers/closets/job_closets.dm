@@ -21,8 +21,6 @@
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
 
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
@@ -47,7 +45,6 @@
 	new /obj/item/clothing/suit/toggle/chef(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
 
 /obj/structure/closet/jcloset
 	name = "custodial closet"

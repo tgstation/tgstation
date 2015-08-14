@@ -99,7 +99,6 @@
 	..()
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	qdel(helmet)
-	qdel(jetpack)
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

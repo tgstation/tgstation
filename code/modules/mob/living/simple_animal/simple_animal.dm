@@ -74,10 +74,10 @@
 	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
-	if(..()) //alive
-		if(!ckey)
+	if(..())
+		if(!client && !stat)
 			handle_automated_movement()
-			handle_automated_action()
+
 			handle_automated_speech()
 		return 1
 
@@ -113,9 +113,6 @@
 
 	if(druggy)
 		druggy = 0
-
-/mob/living/simple_animal/proc/handle_automated_action()
-	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
@@ -257,7 +254,7 @@
 	if(!Proj)
 		return
 	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src)
+	Proj.on_hit(src, 0)
 	return 0
 
 /mob/living/simple_animal/adjustFireLoss(amount)
@@ -490,11 +487,9 @@
 		..()
 
 /mob/living/simple_animal/update_canmove()
-	if(paralysis || stunned || weakened || stat || resting)
+	if(paralysis || stunned || weakened || stat || resting || buckled)
 		drop_r_hand()
 		drop_l_hand()
-		canmove = 0
-	else if(buckled)
 		canmove = 0
 	else
 		canmove = 1

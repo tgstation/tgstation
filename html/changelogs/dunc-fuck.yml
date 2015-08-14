@@ -1,0 +1,6 @@
+author: duncathan
+
+delete-after: true
+
+changes:
+  - tweak: "Restores RPD delay on disposals machines."

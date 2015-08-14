@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = OBJ_LAYER + 0.05 //above table, below windoor/airlock/foamed metal.
+	layer = TURF_LAYER + 0.1
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
@@ -15,7 +15,7 @@
 	var/lifetime = 6
 
 
-/obj/effect/effect/foam/metal
+/obj/effect/effect/foam/metal/aluminium
 	name = "aluminium foam"
 	metal = 1
 	icon_state = "mfoam"
@@ -29,7 +29,7 @@
 /obj/effect/effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	SSobj.processing |= src
+	SSobj.processing.Add(src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 /obj/effect/effect/foam/Destroy()
@@ -153,7 +153,7 @@
 		location = get_turf(loca)
 
 	amount = round(sqrt(amt / 2), 1)
-	carry.copy_to(chemholder, 4*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, carry.total_volume)
 
 /datum/effect/effect/system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
 	..()
@@ -166,7 +166,7 @@
 	else
 		var/obj/effect/effect/foam/F = PoolOrNew(foamtype, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
+		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount) //how much reagents each foam cell holds
 		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal

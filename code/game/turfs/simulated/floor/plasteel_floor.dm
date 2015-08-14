@@ -122,10 +122,6 @@
 /turf/simulated/floor/plasteel/cult/narsie_act()
 	return
 
-/turf/simulated/floor/plasteel/cult/airless
-	oxygen = 0
-	nitrogen = 0
-	temperature = TCMB
 
 /turf/simulated/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"

@@ -6,17 +6,19 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
 
 	var/muzzled = is_muzzled()
 	var/m_type = 1
 	var/message
 
 	switch(act) //Ooh ooh ah ah keep this alphabetical ooh ooh ah ah!
-		if ("deathgasp","deathgasps")
+		if ("deathgasp")
 			message = "<b>[src]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = 1
 
-		if ("gnarl","gnarls")
+		if ("gnarl")
 			if (!muzzled)
 				message = "<B>[src]</B> gnarls and shows its teeth.."
 				m_type = 2
@@ -26,35 +28,35 @@
 				message = "<B>[src]</B> flails its paw."
 				m_type = 1
 
-		if ("moan","moans")
+		if ("moan")
 			message = "<B>[src]</B> moans!"
 			m_type = 2
 
-		if ("roar","roars")
+		if ("roar")
 			if (!muzzled)
 				message = "<B>[src]</B> roars."
 				m_type = 2
 
-		if ("roll","rolls")
+		if ("roll")
 			if (!src.restrained())
 				message = "<B>[src]</B> rolls."
 				m_type = 1
 
-		if ("scratch","scratches")
+		if ("scratch")
 			if (!src.restrained())
 				message = "<B>[src]</B> scratches."
 				m_type = 1
 
-		if ("screech","screeches")
+		if ("scretch")
 			if (!muzzled)
-				message = "<B>[src]</B> screeches."
+				message = "<B>[src]</B> scretches."
 				m_type = 2
 
-		if ("shiver","shivers")
+		if ("shiver")
 			message = "<B>[src]</B> shivers."
 			m_type = 2
 
-		if ("sign","signs")
+		if ("sign")
 			if (!src.restrained())
 				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
@@ -64,7 +66,7 @@
 			m_type = 1
 
 		if ("help") //Ooh ah ooh ooh this is an exception to alphabetical ooh ooh.
-			src << "Help for monkey emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, gnarl, giggle, glare-(none)/mob, grin, jump, laugh, look, me, moan, nod, paw, point-(atom), roar, roll, scream, scratch, screech, shake, shiver, sigh, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave whimper, wink, yawn"
+			src << "Help for monkey emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, gnarl, giggle, glare-(none)/mob, grin, jump, laugh, look, me, moan, nod, paw, point-(atom), roar, roll, scream, scratch, scretch, shake, shiver, sigh, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave whimper, wink, yawn"
 
 		else
 			..(act)

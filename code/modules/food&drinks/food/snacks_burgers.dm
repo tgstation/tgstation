@@ -18,11 +18,6 @@
 	desc = "A bloody burger."
 	bonus_reagents = list("vitamin" = 4)
 
-/obj/item/weapon/reagent_containers/food/snacks/burger/corgi
-	name = "corgi burger"
-	desc = "You monster."
-	bonus_reagents = list("vitamin" = 1)
-
 /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
 	name = "appendix burger"
 	desc = "Tastes like appendicitis."

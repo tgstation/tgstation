@@ -155,8 +155,7 @@ Contents:
 		Ninja.internals.icon_state = "internal1"
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		throw EXCEPTION("Ninja created with incorrect mind")
-		return
+		ERROR("The ninja wasn't assigned the right mind. ;ç;")
 
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 
@@ -213,5 +212,7 @@ Contents:
 	equip_to_slot_or_del(new /obj/item/weapon/tank/jetpack/carbondioxide(src), slot_back)
 
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(src)
-	E.implant(src)
+	E.imp_in = src
+	E.implanted = 1
+	E.implanted(src)
 	return 1

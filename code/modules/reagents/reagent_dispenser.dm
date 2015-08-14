@@ -49,10 +49,6 @@
 	if (N)
 		amount_per_transfer_from_this = N
 
-/obj/structure/reagent_dispensers/examine(mob/user)
-	..()
-	user << "It contains [reagents.total_volume] units."
-
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
@@ -60,10 +56,9 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
-
-/obj/structure/reagent_dispensers/watertank/New()
-	..()
-	reagents.add_reagent("water",1000)
+	New()
+		..()
+		reagents.add_reagent("water",1000)
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
@@ -94,10 +89,9 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
-
-/obj/structure/reagent_dispensers/fueltank/New()
-	..()
-	reagents.add_reagent("welding_fuel",1000)
+	New()
+		..()
+		reagents.add_reagent("welding_fuel",1000)
 
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
@@ -133,10 +127,9 @@
 	anchored = 1
 	density = 0
 	amount_per_transfer_from_this = 45
-
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
-	reagents.add_reagent("condensedcapsaicin",1000)
+	New()
+		..()
+		reagents.add_reagent("condensedcapsaicin",1000)
 
 
 /obj/structure/reagent_dispensers/water_cooler
@@ -148,10 +141,9 @@
 	possible_transfer_amounts = null
 	anchored = 1
 	var/cups = 50
-
-/obj/structure/reagent_dispensers/water_cooler/New()
-	..()
-	reagents.add_reagent("water",500)
+	New()
+		..()
+		reagents.add_reagent("water",500)
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))
@@ -178,10 +170,9 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 10
-
-/obj/structure/reagent_dispensers/beerkeg/New()
-	..()
-	reagents.add_reagent("beer",1000)
+	New()
+		..()
+		reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
@@ -195,6 +186,6 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-/obj/structure/reagent_dispensers/virusfood/New()
-	..()
-	reagents.add_reagent("virusfood", 1000)
+	New()
+		..()
+		reagents.add_reagent("virusfood", 1000)

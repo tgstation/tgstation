@@ -16,14 +16,12 @@ var/list/admin_datums = list()
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
-		spawn(-1)
-			del(src)
-		throw EXCEPTION("Admin datum created without a ckey")
+		ERROR("Admin datum created without a ckey argument. Datum has been deleted")
+		del(src)
 		return
 	if(!istype(R))
-		spawn(-1)
-			del(src)
-		throw EXCEPTION("Admin datum created without a rank")
+		ERROR("Admin datum created without a rank. Datum has been deleted")
+		del(src)
 		return
 	rank = R
 	admincaster_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"

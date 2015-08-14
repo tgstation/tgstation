@@ -101,8 +101,6 @@ var/const/SAFETY_COOLDOWN = 100
 
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(!anchored)
-		return
 	if(safety_mode)
 		return
 

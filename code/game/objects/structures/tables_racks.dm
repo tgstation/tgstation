@@ -20,7 +20,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
+	throwpass = 1	//You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
@@ -364,7 +364,7 @@
 	icon_state = "rack"
 	density = 1
 	anchored = 1.0
-	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
+	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/health = 5
 
 /obj/structure/rack/ex_act(severity, target)

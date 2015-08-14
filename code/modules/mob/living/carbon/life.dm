@@ -8,12 +8,9 @@
 		return
 
 	if(..())
-		. = 1
-		for(var/obj/item/organ/internal/O in internal_organs)
-			O.on_life()
-
-	//Updates the number of stored chemicals for powers
-	handle_changeling()
+		//Updates the number of stored chemicals for powers
+		handle_changeling()
+		return 1
 
 ///////////////
 // BREATHING //
@@ -73,7 +70,7 @@
 				if(!has_smoke_protection())
 					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
 						if(S.reagents.total_volume && S.lifetime)
-							var/fraction = 1/initial(S.lifetime)
+							var/fraction = 1/S.max_lifetime
 							S.reagents.reaction(src,INGEST, fraction)
 							var/amount = round(S.reagents.total_volume*fraction,0.1)
 							S.reagents.copy_to(src, amount)
@@ -261,7 +258,7 @@
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
 
@@ -458,6 +455,7 @@
 	return 1
 
 /mob/living/carbon/update_sight()
+
 	if(stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS
@@ -522,8 +520,3 @@
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
-
-/mob/living/carbon/handle_actions()
-	..()
-	for(var/obj/item/I in internal_organs)
-		give_action_button(I, 1)

@@ -806,16 +806,17 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/proc/squish(atom/target)
-	var/turf/T = get_turf(target)
-	new splat(T)
-	visible_message("The [src.name] has been squashed.","<span class='italics'>You hear a smack.</span>")
+	new splat(src.loc)
+	src.visible_message("The [src.name] has been squashed.","<span class='italics'>You hear a smack.</span>")
 	for(var/atom/A in get_turf(target))
-		reagents.reaction(A)
+		src.reagents.reaction(A)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
-	if(!..()) //was it caught by a mob?
-		squish(hit_atom)
-		qdel(src)
+	..()
+	squish(hit_atom)
+	del(src) // Not qdel, because it'll hit other mobs then the floor for runtimes.
+	return
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer
 	seed = /obj/item/seeds/killertomatoseed
@@ -905,8 +906,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	..()
 	var/teleport_radius = potency / 10
 	if(isliving(squishee))
-		var/turf/T = get_turf(squishee)
-		new /obj/effect/decal/cleanable/molten_item(T) //Leave a pile of goo behind for dramatic effect...
+		new /obj/effect/decal/cleanable/molten_item(squishee.loc) //Leave a pile of goo behind for dramatic effect...
 		do_teleport(squishee, get_turf(squishee), teleport_radius)
 
 

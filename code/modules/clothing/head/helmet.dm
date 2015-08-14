@@ -58,18 +58,17 @@
 				flags_inv |= (visor_flags_inv)
 				icon_state = initial(icon_state)
 				usr << "[toggle_message] \the [src]."
-				usr.update_inv_head()
+				usr.update_inv_head(0)
 			else
 				up = !up
 				flags &= ~(visor_flags)
 				flags_inv &= ~(visor_flags_inv)
 				icon_state = "[initial(icon_state)]up"
 				usr << "[alt_toggle_message] \the [src]"
-				usr.update_inv_head()
-				if(active_sound)
-					while(up)
-						playsound(src.loc, "[active_sound]", 100, 0, 4)
-						sleep(15)
+				usr.update_inv_head(0)
+				while(up)
+					playsound(src.loc, "[activation_sound]", 100, 0, 4)
+					sleep(15)
 
 /obj/item/clothing/head/helmet/justice
 	name = "helmet of justice"
@@ -80,8 +79,8 @@
 	action_button_name = "Toggle Justice Lights"
 	can_toggle = 1
 	toggle_cooldown = 20
-	active_sound = 'sound/items/WEEOO1.ogg'
-	
+	activation_sound = 'sound/items/WEEOO1.ogg'
+
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
@@ -92,22 +91,15 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
-	icon_state = "swatsyndie"
-	item_state = "swatsyndie"
+	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
+	icon_state = "swat"
+	item_state = "swat"
 	armor = list(melee = 40, bullet = 30, laser = 25,energy = 25, bomb = 50, bio = 10, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags = STOPSPRESSUREDMAGE
 	strip_delay = 80
-
-/obj/item/clothing/head/helmet/swat/nanotrasen
-	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
-	icon_state = "swat"
-	item_state = "swat"
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -180,7 +172,7 @@
 
 	if(istype(loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = loc
-		H.update_inv_head()
+		H.update_inv_head(0)
 
 	return
 
@@ -214,7 +206,7 @@
 				update_helmlight(user)
 				S.update_brightness(user)
 				update_icon()
-				usr.update_inv_head()
+				usr.update_inv_head(0)
 				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
 			return
 

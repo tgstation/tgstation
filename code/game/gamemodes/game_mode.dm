@@ -472,16 +472,19 @@
 			M << msg
 
 /datum/game_mode/proc/printplayer(datum/mind/ply)
-	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
+	var/role = "\improper[ply.assigned_role]"
+	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
 	if(ply.current)
 		if(ply.current.stat == DEAD)
-			text += " <font color='red'><b>died</b></font>"
+			text += "died"
 		else
-			text += " <font color='green'><b>survived</b></font>"
+			text += "survived"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
 	else
-		text += " <font color='red'><b>had their body destroyed</b></font>"
+		text += "body destroyed"
+	text += ")"
+
 	return text
 
 /datum/game_mode/proc/printobjectives(datum/mind/ply)

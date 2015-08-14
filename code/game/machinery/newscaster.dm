@@ -843,8 +843,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
 	else
-		throw EXCEPTION("Invalid user for this proc")
-		return
+		ERROR("Newscaster used by non-human/silicon mob: [user.type]")
 
 /obj/machinery/newscaster/proc/print_paper()
 	feedback_inc("newscaster_newspapers_printed",1)

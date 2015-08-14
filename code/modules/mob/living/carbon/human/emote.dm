@@ -6,6 +6,8 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
 
 	var/muzzled = is_muzzled()
 	//var/m_type = 1
@@ -26,29 +28,29 @@
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 
-		if ("choke","chokes")
+		if ("choke")
 			if (miming)
 				message = "<B>[src]</B> clutches \his throat desperately!"
 			else
 				..(act)
 
-		if ("chuckle","chuckles")
+		if ("chuckle")
 			if(miming)
 				message = "<B>[src]</B> appears to chuckle."
 			else
 				..(act)
 
-		if ("clap","claps")
+		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
 
-		if ("collapse","collapses")
+		if ("collapse")
 			Paralyse(2)
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
 
-		if ("cough","coughs")
+		if ("cough")
 			if (miming)
 				message = "<B>[src]</B> appears to cough!"
 			else
@@ -59,7 +61,7 @@
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = 2
 
-		if ("cry","crys","cries") //I feel bad if people put s at the end of cry. -Sum99
+		if ("cry")
 			if (miming)
 				message = "<B>[src]</B> cries."
 			else
@@ -99,7 +101,7 @@
 					return
 				message = "<B>[src]</B> [input]"
 
-		if ("dap","daps")
+		if ("dap")
 			m_type = 1
 			if (!src.restrained())
 				var/M = null
@@ -117,24 +119,24 @@
 			message = "<B>[src]</B> raises an eyebrow."
 			m_type = 1
 
-		if ("flap","flaps")
+		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
-		if ("gasp","gasps")
+		if ("gasp")
 			if (miming)
 				message = "<B>[src]</B> appears to be gasping!"
 			else
 				..(act)
 
-		if ("giggle","giggles")
+		if ("giggle")
 			if (miming)
 				message = "<B>[src]</B> giggles silently!"
 			else
 				..(act)
 
-		if ("groan","groans")
+		if ("groan")
 			if (miming)
 				message = "<B>[src]</B> appears to groan!"
 			else
@@ -145,7 +147,7 @@
 					message = "<B>[src]</B> makes a loud noise."
 					m_type = 2
 
-		if ("grumble","grumbles")
+		if ("grumble")
 			if (!muzzled)
 				message = "<B>[src]</B> grumbles!"
 			else
@@ -169,7 +171,7 @@
 					else
 						message = "<B>[src]</B> holds out \his hand to [M]."
 
-		if ("hug","hugs")
+		if ("hug")
 			m_type = 1
 			if (!src.restrained())
 				var/M = null
@@ -213,14 +215,14 @@
 			else
 				message = "<B>[src]</B> [message]"
 
-		if ("moan","moans")
+		if ("moan")
 			if(miming)
 				message = "<B>[src]</B> appears to moan!"
 			else
 				message = "<B>[src]</B> moans!"
 				m_type = 2
 
-		if ("mumble","mumbles")
+		if ("mumble")
 			message = "<B>[src]</B> mumbles!"
 			m_type = 2
 
@@ -233,7 +235,7 @@
 				message = "<B>[src]</B> raises a hand."
 			m_type = 1
 
-		if ("salute","salutes")
+		if ("salute")
 			if (!src.buckled)
 				var/M = null
 				if (param)
@@ -249,27 +251,27 @@
 					message = "<B>[src]</b> salutes."
 			m_type = 1
 
-		if ("scream","screams")
+		if ("scream")
 			if (miming)
 				message = "<B>[src]</B> acts out a scream!"
 			else
 				..(act)
 
-		if ("shiver","shivers")
+		if ("shiver")
 			message = "<B>[src]</B> shivers."
 			m_type = 1
 
-		if ("shrug","shrugs")
+		if ("shrug")
 			message = "<B>[src]</B> shrugs."
 			m_type = 1
 
-		if ("sigh","sighs")
+		if ("sigh")
 			if(miming)
 				message = "<B>[src]</B> sighs."
 			else
 				..(act)
 
-		if ("signal","signals")
+		if ("signal")
 			if (!src.restrained())
 				var/t1 = round(text2num(param))
 				if (isnum(t1))
@@ -279,46 +281,42 @@
 						message = "<B>[src]</B> raises [t1] finger\s."
 			m_type = 1
 
-		if ("sneeze","sneezes")
+		if ("sneeze")
 			if (miming)
 				message = "<B>[src]</B> sneezes."
 			else
 				..(act)
 
-		if ("sniff","sniffs")
+		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
 
-		if ("snore","snores")
+		if ("snore")
 			if (miming)
 				message = "<B>[src]</B> sleeps soundly."
 			else
 				..(act)
 
-		if ("whimper","whimpers")
+		if ("whimper")
 			if (miming)
 				message = "<B>[src]</B> appears hurt."
 			else
 				..(act)
 
-		if ("yawn","yawns")
+		if ("yawn")
 			if (!muzzled)
 				message = "<B>[src]</B> yawns."
 				m_type = 2
 
-		if("wag","wags")
-			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (features["tail_human"] != "None")))
+		if("wag")
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || ("tail_human" in dna.species.mutant_bodyparts)))
 				message = "<B>[src]</B> wags \his tail."
 				startTailWag()
-			else
-				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if("stopwag")
 			if(dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
 				message = "<B>[src]</B> stops wagging \his tail."
 				endTailWag()
-			else
-				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("help") //This can stay at the bottom.
 			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, stopwag, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"

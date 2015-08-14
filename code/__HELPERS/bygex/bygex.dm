@@ -101,27 +101,27 @@
 			if(!i)	return str
 			var/datum/match/M = matches[i]
 			if(i < 1 || i > matches.len)
-				throw EXCEPTION("str(): out of bounds")
+				ERROR("out of bounds")
 			return copytext(str, M.pos, M.pos+M.len)
 
 		pos(i)
 			if(!i)	return 1
 			if(i < 1 || i > matches.len)
-				throw EXCEPTION("pos(): out of bounds")
+				ERROR("out of bounds")
 			var/datum/match/M = matches[i]
 			return M.pos
 
 		len(i)
 			if(!i)	return length(str)
 			if(i < 1 || i > matches.len)
-				throw EXCEPTION("len(): out of bounds")
+				ERROR("out of bounds")
 			var/datum/match/M = matches[i]
 			return M.len
 
 		end(i)
 			if(!i) return length(str)
 			if(i < 1 || i > matches.len)
-				throw EXCEPTION("end() out of bounds")
+				ERROR("out of bounds")
 			var/datum/match/M = matches[i]
 			return M.pos + M.len
 

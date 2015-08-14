@@ -5,6 +5,8 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
 
 	switch(act)//01000001011011000111000001101000011000010110001001100101011101000110100101111010011001010110010000100001 (Seriously please keep it that way.)
 		if ("aflap")
@@ -13,7 +15,7 @@
 				m_type = 2
 			m_type = 1
 
-		if("beep","beeps")
+		if("beep")
 			var/M = null
 			if(param)
 				for (var/mob/A in view(1, src))
@@ -30,7 +32,7 @@
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
 			m_type = 2
 
-		if ("bow","bows")
+		if ("bow")
 			if (!src.buckled)
 				var/M = null
 				if (param)
@@ -68,12 +70,12 @@
 			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			m_type = 2
 
-		if ("chime","chimes") //You have mail!
+		if ("chime") //You have mail!
 			message = "<B>[src]</B> chimes."
 			playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 			m_type = 2
 
-		if ("clap","claps")
+		if ("clap")
 			if (!src.restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
@@ -92,16 +94,16 @@
 				return
 			message = "<B>[src]</B> [input]"
 
-		if ("deathgasp","deathgasps")
+		if ("deathgasp")
 			message = "<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
 			m_type = 1
 
-		if ("flap","flaps")
+		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
-		if ("glare","glares")
+		if ("glare")
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -115,12 +117,12 @@
 			else
 				message = "<B>[src]</B> glares."
 
-		if ("honk","honks") //Honk!
+		if ("honk") //Honk!
 			message = "<B>[src]</B> honks!"
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 			m_type = 2
 
-		if ("look","looks")
+		if ("look")
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -148,11 +150,11 @@
 			else
 				message = "<B>[src]</B> [message]"
 
-		if ("nod","nods")
+		if ("nod")
 			message = "<B>[src]</B> nods."
 			m_type = 1
 
-		if ("ping","pings")
+		if ("ping")
 			var/M = null
 			if(param)
 				for (var/mob/A in view(1, src))
@@ -173,7 +175,7 @@
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 0)
 			m_type = 2
 
-		if ("salute","salutes")
+		if ("salute")
 			if (!src.buckled)
 				var/M = null
 				if (param)
@@ -189,7 +191,7 @@
 				else
 					message = "<B>[src]</b> salutes."
 
-		if ("stare","stares")
+		if ("stare")
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -204,7 +206,7 @@
 				message = "<B>[src]</B> stares."
 			m_type = 1
 
-		if ("twitch","twitches")
+		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
 

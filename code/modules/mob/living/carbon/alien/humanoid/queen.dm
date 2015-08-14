@@ -5,8 +5,9 @@
 	health = 250
 	icon_state = "alienq_s"
 	status_flags = CANPARALYSE
+	heal_rate = 5
+	plasma_rate = 20
 	ventcrawler = 0 //pull over that ass too fat
-	unique_name = 0
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
@@ -22,11 +23,10 @@
 
 	real_name = src.name
 
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large/queen
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
-	internal_organs += new /obj/item/organ/internal/alien/eggsac
+	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
+	AddAbility(new/obj/effect/proc_holder/alien/neurotoxin(null))
+	AddAbility(new/obj/effect/proc_holder/alien/resin(null))
+	AddAbility(new/obj/effect/proc_holder/alien/lay_egg(null))
 
 	..()
 
@@ -62,9 +62,10 @@
 	desc = "Lay an egg to produce huggers to impregnate prey with."
 	plasma_cost = 75
 	check_turf = 1
+
 	action_icon_state = "alien_egg"
 
-/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/alien/user)
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
 		user << "There's already an egg here."
 		return 0

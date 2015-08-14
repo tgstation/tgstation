@@ -8,10 +8,13 @@
 
 	var/param = null
 
-	if (findtext(act, "-", 1, null)) //Removes dashes for npcs "EMOTE-PLAYERNAME" or something like that, I ain't no AI coder. It's not for players. -Sum99
+	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
+
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
 
 	switch(act)//Hello, how would you like to order? Alphabetically!
 		if ("aflap")
@@ -19,11 +22,11 @@
 				message = "<B>[src]</B> flaps its wings ANGRILY!"
 				m_type = 2
 
-		if ("blush","blushes")
+		if ("blush")
 			message = "<B>[src]</B> blushes."
 			m_type = 1
 
-		if ("bow","bows")
+		if ("bow")
 			if (!src.buckled)
 				var/M = null
 				if (param)
@@ -39,70 +42,70 @@
 					message = "<B>[src]</B> bows."
 			m_type = 1
 
-		if ("burp","burps")
+		if ("burp")
 			message = "<B>[src]</B> burps."
 			m_type = 2
 
-		if ("choke","chokes")
+		if ("choke")
 			message = "<B>[src]</B> chokes!"
 			m_type = 2
 
-		if ("chuckle","chuckles")
+		if ("chuckle")
 			message = "<B>[src]</B> chuckles."
 			m_type = 2
 
-		if ("collapse","collapses")
+		if ("collapse")
 			Paralyse(2)
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
 
-		if ("cough","coughs")
+		if ("cough")
 			message = "<B>[src]</B> coughs!"
 			m_type = 2
 
-		if ("dance","dances")
+		if ("dance")
 			if (!src.restrained())
 				message = "<B>[src]</B> dances around happily."
 				m_type = 1
 
-		if ("deathgasp","deathgasps")
+		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
 			m_type = 1
 
-		if ("drool","drools")
+		if ("drool")
 			message = "<B>[src]</B> drools."
 			m_type = 1
 
-		if ("faint","faints")
+		if ("faint")
 			message = "<B>[src]</B> faints."
 			if(src.sleeping)
 				return //Can't faint while asleep
 			src.sleeping += 10 //Short-short nap
 			m_type = 1
 
-		if ("flap","flaps")
+		if ("flap")
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps its wings."
 				m_type = 2
 
-		if ("flip","flips")
+		if ("flip")
 			if (!src.restrained() || !src.resting || !src.sleeping)
 				src.SpinAnimation(7,1)
 				m_type = 2
 
-		if ("frown","frowns")
+		if ("frown")
 			message = "<B>[src]</B> frowns."
 			m_type = 1
 
-		if ("gasp","gasps")
+		if ("gasp")
 			message = "<B>[src]</B> gasps!"
 			m_type = 2
 
-		if ("giggle","giggles")
+		if ("giggle")
 			message = "<B>[src]</B> giggles."
 			m_type = 2
 
-		if ("glare","glares")
+		if ("glare")
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -116,19 +119,19 @@
 			else
 				message = "<B>[src]</B> glares."
 
-		if ("grin","grins")
+		if ("grin")
 			message = "<B>[src]</B> grins."
 			m_type = 1
 
-		if ("jump","jumps")
+		if ("jump")
 			message = "<B>[src]</B> jumps!"
 			m_type = 1
 
-		if ("laugh","laughs")
+		if ("laugh")
 			message = "<B>[src]</B> laughs."
 			m_type = 2
 
-		if ("look","looks")
+		if ("look")
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -155,11 +158,11 @@
 			else
 				message = "<B>[src]</B> [message]"
 
-		if ("nod","nods")
+		if ("nod")
 			message = "<B>[src]</B> nods."
 			m_type = 1
 
-		if ("point","points")
+		if ("point")
 			if (!src.restrained())
 				var/atom/M = null
 				if (param)
@@ -173,39 +176,39 @@
 					pointed(M)
 			m_type = 1
 
-		if ("scream","screams")
+		if ("scream")
 			message = "<B>[src]</B> screams!"
 			m_type = 2
 
-		if ("shake","shakes")
+		if ("shake")
 			message = "<B>[src]</B> shakes its head."
 			m_type = 1
 
-		if ("sigh","sighs")
+		if ("sigh")
 			message = "<B>[src]</B> sighs."
 			m_type = 2
 
-		if ("sit","sits")
+		if ("sit")
 			message = "<B>[src]</B> sits down."
 			m_type = 1
 
-		if ("smile","smiles")
+		if ("smile")
 			message = "<B>[src]</B> smiles."
 			m_type = 1
 
-		if ("sneeze","sneezes")
+		if ("sneeze")
 			message = "<B>[src]</B> sneezes."
 			m_type = 2
 
-		if ("sniff","sniffs")
+		if ("sniff")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
 
-		if ("snore","snores")
+		if ("snore")
 			message = "<B>[src]</B> snores."
 			m_type = 2
 
-		if ("stare","stares")
+		if ("stare")
 			var/M = null
 			if (param)
 				for (var/mob/A in view(1, src))
@@ -219,19 +222,19 @@
 			else
 				message = "<B>[src]</B> stares."
 
-		if ("sulk","sulks")
+		if ("sulk")
 			message = "<B>[src]</B> sulks down sadly."
 			m_type = 1
 
-		if ("sway","sways")
+		if ("sway")
 			message = "<B>[src]</B> sways around dizzily."
 			m_type = 1
 
-		if ("tremble","trembles")
+		if ("tremble")
 			message = "<B>[src]</B> trembles in fear!"
 			m_type = 1
 
-		if ("twitch","twitches")
+		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
 
@@ -239,15 +242,15 @@
 			message = "<B>[src]</B> twitches."
 			m_type = 1
 
-		if ("wave","waves")
+		if ("wave")
 			message = "<B>[src]</B> waves."
 			m_type = 1
 
-		if ("whimper","whimpers")
+		if ("whimper")
 			message = "<B>[src]</B> whimpers."
 			m_type = 2
 
-		if ("yawn","yawns")
+		if ("yawn")
 			message = "<B>[src]</B> yawns."
 			m_type = 2
 

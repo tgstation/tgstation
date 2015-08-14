@@ -6,54 +6,56 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
 	var/muzzled = is_muzzled()
 	var/m_type = 1
 	var/message
 
 	switch(act) //Alphabetical please
-		if ("deathgasp","deathgasps")
+		if ("deathgasp")
 			message = "<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw..."
 			m_type = 2
 
-		if ("gnarl","gnarls")
+		if ("gnarl")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> gnarls and shows its teeth.."
 				m_type = 2
 
-		if ("hiss","hisses")
+		if ("hiss")
 			if(!muzzled)
 				message = "<span class='name'>[src]</span> hisses."
 				m_type = 2
 
-		if ("moan","moans")
+		if ("moan")
 			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
 
-		if ("roar","roars")
+		if ("roar")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> roars."
 				m_type = 2
 
-		if ("roll","rolls")
+		if ("roll")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
 
-		if ("scratch","scratches")
+		if ("scratch")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
 
-		if ("screech","screeches")
+		if ("scretch")
 			if (!muzzled)
-				message = "<span class='name'>[src]</span> screeches."
+				message = "<span class='name'>[src]</span> scretches."
 				m_type = 2
 
-		if ("shiver","shivers")
+		if ("shiver")
 			message = "<span class='name'>[src]</span> shivers."
 			m_type = 2
 
-		if ("sign","signs")
+		if ("sign")
 			if (!src.restrained())
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
@@ -63,7 +65,7 @@
 			m_type = 1
 
 		if ("help") //This is an exception
-			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, screech, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, scretch, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)

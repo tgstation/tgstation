@@ -390,7 +390,6 @@ var/datum/subsystem/job/SSjob
 		else //We ran out of spare locker spawns!
 			break
 
-
 /datum/subsystem/job/proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
 	if(!config.load_jobs_from_txt)
 		return 0

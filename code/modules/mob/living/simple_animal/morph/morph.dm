@@ -21,8 +21,8 @@
 	maxHealth = 150
 	health = 150
 	environment_smash = 1
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	idle_vision_range = 1 // Only attack when target is close
@@ -49,7 +49,7 @@
 	return 1
 
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)
-	if(morph_time <= world.time && !stat)
+	if(morph_time <= world.time)
 		if(A == src)
 			restore()
 			return
@@ -127,7 +127,7 @@
 /mob/living/simple_animal/hostile/morph/LoseAggro()
 	vision_range = idle_vision_range
 
-/mob/living/simple_animal/hostile/morph/AIShouldSleep(var/list/possible_targets)
+/mob/living/simple_animal/hostile/morph/AIShouldSleep()
 	. = ..()
 	if(.)
 		var/list/things = list()
@@ -159,9 +159,6 @@
 				I.loc = src
 			return
 	target.attack_animal(src)
-
-/mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
-	return
 
 //Spawn Event
 
@@ -197,13 +194,7 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
-	var/info = {"<B>You are a Morph, a shapeshifting alien creature.</B>
- You can assume the shape of anything in sight by Shift-Clicking it.
- You can only transform every 5 seconds.
- To return to your basic form Shift-Click on yourself.
- Base form is slow but strong, you're much weaker and faster when disguised.
- You can eat items and corpses by clicking on them,eating corpses will heal you."}
-	S << info
+	S << "<B>You are a Morph, a shapeshifting alien creature.</B><br>You can assume the shape of anything in sight by Shift-Clicking it.<br> You can only transform every 5 seconds.<br> To return to your basic form Shift-Click on yourself."
 	message_admins("[key_of_morph] has been made into Morph by an event.")
 	log_game("[key_of_morph] was spawned as a Morph by an event.")
 	return 1

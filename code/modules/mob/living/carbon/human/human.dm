@@ -22,12 +22,9 @@
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
 	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
-	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/internal/brain
-
-	for(var/obj/item/organ/internal/I in internal_organs)
-		I.Insert(src)
+	internal_organs += new /obj/item/organ/appendix
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
 
 	// for spawned humans; overwritten by other code
 	ready_dna(src)
@@ -789,16 +786,3 @@
 		..(I, cuff_break = 1)
 	else
 		..()
-
-/mob/living/carbon/human/clean_blood()
-	var/mob/living/carbon/human/H = src
-	if(H.gloves)
-		if(H.gloves.clean_blood())
-			H.update_inv_gloves()
-	else
-		..() // Clear the Blood_DNA list
-		if(H.bloody_hands)
-			H.bloody_hands = 0
-			H.bloody_hands_mob = null
-			H.update_inv_gloves()
-	update_icons()	//apply the now updated overlays to the mob

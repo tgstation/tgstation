@@ -25,12 +25,10 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		var/amt = Clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
-		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
+		cell.use(1)
 	else
 		uneq_all()
 		stat = UNCONSCIOUS
-		update_headlamp(1)
 
 
 /mob/living/silicon/robot/handle_regular_status_updates()
@@ -61,7 +59,6 @@
 
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS
-			update_headlamp()
 
 		return 1
 
@@ -192,9 +189,9 @@
 	return
 
 /mob/living/silicon/robot/update_fire()
-	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+	overlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 	if(on_fire)
-		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+		overlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them

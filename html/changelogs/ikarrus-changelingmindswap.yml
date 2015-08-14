@@ -1,0 +1,6 @@
+author: Ikarrus
+
+delete-after: True
+
+changes: 
+  - rscadd: "Changelings now have the ability to swap forms with another being."

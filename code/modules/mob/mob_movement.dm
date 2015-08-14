@@ -1,16 +1,18 @@
 /mob/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0)
+	if(height==0) return 1
+
+	if(istype(mover) && mover.checkpass(PASSMOB))
 		return 1
-	if(istype(mover, /obj/item/projectile) || mover.throwing)
+	if(istype(mover, /obj/item/projectile))
 		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
-		return 1
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
 			return 1
-	return (!mover.density || !density || lying)
-
+		return (!mover.density || !density || lying)
+	else
+		return (!mover.density || !density || lying)
+	return
 
 
 /client/Northeast()

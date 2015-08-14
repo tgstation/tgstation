@@ -54,5 +54,6 @@
 	item_state = "guitar"
 	force = 10
 	attack_verb = list("played metal on", "serenaded", "crashed", "smashed")
-	hitsound = 'sound/weapons/stringsmash.ogg'
+	hitsound = "swing_hit"
 	instrumentId = "guitar"
+

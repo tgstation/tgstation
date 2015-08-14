@@ -138,10 +138,6 @@
 		W.RemoveLattice()
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
-
-	if(!can_have_cabling())
-		for(var/obj/structure/cable/C in contents)
-			C.Deconstruct()
 	return W
 
 //////Assimilate Air//////
@@ -268,7 +264,7 @@
 	return(2)
 
 /turf/proc/can_have_cabling()
-	return 1
+	return !density
 
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact

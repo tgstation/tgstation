@@ -2,12 +2,11 @@
 	name = "eye surgery"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("eyes")
-	requires_organic_bodypart = 0
+	location = "eyes"
+
 
 //fix eyes
 /datum/surgery_step/fix_eyes
-	name = "fix eyes"
 	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/screwdriver = 45, /obj/item/weapon/pen = 25)
 	time = 64
 
@@ -23,7 +22,7 @@
 	return 1
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/internal/brain))
+	if(target.getorgan(/obj/item/organ/brain))
 		user.visible_message("<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>", "<span class='warning'>You accidentally stab [target] right in the brain!</span>")
 		target.adjustBrainLoss(100)
 	else

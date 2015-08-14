@@ -6,81 +6,83 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+		act = copytext(act,1,length(act))
 	var/muzzled = is_muzzled()
 	var/m_type = 1
 	var/message
 
 	switch(act) //Alphabetically sorted please.
-		if ("burp","burps")
+		if ("burp")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> burps."
 				m_type = 2
-		if ("choke","chokes")
+		if ("choke")
 			message = "<span class='name'>[src]</span> chokes."
 			m_type = 2
-		if ("collapse","collapses")
+		if ("collapse")
 			Paralyse(2)
 			message = "<span class='name'>[src]</span> collapses!"
 			m_type = 2
-		if ("dance","dances")
+		if ("dance")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> dances around happily."
 				m_type = 1
-		if ("drool","drools")
+		if ("drool")
 			message = "<span class='name'>[src]</span> drools."
 			m_type = 1
-		if ("gasp","gasps")
+		if ("gasp")
 			message = "<span class='name'>[src]</span> gasps."
 			m_type = 2
-		if ("gnarl","gnarls")
+		if ("gnarl")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> gnarls and shows its teeth.."
 				m_type = 2
-		if ("hiss","hisses")
+		if ("hiss")
 			message = "<span class='name'>[src]</span> hisses softly."
 			m_type = 1
-		if ("jump","jumps")
+		if ("jump")
 			message = "<span class='name'>[src]</span> jumps!"
 			m_type = 1
-		if ("moan","moans")
+		if ("moan")
 			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
-		if ("nod","nods")
+		if ("nod")
 			message = "<span class='name'>[src]</span> nods its head."
 			m_type = 1
-		if ("roar","roars")
-			if (!muzzled)
-				message = "<span class='name'>[src]</span> softly roars."
-				m_type = 2
-		if ("roll","rolls")
+//		if ("roar")
+//			if (!muzzled)
+//				message = "<span class='name'>[src]</span> roars." Commenting out since larva shouldn't roar /N
+//				m_type = 2
+		if ("roll")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
-		if ("scratch","scratches")
+		if ("scratch")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
-		if ("screech","screeches") //This orignally was called scretch, changing it. -Sum99
+		if ("scretch")
 			if (!muzzled)
-				message = "<span class='name'>[src]</span> screeches."
+				message = "<span class='name'>[src]</span> scretches."
 				m_type = 2
-		if ("shake","shakes")
+		if ("shake")
 			message = "<span class='name'>[src]</span> shakes its head."
 			m_type = 1
-		if ("shiver","shivers")
+		if ("shiver")
 			message = "<span class='name'>[src]</span> shivers."
 			m_type = 2
-		if ("sign","signs")
+		if ("sign")
 			if (!src.restrained())
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
-		if ("snore","snores")
+		if ("snore")
 			message = "<B>[src]</B> snores."
 			m_type = 2
-		if ("sulk","sulks")
+		if ("sulk")
 			message = "<span class='name'>[src]</span> sulks down sadly."
 			m_type = 1
-		if ("sway","sways")
+		if ("sway")
 			message = "<span class='name'>[src]</span> sways around dizzily."
 			m_type = 1
 		if ("tail")
@@ -89,13 +91,13 @@
 		if ("twitch")
 			message = "<span class='name'>[src]</span> twitches violently."
 			m_type = 1
-		if ("whimper","whimpers")
+		if ("whimper")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> whimpers."
 				m_type = 2
 
 		if ("help") //"The exception"
-			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\n\nburp, choke, collapse, dance, drool, gasp, gnarl, hiss, jump, moan, nod, roll, roar, scratch, screech, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
+			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\n\nburp, choke, collapse, dance, drool, gasp, gnarl, hiss, jump, moan, nod, roll, scratch,\nscretch, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
 
 		else
 			src << "<span class='info'>Unusable emote '[act]'. Say *help for a list.</span>"

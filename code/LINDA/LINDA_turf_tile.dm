@@ -51,8 +51,6 @@
 
 	var/temperature_archived //USED ONLY FOR SOLIDS
 
-	var/atmos_overlay_type = "" //current active overlay
-
 /turf/simulated/New()
 	..()
 
@@ -78,7 +76,8 @@
 
 		air.merge(giver)
 
-		update_visuals()
+		if(air.check_tile_graphic())
+			update_visuals(air)
 
 		return 1
 
@@ -105,7 +104,8 @@
 
 		removed = air.remove(amount)
 
-		update_visuals()
+		if(air.check_tile_graphic())
+			update_visuals(air)
 
 		return removed
 
@@ -207,7 +207,8 @@
 
 	air.react()
 
-	update_visuals()
+	if(air.check_tile_graphic())
+		update_visuals(air)
 
 	if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		hotspot_expose(air.temperature, CELL_VOLUME)
@@ -230,35 +231,14 @@
 	temperature_archived = temperature
 	archived_cycle = SSair.times_fired
 
-/turf/simulated/proc/update_visuals()
-	var/new_overlay_type = tile_graphic()
-	if (new_overlay_type == atmos_overlay_type)
-		return
-	var/atmos_overlay = get_atmos_overlay_by_name(atmos_overlay_type)
-	if (atmos_overlay)
-		overlays -= atmos_overlay
-
-	atmos_overlay = get_atmos_overlay_by_name(new_overlay_type)
-	if (atmos_overlay)
-		overlays += atmos_overlay
-	atmos_overlay_type = new_overlay_type
-
-/turf/simulated/proc/get_atmos_overlay_by_name(var/name)
-	switch(name)
+/turf/simulated/proc/update_visuals(datum/gas_mixture/model)
+	overlays -= SSair.plasma_overlay
+	overlays -= SSair.sleeptoxin_overlay
+	switch(model.graphic)
 		if("plasma")
-			return SSair.plasma_overlay
+			overlays += SSair.plasma_overlay
 		if("sleeping_agent")
-			return SSair.sleeptoxin_overlay
-	return null
-
-/turf/simulated/proc/tile_graphic()
-	if(air.toxins > MOLES_PLASMA_VISIBLE)
-		return "plasma"
-
-	var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
-	if(sleeping_agent && (sleeping_agent.moles > 1))
-		return "sleeping_agent"
-	return null
+			overlays += SSair.sleeptoxin_overlay
 
 /turf/simulated/proc/share_air(turf/simulated/T)
 	if(T.current_cycle < current_cycle)
@@ -356,7 +336,8 @@
 				G.moles = S.moles/turf_list.len
 				T.air.trace_gases += G
 
-		T.update_visuals()
+		if(T.air.check_tile_graphic())
+			T.update_visuals(T.air)
 
 
 /datum/excited_group/proc/dismantle()

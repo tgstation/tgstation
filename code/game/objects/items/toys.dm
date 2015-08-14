@@ -44,40 +44,41 @@
 
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(!proximity) return
-	if (istype(A, /obj/structure/reagent_dispensers))
-		var/obj/structure/reagent_dispensers/RD = A
-		if(RD.reagents.total_volume <= 0)
-			user << "<span class='warning'>[RD] is empty.</span>"
-		else if(reagents.total_volume >= 10)
-			user << "<span class='warning'>[src] is full.</span>"
-		else
-			A.reagents.trans_to(src, 10)
-			user << "<span class='notice'>You fill the balloon with the contents of [A].</span>"
-			desc = "A translucent balloon with some form of liquid sloshing around in it."
-			update_icon()
+	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+		A.reagents.trans_to(src, 10)
+		user << "<span class='notice'>You fill the balloon with the contents of [A].</span>"
+		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
+		src.update_icon()
+	return
 
 /obj/item/toy/balloon/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass))
 		if(O.reagents)
-			if(O.reagents.total_volume <= 0)
-				user << "<span class='warning'>[O] is empty.</span>"
-			else if(reagents.total_volume >= 10)
-				user << "<span class='warning'>[src] is full.</span>"
-			else
-				desc = "A translucent balloon with some form of liquid sloshing around in it."
-				user << "<span class='notice'>You fill the balloon with the contents of [O].</span>"
-				O.reagents.trans_to(src, 10)
-				update_icon()
+			if(O.reagents.total_volume < 1)
+				user << "<span class='notice'>The [O] is empty.</span>"
+			else if(O.reagents.total_volume >= 1)
+				if(O.reagents.has_reagent("facid", 1))
+					user << "<span class='warning'>The acid chews through the balloon!</span>"
+					O.reagents.reaction(user)
+					qdel(src)
+				else
+					src.desc = "A translucent balloon with some form of liquid sloshing around in it."
+					user << "<span class='notice'>You fill the balloon with the contents of [O].</span>"
+					O.reagents.trans_to(src, 10)
+	src.update_icon()
+	return
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
-	if(!..()) //was it caught by a mob?
-		if(reagents.total_volume >= 1)
-			visible_message("<span class='danger'>[src] bursts!</span>","<span class='italics'>You hear a pop and a splash.</span>")
-			reagents.reaction(get_turf(hit_atom))
-			for(var/atom/A in get_turf(hit_atom))
-				reagents.reaction(A)
-			icon_state = "burst"
-			qdel(src)
+	if(src.reagents.total_volume >= 1)
+		src.visible_message("<span class='danger'>\The [src] bursts!</span>","<span class='italics'>You hear a pop and a splash.</span>")
+		src.reagents.reaction(get_turf(hit_atom))
+		for(var/atom/A in get_turf(hit_atom))
+			src.reagents.reaction(A)
+		src.icon_state = "burst"
+		spawn(5)
+			if(src)
+				qdel(src)
+	return
 
 /obj/item/toy/balloon/update_icon()
 	if(src.reagents.total_volume >= 1)
@@ -513,23 +514,19 @@
 	icon_state = "snappop"
 	w_class = 1
 
-/obj/item/toy/snappop/proc/pop_burst()
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	new /obj/effect/decal/cleanable/ash(loc)
-	visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
-	playsound(src, 'sound/effects/snap.ogg', 50, 1)
-	qdel(src)
-
 /obj/item/toy/snappop/fire_act()
-	pop_burst()
+	throw_impact()
 	return
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
-	if(!..())
-		pop_burst()
-
+	..()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	new /obj/effect/decal/cleanable/ash(src.loc)
+	src.visible_message("<span class='suicide'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
+	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	qdel(src)
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
 	if((ishuman(H))) //i guess carp and shit shouldn't set them off
@@ -1103,12 +1100,12 @@
 	w_class = 2.0
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
-	if(!..())
-		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
-		for(var/mob/M in range(10, src))
-			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
-				shake_camera(M, 3, 1)
-		qdel(src)
+	..()
+	playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
+	for(var/mob/M in range(10, src))
+		if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+			shake_camera(M, 3, 1)
+	qdel(src)
 
 /*
  * Carp plushie
@@ -1132,7 +1129,6 @@
 // Attack self
 /obj/item/toy/carpplushie/attack_self(mob/user)
 	playsound(src.loc, bitesound, 20, 1)
-	user << "<span class='notice'>You pet [src]. D'awww.</span>"
 	return ..()
 
 /*

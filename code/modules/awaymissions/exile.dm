@@ -1,10 +1,18 @@
 //Exile implants will allow you to use the station gate, but not return home.
 //This will allow security to exile badguys/for badguys to exile their kill targets
 
+/obj/item/weapon/implanter/exile
+	name = "implanter-exile"
+
+/obj/item/weapon/implanter/exile/New()
+	imp = new /obj/item/weapon/implant/exile( src )
+	..()
+	update_icon()
+
+
 /obj/item/weapon/implant/exile
 	name = "exile implant"
 	desc = "Prevents you from returning from away missions"
-	origin_tech = "materials=2;biotech=3;magnets=2;bluespace=3"
 	activated = 0
 
 /obj/item/weapon/implant/exile/get_data()
@@ -14,16 +22,11 @@
 	return dat
 
 
-/obj/item/weapon/implanter/exile
-	name = "implanter (exile)"
-
-/obj/item/weapon/implanter/exile/New()
-	imp = new /obj/item/weapon/implant/exile( src )
-	..()
-
 /obj/item/weapon/implantcase/exile
-	name = "implant case - 'Exile'"
-	desc = "A glass case containing an exile implant."
+	name = "glass case- 'Exile'"
+	desc = "A case containing an exile implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/exile/New()
 	imp = new /obj/item/weapon/implant/exile(src)

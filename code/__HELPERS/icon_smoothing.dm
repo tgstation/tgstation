@@ -26,17 +26,14 @@
 	var/adjacencies = 0
 
 	if(A.can_be_unanchored)
-		var/atom/movable/AM = A
-		if(!AM.anchored)
+		var/atom/movable/T = A
+		if(!T.anchored)
 			return 0
 
 		for(var/direction in alldirs)
-			AM = find_type_in_direction(A, direction)
-			if(istype(AM))
+			var/atom/movable/AM = find_type_in_direction(A, direction)
+			if(AM)
 				if(AM.anchored)
-					adjacencies |= transform_dir(direction)
-			else
-				if(AM)
 					adjacencies |= transform_dir(direction)
 	else
 		for(var/direction in alldirs)
@@ -45,11 +42,10 @@
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
-	spawn(0) //don't remove this, otherwise smoothing breaks
+	spawn(2)
 		if(A && A.smooth)
-			var/adjacencies = calculate_adjacencies(A)
-
 			clear_overlays(A)
+			var/adjacencies = calculate_adjacencies(A)
 
 			A.top_left_corner = make_nw_corner(adjacencies)
 			A.top_right_corner = make_ne_corner(adjacencies)
@@ -146,23 +142,35 @@
 	else if(direction & WEST)
 		x_offset -= range
 
-	var/turf/target_turf = locate(source.x + x_offset, source.y + y_offset, source.z)
-	if(source.canSmoothWith)
-		var/atom/A
-		for(var/a_type in source.canSmoothWith)
+	var/list/siblings = source.canSmoothWith
+	if(istype(source, /turf))
+		if(siblings)
+			for(var/a_type in siblings)
+				if(ispath(a_type, /obj))
+					var/atom/A = locate(a_type) in locate(source.x + x_offset, source.y + y_offset, source.z)
+					if(A && A.type == a_type)
+						return A
+				else
+					var/turf/T = locate(source.x + x_offset, source.y + y_offset, source.z)
+					if(T.type == a_type)
+						return T
+			return null
+		var/turf/T = locate(source.x + x_offset, source.y + y_offset, source.z)
+		return T.type == source.type ? T : null
+
+	if(siblings)
+		for(var/a_type in siblings)
 			if(ispath(a_type, /turf))
-				if(a_type == target_turf.type)
-					return target_turf
+				var/turf/T = locate(source.x + x_offset, source.y + y_offset, source.z)
+				if(T.type == a_type)
+					return T
 			else
-				A = locate(a_type) in target_turf
+				var/atom/A = locate(a_type) in locate(source.x + x_offset, source.y + y_offset, source.z)
 				if(A && A.type == a_type)
 					return A
 		return null
-	else
-		if(isturf(source))
-			return source.type == target_turf.type ? target_turf : null
-		var/atom/A = locate(source.type) in target_turf
-		return A && A.type == source.type ? A : null
+	var/atom/A = locate(source.type) in locate(source.x + x_offset, source.y + y_offset, source.z)
+	return A && A.type == source.type ? A : null
 
 /proc/clear_overlays(atom/A)
 	A.overlays -= A.top_left_corner

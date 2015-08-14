@@ -153,7 +153,7 @@
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0)
 	var/damage = intensity - check_eye_prot()
 	if(..()) // we've been flashed
 		if(weakeyes)
@@ -191,8 +191,30 @@
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
 
+/mob/living/carbon/proc/eyecheck()
+	var/obj/item/cybernetic_implant/eyes/EFP = locate() in src
+	if(EFP)
+		return EFP.flash_protect
+	return 0
+
 /mob/living/carbon/proc/tintcheck()
 	return 0
+
+/mob/living/carbon/clean_blood()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.gloves)
+			if(H.gloves.clean_blood())
+				H.update_inv_gloves(0)
+		else
+			..() // Clear the Blood_DNA list
+			if(H.bloody_hands)
+				H.bloody_hands = 0
+				H.bloody_hands_mob = null
+				H.update_inv_gloves(0)
+	update_icons()	//apply the now updated overlays to the mob
+
+
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -433,13 +455,13 @@ var/const/GALOSHES_DONT_HELP = 8
 				handcuffed = null
 				if(buckled && buckled.buckle_requires_restraints)
 					buckled.unbuckle_mob()
-				update_inv_handcuffed()
+				update_inv_handcuffed(0)
 				return
 			if(legcuffed)
 				legcuffed.loc = loc
 				legcuffed.dropped()
 				legcuffed = null
-				update_inv_legcuffed()
+				update_inv_legcuffed(0)
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
@@ -456,11 +478,11 @@ var/const/GALOSHES_DONT_HELP = 8
 
 			if(handcuffed)
 				handcuffed = null
-				update_inv_handcuffed()
+				update_inv_handcuffed(0)
 				return
 			else
 				legcuffed = null
-				update_inv_legcuffed()
+				update_inv_legcuffed(0)
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
@@ -470,7 +492,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob()
-		update_inv_handcuffed()
+		update_inv_handcuffed(0)
 		if (client)
 			client.screen -= W
 		if (W)
@@ -481,7 +503,7 @@ var/const/GALOSHES_DONT_HELP = 8
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
-		update_inv_legcuffed()
+		update_inv_legcuffed(0)
 		if (client)
 			client.screen -= W
 		if (W)
@@ -531,46 +553,3 @@ var/const/GALOSHES_DONT_HELP = 8
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
-
-/mob/living/carbon/emp_act(severity)
-	for(var/obj/item/organ/internal/O in internal_organs)
-		O.emp_act(severity)
-	..()
-
-/mob/living/carbon/check_eye_prot()
-	var/number = ..()
-	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
-		number += EFP.flash_protect
-	return number
-
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		if(!A.action)
-			A.action = new/datum/action/spell_action/alien
-			A.action.target = A
-			A.action.name = A.name
-			A.action.button_icon = A.action_icon
-			A.action.button_icon_state = A.action_icon_state
-			A.action.background_icon_state = A.action_background_icon_state
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
-
-/mob/living/carbon/Stat()
-	..()
-	if(statpanel("Status"))
-		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
-		if(vessel)
-			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
-	add_abilities_to_panel()
