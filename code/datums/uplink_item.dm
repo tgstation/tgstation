@@ -518,7 +518,7 @@ var/list/uplink_items = list()
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt made for carrying a broad variety of weapons, ammunition and explosives"
 	item = /obj/item/weapon/storage/belt/military
-	cost = 5
+	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
 	
 /datum/uplink_item/device_tools/medkit
