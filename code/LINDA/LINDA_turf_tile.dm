@@ -230,18 +230,35 @@ turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduc
 	temperature_archived = temperature
 	archived_cycle = SSair.times_fired
 
-/turf/simulated/proc/update_visuals(datum/gas_mixture/model)
-	model.check_tile_graphic()
-	if (atmos_overlay_type == model.graphic)
+/turf/simulated/proc/update_visuals()
+	var/new_overlay_type = tile_graphic()
+	if (new_overlay_type == atmos_overlay_type)
 		return
-	overlays -= SSair.plasma_overlay
-	overlays -= SSair.sleeptoxin_overlay
-	switch(model.graphic)
+	var/atmos_overlay = get_atmos_overlay_by_name(atmos_overlay_type)
+	if (atmos_overlay)
+		overlays -= atmos_overlay
+
+	atmos_overlay = get_atmos_overlay_by_name(new_overlay_type)
+	if (atmos_overlay)
+		overlays += atmos_overlay
+	atmos_overlay_type = new_overlay_type
+
+/turf/simulated/proc/get_atmos_overlay_by_name(var/name)
+	switch(name)
 		if("plasma")
-			overlays += SSair.plasma_overlay
+			return SSair.plasma_overlay
 		if("sleeping_agent")
-			overlays += SSair.sleeptoxin_overlay
-	atmos_overlay_type = model.graphic
+			return SSair.sleeptoxin_overlay
+	return null
+
+/turf/simulated/proc/tile_graphic()
+	if(air.toxins > MOLES_PLASMA_VISIBLE)
+		return "plasma"
+
+	var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
+	if(sleeping_agent && (sleeping_agent.moles > 1))
+		return "sleeping_agent"
+	return null
 
 /turf/simulated/proc/share_air(var/turf/simulated/T)
 	if(T.current_cycle < current_cycle)

@@ -3,12 +3,12 @@
 ////////////
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging
-	icon = 'icons/obj/pipes/heat.dmi'
+	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	icon_state = "intact"
 	level = 2
 	var/initialize_directions_he
-	minimum_temperature_difference = 20
-	thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
+	var/minimum_temperature_difference = 20
+	var/thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 	color = "#404040"
 	buckle_lying = 1
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
@@ -56,8 +56,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process_atmos()
 	var/environment_temperature = 0
 	var/datum/gas_mixture/pipe_air = return_air()
-	if(!pipe_air)
-		return
 
 	if(istype(loc, /turf/simulated))
 		if(loc:blocks_air)
@@ -79,15 +77,11 @@
 		pipe_air.temperature = avg_temp
 		buckled_mob.bodytemperature = avg_temp
 
-
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process()
 	var/datum/gas_mixture/pipe_air = return_air()
-	if(!pipe_air)
-		return
 	//Burn any mobs buckled to ourselves based on our temperature
 	if(buckled_mob)
 		var/heat_limit = 1000
-
 		if(pipe_air.temperature > heat_limit + 1)
 			buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")
 
@@ -112,12 +106,14 @@
 //HE Junctions
 ////////////////
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
-	icon = 'icons/obj/pipes/junction.dmi'
+	icon = 'icons/obj/atmospherics/pipes/junction.dmi'
 	icon_state = "intact"
 	level = 2
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/normalize_dir()
+	return
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
@@ -133,9 +129,6 @@
 		if(WEST)
 			initialize_directions = EAST
 			initialize_directions_he = WEST
-
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/normalize_dir()
-	return //fuck you
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/update_icon()
 	if(node1&&node2)

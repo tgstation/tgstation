@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/cryo_cell
+/obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cell-off"
@@ -12,12 +12,11 @@
 	var/next_trans = 0
 	var/current_heat_capacity = 50
 	state_open = 0
-	icon_open = "cell-o"
-	icon_closed = "cell-off"
 	var/efficiency
 	machine_flags = CROWPRY | WRENCHROTATE | CROWDESTROY | REPLACEPARTS
 
-/obj/machinery/atmospherics/unary/cryo_cell/New()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
 	component_parts = list()
@@ -28,49 +27,51 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
 
-/obj/machinery/atmospherics/unary/cryo_cell/construction()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir,dir)
 
-/obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
+/obj/machinery/atmospherics/components/unary/cryo_cell/RefreshParts()
 	var/C
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
 	current_heat_capacity = 50 * C
 	efficiency = C
 
-/obj/machinery/atmospherics/unary/cryo_cell/Destroy()
+/obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	var/turf/T = loc
 	T.contents += contents
+
 	if(beaker)
 		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
 	beaker = null
 	..()
-
-/obj/machinery/atmospherics/unary/cryo_cell/process_atmos()
+/obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
+	var/datum/gas_mixture/air_contents = airs[AIR1]
+
 	if(air_contents)
 		temperature_archived = air_contents.temperature
 		heat_gas_contents()
 	if(abs(temperature_archived-air_contents.temperature) > 1)
-		parent.update = 1
+		update_parents()
 
-/obj/machinery/atmospherics/unary/cryo_cell/process()
+/obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
 	if(occupant)
 		if(occupant.health >= 100)
 			on = 0
 			open_machine()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	if(!node || !is_operational())
+	if(!nodes[NODE1] || !is_operational())
 		return
 
 	if(!on)
 		updateDialog()
 		return
 
-	if(air_contents)
+	if(airs[AIR1])
 		if (occupant)
 			process_occupant()
 		expel_gas()
@@ -78,23 +79,18 @@
 	updateDialog()
 	return 1
 
-/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || target.buckled || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
+/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
 		return
 	close_machine(target)
 
-/obj/machinery/atmospherics/unary/cryo_cell/allow_drop()
-	return 0
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)	open_machine()
 
-/obj/machinery/atmospherics/unary/cryo_cell/relaymove(var/mob/user)
-	..()
-	open_machine()
-
-/obj/machinery/atmospherics/unary/cryo_cell/container_resist()
+/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist()
 	open_machine()
 	return
 
-/obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
+/obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
 	set name = "Eject Cryo Cell"
 	set desc = "Begin the release sequence inside the cryo tube."
 	set category = "Object"
@@ -109,10 +105,12 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
-		if(!usr.stat)
-			open_machine()
+		if(!istype(usr, /mob/living) || usr.stat)
+			usr << "<span class='warning'>You can't do that!</span>"
+			return
+		open_machine()
 
-/obj/machinery/atmospherics/unary/cryo_cell/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	..()
 
 	var/list/otherstuff = contents - beaker
@@ -123,7 +121,7 @@
 	else
 		user << "Seems empty."
 
-/obj/machinery/atmospherics/unary/cryo_cell/attack_hand(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -140,19 +138,22 @@
   *
   * @return nothing
   */
-/obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(user == occupant || user.stat || panel_open)
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "cryo.tmpl", "Cryo Cell Control System", 520, 410, 1)
+	//user.set_machine(src)
 
-/obj/machinery/atmospherics/unary/cryo_cell/get_ui_data()
+/obj/machinery/atmospherics/components/unary/cryo_cell/get_ui_data()
 	// this is the data which will be sent to the ui
-	var/data[0]
+	var/datum/gas_mixture/air_contents = airs[AIR1]
+
+	var/data = list()
 	data["isOperating"] = on
 	data["hasOccupant"] = occupant ? 1 : 0
 
-	var/occupantData[0]
+	var/occupantData = list()
 	if (!occupant)
 		occupantData["name"] = null
 		occupantData["stat"] = null
@@ -164,7 +165,6 @@
 		occupantData["toxLoss"] = null
 		occupantData["fireLoss"] = null
 		occupantData["bodyTemperature"] = null
-		occupantData["bodyTemperatureStatus"] = null
 	else
 		occupantData["name"] = occupant.name
 		occupantData["stat"] = occupant.stat
@@ -181,7 +181,7 @@
 			occupantData["bodyTemperatureStatus"] = "bad"
 		else if(occupant.bodytemperature > 170) //Temperature cryox/clonex kicks in
 			occupantData["bodyTemperatureStatus"] = "average"
-	data["occupant"] = occupantData;
+	data["occupant"] = occupantData
 
 	data["isOpen"] = state_open
 	data["cellTemperature"] = round(air_contents.temperature)
@@ -197,12 +197,9 @@
 		for(var/datum/reagent/R in beaker:reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
-
 	return data
 
-	//user.set_machine(src)
-
-/obj/machinery/atmospherics/unary/cryo_cell/Topic(href, href_list)
+/obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
 	if(usr == occupant || panel_open)
 		return 0 // don't update UIs attached to this object
 
@@ -233,27 +230,37 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
-/obj/machinery/atmospherics/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(isrobot(user) && !ismommi(user))
+		if(isrobot(user))
 			return
 		if(beaker)
-			user << "<span class='notice'>A beaker is already loaded into [src].</span>"
+			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			return
+		if(!user.drop_item())
 			return
 
 		beaker = I
-		user.drop_item()
 		I.loc = src
-		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
+		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
 
 	if(!(on || occupant || state_open))
-		if(default_deconstruction_screwdriver(user, icon_open, icon_closed, I))
+		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
 			return
 
-	..()
+	if(default_change_direction_wrench(user, I))
+		return
 
-/obj/machinery/atmospherics/unary/cryo_cell/open_machine()
+	if(exchange_parts(user, I))
+		return
+
+	if(default_pry_open(I))
+		return
+
+	default_deconstruction_crowbar(I)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = 0
 		layer = 3
@@ -263,13 +270,13 @@
 		if(beaker)
 			beaker.loc = src
 
-/obj/machinery/atmospherics/unary/cryo_cell/close_machine(mob/living/carbon/M)
+/obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/M)
 	if(state_open && !panel_open)
 		layer = 4
 		..(M)
 		return occupant
 
-/obj/machinery/atmospherics/unary/cryo_cell/update_icon()
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	if(panel_open)
 		icon_state = "cell-o"
 		return
@@ -284,11 +291,12 @@
 	else
 		icon_state = "cell-off"
 
-/obj/machinery/atmospherics/unary/cryo_cell/power_change()
+/obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/process_occupant()
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 	if(air_contents.total_moles() < 10)
 		return
 	if(occupant)
@@ -305,7 +313,10 @@
 		next_trans = 0
 
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/heat_gas_contents()
+	var/datum/gas_mixture/air_contents = airs[AIR1]
+
 	if(air_contents.total_moles() < 1)
 		return
 	var/air_heat_capacity = air_contents.heat_capacity()
@@ -314,8 +325,9 @@
 		var/combined_energy = T20C * current_heat_capacity + air_heat_capacity * air_contents.temperature
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/expel_gas()
+	var/datum/gas_mixture/air_contents = airs[AIR1]
 
-/obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
 	if(air_contents.total_moles() < 1)
 		return
 	var/datum/gas_mixture/expel_gas = new

@@ -4,8 +4,7 @@
 	layer = 2.4 //under wires with their 2.44
 	use_power = 0
 	can_unwrench = 1
-	var/alert_pressure = 80*ONE_ATMOSPHERE
-		//minimum pressure before check_pressure(...) should be called
+	var/datum/pipeline/parent = null
 
 	//Buckling
 	can_buckle = 1
@@ -27,8 +26,6 @@
 		air_update_turf()
 
 /obj/machinery/atmospherics/pipe/return_air()
-	if(!parent)
-		return
 	return parent.air
 
 /obj/machinery/atmospherics/pipe/build_network()
@@ -45,6 +42,9 @@
 		return
 
 	return ..()
+
+/obj/machinery/atmospherics/pipe/returnPipenet()
+	return parent
 
 /obj/machinery/atmospherics/pipe/setPipenet(datum/pipeline/P)
 	parent = P
