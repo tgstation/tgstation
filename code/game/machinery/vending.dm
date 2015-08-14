@@ -465,7 +465,37 @@
 			warning("UNKNOWN PRODUCT: PID: [pid], CAT: [category] INSIDE [type]!")
 			return null
 
+/obj/machinery/vending/proc/TurnOff(var/ticks) //Turn off for a while. 10 ticks = 1 second
+	if(stat & (BROKEN|NOPOWER))
+		return
+
+	stat |= NOPOWER
+	src.icon_state = "[initial(icon_state)]-off"
+	src.visible_message("<span class='warning'>[src] goes off!</span>")
+
+	spawn(ticks)
+
+	if(stat & (BROKEN|NOPOWER)) //Make another check just in case something goes weird
+		stat &= ~NOPOWER
+		src.icon_state = "[initial(icon_state)]"
+
 /obj/machinery/vending/attack_hand(mob/user as mob)
+	if(user.a_intent == "hurt")
+		user.delayNextAttack(10)
+		user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>",
+								"<span class='danger'>You kick the [src].</span>")
+		playsound(get_turf(src), 'sound/effects/grillehit.ogg', 50, 1) //Zth: I couldn't find a proper sound, please replace it
+		if(prob(2))
+			src.throw_item()
+		if(prob(1))
+			src.TurnOff(600) //A whole minute
+
+		src.pixel_x = rand(-3.0, 3)
+		spawn(2)
+		src.pixel_x = 0
+
+		return
+
 	if(stat & (BROKEN|NOPOWER))
 		return
 
