@@ -371,6 +371,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in slots)
+		if(istype(user.vars[slot], slot2type[slot]) && !chosen_prof.exists_list[slot]) //remove unnecessary flesh items
+			qdel(user.vars[slot])
+			continue
+
 		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !chosen_prof.exists_list[slot])
 			continue
 
