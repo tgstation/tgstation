@@ -444,3 +444,26 @@
 	desc = "Some small and translucid insect-like wings."
 	icon_state = "clownpiece"
 	item_state = "clownpiece"
+
+/obj/item/clothing/suit/clownpiece/flying
+	name = "small fairy wings"
+	desc = "Some small and translucid insect-like wings. Looks like these are the real deal!"
+	icon_state = "clownpiece-fly"
+	item_state = "clownpiece"
+
+/obj/item/clothing/suit/clownpiece/flying/equipped(var/mob/user, var/slot)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H)) return
+	if((slot == slot_wear_suit) && !user.flying)
+		user.flying = 1
+		animate(user, pixel_y = pixel_y + 10 , time = 10, loop = 1, easing = SINE_EASING)
+
+/obj/item/clothing/suit/clownpiece/flying/dropped(mob/user as mob)
+	if(user.flying)
+		user.flying = 0
+		animate(user, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+		animate(user, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+		animate(user)
+		if(user.lying)//aka. if they have just been stunned
+			user.pixel_y -= 6
+	..()
