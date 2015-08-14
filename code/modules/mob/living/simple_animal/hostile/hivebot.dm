@@ -16,6 +16,7 @@
 	attacktext = "claws"
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
+	meat_type = null
 	faction = "hivebot"
 	min_oxy = 0
 	max_oxy = 0
@@ -27,6 +28,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	speed = 4
+	size = SIZE_BIG
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"

@@ -14,6 +14,7 @@
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
 
+	meat_type = null
 	mob_bump_flag = SLIME
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
@@ -32,6 +33,9 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
+
+	size = SIZE_BIG
+	meat_type = null
 	var/colour = "grey"
 
 /mob/living/simple_animal/adultslime/New()

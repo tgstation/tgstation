@@ -669,7 +669,7 @@ About the new airlock wires panel:
 	if(!nowindow)
 		..()
 	if(!isAdminGhost(usr))
-		if(usr.stat || usr.restrained() || usr.small)
+		if(usr.stat || usr.restrained() || (usr.size < SIZE_SMALL))
 			//testing("Returning: Not adminghost, stat=[usr.stat], restrained=[usr.restrained()], small=[usr.small]")
 			return
 	add_fingerprint(usr)

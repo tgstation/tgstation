@@ -149,6 +149,8 @@
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = "syndicate"
+	meat_type = null
+
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0

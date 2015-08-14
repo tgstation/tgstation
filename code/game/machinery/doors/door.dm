@@ -66,7 +66,7 @@ var/list/all_doors = list()
 
 		M.last_bumped = world.time
 
-		if(!M.restrained() && !M.small)
+		if(!M.restrained() && (M.size > SIZE_TINY))
 			bump_open(M)
 
 		return

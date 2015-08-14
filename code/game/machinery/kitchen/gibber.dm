@@ -300,7 +300,7 @@ obj/machinery/gibber/New()
 		if(istype(victim, /mob/living/carbon/alien))
 			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat
 		if(istype(victim, /mob/living/carbon/monkey))
-			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
 		if(istype(victim, /mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = victim
 			newmeat = new SA.meat_type

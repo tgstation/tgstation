@@ -5,18 +5,18 @@
 	icon_state = "crab"
 	icon_living = "crab"
 	icon_dead = "crab_dead"
-	small = 1
 	speak_emote = list("clicks")
 	emote_hear = list("clicks")
 	emote_see = list("clacks")
 	speak_chance = 1
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
 	stop_automated_movement = 1
 	friendly = "pinches"
+	size = SIZE_TINY
+
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 

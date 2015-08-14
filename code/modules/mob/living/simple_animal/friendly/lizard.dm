@@ -4,7 +4,6 @@
 	icon_state = "lizard"
 	icon_living = "lizard"
 	icon_dead = "lizard_dead"
-	small = 1
 	speak_emote = list("hisses")
 	health = 5
 	maxHealth = 5
@@ -14,3 +13,4 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
+	size = SIZE_TINY

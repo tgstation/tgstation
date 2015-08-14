@@ -12,7 +12,6 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 4
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -98,7 +97,6 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	meat_amount = 6
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -168,7 +166,7 @@
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
-	small = 1
+	size = SIZE_TINY
 
 /mob/living/simple_animal/chick/New()
 	..()
@@ -210,7 +208,7 @@ var/global/chicken_count = 0
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
-	small = 1
+	size = SIZE_TINY
 
 /mob/living/simple_animal/chicken/New()
 	if(prob(5))

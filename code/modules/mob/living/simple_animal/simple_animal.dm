@@ -4,6 +4,10 @@
 	health = 20
 	maxHealth = 20
 
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal
+	meat_amount = 1
+	var/being_butchered = 0 //To prevent butchering an animal almost instantly
+
 	var/icon_living = ""
 	var/icon_dead = ""
 	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
@@ -16,8 +20,7 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	var/meat_amount = 0
-	var/meat_type
+
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -76,7 +79,7 @@
 
 	universal_speak = 1
 	universal_understand = 1
-	
+
 	var/life_tick = 0
 
 /mob/living/simple_animal/apply_beam_damage(var/obj/effect/beam/B)
@@ -133,7 +136,7 @@
 	if(health < 1 && stat != DEAD)
 		Die()
 		return 0
-	
+
 	life_tick++
 
 	health = min(health, maxHealth)
@@ -260,12 +263,14 @@
 		adjustBruteLoss(unsuitable_atoms_damage)
 	return 1
 
-/mob/living/simple_animal/gib(var/animation = 0)
+/mob/living/simple_animal/gib(var/animation = 0, var/meat = 1)
 	if(icon_gib)
 		flick(icon_gib, src)
-	if(meat_amount && meat_type)
+
+	if(meat && meat_amount && meat_type)
 		for(var/i = 0; i < meat_amount; i++)
-			new meat_type(src.loc)
+			drop_meat(get_turf(src))
+
 	..()
 
 
@@ -445,7 +450,7 @@
 			user << "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>"
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchen/utensil/knife/large) || istype(O, /obj/item/weapon/kitchen/utensil/knife/large/butch))
-			harvest()
+			harvest(user,O)
 	else
 		user.delayNextAttack(8)
 		if(O.force)
@@ -601,14 +606,35 @@
 		new childtype(loc)
 
 // Harvest an animal's delicious byproducts
-/mob/living/simple_animal/proc/harvest()
+/mob/living/simple_animal/proc/harvest(mob/user, obj/item/tool)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/proc/harvest() called tick#: [world.time]")
-	new meat_type (get_turf(src))
-	if(prob(95))
-		del(src)
+	if(!meat_type)	return
+	if(!user)		return
+	if(!tool)		return
+	if(being_butchered)
+		user << "<span class='notice'>[src] is already being butchered!</span>"
 		return
-	gib()
-	return
+
+	var/butchering_time = 20 * src.size //2 times size(from 1 to 5). Butchering a goliath takes 8 seconds, butchering a mouse takes 2
+	butchering_time = Clamp(butchering_time / tool.sharpness, 10, 70)
+
+	user.visible_message("<span class='notice'>[user] starts butchering \the [src].</span>",\
+		"<span class='info'>You start butchering \the [src].</span>")
+	src.being_butchered = 1
+
+	if(!do_after(user,src,butchering_time))
+		user << "<span class='warning'>Your attempt to butcher \the [src] was interrupted.</span>"
+		return
+
+	drop_meat(get_turf(src))
+	src.being_butchered = 0
+
+	if(prob(min(15 * src.size,90))) //Chance to drop extra meat depends on the tool's quality and the size of the monster! It can't go above 90%
+		user << "<span class='info'>You cut a chunk of meat out of \the [src].</span>"
+		return
+
+	user << "<span class='info'>You butcher \the [src].</span>"
+	gib(meat = 0)
 
 /mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()

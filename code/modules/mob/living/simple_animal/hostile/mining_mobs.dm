@@ -348,6 +348,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 
+	size = SIZE_BIG
+
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 	playsound(loc, 'sound/weapons/whip.ogg', 50, 1, -1)

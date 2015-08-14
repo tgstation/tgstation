@@ -1,3 +1,4 @@
+
 /mob
 	density = 1
 	layer = 4.0
@@ -103,7 +104,14 @@
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/small = 0
+
+	var/size = SIZE_NORMAL
+	//SIZE_TINY for tiny animals like mice and borers
+	//SIZE_SMALL for monkeys dionae etc
+	//SIZE_NORMAL for humans and most of the other mobs
+	//SIZE_BIG for big guys
+	//SIZE_HUGE for even bigger guys
+
 	var/list/callOnFace = list()
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.

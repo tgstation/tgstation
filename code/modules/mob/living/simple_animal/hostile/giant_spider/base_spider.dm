@@ -45,6 +45,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	wander = 1
 	ranged = 0
 	//minimum_distance = 1
+	size = SIZE_SMALL //dog-sized spiders are still big!
 
 	var/icon_aggro = null // for swapping to when we get aggressive
 	var/busy = 0

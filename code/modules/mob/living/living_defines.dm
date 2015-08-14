@@ -7,6 +7,8 @@
 
 	var/hud_updateflag = 0
 
+	size = SIZE_NORMAL
+
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
 	var/oxyloss = 0		//Oxygen depravation damage (no air in lungs)
@@ -19,6 +21,8 @@
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
+	var/meat_amount = 0
+	var/meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
 	var/list/image/static_overlays
 

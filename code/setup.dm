@@ -1212,3 +1212,10 @@ var/proccalls = 1
 //MALFUNCTION FLAGS
 #define COREFIRERESIST 1
 #define HIGHRESCAMS 2
+
+//Mob sizes
+#define SIZE_TINY	1 //Mice, lizards, borers, kittens - mostly things that can fit into a man's palm
+#define SIZE_SMALL	2 //Monkeys, dionae, cats, dogs
+#define SIZE_NORMAL	3 //Humanoids, robots, small slimes and most of the other animals
+#define SIZE_BIG	4 //The AI, large slimes, wizard 'creatures', goliaths, hivebots
+#define SIZE_HUGE	5 //Pine trees

@@ -11,7 +11,6 @@
 	emote_see = list("hums")
 	speak_chance = 2.5
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help  = "hugs"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
@@ -24,6 +23,7 @@
 	projectilesound = 'sound/weapons/punchmiss.ogg'
 	projectiletype = /obj/item/projectile/snowball
 	environment_smash = 0
+	meat_type = null
 
 	minbodytemp = 0
 	maxbodytemp = MELTPOINT_SNOW

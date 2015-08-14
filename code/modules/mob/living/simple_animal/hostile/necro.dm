@@ -9,7 +9,7 @@
 	icon_gib = "skelly"
 	speak_chance = 0
 	turns_per_move = 1
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = null
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
@@ -17,6 +17,8 @@
 	move_to_delay = 3
 	maxHealth = 50
 	health = 50
+
+	meat_type = null
 
 	harm_intent_damage = 10
 	melee_damage_lower = 5
@@ -45,7 +47,7 @@
 	icon_gib = "zombie_dead"
 	speak_chance = 0
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"

@@ -30,6 +30,7 @@
 	melee_damage_upper = 0
 	attacktext = "barrels into"
 	a_intent = I_HELP
+	size = SIZE_TINY
 	//throw_message = "sinks in slowly, before being pushed out of "
 	//status_flags = CANPUSH
 	search_objects = 0

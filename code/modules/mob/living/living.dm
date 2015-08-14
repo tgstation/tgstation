@@ -1084,3 +1084,19 @@ default behaviour is:
 
 /mob/living/is_open_container()
 	return 1
+
+/mob/living/proc/drop_meat(location)
+	if(!meat_type) return 0
+
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/M = new meat_type(location)
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/animal/A = M
+
+	if(istype(A))
+		var/mob/living/simple_animal/source_animal = src
+		if(istype(source_animal) && source_animal.species)
+			var/mob/living/specimen = source_animal.species
+			A.name = "[initial(specimen.name)] meat"
+			A.animal_name = initial(specimen.name)
+		else
+			A.name = "[initial(src.name)] meat"
+			A.animal_name = initial(src.name)

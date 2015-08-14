@@ -2,6 +2,7 @@
 /mob/living/simple_animal/corgi
 	name = "\improper corgi"
 	real_name = "corgi"
+
 	desc = "It's a corgi."
 	icon_state = "corgi"
 	icon_living = "corgi"
@@ -15,7 +16,7 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
 	meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "bops"
@@ -23,6 +24,8 @@
 	see_in_dark = 5
 	childtype = /mob/living/simple_animal/corgi/puppy
 	species = /mob/living/simple_animal/corgi
+	size = SIZE_SMALL
+
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
@@ -480,6 +483,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	size = SIZE_TINY
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
