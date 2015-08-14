@@ -167,11 +167,13 @@
 		if(src.up)
 			src.up = !src.up
 			eyeprot = 2
+			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			C << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
 			eyeprot = 0
+			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			C << "You push the [src] up out of your face."
 

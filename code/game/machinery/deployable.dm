@@ -228,9 +228,6 @@ for reference:
 /obj/machinery/deployable/barrier/proc/explode()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/deployable/barrier/proc/explode() called tick#: [world.time]")
 	visible_message("<span class='danger'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
-
-	/*	var/obj/item/stack/rods/ =*/
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
