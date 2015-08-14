@@ -49,6 +49,8 @@
 	for(var/mob/living/player in player_list)
 		if(player.stat != DEAD)
 			var/turf/T = get_turf(player)
+			if(!T) continue
+
 			if(istype(T.loc, /area/shuttle/escape/centcom) || istype(T.loc, /area/shuttle/escape_pod1/centcom) || istype(T.loc, /area/shuttle/escape_pod2/centcom) || istype(T.loc, /area/shuttle/escape_pod3/centcom) || istype(T.loc, /area/shuttle/escape_pod5/centcom))
 				score["escapees"]++
 //					player.unlock_medal("100M Dash", 1)
@@ -60,11 +62,11 @@
 				var/dmgscore = 0
 
 
-				for(var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
+				for(var/obj/item/weapon/card/id/C1 in get_contents_in_object(player, /obj/item/weapon/card/id))
 					cashscore += C1.GetBalance()
 
-				for(var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
-					cashscore += C2.worth
+				for(var/obj/item/weapon/spacecash/C2 in get_contents_in_object(player, /obj/item/weapon/spacecash))
+					cashscore += (C2.amount * C2.worth)
 
 //					for(var/datum/data/record/Ba in data_core.bank)
 //						if(Ba.fields["name"] == E.real_name)
