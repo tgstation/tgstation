@@ -1666,6 +1666,7 @@
 #include "code\modules\spells\aoe_turf\blink.dm"
 #include "code\modules\spells\aoe_turf\charge.dm"
 #include "code\modules\spells\aoe_turf\disable_tech.dm"
+#include "code\modules\spells\aoe_turf\fall.dm"
 #include "code\modules\spells\aoe_turf\knock.dm"
 #include "code\modules\spells\aoe_turf\smoke.dm"
 #include "code\modules\spells\aoe_turf\summons.dm"

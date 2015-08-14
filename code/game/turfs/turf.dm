@@ -41,6 +41,9 @@
 	// holy water
 	var/holy = 0
 
+	// wizard sleep spell probably better way to do this
+	var/sleeping = 0
+
 /*
  * Technically obsoleted by base_turf
 	//For building on the asteroid.
@@ -167,6 +170,12 @@
 	if(ismob(Obj))
 		if(Obj.areaMaster && Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
+		if(sleeping)
+			if(sleeping <= world.time) sleeping = 0
+			var/mob/living/L = Obj
+			if(!iswizard(L))
+				if(!L.stat) L.playsound_local(src, 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
+				L.Paralyse(round(((sleeping - world.time)/10)/2, 1))
 
 	/*
 		if(Obj.flags & NOGRAV)

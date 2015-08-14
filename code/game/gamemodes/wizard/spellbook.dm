@@ -64,6 +64,8 @@
 			<I>This spell causes you to turn into a hulk and gain telekinesis for a short while.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>
 			<I>This spell creates your ethereal form, temporarily making you invisible and able to pass through walls.</I><BR>
+			<A href='byond://?src=\ref[src];spell_choice=masssleep'>Mass Sleep</A> (210)<BR>
+			<I>This spell knocks out all organic beings around you for a short period.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>
 			<I>This spell opens nearby doors and does not require wizard garb.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>
@@ -150,7 +152,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", frenchcurse = "The French Curse", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge",)
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", frenchcurse = "The French Curse", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge", masssleep = "Mass Sleep",)
 				var/already_knows = 0
 				for(var/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -190,6 +192,10 @@
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/projectile/dumbfire/fireball,H)
 							temp = "You have learned fireball."
+						if("masssleep")
+							feedback_add_details("wizard_spell_learned","MS")
+							add_spell(new/spell/aoe_turf/fall,H)
+							temp = "You have learned mass sleep."
 						/*if("disintegrate")
 							if(!ticker.mode.rage)
 								feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
