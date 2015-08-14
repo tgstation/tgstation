@@ -598,14 +598,11 @@ datum/reagent/consumable/purple_drank
 
 datum/reagent/consumable/purple_drank/on_mob_life(var/mob/living/M as mob)
 	if (prob(3))
-		switch(pick(1,2,3))
+		switch(pick(1,2))
 			if(1)
 				M.say(pick("Sheeit...","What's up mah niggah?","Yo dawg wassup?", "Real nigga shit, no fuccbois allowed!","Yo dawg check out may mixtape!"))
 			if(2)
 				M.say(pick("Bix nood muffuguh!","I din do nuffin!","Niggggaaaaahhhh!","Sheeeeeeeeeeeeeeeeit...", "Fuck da police!"))
-			if(3)
-				var/high_message = pick("You feelin' pretty chill dawg.","You wonder why security be hatin' on a playa'.","You feelin' real good man.")
-					M << "<span class='notice'>[high_message]</span>"
 	switch(current_cycle)
 		if(1 to 12)
 			M.eye_blurry = max(M.eye_blurry, 10)
