@@ -371,16 +371,18 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in slots)
-		if(istype(user.vars[slot], slot2type[slot]) && !chosen_prof.exists_list[slot]) //remove unnecessary flesh items
+		if(istype(user.vars[slot], slot2type[slot]) && !(chosen_prof.exists_list[slot])) //remove unnecessary flesh items
 			qdel(user.vars[slot])
 			continue
 
-		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !chosen_prof.exists_list[slot])
+		if((user.vars[slot] && !istype(user.vars[slot], slot2type[slot])) || !(chosen_prof.exists_list[slot]))
 			continue
 
 		var/obj/item/C
+		var/equip = 0
 		if(!user.vars[slot])
 			var/thetype = slot2type[slot]
+			equip = 1
 			C = new thetype(user)
 
 		else if(istype(user.vars[slot], slot2type[slot]))
@@ -391,7 +393,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		C.flags_cover = chosen_prof.flags_cover_list[slot]
 		C.item_color = chosen_prof.item_color_list[slot]
 		C.item_state = chosen_prof.item_state_list[slot]
-		user.equip_to_slot_or_del(C, slot2slot[slot])
+		if(equip)
+			user.equip_to_slot_or_del(C, slot2slot[slot])
 
 	user.regenerate_icons()
 
