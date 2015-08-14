@@ -8,6 +8,44 @@
 	eyeprot = -1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	species_fit = list("Vox")
+	action_button_name = "Toggle Meson Scanner"
+	var/on = 1
+
+/obj/item/clothing/glasses/meson/proc/getMask()
+	return global_hud.darkMask
+
+/obj/item/clothing/glasses/meson/attack_self()
+	toggle()
+
+
+/obj/item/clothing/glasses/meson/verb/toggle() //Zth: I'm sure there's a better way of doing this, DON'T LYNCH ME PLEASE, I'M LEARNING
+	set category = "Object"
+	set name = "Toggle Optical Meson Scanner"
+	set src in usr
+	var/mob/C = usr
+	if(!usr)
+		if(!ismob(loc))
+			return
+		C = loc
+	if(C.canmove && !C.stat && !C.restrained())
+		if(!src.on)
+			src.on = !src.on
+			eyeprot = 2
+			vision_flags |= SEE_TURFS
+			see_invisible |= SEE_INVISIBLE_MINIMUM
+			body_parts_covered |= EYES
+			icon_state = initial(icon_state)
+			C << "You turn [src] on."
+		else
+			src.on = !src.on
+			eyeprot = 0
+			body_parts_covered &= ~EYES
+			vision_flags &= ~SEE_TURFS
+			see_invisible &= ~SEE_INVISIBLE_MINIMUM
+			icon_state = "[initial(icon_state)]off"
+			C << "You turn [src] off."
+
+		C.update_inv_glasses()
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"

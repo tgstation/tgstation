@@ -1929,7 +1929,7 @@
 	if(!holder) return
 	if(!M) M = holder.my_atom
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(prob(80)) M.adjustBrainLoss(1*REM)
+	if(prob(80)) M.adjustBrainLoss(5*REM)
 	if(prob(50)) M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10)) M.emote("drool")
 	..()
