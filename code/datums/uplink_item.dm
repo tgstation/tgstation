@@ -353,6 +353,12 @@ var/list/uplink_items = list()
 	cost = 6
 	excludefrom = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/edagger
+	name = "Energy Dagger"
+	desc = "A dagger made of energy that looks and functions as a pen when off."
+	item = /obj/item/weapon/pen/edagger
+	cost = 3
+
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
