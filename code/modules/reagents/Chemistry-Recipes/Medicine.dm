@@ -1,4 +1,5 @@
 
+
 /datum/chemical_reaction/leporazine
 	name = "Leporazine"
 	id = "leporazine"
@@ -240,3 +241,10 @@
 	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
 	result_amount = 4
 	mix_message = "The solution yields an astringent powder."
+
+/datum/chemical_reaction/lipozine //man I can't believe I forgot this recipe
+	name = "Lipozine"
+	id = "lipozine"
+	result = "lipozine"
+	required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 5)
+	result_amount = 3
