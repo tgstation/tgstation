@@ -1,0 +1,14 @@
+
+author: RemieRichards
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added Changeling Team Objectives, these are handed out to all lings, with the chance of a round having one being 20*number_of_lings% (3 lings = 60%)"
+  - rscadd: "Impersonate Department (Team Objective): As many members of a department as can reasonably be picked are chosen for the lings to kill, replace and escape as"
+  - rscadd: "Impersonate Heads (Team Objective): 3 to 6 Heads of Staff are chosen for the lings to kill, replace and escape as"
+  - tweak: "If the Changelings have a Team Objective, their usual Kill, Maroon, Etc. objectives will not pick other changelings, to discourage backstabbing in teamling"
+  - tweak: "Changeling Engorged Glands is now the default storage and regen rate, Engorged Glands remains for an extra boost"
+  - rscadd: "Armblades can now be used to open powered doors, however it takes 10 seconds of the changeling standing still, Their ability to instantly open unpowered doors remains unchanged"
+  - rscdel: "Debrain objective is no longer handed out to lings, it's as good as broken these days"
+  - rscadd: "Changelings may now purchase a togglable version of the Chameleon Skin genetics mutation, for 2 DNA"

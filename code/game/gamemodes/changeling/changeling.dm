@@ -40,6 +40,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 
+	var/changeling_team_objective_type = null //If this is not null, we hand our this objective to all lings
+
 /datum/game_mode/changeling/announce()
 	world << "<b>The current game mode is - Changeling!</b>"
 	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
@@ -72,6 +74,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		return 0
 
 /datum/game_mode/changeling/post_setup()
+
+	//Decide if it's ok for the lings to have a team objective
+	//And then set it up to be handed out in forge_changeling_objectives
+	var/list/team_objectives = typesof(/datum/objective/changeling_team_objective) - /datum/objective/changeling_team_objective
+	var/list/possible_team_objectives = list()
+	for(var/datum/objective/changeling_team_objective/T in team_objectives)
+		if(changelings.len >= initial(T.min_lings))
+			possible_team_objectives += T
+
+	if(possible_team_objectives.len && prob(20*changelings.len))
+		changeling_team_objective_type = pick(possible_team_objectives)
+
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
 		changeling.current.make_changeling()
@@ -92,11 +106,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 
-/datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling)
+/datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling, var/team_mode = 0)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
 	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
-
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
@@ -108,12 +121,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		steal_objective.owner = changeling
 		steal_objective.find_target()
 		changeling.objectives += steal_objective
-	else
-		var/datum/objective/debrain/debrain_objective = new
-		debrain_objective.owner = changeling
-		debrain_objective.find_target()
-		changeling.objectives += debrain_objective
-
 
 	var/list/active_ais = active_ais()
 	if(active_ais.len && prob(100/joined_player_list.len))
@@ -125,12 +132,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		if(prob(70))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = changeling
-			kill_objective.find_target()
+			if(team_mode) //No backstabbing while in a team
+				kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+			else
+				kill_objective.find_target()
 			changeling.objectives += kill_objective
 		else
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = changeling
-			maroon_objective.find_target()
+			if(team_mode)
+				maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+			else
+				maroon_objective.find_target()
 			changeling.objectives += maroon_objective
 
 			if (!(locate(/datum/objective/escape) in changeling.objectives))
@@ -150,7 +163,19 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			identity_theft.owner = changeling
 			identity_theft.find_target()
 			changeling.objectives += identity_theft
-	return
+
+
+
+/datum/game_mode/changeling/forge_changeling_objectives(datum/mind/changeling)
+	if(changeling_team_objective_type)
+		var/datum/objective/changeling_team_objective/team_objective = new changeling_team_objective_type
+		team_objective.owner = changeling
+		changeling.objectives += team_objective
+
+		..(changeling,1)
+	else
+		..(changeling,0)
+
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
@@ -237,8 +262,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/dna_max = 4 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 1 //We would require at least 1 sample of compatible DNA to have taken on the form of a human.
 	var/chem_charges = 20
-	var/chem_storage = 50
-	var/chem_recharge_rate = 0.5
+	var/chem_storage = 75
+	var/chem_recharge_rate = 1
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 2
 	var/changelingID = "Changeling"
