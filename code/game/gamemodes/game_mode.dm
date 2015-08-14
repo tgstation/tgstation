@@ -38,6 +38,7 @@
 
 	var/list/datum/mind/deathsquad = list()
 	var/list/datum/mind/ert = list()
+	var/rage = 0
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/announce() called tick#: [world.time]")

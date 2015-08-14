@@ -43,7 +43,6 @@
 			<I>This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=fireball'>Fireball</A> (10)<BR>
 			<I>This spell fires a fireball in the direction you're facing and does not require wizard garb. Be careful not to fire it at people that are standing next to you.</I><BR>
-			<A href='byond://?src=\ref[src];spell_choice=disintegrate'>Disintegrate</A> (60)<BR>
 			<I>This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=disabletech'>Disable Technology</A> (60)<BR>
 			<I>This spell disables all weapons, cameras and most other technology in range.</I><BR>
@@ -79,7 +78,7 @@
 			<I>This spell will curse a person to immediately turn into an unmoving statue. The effect will eventually wear off if the statue is not destroyed.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=arsenath'>Butt-Bot's Revenge</A> (50)<BR>
 			<I>Summon the power of the butt gods to remove the anus of your enemy.</I><BR>
-			[!istype(ticker.mode, /datum/game_mode/wizard/raginmages) ? "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR><I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>" : ""]
+			[!ticker.mode.rage ? "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR><I>Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!</I><BR>" : ""]
 			<A href='byond://?src=\ref[src];spell_choice=chariot'>Summon Chariot</A> (1/1)<BR>
 			<I>Summon the most badass ride in all of wizardry.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=noclothes'>Remove Clothes Requirement</A> <b>Warning: this takes away 2 spell choices.</b><BR>
@@ -191,10 +190,12 @@
 							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/targeted/projectile/dumbfire/fireball,H)
 							temp = "You have learned fireball."
-						if("disintegrate")
-							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							add_spell(new/spell/targeted/disintegrate,H)
-							temp = "You have learned disintegrate."
+						/*if("disintegrate")
+							if(!ticker.mode.rage)
+								feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+								add_spell(new/spell/targeted/disintegrate,H)
+								temp = "You have learned disintegrate."
+						*/
 						if("disabletech")
 							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/aoe_turf/disable_tech,H)
@@ -264,7 +265,7 @@
 							add_spell(new/spell/targeted/buttbots_revenge,H)
 							temp = "You have learned butt-bot's revenge."
 						if("summonguns")
-							if(!istype(ticker.mode, /datum/game_mode/wizard/raginmages))
+							if(!ticker.mode.rage)
 								feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								H.rightandwrong(0)
 								max_uses--

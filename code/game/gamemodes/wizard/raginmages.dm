@@ -7,6 +7,7 @@
 	var/making_mage = 0
 	var/mages_made = 1
 	var/time_checked = 0
+	rage = 1
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
@@ -51,7 +52,7 @@
 
 	if (wizards_alive)
 		if(!time_checked) time_checked = world.time
-		if(world.time > time_checked + 3000 && (mages_made < max_mages))
+		if(world.time > time_checked + 12000 && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
 	else
