@@ -78,6 +78,7 @@ for reference:
 				return
 			return
 		else
+			user.delayNextAttack(10)
 			switch(W.damtype)
 				if("fire")
 					src.health -= W.force * 1
@@ -86,7 +87,7 @@ for reference:
 				else
 			if (src.health <= 0)
 				visible_message("<span class='danger'>The barricade is smashed apart!</span>")
-				new /obj/item/stack/sheet/wood(get_turf(src, 5))
+				getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 3)
 				qdel(src)
 			..()
 
@@ -100,9 +101,7 @@ for reference:
 				src.health -= 25
 				if (src.health <= 0)
 					visible_message("<span class='danger'>The barricade is blown apart!</span>")
-					new /obj/item/stack/sheet/wood(get_turf(src))
-					new /obj/item/stack/sheet/wood(get_turf(src))
-					new /obj/item/stack/sheet/wood(get_turf(src))
+					getFromPool(/obj/item/stack/sheet/wood, get_turf(src), 3)
 					qdel(src)
 				return
 
@@ -145,8 +144,8 @@ for reference:
 	anchored = 0.0
 	density = 1.0
 	icon_state = "barrier0"
-	var/health = 100.0
-	var/maxhealth = 100.0
+	var/health = 140.0
+	var/maxhealth = 140.0
 	var/locked = 0.0
 //	req_access = list(access_maint_tunnels)
 
@@ -169,32 +168,26 @@ for reference:
 		return
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
 	if (istype(W, /obj/item/weapon/card/id/))
 		if (src.allowed(user))
-			if	(src.emagged < 2.0)
-				src.locked = !src.locked
-				src.anchored = !src.anchored
-				src.icon_state = "barrier[src.locked]"
-				if ((src.locked == 1.0) && (src.emagged < 2.0))
-					user << "Barrier lock toggled on."
-					return
-				else if ((src.locked == 0.0) && (src.emagged < 2.0))
-					user << "Barrier lock toggled off."
-					return
-			else
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
+			src.locked = !src.locked
+			src.anchored = !src.anchored
+			src.icon_state = "barrier[src.locked]"
+			if (src.locked == 1.0)
+				user << "Barrier lock toggled on."
+				return
+			else if (src.locked == 0.0)
+				user << "Barrier lock toggled off."
 				return
 		return
 	else
+		visible_message("<span class='danger'>[src] has been hit by [user] with [W]</span>") //I have to put this because atom/proc/attackby is not triggering. No idea why
+		user.delayNextAttack(10)
 		switch(W.damtype)
 			if("fire")
-				src.health -= W.force * 0.75
+				src.health -= W.force * 1
 			if("brute")
-				src.health -= W.force * 0.5
-			else
+				src.health -= W.force * 0.75
 		if (src.health <= 0)
 			src.explode()
 		..()
@@ -238,7 +231,6 @@ for reference:
 	var/turf/Tsec = get_turf(src)
 
 	/*	var/obj/item/stack/rods/ =*/
-	new /obj/item/stack/rods(Tsec)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)

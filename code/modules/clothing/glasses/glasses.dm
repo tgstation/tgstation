@@ -36,7 +36,7 @@
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			C << "You turn [src] on."
-		else
+		else //Mesons are like cyclops' visons. When off, your eyes are exposed
 			src.on = !src.on
 			eyeprot = 0
 			body_parts_covered &= ~EYES
