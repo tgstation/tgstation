@@ -438,3 +438,9 @@
 	desc = "Simple white apron."
 	icon_state = "maidapron"
 	item_state = "maidapron"
+
+/obj/item/clothing/suit/clownpiece
+	name = "small fairy wings"
+	desc = "Some small and translucid insect-like wings."
+	icon_state = "clownpiece"
+	item_state = "clownpiece"
