@@ -293,7 +293,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/user, mob/living/carbon/human/target)
 	var/datum/changelingprofile/prof = stored_profiles[1]
-	if(prof.dna == user.dna)//If our current DNA is the stalest, we gotta ditch it.
+	if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return
 	if(!target)
