@@ -1,9 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: Butchering animals now creates gibs and takes time depending on the size of the animal
-  - tweak: Corpses of bigger animals can be butchered for longer, providing more meat
-  - tweak: Meat created from butchering inherits the animal's name
-  - tweak: Slightly reduced amount of meat gained from meat spikes
