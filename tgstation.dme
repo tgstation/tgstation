@@ -255,6 +255,7 @@
 #include "code\datums\diseases\advance\symptoms\liggeritis.dm"
 #include "code\datums\diseases\advance\symptoms\mlady.dm"
 #include "code\datums\diseases\advance\symptoms\oxygen.dm"
+#include "code\datums\diseases\advance\symptoms\sensoryres.dm"
 #include "code\datums\diseases\advance\symptoms\shedding.dm"
 #include "code\datums\diseases\advance\symptoms\shivering.dm"
 #include "code\datums\diseases\advance\symptoms\skin.dm"

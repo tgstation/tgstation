@@ -17,7 +17,7 @@ Bonus
 
 /datum/symptom/sensres
 
-	name = "Sensory Resteration"
+	name = "Sensory Restoration"
 	stealth = -3
 	resistance = -3
 	stage_speed = -3
@@ -25,7 +25,7 @@ Bonus
 	level = 6
 	severity = 0
 
-/datum/symptom/oxygen/Activate(var/datum/disease/advance/A)
+/datum/symptom/sensres/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 		var/mob/living/M = A.affected_mob
