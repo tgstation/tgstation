@@ -1,3 +1,4 @@
+#to generate chart, use `fdp -Tpng chart.gv > chart.png`
 digraph chemistry{
     rankdir=LR
     splines=none;
@@ -61,6 +62,7 @@ digraph chemistry{
             doctordelight [label="Doctor's Delight | Heals all damage | OD: 55 | No addiction | {1: tricordrazine | 1: cream | 1: tomato juice | 1: lime juice | 1: orange juice}"]
             silver_sulf [label="Silver Sulfadiazine | Heals burn damage on touch| No overdose| No addiction| {1: ammonia|1: silver|1: sulfur|1: oxygen|1: chlorine}"]
             styptic [label="Styptic Powder | Heals brute damage on touch| No overdose | No addiction| {1: aluminium| 1: hydrogen| 1: oxygen |1: sacid}"] 
+            lipozine [label="Lipozine | Removes nutriment from patient| No overdose | No addiction| {1: sodiumchloride| 1: ethanol | 5: radium}"] 
              
             };
             
