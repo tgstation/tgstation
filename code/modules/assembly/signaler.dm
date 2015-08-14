@@ -79,14 +79,12 @@
 
 
 /obj/item/device/assembly/signaler/Topic(href, href_list)
-	..()
-
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	. = ..()
+	if(.)
 		usr << browse(null, "window=radio")
-		onclose(usr, "radio")
 		return
 
-	if (href_list["freq"])
+	if(href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if(new_frequency < MINIMUM_FREQUENCY || new_frequency > MAXIMUM_FREQUENCY)
 			new_frequency = sanitize_frequency(new_frequency)
@@ -104,9 +102,6 @@
 
 	if(usr)
 		attack_self(usr)
-
-	return
-
 
 /obj/item/device/assembly/signaler/proc/signal()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/signaler/proc/signal() called tick#: [world.time]")
