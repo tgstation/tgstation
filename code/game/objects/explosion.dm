@@ -115,7 +115,8 @@ proc/trange(var/Dist=0,var/turf/Center=null)//alternative to range (ONLY process
 
 					PoolOrNew(/obj/effect/hotspot, T) //Mostly for ambience!
 				if(dist > 0)
-					T.ex_act(dist)
+					spawn(0)
+						T.ex_act(dist)
 
 			//--- THROW ITEMS AROUND ---
 
