@@ -313,6 +313,20 @@
 	. = ..()
 	if(.)
 		return .
+	if(stat & (BROKEN))
+		if(istype(W, /obj/item/stack/sheet/glass/rglass))
+			var/obj/item/stack/sheet/glass/rglass/G = W
+			user << "<span class='notice'>You replace the broken glass.</span>"
+			G.use(1)
+			stat &= ~BROKEN
+			machine_flags &= ~SCREWTOGGLE
+			src.health = 100
+			src.update_vicon()
+			getFromPool(/obj/item/weapon/shard, loc)
+		else
+			user << "<span class='notice'>[src] is broken! Fix it first.</span>"
+			return
+
 	if(!cardboard && istype(W, /obj/item/stack/sheet/cardboard))
 		var/obj/item/stack/sheet/cardboard/C = W
 		if(C.amount>=4)
@@ -472,17 +486,23 @@
 		return
 
 	stat |= NOPOWER
-	src.icon_state = "[initial(icon_state)]-off"
+	src.update_vicon()
 	src.visible_message("<span class='warning'>[src] goes off!</span>")
 
 	spawn(ticks)
 
 	if(stat & (NOPOWER)) //Make another check just in case something goes weird
 		stat &= ~NOPOWER
+		src.update_vicon()
 
-		if(src.health > 0) //Another check
-			src.icon_state = "[initial(icon_state)]"
-
+/obj/machinery/vending/proc/update_vicon()
+	if(stat & (BROKEN))
+		src.icon_state = "[initial(icon_state)]-broken"
+		return
+	else if (stat & (NOPOWER))
+		src.icon_state = "[initial(icon_state)]-off"
+	else
+		src.icon_state = "[initial(icon_state)]"
 /obj/machinery/vending/attack_hand(mob/living/user as mob)
 	if(user.a_intent == "hurt") //Will make another update later. Hulks will insta-break
 		user.delayNextAttack(10)
@@ -492,12 +512,12 @@
 		src.shake(1, 3) //1 means x movement, 3 means intensity
 		src.health -= 4
 
-		if(src.health <= 0)
-			stat |= BROKEN
-			src.icon_state = "[initial(icon_state)]-broken"
-			return
 		if(prob(80))
 			user.apply_damage(rand(2,4), BRUTE, "r_leg")
+		if(src.health <= 0)
+			stat |= BROKEN
+			src.update_vicon()
+			return
 		if(prob(4))
 			src.throw_item()
 		if(prob(2))
