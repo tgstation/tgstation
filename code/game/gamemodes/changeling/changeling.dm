@@ -267,7 +267,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
-	var/absorbedcount = 1 //We would require at least 1 sample of compatible DNA to have taken on the form of a human.
+	var/absorbedcount = 0
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -365,6 +365,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		prof.exists_list[slot] = 1
 
 	stored_profiles += prof
+	absorbedcount++
 
 	return prof
 
