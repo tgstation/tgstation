@@ -127,14 +127,21 @@
 					m_type = VISIBLE
 		if ("flap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings."
+				message = "<B>[src]</B> flaps \his wings."
 				m_type = HEARABLE
 				if(miming)
 					m_type = VISIBLE
+				if(src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/clownpiece))
+					var/obj/item/clothing/suit/clownpiece/wings = src.wear_suit
+					wings.icon_state = "clownpiece-fly"
+					update_inv_wear_suit(1)
+					spawn(5)
+						wings.icon_state = initial(wings.icon_state)
+						update_inv_wear_suit(1)
 
 		if ("aflap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings ANGRILY!"
+				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = HEARABLE
 				if(miming)
 					m_type = VISIBLE

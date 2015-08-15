@@ -451,6 +451,18 @@
 	icon_state = "clownpiece-fly"
 	item_state = "clownpiece"
 
+/obj/item/clothing/suit/clownpiece/flying/attack_hand(var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return ..()
+	if((src == H.wear_suit) && H.flying)
+		H.flying = 0
+		animate(H, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+		animate(H, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+		animate(H)
+		if(H.lying)//aka. if they have just been stunned
+			H.pixel_y -= 6
+	..()
+
 /obj/item/clothing/suit/clownpiece/flying/equipped(var/mob/user, var/slot)
 	var/mob/living/carbon/human/H = user
 	if(!istype(H)) return
