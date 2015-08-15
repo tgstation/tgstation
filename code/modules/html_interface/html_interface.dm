@@ -105,6 +105,9 @@ mob/verb/test()
 	// The initial height of the browser control, used when the window is first shown to a client.
 	var/height
 
+	// File which the HTML is copied from onto the browser window on the client.
+	var/default_html_file = 'html_interface.html'
+
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
 	html_interfaces.Add(src)
 
@@ -232,7 +235,7 @@ mob/verb/test()
 		else
 			src.createWindow(hclient)
 			hclient.is_loaded = FALSE
-			hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
+			hclient.client << output(replacetextEx(replacetextEx(file2text(default_html_file), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
 			winshow(hclient.client, "browser_\ref[src]", TRUE)
 		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
 			winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)

@@ -189,8 +189,8 @@
 /obj/item/weapon/robot_module/engineering/New()
 	..()
 	src.emag = new /obj/item/borg/stun(src)
-	src.modules += new /obj/item/weapon/rcd/borg(src)
-	src.modules += new /obj/item/weapon/pipe_dispenser(src) //What could possibly go wrong?
+	src.modules += new /obj/item/device/rcd/borg/engineering(src)
+	src.modules += new /obj/item/device/rcd/rpd(src) //What could possibly go wrong?
 	src.modules += new /obj/item/weapon/extinguisher(src)
 	src.modules += new /obj/item/weapon/extinguisher/foam(src)
 	src.modules += new /obj/item/weapon/weldingtool/largetank(src)
@@ -203,7 +203,7 @@
 	src.modules += new /obj/item/device/analyzer(src)
 	src.modules += new /obj/item/taperoll/atmos(src)
 	src.modules += new /obj/item/taperoll/engineering(src)
-	src.modules += new /obj/item/weapon/tile_painter(src)
+	src.modules += new /obj/item/device/rcd/tile_painter(src)
 	src.modules += new /obj/item/device/material_synth/robot(src)
 	sensor_augs = list("Mesons", "Disable")
 
@@ -315,7 +315,7 @@
 	src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	src.modules += new /obj/item/weapon/pen/robopen(src)
 
-	src.modules += new /obj/item/weapon/rsf/cyborg(src)
+	src.modules += new /obj/item/device/rcd/borg/rsf(src)
 
 	src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
