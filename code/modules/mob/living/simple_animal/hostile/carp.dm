@@ -80,17 +80,18 @@ var/global/
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
 /mob/living/simple_animal/hostile/carp/baby
-	desc = "A ferocious, fang-bearing creature that resembles a fish. This one, despite not being mature yet, is just as agressive as any other space carp."
-	icon_state = "carp"
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one, despite not being mature yet, is just as agressive as any of its brethren."
+	icon_state = "babycarp"
+	icon_dead = "babycarp_dead"
 
 	size = SIZE_TINY
 	can_breed = 0
 
-	maxHealth = 20
-	health = 20
+	maxHealth = 15
+	health = 15
 
-	melee_damage_upper = 10
-	melee_damage_lower = 10
+	melee_damage_upper = 8
+	melee_damage_lower = 8
 
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
