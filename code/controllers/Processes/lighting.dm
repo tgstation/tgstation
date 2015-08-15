@@ -1,8 +1,12 @@
 /datum/controller/process/lighting
 	schedule_interval = LIGHTING_INTERVAL
+
+	// Solves problems with lighting updates lagging shit
+	// Max constraints on number of updates per doWork():
 	var/const/MAX_LIGHT_UPDATES_PER_WORK=100
 	var/const/MAX_OVERLAY_UPDATES_PER_WORK=1000 // idfk
 
+	// Counters
 	var/light_updates=0
 	var/overlay_updates=0
 
@@ -18,7 +22,8 @@
 	light_updates=0
 	for(var/datum/light_source/L in lighting_update_lights_old)
 		if(L)
-			if(light_updates>MAX_LIGHT_UPDATES_PER_WORK)
+
+			if(light_updates >= MAX_LIGHT_UPDATES_PER_WORK)
 				lighting_update_lights += L
 				continue // DON'T break, we're adding stuff back into the update queue.
 			. = L.check()
@@ -46,11 +51,12 @@
 
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays_old)
 		if(O)
-			if(overlay_updates>MAX_OVERLAY_UPDATES_PER_WORK)
+			if(overlay_updates >= MAX_OVERLAY_UPDATES_PER_WORK)
 				lighting_update_overlays += O
 				continue // DON'T break, we're adding stuff back into the update queue.
 			O.update_overlay()
 			O.needs_update = 0
 			overlay_updates++
 			scheck()
-	world << "LIT: [light_updates]:[overlay_updates]"
+	// TODO: Need debug pane for this.
+	//world << "LIT: [light_updates]:[overlay_updates]"
