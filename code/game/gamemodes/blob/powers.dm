@@ -156,9 +156,13 @@
 		return
 	last_attack = world.time
 	OB.expand(T, 0, blob_reagent_datum.color)
-	for(var/mob/living/L in T)
-		blob_reagent_datum.reaction_mob(L, TOUCH, 25)
-		blob_reagent_datum.send_message(L)
+	mob_loop:
+		for(var/mob/living/L in T)
+			for(var/F in L.faction)
+				if(F == "blob") // no friendly fire
+					continue mob_loop
+			blob_reagent_datum.reaction_mob(L, TOUCH, 25)
+			blob_reagent_datum.send_message(L)
 	OB.color = blob_reagent_datum.color
 
 /mob/camera/blob/verb/rally_spores_power()

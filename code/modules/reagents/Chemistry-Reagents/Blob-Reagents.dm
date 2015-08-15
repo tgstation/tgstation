@@ -112,7 +112,7 @@
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BRUTE)
-		reagent_vortex(M, 0)
+		reagent_vortex(M, 0, volume)
 
 
 /datum/reagent/blob/b_sorium
@@ -126,7 +126,7 @@
 	if(method == TOUCH)
 		var/ratio = volume/25
 		M.apply_damage(15*ratio, BRUTE)
-		reagent_vortex(M, 1)
+		reagent_vortex(M, 1, volume)
 
 
 /datum/reagent/blob/explosive // I'm gonna burn in hell for this one
@@ -171,9 +171,9 @@
 		M.apply_damage(10*ratio, TOX)
 
 
-/datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type)
+/datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, vol)
 	var/turf/pull = get_turf(M)
-	var/range_power = Clamp(round(volume/5, 1), 1, 5)
+	var/range_power = Clamp(round(vol/5, 1), 1, 5)
 	for(var/atom/movable/X in range(range_power,pull))
 		if(istype(X, /obj/effect))
 			continue
