@@ -163,13 +163,11 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/construction(D, P, pipe_type, obj_color)
-	if(can_unwrench)
-		color = obj_color
-		pipe_color = obj_color
-		stored.dir = src.dir				  //need to define them here, because the obj directions...
-		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
-		stored.color = obj_color
+/obj/machinery/atmospherics/construction(obj/item/pipe/pipe_item)
+	if(can_unwrench && pipe_item)
+		color = pipe_item.color
+		pipe_color = pipe_item.color
+		stored = pipe_item
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()

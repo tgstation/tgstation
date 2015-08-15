@@ -89,10 +89,11 @@ Buildable meters
 
 	if(!(pipe_type in pipe_types))
 		for(var/P in pipe_types)
-			if(istype(pipe_type, P))
+			if(ispath(pipe_type, P))
 				pipe_type = P
+				break
 
-	if(!(make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST)) && src.pipe_type in list(PIPE_SIMPLE, PIPE_HE))
+	if(!(src.dir in cardinal))
 		is_bent = 1
 
 	update()
@@ -101,25 +102,25 @@ Buildable meters
 
 //update the name and icon of the pipe item depending on the type
 var/global/list/pipeID2State = list(
-	"[PIPE_SIMPLE]" = "simple", \
-	"[PIPE_MANIFOLD]" = "manifold", \
-	"[PIPE_4WAYMANIFOLD]" = "manifold4w", \
-	"[PIPE_HE]" = "he", \
-	"[PIPE_JUNCTION]" = "junction", \
+	"[PIPE_SIMPLE]"			 = "simple", \
+	"[PIPE_MANIFOLD]"		 = "manifold", \
+	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
+	"[PIPE_HE]"				 = "he", \
+	"[PIPE_JUNCTION]"		 = "junction", \
 	\
-	"[PIPE_CONNECTOR]" = "connector", \
-	"[PIPE_UVENT]" = "uvent", \
-	"[PIPE_SCRUBBER]" = "scrubber", \
-	"[PIPE_HEAT_EXCHANGE]" = "heunary", \
+	"[PIPE_CONNECTOR]"		 = "connector", \
+	"[PIPE_UVENT]"			 = "uvent", \
+	"[PIPE_SCRUBBER]"		 = "scrubber", \
+	"[PIPE_HEAT_EXCHANGE]"	 = "heunary", \
 	\
-	"[PIPE_PUMP]" = "pump", \
-	"[PIPE_PASSIVE_GATE]" = "passivegate", \
-	"[PIPE_VOLUME_PUMP]" = "volumepump", \
-	"[PIPE_MVALVE]" = "mvalve", \
-	"[PIPE_DVALVE]" = "dvalve", \
+	"[PIPE_PUMP]"			 = "pump", \
+	"[PIPE_PASSIVE_GATE]"	 = "passivegate", \
+	"[PIPE_VOLUME_PUMP]"	 = "volumepump", \
+	"[PIPE_MVALVE]"			 = "mvalve", \
+	"[PIPE_DVALVE]"			 = "dvalve", \
 	\
-	"[PIPE_GAS_FILTER]" = "filter", \
-	"[PIPE_GAS_MIXER]" = "mixer", \
+	"[PIPE_GAS_FILTER]"		 = "filter", \
+	"[PIPE_GAS_MIXER]"		 = "mixer", \
 )
 
 /obj/item/pipe/proc/update()
@@ -311,7 +312,7 @@ var/global/list/pipeID2State = list(
 	if(istype(T))
 		T.flipped = flipped
 
-	A.construction(pipe_type, color)
+	A.construction(src)
 
 	/*
 	switch(pipe_type)
