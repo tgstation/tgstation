@@ -34,7 +34,7 @@
 	result = /obj/item/asteroid/goliath_hide
 
 /datum/butchering_product/skin/bear
-	result = /obj/item/clothing/head/bearpelt
+	result = /obj/item/clothing/head/bearpelt/real
 
 /datum/butchering_product/spider_legs
 	result = /obj/item/weapon/reagent_containers/food/snacks/spiderleg
