@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - tweak: Dionae born in hydroponics now ask the potential candidates in the same way as posibrains. There is a 1 minute window (just like posibrains), and after said window the diona dies if no candidate has been found.
