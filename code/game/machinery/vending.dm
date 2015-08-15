@@ -310,9 +310,6 @@
 	return 1
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
-	. = ..()
-	if(.)
-		return .
 	if(stat & (BROKEN))
 		if(istype(W, /obj/item/stack/sheet/glass/rglass))
 			var/obj/item/stack/sheet/glass/rglass/G = W
@@ -326,7 +323,9 @@
 		else
 			user << "<span class='notice'>[src] is broken! Fix it first.</span>"
 			return
-
+	. = ..()
+	if(.)
+		return .
 	if(!cardboard && istype(W, /obj/item/stack/sheet/cardboard))
 		var/obj/item/stack/sheet/cardboard/C = W
 		if(C.amount>=4)
