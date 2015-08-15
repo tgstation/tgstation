@@ -496,6 +496,7 @@
 #include "code\game\machinery\atmoalter\scrubber.dm"
 #include "code\game\machinery\atmoalter\zvent.dm"
 #include "code\game\machinery\bots\bots.dm"
+#include "code\game\machinery\bots\buttbot.dm"
 #include "code\game\machinery\bots\cleanbot.dm"
 #include "code\game\machinery\bots\ed209bot.dm"
 #include "code\game\machinery\bots\floorbot.dm"
