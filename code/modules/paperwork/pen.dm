@@ -78,3 +78,41 @@
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()
+
+/*
+ * (Alan) Edaggers
+ */
+/obj/item/weapon/pen/edagger
+	origin_tech = "combat=3;syndicate=5"
+	var/on = 0
+
+/obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+	if(on)
+		on = 0
+		force = initial(force)
+		w_class = initial(w_class)
+		name = initial(name)
+		hitsound = initial(hitsound)
+		embed_chance = initial(embed_chance)
+		throwforce = initial(throwforce)
+		playsound(user, 'sound/weapons/saberoff.ogg', 10, 1)
+		user << "<span class='warning'>[src] can now be concealed.</span>"
+	else
+		on = 1
+		force = 15
+		w_class = 3
+		name = "energy dagger"
+		hitsound = 'sound/weapons/blade1.ogg'
+		embed_chance = 90 //rule of cool
+		throwforce = 35
+		playsound(user, 'sound/weapons/saberon.ogg', 10, 1)
+		user << "<span class='warning'>[src] is now active.</span>"
+	update_icon()
+
+/obj/item/weapon/pen/edagger/update_icon()
+	if(on)
+		icon_state = "edagger"
+		item_state = "edagger"
+	else
+		icon_state = initial(icon_state) //looks like a normal pen when off.
+		item_state = initial(item_state)

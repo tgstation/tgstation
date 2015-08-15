@@ -271,7 +271,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
 	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
 	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -352,6 +352,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/throwing_stars
 	cost = 6
 	excludefrom = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_weapons/edagger
+	name = "Energy Dagger"
+	desc = "A dagger made of energy that looks and functions as a pen when off."
+	item = /obj/item/weapon/pen/edagger
+	cost = 3
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
@@ -511,7 +517,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 4
 
 /datum/uplink_item/device_tools/medkit
@@ -667,6 +673,12 @@ var/list/uplink_items = list()
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	cost = 8
+
+/datum/uplink_item/implants/storage
+	name = "Storage Implant"
+	desc = "An implant injected into the body and later used to store up to two big items in a subspace pocket."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	cost = 8
 
 /datum/uplink_item/implants/microbomb

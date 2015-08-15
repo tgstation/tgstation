@@ -11,8 +11,16 @@ mob/proc/getorganslot(slot)
 mob/living/carbon/getorgan(typepath)
 	return (locate(typepath) in internal_organs)
 
-mob/living/carbon/getorganszone(zone)
+mob/living/carbon/getorganszone(zone, var/subzones = 0)
 	var/list/returnorg = list()
+	if(subzones)
+		if(zone == "head")
+			returnorg = getorganszone("eyes") + getorganszone("mouth")
+			// We don't have mouth organs now, but who knows?
+		if(zone == "chest")
+			returnorg = getorganszone("groin")
+
+
 	for(var/obj/item/organ/internal/O in internal_organs)
 		if(zone == O.zone)
 			returnorg += O

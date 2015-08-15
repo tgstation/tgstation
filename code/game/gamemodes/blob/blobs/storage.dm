@@ -4,7 +4,6 @@
 	icon_state = "blob_resource"
 	health = 30
 	fire_resist = 2
-	var/mob/camera/blob/overmind = null
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)

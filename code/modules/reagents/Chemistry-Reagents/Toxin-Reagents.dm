@@ -59,6 +59,9 @@
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/M)
 	if(holder.has_reagent("epinephrine"))
 		holder.remove_reagent("epinephrine", 2*REM)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(20)
 	..()
 	return
 

@@ -83,7 +83,7 @@
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -94,9 +94,10 @@
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
 		return
-	if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
-		loc = A.loc
-		return 0
+	if(firer)
+		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
+			loc = A.loc
+			return 0
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.

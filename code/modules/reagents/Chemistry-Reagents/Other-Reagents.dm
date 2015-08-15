@@ -544,7 +544,7 @@
 	if(volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("uranium", volume)
+			reagentdecal.reagents.add_reagent("radium", volume)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -879,6 +879,13 @@
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+
+/datum/reagent/stable_plasma/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(10)
+	..()
+	return
 
 /datum/reagent/iodine
 	name = "Iodine"
