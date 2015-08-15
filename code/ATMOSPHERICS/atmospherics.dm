@@ -53,6 +53,9 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
 
+/obj/machinery/atmospherics/proc/GetInitDirections()
+	return initialize_directions
+
 /obj/machinery/atmospherics/proc/returnPipenet()
 	return
 
@@ -161,12 +164,10 @@ Pipelines + Other Objects -> Pipe network
 	return img
 
 /obj/machinery/atmospherics/construction(D, P, pipe_type, obj_color)
-	dir = D
-	initialize_directions = P
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
-		stored.dir = D				  //need to define them here, because the obj directions...
+		stored.dir = src.dir				  //need to define them here, because the obj directions...
 		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
 		stored.color = obj_color
 	var/turf/T = loc
@@ -194,6 +195,9 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!(direction & initialize_directions)) //cant go this way.
+		return
+
+	if(buckled_mob == user) // fixes buckle ventcrawl edgecase fuck bug
 		return
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)

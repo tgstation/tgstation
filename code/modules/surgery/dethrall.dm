@@ -3,14 +3,17 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/dethrall)
 	possible_locs = list("head")
 
+/datum/surgery/dethrall/can_start(mob/user, mob/living/carbon/target)
+	return is_thrall(target)
+
 /datum/surgery_step/dethrall
 	name = "search head"
 	accept_hand = 1
 	time = 70
-	var/obj/item/organ/brain/B = null
+	var/obj/item/organ/internal/brain/B = null
 
 /datum/surgery_step/dethrall/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	B = target.getorgan(/obj/item/organ/brain)
+	B = target.getorgan(/obj/item/organ/internal/brain)
 	if(B)
 		user.visible_message("[user] begins looking around in [target]'s head.", "<span class='notice'>You begin looking for foreign influences on [target]'s brain...")
 
@@ -19,8 +22,6 @@
 		if(!is_thrall(target))
 			user << "<span class='warning'>You are unable to locate anything on [target]'s brain.</span>"
 			return 1
-		user << "<span class='warning'>You locate a small, pulsing black tumor on the side of [target]'s brain and begin to remove it.</span>"
-		target << "<span class='boldannounce'>A small part of your head pulses with agony as the light impacts it.</span>"
 		sleep(30)
 		user.visible_message("[user] begins removing something from [target]'s head.</span>", \
 							 "<span class='notice'>You begin carefully extracting the tumor...</span>")

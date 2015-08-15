@@ -10,6 +10,7 @@
 	ventcrawler = 1
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
+	unique_name = 1
 
 /mob/living/carbon/monkey/New()
 	create_reagents(1000)
@@ -18,14 +19,10 @@
 
 	internal_organs += new /obj/item/organ/internal/appendix
 	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/internal/brain
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
-
-	if(name == "monkey")
-		name = text("monkey ([rand(1, 1000)])")
-	real_name = name
 	gender = pick(MALE, FEMALE)
 
 	..()

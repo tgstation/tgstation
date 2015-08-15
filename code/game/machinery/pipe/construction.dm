@@ -2,6 +2,7 @@
 Buildable pipes
 Buildable meters
 */
+/*
 #define PIPE_SIMPLE_STRAIGHT	0
 #define PIPE_SIMPLE_BENT		1
 #define PIPE_HE_STRAIGHT		2
@@ -32,7 +33,7 @@ Buildable meters
 #define DISP_END_CHUTE			8
 #define DISP_SORTJUNCTION		9
 #define DISP_SORTJUNCTION_FLIP	10
-
+*/
 /obj/item/pipe
 	name = "pipe"
 	desc = "A pipe"
@@ -45,50 +46,37 @@ Buildable meters
 	w_class = 3
 	level = 2
 	var/flipped = 0
+	var/is_bent = 0
+
+	var/global/list/pipe_types = list(
+		PIPE_SIMPLE, \
+		PIPE_MANIFOLD, \
+		PIPE_4WAYMANIFOLD, \
+		PIPE_HE, \
+		PIPE_JUNCTION, \
+		\
+		PIPE_CONNECTOR, \
+		PIPE_UVENT, \
+		PIPE_SCRUBBER, \
+		PIPE_HEAT_EXCHANGE, \
+		\
+		PIPE_PUMP, \
+		PIPE_PASSIVE_GATE, \
+		PIPE_VOLUME_PUMP, \
+		PIPE_MVALVE, \
+		PIPE_DVALVE, \
+		\
+		PIPE_GAS_FILTER, \
+		PIPE_GAS_MIXER, \
+	)
 
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
-	if (make_from)
+	if(make_from)
 		src.dir = make_from.dir
 		src.pipename = make_from.name
 		src.color = make_from.color
-		var/is_bent
-		if  (make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST))
-			is_bent = 0
-		else
-			is_bent = 1
-		if     (istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction))
-			src.pipe_type = PIPE_JUNCTION
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
-			src.pipe_type = PIPE_HE_STRAIGHT + is_bent
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple))
-			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
-		else if(istype(make_from, /obj/machinery/atmospherics/components/unary/portables_connector))
-			src.pipe_type = PIPE_CONNECTOR
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold))
-			src.pipe_type = PIPE_MANIFOLD
-		else if(istype(make_from, /obj/machinery/atmospherics/components/unary/vent_pump))
-			src.pipe_type = PIPE_UVENT
-		else if(istype(make_from, /obj/machinery/atmospherics/components/binary/valve/digital))
-			src.pipe_type = PIPE_DVALVE
-		else if(istype(make_from, /obj/machinery/atmospherics/components/binary/valve))
-			src.pipe_type = PIPE_MVALVE
-		else if(istype(make_from, /obj/machinery/atmospherics/components/binary/pump))
-			src.pipe_type = PIPE_PUMP
-		else if(istype(make_from, /obj/machinery/atmospherics/components/trinary/filter))
-			src.pipe_type = PIPE_GAS_FILTER
-		else if(istype(make_from, /obj/machinery/atmospherics/components/trinary/mixer))
-			src.pipe_type = PIPE_GAS_MIXER
-		else if(istype(make_from, /obj/machinery/atmospherics/components/unary/vent_scrubber))
-			src.pipe_type = PIPE_SCRUBBER
-		else if(istype(make_from, /obj/machinery/atmospherics/components/binary/passive_gate))
-			src.pipe_type = PIPE_PASSIVE_GATE
-		else if(istype(make_from, /obj/machinery/atmospherics/components/binary/volume_pump))
-			src.pipe_type = PIPE_VOLUME_PUMP
-		else if(istype(make_from, /obj/machinery/atmospherics/components/unary/heat_exchanger))
-			src.pipe_type = PIPE_HEAT_EXCHANGE
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w))
-			src.pipe_type = PIPE_4WAYMANIFOLD
+		src.pipe_type = make_from.type
 
 		var/obj/machinery/atmospherics/components/trinary/triP = make_from
 		if(istype(triP) && triP.flipped)
@@ -98,59 +86,68 @@ Buildable meters
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
-	//src.pipe_dir = get_pipe_dir()
+
+	if(!(pipe_type in pipe_types))
+		for(var/P in pipe_types)
+			if(istype(pipe_type, P))
+				pipe_type = P
+
+	if(!(make_from.initialize_directions in list(NORTH|SOUTH, WEST|EAST)) && src.pipe_type in list(PIPE_SIMPLE, PIPE_HE))
+		is_bent = 1
+
 	update()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
 var/global/list/pipeID2State = list(
-	"simple", \
-	"simple", \
-	"he", \
-	"he", \
-	"connector", \
-	"manifold", \
-	"junction", \
-	"uvent", \
-	"mvalve", \
-	"pump", \
-	"scrubber", \
-	"filter", \
-	"mixer", \
-	"passivegate", \
-	"volumepump", \
-	"heunary", \
-	"dvalve", \
-	"manifold4w", \
+	"[PIPE_SIMPLE]" = "simple", \
+	"[PIPE_MANIFOLD]" = "manifold", \
+	"[PIPE_4WAYMANIFOLD]" = "manifold4w", \
+	"[PIPE_HE]" = "he", \
+	"[PIPE_JUNCTION]" = "junction", \
+	\
+	"[PIPE_CONNECTOR]" = "connector", \
+	"[PIPE_UVENT]" = "uvent", \
+	"[PIPE_SCRUBBER]" = "scrubber", \
+	"[PIPE_HEAT_EXCHANGE]" = "heunary", \
+	\
+	"[PIPE_PUMP]" = "pump", \
+	"[PIPE_PASSIVE_GATE]" = "passivegate", \
+	"[PIPE_VOLUME_PUMP]" = "volumepump", \
+	"[PIPE_MVALVE]" = "mvalve", \
+	"[PIPE_DVALVE]" = "dvalve", \
+	\
+	"[PIPE_GAS_FILTER]" = "filter", \
+	"[PIPE_GAS_MIXER]" = "mixer", \
 )
 
 /obj/item/pipe/proc/update()
-	var/list/nlist = list( \
-		"pipe", \
-		"bent pipe", \
-		"h/e pipe", \
-		"bent h/e pipe", \
-		"connector", \
-		"manifold", \
-		"junction", \
-		"vent", \
-		"manual valve", \
-		"pump", \
-		"scrubber", \
-		"gas filter", \
-		"gas mixer", \
-		"passive gate", \
-		"volume pump", \
-		"heat exchanger", \
-		"digital valve", \
-		"4-way manifold", \
-	)
-	name = nlist[pipe_type+1] + " fitting"
-	icon_state = pipeID2State[pipe_type + 1]
-
-//called when a turf is attacked with a pipe item
-// place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
+	var/list/nlist = list(\
+		"[PIPE_SIMPLE]" 		= "pipe", \
+		"[PIPE_SIMPLE]_b" 		= "bent pipe", \
+		"[PIPE_MANIFOLD]" 		= "manifold", \
+		"[PIPE_4WAYMANIFOLD]" 	= "4-way manifold", \
+		"[PIPE_HE]" 			= "h/e pipe", \
+		"[PIPE_HE]_b" 			= "bent h/e pipe", \
+		"[PIPE_JUNCTION]" 		= "junction", \
+		\
+		"[PIPE_CONNECTOR]" 		= "connector", \
+		"[PIPE_UVENT]" 			= "vent", \
+		"[PIPE_SCRUBBER]" 		= "scrubber", \
+		"[PIPE_HEAT_EXCHANGE]" 	= "heat exchanger", \
+		\
+		"[PIPE_PUMP]" 			= "pump", \
+		"[PIPE_PASSIVE_GATE]" 	= "passive gate", \
+		"[PIPE_VOLUME_PUMP]" 	= "volume pump", \
+		"[PIPE_MVALVE]" 		= "manual valve", \
+		"[PIPE_DVALVE]" 		= "digital valve", \
+		\
+		"[PIPE_GAS_FILTER]" 	= "gas filter", \
+		"[PIPE_GAS_MIXER]" 		= "gas mixer", \
+		)
+	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
+	icon_state = pipeID2State["[pipe_type]"]
 
 // rotate the pipe item clockwise
 
@@ -189,20 +186,15 @@ var/global/list/pipeID2State = list(
 
 /obj/item/pipe/Move()
 	..()
-	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_HE_BENT)) \
+	if ((pipe_type in list (PIPE_SIMPLE, PIPE_HE)) && is_bent \
 		&& (src.dir in cardinal))
 		src.dir = src.dir|turn(src.dir, 90)
 	else if ((pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER)) && flipped)
 		src.dir = turn(src.dir, 45+90)
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
-	return
+	fixdir()
 
 // returns all pipe's endpoints
-
+/*
 /obj/item/pipe/proc/get_pipe_dir()
 	if (!dir)
 		return 0
@@ -269,7 +261,7 @@ var/global/list/pipeID2State = list(
 			return dir
 		else
 			return 0
-
+*/
 /obj/item/pipe/proc/unflip(direction)
 	if(!(direction in cardinal))
 		return turn(direction, 45)
@@ -278,11 +270,11 @@ var/global/list/pipeID2State = list(
 
 //Helper to clean up dir
 /obj/item/pipe/proc/fixdir()
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE))
-		if(dir==2)
-			dir = 1
-		else if(dir==8)
-			dir = 4
+	if((pipe_type in list (PIPE_SIMPLE, PIPE_HE, PIPE_MVALVE, PIPE_DVALVE)) && !is_bent)
+		if(dir==SOUTH)
+			dir = NORTH
+		else if(dir==WEST)
+			dir = EAST
 
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
@@ -296,15 +288,32 @@ var/global/list/pipeID2State = list(
 		return 1
 
 	fixdir()
+	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
+		dir = unflip(dir)
 
-	var/pipe_dir = get_pipe_dir()
+	var/obj/machinery/atmospherics/A = new pipe_type(src.loc)
+	A.dir = src.dir
+	A.SetInitDirections()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
-		if(M.initialize_directions & pipe_dir)	// matches at least one direction on either type of pipe
+		if(M == A) //we don't want to check to see if it interferes with itself
+			continue
+		if(M.initialize_directions & A.GetInitDirections())	// matches at least one direction on either type of pipe
 			user << "<span class='warning'>There is already a pipe at that location!</span>"
+			qdel(A)
 			return 1
 	// no conflicts found
 
+	if(pipename)
+		A.name = pipename
+
+	var/obj/machinery/atmospherics/components/trinary/T = A
+	if(istype(T))
+		T.flipped = flipped
+
+	A.construction(pipe_type, color)
+
+	/*
 	switch(pipe_type)
 		if(PIPE_SIMPLE_STRAIGHT, PIPE_SIMPLE_BENT)
 			var/obj/machinery/atmospherics/pipe/simple/P = new( src.loc )
@@ -388,7 +397,7 @@ var/global/list/pipeID2State = list(
 			if (pipename)
 				C.name = pipename
 			C.construction(dir, pipe_dir, pipe_type, color)
-
+*/
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \

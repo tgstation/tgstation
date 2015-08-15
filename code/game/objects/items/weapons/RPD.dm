@@ -31,7 +31,7 @@ RPD
 
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
-	src.icon_state=pipeID2State[pid+1]
+	src.icon_state=pipeID2State["[pid]"]
 	src.dir=direction
 	src.dirtype=dt
 
@@ -81,8 +81,8 @@ var/global/list/disposalpipeID2State=list(
 //find these defines in code\game\machinery\pipe\consruction.dm
 var/global/list/RPD_recipes=list(
 	"Regular Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE_STRAIGHT,	1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE_BENT, 		5, PIPE_BENT),
+		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE,			1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE,	 		5, PIPE_BENT),
 		"Manifold"       = new /datum/pipe_info(PIPE_MANIFOLD, 			1, PIPE_TRINARY),
 		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
 		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
@@ -101,19 +101,19 @@ var/global/list/RPD_recipes=list(
 //		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_HE_STRAIGHT,		1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(PIPE_HE_BENT,			5, PIPE_BENT),
+		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BINARY),
+		"Bent Pipe"      = new /datum/pipe_info(PIPE_HE,				5, PIPE_BENT),
 		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
 	),
 	"Disposal Pipes" = list(
 		"Pipe"          = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
 		"Bent Pipe"     = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_TRINARY),
-		"Junction"      = new /datum/pipe_info/disposal(DISP_JUNCTION,			PIPE_TRINARY),
+		"Junction"      = new /datum/pipe_info/disposal(DISP_JUNCTION,		PIPE_TRINARY),
 		"Y-Junction"    = new /datum/pipe_info/disposal(DISP_YJUNCTION,		PIPE_TRINARY),
 		"Trunk"         = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_TRINARY),
-		"Bin"           = new /datum/pipe_info/disposal(DISP_END_BIN,			PIPE_QUAD),
-		"Outlet"        = new /datum/pipe_info/disposal(DISP_END_OUTLET,		PIPE_UNARY),
+		"Bin"           = new /datum/pipe_info/disposal(DISP_END_BIN,		PIPE_QUAD),
+		"Outlet"        = new /datum/pipe_info/disposal(DISP_END_OUTLET,	PIPE_UNARY),
 		"Chute"         = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
 		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
 	)
@@ -471,7 +471,7 @@ var/global/list/RPD_recipes=list(
 		show_menu(usr)
 
 	if(href_list["makepipe"])
-		p_type = text2num(href_list["makepipe"])
+		p_type = text2path(href_list["makepipe"])
 		p_dir = text2num(href_list["dir"])
 		p_conntype = text2num(href_list["type"])
 		p_class = ATMOS_MODE

@@ -476,7 +476,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
-	return A.hitby(src,thrownby, 0, itempush)
+	return A.hitby(src, 0, itempush)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	thrownby = thrower
