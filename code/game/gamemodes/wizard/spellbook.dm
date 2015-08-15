@@ -64,7 +64,7 @@
 			<I>This spell causes you to turn into a hulk and gain telekinesis for a short while.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>
 			<I>This spell creates your ethereal form, temporarily making you invisible and able to pass through walls.</I><BR>
-			<A href='byond://?src=\ref[src];spell_choice=masssleep'>Mass Sleep</A> (210)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=masssleep'>Mass Sleep</A> (120)<BR>
 			<I>This spell knocks out all organic beings around you for a short period.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>
 			<I>This spell opens nearby doors and does not require wizard garb.</I><BR>

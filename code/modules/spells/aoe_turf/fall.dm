@@ -7,11 +7,11 @@
 
 	selection_type = "range"
 	school = "transmutation"
-	charge_max = 2100 // 3.5min
+	charge_max = 1200 // now 2min
 	invocation = "OMNIA RUINAM"
 	invocation_type = SpI_WHISPER
 	range = 7
-	cooldown_min = 2100
+	cooldown_min = 1200
 	cooldown_reduc = 0
 	level_max = list(Sp_TOTAL = 0, Sp_SPEED = 0, Sp_POWER = 0)
 	hud_state = "wiz_sleep"
