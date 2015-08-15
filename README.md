@@ -3,7 +3,7 @@
 [Website](http://ss13.pomf.se) - [Code](http://gitlab.com/vgstation/vgstation/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
 
 ---
- 
+
 ### GETTING THE CODE
 The simplest way to obtain the code is using the gitlab .zip feature.
 
@@ -31,7 +31,7 @@ First-time installation should be fairly straightforward.  First, you'll need BY
 This is a sourcecode-only release, so the next step is to compile the server files.  Open vgstation13.dme by double-clicking it, open the Build menu, and click compile.  This'll take a little while, and if everything's done right you'll get a message like this:
 
     saving vgstation13.dmb (DEBUG mode)
-    
+
     vgstation13.dmb - 0 errors, 0 warnings
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt download or the files extracted wrong, or a code issue on the main repo.  Ask on IRC.
@@ -79,7 +79,7 @@ For a basic setup, simply copy every file from config-example/ to config/.
 
 The SQL backend for the library and stats tracking requires a MySQL server.  (Linux servers will need to put libmysql.so into the same directory as vgstation13.dme.)  Your server details go in /config/dbconfig.txt.
 
-We've included a web control panel with some sample data readouts.  It's recommended to install the database through sphinx, which is included and includes some updates.
+The database is automatically installed during server startup, but you need to ensure the database and user are present and have necessary permissions.
 
 ---
 
