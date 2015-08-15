@@ -68,7 +68,7 @@
 /datum/objective/assassinate/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
-	..(role, role_type)
+	..()
 	return target
 
 /datum/objective/assassinate/check_completion()
@@ -93,7 +93,7 @@
 /datum/objective/mutiny/find_target_by_role(role, role_type=0,invert=0)
 	if(!invert)
 		target_role_type = role_type
-	..(role, role_type)
+	..()
 	return target
 
 /datum/objective/mutiny/check_completion()
@@ -123,7 +123,7 @@
 /datum/objective/maroon/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
-	..(role, role_type)
+	..()
 	return target
 
 /datum/objective/maroon/check_completion()
@@ -149,7 +149,7 @@
 /datum/objective/debrain/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
-	..(role, role_type)
+	..()
 	return target
 
 /datum/objective/debrain/check_completion()
@@ -183,7 +183,7 @@
 /datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
-	..(role, role_type)
+	..()
 	return target
 
 /datum/objective/protect/check_completion()
@@ -668,7 +668,7 @@ var/global/list/possible_items_special = list()
 	martyr_compatible = 0	//Suicide is not teamwork!
 	explanation_text = "Changeling Friendship!"
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
-
+	var/escape_objective_compatible = FALSE
 
 
 //Impersonate department
