@@ -61,11 +61,10 @@
 				if("head")
 					H.organs += new /obj/item/organ/limb/robot/head(src)
 				if("chest")
-					var/datum/surgery_step/xenomorph_removal/xeno_removal = new
-					xeno_removal.remove_xeno(user, target) // remove an alien if there is one
-					H.organs += new /obj/item/organ/limb/robot/chest(src)
-					for(var/datum/disease/appendicitis/A in H.viruses) //If they already have Appendicitis, Remove it
-						A.cure(1)
+					for(var/obj/item/organ/internal/I in target.getorganszone(target_zone, 1))
+						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
+							I.Remove(target, special = 1)
+							qdel(I)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)

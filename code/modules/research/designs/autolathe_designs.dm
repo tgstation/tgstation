@@ -190,7 +190,7 @@
 	name = "Compressed matter cardridge"
 	id = "rcd_ammo"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 16000, MAT_GLASS=8000)
+	materials = list(MAT_METAL = 3000, MAT_GLASS=2000)
 	build_path = /obj/item/weapon/rcd_ammo
 	category = list("initial","Construction")
 
