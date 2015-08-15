@@ -1,7 +1,7 @@
 var/create_object_html = null
 var/list/create_object_forms = list(
 	/obj, /obj/structure, /obj/machinery, /obj/effect,
-	/obj/item, /obj/item/clothing, /obj/item/stack,
+	/obj/item, /obj/item/clothing, /obj/item/stack, /obj/item/device,
 	/obj/item/weapon, /obj/item/weapon/reagent_containers, /obj/item/weapon/gun)
 
 /datum/admins/proc/create_object(mob/user)
