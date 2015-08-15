@@ -303,13 +303,6 @@ var/list/uplink_items = list()
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bulltoxin
-	name = "Drum Magazine - 12g Bioterror"
-	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an excruciatingly rapid death."
-	item = /obj/item/ammo_box/magazine/m12g/bioterror
-	cost = 6
-	gamemodes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/ammo/carbine
 	name = "Toploader Magazine - 5.56"
 	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
