@@ -8,6 +8,10 @@
 	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-r", sleeptime = 15)
 	robogibs(loc, viruses)
 
+	if(mind) //To make sure we're gibbing a player, who knows
+		if(!suiciding) //I don't know how that could happen, but you can't be too sure
+			score["deadsilicon"] += 1
+
 	living_mob_list -= src
 	dead_mob_list -= src
 	qdel(src)
