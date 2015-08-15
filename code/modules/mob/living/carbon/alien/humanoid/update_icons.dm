@@ -51,14 +51,3 @@
 		lying = 90 //Anything else looks retarded
 	..()
 	update_icons()
-
-
-#undef FACEMASK_LAYER
-#undef HEAD_LAYER
-#undef BACK_LAYER
-#undef LEGCUFF_LAYER
-#undef HANDCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef FIRE_LAYER
-#undef TOTAL_LAYERS

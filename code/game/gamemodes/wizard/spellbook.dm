@@ -105,7 +105,7 @@
 
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 	log_name = "DG"
 
 /datum/spellbook_entry/disabletech
@@ -174,7 +174,7 @@
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
 	log_name = "FS"
 
 /datum/spellbook_entry/summonitem
@@ -273,12 +273,6 @@
 	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
 	item_path = /obj/item/device/necromantic_stone
 	log_name = "NS"
-
-/datum/spellbook_entry/item/multiverse
-	name = "Multiverse Blade"
-	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
-	item_path = /obj/item/weapon/multisword
-	log_name = "MV"
 
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"

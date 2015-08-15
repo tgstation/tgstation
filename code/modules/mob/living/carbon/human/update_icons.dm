@@ -21,6 +21,10 @@ Note: Recent changes by aranclanos+carn:
 	the system is easier to use. update_icons() should not be called unless you absolutely -know- you need it.
 	IN ALL OTHER CASES it's better to just call the specific update_X procs.
 
+Note: The defines for layer numbers is now kept exclusvely in __DEFINES/misc.dm instead of being defined there,
+	then redefined and undefiend everywhere else. If you need to change the layering of sprites (or add a new layer)
+	that's where you should start.
+
 All of this means that this code is more maintainable, faster and still fairly easy to use.
 
 There are several things that need to be remembered:
@@ -47,28 +51,6 @@ If you have any questions/constructive-comments/bugs-to-report
 Please contact me on #coderbus IRC. ~Carnie x
 //Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 */
-// Human Overlays Indexes /////////////////
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_ADJ_LAYER			23
-#define MUTATIONS_LAYER			22		//Tk headglows etc.
-#define AUGMENTS_LAYER			21
-#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			19
-#define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
-#define EARS_LAYER				15
-#define SUIT_LAYER				14
-#define GLASSES_LAYER			13
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		11
-#define HAIR_LAYER				10		//TODO: make part of head layer?
-#define BODY_FRONT_LAYER		9
-
-//KEEP THE TOTAL_LAYER DEFINE UPDATED !
-//////////////////////////////////////////
 
 /mob/living/carbon/human/proc/update_base_icon_state()
 	//var/race = dna ? dna.mutantrace : null
@@ -230,13 +212,18 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/image/standing
 
 		var/iconfile2use //Which icon file to use to generate the overlay and any female alterations.
+		var/layer2use
 
 		if(U.alternate_worn_icon)
 			iconfile2use = U.alternate_worn_icon
 		if(!iconfile2use)
 			iconfile2use = 'icons/mob/uniform.dmi'
+		if(U.alternate_worn_layer)
+			layer2use = U.alternate_worn_layer
+		if(!layer2use)
+			layer2use = UNIFORM_LAYER
 
-		standing = image("icon"=iconfile2use, "icon_state"="[t_color]_s", "layer"=-UNIFORM_LAYER)
+		standing = image("icon"=iconfile2use, "icon_state"="[t_color]_s", "layer"=-layer2use)
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
@@ -284,11 +271,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_state = gloves.item_state
 		if(!t_state)	t_state = gloves.icon_state
 
+		var/layer2use
+		if(gloves.alternate_worn_layer)
+			layer2use = gloves.alternate_worn_layer
+		if(!layer2use)
+			layer2use = GLOVES_LAYER
+
 		var/image/standing
 		if(gloves.alternate_worn_icon)
-			standing = image("icon"=gloves.alternate_worn_icon, "icon_state"="[t_state]", "layer"=-GLOVES_LAYER)
+			standing = image("icon"=gloves.alternate_worn_icon, "icon_state"="[t_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/hands.dmi', "icon_state"="[t_state]", "layer"=-GLOVES_LAYER)
+			standing = image("icon"='icons/mob/hands.dmi', "icon_state"="[t_state]", "layer"=-layer2use)
 
 		overlays_standing[GLOVES_LAYER]	= standing
 
@@ -312,11 +305,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
+		var/layer2use
+		if(glasses.alternate_worn_layer)
+			layer2use = glasses.alternate_worn_layer
+		if(!layer2use)
+			layer2use = GLASSES_LAYER
+
 		var/image/standing
 		if(glasses.alternate_worn_icon)
-			standing = image("icon"=glasses.alternate_worn_icon, "icon_state"="[glasses.icon_state]","layer"=-GLASSES_LAYER)
+			standing = image("icon"=glasses.alternate_worn_icon, "icon_state"="[glasses.icon_state]","layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/eyes.dmi', "icon_state"="[glasses.icon_state]", "layer"=-GLASSES_LAYER)
+			standing = image("icon"='icons/mob/eyes.dmi', "icon_state"="[glasses.icon_state]", "layer"=-layer2use)
 
 		overlays_standing[GLASSES_LAYER] = standing
 
@@ -332,11 +331,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
 			client.screen += ears					//Either way, add the item to the HUD
 
+		var/layer2use
+		if(ears.alternate_worn_layer)
+			layer2use = ears.alternate_worn_layer
+		if(!layer2use)
+			layer2use = EARS_LAYER
+
 		var/image/standing
 		if(ears.alternate_worn_icon)
-			standing = image("icon"=ears.alternate_worn_icon, "icon_state"="[ears.icon_state]", "layer"=-EARS_LAYER)
+			standing = image("icon"=ears.alternate_worn_icon, "icon_state"="[ears.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/ears.dmi', "icon_state"="[ears.icon_state]", "layer"=-EARS_LAYER)
+			standing = image("icon"='icons/mob/ears.dmi', "icon_state"="[ears.icon_state]", "layer"=-layer2use)
 
 		overlays_standing[EARS_LAYER] = standing
 
@@ -352,11 +357,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
+		var/layer2use
+		if(shoes.alternate_worn_layer)
+			layer2use = shoes.alternate_worn_layer
+		if(!layer2use)
+			layer2use = SHOES_LAYER
+
 		var/image/standing
 		if(shoes.alternate_worn_icon)
-			standing = image("icon"=shoes.alternate_worn_icon, "icon_state"="[shoes.icon_state]","layer"=-SHOES_LAYER)
+			standing = image("icon"=shoes.alternate_worn_icon, "icon_state"="[shoes.icon_state]","layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-SHOES_LAYER)
+			standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-layer2use)
 		overlays_standing[SHOES_LAYER]	= standing
 
 		if(shoes.blood_DNA)
@@ -402,11 +413,17 @@ Please contact me on #coderbus IRC. ~Carnie x
 		var/t_state = belt.item_state
 		if(!t_state)	t_state = belt.icon_state
 
+		var/layer2use
+		if(belt.alternate_worn_layer)
+			layer2use = belt.alternate_worn_layer
+		if(!layer2use)
+			layer2use = BELT_LAYER
+
 		var/image/standing
 		if(belt.alternate_worn_icon)
-			standing = image("icon"=belt.alternate_worn_icon, "icon_state"="[t_state]", "layer"=-BELT_LAYER)
+			standing = image("icon"=belt.alternate_worn_icon, "icon_state"="[t_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/belt.dmi', "icon_state"="[t_state]", "layer"=-BELT_LAYER)
+			standing = image("icon"='icons/mob/belt.dmi', "icon_state"="[t_state]", "layer"=-layer2use)
 
 		overlays_standing[BELT_LAYER] = standing
 
@@ -423,11 +440,18 @@ Please contact me on #coderbus IRC. ~Carnie x
 				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
+
+		var/layer2use
+		if(wear_suit.alternate_worn_layer)
+			layer2use = wear_suit.alternate_worn_layer
+		if(!layer2use)
+			layer2use = SUIT_LAYER
+
 		var/image/standing
 		if(wear_suit.alternate_worn_icon)
-			standing = image("icon"=wear_suit.alternate_worn_icon, "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
+			standing = image("icon"=wear_suit.alternate_worn_icon, "icon_state"="[wear_suit.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
+			standing = image("icon"='icons/mob/suit.dmi', "icon_state"="[wear_suit.icon_state]", "layer"=-layer2use)
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -509,20 +533,3 @@ Please contact me on #coderbus IRC. ~Carnie x
 				continue
 			out += overlays_standing[i]
 	return out
-
-//Human Overlays Indexes/////////
-#undef SPECIES_LAYER
-#undef BODY_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef UNIFORM_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef HAIR_LAYER
-#undef TOTAL_LAYERS

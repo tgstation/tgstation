@@ -56,10 +56,10 @@ var/pipenetwarnings = 10
 
 							if(item.parent)
 								if(pipenetwarnings > 0)
-									error("[item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
-										error("further messages about pipenets will be supressed")
+										warning("build_pipeline(): further messages about pipenets will be supressed")
 							members += item
 							possible_expansions += item
 

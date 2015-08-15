@@ -1,18 +1,3 @@
-
-
-//Carbon Overlays Indexes/////////
-#define FACEMASK_LAYER			8
-#define HEAD_LAYER				7
-#define BACK_LAYER				6
-#define LEGCUFF_LAYER			5
-#define HANDCUFF_LAYER			4
-#define L_HAND_LAYER			3
-#define R_HAND_LAYER			2		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
-#define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
-//////////////////////////////////
-
-
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
 /mob/living/carbon/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -111,11 +96,18 @@
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 	if(istype(wear_mask, /obj/item/clothing/mask))
+
+		var/layer2use
+		if(wear_mask.alternate_worn_layer)
+			layer2use = wear_mask.alternate_worn_layer
+		if(!layer2use)
+			layer2use = FACEMASK_LAYER
+
 		var/image/standing
 		if(wear_mask.alternate_worn_icon)
-			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
+			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
+			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
 
 		overlays_standing[FACEMASK_LAYER]	= standing
 
@@ -126,11 +118,18 @@
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 	if(back)
+
+		var/layer2use
+		if(back.alternate_worn_layer)
+			layer2use = back.alternate_worn_layer
+		if(!layer2use)
+			layer2use = BACK_LAYER
+
 		var/image/standing
 		if(back.alternate_worn_icon)
-			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
+			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
+			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-layer2use)
 
 		overlays_standing[BACK_LAYER] = standing
 		return back
@@ -139,11 +138,18 @@
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
+
+		var/layer2use
+		if(head.alternate_worn_layer)
+			layer2use = head.alternate_worn_layer
+		if(!layer2use)
+			layer2use = HEAD_LAYER
+
 		var/image/standing
 		if(head.alternate_worn_icon)
-			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-layer2use)
 		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
 		standing.alpha = head.alpha
 

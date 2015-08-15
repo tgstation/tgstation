@@ -8,8 +8,6 @@
 
 	maxHealth = 25
 	health = 25
-	storedPlasma = 50
-	max_plasma = 50
 
 	var/amount_grown = 0
 	var/max_grown = 200
@@ -17,11 +15,9 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/New()
-	create_reagents(100)
-	if(name == "alien larva")
-		name = "alien larva ([rand(1, 1000)])"
-	real_name = name
 	regenerate_icons()
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
 	..()
@@ -32,8 +28,8 @@
 	if(statpanel("Status"))
 		stat(null, "Progress: [amount_grown]/[max_grown]")
 
-/mob/living/carbon/alien/larva/adjustToxLoss(amount)
-	if(stat != DEAD)
+/mob/living/carbon/alien/larva/adjustPlasma(amount)
+	if(stat != DEAD && amount > 0)
 		amount_grown = min(amount_grown + 1, max_grown)
 	..(amount)
 

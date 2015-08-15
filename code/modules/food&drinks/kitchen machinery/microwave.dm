@@ -14,7 +14,6 @@
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
 	var/efficiency = 0
-	var/microwavepower = 1
 
 
 // see code/modules/food/recipes_microwave.dm for recipes
@@ -203,12 +202,6 @@
 			dat = "<h3>Ingredients:</h3>[dat]</div>"
 		dat += "<A href='?src=\ref[src];action=cook'>Turn on</A>"
 		dat += "<A href='?src=\ref[src];action=dispose'>Eject ingredients</A><BR>"
-		dat += "Microwave Power: [microwavepower*200]W<BR>"
-		dat += "<A href='?src=\ref[src];action=power;amount=1'>200W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=2'>400W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=3'>600W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=4'>800W</A>"
-		dat += "<A href='?src=\ref[src];action=power;amount=5'>1000W</A><BR>"
 
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
@@ -224,7 +217,7 @@
 		return
 	start()
 
-	if (prob(max(microwavepower*5/efficiency-5,dirty*5))) //a clean unupgraded microwave on lowest power has no risk of failure
+	if (prob(max(5/efficiency-5,dirty*5))) //a clean unupgraded microwave has no risk of failure
 		muck_start()
 		if (!microwaving(4))
 			muck_finish()
@@ -265,7 +258,7 @@
 		if (stat & (NOPOWER|BROKEN))
 			return 0
 		use_power(500)
-		sleep(max(14-2*microwavepower-2*efficiency,2)) // standard power means sleep(10). The higher the power and the better the efficiency, the faster the cooking
+		sleep(max(12-2*efficiency,2)) // standard microwave means sleep(10). The better the efficiency, the faster the cooking
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()
@@ -340,10 +333,5 @@
 
 		if ("dispose")
 			dispose()
-		if ("power")
-			var/amount = text2num(href_list["amount"])
-			if(amount<1 || amount>5)
-				return
-			microwavepower = amount
 	updateUsrDialog()
 	return

@@ -37,11 +37,8 @@
 		species_list[S.id] = S.type
 
 	//Surgeries
-	for(var/path in typesof(/datum/surgery))
-		if(path == /datum/surgery)
-			continue
-		var/datum/surgery/S = new path()
-		surgeries_list[S.name] = S
+	for(var/path in (typesof(/datum/surgery) - /datum/surgery))
+		surgeries_list += new path()
 
 	init_subtypes(/datum/table_recipe, table_recipes)
 

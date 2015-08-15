@@ -44,13 +44,7 @@
 		else
 				return 0
 
-/mob/living/throw_impact(atom/hit_atom)
-	. = ..()
-	if(hit_atom.density)
-		Weaken(1)
-		take_organ_damage(10)
-
-/mob/living/hitby(atom/movable/AM)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
@@ -81,7 +75,7 @@
 			add_logs(I.thrownby, src, "hit", I)
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	return ..()
+	..()
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")

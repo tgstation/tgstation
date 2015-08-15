@@ -141,26 +141,26 @@ update_label("John Doe", "Clowny")
 			if(user.mind.special_role)
 				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
-
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
-	if(!src.registered_name)
-		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
-		var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)as text | null),1,26)
-		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
-			if (t)
-				alert("Invalid name.")
-			return
-		src.registered_name = t
+	if(istype(user, /mob/living) && user.mind)
+		if(user.mind.special_role)
+			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
+				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
+				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+					if (t)
+						alert("Invalid name.")
+					return
+				registered_name = t
 
-		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
-		if(!u)
-			src.registered_name = ""
-			return
-		src.assignment = u
-		update_label()
-		user << "<span class='notice'>You successfully forge the ID card.</span>"
-	else
-		..()
+				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
+				if(!u)
+					registered_name = ""
+					return
+				assignment = u
+				update_label()
+				user << "<span class='notice'>You successfully forge the ID card.</span>"
+				return
+	..()
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"

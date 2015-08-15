@@ -159,7 +159,12 @@
 			return
 
 		if(A.hasPower())
-			user << "<span class='warning'>The airlock's motors resist our efforts to force it!</span>"
+			if(A.locked)
+				user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
+				return
+			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
+			if(do_after(user, 100, target = A))
+				A.open(2)
 			return
 
 		else if(A.locked)
@@ -200,13 +205,13 @@
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
-	flags = NODROP
+	flags = ABSTRACT | NODROP
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 
 	var/remaining_uses //Set by the changeling ability.
 
-/obj/item/weapon/melee/shield/New()
+/obj/item/weapon/shield/changeling/New()
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")

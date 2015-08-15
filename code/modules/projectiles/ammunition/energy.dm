@@ -121,13 +121,13 @@
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
 	select_name = "plasma burst"
-	fire_sound = 'sound/weapons/Laser.ogg'
-	delay = 10
+	fire_sound = 'sound/weapons/plasma_cutter.ogg'
+	delay = 15
 	e_cost = 25
 
 /obj/item/ammo_casing/energy/plasma/adv
 	projectile_type = /obj/item/projectile/plasma/adv
-	delay = 8
+	delay = 10
 	e_cost = 10
 
 /obj/item/ammo_casing/energy/wormhole

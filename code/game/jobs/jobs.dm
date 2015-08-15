@@ -125,3 +125,15 @@ var/list/nonhuman_positions = list(
 
 /proc/guest_jobbans(job)
 	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))
+
+
+
+//this is necessary because antags happen before job datums are handed out, but NOT before they come into existence
+//so I can't simply use job datum.department_head straight from the mind datum, laaaaame.
+/proc/get_department_heads(var/job_title)
+	if(!job_title)
+		return list()
+
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title == job_title)
+			return J.department_head //this is a list

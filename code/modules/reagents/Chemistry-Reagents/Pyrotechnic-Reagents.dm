@@ -128,13 +128,16 @@
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
 	color = "#FF9999"
+	
+/datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, volume)
+	M.IgniteMob()
+	..()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
-	M.IgniteMob()
-	M.adjustFireLoss(0.2*M.fire_stacks)
+	var/burndmg = max(0.3*M.fire_stacks, 0.3)
+	M.adjustFireLoss(burndmg)
 	..()
-	return
 
 /datum/reagent/napalm
 	name = "Napalm"

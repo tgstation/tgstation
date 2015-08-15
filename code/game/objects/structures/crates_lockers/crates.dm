@@ -45,11 +45,12 @@
 	icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/rcd
-	desc = "A crate for the storage of the RCD."
+	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 
 /obj/structure/closet/crate/rcd/New()
 	..()
+	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
