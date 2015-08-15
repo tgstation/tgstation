@@ -33,6 +33,8 @@
 	layer = 2.9
 	anchored = 1
 	density = 1
+	var/health = 100
+	var/maxhealth = 100 //Kicking feature
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
@@ -475,22 +477,35 @@
 
 	spawn(ticks)
 
-	if(stat & (BROKEN|NOPOWER)) //Make another check just in case something goes weird
+	if(stat & (NOPOWER)) //Make another check just in case something goes weird
 		stat &= ~NOPOWER
-		src.icon_state = "[initial(icon_state)]"
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
-	if(user.a_intent == "hurt")
+		if(src.health > 0) //Another check
+			src.icon_state = "[initial(icon_state)]"
+
+/obj/machinery/vending/attack_hand(mob/living/user as mob)
+	if(user.a_intent == "hurt") //Will make another update later. Hulks will insta-break
 		user.delayNextAttack(10)
 		user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>",
 								"<span class='danger'>You kick the [src].</span>")
 		playsound(get_turf(src), 'sound/effects/grillehit.ogg', 50, 1) //Zth: I couldn't find a proper sound, please replace it
-		if(prob(2))
-			src.throw_item()
-		if(prob(1))
-			src.TurnOff(600) //A whole minute
-		src.shake(1, 3)
+		src.shake(1, 3) //1 means x movement, 3 means intensity
+		src.health -= 4
 
+		if(src.health <= 0)
+			stat |= BROKEN
+			src.icon_state = "[initial(icon_state)]-broken"
+			return
+		if(prob(80))
+			user.apply_damage(rand(2,4), BRUTE, "r_leg")
+		if(prob(4))
+			src.throw_item()
+		if(prob(2))
+			src.TurnOff(600) //A whole minute
+		/*if(prob(1))
+			usr << "<span class='warning'>You fall down and break your leg!</span>"
+			user.emote("scream",,, 1)
+			shake_camera(user, 3, 2)*/
 		return
 
 	if(stat & (BROKEN|NOPOWER))
