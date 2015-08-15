@@ -531,3 +531,46 @@ var/const/GALOSHES_DONT_HELP = 8
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
+
+/mob/living/carbon/emp_act(severity)
+	for(var/obj/item/organ/internal/O in internal_organs)
+		O.emp_act(severity)
+	..()
+
+/mob/living/carbon/check_eye_prot()
+	var/number = ..()
+	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
+		number += EFP.flash_protect
+	return number
+
+/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
+	abilities.Add(A)
+	A.on_gain(src)
+	if(A.has_action)
+		if(!A.action)
+			A.action = new/datum/action/spell_action/alien
+			A.action.target = A
+			A.action.name = A.name
+			A.action.button_icon = A.action_icon
+			A.action.button_icon_state = A.action_icon_state
+			A.action.background_icon_state = A.action_background_icon_state
+		A.action.Grant(src)
+	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
+
+/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
+	abilities.Remove(A)
+	A.on_lose(src)
+	if(A.action)
+		A.action.Remove(src)
+
+/mob/living/carbon/proc/add_abilities_to_panel()
+	for(var/obj/effect/proc_holder/alien/A in abilities)
+		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
+
+/mob/living/carbon/Stat()
+	..()
+	if(statpanel("Status"))
+		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+		if(vessel)
+			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+	add_abilities_to_panel()

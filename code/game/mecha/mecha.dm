@@ -143,7 +143,7 @@
 	spark_system = null
 
 	mechas_list -= src //global mech list
-	..()
+	return ..()
 
 ////////////////////////
 ////// Helpers /////////
@@ -445,23 +445,17 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle)
-//	src.inertia_dir = null
-	if(istype(obstacle, /obj))
-		var/obj/O = obstacle
-		if(istype(O, /obj/effect/portal)) //derpfix
-			anchored = 0
-			O.Crossed(src)
-			src.anchored = 1
-		else if(!O.anchored)
+/obj/mecha/Bump(var/atom/obstacle, yes)
+	if(yes)
+		if(..()) //mech was thrown
+			return
+		if(istype(obstacle, /obj))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(istype(obstacle, /mob))
 			step(obstacle, dir)
-		else //I have no idea why I disabled this
-			obstacle.Bumped(src)
-	else if(istype(obstacle, /mob))
-		step(obstacle, dir)
-	else
-		obstacle.Bumped(src)
-	return
+
 
 ///////////////////////////////////
 ////////  Internal damage  ////////
@@ -926,23 +920,20 @@ var/year_integer = text2num(year) // = 2013???
 
 /datum/action/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
-	button_icon_state = "mech_toggle_internals"
+	button_icon_state = "mech_internals_off"
 
 /datum/action/mecha/mech_toggle_internals/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	chassis.use_internal_tank = !chassis.use_internal_tank
-	if(chassis.use_internal_tank)
-		button_icon_state = "mech_toggle_internals_on"
-	else
-		button_icon_state = "mech_toggle_internals"
+	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.occupant_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].")
 
 
 /datum/action/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
-	button_icon_state = "mech_cycle_equip"
+	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/mecha/mech_cycle_equip/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -954,6 +945,7 @@ var/year_integer = text2num(year) // = 2013???
 		chassis.selected = chassis.equipment[1]
 		chassis.occupant_message("You select [chassis.selected]")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
+		button_icon_state = "mech_cycle_equip_on"
 		return
 	var/number = 0
 	for(var/A in chassis.equipment)
@@ -962,16 +954,18 @@ var/year_integer = text2num(year) // = 2013???
 			if(chassis.equipment.len == number)
 				chassis.selected = null
 				chassis.occupant_message("You switch to no equipment")
+				button_icon_state = "mech_cycle_equip_off"
 			else
 				chassis.selected = chassis.equipment[number+1]
 				chassis.occupant_message("You switch to [chassis.selected]")
+				button_icon_state = "mech_cycle_equip_on"
 			send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 			return
 
 
 /datum/action/mecha/mech_toggle_lights
 	name = "Toggle Lights"
-	button_icon_state = "mech_toggle_lights"
+	button_icon_state = "mech_lights_off"
 
 /datum/action/mecha/mech_toggle_lights/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
@@ -979,10 +973,10 @@ var/year_integer = text2num(year) // = 2013???
 	chassis.lights = !chassis.lights
 	if(chassis.lights)
 		chassis.AddLuminosity(chassis.lights_power)
-		button_icon_state = "mech_toggle_lights_on"
+		button_icon_state = "mech_lights_on"
 	else
 		chassis.AddLuminosity(-chassis.lights_power)
-		button_icon_state = "mech_toggle_lights"
+		button_icon_state = "mech_lights_off"
 	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")
 

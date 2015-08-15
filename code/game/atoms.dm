@@ -258,7 +258,7 @@ its easier to just keep the beam vertical.
 /atom/proc/fire_act()
 	return
 
-/atom/proc/hitby(atom/movable/AM, skip, var/hitpush)
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
 		spawn(2)
 			step(AM,  turn(AM.dir, 180))
@@ -426,3 +426,6 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
+
+//This proc is called on the location of an atom when the atom is Destroy()'d
+/atom/proc/handle_atom_del(atom/A)

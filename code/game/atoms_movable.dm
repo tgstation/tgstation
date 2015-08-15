@@ -76,6 +76,8 @@
 
 /atom/movable/Destroy()
 	. = ..()
+	if(loc)
+		loc.handle_atom_del(src)
 	if(reagents)
 		qdel(reagents)
 	for(var/atom/movable/AM in contents)
@@ -153,10 +155,10 @@
 /atom/movable/proc/throw_impact(atom/hit_atom)
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skip, var/hitpush = 1)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
-	return ..()
+	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!target || !src || (flags & NODROP))	return 0

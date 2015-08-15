@@ -11,7 +11,6 @@ var/global/posibrain_notif_cooldown = 0
 	var/askDelay = 10 * 60 * 1
 	brainmob = null
 	req_access = list(access_robotics)
-	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 
@@ -23,7 +22,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
 	if(!posibrain_notif_cooldown)
-		notify_ghosts("Positronic Brain [msg] in [get_area(src)]. <a href=?src=\ref[src];activate=1>(Enter)</a>")
+		notify_ghosts("Positronic brain [msg] in [get_area(src)]! <a href=?src=\ref[src];activate=1>(Click to enter)</a>", 'sound/effects/ghost2.ogg')
 		posibrain_notif_cooldown = 1
 		spawn(askDelay) //Global one minute cooldown to avoid spam.
 			posibrain_notif_cooldown = 0

@@ -25,7 +25,6 @@
 	icon_state = "door_as_1"
 	airlock_type = /obj/machinery/door/airlock
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_com
@@ -37,7 +36,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_command
 	airlock_type = /obj/machinery/door/airlock/command
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_com/glass
@@ -53,7 +51,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_security
 	airlock_type = /obj/machinery/door/airlock/security
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_sec/glass
@@ -69,7 +66,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_engineering
 	airlock_type = /obj/machinery/door/airlock/engineering
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_eng/glass
@@ -85,7 +81,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_mining
 	airlock_type = /obj/machinery/door/airlock/mining
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_min/glass
@@ -101,7 +96,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_atmos
 	airlock_type = /obj/machinery/door/airlock/atmos
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_atmo/glass
@@ -117,7 +111,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_research
 	airlock_type = /obj/machinery/door/airlock/research
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_research/glass
@@ -133,7 +126,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_science
 	airlock_type = /obj/machinery/door/airlock/science
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_science/glass
@@ -149,7 +141,6 @@
 	glass_type = /obj/machinery/door/airlock/glass_medical
 	airlock_type = /obj/machinery/door/airlock/medical
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_med/glass
@@ -163,7 +154,6 @@
 	icontext = "mai"
 	airlock_type = /obj/machinery/door/airlock/maintenance
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_ext
@@ -173,7 +163,6 @@
 	icontext = "ext"
 	airlock_type = /obj/machinery/door/airlock/external
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_fre
@@ -183,7 +172,6 @@
 	icontext = "fre"
 	airlock_type = /obj/machinery/door/airlock/freezer
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_hatch
@@ -193,7 +181,6 @@
 	icontext = "hatch"
 	airlock_type = /obj/machinery/door/airlock/hatch
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_mhatch
@@ -203,7 +190,6 @@
 	icontext = "mhatch"
 	airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_glass
@@ -211,7 +197,6 @@
 	icon_state = "door_as_g1"
 	airlock_type = /obj/machinery/door/airlock/glass
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "glass"
 
@@ -220,7 +205,6 @@
 	icon_state = "door_as_gold1"
 	airlock_type = /obj/machinery/door/airlock/gold
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "gold"
 
@@ -229,7 +213,6 @@
 	icon_state = "door_as_silver1"
 	airlock_type = /obj/machinery/door/airlock/silver
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "silver"
 
@@ -238,7 +221,6 @@
 	icon_state = "door_as_diamond1"
 	airlock_type = /obj/machinery/door/airlock/diamond
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "diamond"
 
@@ -247,7 +229,6 @@
 	icon_state = "door_as_uranium1"
 	airlock_type = /obj/machinery/door/airlock/uranium
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "uranium"
 
@@ -256,7 +237,6 @@
 	icon_state = "door_as_plasma1"
 	airlock_type = /obj/machinery/door/airlock/plasma
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "plasma"
 
@@ -266,7 +246,6 @@
 	icon_state = "door_as_clown1"
 	airlock_type = /obj/machinery/door/airlock/clown
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "bananium"
 
@@ -275,7 +254,6 @@
 	icon_state = "door_as_sandstone1"
 	airlock_type = /obj/machinery/door/airlock/sandstone
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "sandstone"
 
@@ -286,7 +264,6 @@
 	icontext = "highsec"
 	airlock_type = /obj/machinery/door/airlock/highsecurity
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_vault
@@ -296,7 +273,6 @@
 	icontext = "vault"
 	airlock_type = /obj/machinery/door/airlock/vault
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_shuttle
@@ -306,7 +282,6 @@
 	icontext = "shuttle"
 	airlock_type = /obj/machinery/door/airlock/shuttle
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_wood
@@ -314,7 +289,6 @@
 	icon_state = "door_as_wood1"
 	airlock_type = /obj/machinery/door/airlock/wood
 	anchored = 1
-	density = 1
 	state = 1
 	mineral = "wood"
 
@@ -327,12 +301,19 @@
 	glass_type = /obj/machinery/door/airlock/glass_virology
 	airlock_type = /obj/machinery/door/airlock/virology
 	anchored = 1
-	density = 1
 	state = 1
 
 /obj/structure/door_assembly/door_assembly_viro/glass
 	mineral = "glass"
 	icon_state = "door_as_gviro1"
+
+/obj/structure/door_assembly/door_assembly_centcom
+	icon_state = "door_as_ele1"
+	typetext = "centcom"
+	icontext = "ele"
+	airlock_type = /obj/machinery/door/airlock/centcom
+	anchored = 1
+	state = 1
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))

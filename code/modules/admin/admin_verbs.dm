@@ -129,7 +129,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
 	/client/proc/populate_world,
-	/client/proc/cmd_display_del_log
+	/client/proc/cmd_display_del_log,
+	/client/proc/reset_latejoin_spawns
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -585,8 +586,8 @@ var/list/admin_verbs_hideable = list(
 			var/error_extra = ""
 			if(!config.admin_legacy_system)
 				error_extra = " Check mysql DB connection."
-			error("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
 			src << "Error while re-adminning, admin rank ([rank]) does not exist.[error_extra]"
+			WARNING("Error while re-adminning [src], admin rank ([rank]) does not exist.[error_extra]")
 			return
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]

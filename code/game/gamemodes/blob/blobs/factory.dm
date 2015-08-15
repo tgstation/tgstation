@@ -7,7 +7,6 @@
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
-	var/mob/camera/blob/overmind
 
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)

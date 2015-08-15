@@ -50,11 +50,6 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/atmosinit()
 	return
 
-//object initializion. done well after air is setup (build_network needs all pipes to be init'ed with atmosinit before hand)
-/obj/machinery/atmospherics/initialize()
-	..()
-	build_network() //make sure to build our pipe nets
-
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
 
@@ -177,11 +172,9 @@ Pipelines + Other Objects -> Pipe network
 	var/turf/T = loc
 	level = T.intact ? 2 : 1
 	atmosinit()
-	initialize()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.atmosinit()
-		A.initialize()
 		A.addMember(src)
 	build_network()
 
@@ -201,6 +194,9 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!(direction & initialize_directions)) //cant go this way.
+		return
+
+	if(buckled_mob == user) // fixes buckle ventcrawl edgecase fuck bug
 		return
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)

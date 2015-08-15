@@ -269,7 +269,7 @@
 	updateUsrDialog()
 	sleep(30) //only sleep if called by user
 
-	for(var/obj/machinery/computer/rdconsole/RDC in area_contents(get_area(src)))
+	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
 		if(!RDC.sync)
 			continue
 		for(var/datum/tech/T in RDC.files.known_tech)

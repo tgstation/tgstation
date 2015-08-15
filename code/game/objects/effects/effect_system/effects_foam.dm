@@ -29,7 +29,7 @@
 /obj/effect/effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 /obj/effect/effect/foam/Destroy()
