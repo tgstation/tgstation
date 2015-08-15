@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: added Clownpiece's jumpsuit, hat, and wings to the Autodrobe. We Toho 15 now!
-  - rscadd: using *aflap while wearing the wings will visibly make them flap a bit.
-  - rscadd: added an admin-spawned-only version of the wings that allows players to fly, similarly to brooms wielded by wizards.

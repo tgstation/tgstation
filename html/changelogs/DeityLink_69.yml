@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed an exploit that allowed players to keep flying as long as they keep the flying fairy wings in their hands and let them wear another exosuit, such as an armor or spacesuit. Now players stop flying as soon as they remove the wings from their suit slot.
-  - bugfix: The *flap and *aflap emotes are now gender-sensitive (X flaps his/her wings).
