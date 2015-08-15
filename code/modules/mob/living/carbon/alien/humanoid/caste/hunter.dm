@@ -3,10 +3,16 @@
 	caste = "h"
 	maxHealth = 150
 	health = 150
+	storedPlasma = 100
+	max_plasma = 150
 	icon_state = "alienh_s"
+	plasma_rate = 5
 
 /mob/living/carbon/alien/humanoid/hunter/New()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	create_reagents(100)
+	if(name == "alien hunter")
+		name = text("alien hunter ([rand(1, 1000)])")
+	real_name = name
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/handle_hud_icons_health()

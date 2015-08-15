@@ -18,13 +18,13 @@
 	minbodytemp = 0
 	faction = list("cult")
 	flying = 1
-	unique_name = 1
 	var/list/construct_spells = list()
 	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 
-
 /mob/living/simple_animal/construct/New()
 	..()
+	name = text("[initial(name)] ([rand(1, 1000)])")
+	real_name = name
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 

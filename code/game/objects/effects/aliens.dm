@@ -324,11 +324,8 @@
 		Grow()
 
 
-/obj/structure/alien/egg/attack_paw(mob/living/user)
-	return attack_hand(user)
-
-/obj/structure/alien/egg/attack_hand(mob/living/user)
-	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+/obj/structure/alien/egg/attack_paw(mob/user)
+	if(isalien(user))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -343,12 +340,17 @@
 				Burst(0)
 				return
 	else
-		user << "<span class='notice'>It feels slimy.</span>"
-		user.changeNext_move(CLICK_CD_MELEE)
+		return attack_hand(user)
+
+
+/obj/structure/alien/egg/attack_hand(mob/user)
+	user << "<span class='notice'>It feels slimy.</span>"
+	user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
 	return locate(/obj/item/clothing/mask/facehugger) in contents
+
 
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"

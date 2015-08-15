@@ -100,18 +100,3 @@
 		td << "<span class='userdanger'>You enter the rift. Deafening chimes jingle in your ears. You are swallowed in darkness.</span>"
 	playsound(loc, 'sound/effects/EMPulse.ogg', 25, 1)
 	qdel(td)
-
-
-/obj/item/organ/internal/shadowtumor
-	name = "black tumor"
-	icon_state = "blacktumor"
-	origin_tech = "biotech=4"
-	w_class = 1
-	zone = "head"
-	slot = "brain_tumor"
-
-/obj/item/organ/internal/shadowtumor/on_find(mob/living/finder)
-	finder << "<span class='warning'>You locate a small, pulsing black tumor in [owner]'s head!</span>"
-	owner << "<span class='boldannounce'>A small part of your head pulses with agony as the light impacts it!</span>"
-
-// TODO: replace dethrall surgery with this + organ manipulation, somehow.

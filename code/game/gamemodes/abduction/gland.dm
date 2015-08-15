@@ -175,7 +175,8 @@
 
 /obj/item/organ/internal/gland/spiderman/activate()
 	owner << "<span class='warning'>You feel something crawling in your skin.</span>"
-	owner.faction |= "spiders"
+	if(uses == initial(uses))
+		owner.faction += "spiders"
 	new /obj/effect/spider/spiderling(owner.loc)
 
 /obj/item/organ/internal/gland/egg

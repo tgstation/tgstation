@@ -20,9 +20,6 @@ Sorry Giacom. Please don't be mad :(
 				else //no choice? force static
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
-	if(unique_name)
-		name = "[name] ([rand(1, 1000)])"
-		real_name = name
 
 
 /mob/living/Destroy()

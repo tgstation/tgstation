@@ -261,7 +261,7 @@
 
 	if(..()) //alive
 
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
 

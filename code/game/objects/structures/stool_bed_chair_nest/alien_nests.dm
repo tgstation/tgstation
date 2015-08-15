@@ -15,15 +15,9 @@
 	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
 	return ..()
 
-/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/living/user)
+/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(buckled_mob && buckled_mob.buckled == src)
 		var/mob/living/M = buckled_mob
-
-		if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
-			unbuckle_mob()
-			add_fingerprint(user)
-			return
-
 		if(M != user)
 			M.visible_message(\
 				"[user.name] pulls [M.name] free from the sticky nest!",\
@@ -48,13 +42,13 @@
 		unbuckle_mob()
 		add_fingerprint(user)
 
-/obj/structure/stool/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
+/obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
-	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(istype(M,/mob/living/carbon/alien))
 		return
-	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(!istype(user,/mob/living/carbon/alien/humanoid))
 		return
 
 	unbuckle_mob()

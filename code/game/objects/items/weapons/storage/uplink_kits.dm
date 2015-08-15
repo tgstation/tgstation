@@ -58,7 +58,6 @@
 			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/adrenalin(src)
 			new /obj/item/weapon/implanter/explosive(src)
-			new /obj/item/weapon/implanter/storage(src)
 			return
 
 		if("hacker")
@@ -149,15 +148,6 @@
 	return
 
 
-/obj/item/weapon/storage/box/syndie_kit/imp_storage
-	name = "boxed storage implant (with injector)"
-
-/obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
-	..()
-	new /obj/item/weapon/implanter/storage(src)
-	return
-
-
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
@@ -183,7 +173,6 @@
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
-	storage_slots = 14
 
 /obj/item/weapon/storage/box/syndie_kit/chemical/New()
 	..()

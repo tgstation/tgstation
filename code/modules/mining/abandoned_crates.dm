@@ -110,9 +110,9 @@
 		if(87) //1% chance
 			new /obj/item/weed_extract(src)
 		if(88)
-			new /obj/item/organ/internal/brain(src)
+			new /obj/item/organ/brain(src)
 		if(89)
-			new /obj/item/organ/internal/brain/alien(src)
+			new /obj/item/organ/brain/alien(src)
 		if(90)
 			new /obj/item/organ/internal/heart(src)
 		if(91)

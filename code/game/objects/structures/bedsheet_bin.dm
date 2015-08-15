@@ -8,7 +8,7 @@ LINEN BINS
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
 	icon = 'icons/obj/bedsheets.dmi'
-	icon_state = "sheetwhite"
+	icon_state = "white"
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
 	layer = 4.0
@@ -41,131 +41,131 @@ LINEN BINS
 	..()
 
 /obj/item/weapon/bedsheet/blue
-	icon_state = "sheetblue"
+	icon_state = "blue"
 	item_color = "blue"
 
 /obj/item/weapon/bedsheet/green
-	icon_state = "sheetgreen"
+	icon_state = "green"
 	item_color = "green"
 
 /obj/item/weapon/bedsheet/orange
-	icon_state = "sheetorange"
+	icon_state = "orange"
 	item_color = "orange"
 
 /obj/item/weapon/bedsheet/purple
-	icon_state = "sheetpurple"
+	icon_state = "purple"
 	item_color = "purple"
 
 /obj/item/weapon/bedsheet/patriot
 	name = "patriotic bedsheet"
 	desc = "You've never felt more free than when sleeping on this."
-	icon_state = "sheetUSA"
+	icon_state = "USA"
 	item_color = "sheetUSA"
 
 /obj/item/weapon/bedsheet/rainbow
 	name = "rainbow bedsheet"
 	desc = "A multicolored blanket. It's actually several different sheets cut up and sewn together."
-	icon_state = "sheetrainbow"
+	icon_state = "rainbow"
 	item_color = "rainbow"
 
 /obj/item/weapon/bedsheet/red
-	icon_state = "sheetred"
+	icon_state = "red"
 	item_color = "red"
 
 /obj/item/weapon/bedsheet/yellow
-	icon_state = "sheetyellow"
+	icon_state = "yellow"
 	item_color = "yellow"
 
 /obj/item/weapon/bedsheet/mime
 	name = "mime's blanket"
 	desc = "A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this."
-	icon_state = "sheetmime"
+	icon_state = "mime"
 	item_color = "mime"
 
 /obj/item/weapon/bedsheet/clown
 	name = "clown's blanket"
 	desc = "A rainbow blanket with a clown mask woven in. It smells faintly of bananas."
-	icon_state = "sheetclown"
+	icon_state = "clown"
 	item_color = "clown"
 
 /obj/item/weapon/bedsheet/captain
 	name = "captain's bedsheet"
 	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
-	icon_state = "sheetcaptain"
+	icon_state = "captain"
 	item_color = "captain"
 
 /obj/item/weapon/bedsheet/rd
 	name = "research director's bedsheet"
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
-	icon_state = "sheetrd"
+	icon_state = "rd"
 	item_color = "director"
 
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
 	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
-	icon_state = "sheetmedical"
+	icon_state = "medical"
 	item_color = "medical"
 
 /obj/item/weapon/bedsheet/cmo
 	name = "chief medical officer's bedsheet"
 	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
-	icon_state = "sheetcmo"
+	icon_state = "cmo"
 	item_color = "cmo"
 
 /obj/item/weapon/bedsheet/hos
 	name = "head of security's bedsheet"
 	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
-	icon_state = "sheethos"
+	icon_state = "hos"
 	item_color = "hosred"
 
 /obj/item/weapon/bedsheet/hop
 	name = "head of personnel's bedsheet"
 	desc = "It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
-	icon_state = "sheethop"
+	icon_state = "hop"
 	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
 	name = "chief engineer's bedsheet"
 	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
-	icon_state = "sheetce"
+	icon_state = "ce"
 	item_color = "chief"
 
 /obj/item/weapon/bedsheet/qm
 	name = "quartermaster's bedsheet"
 	desc = "It is decorated with a crate emblem in silver lining.  It's rather tough, and just the thing to lie on after a hard day of pushing paper."
-	icon_state = "sheetqm"
+	icon_state = "qm"
 	item_color = "qm"
 
 /obj/item/weapon/bedsheet/brown
-	icon_state = "sheetbrown"
+	icon_state = "brown"
 	item_color = "cargo"
 
 /obj/item/weapon/bedsheet/centcom
 	name = "\improper Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
-	icon_state = "sheetcentcom"
+	icon_state = "centcom"
 	item_color = "centcom"
 
 /obj/item/weapon/bedsheet/syndie
 	name = "syndicate bedsheet"
 	desc = "It has a syndicate emblem and it has an aura of evil."
-	icon_state = "sheetsyndie"
+	icon_state = "syndie"
 	item_color = "syndie"
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
 	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
-	icon_state = "sheetcult"
+	icon_state = "cult"
 	item_color = "cult"
 
 /obj/item/weapon/bedsheet/wiz
 	name = "wizard's bedsheet"
 	desc = "A special fabric enchanted with magic so you can have an enchanted night. It even glows!"
-	icon_state = "sheetwiz"
+	icon_state = "wiz"
 	item_color = "wiz"
 
 /obj/item/weapon/bedsheet/ian
-	icon_state = "sheetian"
+	icon_state = "ian"
 	item_color = "ian"
 
 

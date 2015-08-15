@@ -271,7 +271,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
 	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
 	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -511,7 +511,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
 	cost = 4
 
 /datum/uplink_item/device_tools/medkit
@@ -667,12 +667,6 @@ var/list/uplink_items = list()
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
-	cost = 8
-
-/datum/uplink_item/implants/storage
-	name = "Storage Implant"
-	desc = "An implant injected into the body and later used to store up to two big items in a subspace pocket."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	cost = 8
 
 /datum/uplink_item/implants/microbomb

@@ -8,41 +8,27 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	icon_state = "larva0_dead"
 	var/stage = 0
 
-/obj/item/organ/internal/body_egg/alien_embryo/on_find(mob/living/finder)
-	..()
-	if(stage < 4)
-		finder << "It's small and weak, barely the size of a foetus."
-	else
-		finder << "It's grown quite large, and writhes slightly as you look at it."
-		if(prob(10))
-			AttemptGrow(0)
-
-/obj/item/organ/internal/body_egg/alien_embryo/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent("sacid", 10)
-	return S
-
 /obj/item/organ/internal/body_egg/alien_embryo/on_life()
 	switch(stage)
 		if(2, 3)
-			if(prob(2))
+			if(prob(1))
 				owner.emote("sneeze")
-			if(prob(2))
+			if(prob(1))
 				owner.emote("cough")
-			if(prob(2))
+			if(prob(1))
 				owner << "<span class='danger'>Your throat feels sore.</span>"
-			if(prob(2))
+			if(prob(1))
 				owner << "<span class='danger'>Mucous runs down the back of your throat.</span>"
 		if(4)
-			if(prob(2))
+			if(prob(1))
 				owner.emote("sneeze")
-			if(prob(2))
+			if(prob(1))
 				owner.emote("cough")
-			if(prob(4))
+			if(prob(2))
 				owner << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
 					owner.take_organ_damage(1)
-			if(prob(4))
+			if(prob(2))
 				owner << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
 					owner.adjustToxLoss(1)
