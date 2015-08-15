@@ -2,6 +2,17 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
+	id = "healthanalyzer"
+	req_tech = list("biotech" = 2, "magnets" = 1, "power" = 1)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 25, MAT_GLASS = 20)
+	reliability = 76
+	build_path = /obj/item/device/healthanalyzer
+	category = list("Medical Designs")
+
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood."
