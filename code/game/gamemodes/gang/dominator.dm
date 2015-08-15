@@ -37,7 +37,7 @@
 	..()
 	if(gang && isnum(gang.dom_timer))
 		if(gang.dom_timer > 0)
-			playsound(loc, 'sound/items/timer.ogg', 30, 0)
+			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (gang.dom_timer < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
@@ -169,7 +169,7 @@
 
 	var/time = round(get_domination_time(tempgang)/60,0.1)
 	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
-		if (!tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
+		if (isnum(tempgang.dom_timer) || !tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
 			return 0
 
 		var/area/A = get_area(loc)
