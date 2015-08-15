@@ -74,7 +74,7 @@ digraph chemistry{
             "space drugs" [label="Space Drugs| A generic drug| No overdose |No addiction | {1: lithium| 1: sugar| 1: mercury}"]
             nicotine [label="Nicotine| Reduces stun times| No overdose| AD: 30"]
             crank [label="Crank| Reduce stun times| OD: 20| AD: 10|{1: dipenhydramate| 1: ammonia | 1: lithium| 1: sacid| 1: fuel | TEMP: 390K}"]
-            krokodil [label="Krokodil| Makes user feel calm| OD: 20 | AD:10| {1: diphenhydramine| 1: morphine| 1: cleaner| 1: potassium | 1: phosphorus| 1: fuel| TEMP: 380K}"]
+            krokodil [label="Krokodil| Makes user feel calm| OD: 20 | AD:15| {1: diphenhydramine| 1: morphine| 1: cleaner| 1: potassium | 1: phosphorus| 1: fuel| TEMP: 380K}"]
             meth [label="Methanphetamine| Reduce stuns and speed user up| OD: 20| AD:10 |{1: ephedrine| 1: iodine| 1: phosphorus | 1:hydrogen| TEMP: 374K }"]
             "bath salts" [label="Bath Salts| Reduce stuns and stamina damage| OD: 20| AD: 10 |{ 1: ???? (bad food)| 1: saltpetre 1: nutriment| 1: cleaner| 1: enzyme| 1: tea |1: mercury| TEMP = 374K}"]
             aranesp [label="Aranesp| Makes user feel amped and take oxygen damage | No overdose | No addiction | {1: inaprovaline| 1: atropine| 1: morphine}"]
