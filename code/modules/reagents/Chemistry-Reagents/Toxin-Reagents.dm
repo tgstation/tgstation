@@ -28,13 +28,13 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 	toxpwr = 0
 
-/datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
+/datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	src = null
-	if((method==VAPOR && prob(min(33, volume))) || method==INGEST || method == PATCH)
+	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -65,26 +65,22 @@
 	..()
 	return
 
-/datum/reagent/toxin/plasma/reaction_obj(obj/O, volume)
+/datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	src = null
-	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
-		var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
-		if (egg.grown)
-			egg.Hatch()*/
-	if((!O) || (!volume))	return 0
-	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
+	if((!O) || (!reac_volume))	return 0
+	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 
-/datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, reac_volume)
 	src = null
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
+		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 	return
 
-/datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
+/datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(!istype(M, /mob/living))
 		return
 	if(method == TOUCH || method == VAPOR)
-		M.adjust_fire_stacks(volume / 5)
+		M.adjust_fire_stacks(reac_volume / 5)
 		return
 	..()
 
@@ -181,7 +177,7 @@
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 
-/datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
+/datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/structure/alien/weeds/))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
@@ -192,13 +188,13 @@
 		var/obj/effect/spacevine/SV = O
 		SV.on_chem_effect(src)
 
-/datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
+/datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	src = null
 	if(method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!C.wear_mask) // If not wearing a mask
-				var/damage = min(round(0.4*volume, 0.1),10)
+				var/damage = min(round(0.4*reac_volume, 0.1),10)
 				C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/plantbgone/weedkiller
@@ -215,13 +211,13 @@
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
 
-/datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, volume)
+/datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	src = null
 	if(method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!C.wear_mask) // If not wearing a mask
-				var/damage = min(round(0.4*volume, 0.1),10)
+				var/damage = min(round(0.4*reac_volume, 0.1),10)
 				C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
@@ -459,9 +455,9 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, volume)
+/datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method != INGEST)
-		M.reagents.add_reagent("itching_powder", volume)
+		M.reagents.add_reagent("itching_powder", reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
 	if(prob(15))
@@ -625,28 +621,28 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
-/datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, volume)
+/datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
 		return
-	volume = round(volume,0.1)
+	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+		C.take_organ_damage(min(6*toxpwr, reac_volume * toxpwr))
 		return
-	C.acid_act(acidpwr, toxpwr, volume)
+	C.acid_act(acidpwr, toxpwr, reac_volume)
 
-/datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
+/datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
 		return
-	volume = round(volume,0.1)
-	O.acid_act(acidpwr, volume)
+	reac_volume = round(reac_volume,0.1)
+	O.acid_act(acidpwr, reac_volume)
 
-/datum/reagent/toxin/acid/reaction_turf(turf/T, volume)
+/datum/reagent/toxin/acid/reaction_turf(turf/T, reac_volume)
 	if (!istype(T))
 		return
 	src = null
-	volume = round(volume,0.1)
+	reac_volume = round(reac_volume,0.1)
 	for(var/obj/O in T)
-		O.acid_act(acidpwr, volume)
+		O.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
