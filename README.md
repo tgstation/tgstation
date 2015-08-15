@@ -36,7 +36,7 @@ This is a sourcecode-only release, so the next step is to compile the server fil
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt download or the files extracted wrong, or a code issue on the main repo.  Ask on IRC.
 
-To use the sqlite preferences, rename players2_empty.sqlite to players2.sqlite
+To use the SQLite preferences, rename players2_empty.sqlite to players2.sqlite
 
 Next, copy everything from config-example/ to config/ so you have some default configuration.
 
