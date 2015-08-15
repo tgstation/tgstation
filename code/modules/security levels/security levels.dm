@@ -51,7 +51,7 @@
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
-					pod.admin_controlled = 1
+					pod.admin_controlled = 0
 			if(SEC_LEVEL_DELTA)
 				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
 				security_level = SEC_LEVEL_DELTA
@@ -59,7 +59,7 @@
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
-					pod.admin_controlled = 1
+					pod.admin_controlled = 0
 	else
 		return
 
