@@ -1010,3 +1010,13 @@
 	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
 	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
 	component_parts += new /obj/item/weapon/vending_refill/clothing(0)
+
+/obj/machinery/vending/slurpslurpy_machine
+	name = "\The SlurpSlurpy machine"
+	desc = "A vending machine which dispenses slurpies."
+	product_ads = "Discounts for members of the SlurpSlurpy Metaclub!;Discounts for members of the SlurpSlurpy Meta Rewards Club!;Would you like a hot slurpie?;I'd kill for some META!;The best straws in the galaxy.;Only the finest for you.;Mmmm. Nothing like a good slurpie.;I like slurpies, don't you?;Slurpies help you work!;Try some LeMeta Limeade.;We hope you like the best!"
+	icon_state = "smartfridge_open"
+	icon_vend = "smartfridge_open"
+	vend_delay = 34
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/cuckacola = 30,/obj/item/weapon/reagent_containers/food/drinks/lemeta_limeade = 30,/obj/item/weapon/reagent_containers/food/drinks/fruity_filtered = 30)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/firestation_red = 30)
