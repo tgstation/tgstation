@@ -12,7 +12,8 @@ proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1)
 			log_game("SQL ERROR obtaining ckey from notes table. Error : \[[err]\]\n")
 			return
 		if(!query_find_ckey.NextRow())
-			usr << "<font color='red'>[new_ckey] has not been seen before, you can only add notes to unknown players.</font>"
+			usr << "<font color='red'>[new_ckey] has not been seen before, you can only add notes to known players.</font>"
+			return
 		else
 			target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
@@ -114,7 +115,6 @@ proc/show_note(target_ckey, index, linkless = 0)
 	if(!linkless)
 		output = navbar
 	if(target_ckey)
-		world << "target_ckey: [target_ckey]"
 		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id, timestamp, notetext, adminckey, last_editor, server FROM [format_table_name("notes")] WHERE ckey = '[target_ckey]'")
 		if(!query_get_notes.Execute())
 			var/err = query_get_notes.ErrorMsg()
@@ -138,7 +138,6 @@ proc/show_note(target_ckey, index, linkless = 0)
 					output += " <font size='2'>Last edit by [last_editor] <a href='?_src_=holder;noteedits=[id]'>(Click here to see edit log)</a></font>"
 			output += "<br>[notetext]<hr style='background:#000000; border:0; height:1px'>"
 	else if(index)
-		world << "index: [index]"
 		var/index_ckey
 		var/search
 		output += "<center><a href='?_src_=holder;addnoteempty=1'>\[Add Note\]</a></center>"
@@ -150,10 +149,6 @@ proc/show_note(target_ckey, index, linkless = 0)
 				search = "^\[^\[:alpha:\]\]"
 			else
 				search = "^[index]"
-		world << "search: [search]"
-		if(!search)
-			world << "null search"
-			return
 		var/DBQuery/query_list_notes = dbcon.NewQuery("SELECT DISTINCT ckey FROM [format_table_name("notes")] WHERE ckey REGEXP '[search]'")
 		if(!query_list_notes.Execute())
 			var/err = query_list_notes.ErrorMsg()
@@ -161,7 +156,6 @@ proc/show_note(target_ckey, index, linkless = 0)
 			return
 		while(query_list_notes.NextRow())
 			index_ckey = query_list_notes.item[1]
-			world << "index_ckey: [index_ckey]"
 			output += "<a href='?_src_=holder;shownoteckey=[index_ckey]'>[index_ckey]</a><br>"
 	else
 		output += "<center><a href='?_src_=holder;addnoteempty=1'>\[Add Note\]</a></center>"

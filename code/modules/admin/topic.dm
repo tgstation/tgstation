@@ -996,7 +996,6 @@
 	//Player Notes
 	else if(href_list["addnote"])
 		var/target_ckey = href_list["addnote"]
-		world << "addnote: [target_ckey]"
 		add_note(target_ckey)
 
 	else if(href_list["addnoteempty"])
