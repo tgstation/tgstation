@@ -165,7 +165,7 @@ obj/machinery/gibber/New()
 			M.client.eye = src
 		M.loc = src
 		src.occupant = M
-		del(G)
+		returnToPool(G)
 		update_icon()
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
@@ -235,7 +235,7 @@ obj/machinery/gibber/New()
 	var/sourcejob = src.occupant.job
 	var/sourcenutriment = src.occupant.nutrition / 15
 	var/sourcetotalreagents = src.occupant.reagents.total_volume
-	var/totalslabs = 3
+	var/totalslabs = src.occupant.size
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
 	for (var/i=1 to totalslabs)
@@ -258,7 +258,7 @@ obj/machinery/gibber/New()
 
 	src.occupant.death(1)
 	src.occupant.ghostize()
-	del(src.occupant)
+	qdel(src.occupant)
 	spawn(src.gibtime)
 		operating = 0
 		for (var/i=1 to totalslabs)
@@ -272,7 +272,7 @@ obj/machinery/gibber/New()
 		src.operating = 0
 		update_icon()
 
-/obj/machinery/gibber/proc/startautogibbing(mob/victim as mob)
+/obj/machinery/gibber/proc/startautogibbing(mob/living/victim as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/gibber/proc/startautogibbing() called tick#: [world.time]")
 	if(src.operating)
 		return
@@ -287,23 +287,20 @@ obj/machinery/gibber/New()
 	var/sourcejob = victim.job
 	var/sourcenutriment = victim.nutrition / 15
 	var/sourcetotalreagents = victim.reagents.total_volume
-	var/totalslabs = 3
+	var/totalslabs = victim.size
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/allmeat[totalslabs]
 	for (var/i=1 to totalslabs)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/newmeat = null
 		if(istype(victim, /mob/living/carbon/human))
-			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/human
-			newmeat.name = sourcename + newmeat.name
-			newmeat:subjectname = sourcename
-			newmeat:subjectjob = sourcejob
-		if(istype(victim, /mob/living/carbon/alien))
-			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat
-		if(istype(victim, /mob/living/carbon/monkey))
-			newmeat = new/obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
-		if(istype(victim, /mob/living/simple_animal))
-			var/mob/living/simple_animal/SA = victim
-			newmeat = new SA.meat_type
+			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/human_meat = new
+			human_meat.name = sourcename + newmeat.name
+			human_meat.subjectname = sourcename
+			human_meat.subjectjob = sourcejob
+
+			newmeat = human_meat
+		else
+			newmeat = victim.drop_meat(src)
 
 		if(newmeat==null)
 			return

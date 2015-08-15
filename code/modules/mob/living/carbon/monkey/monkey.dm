@@ -9,7 +9,6 @@
 	update_icon = 0		///no need to call regenerate_icon
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
-	meat_amount = 2
 
 	mob_bump_flag = MONKEY
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL

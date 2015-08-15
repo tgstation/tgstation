@@ -21,7 +21,7 @@
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
-	var/meat_amount = 0
+	var/meat_taken = 0 //How much meat has been taken from this mob by butchering
 	var/meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 
 	var/list/image/static_overlays

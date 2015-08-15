@@ -18,6 +18,8 @@
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 
+	butchering_drops = null
+
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3

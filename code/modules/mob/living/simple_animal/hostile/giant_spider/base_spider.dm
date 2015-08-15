@@ -37,6 +37,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	speed = 3
 	attack_sound = 'sound/weapons/spiderlunge.ogg'
 
+	species = /mob/living/simple_animal/hostile/giant_spider
 	wanted_objects = list(
 		/obj/machinery/bot,          // Beepsky and friends
 		/obj/machinery/light,        // Bust out lights
@@ -62,6 +63,14 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+
+/mob/living/simple_animal/hostile/giant_spider/update_icons()
+	.=..()
+
+	if(stat == DEAD && butchering_drops)
+		var/datum/butchering_product/spider_legs/our_legs = locate(/datum/butchering_product/spider_legs) in butchering_drops
+		if(istype(our_legs))
+			icon_state = "[icon_dead][(our_legs.amount<8) ? our_legs.amount : ""]"
 
 // Checks pressure here vs. around us.
 /mob/living/simple_animal/hostile/giant_spider/proc/performPressureCheck(var/turf/loc)

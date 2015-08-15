@@ -15,8 +15,11 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+
+	can_breed = 1
 	species = /mob/living/simple_animal/cat
 	childtype = /mob/living/simple_animal/cat/kitten
+
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -48,8 +51,6 @@
 					break
 
 	..()
-
-	make_babies()
 
 	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
 		if(prob(15))
@@ -110,6 +111,7 @@
 	emote_see = list("slithers")
 
 	species = /mob/living/simple_animal/cat/snek
+	butchering_drops = null
 	childtype = null
 
 /mob/living/simple_animal/cat/snek/corpus

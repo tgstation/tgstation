@@ -340,6 +340,7 @@
 	speed = 3
 	maxHealth = 300
 	health = 300
+	butchering_drops = list(/obj/item/asteroid/goliath_hide = "Skin")
 	harm_intent_damage = 0
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -401,11 +402,6 @@
 
 	if(isliving(O))
 		Trip()
-
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..()
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
