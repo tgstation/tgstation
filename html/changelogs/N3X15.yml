@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes:
+  - experiment: 'Caps added to number of light sources and lighting overlays processed per tick.  This makes lighting updates slower to respond and "choppier" during large outages, but less likely to interrupt other server activities, such as mobs.'
