@@ -708,7 +708,7 @@ Sorry Giacom. Please don't be mad :(
 			return
 
 	//unbuckling yourself
-	if(buckled && last_special <= world.time)
+	if(buckled && !stat && last_special <= world.time)
 		resist_buckle()
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
