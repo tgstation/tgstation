@@ -701,13 +701,18 @@ var/global/list/possible_items_special = list()
 	var/ling_count = ticker.mode.changelings
 
 	for(var/datum/mind/M in ticker.minds)
-		if(department_head in M.assigned_job.department_head)
+		if(M in ticker.mode.changelings)
+			continue
+		if(department_head in get_department_heads(M.assigned_role))
 			if(ling_count)
 				ling_count--
 				department_minds += M
 				department_real_names += M.current.real_name
+			else
+				break
 
 	if(!department_minds.len)
+		log_game("[type] has failed to find department staff, and has removed itself. the round will continue normally")
 		owner.objectives -= src
 		qdel(src)
 		return
@@ -724,16 +729,19 @@ var/global/list/possible_items_special = list()
 	var/needed_heads = rand(min_lings,command_positions.len)
 	needed_heads = min(ticker.mode.changelings.len,needed_heads)
 
-	for(var/datum/mind/possible_head in ticker.minds)
-		if(possible_head in ticker.mode.changelings) //Looking at you HoP.
+	var/list/heads = ticker.mode.get_living_heads()
+	for(var/datum/mind/head in heads)
+		if(head in ticker.mode.changelings) //Looking at you HoP.
 			continue
-		if(possible_head.assigned_job.title in command_positions)
-			if(needed_heads)
-				department_minds += possible_head
-				department_real_names += possible_head.current.real_name
-				needed_heads--
+		if(needed_heads)
+			department_minds += head
+			department_real_names += head.current.real_name
+			needed_heads--
+		else
+			break
 
 	if(!department_minds.len)
+		log_game("[type] has failed to find department heads, and has removed itself. the round will continue normally")
 		owner.objectives -= src
 		qdel(src)
 		return
@@ -783,6 +791,9 @@ var/global/list/possible_items_special = list()
 
 	//Check each department member's mind to see if any of them made it to centcomm alive, if they did it's an automatic fail
 	for(var/datum/mind/M in department_minds)
+		if(M in ticker.mode.changelings) //Lings aren't picked for this, but let's be safe
+			continue
+
 		if(M.current)
 			var/turf/mloc = get_turf(M.current)
 			if(mloc.onCentcom() && (M.current.stat != DEAD))
