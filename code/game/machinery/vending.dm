@@ -489,10 +489,7 @@
 			src.throw_item()
 		if(prob(1))
 			src.TurnOff(600) //A whole minute
-
-		src.pixel_x = rand(-3.0, 3)
-		spawn(2)
-		src.pixel_x = 0
+		src.shake(1, 3)
 
 		return
 
