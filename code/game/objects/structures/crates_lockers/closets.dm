@@ -119,7 +119,7 @@
 
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
-		if(L.buckled)
+		if(L.locked_to)
 			return 0
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
@@ -161,7 +161,7 @@
 			break
 		if(istype (M, /mob/dead/observer))
 			continue
-		if(M.buckled)
+		if(M.locked_to)
 			continue
 
 		if(M.client)

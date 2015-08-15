@@ -79,8 +79,8 @@
 		user <<"The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
 		return
 
-	if(user && user.buckled)
-		user.buckled.unbuckle()
+	if(user && user.locked_to)
+		user.locked_to.unlock_atom(user)
 
 	var/list/tempL = L
 	var/attempt = null

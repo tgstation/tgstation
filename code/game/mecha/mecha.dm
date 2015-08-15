@@ -397,8 +397,8 @@
 			if(C.flags & INVULNERABLE)
 				return
 			C.take_overall_damage(5,0)
-			if(C.buckled)
-				C.buckled = 0
+			if(C.locked_to)
+				C.locked_to = 0
 			C.Stun(5)
 			C.Weaken(5)
 			C.apply_effect(STUTTER, 5)

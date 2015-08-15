@@ -88,20 +88,16 @@ var/list/all_doors = list()
 			else if(!operating)
 				door_animate("deny")
 
-	if (istype(AM, /obj/structure/stool/bed/chair/vehicle))
-		var/obj/structure/stool/bed/chair/vehicle/vehicle = AM
+	if (istype(AM, /obj/structure/bed/chair/vehicle))
+		var/obj/structure/bed/chair/vehicle/vehicle = AM
 
 		if (density)
-			if (vehicle.buckled_mob && !operating && allowed(vehicle.buckled_mob))
-				if(istype(vehicle, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+			if (vehicle.locked_atoms.len && !operating && allowed(vehicle.locked_atoms[1]))
+				if(istype(vehicle, /obj/structure/bed/chair/vehicle/wizmobile))
 					vehicle.forceMove(get_step(vehicle,vehicle.dir))//Firebird doesn't wait for no slowpoke door to fully open before dashing through!
 				open()
 			else if(!operating)
 				door_animate("deny")
-
-		return
-
-	return
 
 /obj/machinery/door/proc/bump_open(mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/proc/bump_open() called tick#: [world.time]")

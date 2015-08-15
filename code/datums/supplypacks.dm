@@ -1024,7 +1024,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/wheelchair
 	name = "Wheelchair Crate"
-	contains = list(/obj/structure/stool/bed/chair/vehicle/wheelchair)
+	contains = list(/obj/structure/bed/chair/vehicle/wheelchair)
 	cost = 40
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Wheelchair Crate"

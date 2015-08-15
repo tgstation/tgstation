@@ -13,7 +13,7 @@
 #define MODE_DRAWING 1
 #define MODE_PEELS 2
 
-/obj/structure/stool/bed/chair/vehicle/clowncart
+/obj/structure/bed/chair/vehicle/clowncart
 	name = "clowncart"
 	desc = "A goofy-looking cart, commonly used by space clowns for entertainment. There appears to be a coin slot on its side."
 	icon = 'icons/obj/vehicles.dmi'
@@ -36,7 +36,7 @@
 	var/colour2 = "#3D3D3D" //Default is boring black
 	var/emagged = 0			//Does something maybe
 	var/honk				//Timer to prevent spamming honk
-/obj/structure/stool/bed/chair/vehicle/clowncart/process()
+/obj/structure/bed/chair/vehicle/clowncart/process()
 	icon_state = "clowncart0"
 	if(empstun > 0)
 		empstun--
@@ -44,21 +44,20 @@
 		empstun = 0
 	if(activated) //activated and nobody sits in it
 		icon_state = "clowncart1"
-		if(!buckled_mob)
+		if(!occupant)
 			activated = 0
 			icon_state = "clowncart0"
 	if(trail < 0)
 		trail = 0
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/New()
+/obj/structure/bed/chair/vehicle/clowncart/New()
 	. = ..()
 	create_reagents(5000)
 	reagents.add_reagent("banana", 175)
 
 	processing_objects |= src
-	handle_rotation()
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/examine(mob/user)
+/obj/structure/bed/chair/vehicle/clowncart/examine(mob/user)
 	..()
 	if(max_health > 100)
 		user << "<span class='info'>It is reinforced with [(max_health-100)/20] bananium sheets.</span>"
@@ -75,7 +74,7 @@
 		if((INFINITY * -1) to 0)
 			user << "<span class='danger'>It appears completely unsalvageable.</span>"
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/attackby(obj/item/W, mob/user)
+/obj/structure/bed/chair/vehicle/clowncart/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/bikehorn))
 		if(destroyed)
 			user << "<span class='danger'>[src] is completely wrecked, it's over.</span>"
@@ -250,9 +249,9 @@
 				colour2 = "#6D6D6D"
 				user << "Selected color: Boring Black"
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/relaymove(mob/user, direction)
+/obj/structure/bed/chair/vehicle/clowncart/relaymove(mob/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
-		unbuckle()
+		unlock_atom(user)
 		return
 	if(empstun > 0)
 		if(user)
@@ -267,8 +266,6 @@
 	if(activated)
 		var/old_pos = get_turf(src)
 		step(src, direction)
-		update_mob()
-		handle_rotation()
 		if(get_turf(src) == old_pos)
 			return
 
@@ -290,19 +287,17 @@
 	else
 		user << "<span class='notice'>You have to honk to be able to ride [src].</span>"
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/die()
+/obj/structure/bed/chair/vehicle/clowncart/die()
 	destroyed = 1
 	density = 0
-	if(buckled_mob)
-		unbuckle()
 	visible_message("<span class='warning'>[nick] explodes in a puff of pure potassium!</span>")
 	playsound(get_turf(src), 'sound/items/bikehorn.ogg', 75, 1)
 	explosion(src.loc, -1, 0, 3, 7, 10)
 	for(var/a = 0, a < round(reagents.total_volume*0.25), a++) //Spawn banana peels in place of the cart
 		new /obj/item/weapon/bananapeel(get_turf(src)) // WHAT STUPID ASSHOLE MADE THESE TATORPEELS
-	del(src)
+	qdel(src)
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/proc/draw_graffiti(var/pos)
+/obj/structure/bed/chair/vehicle/clowncart/proc/draw_graffiti(var/pos)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/clowncart/proc/draw_graffiti() called tick#: [world.time]")
 	var/graffiti_amount = 0//built-in safety measures allow only 3 drawings on the floor at same time
 	for(var/obj/effect/decal/cleanable/crayon/C in pos)
@@ -340,7 +335,7 @@
 				printing_text = ""
 				printing_pos = 0
 
-/obj/structure/stool/bed/chair/vehicle/clowncart/proc/feed(obj/item/W, mob/living/user)
+/obj/structure/bed/chair/vehicle/clowncart/proc/feed(obj/item/W, mob/living/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/clowncart/proc/feed() called tick#: [world.time]")
 	var/datum/reagents/R=W.reagents
 	if(!R) return

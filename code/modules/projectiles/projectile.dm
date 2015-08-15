@@ -153,10 +153,10 @@
 				log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
 
 	if(A)
-		if(firer && istype(A, /obj/structure/stool/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
-			var/obj/structure/stool/bed/chair/vehicle/JC = A
-			if(JC.buckled_mob)
-				var/mob/BM = JC.buckled_mob
+		if(firer && istype(A, /obj/structure/bed/chair/vehicle))//This is very sloppy but there's no way to get the firer after its passed to bullet_act, we'll just have to assume the admins will use their judgement
+			var/obj/structure/bed/chair/vehicle/JC = A
+			if(JC.occupant)
+				var/mob/BM = JC.occupant
 				if(istype(firer, /mob))
 					BM.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
 					firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"

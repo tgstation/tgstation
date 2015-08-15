@@ -1,92 +1,58 @@
-/obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
+/obj/structure/bed/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
+	locked_should_lie = 0
 
-/obj/structure/stool/MouseDrop(atom/over_object)
-	return
+	var/sheet_type = /obj/item/stack/sheet/metal
+	var/sheet_amt = 2
 
-/obj/structure/stool/bed/chair/New()
+/obj/structure/bed/chair/New()
 	..()
-	spawn(3)	//sorry. i don't think there's a better way to do this.
+	spawn(3)
 		handle_layer()
-	return
 
-/obj/structure/stool/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
+/obj/structure/bed/chair/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/assembly/shock_kit))
 		var/obj/item/assembly/shock_kit/SK = W
 		if(!SK.status)
 			user << "<span class='notice'>[SK] is not ready to be attached!</span>"
 			return
 		user.drop_item(W)
-		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
+		var/obj/structure/bed/chair/e_chair/E = new /obj/structure/bed/chair/e_chair(src.loc)
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		E.dir = dir
 		E.part = SK
-		SK.loc = E
+		SK.forceMove(E)
 		SK.master = E
-		del(src)
+		qdel(src)
+		return
 
-/obj/structure/stool/bed/chair/office/Move(atom/newloc, direct)
-	if(handle_rotation(newloc, direct))
-		..()
-	handle_layer()
+	if(iswrench(W))
+		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		getFromPool(sheet_type, get_turf(src), 2)
+		qdel(src)
+		return
 
+	. = ..()
 
-/obj/structure/stool/bed/chair/office/forceMove(atom/newLoc)
+/obj/structure/bed/chair/update_dir()
 	..()
-	handle_rotation(newLoc, dir)
+
 	handle_layer()
 
-/obj/structure/stool/bed/chair/proc/handle_rotation(atom/newloc, direction)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/handle_rotation() called tick#: [world.time]")
-	if(buckled_mob)
-		buckled_mob.buckled = null //Temporary, so Move() succeeds.
-		if(isturf(buckled_mob.loc))
-			// Nothing but border objects stop you from leaving a tile, only one loop is needed
-			for(var/obj/obstacle in buckled_mob.loc)
-				if(!obstacle.CheckExit(buckled_mob, newloc) && obstacle != buckled_mob && obstacle != buckled_mob.loc)
-					return 0
-		var/list/large_dense = list()
-		for(var/atom/movable/border_obstacle in newloc)
-			if(border_obstacle.flags&ON_BORDER)
-				if(!border_obstacle.CanPass(buckled_mob, buckled_mob.loc) && (buckled_mob.loc != border_obstacle) && buckled_mob != border_obstacle)
-					return 0
-			else
-				large_dense += border_obstacle
-
-		//Then, check the turf itself
-		if (!newloc.CanPass(buckled_mob, newloc))
-			return 0
-
-		//Finally, check objects/mobs to block entry that are not on the border
-		for(var/atom/movable/obstacle in large_dense)
-			if(!obstacle.CanPass(buckled_mob, buckled_mob.loc) && (buckled_mob.loc != obstacle) && buckled_mob != obstacle)
-				return 0
-		if(!buckled_mob.Move(newloc, direction))
-			buckled_mob.buckled = src
-			dir = buckled_mob.dir
-			return 0
-		buckled_mob.buckled = src //Restoring
-	return 1
-
-/obj/structure/stool/bed/chair/proc/handle_layer()
+/obj/structure/bed/chair/proc/handle_layer()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/handle_layer() called tick#: [world.time]")
 	if(dir == NORTH)
 		src.layer = FLY_LAYER
 	else
 		src.layer = OBJ_LAYER
 
-
-/obj/structure/stool/bed/chair/proc/spin()
+/obj/structure/bed/chair/proc/spin()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/proc/spin() called tick#: [world.time]")
-	src.dir = turn(src.dir, 90)
-	handle_layer()
-	if(buckled_mob)
-		buckled_mob.dir = dir
+	change_dir(turn(dir, 90))
 
-/obj/structure/stool/bed/chair/verb/rotate()
+/obj/structure/bed/chair/verb/rotate()
 	set name = "Rotate Chair"
 	set category = "Object"
 	set src in oview(1)
@@ -100,10 +66,8 @@
 			return
 
 	spin()
-	return
 
-
-/obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
+/obj/structure/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	var/mob/living/carbon/human/target = null
 	if(ishuman(M))
@@ -129,123 +93,113 @@
 	else
 		buckle_mob(M, user)
 
-	return
-
 // Chair types
-/obj/structure/stool/bed/chair/wood
+/obj/structure/bed/chair/wood
 	autoignition_temperature = AUTOIGNITION_WOOD
 	fire_fuel = 3
 	// TODO:  Special ash subtype that looks like charred chair legs
 
-/obj/structure/stool/bed/chair/wood/normal
+	sheet_type = /obj/item/stack/sheet/wood
+
+/obj/structure/bed/chair/wood/normal
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/wood/wings
+/obj/structure/bed/chair/wood/wings
 	icon_state = "wooden_chair_wings"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/wood/wings/cultify()
+/obj/structure/bed/chair/wood/wings/cultify()
 	return
 
-/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/wood(src.loc)
-		del(src)
-	else
-		..()
-
-/obj/structure/stool/bed/chair/holowood/normal
+/obj/structure/bed/chair/holowood/normal
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/holowood/wings
+/obj/structure/bed/chair/holowood/wings
 	icon_state = "wooden_chair_wings"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/holowood/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/wrench))
-		user << "Your [W] passes harmlessly through the hologram."
-	else
-		..()
+/obj/structure/bed/chair/holowood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	return
 
 //Comfy chairs
 
-/obj/structure/stool/bed/chair/comfy
+/obj/structure/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair_black"
 
 	var/image/armrest
 
-/obj/structure/stool/bed/chair/comfy/New()
+/obj/structure/bed/chair/comfy/New()
 	..()
 	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", MOB_LAYER + 0.1)
 
-/obj/structure/stool/bed/chair/comfy/buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/bed/chair/comfy/lock_atom(var/atom/movable/AM)
 	..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/comfy/unbuckle()
+/obj/structure/bed/chair/comfy/unlock_atom(var/atom/movable/AM)
 	..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/comfy/update_icon()
+/obj/structure/bed/chair/comfy/update_icon()
 	..()
-	if(buckled_mob)
+	if(locked_atoms.len)
 		overlays += armrest
 	else
 		overlays -= armrest
 
-/obj/structure/stool/bed/chair/comfy/brown
+/obj/structure/bed/chair/comfy/brown
 	icon_state = "comfychair_brown"
 
-/obj/structure/stool/bed/chair/comfy/beige
+/obj/structure/bed/chair/comfy/beige
 	icon_state = "comfychair_beige"
 
-/obj/structure/stool/bed/chair/comfy/teal
+/obj/structure/bed/chair/comfy/teal
 	icon_state = "comfychair_teal"
 
-/obj/structure/stool/bed/chair/comfy/black
+/obj/structure/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
-/obj/structure/stool/bed/chair/comfy/lime
+/obj/structure/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
 //Office chairs
 
-/obj/structure/stool/bed/chair/office
-	anchored = 0
+/obj/structure/bed/chair/office
 	icon_state = "officechair_white"
 	var/image/back
 
-/obj/structure/stool/bed/chair/office/New()
+	sheet_amt = 5
+
+/obj/structure/bed/chair/office/New()
 	..()
 	back = image("icons/obj/objects.dmi", "[icon_state]-overlay", MOB_LAYER + 0.1)
 
-/obj/structure/stool/bed/chair/office/buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/bed/chair/office/lock_atom(var/atom/movable/AM)
+	. = ..()
+	update_icon()
+
+/obj/structure/bed/chair/office/unlock_atom(var/atom/movable/AM)
 	..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/office/unbuckle()
+/obj/structure/bed/chair/office/update_icon()
 	..()
-	update_icon()
-
-/obj/structure/stool/bed/chair/office/update_icon()
-	..()
-	if(buckled_mob)
+	if(locked_atoms.len)
 		overlays += back
 	else
 		overlays -= back
 
-/obj/structure/stool/bed/chair/office/light
+/obj/structure/bed/chair/office/light
 	icon_state = "officechair_white"
 
-/obj/structure/stool/bed/chair/office/dark
+/obj/structure/bed/chair/office/dark
 	icon_state = "officechair_dark"
 

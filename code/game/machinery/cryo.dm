@@ -90,7 +90,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
-	if(!istype(L) || L.buckled)
+	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
 		user << "<span class='danger'>Subject cannot have abiotic items on.</span>"
@@ -450,8 +450,8 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	if (M.abiotic())
 		usr << "<span class='warning'>Subject may not have abiotic items on.</span>"
 		return
-	if(M.buckled)
-		M.buckled.unbuckle()
+	if(M.locked_to)
+		M.locked_to.unlock_atom(M)
 	if(!node)
 		usr << "<span class='warning'>The cell is not correctly connected to its pipe network!</span>"
 		return
@@ -494,7 +494,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	set category = "Object"
 	set src in oview(1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/atmospherics/unary/cryo_cell/verb/move_inside()  called tick#: [world.time]")
-	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.buckled || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
+	if(usr.restrained() || usr.stat || usr.weakened || usr.stunned || usr.paralysis || usr.resting || usr.locked_to || (usr.status_flags & FAKEDEATH)) //are you cuffed, dying, lying, stunned or other
 		return
 	for(var/mob/living/carbon/slime/M in range(1,usr))
 		if(M.Victim == usr)

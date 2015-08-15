@@ -71,7 +71,7 @@ mob/living/carbon/metroid/airflow_stun()
 
 mob/living/carbon/human/airflow_stun()
 	if(last_airflow_stun > world.time - zas_settings.Get(/datum/ZAS_Setting/airflow_stun_cooldown))	return 0
-	if(buckled || (flags & INVULNERABLE)) return 0
+	if(locked_to || (flags & INVULNERABLE)) return 0
 	if(shoes)
 		if(CheckSlip() < 1) return 0
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
@@ -264,7 +264,7 @@ proc/AirflowSpace(zone/A)
 			return
 		if(istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			if(H.buckled)
+			if(H.locked_to)
 				return
 			if(H.shoes)
 				if(H.CheckSlip() < 0)
@@ -325,7 +325,7 @@ proc/AirflowSpace(zone/A)
 			return
 		if(istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			if(H.buckled)
+			if(H.locked_to)
 				return
 			if(H.shoes)
 				if(H.CheckSlip() < 0)

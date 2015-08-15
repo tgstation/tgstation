@@ -123,7 +123,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(shoes) shoes.contaminate()
 	if(gloves) gloves.contaminate()
 
-
+/*
 /turf/Entered(atom/movable/Obj, atom/OldLoc)
 	..(Obj, OldLoc)
 
@@ -136,3 +136,4 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		if(environment.toxins > MOLES_PLASMA_VISIBLE + 1)
 			if(I.can_contaminate())
 				I.contaminate()
+*/

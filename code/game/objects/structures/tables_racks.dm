@@ -290,7 +290,7 @@
 	return 0
 
 /obj/structure/table/Bumped(atom/AM)
-	if (istype(AM, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+	if (istype(AM, /obj/structure/bed/chair/vehicle/wizmobile))
 		destroy()
 	return ..()
 
@@ -622,7 +622,7 @@
 		return 0
 
 /obj/structure/rack/Bumped(atom/AM)
-	if (istype(AM, /obj/structure/stool/bed/chair/vehicle/wizmobile))
+	if (istype(AM, /obj/structure/bed/chair/vehicle/wizmobile))
 		destroy()
 	return ..()
 

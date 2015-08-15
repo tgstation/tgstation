@@ -67,8 +67,8 @@
 		return
 	if(!istype(target))
 		return
-	if(target.buckled)
-		occupant_message("[target] will not fit into the jail cell because they are buckled to [target.buckled].")
+	if(target.locked_to)
+		occupant_message("[target] will not fit into the jail cell because they are buckled to [target.locked_to].")
 		return
 	if(!CellFree())
 		occupant_message("The jail cells are already occupied")

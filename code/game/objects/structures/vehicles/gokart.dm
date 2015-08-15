@@ -3,37 +3,38 @@
 	desc = "A keyring with a small steel key, with a picture of Saint Mario as a fob."
 	icon_state = "gokart_keys"
 
-/obj/structure/stool/bed/chair/vehicle/gokart
+/obj/structure/bed/chair/vehicle/gokart
 	name = "\improper Go-Kart"
 	desc = "Tiny car for tiny people."
 	icon_state = "gokart0"
 	//nick = "TRUE POWER"
 	keytype = /obj/item/key/gokart
 
-/obj/structure/stool/bed/chair/vehicle/gokart/buckle_mob(mob/M, mob/user)
-	..(M,user)
+/obj/structure/bed/chair/vehicle/gokart/unlock_atom(var/atom/movable/AM)
+	. = ..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/vehicle/gokart/unbuckle()
-	..()
+/obj/structure/bed/chair/vehicle/gokart/lock_atom(var/atom/movable/AM)
+	. = ..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/vehicle/gokart/update_icon()
-	icon_state="gokart[!isnull(buckled_mob)]"
+/obj/structure/bed/chair/vehicle/gokart/update_icon()
+	icon_state="gokart[!occupant]"
 
-/obj/structure/stool/bed/chair/vehicle/gokart/update_mob()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		switch(dir)
-			if(SOUTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 7
-			if(WEST)
-				buckled_mob.pixel_x = 4
-				buckled_mob.pixel_y = 7
-			if(NORTH)
-				buckled_mob.pixel_x = 0
-				buckled_mob.pixel_y = 4
-			if(EAST)
-				buckled_mob.pixel_x = -4
-				buckled_mob.pixel_y = 7
+/obj/structure/bed/chair/vehicle/gokart/update_mob()
+	if(!occupant)
+		return
+
+	switch(dir)
+		if(SOUTH)
+			occupant.pixel_x = 0
+			occupant.pixel_y = 7
+		if(WEST)
+			occupant.pixel_x = 4
+			occupant.pixel_y = 7
+		if(NORTH)
+			occupant.pixel_x = 0
+			occupant.pixel_y = 4
+		if(EAST)
+			occupant.pixel_x = -4
+			occupant.pixel_y = 7

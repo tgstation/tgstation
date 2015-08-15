@@ -392,7 +392,7 @@
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
 		return 0
-	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
+	if(locked_to && ! istype(locked_to, /obj/structure/bed/chair)) // buckling does not restrict hands
 		return 0
 	return 1
 
@@ -634,4 +634,4 @@
 	return 0
 
 /mob/living/carbon/CheckSlip()
-	return !buckled && !lying
+	return !locked_to && !lying

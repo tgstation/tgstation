@@ -236,8 +236,8 @@
 	if(Process_Grab())
 		return
 
-	if(mob.buckled) //if we're buckled to something, tell it we moved.
-		return mob.buckled.relaymove(mob, dir)
+	if(mob.locked_to) //if we're locked_to to something, tell it we moved.
+		return mob.locked_to.relaymove(mob, dir)
 
 	if(!mob.canmove)
 		return

@@ -468,7 +468,7 @@
 			return // animals cannot put mobs other than themselves into disposal
 
 		if(!user.restrained() && user.canmove)
-			if(target.buckled)
+			if(target.locked_to)
 				return
 
 			user.visible_message("[user] starts stuffing [target] into the [src].", "You start stuffing [target] into the [src].")
@@ -488,7 +488,7 @@
 			return
 	else
 		if(!user.restrained() && user.canmove)
-			if(target.buckled)
+			if(target.locked_to)
 				return
 
 			user.visible_message("[user] stuffed [target] into the [src]!", "You stuffed [target] into the [src]!")
@@ -933,7 +933,7 @@
 			if("pipe-j2s")
 				C.ptype = 10
 		src.transfer_fingerprints_to(C)
-		C.dir = dir
+		C.change_dir(dir)
 		C.density = 0
 		C.anchored = 1
 		C.update()
@@ -1102,7 +1102,7 @@
 	update_dir()
 	update()
 
-/obj/structure/disposalpipe/wrapsortjunction/proc/update_dir()
+/obj/structure/disposalpipe/wrapsortjunction/update_dir()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/disposalpipe/wrapsortjunction/proc/update_dir() called tick#: [world.time]")
 	posdir = dir
 	negdir = turn(posdir, 180)
@@ -1113,6 +1113,8 @@
 		icon_state = "pipe-j2s"
 		sortdir = turn(posdir, 90)
 	dpdir = sortdir | posdir | negdir
+
+	. = ..()
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir

@@ -428,7 +428,7 @@ Thanks.
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/revive() called tick#: [world.time]")
 	rejuvenate(animation)
 	/*
-	buckled = initial(src.buckled)
+	locked_to = initial(src.locked_to)
 	*/
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -479,9 +479,9 @@ Thanks.
 	ExtinguishMob()
 	fire_stacks = 0
 	/*
-	if(buckled)
-		buckled.unbuckle()
-	buckled = initial(src.buckled)
+	if(locked_to)
+		locked_to.unbuckle()
+	locked_to = initial(src.locked_to)
 	*/
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
@@ -567,9 +567,9 @@ Thanks.
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
-		if (!buckled.anchored)
-			return buckled.Move(newloc, direct)
+	if (locked_to && locked_to.loc != newloc)
+		if (!locked_to.anchored)
+			return locked_to.Move(newloc, direct)
 		else
 			return 0
 
@@ -726,7 +726,8 @@ Thanks.
 
 
 	//unbuckling yourself
-	if(L.buckled && L.special_delayer.blocked())
+	if(L.locked_to && L.special_delayer.blocked() && istype(L.locked_to, /obj/structure/bed))
+		var/obj/structure/bed/B = L.locked_to
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			if(C.handcuffed)
@@ -736,15 +737,15 @@ Thanks.
 								  "<span class='warning'>You attempt to unbuckle yourself. (This will take around two minutes and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(usr, usr, 1200))
-						if(!C.buckled)
+						if(!C.locked_to)
 							return
 						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>",
 										  "<span class='notice'>You successfully unbuckle yourself.</span>")
-						C.buckled.manual_unbuckle(C)
+						B.manual_unbuckle(C)
 					else
 						C << "<span class='warning'>Your unbuckling attempt was interrupted.</span>"
 		else
-			L.buckled.manual_unbuckle(L)
+			B.manual_unbuckle(L)
 
 	//Breaking out of a locker?
 	if(src.loc && (istype(src.loc, /obj/structure/closet)))
@@ -828,7 +829,7 @@ Thanks.
 								   "<span class='warning'>You attempt to break your handcuffs. (This will take around five seconds and you will need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM, CM, 50))
-						if(!CM.handcuffed || CM.buckled)
+						if(!CM.handcuffed || CM.locked_to)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>",
 										   "<span class='notice'>You successful break your handcuffs.</span>")
@@ -849,7 +850,7 @@ Thanks.
 								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM,CM, breakouttime))
-						if(!CM.handcuffed || CM.buckled)
+						if(!CM.handcuffed || CM.locked_to)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
 										   "<span class='notice'>You successful remove [HC].</span>")
@@ -866,7 +867,7 @@ Thanks.
 								   "<span class='warning'>You attempt to break your legcuffs. (This will take around five seconds and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM, CM, 50))
-						if(!CM.legcuffed || CM.buckled)
+						if(!CM.legcuffed || CM.locked_to)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>",
 										   "<span class='notice'>You successfully break your legcuffs.</span>")
@@ -885,7 +886,7 @@ Thanks.
 								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM, CM, breakouttime))
-						if(!CM.legcuffed || CM.buckled)
+						if(!CM.legcuffed || CM.locked_to)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
 										   "<span class='notice'>You successful remove [HC].</span>")

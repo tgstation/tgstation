@@ -544,7 +544,7 @@ var/static/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons
 #define SEC_LEVEL_DELTA	3
 
 #define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
-
+/*
 var/list/liftable_structures = list(\
 
 	/obj/machinery/r_n_d/fabricator/mechanic_fab/autolathe, \
@@ -566,7 +566,7 @@ var/list/liftable_structures = list(\
 	/obj/structure/filingcabinet, \
 	/obj/structure/reagent_dispensers, \
 	/obj/machinery/portable_atmospherics/canister)
-
+*/
 //A set of constants used to determine which type of mute an admin wishes to apply:
 //Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
 //Therefore there needs to be a gap between the flags for the automute flags
@@ -1219,3 +1219,5 @@ var/proccalls = 1
 #define SIZE_NORMAL	3 //Humanoids, robots, small slimes and most of the other animals
 #define SIZE_BIG	4 //The AI, large slimes, wizard 'creatures', goliaths, hivebots
 #define SIZE_HUGE	5 //Pine trees
+
+#define ADIABATIC_EXPONENT		0.667	//This means something g-guys

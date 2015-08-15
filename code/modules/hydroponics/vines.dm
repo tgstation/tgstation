@@ -20,7 +20,6 @@
 	// Life vars/
 	var/energy = 0
 	var/obj/effect/plant_controller/master = null
-	var/mob/living/buckled_mob
 	var/datum/seed/seed
 
 /obj/effect/plantsegment/New()
@@ -80,39 +79,28 @@
 /obj/effect/plantsegment/attack_paw(mob/user as mob)
 	manual_unbuckle(user)
 
-/obj/effect/plantsegment/proc/unbuckle()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/unbuckle() called tick#: [world.time]")
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
-			buckled_mob.buckled = null
-			buckled_mob.anchored = initial(buckled_mob.anchored)
-			buckled_mob.update_canmove()
-		buckled_mob = null
-	return
-
 /obj/effect/plantsegment/proc/manual_unbuckle(mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/manual_unbuckle() called tick#: [world.time]")
-	if(buckled_mob)
+	if(locked_atoms.len)
 		if(prob(seed ? min(max(0,100 - seed.potency),100) : 50))
-			if(buckled_mob.buckled == src)
-				if(buckled_mob != user)
-					buckled_mob.visible_message(\
-						"<span class='notice'>[user.name] frees [buckled_mob.name] from [src].</span>",\
-						"<span class='notice'>[user.name] frees you from [src].</span>",\
-						"<span class='warning'>You hear shredding and ripping.</span>")
-				else
-					buckled_mob.visible_message(\
-						"<span class='notice'>[buckled_mob.name] struggles free of [src].</span>",\
-						"<span class='notice'>You untangle [src] from around yourself.</span>",\
-						"<span class='warning'>You hear shredding and ripping.</span>")
-			unbuckle()
+			var/mob/M = locked_atoms[1]
+			if(M != user)
+				M.visible_message(\
+					"<span class='notice'>[user.name] frees [M.name] from \the [src].</span>",\
+					"<span class='notice'>[user.name] frees you from [src].</span>",\
+					"<span class='warning'>You hear shredding and ripping.</span>")
+			else
+				M.visible_message(\
+					"<span class='notice'>[M.name] struggles free of [src].</span>",\
+					"<span class='notice'>You untangle [src] from around yourself.</span>",\
+					"<span class='warning'>You hear shredding and ripping.</span>")
+			unlock_atom(M)
 		else
 			var/text = pick("rips","tears","pulls")
 			user.visible_message(\
-				"<span class='notice'>[user.name] [text] at [src].</span>",\
-				"<span class='notice'>You [text] at [src].</span>",\
+				"<span class='notice'>[user.name] [text] at \the [src].</span>",\
+				"<span class='notice'>You [text] at \the [src].</span>",\
 				"<span class='warning'>You hear shredding and ripping.</span>")
-	return
 
 /obj/effect/plantsegment/proc/grow()
 
@@ -142,49 +130,48 @@
 
 	if(prob(seed ? seed.potency : 25))
 
-		if(!buckled_mob)
+		if(!locked_atoms.len)
 			var/mob/living/carbon/V = locate() in src.loc
-			if(V && (V.stat != DEAD) && (V.buckled != src)) // If mob exists and is not dead or captured.
-				V.buckled = src
-				V.loc = src.loc
-				V.update_canmove()
-				src.buckled_mob = V
+			if(V && V.stat != DEAD) // If mob exists and is not dead or captured.
+				lock_atom(V)
 				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
 
 		// FEED ME, SEYMOUR.
-		if(buckled_mob && seed && (buckled_mob.stat != DEAD)) //Don't bother with a dead mob.
+		if(seed && locked_atoms.len)
+			var/mob/V = locked_atoms[1]
+			if(V.stat != DEAD) //Don't bother with a dead mob.
 
-			var/mob/living/M = buckled_mob
-			if(!istype(M)) return
-			var/mob/living/carbon/human/H = buckled_mob
+				var/mob/living/M = V
+				if(!istype(M)) return
+				var/mob/living/carbon/human/H = V
 
-			// Drink some blood/cause some brute.
-			if(seed.carnivorous == 2)
-				buckled_mob << "<span class='danger'>\The [src] pierces your flesh greedily!</span>"
+				// Drink some blood/cause some brute.
+				if(seed.carnivorous == 2)
+					V << "<span class='danger'>\The [src] pierces your flesh greedily!</span>"
 
-				var/damage = rand(round(seed.potency/2),seed.potency)
-				if(!istype(H))
-					H.adjustBruteLoss(damage)
-					return
+					var/damage = rand(round(seed.potency/2),seed.potency)
+					if(!istype(H))
+						H.adjustBruteLoss(damage)
+						return
 
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot","r_foot","l_leg","r_leg","l_hand","r_hand","l_arm", "r_arm","head","chest","groin"))
+					var/datum/organ/external/affecting = H.get_organ(pick("l_foot","r_foot","l_leg","r_leg","l_hand","r_hand","l_arm", "r_arm","head","chest","groin"))
 
-				if(affecting)
-					affecting.take_damage(damage, 0)
-					if(affecting.parent)
-						affecting.parent.add_autopsy_data("[plant_damage_noun]", damage)
-				else
-					H.adjustBruteLoss(damage)
+					if(affecting)
+						affecting.take_damage(damage, 0)
+						if(affecting.parent)
+							affecting.parent.add_autopsy_data("[plant_damage_noun]", damage)
+					else
+						H.adjustBruteLoss(damage)
 
-				H.UpdateDamageIcon()
-				H.updatehealth()
+					H.UpdateDamageIcon()
+					H.updatehealth()
 
-			// Inject some chems.
-			if(seed.chems && seed.chems.len && istype(H))
-				H << "<span class='danger'>You feel something seeping into your skin!</span>"
-				for(var/rid in seed.chems)
-					var/injecting = min(5,max(1,seed.potency/5))
-					H.reagents.add_reagent(rid,injecting)
+				// Inject some chems.
+				if(seed.chems && seed.chems.len && istype(H))
+					H << "<span class='danger'>You feel something seeping into your skin!</span>"
+					for(var/rid in seed.chems)
+						var/injecting = min(5,max(1,seed.potency/5))
+						H.reagents.add_reagent(rid,injecting)
 
 /obj/effect/plantsegment/proc/update()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/update() called tick#: [world.time]")

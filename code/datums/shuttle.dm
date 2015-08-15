@@ -380,7 +380,7 @@
 		if(istype(AM,/mob/living))
 			var/mob/living/M = AM
 
-			if(!M.buckled)
+			if(!M.locked_to)
 				shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
 
 				if(!src.stable)
