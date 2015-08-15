@@ -26,8 +26,6 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
-				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
-					pod.admin_controlled = 1
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					minor_announce(config.alert_desc_blue_upto, "Attention! Security level elevated to blue:",1)
@@ -37,8 +35,6 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
-				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
-					pod.admin_controlled = 1
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					minor_announce(config.alert_desc_red_upto, "Attention! Code red!",1)
