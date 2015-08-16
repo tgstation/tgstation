@@ -137,6 +137,20 @@
 	O.update_icon()
 	return
 
+/obj/item/weapon/storage/box/syndie_kit/bioterror
+	name = "bioterror syringe box"
+
+/obj/item/weapon/storage/box/syndie_kit/bioterror/New()
+	..()
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
+	return
+
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	name = "boxed adrenal implant (with injector)"
@@ -183,6 +197,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
+	storage_slots = 14
 
 /obj/item/weapon/storage/box/syndie_kit/chemical/New()
 	..()

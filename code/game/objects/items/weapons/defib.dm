@@ -361,11 +361,13 @@
 			return
 		if(user.zone_sel && user.zone_sel.selecting == "chest")
 			if(!defib.safety && user.a_intent == "harm")
-				user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>", "<span class='warning'>You overcharge the paddles and begin to place them onto [M]'s chest...</span>")
+				user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>",
+					"<span class='warning'>You overcharge the paddles and begin to place them onto [M]'s chest...</span>")
 				busy = 1
 				update_icon()
 				if(do_after(user, 30, target = M))
-					user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>", "<span class='warning'>You place [src] on [M.name]'s chest and begin to charge them.</span>")
+					user.visible_message("<span class='notice'>[user] places [src] on [M.name]'s chest.</span>",
+						"<span class='warning'>You place [src] on [M.name]'s chest and begin to charge them.</span>")
 					var/turf/T = get_turf(defib)
 					playsound(get_turf(src), 'sound/machines/defib_charge.ogg', 50, 0)
 					T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
@@ -384,7 +386,8 @@
 						if(!HU.heart_attack)
 							HU.heart_attack = 1
 							if(!HU.stat)
-								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>", "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
+								HU.visible_message("<span class='warning'>[M] thrashes wildly, clutching at their chest!</span>",
+									"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 						HU.apply_damage(50, BURN, "chest")
 						add_logs(user, M, "overloaded the heart of", defib)
 						M.Weaken(5)
@@ -427,7 +430,22 @@
 						total_brute	= H.getBruteLoss()
 						total_burn	= H.getFireLoss()
 
-						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !H.get_ghost() && tplus < tlimit && !(NOCLONE in H.mutations))
+						var/failed = null
+
+						if (H.suiciding || (NOCLONE in H.mutations))
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
+						else if ((tplus > tlimit) || !H.getorgan(/obj/item/organ/internal/heart))
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"
+						else if(total_burn >= 180 || total_brute >= 180)
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>"
+						else if(H.get_ghost() || !H.getorgan(/obj/item/organ/internal/brain))
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
+
+
+						if(failed)
+							user.visible_message(failed)
+							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+						else
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
 								H.adjustOxyLoss(H.health - halfwaycritdeath)
@@ -446,19 +464,8 @@
 							H.emote("gasp")
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
-							defib.deductcharge(revivecost)
 							add_logs(user, M, "revived", defib)
-						else
-							if (H.suiciding || (NOCLONE in H.mutations))
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>")
-							else if (tplus > tlimit)
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation. Further attempts futile.</span>")
-							else if(total_burn >= 180 || total_brute >= 180)
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
-							else
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - No soul in patient body. Further attempts may be successful.</span>")
-							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-							defib.deductcharge(revivecost)
+						defib.deductcharge(revivecost)
 						update_icon()
 						cooldown = 1
 						defib.cooldowncheck(user)
