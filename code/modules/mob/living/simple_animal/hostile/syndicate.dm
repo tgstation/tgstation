@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/syndicate/Die()
 	..()
 	if(corpse)
-		new corpse(loc)
+		corpse = new corpse(loc)
 		corpse.createCorpse()
 	if(weapon1)
 		new weapon1 (get_turf(src))

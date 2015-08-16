@@ -9,7 +9,11 @@ var/global/list/active_diseases = list()
 /datum/controller/process/disease/doWork()
 	for(var/d in active_diseases)
 		if(d)
-			d:process()
+			try
+				d:process()
+			catch(var/exception/e)
+				world.Error(e)
+				continue
 			scheck()
 			continue
 		active_diseases -= d

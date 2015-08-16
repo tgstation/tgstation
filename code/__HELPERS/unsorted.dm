@@ -1329,3 +1329,10 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	else
 		angle = round(angle) + 45*/
 	return angle
+
+/proc/print_runtime(exception/e)
+	world.log << "[time_stamp()] Runtime detected\n[e] at [e.file]:[e.line]\n [e.desc]"
+
+/world/Error(exception/e)
+	print_runtime(e)
+	..()

@@ -31,7 +31,6 @@ var/list/beam_master = list()
 	var/turf/last = null
 	kill_count = 20
 
-
 	process()
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
 		var/broke = 0
@@ -167,6 +166,18 @@ var/list/beam_master = list()
 			var/mob/living/M = target
 			M.playsound_local(src, "explosion", 50, 1)
 		..()
+
+/obj/item/projectile/beam/lightning/spell
+	var/basedamage = 40
+	damage = 0
+
+	on_hit(atom/target, blocked = 0)
+		..()
+		target.emp_act(2)
+		if(ismob(target))
+			var/mob/living/L = target
+			L.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
+
 
 /obj/item/projectile/beam
 	name = "laser"
