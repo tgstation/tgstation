@@ -101,7 +101,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 		src << "<span class='warning'>You find yourself unable to speak!</span>"
 		return
 
-	message = treat_message(message)
+	if(message_mode != MODE_WHISPER) //Prevent double treating
+		message = treat_message(message)
 	var/spans = list()
 	spans += get_spans()
 
