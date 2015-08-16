@@ -444,11 +444,8 @@
 /obj/effect/timestop/New()
 	..()
 	for(var/mob/living/M in player_list)
-		spells:
-			for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)//People with timestop are immune to all timestops
-				if(istype(S, /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop))
-					immune |= M
-					break spells
+		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
+			immune |= M
 	timestop()
 
 
