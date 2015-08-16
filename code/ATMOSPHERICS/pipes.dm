@@ -302,7 +302,10 @@
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	alpha = invisibility ? 128 : 255
-	color = available_colors[_color]
+	//testing("PIPE UPDATE ICON: Updating icon on \the [src], _color: [_color]")
+	if(_color in available_colors)
+		color = available_colors[_color]
+
 	if(node1&&node2)
 		icon_state = "intact"
 
