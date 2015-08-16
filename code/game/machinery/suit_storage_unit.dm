@@ -393,12 +393,12 @@
 					for(var/obj/item/ITEM in src)
 						ITEM.clean_blood()
 					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
-						del(STORAGE)
+						qdel(STORAGE)
 				else //It was supercycling, destroy everything
 					src.HELMET = null
 					src.SUIT = null
 					src.MASK = null
-					del(STORAGE)
+					qdel(STORAGE)
 					visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
 					src.isbroken = 1
 					src.isopen = 1

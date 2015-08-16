@@ -45,7 +45,7 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
+		qdel(button)
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null

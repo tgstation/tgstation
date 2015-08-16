@@ -16,7 +16,7 @@
 
 /mob/camera/Destroy()
 	..()
-	del(src)
+	qdel(src)
 
 /mob/camera/Login()
 	..()
