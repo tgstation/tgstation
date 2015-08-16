@@ -181,7 +181,7 @@
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/proc/load()
-	var/turf/start_turf = src.loc
+	var/turf/start_turf = get_turf(src.loc)
 	var/turf/cur_turf
 	var/x_size = 5
 	var/y_size = 5
@@ -193,9 +193,6 @@
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
 	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
-
-	start_turf = src.loc
-
 
 	//Fill it
 	cur_turf = locate(start_turf.x, start_turf.y-2, start_turf.z)
