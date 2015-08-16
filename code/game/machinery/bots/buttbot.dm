@@ -28,6 +28,8 @@ Here it is: Buttbot.
 
 /obj/machinery/bot/buttbot/bot_process()
 
+	if(!..())
+		return
 	if(frustration > 8)
 		oldvictim = victim
 		victim = null
