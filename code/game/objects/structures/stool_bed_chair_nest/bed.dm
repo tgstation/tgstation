@@ -88,7 +88,7 @@
 	else
 		M.visible_message(\
 			"<span class='notice'>[M.name] is buckled in to [src] by [user.name]!</span>",\
-			"You are locked_to in to [src] by [user.name].",\
+			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
 
 	add_fingerprint(user)
