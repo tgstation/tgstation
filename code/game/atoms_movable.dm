@@ -203,6 +203,8 @@
 		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++
 		dist_since_sleep++
+		if(dist_travelled > 600) //safety to prevent infinite while loop.
+			break
 		if(dist_since_sleep >= speed)
 			dist_since_sleep = 0
 			sleep(1)
