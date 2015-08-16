@@ -215,6 +215,7 @@
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	var/start_fueled = 1 //Explicit, should the welder start with fuel in it ?
 
 /obj/item/weapon/weldingtool/suicide_act(mob/user)
 	user.visible_message("<span class='danger'>[user] is burning \his face off with the [src.name]! It looks like \he's  trying to commit suicide!</span>")
@@ -223,7 +224,8 @@
 /obj/item/weapon/weldingtool/New()
 	. = ..()
 	create_reagents(max_fuel)
-	reagents.add_reagent("fuel", max_fuel)
+	if(start_fueled)
+		reagents.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
@@ -480,6 +482,8 @@
 					user.disabilities &= ~NEARSIGHTED
 	return
 
+/obj/item/weapon/weldingtool/empty
+	start_fueled = 0
 
 /obj/item/weapon/weldingtool/largetank
 	name = "Industrial Welding Tool"
@@ -487,12 +491,18 @@
 	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 60)
 	origin_tech = "engineering=2"
 
+/obj/item/weapon/weldingtool/largetank/empty
+	start_fueled = 0
+
 /obj/item/weapon/weldingtool/hugetank
 	name = "Upgraded Welding Tool"
 	max_fuel = 80
 	w_class = 3.0
 	starting_materials = list(MAT_IRON = 70, MAT_GLASS = 120)
 	origin_tech = "engineering=3"
+
+/obj/item/weapon/weldingtool/hugetank/empty
+	start_fueled = 0
 
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"
@@ -503,7 +513,8 @@
 	icon_state = "ewelder"
 	var/last_gen = 0
 
-
+/obj/item/weapon/weldingtool/experimental/empty
+	start_fueled = 0
 
 /obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/weldingtool/experimental/proc/fuel_gen() called tick#: [world.time]")

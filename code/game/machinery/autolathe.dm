@@ -34,7 +34,7 @@
 	part_sets = list(
 		"Tools"=list(
 		new /obj/item/device/multitool(), \
-		new /obj/item/weapon/weldingtool(), \
+		new /obj/item/weapon/weldingtool/empty(), \
 		new /obj/item/weapon/crowbar(), \
 		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \
@@ -111,7 +111,7 @@
 		new /obj/item/weapon/pipe_dispenser(),\
 		new /obj/item/weapon/rsf(), \
 		new /obj/item/device/radio/electropack(), \
-		new /obj/item/weapon/weldingtool/largetank(), \
+		new /obj/item/weapon/weldingtool/largetank/empty(), \
 		new /obj/item/weapon/handcuffs(), \
 		new /obj/item/ammo_storage/box/a357(), \
 		new /obj/item/ammo_casing/shotgun(), \
