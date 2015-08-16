@@ -105,11 +105,11 @@
 			src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
 			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
 			var/datum/objective/revenant/objective = new
-			objective.owner = src
+			objective.owner = src.mind
 			src.mind.objectives += objective
 			src << "<b>Objective #1</b>: [objective.explanation_text]"
 			var/datum/objective/revenantFluff/objective2 = new
-			objective2.owner = src
+			objective2.owner = src.mind
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
@@ -187,10 +187,10 @@
 	if(user.essence + essence_amt <= 0)
 		return
 	user.essence += essence_amt
-	user.essence = Clamp(user.essence, 0, INFINITY)
+	user.essence = max(0, user.essence)
 	if(essence_amt > 0)
 		user.essence_accumulated += essence_amt
-		user.essence_accumulated = Clamp(user.essence_accumulated, 0, INFINITY)
+		user.essence_accumulated = max(0, user.essence_accumulated)
 	if(!silent)
 		if(essence_amt > 0)
 			user << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
@@ -226,9 +226,9 @@
 	..()
 
 /datum/objective/revenant/check_completion()
-	if(!istype(owner, /mob/living/simple_animal/revenant) || !owner)
+	if(!istype(owner.current, /mob/living/simple_animal/revenant))
 		return 0
-	var/mob/living/simple_animal/revenant/R = owner
+	var/mob/living/simple_animal/revenant/R = owner.current
 	if(!R || R.stat == DEAD)
 		return 0
 	var/essence_stolen = R.essence_accumulated
