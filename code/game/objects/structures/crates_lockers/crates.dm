@@ -45,11 +45,12 @@
 	icon_state = "medicalcrate"
 
 /obj/structure/closet/crate/rcd
-	desc = "A crate for the storage of the RCD."
+	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 
 /obj/structure/closet/crate/rcd/New()
 	..()
+	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
@@ -172,7 +173,7 @@
 	update_icon()
 	return 1
 
-/obj/structure/closet/crate/insert(var/atom/movable/AM, var/include_mobs = 0)
+/obj/structure/closet/crate/insert(atom/movable/AM, include_mobs = 0)
 
 	if(contents.len >= storage_capacity)
 		return -1
@@ -194,7 +195,7 @@
 	AM.loc = src
 	return 1
 
-/obj/structure/closet/crate/proc/tear_manifest(mob/user as mob)
+/obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
 	manifest.loc = loc
@@ -203,7 +204,7 @@
 	manifest = null
 	overlays-="manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/attack_hand(mob/user)
 	if(manifest)
 		tear_manifest(user)
 		return
@@ -221,7 +222,7 @@
 		open()
 	return
 
-/obj/structure/closet/crate/secure/attack_hand(mob/user as mob)
+/obj/structure/closet/crate/secure/attack_hand(mob/user)
 	if(manifest)
 		tear_manifest(user)
 		return
@@ -238,7 +239,7 @@
 	else
 		..()
 
-/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/card) && src.allowed(user) && !locked && !opened && !broken)
 		user << "<span class='notice'>You lock \the [src].</span>"
 		src.locked = 1
@@ -248,7 +249,7 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/emag_act(mob/user as mob)
+/obj/structure/closet/crate/secure/emag_act(mob/user)
 	if(locked && !broken)
 		src.locked = 0
 		src.broken = 1
@@ -259,10 +260,10 @@
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		add_fingerprint(user)
 
-/obj/structure/closet/crate/attack_paw(mob/user as mob)
+/obj/structure/closet/crate/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user, params)
 	if(opened)
 		if(isrobot(user))
 			return

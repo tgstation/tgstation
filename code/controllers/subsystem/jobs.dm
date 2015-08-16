@@ -390,6 +390,7 @@ var/datum/subsystem/job/SSjob
 		else //We ran out of spare locker spawns!
 			break
 
+
 /datum/subsystem/job/proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
 	if(!config.load_jobs_from_txt)
 		return 0
@@ -462,7 +463,7 @@ var/datum/subsystem/job/SSjob
 			return 1
 	return 0
 
-/datum/subsystem/job/proc/RejectPlayer(var/mob/new_player/player)
+/datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
 	Debug("Popcap overflow Check observer located, Player: [player]")

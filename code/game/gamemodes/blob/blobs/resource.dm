@@ -4,14 +4,13 @@
 	icon_state = "blob_resource"
 	health = 30
 	fire_resist = 2
-	var/mob/camera/blob/overmind = null
 	var/resource_delay = 0
 
 /obj/effect/blob/resource/update_icon()
 	if(health <= 0)
 		qdel(src)
 
-/obj/effect/blob/resource/PulseAnimation(var/activate = 0)
+/obj/effect/blob/resource/PulseAnimation(activate = 0)
 	if(activate)
 		..()
 	return

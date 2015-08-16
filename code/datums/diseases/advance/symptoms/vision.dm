@@ -25,7 +25,7 @@ Bonus
 	level = 5
 	severity = 4
 
-/datum/symptom/visionloss/Activate(var/datum/disease/advance/A)
+/datum/symptom/visionloss/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
@@ -75,7 +75,7 @@ Bonus
 	transmittable = -4
 	level = 4
 
-/datum/symptom/visionaid/Activate(var/datum/disease/advance/A)
+/datum/symptom/visionaid/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 		var/mob/living/M = A.affected_mob

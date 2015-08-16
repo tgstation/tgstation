@@ -10,14 +10,15 @@
 	var/surplus = -1 // -1 for infinite, not used by anything atm
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
+	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
-/datum/spellbook_entry/proc/CanBuy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book) // Specific circumstances
-	if(book.uses<cost)
+/datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
+	if(book.uses<cost || limit == 0)
 		return 0
 	return 1
-/datum/spellbook_entry/proc/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book) //return 1 on success
+/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
 	if(!S)
 		S = new spell_type()
 
@@ -55,7 +56,7 @@
 	user << "<span class='notice'>You have learned [S.name].</span>"
 	return 1
 
-/datum/spellbook_entry/proc/CanRefund(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	if(!refundable)
 		return 0
 	if(!S)
@@ -65,7 +66,7 @@
 			return 1
 	return 0
 
-/datum/spellbook_entry/proc/Refund(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book) //return point value or -1 for failure
+/datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return point value or -1 for failure
 	var/area/wizard_station/A = locate()
 	if(!(user in A.contents))
 		user << "<span clas=='warning'>You can only refund spells at the wizard lair</span>"
@@ -104,7 +105,7 @@
 
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 	log_name = "DG"
 
 /datum/spellbook_entry/disabletech
@@ -117,6 +118,11 @@
 	name = "Repulse"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
+
+/datum/spellbook_entry/timestop
+	name = "Time Stop"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	log_name = "TS"
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
@@ -173,7 +179,7 @@
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
 	log_name = "FS"
 
 /datum/spellbook_entry/summonitem
@@ -205,7 +211,7 @@
 	var/item_path= null
 
 
-/datum/spellbook_entry/item/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	new item_path(get_turf(user))
 	feedback_add_details("wizard_spell_learned",log_name)
 	return 1
@@ -249,7 +255,7 @@
 	item_path = /obj/item/weapon/scrying
 	log_name = "SO"
 
-/datum/spellbook_entry/item/scryingorb/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/scryingorb/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	if(..())
 		if (!(user.dna.check_mutation(XRAY)))
 			user.dna.add_mutation(XRAY)
@@ -261,7 +267,7 @@
 	item_path = /obj/item/weapon/storage/belt/soulstone/full
 	log_name = "SS"
 
-/datum/spellbook_entry/item/soulstones/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/soulstones/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. =..()
 	if(.)
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null))
@@ -285,7 +291,7 @@
 	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
 	log_name = "HS"
 
-/datum/spellbook_entry/item/armor/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
@@ -302,6 +308,7 @@
 	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
 	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
 	log_name = "BB"
+	limit = 3
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -310,7 +317,7 @@
 	buy_word = "Cast"
 	var/active = 0
 
-/datum/spellbook_entry/summon/CanBuy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	return ..() && !active
 
 /datum/spellbook_entry/summon/GetInfo()
@@ -337,7 +344,7 @@
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
-/datum/spellbook_entry/summon/guns/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(0, user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
@@ -356,7 +363,7 @@
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
-/datum/spellbook_entry/summon/magic/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(1, user, 0)
 	book.uses += 1
@@ -377,7 +384,7 @@
 		return 0
 	return (ticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
-/datum/spellbook_entry/summon/events/Buy(var/mob/living/carbon/human/user,var/obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	summonevents()
 	times++
@@ -425,21 +432,27 @@
 	Initialize()
 
 
-/obj/item/weapon/spellbook/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/antag_spawner/contract))
 		var/obj/item/weapon/antag_spawner/contract/contract = O
 		if(contract.used)
 			user << "<span class='warning'>The contract has been used, you can't get your points back now!</span>"
 		else
 			user << "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>"
-			src.uses++
+			uses++
+			for(var/datum/spellbook_entry/item/contract/CT in entries)
+				if(!isnull(CT.limit))
+					CT.limit++
 			qdel(O)
 	if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
 		user << "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>"
-		src.uses++
+		uses++
+		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
+			if(!isnull(BB.limit))
+				BB.limit++
 		qdel(O)
 
-/obj/item/weapon/spellbook/proc/GetCategoryHeader(var/category)
+/obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""
 	switch(category)
 		if("Offensive Spells")
@@ -460,7 +473,7 @@
 			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
 	return dat
 
-/obj/item/weapon/spellbook/proc/wrap(var/content)
+/obj/item/weapon/spellbook/proc/wrap(content)
 	var/dat = ""
 	dat +="<html><head><title>Spellbook</title></head>"
 	dat += {"
@@ -480,7 +493,7 @@
 	dat += {"[content]</body></html>"}
 	return dat
 
-/obj/item/weapon/spellbook/attack_self(mob/user as mob)
+/obj/item/weapon/spellbook/attack_self(mob/user)
 	if(!owner)
 		user << "<span class='notice'>You bind the spellbook to yourself.</span>"
 		owner = user
@@ -545,12 +558,16 @@
 			E = entries[text2num(href_list["buy"])]
 			if(E && E.CanBuy(H,src))
 				if(E.Buy(H,src))
+					if(E.limit)
+						E.limit--
 					uses -= E.cost
 		else if(href_list["refund"])
 			E = entries[text2num(href_list["refund"])]
 			if(E && E.refundable)
 				var/result = E.Refund(H,src)
 				if(result > 0)
+					if(!isnull(E.limit))
+						E.limit += result
 					uses += result
 		else if(href_list["page"])
 			tab = sanitize(href_list["page"])
@@ -574,7 +591,7 @@
 /obj/item/weapon/spellbook/oneuse/Initialize() //No need to init
 	return
 
-/obj/item/weapon/spellbook/oneuse/attack_self(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/attack_self(mob/user)
 	var/obj/effect/proc_holder/spell/S = new spell
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == S.type)
@@ -592,10 +609,10 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
 
-/obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
-/obj/item/weapon/spellbook/oneuse/proc/onlearned(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/proc/onlearned(mob/user)
 	used = 1
 	user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 
@@ -608,7 +625,7 @@
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
 
-/obj/item/weapon/spellbook/oneuse/fireball/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/fireball/recoil(mob/user)
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	qdel(src)
@@ -619,7 +636,7 @@
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
 
-/obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user)
 	..()
 	user <<"<span class='caution'>Your stomach rumbles...</span>"
 	if(user.nutrition)
@@ -633,7 +650,7 @@
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
 
-/obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/blind/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You go blind!</span>"
 	user.eye_blind = 10
@@ -651,7 +668,7 @@
 	name = "spellbook of [spellname]" //Note, desc doesn't change by design
 	..()
 
-/obj/item/weapon/spellbook/oneuse/mindswap/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/mindswap/recoil(mob/user)
 	..()
 	if(stored_swap in dead_mob_list)
 		stored_swap = null
@@ -696,7 +713,7 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
-/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
 	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
@@ -710,7 +727,7 @@
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
 
-/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>You're knocked down!</span>"
 	user.Weaken(20)
@@ -721,7 +738,7 @@
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
 
-/obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user as mob)
+/obj/item/weapon/spellbook/oneuse/barnyard/recoil(mob/living/carbon/user)
 	if(istype(user, /mob/living/carbon/human))
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
 		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
@@ -741,7 +758,7 @@
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% post-consumer wizard."
 
-/obj/item/weapon/spellbook/oneuse/charge/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/charge/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>[src] suddenly feels very warm!</span>"
 	empulse(src, 1, 1)
@@ -752,7 +769,7 @@
 	icon_state ="booksummons"
 	desc = "This book is bright and garish, very hard to miss."
 
-/obj/item/weapon/spellbook/oneuse/summonitem/recoil(mob/user as mob)
+/obj/item/weapon/spellbook/oneuse/summonitem/recoil(mob/user)
 	..()
 	user <<"<span class='warning'>[src] suddenly vanishes!</span>"
 	qdel(src)

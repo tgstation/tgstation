@@ -12,26 +12,27 @@
 	invisibility = INVISIBILITY_OBSERVER
 	health = 25
 	maxHealth = 25
-	see_in_dark = 255
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	languages = ALL
 	response_help   = "passes through"
 	response_disarm = "swings at"
-	response_harm   = "punches"
+	response_harm   = "punches through"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	harm_intent_damage = 5
-	speak_emote = list("hisses", "spits", "growls")
+	harm_intent_damage = 0
 	friendly = "touches"
 	status_flags = 0
 	wander = 0
 	density = 0
+	anchored = 1
 
-	var/essence = 25 //The resource of revenants. Max health is equal to twice this amount
+	var/essence = 25 //The resource of revenants. Max health is equal to three times this amount
 	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
-	var/essence_regen = 1 //If the revenant regenerates essence or not; 1 for yes, 0 for no
+	var/essence_regenerating = 1 //If the revenant regenerates essence or not; 1 for yes, 0 for no
+	var/essence_regen_amount = 2 //How much essence regenerates
 	var/essence_min = 1 //The minimum amount of essence a revenant can have; by default, it never drops below one
+	var/essence_accumulated = 0 //How much essence the revenant has stolen
 	var/strikes = 0 //How many times a revenant can die before dying for good
 	var/revealed = 0 //If the revenant can take damage from normal sources.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
@@ -45,16 +46,18 @@
 			src << "<span class='boldannounce'>Your essence has dropped below critical levels. You barely manage to save yourself - [strikes ? "you can't keep this up!" : "next time, it's death."]</span>"
 		else if(strikes <= 0)
 			death()
-	maxHealth = essence * 2
+	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
+		essence += essence_regen_amount
+		if(essence > essence_regen_cap)
+			essence = essence_regen_cap
+	maxHealth = essence * 3
 	if(!revealed)
 		health = maxHealth //Heals to full when not revealed
-	if(essence_regen && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
-		essence++
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
 
-/mob/living/simple_animal/revenant/ClickOn(var/atom/A, var/params) //Copypaste from ghost code - revenants can't interact with the world directly.
+/mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
@@ -84,6 +87,7 @@
 	..()
 	if(statpanel("Status"))
 		stat(null, "Current essence: [essence]E")
+		stat(null, "Stolen essence: [essence_accumulated]E")
 
 /mob/living/simple_animal/revenant/New()
 	..()
@@ -101,11 +105,11 @@
 			src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
 			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
 			var/datum/objective/revenant/objective = new
-			objective.owner = src
+			objective.owner = src.mind
 			src.mind.objectives += objective
 			src << "<b>Objective #1</b>: [objective.explanation_text]"
 			var/datum/objective/revenantFluff/objective2 = new
-			objective2.owner = src
+			objective2.owner = src.mind
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
@@ -121,7 +125,7 @@
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_harvest
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenantDefile
+		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
 		return 1
 	return 0
 
@@ -150,7 +154,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
-						"<span class='boldannounce'>The null rod invokes agony in you! You feel your essence draining away!</span>")
+						"<span class='boldannounce'>As the null rod passes through you, you feel your essence draining away!</span>")
 		essence -= 25 //hella effective
 		inhibited = 1
 		spawn(30)
@@ -158,7 +162,7 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/castcheck(var/essence_cost)
+/mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
 	var/mob/living/simple_animal/revenant/user = usr
 	if(!istype(user) || !user)
 		return
@@ -170,20 +174,23 @@
 		user << "<span class='warning'>You lack the essence to use that ability.</span>"
 		return 0
 	if(user.inhibited)
-		user << "<span class='warning'>Your powers have been suppressed by holy energies!</span>"
+		user << "<span class='warning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0
 	return 1
 
 
 
-/mob/living/simple_animal/revenant/proc/change_essence_amount(var/essence_amt, var/silent = 0, var/source = null)
+/mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = 0, source = null)
 	var/mob/living/simple_animal/revenant/user = usr
 	if(!istype(usr) || !usr)
 		return
 	if(user.essence + essence_amt <= 0)
 		return
 	user.essence += essence_amt
-	user.essence = Clamp(user.essence, 0, INFINITY)
+	user.essence = max(0, user.essence)
+	if(essence_amt > 0)
+		user.essence_accumulated += essence_amt
+		user.essence_accumulated = max(0, user.essence_accumulated)
 	if(!silent)
 		if(essence_amt > 0)
 			user << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
@@ -193,7 +200,7 @@
 
 
 
-/mob/living/simple_animal/revenant/proc/reveal(var/time, var/stun)
+/mob/living/simple_animal/revenant/proc/reveal(time, stun)
 	var/mob/living/simple_animal/revenant/R = usr
 	if(!istype(usr) || !usr)
 		return
@@ -201,13 +208,13 @@
 	R.invisibility = 0
 	if(stun)
 		R.notransform = 1
-	R << "<span class='warning'>You have been revealed [stun ? "and cannot move" : ""].</span>"
+	R << "<span class='warning'>You have been revealed[stun ? " and cannot move" : ""].</span>"
 	spawn(time)
 		R.revealed = 0
 		R.invisibility = INVISIBILITY_OBSERVER
 		if(stun)
 			R.notransform = 0
-		R << "<span class='notice'>You are once more concealed [stun ? "and can move again" : ""].</span>"
+		R << "<span class='notice'>You are once more concealed[stun ? " and can move again" : ""].</span>"
 
 /datum/objective/revenant
 	dangerrating = 10
@@ -215,17 +222,17 @@
 
 /datum/objective/revenant/New()
 	targetAmount = rand(100,200)
-	explanation_text = "Absorb [targetAmount] points of essence."
+	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 
 /datum/objective/revenant/check_completion()
-	if(!istype(owner.current, /mob/living/simple_animal/revenant) || !owner.current)
+	if(!istype(owner.current, /mob/living/simple_animal/revenant))
 		return 0
 	var/mob/living/simple_animal/revenant/R = owner.current
 	if(!R || R.stat == DEAD)
 		return 0
-	var/essenceAccumulated = R.essence
-	if(essenceAccumulated < targetAmount)
+	var/essence_stolen = R.essence_accumulated
+	if(essence_stolen < targetAmount)
 		return 0
 	return 1
 
@@ -258,7 +265,7 @@
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
 	reforming = 1
-	spawn(1800) //3 minutes
+	spawn(600) //1 minute
 		if(src && reforming)
 			return reform()
 		if(src && !reforming)
@@ -294,7 +301,7 @@
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
 	if(!reforming || !src)
 		return
-	message_admins("Revenant ectoplasm was left undestroyed for 3 minutes and has reformed into a new revenant.")
+	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and has reformed into a new revenant.")
 	loc = get_turf(src) //In case it's in a backpack or someone's hand
 	visible_message("<span class='boldannounce'>[src] suddenly rises into the air before fading away.</span>")
 	var/mob/living/simple_animal/revenant/R = new(get_turf(src))

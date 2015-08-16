@@ -14,17 +14,17 @@
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
 	..()
 
-/obj/structure/spirit_board/attack_hand(mob/user as mob)
+/obj/structure/spirit_board/attack_hand(mob/user)
 	if(..())
 		return
 	spirit_board_pick_letter(user)
 
 
-/obj/structure/spirit_board/attack_ghost(mob/dead/observer/user as mob)
+/obj/structure/spirit_board/attack_ghost(mob/dead/observer/user)
 	spirit_board_pick_letter(user)
 
 
-/obj/structure/spirit_board/proc/spirit_board_pick_letter(var/mob/M)
+/obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
 	if(!spirit_board_checks(M))
 		return 0
 
@@ -43,7 +43,7 @@
 		visible_message("<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>")
 
 
-/obj/structure/spirit_board/proc/spirit_board_checks(var/mob/M)
+/obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
 	//cooldown
 	var/bonus = 0
 	if(M.ckey == lastuser)

@@ -30,14 +30,14 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
-/obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O as obj, mob/living/user as mob, params)
+/obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user, params)
 	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		user << "<span class='warning'>It is too hot to mess with!</span>"
 		return
 	..()
 
-/obj/machinery/computer/message_monitor/emag_act(user as mob)
+/obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(!emagged)
 		if(!isnull(src.linkedServer))
 			emagged = 1
@@ -60,7 +60,7 @@
 			linkedServer = message_servers[1]
 	return
 
-/obj/machinery/computer/message_monitor/attack_hand(var/mob/living/user as mob)
+/obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())
 		return
 	//If the computer is being hacked or is emagged, display the reboot message.
@@ -244,7 +244,7 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/message_monitor/proc/BruteForce(mob/user as mob)
+/obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
 		user << "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>"
 	else

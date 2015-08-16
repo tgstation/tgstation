@@ -128,7 +128,7 @@
 		. = 0
 
 
-/obj/machinery/door_timer/proc/timeset(var/seconds)
+/obj/machinery/door_timer/proc/timeset(seconds)
 	if(timing)
 		releasetime=world.time+seconds*10
 	else
@@ -136,7 +136,7 @@
 	return
 
 //Allows AIs to use door_timer, see human attack_hand function below
-/obj/machinery/door_timer/attack_ai(var/mob/user as mob)
+/obj/machinery/door_timer/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
@@ -144,7 +144,7 @@
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
-/obj/machinery/door_timer/attack_hand(var/mob/user as mob)
+/obj/machinery/door_timer/attack_hand(mob/user)
 	if(..())
 		return
 	var/second = round(timeleft() % 60)
@@ -237,7 +237,7 @@
 
 
 // Adds an icon in case the screen is broken/off, stolen from status_display.dm
-/obj/machinery/door_timer/proc/set_picture(var/state)
+/obj/machinery/door_timer/proc/set_picture(state)
 	if(maptext)	maptext = ""
 	picture_state = state
 	overlays.Cut()

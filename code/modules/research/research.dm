@@ -63,7 +63,7 @@ research holder datum.
 
 //Checks to see if tech has all the required pre-reqs.
 //Input: datum/tech; Output: 0/1 (false/true)
-/datum/research/proc/TechHasReqs(var/datum/tech/T)
+/datum/research/proc/TechHasReqs(datum/tech/T)
 	if(T.req_tech.len == 0)
 		return 1
 	var/matches = 0
@@ -79,7 +79,7 @@ research holder datum.
 
 //Checks to see if design has all the required pre-reqs.
 //Input: datum/design; Output: 0/1 (false/true)
-/datum/research/proc/DesignHasReqs(var/datum/design/D)//Heavily optimized -Sieve
+/datum/research/proc/DesignHasReqs(datum/design/D)//Heavily optimized -Sieve
 	if(D.req_tech.len == 0)
 		return 1
 	for(var/datum/tech/T in known_tech)
@@ -106,7 +106,7 @@ research holder datum.
 */
 //Adds a tech to known_tech list. Checks to make sure there aren't duplicates and updates existing tech's levels if needed.
 //Input: datum/tech; Output: Null
-/datum/research/proc/AddTech2Known(var/datum/tech/T)
+/datum/research/proc/AddTech2Known(datum/tech/T)
 	for(var/datum/tech/known in known_tech)
 		if(T.id == known.id)
 			if(T.level > known.level)
@@ -115,7 +115,7 @@ research holder datum.
 	known_tech += T
 	return
 
-/datum/research/proc/AddDesign2Known(var/datum/design/D)
+/datum/research/proc/AddDesign2Known(datum/design/D)
 	for(var/datum/design/known in known_designs)
 		if(D.id == known.id)
 			if(D.reliability > known.reliability)
@@ -141,14 +141,14 @@ research holder datum.
 
 //Refreshes the levels of a given tech.
 //Input: Tech's ID and Level; Output: null
-/datum/research/proc/UpdateTech(var/ID, var/level)
+/datum/research/proc/UpdateTech(ID, level)
 	for(var/datum/tech/KT in known_tech)
 		if(KT.id == ID)
 			if(KT.level <= level)
 				KT.level = max((KT.level + 1), (level - 1))
 	return
 
-/datum/research/proc/UpdateDesigns(var/obj/item/I, var/list/temp_tech)
+/datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
 	for(var/T in temp_tech)
 		if(temp_tech[T] - 1 >= known_tech[T])
 			for(var/datum/design/D in known_designs)
@@ -159,7 +159,7 @@ research holder datum.
 						if(I.crit_fail)
 							D.reliability = min(100, D.reliability + rand(3, 5))
 
-/datum/research/proc/FindDesignByID(var/id)
+/datum/research/proc/FindDesignByID(id)
 	for(var/datum/design/D in known_designs)
 		if(D.id == id)
 			return D
@@ -175,7 +175,7 @@ research holder datum.
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
 			AddDesign2Known(D)
 
-/datum/research/autolathe/AddDesign2Known(var/datum/design/D)
+/datum/research/autolathe/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & AUTOLATHE))
 		return
 	..()

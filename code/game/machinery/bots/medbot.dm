@@ -110,7 +110,6 @@
 
 /obj/machinery/bot/medbot/turn_off()
 	..()
-	updateicon()
 	updateUsrDialog()
 
 /obj/machinery/bot/medbot/bot_reset()
@@ -120,12 +119,14 @@
 	oldloc = null
 	last_found = world.time
 	declare_cooldown = 0
+	updateicon()
 
 /obj/machinery/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
 	path = list()
 	patient = null
 	mode = BOT_IDLE
 	last_found = world.time
+	updateicon()
 
 /obj/machinery/bot/medbot/set_custom_texts()
 
@@ -133,10 +134,10 @@
 	text_dehack = "You reset [name]'s reagent processor circuits."
 	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
-/obj/machinery/bot/medbot/attack_paw(mob/user as mob)
+/obj/machinery/bot/medbot/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/medbot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
@@ -259,7 +260,7 @@
 		if (health < current_health) //if medbot took some damage
 			step_to(src, (get_step_away(src,user)))
 
-/obj/machinery/bot/medbot/Emag(mob/user as mob)
+/obj/machinery/bot/medbot/Emag(mob/user)
 	..()
 	if(emagged == 2)
 		declare_crit = 0
@@ -271,7 +272,7 @@
 		if(user)
 			oldpatient = user
 
-/obj/machinery/bot/medbot/process_scan(var/mob/living/carbon/human/H)
+/obj/machinery/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if (H.stat == 2)
 		return
 
@@ -362,7 +363,7 @@
 
 	return
 
-/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
 	if(C.stat == 2)
 		return 0 //welp too late for them!
@@ -409,24 +410,20 @@
 
 	return 0
 
-/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C as mob)
+/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
 	if(!on)
 		return
 
 	if(!istype(C))
 		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
+		soft_reset()
 		return
 
 	if(C.stat == 2)
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
 		speak(death_message)
 		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
+		soft_reset()
 		return
 
 	var/reagent_id = null
@@ -472,20 +469,16 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
-		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		speak(message)
-		updateicon()
+		bot_reset()
 		return
 	else
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		spawn(30)
-			if ((get_dist(src, patient) <= 1) && (on))
+			if ((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						var/fraction = min(injection_amount/reagent_glass.reagents.total_volume, 1)
@@ -495,16 +488,16 @@
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
 					"<span class='userdanger'>[src] injects you with its syringe!</span>")
-				patient = null
+			else
+				visible_message("[src] retracts its syringe.")
 
-			mode = BOT_IDLE
-			updateicon()
+			soft_reset()
 			return
 
 	reagent_id = null
 	return
 
-/obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag == "taser")
 		stunned = min(stunned+10,20)
 	..()
@@ -533,7 +526,7 @@
 	qdel(src)
 	return
 
-/obj/machinery/bot/medbot/proc/declare(var/crit_patient)
+/obj/machinery/bot/medbot/proc/declare(crit_patient)
 	if(declare_cooldown)
 		return
 	var/area/location = get_area(src)
@@ -546,7 +539,7 @@
  *	Medbot Assembly -- Can be made out of all three medkits.
  */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob, params)
+/obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user, params)
 
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
@@ -574,7 +567,7 @@
 	qdel(src)
 
 
-/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)

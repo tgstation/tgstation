@@ -21,7 +21,7 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"nanotrasen.css\" />"
 	src.updateLayout("")
 
-/datum/html_interface/updateLayout(layout)
+/datum/html_interface/nanotrasen/updateLayout(layout)
 	// Wrap the layout in our custom HTML
 	return ..("<div id=\"ntbgcenter\"></div><div id=\"content\">[layout]</div>")
 

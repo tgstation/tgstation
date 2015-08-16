@@ -50,6 +50,10 @@
 		WL.amount = HH.amount
 		qdel(HH)
 
+	//Corgi costume says goodbye
+	for(var/obj/item/clothing/suit/hooded/ian_costume/IC in contents)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
+		qdel(IC)
 
 	if(crayon)
 		var/wash_color
@@ -181,7 +185,7 @@
 /obj/machinery/washing_machine/update_icon()
 	icon_state = "wm_[state][panel]"
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	/*if(istype(W,/obj/item/weapon/screwdriver))
 		panel = !panel
 		user << "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel"*/
@@ -199,7 +203,7 @@
 	else if(istype(W,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
-			if(ishuman(G.assailant) && iscorgi(G.affecting))
+			if(iscorgi(G.affecting))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3
@@ -269,7 +273,7 @@
 		..()
 	update_icon()
 
-/obj/machinery/washing_machine/attack_hand(mob/user as mob)
+/obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)
 		if(1)
 			state = 2

@@ -57,7 +57,7 @@
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
-/obj/item/clothing/suit/toggle/AltClick(var/mob/user)
+/obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"
@@ -99,6 +99,7 @@
 	..()
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	qdel(helmet)
+	qdel(jetpack)
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()

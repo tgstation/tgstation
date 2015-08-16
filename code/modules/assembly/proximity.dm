@@ -98,7 +98,7 @@
 	return
 
 
-/obj/item/device/assembly/prox_sensor/interact(mob/user as mob)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
 	if(is_secured(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60

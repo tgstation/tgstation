@@ -24,7 +24,7 @@
 				max_mages = 20
 			if(max_mages < 1)
 				max_mages = 1
-/datum/game_mode/wizard/raginmages/greet_wizard(var/datum/mind/wizard, var/you_are=1)
+/datum/game_mode/wizard/raginmages/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
 		wizard.current << "<B>You are the Space Wizard!</B>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
@@ -123,7 +123,7 @@
 		world << "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
 	..(1)
 
-/datum/game_mode/wizard/raginmages/proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+/datum/game_mode/wizard/raginmages/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
 	//First we spawn a dude.

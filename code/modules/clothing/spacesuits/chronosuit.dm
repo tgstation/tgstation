@@ -34,7 +34,7 @@
 	var/teleporting = 0
 
 
-/obj/item/clothing/suit/space/chronos/proc/new_camera(var/mob/user)
+/obj/item/clothing/suit/space/chronos/proc/new_camera(mob/user)
 	if(camera)
 		qdel(camera)
 	camera = new /obj/effect/chronos_cam(get_turf(user))
@@ -65,7 +65,7 @@
 				user << "<span class='userdanger'>Elecrtromagnetic pulse detected, shutting down systems to preserve integrity...</span>"
 			deactivate()
 
-/obj/item/clothing/suit/space/chronos/proc/chronowalk(var/mob/living/carbon/human/user)
+/obj/item/clothing/suit/space/chronos/proc/chronowalk(mob/living/carbon/human/user)
 	if(!teleporting && user && (user.stat == CONSCIOUS))
 		teleporting = 1
 		var/turf/from_turf = get_turf(user)

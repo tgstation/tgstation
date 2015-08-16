@@ -1,6 +1,6 @@
 /var/create_object_html = null
 
-/datum/admins/proc/create_object(var/mob/user)
+/datum/admins/proc/create_object(mob/user)
 	if (!create_object_html)
 		var/objectjs = null
 		objectjs = list2text(typesof(/obj), ";")
@@ -10,7 +10,7 @@
 	user << browse(replacetext(create_object_html, "/* ref src */", "\ref[src]"), "window=create_object;size=425x475")
 
 
-/datum/admins/proc/quick_create_object(var/mob/user)
+/datum/admins/proc/quick_create_object(mob/user)
 
 	var/quick_create_object_html = null
 	var/pathtext = null

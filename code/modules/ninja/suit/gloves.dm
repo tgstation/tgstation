@@ -37,7 +37,7 @@
 	var/maxdrain = 400
 
 
-/obj/item/clothing/gloves/space_ninja/Touch(var/atom/A,var/proximity)
+/obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)
 	if(!candrain || draining)
 		return 0
 	if(!istype(loc, /mob/living/carbon/human))

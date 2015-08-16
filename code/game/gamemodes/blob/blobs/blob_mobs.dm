@@ -13,7 +13,7 @@
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
 
-/mob/living/simple_animal/hostile/blob/proc/adjustcolors(var/a_color)
+/mob/living/simple_animal/hostile/blob/proc/adjustcolors(a_color)
 	if(a_color)
 		color = a_color
 
@@ -65,7 +65,7 @@
 				break
 	..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(var/mob/living/carbon/human/H)
+/mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	is_zombie = 1
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
@@ -94,16 +94,16 @@
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
-	create_reagents(25)
+	create_reagents(5)
 
 	if(overmind && overmind.blob_reagent_datum)
-		reagents.add_reagent(overmind.blob_reagent_datum.id, 25)
+		reagents.add_reagent(overmind.blob_reagent_datum.id, 5)
 	else
-		reagents.add_reagent("spore", 25)
+		reagents.add_reagent("spore", 5)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
-	S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
+	S.set_up(reagents, 1, 1, location, 15, 1) // only 1 smoke cloud
 	S.start()
 
 	ghostize()
@@ -128,7 +128,7 @@
 		adjustcolors(color) //to ensure zombie/other overlays update
 
 
-/mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(var/a_color)
+/mob/living/simple_animal/hostile/blob/blobspore/adjustcolors(a_color)
 	color = a_color
 
 	if(is_zombie)

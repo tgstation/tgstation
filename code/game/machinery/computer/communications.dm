@@ -322,21 +322,21 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob, params)
+/obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		attack_hand(user)
 	else
 		..()
 	return
 
-/obj/machinery/computer/communications/emag_act(mob/user as mob)
+/obj/machinery/computer/communications/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
 		user << "<span class='notice'>You scramble the communication routing circuits.</span>"
 
-/obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > 6)
@@ -456,7 +456,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/computer/communications/proc/get_javascript_header(var/form_id)
+/obj/machinery/computer/communications/proc/get_javascript_header(form_id)
 	var/dat = {"<script type="text/javascript">
 						function getLength(){
 							var reasonField = document.getElementById('reasonfield');
@@ -473,7 +473,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					</script>"}
 	return dat
 
-/obj/machinery/computer/communications/proc/get_call_shuttle_form(var/ai_interface = 0)
+/obj/machinery/computer/communications/proc/get_call_shuttle_form(ai_interface = 0)
 	var/form_id = "callshuttle"
 	var/dat = get_javascript_header(form_id)
 	dat += "<form name='callshuttle' id='[form_id]' action='?src=\ref[src]' method='get' style='display: inline'>"
@@ -493,7 +493,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	dat += "<BR>Are you sure you want to cancel the shuttle? \[ <a href='#' onclick='submit()'>Cancel</a> \]"
 	return dat
 
-/obj/machinery/computer/communications/proc/interact_ai(var/mob/living/silicon/ai/user as mob)
+/obj/machinery/computer/communications/proc/interact_ai(mob/living/silicon/ai/user)
 	var/dat = ""
 	switch(src.aistate)
 		if(STATE_DEFAULT)
@@ -567,7 +567,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	dat += "<BR><BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
-/obj/machinery/computer/communications/proc/make_announcement(var/mob/living/user, var/is_silicon)
+/obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
@@ -586,7 +586,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 
 
-/obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
+/obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

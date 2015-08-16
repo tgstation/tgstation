@@ -47,7 +47,7 @@
 	icon_state = "u_laser"
 	damage = 50
 
-/obj/item/projectile/beam/pulse/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(istype(target,/turf/)||istype(target,/obj/structure/))
 		target.ex_act(2)
@@ -76,7 +76,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 
-/obj/item/projectile/lasertag/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/lasertag/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target

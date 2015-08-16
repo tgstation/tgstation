@@ -13,14 +13,14 @@
 /obj/item/device/soulstone/anybody
 	usability = 1
 
-/obj/item/device/soulstone/pickup(mob/living/user as mob)
+/obj/item/device/soulstone/pickup(mob/living/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user << "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>"
 		user.Dizzy(120)
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-/obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Paralyse(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
@@ -92,7 +92,7 @@
 	icon_state = "construct"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive"
 
-/obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/SS = O
 		SS.transfer_soul("CONSTRUCT",src,user)
@@ -101,7 +101,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/device/soulstone/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
+/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/U).
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TO-DO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
@@ -115,8 +115,10 @@
 					for(var/obj/item/W in T)
 						T.unEquip(W)
 				init_shade(C, T, U)
-				//qdel T		//Gib instead
 				return 1
+			else
+				U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+				getCultGhost(C,T,U)
 			return 0
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
@@ -134,7 +136,8 @@
 					U << "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!"
 				else
 					if(T.client == null)
-						U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame."
+						U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+						getCultGhost(C,T,U)
 					else
 						if(C.contents.len)
 							U << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
@@ -188,7 +191,7 @@
 	return
 
 
-/proc/makeNewConstruct(var/mob/living/simple_animal/construct/ctype, var/mob/target, var/mob/stoner = null, cultoverride = 0)
+/proc/makeNewConstruct(mob/living/simple_animal/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0)
 	var/mob/living/simple_animal/construct/newstruct = new ctype(get_turf(target))
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
@@ -207,7 +210,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/device/soulstone/proc/init_shade(var/obj/item/device/soulstone/C, var/mob/living/carbon/human/T, var/mob/U as mob, var/vic = 0)
+/obj/item/device/soulstone/proc/init_shade(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.invisibility = 101
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
@@ -237,3 +240,37 @@
 	if(vic)
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
 		U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
+
+
+/obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
+	var/list/candidates = get_candidates(BE_CULTIST)
+
+	shuffle(candidates)
+
+	var/time_passed = world.time
+	var/list/consenting_candidates = list()
+
+	for(var/candidate in candidates)
+
+		spawn(0)
+			switch(alert(candidate, "Would you like to play as a Shade? Please choose quickly!","Confirmation","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>=50 || !src)
+						return
+					consenting_candidates += candidate
+
+	sleep(50)
+
+	if(consenting_candidates.len)
+		var/client/ghost = null
+		ghost = pick(consenting_candidates)
+		if(C.contents.len) //If they used the soulstone on someone else in the meantime
+			return 0
+		if(!T.client) //If the original returns in the alloted time
+			T.client = ghost
+		for(var/obj/item/W in T)
+			T.unEquip(W)
+		init_shade(C, T, U)
+		qdel(T)
+	else
+		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"

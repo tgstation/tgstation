@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/datum/game_mode/blob/send_intercept(var/report = 1)
+/datum/game_mode/blob/send_intercept(report = 1)
 	var/intercepttext = ""
 	switch(report)
 		if(0)
@@ -57,7 +57,7 @@
 	var/num_territories = 1//Number of total valid territories for gang mode
 
 
-/datum/station_state/proc/count(var/count_territories)
+/datum/station_state/proc/count(count_territories)
 	for(var/turf/T in block(locate(1,1,1), locate(world.maxx,world.maxy,1)))
 
 		if(istype(T,/turf/simulated/floor))
@@ -100,7 +100,7 @@
 		else
 			world << "ERROR: NO VALID TERRITORIES"
 
-/datum/station_state/proc/score(var/datum/station_state/result)
+/datum/station_state/proc/score(datum/station_state/result)
 	if(!result)	return 0
 	var/output = 0
 	output += (result.floor / max(floor,1))

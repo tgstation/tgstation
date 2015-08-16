@@ -76,6 +76,16 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	return
 
+/obj/item/weapon/storage/box/security
+
+/obj/item/weapon/storage/box/security/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	return
+
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
@@ -478,6 +488,21 @@
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
 
+/obj/item/weapon/storage/box/alienhandcuffs
+	name = "box of spare handcuffs"
+	desc = "A box full of handcuffs."
+	icon_state = "alienboxCuffs"
+
+/obj/item/weapon/storage/box/alienhandcuffs/New()
+	..()
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+	new	/obj/item/weapon/restraints/handcuffs/alien(src)
+
 /obj/item/weapon/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
 	desc = "A sleek, sturdy box used to hold replica spacesuits."
@@ -629,10 +654,10 @@
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, "rustle", 50, 1, -5)
-	user.visible_message("<span class='notice'>[user] hugs the [src].</span>","<span class='notice'>You hug the [src].</span>")
+	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 	return
 
-/obj/item/weapon/storage/box/hug/New()
+/obj/item/weapon/storage/box/hug/medical/New()
 	..()
 	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/ointment(src)

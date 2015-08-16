@@ -2,10 +2,9 @@
 //node1, air1, network1 correspond to output
 
 
-/obj/machinery/atmospherics/binary/circulator
+/obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "circ1-off"
 
 	var/side = 1 // 1=left 2=right
@@ -17,8 +16,10 @@
 	density = 1
 
 
-/obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
+/obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
 
 	var/output_starting_pressure = air1.return_pressure()
 	var/input_starting_pressure = air2.return_pressure()
@@ -41,20 +42,18 @@
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
 
-		parent1.update = 1
-
-		parent2.update = 1
+		update_parents()
 
 		return removed
 
 	else
 		last_pressure_delta = 0
 
-/obj/machinery/atmospherics/binary/circulator/process_atmos()
+/obj/machinery/atmospherics/components/binary/circulator/process_atmos()
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/binary/circulator/update_icon()
+/obj/machinery/atmospherics/components/binary/circulator/update_icon()
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = "circ[side]-p"
 	else if(last_pressure_delta > 0)

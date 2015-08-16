@@ -7,7 +7,7 @@
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
 
-/obj/effect/step_trigger/proc/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
 /obj/effect/step_trigger/Crossed(H as mob|obj)
@@ -26,7 +26,7 @@
 	var/message	//the message to give to the mob
 	var/once = 1
 
-/obj/effect/step_trigger/message/Trigger(mob/M as mob)
+/obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)
 		M << "<span class='info'>[message]</span>"
 		if(once)
@@ -43,7 +43,7 @@
 	var/nostop = 0 // if 1: will only be stopped by teleporters
 	var/list/affecting = list()
 
-/obj/effect/step_trigger/thrower/Trigger(var/atom/A)
+/obj/effect/step_trigger/thrower/Trigger(atom/A)
 	if(!A || !istype(A, /atom/movable))
 		return
 	var/atom/movable/AM = A
@@ -106,7 +106,7 @@
 	var/teleport_y = 0
 	var/teleport_z = 0
 
-/obj/effect/step_trigger/teleporter/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/teleporter/Trigger(atom/movable/A)
 	if(teleport_x && teleport_y && teleport_z)
 
 		A.x = teleport_x
@@ -120,7 +120,7 @@
 	var/teleport_y_offset = 0
 	var/teleport_z_offset = 0
 
-/obj/effect/step_trigger/teleporter/random/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/teleporter/random/Trigger(atom/movable/A)
 	if(teleport_x && teleport_y && teleport_z)
 		if(teleport_x_offset && teleport_y_offset && teleport_z_offset)
 
@@ -139,7 +139,7 @@
 	var/entersmoke = 0
 	var/exitsmoke = 0
 
-/obj/effect/step_trigger/teleport_fancy/Trigger(mob/M as mob)
+/obj/effect/step_trigger/teleport_fancy/Trigger(mob/M)
 	var/dest = locate(locationx, locationy, z)
 	M.Move(dest)
 
@@ -176,7 +176,7 @@
 	var/triggerer_only = 0 //Whether the triggerer is the only person who hears this
 
 
-/obj/effect/step_trigger/sound_effect/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/sound_effect/Trigger(atom/movable/A)
 	var/turf/T = get_turf(A)
 
 	if(!T)

@@ -64,7 +64,7 @@ Borg Hypospray
 
 
 // Use this to add more chemicals for the borghypo to produce.
-/obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(var/reagent)
+/obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
 	var/datum/reagents/RG = new(30)
 	RG.my_atom = src
@@ -82,7 +82,7 @@ Borg Hypospray
 				R.cell.use(charge_cost) 					//Take power from borg...
 				RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
 
-/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
 		user << "<span class='notice'>The injector is empty.</span>"
@@ -100,11 +100,11 @@ Borg Hypospray
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	mode++
-	if(mode > reagent_list.len)
-		mode = 1
+	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
+	if(!chosen_reagent)
+		return
+	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
 	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
 	return
@@ -139,7 +139,7 @@ Borg Shaker
 
 	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
 
-/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we?
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/regenerate_reagents()
@@ -152,15 +152,6 @@ Borg Shaker
 				if(RG.total_volume < RG.maximum_volume)
 					R.cell.use(charge_cost)
 					RG.add_reagent(reagent_ids[valueofi], 5)
-
-/obj/item/weapon/reagent_containers/borghypo/borgshaker/attack_self(mob/user)
-	mode = modes[input(user, "What reagent do you want to dispense?") as anything in reagent_ids]
-
-	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-
-	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
-	user << "<span class='notice'>[src] is now dispensing '[R.name]'.</span>"
-	return
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return

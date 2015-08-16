@@ -9,7 +9,7 @@
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/mecha/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/mecha/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)

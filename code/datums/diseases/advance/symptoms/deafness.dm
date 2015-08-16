@@ -25,7 +25,7 @@ Bonus
 	level = 4
 	severity = 3
 
-/datum/symptom/deafness/Activate(var/datum/disease/advance/A)
+/datum/symptom/deafness/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

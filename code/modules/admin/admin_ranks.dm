@@ -10,8 +10,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	name = init_name
 	switch(name)
 		if("Removed",null,"")
-			ERROR("invalid admin-rank name. datum deleted")
-			del(src)
+			spawn(-1)
+				del(src)
+			throw EXCEPTION("invalid admin-rank name")
+			return
 	if(init_rights)	rights = init_rights
 	if(!init_adds)	init_adds = list()
 	if(!init_subs)	init_subs = list()
@@ -178,7 +180,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/ckey = ckey(query.item[1])
 			var/rank = ckeyEx(query.item[2])
 			if(rank_names[rank] == null)
-				error("Admin rank ([rank]) does not exist.")
+				WARNING("Admin rank ([rank]) does not exist.")
 				continue
 			var/datum/admins/D = new(rank_names[rank], ckey)				//create the admin datum and store it for later use
 			if(!D)	continue									//will occur if an invalid rank is provided

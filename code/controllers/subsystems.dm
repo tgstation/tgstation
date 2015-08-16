@@ -42,10 +42,6 @@
 		testing(msg)
 		return
 	world << "<span class='boldannounce'>[msg]</span>"
-	world.log << msg
-
-/datum/subsystem/proc/AfterInitialize()
-	return
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
@@ -57,7 +53,7 @@
 
 //could be used to postpone a costly subsystem for (default one) var/cycles, cycles
 //for instance, during cpu intensive operations like explosions
-/datum/subsystem/proc/postpone(var/cycles = 1)
+/datum/subsystem/proc/postpone(cycles = 1)
 	if(next_fire - world.time < wait)
 		next_fire += (wait*cycles)
 

@@ -31,7 +31,7 @@
 	action_button_name = "Adjust Sterile Mask"
 	ignore_maskadjust = 0
 
-/obj/item/clothing/mask/surgical/attack_self(var/mob/user)
+/obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/fakemoustache
@@ -118,7 +118,7 @@
 	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"
 
-/obj/item/clothing/mask/bandana/attack_self(var/mob/user)
+/obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
 /obj/item/clothing/mask/bandana/red

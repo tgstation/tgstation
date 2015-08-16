@@ -16,14 +16,14 @@
 	return 1
 
 
-/obj/item/device/assembly_holder/proc/assemble(var/obj/item/device/assembly/A, var/obj/item/device/assembly/A2, var/mob/user)
+/obj/item/device/assembly_holder/proc/assemble(obj/item/device/assembly/A, obj/item/device/assembly/A2, mob/user)
 	attach(A,user)
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
 	feedback_add_details("assembly_made","[name]")
 
-/obj/item/device/assembly_holder/proc/attach(var/obj/item/device/assembly/A, var/mob/user)
+/obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
 	if(!A.remove_item_from_storage(src))
 		if(user)
 			user.remove_from_mob(A)
@@ -61,7 +61,7 @@
 	if(a_right)
 		a_right.Crossed(AM)
 
-/obj/item/device/assembly_holder/on_found(mob/finder as mob)
+/obj/item/device/assembly_holder/on_found(mob/finder)
 	if(a_left)
 		a_left.on_found(finder)
 	if(a_right)
@@ -81,7 +81,7 @@
 	..()
 	return
 
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)
 		if(!T)
@@ -96,7 +96,7 @@
 	else
 		..()
 
-/obj/item/device/assembly_holder/attack_self(mob/user as mob)
+/obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(!a_left || !a_right)
 		user << "<span class='danger'>Assembly part missing!</span>"
@@ -111,7 +111,7 @@
 		a_right.attack_self(user)
 
 
-/obj/item/device/assembly_holder/proc/process_activation(var/obj/D, var/normal = 1, var/special = 1)
+/obj/item/device/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
 	if(!D)
 		return 0
 	if((normal) && (a_right) && (a_left))

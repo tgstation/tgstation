@@ -25,7 +25,7 @@
 
 	..()
 
-/obj/structure/transit_tube_pod/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!moving)
 			for(var/obj/structure/transit_tube/station/T in loc)
@@ -60,7 +60,7 @@
 		return 1
 	else return ..()
 
-/obj/structure/transit_tube_pod/proc/follow_tube(var/reverse_launch)
+/obj/structure/transit_tube_pod/proc/follow_tube(reverse_launch)
 	if(moving)
 		return
 

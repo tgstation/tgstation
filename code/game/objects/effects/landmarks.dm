@@ -255,3 +255,6 @@
 
 /obj/effect/landmark/start/depsec/science
 	name = "science_sec"
+
+/obj/effect/landmark/latejoin
+	name = "JoinLate"

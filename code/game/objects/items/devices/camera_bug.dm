@@ -62,16 +62,16 @@
 	..()
 
 
-/obj/item/device/camera_bug/interact(var/mob/user = usr)
+/obj/item/device/camera_bug/interact(mob/user = usr)
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
 	popup.set_content(menu(get_cameras()))
 	popup.open()
 
-/obj/item/device/camera_bug/attack_self(mob/user as mob)
+/obj/item/device/camera_bug/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/camera_bug/check_eye(var/mob/user as mob)
+/obj/item/device/camera_bug/check_eye(mob/user)
 	if (user.stat || loc != user || !user.canmove || user.eye_blind || !current)
 		user.reset_view(null)
 		user.unset_machine()
@@ -108,7 +108,7 @@
 	return bugged_cameras
 
 
-/obj/item/device/camera_bug/proc/menu(var/list/cameras)
+/obj/item/device/camera_bug/proc/menu(list/cameras)
 	if(!cameras || !cameras.len)
 		return "No bugged cameras found."
 
@@ -209,7 +209,7 @@
 	else
 		return "Camera Offline<br>"
 
-/obj/item/device/camera_bug/Topic(var/href,var/list/href_list)
+/obj/item/device/camera_bug/Topic(href,list/href_list)
 	if(usr != loc)
 		usr.unset_machine()
 		usr.reset_view(null)
@@ -309,7 +309,7 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob, params)
+/obj/item/device/camera_bug/attackby(obj/item/W,mob/living/user, params)
 	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
 		expansion.loc = get_turf(loc)
 		user << "<span class='notice'>You unscrew [expansion].</span>"

@@ -6,18 +6,18 @@ var/const/WIRE_SIGNAL = 1
 var/const/WIRE_RECEIVE = 2
 var/const/WIRE_TRANSMIT = 4
 
-/datum/wires/radio/CanUse(var/mob/living/L)
+/datum/wires/radio/CanUse(mob/living/L)
 	var/obj/item/device/radio/R = holder
 	if(R.b_stat)
 		return 1
 	return 0
 
-/datum/wires/radio/Interact(var/mob/living/user)
+/datum/wires/radio/Interact(mob/living/user)
 	if(CanUse(user))
 		var/obj/item/device/radio/R = holder
 		R.interact(user)
 
-/datum/wires/radio/UpdatePulsed(var/index)
+/datum/wires/radio/UpdatePulsed(index)
 	var/obj/item/device/radio/R = holder
 	switch(index)
 		if(WIRE_SIGNAL)

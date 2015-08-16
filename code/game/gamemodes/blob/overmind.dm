@@ -67,12 +67,12 @@
 	if(blob_core)
 		hud_used.blobhealthdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
-/mob/camera/blob/proc/add_points(var/points)
+/mob/camera/blob/proc/add_points(points)
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
 		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
 
-/mob/camera/blob/say(var/message)
+/mob/camera/blob/say(message)
 	if (!message)
 		return
 
@@ -103,7 +103,7 @@
 		if(isovermind(M) || isobserver(M))
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(var/act,var/m_type=1,var/message = null)
+/mob/camera/blob/emote(act,m_type=1,message = null)
 	return
 
 /mob/camera/blob/blob_act()
@@ -116,7 +116,7 @@
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 
-/mob/camera/blob/Move(var/NewLoc, var/Dir = 0)
+/mob/camera/blob/Move(NewLoc, Dir = 0)
 	var/obj/effect/blob/B = locate() in range("3x3", NewLoc)
 	if(B)
 		loc = NewLoc

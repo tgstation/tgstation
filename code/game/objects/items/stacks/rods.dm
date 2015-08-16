@@ -33,7 +33,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else
 		icon_state = "rods"
 
-/obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -43,7 +43,6 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			new_item.add_to_stacks(usr)
 			user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
 						 "<span class='notice'>You shape [src] into metal with the welding tool.</span>", \
 						 "<span class='italics'>You hear welding.</span>")

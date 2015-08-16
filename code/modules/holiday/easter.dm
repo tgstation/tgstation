@@ -116,7 +116,7 @@
 	icon_state = "egg-[color]"
 	item_color = "[color]"
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(var/turf/where)
+/obj/item/weapon/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
@@ -133,7 +133,7 @@
 	new won(where)
 	new/obj/item/weapon/reagent_containers/food/snacks/chocolateegg(where)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/attack_self(mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
 		user << "<span class='notice'>You unwrap the [src] and find a prize inside!</span>"

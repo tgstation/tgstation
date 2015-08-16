@@ -189,7 +189,7 @@
 
 /obj/machinery/power/supermatter_shard
 
-/obj/machinery/power/supermatter_shard/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
 		return 0	// This stops people from being able to really power up the supermatter
@@ -217,21 +217,21 @@
 	qdel(src)
 	return(gain)
 
-/obj/machinery/power/supermatter_shard/attack_paw(mob/user as mob)
+/obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/machinery/power/supermatter_shard/attack_robot(mob/user as mob)
+/obj/machinery/power/supermatter_shard/attack_robot(mob/user)
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
 		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 	return
 
-/obj/machinery/power/supermatter_shard/attack_ai(mob/user as mob)
+/obj/machinery/power/supermatter_shard/attack_ai(mob/user)
 	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
 
-/obj/machinery/power/supermatter_shard/attack_hand(mob/living/user as mob)
+/obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))
 		return
 	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
@@ -248,7 +248,7 @@
 			R.receive_pulse(power/10)
 	return
 
-/obj/machinery/power/supermatter_shard/attackby(obj/item/W as obj, mob/living/user as mob, params)
+/obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
 		return
 	if(user.drop_item(W))

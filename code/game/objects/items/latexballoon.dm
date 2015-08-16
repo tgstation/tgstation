@@ -11,7 +11,7 @@
 	var/state
 	var/datum/gas_mixture/air_contents = null
 
-/obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank, mob/user as mob)
+/obj/item/latexballon/proc/blow(obj/item/weapon/tank/tank, mob/user)
 	if (icon_state == "latexballon_bursted")
 		return
 	icon_state = "latexballon_blow"
@@ -50,7 +50,7 @@
 		burst()
 	return
 
-/obj/item/latexballon/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/latexballon/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/tank))
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)

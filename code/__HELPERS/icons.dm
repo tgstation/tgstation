@@ -870,7 +870,7 @@ The _flatIcons list is a cache for generated icon files.
 
 //Find's the average colour of the icon
 //By vg's ComicIronic
-/proc/AverageColour(var/icon/I)
+/proc/AverageColour(icon/I)
 	var/list/colours = list()
 	for(var/x_pixel = 1 to I.Width())
 		for(var/y_pixel = 1 to I.Height())
@@ -889,7 +889,7 @@ The _flatIcons list is a cache for generated icon files.
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
-/proc/DrawPixel(var/icon/I,var/colour,var/drawX,var/drawY)
+/proc/DrawPixel(icon/I,colour,drawX,drawY)
 	if(!I)
 		return 0
 
@@ -906,7 +906,7 @@ The _flatIcons list is a cache for generated icon files.
 
 
 //Interface for easy drawing of one pixel on an atom.
-/atom/proc/DrawPixelOn(var/colour, var/drawX, var/drawY)
+/atom/proc/DrawPixelOn(colour, drawX, drawY)
 	var/icon/I = new(icon)
 	var/icon/J = DrawPixel(I, colour, drawX, drawY)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.

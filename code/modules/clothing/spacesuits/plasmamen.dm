@@ -17,7 +17,7 @@
 	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
 
 
-/obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(var/mob/living/carbon/human/H)
+/obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 

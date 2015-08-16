@@ -14,7 +14,7 @@
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/New()
-	gland_types = typesof(/obj/item/gland) - /obj/item/gland
+	gland_types = typesof(/obj/item/organ/internal/gland) - /obj/item/organ/internal/gland
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -22,7 +22,7 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(var/mob/user as mob)
+/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
 		return
 	if(!IsAbductor(user))
@@ -59,7 +59,7 @@
 	return
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/gland))
+	if(istype(W, /obj/item/organ/internal/gland))
 		if(!user.drop_item())
 			return
 		W.loc = src
@@ -76,7 +76,7 @@
 		Dispense(text2num(href_list["dispense"]))
 	src.updateUsrDialog()
 
-/obj/machinery/abductor/gland_dispenser/proc/Dispense(var/count)
+/obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)
 		amounts[count]--
 		var/T = gland_types[count]

@@ -41,7 +41,7 @@
 
 	return
 
-/obj/structure/window/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		health -= Proj.damage
 		update_nearby_icons()
@@ -83,7 +83,7 @@
 		return 1
 
 
-/obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
+/obj/structure/window/CheckExit(atom/movable/O as mob|obj, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(O.loc, target) == dir)
@@ -115,7 +115,7 @@
 		spawnfragments()
 	update_nearby_icons()
 
-/obj/structure/window/attack_tk(mob/user as mob)
+/obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
@@ -131,7 +131,7 @@
 	hit(50)
 	return 1
 
-/obj/structure/window/attack_hand(mob/user as mob)
+/obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -139,11 +139,11 @@
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
-/obj/structure/window/attack_paw(mob/user as mob)
+/obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user as mob, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/proc/attack_generic(mob/user, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -156,13 +156,13 @@
 		playsound(loc, 'sound/effects/Glasshit.ogg', 100, 1)
 
 
-/obj/structure/window/attack_alien(mob/living/user as mob)
+/obj/structure/window/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	if(islarva(user)) return
 	attack_generic(user, 15)
 	update_nearby_icons()
 
-/obj/structure/window/attack_animal(mob/living/user as mob)
+/obj/structure/window/attack_animal(mob/living/user)
 	if(!isanimal(user))
 		return
 
@@ -174,7 +174,7 @@
 	attack_generic(M, M.melee_damage_upper)
 	update_nearby_icons()
 
-/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user as mob)
+/obj/structure/window/attack_slime(mob/living/simple_animal/slime/user)
 	user.do_attack_animation(src)
 	if(!user.is_adult)
 		return
@@ -282,7 +282,7 @@
 					return 0
 	return 1
 
-/obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
+/obj/structure/window/proc/hit(damage, sound_effect = 1)
 	if(reinf)
 		damage *= 0.5
 	health = max(0, health - damage)
@@ -409,7 +409,7 @@
 		overlays += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 800)
+	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
 		hit(round(exposed_volume / 100), 0)
 	..()
 
@@ -421,6 +421,7 @@
 	icon_state = "rwindow"
 	reinf = 1
 	maxhealth = 50
+	explosion_block = 1
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -472,3 +473,4 @@
 	reinf = 1
 	smooth = 1
 	canSmoothWith = null
+	explosion_block = 1

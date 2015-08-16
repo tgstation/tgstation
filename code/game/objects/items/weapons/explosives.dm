@@ -21,7 +21,7 @@
 	image_overlay = image('icons/obj/assemblies.dmi', "plastic-explosive2")
 	..()
 
-/obj/item/weapon/c4/suicide_act(var/mob/user)
+/obj/item/weapon/c4/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above his head! It looks like \he's going out with a bang!</span>")
 	var/message_say = "FOR NO RAISIN!"
 	if(user.mind)
@@ -43,7 +43,7 @@
 	explode(get_turf(user))
 	user.gib()
 
-/obj/item/weapon/c4/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/weapon/c4/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open_panel = !open_panel
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
@@ -52,7 +52,7 @@
 	else
 		..()
 
-/obj/item/weapon/c4/attack_self(mob/user as mob)
+/obj/item/weapon/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_hand() == src)
 		newtime = Clamp(newtime, 10, 60000)
@@ -86,12 +86,12 @@
 			else
 				qdel(src)
 
-/obj/item/weapon/c4/proc/explode(var/turf/location)
+/obj/item/weapon/c4/proc/explode(turf/location)
 	location.ex_act(2, target)
 	explosion(location,0,0,3)
 	if(target)
 		target.overlays -= image_overlay
 	qdel(src)
 
-/obj/item/weapon/c4/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/c4/attack(mob/M, mob/user, def_zone)
 	return

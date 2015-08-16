@@ -4,7 +4,7 @@
 	set name = "Show Laws"
 	src.show_laws()
 
-/mob/living/silicon/ai/show_laws(var/everyone = 0)
+/mob/living/silicon/ai/show_laws(everyone = 0)
 	var/who
 
 	if (everyone)

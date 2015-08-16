@@ -53,25 +53,6 @@
 	action_icon_state = "mutate"
 	sound = "sound/magic/Mutate.ogg"
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
-	name = "Disintegrate"
-	desc = "This spell instantly kills somebody adjacent to you with the vilest of magick."
-
-	school = "evocation"
-	charge_max = 600
-	clothes_req = 1
-	invocation = "EI NATH"
-	invocation_type = "shout"
-	range = 1
-	cooldown_min = 200 //100 deciseconds reduction per rank
-
-	destroys = "gib_brain"
-
-	sparks_spread = 1
-	sparks_amt = 4
-
-	action_icon_state = "gib"
-	sound = "sound/magic/Disintegrate.ogg"
 
 /obj/effect/proc_holder/spell/targeted/smoke
 	name = "Smoke"
@@ -176,6 +157,20 @@
 	cast_sound = "sound/magic/ForceWall.ogg"
 
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	name = "Stop Time"
+	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
+	charge_max = 300
+	clothes_req = 1
+	invocation = "TOKI WO TOMARE"
+	invocation_type = "shout"
+	range = 0
+	cooldown_min = 90
+	summon_amt = 1
+	action_icon_state = "time"
+
+	summon_type = list(/obj/effect/timestop/wizard)
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
 	desc = "This spell conjures a simple carp."
@@ -257,24 +252,6 @@
 	duration = 300
 	sound="sound/magic/Blind.ogg"
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
-	name = "Flesh to Stone"
-	desc = "This spell turns a single person into an inert statue for a long period of time."
-
-	school = "transmutation"
-	charge_max = 600
-	clothes_req = 1
-	range = 2
-	invocation = "STAUN EI"
-	invocation_type = "shout"
-	amt_stunned = 2//just exists to make sure the statue "catches" them
-	cooldown_min = 200 //100 deciseconds reduction per rank
-
-	summon_type = "/obj/structure/closet/statue"
-
-	action_icon_state = "statue"
-	sound = "sound/magic/FleshToStone.ogg"
-
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
@@ -297,7 +274,7 @@
 	action_icon_state = "fireball"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(var/turf/T)
+/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
 
 

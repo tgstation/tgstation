@@ -59,7 +59,7 @@
 "bg" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/djstation)
 "bh" = (/turf/simulated/wall/shuttle{icon_state = "swall_s5"; dir = 2},/area/space)
 "bi" = (/turf/simulated/wall/shuttle{icon_state = "swall_s9"; dir = 2},/area/space)
-"bj" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
+"bj" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
 "bk" = (/obj/machinery/light/small,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
 "bl" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/djstation)
 "bm" = (/obj/structure/table,/turf/simulated/floor/plasteel{icon_state = "cafeteria"; dir = 5},/area/djstation)

@@ -80,3 +80,19 @@
 	density = 0
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+
+/mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	switch(M.a_intent)
+		if("help")	wuv(1,M)
+		if("harm")	wuv(-1,M)
+
+/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
+	if(change)
+		if(change > 0)
+			if(M && stat != DEAD)
+				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				emote("me", 1, "purrs!")
+		else
+			if(M && stat != DEAD)
+				emote("me", 1, "hisses!")

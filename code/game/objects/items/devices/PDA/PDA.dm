@@ -203,7 +203,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	noreturn = 1
 	detonate = 0
 
-/obj/item/device/pda/ai/attack_self(mob/user as mob)
+/obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
@@ -243,7 +243,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(user.stat || user.restrained() || user.paralysis || user.stunned || user.weakened)
+		if(user.incapacitated())
 			return 0
 		if(loc == user)
 			return 1
@@ -258,14 +258,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/GetID()
 	return id
 
-/obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
+/obj/item/device/pda/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && can_use(M))
 		return attack_self(M)
 	return
 
 //NOTE: graphic resources are loaded on client login
-/obj/item/device/pda/attack_self(mob/user as mob)
+/obj/item/device/pda/attack_self(mob/user)
 
 	user.set_machine(src)
 
@@ -767,7 +767,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			id.loc = get_turf(src)
 		id = null
 
-/obj/item/device/pda/proc/msg_input(var/mob/living/U = usr)
+/obj/item/device/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name, null, MAX_MESSAGE_LEN)
 	if (!t || toff)
 		return
@@ -779,7 +779,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/device/pda/proc/create_message(var/mob/living/U = usr, var/obj/item/device/pda/P)
+/obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P)
 
 	var/t = msg_input(U)
 
@@ -902,7 +902,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "<span class='warning'>You cannot do that while restrained!</span>"
 
-/obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
+/obj/item/device/pda/proc/id_check(mob/user, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
 			remove_id()
@@ -925,7 +925,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return 1
 
 // access to status display signals
-/obj/item/device/pda/attackby(obj/item/C as obj, mob/user as mob, params)
+/obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	..()
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = C
@@ -978,7 +978,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		user << "<span class='notice'>You scan \the [C].</span>"
 	return
 
-/obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user as mob)
+/obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user)
 	if(istype(C))
 		switch(scanmode)
 
@@ -999,7 +999,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 
-/obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+/obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	switch(scanmode)
 
@@ -1078,7 +1078,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 //AI verb and proc for sending PDA messages.
 
-/mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user as mob)
+/mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user)
 	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
@@ -1159,7 +1159,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	else
 		usr << "You do not have a PDA. You should make an issue report about this."
 
-/mob/living/silicon/ai/proc/cmd_show_message_log(mob/user as mob)
+/mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
 	if(user.stat == 2)
 		user << "You can't do that because you are dead!"
 		return

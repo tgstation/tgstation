@@ -15,8 +15,8 @@
 	density = 1
 	use_power = 0
 
-	var/obj/machinery/atmospherics/binary/circulator/circ1
-	var/obj/machinery/atmospherics/binary/circulator/circ2
+	var/obj/machinery/atmospherics/components/binary/circulator/circ1
+	var/obj/machinery/atmospherics/components/binary/circulator/circ2
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -28,8 +28,8 @@
 	circ1 = null
 	circ2 = null
 
-	circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
-	circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
+	circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
+	circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,EAST)
 	connect_to_network()
 
 	if(circ1)
@@ -106,10 +106,12 @@
 		// update icon overlays only if displayed level has changed
 
 		if(hot_air)
-			circ2.air1.merge(hot_air)
+			var/datum/gas_mixture/circ2_air1 = circ2.airs["a1"]
+			circ2_air1.merge(hot_air)
 
 		if(cold_air)
-			circ1.air1.merge(cold_air)
+			var/datum/gas_mixture/circ1_air1 = circ1.airs["a1"]
+			circ1_air1.merge(cold_air)
 
 	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
 	var/circ = "[circ1 && circ1.last_pressure_delta > 0 ? "1" : "0"][circ2 && circ2.last_pressure_delta > 0 ? "1" : "0"]"
@@ -126,11 +128,15 @@
 		return
 	interact(user)
 
-/obj/machinery/power/generator/proc/get_menu(var/include_link = 1)
+/obj/machinery/power/generator/proc/get_menu(include_link = 1)
 	var/t = ""
 	if(!powernet)
 		t += "<span class='bad'>Unable to connect to the power network!</span>"
 	else if(circ1 && circ2)
+		var/datum/gas_mixture/circ1_air1 = circ1.airs["a1"]
+		var/datum/gas_mixture/circ1_air2 = circ1.airs["a2"]
+		var/datum/gas_mixture/circ2_air1 = circ2.airs["a1"]
+		var/datum/gas_mixture/circ2_air2 = circ2.airs["a2"]
 
 		t += "<div class='statusDisplay'>"
 
@@ -139,12 +145,12 @@
 		t += "<BR>"
 
 		t += "<B><font color='blue'>Cold loop</font></B><BR>"
-		t += "Temperature Inlet: [round(circ1.air2.temperature, 0.1)] K / Outlet: [round(circ1.air1.temperature, 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(circ1.air2.return_pressure(), 0.1)] kPa /  Outlet: [round(circ1.air1.return_pressure(), 0.1)] kPa<BR>"
+		t += "Temperature Inlet: [round(circ1_air2.temperature, 0.1)] K / Outlet: [round(circ1_air1.temperature, 0.1)] K<BR>"
+		t += "Pressure Inlet: [round(circ1_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(circ1_air1.return_pressure(), 0.1)] kPa<BR>"
 
 		t += "<B><font color='red'>Hot loop</font></B><BR>"
-		t += "Temperature Inlet: [round(circ2.air2.temperature, 0.1)] K / Outlet: [round(circ2.air1.temperature, 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(circ2.air2.return_pressure(), 0.1)] kPa / Outlet: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>"
+		t += "Temperature Inlet: [round(circ2_air2.temperature, 0.1)] K / Outlet: [round(circ2_air1.temperature, 0.1)] K<BR>"
+		t += "Pressure Inlet: [round(circ2_air2.return_pressure(), 0.1)] kPa / Outlet: [round(circ2_air1.return_pressure(), 0.1)] kPa<BR>"
 
 		t += "</div>"
 	else

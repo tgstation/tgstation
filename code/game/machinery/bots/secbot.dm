@@ -84,14 +84,14 @@
 	text_dehack = "You reboot [name] and restore the target identification."
 	text_dehack_fail = "[name] refuses to accept your authority!"
 
-/obj/machinery/bot/secbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/secbot/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	usr.set_machine(src)
 	interact(user)
 
-/obj/machinery/bot/secbot/interact(mob/user as mob)
+/obj/machinery/bot/secbot/interact(mob/user)
 	var/dat
 	dat += hack(user)
 	dat += text({"
@@ -145,7 +145,7 @@ Auto Patrol: []"},
 			updateUsrDialog()
 
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/bot/secbot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -168,7 +168,7 @@ Auto Patrol: []"},
 				target = user
 				mode = BOT_HUNT
 
-/obj/machinery/bot/secbot/Emag(mob/user as mob)
+/obj/machinery/bot/secbot/Emag(mob/user)
 	..()
 
 	if(emagged == 2)
@@ -179,7 +179,7 @@ Auto Patrol: []"},
 		declare_arrests = 0
 		icon_state = "secbot[on]"
 
-/obj/machinery/bot/secbot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/secbot/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if (!Proj.nodamage && Proj.damage < src.health)
@@ -402,7 +402,7 @@ Auto Patrol: []"},
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(var/obj/item/device/assembly/signaler/S, mob/user as mob, params)
+/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
 	..()
 	if(!issignaler(S))
 		..()

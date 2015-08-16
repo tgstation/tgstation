@@ -31,7 +31,7 @@
 
 
 
-/obj/structure/sign/barsign/proc/set_sign(var/datum/barsign/sign)
+/obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
 		return
 	icon_state = sign.icon
@@ -43,12 +43,12 @@
 
 
 
-/obj/structure/sign/barsign/attack_ai(mob/user as mob)
+/obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
 
-/obj/structure/sign/barsign/attack_hand(mob/user as mob)
+/obj/structure/sign/barsign/attack_hand(mob/user)
 	if (!src.allowed(user))
 		user << "<span class='info'>Access denied.</span>"
 		return
@@ -60,7 +60,7 @@
 
 
 
-/obj/structure/sign/barsign/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
 	if(!allowed(user))
 		user << "<span class='info'>Access denied.</span>"
 		return

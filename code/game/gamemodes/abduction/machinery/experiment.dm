@@ -36,7 +36,7 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/proc/dissection_icon(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)
@@ -129,7 +129,7 @@
 	updateUsrDialog()
 	add_fingerprint(usr)
 
-/obj/machinery/abductor/experiment/proc/Experiment(var/mob/occupant,var/type)
+/obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -137,7 +137,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
-	var/obj/item/gland/GlandTest = locate() in H
+	var/obj/item/organ/internal/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
@@ -165,7 +165,7 @@
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
-		for(var/obj/item/gland/G in H)
+		for(var/obj/item/organ/internal/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
@@ -185,7 +185,7 @@
 	return "<span class='bad'>ERROR</span>"
 
 
-/obj/machinery/abductor/experiment/proc/SendBack(var/mob/living/carbon/human/H)
+/obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
 	var/area/A
 	if(console && console.pad && console.pad.teleport_target)

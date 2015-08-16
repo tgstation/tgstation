@@ -28,17 +28,17 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
-/obj/item/clothing/mask/facehugger/attack_alien(user as mob) //can be picked up by aliens
+/obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	attack_hand(user)
 	return
 
-/obj/item/clothing/mask/facehugger/attack_hand(user as mob)
+/obj/item/clothing/mask/facehugger/attack_hand(mob/user)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Attach(user))
 			return
 	..()
 
-/obj/item/clothing/mask/facehugger/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
 	user.unEquip(src)
 	Attach(M)
@@ -55,12 +55,12 @@ var/const/MAX_ACTIVE_TIME = 400
 	if (sterile)
 		user << "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
-/obj/item/clothing/mask/facehugger/attackby(var/obj/item/O,var/mob/m, params)
+/obj/item/clothing/mask/facehugger/attackby(obj/item/O,mob/m, params)
 	if(O.force)
 		Die()
 	return
 
-/obj/item/clothing/mask/facehugger/bullet_act(var/obj/item/projectile/P)
+/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P)
 	if(P.damage)
 		Die()
 	return
@@ -77,7 +77,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	HasProximity(target)
 	return
 
-/obj/item/clothing/mask/facehugger/on_found(mob/finder as mob)
+/obj/item/clothing/mask/facehugger/on_found(mob/finder)
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
 	return 0
@@ -87,7 +87,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		return Attach(AM)
 	return 0
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin)
 	if(!..())
 		return
 	if(stat == CONSCIOUS)
@@ -102,8 +102,10 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]"
 		Attach(hit_atom)
 
-/obj/item/clothing/mask/facehugger/proc/Attach(M as mob)
-	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
+	if(!isliving(M)) return 0
+
+	if((!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return 0
 	if(attached)
 		return 0
@@ -112,18 +114,18 @@ var/const/MAX_ACTIVE_TIME = 400
 		spawn(MAX_IMPREGNATION_TIME)
 			attached = 0
 
-	var/mob/living/L = M //just so I don't need to use :
+	if(M.getorgan(/obj/item/organ/internal/alien/hivenode)) return 0
+	if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)) return 0
 
-	if(loc == L) return 0
+	if(loc == M) return 0
 	if(stat != CONSCIOUS)	return 0
-	if(locate(/obj/item/body_egg/alien_embryo) in L) return 0
-	if(!sterile) L.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
+	if(!sterile) M.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
 
-	L.visible_message("<span class='danger'>[src] leaps at [L]'s face!</span>", \
-						"<span class='userdanger'>[src] leaps at [L]'s face!</span>")
+	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
+						"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered(head_only = 1))
 			H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
@@ -131,7 +133,7 @@ var/const/MAX_ACTIVE_TIME = 400
 			return 0
 
 	if(iscarbon(M))
-		var/mob/living/carbon/target = L
+		var/mob/living/carbon/target = M
 		if(target.wear_mask)
 			if(prob(20))	return 0
 			var/obj/item/clothing/W = target.wear_mask
@@ -144,9 +146,9 @@ var/const/MAX_ACTIVE_TIME = 400
 		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask,,0)
 
-		if(!sterile) L.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile) M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
-		var/mob/living/simple_animal/pet/corgi/C = M
+		var/mob/living/simple_animal/pet/dog/corgi/C = M
 		loc = C
 		C.facehugger = src
 		C.regenerate_icons()
@@ -154,11 +156,11 @@ var/const/MAX_ACTIVE_TIME = 400
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
-		Impregnate(L)
+		Impregnate(M)
 
 	return 1
 
-/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target as mob)
+/obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
 	if(!target || target.stat == DEAD) //was taken off or something
 		return
 
@@ -176,11 +178,10 @@ var/const/MAX_ACTIVE_TIME = 400
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(!target.getlimb(/obj/item/organ/limb/robot/chest) && !(target.status_flags & XENO_HOST))
-			new /obj/item/body_egg/alien_embryo(target)
-
+			new /obj/item/organ/internal/body_egg/alien_embryo(target)
 
 		if(iscorgi(target))
-			var/mob/living/simple_animal/pet/corgi/C = target
+			var/mob/living/simple_animal/pet/dog/corgi/C = target
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else
@@ -229,10 +230,12 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	return
 
-/proc/CanHug(var/mob/M)
+/proc/CanHug(mob/living/M)
 	if(!istype(M))
 		return 0
 	if(M.stat == DEAD)
+		return 0
+	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
 		return 0
 
 	if(iscorgi(M) || ismonkey(M))

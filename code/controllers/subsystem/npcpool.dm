@@ -12,7 +12,7 @@ var/datum/subsystem/npcpool/SSbp
 	var/list/botPool_l = list() //list of all npcs using the pool
 	var/list/botPool_l_non = list() //list of all non SNPC mobs using the pool
 
-/datum/subsystem/npcpool/proc/insertBot(var/toInsert)
+/datum/subsystem/npcpool/proc/insertBot(toInsert)
 	if(istype(toInsert,/mob/living/carbon/human/interactive))
 		botPool_l |= toInsert
 

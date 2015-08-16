@@ -10,13 +10,13 @@ var/const/WIRE_PROCEED = 8		// Lowers the timer, explodes if cut while the bomb 
 var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if pulsed while already active, will stop a timer a bomb on cut
 
 
-/datum/wires/syndicatebomb/CanUse(var/mob/living/L)
+/datum/wires/syndicatebomb/CanUse(mob/living/L)
 	var/obj/machinery/syndicatebomb/P = holder
 	if(P.open_panel)
 		return 1
 	return 0
 
-/datum/wires/syndicatebomb/UpdatePulsed(var/index)
+/datum/wires/syndicatebomb/UpdatePulsed(index)
 	var/obj/machinery/syndicatebomb/P = holder
 	switch(index)
 		if(WIRE_BOOM)
@@ -48,7 +48,7 @@ var/const/WIRE_ACTIVATE = 16	// Will start a bombs timer if pulsed, will hint if
 				P.loc.visible_message("<span class='notice'>\icon[holder] The bomb seems to hesitate for a moment.</span>")
 				P.timer += 5
 
-/datum/wires/syndicatebomb/UpdateCut(var/index, var/mended)
+/datum/wires/syndicatebomb/UpdateCut(index, mended)
 	var/obj/machinery/syndicatebomb/P = holder
 	switch(index)
 		if(WIRE_EXPLODE)

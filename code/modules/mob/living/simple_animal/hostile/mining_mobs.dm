@@ -24,7 +24,7 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(var/obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
@@ -87,17 +87,13 @@
 	flag = "energy"
 	temperature = 50
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(var/new_target)
-	target = new_target
-	if(target != null)
-		Aggro()
-		stance = HOSTILE_STANCE_ATTACK
+/mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
+	if(..()) //we have a target
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.bodytemperature > 200)
 				L.bodytemperature = 200
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
@@ -150,22 +146,19 @@
 	var/ore_eaten = 1
 	var/chase_time = 100
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(var/new_target)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore))
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
-			stance = HOSTILE_STANCE_ATTACK
-			return
-		if(isliving(target))
+
+		else if(isliving(target))
 			Aggro()
-			stance = HOSTILE_STANCE_ATTACK
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
 			Burrow()
-			return
-	return
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -173,7 +166,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(var/atom/targeted_ore)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
 	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
 		ore_eaten++
 		if(!(O.type in ore_types_eaten))
@@ -203,7 +196,7 @@
 	ore_eaten = 0
 
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 	return
 
@@ -212,7 +205,7 @@
 	Reward()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
 	idle_vision_range = 9
 	..()
 
@@ -248,7 +241,7 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(var/the_target)
+/mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
 	A.GiveTarget(target)
 	A.friends = friends
@@ -275,7 +268,7 @@
 		inert = 1
 		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
-/obj/item/asteroid/hivelord_core/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(inert)
@@ -367,7 +360,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
 	if(ranged_cooldown <= 2 && !pre_attack)
 		pre_attack++
-	if(!pre_attack || stat || stance == HOSTILE_STANCE_IDLE)
+	if(!pre_attack || stat || AIStatus == AI_IDLE)
 		return
 	icon_state = "Goliath_preattack"
 
@@ -389,7 +382,7 @@
 		pre_attack = 0
 	return
 
-/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(var/damage)
+/mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
 	handle_preattack()
 	..()
@@ -469,26 +462,21 @@
 				user << "<span class='warning'>You can't improve [C] any further!</span>"
 				return
 		if(istype(target, /obj/mecha/working/ripley))
-			var/obj/mecha/D = target
+			var/obj/mecha/working/ripley/D = target
 			var/list/damage_absorption = D.damage_absorption
-			if(damage_absorption["brute"] > 0.3)
+			if(D.hides < 3)
+				D.hides++
 				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
-				qdel(src)
-				if(D.icon_state == "ripley-open")
-					D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-open")
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				D.update_icon()
+				if(D.hides == 3)
+					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 				else
-					user << "<span class='info'>You can't add armour onto the mech while someone is inside!</span>"
-				if(damage_absorption.["brute"] == 0.3)
-					if(D.icon_state == "ripley-open")
-						D.overlays += image("icon"="mecha.dmi", "icon_state"="ripley-g-full-open")
-						D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - the pilot must be an experienced monster hunter."
-					else
-						user << "<span class='warning'>You can't add armour onto the mech while someone is inside!</span>"
+					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+				qdel(src)
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"
 				return
@@ -502,7 +490,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
-	desc = "The wumborian fugu rapidly increases its body mass in order to pulverize its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain it forever."
+	desc = "The wumborian fugu rapidly increases its body mass in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "Fugu"
 	icon_living = "Fugu"
@@ -515,7 +503,7 @@
 	friendly = "floats near"
 	speak_emote = list("puffs")
 	vision_range = 5
-	speed = 3
+	speed = 0
 	maxHealth = 50
 	health = 50
 	harm_intent_damage = 5
@@ -527,13 +515,14 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
+	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
 		inflate_cooldown = max((inflate_cooldown - 1), 0)
-	if(target)
+	if(target && AIStatus == AI_ON)
 		Inflate()
 	..()
 
@@ -546,8 +535,18 @@
 	..()
 	Inflate()
 
-/mob/living/simple_animal/hostile/asteroid/fugu/proc/Inflate()
-	if(wumbo || inflate_cooldown || buffed)
+/mob/living/simple_animal/hostile/asteroid/fugu/verb/Inflate()
+	set name = "Inflate"
+	set category = "Fugu"
+	set desc = "Temporarily increases your size, and makes you significantly more dangerous and tough."
+	if(wumbo)
+		src << "<span class='notice'>You're already inflated.</span>"
+		return
+	if(inflate_cooldown)
+		src << "<span class='notice'>We need time to gather our strength.</span>"
+		return
+	if(buffed)
+		src << "<span class='notice'>Something is interfering with our growth.</span>"
 		return
 	wumbo = 1
 	icon_state = "Fugu_big"
@@ -561,6 +560,7 @@
 	transform *= 2
 	environment_smash = 2
 	mob_size = MOB_SIZE_LARGE
+	speed = 1
 	spawn(100)
 		Deflate()
 
@@ -580,6 +580,7 @@
 		inflate_cooldown = 4
 		environment_smash = 0
 		mob_size = MOB_SIZE_SMALL
+		speed = 0
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
 	Deflate()
@@ -591,7 +592,7 @@
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "goliath_hide"
+	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
 	w_class = 3
 	layer = 4
@@ -605,10 +606,10 @@
 			user << "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>"
 			return
 		A.buffed++
-		A.maxHealth *= 2
+		A.maxHealth *= 1.5
 		A.health = min(A.maxHealth,A.health*1.5)
-		A.melee_damage_lower *= 2
-		A.melee_damage_upper *= 2
+		A.melee_damage_lower = max((A.melee_damage_lower * 2), 10)
+		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
 		A.environment_smash += 2
 		user << "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>"

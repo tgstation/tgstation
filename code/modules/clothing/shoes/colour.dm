@@ -81,7 +81,7 @@
 	icon_state = "orange"
 	item_color = "orange"
 
-/obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user as mob)
+/obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
 	if (src.chained)
 		src.chained = null
 		src.slowdown = SHOES_SLOWDOWN
@@ -89,7 +89,7 @@
 		src.icon_state = "orange"
 	return
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(H as obj, loc, params)
+/obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
 	..()
 	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
 		//H = null

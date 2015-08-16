@@ -26,7 +26,7 @@ BONUS
 	level = 1
 	severity = 1
 
-/datum/symptom/itching/Activate(var/datum/disease/advance/A)
+/datum/symptom/itching/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

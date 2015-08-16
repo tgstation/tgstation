@@ -18,7 +18,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 
-/obj/item/projectile/energy/electrode/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
 		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread
@@ -50,7 +50,7 @@
 	..()
 	SpinAnimation()
 
-/obj/item/projectile/energy/net/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
 	if(isliving(target) && !locate(/obj/effect/nettingportal) in loc)
 		new/obj/effect/nettingportal(get_turf(target))
 	..()
@@ -97,7 +97,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
-/obj/item/projectile/energy/trap/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
 	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - drop a trap
 		new/obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))

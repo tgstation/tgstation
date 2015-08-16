@@ -210,7 +210,7 @@
 	build_path = /obj/item/weapon/circuitboard/arcade/orion_trail
 	category = list("Computer Boards")
 
-/datum/design/orion_trail
+/datum/design/slot_machine
 	name = "Computer Design (Slot Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new slot machine."
 	id = "slotmachine"

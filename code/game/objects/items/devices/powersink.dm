@@ -54,7 +54,7 @@
 	update_icon()
 	SetLuminosity(0)
 
-/obj/item/device/powersink/attackby(var/obj/item/I, var/mob/user, params)
+/obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(mode == DISCONNECTED)
 			var/turf/T = loc
@@ -85,7 +85,7 @@
 /obj/item/device/powersink/attack_ai()
 	return
 
-/obj/item/device/powersink/attack_hand(var/mob/user)
+/obj/item/device/powersink/attack_hand(mob/user)
 	switch(mode)
 		if(DISCONNECTED)
 			..()

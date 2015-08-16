@@ -54,7 +54,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
 		return
 
@@ -118,12 +118,12 @@
 
 
 
-/obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/proc/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))
 		return 1
 	return 0
 
-/obj/machinery/smartfridge/proc/load(var/obj/item/O as obj)
+/obj/machinery/smartfridge/proc/load(obj/item/O)
 	if(istype(O.loc,/mob))
 		var/mob/M = O.loc
 		if(!M.unEquip(O))
@@ -142,13 +142,13 @@
 		item_quants[n] = 1
 	sortList(item_quants)
 
-/obj/machinery/smartfridge/attack_paw(mob/user as mob)
+/obj/machinery/smartfridge/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/smartfridge/attack_ai(mob/user as mob)
+/obj/machinery/smartfridge/attack_ai(mob/user)
 	return 0
 
-/obj/machinery/smartfridge/attack_hand(mob/user as mob)
+/obj/machinery/smartfridge/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
 
@@ -156,7 +156,7 @@
 *   SmartFridge Menu
 ********************/
 
-/obj/machinery/smartfridge/interact(mob/user as mob)
+/obj/machinery/smartfridge/interact(mob/user)
 	if(stat)
 		return 0
 
@@ -227,7 +227,7 @@
 	icon_off = "drying_rack"
 	var/drying = 0
 
-/obj/machinery/smartfridge/drying_rack/interact(mob/user as mob)
+/obj/machinery/smartfridge/drying_rack/interact(mob/user)
 	var/dat = ..()
 	if(dat)
 		dat += "<br>"
@@ -235,7 +235,7 @@
 		user << browse("<HEAD><TITLE>[src] supplies</TITLE></HEAD><TT>[dat]</TT>", "window=smartfridge")
 	onclose(user, "smartfridge")
 
-/obj/machinery/smartfridge/drying_rack/Topic(var/href, var/list/href_list)
+/obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
 	..()
 	if(href_list["dry"])
 		toggle_drying()
@@ -267,14 +267,14 @@
 		if(rack_dry())//no need to update unless something got dried
 			update_icon()
 
-/obj/machinery/smartfridge/drying_rack/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
 			return 1
 	return 0
 
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(var/forceoff = 0)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
 	if(drying || forceoff)
 		drying = 0
 		use_power = 1
@@ -308,7 +308,7 @@
 	name = "drink showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
-/obj/machinery/smartfridge/drinks/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(!istype(O,/obj/item/weapon/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
 		return 0
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
@@ -322,7 +322,7 @@
 	name = "smart slime extract storage"
 	desc = "A refrigerated storage unit for slime extracts."
 
-/obj/machinery/smartfridge/extract/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
 		return 1
 	if(istype(O,/obj/item/device/slime_scanner))
@@ -355,7 +355,7 @@
 			load(I)
 			amount--
 
-/obj/machinery/smartfridge/chemistry/accept_check(var/obj/item/O as obj)
+/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
 		if(O.contents.len)
 			for(var/obj/item/I in O)

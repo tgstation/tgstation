@@ -33,7 +33,7 @@
 	var/input
 	var/output
 	var/time = 40
-/datum/food_processor_process/proc/process_food(loc, what, var/obj/machinery/processor/processor)
+/datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
 	if (src.output && loc && processor)
 		for(var/i = 0, i < processor.rating_amount, i++)
 			new src.output(loc)
@@ -79,7 +79,7 @@
 	..()
 
 
-/datum/food_processor_process/mob/slime/process_food(loc, what, var/obj/machinery/processor/processor)
+/datum/food_processor_process/mob/slime/process_food(loc, what, obj/machinery/processor/processor)
 	var/mob/living/simple_animal/slime/S = what
 	var/C = S.cores
 	if(S.stat != DEAD)
@@ -126,7 +126,7 @@
 /datum/food_processor_process/mob/monkey/input = /mob/living/carbon/monkey
 /datum/food_processor_process/mob/monkey/output = null
 
-/obj/machinery/processor/proc/select_recipe(var/X)
+/obj/machinery/processor/proc/select_recipe(X)
 	for (var/Type in typesof(/datum/food_processor_process) - /datum/food_processor_process - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/P = new Type()
 		if (!istype(X, P.input))
@@ -134,7 +134,7 @@
 		return P
 	return 0
 
-/obj/machinery/processor/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+/obj/machinery/processor/attackby(obj/item/O, mob/user, params)
 	if(src.processing)
 		user << "<span class='warning'>The processor is in the process of processing!</span>"
 		return 1
@@ -169,7 +169,7 @@
 	what:loc = src
 	return
 
-/obj/machinery/processor/attack_hand(var/mob/user as mob)
+/obj/machinery/processor/attack_hand(mob/user)
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)

@@ -127,11 +127,11 @@ mob/verb/test()
 /datum/html_interface/proc/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 
 /datum/html_interface/proc/sendResources(client/client)
-	client << browse_rsc('jquery.min.js')
-	client << browse_rsc('bootstrap.min.js')
-	client << browse_rsc('bootstrap.min.css')
-	client << browse_rsc('html_interface.css')
-	client << browse_rsc('html_interface.js')
+	client << browse_rsc('js/jquery.min.js', "jquery.min.js")
+	client << browse_rsc('js/bootstrap.min.js', "bootstrap.min.js")
+	client << browse_rsc('css/bootstrap.min.css', "bootstrap.min.css")
+	client << browse_rsc('css/html_interface.css', "html_interface.css")
+	client << browse_rsc('js/html_interface.js', "html_interface.js")
 
 /datum/html_interface/proc/createWindow(datum/html_interface_client/hclient)
 	winclone(hclient.client, "window", "browser_\ref[src]")
@@ -212,14 +212,15 @@ mob/verb/test()
 		// causing file not found errors.
 //		src.sendResources(hclient.client)
 
-		if (winexists(hclient.client, "browser_\ref[src]"))
-			src._renderTitle(hclient, TRUE)
-			src._renderLayout(hclient)
-		else
+		if (!winexists(hclient.client, "browser_\ref[src]"))
 			src.createWindow(hclient)
-			hclient.is_loaded = FALSE
-			hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
-			winshow(hclient.client, "browser_\ref[src]", TRUE)
+			//src._renderTitle(hclient, TRUE)
+			//src._renderLayout(hclient)
+
+		hclient.is_loaded = FALSE
+		hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
+
+		winshow(hclient.client, "browser_\ref[src]", TRUE)
 
 		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 

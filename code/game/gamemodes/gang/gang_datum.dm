@@ -21,7 +21,8 @@
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
 		message_admins("WARNING: Maximum number of gangs have been exceeded!")
-		ERROR("WARNING: Maximum number of gangs have been exceeded!")
+		throw EXCEPTION("Maximum number of gangs has been exceeded")
+		return
 	else
 		color = pick(gang_colors_pool)
 		gang_colors_pool -= color
@@ -55,8 +56,8 @@
 	ganghud.leave_hud(defector_mind.current)
 	ticker.mode.set_antag_hud(defector_mind.current, null)
 
-/datum/gang/proc/domination(var/modifier=1)
-	dom_timer = max(300,900 - ((round((territory.len/start_state.num_territories)*200, 1) - 60) * 15)) * modifier
+/datum/gang/proc/domination(modifier=1)
+	dom_timer = get_domination_time(src) * modifier
 	set_security_level("delta")
 	SSshuttle.emergencyNoEscape = 1
 
@@ -64,7 +65,7 @@
 
 
 //Used by recallers when purchasing a gang outfit. First time a gang outfit is purchased the buyer decides a gang style which is stored so gang outfits are uniform
-/datum/gang/proc/gang_outfit(mob/living/carbon/user,var/obj/item/device/gangtool/gangtool)
+/datum/gang/proc/gang_outfit(mob/living/carbon/user,obj/item/device/gangtool/gangtool)
 	if(!user || !gangtool)
 		return 0
 	if(!gangtool.can_use(user))
@@ -90,7 +91,7 @@
 			if("Leather Overcoats")
 				outfit_path = /obj/item/clothing/suit/jacket/leather/overcoat
 			if("Military Jackets")
-				outfit_path = /obj/item/clothing/suit/miljacket
+				outfit_path = /obj/item/clothing/suit/jacket/miljacket
 			if("Soviet Uniforms")
 				outfit_path = /obj/item/clothing/under/soviet
 			if("Tactical Turtlenecks")
@@ -110,7 +111,7 @@
 //////////////////////////////////////////// MESSAGING
 
 
-/datum/gang/proc/message_gangtools(var/message,var/beep=1,var/warning)
+/datum/gang/proc/message_gangtools(message,beep=1,warning)
 	if(!gangtools.len || !message)
 		return
 	for(var/obj/item/device/gangtool/tool in gangtools)
@@ -131,6 +132,12 @@
 
 	var/added_names = ""
 	var/lost_names = ""
+
+	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
+	var/list/reclaimed_territories = territory_new & territory_lost
+	territory |= reclaimed_territories
+	territory_new -= reclaimed_territories
+	territory_lost -= reclaimed_territories
 
 	//Process lost territories
 	for(var/area in territory_lost)
@@ -166,7 +173,7 @@
 	//Calculate and report influence growth
 	var/message = "<b>[src] Gang Status Report:</b><BR>*---------*<br>"
 	if(isnum(dom_timer))
-		var/new_time = max(300,dom_timer - ((territory.len + uniformed) * 2))
+		var/new_time = max(180,dom_timer - (uniformed * 4) - (territory.len * 2))
 		if(new_time < dom_timer)
 			message += "Takeover shortened by [dom_timer - new_time] seconds for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 			dom_timer = new_time
@@ -177,10 +184,6 @@
 			message += "Gang influence has increased by [points_new - points] for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 		points = points_new
 		message += "Your gang now has <b>[points] influence</b>.<BR>"
-
-
-	//Remove territories they already own from the buffer, so if they got tagged over, they can still earn income if they tag it back before the next status report
-	territory_new -= territory
 
 	//Process new territories
 	for(var/area in territory_new)

@@ -174,12 +174,11 @@
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/New()
 	..()
-	reagents.add_reagent("neurotoxin", 5)
-	reagents.add_reagent("morphine", 5)
-	reagents.add_reagent("spore", 5)
-	reagents.add_reagent("mutetoxin", 5) //;HELP OPS IN MAINT
-	reagents.add_reagent("initropidril", 5)
-	reagents.add_reagent("sodium_thiopental", 5)
+	reagents.add_reagent("neurotoxin", 6)
+	reagents.add_reagent("spore", 6)
+	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT
+	reagents.add_reagent("coniine", 6)
+	reagents.add_reagent("sodium_thiopental", 6)
 
 /obj/item/ammo_casing/a762
 	desc = "A 7.62mm bullet casing."
@@ -196,7 +195,7 @@
 	desc = "A caseless bullet casing."
 
 
-/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, var/distro, var/quiet)
+/obj/item/ammo_casing/caseless/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
 	if (..())
 		loc = null
 		return 1
@@ -244,7 +243,7 @@
 		icon_state = "foamdart_empty"
 		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
 
-/obj/item/ammo_casing/caseless/foam_dart/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
 		modified = 1
