@@ -597,99 +597,20 @@ datum/reagent/consumable/purple_drank
 	color = "#FF99FF" // rgb: 255, 153, 255
 
 datum/reagent/consumable/purple_drank/on_mob_life(var/mob/living/M as mob)
-	M.druggy = max(M.druggy, 15)
 	if (prob(3))
-		switch(pick(1,2,3))
+		switch(pick(1,2))
 			if(1)
-				M.say(pick("Sheeit...","what's up mah niggah?","Yo dawg wassup?", "Real nigga shit, no fuccbois allowed!"))
+				M.say(pick("Sheeit...","What's up mah niggah?","Yo dawg wassup?", "Real nigga shit, no fuccbois allowed!","Yo dawg check out mah mixtape!"))
 			if(2)
-				M.say(pick("Bix nood muffuguh!","I din do nuffin!","Niggggaaaaahhhh!","Sheeeeeeeeeeeeeeeeit..."))
-			if(3)
-				M.emote(pick("stares","slumps","chuckles"))
+				M.say(pick("Bix nood muffuguh!","I din do nuffin!","Niggggaaaaahhhh!","Sheeeeeeeeeeeeeeeeit...", "Fuck da police!"))
 	switch(current_cycle)
 		if(1 to 12)
-			if(prob(5))	M.emote("yawn")
-		if(12 to 15)
 			M.eye_blurry = max(M.eye_blurry, 10)
-		if(15 to INFINITY)
+			if(prob(5))
+				M.emote("yawn")
+		if(12 to 25)
+			M.druggy = max(M.druggy, 15)
+		if(25 to INFINITY)
 			M.drowsyness  = max(M.drowsyness, 20)
-	..()
-	return
-
-datum/reagent/consumable/cuckacola
-	name = "CuckaCola"
-	id = "cuckacola"
-	description = "Share it with a friend!"
-	color = "#E78108" // rgb: 231, 129, 8
-
-datum/reagent/consumable/cuckacola/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(10 to INFINITY)
-			M.Jitter(5)
-	..()
-	return
-
-datum/reagent/consumable/firestation_red
-	name = "Firestation Red"
-	id = "firestation_red"
-	description = "A discontinued SlurpSlurpy flavor consisting of all syrup with a chemically goodness that tastes like burn."
-	color = "#E78108" // rgb: 231, 129, 8
-
-datum/reagent/consumable/firestation_red/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(10 to INFINITY)
-			M.heal_organ_damage(0,-1)
-	..()
-	return
-
-datum/reagent/consumable/fruity_filtered
-	name = "Fruity Filtered"
-	id = "fruity_filtered"
-	description = "Tastes like REDACTED"
-	color = "#E78108" // rgb: 231, 129, 8
-
-datum/reagent/consumable/fruity_filtered/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(10 to INFINITY)
-			M.Jitter(5)
-	..()
-	return
-
-datum/reagent/consumable/lemeta_limeade
-	name = "LeMeta Limeade"
-	id = "lemeta_limeade"
-	description = "Somehow you know that it has a citrus flavor."
-	color = "#E78108" // rgb: 231, 129, 8
-
-datum/reagent/consumable/lemeta_limeade/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(10 to INFINITY)
-			M.Jitter(5)
-	..()
-	return
-
-datum/reagent/consumable/salty_strawberry
-	name = "Salty Strawberry"
-	id = "salty_strawberry"
-	description = "All these flavors and you chose Salty Strawberry."
-	color = "#E78108" // rgb: 231, 129, 8
-
-datum/reagent/consumable/salty_strawberry/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(10 to INFINITY)
-			M.Jitter(5)
-	..()
-	return
-
-datum/reagent/consumable/whitewash_pina_colada
-	name = "Whitewash Pina Colada"
-	id = "whitewash_pina_colada"
-	description = "All these flavors and you chose Salty Strawberry."
-	color = "#E78108" // rgb: 231, 129, 8
-
-datum/reagent/consumable/whitewash_pina_colada/on_mob_life(var/mob/living/M as mob)
-	switch(current_cycle)
-		if(10 to INFINITY)
-			M.Jitter(5)
 	..()
 	return
