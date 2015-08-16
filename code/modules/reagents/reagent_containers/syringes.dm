@@ -221,6 +221,11 @@
 	desc = "Contains antiviral agents."
 	list_reagents = list("spaceacillin" = 15)
 
+/obj/item/weapon/reagent_containers/syringe/bioterror
+	name = "bioterror syringe"
+	desc = "Contains several paralyzing reagents."
+	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
+
 /obj/item/weapon/reagent_containers/syringe/stimulants
 	name = "Stimpack"
 	desc = "Contains stimulants."

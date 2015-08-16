@@ -303,10 +303,10 @@ var/list/uplink_items = list()
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bulltoxin
-	name = "Drum Magazine - 12g Bioterror"
-	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an excruciatingly rapid death."
-	item = /obj/item/ammo_box/magazine/m12g/bioterror
+/datum/uplink_item/ammo/bioterror
+	name = "Box of Bioterror Syringes"
+	desc = "A box full of preloaded syringes, containing various chemicals that seize up the victim's motor and broca system , making it impossible for them to move or speak while in their system."
+	item = /obj/item/weapon/storage/box/syndie_kit/bioterror
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -352,12 +352,6 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/throwing_stars
 	cost = 6
 	excludefrom = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/stealthy_weapons/edagger
-	name = "Energy Dagger"
-	desc = "A dagger made of energy that looks and functions as a pen when off."
-	item = /obj/item/weapon/pen/edagger
-	cost = 3
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
