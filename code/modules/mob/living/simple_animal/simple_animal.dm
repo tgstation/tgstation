@@ -454,18 +454,13 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
-				if(MED.amount >= 1)
+				if(MED.use(1))
 					adjustBruteLoss(-MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						del(MED)
-					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
-							M.show_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
+					src.visible_message("<span class='notice'>[user] applies \the [MED] on [src].</span>")
 		else
 			user << "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>"
-	if((meat_type || butchering_drops) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchen/utensil/knife/large) || istype(O, /obj/item/weapon/kitchen/utensil/knife/large/butch))
+	else if((meat_type || butchering_drops) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+		if(O.is_sharp())
 			harvest(user,O)
 	else
 		user.delayNextAttack(8)
@@ -599,6 +594,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	butchering_drops = null
+	meat_taken = 0
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
@@ -632,7 +629,10 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		if(animal_count[childtype] > ANIMAL_CHILD_CAP)
 			break
 
-		new childtype(loc)
+		var/mob/living/simple_animal/child = new childtype(loc)
+		if(istype(child))
+			child.faction = src.faction
+
 
 // Harvest an animal's delicious byproducts
 /mob/living/simple_animal/proc/harvest(mob/user, obj/item/tool)
@@ -646,6 +646,9 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 	var/butchering_time = 20 * src.size //2 times size(from 1 to 5). Butchering a goliath takes 8 seconds, butchering a mouse takes 2
 	butchering_time = Clamp(butchering_time / tool.sharpness, 10, 70)
+
+	if(tool.sharpness < 1.0)
+		butchering_time += 30 //3 seconds penalty if you're using something very dull
 
 	if(src.butchering_drops && src.butchering_drops.len)
 		var/list/actions = list()

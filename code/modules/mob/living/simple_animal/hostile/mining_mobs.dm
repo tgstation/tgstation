@@ -340,7 +340,6 @@
 	speed = 3
 	maxHealth = 300
 	health = 300
-	butchering_drops = list(/obj/item/asteroid/goliath_hide = "Skin")
 	harm_intent_damage = 0
 	melee_damage_lower = 25
 	melee_damage_upper = 25

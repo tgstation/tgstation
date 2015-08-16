@@ -704,13 +704,6 @@
 	if(istype(target, /mob/living) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
-			if(M.meat_taken > 0)
-				if(prob(20*M.meat_taken))
-					loaded = 0
-					user.visible_message("<span class='notice'>[user] injects [M] with [src], but nothing happens.</span>","<span class='warning'>[src]'s body is too disfigured to be revived.</span>")
-					playsound(src,'sound/effects/refill.ogg',50,1)
-					update_icon()
-					return
 
 			if(M.stat == DEAD)
 				M.faction = "lazarus \ref[user]"
