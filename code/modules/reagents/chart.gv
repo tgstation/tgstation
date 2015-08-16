@@ -142,7 +142,7 @@ digraph chemistry{
             label="Toxins"
             bgcolor=mediumspringgreen
             node [fillcolor=white]
-            formaldehyde [label="Formaldehyde| Toxic chemical component, decays into histamine|{1: ethanol| 1: oxygen| 1: silver}"]
+            formaldehyde [label="Formaldehyde| Toxic chemical component, decays into histamine|{1: ethanol| 1: oxygen| 1: silver| TEMP:420}"]
             neurotoxin [label="Neurotoxin| Does brain and tox damage, possibly knocking the user out|{1:space drugs| TEMP:674}"]
             cyanide [label="Cyanide| Does oxygen and toxic damage| {1: oil| 1: ammonia| 1:oxygen| TEMP:380}"]
             itching_powder [label="Itching Powder| Does minor brute damage and annoyance and decays into histamine|{1: fuel| 1:ammonia| 1: dylovene}"]
