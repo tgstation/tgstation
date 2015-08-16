@@ -3,6 +3,7 @@
  *		Pens
  *		Sleepy Pens
  *		Parapens
+ *		Edaggers
  */
 
 
@@ -48,16 +49,17 @@
 	if(!istype(M))
 		return
 
-	if(M.can_inject(user, 1) && force == initial(force))
-		user << "<span class='warning'>You stab [M] with the pen.</span>"
-		if(!stealth)
-			M << "<span class='danger'>You feel a tiny prick!</span>"
-		. = 1
+	if(!force)
+		if(M.can_inject(user, 1))
+			user << "<span class='warning'>You stab [M] with the pen.</span>"
+			if(!stealth)
+				M << "<span class='danger'>You feel a tiny prick!</span>"
+			. = 1
 
 		add_logs(user, M, "stabbed", src)
-	
+
 	else
-		..()
+		. = ..()
 
 /*
  * Sleepypens
@@ -99,17 +101,17 @@
 		hitsound = initial(hitsound)
 		embed_chance = initial(embed_chance)
 		throwforce = initial(throwforce)
-		playsound(user, 'sound/weapons/saberoff.ogg', 10, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		user << "<span class='warning'>[src] can now be concealed.</span>"
 	else
 		on = 1
-		force = 20
+		force = 18
 		w_class = 3
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embed_chance = 90 //rule of cool
+		embed_chance = 100 //rule of cool
 		throwforce = 35
-		playsound(user, 'sound/weapons/saberon.ogg', 10, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		user << "<span class='warning'>[src] is now active.</span>"
 	update_icon()
 
