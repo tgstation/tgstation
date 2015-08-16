@@ -193,7 +193,9 @@
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
 	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
-
+	
+	start_turf = get_turf(src.loc)
+	
 	//Fill it
 	cur_turf = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	new /obj/machinery/door/airlock/glass(cur_turf)
