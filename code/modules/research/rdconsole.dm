@@ -71,6 +71,28 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	light_color = LIGHT_COLOR_PINK
 
+/obj/machinery/computer/rdconsole/Destroy()
+	. = ..()
+	for(var/obj/machinery/r_n_d/R in linked_machines)
+		R.linked_console = null
+		linked_machines -= R
+		R.update_icon()
+
+	if(linked_destroy)
+		linked_destroy.linked_console	= null
+		linked_destroy.update_icon()
+		linked_destroy					= null
+
+	if(linked_imprinter)
+		linked_imprinter.linked_console	= null
+		linked_imprinter.update_icon()
+		linked_imprinter				= null
+
+	if(linked_lathe)
+		linked_lathe.linked_console		= null
+		linked_lathe.update_icon()
+		linked_lathe					= null
+
 /obj/machinery/computer/rdconsole/proc/Maximize()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/rdconsole/proc/Maximize() called tick#: [world.time]")
 	files.known_tech = tech_list.Copy()

@@ -27,6 +27,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	RefreshParts()
 
+/obj/machinery/r_n_d/destructive_analyzer/Destroy()
+	if(linked_console && linked_console.linked_destroy == src)
+		linked_console.linked_destroy = null
+
+	. = ..()
+
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/S in component_parts)
@@ -50,7 +56,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/crowbarDestroy(mob/user)
 	if(..() == 1)
 		if(loaded_item)
-			loaded_item.loc = src.loc
+			loaded_item.forceMove(loc)
 		return 1
 	return -1
 
