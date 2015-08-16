@@ -19,7 +19,11 @@ var/global/list/obj/machinery/atmospherics/atmos_machines = list()
 	for(var/datum/pipe_network/pipeNetwork in pipe_networks)
 		if(istype(pipeNetwork))
 			if(!pipeNetwork.disposed)
-				pipeNetwork.process()
+				try
+					pipeNetwork.process()
+				catch(var/exception/e)
+					world.Error(e)
+					continue
 				scheck()
 				continue
 

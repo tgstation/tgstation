@@ -15,7 +15,11 @@
 	if (mob_list)
 		for(var/m in mob_list)
 			if(m)
-				m:Life()
+				try
+					m:Life()
+				catch(var/exception/e)
+					world.Error(e)
+					continue
 				scheck()
 				continue
 			mob_list -= m
