@@ -1,9 +1,8 @@
 /datum/round_event_control/meteor_wave/dust
 	name = "Minor Space Dust"
 	typepath = /datum/round_event/meteor_wave/dust
-	weight = 200
 	max_occurrences = 1000
-	earliest_start = 0
+	average_time = 5 //Minor event
 	alertadmins = 0
 
 /datum/round_event/meteor_wave/dust
@@ -15,7 +14,8 @@
 	return
 
 /datum/round_event/meteor_wave/dust/start()
-	spawn_meteors(1, meteorsC)
+	spawn_meteors(5, meteorsC)	//Let's make it at least worth being an event.
+								//Five space dusts will poke a few holes in maintenance.
 
 /datum/round_event/meteor_wave/dust/tick()
 	return

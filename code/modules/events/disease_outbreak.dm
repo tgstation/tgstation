@@ -2,7 +2,7 @@
 	name = "Disease Outbreak"
 	typepath = /datum/round_event/disease_outbreak
 	max_occurrences = 1
-	weight = 5
+	average_time = 20
 
 /datum/round_event/disease_outbreak
 	announceWhen	= 15

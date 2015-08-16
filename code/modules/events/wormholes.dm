@@ -2,7 +2,7 @@
 	name = "Wormholes"
 	typepath = /datum/round_event/wormholes
 	max_occurrences = 3
-	weight = 2
+	average_time = 35
 
 
 /datum/round_event/wormholes

@@ -3,9 +3,8 @@
 /datum/round_event_control/revenant
 	name = "Spawn Revenant"
 	typepath = /datum/round_event/revenant
-	weight = 0 //Admin only
-	max_occurrences = 3
-	earliest_start = 0 //Meant to mix things up early-game.
+	max_occurrences = 0 //Admin-only
+	average_time = 25
 
 
 /datum/round_event/revenant

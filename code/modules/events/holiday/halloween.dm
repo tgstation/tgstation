@@ -2,9 +2,8 @@
 	name = "2 SPOOKY! (Halloween)"
 	holidayID = HALLOWEEN
 	typepath = /datum/round_event/spooky
-	weight = -1							//forces it to be called, regardless of weight
+	average_time = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
-	earliest_start = 0
 
 /datum/round_event/spooky/start()
 	..()
@@ -28,8 +27,7 @@
 	name = "Eyeball Migration"
 	typepath = /datum/round_event/carp_migration/eyeballs
 	holidayID = HALLOWEEN
-	weight = 25
-	earliest_start = 0
+	average_time = 30
 
 /datum/round_event/carp_migration/eyeballs/start()
 	for(var/obj/effect/landmark/C in landmarks_list)
@@ -41,15 +39,13 @@
 	name = "Pumpkin Wave"
 	typepath = /datum/round_event/meteor_wave/spooky
 	holidayID = HALLOWEEN
-	weight = 20
 	max_occurrences = 2
 
 /datum/round_event/meteor_wave/spooky
-	endWhen	= 40
+	endWhen = 40
 
-/datum/round_event/meteor_wave/spooky/tick()
-	if(IsMultiple(activeFor, 4))
-		spawn_meteors(3, meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
+/datum/round_event/meteor_wave/spooky/init_meteors()
+	wave_type = meteorsSPOOKY
 
 //spooky foods (you can't actually make these when it's not halloween)
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull

@@ -1,8 +1,8 @@
 /datum/round_event_control/brand_intelligence
 	name = "Brand Intelligence"
 	typepath = /datum/round_event/brand_intelligence
-	weight = 5
 	max_occurrences = 1
+	average_time = 45 //Tends to wind up with a bunch of holes and talking vending machines, destroying all vending machine contents.
 
 /datum/round_event/brand_intelligence
 	announceWhen	= 21

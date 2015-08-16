@@ -1,7 +1,7 @@
 /datum/round_event_control/communications_blackout
 	name = "Communications Blackout"
 	typepath = /datum/round_event/communications_blackout
-	weight = 30
+	average_time = 20 //Minor event that can cause a few deaths, but generally not a huge obstacle to the station.
 
 /datum/round_event/communications_blackout
 	announceWhen	= 1

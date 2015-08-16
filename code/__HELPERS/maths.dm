@@ -164,3 +164,7 @@ var/gaussian_next
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
+
+//Probability density function for normal distributions
+/proc/normalDistribution(mean, stdev, x)
+	return 1/(stdev * sqrt(2 * PI)) * MATH_E ** -(((x - mean) ** 2) / (2 * (stdev ** 2)))

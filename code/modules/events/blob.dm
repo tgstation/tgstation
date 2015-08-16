@@ -1,10 +1,9 @@
 /datum/round_event_control/blob
 	name = "Blob"
 	typepath = /datum/round_event/blob
-	weight = 5
 	max_occurrences = 1
 
-	earliest_start = 48000 // 1 hour 20 minutes
+	average_time = 70 //High potential to end rounds; only spawn in rounds that have gone on too long.
 
 /datum/round_event/blob
 	announceWhen	= 12

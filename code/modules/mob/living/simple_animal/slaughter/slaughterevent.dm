@@ -2,9 +2,8 @@
 /datum/round_event_control/slaughter
 	name = "Spawn Slaughter Demon"
 	typepath = /datum/round_event/slaughter
-	weight = 0 //Admin only
-	max_occurrences = 1
-	earliest_start = 30 //Spawn later with more blood, hopefully
+	max_occurrences = 2
+	average_time = 120 //What the fuck, the round's still going on?
 
 
 

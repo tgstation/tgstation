@@ -1,8 +1,7 @@
 /datum/round_event_control/electrical_storm
 	name = "Electrical Storm"
 	typepath = /datum/round_event/electrical_storm
-	earliest_start = 6000
-	weight = 40
+	average_time = 5 //Minor event, no permanent damage
 	alertadmins = 0
 
 /datum/round_event/electrical_storm

@@ -967,7 +967,6 @@
 #include "code\modules\events\immovable_rod.dm"
 #include "code\modules\events\ion_storm.dm"
 #include "code\modules\events\mass_hallucination.dm"
-#include "code\modules\events\meateor_wave.dm"
 #include "code\modules\events\meteor_wave.dm"
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"

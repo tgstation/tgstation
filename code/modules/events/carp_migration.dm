@@ -1,8 +1,7 @@
 /datum/round_event_control/carp_migration
 	name = "Carp Migration"
 	typepath = /datum/round_event/carp_migration
-	weight = 15
-	earliest_start = 6000
+	average_time = 30 //Moderate challenge that sometimes kills a person or two.
 	max_occurrences = 6
 
 /datum/round_event/carp_migration
