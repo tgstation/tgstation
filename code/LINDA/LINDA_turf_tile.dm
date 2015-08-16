@@ -290,7 +290,7 @@
 /atom/movable/var/pressure_resistance = 5
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
-	if(!anchored)
+	if(!anchored && !pulledby)
 		if(pressure_difference > pressure_resistance)
 			spawn step(src, direction)
 		return 1
