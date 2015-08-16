@@ -7,13 +7,13 @@
 
 	selection_type = "range"
 	school = "transmutation"
-	charge_max = 1200 // now 2min
+	charge_max = 600 // now 2min
 	invocation = "OMNIA RUINAM"
 	invocation_type = SpI_SHOUT
 	range = 7
-	cooldown_min = 1200
-	cooldown_reduc = 0
-	level_max = list(Sp_TOTAL = 0, Sp_SPEED = 0, Sp_POWER = 0)
+	cooldown_min = 300
+	cooldown_reduc = 100
+	level_max = list(Sp_TOTAL = 3, Sp_SPEED = 3, Sp_POWER = 0)
 	hud_state = "wiz_sleep"
 	var/image/aoe_underlay
 	var/list/oureffects = list()

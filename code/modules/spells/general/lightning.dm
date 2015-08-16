@@ -1,6 +1,6 @@
 /spell/lightning
 	name = "Lightning"
-	charge_max = 450
+	charge_max = 200
 	level_max = list(Sp_TOTAL = 3, Sp_SPEED = 0, Sp_POWER = 3) //each level of power grants 1 additional target.
 
 	spell_flags = NEEDSCLOTHES
@@ -14,6 +14,7 @@
 	var/bounces = 0
 	var/bounce_range = 6
 	var/image/chargeoverlay
+	var/last_active_sound
 
 /spell/lightning/New()
 	..()
@@ -34,13 +35,13 @@
 			name = "Chain Lightning"
 			bounces++
 		if(1)
-			temp = "You have improved [name] into Powerful Chain Lightning it will arc to two additional targets."
+			temp = "You have improved [name] into Powerful Chain Lightning it will arc to up to 3 targets."
 			name = "Powerful Chain Lightning"
-			bounces++
+			bounces+=2
 		if(0)
-			temp = "You have improved [name] into Zeus' Own Chain Lightning it will arc to three additional targets."
+			temp = "You have improved [name] into Zeus' Own Chain Lightning it will arc to up to 5 targets."
 			name = "Zeus' Own Chain Lightning"
-			bounces++
+			bounces+=2
 	connected_button.name = name
 	return temp
 
@@ -57,6 +58,9 @@
 		chargedkey = user.on_uattack.Add(src, "charged_click")
 		connected_button.name = "(Ready) [name]"
 		user.overlays += chargeoverlay
+		if(world.time >= last_active_sound + 50)
+			playsound(get_turf(user), 'sound/effects/chainlightning_activate.ogg', 100, 1, "vary" = 0)
+
 		//give user overlay
 	else
 		//remove overlay
@@ -99,11 +103,11 @@
 	zapped.Add(target)
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(target)
-	var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, T)
-	L.stun = 1
-	L.weaken = 0
-	L.damage = basedamage
-	playsound(get_turf(user), 'sound/effects/eleczap.ogg', 75, 1)
+	var/obj/item/projectile/beam/lightning/spell/L = getFromPool(/obj/item/projectile/beam/lightning/spell, T)
+	L.stun = 2
+	L.weaken = 1
+	L.basedamage = basedamage
+	playsound(get_turf(user), 'sound/effects/chainlightning.ogg', 75, 1)
 	L.tang = adjustAngle(get_angle(U,T))
 	L.icon = midicon
 	L.icon_state = "[L.tang]"
