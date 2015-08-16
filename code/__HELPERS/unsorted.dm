@@ -1306,6 +1306,8 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	var/z
 	if(istype(A, /atom/movable))
 		var/turf/T = get_turf(A)
+		if(!T)
+			return null
 		z = T.z
 	else
 		z = A.z
