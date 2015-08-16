@@ -9,7 +9,7 @@
 	school = "transmutation"
 	charge_max = 1200 // now 2min
 	invocation = "OMNIA RUINAM"
-	invocation_type = SpI_WHISPER
+	invocation_type = SpI_SHOUT
 	range = 7
 	cooldown_min = 1200
 	cooldown_reduc = 0

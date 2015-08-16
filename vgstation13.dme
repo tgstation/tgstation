@@ -1681,6 +1681,7 @@
 #include "code\modules\spells\aoe_turf\conjure\forcewall.dm"
 #include "code\modules\spells\aoe_turf\conjure\pontiac.dm"
 #include "code\modules\spells\general\area_teleport.dm"
+#include "code\modules\spells\general\lightning.dm"
 #include "code\modules\spells\general\rune_write.dm"
 #include "code\modules\spells\targeted\buttbots_revenge.dm"
 #include "code\modules\spells\targeted\disintegrate.dm"

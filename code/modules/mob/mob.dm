@@ -16,6 +16,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 /mob/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	if(on_uattack) on_uattack.holder = null
 	unset_machine()
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -182,6 +183,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 		living_mob_list += src
 
 	store_position()
+	on_uattack = new("owner"=src)
 
 /mob/proc/is_muzzled()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/is_muzzled() called tick#: [world.time]")

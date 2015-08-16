@@ -1311,3 +1311,19 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 		z = A.z
 
 	. = map.zLevels[z]
+
+/proc/adjustAngle(angle)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjustAngle() called tick#: [world.time]")
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
+	if(!angle)
+		angle = 1
+	/*if(angle < 0)
+		//angle = (round(abs(get_angle(A, user))) + 45) - 90
+		angle = round(angle) + 45 + 180
+	else
+		angle = round(angle) + 45*/
+	return angle

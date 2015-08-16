@@ -112,6 +112,7 @@
 		else
 			if(ismob(A) || istype(W, /obj/item/weapon/grab))
 				delayNextAttack(10)
+			INVOKE_EVENT(on_uattack,list("atom"=A))
 			UnarmedAttack(A, 1, params)
 		return
 	else // non-adjacent click
@@ -124,6 +125,7 @@
 			if(ismob(A))
 				delayNextAttack(10)
 			RangedAttack(A, params)
+			INVOKE_EVENT(on_uattack,list("atom"=A))
 	return
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
