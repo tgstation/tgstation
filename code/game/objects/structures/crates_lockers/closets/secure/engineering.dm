@@ -151,7 +151,7 @@
 		new /obj/item/weapon/wrench/socket(src)
 		new /obj/item/weapon/gun/projectile/flare(src) //yay for emergency lighting
 		new /obj/item/ammo_storage/box/flare(src)
-		new /obj/item/weapon/pipe_dispenser(src)
+		new /obj/item/device/rcd/rpd(src)
 		new /obj/item/device/analyzer(src)
 		return
 

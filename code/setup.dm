@@ -1226,6 +1226,12 @@ var/proccalls = 1
 #define COREFIRERESIST 1
 #define HIGHRESCAMS 2
 
+//RCD schematic bitflags.
+#define RCD_SELF_SANE	1	//Check proximity ourselves.
+#define RCD_GET_TURF	2	//If used on objs/mobs, get the turf instead.
+#define RCD_RANGE		4	//Use range() instead of adjacency. (old RPD behaviour.) (overriden by RCD_SELF_SANE)
+#define RCD_SELF_COST	8	//Handle energy usage ourselves. (energy availability still checked).
+
 //Mob sizes
 #define SIZE_TINY	1 //Mice, lizards, borers, kittens - mostly things that can fit into a man's palm
 #define SIZE_SMALL	2 //Monkeys, dionae, cats, dogs
