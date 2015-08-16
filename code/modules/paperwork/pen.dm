@@ -48,13 +48,16 @@
 	if(!istype(M))
 		return
 
-	if(M.can_inject(user, 1))
+	if(M.can_inject(user, 1) && force == initial(force))
 		user << "<span class='warning'>You stab [M] with the pen.</span>"
 		if(!stealth)
 			M << "<span class='danger'>You feel a tiny prick!</span>"
 		. = 1
 
-	add_logs(user, M, "stabbed", src)
+		add_logs(user, M, "stabbed", src)
+	
+	else
+		..()
 
 /*
  * Sleepypens
@@ -84,6 +87,7 @@
  */
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=5"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = 0
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
@@ -99,7 +103,7 @@
 		user << "<span class='warning'>[src] can now be concealed.</span>"
 	else
 		on = 1
-		force = 15
+		force = 20
 		w_class = 3
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
