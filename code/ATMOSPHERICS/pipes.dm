@@ -24,13 +24,13 @@
 	var/baseicon=""
 
 	available_colors = list(
-		"grey"		= PIPE_COLOR_GREY,
-		"red"		= PIPE_COLOR_RED,
-		"blue"		= PIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
+		"grey"=PIPE_COLOR_GREY,
+		"red"=PIPE_COLOR_RED,
+		"blue"=PIPE_COLOR_BLUE,
+		"cyan"=PIPE_COLOR_CYAN,
+		"green"=PIPE_COLOR_GREEN,
+		"yellow"=PIPE_COLOR_YELLOW,
+		"purple"=PIPE_COLOR_PURPLE
 	)
 
 /obj/machinery/atmospherics/pipe/singularity_pull(/obj/machinery/singularity/S, size)
@@ -404,7 +404,7 @@
 	level = 1
 	alpha=128
 /obj/machinery/atmospherics/pipe/simple/insulated
-	name = "\improper Insulated pipe"
+	name = "Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
 	icon = 'icons/obj/atmospherics/insulated.dmi'
 	minimum_temperature_difference = 10000
@@ -415,12 +415,8 @@
 	alert_pressure   =  900000
 
 	available_colors = list(
-		"red"		= IPIPE_COLOR_RED,
-		"blue"		= IPIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
+		"red"=IPIPE_COLOR_RED,
+		"blue"=IPIPE_COLOR_BLUE
 	)
 	_color = "red"
 /obj/machinery/atmospherics/pipe/simple/insulated/visible
@@ -596,35 +592,35 @@
 		update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
-	name = "\improper Scrubbers pipe"
+	name = "Scrubbers pipe"
 	_color = "red"
 	color=PIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/manifold/supply
-	name = "\improper Air supply pipe"
+	name = "Air supply pipe"
 	_color = "blue"
 	color=PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold/supplymain
-	name = "\improper Main air supply pipe"
+	name = "Main air supply pipe"
 	_color = "purple"
 	color=PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/manifold/general
-	name = "\improper Gas pipe"
+	name = "Gas pipe"
 	_color = "gray"
 	color=PIPE_COLOR_GREY
 /obj/machinery/atmospherics/pipe/manifold/yellow
-	name = "\improper Air supply pipe"
+	name = "Air supply pipe"
 	_color = "yellow"
 	color=PIPE_COLOR_YELLOW
 /obj/machinery/atmospherics/pipe/manifold/cyan
-	name = "\improper Air supply pipe"
+	name = "Air supply pipe"
 	_color = "cyan"
 	color=PIPE_COLOR_CYAN
 /obj/machinery/atmospherics/pipe/manifold/filtering
-	name = "\improper Air filtering pipe"
+	name = "Air filtering pipe"
 	_color = "green"
 	color=PIPE_COLOR_GREEN
 /obj/machinery/atmospherics/pipe/manifold/insulated
-	name = "\improper Insulated pipe"
+	name = "Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
 	icon = 'icons/obj/atmospherics/insulated.dmi'
 	icon_state = "manifold"
@@ -632,16 +628,10 @@
 	_color = "red"
 	color=IPIPE_COLOR_RED
 	level = 2
-
 	available_colors = list(
-		"red"		= IPIPE_COLOR_RED,
-		"blue"		= IPIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
+		"red"=IPIPE_COLOR_RED,
+		"blue"=IPIPE_COLOR_BLUE
 	)
-
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
 	level = 2
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
@@ -848,46 +838,40 @@
 		update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
-	name = "\improper Scrubbers pipe"
+	name = "Scrubbers pipe"
 	_color = "red"
 	color=PIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/manifold4w/supply
-	name = "\improper Air supply pipe"
+	name = "Air supply pipe"
 	_color = "blue"
 	color=PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain
-	name = "\improper Main air supply pipe"
+	name = "Main air supply pipe"
 	_color = "purple"
 	color=PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/manifold4w/general
-	name = "\improper Air supply pipe"
+	name = "Air supply pipe"
 	_color = "gray"
 	color=PIPE_COLOR_GREY
 /obj/machinery/atmospherics/pipe/manifold4w/yellow
-	name = "\improper Air supply pipe"
+	name = "Air supply pipe"
 	_color = "yellow"
 	color=PIPE_COLOR_YELLOW
 /obj/machinery/atmospherics/pipe/manifold4w/filtering
-	name = "\improper Air filtering pipe"
+	name = "Air filtering pipe"
 	_color = "green"
 	color=PIPE_COLOR_GREEN
 /obj/machinery/atmospherics/pipe/manifold4w/insulated
 	icon = 'icons/obj/atmospherics/insulated.dmi'
-	name = "\improper Insulated pipe"
+	name = "Insulated pipe"
 	_color = "red"
 	alert_pressure = 900*ONE_ATMOSPHERE
 	color=IPIPE_COLOR_RED
 	level = 2
-
 	available_colors = list(
-		"red"		= IPIPE_COLOR_RED,
-		"blue"		= IPIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
+		"red"=IPIPE_COLOR_RED,
+		"blue"=IPIPE_COLOR_BLUE
 	)
-
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible
 	level = 2
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden
@@ -932,7 +916,7 @@
 
 
 /obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/device/rcd/rpd) || istype(W, /obj/item/device/pipe_painter))
+	if(istype(W, /obj/item/weapon/pipe_dispenser) || istype(W, /obj/item/device/pipe_painter))
 		return // Coloring pipes.
 
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))

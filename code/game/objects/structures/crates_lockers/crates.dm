@@ -342,7 +342,7 @@
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/device/rcd/matter/engineering(src)
+	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/radiation/New()
 	..()

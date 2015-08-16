@@ -92,7 +92,7 @@
 		new /obj/item/clothing/head/welding(), \
 		new /obj/item/device/taperecorder(), \
 		new /obj/item/weapon/chisel(), \
-		new /obj/item/device/rcd/tile_painter(), \
+		new /obj/item/weapon/tile_painter(), \
 		),
 		"Misc_Other"=list(
 		new /obj/item/weapon/rcd_ammo(), \
@@ -107,9 +107,9 @@
 		"Hidden_Items" = list(
 		new /obj/item/weapon/flamethrower/full(), \
 		new /obj/item/ammo_storage/box/flare(), \
-		new /obj/item/device/rcd/matter/engineering(), \
-		new /obj/item/device/rcd/rpd(),\
-		new /obj/item/device/rcd/matter/rsf(), \
+		new /obj/item/weapon/rcd(), \
+		new /obj/item/weapon/pipe_dispenser(),\
+		new /obj/item/weapon/rsf(), \
 		new /obj/item/device/radio/electropack(), \
 		new /obj/item/weapon/weldingtool/largetank(), \
 		new /obj/item/weapon/handcuffs(), \

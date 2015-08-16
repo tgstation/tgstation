@@ -72,12 +72,12 @@
 
 /datum/theft_objective/traitor/rcd
 	name = "an RCD"
-	typepath = /obj/item/device/rcd/matter/engineering
+	typepath = /obj/item/weapon/rcd
 	protected_jobs = list("Chief Engineer")
 
 /datum/theft_objective/traitor/rpd
 	name = "an RPD"
-	typepath = /obj/item/device/rcd/rpd
+	typepath = /obj/item/weapon/pipe_dispenser
 	protected_jobs = list("Chief Engineer", "Atmospherics Technician")
 
 /datum/theft_objective/traitor/jetpack
