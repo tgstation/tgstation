@@ -669,7 +669,8 @@
 								// <[REDACTED]> gets between 1 and 10 units of jenkem added to them...we obviously don't have Jenkem, but Space Drugs do literally the same exact thing as Jenkem
 								// <[REDACTED]> the user, of course, isn't impacted because it's not an actual smoke cloud
 								// So, let's give 'em space drugs.
-								M.reagents.add_reagent("space_drugs",rand(1,50))
+								if(M.reagents)
+									M.reagents.add_reagent("space_drugs",rand(1,50))
 							/*
 							var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
 							S.attach(location)

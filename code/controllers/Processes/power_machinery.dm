@@ -47,7 +47,7 @@ var/global/list/power_machines = list()
 				if(!power_machines.Remove(M))
 					power_machines.Cut(i,i+1)
 
-		if(istype(power_machines[i], /datum/power_connection))
+		else if(istype(power_machines[i], /datum/power_connection))
 			var/datum/power_connection/C = power_machines[i]
 
 			#ifdef PROFILE_MACHINES
