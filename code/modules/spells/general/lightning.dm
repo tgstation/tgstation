@@ -12,6 +12,12 @@
 	var/chargedkey
 	var/basedamage = 40
 	var/bounces = 0
+	var/bounce_range = 6
+	var/image/chargeoverlay
+
+/spell/lightning/New()
+	..()
+	chargeoverlay = image("icon" = 'icons/mob/mob.dmi', "icon_state" = "sithlord")
 
 /spell/lightning/can_improve(var/upgrade_type)
 	if(upgrade_type == "speed") return 0
@@ -50,6 +56,7 @@
 			return
 		chargedkey = user.on_uattack.Add(src, "charged_click")
 		connected_button.name = "(Ready) [name]"
+		user.overlays += chargeoverlay
 		//give user overlay
 	else
 		//remove overlay
@@ -58,6 +65,7 @@
 		E.handlers.Remove(chargedkey)
 		chargedkey = null
 		charge_counter = charge_max
+		user.overlays -= chargeoverlay
 	return
 
 
@@ -76,6 +84,7 @@
 		E.handlers.Remove("\ref[src]:charged_click")
 		return
 	if(isliving(A))
+		usr.overlays -= chargeoverlay
 		var/mob/living/L = A
 		invocation(holder)
 		take_charge(holder, 0)
@@ -86,7 +95,7 @@
 			zapmuthafucka(holder, L, bounces)
 		src.process()
 
-/spell/lightning/proc/zapmuthafucka(var/mob/user, var/mob/target, var/chained = 0, var/list/zapped = list())
+/spell/lightning/proc/zapmuthafucka(var/mob/user, var/mob/target, var/chained = bounces, var/list/zapped = list())
 	zapped.Add(target)
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(target)
@@ -110,7 +119,7 @@
 		//DO IT AGAIN
 		var/mob/next_target
 		var/currdist = -1
-		for(var/mob/living/M in view(target,6-(bounces-chained)))
+		for(var/mob/living/M in view(target,bounce_range))
 			if(M != holder && M != user && !(M in zapped))
 				var/dist = get_dist(M, holder)
 				if(currdist == -1)
