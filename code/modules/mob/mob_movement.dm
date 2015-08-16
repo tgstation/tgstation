@@ -195,20 +195,13 @@
 							M.animate_movement = 2
 							return
 
-
-		var/san_tick_lag = round(world.tick_lag, 0.1) //floating point imprecision means 0.9 != 0.9
-		var/rounded = round(move_delay, san_tick_lag) //Round move_delay up to the nearest multiple of tick_lag
-		if(rounded < move_delay)
-			rounded += san_tick_lag
-		move_delay = rounded
-
-		if(move_delay <= 0)
-			glide_size = 0
-		else
-			glide_size = world.icon_size / move_delay * san_tick_lag //assume icons are square
+		var/ticks = Ceiling(move_delay / world.tick_lag)
+		if(ticks <= 0)
+			ticks = 1
+		glide_size = world.icon_size / ticks //assume icons are square
 		mob.glide_size = glide_size
 
-		move_delay += (world.time - 0.01) //Floating point imprecision again
+		move_delay += world.time - 0.0001 //Ensure we're on the right tick even if there's rounding errors
 
 		if(mob.confused && IsEven(world.time))
 			step(mob, pick(cardinal))
