@@ -218,7 +218,8 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/autodrobe = "AutoDrobe")
+							/obj/machinery/vending/autodrobe = "AutoDrobe",
+							/obj/machinery/vending/slurpslurpy_machine = "SlurpSlurpy Machine")
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
