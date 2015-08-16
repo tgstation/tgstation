@@ -316,7 +316,6 @@
 			user << "<span class='notice'>You replace the broken glass.</span>"
 			G.use(1)
 			stat &= ~BROKEN
-			machine_flags &= ~SCREWTOGGLE
 			src.health = 100
 			src.update_vicon()
 			getFromPool(/obj/item/weapon/shard, loc)
@@ -502,6 +501,7 @@
 		src.icon_state = "[initial(icon_state)]-off"
 	else
 		src.icon_state = "[initial(icon_state)]"
+
 /obj/machinery/vending/attack_hand(mob/living/user as mob)
 	if(user.a_intent == "hurt") //Will make another update later. Hulks will insta-break
 		user.delayNextAttack(10)
@@ -511,7 +511,7 @@
 		src.shake(1, 3) //1 means x movement, 3 means intensity
 		src.health -= 4
 
-		if(prob(80))
+		if(prob(70))
 			user.apply_damage(rand(2,4), BRUTE, "r_leg")
 		if(src.health <= 0)
 			stat |= BROKEN
@@ -524,7 +524,7 @@
 		/*if(prob(1))
 			usr << "<span class='warning'>You fall down and break your leg!</span>"
 			user.emote("scream",,, 1)
-			shake_camera(user, 3, 2)*/
+			shake_camera(user, 2, 1)*/
 		return
 
 	if(stat & (BROKEN|NOPOWER))
