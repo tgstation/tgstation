@@ -26,6 +26,7 @@
 		target.internal_organs -= A
 		for(var/datum/disease/appendicitis/appendicitis in target.viruses)
 			appendicitis.cure()
+		target.resistances += /datum/disease/appendicitis
 	else
 		user.visible_message("<span class='notice'>[user] can't find an appendix in [target]!</span>")
 	return 1
