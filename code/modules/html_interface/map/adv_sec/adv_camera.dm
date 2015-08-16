@@ -106,6 +106,9 @@ var/global/datum/interactive_map/camera/adv_camera = new
 			if(!istype(single))
 				for (var/obj/machinery/camera/C in ourcams)
 					var/turf/pos = get_turf(C)
+					if(!pos)
+						camerasbyzlevel["[zz]"] -= C
+						continue
 					if(pos.z != zz)
 						camerasbyzlevel["[zz]"] -= C //bad zlevel
 						if(pos.z == 1 || pos.z == 5)

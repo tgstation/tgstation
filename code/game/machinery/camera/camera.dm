@@ -92,6 +92,8 @@ var/list/camera_names=list()
 		assembly = null
 	wires = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
+	for(var/key in camerasbyzlevel)
+		camerasbyzlevel[key] -= src
 	..()
 
 /obj/machinery/camera/emp_act(severity)
