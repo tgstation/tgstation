@@ -9475,7 +9475,7 @@
 "dAk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/wall,/area/research_outpost/atmos)
 "dAl" = (/obj/machinery/portable_atmospherics/canister/carbon_dioxide,/obj/machinery/atmospherics/pipe/manifold/supply/visible,/obj/machinery/light{dir = 8},/turf/simulated/floor/plating,/area/research_outpost/atmos)
 "dAm" = (/obj/machinery/atmospherics/binary/pump{dir = 8},/turf/simulated/floor/plating,/area/research_outpost/atmos)
-"dAn" = (/obj/machinery/atmospherics/pipe/manifold4w/general/visible{_color = "grey"; color = "cyan"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/portable_atmospherics/pump,/turf/simulated/floor/plating,/area/research_outpost/atmos)
+"dAn" = (/obj/machinery/atmospherics/pipe/manifold4w/general/visible{ color = "cyan"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/portable_atmospherics/pump,/turf/simulated/floor/plating,/area/research_outpost/atmos)
 "dAo" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/unsimulated/floor/asteroid,/area/mine/explored)
 "dAp" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/unsimulated/floor/asteroid,/area/mine/explored)
 "dAq" = (/obj/structure/disposaloutlet,/obj/structure/disposalpipe/trunk{dir = 8},/turf/unsimulated/floor/asteroid,/area/mine/explored)
