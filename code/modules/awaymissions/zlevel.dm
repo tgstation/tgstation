@@ -41,16 +41,17 @@
 
 	if(potentialRandomZlevels.len)
 		world << "<span class='danger'>Loading away mission...</span>"
-
 		var/map = pick(potentialRandomZlevels)
+		log_game("Loading away mission [map]")
+
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
 
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
+			for(var/obj/effect/landmark/L in landmarks_list)
+				if (L.name != "awaystart")
+					continue
+				awaydestinations.Add(L)
 
 		world << "<span class='danger'>Away mission loaded.</span>"
 
