@@ -3486,7 +3486,7 @@
 "bpb" = (/obj/structure/stool/bed/chair/comfy/beige,/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/hallway/primary/port)
 "bpc" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/hallway/primary/port)
 "bpd" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/chips,/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/hallway/primary/port)
-"bpe" = (/obj/machinery/vending/coffee,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/hallway/primary/port)
+"bpe" = (/obj/machinery/vending/slurpslurpy_machine,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/hallway/primary/port)
 "bpf" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor/plasteel{icon_state = "neutral"; dir = 8},/area/hallway/primary/port)
 "bpg" = (/obj/structure/disposalpipe/junction{dir = 1; icon_state = "pipe-j2"; tag = "icon-pipe-j1 (WEST)"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor/plasteel{dir = 4; icon_state = "neutralcorner"},/area/hallway/primary/port)
 "bph" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/firealarm{pixel_y = 32},/turf/simulated/floor/plasteel{dir = 1; icon_state = "neutralcorner"},/area/hallway/primary/port)

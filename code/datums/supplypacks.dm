@@ -942,6 +942,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "softdrinks supply crate"
 
+/datum/supply_packs/organic/vending/slurpee
+	name = "Slurpee Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/slurpslurpy_machine,
+					/obj/item/weapon/vending_refill/slurpslurpy_machine,
+					/obj/item/weapon/vending_refill/slurpslurpy_machine)
+	cost = 30
+	containername = "softdrinks supply crate"
+
 /datum/supply_packs/organic/vending/cigarette
 	name = "Cigarette Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/cigarette,
