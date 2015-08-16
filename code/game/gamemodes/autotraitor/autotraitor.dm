@@ -189,6 +189,7 @@
 				for(var/datum/objective/objective in character.mind.objectives)
 					character << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 					obj_count++
+				character << sound('sound/voice/syndicate_intro.ogg')
 			//else
 				//message_admins("New traitor roll failed.  No new traitor.")
 	//else
