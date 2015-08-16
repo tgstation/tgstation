@@ -1,9 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - tweak: Rewrites RCD/RPD/RSF/tile painter code into one to be more moduler & simpler.
-  - tweak: RCD, RSF & tile painter now have an RPD-like UI.
-  - tweak: Setting airlock colour on the RCD is now done through the UI instead of a verb.
-  - tweak: UIs of the RPD and tile painter are now MASSIVELY more responsive.
-  - tweak: The RCD can now make airlocks with custom names and access levels (latter is disabled for engie borgs).
-  - tweak: You can paint ALL insulated pipes now! (colours other than white available)
