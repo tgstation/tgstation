@@ -12,10 +12,10 @@
 			return "it cannot deconstruct reinforced walls!"
 
 		user << "Deconstructing \the [T]..."
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 
 		if(do_after(user, T, 40))
-			if(master.get_energy() < energy_cost)
+			if(master.get_energy(user) < energy_cost)
 				return 1
 
 			playsound(get_turf(master), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -26,7 +26,7 @@
 		var/turf/simulated/floor/T = A
 		user << "Deconstructing \the [T]..."
 		if(do_after(user, T, 50))
-			if(master.get_energy() < energy_cost)
+			if(master.get_energy(user) < energy_cost)
 				return 1
 
 			playsound(get_turf(master), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -37,7 +37,7 @@
 		var/obj/machinery/door/airlock/D = A
 		user << "Deconstructing \the [D]..."
 		if(do_after(user, D, 50))
-			if(master.get_energy() < energy_cost)
+			if(master.get_energy(user) < energy_cost)
 				return 1
 
 			playsound(get_turf(master), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -50,6 +50,8 @@
 	name		= "Build floors"
 	category	= "Construction"
 	energy_cost	= 1
+
+	flags		= RCD_GET_TURF
 
 /datum/rcd_schematic/con_floors/attack(var/atom/A, var/mob/user)
 	if(!(istype(A, /turf/space) && !istype(A, /turf/space/transit)))
@@ -75,7 +77,7 @@
 	user << "Building wall"
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 	if(do_after(user, A, 20))
-		if(master.get_energy() < energy_cost)
+		if(master.get_energy(user) < energy_cost)
 			return 1
 
 		playsound(get_turf(master), 'sound/items/Deconstruct.ogg', 50, 1)
@@ -251,7 +253,7 @@
 	if(!do_after(user, A, 50))
 		return 1
 
-	if(master.get_energy() < energy_cost)
+	if(master.get_energy(user) < energy_cost)
 		return 1
 
 	if(locate(/obj/machinery/door/airlock) in A)

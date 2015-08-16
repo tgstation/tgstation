@@ -134,7 +134,7 @@
 	if(selected.flags & RCD_GET_TURF)	//Get the turf because RCD_GET_TURF is on.
 		A = get_turf(A)
 
-	if(selected.flags ^ RCD_SELF_SANE && get_energy() < selected.energy_cost)	//Handle energy amounts, but only if not SELF_SANE.
+	if(selected.flags ^ RCD_SELF_SANE && get_energy(user) < selected.energy_cost)	//Handle energy amounts, but only if not SELF_SANE.
 		return 1
 
 	busy	= 1	//Busy to prevent switching schematic while it's in use.
@@ -156,7 +156,7 @@
 	if(sparky)
 		spark_system.start()
 
-/obj/item/device/rcd/proc/get_energy()
+/obj/item/device/rcd/proc/get_energy(var/mob/user)
 	return INFINITY
 
 /obj/item/device/rcd/proc/use_energy(var/amount, var/mob/user)
@@ -182,7 +182,7 @@
 
 	R.cell.use(amount * cell_power_per_energy)
 
-/obj/item/device/rcd/borg/get_energy(var/amount, var/mob/user)
+/obj/item/device/rcd/borg/get_energy(var/mob/user)
 	if(!isrobot(user))
 		return 0
 
@@ -191,7 +191,7 @@
 	if(!R.cell)
 		return
 
-	return R.cell.charge * cell_power_per_energy
+	return R.cell.charge / cell_power_per_energy
 
 //Matter based RCDs.
 /obj/item/device/rcd/matter
@@ -227,5 +227,5 @@
 	matter -= amount
 	user << "<span class='notice'>\the [src] currently holds [matter]/[max_matter] matter-units."
 
-/obj/item/device/rcd/matter/get_energy()
+/obj/item/device/rcd/matter/get_energy(var/mob/user)
 	return matter
