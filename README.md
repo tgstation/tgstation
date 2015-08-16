@@ -13,7 +13,7 @@ The more complicated and easier to update method is using git.  You'll need to d
 
     git clone https://gitlab.com/vgstation/vgstation.git
 
-(hint: hold down ctrl and press insert to paste into git bash)
+(Hint: hold down ctrl and press insert to paste into git bash)
 
 This will take a while to download, but it provides an easier method for updating.
 
@@ -71,7 +71,7 @@ When you have done this, you'll need to recompile the code, but then it should w
 
 ### Configuration
 
-For a basic setup, simply copy every file from config-example/ to config/.
+For a basic setup, simply copy every file from config-example/ to config/ and then add yourself as admin via `admins.txt`.
 
 ---
 
