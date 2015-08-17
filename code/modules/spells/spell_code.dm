@@ -101,6 +101,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 		after_cast(targets) //generates the sparks, smoke, target messages etc.
 
 
+
 /spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/cast() called tick#: [world.time]")
 	return
@@ -295,7 +296,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	if(level_max[Sp_TOTAL] <= ( spell_levels[Sp_SPEED] + spell_levels[Sp_POWER] )) //too many levels, can't do it
 		return 0
 
-	if(upgrade_type && upgrade_type in spell_levels && upgrade_type in level_max)
+	if(upgrade_type && (upgrade_type in spell_levels) && (upgrade_type in level_max))
 		if(spell_levels[upgrade_type] >= level_max[upgrade_type])
 			return 0
 

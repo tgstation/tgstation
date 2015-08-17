@@ -79,7 +79,9 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
 	speed = 5
-	small = 1
+
+	size = SIZE_SMALL
+
 	density = 0
 	a_intent = I_HURT
 	stop_automated_movement = 1

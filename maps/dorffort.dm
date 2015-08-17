@@ -93,7 +93,7 @@
 		/obj/item/weapon/melee/defibrillator			= 1,
 		/obj/structure/closet/secure_closet/medical3	= 2,
 		/obj/structure/closet/secure_closet/medical2	= 2,
-		/obj/structure/stool/bed/roller					= 3,
+		/obj/structure/bed/roller					= 3,
 		/obj/item/device/mass_spectrometer/adv			= 1,
 		/obj/item/clothing/glasses/hud/health			= 1,
 	)

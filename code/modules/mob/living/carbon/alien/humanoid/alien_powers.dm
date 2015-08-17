@@ -173,7 +173,7 @@ Doesn't work on other aliens/AI.*/
 			if("resin membrane")
 				new /obj/effect/alien/resin/membrane(loc)
 			if("resin nest")
-				new /obj/structure/stool/bed/nest(loc)
+				new /obj/structure/bed/nest(loc)
 	return
 
 /mob/living/carbon/alien/humanoid/verb/regurgitate()

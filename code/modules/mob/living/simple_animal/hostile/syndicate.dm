@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/syndicate/Die()
 	..()
 	if(corpse)
-		new corpse(loc)
+		corpse = new corpse(loc)
 		corpse.createCorpse()
 	if(weapon1)
 		new weapon1 (get_turf(src))
@@ -149,6 +149,8 @@
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = "syndicate"
+	meat_type = null
+
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0

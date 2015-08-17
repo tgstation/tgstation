@@ -3,7 +3,7 @@
 [Website](http://ss13.pomf.se) - [Code](http://gitlab.com/vgstation/vgstation/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
 
 ---
- 
+
 ### GETTING THE CODE
 The simplest way to obtain the code is using the gitlab .zip feature.
 
@@ -13,7 +13,7 @@ The more complicated and easier to update method is using git.  You'll need to d
 
     git clone https://gitlab.com/vgstation/vgstation.git
 
-(hint: hold down ctrl and press insert to paste into git bash)
+(Hint: hold down ctrl and press insert to paste into git bash)
 
 This will take a while to download, but it provides an easier method for updating.
 
@@ -31,12 +31,12 @@ First-time installation should be fairly straightforward.  First, you'll need BY
 This is a sourcecode-only release, so the next step is to compile the server files.  Open vgstation13.dme by double-clicking it, open the Build menu, and click compile.  This'll take a little while, and if everything's done right you'll get a message like this:
 
     saving vgstation13.dmb (DEBUG mode)
-    
+
     vgstation13.dmb - 0 errors, 0 warnings
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt download or the files extracted wrong, or a code issue on the main repo.  Ask on IRC.
 
-To use the sqlite preferences, rename players2_empty.sqlite to players2.sqlite
+To use the SQLite preferences, rename players2_empty.sqlite to players2.sqlite
 
 Next, copy everything from config-example/ to config/ so you have some default configuration.
 
@@ -46,7 +46,7 @@ You'll also want to edit admins.txt to remove the default admins and add your ow
 
     byondkey - Rank
 
-where the BYOND key must be in lowercase and the admin rank must be properly capitalised.  There are a bunch more admin ranks, but these two should be enough for most servers, assuming you have trustworthy admins.
+where the BYOND key must be in lowercase and the admin rank must be properly capitalized.  There are a bunch more admin ranks, but these two should be enough for most servers, assuming you have trustworthy admins.
 
 Finally, to start the server, run Dream Daemon and enter the path to your compiled vgstation13.dmb file.  Make sure to set the port to the one you  specified in the config.txt, and set the Security box to 'Trusted'.  Then press GO and the server should start up and be ready to join.
 
@@ -71,7 +71,7 @@ When you have done this, you'll need to recompile the code, but then it should w
 
 ### Configuration
 
-For a basic setup, simply copy every file from config-example/ to config/.
+For a basic setup, simply copy every file from config-example/ to config/ and then add yourself as admin via `admins.txt`.
 
 ---
 
@@ -79,7 +79,7 @@ For a basic setup, simply copy every file from config-example/ to config/.
 
 The SQL backend for the library and stats tracking requires a MySQL server.  (Linux servers will need to put libmysql.so into the same directory as vgstation13.dme.)  Your server details go in /config/dbconfig.txt.
 
-We've included a web control panel with some sample data readouts.  It's recommended to install the database through sphinx, which is included and includes some updates.
+The database is automatically installed during server startup, but you need to ensure the database and user are present and have necessary permissions.
 
 ---
 

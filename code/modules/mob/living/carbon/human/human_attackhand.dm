@@ -102,7 +102,7 @@
 				w_uniform.add_fingerprint(M)
 
 			var/obj/item/weapon/grab/G = getFromPool(/obj/item/weapon/grab,M,src)
-			if(buckled)
+			if(locked_to)
 				M << "<span class='notice'>You cannot grab [src], \he is buckled in!</span>"
 			if(!G)	//the grab will delete itself in New if affecting is anchored
 				return

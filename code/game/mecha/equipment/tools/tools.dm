@@ -33,7 +33,7 @@
 	if(!istype(chassis, /obj/mecha/working/ripley)) return
 	var/obj/mecha/working/ripley/R = chassis
 
-	if(istype(target, /obj/structure/stool))
+	if(istype(target, /obj/structure/bed))
 		occupant_message("<span class='warning'>Safety features prevent this action.</span>")
 		return //no picking up rollerbeds
 	var/list/living_in_target = target.search_contents_for(/mob/living)

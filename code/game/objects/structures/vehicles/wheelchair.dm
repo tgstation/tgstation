@@ -1,4 +1,4 @@
-/obj/structure/stool/bed/chair/vehicle/wheelchair
+/obj/structure/bed/chair/vehicle/wheelchair
 	name = "wheelchair"
 	nick = "cripplin' ride"
 	desc = "A chair with fitted wheels. Used by handicapped to make life easier, however it still requires hands to drive."
@@ -13,31 +13,31 @@
 
 	var/image/wheel_overlay
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/New()
-	.=..()
+/obj/structure/bed/chair/vehicle/wheelchair/New()
+	. = ..()
 	wheel_overlay = image("icons/obj/objects.dmi", "[icon_state]_overlay", MOB_LAYER + 0.1)
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/buckle_mob()
-	.=..()
+/obj/structure/bed/chair/vehicle/wheelchair/unlock_atom(var/atom/movable/AM)
+	. = ..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/unbuckle()
-	.=..()
+/obj/structure/bed/chair/vehicle/wheelchair/lock_atom(var/atom/movable/AM)
+	. = ..()
 	update_icon()
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/update_icon()
+/obj/structure/bed/chair/vehicle/wheelchair/update_icon()
 	..()
-	if(buckled_mob)
+	if(occupant)
 		overlays |= wheel_overlay
 	else
 		overlays -= wheel_overlay
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/can_buckle(mob/M, mob/user)
-	if(M != user || !Adjacent(user) || (!ishuman(user) && !isalien(user) && !ismonkey(user)) || user.restrained() || user.stat || user.buckled || destroyed) //Same as vehicle/can_buckle, minus check for user.lying as well as allowing monkey and ayliens
+/obj/structure/bed/chair/vehicle/wheelchair/can_buckle(mob/M, mob/user)
+	if(M != user || !Adjacent(user) || (!ishuman(user) && !isalien(user) && !ismonkey(user)) || user.restrained() || user.stat || user.locked_to || destroyed) //Same as vehicle/can_buckle, minus check for user.lying as well as allowing monkey and ayliens
 		return 0
 	return 1
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/proc/check_hands(var/mob/user)
+/obj/structure/bed/chair/vehicle/wheelchair/proc/check_hands(var/mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/wheelchair/proc/check_hands() called tick#: [world.time]")
 	//Returns a number from 0 to 4 depending on usability of user's hands
 	//Human with no hands gets 0
@@ -82,42 +82,38 @@
 
 	return ( left_hand_exists + right_hand_exists )
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/getMovementDelay()
+/obj/structure/bed/chair/vehicle/wheelchair/getMovementDelay()
 	//Speed is determined by amount of usable hands and whether they're carrying something
-	var/hands = check_hands(buckled_mob) //See check_hands() proc above
+	var/hands = check_hands(occupant) //See check_hands() proc above
 	if(hands <= 0) return 0
 	return movement_delay * (4 / hands)
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/relaymove(var/mob/user, direction)
+/obj/structure/bed/chair/vehicle/wheelchair/relaymove(var/mob/user, direction)
 	if(!check_key(user))
 		user << "<span class='warning'>You need at least one hand to use [src]!</span>"
 		return 0
 	return ..()
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/handle_layer()
+/obj/structure/bed/chair/vehicle/wheelchair/handle_layer()
 	if(dir == NORTH)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/check_key(var/mob/user)
+/obj/structure/bed/chair/vehicle/wheelchair/check_key(var/mob/user)
 	if(check_hands(user))
 		return 1
 	return 0
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/emp_act(severity)
+/obj/structure/bed/chair/vehicle/wheelchair/emp_act(severity)
 	return
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/update_mob()
-	if(buckled_mob)
-		buckled_mob.dir = dir
-		buckled_mob.pixel_x = 0
-		buckled_mob.pixel_y = 3
+/obj/structure/bed/chair/vehicle/wheelchair/update_mob()
+	if(occupant)
+		occupant.pixel_x = 0
+		occupant.pixel_y = 3
 
-/obj/structure/stool/bed/chair/vehicle/wheelchair/die()
-	if(buckled_mob)
-		unbuckle()
-
+/obj/structure/bed/chair/vehicle/wheelchair/die()
 	getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 4)
 	getFromPool(/obj/item/stack/rods, get_turf(src), 2)
 	qdel(src)

@@ -49,6 +49,8 @@
 	for(var/mob/living/player in player_list)
 		if(player.stat != DEAD)
 			var/turf/T = get_turf(player)
+			if(!T) continue
+
 			if(istype(T.loc, /area/shuttle/escape/centcom) || istype(T.loc, /area/shuttle/escape_pod1/centcom) || istype(T.loc, /area/shuttle/escape_pod2/centcom) || istype(T.loc, /area/shuttle/escape_pod3/centcom) || istype(T.loc, /area/shuttle/escape_pod5/centcom))
 				score["escapees"]++
 //					player.unlock_medal("100M Dash", 1)
@@ -60,11 +62,11 @@
 				var/dmgscore = 0
 
 
-				for(var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
+				for(var/obj/item/weapon/card/id/C1 in get_contents_in_object(player, /obj/item/weapon/card/id))
 					cashscore += C1.GetBalance()
 
-				for(var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
-					cashscore += C2.worth
+				for(var/obj/item/weapon/spacecash/C2 in get_contents_in_object(player, /obj/item/weapon/spacecash))
+					cashscore += (C2.amount * C2.worth)
 
 //					for(var/datum/data/record/Ba in data_core.bank)
 //						if(Ba.fields["name"] == E.real_name)
@@ -180,11 +182,11 @@
 
 	//Bonus Modifiers
 	//var/traitorwins = score["traitorswon"]
-	var/deathpoints = score["deadcrew"] * 100 //Human beans aren't free
-	var/siliconpoints = score["deadsilicon"] * 250 //Silicons certainly aren't either
+	var/deathpoints = score["deadcrew"] * 250 //Human beans aren't free
+	var/siliconpoints = score["deadsilicon"] * 500 //Silicons certainly aren't either
 	//var/researchpoints = score["researchdone"] * 20 //One discovered design is 20 points. You'll usually find hundreds
 	var/eventpoints = score["eventsendured"] * 200 //Events fine every 10 to 15 and are uncommon
-	var/escapoints = score["escapees"] * 50 //Two rescued human beans are worth a dead one
+	var/escapoints = score["escapees"] * 100 //Two rescued human beans are worth a dead one
 	var/harvests = score["stuffharvested"] * 1 //One harvest is one product. So 5 wheat is 5 points
 	//var/shipping = score["stuffshipped"] * 5 //Does not work currently
 	var/mining = score["oremined"] * 1 //Not actually counted at mining, but at processing. One ore smelted is one point
@@ -395,14 +397,14 @@
 	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"] * 1] Points)<BR>
 	<B>Ore Smelted:</B> [score["oremined"]] ([score["oremined"] * 1] Points)<BR>
 	<B>Meals Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
-	<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 50] Points)<BR>
+	<B>Shuttle Escapees:</B> [score["escapees"]] ([score["escapees"] * 100] Points)<BR>
 	<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 200] Points)<BR>
 	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
-	<B>Ultra-Clean Station:</B> [score["messbonus"] ? "Yes" : "No"] ([score["messbonus"] * 5000] Points)<BR><BR>
+	<B>Ultra-Clean Station:</B> [score["messbonus"] ? "Yes" : "No"] ([score["messbonus"] * 10000] Points)<BR><BR>
 
 	<U>THE BAD:</U><BR>
-	<B>Dead Crewmen:</B> [score["deadcrew"]] (-[score["deadcrew"] * 100] Points)<BR>
-	<B>Destroyed Silicons:</B> [score["deadsilicon"]] (-[score["deadsilicon"] * 250] Points)<BR>
+	<B>Dead Crewmen:</B> [score["deadcrew"]] (-[score["deadcrew"] * 250] Points)<BR>
+	<B>Destroyed Silicons:</B> [score["deadsilicon"]] (-[score["deadsilicon"] * 500] Points)<BR>
 	<B>AIs Destroyed:</B> [score["deadaipenalty"]] (-[score["deadaipenalty"] * 1000] Points)<BR>
 	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
 	<B>Trash on Station:</B> [score["litter"]] (-[score["litter"]] Points)<BR>

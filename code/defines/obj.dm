@@ -319,6 +319,25 @@ var/global/list/PDA_Manifest = list()
 	desc = "You can't resist."
 	// name = ""
 
+/obj/effect/sleeping
+	var/sleeptime
+	icon_state = "empty"
+	name = "Sleepy time"
+	var/datum/mind/owner
+
+/obj/effect/sleeping/New(loc, ourtime, mind)
+	..()
+	sleeptime = ourtime
+	owner = mind
+/obj/effect/sleeping/Crossed(atom/movable/A)
+	if(sleeptime > world.time)
+		if(ismob(A))
+			var/mob/living/L = A
+			if(L.mind != owner)
+				if(!L.stat) L.playsound_local(src, 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
+				L.Paralyse(round(((sleeptime - world.time)/10)/2, 1))
+
+
 /obj/effect/spawner
 	name = "object spawner"
 

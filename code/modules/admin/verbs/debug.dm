@@ -1483,7 +1483,7 @@ client/proc/delete_all_adminbus()
 	if(alert(usr, "Delete every single Adminbus in the game world?", "Delete Adminbus", "Yes", "No") != "Yes")
 		return
 
-	for(var/obj/structure/stool/bed/chair/vehicle/adminbus/AB in world)
+	for(var/obj/structure/bed/chair/vehicle/adminbus/AB in world)
 		AB.Adminbus_Deletion()
 
 client/proc/delete_all_bomberman()

@@ -24,6 +24,33 @@
 		static_overlays = null
 	. = ..()
 
+/mob/living/examine(mob/user) //Show the mob's size and whether it's been butchered
+	var/size
+	switch(src.size)
+		if(SIZE_TINY)
+			size = "tiny"
+		if(SIZE_SMALL)
+			size = "small"
+		if(SIZE_NORMAL)
+			size = "average in size"
+		if(SIZE_BIG)
+			size = "big"
+		if(SIZE_HUGE)
+			size = "huge"
+
+	var/pronoun = "it is"
+	if(src.gender == FEMALE)
+		pronoun = "she is"
+	else if(src.gender == MALE)
+		pronoun = "he is"
+	else if(src.gender == PLURAL)
+		pronoun = "they are"
+
+	var/butchery = ""
+	if(src.meat_taken > 0)
+		butchery = " [capitalize(pronoun)] partially butchered."
+	..(user, " [capitalize(pronoun)] [size].[butchery]")
+
 /mob/living/Life()
 	..()
 	if (flags & INVULNERABLE)
@@ -428,7 +455,7 @@ Thanks.
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/revive() called tick#: [world.time]")
 	rejuvenate(animation)
 	/*
-	buckled = initial(src.buckled)
+	locked_to = initial(src.locked_to)
 	*/
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -479,9 +506,9 @@ Thanks.
 	ExtinguishMob()
 	fire_stacks = 0
 	/*
-	if(buckled)
-		buckled.unbuckle()
-	buckled = initial(src.buckled)
+	if(locked_to)
+		locked_to.unbuckle()
+	locked_to = initial(src.locked_to)
 	*/
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
@@ -567,9 +594,9 @@ Thanks.
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
-		if (!buckled.anchored)
-			return buckled.Move(newloc, direct)
+	if (locked_to && locked_to.loc != newloc)
+		if (!locked_to.anchored)
+			return locked_to.Move(newloc, direct)
 		else
 			return 0
 
@@ -726,7 +753,8 @@ Thanks.
 
 
 	//unbuckling yourself
-	if(L.buckled && L.special_delayer.blocked())
+	if(L.locked_to && L.special_delayer.blocked() && istype(L.locked_to, /obj/structure/bed))
+		var/obj/structure/bed/B = L.locked_to
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			if(C.handcuffed)
@@ -736,15 +764,15 @@ Thanks.
 								  "<span class='warning'>You attempt to unbuckle yourself. (This will take around two minutes and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(usr, usr, 1200))
-						if(!C.buckled)
+						if(!C.locked_to)
 							return
 						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>",
 										  "<span class='notice'>You successfully unbuckle yourself.</span>")
-						C.buckled.manual_unbuckle(C)
+						B.manual_unbuckle(C)
 					else
 						C << "<span class='warning'>Your unbuckling attempt was interrupted.</span>"
 		else
-			L.buckled.manual_unbuckle(L)
+			B.manual_unbuckle(L)
 
 	//Breaking out of a locker?
 	if(src.loc && (istype(src.loc, /obj/structure/closet)))
@@ -828,7 +856,7 @@ Thanks.
 								   "<span class='warning'>You attempt to break your handcuffs. (This will take around five seconds and you will need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM, CM, 50))
-						if(!CM.handcuffed || CM.buckled)
+						if(!CM.handcuffed || CM.locked_to)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>",
 										   "<span class='notice'>You successful break your handcuffs.</span>")
@@ -849,7 +877,7 @@ Thanks.
 								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM,CM, breakouttime))
-						if(!CM.handcuffed || CM.buckled)
+						if(!CM.handcuffed || CM.locked_to)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
 										   "<span class='notice'>You successful remove [HC].</span>")
@@ -866,7 +894,7 @@ Thanks.
 								   "<span class='warning'>You attempt to break your legcuffs. (This will take around five seconds and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM, CM, 50))
-						if(!CM.legcuffed || CM.buckled)
+						if(!CM.legcuffed || CM.locked_to)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>",
 										   "<span class='notice'>You successfully break your legcuffs.</span>")
@@ -885,7 +913,7 @@ Thanks.
 								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
 				spawn(0)
 					if(do_after(CM, CM, breakouttime))
-						if(!CM.legcuffed || CM.buckled)
+						if(!CM.legcuffed || CM.locked_to)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
 										   "<span class='notice'>You successful remove [HC].</span>")
@@ -1084,3 +1112,20 @@ default behaviour is:
 
 /mob/living/is_open_container()
 	return 1
+
+/mob/living/proc/drop_meat(location)
+	if(!meat_type) return 0
+
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/M = new meat_type(location)
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/animal/A = M
+
+	if(istype(A))
+		var/mob/living/simple_animal/source_animal = src
+		if(istype(source_animal) && source_animal.species)
+			var/mob/living/specimen = source_animal.species
+			A.name = "[initial(specimen.name)] meat"
+			A.animal_name = initial(specimen.name)
+		else
+			A.name = "[initial(src.name)] meat"
+			A.animal_name = initial(src.name)
+	return M

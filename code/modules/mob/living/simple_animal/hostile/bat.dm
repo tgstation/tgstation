@@ -8,7 +8,6 @@
 	icon_gib = "bat_dead"
 	speak_chance = 0
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
@@ -34,6 +33,7 @@
 	minbodytemp = 0
 
 	environment_smash = 1
+	size = SIZE_TINY
 
 	faction = "scarybat"
 	var/mob/living/owner

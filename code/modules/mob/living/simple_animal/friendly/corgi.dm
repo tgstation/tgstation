@@ -2,6 +2,7 @@
 /mob/living/simple_animal/corgi
 	name = "\improper corgi"
 	real_name = "corgi"
+
 	desc = "It's a corgi."
 	icon_state = "corgi"
 	icon_living = "corgi"
@@ -15,14 +16,19 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	meat_amount = 3
+
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
+
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	see_in_dark = 5
+
 	childtype = /mob/living/simple_animal/corgi/puppy
 	species = /mob/living/simple_animal/corgi
+	can_breed = 1
+	size = SIZE_SMALL
+
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
@@ -367,7 +373,7 @@
 
 /mob/living/simple_animal/corgi/proc/spinaroo(var/list/emotes = list("dances around","chases its tail"))
     //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/corgi/proc/spinaroo() called tick#: [world.time]")
-    if(!stat && !resting && !buckled)
+    if(!stat && !resting && !locked_to)
         if(prob(1))
             if (ckey == null)
                 emote(pick(emotes))
@@ -395,7 +401,7 @@
 	spinaroo(list("dances around","chases its tail"))
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled && (ckey == null))
+	if(!stat && !resting && !locked_to && (ckey == null))
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -480,6 +486,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	size = SIZE_TINY
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/corgi/puppy/Topic(href, href_list)
@@ -513,8 +520,6 @@
 
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
-
-	make_babies()
 	spinaroo(list("dances around","chases her tail"))
 
 /mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)

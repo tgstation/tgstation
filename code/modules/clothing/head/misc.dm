@@ -245,13 +245,17 @@
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt
-	name = "bear pelt hat"
-	desc = "Fuzzy."
+	name = "cheap bear pelt hat"
+	desc = "Not as fuzzy as the real thing."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
 	flags = FPRINT
 	flags_inv = HIDEHEADHAIR
 	siemens_coefficient = 2.0
+
+/obj/item/clothing/head/bearpelt/real
+	name = "bear pelt hat"
+	desc = "Now that's what I call fuzzy."
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -311,13 +315,13 @@
 	flags_inv = HIDEEARS|HIDEHEADHAIR
 
 /obj/item/clothing/head/lordadmiralhat
-	name = "Lord Admiral's Hat"
+	name = "lord admiral's hat"
 	desc = "A hat suitable for any man of high and exalted rank."
 	icon_state = "lordadmiralhat"
 	item_state = "lordadmiralhat"
 
 /obj/item/clothing/head/jesterhat
-	name = "Jester Hat"
+	name = "jester hat"
 	desc = "A hat fit for a fool."
 	icon_state = "jesterhat"
 	item_state = "jesterhat"
@@ -325,21 +329,21 @@
 	flags_inv = HIDEEARS|HIDEHEADHAIR
 
 /obj/item/clothing/head/libertyhat
-	name = "Liberty Top Hat"
+	name = "liberty top hat"
 	desc = "Show everyone just how patriotic you are."
 	icon_state = "libertyhat"
 	item_state = "libertyhat"
 	flags = FPRINT
 
 /obj/item/clothing/head/maidhat
-	name = "Maid Headband"
+	name = "maid headband"
 	desc = "Do these even do anything besides look cute?"
 	icon_state = "maidhat"
 	item_state = "maidhat"
 	flags = FPRINT
 
 /obj/item/clothing/head/maidhat
-	name = "Maid Headband"
+	name = "maid headband"
 	desc = "Do these even do anything besides look cute?"
 	icon_state = "maidhat"
 	item_state = "maidhat"
@@ -350,3 +354,9 @@
 	desc = "A funny hat worn by extremely boring people."
 	icon_state = "mitre"
 	item_state = "mitre"
+
+/obj/item/clothing/head/clownpiece
+	name = "Clownpiece's jester hat"
+	desc = "A purple polka-dotted jester's hat with yellow pompons."
+	icon_state = "clownpiece"
+	item_state = "clownpiece"

@@ -254,7 +254,7 @@
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
-	if(!istype(L) || L.buckled)
+	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
 		user << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
@@ -360,7 +360,7 @@
 	if(!istype(W, /obj/item/weapon/grab))
 		return ..()
 	var/obj/item/weapon/grab/G = W
-	if(!(ismob(G.affecting)) || G.affecting.buckled) return
+	if(!(ismob(G.affecting)) || G.affecting.locked_to) return
 	if(src.occupant)
 		user << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 		return
@@ -373,7 +373,7 @@
 	visible_message("[user] places [G.affecting.name] into the sleeper.", 3)
 
 	var/mob/M = G.affecting
-	if(!isliving(M) || M.buckled)
+	if(!isliving(M) || M.locked_to)
 		return
 	M.forceMove(src)
 	M.reset_view()
@@ -527,14 +527,14 @@
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return
-	if(usr.buckled)
+	if(usr.locked_to)
 		return
 	visible_message("[usr] starts climbing into the sleeper.", 3)
 	if(do_after(usr, src, 20))
 		if(src.occupant)
 			usr << "<span class='notice'><B>The sleeper is already occupied!</B></span>"
 			return
-		if(usr.buckled)
+		if(usr.locked_to)
 			return
 		usr.stop_pulling()
 		usr.loc = src

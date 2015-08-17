@@ -156,7 +156,7 @@
 	in_chamber.OnFired()
 	in_chamber.yo = targloc.y - curloc.y
 	in_chamber.xo = targloc.x - curloc.x
-	in_chamber.inaccurate = (istype(user.buckled, /obj/structure/stool/bed/chair/vehicle))
+	in_chamber.inaccurate = (istype(user.locked_to, /obj/structure/bed/chair/vehicle))
 
 	if(params)
 		var/list/mouse_control = params2list(params)

@@ -29,7 +29,7 @@ var/list/directional = list(
 	/obj/machinery/atmospherics/pipe,
 	/obj/structure/window,
 	/obj/structure/window/full,
-	/obj/structure/stool/bed/chair,
+	/obj/structure/bed/chair,
 	/obj/structure/table,
 	/obj/machinery/light,
 	/obj/machinery/door/airlock/multi_tile,

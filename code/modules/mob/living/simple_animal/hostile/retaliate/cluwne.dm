@@ -86,7 +86,7 @@
 	if(client || stat || stat==DEAD)
 		return //Lets not force players or dead/incap cluwnes to move
 	..()
-	if(!stat && !resting && !buckled)
+	if(!stat && !resting && !locked_to)
 		if(health > maxHealth)
 			health = maxHealth
 		if(health <= 0)
@@ -94,7 +94,7 @@
 
 
 		if(!ckey && !stop_automated_movement)
-			if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+			if(isturf(src.loc) && !resting && !locked_to && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 				turns_since_move++
 				if(turns_since_move >= turns_per_move)
 					if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled

@@ -483,7 +483,7 @@
 
 /obj/item/toy/waterflower/afterattack(atom/A as mob|obj, mob/user as mob)
 
-	if (istype(A, /obj/item/weapon/storage/backpack ) || istype(A, /obj/structure/stool/bed/chair/vehicle/clowncart))
+	if (istype(A, /obj/item/weapon/storage/backpack ) || istype(A, /obj/structure/bed/chair/vehicle/clowncart))
 		return
 
 	else if (locate (/obj/structure/table, src.loc))

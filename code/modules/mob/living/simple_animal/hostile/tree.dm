@@ -6,9 +6,10 @@
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
+
+	size = SIZE_HUGE
 	speak_chance = 0
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/carpmeat
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"

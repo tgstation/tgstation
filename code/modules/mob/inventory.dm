@@ -148,7 +148,7 @@
 	if(!to_drop) //if we're not told to drop something specific
 		to_drop = get_active_hand() //drop what we're currently holding
 
-	if(!to_drop) //still nothing to drop?
+	if(!istype(to_drop)) //still nothing to drop?
 		return 0 //bail
 
 	if(!Target)

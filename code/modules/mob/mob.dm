@@ -16,6 +16,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 /mob/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	if(on_uattack) on_uattack.holder = null
 	unset_machine()
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -182,6 +183,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 		living_mob_list += src
 
 	store_position()
+	on_uattack = new("owner"=src)
 
 /mob/proc/is_muzzled()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/is_muzzled() called tick#: [world.time]")
@@ -885,8 +887,8 @@ var/list/slot_equipment_priority = list( \
 
 	if (ismob(AM))
 		var/mob/M = AM
-		if (M.buckled) //If the mob is buckled on something, let's just try to pull the thing they're buckled to for convenience's sake.
-			P = M.buckled
+		if (M.locked_to) //If the mob is locked_to on something, let's just try to pull the thing they're locked_to to for convenience's sake.
+			P = M.locked_to
 
 	if (!( P.anchored ))
 		P.add_fingerprint(src)
@@ -1439,13 +1441,11 @@ var/list/slot_equipment_priority = list( \
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 /mob/proc/update_canmove()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_canmove() called tick#: [world.time]")
-	if(buckled)
-		anchored = 1
+	if(locked_to)
 		canmove = 0
-		if( istype(buckled,/obj/structure/stool/bed/chair) )
-			lying = 0
-		else
+		if(locked_to.locked_should_lie)
 			lying = 1
+
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		stop_pulling()
 		lying = 1

@@ -41,6 +41,9 @@
 	// holy water
 	var/holy = 0
 
+	// wizard sleep spell probably better way to do this
+	var/sleeping = 0
+
 /*
  * Technically obsoleted by base_turf
 	//For building on the asteroid.
@@ -167,7 +170,6 @@
 	if(ismob(Obj))
 		if(Obj.areaMaster && Obj.areaMaster.has_gravity == 0)
 			inertial_drift(Obj)
-
 	/*
 		if(Obj.flags & NOGRAV)
 			inertial_drift(Obj)
@@ -227,8 +229,8 @@
 				if(SP.inertia_dir)
 					SP.Move(get_step(SP, SP.inertia_dir), SP.inertia_dir)
 					return
-	if(istype(A, /obj/structure/stool/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
-		var/obj/structure/stool/bed/chair/vehicle/JC = A //A bomb!
+	if(istype(A, /obj/structure/bed/chair/vehicle/) && src.x > 2 && src.x < (world.maxx - 1) && src.y > 2 && src.y < (world.maxy-1))
+		var/obj/structure/bed/chair/vehicle/JC = A //A bomb!
 		if(JC.Process_Spacemove(1))
 			JC.inertia_dir = 0
 			return

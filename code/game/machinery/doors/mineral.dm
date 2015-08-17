@@ -53,7 +53,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/mineral/proc/TryToSwitchState() called tick#: [world.time]")
 	if(operating) return
 
-	if(!user.restrained() && !user.small)
+	if(!user.restrained() && (user.size > SIZE_TINY))
 		add_fingerprint(user)
 		SwitchState()
 	return

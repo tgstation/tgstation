@@ -45,7 +45,7 @@
 			//del(L)
 		if(L)
 			playsound(get_turf(src), 'sound/effects/eleczap.ogg', 75, 1)
-			L.tang = L.adjustAngle(get_angle(U,T))
+			L.tang = adjustAngle(get_angle(U,T))
 			L.icon = midicon
 			L.icon_state = "[L.tang]"
 			L.firer = user

@@ -16,7 +16,11 @@ var/global/list/processing_objects = list()
 	if(processing_objects)
 		for(var/o in processing_objects)
 			if(o)
-				o:process()
+				try
+					o:process()
+				catch(var/exception/e)
+					world.Error(e)
+					continue
 				scheck()
 				continue
 			processing_objects -= o

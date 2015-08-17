@@ -348,6 +348,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 
+	size = SIZE_BIG
+
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
 	playsound(loc, 'sound/weapons/whip.ogg', 50, 1, -1)
@@ -399,11 +401,6 @@
 
 	if(isliving(O))
 		Trip()
-
-/mob/living/simple_animal/hostile/asteroid/goliath/Die()
-	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
-	G.layer = 4.1
-	..()
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"

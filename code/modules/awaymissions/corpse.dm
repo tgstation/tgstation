@@ -270,7 +270,7 @@
 	name = "Russian"
 	corpseuniform = /obj/item/clothing/under/soviet
 	corpseshoes = /obj/item/clothing/shoes/jackboots
-	corpsehelmet = /obj/item/clothing/head/bearpelt
+	corpsehelmet = /obj/item/clothing/head/bearpelt/real
 
 /obj/effect/landmark/corpse/russian/ranged
 	corpsehelmet = /obj/item/clothing/head/ushanka

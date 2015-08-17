@@ -372,6 +372,6 @@
 //Robots on fire
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
+	if(paralysis || stunned || weakened || locked_to || lockcharge) canmove = 0
 	else canmove = 1
 	return canmove

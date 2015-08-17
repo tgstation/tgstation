@@ -579,7 +579,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/corgikabob,
 		/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
 		/obj/item/weapon/reagent_containers/food/snacks/donut,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey,
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin,
 		/obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie,
 		/obj/item/weapon/reagent_containers/food/snacks/soylenviridians,

@@ -12,8 +12,6 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 4
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -22,6 +20,8 @@
 	health = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
+	size = SIZE_BIG
+
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
@@ -98,13 +98,12 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 6
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	attacktext = "kicks"
 	health = 50
+	size = SIZE_BIG
 	var/datum/reagents/udder = null
 
 /mob/living/simple_animal/cow/New()
@@ -160,7 +159,7 @@
 	speak_chance = 2
 	turns_per_move = 2
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
-	meat_amount = 1
+	species = /mob/living/simple_animal/chicken
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -168,7 +167,7 @@
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
-	small = 1
+	size = SIZE_TINY
 
 /mob/living/simple_animal/chick/New()
 	..()
@@ -185,9 +184,6 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-var/const/MAX_CHICKENS = 50
-var/global/chicken_count = 0
-
 /mob/living/simple_animal/chicken
 	name = "chicken"
 	desc = "Hopefully the eggs are good this season."
@@ -201,7 +197,6 @@ var/global/chicken_count = 0
 	speak_chance = 2
 	turns_per_move = 3
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
-	meat_amount = 2
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -210,7 +205,7 @@ var/global/chicken_count = 0
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
-	small = 1
+	size = SIZE_TINY
 
 /mob/living/simple_animal/chicken/New()
 	if(prob(5))
@@ -225,11 +220,6 @@ var/global/chicken_count = 0
 	..() //call this after icons to generate the proper static overlays
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
-	chicken_count += 1
-
-/mob/living/simple_animal/chicken/Die()
-	..()
-	chicken_count -= 1
 
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
@@ -257,7 +247,7 @@ var/global/chicken_count = 0
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		if(chicken_count < MAX_CHICKENS && prob(10))
+		if(animal_count[src.type] < ANIMAL_CHILD_CAP && prob(10))
 			processing_objects.Add(E)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/egg/var/amount_grown = 0

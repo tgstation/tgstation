@@ -161,7 +161,7 @@
 			user << "<span class='warning'>You do not have the means to do this!</span>"
 			return
 	var/mob/living/L = O
-	if(!istype(L) || L.buckled)
+	if(!istype(L) || L.locked_to)
 		return
 	if(L.abiotic())
 		user << "<span class='danger'>Subject cannot have abiotic items on.</span>"
@@ -228,7 +228,7 @@
 		if (G.affecting.abiotic())
 			user << "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>"
 			return
-		if(G.affecting.buckled)
+		if(G.affecting.locked_to)
 			return
 		put_in(G.affecting)
 		src.add_fingerprint(user)

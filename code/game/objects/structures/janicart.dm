@@ -9,7 +9,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
 
-/obj/structure/stool/bed/chair/vehicle/janicart
+/obj/structure/bed/chair/vehicle/janicart
 	name = "janicart"
 	icon_state = "pussywagon"
 	nick = "pimpin' ride"
@@ -20,11 +20,11 @@
 
 	var/upgraded = 0
 
-/obj/structure/stool/bed/chair/vehicle/janicart/New()
+/obj/structure/bed/chair/vehicle/janicart/New()
 	. = ..()
 	create_reagents(100)
 
-/obj/structure/stool/bed/chair/vehicle/janicart/examine(mob/user)
+/obj/structure/bed/chair/vehicle/janicart/examine(mob/user)
 	..()
 	if(in_range(src, user) && reagents.has_reagent("lube"))
 		user << "<span class='warning'> Something is very off about this water.</span>"
@@ -40,11 +40,11 @@
 	if(mybag)
 		user << "\A [mybag] is hanging on the pimpin' ride."
 
-/obj/structure/stool/bed/chair/vehicle/janicart/attackby(obj/item/W, mob/user)
+/obj/structure/bed/chair/vehicle/janicart/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/mecha_parts/janicart_upgrade) && !upgraded && !destroyed)
 		user.drop_item(W)
-		del(W)
+		qdel(W)
 		user << "<span class='notice'>You upgrade the Pussy Wagon.</span>"
 		upgraded = 1
 		name = "upgraded janicart"
@@ -54,7 +54,7 @@
 		user.drop_item(W, src)
 		mybag = W
 
-/obj/structure/stool/bed/chair/vehicle/janicart/mop_act(obj/item/weapon/mop/M, mob/user)
+/obj/structure/bed/chair/vehicle/janicart/mop_act(obj/item/weapon/mop/M, mob/user)
 	if(istype(M))
 		if(reagents.total_volume >= 2)
 			reagents.trans_to(M, 3)
@@ -64,21 +64,23 @@
 			user << "<span class='notice'>This pimpin' ride is out of water!</span>"
 	return 1
 
-/obj/structure/stool/bed/chair/vehicle/janicart/attack_hand(mob/user)
+/obj/structure/bed/chair/vehicle/janicart/attack_hand(mob/user)
 	if(mybag)
-		if(buckled_mob==user)
+		if(occupant && occupant == user)
 			switch(alert("Choose an action","Janicart","Get off the ride","Remove the bag","Cancel"))
 				if("Get off the ride")
 					return ..()
+
 				if("Cancel")
 					return
-		mybag.loc = get_turf(user)
+
+		mybag.forceMove(get_turf(user))
 		user.put_in_hands(mybag)
 		mybag = null
 	else
 		..()
 
-/obj/structure/stool/bed/chair/vehicle/janicart/Move()
+/obj/structure/bed/chair/vehicle/janicart/Move()
 	..()
 	if(upgraded)
 		var/turf/tile = loc

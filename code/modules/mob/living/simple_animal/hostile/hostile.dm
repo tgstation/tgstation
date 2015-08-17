@@ -325,8 +325,8 @@
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/proc/EscapeConfinement() called tick#: [world.time]")
-	if(buckled)
-		buckled.attack_animal(src)
+	if(locked_to)
+		locked_to.attack_animal(src)
 	if(!isturf(src.loc) && src.loc != null)//Did someone put us in something?
 		var/atom/A = src.loc
 		A.attack_animal(src)//Bang on it till we get out

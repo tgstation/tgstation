@@ -1,3 +1,4 @@
+
 /mob
 	density = 1
 	layer = 4.0
@@ -103,7 +104,14 @@
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/small = 0
+
+	var/size = SIZE_NORMAL
+	//SIZE_TINY for tiny animals like mice and borers
+	//SIZE_SMALL for monkeys dionae etc
+	//SIZE_NORMAL for humans and most of the other mobs
+	//SIZE_BIG for big guys
+	//SIZE_HUGE for even bigger guys
+
 	var/list/callOnFace = list()
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
@@ -136,7 +144,6 @@
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/structure/stool/bed/buckled = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/back = null//Human/Monkey
@@ -178,6 +185,7 @@
 	var/voice_name = "unidentifiable voice"
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
+	var/move_on_shuttle = 1 // Can move on the shuttle.
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
@@ -259,6 +267,7 @@
 
 	var/list/languages[0]
 	var/stat_fucked = 0
+	var/event/on_uattack
 
 /mob/resetVariables()
 	..("callOnFace", "pinned", "embedded", "abilities", "grabbed_by", "requests", "mapobjs", "mutations", "spell_list", "viruses", "resistances", "radar_blips", "active_genes", "attack_log", "speak_emote", args)

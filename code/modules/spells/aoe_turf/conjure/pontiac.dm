@@ -12,7 +12,7 @@
 	invocation_type = SpI_SHOUT
 	range = 0
 
-	summon_type = list(/obj/structure/stool/bed/chair/vehicle/wizmobile)
+	summon_type = list(/obj/structure/bed/chair/vehicle/wizmobile)
 	duration = 0
 
 	hud_state = "wiz_mobile"

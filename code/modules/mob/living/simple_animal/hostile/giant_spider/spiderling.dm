@@ -18,6 +18,8 @@
 	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 
+	butchering_drops = null
+
 	vision_range = 3
 	aggro_vision_range = 9
 	idle_vision_range = 3
@@ -30,6 +32,7 @@
 	melee_damage_upper = 0
 	attacktext = "barrels into"
 	a_intent = I_HELP
+	size = SIZE_TINY
 	//throw_message = "sinks in slowly, before being pushed out of "
 	//status_flags = CANPUSH
 	search_objects = 0

@@ -102,12 +102,12 @@ proc/move_mining_shuttle()
 		for(var/mob/M in toArea)
 			if(M.client)
 				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 3, 1) // buckled, not a lot of shaking
+					if(M.locked_to)
+						shake_camera(M, 3, 1) // locked_to, not a lot of shaking
 					else
-						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
+						shake_camera(M, 10, 1) // unlocked_to, HOLY SHIT SHAKE THE ROOM
 			if(istype(M, /mob/living/carbon))
-				if(!M.buckled)
+				if(!M.locked_to)
 					M.Weaken(3)
 
 		mining_shuttle_moving = 0
@@ -182,6 +182,7 @@ proc/move_mining_shuttle()
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
+	sharpness = 0.6
 	starting_materials = list(MAT_IRON = 3750) //one sheet, but where can you make them?
 	w_type = RECYK_METAL
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
@@ -232,6 +233,7 @@ proc/move_mining_shuttle()
 	damtype = "fire"
 	heat_production = 3800
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	sharpness = 1.0
 	origin_tech = "materials=4;plasmatech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	diggables = DIG_ROCKS | DIG_WALLS
@@ -243,6 +245,7 @@ proc/move_mining_shuttle()
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 10
+	sharpness = 1.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 

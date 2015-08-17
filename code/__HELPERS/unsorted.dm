@@ -1146,7 +1146,7 @@ var/global/list/common_tools = list(
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/can_operate() called tick#: [world.time]")
 	return (ishuman(M) && M.lying && \
 	locate(/obj/machinery/optable, M.loc) || \
-	(locate(/obj/structure/stool/bed/roller, M.loc) && prob(75)) || \
+	(locate(/obj/structure/bed/roller, M.loc) && prob(75)) || \
 	(locate(/obj/structure/table/, M.loc) && prob(66)))
 
 /proc/reverse_direction(var/dir)
@@ -1306,8 +1306,33 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	var/z
 	if(istype(A, /atom/movable))
 		var/turf/T = get_turf(A)
+		if(!T)
+			return null
 		z = T.z
 	else
 		z = A.z
 
 	. = map.zLevels[z]
+
+/proc/adjustAngle(angle)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjustAngle() called tick#: [world.time]")
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
+	if(!angle)
+		angle = 1
+	/*if(angle < 0)
+		//angle = (round(abs(get_angle(A, user))) + 45) - 90
+		angle = round(angle) + 45 + 180
+	else
+		angle = round(angle) + 45*/
+	return angle
+
+/proc/print_runtime(exception/e)
+	world.log << "[time_stamp()] Runtime detected\n[e] at [e.file]:[e.line]\n [e.desc]"
+
+/world/Error(exception/e)
+	print_runtime(e)
+	..()

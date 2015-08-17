@@ -72,7 +72,6 @@
 /mob/new_player/Stat()
 	..()
 
-
 	if(statpanel("Status") && ticker)
 		if (ticker.current_state != GAME_STATE_PREGAME)
 			stat(null, "Station Time: [worldtime2text()]")
@@ -83,12 +82,15 @@
 		else
 			stat("Game Mode:", "[master_mode]")
 
-		if((ticker.current_state == GAME_STATE_PREGAME) && going)
-			stat("Time To Start:", (round(ticker.pregame_timeleft - world.timeofday) / 10)) //rounding because people freak out at decimals i guess
-		if((ticker.current_state == GAME_STATE_PREGAME) && !going)
-			stat("Time To Start:", "DELAYED")
+		if(master_controller.initialized)
+			if((ticker.current_state == GAME_STATE_PREGAME) && going)
+				stat("Time To Start:", (round(ticker.pregame_timeleft - world.timeofday) / 10)) //rounding because people freak out at decimals i guess
+			if((ticker.current_state == GAME_STATE_PREGAME) && !going)
+				stat("Time To Start:", "DELAYED")
+		else
+			stat("Time To Start:", "LOADING...")
 
-		if(ticker.current_state == GAME_STATE_PREGAME)
+		if(master_controller.initialized && ticker.current_state == GAME_STATE_PREGAME)
 			stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
 			totalPlayers = 0
 			totalPlayersReady = 0
@@ -346,7 +348,7 @@
 	var/datum/organ/external/right_leg = character.get_organ("r_foot")
 
 	if( (!left_leg || left_leg.status & ORGAN_DESTROYED) && (!right_leg || right_leg.status & ORGAN_DESTROYED) ) //If the character is missing both of his feet
-		var/obj/structure/stool/bed/chair/vehicle/wheelchair/W = new(character.loc)
+		var/obj/structure/bed/chair/vehicle/wheelchair/W = new(character.loc)
 		W.buckle_mob(character,character)
 	character.store_position()
 

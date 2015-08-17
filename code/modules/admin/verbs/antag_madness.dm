@@ -72,7 +72,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 
 	feedback_add_details("admin_verb","AM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/obj/structure/stool/bed/chair/vehicle/adminbus/proc/antag_madness_adminbus(var/mob/M)
+/obj/structure/bed/chair/vehicle/adminbus/proc/antag_madness_adminbus(var/mob/M)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/adminbus/proc/antag_madness_adminbus() called tick#: [world.time]")
 	if(!M.mind)
 		return

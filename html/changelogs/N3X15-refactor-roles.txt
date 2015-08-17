@@ -1,4 +1,0 @@
-author: N3X15
-delete-after: true
-changes:
-- rscadd: "Special role recruiting and polling has been completely reworked."

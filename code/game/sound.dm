@@ -127,7 +127,7 @@ var/const/SURROUND_CAP = 7
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/playtitlemusic() called tick#: [world.time]")
 	if(!ticker || !ticker.login_music)	return
 	if(prefs.toggles & SOUND_LOBBY)
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+		if(istype(src))src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
 /proc/get_rand_frequency()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_rand_frequency() called tick#: [world.time]")

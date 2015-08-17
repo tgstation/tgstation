@@ -112,6 +112,7 @@
 		else
 			if(ismob(A) || istype(W, /obj/item/weapon/grab))
 				delayNextAttack(10)
+			INVOKE_EVENT(on_uattack,list("atom"=A))
 			UnarmedAttack(A, 1, params)
 		return
 	else // non-adjacent click
@@ -124,6 +125,7 @@
 			if(ismob(A))
 				delayNextAttack(10)
 			RangedAttack(A, params)
+			INVOKE_EVENT(on_uattack,list("atom"=A))
 	return
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
@@ -300,7 +302,7 @@
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(var/atom/A)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/face_atom() called tick#: [world.time]")
-	if(stat != CONSCIOUS || buckled || !A || !x || !y || !A.x || !A.y )
+	if(stat != CONSCIOUS || locked_to || !A || !x || !y || !A.x || !A.y )
 		return
 
 	var/dx = A.x - x
@@ -308,23 +310,23 @@
 
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			dir = NORTH
+			change_dir(NORTH)
 		else if(A.pixel_y < -16)
-			dir = SOUTH
+			change_dir(SOUTH)
 		else if(A.pixel_x > 16)
-			dir = EAST
+			change_dir(EAST)
 		else if(A.pixel_x < -16)
-			dir = WEST
+			change_dir(WEST)
 
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			change_dir(NORTH)
 		else
-			dir = SOUTH
+			change_dir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			change_dir(EAST)
 		else
-			dir = WEST
+			change_dir(WEST)

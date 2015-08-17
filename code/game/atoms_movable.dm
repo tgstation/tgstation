@@ -25,6 +25,12 @@
 	var/hard_deleted = 0
 	//glide_size = 8
 
+	//Atom locking stuff.
+	var/list/locked_atoms[0]
+	var/atom/movable/locked_to
+	var/locked_should_lie = 0	//Whether locked mobs should lie down, used by beds.
+	var/dense_when_locking = 1
+
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
@@ -39,6 +45,13 @@
 	gcDestroyed = "Bye, world!"
 	tag = null
 	loc = null
+
+	for(var/atom/movable/AM in locked_atoms)
+		unlock_atom(AM)
+
+	if(locked_to)
+		locked_to.unlock_atom(src)
+
 	..()
 
 /proc/delete_profile(var/type, code = 0)
@@ -63,7 +76,6 @@
 
 /atom/movable/Del()
 	if (gcDestroyed)
-
 
 		if (hard_deleted)
 			delete_profile("[type]", 1)
@@ -91,7 +103,11 @@
 	glide_size = Ceiling(32 / move_delay * world.tick_lag) - 1 //We always split up movements into cardinals for issues with diagonal movements.
 	var/atom/oldloc = loc
 	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
-		return ..()
+		. = ..()
+
+		update_dir()
+		return
+
 	if(loc != newLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
@@ -119,6 +135,12 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
+	if(.)	//The move was succesful, update locked atoms.
+		for(var/atom/movable/AM in locked_atoms)
+			AM.forceMove(loc)
+
+	update_dir()
+
 	if(!loc || (loc == oldloc && oldloc != newLoc))
 		last_move = 0
 		return
@@ -129,6 +151,69 @@
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=newLoc))
 	return .
+
+//The reason behind change_dir()
+/atom/movable/proc/update_dir()
+	for(var/atom/movable/AM in locked_atoms)
+		if(dir != AM.dir)
+			AM.change_dir(dir, src)
+
+//Like forceMove(), but for dirs!
+/atom/movable/proc/change_dir(new_dir, var/changer)
+	if(locked_to && changer != locked_to)
+		return
+
+	if(new_dir != dir)
+		dir = new_dir
+		update_dir()
+
+//Atom locking, lock an atom to another atom, and the locked atom will move when the other atom moves.
+//Essentially buckling mobs to chairs. For all atoms.
+//Please don't lock atoms to other atoms if the atoms locked to expect for example a different type, it's basically bound to runtime/glitch.
+/atom/movable/proc/lock_atom(var/atom/movable/AM)
+	if(AM in locked_atoms || AM.locked_to || !istype(AM))
+		return
+
+	AM.locked_to = src
+	locked_atoms += AM
+
+	AM.forceMove(loc)
+	AM.change_dir(dir, src)
+
+	if(ismob(AM))
+		var/mob/M = AM
+		M.update_canmove()
+
+	AM.anchored = 1
+
+	if(dense_when_locking)
+		density = 1
+
+	return 1
+
+/atom/movable/proc/unlock_atom(var/atom/movable/AM)
+	if(!(AM in locked_atoms))
+		return
+
+	locked_atoms -= AM
+	AM.locked_to = null
+
+	if(ismob(AM))
+		var/mob/M = AM
+		M.update_canmove()
+
+	AM.anchored = initial(AM.anchored)
+
+	if(dense_when_locking)
+		density = initial(density)
+
+	return 1
+
+/atom/movable/proc/unlock_from()
+	if(!locked_to)
+		return 0
+
+	locked_to.unlock_atom(src)
 
 /atom/movable/proc/recycle(var/datum/materials/rec)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/recycle() called tick#: [world.time]")
@@ -172,6 +257,9 @@
 		for(var/atom/movable/AM in loc)
 			AM.Crossed(src)
 
+		for(var/atom/movable/AM in locked_atoms)
+			AM.forceMove(loc)
+
 		// Update on_moved listeners.
 		INVOKE_EVENT(on_moved,list("loc"=loc))
 		return 1
@@ -187,6 +275,10 @@
 		if(isturf(destination))
 			var/area/A = get_area_master(destination)
 			A.Entered(src)
+
+		for(var/atom/movable/AM in locked_atoms)
+			AM.forceMove(loc)
+
 		return 1
 	return 0
 

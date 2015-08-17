@@ -426,21 +426,21 @@
 	_color = "russobluecamo"
 
 /obj/item/clothing/under/jester
-	name = "Jester Suit"
+	name = "jester duit"
 	desc = "Only a fool would wear such a suit."
 	icon_state = "jester"
 	item_state = "jester"
 	_color = "jester"
 
 /obj/item/clothing/under/stilsuit
-	name = "Stilsuit"
+	name = "dtilsuit"
 	desc = "Designed to preserve bodymoisture."
 	icon_state = "stilsuit"
 	item_state = "stilsuit"
 	_color = "stilsuit"
 
 /obj/item/clothing/under/aviatoruniform
-	name = "Aviator Uniform"
+	name = "aviator uniform"
 	desc = "Now you can look absolutely dashing!"
 	icon_state = "aviator_uniform"
 	item_state = "aviator_uniform"
@@ -448,27 +448,27 @@
 	species_restricted = list("exclude","Vox")
 
 /obj/item/clothing/under/libertyshirt
-	name = "Liberty Shirt"
+	name = "liberty dhirt"
 	desc = "For any freedom loving patriot out there"
 	icon_state = "libertyshirt"
 	item_state = "libertyshirt"
 	_color = "libertyshirt"
 
 /obj/item/clothing/under/bikersuit
-	name = "Biker's Outfit"
+	name = "biker's outfit"
 	icon_state = "biker"
 	item_state = "biker"
 	_color = "biker"
 
 /obj/item/clothing/under/jacketsuit
-	name = "Richard's Outfit"
+	name = "richard's outfit"
 	desc = "Do you know what time it is?"
 	icon_state = "jacket"
 	item_state = "jacket"
 	_color = "jacket"
 
 /obj/item/clothing/under/mega
-	name = "DRN-001 Suit"
+	name = "\improper DRN-001 suit"
 	desc = "The original. Simple, yet very adaptable."
 	icon_state = "mega"
 	item_state = "mega"
@@ -482,7 +482,7 @@
 	_color = "proto"
 
 /obj/item/clothing/under/megax
-	name = "Maverick Hunter regalia"
+	name = "\improper Maverick Hunter regalia"
 	desc = "The best outfit for taking out rogue borgs."
 	icon_state = "megax"
 	item_state = "megax"
@@ -496,63 +496,63 @@
 	_color = "joe"
 
 /obj/item/clothing/under/roll
-	name = "DRN-002 Dress"
+	name = "\improper DRN-002 Dress"
 	desc = "A simple red dress, the good doctor's second robot wasn't quite as exciting as the first."
 	icon_state = "roll"
 	item_state = "roll"
 	_color = "roll"
 
 /obj/item/clothing/under/maid
-	name = "Maid outfit"
+	name = "maid outfit"
 	desc = "Perfect for lusty aliens and desperate weeaboos."
 	icon_state = "maid"
 	item_state = "maid"
 	_color = "maid"
 
 /obj/item/clothing/under/darkholme
-	name = "The Darkholme"
+	name = "\improper The Darkholme"
 	desc = "Fuck you."
 	icon_state = "darkholme"
 	item_state = "darkholme"
 	_color = "darkholme"
 
 /obj/item/clothing/under/gokugidown
-	name = "Turtle Hermit Undershirt"
+	name = "turtle hermit undershirt"
 	desc = "Something seems oddly familiar about this outfit..."
 	icon_state = "gokugidown"
 	item_state = "gokugidown"
 	_color = "gokugidown"
 
 /obj/item/clothing/under/gokugi
-	name = "Turtle Hermit Outfit"
+	name = "turtle hermit outfit"
 	desc = "An outfit from one trained by the great Turtle Hermit"
 	icon_state = "gokugi"
 	item_state = "gokugi"
 	_color = "gokugi"
 
 /obj/item/clothing/under/doomguy
-	name = "Doomguy's pants"
+	name = "\improper Doomguy's pants"
 	desc = ""
 	icon_state = "doom"
 	item_state = "doom"
 	_color = "doom"
 
 /obj/item/clothing/under/vault13
-	name = "Vault 13 Jumpsuit"
+	name = "vault 13 Jumpsuit"
 	desc = "Oddly similar to the station's usual jumpsuits, but with a rustic charm to it. Has a large thirteen emblazened on the back"
 	icon_state = "v13-jumpsuit"
 	item_state = "v13-jumpsuit"
 	_color = "v13-jumpsuit"
 
 /obj/item/clothing/under/vault
-	name = "Vault Jumpsuit"
+	name = "vault jumpsuit"
 	desc = "Oddly similar to the station's usual jumpsuits, but with a rustic charm to it."
 	icon_state = "v-jumpsuit"
 	item_state = "v-jumpsuit"
 	_color = "v-jumpsuit"
 
 /obj/item/clothing/under/contortionist
-	name = "Contortionist's Jumpsuit"
+	name = "contortionist's jumpsuit"
 	desc = "A light jumpsuit useful for squeezing through narrow vents."
 	icon_state = "darkholme"
 	item_state = "darkholme"
@@ -566,3 +566,10 @@
 			user << "<span class='warning'>You can't fit inside while wearing that \the [user.get_item_by_slot(slot_id)].</span>"
 			return 0
 	return 1
+
+/obj/item/clothing/under/clownpiece
+	name = "Clownpiece's Pierrot suit"
+	desc = "A female-sized set of leggings and shirt with a pattern similar to the American flag, featuring a frilled collar."
+	icon_state = "clownpiece"
+	item_state = "clownpiece"
+	_color = "clownpiece"

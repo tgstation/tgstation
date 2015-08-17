@@ -76,7 +76,7 @@
 		// /vg/: /obj/item/key=1
 		/obj/item/clothing/glasses/monocle=5,
 		// /vg/:
-		/obj/structure/stool/bed/chair/vehicle/wizmobile=1
+		/obj/structure/bed/chair/vehicle/wizmobile=1
 	)
 	fluffitems = list(
 		/obj/structure/safe/floor=1,

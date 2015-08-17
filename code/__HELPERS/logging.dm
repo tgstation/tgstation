@@ -168,3 +168,10 @@
 	else
 		add_gamelogs(user, "added [amount]u to \a [target] with \the [source]", admin = TRUE, tp_link = FALSE)
 
+
+/**
+ * Standardized method for tracking startup times.
+ */
+/proc/log_startup_progress(var/message)
+	world << "<span class='danger'>[message]</span>"
+	world.log << message

@@ -16,7 +16,7 @@
 "p" = (/obj/item/weapon/gun/energy/pulse_rifle/M1911,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "q" = (/obj/item/weapon/card/emag,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "r" = (/obj/item/device/powersink,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
-"s" = (/obj/item/device/radio/beacon,/obj/item/weapon/caution,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
+"s" = (/obj/item/beacon,/obj/item/weapon/caution,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "t" = (/obj/item/organ/brain,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "u" = (/obj/item/weapon/gun/energy/laser/captain,/turf/simulated/floor{icon_state = "white"},/area/awaymission)
 "v" = (/obj/item/weapon/gun/projectile/deagle/gold,/turf/simulated/floor{icon_state = "white"},/area/awaymission)

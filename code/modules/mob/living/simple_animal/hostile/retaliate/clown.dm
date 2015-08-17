@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/clown
-	name = "Clown"
+	name = "clown"
 	desc = "A denizen of clown planet"
 	icon_state = "clown"
 	icon_living = "clown"

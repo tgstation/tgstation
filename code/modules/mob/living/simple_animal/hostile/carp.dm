@@ -1,4 +1,4 @@
-
+var/global/
 
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
@@ -16,6 +16,12 @@
 	speed = -1
 	maxHealth = 25
 	health = 25
+	size = SIZE_SMALL
+
+	can_breed = 1
+	childtype = /mob/living/simple_animal/hostile/carp/baby
+	child_amount = 1
+
 
 	harm_intent_damage = 8
 	melee_damage_lower = 15
@@ -36,6 +42,27 @@
 
 	faction = "carp"
 
+/mob/living/simple_animal/hostile/carp/New()
+	.=..()
+	gender = pick(MALE, FEMALE)
+	if(gender==FEMALE)
+		child_amount = rand(4,6) //Mother explodes on death, so letting it leave 5 child carps (that can't breed) behind is fair
+
+/mob/living/simple_animal/hostile/carp/examine(mob/user)
+	..()
+	if(Adjacent(user))
+		user << "It appears to be [(gender==MALE) ? "male" : "female"]."
+
+/mob/living/simple_animal/hostile/carp/give_birth()
+	spawn(rand(100,200))
+		if(!src) return
+
+		src.death(0)
+		sleep(30)
+		src.visible_message("<span class='danger'>[src]'s body explodes in a shower of gore as its offspring burst out!</span>")
+		..()
+		src.gib(meat=0)
+
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
@@ -52,10 +79,25 @@
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
+/mob/living/simple_animal/hostile/carp/baby
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one, despite not being mature yet, is just as agressive as any of its brethren."
+	icon_state = "babycarp"
+	icon_dead = "babycarp_dead"
+
+	size = SIZE_TINY
+	can_breed = 0
+
+	maxHealth = 15
+	health = 15
+
+	melee_damage_upper = 8
+	melee_damage_lower = 8
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
+	can_breed = 0
 
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
-	del(src)
+	qdel(src)
 	return

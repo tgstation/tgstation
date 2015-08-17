@@ -8,10 +8,13 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
 
 	mob_bump_flag = MONKEY
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 	mob_push_flags = MONKEY|SLIME|SIMPLE_ANIMAL|ALIEN
+
+	size = SIZE_SMALL
 
 	var/canWearClothes = 1
 	var/canWearHats = 1
@@ -34,6 +37,9 @@
 	uniform = null
 	hat = null
 	glasses = null
+
+/mob/living/carbon/monkey/abiotic()
+	return (wear_mask || l_hand || r_hand || back || uniform || hat)
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"

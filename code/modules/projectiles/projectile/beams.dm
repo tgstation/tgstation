@@ -29,23 +29,7 @@ var/list/beam_master = list()
 	var/tang = 0
 	layer = 3
 	var/turf/last = null
-	kill_count = 6
-
-	proc/adjustAngle(angle)
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/adjustAngle() called tick#: [world.time]")
-		angle = round(angle) + 45
-		if(angle > 180)
-			angle -= 180
-		else
-			angle += 180
-		if(!angle)
-			angle = 1
-		/*if(angle < 0)
-			//angle = (round(abs(get_angle(A, user))) + 45) - 90
-			angle = round(angle) + 45 + 180
-		else
-			angle = round(angle) + 45*/
-		return angle
+	kill_count = 20
 
 	process()
 		var/first = 1 //So we don't make the overlay in the same tile as the firer
@@ -55,6 +39,10 @@ var/list/beam_master = list()
 		var/Angle=round(Get_Angle(firer,curr))
 		var/icon/I=new('icons/obj/zap.dmi',"lightning")
 		I.Turn(Angle)
+		if(!curr)
+			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+			curr = current
+
 		var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
 		var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
 		var/N=0
@@ -178,6 +166,18 @@ var/list/beam_master = list()
 			var/mob/living/M = target
 			M.playsound_local(src, "explosion", 50, 1)
 		..()
+
+/obj/item/projectile/beam/lightning/spell
+	var/basedamage = 40
+	damage = 0
+
+	on_hit(atom/target, blocked = 0)
+		..()
+		target.emp_act(2)
+		if(ismob(target))
+			var/mob/living/L = target
+			L.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
+
 
 /obj/item/projectile/beam
 	name = "laser"

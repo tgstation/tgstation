@@ -37,9 +37,10 @@
 	var/syndie = 0                //IS WE SYNDICAT? (currently unused)
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
-	small = 1
 	speak_emote = list("beeps","clicks","chirps")
 	canEnterVentWith = "/obj/item/device/radio/borg=0&/obj/machinery/camera=0&/obj/item/device/mmi=0"
+
+	size = SIZE_SMALL
 
 /mob/living/simple_animal/spiderbot/attackby(var/obj/item/O as obj, var/mob/user as mob)
 

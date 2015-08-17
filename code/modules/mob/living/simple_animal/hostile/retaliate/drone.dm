@@ -25,6 +25,8 @@
 	environment_smash = 2
 	minimum_distance = 3
 	retreat_distance = 2
+	meat_type = null
+
 	var/datum/effect/effect/system/trail/ion_trail
 	var/hostile_time = 0
 

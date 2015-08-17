@@ -43,7 +43,7 @@
 			m_type = VISIBLE
 
 		if ("bow")
-			if (!src.buckled)
+			if (!src.locked_to)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
@@ -91,7 +91,7 @@
 			return custom_emote(m_type, message)
 
 		if ("salute")
-			if (!src.buckled)
+			if (!src.locked_to)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
@@ -127,17 +127,31 @@
 					m_type = VISIBLE
 		if ("flap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings."
+				message = "<B>[src]</B> flaps \his wings."
 				m_type = HEARABLE
 				if(miming)
 					m_type = VISIBLE
+				if(src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/clownpiece))
+					var/obj/item/clothing/suit/clownpiece/wings = src.wear_suit
+					wings.icon_state = "clownpiece-fly"
+					update_inv_wear_suit(1)
+					spawn(5)
+						wings.icon_state = initial(wings.icon_state)
+						update_inv_wear_suit(1)
 
 		if ("aflap")
 			if (!src.restrained())
-				message = "<B>[src]</B> flaps his wings ANGRILY!"
+				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = HEARABLE
 				if(miming)
 					m_type = VISIBLE
+				if(src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/clownpiece))
+					var/obj/item/clothing/suit/clownpiece/wings = src.wear_suit
+					wings.icon_state = "clownpiece-fly"
+					update_inv_wear_suit(1)
+					spawn(5)
+						wings.icon_state = initial(wings.icon_state)
+						update_inv_wear_suit(1)
 
 		if ("drool")
 			message = "<B>[src]</B> drools."
@@ -655,7 +669,8 @@
 								// <[REDACTED]> gets between 1 and 10 units of jenkem added to them...we obviously don't have Jenkem, but Space Drugs do literally the same exact thing as Jenkem
 								// <[REDACTED]> the user, of course, isn't impacted because it's not an actual smoke cloud
 								// So, let's give 'em space drugs.
-								M.reagents.add_reagent("space_drugs",rand(1,50))
+								if(M.reagents)
+									M.reagents.add_reagent("space_drugs",rand(1,50))
 							/*
 							var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
 							S.attach(location)

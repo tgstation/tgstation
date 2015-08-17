@@ -15,8 +15,8 @@
 /obj/structure/closet/statue/New(loc, var/mob/living/L)
 
 	if(ishuman(L) || ismonkey(L) || iscorgi(L))
-		if(L.buckled)
-			L.buckled = 0
+		if(L.locked_to)
+			L.locked_to = 0
 			L.anchored = 0
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE

@@ -17,6 +17,8 @@
 	attack_sound = 'sound/weapons/welderattack.ogg'
 	faction = "slimesummon"
 	speed = 4
+	meat_type = null
+
 	var/colour = "grey"
 
 /mob/living/simple_animal/hostile/slime/New()

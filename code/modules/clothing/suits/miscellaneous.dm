@@ -438,3 +438,44 @@
 	desc = "Simple white apron."
 	icon_state = "maidapron"
 	item_state = "maidapron"
+
+/obj/item/clothing/suit/clownpiece
+	name = "small fairy wings"
+	desc = "Some small and translucid insect-like wings."
+	icon_state = "clownpiece"
+	item_state = "clownpiece"
+
+/obj/item/clothing/suit/clownpiece/flying
+	name = "small fairy wings"
+	desc = "Some small and translucid insect-like wings. Looks like these are the real deal!"
+	icon_state = "clownpiece-fly"
+	item_state = "clownpiece"
+
+/obj/item/clothing/suit/clownpiece/flying/attack_hand(var/mob/living/carbon/human/H)
+	if(!istype(H))
+		return ..()
+	if((src == H.wear_suit) && H.flying)
+		H.flying = 0
+		animate(H, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+		animate(H, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+		animate(H)
+		if(H.lying)//aka. if they have just been stunned
+			H.pixel_y -= 6
+	..()
+
+/obj/item/clothing/suit/clownpiece/flying/equipped(var/mob/user, var/slot)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H)) return
+	if((slot == slot_wear_suit) && !user.flying)
+		user.flying = 1
+		animate(user, pixel_y = pixel_y + 10 , time = 10, loop = 1, easing = SINE_EASING)
+
+/obj/item/clothing/suit/clownpiece/flying/dropped(mob/user as mob)
+	if(user.flying)
+		user.flying = 0
+		animate(user, pixel_y = pixel_y + 10 , time = 1, loop = 1)
+		animate(user, pixel_y = pixel_y, time = 10, loop = 1, easing = SINE_EASING)
+		animate(user)
+		if(user.lying)//aka. if they have just been stunned
+			user.pixel_y -= 6
+	..()
