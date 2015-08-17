@@ -105,6 +105,24 @@
 	level_min = 4
 	level_max = 6
 
+/datum/chemical_reaction/mix_virus/combine_virus
+
+	name = "Combine Virus"
+	id = "combinevirus"
+	required_reagents = list("FEV" = 1)
+	required_catalysts = list("blood" = 1)
+
+/datum/chemical_reaction/mix_virus/on_reaction(var/datum/reagents/holder, var/created_volume)
+
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	if(B && B.data)
+		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+		if(D.HasSymptom(/datum/symptom/damage_converter) && D.HasSymptom(/datum/symptom/heal))
+			D.RemoveSymptom(/datum/symptom/damage_converter)
+			D.RemoveSymptom(/datum/symptom/heal)
+			D.AddSymptom(/datum/symptom/regen)
+			D.Refresh (0)
+
 /datum/chemical_reaction/mix_virus/rem_virus
 
 	name = "Devolve Virus"

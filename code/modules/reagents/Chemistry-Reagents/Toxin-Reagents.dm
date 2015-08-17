@@ -670,3 +670,14 @@ datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
 			M.drowsyness  = max(M.drowsyness, 30)
 	..()
 	return
+
+datum/reagent/FEV
+	name = "FEV"
+	id = "FEV"
+	description = "???"
+	color = "#13BC5E" // rgb: 207, 54, 0
+
+datum/reagent/toxin/FEV/on_mob_life(var/mob/living/M as mob)
+	if(prob(1)) M.gib()
+	..()
+	return
