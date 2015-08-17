@@ -118,7 +118,7 @@
 	else
 		return "[id]"
 
-/datum/species/proc/update_color(mob/living/carbon/human/H)
+/datum/species/proc/update_color(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(SPECIES_LAYER)
 
 	var/image/standing
@@ -135,7 +135,11 @@
 
 		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
 
-		spec_base.color = "#[H.dna.features["mcolor"]]"
+		if(!forced_colour)
+			spec_base.color = "#[H.dna.features["mcolor"]]"
+		else
+			spec_base.color = forced_colour
+
 		standing = spec_base
 
 	if(standing)
@@ -143,7 +147,7 @@
 
 	H.apply_overlay(SPECIES_LAYER)
 
-/datum/species/proc/handle_hair(mob/living/carbon/human/H)
+/datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
 
 	var/datum/sprite_accessory/S
@@ -156,13 +160,17 @@
 
 			img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			if(hair_color)
-				if(hair_color == "mutcolor")
-					img_facial_s.color = "#" + H.dna.features["mcolor"]
+			if(!forced_colour)
+				if(hair_color)
+					if(hair_color == "mutcolor")
+						img_facial_s.color = "#" + H.dna.features["mcolor"]
+					else
+						img_facial_s.color = "#" + hair_color
 				else
-					img_facial_s.color = "#" + hair_color
+					img_facial_s.color = "#" + H.facial_hair_color
 			else
-				img_facial_s.color = "#" + H.facial_hair_color
+				img_facial_s.color = forced_colour
+
 			img_facial_s.alpha = hair_alpha
 
 			standing	+= img_facial_s
@@ -184,13 +192,16 @@
 
 			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			if(hair_color)
-				if(hair_color == "mutcolor")
-					img_hair_s.color = "#" + H.dna.features["mcolor"]
+			if(!forced_colour)
+				if(hair_color)
+					if(hair_color == "mutcolor")
+						img_hair_s.color = "#" + H.dna.features["mcolor"]
+					else
+						img_hair_s.color = "#" + hair_color
 				else
-					img_hair_s.color = "#" + hair_color
+					img_hair_s.color = "#" + H.hair_color
 			else
-				img_hair_s.color = "#" + H.hair_color
+				img_hair_s.color = forced_colour
 			img_hair_s.alpha = hair_alpha
 
 			standing	+= img_hair_s
@@ -246,7 +257,7 @@
 
 	return
 
-/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H)
+/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	var/list/standing	= list()
@@ -359,18 +370,21 @@
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
 			if(!(H.disabilities & HUSK))
-				switch(S.color_src)
-					if(MUTCOLORS)
-						I.color = "#[H.dna.features["mcolor"]]"
-					if(HAIR)
-						if(hair_color == "mutcolor")
+				if(!forced_colour)
+					switch(S.color_src)
+						if(MUTCOLORS)
 							I.color = "#[H.dna.features["mcolor"]]"
-						else
-							I.color = "#[H.hair_color]"
-					if(FACEHAIR)
-						I.color = "#[H.facial_hair_color]"
-					if(EYECOLOR)
-						I.color = "#[H.eye_color]"
+						if(HAIR)
+							if(hair_color == "mutcolor")
+								I.color = "#[H.dna.features["mcolor"]]"
+							else
+								I.color = "#[H.hair_color]"
+						if(FACEHAIR)
+							I.color = "#[H.facial_hair_color]"
+						if(EYECOLOR)
+							I.color = "#[H.eye_color]"
+				else
+					I.color = forced_colour
 			standing += I
 
 			if(S.hasinner)

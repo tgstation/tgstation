@@ -280,7 +280,12 @@
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
-	return ..(shock_damage,source,siemens_coeff)
+
+	. = ..(shock_damage,source,siemens_coeff)
+	if(.)
+		electrocution_animation(40)
+
+
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
@@ -802,3 +807,29 @@
 			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
+
+
+
+//Turns a mob black, flashes a skeleton overlay
+//Just like a cartoon!
+/mob/living/carbon/human/proc/electrocution_animation(anim_duration)
+	//Handle mutant parts if possible
+	if(dna && dna.species)
+		dna.species.handle_mutant_bodyparts(src, "black")
+		dna.species.update_color(src, "black")
+		dna.species.handle_hair(src, "black")
+		overlays += "electrocuted_base"
+		spawn(anim_duration)
+			if(src)
+				if(dna && dna.species)
+					dna.species.handle_mutant_bodyparts(src)
+					dna.species.update_color(src)
+					dna.species.handle_hair(src)
+				overlays -= "electrocuted_base"
+
+	else //or just do a generic animation
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client)
+				viewing += M.client
+		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
