@@ -199,12 +199,20 @@
 		if(!C.wear_mask) // If not wearing a mask
 			var/damage = min(round(0.4*volume, 0.1),10)
 			C.adjustToxLoss(damage)
+
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 
+/datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, volume)
+	src = null
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(!C.wear_mask) // If not wearing a mask
+			var/damage = rand(volume,17)
+			C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -218,7 +226,7 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			var/damage = min(round(0.4*volume, 0.1),10)
+			var/damage = rand(volume,17)
 			C.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore

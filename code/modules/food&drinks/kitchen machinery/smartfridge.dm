@@ -343,7 +343,7 @@
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
 	var/list/spawn_meds = list(/obj/item/weapon/reagent_containers/pill/epinephrine = 12,/obj/item/weapon/reagent_containers/pill/charcoal = 1,
-								/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
+								/obj/item/weapon/reagent_containers/glass/beaker/bottle/epinephrine = 1, /obj/item/weapon/reagent_containers/glass/beaker/bottle/charcoal = 1)
 
 /obj/machinery/smartfridge/chemistry/New()
 	..()
@@ -369,7 +369,7 @@
 		return 1
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
 		return 0
-	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
+	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
 		return 1
 	return 0
 
@@ -379,4 +379,4 @@
 /obj/machinery/smartfridge/chemistry/virology
 	name = "smart virus storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
-	spawn_meds = list(/obj/item/weapon/reagent_containers/syringe/antiviral = 4, /obj/item/weapon/reagent_containers/glass/bottle/cold = 1, /obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1, /obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1, /obj/item/weapon/reagent_containers/glass/bottle/plasma = 1, /obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+	spawn_meds = list(/obj/item/weapon/reagent_containers/syringe/antiviral = 4, /obj/item/weapon/reagent_containers/glass/beaker/bottle/cold = 1, /obj/item/weapon/reagent_containers/glass/beaker/bottle/flu_virion = 1, /obj/item/weapon/reagent_containers/glass/beaker/bottle/mutagen = 1, /obj/item/weapon/reagent_containers/glass/beaker/bottle/plasma = 1, /obj/item/weapon/reagent_containers/glass/beaker/bottle/synaptizine = 1)

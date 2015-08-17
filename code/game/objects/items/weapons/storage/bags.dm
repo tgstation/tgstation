@@ -350,5 +350,5 @@
 	max_combined_w_class = 200
 	w_class = 1
 	preposition = "in"
-	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
+	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/beaker/bottle)
 	burn_state = 0 //Burnable

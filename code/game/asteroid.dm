@@ -125,7 +125,7 @@ var/global/max_secret_rooms = 6
 			/obj/item/seeds/coffee_robusta_seed=2, /obj/item/seeds/cashseed=2)
 			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics=1,
 							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
-							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
+							  /obj/item/weapon/reagent_containers/glass/beaker/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/beaker/bottle/ammonia=3)
 
 		/*if("poly")
 			theme = "poly"
