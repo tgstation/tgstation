@@ -17,6 +17,7 @@
 	response_help   = "passes through"
 	response_disarm = "swings at"
 	response_harm   = "punches through"
+	unsuitable_atmos_damage = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -25,6 +26,7 @@
 	status_flags = 0
 	wander = 0
 	density = 0
+	flying = 1
 	anchored = 1
 
 	var/essence = 25 //The resource of revenants. Max health is equal to three times this amount
@@ -33,7 +35,6 @@
 	var/essence_regen_amount = 2 //How much essence regenerates
 	var/essence_min = 1 //The minimum amount of essence a revenant can have; by default, it never drops below one
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
-	var/strikes = 0 //How many times a revenant can die before dying for good
 	var/revealed = 0 //If the revenant can take damage from normal sources.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
 
@@ -41,11 +42,6 @@
 	..()
 	if(essence < essence_min)
 		essence = essence_min
-		if(strikes > 0)
-			strikes--
-			src << "<span class='boldannounce'>Your essence has dropped below critical levels. You barely manage to save yourself - [strikes ? "you can't keep this up!" : "next time, it's death."]</span>"
-		else if(strikes <= 0)
-			death()
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence += essence_regen_amount
 		if(essence > essence_regen_cap)
@@ -56,6 +52,9 @@
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
+
+/mob/living/simple_animal/revenant/blob_act()
+	return //blah blah blobs aren't in tune with the spirit world, or something.
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
 	if(client.buildmode)
@@ -114,8 +113,8 @@
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
 		if(!src.giveSpells())
-			message_admins("Revenant was created but has no mind. Trying again in five seconds.")
-			spawn(50)
+			message_admins("Revenant was created but has no mind. Trying again in ten seconds.")
+			spawn(100)
 				if(!src.giveSpells())
 					message_admins("Revenant still has no mind. Deleting...")
 					qdel(src)
@@ -130,8 +129,6 @@
 	return 0
 
 /mob/living/simple_animal/revenant/death()
-	if(strikes)
-		return 0 //Impossible to die with strikes still active
 	..(1)
 	src << "<span class='userdanger'><b>NO! No... it's too late, you can feel yourself fading...</b></span>"
 	notransform = 1
@@ -151,7 +148,6 @@
 
 
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
-	..()
 	if(istype(W, /obj/item/weapon/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
 						"<span class='boldannounce'>As the null rod passes through you, you feel your essence draining away!</span>")
@@ -159,7 +155,7 @@
 		inhibited = 1
 		spawn(30)
 			inhibited = 0
-
+	..()
 
 
 /mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
