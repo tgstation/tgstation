@@ -1,4 +1,5 @@
 #!/bin/bash -ex
+set -x
 # ARGUMENT 1: Map
 BYOND_MAJOR="508"
 BYOND_MINOR="1296"
