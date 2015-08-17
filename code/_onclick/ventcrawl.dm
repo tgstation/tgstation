@@ -56,7 +56,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/carbon/alien/humanoid/queen/can_ventcrawl()
 	return 0
 
-
+/mob/living/var/ventcrawl_layer = PIPING_LAYER_DEFAULT
+	
 /mob/living/proc/handle_ventcrawl(var/atom/clicked_on)
 	diary << "[src] is ventcrawling."
 	if(!stat)
