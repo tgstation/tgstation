@@ -4,7 +4,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 */
 
 /obj/machinery/atmospherics/components/
-	var/welded //Used on pumps and scrubbers
+	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
 	var/list/datum/pipeline/parents = list()
@@ -39,6 +39,13 @@ Iconnery
 	update_icon_nopipes()
 
 	underlays.Cut()
+
+	var/turf/T = loc
+	if(level == 2 || !T.intact)
+		showpipe = 1
+	else
+		showpipe = 0
+
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
 
@@ -63,10 +70,8 @@ Pipenet stuff; housekeeping
 			nullifyPipenet(PARENT_I)
 	..()
 
-/obj/machinery/atmospherics/components/atmosinit()
-	if(level == 2)
-		showpipe = 1
-	..()
+
+
 
 /obj/machinery/atmospherics/components/construction()
 	..()
