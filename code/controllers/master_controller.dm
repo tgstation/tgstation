@@ -212,7 +212,7 @@ datum/controller/game_controller/proc/setup_objects()
 		C.send_html_resources()
 	log_startup_progress("  Finished sending assets in [stop_watch(watch)]s.")
 
-	world << "<span class='danger'>Generating ingame minimaps.</span>"
+	world << "<span class='danger'>Generating in-game minimaps.</span>"
 	//sleep(-1)
 	generateMiniMaps() // start generating minimaps (this is a background process)
 
