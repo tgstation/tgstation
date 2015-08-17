@@ -68,12 +68,12 @@
 /mob/proc/see_fall(var/turf/T)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/see_rift() called tick#: [world.time]")
 	var/turf/T_mob = get_turf(src)
-	if(!T && fallimage)
+	if((!T || isnull(T)) && fallimage)
 		animate(fallimage, transform = fallimage.transform / 50, time = 2)
 		sleep(2)
 		del(fallimage)
 		return
-	if((T.z == T_mob.z) && (get_dist(T,T_mob) <= 15))// &&!(T in view(T_mob)))
+	else if(T && T_mob && (T.z == T_mob.z) && (get_dist(T,T_mob) <= 15))// &&!(T in view(T_mob)))
 		if(!fallimage)
 			fallimage = image(icon = 'icons/effects/640x640.dmi', icon_state = "fall", layer = 2.1)
 			fallimage.transform /= 50
