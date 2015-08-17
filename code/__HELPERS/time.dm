@@ -4,14 +4,14 @@
 #define HOURS   * 36000
 
 //Returns the world time in english
-proc/worldtime2text(timestamp = world.time)
+/proc/worldtime2text(timestamp = world.time)
 	return "[(round(timestamp / 36000) + 12) % 24]:[(timestamp / 600 % 60) < 10 ? add_zero(timestamp / 600 % 60, 1) : timestamp / 600 % 60]"
 
-proc/time_stamp()
+/proc/time_stamp()
 	return time2text(world.timeofday, "hh:mm:ss")
 
 /* Preserving this so future generations can see how fucking retarded some people are
-proc/time_stamp()
+/proc/time_stamp()
 	var/hh = text2num(time2text(world.timeofday, "hh")) // Set the hour
 	var/mm = text2num(time2text(world.timeofday, "mm")) // Set the minute
 	var/ss = text2num(time2text(world.timeofday, "ss")) // Set the second
@@ -25,7 +25,7 @@ proc/time_stamp()
 */
 
 /* Returns 1 if it is the selected month and day */
-proc/isDay(var/month, var/day)
+/proc/isDay(var/month, var/day)
 	//writepanic("[__FILE__].[__LINE__] \\/proc/isDay() called tick#: [world.time]")
 	if(isnum(month) && isnum(day))
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
@@ -36,3 +36,16 @@ proc/isDay(var/month, var/day)
 		// Uncomment this out when debugging!
 		//else
 			//return 1
+
+/**
+ * Returns "watch handle" (really just a timestamp :V)
+ */
+/proc/start_watch()
+	return world.timeofday
+
+/**
+ * Returns number of seconds elapsed.
+ * @param wh number The "Watch Handle" from start_watch(). (timestamp)
+ */
+/proc/stop_watch(wh)
+	return round(0.1*(world.timeofday-wh),0.1)

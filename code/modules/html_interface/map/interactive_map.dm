@@ -61,15 +61,18 @@ var/const/ALLOW_CENTCOMM = FALSE
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/interactive_map/proc/queueUpdate() called tick#: [world.time]")
 
 /proc/generateMiniMaps()
-	spawn
-		for (var/z = 1 to world.maxz)
-			if(z == CENTCOMM_Z && !ALLOW_CENTCOMM) continue
-			generateMiniMap(z)
+	//spawn // NO
+	for (var/z = 1 to world.maxz)
+		if(z == CENTCOMM_Z && !ALLOW_CENTCOMM) continue
+		generateMiniMap(z)
 
-		testing("MINIMAP: All minimaps have been generated.")
-		minimapinit = 1
-		for (var/client/C in clients)
-			C.send_html_resources()
+	testing("MINIMAP: All minimaps have been generated.")
+	minimapinit = 1
+	// some idiot put HTML asset sending here.  In a spawn.  After a long wait for minimap generation.
+	// Dear Idiot: don't do that anymore.
+	// You can put MINIMAP sending here, but we need HTML assets ASAP for character editing.
+	//for (var/client/C in clients)
+	//	C.send_html_resources()
 
 
 /datum/interactive_map/proc/sendResources(client/C)

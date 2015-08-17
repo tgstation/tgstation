@@ -55,7 +55,7 @@
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	#ifdef RUNWARNING
-	#if DM_VERSION > 506
+	#if DM_VERSION > 506 && DM_VERSION < 508
 		#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
 	src << ftp( file(path) )
 	#else
@@ -85,7 +85,7 @@
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
 	#ifdef RUNWARNING
-	#if DM_VERSION > 506
+	#if DM_VERSION > 506 && DM_VERSION < 508
 		#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
 	src << ftp( file(path) )
 	#else
@@ -110,7 +110,7 @@
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
 	if( fexists(path) )
 	#ifdef RUNWARNING
-		#if DM_VERSION > 506
+		#if DM_VERSION > 506 && DM_VERSION < 508
 			#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
 		src << ftp( file(path) )
 		#else
@@ -135,7 +135,7 @@
 	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
 	if( fexists(path) )
 		#ifdef RUNWARNING
-		#if DM_VERSION > 506
+		#if DM_VERSION > 506 && DM_VERSION < 508
 			#warn Run is deprecated and disabled for some fucking reason in 507.1275/6, if you have a version that doesn't have run() disabled then comment out #define RUNWARNING in setup.dm
 		src << ftp( file(path) )
 		#else

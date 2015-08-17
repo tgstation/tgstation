@@ -51,11 +51,14 @@ datum/controller/game_controller/New()
 
 		master_controller = src
 
+	var/watch=0
 	if (isnull(job_master))
+		watch = start_watch()
 		job_master = new /datum/controller/occupations()
 		job_master.SetupOccupations()
 		job_master.LoadJobs("config/jobs.txt")
-		world << "<span class='danger'>Job setup complete</span>"
+		//world << "<span class='danger'>Job setup complete in </span>"
+		log_startup_progress("Job setup complete in [stop_watch(watch)]s.")
 
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
@@ -90,11 +93,17 @@ datum/controller/game_controller/proc/setup()
 	setupfactions()
 	setup_economy()
 	SetupXenoarch()
+	var/watch=start_watch()
+	log_startup_progress("Caching damage icons...")
 	cachedamageicons()
+	log_startup_progress("Finished caching damage icons in [stop_watch(watch)]s.")
+
 	buildcamlist()
-	world << "<span class='danger'>Caching Jukebox playlists...</span>"
+
+	watch=start_watch()
+	log_startup_progress("Caching jukebox playlists...")
 	load_juke_playlists()
-	world << "<span class='danger'>Caching Jukebox playlists complete.</span>"
+	log_startup_progress("Finished caching jukebox playlists in [stop_watch(watch)]s.")
 	//if(map && map.dorf)
 		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
 		//max_secret_rooms += 2
@@ -145,7 +154,7 @@ datum/controller/game_controller/proc/cachedamageicons()
 		species_blood = (S.blood_color == "#A10808" ? "" : S.blood_color)
 		testing("Generating [S], Blood([species_blood])")
 		for(var/datum/organ/external/O in H.organs)
-			testing("[O] part")
+			//testing("[O] part")
 			for(var/brute = 1 to 3)
 				for(var/burn = 1 to 3)
 					var/damage_state = "[brute][burn]"
@@ -153,43 +162,62 @@ datum/controller/game_controller/proc/cachedamageicons()
 					DI.Blend(icon('icons/mob/dam_mask.dmi', O.icon_name), ICON_MULTIPLY)
 					if(species_blood)
 						DI.Blend(S.blood_color, ICON_MULTIPLY)
-					testing("Completed [damage_state]/[O.icon_name]/[species_blood]")
+					//testing("Completed [damage_state]/[O.icon_name]/[species_blood]")
 					damage_icon_parts["[damage_state]/[O.icon_name]/[species_blood]"] = DI
 	del(H)
 
 datum/controller/game_controller/proc/setup_objects()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/setup_objects() called tick#: [world.time]")
-	world << "<span class='danger'>Initializing objects</span>"
-	sleep(-1)
+	var/watch = start_watch()
+	log_startup_progress("Initializing objects...")
+	//sleep(-1) // Why
 	//var/last_init_type = null
+	var/count=0
 	for(var/atom/movable/object in world)
 		//if(last_init_type != object.type)
 		//	testing("Initializing [object.type]")
 		//	last_init_type = object.type
 		object.initialize()
+		count++
+	log_startup_progress("  Initialized [count] objects in [stop_watch(watch)]s.")
 
-
-	world << "<span class='danger'>Initializing pipe networks</span>"
-	sleep(-1)
+	watch = start_watch()
+	count=0
+	log_startup_progress("Initializing pipe networks...")
+	//sleep(-1)
 	for(var/obj/machinery/atmospherics/machine in atmos_machines)
 		machine.build_network()
+		count++
+	log_startup_progress("  Initialized [count] pipe networks in [stop_watch(watch)]s.")
 
-	world << "<span class='danger'>Initializing atmos machinery.</span>"
-	sleep(-1)
+	watch = start_watch()
+	count=0
+	log_startup_progress("Initializing atmos machinery...")
+	//sleep(-1)
 	for(var/obj/machinery/atmospherics/unary/U in atmos_machines)
 		if(istype(U, /obj/machinery/atmospherics/unary/vent_pump))
 			var/obj/machinery/atmospherics/unary/vent_pump/T = U
 			T.broadcast_status()
+			count++
 		else if(istype(U, /obj/machinery/atmospherics/unary/vent_scrubber))
 			var/obj/machinery/atmospherics/unary/vent_scrubber/T = U
 			T.broadcast_status()
+			count++
+	log_startup_progress("  Initialized [count] atmos devices in [stop_watch(watch)]s.")
+
+	watch = start_watch()
+	log_startup_progress("Sending assets to clients...")
+	// MOVED from minimap hell.
+	for (var/client/C in clients)
+		C.send_html_resources()
+	log_startup_progress("  Finished sending assets in [stop_watch(watch)]s.")
 
 	world << "<span class='danger'>Generating ingame minimaps.</span>"
-	sleep(-1)
+	//sleep(-1)
 	generateMiniMaps() // start generating minimaps (this is a background process)
 
 	world << "<span class='danger'>Initializations complete.</span>"
-	sleep(-1)
+	//sleep(-1)
 
 
 /datum/controller/game_controller/proc/process()
