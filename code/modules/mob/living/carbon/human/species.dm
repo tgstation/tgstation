@@ -125,17 +125,24 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
-	if(MUTCOLORS in specflags)
+	if((MUTCOLORS in specflags) || use_skintones)
 		var/image/spec_base
 		var/icon_state_string = "[id]_"
-		if(sexes)
-			icon_state_string += "[g]_s"
+
+		if(use_skintones)
+			if(sexes)
+				icon_state_string = "[H.skin_tone]_[g]_s"
+			else
+				icon_state_string = "[H.skin_tone]_s"
 		else
-			icon_state_string += "_s"
+			if(sexes)
+				icon_state_string += "[g]_s"
+			else
+				icon_state_string += "_s"
 
 		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
 
-		if(!forced_colour)
+		if(!forced_colour && !use_skintones)
 			spec_base.color = "#[H.dna.features["mcolor"]]"
 		else
 			spec_base.color = forced_colour

@@ -815,16 +815,16 @@
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
 	if(dna && dna.species)
-		dna.species.handle_mutant_bodyparts(src, "black")
-		dna.species.update_color(src, "black")
-		dna.species.handle_hair(src, "black")
+		dna.species.handle_mutant_bodyparts(src,"black")
+		dna.species.handle_hair(src,"black")
+		dna.species.update_color(src,"black")
 		overlays += "electrocuted_base"
 		spawn(anim_duration)
 			if(src)
 				if(dna && dna.species)
 					dna.species.handle_mutant_bodyparts(src)
-					dna.species.update_color(src)
 					dna.species.handle_hair(src)
+					dna.species.update_color(src)
 				overlays -= "electrocuted_base"
 
 	else //or just do a generic animation
