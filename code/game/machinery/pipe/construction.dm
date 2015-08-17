@@ -57,9 +57,9 @@ Buildable meters
 			is_bent = 0
 		else
 			is_bent = 1
-		if     (istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction))
+		if     (istype(make_from, /obj/machinery/atmospherics/pipe/heat_exchanging/junction))
 			src.pipe_type = PIPE_JUNCTION
-		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/heat_exchanging/simple))
 			src.pipe_type = PIPE_HE_STRAIGHT + is_bent
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/simple))
 			src.pipe_type = PIPE_SIMPLE_STRAIGHT + is_bent
@@ -311,7 +311,7 @@ var/global/list/pipeID2State = list(
 			P.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
-			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new ( src.loc )
+			var/obj/machinery/atmospherics/pipe/heat_exchanging/simple/P = new ( src.loc )
 			P.initialize_directions_he = pipe_dir
 			P.construction(dir, pipe_dir, pipe_type, color)
 
@@ -330,7 +330,7 @@ var/global/list/pipeID2State = list(
 			M.construction(dir, pipe_dir, pipe_type, color)
 
 		if(PIPE_JUNCTION)
-			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new ( src.loc )
+			var/obj/machinery/atmospherics/pipe/heat_exchanging/junction/P = new ( src.loc )
 			P.initialize_directions_he = src.get_hdir()
 			P.construction(dir, get_pdir(), pipe_type, color)
 

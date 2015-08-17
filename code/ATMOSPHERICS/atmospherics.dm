@@ -50,6 +50,11 @@ Pipelines + Other Objects -> Pipe network
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
+	if(!node_connects) //for pipes where order of nodes doesn't matter
+		node_connects = list()
+		for(var/D in cardinal)
+			if(D & GetInitDirections())
+				node_connects |= D
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
 			if(target.initialize_directions & get_dir(target,src))

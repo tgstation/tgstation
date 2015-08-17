@@ -18,14 +18,6 @@ Iconnery
 
 	..(intact)
 
-/*
-Housekeeping and pipe network stuff below
-*/
-
-/obj/machinery/atmospherics/components/unary/atmosinit()
-	var/list/node_connects = list(dir)
-	..(node_connects)
-
 /obj/machinery/atmospherics/components/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(!..())
 		return
