@@ -30,13 +30,22 @@
 			initialize_directions = EAST
 			initialize_directions_he = WEST
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction/atmosinit() //it pains me that this must be hardcoded, but the alternative is super hacky
-	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
-		if(target.initialize_directions & get_dir(target,src))
-			NODE1 = target
-			break
-	for(var/obj/machinery/atmospherics/pipe/heat_exchanging/simple/target in get_step(src,initialize_directions_he))
-		if(target.initialize_directions_he & get_dir(target,src))
-			NODE2 = target
-			break
-	update_icon()
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/atmosinit()
+	var/node2_connect = dir
+	var/node1_connect = turn(dir, 180)
+	var/list/node_connects = list(node1_connect, node2_connect)
+
+	..(node_connects)
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target, iteration)
+	var/init_dir
+	switch(iteration)
+		if(1)
+			init_dir = target.initialize_directions
+		if(2)
+			var/obj/machinery/atmospherics/pipe/heat_exchanging/H = target
+			if(!istype(H))
+				return 0
+			init_dir = H.initialize_directions_he
+	if(init_dir & get_dir(target,src))
+		return 1

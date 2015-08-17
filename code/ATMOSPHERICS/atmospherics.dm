@@ -52,15 +52,27 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
 	if(!node_connects) //for pipes where order of nodes doesn't matter
 		node_connects = list()
-		for(var/D in cardinal)
-			if(D & GetInitDirections())
-				node_connects |= D
+		node_connects.len = device_type
+
+		for(DEVICE_TYPE_LOOP)
+			for(var/D in cardinal)
+				if(D & GetInitDirections())
+					if(D in node_connects)
+						continue
+					node_connects[I] = D
+					break
+
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
-			if(target.initialize_directions & get_dir(target,src))
+			if(can_be_node(target, I))
 				NODE_I = target
 				break
+
 	update_icon()
+
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+	if(target.initialize_directions & get_dir(target,src))
+		return 1
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	var/list/return_nodes = list()
@@ -70,6 +82,9 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
+
+/obj/machinery/atmospherics/proc/GetInitDirections()
+	return initialize_directions
 
 /obj/machinery/atmospherics/proc/returnPipenet()
 	return

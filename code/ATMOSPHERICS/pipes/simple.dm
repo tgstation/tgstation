@@ -21,27 +21,14 @@ The regular pipe you see everywhere, including bent ones.
 	if(dir in diagonals)
 		initialize_directions = dir
 	switch(dir)
-		if(NORTH)
+		if(NORTH,SOUTH)
 			initialize_directions = SOUTH|NORTH
-		if(SOUTH)
-			initialize_directions = SOUTH|NORTH
-		if(EAST)
-			initialize_directions = EAST|WEST
-		if(WEST)
+		if(EAST,WEST)
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/simple/atmosinit()
 	normalize_dir()
-	var/list/node_connects = list()
-
-	if(dir in diagonals) //bent pipes
-		..()
-	else //straight pipes
-		var/node1_connect = dir
-		var/node2_connect = turn(dir, 180)
-		node_connects = list(node1_connect, node2_connect)
-
-	..(node_connects)
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
 	if(dir==SOUTH)

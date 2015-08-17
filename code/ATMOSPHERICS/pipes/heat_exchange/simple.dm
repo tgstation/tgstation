@@ -15,13 +15,9 @@
 	if(dir in diagonals)
 		initialize_directions_he = dir
 	switch(dir)
-		if(SOUTH)
+		if(NORTH,SOUTH)
 			initialize_directions_he = SOUTH|NORTH
-		if(NORTH)
-			initialize_directions_he = SOUTH|NORTH
-		if(EAST)
-			initialize_directions_he = EAST|WEST
-		if(WEST)
+		if(EAST,WEST)
 			initialize_directions_he = WEST|EAST
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/proc/normalize_dir()
@@ -31,5 +27,9 @@
 		dir = EAST
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/atmosinit()
+	normalize_dir()
+	..()
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple/update_icon()
 	normalize_dir()
 	..()
