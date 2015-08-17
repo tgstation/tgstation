@@ -519,8 +519,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		var/list/L = animal_butchering_products[src.species]
 		src.butchering_drops = list()
 
-		for(var/datum/butchering_product/B in L)
-			src.butchering_drops += new B
+		for(var/butchering_type in L)
+			src.butchering_drops += new butchering_type
 
 	return
 
