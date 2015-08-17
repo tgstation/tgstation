@@ -9,9 +9,9 @@ BYOND_MINOR="1296"
 #apt-get --yes install build-essential unzip lib32stdc++6 gcc-multilib
 
 # This ensures we have an up-to-date LOCAL install of BYOND, and doesn't download it every goddamn build.
-BYOND_DIR=byond-${BYOND_MAJOR}.${BYOND_MINOR}
+BYOND_DIR=/tmp/byond-${BYOND_MAJOR}.${BYOND_MINOR}
 if [ ! -d $BYOND_DIR ]; then
-  rm -rf byond-* byond.zip
+  rm -rf /tmp/byond-* byond.zip
   curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
   unzip byond.zip
   mv byond/ $BYOND_DIR

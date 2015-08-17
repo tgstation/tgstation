@@ -41,7 +41,7 @@ do
 	if [[ $var == -M* ]]
 	then
 		sed -i '1s/^/#define MAP_OVERRIDE\n/' $dmepath.mdme
-		sed -i 's!// BEGIN_INCLUDE!// BEGIN_INCLUDE\n#include "maps\\'$arg'.dm"!' $dmepath.mdme
+		sed -i 's!#include "maps\\[a-z]+.dm"!#include "maps\\'$arg'.dm"!' $dmepath.mdme
 		continue
 	fi
 done
@@ -50,7 +50,7 @@ done
 if [[ `uname` == MINGW* ]]
 then
 	dm=""
-	
+
 	if hash dm.exe 2>/dev/null
 	then
 		dm='dm.exe'
@@ -61,13 +61,13 @@ then
 	then
 		dm='/c/Program Files/BYOND/bin/dm.exe'
 	fi
-	
+
 	if [[ $dm == "" ]]
 	then
 		echo "Couldn't find the DreamMaker executable, aborting."
 		exit 3
 	fi
-	
+
 	"$dm" $dmepath.mdme
 	retval=$?
 else
