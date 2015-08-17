@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - bugfix: You can no longer get multiple sections of AME shielding out of 1 package of AME shielding.
