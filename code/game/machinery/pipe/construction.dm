@@ -49,7 +49,7 @@ Buildable meters
 		src.dir = make_from.dir
 		src.pipename = make_from.name
 		src.color = make_from.color
-			src.pipe_type = PIPE_4WAYMANIFOLD
+
 		if(make_from.type in pipe_types)
 			src.pipe_type = make_from.type
 		else //make pipe_type a value we can work with

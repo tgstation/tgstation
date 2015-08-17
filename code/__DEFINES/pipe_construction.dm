@@ -8,8 +8,8 @@ Construction breaks otherwise
 #define PIPE_SIMPLE				/obj/machinery/atmospherics/pipe/simple
 #define PIPE_MANIFOLD			/obj/machinery/atmospherics/pipe/manifold
 #define PIPE_4WAYMANIFOLD       /obj/machinery/atmospherics/pipe/manifold4w
-#define PIPE_HE					/obj/machinery/atmospherics/pipe/simple/heat_exchanging
-#define PIPE_JUNCTION			/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
+#define PIPE_HE					/obj/machinery/atmospherics/pipe/heat_exchanging/simple
+#define PIPE_JUNCTION			/obj/machinery/atmospherics/pipe/heat_exchanging/junction
 //Unary
 #define PIPE_CONNECTOR			/obj/machinery/atmospherics/components/unary/portables_connector
 #define PIPE_UVENT				/obj/machinery/atmospherics/components/unary/vent_pump
