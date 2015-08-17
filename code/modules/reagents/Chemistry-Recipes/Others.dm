@@ -112,7 +112,7 @@
 	required_reagents = list("FEV" = 1)
 	required_catalysts = list("blood" = 1)
 
-/datum/chemical_reaction/mix_virus/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/mix_virus/combine_virus/on_reaction(var/datum/reagents/holder, var/created_volume)
 
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
 	if(B && B.data)
@@ -121,7 +121,7 @@
 			D.RemoveSymptom(/datum/symptom/damage_converter)
 			D.RemoveSymptom(/datum/symptom/heal)
 			D.AddSymptom(/datum/symptom/regen)
-			D.Refresh (0)
+			D.Refresh(0)
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
