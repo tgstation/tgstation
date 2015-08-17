@@ -89,7 +89,7 @@
 	if(M == user) //We are trying to smack ourselves
 		return //That's dumb, don't do it
 
-	if(ishuman(M))
+	if(ishuman(M)) //We're forced to do two ishuman() code paragraphs because this one blocks the others
 		var/mob/living/carbon/human/H = M
 		if(istype(H.head, /obj/item/clothing/head/helmet) || istype(H.head, /obj/item/clothing/head/hardhat) || istype(H.head, /obj/item/clothing/head/fedora) || istype(H.head, /obj/item/clothing/head/culthood)) //Blessing blocked
 			user.visible_message("<span class='warning'>[user] [pick(attack_verb)]s [H]'s head with \the [src], but their headgear blocks the hit.</span>",
@@ -109,23 +109,24 @@
 	"<span class='warning'>You [pick(attack_verb)] [M]'s head with \the [src]. In the name of [deity_name], bless thee!</span>")
 	playsound(get_turf(src), "punch", 25, 1, -1)
 
-	if(isvampire(M) && !(VAMP_MATURE in M.mind.vampire.powers)) //The user is a "young" Vampire, fuck up his vampiric powers and hurt his head
-		if(ishuman(M))
-			M << "<span class='warning'>[deity_name]'s power nullifies your own!</span>"
-			if(M.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
-				M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
-			M.mind.vampire.smitecounter += 10 //Better get out of here quickly before the problem shows. Ten hits and you are literal toast
+	if(ishuman(M)) //Only humans can be vampires or cultists
+		var/mob/living/carbon/human/H = M
+		if(isvampire(H) && !(VAMP_MATURE in H.mind.vampire.powers)) //The user is a "young" Vampire, fuck up his vampiric powers and hurt his head
+			H << "<span class='warning'>[deity_name]'s power nullifies your own!</span>"
+			if(H.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
+				H.mind.vampire.nullified = max(5, H.mind.vampire.nullified + 2)
+			H.mind.vampire.smitecounter += 10 //Better get out of here quickly before the problem shows. Ten hits and you are literal toast
 
-	if(iscult(M)) //The user is a Cultist. We are thus deconverting him
-		if(prob(20))
-			M << "<span class='notice'>The power of [deity_name] suddenly clears your mind of heresy. Your allegiance to Nar'Sie wanes!</span>"
-			user << "<span class='notice'>You see [M]'s eyes become clear. Nar'Sie no longer controls his mind, [deity_name] saved him!</span>"
-			ticker.mode.remove_cultist(M.mind)
-		else //We aren't deconverting him this time, give the Cultist a fair warning
-			M << "<span class='warning'>The power of [deity_name] is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>"
+		if(iscult(H)) //The user is a Cultist. We are thus deconverting him
+			if(prob(20))
+				H << "<span class='notice'>The power of [deity_name] suddenly clears your mind of heresy. Your allegiance to Nar'Sie wanes!</span>"
+				user << "<span class='notice'>You see [H]'s eyes become clear. Nar'Sie no longer controls his mind, [deity_name] saved him!</span>"
+				ticker.mode.remove_cultist(H.mind)
+			else //We aren't deconverting him this time, give the Cultist a fair warning
+				H << "<span class='warning'>The power of [deity_name] is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>"
 
-	if(ishuman(M)) //Only humans can be blessed and yaddi yadda
-		bless(user, M) //Let's outsource the healing code, because we can
+
+		bless(user, H) //Let's outsource the healing code, because we can
 
 //Bless thee. Heals followers fairly, potentially heals everyone a bit (or gives them brain damage)
 /obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/human/user, mob/living/carbon/human/M)
@@ -161,8 +162,10 @@
 /obj/item/weapon/storage/bible/pickup(mob/living/user as mob)
 	if(user.mind && user.mind.assigned_role == "Chaplain") //We are the Chaplain, yes we are
 		user << "<span class ='notice'>You feel [deity_name]'s holy presence as you pick up \the [src].</span>"
-	if(isvampire(user) && (!VAMP_UNDYING in user.mind.vampire.powers)) //We are a Vampire, we aren't very smart
-		user << "<span class ='danger'>[deity_name]'s power channels through \the [src]. You feel extremely uneasy as you grab it!</span>"
-		user.mind.vampire.smitecounter += 10
-	if(iscult(user)) //We are a Cultist, we aren't very smart either, but at least there will be no consequences for us
-		user << "<span class ='danger'>[deity_name]'s power channels through \the [src]. You feel uneasy as you grab it, but Nar'Sie protects you from its influence!</span>"
+	if(ishuman(user)) //We are checking for antagonists, only humans can be antagonists
+		var/mob/living/carbon/human/H = user
+		if(isvampire(H) && (!VAMP_UNDYING in H.mind.vampire.powers)) //We are a Vampire, we aren't very smart
+			H << "<span class ='danger'>[deity_name]'s power channels through \the [src]. You feel extremely uneasy as you grab it!</span>"
+			H.mind.vampire.smitecounter += 10
+		if(iscult(H)) //We are a Cultist, we aren't very smart either, but at least there will be no consequences for us
+			H << "<span class ='danger'>[deity_name]'s power channels through \the [src]. You feel uneasy as you grab it, but Nar'Sie protects you from its influence!</span>"
