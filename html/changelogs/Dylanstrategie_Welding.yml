@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - tweak: Fabricated Welding Tools (Autolathe) now start empty
