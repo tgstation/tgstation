@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: Pipes no longer have weird artifacts on their ends.
