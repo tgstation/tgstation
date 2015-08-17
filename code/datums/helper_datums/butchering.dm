@@ -43,10 +43,10 @@
 	amount = 8
 
 var/global/list/animal_butchering_products = list(
-	/mob/living/simple_animal/cat						= list(new /datum/butchering_product/skin/cat),
-	/mob/living/simple_animal/corgi						= list(new /datum/butchering_product/skin/corgi),
-	/mob/living/simple_animal/lizard					= list(new /datum/butchering_product/skin/lizard),
-	/mob/living/simple_animal/hostile/asteroid/goliath	= list(new /datum/butchering_product/skin/goliath),
-	/mob/living/simple_animal/hostile/giant_spider		= list(new /datum/butchering_product/spider_legs),
-	/mob/living/simple_animal/hostile/bear				= list(new /datum/butchering_product/skin/bear)
+	/mob/living/simple_animal/cat						= list(/datum/butchering_product/skin/cat),
+	/mob/living/simple_animal/corgi						= list(/datum/butchering_product/skin/corgi),
+	/mob/living/simple_animal/lizard					= list(/datum/butchering_product/skin/lizard),
+	/mob/living/simple_animal/hostile/asteroid/goliath	= list(/datum/butchering_product/skin/goliath),
+	/mob/living/simple_animal/hostile/giant_spider		= list(/datum/butchering_product/spider_legs),
+	/mob/living/simple_animal/hostile/bear				= list(/datum/butchering_product/skin/bear)
 )

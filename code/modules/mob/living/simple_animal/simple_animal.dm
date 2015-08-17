@@ -517,7 +517,10 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	animal_count[src.type]--
 	if(!src.butchering_drops && animal_butchering_products[src.species]) //If we already created a list of butchering drops, don't create another one
 		var/list/L = animal_butchering_products[src.species]
-		src.butchering_drops = L.Copy()
+		src.butchering_drops = list()
+
+		for(var/datum/butchering_product/B in L)
+			src.butchering_drops += new B
 
 	return
 
