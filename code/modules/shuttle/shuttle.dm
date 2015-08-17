@@ -620,11 +620,7 @@
 	if(T.dir != dir)
 		T.dir = dir
 
-	#if LIGHTING_RESOLUTION == 1
 	if(T.lighting_overlay != lighting_overlay)
-	#else
-	if(T.lighting_overlays.len != lighting_overlays.len)
-	#endif
 		T.lighting_fix_overlays()
 //	T.lighting_build_overlays()
 //
