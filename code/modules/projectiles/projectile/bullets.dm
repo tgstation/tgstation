@@ -4,15 +4,17 @@
 	damage = 60
 	damage_type = BRUTE
 	nodamage = 0
+	phase_type = PROJREACT_WINDOWS
+	penetration = 5 //bullets can now by default move through up to 5 windows, or 2 reinforced windows, or 1 plasma window. (reinforced plasma windows still have enough dampening to completely block them)
 	flag = "bullet"
 	var/embed = 1
 
-	on_hit(var/atom/target, var/blocked = 0)
-		if (..(target, blocked))
-			var/mob/living/L = target
-			shake_camera(L, 3, 2)
-			return 1
-		return 0
+/obj/item/projectile/bullet/on_hit(var/atom/target, var/blocked = 0)
+	if (..(target, blocked))
+		var/mob/living/L = target
+		shake_camera(L, 3, 2)
+		return 1
+	return 0
 
 /obj/item/projectile/bullet/dart
 	name = "shotgun dart"

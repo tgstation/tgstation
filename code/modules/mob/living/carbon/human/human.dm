@@ -1640,7 +1640,7 @@
 	gib()
 	return gain
 
-/mob/living/carbon/human/singularity_pull(S, current_size)
+/mob/living/carbon/human/singularity_pull(S, current_size,var/radiations = 3)
 	if(src.flags & INVULNERABLE)
 		return 0
 	if(current_size >= STAGE_THREE)
@@ -1649,7 +1649,8 @@
 			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand,1))
 				step_towards(hand, src)
 				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
-	apply_effect(current_size * 3, IRRADIATE)
+	if(radiations)
+		apply_effect(current_size * radiations, IRRADIATE)
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
 	..()

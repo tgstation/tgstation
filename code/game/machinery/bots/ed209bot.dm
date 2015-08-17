@@ -889,10 +889,14 @@ Auto Patrol: []"},
 	if (!( istype(U, /turf) ))
 		return
 	var/obj/item/projectile/A = new projectile (loc)
-	A.current = U
+	A.original = target
+	A.target = target
+	A.current = T
+	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
+	spawn()
+		A.OnFired()
 		A.process()
 		return
 	return
