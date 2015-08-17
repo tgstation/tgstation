@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes:
+  - rscadd: Round start timer does not start until loading completes.

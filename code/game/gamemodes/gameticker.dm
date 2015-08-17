@@ -60,13 +60,16 @@ var/global/datum/controller/gameticker/ticker
 		"sound/music/space_asshole.ogg",
 		))
 	login_music = fcopy_rsc(oursong)
-
+	// Wait for MC to get its shit together
+	while(!master_controller.initialized)
+		sleep(1) // Don't thrash the poor CPU
+		continue
 	do
 		var/delay_timetotal = 3000 //actually 5 minutes or incase this is changed from 3000, (time_in_seconds * 10)
 		pregame_timeleft = world.timeofday + delay_timetotal
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [(pregame_timeleft - world.timeofday) / 10] seconds"
-		while(current_state == GAME_STATE_PREGAME)
+		while(current_state <= GAME_STATE_PREGAME)
 			for(var/i=0, i<10, i++)
 				sleep(1)
 				vote.process()

@@ -36,6 +36,8 @@ var/list/machine_profiling=list()
 	var/mob/list/expensive_mobs = list()
 	var/rebuild_active_areas = 0
 
+	var/initialized = 0 // Everything initialized? (Delays game start timer until shit is actually loaded)
+
 	var/global/datum/garbage_collector/garbageCollector
 
 datum/controller/game_controller/New()
@@ -88,7 +90,7 @@ datum/controller/game_controller/proc/setup()
 		global.garbageCollector = new
 		garbageCollector = global.garbageCollector
 */
-	setup_objects()
+	setup_objects() // Most log_startup spam happens here
 	setupgenetics()
 	setupfactions()
 	setup_economy()
@@ -96,14 +98,14 @@ datum/controller/game_controller/proc/setup()
 	var/watch=start_watch()
 	log_startup_progress("Caching damage icons...")
 	cachedamageicons()
-	log_startup_progress("Finished caching damage icons in [stop_watch(watch)]s.")
+	log_startup_progress("  Finished caching damage icons in [stop_watch(watch)]s.")
 
 	buildcamlist()
 
 	watch=start_watch()
 	log_startup_progress("Caching jukebox playlists...")
 	load_juke_playlists()
-	log_startup_progress("Finished caching jukebox playlists in [stop_watch(watch)]s.")
+	log_startup_progress("  Finished caching jukebox playlists in [stop_watch(watch)]s.")
 	//if(map && map.dorf)
 		//mining_surprises = typesof(/mining_surprise/dorf) - /mining_surprise/dorf
 		//max_secret_rooms += 2
@@ -122,6 +124,8 @@ datum/controller/game_controller/proc/setup()
 
 	lighting_controller.Initialize()
 */
+	initialized=1
+
 datum/controller/game_controller/proc/buildcamlist()
 	adv_camera.camerasbyzlevel = list()
 	for(var/key in adv_camera.zlevels)
@@ -166,9 +170,10 @@ datum/controller/game_controller/proc/cachedamageicons()
 					damage_icon_parts["[damage_state]/[O.icon_name]/[species_blood]"] = DI
 	del(H)
 
-datum/controller/game_controller/proc/setup_objects()
+/datum/controller/game_controller/proc/setup_objects()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/controller/game_controller/proc/setup_objects() called tick#: [world.time]")
 	var/watch = start_watch()
+	var/overwatch = start_watch() // Overall.
 	log_startup_progress("Initializing objects...")
 	//sleep(-1) // Why
 	//var/last_init_type = null
@@ -212,12 +217,14 @@ datum/controller/game_controller/proc/setup_objects()
 		C.send_html_resources()
 	log_startup_progress("  Finished sending assets in [stop_watch(watch)]s.")
 
-	world << "<span class='danger'>Generating in-game minimaps.</span>"
-	//sleep(-1)
-	generateMiniMaps() // start generating minimaps (this is a background process)
 
-	world << "<span class='danger'>Initializations complete.</span>"
-	//sleep(-1)
+	watch = start_watch()
+	log_startup_progress("Generating in-game minimaps...")
+	generateMiniMaps()
+	log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
+
+	log_startup_progress("Finished initializations in [stop_watch(overwatch)]s.")
+
 
 
 /datum/controller/game_controller/proc/process()
