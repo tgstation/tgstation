@@ -19,6 +19,9 @@
 	else
 		var/oldname = target.real_name
 		target.real_name = random_name(target.gender)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.sec_hud_set_security_status()	//Update HUD
 		var/newname = target.real_name	//something about how the code handles names required that I use this instead of target.real_name
 		user.visible_message("<span class='notice'>[user] alters [oldname]'s appearance completely, they are now [newname]!</span>")
 	return 1

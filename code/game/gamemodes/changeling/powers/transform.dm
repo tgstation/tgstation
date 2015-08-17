@@ -19,6 +19,7 @@
 	user.real_name = chosen_dna.real_name
 	hardset_dna(user, null, null, null, null, chosen_dna.species.type)
 	user.dna.mutant_color = chosen_dna.mutant_color
+	user.sec_hud_set_security_status()
 	updateappearance(user)
 	domutcheck(user)
 
