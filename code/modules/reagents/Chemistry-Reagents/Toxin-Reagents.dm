@@ -677,7 +677,7 @@ datum/reagent/FEV
 	description = "???"
 	color = "#13BC5E" // rgb: 207, 54, 0
 
-datum/reagent/toxin/FEV/on_mob_life(var/mob/living/M as mob)
+datum/reagent/FEV/on_mob_life(var/mob/living/M as mob)
 	if(prob(1)) M.gib()
 	..()
 	return
