@@ -401,7 +401,8 @@ its easier to just keep the beam vertical.
 						user << "<span class='info'>[R.volume] units of [R.name]</span>"
 				else
 					user << "<span class='info'>Nothing.</span>"
-			else
+
+			else //Show stupid things to hallucinating mobs
 				var/list/fake_reagents = list("Water", "Orange juice", "Banana juice", "Tungsten", "Chloral Hydrate", "Helium",\
 					"Sea water", "Energy drink", "Gushin' Granny", "Salt", "Sugar", "something yellow", "something red", "something blue",\
 					"something suspicious", "something smelly", "something sweet", "Soda", "something that reminds you of home",\

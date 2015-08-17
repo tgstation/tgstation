@@ -193,6 +193,8 @@
 
 		if(druggy)
 			druggy = max(druggy - 1, 0)
+			if(!druggy)
+				src << "It looks like you are back in Kansas."
 /*
 		// Increase germ_level regularly
 		if(prob(40))

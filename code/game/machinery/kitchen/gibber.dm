@@ -184,16 +184,17 @@ obj/machinery/gibber/New()
 		return
 
 	src.add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user.name] starts climbing into the [src].</span>", \
+
+	user.visible_message("<span class='warning'>[user] starts climbing into the [src].</span>", \
 		"<span class='warning'>You start climbing into the [src].</span>", \
-		drugged_message = "<span class='warning'>[user.name] starts dancing like a ballerina!</span>", \
-		self_drugged_message = "<span class='warning'>You start climbing onto the big metal box.</span>")
+		drugged_message = "<span class='warning'>[user] starts dancing like a ballerina!</span>")
 
 	if(do_after(user, src, 30) && user && !occupant && !isnull(src.loc))
+
 		user.visible_message("<span class='warning'>[user] climbs into the [src]</span>", \
 			"<span class='warning'>You climb into the [src].</span>", \
-			drugged_message = "<span class='warning'>[user] suddenly disappears! How did he do that?</span>", \
-			self_drugged_message = "<span class='warning'>You fall down into the big metal box! It's so warm in here...</span>")
+			drugged_message = "<span class='warning'>[src] consumes [user]!</span>")
+
 		if(user.client)
 			user.client.perspective = EYE_PERSPECTIVE
 			user.client.eye = src
@@ -288,7 +289,7 @@ obj/machinery/gibber/New()
 		return
 	if(!victim)
 		visible_message("<span class='warning'>You hear a loud metallic grinding sound.</span>", \
-			drugged_message = "<span class='warning'>You hear a band performance.</span>")
+			drugged_message = "<span class='warning'>You fainly hear a guitar solo.</span>")
 		return
 	use_power(1000)
 	visible_message("<span class='warning'>You hear a loud squelchy grinding sound.</span>", \

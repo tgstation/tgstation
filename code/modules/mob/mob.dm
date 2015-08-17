@@ -1,4 +1,4 @@
-#define MOB_SPACEDRUGS_HALLUCINATING 1
+#define MOB_SPACEDRUGS_HALLUCINATING 5
 #define MOB_MINDBREAKER_HALLUCINATING 100
 
 /obj/screen/fuckstat
@@ -244,9 +244,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 		src << hallucination_msg
 	else
 		src << msg
-
-#define MESSAGE_SEE		1
-#define MESSAGE_HEAR	2
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1=visible or 2=hearable), alternative message, alt message type (1=if blind or 2=if deaf)
 

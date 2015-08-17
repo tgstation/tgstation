@@ -380,8 +380,6 @@
 
 			if(druggy)
 				druggy = max(druggy-1, 0)
-				if(!druggy)
-					src << "It looks like you are back in Kansas."
 		return 1
 
 

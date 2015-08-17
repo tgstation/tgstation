@@ -95,10 +95,10 @@ REAGENT SCANNER
 	if(!user.hallucinating())
 		healthanalyze(M, user, mode)
 	else
-		if( (M.stat == DEAD || (M.status_flags & FAKEDEATH) ) && !user.is_deaf())
-			user << "<span class='notice'>The [name] glows black and says: </span><b>It's dead, Jim.</b>"
+		if( (M.stat == DEAD || (M.status_flags & FAKEDEATH)) )
+			user.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"It's dead, Jim.\"</span>",MESSAGE_HEAR,"<span class='notice'>The [name] glows black.</span>")
 		else
-			user << "<span class='notice'>The [name] glows [pick("red","green","blue","pink")] and beeps! You're pretty sure that was supposed to mean something, but you have no idea what.</span>"
+			user << "<span class='notice'>[src] glows [pick("red","green","blue","pink")]! You wonder what would that mean.</span>"
 	src.add_fingerprint(user)
 
 proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)

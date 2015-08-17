@@ -329,7 +329,6 @@ var/global/list/organ_damage_overlays = list(
 		update_overlays = 0
 		UpdateDamageIcon()
 	cycle++
-
 	..()
 
 //Need this in species.
