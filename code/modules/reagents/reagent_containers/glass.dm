@@ -175,6 +175,8 @@
 			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
 
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
+		filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
+
 		overlays += filling
 
 	if(!is_open_container())

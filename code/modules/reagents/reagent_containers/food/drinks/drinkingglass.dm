@@ -26,6 +26,8 @@
 		/*else if(reagents.reagent_list.len == 1)
 			for(var/datum/reagent/R in reagents.reagent_list)
 				switch(R.id)*/
+		viewcontents = 1
+		overlays.len = 0
 		if (reagents.reagent_list.len > 0)
 			//mrid = R.get_master_reagent_id()
 			flammable = 0
@@ -472,13 +474,20 @@
 					name = "\improper Rewriter"
 					desc = "The secert of the sanctuary of the Libarian..."
 				else
-					icon_state ="glass_brown"
-					name = "glass of ..what?"
-					desc = "You can't really tell what this is."
+					icon_state ="glass_colour"
+					get_reagent_name(src)
+					var/image/filling = image('icons/obj/reagentfillings.dmi', src, "glass")
+					filling.icon += mix_color_from_reagents(reagents.reagent_list)
+					filling.alpha = mix_alpha_from_reagents(reagents.reagent_list)
+					overlays += filling
+
+
+
 			if(reagents.has_reagent("blackcolor"))
 				icon_state ="blackglass"
 				name = "international drink of mystery"
 				desc = "The identity of this drink has been concealed for its protection."
+				viewcontents = 0
 		else
 			icon_state = "glass_empty"
 			name = "drinking glass"

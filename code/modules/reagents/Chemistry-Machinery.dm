@@ -1213,6 +1213,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list("applejuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice" = 0),

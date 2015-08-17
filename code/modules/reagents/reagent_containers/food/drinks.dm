@@ -219,7 +219,7 @@
 	else
 		user << "\icon[src] That's \a [src]."
 		user << desc
-		user << "<span class='info'>Its contents are solid black!</span>"
+		user << "<span class='info'>You can't quite make out its content!</span>"
 
 	if(!reagents || reagents.total_volume == 0)
 		user << "<span class='info'>\The [src] is empty!</span>"

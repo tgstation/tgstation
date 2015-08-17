@@ -23,6 +23,7 @@
 	var/overdose_dam = 1
 	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
+	var/alpha = 255
 
 /datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
  //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/reaction_mob() called tick#: [world.time]")
@@ -241,7 +242,8 @@
 	id = "water"
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
-	color = "#0064C8" // rgb: 0, 100, 200
+	color = "#DEF7F5" // rgb: 192, 227, 233
+	alpha = 128
 
 /datum/reagent/water/on_mob_life(var/mob/living/M as mob,var/alien)
 	if(ishuman(M))
@@ -3254,9 +3256,9 @@
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M as mob)
-
 	if(!holder) return
 	..()
 	if(M.getToxLoss() && prob(20)) M.adjustToxLoss(-1*REM)
@@ -3267,9 +3269,9 @@
 	id = "tomatojuice"
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/tomatojuice/on_mob_life(var/mob/living/M as mob)
-
 	if(!holder) return
 	..()
 	if(M.getFireLoss() && prob(20)) M.heal_organ_damage(0,1)
@@ -3279,19 +3281,22 @@
 	name = "Lime Juice"
 	id = "limejuice"
 	description = "The sweet-sour juice of limes."
-	color = "#365E30" // rgb: 54, 94, 48
-	on_mob_life(var/mob/living/M as mob)
+	color = "#BBB943" // rgb: 187, 185, 67
+	alpha = 170
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
-		if(!holder) return
-		..()
-		if(M.getToxLoss() && prob(20)) M.adjustToxLoss(-1)
-		return
+/datum/reagent/drink/limejuice/on_mob_life(var/mob/living/M as mob)
+	if(!holder) return
+	..()
+	if(!M) M = holder.my_atom
+	if(M.getToxLoss() && prob(20)) M.adjustToxLoss(-1)
 
 /datum/reagent/drink/carrotjuice
 	name = "Carrot juice"
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/carrotjuice/on_mob_life(var/mob/living/M as mob)
 	if(!holder) return
@@ -3306,6 +3311,7 @@
 			if (prob(data-10))
 				M.disabilities &= ~NEARSIGHTED
 	data++
+	if(prob(50)) M.heal_organ_damage(1,0)
 	return
 
 /datum/reagent/drink/berryjuice
@@ -3313,6 +3319,7 @@
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/poisonberryjuice
 	name = "Poison Berry Juice"
@@ -3321,7 +3328,6 @@
 	color = "#863353" // rgb: 134, 51, 83
 
 /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M as mob)
-
 	if(!holder) return
 	..()
 	M.adjustToxLoss(1)
@@ -3331,45 +3337,69 @@
 	name = "Watermelon Juice"
 	id = "watermelonjuice"
 	description = "Delicious juice made from watermelon."
-	color = "#863333" // rgb: 134, 51, 51
+	color = "#EF3520" // rgb: 239, 53, 32
+	alpha = 240
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+
+/datum/reagent/drink/applejuice
+	name = "Apple Juice"
+	id = "applejuice"
+	description = "Tastes of New-York."
+	color = "#FDAD01" // rgb: 253, 173, 1
+	alpha = 150
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/lemonjuice
 	name = "Lemon Juice"
 	id = "lemonjuice"
 	description = "This juice is VERY sour."
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#C6BB6E" // rgb: 198, 187, 110
+	alpha = 170
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/banana
 	name = "Banana Juice"
 	id = "banana"
 	description = "The raw essence of a banana."
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#FFEBC1" // rgb: 255, 235, 193
+	alpha = 255
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/nothing
 	name = "Nothing"
 	id = "nothing"
 	description = "Absolutely nothing."
+	nutriment_factor = 0
 
 /datum/reagent/drink/potato_juice
 	name = "Potato Juice"
 	id = "potato"
 	description = "Juice of the potato. Bleh."
-	nutriment_factor = 2 * FOOD_METABOLISM
+	nutriment_factor = 5 * FOOD_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+
+/datum/reagent/drink/potato_juice/on_mob_life(var/mob/living/M as mob)
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	M.nutrition += nutriment_factor*REM
+	..()
+	return
 
 /datum/reagent/drink/milk
 	name = "Milk"
 	id = "milk"
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
+	alpha = 240
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/milk/on_mob_life(var/mob/living/M as mob)
-
 	if(!holder) return
+	..()
 	if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10*REAGENTS_METABOLISM)
-	..()
+	if(prob(50)) M.heal_organ_damage(1,0)
 	return
 
 /datum/reagent/drink/milk/soymilk
@@ -3377,12 +3407,14 @@
 	id = "soymilk"
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/milk/cream
 	name = "Cream"
 	id = "cream"
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 
 /datum/reagent/drink/hot_coco
 	name = "Hot Chocolate"
