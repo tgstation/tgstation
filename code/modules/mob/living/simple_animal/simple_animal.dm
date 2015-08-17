@@ -1,3 +1,7 @@
+var/const/ANIMAL_CHILD_CAP = 50
+var/global/list/animal_count = list() //Stores types, and amount of animals of that type associated with the type (example: /mob/living/simple_animal/dog = 10)
+//Animals can't breed if amount of children exceeds 50
+
 /mob/living/simple_animal
 	name = "animal"
 	icon = 'icons/mob/animal.dmi'
@@ -5,8 +9,10 @@
 	maxHealth = 20
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal
-	meat_amount = 1
+
 	var/being_butchered = 0 //To prevent butchering an animal almost instantly
+
+	var/list/butchering_drops //See code/datums/butchering.dm
 
 	var/icon_living = ""
 	var/icon_dead = ""
@@ -70,8 +76,10 @@
 
 	//Hot simple_animal baby making vars
 	var/childtype = null
+	var/child_amount = 1
 	var/scan_ready = 1
 	var/species //Sorry, no spider+corgi buttbabies.
+	var/can_breed = 0
 
 	//Null rod stuff
 	var/supernatural = 0
@@ -103,6 +111,10 @@
 	verbs -= /mob/verb/observe
 	if(!real_name)
 		real_name = name
+	if(!species)
+		species = src.type
+
+	animal_count[src.type]++
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -261,14 +273,18 @@
 
 	if(!atmos_suitable)
 		adjustBruteLoss(unsuitable_atoms_damage)
+
+	if(can_breed)
+		make_babies()
+
 	return 1
 
 /mob/living/simple_animal/gib(var/animation = 0, var/meat = 1)
 	if(icon_gib)
 		flick(icon_gib, src)
 
-	if(meat && meat_amount && meat_type)
-		for(var/i = 0; i < meat_amount; i++)
+	if(meat && meat_type)
+		for(var/i = 0; i < (src.size - meat_taken); i++)
 			drop_meat(get_turf(src))
 
 	..()
@@ -438,18 +454,13 @@
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
-				if(MED.amount >= 1)
+				if(MED.use(1))
 					adjustBruteLoss(-MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						del(MED)
-					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
-							M.show_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
+					src.visible_message("<span class='notice'>[user] applies \the [MED] on [src].</span>")
 		else
 			user << "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>"
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchen/utensil/knife/large) || istype(O, /obj/item/weapon/kitchen/utensil/knife/large/butch))
+	else if((meat_type || butchering_drops) && (stat == DEAD))	//if the animal has a meat, and if it is dead.
+		if(O.is_sharp())
 			harvest(user,O)
 	else
 		user.delayNextAttack(8)
@@ -502,6 +513,12 @@
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
+
+	animal_count[src.type]--
+	if(!src.butchering_drops && animal_butchering_products[src.species]) //If we already created a list of butchering drops, don't create another one
+		var/list/L = animal_butchering_products[src.species]
+		src.butchering_drops = L.Copy()
+
 	return
 
 /mob/living/simple_animal/death(gibbed)
@@ -577,6 +594,8 @@
 
 /mob/living/simple_animal/revive()
 	health = maxHealth
+	butchering_drops = null
+	meat_taken = 0
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
@@ -599,12 +618,22 @@
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+		else if(istype(M, /mob/living))
 			if(!istype(M, /mob/dead/observer) || M.stat != DEAD) //Make babies with ghosts or dead people nearby!
 				alone = 0
 				continue
 	if(alone && partner && children < 3)
-		new childtype(loc)
+		give_birth()
+
+/mob/living/simple_animal/proc/give_birth()
+	for(var/i=1; i<=child_amount; i++)
+		if(animal_count[childtype] > ANIMAL_CHILD_CAP)
+			break
+
+		var/mob/living/simple_animal/child = new childtype(loc)
+		if(istype(child))
+			child.faction = src.faction
+
 
 // Harvest an animal's delicious byproducts
 /mob/living/simple_animal/proc/harvest(mob/user, obj/item/tool)
@@ -619,23 +648,71 @@
 	var/butchering_time = 20 * src.size //2 times size(from 1 to 5). Butchering a goliath takes 8 seconds, butchering a mouse takes 2
 	butchering_time = Clamp(butchering_time / tool.sharpness, 10, 70)
 
+	if(tool.sharpness < 1.0)
+		butchering_time += 30 //3 seconds penalty if you're using something very dull
+
+	if(src.butchering_drops && src.butchering_drops.len)
+		var/list/actions = list()
+		actions += "Butcher"
+		for(var/datum/butchering_product/B in src.butchering_drops)
+			actions |= capitalize(B.verb_name)
+			actions[capitalize(B.verb_name)] = B
+		actions += "Cancel"
+
+		var/choice = input(user,"What would you like to do with \the [src]?","Butchering") in actions
+		if(!Adjacent(user) || !(usr.get_active_hand() == tool)) return
+
+		if(choice == "Cancel")
+			return 0
+		else if(choice != "Butcher")
+			var/datum/butchering_product/our_product = actions[choice]
+			if(!istype(our_product)) return
+
+			user.visible_message("<span class='notice'>[user] starts [our_product.verb_gerund] \the [src].</span>",\
+				"<span class='info'>You start [our_product.verb_gerund] \the [src].</span>")
+			src.being_butchered = 1
+			if(!do_after(user,src,butchering_time))
+				user << "<span class='warning'>Your attempt to [our_product.verb_name] \the [src] has been interrupted.</span>"
+				src.being_butchered = 0
+			else
+				user << "<span class='info'>You finish [our_product.verb_gerund] \the [src].</span>"
+				src.being_butchered = 0
+				src.update_icons()
+				our_product.spawn_result(get_turf(src))
+
+				if(our_product.amount <= 0)
+					butchering_drops -= our_product
+					del(our_product)
+			return
+
 	user.visible_message("<span class='notice'>[user] starts butchering \the [src].</span>",\
 		"<span class='info'>You start butchering \the [src].</span>")
 	src.being_butchered = 1
 
 	if(!do_after(user,src,butchering_time))
 		user << "<span class='warning'>Your attempt to butcher \the [src] was interrupted.</span>"
+		src.being_butchered = 0
 		return
 
 	drop_meat(get_turf(src))
+	src.meat_taken++
 	src.being_butchered = 0
 
-	if(prob(min(15 * src.size,90))) //Chance to drop extra meat depends on the tool's quality and the size of the monster! It can't go above 90%
+	if(src.meat_taken < src.size) //Chance to drop extra meat depends on the tool's quality and the size of the monster! It can't go above 90%
 		user << "<span class='info'>You cut a chunk of meat out of \the [src].</span>"
 		return
 
 	user << "<span class='info'>You butcher \the [src].</span>"
 	gib(meat = 0)
+
+// Return 0 if this animal has been skinned or butchered
+/mob/living/simple_animal/proc/intact()
+	if(meat_taken)
+		return 0
+	var/list/initial_butchering_drops = initial(butchering_drops)
+	if(butchering_drops.len != initial_butchering_drops.len)
+		return 0
+	return 1
 
 /mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()

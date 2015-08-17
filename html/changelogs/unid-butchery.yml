@@ -1,0 +1,15 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - tweak: When examining a mob, it's possible to see its size and whether it has been butchered.
+  - tweak: Butchering is no longer random, and can be done with any sharp object
+  - tweak: Pickaxes are now sharp
+  - tweak: Changed sizes of some animals
+  - rscadd: Space carps can breed now (credit to Bad_Spriter for baby carp sprites)
+  - rscadd: Dead cats, corgis, lizards, space bears and goliaths can be skinned
+  - tweak: Skinning space bears creates a bear pelt hat
+  - tweak: Bear pelt hats from other sources have been renamed to cheap bear pelt hats
+  - tweak: Goliath hides can only be obtained by skinning
+  - rscadd: Legs of giant spiders can be cut off

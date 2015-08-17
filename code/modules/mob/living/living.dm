@@ -24,6 +24,33 @@
 		static_overlays = null
 	. = ..()
 
+/mob/living/examine(mob/user) //Show the mob's size and whether it's been butchered
+	var/size
+	switch(src.size)
+		if(SIZE_TINY)
+			size = "tiny"
+		if(SIZE_SMALL)
+			size = "small"
+		if(SIZE_NORMAL)
+			size = "average in size"
+		if(SIZE_BIG)
+			size = "big"
+		if(SIZE_HUGE)
+			size = "huge"
+
+	var/pronoun = "it is"
+	if(src.gender == FEMALE)
+		pronoun = "she is"
+	else if(src.gender == MALE)
+		pronoun = "he is"
+	else if(src.gender == PLURAL)
+		pronoun = "they are"
+
+	var/butchery = ""
+	if(src.meat_taken > 0)
+		butchery = " [capitalize(pronoun)] partially butchered."
+	..(user, " [capitalize(pronoun)] [size].[butchery]")
+
 /mob/living/Life()
 	..()
 	if (flags & INVULNERABLE)
@@ -1101,3 +1128,4 @@ default behaviour is:
 		else
 			A.name = "[initial(src.name)] meat"
 			A.animal_name = initial(src.name)
+	return M

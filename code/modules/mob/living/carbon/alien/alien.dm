@@ -15,7 +15,6 @@
 	mob_push_flags = ALLMOBS ^ ROBOT
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/xenomeat
-	meat_amount = 3
 
 	var/storedPlasma = 250
 	var/max_plasma = 500

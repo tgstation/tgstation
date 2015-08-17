@@ -55,7 +55,7 @@
 				else
 					src.icon_state = "spikebloody"
 
-				src.meat_remaining = 1 + our_mob.meat_amount
+				src.meat_remaining = 1 + our_mob.size - our_mob.meat_taken
 
 				user.visible_message("<span class='warning'>[user] has forced [our_mob] onto the spike, killing it instantly!</span>")
 
@@ -81,6 +81,8 @@
 			else
 				user << "You remove the last piece of meat from \the [src]!"
 				src.clean()
+	else
+		src.clean()
 
 /obj/structure/kitchenspike/proc/clean()
 	icon_state = initial(icon_state)

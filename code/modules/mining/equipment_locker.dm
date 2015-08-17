@@ -691,12 +691,20 @@
 	throw_range = 5
 	var/loaded = 1
 
+/obj/item/weapon/lazarus_injector/update_icon()
+	..()
+	if(loaded)
+		icon_state = "lazarus_hypo"
+	else
+		icon_state = "lazarus_empty"
+
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
 		return
 	if(istype(target, /mob/living) && proximity_flag)
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
+
 			if(M.stat == DEAD)
 				M.faction = "lazarus \ref[user]"
 				M.revive()
@@ -707,7 +715,7 @@
 				loaded = 0
 				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
 				playsound(src,'sound/effects/refill.ogg',50,1)
-				icon_state = "lazarus_empty"
+				update_icon()
 				return
 			else
 				user << "<span class='info'>[src] is only effective on the dead.</span>"

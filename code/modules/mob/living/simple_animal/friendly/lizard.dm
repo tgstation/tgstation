@@ -13,4 +13,5 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
+
 	size = SIZE_TINY

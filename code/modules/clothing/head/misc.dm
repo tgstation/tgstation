@@ -245,13 +245,17 @@
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/bearpelt
-	name = "bear pelt hat"
-	desc = "Fuzzy."
+	name = "cheap bear pelt hat"
+	desc = "Not as fuzzy as the real thing."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
 	flags = FPRINT
 	flags_inv = HIDEHEADHAIR
 	siemens_coefficient = 2.0
+
+/obj/item/clothing/head/bearpelt/real
+	name = "bear pelt hat"
+	desc = "Now that's what I call fuzzy."
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
