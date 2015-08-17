@@ -25,6 +25,7 @@
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
+	..()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -268,6 +269,7 @@
 	if (power_station)
 		power_station.teleporter_hub = null
 		power_station = null
+	..()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
