@@ -17,11 +17,15 @@
 
 // Wires for the airlock are located in the datum folder, inside the wires datum folder.
 
+#define AIRLOCK_CLOSED	1
+#define AIRLOCK_CLOSING	2
+#define AIRLOCK_OPEN	3
+#define AIRLOCK_OPENING	4
 
 /obj/machinery/door/airlock
 	name = "airlock"
-	icon = 'icons/obj/doors/Doorint.dmi'
-	icon_state = "door_closed"
+	icon = 'icons/obj/doors/airlocks/station/public.dmi'
+	icon_state = "closed"
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
@@ -48,49 +52,69 @@
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/detonated = 0
 
+	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
+	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	var/list/airlock_overlays = list()
+
 	explosion_block = 1
 
+/obj/machinery/door/airlock/New()
+	..()
+	wires = new(src)
+	if(src.closeOtherId != null)
+		spawn (5)
+			for (var/obj/machinery/door/airlock/A in world)
+				if(A.closeOtherId == src.closeOtherId && A != src)
+					src.closeOther = A
+					break
+	update_icon()
+
 /obj/machinery/door/airlock/command
-	icon = 'icons/obj/doors/Doorcom.dmi'
+	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_com
 
 /obj/machinery/door/airlock/security
-	icon = 'icons/obj/doors/Doorsec.dmi'
+	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_sec
 
 /obj/machinery/door/airlock/engineering
-	icon = 'icons/obj/doors/Dooreng.dmi'
+	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_eng
 
 /obj/machinery/door/airlock/medical
-	icon = 'icons/obj/doors/Doormed.dmi'
+	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_med
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
-	icon = 'icons/obj/doors/Doormaint.dmi'
+	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_mai
 
 /obj/machinery/door/airlock/external
 	name = "external airlock"
-	icon = 'icons/obj/doors/Doorext.dmi'
+	icon = 'icons/obj/doors/airlocks/external/external.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_ext
 
 /obj/machinery/door/airlock/glass
 	name = "glass airlock"
-	icon = 'icons/obj/doors/Doorglass.dmi'
+	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_glass
 	glass = 1
+	airlock_material = "glass"
 
 /obj/machinery/door/airlock/centcom
-	icon = 'icons/obj/doors/Doorele.dmi'
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	doortype = null //(centcom) there's no door assembly sprites for this one.
 
 /obj/machinery/door/airlock/vault
 	name = "vault door"
-	icon = 'icons/obj/doors/vault.dmi'
+	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
@@ -105,19 +129,21 @@
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
-	icon = 'icons/obj/doors/Doorfreezer.dmi'
+	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_fre
 
 /obj/machinery/door/airlock/hatch
 	name = "airtight hatch"
-	icon = 'icons/obj/doors/Doorhatchele.dmi'
+	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_hatch
 
 /obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
-	icon = 'icons/obj/doors/Doorhatchmaint2.dmi'
+	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_mhatch
 
@@ -437,47 +463,110 @@ About the new airlock wires panel:
 	else
 		return 0
 
+/obj/machinery/door/airlock/update_icon(state=0)
+	switch(state)
+		if(0)
+			if(density)
+				state = AIRLOCK_CLOSED
+				icon_state = "closed"
+			else
+				state = AIRLOCK_OPEN
+				icon_state = "open"
+		if(AIRLOCK_CLOSED)
+			icon_state = "closed"
+		if(AIRLOCK_OPEN)
+			icon_state = "open"
+		if(AIRLOCK_CLOSING)
+			icon_state = ""
+		if(AIRLOCK_OPENING)
+			icon_state = ""
+	set_airlock_overlays(state)
 
-/obj/machinery/door/airlock/update_icon()
-	if(overlays) overlays.Cut()
-	if(density)
-		if(locked && lights)
-			icon_state = "door_locked"
-		else
-			icon_state = "door_closed"
-		if(p_open || welded || emergency)
-			overlays = list()
+/obj/machinery/door/airlock/proc/set_airlock_overlays(state)
+	var/image/frame_overlay
+	var/image/filling_overlay
+	var/image/lights_overlay
+	var/image/panel_overlay
+	var/image/weld_overlay
+
+	switch(state)
+		if(AIRLOCK_CLOSED)
+			world << "AIRLOCK_CLOSED"
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed")
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
 			if(p_open)
-				overlays += image(icon, "panel_open")
+				panel_overlay = get_airlock_overlay("panel_closed")
 			if(welded)
-				overlays += image(icon, "welded")
-			if(emergency && !locked)
-				overlays += image(icon, "elights")
-	else
-		icon_state = "door_open"
+				weld_overlay = get_airlock_overlay("welded")
+			if(lights)
+				if(locked)
+					lights_overlay = get_airlock_overlay("lights_bolted")
+				else if(emergency)
+					lights_overlay = get_airlock_overlay("lights_emergency")
 
-	return
+		if(AIRLOCK_CLOSING)
+			frame_overlay = get_airlock_overlay("closing", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closing")
+			else
+				filling_overlay = get_airlock_overlay("fill_closing", icon)
+			if(lights)
+				lights_overlay = get_airlock_overlay("lights_closing")
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_closing")
+
+		if(AIRLOCK_OPEN)
+			world << "AIRLOCK OPEN"
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_open")
+			else
+				filling_overlay = get_airlock_overlay("fill_open", icon)
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_open")
+
+		if(AIRLOCK_OPENING)
+			world << "AIRLOCK_OPENING"
+			frame_overlay = get_airlock_overlay("opening", icon)
+
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_opening")
+			else
+				filling_overlay = get_airlock_overlay("fill_opening", icon)
+			if(lights)
+				lights_overlay = get_airlock_overlay("lights_opening")
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_opening")
+
+	overlays.Cut()
+	if(frame_overlay)
+		overlays += frame_overlay
+		frame_overlay.icon_state = frame_overlay.icon_state
+	if(filling_overlay)
+		overlays += filling_overlay
+		filling_overlay.icon_state = filling_overlay.icon_state
+	if(lights_overlay)
+		overlays += lights_overlay
+		lights_overlay.icon_state = lights_overlay.icon_state
+	if(panel_overlay)
+		overlays += panel_overlay
+		panel_overlay.icon_state = panel_overlay.icon_state
+	if(weld_overlay)
+		overlays += weld_overlay
+
+/obj/machinery/door/airlock/proc/get_airlock_overlay(key, icon_file=overlays_file)
+	if(src.airlock_overlays[key])
+		return src.airlock_overlays[key]
+	src.airlock_overlays[key] = image(icon_file, key)
+	return src.airlock_overlays[key]
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
 		if("opening")
-			if(overlays) overlays.Cut()
-			if(p_open)
-				spawn(2) // The only work around that works. Downside is that the door will be gone for a millisecond.
-					flick("o_door_opening", src)  //can not use flick due to BYOND bug updating overlays right before flicking
-			else
-				flick("door_opening", src)
+			update_icon(AIRLOCK_OPENING)
 		if("closing")
-			if(overlays) overlays.Cut()
-			if(p_open)
-				flick("o_door_closing", src)
-			else
-				flick("door_closing", src)
-		if("spark")
-			flick("door_spark", src)
-		if("deny")
-			flick("door_deny", src)
-	return
+			update_icon(AIRLOCK_CLOSING)
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
@@ -1067,7 +1156,7 @@ About the new airlock wires panel:
 			return 0
 	if(charge && !detonated)
 		p_open = 1
-		update_icon()
+		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
 		charge.ex_act(1)
 		detonated = 1
@@ -1135,7 +1224,7 @@ About the new airlock wires panel:
 	if(density)
 		return 1
 	operating = 1
-	do_animate("closing")
+	update_icon(AIRLOCK_CLOSING)
 	src.layer = 3.1
 	sleep(5)
 	src.density = 1
@@ -1152,17 +1241,6 @@ About the new airlock wires panel:
 		if(locate(/mob/living) in get_turf(src))
 			open()
 	return 1
-
-/obj/machinery/door/airlock/New()
-	..()
-	wires = new(src)
-	if(src.closeOtherId != null)
-		spawn (5)
-			for (var/obj/machinery/door/airlock/A in world)
-				if(A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
-
 
 /obj/machinery/door/airlock/proc/prison_open()
 	if(emagged)	return
