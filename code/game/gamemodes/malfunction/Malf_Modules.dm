@@ -123,27 +123,27 @@
 /datum/AI_Module/large/disable_rcd
 	module_name = "RCD disable"
 	mod_pick_name = "rcd"
-	description = "Send a specialised pulse to break all RCD devices on the station."
-	cost = 50
+	description = "Send a specialised pulse to break all hand-held and exosuit Rapid Cconstruction Devices on the station."
+	cost = 25
+	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/disable_rcd
 
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
 	set name = "Disable RCDs"
+	set desc = "Disable all RCD devices on the station, while sparing onboard cyborg RCDs."
 
 	if(!canUseTopic())
 		return
 
-	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
-		if(rcdmod.uses > 0)
-			rcdmod.uses --
-			for(var/obj/item/weapon/rcd/rcd in world)
-				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd in world)
-				rcd.disabled = 1
-			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
-		else src << "<span class='notice'>Out of uses.</span>"
+	for(var/obj/item/weapon/rcd/RCD in rcd_list)
+		if(!istype(/obj/item/weapon/rcd/borg, RCD)) //Ensures that cyborg RCDs are spared.
+			RCD.disabled = 1
+	for(var/obj/item/mecha_parts/mecha_equipment/rcd/MRCD in rcd_list)
+		MRCD.disabled = 1
+
+	src << "<span class='warning'>RCD-disabling pulse emitted.</span>"
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"

@@ -1,0 +1,7 @@
+author: Gun Hog
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+changes: 
+  - tweak: "The Disable RCD Malfunction power now costs 25 CPU (down from 50), can be used multiple times, and no longer affects cyborgs."
