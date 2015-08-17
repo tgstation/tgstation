@@ -13,22 +13,18 @@
 
 	initialize_directions = NORTH|SOUTH|EAST|WEST
 
-	var/obj/machinery/atmospherics/node1 // North
-	var/obj/machinery/atmospherics/node2 // South
-	var/obj/machinery/atmospherics/node3 // East
-	var/obj/machinery/atmospherics/node4 // West
-
-	level = 1
-	layer = 2.4 //under wires with their 2.44
-
+	device_type = QUATERNARY
+/*
 /obj/machinery/atmospherics/pipe/manifold4w/New()
 	color = pipe_color
 	..()
-
+*/
 /obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
-	return
+	initialize_directions = initial(initialize_directions)
 
 /obj/machinery/atmospherics/pipe/manifold4w/atmosinit()
+	..(cardinal)
+/*
 	for(var/D in cardinal)
 		for(var/obj/machinery/atmospherics/target in get_step(src, D))
 			if(target.initialize_directions & get_dir(target,src))
@@ -98,12 +94,8 @@
 		node4 = null
 	update_icon()
 	..()
-
+*/
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon()
-	if(!node1 && !node2 && !node3 && !node4) //Remove us if we ain't connected to anything.
-		qdel(src)
-		return
-
 	var/invis = invisibility ? "-f" : ""
 
 	icon_state = "manifold4w_center[invis]"
@@ -111,18 +103,10 @@
 	overlays.Cut()
 
 	//Add non-broken pieces
-	if(node1)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", NORTH)
-
-	if(node2)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", SOUTH)
-
-	if(node3)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", EAST)
-
-	if(node4)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", WEST)
-
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, NODE_I))
+/*
 /obj/machinery/atmospherics/pipe/manifold4w/update_node_icon()
 	..()
 	if(node1)
@@ -133,7 +117,7 @@
 		node3.update_icon()
 	if(node4)
 		node4.update_icon()
-
+*/
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold4w/general
 	name="pipe"

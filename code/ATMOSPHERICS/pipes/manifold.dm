@@ -15,18 +15,13 @@
 	dir = SOUTH
 	initialize_directions = EAST|NORTH|WEST
 
-	var/obj/machinery/atmospherics/node1
-	var/obj/machinery/atmospherics/node2
-	var/obj/machinery/atmospherics/node3
-
-	level = 1
-	layer = 2.4 //under wires with their 2.44
-
+	device_type = TRINARY
+/*
 /obj/machinery/atmospherics/pipe/manifold/New()
 	color = pipe_color
 
 	..()
-
+*/
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
 	switch(dir)
 		if(NORTH)
@@ -39,6 +34,12 @@
 			initialize_directions = NORTH|EAST|SOUTH
 
 /obj/machinery/atmospherics/pipe/manifold/atmosinit()
+	var/node1_connect = turn(dir, 90)
+	var/node2_connect = turn(dir, 270)
+	var/node3_connect = turn(dir, 180)
+	var/list/node_connects = list(node1_connect, node2_connect, node3_connect)
+	..(node_connects)
+/*
 	for(var/D in cardinal)
 		if(D == dir)
 			continue
@@ -90,7 +91,7 @@
 		node3 = null
 	update_icon()
 	..()
-
+*/
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
 	var/invis = invisibility ? "-f" : ""
 
@@ -99,15 +100,10 @@
 	overlays.Cut()
 
 	//Add non-broken pieces
-	if(node1)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src,node1))
-
-	if(node2)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src,node2))
-
-	if(node3)
-		overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src,node3))
-
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			overlays += getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, NODE_I))
+/*
 /obj/machinery/atmospherics/pipe/manifold/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? 101 : 0
@@ -124,7 +120,7 @@
 		node2.update_icon()
 	if(node3)
 		node3.update_icon()
-
+*/
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold/general

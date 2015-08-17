@@ -23,21 +23,20 @@ Housekeeping and pipe network stuff below
 */
 
 /obj/machinery/atmospherics/components/unary/atmosinit()
-	var/list/node_connects = new/list()
-	node_connects.Add(dir)
+	var/list/node_connects = list(dir)
 	..(node_connects)
 
 /obj/machinery/atmospherics/components/unary/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(!..())
 		return
 	SetInitDirections()
-	var/obj/machinery/atmospherics/node = nodes[NODE1]
+	var/obj/machinery/atmospherics/node = NODE1
 	if(node)
 		node.disconnect(src)
 	node = null
-	nullifyPipenet(parents[PARENT1])
+	nullifyPipenet(PARENT1)
 	atmosinit()
-	node = nodes[NODE1]
+	node = NODE1
 	if(node)
 		node.atmosinit()
 		node.addMember(src)

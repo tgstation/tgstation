@@ -9,7 +9,6 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
-
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -24,6 +23,9 @@ Pipelines + Other Objects -> Pipe network
 	var/global/list/pipeimages = list()
 
 	var/image/pipe_vision_img = null
+
+	var/device_type = 0
+	var/list/obj/machinery/atmospherics/nodes = list()
 
 /obj/machinery/atmospherics/New()
 	..()
@@ -47,8 +49,19 @@ Pipelines + Other Objects -> Pipe network
 	..()
 
 //this is called just after the air controller sets up turfs
-/obj/machinery/atmospherics/proc/atmosinit()
-	return
+/obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
+	for(DEVICE_TYPE_LOOP)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
+			if(target.initialize_directions & get_dir(target,src))
+				NODE_I = target
+				break
+	update_icon()
+
+/obj/machinery/atmospherics/proc/pipeline_expansion()
+	var/list/return_nodes = list()
+	for(DEVICE_TYPE_LOOP)
+		return_nodes |= NODE_I
+	return return_nodes
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -70,7 +83,14 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	return
+	for(DEVICE_TYPE_LOOP)
+		if(reference == NODE_I)
+			if(istype(NODE_I, /obj/machinery/atmospherics/pipe))
+				var/obj/machinery/atmospherics/pipe/P = NODE_I
+				qdel(P.parent)
+			NODE_I = null
+			break
+	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
 	return

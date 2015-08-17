@@ -112,3 +112,36 @@
 // Atmos pipe limits
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
+
+//Atmos machinery pipenet stuff
+
+// used for device_type vars; used by DEVICE_TYPE_LOOP
+#define UNARY		1
+#define BINARY 		2
+#define TRINARY		3
+#define QUATERNARY	4
+
+// this is the standard for loop used by all sorts of atmos machinery procs
+#define DEVICE_TYPE_LOOP	var/I = 1; I <= device_type; I++
+
+// defines for the various machinery lists
+// NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
+
+//  nodes list - all atmos machinery
+#define NODE1	nodes["n1"]
+#define	NODE2	nodes["n2"]
+#define NODE3	nodes["n3"]
+#define NODE4	nodes["n4"]
+#define NODE_I	nodes["n[I]"]
+
+//  airs list - components only
+#define AIR1	airs["a1"]
+#define AIR2	airs["a2"]
+#define AIR3	airs["a3"]
+#define AIR_I	airs["a[I]"]
+
+//  parents list - components only
+#define PARENT1		parents["p1"]
+#define PARENT2		parents["p2"]
+#define PARENT3		parents["p3"]
+#define PARENT_I	parents["p[I]"]

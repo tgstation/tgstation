@@ -1,7 +1,10 @@
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
+
+	level = 1
 	layer = 2.4 //under wires with their 2.44
+
 	use_power = 0
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
@@ -11,8 +14,30 @@
 	buckle_requires_restraints = 1
 	buckle_lying = -1
 
-/obj/machinery/atmospherics/proc/pipeline_expansion()
-	return null
+/obj/machinery/atmospherics/pipe/New()
+	color = pipe_color
+	..()
+
+/obj/machinery/atmospherics/pipe/Destroy()
+	for(DEVICE_TYPE_LOOP)
+		var/obj/machinery/atmospherics/N = NODE_I
+		if(N)
+			var/obj/machinery/atmospherics/oldN = N
+			N.disconnect(src)
+			NODE_I = null
+			oldN.build_network()
+	releaseAirToTurf()
+	..()
+
+/obj/machinery/atmospherics/pipe/atmosinit()
+	var/turf/T = loc			// hide if turf is not intact
+	hide(T.intact)
+	..()
+
+/obj/machinery/atmospherics/pipe/hide(i)
+	if(level == 1 && istype(loc, /turf/simulated))
+		invisibility = i ? 101 : 0
+	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
 	//Return 1 if parent should continue checking other pipes
@@ -59,5 +84,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
-	//Used for pipe painting. Overriden in the children.
-	return
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			var/obj/machinery/atmospherics/N = NODE_I
+			N.update_icon()

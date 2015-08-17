@@ -18,6 +18,8 @@
 	color = "#404040"
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/SetInitDirections()
+	if(dir in diagonals)
+		initialize_directions_he = dir
 	switch(dir)
 		if(SOUTH)
 			initialize_directions_he = SOUTH|NORTH
@@ -27,14 +29,6 @@
 			initialize_directions_he = EAST|WEST
 		if(WEST)
 			initialize_directions_he = WEST|EAST
-		if(NORTHEAST)
-			initialize_directions_he = NORTH|EAST
-		if(NORTHWEST)
-			initialize_directions_he = NORTH|WEST
-		if(SOUTHEAST)
-			initialize_directions_he = SOUTH|EAST
-		if(SOUTHWEST)
-			initialize_directions_he = SOUTH|WEST
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/atmosinit()
 	normalize_dir()
@@ -44,11 +38,11 @@
 			N--
 			for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src, D))
 				if(target.initialize_directions_he & get_dir(target,src))
-					if(!node1 && N == 1)
-						node1 = target
+					if(!NODE1 && N == 1)
+						NODE1 = target
 						break
-					if(!node2 && N == 0)
-						node2 = target
+					if(!NODE2 && N == 0)
+						NODE2 = target
 						break
 	update_icon()
 	..()
@@ -131,21 +125,21 @@
 			initialize_directions_he = WEST
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/update_icon()
-	if(node1&&node2)
+	if(NODE1&&NODE2)
 		icon_state = "intact"
 	else
-		var/have_node1 = node1?1:0
-		var/have_node2 = node2?1:0
+		var/have_node1 = NODE1?1:0
+		var/have_node2 = NODE2?1:0
 		icon_state = "exposed[have_node1][have_node2]"
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/atmosinit()
 	for(var/obj/machinery/atmospherics/target in get_step(src,initialize_directions))
 		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
+			NODE1 = target
 			break
 	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src,initialize_directions_he))
 		if(target.initialize_directions_he & get_dir(target,src))
-			node2 = target
+			NODE2 = target
 			break
 	update_icon()
 	..()

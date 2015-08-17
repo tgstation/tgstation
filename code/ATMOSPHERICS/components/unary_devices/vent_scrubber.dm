@@ -86,7 +86,7 @@
 		icon_state = "scrub_welded"
 		return
 
-	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "scrub_off"
 		return
 
@@ -142,7 +142,7 @@
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes[NODE1])
+	if (!NODE1)
 		on = 0
 	//broadcast_status()
 	if(!on || welded)
@@ -159,7 +159,7 @@
 		return 0
 
 	var/datum/gas_mixture/environment = tile.return_air()
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 
 	if(scrubbing)
 		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))

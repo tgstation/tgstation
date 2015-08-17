@@ -18,8 +18,8 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/output_starting_pressure = air1.return_pressure()
 	var/input_starting_pressure = air2.return_pressure()
