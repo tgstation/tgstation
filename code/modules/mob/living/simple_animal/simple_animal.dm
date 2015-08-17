@@ -600,8 +600,9 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 		else if(istype(M, /mob/))
-			alone = 0
-			continue
+			if(!istype(M, /mob/dead/observer) || M.stat != DEAD) //Make babies with ghosts or dead people nearby!
+				alone = 0
+				continue
 	if(alone && partner && children < 3)
 		new childtype(loc)
 

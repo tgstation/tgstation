@@ -55,6 +55,12 @@ it creates. All the menus and other manipulation commands are in the R&D console
 
 	RefreshParts()
 
+/obj/machinery/r_n_d/fabricator/protolathe/Destroy()
+	if(linked_console && linked_console.linked_lathe == src)
+		linked_console.linked_lathe = null
+
+	. = ..()
+
 /obj/machinery/r_n_d/fabricator/protolathe/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)

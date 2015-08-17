@@ -72,6 +72,20 @@ var/global/list/ghdel_profiling = list()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/handle_beams() called tick#: [world.time]")
 	return 1
 
+/atom/proc/shake(var/xy, var/intensity, mob/user) //Zth. SHAKE IT. Vending machines' kick uses this
+	switch(xy)
+		if(1)
+			src.pixel_x = rand(-intensity, intensity)
+		if(2)
+			src.pixel_y = rand(-intensity, intensity)
+		if(3)
+			src.pixel_x = rand(-intensity, intensity)
+			src.pixel_y = rand(-intensity, intensity)
+
+	spawn(2)
+	src.pixel_x = 0
+	src.pixel_y = 0
+
 /atom/proc/throw_impact(atom/hit_atom, var/speed, user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/throw_impact() called tick#: [world.time]")
 	if(istype(hit_atom,/mob/living))
@@ -747,3 +761,4 @@ its easier to just keep the beam vertical.
 		oldarea = "[oldarea.name]"
 	if(istype(newarea))
 		newarea = "[newarea.name]"
+

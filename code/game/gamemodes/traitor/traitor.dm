@@ -171,8 +171,6 @@
 	<SPAN CLASS='big bold center red'>You are now a traitor!</SPAN>
 	"}
 
-	traitor.current << sound('sound/voice/syndicate intro.ogg')
-
 	var/obj_count = 1
 
 	for (var/datum/objective/objective in traitor.objectives)
@@ -182,10 +180,13 @@
 
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/finalize_traitor() called tick#: [world.time]")
-	if (istype(traitor.current, /mob/living/silicon))
+	//We are firing the alert here, because silicons have a special syndicate intro, courtesy of old mysterious content maker
+	if(istype(traitor.current, /mob/living/silicon))
 		add_law_zero(traitor.current)
+		traitor.current << sound('sound/voice/AISyndiHack.ogg')
 	else
 		equip_traitor(traitor.current)
+		traitor.current << sound('sound/voice/syndicate_intro.ogg')
 	return
 
 

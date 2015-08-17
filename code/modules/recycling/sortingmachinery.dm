@@ -349,15 +349,9 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 
 /obj/machinery/disposal/deliveryChute/Bumped(var/atom/movable/AM) //Go straight into the chute
 	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/item/weapon/dummy))	return
-	switch(dir)
-		if(NORTH)
-			if(AM.loc.y != src.loc.y+1) return
-		if(EAST)
-			if(AM.loc.x != src.loc.x+1) return
-		if(SOUTH)
-			if(AM.loc.y != src.loc.y-1) return
-		if(WEST)
-			if(AM.loc.x != src.loc.x-1) return
+
+	if(dir != get_dir(src, AM))
+		return
 
 	//testing("[src] FUCKING BUMPED BY \a [AM]")
 

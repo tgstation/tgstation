@@ -169,6 +169,9 @@
 		return 1
 
 	if(href_list["eject"])
+		if(!id)
+			return
+
 		id.forceMove(get_turf(src))
 		if(!usr.get_active_hand()) //Nothing in the user's hand.
 			usr.put_in_hands(id)

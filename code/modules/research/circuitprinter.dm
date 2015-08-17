@@ -52,6 +52,13 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	RefreshParts()
 
+/obj/machinery/r_n_d/fabricator/circuit_imprinter/Destroy()
+	if(linked_console && linked_console.linked_imprinter == src)
+		linked_console.linked_imprinter = null	//Clearing of the rest is handled in the parent.
+
+	. = ..()
+
+
 /obj/machinery/r_n_d/fabricator/circuit_imprinter/RefreshParts()
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)

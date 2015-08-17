@@ -1,6 +1,2 @@
 author: N3X15
-changes:
-  - bugfix: "HTML assets are sent before minimap generation, probably making character setup load times more tolerable."
-  - experiment: "Added additional profiling data to server startup messages, and improved logging of these messages."
-  - tweak: "Minimap generation no longer done as a background thread."
-  - tweak: "Removed some blood spatter caching messages, making logs more readable."
+changes: []

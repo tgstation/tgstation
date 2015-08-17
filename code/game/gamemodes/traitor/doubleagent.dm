@@ -94,4 +94,5 @@
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
+	traitor.current << sound('sound/voice/syndicate_intro.ogg')
 	return

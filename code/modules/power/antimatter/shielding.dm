@@ -34,8 +34,8 @@ proc/cardinalrange(var/center)
 	..(loc)
 	machines -= src
 	power_machines += src
-	sleep(10)
-	controllerscan()
+	spawn(10)
+		controllerscan()
 
 
 /obj/machinery/am_shielding/proc/controllerscan(var/priorscan = 0)
@@ -240,7 +240,7 @@ proc/cardinalrange(var/center)
 	w_type = RECYK_METAL
 
 /obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
+	if(ismultitool(I) && isturf(loc))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 		return

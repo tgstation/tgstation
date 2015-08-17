@@ -54,6 +54,10 @@ var/global/list/rnd_machines = list()
 				break
 
 /obj/machinery/r_n_d/Destroy()
+	if(linked_console)
+		linked_console.linked_machines -= src
+		linked_console = null
+
 	rnd_machines -= src
 	wires = null
 	..()

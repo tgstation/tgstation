@@ -33,6 +33,8 @@
 	layer = 2.9
 	anchored = 1
 	density = 1
+	var/health = 100
+	var/maxhealth = 100 //Kicking feature
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
@@ -308,6 +310,18 @@
 	return 1
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
+	if(stat & (BROKEN))
+		if(istype(W, /obj/item/stack/sheet/glass/rglass))
+			var/obj/item/stack/sheet/glass/rglass/G = W
+			user << "<span class='notice'>You replace the broken glass.</span>"
+			G.use(1)
+			stat &= ~BROKEN
+			src.health = 100
+			src.update_vicon()
+			getFromPool(/obj/item/weapon/shard, loc)
+		else
+			user << "<span class='notice'>[src] is broken! Fix it first.</span>"
+			return
 	. = ..()
 	if(.)
 		return .
@@ -465,7 +479,54 @@
 			warning("UNKNOWN PRODUCT: PID: [pid], CAT: [category] INSIDE [type]!")
 			return null
 
-/obj/machinery/vending/attack_hand(mob/user as mob)
+/obj/machinery/vending/proc/TurnOff(var/ticks) //Turn off for a while. 10 ticks = 1 second
+	if(stat & (BROKEN|NOPOWER))
+		return
+
+	stat |= NOPOWER
+	src.update_vicon()
+	src.visible_message("<span class='warning'>[src] goes off!</span>")
+
+	spawn(ticks)
+
+	if(stat & (NOPOWER)) //Make another check just in case something goes weird
+		stat &= ~NOPOWER
+		src.update_vicon()
+
+/obj/machinery/vending/proc/update_vicon()
+	if(stat & (BROKEN))
+		src.icon_state = "[initial(icon_state)]-broken"
+		return
+	else if (stat & (NOPOWER))
+		src.icon_state = "[initial(icon_state)]-off"
+	else
+		src.icon_state = "[initial(icon_state)]"
+
+/obj/machinery/vending/attack_hand(mob/living/user as mob)
+	if(user.a_intent == "hurt") //Will make another update later. Hulks will insta-break
+		user.delayNextAttack(10)
+		user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>",
+								"<span class='danger'>You kick the [src].</span>")
+		playsound(get_turf(src), 'sound/effects/grillehit.ogg', 50, 1) //Zth: I couldn't find a proper sound, please replace it
+		src.shake(1, 3) //1 means x movement, 3 means intensity
+		src.health -= 4
+
+		if(prob(70))
+			user.apply_damage(rand(2,4), BRUTE, "r_leg")
+		if(src.health <= 0)
+			stat |= BROKEN
+			src.update_vicon()
+			return
+		if(prob(4))
+			src.throw_item()
+		if(prob(2))
+			src.TurnOff(600) //A whole minute
+		/*if(prob(1))
+			usr << "<span class='warning'>You fall down and break your leg!</span>"
+			user.emote("scream",,, 1)
+			shake_camera(user, 2, 1)*/
+		return
+
 	if(stat & (BROKEN|NOPOWER))
 		return
 

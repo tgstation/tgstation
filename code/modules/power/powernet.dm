@@ -214,6 +214,9 @@ var/global/powernets_broke = 0
 	. = list()
 	//var/fdir = (!d) ? 0 : turn(d, 180)			// the opposite direction to d (or 0 if d==0)
 
+	if(!T)
+		return
+
 	if(!cable_only)
 		for(var/datum/power_connection/C in T.power_connections)
 			if(!unmarked || !C.powernet)		// if unmarked=1 we only return things with no powernet
