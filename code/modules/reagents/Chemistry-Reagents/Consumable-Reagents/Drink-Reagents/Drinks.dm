@@ -638,7 +638,7 @@ datum/reagent/consumable/firestation_red
 datum/reagent/consumable/firestation_red/on_mob_life(var/mob/living/M as mob)
 	switch(current_cycle)
 		if(10 to INFINITY)
-			M.get_damage(0,1)
+			M.take_overall_damage(0,1)
 			M.hallucination = 1
 	..()
 	return
