@@ -163,6 +163,8 @@
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
 
+	var/autoconvert_notes = 0 //if all connecting player's notes should attempt to be converted to the database
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -343,6 +345,8 @@
 					if (world.log != newlog)
 						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
 						world.log = newlog
+				if("autoconvert_notes")
+					config.autoconvert_notes = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

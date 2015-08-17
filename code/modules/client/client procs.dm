@@ -175,6 +175,9 @@ var/next_external_rsc = 0
 		else
 			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
+	if (config && config.autoconvert_notes)
+		convert_notes_sql(ckey)
+
 	//////////////
 	//DISCONNECT//
 	//////////////

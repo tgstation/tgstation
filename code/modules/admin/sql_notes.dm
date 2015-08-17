@@ -1,4 +1,4 @@
-proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1)
+/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server)
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
@@ -28,10 +28,10 @@ proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1)
 		adminckey = usr.ckey
 		if(!adminckey)
 			return
-	var/server
-	if (config && config.server_name)
-		server = config.server_name
 	var/admin_sql_ckey = sanitizeSQL(adminckey)
+	if(!server)
+		if (config && config.server_name)
+			server = config.server_name
 	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]')")
 	if(!query_noteadd.Execute())
 		var/err = query_noteadd.ErrorMsg()
@@ -40,9 +40,9 @@ proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1)
 	if(logged)
 		log_admin("[key_name(usr)] has added a note to [target_ckey]: [notetext]")
 		message_admins("[key_name_admin(usr)] has added a note to [target_ckey]:<br>[notetext]")
-	show_note(target_ckey)
+		show_note(target_ckey)
 
-proc/remove_note(note_id)
+/proc/remove_note(note_id)
 	var/ckey
 	var/notetext
 	var/adminckey
@@ -69,7 +69,7 @@ proc/remove_note(note_id)
 	message_admins("[key_name_admin(usr)] has removed a note made by [adminckey] from [ckey]:<br>[notetext]")
 	show_note(ckey)
 
-proc/edit_note(note_id)
+/proc/edit_note(note_id)
 	if(!dbcon.IsConnected())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
@@ -100,7 +100,7 @@ proc/edit_note(note_id)
 		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s note made by [adminckey] from<br>[old_note]<br>to<br>[new_note]")
 	show_note(target_ckey)
 
-proc/show_note(target_ckey, index, linkless = 0)
+/proc/show_note(target_ckey, index, linkless = 0)
 	var/output
 	var/navbar
 	var/ruler
@@ -161,3 +161,54 @@ proc/show_note(target_ckey, index, linkless = 0)
 		output += "<center><a href='?_src_=holder;addnoteempty=1'>\[Add Note\]</a></center>"
 		output += ruler
 	usr << browse(output, "window=show_notes;size=900x500")
+
+/proc/regex_note_sql_extract(str, exp)
+	return new /datum/regex(str, exp, call(LIBREGEX_LIBRARY, "regEx_find")(str, exp))
+
+#define NOTESFILE "data/player_notes.sav"
+//if the AUTOCONVERT_NOTES is turned on, anytime a player connects this will be run to try and add all their notes to the databas
+/proc/convert_notes_sql(ckey)
+	var/savefile/notesfile = new(NOTESFILE)
+	if(!notesfile)
+		log_game("Error: Cannot access [NOTESFILE]")
+		return
+	notesfile.cd = "/[ckey]"
+	while(!notesfile.eof)
+		var/notetext
+		notesfile >> notetext
+		var/server
+		if (config && config.server_name)
+			server = config.server_name
+		var/regex = "^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$"
+		var/datum/regex/results = regex_note_sql_extract(notetext, regex)
+		var/timestamp = results.str(2)
+		notetext = results.str(3)
+		var/adminckey = results.str(4)
+		var/DBQuery/query_convert_time = dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
+		if(!query_convert_time.Execute())
+			var/err = query_convert_time.ErrorMsg()
+			log_game("SQL ERROR converting timestamp. Error : \[[err]\]\n")
+			return
+		if(query_convert_time.NextRow())
+			timestamp = query_convert_time.item[1]
+		if(ckey && notetext && timestamp && adminckey && server)
+			add_note(ckey, notetext, timestamp, adminckey, 0, server)
+		else
+	notesfile.cd = "/"
+	notesfile.dir.Remove(ckey)
+
+/*alternatively this proc can be run once to pass through every note and attempt to convert it before deleting the file, if done then AUTOCONVERT_NOTES should be turned off
+this proc can take several minutes to execute fully if converting and cause DD to hang if converting a lot of notes; it's not advised to do so while a server is live
+/proc/mass_convert_notes()
+	world << "Beginning mass note conversion"
+	var/savefile/notesfile = new(NOTESFILE)
+	if(!notesfile)
+		log_game("Error: Cannot access [NOTESFILE]")
+		return
+	notesfile.cd = "/"
+	for(var/ckey in notesfile.dir)
+		convert_notes_sql(ckey)
+	world << "Deleting NOTESFILE"
+	fdel(NOTESFILE)
+	world << "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES"*/
+#undef NOTESFILE
