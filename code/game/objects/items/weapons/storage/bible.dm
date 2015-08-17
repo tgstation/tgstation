@@ -129,18 +129,18 @@
 		bless(user, H) //Let's outsource the healing code, because we can
 
 //Bless thee. Heals followers fairly, potentially heals everyone a bit (or gives them brain damage)
-/obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/human/user, mob/living/carbon/human/M)
-	var/datum/organ/internal/brain/sponge = M.internal_organs_by_name["brain"]
+/obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/human/user, mob/living/carbon/human/H)
+	var/datum/organ/internal/brain/sponge = H.internal_organs_by_name["brain"]
 	if(sponge && sponge.damage >= 60) //Massive brain damage
-		user << "<span class='warning'>[M] responds to \the [src]'s blessing with drooling and an empty stare. [deity_name]'s teachings appear to be lost on this poor soul.</span>"
+		user << "<span class='warning'>[H] responds to \the [src]'s blessing with drooling and an empty stare. [deity_name]'s teachings appear to be lost on this poor soul.</span>"
 		return //Brainfart
 	//TODO: Put code for followers right here
 	if(prob(20)) //1/5 chance of adding some brain damage. You can't just heal people for free
-		M.adjustBrainLoss(5)
+		H.adjustBrainLoss(5)
 	if(prob(50)) //1/2 chance of healing at all
-		for(var/datum/organ/external/affecting in M.organs)
+		for(var/datum/organ/external/affecting in H.organs)
 			if(affecting.heal_damage(5, 5)) //5 brute and burn healed per bash. Not wonderful, but it can help if someone has Alkyzine handy
-				M.UpdateDamageIcon()
+				H.UpdateDamageIcon()
 	return //Nothing else to add
 
 //We're done working on mobs, let's check if we're blessing something else
