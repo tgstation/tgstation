@@ -7,7 +7,7 @@
 	transmittable = -4
 	level = 7
 
-/datum/symptom/stimulant/Activate(var/datum/disease/advance/A)
+/datum/symptom/regen/Activate(var/datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob

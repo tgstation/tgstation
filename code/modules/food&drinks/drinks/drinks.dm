@@ -311,7 +311,7 @@
 	list_reagents = list("fruity_filtered" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/lemeta_limeade
-	name = "LeMera Limeade"
+	name = "LeMeta Limeade"
 	desc = "Somehow you know that it has a citrus flavor."
 	icon_state = "lemeta_limeade"
 	list_reagents = list("lemeta_limeade" = 30)
