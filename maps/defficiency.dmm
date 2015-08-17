@@ -2299,7 +2299,7 @@
 "aSk" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "dark-markings"; dir = 8},/area/hydroponics)
 "aSl" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden,/turf/simulated/floor{icon_state = "green"; dir = 8},/area/hydroponics)
 "aSm" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 8; on = 1},/turf/simulated/floor,/area/hydroponics)
-"aSn" = (/mob/living/simple_animal/chick{desc = "He looks depressed."; flavor_text = "He's disappointed in you."; health = 666; meat_amount = 20; name = "Pomfy"},/turf/simulated/floor,/area/hydroponics)
+"aSn" = (/mob/living/simple_animal/chick{desc = "He looks depressed."; flavor_text = "He's disappointed in you."; health = 666; meat_left = 20; name = "Pomfy"},/turf/simulated/floor,/area/hydroponics)
 "aSo" = (/obj/structure/table,/obj/machinery/reagentgrinder,/turf/simulated/floor{icon_state = "dark"},/area/hydroponics)
 "aSp" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/hydroponics)
 "aSq" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
