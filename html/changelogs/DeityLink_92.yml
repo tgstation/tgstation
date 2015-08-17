@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixed players being sent into nullspace (black screen) when inside a decapitated head that gets deleted. Often happens to people falling into singularities.
