@@ -1310,3 +1310,8 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				..()
 	else
 		..()
+
+obj/item/weapon/organ/head/Destroy()
+	if(brainmob)
+		brainmob.ghostize()
+	..()
