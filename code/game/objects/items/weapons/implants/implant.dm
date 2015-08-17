@@ -11,10 +11,16 @@
 
 /obj/item/weapon/implant/New()
 	..()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.sec_hud_set_implants()
 	implants += src
 
 /obj/item/weapon/implant/Destroy()
 	implants -= src
+	if(ishuman(imp_in))
+		var/mob/living/carbon/human/H = imp_in
+		H.sec_hud_set_implants()
 	..()
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
@@ -34,9 +40,6 @@
 /obj/item/weapon/implant/proc/implanted(var/mob/source)
 	if(activated)
 		action_button_name = "Activate [src.name]"
-	if(istype(source, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = source
-		H.sec_hud_set_implants()
 	return 1
 
 
@@ -175,7 +178,6 @@
 
 
 /obj/item/weapon/implant/loyalty/implanted(mob/target)
-	..()
 	if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_shadow_or_thrall(target))
 		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
 		return 0
@@ -189,6 +191,7 @@
 		target << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
 	else
 		target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
+	return ..()
 
 
 /obj/item/weapon/implant/adrenalin
