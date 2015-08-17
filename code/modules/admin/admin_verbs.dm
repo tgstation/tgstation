@@ -129,7 +129,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/check_bomb_impacts,
 	/proc/machine_upgrade,
 	/client/proc/populate_world,
-	/client/proc/cmd_display_del_log
+	/client/proc/cmd_display_del_log,
+	/client/proc/reset_latejoin_spawns
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

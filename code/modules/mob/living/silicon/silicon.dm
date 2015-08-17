@@ -153,7 +153,7 @@
 /mob/living/silicon/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src,2)
+	Proj.on_hit(src)
 	return 2
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)

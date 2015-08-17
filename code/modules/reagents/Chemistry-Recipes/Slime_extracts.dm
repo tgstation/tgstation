@@ -123,6 +123,23 @@
 
 		chemical_mob_spawn(holder, 1, "Lesser Gold Slime", "neutral")
 
+/datum/chemical_reaction/slimecritfriendly
+	name = "Slime Crit Friendly"
+	id = "m_tele5"
+	result = null
+	required_reagents = list("water" = 1)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/gold
+	required_other = 1
+
+/datum/chemical_reaction/slimecritfriendly/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[replacetext(name," ","_")]")
+	for(var/mob/O in viewers(get_turf(holder.my_atom), null))
+		O.show_message(text("<span class='danger'>The slime extract begins to vibrate adorably !</span>"), 1)
+	spawn(50)
+
+		chemical_mob_spawn(holder, 1, "Friendly Gold Slime", "neutral")
+
 //Silver
 /datum/chemical_reaction/slimebork
 	name = "Slime Bork"
@@ -562,7 +579,7 @@
 	var/mob/mob = get_mob_by_key(holder.my_atom.fingerprintslast)
 	var/obj/effect/timestop/T = new /obj/effect/timestop
 	T.loc = get_turf(holder.my_atom)
-	T.immune = mob
+	T.immune += mob
 	T.timestop()
 
 

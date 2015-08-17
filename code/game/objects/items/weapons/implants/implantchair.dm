@@ -132,11 +132,8 @@
 		if(istype(imp, /obj/item/weapon/implant/loyalty))
 			M.visible_message("<span class='warning'>[M] has been implanted by the [src.name].</span>")
 
-			if(imp.implanted(M))
-				imp.loc = M
-				imp.imp_in = M
-				imp.implanted = 1
-			implant_list -= imp
+			if(imp.implant(M))
+				implant_list -= imp
 			break
 	return
 

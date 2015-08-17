@@ -271,7 +271,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
 	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
 	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -303,10 +303,10 @@ var/list/uplink_items = list()
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bulltoxin
-	name = "Drum Magazine - 12g Bioterror"
-	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an excruciatingly rapid death."
-	item = /obj/item/ammo_box/magazine/m12g/bioterror
+/datum/uplink_item/ammo/bioterror
+	name = "Box of Bioterror Syringes"
+	desc = "A box full of preloaded syringes, containing various chemicals that seize up the victim's motor and broca system , making it impossible for them to move or speak while in their system."
+	item = /obj/item/weapon/storage/box/syndie_kit/bioterror
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -355,7 +355,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
-	desc = "An innocent looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
+	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
 	cost = 6
 	surplus = 10
@@ -399,14 +399,14 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_weapons/pizza_bomb
 	name = "Pizza Bomb"
-	desc = "A pizza box with a bomb taped inside of it. The timer needs to be set by opening the box; afterwards, opening the box again will trigger the detonation."
+	desc = "A pizza box with a bomb taped inside it. The timer needs to be set by opening the box; afterwards, opening the box again will trigger the detonation."
 	item = /obj/item/device/pizza_bomb
 	cost = 5
 	surplus = 8
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
-	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
+	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate before use."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 3
 
@@ -464,7 +464,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon-Projector"
-	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. The disguised user cannot run and rojectiles pass over them."
+	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't move the projector from their hand. Disguised users cannot run, and projectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 7
 	excludefrom = list(/datum/game_mode/gang)
@@ -485,7 +485,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, a tool of many great heroes, make you nearly immune to stuns and knockdowns for about 5 minutes after injection."
+	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about 5 minutes after injection."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
 	cost = 5
 	surplus = 90
@@ -497,7 +497,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
-	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
+	desc = "The cryptographic sequencer, or emag, is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 6
 	excludefrom = list(/datum/game_mode/gang)
@@ -511,7 +511,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 4
 
 /datum/uplink_item/device_tools/medkit
@@ -611,7 +611,6 @@ var/list/uplink_items = list()
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 11
-	excludefrom = list(/datum/game_mode/traitor/double_agents)
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
@@ -659,7 +658,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 10 telecrystals. \
-	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
+	The ability for an agent to open an uplink after their possessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 14
 	surplus = 0
@@ -668,6 +667,12 @@ var/list/uplink_items = list()
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a chemical cocktail, which has a mild healing effect along with removing all stuns and increasing his speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
+	cost = 8
+
+/datum/uplink_item/implants/storage
+	name = "Storage Implant"
+	desc = "An implant injected into the body and later used to store up to two big items in a subspace pocket."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	cost = 8
 
 /datum/uplink_item/implants/microbomb
@@ -689,38 +694,26 @@ var/list/uplink_items = list()
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision."
-	item = /obj/item/cybernetic_implant/eyes/thermals
+	item = /obj/item/organ/internal/cyberimp/eyes/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision."
-	item = /obj/item/cybernetic_implant/eyes/xray
+	item = /obj/item/organ/internal/cyberimp/eyes/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned."
-	item = /obj/item/cybernetic_implant/brain/anti_stun
+	item = /obj/item/organ/internal/cyberimp/brain/anti_stun
 	cost = 12
-
-/datum/uplink_item/cyber_implants/antidrop
-	name = "Anti-Drop Implant"
-	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping."
-	item = /obj/item/cybernetic_implant/brain/anti_drop
-	cost = 8
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness."
-	item = /obj/item/cybernetic_implant/chest/reviver
+	item = /obj/item/organ/internal/cyberimp/chest/reviver
 	cost = 8
-
-/datum/uplink_item/cyber_implants/nutriment
-	name = "Nutriment Pump Implant PLUS"
-	desc = "This implant will pump you with nutriments and electrolytes so you don't go hungry in action."
-	item = /obj/item/cybernetic_implant/chest/nutriment/plus
-	cost = 5
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"

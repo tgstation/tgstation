@@ -115,7 +115,8 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
 	if(istype(W,/obj/item/clothing/mask/cigarette))
-		reagents.trans_to(W,(reagents.total_volume/contents.len))
+		if(reagents)
+			reagents.trans_to(W,(reagents.total_volume/contents.len))
 	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)

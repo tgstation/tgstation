@@ -240,6 +240,10 @@ var/datum/subsystem/ticker/ticker
 					world << sound('sound/effects/explosionfar.ogg')
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("gang war") //Gang Domination (just show the override screen)
+					cinematic.icon_state = "intro_malf_still"
+					flick("intro_malf",cinematic)
+					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
 					sleep(35)

@@ -946,6 +946,14 @@ var/list/slot_equipment_priority = list( \
 					return G
 				break
 
+/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg')
+	var/mob/dead/observer/ghost = get_ghost()
+	if(ghost)
+		ghost.notify_cloning(message, sound)
+		return ghost
+
+
+
 /mob/proc/adjustEarDamage()
 	return
 
