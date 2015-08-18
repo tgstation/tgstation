@@ -678,6 +678,10 @@ datum/reagent/FEV
 	color = "#13BC5E" // rgb: 207, 54, 0
 
 datum/reagent/FEV/on_mob_life(var/mob/living/M as mob)
-	if(prob(1)) M.gib()
+	if(prob(1))
+		M.take_overall_damage(80,0)
+		if(M.stat)
+			M << "<span class='userdanger'>You feel like you are being torn apart from the inside!</span>"
+			M.emote("scream")
 	..()
 	return
