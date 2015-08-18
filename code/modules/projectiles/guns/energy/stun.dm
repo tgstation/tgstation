@@ -9,6 +9,31 @@
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/crap"
 
+/obj/item/weapon/gun/energy/taser/update_icon()
+	if(!power_supply.maxcharge)
+		ASSERT(power_supply.maxcharge > 0)
+		return
+
+	var/ratio = power_supply.charge / power_supply.maxcharge
+
+	ratio *= 100
+
+	if(ratio && ratio <= 40)
+		ratio = 25
+	else if(ratio > 40 && ratio <= 60)
+		ratio = 50
+	else if(ratio > 60 && ratio < 100)
+		ratio = 75
+	else
+		ratio = 100
+
+
+	if(modifystate && charge_states)
+		icon_state = "[modifystate][ratio]"
+	else if(charge_states)
+		icon_state = "[initial(icon_state)][ratio]"
+
+
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
