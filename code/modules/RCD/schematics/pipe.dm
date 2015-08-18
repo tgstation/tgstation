@@ -1,5 +1,5 @@
 #define PIPE_BINARY		0
-#define PIPE_BENT		1
+#define PIPE_BENT			1
 #define PIPE_TRINARY	2
 #define PIPE_TRIN_M		3
 #define PIPE_UNARY		4
@@ -156,13 +156,14 @@
 //ACTUAL PIPES.
 
 /datum/rcd_schematic/pipe
-	name				= "Pipe"
-	category			= "Regular pipes"
-	flags				= RCD_RANGE | RCD_GET_TURF
+	name					= "Pipe"
+	category				= "Regular pipes"
+	flags					= RCD_RANGE | RCD_GET_TURF
 
 	var/pipe_id			= PIPE_SIMPLE_STRAIGHT
 	var/pipe_type		= PIPE_BINARY
 	var/selected_dir	= NORTH
+	var/layer				= PIPING_LAYER_DEFAULT //Layer selected, at 0, no layer picker will be available (disposals).
 
 /datum/rcd_schematic/pipe/send_icons(var/client/client)
 	var/list/dir_list	//We get the dirs to loop through and send images to the client for.
@@ -191,6 +192,29 @@
 /datum/rcd_schematic/pipe/get_HTML()
 	. += "<p>"
 
+	. += "<h4>Layers</h4>"
+
+	. += {"
+		<div class="layer_holder">
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=1"><div class="layer vertical one 			[layer == 1 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=2"><div class="layer vertical two 			[layer == 2 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=3"><div class="layer vertical three 		[layer == 3 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=4"><div class="layer vertical four 			[layer == 4 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=5"><div class="layer vertical five 			[layer == 5 ? "selected" : ""]"></div></a>
+		</div>
+		
+		<div class="layer_holder" style="left: 200px;">
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=1"><div class="layer horizontal one		[layer == 1 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=2"><div class="layer horizontal two		[layer == 2 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=3"><div class="layer horizontal three	[layer == 3 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=4"><div class="layer horizontal four		[layer == 4 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=5"><div class="layer horizontal five		[layer == 5 ? "selected" : ""]"></div></a>
+		</div>
+
+	"}
+	
+	. += "<h4>Directions</h4>"
+	
 	switch(pipe_type)
 		if(PIPE_BINARY)
 			. += render_dir_image(NORTH,	"Vertical")
@@ -249,6 +273,14 @@
 
 		return 1
 
+	if(href_list["set_layer"] && layer) //Only handle this is layer is nonzero.
+		var/n_layer = Clamp(round(text2num(href_list["set_layer"])), 1, 5)
+		if(layer == n_layer) //No point doing anything.
+			return 1
+		
+		layer = n_layer
+		master.update_options_menu()
+
 /datum/rcd_schematic/pipe/attack(var/atom/A, var/mob/user)
 	user << "Building Pipes ..."
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
@@ -258,6 +290,7 @@
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 
 	var/obj/item/pipe/P = getFromPool(/obj/item/pipe, A, pipe_id, selected_dir)
+	P.setPipingLayer(layer)
 	P.update()
 	P.add_fingerprint(user)
 
@@ -265,6 +298,7 @@
 /datum/rcd_schematic/pipe/disposal
 	category		= "Disposal Pipes"
 
+	layer				= 0	//Set to 0 to disable layer selection.
 	pipe_id			= DISP_PIPE_STRAIGHT
 	var/actual_id	= 0	//This is needed because disposals construction code is a shit.
 
@@ -305,6 +339,17 @@ var/global/list/disposalpipeID2State=list(
 	"pipe-j1s",
 	"pipe-j1s",
 )
+
+//This is a meta thing to send a blended pipe sprite to clients, basically the default straight pipe, but blended blue.
+//Yes I tried to find a proper way to blend things in HTML/CSS, alas.
+/datum/rcd_schematic/pipe/blender/send_icons(var/client/client)
+	var/icon/I = new/icon('icons/obj/pipe-item.dmi', pipeID2State[1], 1)
+	I.Blend("#0000FF", ICON_MULTIPLY)	//Make it blue
+	client << browse_rsc(I, "RPD-layer-blended-1.png")
+
+	I = new/icon('icons/obj/pipe-item.dmi', pipeID2State[1], 4)
+	I.Blend("#0000FF", ICON_MULTIPLY)	//Make it blue
+	client << browse_rsc(I, "RPD-layer-blended-4.png")
 
 //PIPE DEFINES START HERE.
 
@@ -358,6 +403,12 @@ var/global/list/disposalpipeID2State=list(
 
 	pipe_id		= PIPE_DTVALVE
 	pipe_type	= PIPE_TRIN_M
+
+/datum/rcd_schematic/pipe/layer_manifold
+	name		= "Layer Manifold"
+
+	pipe_id		= PIPE_LAYER_MANIFOLD
+	pipe_type	= PIPE_UNARY
 
 //DEVICES.
 

@@ -4,7 +4,7 @@
 	icon_state			= "rpd"
 
 	starting_materials	= list(MAT_IRON = 75000, MAT_GLASS = 37500)
-
+	
 	schematics	= list(
 
 		/* Utilities */
@@ -21,6 +21,7 @@
 		/datum/rcd_schematic/pipe/manifold_4w,
 		/datum/rcd_schematic/pipe/mtvalve,
 		/datum/rcd_schematic/pipe/dtvalve,
+		/datum/rcd_schematic/pipe/layer_manifold
 
 		/* Devices */
 		/datum/rcd_schematic/pipe/connector,
