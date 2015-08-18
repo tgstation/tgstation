@@ -109,7 +109,7 @@
 
 	name = "Combine Virus"
 	id = "combinevirus"
-	required_reagents = list("FEV" = 1)
+	required_reagents = list("viral_readaption" = 1)
 	required_catalysts = list("blood" = 1)
 
 /datum/chemical_reaction/mix_virus/combine_virus/on_reaction(var/datum/reagents/holder, var/created_volume)

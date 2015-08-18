@@ -671,13 +671,13 @@ datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/FEV
-	name = "FEV"
-	id = "FEV"
+datum/reagent/viral_readaption
+	name = "Viral Readaption"
+	id = "viral_readaption"
 	description = "???"
 	color = "#13BC5E" // rgb: 207, 54, 0
 
-datum/reagent/FEV/on_mob_life(var/mob/living/M as mob)
+datum/reagent/viral_readaption/on_mob_life(var/mob/living/M as mob)
 	if(prob(1))
 		M.take_overall_damage(80,0)
 		if(M.stat)
