@@ -18,6 +18,7 @@ mob/living/carbon/proc/dream()
 		"an abandoned laboratory","The Syndicate","blood","falling","flames","ice","the cold","an operating table","a war","red men","malfunctioning robots",
 		"a ship full of spiders","valids","hardcore","your mom","lewd","explosions","broken bones","clowns everywhere","features","a crash","a skrell","a unathi","a tajaran",
 		"a vox","a plasmaman","a skellington","a diona","the derelict","the end of the world","the thunderdome","a ship full of dead clowns","a chicken with godlike powers",
+		"a red bus that drives through space",
 		)
 	spawn(0)
 		for(var/i = rand(1,4),i > 0, i--)

@@ -102,8 +102,7 @@
 		else
 			if(M.attack_sound)
 				playsound(loc, M.attack_sound, 50, 1, 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
+			M.visible_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>")
 			add_logs(M, src, "attacked", admin=1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			adjustBruteLoss(damage)
@@ -118,14 +117,10 @@
 			damage *= 2
 			purge = 3
 		adjustBruteLoss(damage)
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
+		user.visible_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
 	else
 		usr << "<span class='warning'>This weapon is ineffective, it does no damage.</span>"
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
+		user.visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 
 

@@ -75,6 +75,18 @@
 	icon_state = "bio_cmo"
 
 
+//Beekeeper's biosuit, white with a bee on its back
+/obj/item/clothing/suit/bio_suit/beekeeping
+	name = "beekeeping suit"
+	icon_state = "bio_beekeeping"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 70, rad = 0)
+
+/obj/item/clothing/head/bio_hood/beekeeping
+	name = "beekeeping hood"
+	icon_state = "bio_beekeeping"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
+
+
 //Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"

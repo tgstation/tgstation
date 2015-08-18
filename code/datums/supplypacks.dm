@@ -1240,13 +1240,19 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/bee_keeper
 	name = "Beekeeping Crate"
-	contains = list(/obj/item/beezeez,
-					/obj/item/beezeez,
-					/obj/item/weapon/bee_net,
-					/obj/item/apiary,
-					/obj/item/queen_bee,
-					/obj/item/queen_bee,
-					/obj/item/queen_bee)
+	contains = list(
+		/obj/item/beezeez,
+		/obj/item/beezeez,
+		/obj/item/weapon/bee_net,
+		/obj/item/weapon/extinguisher/mini,
+		/obj/item/apiary,
+		/obj/item/queen_bee,
+		/obj/item/queen_bee,
+		/obj/item/queen_bee,
+		/obj/item/clothing/suit/bio_suit/beekeeping,
+		/obj/item/clothing/head/bio_hood/beekeeping,
+		/obj/item/weapon/book/manual/hydroponics_beekeeping,
+		)
 	cost = 20
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Beekeeping crate"

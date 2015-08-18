@@ -41,6 +41,8 @@
 	var/force_update           // Set this to bypass the cycle time check.
 	var/obj/temp_chem_holder   // Something to hold reagents during process_reagents()
 
+	var/bees = 0				//Are there currently bees above the tray?
+
 	// Seed details/line data.
 	var/datum/seed/seed = null // The currently planted seed
 
@@ -186,9 +188,15 @@
 	// Mutation level drops each main tick.
 	mutation_level -= rand(2,4)
 
+	var/mob/living/simple_animal/bee/BEE = locate() in loc
+	if(BEE && (BEE.feral < 1))
+		bees = 1
+	else
+		bees = 0
+
 	// Weeds like water and nutrients, there's a chance the weed population will increase.
 	// Bonus chance if the tray is unoccupied.
-	if(waterlevel > 10 && nutrilevel > 2 && prob(isnull(seed) ? 5 : 1))
+	if(waterlevel > 10 && nutrilevel > 2 && prob(isnull(seed) ? 5 : (1/(1+bees))))
 		weedlevel += 1 * HYDRO_SPEED_MULTIPLIER
 
 	// There's a chance for a weed explosion to happen if the weeds take over.
@@ -204,7 +212,10 @@
 		return
 
 	// Advance plant age.
-	if(prob(80)) age += 1 * HYDRO_SPEED_MULTIPLIER
+	if(harvest)
+		if(prob(80)) age += (1 * HYDRO_SPEED_MULTIPLIER)/(1+bees)
+	else
+		if(prob(80+(20*bees))) age += 1 * HYDRO_SPEED_MULTIPLIER + (bees/2)
 
 	//Highly mutable plants have a chance of mutating every tick.
 	if(seed.immutable == -1)
@@ -313,7 +324,10 @@
 		var/toxin_uptake = max(1,round(toxins/10))
 		if(toxins > seed.toxins_tolerance)
 			health -= toxin_uptake
-		toxins -= toxin_uptake
+		toxins -= toxin_uptake * (1+bees)
+		if(BEE && BEE.parent)
+			var/obj/machinery/apiary/A = BEE.parent
+			A.toxic += toxin_uptake//gotta be careful where you let your bees hang around
 
 	// Check for pests and weeds.
 	// Some carnivorous plants happily eat pests.
@@ -335,7 +349,7 @@
 	// Handle life and death.
 	// If the plant is too old, it loses health fast.
 	if(age > seed.lifespan)
-		health -= rand(3,5) * HYDRO_SPEED_MULTIPLIER
+		health -= (rand(3,5) * HYDRO_SPEED_MULTIPLIER)/(1+bees)
 
 	// When the plant dies, weeds thrive and pests die off.
 	if(health <= 0)
@@ -351,7 +365,7 @@
 		harvest = 1
 		lastproduce = age
 
-	if(prob(3))  // On each tick, there's a chance the pest population will increase
+	if(prob(3/(1+bees)))  // On each tick, there's a chance the pest population will increase
 		pestlevel += 0.1 * HYDRO_SPEED_MULTIPLIER
 
 	check_level_sanity()

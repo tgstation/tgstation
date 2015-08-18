@@ -13,6 +13,8 @@
 	var/to_suit = /obj/item/clothing/suit/cardborg
 
 /obj/item/device/modkit/afterattack(obj/O, mob/user as mob)
+	if(get_dist(O,user) > 1)//For all those years you could use it at any range, what the actual fuck?
+		return
 	var/flag
 	var/to_type
 	if(istype(O,from_helmet))

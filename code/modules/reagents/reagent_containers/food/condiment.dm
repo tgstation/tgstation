@@ -150,6 +150,10 @@
 				name = "Malt Vinegar Bottle"
 				desc = "Perfect for fish and chips!"
 				icon_state = "vinegar_container"
+			if("honey")
+				name = "Honey Pot"
+				desc = "Sweet and healthy!"
+				icon_state = "honey"
 			else
 				name = "Misc Condiment Bottle"
 

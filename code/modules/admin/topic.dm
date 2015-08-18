@@ -2580,6 +2580,23 @@
 							F.update_icon()
 					floorIsLava = 0
 				return
+			if("thebees")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","BEE")
+				var/answer = alert("What's this? A Space Station woefully underpopulated by bees?",,"Let's fix it!","On second thought, let's not.")
+				if(answer=="Let's fix it!")
+					message_admins("[key_name_admin(usr)] unleashed the bees onto the crew.", 1)
+					world << "<font size='10' color='red'><b>NOT THE BEES!</b></font>"
+					world << sound('sound/effects/bees.ogg')
+					for(var/mob/living/M in player_list)
+						var/mob/living/simple_animal/bee/BEE = new(get_turf(M))
+						BEE.strength = 16
+						BEE.toxic = 5
+						BEE.mut = 2
+						BEE.feral = 25
+						BEE.target = M
+						BEE.icon_state = "bees_swarm-feral"
+
 			if("virus")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","V")

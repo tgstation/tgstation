@@ -3311,7 +3311,6 @@
 			if (prob(data-10))
 				M.disabilities &= ~NEARSIGHTED
 	data++
-	if(prob(50)) M.heal_organ_damage(1,0)
 	return
 
 /datum/reagent/drink/berryjuice
@@ -3399,7 +3398,6 @@
 	if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10*REAGENTS_METABOLISM)
-	if(prob(50)) M.heal_organ_damage(1,0)
 	return
 
 /datum/reagent/drink/milk/soymilk

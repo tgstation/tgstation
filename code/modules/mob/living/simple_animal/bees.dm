@@ -47,20 +47,48 @@
 /mob/living/simple_animal/bee/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	return 1
 
+/mob/living/simple_animal/bee/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	user.delayNextAttack(8)
+	if(O.force)
+		var/damage = O.force
+		if (O.damtype == HALLOSS)
+			damage = 0
+		adjustBruteLoss(damage)
+		user.visible_message("<span class='danger'>[src] has been attacked with [O] by [user]. </span>")
+		panic_attack(user)
+
+/mob/living/simple_animal/bee/bullet_act(var/obj/item/projectile/P)
+	..()
+	if(P && P.firer)
+		panic_attack(P.firer)
+
+/mob/living/simple_animal/bee/attack_hand(mob/living/carbon/human/M as mob)//punching bees!
+	..()
+	if((M.a_intent == I_HURT) || (M.a_intent == I_DISARM))
+		panic_attack(M)
+
+/mob/living/simple_animal/bee/proc/panic_attack(mob/damagesource)
+	for(var/mob/living/simple_animal/bee/B in range(src,3))
+		B.feral = 15
+		B.target = damagesource
+
 /mob/living/simple_animal/bee/Life()
 	..()
 	if(stat != DEAD) //If we're alive, see if we can be calmed down.
 		//smoke, water and steam calms us down
 		var/calming = 0
-		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
-		/obj/effect/effect/water, \
-		/obj/effect/effect/foam, \
-		/obj/effect/effect/steam, \
-		/obj/effect/mist)
+		var/list/calmers = list(
+			/obj/effect/decal/chemical_puff,
+			/obj/effect/effect/smoke/chem,
+			/obj/effect/effect/water,
+			/obj/effect/effect/foam,
+			/obj/effect/effect/steam,
+			/obj/effect/mist,
+			)
 
 		for(var/this_type in calmers)
-			var/check_effect = locate(this_type) in src.loc
-			if(check_effect && check_effect == this_type)
+			var/obj/effect/check_effect = locate(this_type) in src.loc
+			if(check_effect && (check_effect.reagents.has_reagent("water") || check_effect.reagents.has_reagent("holywater")))
 				calming = 1
 				break
 
@@ -121,8 +149,10 @@
 					src.parent.owned_bee_swarms.Add(B)
 
 		//make some noise
-		if(prob(0.5))
-			src.visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
+		if(prob(1))
+			if(prob(50))
+				src.visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
+			playsound(get_turf(src), 'sound/effects/bees.ogg', min(20*strength,100), 1)
 
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			if(B == src)
@@ -184,8 +214,7 @@
 					else
 						my_hydrotray = null
 
-		pixel_x = rand(-12,12)
-		pixel_y = rand(-12,12)
+		animate(src, pixel_x = rand(-12,12), pixel_y = rand(-12,12), time = 10, easing = SINE_EASING)
 
 	if(!parent && prob(10))
 		strength -= 1
@@ -193,6 +222,12 @@
 			returnToPool(src)
 		else if(strength <= 5)
 			icon_state = "bees[strength]"
+
+	if(feral > 0)
+		if(strength <= 5)
+			icon_state = "bees[max(strength,1)]-feral"
+		else
+			icon_state = "bees_swarm-feral"
 
 	//debugging
 	/*icon_state = "[strength]"

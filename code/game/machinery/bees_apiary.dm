@@ -1,6 +1,8 @@
 //http://www.youtube.com/watch?v=-1GadTfGFvU
 //i could have done these as just an ordinary plant, but fuck it - there would have been too much snowflake code
 
+#define HONEYCOMB_COST 15
+
 /obj/machinery/apiary
 	name = "apiary tray"
 	icon = 'icons/obj/hydroponics.dmi'
@@ -16,9 +18,9 @@
 	var/maxhealth = 100
 	var/lastcycle = 0
 	var/cycledelay = 100
-	var/harvestable_honey = 0
 	var/beezeez = 0
 	var/swarming = 0
+	var/honey_level = 0
 
 	var/bees_in_hive = 0
 	var/list/owned_bee_swarms = list()
@@ -29,7 +31,22 @@
 //overwrite this after it's created if the apiary needs a custom machinery sprite
 /obj/machinery/apiary/New()
 	..()
-	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary")
+	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary0")
+
+/obj/machinery/apiary/examine(mob/user)
+	..()
+	if(health > 0)
+		user << "You can hear a loud buzzing coming from the inside."
+	else
+		user << "There doesn't seem to be any bees in it."
+
+	switch(honey_level)
+		if(1)
+			user << "<span class='info'>Looks like there's a bit of honey in it.</span>"
+		if(2)
+			user << "<span class='info'>There's a decent amount of honey dripping from it!</span>"
+		if(3)
+			user << "<span class='info'>It's full of honey!</span>"
 
 /obj/machinery/apiary/bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
@@ -43,6 +60,8 @@
 			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
+		if(src)
+			angry_swarm()
 		return
 
 /obj/machinery/apiary/attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -53,7 +72,7 @@
 			user << "<span class='warning'>There is already a queen in there.</span>"
 		else
 			health = 10
-			nutrilevel += 10
+			nutrilevel = min(10,nutrilevel+10)
 			user.drop_item(O)
 			qdel(O)
 			user << "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>"
@@ -67,9 +86,9 @@
 		else
 			user << "<span class='notice'>You insert [O] into [src]. Now it just needs some bees.</span>"
 		qdel(O)
-	else if(istype(O, /obj/item/weapon/minihoe))
+	else if(istype(O, /obj/item/weapon/hatchet))
 		if(health > 0)
-			user << "<span class='danger'>You begin to dislodge the apiary from the tray, the bees don't like that.</span>"
+			user << "<span class='danger'>You begin harvesting the honeycombs, the bees don't like that.</span>"
 			angry_swarm(user)
 		else
 			user << "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>"
@@ -84,7 +103,17 @@
 				I.loc = created_tray
 				contents -= I
 			new /obj/item/apiary(src.loc)
-			user << "<span class='warning'>You dislodge the apiary from the tray.</span>"
+			if(health > 0)
+				while(health > HONEYCOMB_COST)
+					health -= HONEYCOMB_COST
+					var/obj/item/weapon/reagent_containers/food/snacks/honeycomb/H = new(src.loc)
+					if(toxic > 0)
+						H.reagents.add_reagent("toxin", toxic)
+				if(honey_level >= 3)
+					new/obj/item/queen_bee(src.loc)
+				user << "<span class='notice'>You successfully harvest the honeycombs. The empty apiary can be relocated.</span>"
+			else
+				user << "<span class='notice'>You dislodge the apiary from the tray.</span>"
 			qdel(src)
 	else if(istype(O, /obj/item/weapon/bee_net))
 		var/obj/item/weapon/bee_net/N = O
@@ -94,21 +123,8 @@
 			N.caught_bees = 0
 		else
 			user << "<span class='notice'>There are no more bees in the net.</span>"
-	else if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		var/obj/item/weapon/reagent_containers/glass/G = O
-		if(harvestable_honey > 0)
-			if(health > 0)
-				user << "<span class='warning'>You begin to harvest the honey. The bees don't seem to like it.</span>"
-				angry_swarm(user)
-			else
-				user << "<span class='notice'>You begin to harvest the honey.</span>"
-			if(do_after(user, src, 50))
-				G.reagents.add_reagent("honey",harvestable_honey)
-				harvestable_honey = 0
-				user << "<span class='notice'>You successfully harvest the honey.</span>"
-		else
-			user << "<span class='notice'>There is no honey left to harvest.</span>"
 	else
+		visible_message("<span class='warning'>You hit \the [src] with \the [O]!</span>")
 		angry_swarm(user)
 
 /obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
@@ -141,15 +157,15 @@
 			beezeez -= 1
 
 			nutrilevel += 2
-			health += 1
-			toxic = max(0, toxic - 1)
+			health = min(health+1,maxhealth)
+			if(prob(10))
+				toxic = max(0, toxic - 1)
 
 		//handle nutrients
 		nutrilevel -= bees_in_hive / 10 + owned_bee_swarms.len / 5
 		if(nutrilevel > 0)
 			bees_in_hive += 1 * yieldmod
-			if(health < maxhealth)
-				health++
+			health = min(health+1,maxhealth)
 		else
 			//nutrilevel is less than 1, so we're effectively subtracting here
 			health += max(nutrilevel - 1, round(-health / 2))
@@ -163,12 +179,26 @@
 			toxic -= 1
 			health -= 1
 
+		var/newlevel = 0
+		if(health >= (HONEYCOMB_COST * 6))
+			newlevel = 3
+		else if(health >= (HONEYCOMB_COST * 3))
+			newlevel = 2
+		else if(health >= HONEYCOMB_COST)
+			newlevel = 1
+		else
+			newlevel = 0
+
+		if(newlevel != honey_level)
+			overlays -= image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary[honey_level]")
+			overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary[newlevel]")
+			honey_level = newlevel
+
 		if(health <= 0)
 			return
 
-		//make a bit of honey
-		if(harvestable_honey < 50)
-			harvestable_honey += 0.5
+		if(prob(2))
+			playsound(get_turf(src), 'sound/effects/bees.ogg', min(20+(20*honey_level),100), 1)
 
 		//make some new bees
 		if(bees_in_hive >= 10 && prob(bees_in_hive * 10))
@@ -183,7 +213,7 @@
 		for(var/obj/machinery/portable_atmospherics/hydroponics/H in view(7, src))
 			if(H.seed && !H.dead && prob(owned_bee_swarms.len * 10))
 				src.nutrilevel++
-				if(H.nutrilevel < 100)
+				if(H.nutrilevel < 10)
 					H.nutrilevel++
 
 				if(mut < H.mutation_mod - 1)
@@ -198,6 +228,7 @@
 					H.nutrilevel++
 */
 				//have a few beneficial effects on nearby plants
+/* - beneficial effects are now applied directly by bees themselves
 				if(prob(10))
 					H.lastcycle -= 5
 				if(prob(10))
@@ -211,6 +242,7 @@
 				if(H.toxins && prob(10))
 					H.toxins = min(0, H.toxins - 1)
 					toxic++
+*/
 
 /obj/machinery/apiary/proc/die()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/apiary/proc/die() called tick#: [world.time]")
@@ -225,7 +257,7 @@
 	bees_in_hive = 0
 	health = 0
 
-/obj/machinery/apiary/proc/angry_swarm(var/mob/M)
+/obj/machinery/apiary/proc/angry_swarm(var/mob/M = null)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/apiary/proc/angry_swarm() called tick#: [world.time]")
 	for(var/mob/living/simple_animal/bee/B in owned_bee_swarms)
 		B.feral = 25
@@ -233,8 +265,8 @@
 
 	swarming = 25
 
-	while(bees_in_hive > 0)
-		var/spawn_strength = bees_in_hive
+	while(bees_in_hive >= 1)
+		var/spawn_strength = round(bees_in_hive)
 		if(bees_in_hive >= 5)
 			spawn_strength = 6
 		var/turf/T = get_turf(src)
@@ -246,17 +278,4 @@
 		B.toxic = toxic
 		bees_in_hive -= spawn_strength
 
-/obj/machinery/apiary/verb/harvest_honeycomb()
-	set src in oview(1)
-	set name = "Harvest honeycomb"
-	set category = "Object"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/machinery/apiary/verb/harvest_honeycomb()  called tick#: [world.time]")
-
-	while(health > 15)
-		health -= 15
-		var/obj/item/weapon/reagent_containers/food/snacks/honeycomb/H = new(src.loc)
-		if(toxic > 0)
-			H.reagents.add_reagent("toxin", toxic)
-
-	usr << "<span class='notice'>You harvest the honeycomb from the hive. There is a wild buzzing!</span>"
-	angry_swarm(usr)
+#undef HONEYCOMB_COST
