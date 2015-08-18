@@ -407,7 +407,7 @@
 		src.OCCUPANT.loc = src.loc
 	src.OCCUPANT = null
 	if(!src.isopen)
-		src.isopeen = 1
+		src.isopen = 1
 	src.update_icon()
 	return
 
