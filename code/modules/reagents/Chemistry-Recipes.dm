@@ -56,8 +56,7 @@
 			/mob/living/simple_animal/hostile/guardian/ranged,
 			/mob/living/simple_animal/hostile/guardian/bluespace,
 			/mob/living/simple_animal/hostile/guardian/bomb,
-			/mob/living/simple_animal/hostile/guardian/shield,
-			/mob/living/simple_animal/hostile/guardian/scout
+			/mob/living/simple_animal/hostile/guardian/shield
 			)//exclusion list for things you don't want the reaction to create.
 		var/list/meancritters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 		var/list/nicecritters = list(/mob/living/simple_animal/crab,
