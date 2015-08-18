@@ -204,7 +204,7 @@
 	src.SetOpacity(0)
 	sleep(5)
 	src.density = 0
-	sleep(8)
+	sleep(5)
 	src.layer = 2.7
 	update_icon()
 	SetOpacity(0)

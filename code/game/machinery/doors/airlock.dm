@@ -470,16 +470,13 @@ About the new airlock wires panel:
 		if(0)
 			if(density)
 				state = AIRLOCK_CLOSED
-				icon_state = "closed"
 			else
 				state = AIRLOCK_OPEN
-				icon_state = "open"
-		if(AIRLOCK_CLOSED)
-			icon_state = "closed"
-		if(AIRLOCK_OPEN)
-			icon_state = "open"
-		if(AIRLOCK_CLOSING, AIRLOCK_OPENING)
 			icon_state = ""
+		if(AIRLOCK_OPENING, AIRLOCK_OPEN, AIRLOCK_CLOSED)
+			icon_state = ""
+		if(AIRLOCK_DENY, AIRLOCK_CLOSING)
+			icon_state = "nonexistenticonstate" //MADNESS
 	set_airlock_overlays(state)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
@@ -491,7 +488,8 @@ About the new airlock wires panel:
 	var/image/sparks_overlay
 
 	switch(state)
-		if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
+		if(AIRLOCK_CLOSED)
+			frame_overlay = get_airlock_overlay("closed", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_closed")
 			else
@@ -500,18 +498,20 @@ About the new airlock wires panel:
 				panel_overlay = get_airlock_overlay("panel_closed")
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded")
-			if(state == AIRLOCK_EMAG)
-				sparks_overlay = get_airlock_overlay("sparks")
 			else
 				if(lights)
 					if(locked)
 						lights_overlay = get_airlock_overlay("lights_bolted")
 					else if(emergency)
 						lights_overlay = get_airlock_overlay("lights_emergency")
-					else if(state == AIRLOCK_DENY)
-						lights_overlay = get_airlock_overlay("lights_denied")
-						spawn(4)
-							overlays -= lights_overlay
+		if(AIRLOCK_DENY)
+			overlays += get_airlock_overlay("lights_denied")
+			sleep(4)
+			update_icon(AIRLOCK_CLOSED)
+			return
+		if(AIRLOCK_EMAG)
+			overlays += get_airlock_overlay("sparks")
+			return
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -525,6 +525,7 @@ About the new airlock wires panel:
 				panel_overlay = get_airlock_overlay("panel_closing")
 
 		if(AIRLOCK_OPEN)
+			frame_overlay = get_airlock_overlay("open", icon)
 			if(airlock_material)
 				filling_overlay = get_airlock_overlay("[airlock_material]_open")
 			else
@@ -544,18 +545,12 @@ About the new airlock wires panel:
 				panel_overlay = get_airlock_overlay("panel_opening")
 
 	overlays.Cut()
-	if(frame_overlay)
-		overlays += frame_overlay
-	if(filling_overlay)
-		overlays += filling_overlay
-	if(lights_overlay)
-		overlays += lights_overlay
-	if(panel_overlay)
-		overlays += panel_overlay
-	if(weld_overlay)
-		overlays += weld_overlay
-	if(sparks_overlay)
-		overlays += sparks_overlay
+	overlays += frame_overlay
+	overlays += filling_overlay
+	overlays += lights_overlay
+	overlays += panel_overlay
+	overlays += weld_overlay
+	overlays += sparks_overlay
 
 /obj/machinery/door/airlock/proc/get_airlock_overlay(iconstate, icon_file=overlays_file)
 	var/iconkey = "[iconstate][icon_file]"
@@ -573,6 +568,7 @@ About the new airlock wires panel:
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
+			icon_state = "closed"
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
@@ -1190,7 +1186,7 @@ About the new airlock wires panel:
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-	if(autoclose  && normalspeed)
+	if(autoclose && normalspeed)
 		spawn(150)
 			autoclose()
 	else if(autoclose && !normalspeed)
@@ -1239,7 +1235,7 @@ About the new airlock wires panel:
 	src.density = 1
 	if(!safe)
 		crush()
-	sleep(5)
+	sleep(7)
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
