@@ -21,7 +21,7 @@
 		/datum/rcd_schematic/pipe/manifold_4w,
 		/datum/rcd_schematic/pipe/mtvalve,
 		/datum/rcd_schematic/pipe/dtvalve,
-		/datum/rcd_schematic/pipe/layer_manifold
+		/datum/rcd_schematic/pipe/layer_manifold,
 
 		/* Devices */
 		/datum/rcd_schematic/pipe/connector,
