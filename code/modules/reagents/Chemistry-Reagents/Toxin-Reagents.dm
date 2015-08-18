@@ -127,7 +127,7 @@ datum/reagent/toxin/minttoxin
 	toxpwr = 0
 
 datum/reagent/toxin/minttoxin/on_mob_life(var/mob/living/M as mob)
-	if (FAT in M.mutations)
+	if (M.disabilities & FAT)
 		M.gib()
 	..()
 	return
