@@ -121,8 +121,11 @@
 
 /datum/light_source/proc/falloff(atom/movable/lighting_overlay/O)
   #if LIGHTING_FALLOFF == 1 // circular
-
+   #if LIGHTING_RESOLUTION == 1
 	. = (O.x - source_turf.x)**2 + (O.y - source_turf.y)**2 + LIGHTING_HEIGHT
+   #else
+	. = (O.x - source_turf.x + O.xoffset)**2 + (O.y - source_turf.y + O.yoffset)**2 + LIGHTING_HEIGHT
+   #endif
 
    #if LIGHTING_LAMBERTIAN == 1
 	if(!light_range || !sqrt(. + 1))
@@ -133,7 +136,11 @@
    #endif
 
   #elif LIGHTING_FALLOFF == 2 // square
+   #if LIGHTING_RESOLUTION == 1
 	. = abs(O.x - source_turf.x) + abs(O.y - source_turf.y) + LIGHTING_HEIGHT
+   #else
+	. = abs(O.x - source_turf.x + O.xoffset) + abs(O.y - source_turf.y + O.yoffset) + LIGHTING_HEIGHT
+   #endif
 
    #if LIGHTING_LAMBERTIAN == 1
 	. = CLAMP01((1 - CLAMP01(. / light_range)) * (1 / (sqrt(.)**2 + )))
@@ -145,28 +152,16 @@
 /datum/light_source/proc/apply_lum()
 	applied = 1
 	if(istype(source_turf))
+		#if LIGHTING_RESOLUTION == 1
 		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
 			if(T.dynamic_lighting && T.lighting_overlay)
 				var/strength = light_power * falloff(T.lighting_overlay)
 
-				if(!strength) //Don't add turfs that aren't affected to the affected turfs.
-					continue
+				effect_r[T.lighting_overlay] = lum_r * strength
+				effect_g[T.lighting_overlay] = lum_g * strength
+				effect_b[T.lighting_overlay] = lum_b * strength
 
-				strength = round(strength, LIGHTING_ROUND_VALUE)	//fug it
-				effect_r += lum_r * strength
-				effect_g += lum_g * strength
-				effect_b += lum_b * strength
-
-
-				T.lighting_overlay.update_lumcount(
- 					round(lum_r * strength, LIGHTING_ROUND_VALUE),
- 					round(lum_g * strength, LIGHTING_ROUND_VALUE),
- 					round(lum_b * strength, LIGHTING_ROUND_VALUE)
- 				)
-			else
-				effect_r += 0
-				effect_b += 0
-				effect_g += 0
+				T.lighting_overlay.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
@@ -174,7 +169,23 @@
 			T.affecting_lights += src
 			effect_turf += T
 
+		#else
+		for(var/turf/T in dview(light_range, source_turf, INVISIBILITY_LIGHTING))
+			for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)
+				var/strength = light_power * falloff(L)
 
+				effect_r[L] = lum_r * strength
+				effect_g[L] = lum_g * strength
+				effect_b[L] = lum_b * strength
+
+				L.update_lumcount(lum_r * strength, lum_g * strength, lum_b * strength)
+
+			if(!T.affecting_lights)
+				T.affecting_lights = list()
+
+			T.affecting_lights += src
+			effect_turf += T
+		#endif
 
 /datum/light_source/proc/remove_lum()
 	applied = 0
@@ -183,9 +194,13 @@
 		if(T.affecting_lights)
 			T.affecting_lights -= src
 
+		#if LIGHTING_RESOLUTION == 1
 		if(T.dynamic_lighting && T.lighting_overlay)
 			T.lighting_overlay.update_lumcount(-effect_r[T.lighting_overlay], -effect_g[T.lighting_overlay], -effect_b[T.lighting_overlay])
-
+		#else
+		for(var/atom/movable/lighting_overlay/L in T.lighting_overlays)
+			L.lighting_overlay.update_lumcount(-effect_r[L], -effect_g[L], -effect_b[L])
+		#endif
 
 
 	effect_r.Cut()

@@ -13,6 +13,10 @@
 	var/lum_g
 	var/lum_b
 
+	#if LIGHTING_RESOLUTION != 1
+	var/xoffset
+	var/yoffset
+	#endif
 
 	var/needs_update
 
@@ -24,7 +28,7 @@
 	return QDEL_HINT_PUTINPOOL
 
 
-/atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b, force_update = 0)
+/atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b)
 	if(!delta_r && !delta_g && !delta_b) //Nothing is being changed all together.
 		return
 
@@ -47,7 +51,7 @@
 	lum_g += delta_g
 	lum_b += delta_b
 
-	if((!needs_update && should_update) || force_update)
+	if(!needs_update && should_update)
 		needs_update = 1
 		lighting_update_overlays += src
 
@@ -112,6 +116,10 @@
 
 	color = "#000000"
 
+	#if LIGHTING_RESOLUTION != 1
+	xoffset = null
+	yoffset = null
+	#endif
 
 	needs_update = null
 
@@ -121,9 +129,11 @@
 
 	var/turf/T = loc
 	if(istype(T))
-
+		#if LIGHTING_RESOLUTION == 1
 		T.lighting_overlay = null
-
+		#else
+		T.lighting_overlays -= src
+		#endif
 		for(var/datum/light_source/D in T.affecting_lights) //Remove references to us on the light sources affecting us.
 			D.effect_r -= src
 			D.effect_g -= src

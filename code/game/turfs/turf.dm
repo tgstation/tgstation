@@ -145,8 +145,11 @@
 	if(!path)			return
 	if(path == type)	return src
 	var/list/old_affecting_lights = affecting_lights
+	#if LIGHTING_RESOLUTION == 1
 	var/old_lighting_overlay = lighting_overlay
-
+	#else
+	var/old_lighting_overlays = lighting_overlays
+	#endif
 
 //	var/old_opacity = opacity
 	var/old_baseturf = baseturf
@@ -155,11 +158,14 @@
 	var/turf/W = new path(src)
 	W.baseturf = old_baseturf
 	W.affecting_lights = old_affecting_lights
+	#if LIGHTING_RESOLUTION == 1
 	W.lighting_overlay = old_lighting_overlay
-
+	#else
+	W.lighting_overlays = old_lighting_overlays
+	#endif
 	if(!istype(W, /turf/space))
 		W.lighting_build_overlays()
-		W.update_lumcount(0, 0, 0, 1)
+		W.update_overlay()
 	else
 		W.lighting_clear_overlays()
 
