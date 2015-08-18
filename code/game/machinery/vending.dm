@@ -503,7 +503,7 @@
 		src.icon_state = "[initial(icon_state)]"
 
 /obj/machinery/vending/attack_hand(mob/living/user as mob)
-	if(user.a_intent == "hurt") //Will make another update later. Hulks will insta-break
+	if(user.a_intent == "hurt" && istype(user, /mob/living/carbon/)) //Will make another update later. Hulks will insta-break
 		user.delayNextAttack(10)
 		user.visible_message(	"<span class='danger'>[user] kicks the [src].</span>",
 								"<span class='danger'>You kick the [src].</span>")
