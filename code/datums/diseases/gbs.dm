@@ -35,7 +35,7 @@
 			affected_mob.updatehealth()
 		if(5)
 			affected_mob << "<span class='danger'>Your body feels as if it's trying to rip itself open...</span>"
-			if(prob(50))
+			if(prob(1) && prob(1))
 				affected_mob.gib()
 		else
 			return
