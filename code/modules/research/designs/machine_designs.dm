@@ -92,6 +92,26 @@
 	build_path = /obj/item/weapon/circuitboard/telesci_pad
 	category = list ("Teleportation Machinery")
 
+/datum/design/teleconsole
+	name = "Computer Design (Teleporter Console)"
+	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
+	id = "teleconsole"
+	req_tech = list("programming" = 3, "bluespace" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teleporter
+	category = list("Teleportation Machinery")
+
+/datum/design/telesci_console
+	name = "Computer Design (Telepad Control Console Board)"
+	desc = "Allows for the construction of circuit boards used to build a telescience console."
+	id = "telesci_console"
+	req_tech = list("programming" = 3, "bluespace" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_console
+	category = list("Teleportation Machinery")
+
 /datum/design/sleeper
 	name = "Machine Design (Sleeper Board)"
 	desc = "The circuit board for a sleeper."
