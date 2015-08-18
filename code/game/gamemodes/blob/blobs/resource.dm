@@ -4,7 +4,6 @@
 	icon_state = "blob_resource"
 	health = 30
 	fire_resist = 2
-	var/mob/camera/blob/overmind = null
 	var/resource_delay = 0
 
 /obj/effect/blob/resource/update_icon()

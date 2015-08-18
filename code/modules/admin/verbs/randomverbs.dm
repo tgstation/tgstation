@@ -747,3 +747,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
 	message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>).")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/reset_latejoin_spawns()
+	set category = "Debug"
+	set name = "Remove Latejoin Spawns"
+
+	if(!check_rights(R_DEBUG))	return
+
+	latejoin.Cut()
+
+	log_admin("[key_name(usr)] removed latejoin spawnpoints.")
+	message_admins("[key_name_admin(usr)] removed latejoin spawnpoints.")

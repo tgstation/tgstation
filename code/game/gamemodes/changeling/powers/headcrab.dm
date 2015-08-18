@@ -7,7 +7,7 @@
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
-	var/list/organs = user.getorganszone("head") + user.getorganszone("eyes")
+	var/list/organs = user.getorganszone("head", 1)
 
 	for(var/obj/item/organ/internal/I in organs)
 		I.Remove(user, 1)

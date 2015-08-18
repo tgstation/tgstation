@@ -22,7 +22,8 @@
 		say("Activation message is '[recorded]'.")
 	else
 		if(findtext(raw_message, recorded))
-			pulse(0)
+			spawn(10)
+				pulse(0)
 
 /obj/item/device/assembly/voice/activate()
 	if(secured)
