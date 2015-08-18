@@ -335,11 +335,10 @@
 	return "trails_2"
 
 var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/STEP = 2
-var/const/SLIDE = 4
-var/const/GALOSHES_DONT_HELP = 8
+var/const/SLIDE = 2
+var/const/GALOSHES_DONT_HELP = 4
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	loc.handle_slip(src, s_amount, w_amount, O, lube)
+	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -505,7 +504,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		return 1
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.flags & NODROP))
+	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
 	unEquip(I)

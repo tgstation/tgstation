@@ -1,0 +1,7 @@
+
+author: phil235
+
+delete-after: True
+
+changes: 
+  - tweak: "Janicart rider no longer slip on wet floor or bananas. Moving on a floor tile with lube while buckled (chair, roller bed, etc) will make you fall off."
