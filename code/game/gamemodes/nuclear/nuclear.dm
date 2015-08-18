@@ -7,6 +7,7 @@
 	config_tag = "nuclear"
 	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
 	required_enemies = 5
+	lowpop_required_players = 10
 	recommended_enemies = 5
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
@@ -333,14 +334,11 @@
 		synd_mind.current.real_name = synd_mind.name
 	return
 
-/datum/game_mode/nuclear/mini
-	name = "nuclear emergency - mini"
-	config_tag = "nuclear_mini"
-	required_players = 10
+/datum/game_mode/nuclear/setup_lowpop()
 	required_enemies = 2
-	max_players = 20 // Real ops now
 	recommended_enemies = 2
-	antag_flag = BE_OPERATIVE
-	enemy_minimum_age = 14
-
 	agents_possible = 2
+	max_players = 2
+
+	lowpop_variant = 1
+	return 1
