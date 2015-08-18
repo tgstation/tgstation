@@ -115,7 +115,7 @@
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
 
 	for(var/mob/M in mob_list)
-		if(M == src.summoner)
+		if(M == src.summoner || (M in dead_mob_list))
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 
@@ -125,8 +125,12 @@
 	set desc = "Communicate telepathically with your guardian."
 	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
 
-	for(var/mob/living/simple_animal/hostile/guardian/M in mob_list)
-		if(M.summoner == src)
+	for(var/mob/M in mob_list)
+		if(istype (M, /mob/living/simple_animal/hostile/guardian))
+			var/mob/living/simple_animal/hostile/guardian/G = M
+			if(G.summoner == src)
+				G << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+		else if (M in dead_mob_list)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 
@@ -138,8 +142,8 @@
 
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
 	damage_transfer = 0.7
@@ -149,6 +153,7 @@
 	magic_fluff_string = "..And draw Atmosia, bringer of cleansing fires!"
 	tech_fluff_string = "Boot sequence complete. Incendiary combat modules loaded. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of igniting enemies on touch."
+	pass_flags = PASSMOB
 
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
@@ -224,21 +229,6 @@
 	tech_fluff_string = "Boot sequence complete. Defensive modules active. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, helpless, but invulnerable."
 
-//Scout. No damage, high range, high mobility, low resistance
-
-/mob/living/simple_animal/hostile/guardian/scout
-	range = 255
-	incorporeal_move = 1
-	damage_transfer = 1.2
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	alpha = 60
-	friendly = "quietly assesses"
-	playstyle_string = "As a scout type, you are incapable of attacking, but have infinite range, can pass through walls, and crawl through vents."
-	magic_fluff_string = "..And draw the AI, all seeing and all knowing."
-	tech_fluff_string = "Boot sequence complete. Surveillance modules loaded. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, helpless, but near invsible, and capable of near unlimited travel."
-
 //Healer
 
 /mob/living/simple_animal/hostile/guardian/healer
@@ -264,6 +254,9 @@
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5)
 
+
+///////////////////Ranged
+
 /obj/item/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
@@ -272,6 +265,7 @@
 
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = "help"
+	friendly = "quietly assesses"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_transfer = 1.2
@@ -280,10 +274,78 @@
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
 	range = 13
-	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed."
+	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
 	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spraying shards of crystal."
+	var/list/snares = list()
+	var/toggle = FALSE
+
+/mob/living/simple_animal/hostile/guardian/ranged/verb/ToggleMode()
+	set name = "Toggle Mode"
+	set category = "Guardian"
+	set desc = "Toggle between combat and scout modes."
+	if(src.loc == summoner)
+		if(toggle)
+			ranged = 1
+			melee_damage_lower = 10
+			melee_damage_upper = 10
+			alpha = 255
+			range = 13
+			incorporeal_move = 0
+			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
+		else
+			ranged = 0
+			melee_damage_lower = 0
+			melee_damage_upper = 0
+			alpha = 60
+			range = 255
+			incorporeal_move = 0
+			src << "<span class='danger'><B>You switch to scout mode.</span></B>"
+	else
+		src << "<span class='danger'><B>You have to be recalled to toggle modes!.</span></B>"
+
+
+
+/mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
+	set name = "Set Surveillance Trap"
+	set category = "Guardian"
+	set desc = "Set an invisible trap that will alert you when living creatures walk over it. Max of 5"
+	if(src.snares.len <6)
+		var/turf/snare_loc = get_turf(src.loc)
+		var/obj/item/effect/snare/S = new /obj/item/effect/snare(snare_loc)
+		S.spawner = src
+		S.name = "[get_area(snare_loc)] trap ([rand(1, 1000)])"
+		src.snares |= S
+		src << "<span class='danger'><B>Surveillance trap deployed!</span></B>"
+	else
+		src << "<span class='danger'><B>You have too many traps deployed. Delete some first.</span></B>"
+
+/mob/living/simple_animal/hostile/guardian/ranged/verb/DisarmSnare()
+	set name = "Remove Surveillance Trap"
+	set category = "Guardian"
+	set desc = "Disarm unwanted surveillance traps."
+	var/picked_snare = input(src, "Pick which trap to disarm", "Disarm Trap") as null|anything in src.snares
+	if(picked_snare)
+		qdel(picked_snare)
+		src << "<span class='danger'><B>Snare disarmed.</span></B>"
+
+/obj/item/effect/snare
+	name = "snare"
+	desc = "You shouldn't be seeing this!"
+	var/mob/living/spawner
+	invisibility = 1
+
+
+/obj/item/effect/snare/Crossed(AM as mob|obj)
+	if(istype(AM, /mob/living/))
+		var/turf/snare_loc = get_turf(src.loc)
+		if(spawner)
+			spawner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
+
+
+
+///Bluespace
 
 
 /mob/living/simple_animal/hostile/guardian/bluespace
@@ -306,6 +368,9 @@
 		var/atom/movable/M = target
 		if(!M.anchored && M != src.summoner)
 			do_teleport(M, M, 10)
+
+
+////Bomb
 
 /mob/living/simple_animal/hostile/guardian/bomb
 	melee_damage_lower = 15
@@ -337,7 +402,6 @@
 	desc = "You shouldn't be seeing this!"
 	var/obj/stored_obj
 	var/mob/living/spawner
-
 
 
 /obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
@@ -395,7 +459,7 @@
 	var/use_message = "You shuffle the deck..."
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
-	var/list/possible_guardians = list("Fire", "Standard", "Scout", "Shield", "Ranged", "Healer", "Fast", "Explosive")
+	var/list/possible_guardians = list("Fire", "Standard", "Shield", "Ranged", "Healer", "Fast", "Explosive")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -439,7 +503,7 @@
 	if(random)
 		gaurdiantype = pick(possible_guardians)
 	else
-		gaurdiantype = input(user, "Pick the type pf [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
+		gaurdiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
 	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
 	var/picked_color = randomColor(0)
 	switch(gaurdiantype)
@@ -449,9 +513,6 @@
 
 		if("Standard")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
-
-		if("Scout")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/scout
 
 		if("Shield")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/shield
