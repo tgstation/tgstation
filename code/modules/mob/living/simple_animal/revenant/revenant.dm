@@ -82,16 +82,16 @@
 		return
 	A.attack_ghost(src)
 	if(ishuman(A) && in_range(src, A))
-		src.Harvest(A)
+		Harvest(A)
 
 
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
-	if(!src.castcheck(0))
+	if(!castcheck(0))
 		return
-	if(src.draining)
+	if(draining)
 		src << "<span class='warning'>You are already siphoning the essence of a soul!</span>"
 		return
-	if(target in src.drained_mobs)
+	if(target in drained_mobs)
 		src << "<span class='warning'>[target]'s soul is dead and empty.</span>"
 		return
 	if(!target.stat)
@@ -99,16 +99,16 @@
 		if(prob(10))
 			target << "You feel as if you are being watched."
 		return
-	src.draining = 1
-	src.essence_drained = 2
+	draining = 1
+	essence_drained = 2
 	src << "<span class='notice'>You search for the soul of [target].</span>"
 	if(do_after(src, 10, 3, 0, target)) //did they get deleted in that second?
 		if(target.ckey)
 			src << "<span class='notice'>Their soul burns with intelligence.</span>"
-			src.essence_drained += 2
+			essence_drained += 2
 		if(target.stat != DEAD)
 			src << "<span class='notice'>Their soul blazes with life!</span>"
-			src.essence_drained += 2
+			essence_drained += 2
 		else
 			src << "<span class='notice'>Their soul is weak and faltering.</span>"
 		if(do_after(src, 20, 6, 0, target)) //did they get deleted NOW?
@@ -120,10 +120,6 @@
 				if(5 to INFINITY)
 					src << "<span class='info'>Such a feast! [target] will yield much essence to you.</span>"
 			if(do_after(src, 30, 9, 0, target)) //how about now
-				if(!in_range(src, target))
-					src << "<span class='warning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
-					draining = 0
-					return
 				if(!target.stat)
 					src << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
 					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
@@ -132,18 +128,22 @@
 				src << "<span class='danger'>You begin siphoning essence from [target]'s soul.</span>"
 				if(target.stat != DEAD)
 					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
-				src.icon_state = "revenant_draining"
-				src.reveal(65)
-				src.stun(65)
+				icon_state = "revenant_draining"
+				reveal(65)
+				stun(65)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
 				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=60)
 				if(target) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-					src.change_essence_amount(essence_drained * 5, 0, target)
+					change_essence_amount(essence_drained * 5, 0, target)
 					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
 					target.visible_message("<span class='warning'>[target] gently slumps back onto the ground.</span>")
-					src.drained_mobs.Add(target)
+					drained_mobs.Add(target)
 					target.death(0)
-				src.icon_state = "revenant_idle"
+				icon_state = "revenant_idle"
+			else
+				src << "<span class='warning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
+				draining = 0
+				return
 	draining = 0
 	return
 

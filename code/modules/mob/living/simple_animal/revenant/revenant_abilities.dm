@@ -43,7 +43,7 @@
 	clothes_req = 0
 	range = 1
 	var/reveal = 80
-	var/stun = 10
+	var/stun = 20
 	var/locked = 1
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant_light/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -95,7 +95,7 @@
 	clothes_req = 0
 	range = 1
 	var/reveal = 100
-	var/stun = 10
+	var/stun = 20
 	var/locked = 1
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant_defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -117,9 +117,9 @@
 		spawn(0)
 			if(T.flags & NOJAUNT)
 				T.flags -= NOJAUNT
-			if(!istype(T, /turf/simulated/wall/cult) && istype(T, /turf/simulated/wall) && prob(30))
+			if(!istype(T, /turf/simulated/wall/cult) && istype(T, /turf/simulated/wall) && prob(40))
 				T.ChangeTurf(/turf/simulated/wall/cult)
-			if(!istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(30))
+			if(!istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(40))
 				T.ChangeTurf(/turf/simulated/floor/engine/cult)
 			for(var/mob/living/carbon/human/human in T.contents)
 				human << "<span class='warning'>You suddenly feel tired.</span>"
@@ -166,22 +166,9 @@
 					bot.locked = 0
 					bot.open = 1
 					bot.Emag(null)
-			for(var/mob/living/silicon/robot/robot in T.contents)
-				robot.visible_message("<span class='warning'>[robot] lets out an alarm!</span>", \
-									  "<span class='boldannounce'>01001111 01010110 01000101 01010010 01001100 01001111 01000001 01000100</span>") //Translates to "OVERLOAD"
-				robot << 'sound/misc/interference.ogg'
-				robot.emp_act(2)
-				playsound(robot, 'sound/machines/warning-buzzer.ogg', 50, 1)
-			for(var/mob/living/carbon/human/human in T.contents)
-				human << "<span class='deadsay'>You feel a burst of cold throughout your body...</span>"
-				human.emp_act(2)
 			for(var/obj/machinery/mach in T.contents)
-				switch(rand(1,10))
-					if(1 to 3)
-						mach.emp_act(1)
-					if(4 to 9)
-						mach.emp_act(2)
-					if(10)
-						mach.emag_act(null)
+				if(prob(10))
+					mach.emag_act(null)
+			empulse(user.loc, 3, 5)
 	user.reveal(reveal)
 	user.stun(stun)
