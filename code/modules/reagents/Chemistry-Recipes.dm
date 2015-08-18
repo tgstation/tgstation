@@ -47,7 +47,7 @@
 			/mob/living/simple_animal/hostile/mining_drone,
 			/mob/living/simple_animal/hostile/poison,
 			/mob/living/simple_animal/hostile/blob,
-			/mob/living/simple_animal/ascendant_shadowling
+			/mob/living/simple_animal/ascendant_shadowling,
 			/mob/living/simple_animal/hostile/guardian,
 			/mob/living/simple_animal/hostile/guardian/fire,
 			/mob/living/simple_animal/hostile/guardian/punch,
