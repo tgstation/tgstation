@@ -88,7 +88,7 @@
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/hatchet))
 		if(health > 0)
-			user << "<span class='danger'>You begin harvesting the honeycombs, the bees don't like that.</span>"
+			user.visible_message("<span class='danger'>\the [user] begins harvesting the honeycombs, the bees don't like that.</span>","<span class='danger'>You begin harvesting the honeycombs, the bees don't like that.</span>")
 			angry_swarm(user)
 		else
 			user << "<span class='notice'>You begin to dislodge the dead apiary from the tray.</span>"
@@ -124,7 +124,7 @@
 		else
 			user << "<span class='notice'>There are no more bees in the net.</span>"
 	else
-		visible_message("<span class='warning'>You hit \the [src] with \the [O]!</span>")
+		user.visible_message("<span class='warning'>\the [user] hits \the [src] with \the [O]!</span>","<span class='warning'>You hit \the [src] with \the [O]!</span>")
 		angry_swarm(user)
 
 /obj/machinery/apiary/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
