@@ -169,6 +169,6 @@
 			for(var/obj/machinery/mach in T.contents)
 				if(prob(10))
 					mach.emag_act(null)
-			empulse(user.loc, 3, 5)
+	empulse(user.loc, 3, 5)
 	user.reveal(reveal)
 	user.stun(stun)

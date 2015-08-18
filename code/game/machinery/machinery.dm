@@ -141,7 +141,7 @@ Class Procs:
 
 /obj/machinery/emp_act(severity)
 	if(use_power && stat == 0)
-		use_power(750/severity)
+		use_power(7500/severity)
 
 		var/obj/effect/overlay/pulse2 = new/obj/effect/overlay ( src.loc )
 		pulse2.icon = 'icons/effects/effects.dmi'
