@@ -4,7 +4,6 @@
 
 	name = "gas mixer"
 
-	req_access = list(access_atmospherics)
 
 	can_unwrench = 1
 
@@ -123,9 +122,6 @@
 	if(..())
 		return
 
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
-		return
 
 	ui_interact(user)
 

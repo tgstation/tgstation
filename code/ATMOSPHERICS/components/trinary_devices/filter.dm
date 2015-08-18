@@ -11,7 +11,6 @@
 
 	name = "gas filter"
 
-	req_access = list(access_atmospherics)
 
 	can_unwrench = 1
 
@@ -158,10 +157,6 @@ Filter types:
 
 /obj/machinery/atmospherics/components/trinary/filter/attack_hand(mob/user)
 	if(..())
-		return
-
-	if(!src.allowed(user))
-		user << "<span class='danger'>Access denied.</span>"
 		return
 
 	ui_interact(user)
