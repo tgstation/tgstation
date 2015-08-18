@@ -4,6 +4,8 @@
 	name = "XCC-P5831"
 	icon_state = "away"
 	requires_power = 0
+	luminosity = 1
+	lighting_use_dynamic = 0
 
 /area/awaymission/centcomAway/general
 	name = "XCC-P5831"
