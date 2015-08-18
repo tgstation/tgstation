@@ -284,12 +284,8 @@ var/list/blood_splatter_icons = list()
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
 			return 0
-	if(rejects_blood())
+	if(rejects_blood() || !istype(M) || !check_dna_integrity(M))
 		return 0
-	if(!istype(M))
-		return 0
-	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
-		return 0					//no dna!
 	return 1
 
 /obj/add_blood(mob/living/carbon/M)
