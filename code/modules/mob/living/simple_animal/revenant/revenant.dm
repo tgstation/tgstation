@@ -229,68 +229,64 @@
 
 
 /mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
-	var/mob/living/simple_animal/revenant/user = usr
-	if(!istype(user) || !user)
+	if(!src)
 		return
-	var/turf/T = get_turf(usr)
+	var/turf/T = get_turf(src)
 	if(istype(T, /turf/simulated/wall))
-		user << "<span class='warning'>You cannot use abilities from inside of a wall.</span>"
+		src << "<span class='warning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
-	if(!user.change_essence_amount(essence_cost, 1))
-		user << "<span class='warning'>You lack the essence to use that ability.</span>"
+	if(src.inhibited)
+		src << "<span class='warning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0
-	if(user.inhibited)
-		user << "<span class='warning'>Your powers have been suppressed by nulling energy!</span>"
+	if(!src.change_essence_amount(essence_cost, 1))
+		src << "<span class='warning'>You lack the essence to use that ability.</span>"
 		return 0
 	return 1
 
 
 
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = 0, source = null)
-	var/mob/living/simple_animal/revenant/user = usr
-	if(!istype(usr) || !usr)
+	if(!src)
 		return
-	if(user.essence + essence_amt <= 0)
+	if(essence + essence_amt <= 0)
 		return
-	user.essence += essence_amt
-	user.essence = max(0, user.essence)
+	essence += essence_amt
+	essence = max(0, essence)
 	if(essence_amt > 0)
-		user.essence_accumulated += essence_amt
-		user.essence_accumulated = max(0, user.essence_accumulated)
+		essence_accumulated += essence_amt
+		essence_accumulated = max(0, essence_accumulated)
 	if(!silent)
 		if(essence_amt > 0)
-			user << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
+			src << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
 		else
-			user << "<span class='danger'>Lost [essence_amt]E from [source].</span>"
+			src << "<span class='danger'>Lost [essence_amt]E from [source].</span>"
 	return 1
 
 
 
 /mob/living/simple_animal/revenant/proc/reveal(time)
-	var/mob/living/simple_animal/revenant/R = usr
-	if(!istype(usr) || !usr)
+	if(!src)
 		return
 	if(time <= 0)
 		return
-	R.revealed = 1
-	R.invisibility = 0
-	R << "<span class='warning'>You have been revealed.</span>"
+	revealed = 1
+	invisibility = 0
+	src << "<span class='warning'>You have been revealed.</span>"
 	spawn(time)
-		R.revealed = 0
-		R.invisibility = INVISIBILITY_OBSERVER
-		R << "<span class='notice'>You are once more concealed.</span>"
+		revealed = 0
+		invisibility = INVISIBILITY_OBSERVER
+		src << "<span class='notice'>You are once more concealed.</span>"
 
 /mob/living/simple_animal/revenant/proc/stun(time)
-	var/mob/living/simple_animal/revenant/R = usr
-	if(!istype(usr) || !usr)
+	if(!src)
 		return
 	if(time <= 0)
 		return
-	R.notransform = 1
-	R << "<span class='warning'>You cannot move!</span>"
+	notransform = 1
+	src << "<span class='warning'>You cannot move!</span>"
 	spawn(time)
-		R.notransform = 0
-		R << "<span class='notice'>You can move again!</span>"
+		notransform = 0
+		src << "<span class='notice'>You can move again!</span>"
 
 
 
