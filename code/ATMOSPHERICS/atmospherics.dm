@@ -53,7 +53,9 @@ Pipelines + Other Objects -> Pipe network
 		M.remove_ventcrawl()
 		M.forceMove(src.loc)
 	if(pipe_image)
-		del(pipe_image) //we have to del it, or it might keep a ref somewhere else
+		for(var/mob/M in player_list)
+			M.client.screen -= pipe_image
+		pipe_image = null
 	atmos_machines -= src
 	..()
 
