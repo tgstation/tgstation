@@ -14,8 +14,7 @@
 	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
 
 	if(Toxins_pp) // Detect toxins in air
-
-		adjustToxLoss(breath.toxins*250)
+		adjustPlasma(breath.toxins*250)
 		throw_alert("alien_tox")
 
 		toxins_used = breath.toxins
@@ -37,7 +36,6 @@
 		move_delay_add = max(0, move_delay_add - rand(1, 2))
 
 /mob/living/carbon/alien/update_sight()
-
 	if(stat == DEAD)
 		sight |= SEE_TURFS
 		sight |= SEE_MOBS

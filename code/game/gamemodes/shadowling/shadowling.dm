@@ -1,6 +1,6 @@
 #define LIGHT_DAM_THRESHOLD 4
 #define LIGHT_HEAL_THRESHOLD 2
-#define LIGHT_DAMAGE_TAKEN 10
+#define LIGHT_DAMAGE_TAKEN 7
 /*
 
 SHADOWLING: A gamemode based on previously-run events
@@ -232,8 +232,8 @@ Made by Xhuis
 	id = "shadowling"
 	say_mod = "chitters"
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
-	burnmod = 2 //2x burn damage lel
-	heatmod = 2
+	burnmod = 1.5 //1.5x burn damage, 2x is excessive 
+	heatmod = 1.5
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes) H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs

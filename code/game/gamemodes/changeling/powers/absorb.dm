@@ -54,7 +54,7 @@
 	target << "<span class='userdanger'>You are absorbed by the changeling!</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.absorb_dna(target, user)
+		changeling.add_profile(target, user)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
@@ -88,7 +88,7 @@
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
 
-			target.mind.changeling.absorbed_dna.len = 1
+			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
 
 
@@ -104,26 +104,9 @@
 
 
 //Absorbs the target DNA.
-/datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/user)
-	if(absorbed_dna.len)
-		absorbed_dna.Cut(1,2)
-	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
-	var/datum/dna/new_dna = new T.dna.type
-	new_dna.uni_identity = T.dna.uni_identity
-	new_dna.struc_enzymes = T.dna.struc_enzymes
-	new_dna.real_name = T.dna.real_name
-	new_dna.species = T.dna.species
-	new_dna.features = T.dna.features
-	new_dna.blood_type = T.dna.blood_type
-	absorbedcount++
-	store_dna(new_dna, user)
+//datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/user)
 
-/datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
-	for(var/datum/objective/escape/escape_with_identity/E in user.mind.objectives)
-		if(E.target_real_name == new_dna.real_name)
-			protected_dna |= new_dna
-			return
-	absorbed_dna |= new_dna
+//datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
 
 
 
@@ -169,9 +152,8 @@
 	target << "<span class='userdanger'>[user] tightens their grip as a painful sensation invades your body.</span>"
 
 	if(!changeling.has_dna(target.dna))
-		changeling.absorb_dna(target, user)
-	changeling.protected_dna -= user.dna
-	changeling.absorbed_dna -= user.dna
+		changeling.add_profile(target, user)
+	changeling.remove_profile(user)
 
 	var/mob/dead/observer/ghost = target.ghostize(0)
 	user.mind.transfer_to(target)

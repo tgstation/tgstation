@@ -243,7 +243,7 @@
 	A.say("PLASMA FIST!")
 	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
-	var/obj/item/organ/brain/B = D.getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/internal/brain/B = D.getorgan(/obj/item/organ/internal/brain)
 	if(B)
 		B.loc = get_turf(D)
 		B.transfer_identity(D)

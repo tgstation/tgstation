@@ -437,7 +437,7 @@ var/global/list/rockTurfEdgeCache
 			if(istype(src, /turf/simulated/mineral))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
-				feedback_add_details("pick_used_mining","[P.name]")
+				feedback_add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 	return
@@ -572,7 +572,7 @@ var/global/list/rockTurfEdgeCache
 			if(istype(src, /turf/simulated/floor/plating/asteroid))
 				user << "<span class='notice'>You dig a hole.</span>"
 				gets_dug()
-				feedback_add_details("pick_used_mining","[W.name]")
+				feedback_add_details("pick_used_mining","[W.type]")
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W

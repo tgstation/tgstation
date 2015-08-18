@@ -206,6 +206,11 @@ var/const/POWER = 8
 	else
 		CRASH("[colour] is not a key in wires.")
 
+/datum/wires/proc/GetColour(index)
+	for(var/colour in wires)
+		if(wires[colour] == index)
+			return colour
+
 //
 // Is Index/Colour Cut procs
 //
