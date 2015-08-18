@@ -214,10 +214,12 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if ((prob(1) && owner.paralysis < 1))
+	if((prob(1) && owner.paralysis < 1))
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
+		spawn(90)
+			owner.jitteriness = 10
 
 /datum/mutation/human/bad_dna
 
