@@ -12,6 +12,9 @@ On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components/New()
 	..()
+	parents.len = device_type
+	airs.len = device_type
+
 	for(DEVICE_TYPE_LOOP)
 		var/datum/gas_mixture/A = new
 		A.volume = 200

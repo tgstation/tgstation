@@ -128,20 +128,20 @@
 // NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
 
 //  nodes list - all atmos machinery
-#define NODE1	nodes["n1"]
-#define	NODE2	nodes["n2"]
-#define NODE3	nodes["n3"]
-#define NODE4	nodes["n4"]
-#define NODE_I	nodes["n[I]"]
+#define NODE1	nodes[1]
+#define	NODE2	nodes[2]
+#define NODE3	nodes[3]
+#define NODE4	nodes[4]
+#define NODE_I	nodes[I]
 
 //  airs list - components only
-#define AIR1	airs["a1"]
-#define AIR2	airs["a2"]
-#define AIR3	airs["a3"]
-#define AIR_I	airs["a[I]"]
+#define AIR1	airs[1]
+#define AIR2	airs[2]
+#define AIR3	airs[3]
+#define AIR_I	airs[I]
 
 //  parents list - components only
-#define PARENT1		parents["p1"]
-#define PARENT2		parents["p2"]
-#define PARENT3		parents["p3"]
-#define PARENT_I	parents["p[I]"]
+#define PARENT1		parents[1]
+#define PARENT2		parents[2]
+#define PARENT3		parents[3]
+#define PARENT_I	parents[I]

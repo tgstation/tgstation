@@ -29,6 +29,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/New()
 	..()
+	nodes.len = device_type
 	SSair.atmos_machinery += src
 	SetInitDirections()
 	if(can_unwrench)
