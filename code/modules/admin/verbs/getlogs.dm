@@ -1,7 +1,7 @@
 /*
 	HOW DO I LOG RUNTIMES?
 	Firstly, start dreamdeamon if it isn't already running. Then select "world>Log Session" (or press the F3 key)
-	navigate the popup window to the data/logs/runtime/ folder from where your tgstation .dmb is located.
+	navigate the popup window to the data/logs/runtime/ folder from where your vgstation13.dmb is located.
 	(you may have to make this folder yourself)
 
 	OPTIONAL: 	you can select the little checkbox down the bottom to make dreamdeamon save the log everytime you
@@ -149,3 +149,18 @@
 		return
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+/datum/admins/proc/view_mob_attack_log(var/mob/M as mob)
+	set category	= "Admin"
+	set name		= "Show mob's attack logs"
+	set desc			= "Shows the (formatted) attack log of a mob in a HTML window."
+
+	if(!istype(M))
+		usr << "That's not a valid mob!"
+		return
+
+	var/datum/browser/clean/popup = new (usr, "\ref[M]_admin_log_viewer", "Attack logs of [M]", 300, 300)
+	popup.set_content(list2text(M.attack_log, "<br/>"))
+	popup.open()
+
+	feedback_add_details("admin_verb","VMAL")
