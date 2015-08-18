@@ -327,6 +327,7 @@
 	set desc = "Disarm unwanted surveillance traps."
 	var/picked_snare = input(src, "Pick which trap to disarm", "Disarm Trap") as null|anything in src.snares
 	if(picked_snare)
+		src.snares -= picked_snare
 		qdel(picked_snare)
 		src << "<span class='danger'><B>Snare disarmed.</span></B>"
 
