@@ -429,6 +429,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
 
+	default_mutations=list(M_CLAWS)
+
 	flesh_color = "#AFA59E"
 
 	var/datum/speech_filter/filter = new
@@ -546,6 +548,7 @@ var/global/list/whitelisted_species = list("Human")
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
+	default_mutations = list(M_BEAK)
 	flags = IS_WHITELISTED | NO_SCAN
 
 	blood_color = "#2299FC"

@@ -145,8 +145,8 @@
 			if(can_bite)
 				if ((prob(75) && health > 0))
 					playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						O.show_message("<span class='danger'>[M.name] has bit [name]!</span>", 1)
+					src.visible_message("<span class='danger'>[M.name] has bit [name]!</span>")
+
 					var/damage = rand(1, 5)
 					adjustBruteLoss(damage)
 					health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -190,7 +190,8 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(M_HULK in M.mutations)			damage += 5
+			if(M_HULK in M.mutations)							damage += 5
+			if((M_CLAWS in M.mutations) && !istype(M.gloves))	damage += 3 //Claws mutation + no gloves
 
 
 			if(M.species.attack_verb == "punch")

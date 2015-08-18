@@ -113,8 +113,7 @@
 		brainmob.loc = src
 		brainmob.container = src
 		brainmob.stat = 0
-		dead_mob_list -= brainmob//Update dem lists
-		living_mob_list += brainmob
+		brainmob.resurrect()
 
 		user.drop_item(O)
 		del(O)

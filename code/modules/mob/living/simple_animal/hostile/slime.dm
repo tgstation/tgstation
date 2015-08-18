@@ -17,7 +17,7 @@
 	attack_sound = 'sound/weapons/welderattack.ogg'
 	faction = "slimesummon"
 	speed = 4
-	meat_type = null
+	can_butcher = 0
 
 	var/colour = "grey"
 

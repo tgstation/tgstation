@@ -167,8 +167,9 @@
 		if(target.health > config.health_threshold_dead)
 			target.timeofdeath = 0
 			target.visible_message("<span class='notice'>[src] beeps: Defibrillation successful.</span>")
-			dead_mob_list -= target
-			living_mob_list |= list(target)
+
+			target.resurrect()
+
 			target.tod = null
 			target.stat = UNCONSCIOUS
 			target.regenerate_icons()

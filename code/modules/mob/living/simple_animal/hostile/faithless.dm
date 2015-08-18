@@ -12,7 +12,7 @@
 	speed = -1
 	maxHealth = 80
 	health = 80
-	meat_type = null
+	can_butcher = 0
 
 	harm_intent_damage = 10
 	melee_damage_lower = 15

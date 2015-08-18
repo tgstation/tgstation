@@ -13,6 +13,7 @@
 	var/animal_name = "animal"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
+	name = "monkey meat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
 	desc = "Tastes like the tears of the station. Gives off the faint aroma of a valid salad. Just like mom used to make. This revelation horrifies you greatly."

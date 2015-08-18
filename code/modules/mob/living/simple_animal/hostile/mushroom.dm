@@ -153,12 +153,3 @@
 /mob/living/simple_animal/hostile/mushroom/bullet_act()
 	..()
 	Bruise()
-
-/mob/living/simple_animal/hostile/mushroom/harvest()
-	var/counter
-	for(counter=0, counter<=powerlevel, counter++)
-		var/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice(src.loc)
-		S.reagents.add_reagent("psilocybin", powerlevel)
-		S.reagents.add_reagent("doctorsdelight", powerlevel)
-		S.reagents.add_reagent("synaptizine", powerlevel)
-	del(src)

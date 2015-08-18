@@ -44,3 +44,11 @@
 	for(var/obj/item/I in src)
 		I.OnMobDeath(src)
 	return ..(gibbed)
+
+//This proc should be used when you're restoring a guy to life. It will remove him from the dead mob list, and add him to the living mob list. It will also remove any verbs
+//that his dead body has
+/mob/proc/resurrect()
+	living_mob_list |= src
+	dead_mob_list -= src
+
+	verbs -= /mob/living/proc/butcher

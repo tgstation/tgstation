@@ -25,7 +25,7 @@
 	see_in_dark = 5
 
 	childtype = /mob/living/simple_animal/corgi/puppy
-	species = /mob/living/simple_animal/corgi
+	species_type = /mob/living/simple_animal/corgi
 	can_breed = 1
 	size = SIZE_SMALL
 

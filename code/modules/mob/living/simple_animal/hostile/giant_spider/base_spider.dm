@@ -37,7 +37,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	speed = 3
 	attack_sound = 'sound/weapons/spiderlunge.ogg'
 
-	species = /mob/living/simple_animal/hostile/giant_spider
+	species_type = /mob/living/simple_animal/hostile/giant_spider
 	wanted_objects = list(
 		/obj/machinery/bot,          // Beepsky and friends
 		/obj/machinery/light,        // Bust out lights

@@ -47,6 +47,7 @@
 	voice_name = "diona nymph"
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
+	species_type = /mob/living/carbon/monkey/diona
 	var/list/donors = list()
 	var/ready_evolve = 0
 	canWearHats = 0

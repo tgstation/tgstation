@@ -17,7 +17,7 @@
 	see_in_dark = 6
 
 	can_breed = 1
-	species = /mob/living/simple_animal/cat
+	species_type = /mob/living/simple_animal/cat
 	childtype = /mob/living/simple_animal/cat/kitten
 
 	response_help  = "pets"
@@ -112,7 +112,7 @@
 	emote_hear = list("hisses")
 	emote_see = list("slithers")
 
-	species = /mob/living/simple_animal/cat/snek
+	species_type = /mob/living/simple_animal/cat/snek
 	butchering_drops = null
 	childtype = null
 

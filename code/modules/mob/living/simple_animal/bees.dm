@@ -6,7 +6,7 @@
 	icon_dead = "bees1"
 
 	size = SIZE_TINY
-	meat_type = null
+	can_butcher = 0
 
 	var/strength = 1
 	var/feral = 0
