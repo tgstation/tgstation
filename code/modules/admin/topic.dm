@@ -3586,8 +3586,8 @@
 		if(!A)
 			usr << "You must be standing on an area!"
 			return
-		if(A.type == /area)
-			usr << "You can't shuttlify space."
+		if(A.type == /area && A.name = "Space")
+			usr << "You can't shuttlify space. (If this isn't space, rename this area to something else!)"
 			return
 
 		var/datum/shuttle/conflict = A.get_shuttle()
