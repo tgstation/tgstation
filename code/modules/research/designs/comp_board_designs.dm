@@ -160,6 +160,35 @@
 	build_path = /obj/item/weapon/circuitboard/robotics
 	category = list("Computer Boards")
 
+/datum/design/clonecontrol
+	name = "Computer Design (Cloning Machine Console)"
+	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
+	id = "clonecontrol"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cloning
+	category = list("Computer Boards")
+
+/datum/design/clonepod
+	name = "Machine Design (Clone Pod)"
+	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
+	id = "clonepod"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/clonepod
+	category = list("Computer Boards")
+
+/datum/design/clonescanner
+	name = "Machine Design (Cloning Scanner)"
+	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
+	id = "clonescanner"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/clonescanner
+	category = list("Computer Boards")
 
 /datum/design/arcadebattle
 	name = "Computer Design (Battle Arcade Machine)"
