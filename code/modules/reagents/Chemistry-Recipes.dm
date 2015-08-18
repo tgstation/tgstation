@@ -48,6 +48,16 @@
 			/mob/living/simple_animal/hostile/poison,
 			/mob/living/simple_animal/hostile/blob,
 			/mob/living/simple_animal/ascendant_shadowling
+			/mob/living/simple_animal/hostile/guardian,
+			/mob/living/simple_animal/hostile/guardian/fire,
+			/mob/living/simple_animal/hostile/guardian/punch,
+			/mob/living/simple_animal/hostile/guardian/fast,
+			/mob/living/simple_animal/hostile/guardian/healer,
+			/mob/living/simple_animal/hostile/guardian/ranged,
+			/mob/living/simple_animal/hostile/guardian/bluespace,
+			/mob/living/simple_animal/hostile/guardian/bomb,
+			/mob/living/simple_animal/hostile/guardian/shield,
+			/mob/living/simple_animal/hostile/guardian/scout
 			)//exclusion list for things you don't want the reaction to create.
 		var/list/meancritters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 		var/list/nicecritters = list(/mob/living/simple_animal/crab,
