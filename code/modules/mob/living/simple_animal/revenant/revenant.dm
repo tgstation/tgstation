@@ -86,7 +86,7 @@
 
 
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/tar, mob/living/simple_animal/revenant/user = usr)
-	if(!user.castcheck(-30))
+	if(!user.castcheck(0))
 		return
 	var/mob/living/carbon/human/target = tar
 	if(user.draining)
