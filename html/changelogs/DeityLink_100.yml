@@ -4,7 +4,7 @@ changes:
   - imageadd: Re-made most bee-related sprites.
   - imageadd: Bees animate much more smoothly, and are actually easily visible now.
   - rscadd: You can now examine apiaries to get a clue whether there are bees inside or not, and how much honey there is.
- - imageadd: The apiary's sprite also updates depending on how much honey there is inside.
+  - imageadd: The apiary's sprite also updates depending on how much honey there is inside.
   - tweak: Reworked the procedure to harvest Honeycombs.
   - rscdel: You cannot obtain honey by merely using a beaker on an apiary anymore.
   - imageadd: Added a custom sprite for honey-storing condiment bottles.
