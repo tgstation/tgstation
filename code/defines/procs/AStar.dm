@@ -167,6 +167,7 @@ proc/SeekTurf(var/PriorityQueue/Queue, var/turf/T)
 
 //the actual algorithm
 proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, var/turf/exclude=null)
+	ASSERT(!istype(end,/area)) //Because yeah some things might be doing this and we want to know what
 	//writepanic("[__FILE__].[__LINE__] \\/proc/AStar() called tick#: [world.time]")
 	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
 	var/list/closed = new() //the closed list
