@@ -48,19 +48,15 @@ var/datum/subsystem/lighting/SSlighting
 				L.apply_lum()
 			L.force_update = 0
 			L.needs_update = 0
-
-//		scheck()
-
-	lighting_update_lights.len = 0
+		lighting_update_lights.Remove(L)
 
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays)
 		if(O.needs_update)
 			O.update_overlay()
 			O.needs_update = 0
+		lighting_update_overlays.Remove(O)
 
-//		scheck()
 
-	lighting_update_overlays.len = 0
 
 /*
 	lights_workload = MC_AVERAGE(lights_workload, lighting_update_lights.len)
