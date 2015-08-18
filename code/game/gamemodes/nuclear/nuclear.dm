@@ -11,7 +11,7 @@
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
 
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
+	var/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -332,3 +332,15 @@
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
 		synd_mind.current.real_name = synd_mind.name
 	return
+
+/datum/game_mode/nuclear/mini
+	name = "nuclear emergency - mini"
+	config_tag = "nuclear_mini"
+	required_players = 10
+	required_enemies = 2
+	max_players = 20 // Real ops now
+	recommended_enemies = 2
+	antag_flag = BE_OPERATIVE
+	enemy_minimum_age = 14
+
+	agents_possible = 2
