@@ -121,7 +121,7 @@
 			D.RemoveSymptom(/datum/symptom/damage_converter)
 			D.RemoveSymptom(/datum/symptom/heal)
 			D.AddSymptom(/datum/symptom/regen)
-			D.Refresh(0)
+			D.Refresh(1) //It needs to actually change the disease name for reasons
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
