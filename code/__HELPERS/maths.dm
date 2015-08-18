@@ -24,8 +24,8 @@ proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/proc/Ceiling(x)
-	return -round(-x)
+/proc/Ceiling(x, y = 1)
+	. = -round(-x / y) * y
 
 //Moved to macros.dm to reduce pure calling overhead, this was being called shitloads, like, most calls of all procs.
 /*
