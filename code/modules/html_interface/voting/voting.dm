@@ -283,7 +283,7 @@ var/global/datum/controller/vote/vote = new()
 			for(var/client/C in clients)
 				interact(C)
 		else
-			if(usr)
+			if(istype(usr) && usr.client)
 				interact(usr.client)
 		world << "<font color='purple'><b>[text]</b><br>Type vote to place your votes.<br>You have [ismapvote && ismapvote.len ? "60" : config.vote_period/10] seconds to vote.</font>"
 		switch(vote_type)
