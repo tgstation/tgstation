@@ -1,0 +1,5 @@
+author: PJB3005
+delete-after: true
+changes: 
+  - rscadd: Admins now have a verb specifically for viewing a mob's attack logs.
+  - bugfix: VV does no longer render HTML in the contents of vars.
