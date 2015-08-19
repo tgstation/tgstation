@@ -195,7 +195,6 @@
 	energy_drain = 250
 	range = MELEE|RANGED
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
-	var/disabled = 0 //malf
 
 /obj/item/mecha_parts/mecha_equipment/rcd/New()
 	rcd_list += src
@@ -211,7 +210,7 @@
 
 	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
-	if(!action_checks(target) || disabled || get_dist(chassis, target)>3)
+	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return
 	playsound(chassis, 'sound/machines/click.ogg', 50, 1)
 
@@ -249,7 +248,6 @@
 				var/turf/simulated/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
-					if(disabled) return
 					F.ChangeTurf(/turf/simulated/wall)
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
@@ -267,8 +265,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/do_after_cooldown(var/atom/target)
 	. = ..()
-	if(disabled)
-		return 0
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Topic(href,href_list)
 	..()
