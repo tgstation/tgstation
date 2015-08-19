@@ -48,6 +48,6 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Gang" = BE_GANG,
 	"Abductor" = BE_ABDUCTOR,
-	"Shadowling" = BE_SHADOWLING //space niggers
-//	"Revenant" = BE_REVENANT ;^)
+	"Shadowling" = BE_SHADOWLING, //space niggers
+	"Revenant" = BE_REVENANT
 	)

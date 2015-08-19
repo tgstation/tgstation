@@ -60,6 +60,7 @@
 
 	var/supernatural = 0
 	var/purge = 0
+	var/flying = 0 //whether it's flying or touching the ground.
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
@@ -98,7 +99,7 @@
 
 
 	if(health < 1 && stat != DEAD)
-		Die()
+		death(0)
 
 	if(health > maxHealth)
 		health = maxHealth
@@ -389,22 +390,14 @@
 	if(statpanel("Status"))
 		stat(null, "Health: [round((health / maxHealth) * 100)]%")
 
-/mob/living/simple_animal/proc/Die()
-	health = 0 // so /mob/living/simple_animal/Life() doesn't magically revive them
-	dead_mob_list += src
+/mob/living/simple_animal/death(gibbed)
+	health = 0
 	icon_state = icon_dead
 	stat = DEAD
 	density = 0
-	return
-
-/mob/living/simple_animal/death(gibbed)
-	if(stat == DEAD)
-		return
-
 	if(!gibbed)
 		visible_message("<span class='danger'>\the [src] stops moving...</span>")
-
-	Die()
+	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
@@ -423,7 +416,7 @@
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	health = Clamp(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
-		Die()
+		death(0)
 
 /mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
 	if(see_invisible < the_target.invisibility)
