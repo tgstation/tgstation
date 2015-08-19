@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Borgs are now automatically ejected from recharge stations if they suicide or ghost.
+  - bugfix: Fixed ChemMasters and Condimasters windows not updating when clicking the buttons in the window.
+  - bugfix: Using a condiment bottle on a sliceable dish will no longer place the fucking bottle inside it.
+  - imageadd: Improved a bunch of food-related sprites.

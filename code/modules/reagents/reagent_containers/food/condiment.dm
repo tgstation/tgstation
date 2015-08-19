@@ -11,6 +11,7 @@
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "emptycondiment"
+	item_state = null
 	flags = FPRINT  | OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
@@ -21,6 +22,7 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)
 
+	attack(user, user)
 	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/living/M as mob, mob/user as mob, def_zone)
@@ -37,7 +39,7 @@
 		if(reagents.total_volume) //Deal with the reagents in the food
 			reagents.reaction(M, INGEST)
 			spawn(5)
-				reagents.trans_to(M, 10)
+				reagents.trans_to(M, amount_per_transfer_from_this)
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10, 50), 1)
 		return 1
@@ -66,7 +68,7 @@
 		if(reagents.total_volume) //Deal with the reagents in the food
 			reagents.reaction(M, INGEST)
 			spawn(5)
-				reagents.trans_to(M, 10)
+				reagents.trans_to(M, amount_per_transfer_from_this)
 
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
@@ -109,53 +111,90 @@
 		switch(reagents.get_master_reagent_id())
 
 			if("ketchup")
-				name = "Ketchup"
+				name = "ketchup"
 				desc = "You feel more American already."
 				icon_state = "ketchup"
+				item_state = null
 			if("capsaicin")
-				name = "Hotsauce"
+				name = "hotsauce"
 				desc = "You can almost TASTE the stomach ulcers now!"
 				icon_state = "hotsauce"
+				item_state = null
 			if("enzyme")
-				name = "Universal Enzyme"
+				name = "universal enzyme"
 				desc = "Used in cooking various dishes."
 				icon_state = "enzyme"
+				item_state = null
+			if("flour")
+				name = "flour sack"
+				desc = "A big bag of flour. Good for baking!"
+				icon_state = "flour"
+				item_state = null
+			if("milk")
+				name = "space milk"
+				desc = "It's milk. White and nutritious goodness!"
+				icon_state = "milk"
+				item_state = "carton"
+			if("soymilk")
+				name = "soy milk"
+				desc = "It's soy milk. White and nutritious goodness!"
+				icon_state = "soymilk"
+				item_state = "carton"
+			if("rice")
+				name = "rice sack"
+				desc = "A taste of Asia in the kitchen."
+				icon_state = "enzyme"
+				item_state = null
 			if("soysauce")
-				name = "Soy Sauce"
+				name = "soy sauce"
 				desc = "A salty soy-based flavoring."
 				icon_state = "soysauce"
+				item_state = null
 			if("frostoil")
-				name = "Coldsauce"
+				name = "coldsauce"
 				desc = "Leaves the tongue numb in its passage."
 				icon_state = "coldsauce"
+				item_state = null
 			if("sodiumchloride")
-				name = "Salt Shaker"
+				name = "salt shaker"
 				desc = "Salt. From space oceans, presumably."
 				icon_state = "saltshakersmall"
+				item_state = null
 			if("blackpepper")
-				name = "Pepper Mill"
+				name = "pepper mill"
 				desc = "Often used to flavor food or make people sneeze."
 				icon_state = "peppermillsmall"
+				item_state = null
 			if("cornoil")
-				name = "Corn Oil"
+				name = "corn oil"
 				desc = "A delicious oil used in cooking. Made from corn."
-				icon_state = "oliveoil"
+				icon_state = "cornoil"
+				item_state = null
 			if("sugar")
-				name = "Sugar"
+				name = "sugar"
 				desc = "Tastey space sugar!"
+				icon_state = "sugar"
+				item_state = null
 			if("chefspecial")
-				name = "Chef Excellence's Special Sauce"
+				name = "\improper Chef Excellence's Special Sauce"
 				desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp."
+				icon_state = "emptycondiment"
+				item_state = null
 			if("vinegar")
-				name = "Malt Vinegar Bottle"
+				name = "malt vinegar bottle"
 				desc = "Perfect for fish and chips!"
 				icon_state = "vinegar_container"
+				item_state = null
 			if("honey")
-				name = "Honey Pot"
+				name = "honey pot"
 				desc = "Sweet and healthy!"
 				icon_state = "honey"
+				item_state = null
 			else
-				name = "Misc Condiment Bottle"
+				name = "misc condiment bottle"
+				desc = "Just your average condiment container."
+				icon_state = "emptycondiment"
+				item_state = null
 
 				if(reagents.reagent_list.len == 1)
 					desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
