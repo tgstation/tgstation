@@ -1,18 +1,3 @@
-//Harvest Essence: The bread and butter of the revenant. The basic way of harvesting additional essence.
-/obj/effect/proc_holder/spell/targeted/revenant_harvest
-	name = "Harvest"
-	desc = "Siphons the lingering spectral essence from a human, empowering yourself."
-	panel = "Revenant Abilities"
-	charge_max = 0 //No cooldown
-	clothes_req = 0
-	range = 1
-
-/obj/effect/proc_holder/spell/targeted/revenant_harvest/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	for(var/mob/living/carbon/human/target in targets)
-		spawn(0)
-			user.Harvest(target)
-
-
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob for 5E.
 /obj/effect/proc_holder/spell/targeted/revenant_transmit
 	name = "Transmit"
