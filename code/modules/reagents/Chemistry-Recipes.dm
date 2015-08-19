@@ -567,7 +567,7 @@ datum
 			name = "Carp pheromones"
 			id = "carppheromones"
 			result = "carppheromones"
-			required_reagents = list("carpotoxin" = 1, "leporazine" = 1, "lithium" = 1)
+			required_reagents = list("carpotoxin" = 1, "leporazine" = 1, "carbon" = 1)
 			result_amount = 3
 
 		plasmasolidification
