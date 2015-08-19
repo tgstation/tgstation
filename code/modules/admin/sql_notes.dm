@@ -12,7 +12,7 @@
 			log_game("SQL ERROR obtaining ckey from notes table. Error : \[[err]\]\n")
 			return
 		if(!query_find_ckey.NextRow())
-			usr << "<font color='red'>[new_ckey] has not been seen before, you can only add notes to known players.</font>"
+			usr << "<span class='redtext'>[new_ckey] has not been seen before, you can only add notes to known players.</span>"
 			return
 		else
 			target_ckey = new_ckey
