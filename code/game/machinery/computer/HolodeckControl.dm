@@ -280,12 +280,12 @@
 	return
 	// HOLOFLOOR DOES NOT GIVE A FUCK
 
-/turf/simulated/floor/fancy/grass/holo
+/turf/simulated/floor/grass/holo
 	thermal_conductivity = 0
 	gender = PLURAL
 	name = "lush grass"
 
-/turf/simulated/floor/fancy/grass/holo/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/turf/simulated/floor/grass/holo/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	return
 	// HOLOGRASS DOES NOT GIVE A FUCK
 
@@ -422,7 +422,7 @@
 	icon_state = "hoop"
 	anchored = 1
 	density = 1
-	throwpass = 1
+	pass_flags = LETPASSTHROW
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)

@@ -148,7 +148,7 @@
 		if(!step)
 			break
 		src.Move(step, get_dir(src, step))
-		hit_check()
+		hitcheck()
 		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++
 		dist_since_sleep++

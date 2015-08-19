@@ -145,19 +145,15 @@
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
 
-/atom/movable/proc/hit_check() // todo: this is partly obsolete due to passflags already, add throwing stuff to mob CanPass and finish it
-	if(src.throwing)
-		for(var/atom/A in get_turf(src))
-			if(A == src) continue
-			if(istype(A,/mob/living))
-				if(A:lying) continue
-				src.throw_impact(A)
-				if(src.throwing == 1)
-					src.throwing = 0
-			if(isobj(A))
-				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
-					src.throw_impact(A)
-					src.throwing = 0
+/atom/movable/proc/hitcheck()
+	for(var/atom/movable/AM in get_turf(src))
+		if(AM == src)
+			continue
+		if(AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
+			throwing = 0
+			throw_impact(AM)
+			return 1
+
 
 /atom/movable/proc/throw_at(atom/target, range, speed)
 	if(!target || !src || (flags & NODROP))	return 0
@@ -199,7 +195,7 @@
 		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 			break
 		src.Move(step, get_dir(loc, step))
-		hit_check()
+		hitcheck()
 		error += (error < 0) ? tdist_x : -tdist_y;
 		dist_travelled++
 		dist_since_sleep++
