@@ -1,0 +1,6 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: Added carp pheromones, created by mixing carpotoxin, leporazine and lithium. Space carps won't attack stuff containing them.

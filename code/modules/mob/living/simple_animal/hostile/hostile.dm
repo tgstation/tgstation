@@ -81,6 +81,10 @@
 		L += Objects
 	return L
 
+/mob/living/simple_animal/hostile/proc/IsInvalidTarget(atom/A)
+	if(isMoMMI(A))
+		return 1
+
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/proc/FindTarget() called tick#: [world.time]")
 	var/list/Targets = list()
@@ -92,11 +96,8 @@
 			Targets = FoundTarget
 			break
 		if(CanAttack(A))//Can we attack it?
-			if(isMoMMI(A))
-				continue
-			if(istype(src, /mob/living/simple_animal/hostile/scarybat))
-				if(A == src:owner)
-					continue
+			if(IsInvalidTarget(A)) continue
+
 			Targets += A
 			continue
 	Target = PickTarget(Targets)

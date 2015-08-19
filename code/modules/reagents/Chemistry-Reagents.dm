@@ -2762,6 +2762,13 @@
 		H.update_mutations()		//update our mutation overlays
 		H.update_body()
 
+/datum/reagent/carp_pheromones
+	name = "carp pheromones"
+	id = "carppheromones"
+	description = "A disgusting liquid which is used by space carps to mark their territory and food."
+	reagent_state = LIQUID
+	color = "#6AAA96" // rgb: 106, 170, 150
+
 /datum/reagent/blackpepper
 	name = "Black Pepper"
 	id = "blackpepper"

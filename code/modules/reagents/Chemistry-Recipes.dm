@@ -563,6 +563,13 @@ datum
 			required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 1)
 			result_amount = 3
 
+		carp_pheromones
+			name = "Carp pheromones"
+			id = "carppheromones"
+			result = "carppheromones"
+			required_reagents = list("carpotoxin" = 1, "leporazine" = 1, "lithium" = 1)
+			result_amount = 3
+
 		plasmasolidification
 			name = "Solid Plasma"
 			id = "solidplasma"
