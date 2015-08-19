@@ -4,4 +4,4 @@ author: Gun Hog
 delete-after: True
 
 changes: 
-  - tweak: "The Disable RCD Malfunction power now costs 25 CPU (down from 50), can be used multiple times, and no longer affects cyborgs."
+  - tweak: "The Disable RCD Malfunction power is now Destroy RCDs! It costs 25 CPU (down from 50), causes RCDs to explode, can be used multiple times, and no longer affects cyborgs."
