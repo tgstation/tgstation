@@ -6,14 +6,14 @@
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
-/datum/reagent/thermite/reaction_turf(turf/T, volume)
+/datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
 	src = null
-	if(volume >= 1 && istype(T, /turf/simulated/wall))
+	if(reac_volume >= 1 && istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/Wall = T
 		if(istype(Wall, /turf/simulated/wall/r_wall))
-			Wall.thermite = Wall.thermite+(volume*2.5)
+			Wall.thermite = Wall.thermite+(reac_volume*2.5)
 		else
-			Wall.thermite = Wall.thermite+(volume*10)
+			Wall.thermite = Wall.thermite+(reac_volume*10)
 		Wall.overlays = list()
 		Wall.overlays += image('icons/effects/effects.dmi',"thermite")
 
@@ -48,29 +48,30 @@
 	M.adjustFireLoss(burndmg)
 	..()
 
-/datum/reagent/clf3/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/clf3/reaction_turf(turf/simulated/T, reac_volume)
 	if(istype(T, /turf/simulated/floor/plating))
 		var/turf/simulated/floor/plating/F = T
 		if(prob(1 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
 			F.ChangeTurf(F.baseturf)
 	if(istype(T, /turf/simulated/floor/))
 		var/turf/simulated/floor/F = T
-		if(prob(volume/10))
+		if(prob(reac_volume/10))
 			F.make_plating()
-		else if(prob(volume))
+		else if(prob(reac_volume))
 			F.burn_tile()
 		if(istype(F, /turf/simulated/floor/))
 			PoolOrNew(/obj/effect/hotspot, F)
 	if(istype(T, /turf/simulated/wall/))
 		var/turf/simulated/wall/W = T
-		if(prob(volume/10))
+		if(prob(reac_volume/10))
 			W.ChangeTurf(/turf/simulated/floor/plating)
 
-/datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(min(volume/5, 10))
-		M.IgniteMob()
-		PoolOrNew(/obj/effect/hotspot, M.loc)
+/datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(istype(M))
+		if(method != INGEST)
+			M.adjust_fire_stacks(min(reac_volume/5, 10))
+			M.IgniteMob()
+			PoolOrNew(/obj/effect/hotspot, M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"
@@ -128,8 +129,8 @@
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
 	color = "#FF9999"
-	
-/datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, volume)
+
+/datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.IgniteMob()
 	..()
 
@@ -150,9 +151,10 @@
 	M.adjust_fire_stacks(1)
 	..()
 
-/datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH && isliving(M))
-		M.adjust_fire_stacks(min(volume/4, 20))
+/datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(istype(M))
+		if(method != INGEST)
+			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
 /datum/reagent/cryostylane
 	name = "Cryostylane"
@@ -175,8 +177,8 @@
 		holder.handle_reactions()
 	..()
 
-/datum/reagent/cryostylane/reaction_turf(turf/simulated/T, volume)
-	if(volume >= 5)
+/datum/reagent/cryostylane/reaction_turf(turf/simulated/T, reac_volume)
+	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 

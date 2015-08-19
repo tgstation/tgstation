@@ -10,19 +10,24 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
+	//Vars to hold internal items
 	var/mob/living/OCCUPANT = null
 	var/obj/item/clothing/suit/space/SUIT = null
-	var/SUIT_TYPE = null
 	var/obj/item/clothing/head/helmet/space/HELMET = null
+	var/obj/item/clothing/mask/MASK = null 
+	var/obj/item/STORAGE = null
+	
+	//Base types on creation
+	var/SUIT_TYPE = null
 	var/HELMET_TYPE = null
-	var/obj/item/clothing/mask/MASK = null  //All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
-	var/MASK_TYPE = null //Erro's idea on standarising SSUs whle keeping creation of other SSU types easy: Make a child SSU, name it something then set the TYPE vars to your desired suit output. New() should take it from there by itself.
-	var/obj/item/STORAGE = null  //One-slot storage slot for anything... food not recommended
+	var/MASK_TYPE = null
 	var/STORAGE_TYPE = null
+	
+	//Machine related vars
 	var/isopen = 0
 	var/islocked = 0
 	var/isUV = 0
-	var/ispowered = 1 //starts powered
+	var/ispowered = 1
 	var/isbroken = 0
 	var/issuperUV = 0
 	var/panelopen = 0
@@ -30,7 +35,6 @@
 	var/cycletime_left = 0
 
 
-//The units themselves/////////////////
 
 /obj/machinery/suit_storage_unit/standard_unit
 	SUIT_TYPE = /obj/item/clothing/suit/space/eva
@@ -168,17 +172,13 @@
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<B>Maintenance panel controls</B><HR>"
 		dat+= "The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"
-		dat+= text("A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'>Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
+		dat+= text("A small dial with a \"Ã«\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'>Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
 		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A href='?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
 		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
-		//user << browse(dat, "window=ssu_m_panel;size=400x500")
-		//onclose(user, "ssu_m_panel")
 	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
 		dat += "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 		dat+= "<font color ='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</font></B><BR>"
-		//dat+= "<font colr='black'><B>Cycle end in: [src.cycletimeleft()] seconds. </font></B>"
-		//user << browse(dat, "window=ssu_cycling_panel;size=400x500")
-		//onclose(user, "ssu_cycling_panel")
+
 
 	else
 		if(!src.isbroken)
@@ -208,14 +208,12 @@
 			dat+= text("Unit status: []",(src.islocked? "<font color ='red'><B>**LOCKED**</B></font><BR>" : "<font color ='green'><B>**UNLOCKED**</B></font><BR>") )
 			dat+= text("<A href='?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
 			dat += text("<BR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-			//user << browse(dat, "window=Suit Storage Unit;size=400x500")
-			//onclose(user, "Suit Storage Unit")
+
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat+= "<B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</B><BR><BR>"
 			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-			//user << browse(dat, "window=suit_storage_unit;size=400x500")
-			//onclose(user, "suit_storage_unit")
+
 
 	var/datum/browser/popup = new(user, "suit_storage_unit", "Suit Storage Unit", 440, 500)
 	popup.set_content(dat)
@@ -227,7 +225,7 @@
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
 		return
-	if(usr == src.OCCUPANT) //No unlocking yourself out!
+	if(usr == src.OCCUPANT)
 		return
 	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
 		usr.set_machine(src)
@@ -253,29 +251,15 @@
 			src.eject_occupant(usr)
 		src.updateUsrDialog()
 		src.update_icon()
-	/*if (href_list["refresh"])
-		src.updateUsrDialog()*/
 	src.add_fingerprint(usr)
 	return
 
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
-//	var/protected = 0
-//	var/mob/living/carbon/human/H = user
 	if(!src.panelopen)
 		return
-
-	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(istype(G,/obj/item/clothing/gloves/yellow))
-				protected = 1
-
-	if(!protected)
-		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
-		return*/
-	else  //welp, the guy is protected, we can continue
+		
+	else
 		if(src.issuperUV)
 			user << "<span class='notice'>You slide the dial back towards \"185nm\".</span>"
 			src.issuperUV = 0
@@ -286,21 +270,8 @@
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
-//	var/protected = 0
-//	var/mob/living/carbon/human/H = user
 	if(!src.panelopen) //Needed check due to bugs
 		return
-
-	/*if(istype(H)) //Let's check if the guy's wearing electrically insulated gloves
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(istype(G,/obj/item/clothing/gloves/yellow) )
-				protected = 1
-
-	if(!protected)
-		playsound(src.loc, "sparks", 75, 1, -1)
-		user << "<font color='red'>You try to touch the controls but you get zapped. There must be a short circuit somewhere.</font>"
-		return*/
 	else
 		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
 		src.safetieson = !src.safetieson
@@ -323,7 +294,9 @@
 	STORAGE = null
 
 /obj/machinery/suit_storage_unit/proc/eject(atom/movable/ITEM)
-	ITEM.loc = src.loc
+	//Check item still exists - if not, then usually someone has already ejected the item
+	if(ITEM)
+		ITEM.loc = src.loc
 
 /obj/machinery/suit_storage_unit/proc/dump_everything()
 	for(var/obj/item/ITEM in src)
@@ -364,7 +337,7 @@
 	if(src.OCCUPANT && src.safetieson)
 		user << "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</font>"
 		return
-	if(!src.HELMET && !src.MASK && !src.SUIT && !src.STORAGE && !src.OCCUPANT ) //shit's empty yo
+	if(!src.HELMET && !src.MASK && !src.SUIT && !src.STORAGE && !src.OCCUPANT )
 		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
 		return
 	user << "<span class='notice'>You start the Unit's cauterisation cycle.</span>"
@@ -375,7 +348,7 @@
 	src.update_icon()
 	src.updateUsrDialog()
 
-	var/i //our counter
+	var/i
 	spawn(0)
 		for(i=0,i<4,++i)
 			sleep(50)
@@ -393,17 +366,17 @@
 					for(var/obj/item/ITEM in src)
 						ITEM.clean_blood()
 					if(istype(STORAGE, /obj/item/weapon/reagent_containers/food))
-						del(STORAGE)
+						qdel(STORAGE)
 				else //It was supercycling, destroy everything
 					src.HELMET = null
 					src.SUIT = null
 					src.MASK = null
-					del(STORAGE)
+					qdel(STORAGE)
 					visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
 					src.isbroken = 1
 					src.isopen = 1
 					src.islocked = 0
-					src.eject_occupant(OCCUPANT) //Mixing up these two lines causes bug. DO NOT DO IT.
+					src.eject_occupant(OCCUPANT)
 				src.isUV = 0 //Cycle ends
 		src.update_icon()
 		src.updateUsrDialog()
@@ -421,8 +394,6 @@
 
 	if (!src.OCCUPANT)
 		return
-//	for(var/obj/O in src)
-//		O.loc = src.loc
 
 	if (src.OCCUPANT.client)
 		if(user != OCCUPANT)
@@ -494,7 +465,7 @@
 			M.client.eye = src
 		M.loc = src
 		src.OCCUPANT = M
-		src.isopen = 0 //Close the thing after the guy gets inside
+		src.isopen = 0
 		src.update_icon()
 
 		src.add_fingerprint(user)
@@ -595,5 +566,3 @@
 	user << "<span class='warning'>The console controls are far too complicated for your tiny brain!</span>"
 	return
 
-
-//////////////////////////////REMINDER: Make it lock once you place some fucker inside.

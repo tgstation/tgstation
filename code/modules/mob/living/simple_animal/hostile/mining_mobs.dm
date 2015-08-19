@@ -42,7 +42,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	feedback_add_details("mobs_killed_mining","[src.name]")
+	feedback_add_details("mobs_killed_mining","[src.type]")
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk

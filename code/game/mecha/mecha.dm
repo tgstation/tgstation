@@ -137,7 +137,7 @@
 		loc.assume_air(cabin_air)
 		air_update_turf()
 	else
-		del(cabin_air)
+		qdel(cabin_air)
 	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
@@ -240,7 +240,7 @@
 					loc.assume_air(leaked_gas)
 					air_update_turf()
 				else
-					del(leaked_gas)
+					qdel(leaked_gas)
 
 		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 			if(get_charge())
@@ -276,7 +276,7 @@
 				if(t_air)
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
-					del(removed)
+					qdel(removed)
 
 	if(occupant)
 		if(cell)
