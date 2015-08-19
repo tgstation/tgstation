@@ -1,0 +1,7 @@
+author: Shadowmech88
+delete-after: True
+changes: 
+  - rscadd: Added remote signaling buttons, constructable by using a sheet of metal on a remote signaling device. Wrench to turn back into components, multitool to change frequency once mounted.
+  - bugfix: Remote signaling devices can no longer be interacted with while more than a tile away.
+  - bugfix: The wheelchair-bound can now make use of proximity sensors and timers.
+  - bugfix: It is now possible to use remote signaling devices, proximity sensors, and timers while buckled into something, as long as you are not also restrained.
