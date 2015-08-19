@@ -22,6 +22,7 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user as mob)
 
+	attack(user, user)
 	return
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/living/M as mob, mob/user as mob, def_zone)
