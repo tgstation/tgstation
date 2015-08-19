@@ -249,19 +249,19 @@
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez(src.loc)
+			else new/obj/item/weapon/reagent_containers/glass/beaker/bottle/nutrient/ez(src.loc)
 		if("l4z")
 			if (check_cost(20/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z(src.loc)
+			else new/obj/item/weapon/reagent_containers/glass/beaker/bottle/nutrient/l4z(src.loc)
 		if("rh")
 			if (check_cost(25/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh(src.loc)
+			else new/obj/item/weapon/reagent_containers/glass/beaker/bottle/nutrient/rh(src.loc)
 		if("wk")
 			if (check_cost(50/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/weedkiller(src.loc)
+			else new/obj/item/weapon/reagent_containers/glass/beaker/bottle/weedkiller(src.loc)
 		if("pk")
 			if (check_cost(50/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/glass/bottle/pestkiller(src.loc)
+			else new/obj/item/weapon/reagent_containers/glass/beaker/bottle/pestkiller(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)

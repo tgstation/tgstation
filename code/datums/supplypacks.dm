@@ -539,18 +539,18 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/medical/supplies
 	name = "Medical Supplies Crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-					/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-					/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
-					/obj/item/weapon/reagent_containers/glass/bottle/toxin,
+	contains = list(/obj/item/weapon/reagent_containers/glass/beaker/bottle/charcoal,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/charcoal,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/epinephrine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/epinephrine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/morphine,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/toxin,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/toxin,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/reagent_containers/glass/beaker/large,
 					/obj/item/weapon/reagent_containers/pill/insulin,
@@ -609,20 +609,20 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/medical/virus
 	name = "Virus Crate"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/flu_virion,
-					/obj/item/weapon/reagent_containers/glass/bottle/cold,
-					/obj/item/weapon/reagent_containers/glass/bottle/epiglottis_virion,
-					/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion,
-					/obj/item/weapon/reagent_containers/glass/bottle/fake_gbs,
-					/obj/item/weapon/reagent_containers/glass/bottle/magnitis,
-					/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat,
-					/obj/item/weapon/reagent_containers/glass/bottle/brainrot,
-					/obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion,
-					/obj/item/weapon/reagent_containers/glass/bottle/anxiety,
-					/obj/item/weapon/reagent_containers/glass/bottle/beesease,
+	contains = list(/obj/item/weapon/reagent_containers/glass/beaker/bottle/flu_virion,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/cold,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/epiglottis_virion,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/liver_enhance_virion,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/fake_gbs,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/magnitis,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/pierrot_throat,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/brainrot,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/hullucigen_virion,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/anxiety,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/beesease,
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/beakers,
-					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/mutagen)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "virus crate"
@@ -848,8 +848,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Hydroponics Supply Crate"
 	contains = list(/obj/item/weapon/reagent_containers/spray/plantbgone,
 					/obj/item/weapon/reagent_containers/spray/plantbgone,
-					/obj/item/weapon/reagent_containers/glass/bottle/ammonia,
-					/obj/item/weapon/reagent_containers/glass/bottle/ammonia,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/ammonia,
+					/obj/item/weapon/reagent_containers/glass/beaker/bottle/ammonia,
 					/obj/item/weapon/hatchet,
 					/obj/item/weapon/cultivator,
 					/obj/item/device/analyzer/plant_analyzer,

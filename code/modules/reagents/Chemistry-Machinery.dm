@@ -333,7 +333,7 @@
 		if(condi)
 			P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 		else
-			P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			P = new/obj/item/weapon/reagent_containers/glass/beaker/bottle(src.loc)
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
 		P.name = trim("[name] bottle")
@@ -720,7 +720,7 @@
 
 	if (href_list["create_vaccine"])
 		if(!src.wait)
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			var/obj/item/weapon/reagent_containers/glass/beaker/bottle/B = new/obj/item/weapon/reagent_containers/glass/beaker/bottle(src.loc)
 			if(B)
 				B.pixel_x = rand(-3, 3)
 				B.pixel_y = rand(-3, 3)
@@ -765,7 +765,7 @@
 			var/name = stripped_input(usr,"Name:","Name the culture",D.name,MAX_NAME_LEN)
 			if(name == null || wait)
 				return
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			var/obj/item/weapon/reagent_containers/glass/beaker/bottle/B = new/obj/item/weapon/reagent_containers/glass/beaker/bottle(src.loc)
 			B.icon_state = "bottle3"
 			B.pixel_x = rand(-3, 3)
 			B.pixel_y = rand(-3, 3)

@@ -140,7 +140,7 @@
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/beaker/bottle)
 					else if(prob(15))
 						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/syringe)
 					else if(prob(25))
@@ -152,8 +152,8 @@
 					b.viruses += D
 					D.holder = b
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/beaker/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/beaker/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
