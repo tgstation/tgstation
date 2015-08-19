@@ -68,6 +68,14 @@
 	if (config.log_whisper)
 		diary << html_decode("\[[time_stamp()]]WHISPER: [text]")
 
+/proc/log_cultspeak(text)
+	if (config.log_whisper)
+		diary << html_decode("\[[time_stamp()]]CULT: [text]")
+
+/proc/log_narspeak(text)
+	if (config.log_whisper)
+		diary << html_decode("\[[time_stamp()]]NARSIE: [text]")
+
 /proc/log_emote(text)
 //	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_emote() called tick#: [world.time]")
 	if (config.log_emote)
