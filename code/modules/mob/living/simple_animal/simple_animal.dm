@@ -638,15 +638,6 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 		if(istype(child))
 			child.faction = src.faction
 
-// Return 0 if this animal has been skinned or butchered
-/mob/living/simple_animal/proc/intact()
-	if(meat_taken)
-		return 0
-	if(butchering_drops)
-		for(var/datum/butchering_product/P in butchering_drops)
-			return 0
-	return 1
-
 /mob/living/simple_animal/say_understands(var/mob/other,var/datum/language/speaking = null)
 	if(other) other = other.GetSource()
 	if(issilicon(other))
