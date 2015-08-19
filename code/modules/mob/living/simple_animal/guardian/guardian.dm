@@ -23,6 +23,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+	AIStatus = AI_OFF
 	var/cooldown = 0
 	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
