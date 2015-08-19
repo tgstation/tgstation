@@ -1,3 +1,15 @@
+14 August 2015, by Jordie0608
+
+Added new table 'notes' to replace BYOND's .sav note system.
+
+To create this new table run the following command:
+
+CREATE TABLE `notes` ( `id` int(11) NOT NULL AUTO_INCREMENT, `ckey` varchar(32) NOT NULL, `notetext` text NOT NULL, `timestamp` datetime NOT NULL, `adminckey` varchar(32) NOT NULL, `last_editor` varchar(32), `edits` text, `server` varchar(50) NOT NULL, PRIMARY KEY (`id`))
+
+Remember to add prefix to the table name if you use them.
+
+----------------------------------------------------
+
 28 July 2015, by Jordie0608
 
 Modified table 'memo', removing 'id' column and making 'ckey' primary.

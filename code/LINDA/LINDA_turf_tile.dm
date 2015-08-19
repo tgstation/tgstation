@@ -8,7 +8,7 @@
 	var/atmos_supeconductivity = 0
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	del(giver)
+	qdel(giver)
 	return 0
 
 /turf/return_air()
@@ -290,7 +290,7 @@
 /atom/movable/var/pressure_resistance = 5
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
-	if(!anchored)
+	if(!anchored && !pulledby)
 		if(pressure_difference > pressure_resistance)
 			spawn step(src, direction)
 		return 1

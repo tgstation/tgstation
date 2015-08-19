@@ -5,7 +5,7 @@
 			id = "blood"
 			color = "#C80000" // rgb: 200, 0, 0
 
-/datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
+/datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	var/datum/reagent/blood/self = src
 	src = null
 	if(self.data && self.data["viruses"])
@@ -14,9 +14,9 @@
 			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
 				continue
 
-			if(method == TOUCH)
+			if(method == TOUCH || method == VAPOR)
 				M.ContractDisease(D)
-			else //injected
+			else //ingest or patch
 				M.ForceContractDisease(D)
 
 /datum/reagent/blood/on_new(list/data)
@@ -48,11 +48,13 @@
 				src.data["viruses"] = preserve
 	return 1
 
-/datum/reagent/blood/reaction_turf(turf/simulated/T, volume)//splash the blood all over the place
-	if(!istype(T)) return
+/datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
+	if(!istype(T))
+		return
 	var/datum/reagent/blood/self = src
 	src = null
-	if(!(volume >= 3)) return
+	if(reac_volume < 3)
+		return
 	//var/datum/disease/D = self.data["virus"]
 	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
@@ -93,7 +95,7 @@
 	id = "vaccine"
 	color = "#C81040" // rgb: 200, 16, 64
 
-/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
+/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	var/datum/reagent/vaccine/self = src
 	src = null
 	if(islist(self.data) && method == INGEST)
@@ -101,12 +103,10 @@
 			if(D.GetDiseaseID() in self.data)
 				D.cure()
 		M.resistances |= self.data
-	return
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
 		src.data |= data.Copy()
-
 
 /datum/reagent/water
 	name = "Water"
@@ -119,11 +119,11 @@
  *	Water reaction to turf
  */
 
-/datum/reagent/water/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
 	src = null
-	if(volume >= 10)
+	if(reac_volume >= 10)
 		T.MakeSlippery()
 
 	for(var/mob/living/simple_animal/slime/M in T)
@@ -142,7 +142,7 @@
  *	Water reaction to an object
  */
 
-/datum/reagent/water/reaction_obj(obj/O, volume)
+/datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	src = null
 
 	if(istype(O,/obj/item))
@@ -166,11 +166,12 @@
  *	Water reaction to a mob
  */
 
-/datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with water can help put them out!
+/datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
 	if(!istype(M, /mob/living))
 		return
 	if(method == TOUCH)
-		M.adjust_fire_stacks(-(volume / 10))
+		M.adjust_fire_stacks(-(reac_volume / 10))
+	..()
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
@@ -200,10 +201,10 @@
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
-/datum/reagent/water/holywater/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
 	..()
 	if(!istype(T)) return
-	if(volume>=10)
+	if(reac_volume>=10)
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
 	T.Bless()
@@ -247,10 +248,10 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
-/datum/reagent/lube/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	src = null
-	if(volume >= 1)
+	if(reac_volume >= 1)
 		T.MakeSlippery(2)
 
 /datum/reagent/spraytan
@@ -260,10 +261,10 @@
 	color = "#FFC080" // rgb: 255, 196, 128  Bright orange
 	metabolization_rate = 10 * REAGENTS_METABOLISM // very fast, so it can be applied rapidly.  But this changes on an overdose
 	overdose_threshold = 11 //Slightly more than one un-nozzled spraybottle.
-	
-/datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
+
+/datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(istype(M, /mob/living/carbon/human))
-		if(method == TOUCH)
+		if(method == PATCH || method == VAPOR)
 			var/mob/living/carbon/human/N = M
 			if(N.dna.species.id == "human")
 				switch(N.skin_tone)
@@ -289,7 +290,7 @@
 						N.skin_tone = "caucasian2"
 					if ("albino")
 						N.skin_tone = "caucasian1"
-						
+
 			if(MUTCOLORS in N.dna.species.specflags) //take current alien color and darken it slightly
 				var/newcolor = ""
 				var/len = length(N.dna.features["mcolor"])
@@ -307,20 +308,20 @@
 				N.dna.features["mcolor"] = newcolor
 				N.regenerate_icons()
 			N.update_body()
-			
-			
-			
+
+
+
 		if(method == INGEST)
 			if(show_message)
 				M << "<span class='notice'>That tasted horrible.</span>"
 			M.AdjustStunned(2)
 			M.AdjustWeakened(2)
 	..()
-	
-	
+
+
 /datum/reagent/spraytan/overdose_process(mob/living/M)
 	metabolization_rate = 1 * REAGENTS_METABOLISM
-	
+
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/N = M
 		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
@@ -329,7 +330,7 @@
 			N.hair_color = "000"
 			N.update_hair()
 		if(MUTCOLORS in N.dna.species.specflags) //Aliens with custom colors simply get turned orange
-			N.dna.features["mcolor"] = "f80" 
+			N.dna.features["mcolor"] = "f80"
 			N.regenerate_icons()
 		N.update_body()
 		if(prob(7))
@@ -382,9 +383,10 @@
 	description = "An advanced corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
-/datum/reagent/aslimetoxin/reaction_mob(mob/M, volume)
+/datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	src = null
-	M.ForceContractDisease(new /datum/disease/transformation/slime(0))
+	if(method != TOUCH)
+		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -463,7 +465,7 @@
 	reagent_state = SOLID
 	color = "#1C1300" // rgb: 30, 20, 0
 
-/datum/reagent/carbon/reaction_turf(turf/T, volume)
+/datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	src = null
 	if(!istype(T, /turf/space))
 		new /obj/effect/decal/cleanable/dirt(T)
@@ -539,12 +541,12 @@
 	..()
 	return
 
-/datum/reagent/radium/reaction_turf(turf/T, volume)
+/datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	src = null
-	if(volume >= 3)
+	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("radium", volume)
+			reagentdecal.reagents.add_reagent("radium", reac_volume)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -583,15 +585,13 @@
 /datum/reagent/uranium/on_mob_life(mob/living/M)
 	M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
 	..()
-	return
 
-
-/datum/reagent/uranium/reaction_turf(turf/T, volume)
+/datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	src = null
-	if(volume >= 3)
+	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("uranium", volume)
+			reagentdecal.reagents.add_reagent("uranium", reac_volume)
 
 /datum/reagent/aluminium
 	name = "Aluminium"
@@ -613,17 +613,17 @@
 	description = "Required for welders. Flamable."
 	color = "#660000" // rgb: 102, 0, 0
 
-/datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
+/datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH)
-		M.adjust_fire_stacks(volume / 10)
+	if(method == TOUCH || method == VAPOR)
+		M.adjust_fire_stacks(reac_volume / 10)
 		return
+	..()
 
 /datum/reagent/fuel/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1)
 	..()
-	return
 
 /datum/reagent/space_cleaner
 	name = "Space cleaner"
@@ -631,15 +631,15 @@
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
 
-/datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
+/datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/effect/decal/cleanable))
 		qdel(O)
 	else
 		if(O)
 			O.clean_blood()
 
-/datum/reagent/space_cleaner/reaction_turf(turf/T, volume)
-	if(volume >= 1)
+/datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
+	if(reac_volume >= 1)
 		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
@@ -648,39 +648,40 @@
 			M.adjustToxLoss(rand(5,10))
 	if(istype(T, /turf/simulated/floor))
 		var/turf/simulated/floor/F = T
-		if(volume >= 1)
+		if(reac_volume >= 1)
 			F.dirt = 0
 
-/datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.lip_style)
-				H.lip_style = null
-				H.update_body()
-		if(C.r_hand)
-			C.r_hand.clean_blood()
-		if(C.l_hand)
-			C.l_hand.clean_blood()
-		if(C.wear_mask)
-			if(C.wear_mask.clean_blood())
-				C.update_inv_wear_mask()
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = C
-			if(H.head)
-				if(H.head.clean_blood())
-					H.update_inv_head()
-			if(H.wear_suit)
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
-			else if(H.w_uniform)
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
-			if(H.shoes)
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
-		M.clean_blood()
+/datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || VAPOR)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(istype(M,/mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if(H.lip_style)
+					H.lip_style = null
+					H.update_body()
+			if(C.r_hand)
+				C.r_hand.clean_blood()
+			if(C.l_hand)
+				C.l_hand.clean_blood()
+			if(C.wear_mask)
+				if(C.wear_mask.clean_blood())
+					C.update_inv_wear_mask()
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = C
+				if(H.head)
+					if(H.head.clean_blood())
+						H.update_inv_head()
+				if(H.wear_suit)
+					if(H.wear_suit.clean_blood())
+						H.update_inv_wear_suit()
+				else if(H.w_uniform)
+					if(H.w_uniform.clean_blood())
+						H.update_inv_w_uniform()
+				if(H.shoes)
+					if(H.shoes.clean_blood())
+						H.update_inv_shoes()
+			M.clean_blood()
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
@@ -717,9 +718,9 @@
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
+/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	src = null
-	if( (prob(min(10, volume)) && method==TOUCH) || method==INGEST)
+	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 /datum/reagent/xenomicrobes
@@ -728,9 +729,9 @@
 	description = "Microbes with an entirely alien cellular structure."
 	color = "#535E66" // rgb: 83, 94, 102
 
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
+/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	src = null
-	if( (prob(min(10, volume)) && method==TOUCH) || method==INGEST)
+	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 /datum/reagent/fluorosurfactant//foam precursor
@@ -881,6 +882,13 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
+/datum/reagent/stable_plasma/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(10)
+	..()
+	return
+
 /datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"
@@ -902,7 +910,7 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/carpet/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/carpet/reaction_turf(turf/simulated/T, reac_volume)
 	if(istype(T, /turf/simulated/floor/plating) || istype(T, /turf/simulated/floor/plasteel))
 		var/turf/simulated/floor/F = T
 		F.ChangeTurf(/turf/simulated/floor/carpet)
@@ -952,21 +960,20 @@
 	..()
 	return
 
-/datum/reagent/colorful_reagent/reaction_mob(mob/living/M, volume)
+/datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(M && isliving(M))
 		M.color = pick(random_color_list)
 	..()
-	return
-/datum/reagent/colorful_reagent/reaction_obj(obj/O, volume)
+
+/datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
 		O.color = pick(random_color_list)
 	..()
-	return
-/datum/reagent/colorful_reagent/reaction_turf(turf/T, volume)
+
+/datum/reagent/colorful_reagent/reaction_turf(turf/T, reac_volume)
 	if(T)
 		T.color = pick(random_color_list)
 	..()
-	return
 
 /datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
@@ -976,14 +983,13 @@
 	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 
-/datum/reagent/hair_dye/reaction_mob(mob/living/M, volume)
-	if(M && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.hair_color = pick(potential_colors)
-		H.facial_hair_color = pick(potential_colors)
-		H.update_hair()
-	..()
-	return
+/datum/reagent/hair_dye/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.hair_color = pick(potential_colors)
+			H.facial_hair_color = pick(potential_colors)
+			H.update_hair()
 
 /datum/reagent/barbers_aid
 	name = "Barber's Aid"
@@ -992,16 +998,15 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/barbers_aid/reaction_mob(mob/living/M, volume)
-	if(M && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/datum/sprite_accessory/hair/picked_hair = pick(hair_styles_list)
-		var/datum/sprite_accessory/facial_hair/picked_beard = pick(facial_hair_styles_list)
-		H.hair_style = picked_hair
-		H.facial_hair_style = picked_beard
-		H.update_hair()
-	..()
-	return
+/datum/reagent/barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/datum/sprite_accessory/hair/picked_hair = pick(hair_styles_list)
+			var/datum/sprite_accessory/facial_hair/picked_beard = pick(facial_hair_styles_list)
+			H.hair_style = picked_hair
+			H.facial_hair_style = picked_beard
+			H.update_hair()
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -1010,14 +1015,13 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, volume)
-	if(M && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.hair_style = "Very Long Hair"
-		H.facial_hair_style = "Very Long Beard"
-		H.update_hair()
-	..()
-	return
+/datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.hair_style = "Very Long Hair"
+			H.facial_hair_style = "Very Long Beard"
+			H.update_hair()
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"

@@ -159,7 +159,12 @@
 			return
 
 		if(A.hasPower())
-			user << "<span class='warning'>The airlock's motors resist our efforts to force it!</span>"
+			if(A.locked)
+				user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
+				return
+			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
+			if(do_after(user, 100, target = A))
+				A.open(2)
 			return
 
 		else if(A.locked)

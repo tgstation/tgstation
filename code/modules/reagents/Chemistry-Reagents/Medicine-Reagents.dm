@@ -163,24 +163,22 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
-	if(iscarbon(M))
-		if(method == TOUCH)
-			M.adjustFireLoss(-volume)
+/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method == PATCH)
+			M.adjustFireLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing!</span>"
 			M.emote("scream")
 		if(method == INGEST)
-			M.adjustToxLoss(0.5*volume)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
-	return
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-2*REM)
 	..()
-	return
 
 /datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
@@ -189,25 +187,23 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
-	if(iscarbon(M))
-		if(method == TOUCH)
-			M.adjustBruteLoss(-volume)
+/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method == PATCH)
+			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
-			if(M.stat)
-				M.emote("scream")
+			M.emote("scream")
 		if(method == INGEST)
-			M.adjustToxLoss(0.5*volume)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel kind of ill. Maybe you ate a medicine you shouldn't have?</span>"
 	..()
-	return
+
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM)
 	..()
-	return
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -222,7 +218,6 @@
 		M.adjustBruteLoss(-0.5*REM)
 		M.adjustFireLoss(-0.5*REM)
 	..()
-	return
 
 /datum/reagent/medicine/mine_salve
 	name = "Miner's Salve"
@@ -239,20 +234,19 @@
 	M.adjustBruteLoss(-0.25*REM)
 	M.adjustFireLoss(-0.25*REM)
 	..()
-	return
 
-/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1)
+/datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if(method == TOUCH)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
+			method = VAPOR //so it's correctly absorbed in reagent/reaction_mob()
 		if(method == INGEST)
 			if(show_message)
 				M << "<span class='notice'>That tasted horrible.</span>"
 			M.AdjustStunned(2)
 			M.AdjustWeakened(2)
 	..()
-	return
 
 /datum/reagent/medicine/mine_salve/on_mob_delete(mob/living/M)
 	if(iscarbon(M))
@@ -267,15 +261,15 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, volume,show_message = 1)
-	if(iscarbon(M))
-		if(method == TOUCH)
-			M.adjustBruteLoss(-1.5*volume)
-			M.adjustFireLoss(-1.5*volume)
+/datum/reagent/medicine/synthflesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(method == PATCH)
+			M.adjustBruteLoss(-1.5*reac_volume)
+			M.adjustFireLoss(-1.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing and your flesh knitting together!</span>"
 	..()
-	return
+
 
 /datum/reagent/medicine/charcoal
 	name = "Charcoal"
@@ -659,7 +653,7 @@
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, volume)
+/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")

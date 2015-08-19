@@ -529,8 +529,8 @@ var/list/sacrificed = list()
 			if(!(iscultist(V)))
 				victims += V//Checks for cult status and mob type
 	for(var/obj/item/I in src.loc)//Checks for MMIs/brains/Intellicards
-		if(istype(I,/obj/item/organ/brain))
-			var/obj/item/organ/brain/B = I
+		if(istype(I,/obj/item/organ/internal/brain))
+			var/obj/item/organ/internal/brain/B = I
 			victims += B.brainmob
 		else if(istype(I,/obj/item/device/mmi))
 			var/obj/item/device/mmi/B = I
@@ -1002,8 +1002,8 @@ var/list/sacrificed = list()
 		usr.say("Uln Shogg Hafh[pick("'","`")]drn!")
 		user << "\red You quietly prick your finger and make a pact with the geometer of blood to acquire more power."
 		user.take_overall_damage(rand(5,20))
-		del(user.head)
-		del(user.wear_suit)
+		qdel(user.head)
+		qdel(user.wear_suit)
 		user.equip_to_slot_or_del(new /obj/item/clothing/head/magus(user), slot_head)
 		user.equip_to_slot_or_del(new /obj/item/clothing/suit/magusred(user), slot_wear_suit)
 		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
@@ -1020,8 +1020,8 @@ var/list/sacrificed = list()
 		user.put_in_hands(new /obj/item/weapon/gun/magic/wand/resurrection(user))
 	if (armorworn == "traveler" || armorworn == "marauder")
 		usr.say("Tharanak n[pick("'","`")]ghft!")
-		del(user.head)
-		del(user.wear_suit)
+		qdel(user.head)
+		qdel(user.wear_suit)
 		user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/cult(user), slot_head)
 		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/cult(user), slot_wear_suit)
 		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
@@ -1033,7 +1033,7 @@ var/list/sacrificed = list()
 	if (armorworn == "marauder")
 		user.spellremove(user)
 		user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult(user)
-	del(src)
+	qdel(src)
 	return
 
 ///Summon Shell: Summons a construct shell if there's four plasteel sheets on top of the rune
