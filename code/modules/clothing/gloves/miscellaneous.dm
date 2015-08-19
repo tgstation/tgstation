@@ -36,3 +36,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = -1 //Won't burn in fires
+
+/obj/item/clothing/gloves/combat/red
+	icon_state = "red"
+	item_state = "redgloves"

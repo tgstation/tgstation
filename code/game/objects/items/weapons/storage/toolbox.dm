@@ -83,7 +83,7 @@
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/wirecutters(src, "red")
 	new /obj/item/device/multitool(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/combat/red(src)
 
 /obj/item/weapon/storage/toolbox/drone
 	name = "mechanical toolbox"
