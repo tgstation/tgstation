@@ -454,6 +454,9 @@
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
+	var/list/node_list
+	var/image/manifold_centre
+	var/list/nodecon_overlays
 	level = 1
 	layer = 2.4 //under wires with their 2.44
 
@@ -481,6 +484,7 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/New()
+	nodecon_overlays = list()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
@@ -490,9 +494,14 @@
 			initialize_directions = SOUTH|WEST|NORTH
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
-
 	..()
-
+	manifold_centre = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_centre")
+	manifold_centre.dir = dir
+	manifold_centre.pixel_x = pixel_x
+	manifold_centre.pixel_y = pixel_y
+	manifold_centre.color = _color
+	overlays += manifold_centre
+	//update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
@@ -566,25 +575,45 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
+	node_list = list(node1,node2,node3)
 	alpha = invisibility ? 128 : 255
-	color = available_colors[_color]
-	overlays = 0
-	if(node1&&node2&&node3)
-		icon_state="manifold"
-	else
-		icon_state = "[baseicon]_ex"
-		var/icon/con = new/icon(icon,"[baseicon]_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
-
-		if(node1)
-			overlays += new/image(con,dir=get_dir(src, node1))
-		if(node2)
-			overlays += new/image(con,dir=get_dir(src, node2))
-		if(node3)
-			overlays += new/image(con,dir=get_dir(src, node3))
-
-		if(!node1 && !node2 && !node3)
-			qdel(src)
-
+	overlays.Cut()	// previously overlays = 0 and I'm pretty sure that's not very good
+	nodecon_overlays.Cut()
+	manifold_centre.color = _color
+	overlays += manifold_centre
+	var/list/is_node = list(0,0,0)
+	var/image/nodecon
+	var/list/directions = list(1,2,4,8)
+	directions -= dir
+	if(node1)
+		is_node[1] = 1
+	if(node2)
+		is_node[2] = 1
+	if(node3)
+		is_node[3] = 1
+	for (var/node in list(1,2,3))
+		var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
+		directions -= get_dir(src, connected_node) // finds all the directions that aren't pointed to by a node
+	for (var/node in list(1,2,3))
+		if (is_node[node])
+			var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
+			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con",dir = get_dir(src, connected_node))
+			if (connected_node.color)
+				nodecon.color = connected_node.color
+			else if (connected_node._color)
+				nodecon.color = connected_node._color
+			else
+				nodecon.color = _color
+			nodecon_overlays += nodecon
+		else
+			var/randomdir = pick(directions) // it picks a random direction from those that we don't have
+			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con_ex", dir = randomdir)
+			directions -= randomdir
+			nodecon.color = _color
+			nodecon_overlays += nodecon
+	overlays += nodecon_overlays
+	if(!node1 && !node2 && !node3)
+		qdel(src)
 	return
 
 
@@ -600,32 +629,25 @@
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
 	name = "\improper Scrubbers pipe"
-	_color = "red"
-	color=PIPE_COLOR_RED
+	_color = "PIPE_COLOR_RED"
 /obj/machinery/atmospherics/pipe/manifold/supply
 	name = "\improper Air supply pipe"
-	_color = "blue"
-	color=PIPE_COLOR_BLUE
+	_color = PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold/supplymain
 	name = "\improper Main air supply pipe"
-	_color = "purple"
-	color=PIPE_COLOR_PURPLE
+	_color = PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/manifold/general
 	name = "\improper Gas pipe"
-	_color = "gray"
-	color=PIPE_COLOR_GREY
+	_color = PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold/yellow
 	name = "\improper Air supply pipe"
-	_color = "yellow"
-	color=PIPE_COLOR_YELLOW
+	_color = PIPE_COLOR_YELLOW
 /obj/machinery/atmospherics/pipe/manifold/cyan
 	name = "\improper Air supply pipe"
-	_color = "cyan"
-	color=PIPE_COLOR_CYAN
+	_color = PIPE_COLOR_CYAN
 /obj/machinery/atmospherics/pipe/manifold/filtering
 	name = "\improper Air filtering pipe"
-	_color = "green"
-	color=PIPE_COLOR_GREEN
+	_color = PIPE_COLOR_GREEN
 /obj/machinery/atmospherics/pipe/manifold/insulated
 	name = "\improper Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
@@ -711,6 +733,9 @@
 	level = 1
 	layer = 2.4 //under wires with their 2.44
 	baseicon="manifold4w"
+	var/list/node_list
+	var/image/manifold_centre
+	var/list/nodecon_overlays
 
 /obj/machinery/atmospherics/pipe/manifold4w/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
@@ -737,6 +762,14 @@
 		node4.build_network()
 	return 1
 
+/obj/machinery/atmospherics/pipe/manifold4w/New()
+	nodecon_overlays = list()
+	..()
+	manifold_centre = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold4w_centre")
+	manifold_centre.pixel_x = pixel_x
+	manifold_centre.pixel_y = pixel_y
+	manifold_centre.color = _color
+	overlays += manifold_centre
 
 /obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
@@ -818,26 +851,47 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon()
-	overlays=0
+
+	node_list = list(node1,node2,node3,node4)
 	alpha = invisibility ? 128 : 255
-	color = available_colors[_color]
-	if(node1&&node2&&node3&&node4)
-		icon_state = "[baseicon]"
-	else
-		icon_state = "[baseicon]_ex"
-		var/icon/con = new/icon(icon,"[baseicon]_con") //Since 4-ways are supposed to be directionless, they need an overlay instead it seems.
-
-		if(node1)
-			overlays += new/image(con,dir=1)
-		if(node2)
-			overlays += new/image(con,dir=2)
-		if(node3)
-			overlays += new/image(con,dir=4)
-		if(node4)
-			overlays += new/image(con,dir=8)
-
-		if(!node1 && !node2 && !node3 && !node4)
-			qdel(src)
+	overlays.Cut()	// previously overlays = 0 and I'm pretty sure that's not very good
+	nodecon_overlays.Cut()
+	manifold_centre.color = _color
+	overlays += manifold_centre
+	var/list/is_node = list(0,0,0,0)
+	var/image/nodecon
+	var/list/directions = list(1,2,4,8)
+	if(node1)
+		is_node[1] = 1
+	if(node2)
+		is_node[2] = 1
+	if(node3)
+		is_node[3] = 1
+	if(node4)
+		is_node[4] = 1
+	for (var/node in list(1,2,3,4))
+		var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
+		directions -= get_dir(src, connected_node) // finds all the directions that aren't pointed to by a node
+	for (var/node in list(1,2,3,4))
+		if (is_node[node])
+			var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
+			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con",dir = get_dir(src, connected_node))
+			if (connected_node.color)
+				nodecon.color = connected_node.color
+			else if (connected_node._color)
+				nodecon.color = connected_node._color
+			else
+				nodecon.color = _color
+			nodecon_overlays += nodecon
+		else
+			var/randomdir = pick(directions) // it picks a random direction from those that we don't have
+			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con_ex", dir = randomdir)
+			directions -= randomdir
+			nodecon.color = _color
+			nodecon_overlays += nodecon
+	overlays += nodecon_overlays
+	if(!node1 && !node2 && !node3 && !node4)
+		qdel(src)
 	return
 
 
@@ -852,28 +906,22 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
 	name = "\improper Scrubbers pipe"
-	_color = "red"
-	color=PIPE_COLOR_RED
+	_color = PIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/manifold4w/supply
 	name = "\improper Air supply pipe"
-	_color = "blue"
-	color=PIPE_COLOR_BLUE
+	_color = PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain
 	name = "\improper Main air supply pipe"
-	_color = "purple"
-	color=PIPE_COLOR_PURPLE
+	_color = PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/manifold4w/general
 	name = "\improper Air supply pipe"
-	_color = "gray"
-	color=PIPE_COLOR_GREY
+	_color = PIPE_COLOR_GREY
 /obj/machinery/atmospherics/pipe/manifold4w/yellow
 	name = "\improper Air supply pipe"
-	_color = "yellow"
-	color=PIPE_COLOR_YELLOW
+	_color = PIPE_COLOR_YELLOW
 /obj/machinery/atmospherics/pipe/manifold4w/filtering
 	name = "\improper Air filtering pipe"
-	_color = "green"
-	color=PIPE_COLOR_GREEN
+	_color = PIPE_COLOR_GREEN
 /obj/machinery/atmospherics/pipe/manifold4w/insulated
 	icon = 'icons/obj/atmospherics/insulated.dmi'
 	name = "\improper Insulated pipe"
