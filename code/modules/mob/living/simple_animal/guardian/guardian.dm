@@ -295,14 +295,16 @@
 			range = 13
 			incorporeal_move = 0
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
+			toggle = FALSE
 		else
 			ranged = 0
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			alpha = 60
 			range = 255
-			incorporeal_move = 0
+			incorporeal_move = 1
 			src << "<span class='danger'><B>You switch to scout mode.</span></B>"
+			toggle = TRUE
 	else
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!.</span></B>"
 
@@ -328,6 +330,7 @@
 	set desc = "Disarm unwanted surveillance traps."
 	var/picked_snare = input(src, "Pick which trap to disarm", "Disarm Trap") as null|anything in src.snares
 	if(picked_snare)
+		src.snares -= picked_snare
 		qdel(picked_snare)
 		src << "<span class='danger'><B>Snare disarmed.</span></B>"
 
