@@ -76,13 +76,6 @@ We use BYGEX for some of our text replacement related code. Unfortunately, we
 only have a windows dll included right now. You can find a version known to compile on linux, along with some basic install instructions here
 https://github.com/optimumtact/byond-regex
 
-Otherwise, edit the file `code/_compile_options.dm`, and comment out:
-`#define USE_BYGEX`
-at the bottom, so that it looks like this:
-`//#define USE_BYGEX`
-Recompile the codebase afterwards.
-
-
 ##UPDATING
 
 To update an existing installation, first back up your /config and /data folders
