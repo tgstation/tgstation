@@ -468,7 +468,8 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/medbot/proc/speak() called tick#: [world.time]")
 	if((!src.on) || (!message))
 		return
-	visible_message("[src] beeps, \"[message]\"")
+	visible_message("[src] beeps, \"[message]\"",\
+		drugged_message="[src] beeps, \"[pick("FEED ME HUMANS","LET THE BLOOD FLOW","BLOOD FOR THE BLOOD GOD","I SPREAD DEATH AND DESTRUCTION","EXTERMINATE","I HATE YOU!","SURRENDER TO YOUR MACHINE OVERLORDS","FEED ME SHITTERS")]\"")
 	return
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/item/projectile/Proj)

@@ -7,7 +7,11 @@
 
 /datum/universal_state/supermatter_cascade/OnShuttleCall(var/mob/user)
 	if(user)
-		user << "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>"
+		if(user.hallucinating())
+			var/msg = pick("your mother and father arguing","a smooth jazz tune","somebody speaking [pick("french","siik'tajr","gibberish")]","[pick("somebody","your parents","a gorilla","a man","a woman")] making [pick("chicken","cow","train","duck","cat","dog","strange","funny")] sounds")
+			user << "<span class='sinister'>All you hear on the frequency is [msg]. There will be no shuttle call today.</span>"
+		else
+			user << "<span class='sinister'>All you hear on the frequency is static and panicked screaming. There will be no shuttle call today.</span>"
 	return 0
 
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)

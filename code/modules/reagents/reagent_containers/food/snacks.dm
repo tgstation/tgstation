@@ -148,7 +148,7 @@
 		if(n_name && Adjacent(user) && !user.stat)
 			name = "[n_name]"
 		return
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W,/obj/item/weapon/storage) || istype(W,/obj/item/weapon/reagent_containers/food/condiment))
 		return ..() // -> item/attackby()
 	if(istype(W, /obj/item/weapon/kitchen/utensil/fork))
 		var/obj/item/weapon/kitchen/utensil/fork/fork = W

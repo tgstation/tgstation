@@ -82,3 +82,7 @@
 				set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
 		set_light(6, 2, LIGHT_COLOR_TUNGSTEN)
 	flickering = 0
+
+/obj/structure/hanging_lantern/spook()
+	if(..())
+		flicker()

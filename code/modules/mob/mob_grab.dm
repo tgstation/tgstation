@@ -125,7 +125,8 @@
 	if(state < GRAB_AGGRESSIVE)
 		if(!allow_upgrade)
 			return
-		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+		assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>", \
+			drugged_message = "<span class='warning'>[assailant] has hugged [affecting] passionately!</span>")
 		state = GRAB_AGGRESSIVE
 		icon_state = "grabbed1"
 	else
@@ -133,7 +134,8 @@
 			if(isslime(affecting))
 				assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
 				return
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>", \
+				drugged_message = "<span class='warning'>[assailant] has reinforced \his hug on [affecting]!</span>")
 			state = GRAB_NECK
 			icon_state = "grabbed+1"
 			if(!affecting.locked_to)
@@ -145,7 +147,8 @@
 			hud.name = "disarm/kill"
 		else
 			if(state < GRAB_UPGRADING)
-				assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
+				assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>", \
+					drugged_message = "<span class='danger'>[assailant] starts to tighten \his hug on [affecting]!</span>")
 				hud.icon_state = "disarm/kill1"
 				state = GRAB_UPGRADING
 				if(do_after(assailant,affecting, UPGRADE_KILL_TIMER))
@@ -158,7 +161,8 @@
 						returnToPool(src)
 						return
 					state = GRAB_KILL
-					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
+					assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>", \
+						drugged_message = "<span class='danger'>[assailant] has tightened \his hug on [affecting]!</span>")
 					affecting.attack_log += "\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>"
 					assailant.attack_log += "\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>"
 					log_attack("<font color='red'>[assailant.name] ([assailant.ckey]) Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
@@ -171,7 +175,8 @@
 					if(!assailant || !affecting)
 						returnToPool(src)
 						return
-					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
+					assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>", \
+						drugged_message = "<span class='warning'>[affecting] refused [assailant]'s hug!</span>")
 					hud.icon_state = "disarm/kill"
 					state = GRAB_NECK
 
@@ -202,12 +207,14 @@
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
 		if( (ishuman(user) && (M_FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
-			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
+			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>", \
+				drugged_message="<span class='danger'>[user] is attempting to kiss [affecting]! Ew!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
 				if(!do_mob(user, affecting)) return
 			else
 				if(!do_mob(user, affecting, 100)) return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
+			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>", \
+				drugged_message="<span class='danger'>[affecting] vanishes in disgust.</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)
 			returnToPool(src)

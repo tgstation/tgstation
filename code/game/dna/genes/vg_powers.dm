@@ -16,6 +16,10 @@ Obviously, requires DNA2.
 	desc = "Allows the subject to become the motherfucking Hulk."
 	activation_messages = list("Your muscles hurt.")
 	deactivation_messages = list("Your muscles quit tensing.")
+
+	drug_activation_messages=list("You feel strong! You must've been working out lately.")
+	drug_deactivation_messages=list("You return to your old lifestyle.")
+
 	flags = GENE_UNNATURAL // Do NOT spawn on roundstart.
 
 	spelltype = /spell/targeted/genetic/hulk
@@ -92,6 +96,10 @@ Obviously, requires DNA2.
 	desc = "Increases the subjects ability to see things from afar."
 	activation_messages = list("Your eyes focus.")
 	deactivation_messages = list("Your eyes return to normal.")
+
+	drug_activation_messages=list("The world becomes huge! You feel like an ant.")
+	drug_deactivation_messages=list("You no longer feel like an insect.")
+
 	mutation = M_FARSIGHT
 
 /datum/dna/gene/basic/farsight/New()

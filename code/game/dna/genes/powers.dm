@@ -15,6 +15,10 @@
 	name="Remote Viewing"
 	activation_messages=list("Your mind expands.")
 	deactivation_messages=list("Your mind is no longer expanded.")
+
+	drug_activation_messages=list("You feel in touch with the cosmos.")
+	drug_deactivation_messages=list("You no longer feel in touch with the cosmos.")
+
 	mutation=M_REMOTE_VIEW
 
 	spelltype = /spell/targeted/remoteobserve
@@ -90,6 +94,10 @@
 	name="Telepathy"
 	activation_messages=list("You feel your voice can penetrate other minds.")
 	deactivation_messages=list("Your mind can no longer project your voice onto others.")
+
+	drug_activation_messages=list("You feel your voice can reach the astral plane now.")
+	drug_deactivation_messages=list("Your voice can no longer reach the astral plane.")
+
 	mutation=M_REMOTE_TALK
 
 	spelltype = /spell/targeted/remotesay
@@ -139,6 +147,10 @@
 	name="Morph"
 	activation_messages=list("Your skin feels strange.")
 	deactivation_messages=list("Your skin no longer feels strange.")
+
+	drug_activation_messages=list("You feel like a chameleon.")
+	drug_deactivation_messages=list("You no longer feel like a chameleon.")
+
 	mutation=M_MORPH
 
 	New()
@@ -152,6 +164,10 @@
 	name="Heat Resistance"
 	activation_messages=list("Your skin is icy to the touch.")
 	deactivation_messages=list("Your skin stops feeling icy.")
+
+	drug_activation_messages=list()
+	drug_deactivation_messages=list()
+
 	mutation=M_RESIST_HEAT
 
 	New()
@@ -174,6 +190,10 @@
 	name="Cold Resistance"
 	activation_messages=list("Your body is filled with warmth.")
 	deactivation_messages=list("Your body is no longer filled with warmth.")
+
+	drug_activation_messages=list()
+	drug_deactivation_messages=list()
+
 	mutation=M_RESIST_COLD
 
 	New()
@@ -271,6 +291,10 @@
 	name="X-Ray Vision"
 	activation_messages=list("The walls suddenly disappear.")
 	deactivation_messages=list("The walls suddenly appear.")
+
+	drug_activation_messages=list("You see so much clearer now!")
+	drug_deactivation_messages=list("Your vision is obstructed again.")
+
 	mutation=M_XRAY
 
 	New()
@@ -280,6 +304,10 @@
 	name="Telekenesis"
 	activation_messages=list("You feel smarter.")
 	deactivation_messages=list("You feel less smart.")
+
+	drug_activation_messages=list("You feel like a nerd.")
+	drug_deactivation_messages=list("You feel normal again.")
+
 	mutation=M_TK
 	activation_prob=15
 

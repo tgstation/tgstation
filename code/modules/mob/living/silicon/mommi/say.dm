@@ -18,7 +18,7 @@
 			return
 
 		var/turf/T = get_turf(src)
-		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Damage Control: [message]")
+		log_say("[key_name(src)] (@[!T ? "Nullspace" : "[T.x],[T.y],[T.z]"]) Damage Control: [message]")
 
 
 		var/interior_message = say_quote(message)

@@ -365,7 +365,6 @@ var/global/list/organ_damage_overlays = list(
 		UpdateDamageIcon()
 		profile_life_end("UpdateDamageIcon")
 	cycle++
-
 	..()
 
 //Need this in species.

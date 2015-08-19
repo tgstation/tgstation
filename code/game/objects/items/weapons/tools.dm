@@ -452,12 +452,14 @@
 		if(safety < 2)
 			switch(safety)
 				if(1)
-					usr << "<span class='warning'>Your eyes sting a little.</span>"
+					usr.simple_message("<span class='warning'>Your eyes sting a little.</span>",\
+						"<span class='warning'>You shed a tear.</span>")
 					E.damage += rand(1, 2)
 					if(E.damage > 12)
 						user.eye_blurry += rand(3,6)
 				if(0)
-					usr << "<span class='warning'>Your eyes burn.</span>"
+					usr.simple_message("<span class='warning'>Your eyes burn.</span>",\
+						"<span class='warning'>Some tears fall down from your eyes.</span>")
 					E.damage += rand(2, 4)
 					if(E.damage > 10)
 						E.damage += rand(4,10)
@@ -465,16 +467,18 @@
 					var/obj/item/clothing/to_blame = H.head //blame the hat
 					if(!to_blame || (istype(to_blame) && H.glasses && H.glasses.eyeprot < to_blame.eyeprot)) //if we don't have a hat, the issue is the glasses. Otherwise, if the glasses are worse, blame the glasses
 						to_blame = H.glasses
-					usr << "<span class='warning'>Your [to_blame] intensifies the welder's glow. Your eyes itch and burn severely.</span>"
+					usr.simple_message("<span class='warning'>Your [to_blame] intensifies the welder's glow. Your eyes itch and burn severely.</span>",\
+						"<span class='warning'>Somebody's cutting onions.</span>")
 					user.eye_blurry += rand(12,20)
 					E.damage += rand(12, 16)
 			if(E.damage > 10 && safety < 2)
-				user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+				user.simple_message("<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>",\
+					"<span class='warning'>This is too sad! You start to cry.</span>")
 			if (E.damage >= E.min_broken_damage)
-				user << "<span class='warning'>You go blind!</span>"
+				user.simple_message("<span class='warning'>You go blind!</span>","<span class='warning'>Somebody turns the lights off.</span>")
 				user.sdisabilities |= BLIND
 			else if (E.damage >= E.min_bruised_damage)
-				user << "<span class='warning'>You go blind!</span>"
+				user.simple_message("<span class='warning'>You go blind!</span>","<span class='warning'>Somebody turns the lights off.</span>")
 				user.eye_blind = 5
 				user.eye_blurry = 5
 				user.disabilities |= NEARSIGHTED
@@ -660,18 +664,22 @@
 	if(istype(W,/obj/item/weapon/reagent_containers/glass/))
 		var/obj/item/weapon/reagent_containers/glass/G = W
 		if(G.reagents.reagent_list.len>1)
-			user << "<span class='warning'>The mixture is rejected by the tool.</span>"
+			user.simple_message("<span class='warning'>The mixture is rejected by the tool.</span>",
+				"<span class='warning'>The tool isn't THAT thirsty.</span>")
 			return
 		if(!G.reagents.has_reagent("sacid", 1))
-			user << "<span class='warning'>The tool is not compatible with that.</span>"
+			user.simple_message("<span class='warning'>The tool is not compatible with that.</span>",
+				"<span class='warning'>The tool won't drink that.</span>")
 			return
 		else
 			var/space = max_fuel - reagents.total_volume
 			if(!space)
-				user << "<span class='warning'>The tool is full!</span>"
+				user.simple_message("<span class='warning'>The tool is full!</span>",
+					"<span class='warning'>The tool isn't thirsty.</span>")
 				return
 			var/transfer_amount = min(G.amount_per_transfer_from_this,space)
-			user << "<span class='info'>You transfer [transfer_amount] units to the [src].</span>"
+			user.simple_message("<span class='info'>You transfer [transfer_amount] units to the [src].</span>",
+				"<span class='info'>The tool gulps down your drink!</span>")
 			G.reagents.trans_id_to(src,"sacid",transfer_amount)
 			update_icon()
 	else
@@ -684,7 +692,8 @@
 		update_icon()
 		return 1
 	else
-		user << "<span class='warn'>The tool does not have enough acid!</span>"
+		user.simple_message("<span class='warn'>The tool does not have enough acid!</span>",
+			"<span class='warn'>The tool is too thirsty!</span>")
 		return 0
 
 /*
