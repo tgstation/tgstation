@@ -13,6 +13,7 @@
 	throw_range = 10
 	origin_tech = "magnets=1"
 
+	var/show_status = 1 //in order to prevent the signaler button in signaler.dm from saying "... is ready!" when examined
 	var/secured = 1
 	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
@@ -145,10 +146,11 @@
 
 /obj/item/device/assembly/examine(mob/user)
 	..()
-	if(secured)
-		user << "<span class='info'>\The [src] is ready!</span>"
-	else
-		user << "<span class='info'>\The [src] can be attached!</span>"
+	if(show_status)
+		if(secured)
+			user << "<span class='info'>\The [src] is ready!</span>"
+		else
+			user << "<span class='info'>\The [src] can be attached!</span>"
 
 /obj/item/device/assembly/attack_self(mob/user as mob)
 	if(!user)	return 0
