@@ -198,8 +198,16 @@
 		var/ticks = Ceiling(move_delay / world.tick_lag)
 		if(ticks <= 0)
 			ticks = 1
-		glide_size = world.icon_size / ticks //assume icons are square
-		mob.glide_size = glide_size
+		var/target_glide_size = world.icon_size / ticks
+
+		glide_size = target_glide_size
+		mob.glide_size = target_glide_size
+
+		//byond floor()'s glide_size, we want it to Ceiling(),
+		//but we don't want it to Ceiling() if they fix it to accept floating point numbers
+		if(glide_size != target_glide_size)
+			glide_size = Ceiling(target_glide_size)
+			mob.glide_size = glide_size
 
 		move_delay += world.time - 0.0001 //Ensure we're on the right tick even if there's rounding errors
 
