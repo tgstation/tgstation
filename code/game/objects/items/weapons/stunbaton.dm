@@ -84,26 +84,31 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='warning'>You grab the [src] on the wrong side.</span>"
+		user.simple_message("<span class='warning'>You grab the [src] on the wrong side.</span>",
+			"<span class='danger'>The [name] blasts you with its power!</span>")
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
 	if(bcell && bcell.charge >= hitcost)
 		status = !status
-		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		user.simple_message("<span class='notice'>[src] is now [status ? "on" : "off"].</span>",
+			"<span class='notice'>[src] is now [pick("drowsy","hungry","thirsty","bored","unhappy")].</span>")
 		playsound(loc, "sparks", 75, 1, -1)
 		update_icon()
 	else
 		status = 0
 		if(!bcell)
-			user << "<span class='warning'>[src] does not have a power source!</span>"
+			user.simple_message("<span class='warning'>[src] does not have a power source!</span>",
+				"<span class='warning'>[src] has no pulse and its soul has departed...</span>")
 		else
-			user << "<span class='warning'>[src] is out of charge.</span>"
+			user.simple_message("<span class='warning'>[src] is out of charge.</span>",
+				"<span class='warning'>[src] refuses to obey you.</span>")
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
 	if(status && (M_CLUMSY in user.mutations) && prob(50))
-		user << "<span class='danger'>You accidentally hit yourself with [src]!</span>"
+		user.simple_message("<span class='danger'>You accidentally hit yourself with [src]!</span>",
+			"<span class='danger'>The [name] goes mad!</span>")
 		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
@@ -124,7 +129,8 @@
 	else
 		hit = -1
 		if(!status)
-			L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>")
+			L.visible_message("<span class='attack'>[L] has been prodded with the [src] by [user]. Luckily it was off.</span>",
+				self_drugged_message="<span class='warning'>The [name] decides to spare this one.</span>")
 			return
 
 	if(status && hit)
@@ -143,7 +149,8 @@
 		L.Weaken(stunforce)
 		L.apply_effect(STUTTER, stunforce)
 
-		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>")
+		L.visible_message("<span class='danger'>[L] has been stunned with [src] by [user]!</span>",
+			self_drugged_message="<span class='danger'>The [src.name] absorbs [L]'s life!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 		if(isrobot(loc))

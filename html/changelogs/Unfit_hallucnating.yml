@@ -1,0 +1,5 @@
+author: Unid
+delete-after: True
+changes: 
+  - tweak: Chance of getting some annoying messages (like fake emergency shuttle one) while hallucinating reduced greatly
+  - rscadd: Some things now produce unique messages if used while on drugs.

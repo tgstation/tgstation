@@ -357,6 +357,38 @@
 		return
 	src.add_fingerprint(user)
 
+	var/mob/living/L = user
+	if(src.opened==0 && L && L.client && L.hallucinating()) //If the closet is CLOSED and user is hallucinating
+		if(prob(10))
+			var/client/C = L.client
+			var/image/temp_overlay = image(src.icon, icon_state=src.icon_opened) //Get the closet's OPEN icon
+			temp_overlay.override = 1
+			temp_overlay.loc = src
+
+			var/image/spooky_overlay
+			switch(rand(0,5))
+				if(0) spooky_overlay = image('icons/mob/animal.dmi',icon_state="hunter",dir=turn(L.dir,180))
+				if(1) spooky_overlay = image('icons/mob/animal.dmi',icon_state="zombie",dir=turn(L.dir,180))
+				if(2) spooky_overlay = image('icons/mob/horror.dmi',icon_state="horror_[pick("male","female")]",dir=turn(L.dir,180))
+				if(3) spooky_overlay = image('icons/mob/animal.dmi',icon_state="faithless",dir=turn(L.dir,180))
+				if(4) spooky_overlay = image('icons/mob/animal.dmi',icon_state="carp",dir=turn(L.dir,180))
+				if(5) spooky_overlay = image('icons/mob/animal.dmi',icon_state="skelly",dir=turn(L.dir,180))
+
+			if(!spooky_overlay) return
+
+			temp_overlay.overlays += spooky_overlay
+
+			C.images += temp_overlay
+			L << sound('sound/machines/click.ogg')
+			L << sound('sound/hallucinations/scary.ogg')
+			L.Weaken(5)
+
+			sleep(50)
+
+			if(C)
+				C.images -= temp_overlay
+			return
+
 	if(!src.toggle())
 		usr << "<span class='notice'>It won't budge!</span>"
 

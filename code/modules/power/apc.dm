@@ -350,9 +350,11 @@
 			update_icon()
 			updating_icon = 0
 
-/obj/machinery/power/apc/proc/spookify()
+/obj/machinery/power/apc/spook()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/apc/proc/spookify() called tick#: [world.time]")
 	if(spooky) return // Fuck you we're already spooky
+	if(!..()) return //If blessed, return
+
 	spooky=1
 	update_icon()
 	spawn(10)

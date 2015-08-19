@@ -124,6 +124,9 @@
 	activation_messages = list("You notice a strange cold tingle in your fingertips.")
 	deactivation_messages = list("Your fingers feel warmer.")
 
+	drug_activation_messages=list("Your skin is icy to the touch.")
+	drug_deactivation_messages=list("Your skin stops feeling icy.")
+
 	spelltype = /spell/targeted/cryokinesis
 
 	New()
@@ -202,6 +205,9 @@
 	desc = "Allows the subject to eat just about anything without harm."
 	activation_messages = list("You feel hungry.")
 	deactivation_messages = list("You don't feel quite so hungry anymore.")
+
+	drug_activation_messages=list("You are getting the munchies.")
+	drug_deactivation_messages=list("You no longer getting the munchies.")
 
 	spelltype=	/spell/targeted/eat
 
@@ -387,6 +393,9 @@
 	activation_messages = list("Your leg muscles feel taut and strong.")
 	deactivation_messages = list("Your leg muscles shrink back to normal.")
 
+	drug_activation_messages=list()
+	drug_deactivation_messages=list()
+
 	spelltype =/spell/targeted/leap
 
 	New()
@@ -491,6 +500,9 @@
 	activation_messages = list("You don't feel entirely like yourself somehow.")
 	deactivation_messages = list("You feel secure in your identity.")
 
+	drug_activation_messages=list()
+	drug_deactivation_messages=list()
+
 	New()
 		..()
 		block = POLYMORPHBLOCK
@@ -535,6 +547,9 @@
 	spelltype = /spell/targeted/empath
 	activation_messages = list("You suddenly notice more about others than you did before.")
 	deactivation_messages = list("You no longer feel able to sense intentions.")
+
+	drug_activation_messages=list("You feel more social!")
+	drug_deactivation_messages=list("You feel less social.")
 
 	New()
 		..()
@@ -652,6 +667,9 @@
 	desc = "Vastly increases the gas capacity of the subject's digestive tract."
 	activation_messages = list("You feel bloated and gassy.")
 	deactivation_messages = list("You no longer feel gassy. What a relief!")
+
+	drug_activation_messages = list()
+	drug_deactivation_messages = list()
 
 	mutation = M_SUPER_FART
 

@@ -25,7 +25,7 @@ mob/living/carbon/proc/handle_hallucinations()
 	handling_hal = 1
 	while(hallucination > 20)
 		sleep(rand(200,500)/(hallucination/25))
-		var/halpick = rand(1,110)
+		var/halpick = rand(1,104)
 		switch(halpick)
 			if(0 to 15)
 				//Screwy HUD
@@ -136,7 +136,7 @@ mob/living/carbon/proc/handle_hallucinations()
 								src << 'sound/weapons/Taser.ogg'
 					//Rare audio
 						if(12)
-	//These sounds are (mostly) taken from Hidden: Source
+							//These sounds are (mostly) taken from Hidden: Source
 							var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
 								'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
 								'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
@@ -195,34 +195,84 @@ mob/living/carbon/proc/handle_hallucinations()
 					src.sleeping = 0
 					hal_crit = 0
 					hal_screwyhud = 0
-			if(73 to 77)
+			if(73 to 75)
 				//Fake changeling/parapen
-				if(prob(1) && prob(1))
+				if(prob(0.01))
 					src << "<span class='warning'>You feel a <b>HUGE</b> prick!</span>"
 				else
 					src << "<span class='warning'>You feel a tiny prick!</span>"
-			if(78 to 80)
-				src << "<h1 class='alert'>Priority Announcement</h1>"
-				src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
-				src << sound('sound/AI/shuttledock.ogg')
-			if(81) //Fake malf AI
-				if(prob(10))
+			if(76)
+				if(prob(5))
+					src << "<h1 class='alert'>Priority Announcement</h1>"
+					src << "<span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span>"
+					src << sound('sound/AI/shuttledock.ogg')
+				else
+					var/txt_verb = pick("go to","die in","stay in","avoid")
+					var/location = pick("security","arrivals","bridge","your old house","the escape shuttle hallway","deep space","the DJ satelite","science")
+					src << "<i>You feel a sudden urge to [txt_verb] [location][pick("...","!",".")]</i>"
+			if(77) //Sillycone
+				if(prob(5))
 					src << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
 					src << "<font color='red'>[config.alert_desc_delta]</font>"
 					src << sound('sound/AI/aimalf.ogg')
-			if(82 to 85) //Fake ghosts
+
+					if(src.client)
+						message_admins("[key_name(usr)] just got a fake delta AI message from hallucinating! [formatJumpTo(get_turf(usr))]")
+				else
+					switch(rand(1,10)) //Copied from nanites disease
+						if(1) src << "Your joints feel stiff."
+						if(2) src << "<span class='warning'>Beep...boop..</span>"
+						if(3) src << "<span class='warning'>Bop...beeep...</span>"
+						if(4) src << "<span class='warning'>Your joints feel very stiff.</span>"
+						if(5) src.say(pick("Beep, boop", "beep, beep!", "Boop...bop"))
+						if(6) src << "Your skin feels loose."
+						if(7) src << "<span class='warning'>You feel a stabbing pain in your head.</span>"
+						if(8) src << "<span class='warning'>You can feel something move...inside.</span>"
+						if(9) src << "<span class='warning'>Your skin feels very loose.</span>"
+						if(10) src << "<span class='warning'>Your skin feels as if it's about to burst off...</span>"
+
+			if(78 to 80) //Fake ghosts
 				src << "<i>[pick(boo_phrases)]</i>"
-			if(86) //Fake flash
+			if(81) //Fake flash
 				src << sound('sound/weapons/flash.ogg')
-				src.Weaken(10)
 				flick("e_flash", src.flash)
-			if(87 to 90) //Clown
+
+				if(prob(20))
+					src.Weaken(10)
+			if(82 to 85) //Clown
 				src << get_sfx("clownstep")
 				spawn(rand(16,28))
 					src << get_sfx("clownstep")
+			if(86) //nom nom
+				if(prob(15))
+					var/mob/living/L = src
+					if(prob(50))
+						var/list/mob_list=list()
+						for(var/mob/living/M in view(src))
+							mob_list |= M
+						L = pick(mob_list)
+
+					var/obj/item/random_food = pick(typesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable))
+					if(initial(random_food.icon) && initial(random_food.name) && initial(random_food.icon_state))
+						var/image/foodie = image(initial(random_food.icon), initial(random_food.icon_state))
+						foodie.loc = L
+						foodie.override = 1
+
+						var/client/C = src.client
+
+						C.images += foodie
+
+						if(L == src)
+							src << "<span class='notice'>You feel like a [initial(random_food.name)]. Oh wow!</span>"
+						else
+							src << "<span class='notice'>You smell [initial(random_food.name)]...</span>"
+
+						sleep(rand(50,150))
+
+						if(!C) return
+
+						C.screen -= foodie
 	handling_hal = 0
-
-
 
 
 /*obj/machinery/proc/mockpanel(list/buttons,start_txt,end_txt,list/mid_txts)

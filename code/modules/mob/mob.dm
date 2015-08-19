@@ -1,3 +1,6 @@
+#define MOB_SPACEDRUGS_HALLUCINATING 5
+#define MOB_MINDBREAKER_HALLUCINATING 100
+
 /obj/screen/fuckstat
 	name = "Toggle Stat"
 	desc = "Fuck It"
@@ -236,10 +239,13 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 	usr.show_message(t, 1)
 
-#define MESSAGE_SEE		1
-#define MESSAGE_HEAR	2
+/mob/proc/simple_message(var/msg, var/hallucination_msg)//Same as M << "message", but with additinal message for hallucinations
+	if(hallucinating() && hallucination_msg)
+		src << hallucination_msg
+	else
+		src << msg
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1=visible or 2=hearable), alternative message, alt message type (1=if blind or 2=if deaf)
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/show_message() called tick#: [world.time]")
 
@@ -251,13 +257,13 @@ var/global/obj/screen/fuckstat/FUCK = new
 	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
-		if((type & MESSAGE_SEE) && (sdisabilities & BLIND || blinded || paralysis)) //Vision related //We can't see all those emotes no-one ever does !
+		if((type & MESSAGE_SEE) && is_blind()) //Vision related //We can't see all those emotes no-one ever does !
 			if(!(alt))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if((type & MESSAGE_HEAR) && (sdisabilities & DEAF || ear_deaf)) //Hearing related //We can't hear what the person is saying. Too bad
+		if((type & MESSAGE_HEAR) && is_deaf()) //Hearing related //We can't hear what the person is saying. Too bad
 			if(!(alt))
 				src << "<span class='notice'>You can almost hear someone talking.</span>" //Well, not THAT deaf
 				return //And that does it
@@ -288,24 +294,49 @@ var/global/obj/screen/fuckstat/FUCK = new
 // message is the message output to anyone who can see e.g. "[src] does something!"
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
+// drugged_message (optional) is shown to hallucinating mobs instead of message
+// self_drugged_message (optional) is shown to src mob if it's hallucinating
+// blind_drugged_message (optional) is shown to blind hallucinating people
 
-/mob/visible_message(var/message, var/self_message, var/blind_message)
+/mob/visible_message(var/message, var/self_message, var/blind_message, var/drugged_message, var/self_drugged_message, var/blind_drugged_message)
 	for(var/mob/M in viewers(src))
 		if(M.see_invisible < invisibility)
 			continue
+		var/hallucination = M.hallucinating()
 		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
+		var/msg2 = blind_message
+
+		if(hallucination && drugged_message)
+			if(drugged_message)
+				msg = drugged_message
+			if(blind_drugged_message)
+				msg2 = blind_drugged_message
+
+		if(M==src)
+			if(self_message)
+				msg = self_message
+			if(hallucination && self_drugged_message)
+				msg = self_drugged_message
+
+		M.show_message( msg, 1, msg2, 2)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message)
+/atom/proc/visible_message(var/message, var/blind_message, var/drugged_message, var/blind_drugged_message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/visible_message() called tick#: [world.time]")
 	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
+		var/hallucination = M.hallucinating()
+		var/msg = message
+		var/msg2 = blind_message
+
+		if(hallucination)
+			if(drugged_message)
+				msg = drugged_message
+			if(blind_drugged_message)
+				msg2 = blind_drugged_message
+		M.show_message( msg, 1, msg2, 2)
 
 
 /mob/proc/findname(msg)
@@ -1738,3 +1769,38 @@ mob/proc/walking()
 
 /mob/can_shuttle_move()
 	return 1
+
+/mob/proc/is_blind()
+	if(sdisabilities & BLIND || blinded || paralysis)
+		return 1
+	return 0
+
+/mob/proc/is_deaf()
+	if(sdisabilities & DEAF || ear_deaf)
+		return 1
+	return 0
+
+/mob/proc/hallucinating() //Return 1 if hallucinating! This doesn't affect the scary stuff from mindbreaker toxin, but it does affect other stuff (like special messages for interacting with objects)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/hallucinating() called tick#: [world.time]")
+	if(isliving(src))
+		var/mob/living/M = src
+		if(M.hallucination >= MOB_MINDBREAKER_HALLUCINATING)
+			return 1
+		if(M.druggy >= MOB_SPACEDRUGS_HALLUCINATING)
+			return 1
+	return 0
+
+/mob/proc/get_subtle_message(var/msg)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/get_subtle_message() called tick#: [world.time]")
+	var/pre_msg = "You hear a voice in your head..."
+	if(mind && mind.assigned_role == "Chaplain")
+		pre_msg = "You hear the voice of [ticker.Bible_deity_name] in your head... "
+	if(src.hallucinating()) //If hallucinating, make subtle messages more fun
+		var/adjective = pick("an angry","a funny","a squeaky","a disappointed","your mother's","your father's","[ticker.Bible_deity_name]'s","an annoyed","a brittle","a loud","a very loud","a quiet")
+		var/location = pick(" from above"," from below"," in your head","")
+		pre_msg = pick("You hear [adjective] voice[location]...")
+
+	src << "<b>[pre_msg] <em>[msg]</em></b>"
+
+#undef MOB_SPACEDRUGS_HALLUCINATING
+#undef MOB_MINDBREAKER_HALLUCINATING

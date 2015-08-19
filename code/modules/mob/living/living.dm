@@ -644,7 +644,8 @@ Thanks.
 							if (prob(75))
 								var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 								if (istype(G, /obj/item/weapon/grab))
-									visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
+									visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>",
+										drugged_message="<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s hug.</span>")
 									qdel(G)
 							else
 								ok = 0
@@ -710,7 +711,8 @@ Thanks.
 		var/mob/living/simple_animal/borer/B = src.loc
 		var/mob/living/captive_brain/H = src
 
-		H << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>"
+		H.simple_message("<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>",\
+			"<span class='danger'>You attempt to remember who you are and how the heck did you get here (this will probably take a while).</span>")
 		B.host << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 		spawn(rand(350,450)+B.host.brainloss)
@@ -719,7 +721,7 @@ Thanks.
 				return
 
 			B.host.adjustBrainLoss(rand(5,10))
-			H << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
+			H.simple_message("<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
 			B.host << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
 
 			var/mob/living/carbon/C=B.host
@@ -741,12 +743,14 @@ Thanks.
 			else
 				if (G.state == GRAB_AGGRESSIVE)
 					if (prob(25))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
+						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>", \
+							drugged_message="<span class='danger'>[L] has broken free of [G.assailant]'s hug!</span>")
 						returnToPool(G)
 				else
 					if (G.state == GRAB_NECK)
 						if (prob(5))
-							L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
+							L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>", \
+								drugged_message="<span class='danger'>[L] has broken free of [G.assailant]'s passionate hug!</span>")
 							returnToPool(G)
 		if(resisting)
 			L.visible_message("<span class='danger'>[L] resists!</span>")
@@ -761,16 +765,19 @@ Thanks.
 				C.delayNextAttack(100)
 				C.delayNextSpecial(100)
 				C.visible_message("<span class='warning'>[C] attempts to unbuckle themself!</span>",
-								  "<span class='warning'>You attempt to unbuckle yourself. (This will take around two minutes and you need to stand still).</span>")
+								  "<span class='warning'>You attempt to unbuckle yourself (this will take around two minutes, and you need to stay still).</span>",
+								  self_drugged_message="<span class='warning'>You attempt to regain control of your legs (this will take a while).</span>")
 				spawn(0)
 					if(do_after(usr, usr, 1200))
 						if(!C.locked_to)
 							return
-						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>",
-										  "<span class='notice'>You successfully unbuckle yourself.</span>")
+						C.visible_message("<span class='danger'>[C] manages to unbuckle themself!</span>",\
+							"<span class='notice'>You successfully unbuckle yourself.</span>",\
+							self_drugged_message="<span class='notice'>You successfully regain control of your legs and stand up.</span>")
 						B.manual_unbuckle(C)
 					else
-						C << "<span class='warning'>Your unbuckling attempt was interrupted.</span>"
+						C.simple_message("<span class='warning'>Your unbuckling attempt was interrupted.</span>", \
+							"<span class='warning'>Your attempt to regain control of your legs was interrupted. Damn it!</span>")
 		else
 			B.manual_unbuckle(L)
 
@@ -859,7 +866,7 @@ Thanks.
 						if(!CM.handcuffed || CM.locked_to)
 							return
 						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>",
-										   "<span class='notice'>You successful break your handcuffs.</span>")
+										   "<span class='notice'>You successfuly break your handcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 						del(CM.handcuffed)
 						CM.handcuffed = null
@@ -874,18 +881,21 @@ Thanks.
 				if(!(breakouttime))
 					breakouttime = 1200 //Default
 				CM.visible_message("<span class='danger'>[CM] attempts to remove [HC]!</span>",
-								   "<span class='warning'>You attempt to remove [HC]. (This will take around [(breakouttime)/600] minutes and you need to stand still).</span>")
+								   "<span class='warning'>You attempt to remove [HC] (this will take around [(breakouttime)/600] minutes and you need to stand still).</span>",
+								   self_drugged_message="<span class='warning'>You attempt to regain control of your hands (this will take a while).</span>")
 				spawn(0)
 					if(do_after(CM,CM, breakouttime))
 						if(!CM.handcuffed || CM.locked_to)
 							return // time leniency for lag which also might make this whole thing pointless but the server
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
-										   "<span class='notice'>You successful remove [HC].</span>")
+										   "<span class='notice'>You successfuly remove [HC].</span>",
+										   self_drugged_message="<span class='notice'>You successfully regain control of your hands.</span>")
 						CM.handcuffed.loc = usr.loc
 						CM.handcuffed = null
 						CM.update_inv_handcuffed()
 					else
-						CM << "<span class='warning'>Your uncuffing attempt was interrupted.</span>"
+						CM.simple_message("<span class='warning'>Your uncuffing attempt was interrupted.</span>",
+							"<span class='warning'>Your attempt to regain control of your hands was interrupted. Damn it!</span>")
 
 		else if(CM.legcuffed && CM.canmove && CM.special_delayer.blocked())
 			CM.delayNext(DELAY_ALL,100)

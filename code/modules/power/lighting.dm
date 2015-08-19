@@ -161,6 +161,10 @@ var/global/list/obj/machinery/light/alllights = list()
 
 	var/idle = 0 // For process().
 
+/obj/machinery/light/spook()
+	if(..())
+		flicker()
+
 // the smaller bulb light fixture
 
 /obj/machinery/light/cultify()

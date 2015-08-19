@@ -327,7 +327,8 @@ Auto Patrol: []"},
 				if(!C.handcuffed && !src.arrest_type)
 					playsound(get_turf(src), 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 					mode = SECBOT_ARREST
-					visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>")
+					visible_message("<span class='danger'>[src] is trying to put handcuffs on [src.target]!</span>",\
+						"<span class='danger'>[src] is trying to cut [src.target]'s hands off!</span>")
 
 					spawn(60)
 						if(Adjacent(target))
@@ -766,8 +767,8 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/secbot/proc/speak(var/message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/secbot/proc/speak() called tick#: [world.time]")
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",2)
+	visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"",\
+		drugged_message="<span class='game say'><span class='name'>[src]</span> beeps, \"[pick("Wait! Let's be friends!","Wait for me!","You're so cool!","Who's your favourite pony?","I-It's not like I like you or anything...","Wanna see a magic trick?","Let's go have fun, assistant-kun~")]\"")
 	return
 
 

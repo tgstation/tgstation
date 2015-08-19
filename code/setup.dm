@@ -1240,3 +1240,7 @@ var/proccalls = 1
 #define SIZE_HUGE	5 //Pine trees
 
 #define ADIABATIC_EXPONENT		0.667	//This means something g-guys
+
+//For mob/proc/show_message (code/modules/mob/mob.dm @ 248)
+#define MESSAGE_SEE		1 //Visible message
+#define MESSAGE_HEAR	2 //Hearable message
