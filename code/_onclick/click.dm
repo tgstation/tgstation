@@ -67,8 +67,6 @@
 		return
 
 	if(istype(loc,/obj/mecha))
-		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
-			return
 		var/obj/mecha/M = loc
 		return M.click_action(A,src)
 

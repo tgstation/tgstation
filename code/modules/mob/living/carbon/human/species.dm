@@ -1103,7 +1103,7 @@
 
 				// Handle chem smoke effect  -- Doohl
 				if(!H.has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
+					for(var/obj/effect/effect/smoke/chem/smoke in view(1, H))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(H, INGEST)
 							spawn(5)

@@ -45,6 +45,9 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 
+	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
+
+
 	var/s_cooldown = 0 //Boolean, used for emotes that produce sound
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
