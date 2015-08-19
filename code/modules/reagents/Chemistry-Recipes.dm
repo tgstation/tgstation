@@ -59,7 +59,9 @@
 			/mob/living/simple_animal/hostile/guardian/ranged,
 			/mob/living/simple_animal/hostile/guardian/bluespace,
 			/mob/living/simple_animal/hostile/guardian/bomb,
-			/mob/living/simple_animal/hostile/guardian/shield
+			/mob/living/simple_animal/hostile/guardian/shield,
+			/mob/living/simple_animal/hostile/morph,
+			/mob/living/simple_animal/revenant
 			)//exclusion list for things you don't want the reaction to create.
 			 //>not a whitelist
 			 //T-T-THANKS TG

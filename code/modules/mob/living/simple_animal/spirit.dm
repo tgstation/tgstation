@@ -22,6 +22,7 @@
 	environment_smash = 0
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	var/harmful = 1 //Defines if it can attack its summoner
 	var/robotic = 0 //Controls spans
 	var/cooldown = 0
 	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
@@ -87,7 +88,7 @@
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
-	if(!istype(src, /mob/living/simple_animal/hostile/guardian/healer) && target == summoner)
+	if(harmful && target == summoner)
 		src << "<span class='notice'>You cannot attack your summoner!</span>"  //Just in case
 		return 0
 	return ..()
@@ -250,6 +251,7 @@
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = "help"
 	friendly = "heals"
+	harmful = 0
 	speed = 1
 	melee_damage_lower = 0
 	melee_damage_upper = 0
