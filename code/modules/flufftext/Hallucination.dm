@@ -156,10 +156,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/Destroy()
 	SSobj.processing.Remove(src)
-	del(flood_turfs)
+	qdel(flood_turfs)
 	if(target.client) target.client.images.Remove(flood_images)
 	target = null
-	del(flood_images)
+	qdel(flood_images)
 	return
 
 /obj/effect/hallucination/simple/xeno

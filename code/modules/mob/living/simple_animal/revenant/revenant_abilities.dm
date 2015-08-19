@@ -57,6 +57,7 @@
 			if(!target.stat)
 				user << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
 				target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
+				return //hey, wait a minute...
 			user << "<span class='danger'>You begin siphoning essence from [target]'s soul.</span>"
 			if(target.stat != DEAD)
 				target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
@@ -138,12 +139,19 @@
 					if(!L.on)
 						return
 					L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
-					sleep(20)
+					sleep(10)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(4, 1, L)
+					s.start()
+					sleep(10)
 					for(var/mob/living/M in orange(4, L))
 						if(M == user)
 							return
 						M.Beam(L,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 						M.electrocute_act(25, "[L.name]")
+						var/datum/effect/effect/system/spark_spread/z = new /datum/effect/effect/system/spark_spread
+						z.set_up(4, 1, M)
+						z.start()
 						playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	user.reveal(80)
 

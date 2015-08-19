@@ -60,7 +60,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		check_tech = new T()
 		if(check_tech.id == ID)
 			return_name = check_tech.name
-			del(check_tech)
+			qdel(check_tech)
 			check_tech = null
 			break
 
@@ -94,7 +94,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			temp_reagent = new R()
 			if(temp_reagent.id == ID)
 				return_name = temp_reagent.name
-				del(temp_reagent)
+				qdel(temp_reagent)
 				temp_reagent = null
 				break
 	return return_name
@@ -278,7 +278,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.materials[MAT_METAL]*(linked_destroy.decon_mod/10)))
 								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.materials[MAT_GLASS]*(linked_destroy.decon_mod/10)))
-								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.name]")
+								feedback_add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
 							linked_destroy.loaded_item = null
 						else
 							screen = 1.0
@@ -421,7 +421,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									R = max((new_item.reliability/2), 0)
 								new_item.loc = linked_lathe.loc
 								if(!already_logged)
-									feedback_add_details("item_printed","[new_item.name]|[amount]")
+									feedback_add_details("item_printed","[new_item.type]|[amount]")
 									already_logged = 1
 						linked_lathe.busy = 0
 						screen = old_screen
@@ -476,7 +476,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							var/obj/item/new_item = new P(src)
 							new_item.reliability = R
 							new_item.loc = linked_imprinter.loc
-							feedback_add_details("circuit_printed","[new_item.name]")
+							feedback_add_details("circuit_printed","[new_item.type]")
 						linked_imprinter.busy = 0
 						screen = old_screen
 						updateUsrDialog()
@@ -575,7 +575,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			screen = 0.0
-			del(files)
+			qdel(files)
 			files = new /datum/research(src)
 			spawn(20)
 				screen = 1.6
@@ -715,11 +715,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];menu=1.5'>Load Design to Disk</A>"
 			else
 				dat += "Name: [d_disk.blueprint.name]<BR>"
-				dat += "Level: [Clamp((d_disk.blueprint.reliability + rand(-15,15)), 0, 100)]<BR>"
-				switch(d_disk.blueprint.build_type)
-					if(IMPRINTER) dat += "Lathe Type: Circuit Imprinter<BR>"
-					if(PROTOLATHE) dat += "Lathe Type: Proto-lathe<BR>"
-					if(AUTOLATHE) dat += "Lathe Type: Auto-lathe<BR>"
+				dat += "Level: [d_disk.blueprint.reliability]<BR>"
+				var/b_type = d_disk.blueprint.build_type
+				if(b_type)
+					dat += "Lathe Types:<BR>"
+					if(b_type & IMPRINTER) dat += "Circuit Imprinter<BR>"
+					if(b_type & PROTOLATHE) dat += "Proto-lathe<BR>"
+					if(b_type & AUTOLATHE) dat += "Auto-lathe<BR>"
+					if(b_type & MECHFAB) dat += "Mech Fabricator<BR>"
 				dat += "Required Materials:<BR>"
 				for(var/M in d_disk.blueprint.materials)
 					if(copytext(M, 1, 2) == "$") dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
@@ -790,7 +793,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Origin Tech:<BR>"
 			var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 			for(var/T in temp_tech)
-				dat += "* [CallTechName(T)] [temp_tech[T]]<BR>"
+				dat += "* [CallTechName(T)] [temp_tech[T]]"
+				for(var/datum/tech/F in files.known_tech)
+					if(F.name == CallTechName(T))
+						dat += " (Current: [F.level])"
+						break
+				dat += "<BR>"
 			dat += "</div>Options: "
 			dat += "<A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A>"
 			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"
@@ -1102,4 +1110,4 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/experiment
 	name = "E.X.P.E.R.I-MENTOR R&D Console"
 	desc = "A console used to interface with R&D tools."
-	id = 1
+	id = 3
