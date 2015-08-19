@@ -1,102 +1,14 @@
-//Harvest Essence: The bread and butter of the revenant. The basic way of harvesting additional essence.
-/obj/effect/proc_holder/spell/targeted/revenant_harvest
-	name = "Harvest (0E)"
-	desc = "Siphons the lingering spectral essence from a human, empowering yourself."
-	panel = "Revenant Abilities"
-	charge_max = 100 //Short cooldown
-	clothes_req = 0
-	range = 1
-	var/essence_drained = 0
-	var/draining
-	var/list/drained_mobs = list() //Cannot harvest the same mob twice
-
-/obj/effect/proc_holder/spell/targeted/revenant_harvest/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	if(!user.castcheck(0))
-		charge_counter = charge_max
-		return
-	for(var/mob/living/carbon/human/target in targets)
-		spawn(0)
-			if(draining)
-				user << "<span class='warning'>You are already siphoning the essence of a soul!</span>"
-				charge_counter = charge_max
-				return
-			if(target in drained_mobs)
-				user << "<span class='warning'>[target]'s soul is dead and empty.</span>"
-				charge_counter = charge_max
-				return
-			if(!target.stat)
-				user << "<span class='notice'>This being's soul is too strong to harvest.</span>"
-				if(prob(10))
-					target << "You feel as if you are being watched."
-				return
-			draining = 1
-			essence_drained = 2
-			user << "<span class='notice'>You search for the soul of [target].</span>"
-			sleep(10)
-			if(target.ckey)
-				user << "<span class='notice'>Their soul burns with intelligence.</span>"
-				essence_drained += 2
-			if(target.stat != DEAD)
-				user << "<span class='notice'>Their soul blazes with life!</span>"
-				essence_drained += 2
-			else
-				user << "<span class='notice'>Their soul is weak and faltering.</span>"
-			sleep(20)
-			switch(essence_drained)
-				if(1 to 2)
-					user << "<span class='info'>[target] will not yield much essence. Still, every bit counts.</span>"
-				if(3 to 4)
-					user << "<span class='info'>[target] will yield an average amount of essence.</span>"
-				if(5 to INFINITY)
-					user << "<span class='info'>Such a feast! [target] will yield much essence to you.</span>"
-			sleep(30)
-			if(!in_range(user, target))
-				user << "<span class='warning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
-				draining = 0
-				return
-			if(!target.stat)
-				user << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
-				target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
-				return //hey, wait a minute...
-			user << "<span class='danger'>You begin siphoning essence from [target]'s soul.</span>"
-			if(target.stat != DEAD)
-				target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
-			user.icon_state = "revenant_draining"
-			user.reveal(65,1)
-			target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-			target.Beam(user,icon_state="drain_life",icon='icons/effects/effects.dmi',time=60)
-			target.death(0)
-			target.visible_message("<span class='warning'>[target] gently slumps back onto the ground.</span>")
-			user.icon_state = "revenant_idle"
-			user.change_essence_amount(essence_drained * 5, 0, target)
-			user << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
-			drained_mobs.Add(target)
-			draining = 0
-
-
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob for 5E.
 /obj/effect/proc_holder/spell/targeted/revenant_transmit
-	name = "Transmit (5E)"
+	name = "Transmit"
 	desc = "Telepathically transmits a message to the target."
-	panel = "Revenant Abilities (Locked)"
-	charge_max = 50
+	panel = "Revenant Abilities"
+	charge_max = 0
 	clothes_req = 0
-	range = -1
-	include_user = 1
-	var/locked = 1
+	range = 7
+	include_user = 0
 
 /obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	if(!user.castcheck(-5))
-		charge_counter = charge_max
-		return
-	if(locked)
-		usr << "<span class='info'>You have unlocked Transmit!</span>"
-		locked = 0
-		charge_counter = charge_max
-		panel = "Revenant Abilities"
-		range = 7
-		include_user = 0
-		return
 	for(var/mob/living/M in targets)
 		spawn(0)
 			var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
@@ -115,6 +27,8 @@
 	charge_max = 200
 	clothes_req = 0
 	range = 1
+	var/reveal = 80
+	var/stun = 20
 	var/locked = 1
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant_light/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -126,7 +40,7 @@
 		name = "Overload Lights (20E)"
 		panel = "Revenant Abilities"
 		locked = 0
-		range = 5
+		range = 6
 		charge_counter = charge_max
 		return
 	if(!user.castcheck(-20))
@@ -153,29 +67,32 @@
 						z.set_up(4, 1, M)
 						z.start()
 						playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
-	user.reveal(80)
+	user.reveal(reveal)
+	user.stun(stun)
 
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
-	name = "Defile (40E)"
-	desc = "Twists and corrupts certain nearby objects. Also dispels holy auras on floors, but not salt lines."
+	name = "Defile (35E)"
+	desc = "Twists and corrupts the nearby area. Also dispels holy auras on floors, but not salt lines."
 	panel = "Revenant Abilities (Locked)"
 	charge_max = 200
 	clothes_req = 0
 	range = 1
+	var/reveal = 100
+	var/stun = 20
 	var/locked = 1
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant_defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(locked)
-		if(!user.castcheck(-40))
+		if(!user.castcheck(-35))
 			charge_counter = charge_max
 			return
 		user << "<span class='info'>You have unlocked Defile!</span>"
 		name = "Defile (20E)"
 		panel = "Revenant Abilities"
 		locked = 0
-		range = 4
+		range = 3
 		charge_counter = charge_max
 		return
 	if(!user.castcheck(-20))
@@ -185,22 +102,58 @@
 		spawn(0)
 			if(T.flags & NOJAUNT)
 				T.flags -= NOJAUNT
-			for(var/obj/machinery/bot/bot in T.contents)
-				bot.locked = 0
-				bot.open = 1
-				bot.emagged = 2
-				bot.Emag(null)
+			if(!istype(T, /turf/simulated/wall/cult) && istype(T, /turf/simulated/wall) && prob(40))
+				T.ChangeTurf(/turf/simulated/wall/cult)
+			if(!istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(40))
+				T.ChangeTurf(/turf/simulated/floor/engine/cult)
 			for(var/mob/living/carbon/human/human in T.contents)
 				human << "<span class='warning'>You suddenly feel tired.</span>"
-				human.adjustStaminaLoss(50)
-			for(var/mob/living/silicon/robot/robot in T.contents)
-				robot.visible_message("<span class='warning'>[robot] lets out an alarm!</span>", \
-									  "<span class='boldannounce'>01001111 01010110 01000101 01010010 01001100 01001111 01000001 01000100</span>") //Translates to "OVERLOAD"
-				robot << 'sound/misc/interference.ogg'
-				robot.emp_act(2)
-				playsound(robot, 'sound/machines/warning-buzzer.ogg', 50, 1)
+				human.adjustStaminaLoss(35)
 			for(var/obj/structure/window/window in T.contents)
-				window.hit(rand(50,200))
+				window.hit(rand(50,125))
 			for(var/obj/machinery/light/light in T.contents)
 				light.flicker() //spooky
-	user.reveal(100)
+	user.reveal(reveal)
+	user.stun(stun)
+
+
+//Malfunction: Makes bad stuff happen to robots and machines.
+/obj/effect/proc_holder/spell/aoe_turf/revenant_malf
+	name = "Malfunction (50E)"
+	desc = "Corrupts and damages nearby machines and mechanical objects."
+	panel = "Revenant Abilities (Locked)"
+	charge_max = 150
+	clothes_req = 0
+	range = 1
+	var/reveal = 60
+	var/stun = 30
+	var/locked = 1
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant_malf/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(locked)
+		if(!user.castcheck(-50))
+			charge_counter = charge_max
+			return
+		user << "<span class='info'>You have unlocked Malfunction!</span>"
+		name = "Malfunction (15E)"
+		panel = "Revenant Abilities"
+		locked = 0
+		range = 4
+		charge_counter = charge_max
+		return
+	if(!user.castcheck(-15))
+		charge_counter = charge_max
+		return
+	for(var/turf/T in targets)
+		spawn(0)
+			for(var/obj/machinery/bot/bot in T.contents)
+				if(!bot.emagged)
+					bot.locked = 0
+					bot.open = 1
+					bot.Emag(null)
+			for(var/obj/machinery/mach in T.contents)
+				if(prob(10))
+					mach.emag_act(null)
+	empulse(user.loc, 3, 5)
+	user.reveal(reveal)
+	user.stun(stun)

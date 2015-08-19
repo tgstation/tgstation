@@ -1,0 +1,10 @@
+author: Joan
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added a new revenant ability; Malfunction. It does bad stuff to machines."
+  - tweak: "Defile and Overload Lights now briefly stun the revenant."
+  - tweak: "You can now Harvest a target by clicking on them while next to them."
+  - bugfix: "Harvesting no longer leaves you draining if the target is deleted mid-drain attempt."
+  - rscdel: "Defile no longer emags bots or disables cyborgs, Malfunction does that now."

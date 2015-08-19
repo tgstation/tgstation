@@ -37,6 +37,9 @@
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
 	var/revealed = 0 //If the revenant can take damage from normal sources.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
+	var/essence_drained = 0 //How much essence the revenant has drained.
+	var/draining = 0 //If the revenant is draining someone.
+	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 
 /mob/living/simple_animal/revenant/Life()
 	..()
@@ -78,6 +81,72 @@
 	if(world.time <= next_move)
 		return
 	A.attack_ghost(src)
+	if(ishuman(A) && in_range(src, A))
+		Harvest(A)
+
+
+/mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+	if(!castcheck(0))
+		return
+	if(draining)
+		src << "<span class='warning'>You are already siphoning the essence of a soul!</span>"
+		return
+	if(target in drained_mobs)
+		src << "<span class='warning'>[target]'s soul is dead and empty.</span>"
+		return
+	if(!target.stat)
+		src << "<span class='notice'>This being's soul is too strong to harvest.</span>"
+		if(prob(10))
+			target << "You feel as if you are being watched."
+		return
+	draining = 1
+	essence_drained = 2
+	src << "<span class='notice'>You search for the soul of [target].</span>"
+	if(do_after(src, 10, 3, 0, target)) //did they get deleted in that second?
+		if(target.ckey)
+			src << "<span class='notice'>Their soul burns with intelligence.</span>"
+			essence_drained += 2
+		if(target.stat != DEAD)
+			src << "<span class='notice'>Their soul blazes with life!</span>"
+			essence_drained += 2
+		else
+			src << "<span class='notice'>Their soul is weak and faltering.</span>"
+		if(do_after(src, 20, 6, 0, target)) //did they get deleted NOW?
+			switch(essence_drained)
+				if(1 to 2)
+					src << "<span class='info'>[target] will not yield much essence. Still, every bit counts.</span>"
+				if(3 to 4)
+					src << "<span class='info'>[target] will yield an average amount of essence.</span>"
+				if(5 to INFINITY)
+					src << "<span class='info'>Such a feast! [target] will yield much essence to you.</span>"
+			if(do_after(src, 30, 9, 0, target)) //how about now
+				if(!target.stat)
+					src << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
+					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
+					draining = 0
+					return //hey, wait a minute...
+				src << "<span class='danger'>You begin siphoning essence from [target]'s soul.</span>"
+				if(target.stat != DEAD)
+					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
+				icon_state = "revenant_draining"
+				reveal(65)
+				stun(65)
+				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
+				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=60)
+				if(target) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+					change_essence_amount(essence_drained * 5, 0, target)
+					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
+					target.visible_message("<span class='warning'>[target] gently slumps back onto the ground.</span>")
+					drained_mobs.Add(target)
+					target.death(0)
+				icon_state = "revenant_idle"
+			else
+				src << "<span class='warning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
+				draining = 0
+				return
+	draining = 0
+	return
+
 
 /mob/living/simple_animal/revenant/say(message)
 	return 0 //Revenants cannot speak out loud.
@@ -121,10 +190,10 @@
 
 /mob/living/simple_animal/revenant/proc/giveSpells()
 	if(src.mind)
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_harvest
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
 		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
+		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf
 		return 1
 	return 0
 
@@ -159,58 +228,66 @@
 
 
 /mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
-	var/mob/living/simple_animal/revenant/user = usr
-	if(!istype(user) || !user)
+	if(!src)
 		return
-	var/turf/T = get_turf(usr)
+	var/turf/T = get_turf(src)
 	if(istype(T, /turf/simulated/wall))
-		user << "<span class='warning'>You cannot use abilities from inside of a wall.</span>"
+		src << "<span class='warning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
-	if(!user.change_essence_amount(essence_cost, 1))
-		user << "<span class='warning'>You lack the essence to use that ability.</span>"
+	if(src.inhibited)
+		src << "<span class='warning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0
-	if(user.inhibited)
-		user << "<span class='warning'>Your powers have been suppressed by nulling energy!</span>"
+	if(!src.change_essence_amount(essence_cost, 1))
+		src << "<span class='warning'>You lack the essence to use that ability.</span>"
 		return 0
 	return 1
 
 
 
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = 0, source = null)
-	var/mob/living/simple_animal/revenant/user = usr
-	if(!istype(usr) || !usr)
+	if(!src)
 		return
-	if(user.essence + essence_amt <= 0)
+	if(essence + essence_amt <= 0)
 		return
-	user.essence += essence_amt
-	user.essence = max(0, user.essence)
+	essence += essence_amt
+	essence = max(0, essence)
 	if(essence_amt > 0)
-		user.essence_accumulated += essence_amt
-		user.essence_accumulated = max(0, user.essence_accumulated)
+		essence_accumulated += essence_amt
+		essence_accumulated = max(0, essence_accumulated)
 	if(!silent)
 		if(essence_amt > 0)
-			user << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
+			src << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
 		else
-			user << "<span class='danger'>Lost [essence_amt]E from [source].</span>"
+			src << "<span class='danger'>Lost [essence_amt]E from [source].</span>"
 	return 1
 
 
 
-/mob/living/simple_animal/revenant/proc/reveal(time, stun)
-	var/mob/living/simple_animal/revenant/R = usr
-	if(!istype(usr) || !usr)
+/mob/living/simple_animal/revenant/proc/reveal(time)
+	if(!src)
 		return
-	R.revealed = 1
-	R.invisibility = 0
-	if(stun)
-		R.notransform = 1
-	R << "<span class='warning'>You have been revealed[stun ? " and cannot move" : ""].</span>"
+	if(time <= 0)
+		return
+	revealed = 1
+	invisibility = 0
+	src << "<span class='warning'>You have been revealed.</span>"
 	spawn(time)
-		R.revealed = 0
-		R.invisibility = INVISIBILITY_OBSERVER
-		if(stun)
-			R.notransform = 0
-		R << "<span class='notice'>You are once more concealed[stun ? " and can move again" : ""].</span>"
+		revealed = 0
+		invisibility = INVISIBILITY_OBSERVER
+		src << "<span class='notice'>You are once more concealed.</span>"
+
+/mob/living/simple_animal/revenant/proc/stun(time)
+	if(!src)
+		return
+	if(time <= 0)
+		return
+	notransform = 1
+	src << "<span class='warning'>You cannot move!</span>"
+	spawn(time)
+		notransform = 0
+		src << "<span class='notice'>You can move again!</span>"
+
+
 
 /datum/objective/revenant
 	dangerrating = 10
