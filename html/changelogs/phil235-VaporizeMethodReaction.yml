@@ -1,8 +1,0 @@
-author: phil235
-
-delete-after: True
-
-changes: 
-  - rscadd: "You can now partially protect yourself from blob attack effects by wearing impermeable clothes like hardsuits, medical clothes, masks, etc. Max protection effect is capped at 50%."
-  - rscdel: "Splashing someone with chemicals no longer inject those chemicals in their body."
-  - bugfix: "Fixes splashing acid on items or floor with items not having any effect."
