@@ -36,6 +36,9 @@
 		if(SOUTHWEST)
 			initialize_directions_he = SOUTH|WEST
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/GetInitDirections()
+	return ..() | initialize_directions_he
+
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/atmosinit()
 	normalize_dir()
 	var/N = 2

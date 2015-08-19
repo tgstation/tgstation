@@ -129,8 +129,8 @@ emp_act
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 	var/target_area = parse_zone(target_limb.name)
-	feedback_add_details("item_used_for_combat","[I.name]|[I.force]")
-	feedback_add_details("zone_targeted","[def_zone]")
+	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
+	feedback_add_details("zone_targeted","[target_area]")
 
 	if(dna)	// allows your species to affect the attacked_by code
 		return dna.species.spec_attacked_by(I,user,def_zone,affecting,hit_area,src.a_intent,target_limb,target_area,src)
@@ -455,7 +455,9 @@ emp_act
 		..()
 
 /mob/living/carbon/human/hitby(atom/movable/AM)
-	if(throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+	var/hitpush = 1
+	var/skipcatch = 0
+	if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(can_embed(I))
@@ -467,5 +469,6 @@ emp_act
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
-					return
-	return ..()
+					hitpush = 0
+					skipcatch = 1 //can't catch the now embedded item
+	return ..(AM, skipcatch, hitpush)

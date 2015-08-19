@@ -4,7 +4,6 @@
 	icon_state = "blank_blob"
 	health = 200
 	fire_resist = 2
-	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
@@ -67,15 +66,15 @@
 	health = min(initial(health), health + 1)
 	if(overmind)
 		overmind.update_health()
-	for(var/i = 1; i < 8; i += i)
-		Pulse(0, i, overmind.blob_reagent_datum.color)
+	pulseLoop(0)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
 		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
-			B.change_to(/obj/effect/blob/shield)
-			B.color = overmind.blob_reagent_datum.color
+			var/obj/effect/blob/N = B.change_to(/obj/effect/blob/shield)
+			if(overmind)
+				N.color = overmind.blob_reagent_datum.color
 	color = null
 	..()
 
