@@ -1193,7 +1193,24 @@ About the new airlock wires panel:
 		spawn(11)
 			autoclose()
 
-	return ..()
+	if(!density)
+		return 1
+	if(!ticker)
+		return 0
+	operating = 1
+
+	do_animate("opening")
+	src.SetOpacity(0)
+	sleep(5)
+	src.density = 0
+	sleep(9)
+	src.layer = 2.7
+	update_icon()
+	SetOpacity(0)
+	operating = 0
+	air_update_turf(1)
+	update_freelook_sight()
+	return 1
 
 
 /obj/machinery/door/airlock/close(forced=0)
@@ -1235,7 +1252,7 @@ About the new airlock wires panel:
 	src.density = 1
 	if(!safe)
 		crush()
-	sleep(7)
+	sleep(9)
 	update_icon()
 	if(visible && !glass)
 		SetOpacity(1)
