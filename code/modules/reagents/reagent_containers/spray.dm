@@ -79,12 +79,12 @@
 					continue
 				if(puff_reagent_left <= 0)
 					break
-				D.reagents.reaction(T)
+				D.reagents.reaction(T, VAPOR)
 				if(ismob(T)) //mobs are obstacles that consume part of the puff, shortening its range.
 					puff_reagent_left -= 1
 
 			if(puff_reagent_left > 0)
-				D.reagents.reaction(get_turf(D))
+				D.reagents.reaction(get_turf(D), VAPOR)
 				puff_reagent_left -= 1
 
 			if(puff_reagent_left <= 0) // we used all the puff so we delete it.

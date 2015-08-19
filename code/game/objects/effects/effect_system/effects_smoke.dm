@@ -156,10 +156,10 @@
 		for(var/obj/O in range(1,src))
 			if(O.type == src.type)
 				continue
-			reagents.reaction(O, TOUCH, fraction)
+			reagents.reaction(O, VAPOR, fraction)
 
 		for(var/turf/T in range(1,src))
-			reagents.reaction(T, TOUCH, fraction)
+			reagents.reaction(T, VAPOR, fraction)
 
 		var/hit = 0
 		for(var/mob/living/L in range(1,src))
@@ -173,7 +173,7 @@
 	if(!istype(M))
 		return 0
 	var/fraction = 1/initial(lifetime)
-	reagents.reaction(M, TOUCH, fraction)
+	reagents.reaction(M, VAPOR, fraction)
 	lifetime--
 	return 1
 

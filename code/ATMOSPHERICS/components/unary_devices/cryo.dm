@@ -314,7 +314,7 @@
 				occupant.heal_organ_damage(heal_brute,heal_fire)
 		if(beaker && next_trans == 0)
 			beaker.reagents.trans_to(occupant, 1, 10)
-			beaker.reagents.reaction(occupant)
+			beaker.reagents.reaction(occupant, VAPOR)
 	next_trans++
 	if(next_trans == 10)
 		next_trans = 0

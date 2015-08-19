@@ -58,14 +58,14 @@
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
-		reagents.reaction(O, TOUCH, fraction)
+		reagents.reaction(O, VAPOR, fraction)
 	var/hit = 0
 	for(var/mob/living/L in range(0,src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
-	reagents.reaction(T, TOUCH, fraction)
+	reagents.reaction(T, VAPOR, fraction)
 
 	if(--amount < 0)
 		return
@@ -77,7 +77,7 @@
 	if(!istype(L))
 		return 0
 	var/fraction = 1/initial(lifetime)
-	reagents.reaction(L, TOUCH, fraction)
+	reagents.reaction(L, VAPOR, fraction)
 	lifetime--
 	return 1
 
