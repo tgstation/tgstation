@@ -195,7 +195,6 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 							pos_y = null
 							see_pos_x = null
 							see_pos_y = null
-						world << "adding [name] to zlevel [z] at [formatJumpTo(pos_x, pos_y, pos.z)]"
 						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.monitor_check(), see_pos_x, see_pos_y)
 			for(var/mob/living/carbon/brain/B in mob_list)
 				var/obj/item/device/mmi/M = B.loc
