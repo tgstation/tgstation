@@ -84,9 +84,9 @@
 
 	if(status & ORGAN_DESTROYED)
 		return 0
-	if((status & ORGAN_ROBOT|ORGAN_PEG))
+	if(status & (ORGAN_ROBOT|ORGAN_PEG))
 		brute *= 0.66 //~2/3 damage for ROBOLIMBS
-		burn *= 0.66 //~2/3 damage for ROBOLIMBS
+		burn *= (status & (ORGAN_PEG) ? 2 : 0.66) //~2/3 damage for ROBOLIMBS 2x for peg
 
 	//If limb took enough damage, try to cut or tear it off
 	if(body_part != UPPER_TORSO && body_part != LOWER_TORSO) //as hilarious as it is, getting hit on the chest too much shouldn't effectively gib you.
