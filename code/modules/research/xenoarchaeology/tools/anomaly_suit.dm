@@ -27,4 +27,5 @@
 	desc = "A pressure resistant excavation hood partially capable of insulating against exotic alien energies."
 	icon_state = "cespace_helmet"
 	item_state = "cespace_helmet"
+	flags_inv = HIDEEARS | HIDEHEADHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
