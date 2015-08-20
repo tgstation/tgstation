@@ -216,6 +216,7 @@
 		/obj/item/device/radio/beacon,
 		/obj/machinery/the_singularitygen,
 		/obj/singularity,
+		/obj/machinery/dominator,
 	)
 	if(A)
 		if(is_type_in_list(A, blacklist))
