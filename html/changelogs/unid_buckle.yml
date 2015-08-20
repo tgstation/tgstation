@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: Animals can be buckled into chairs and beds. Doesn't affect mice and other tiny creatures.
