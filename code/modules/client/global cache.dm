@@ -12,7 +12,7 @@
 	if(asset_name in client_list)
 		return
 
-	world << "sending a client the asset '[asset_name]'"
+	// world << "sending a client the asset '[asset_name]'"
 	client << browse_rsc(asset_cache[asset_name], asset_name)
 	client_list += asset_name
 
