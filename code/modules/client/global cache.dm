@@ -42,13 +42,6 @@
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
-
-
-/client/verb/send_asset(var/asset_id as text)
-	send_asset(src, asset_id)
-
-/client/verb/dump_assets()
-	src << browse(tg_list2text(asset_cache, "<br>"), "window=test")
 		
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 

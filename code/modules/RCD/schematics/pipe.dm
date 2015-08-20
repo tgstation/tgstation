@@ -176,6 +176,9 @@
 
 	for(var/dir in dir_list)
 		send_icon(client, dir)
+		
+	send_asset(client, "RPD-layer-blended-1.png")
+	send_asset(client, "RPD-layer-blended-4.png")
 
 /datum/rcd_schematic/pipe/proc/get_dirs()
 	switch(pipe_type)
@@ -364,10 +367,6 @@ var/global/list/disposalpipeID2State = list(
 	I = new/icon('icons/obj/pipe-item.dmi', pipeID2State[1], 4)
 	I.Blend("#0000FF", ICON_MULTIPLY)	//Make it blue
 	register_asset("RPD-layer-blended-4.png", I)
-
-/datum/rcd_schematic/pipe/blender/send_assets(var/client/client)
-	send_asset(client, "RPD-layer-blended-1.png")
-	send_asset(client, "RPD-layer-blended-4.png")
 
 //PIPE DEFINES START HERE.
 

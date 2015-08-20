@@ -175,9 +175,9 @@ datum/controller/game_controller/proc/cachedamageicons()
 	var/watch = start_watch()
 	var/overwatch = start_watch() // Overall.
 
-	log_startup_progress("populating asset cache...")
+	log_startup_progress("Populating asset cache...")
 	populate_asset_cache()
-	log_startup_progress("Populated [asset_cache.len] assets in [stop_watch(watch)]s.")
+	log_startup_progress("  Populated [asset_cache.len] assets in [stop_watch(watch)]s.")
 
 	watch = start_watch()	
 	log_startup_progress("Initializing objects...")

@@ -20,4 +20,4 @@
 		C.register_assets()
 
 /datum/html_interface/rcd/sendAssets(var/client/client)
-	send_asset("")
+	. = send_asset(client, "RCD.css")
