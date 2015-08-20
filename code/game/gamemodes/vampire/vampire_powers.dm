@@ -321,7 +321,7 @@
 		M.current << "<span class='warning'>You can only enthrall humanoids.</span>"
 		return
 
-	if(M.current.can_enthrall(C) && do_mob(M.current, C, (VAMP_CHARISMA in M.vampire.powers) ? 25 : 50)) //takes half the time with Charisma unlocked
+	if(M.current.can_enthrall(C) && do_mob(M.current, C, (VAMP_CHARISMA in M.vampire.powers) ? 150 : 300)) //takes half the time with Charisma unlocked
 		if(!M.current.can_enthrall(C))
 			M.current << "<span class='warning'>Either you or your target moved, and you couldn't finish enthralling them!</span>"
 			return
@@ -433,7 +433,7 @@
 		var/list/turf/locs = new
 		var/number = 0
 		for(var/direction in alldirs) //looking for bat spawns
-			if(locs.len == 2) //we found 2 locations and thats all we need
+			if(locs.len >= 3) //we found 3 locations and thats all we need
 				break
 			var/turf/T = get_step(M.current,direction) //getting a loc in that direction
 			if(AStar(M.current.loc, T, /turf/proc/AdjacentTurfs, /turf/proc/Distance, 1)) // if a path exists, so no dense objects in the way its valid salid
@@ -442,9 +442,11 @@
 			for(var/turf/tospawn in locs)
 				number++
 				new /mob/living/simple_animal/hostile/scarybat(tospawn, M.current)
-			if(number != 2) //if we only found one location, spawn one on top of our tile so we dont get stacked bats
-				new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
-		else // we had no good locations so make two on top of us
+			if(number < 3) //if we only found one location, spawn more on top of our tile so we dont get stacked bats
+				for(var/i = number; i < 3; i++)
+					new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+		else // we had no good locations so make three on top of us
+			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
 			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
 			new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
 		M.current.remove_vampire_blood(75)
@@ -453,17 +455,17 @@
 		M.current.verbs += /client/proc/vampire_bats
 
 /client/proc/vampire_jaunt()
-	//AHOY COPY PASTE INCOMING
 	set category = "Vampire"
-	set name = "Mist Form"
-	set desc = "You take on the form of mist for a short period of time."
+	set name = "Bat Jaunt"
+	set desc = "You become etheral and can travel through walls for a short time, while leaving a scary bat behind."
 	var/duration = 5 SECONDS
 	var/datum/mind/M = usr.mind
 	if(!M) return
 
 	if(M.current.vampire_power(0, 0))
 		M.current.verbs -= /client/proc/vampire_jaunt
-		ethereal_jaunt(M.current, duration, "liquify", "reappear", 1)
+		new /mob/living/simple_animal/hostile/scarybat(M.current.loc, M.current)
+		ethereal_jaunt(M.current, duration, "batify", "debatify", 0)
 		sleep(600)
 		M.current.verbs += /client/proc/vampire_jaunt
 
@@ -509,18 +511,9 @@
 			M.current.ExtinguishMob()
 			if(M.current.locked_to)
 				M.current.locked_to.unlock_atom(M.current)
-			var/atom/movable/overlay/animation = new /atom/movable/overlay( get_turf(usr) )
-			animation.name = usr.name
-			animation.density = 0
-			animation.anchored = 1
-			animation.icon = usr.icon
-			animation.alpha = 127
-			animation.layer = 5
-			//animation.master = src
+			var/turf/T = get_turf(M.current)
+			T.turf_animation('icons/effects/effects.dmi',"shadowstep")
 			usr.loc = picked
-			spawn(10)
-				animation.master = null
-				qdel(animation)
 		M.current.verbs -= /client/proc/vampire_shadowstep
 		sleep(20)
 		M.current.verbs += /client/proc/vampire_shadowstep
