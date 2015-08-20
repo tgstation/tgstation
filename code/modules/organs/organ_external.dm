@@ -102,12 +102,12 @@
 		I.take_damage(brute / 2)
 		brute -= brute / 2
 
-	if(status & ORGAN_BROKEN && prob(40) && brute)
+	if((status & ORGAN_BROKEN) && prob(40) && brute)
 		owner.emote("scream",,, 1)	//getting hit on broken hand hurts
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 
-	var/can_cut = (prob(brute*2) || sharp) && !((status & ORGAN_ROBOT|ORGAN_PEG))
+	var/can_cut = (prob(brute*2) || sharp) && !(status & (ORGAN_ROBOT|ORGAN_PEG))
 	// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
 	if((brute_dam + burn_dam + brute + burn) < max_damage || !config.limbs_can_break)
 		if(brute)
@@ -280,7 +280,7 @@ This function completely restores a damaged organ to perfect condition.
 
 /datum/organ/external/proc/need_process()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/need_process() called tick#: [world.time]")
-	if(status && ((status & ORGAN_ROBOT|ORGAN_PEG))) // If it's robotic OR PEG, that's fine it will have a status.
+	if(status && (status & (ORGAN_ROBOT|ORGAN_PEG))) // If it's robotic OR PEG, that's fine it will have a status.
 		return 1
 	if(brute_dam || burn_dam)
 		return 1
