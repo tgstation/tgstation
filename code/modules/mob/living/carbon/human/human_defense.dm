@@ -152,8 +152,9 @@ emp_act
 
 /mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/attacked_by() called tick#: [world.time]")
-	if(!I || !user)	return 0
-
+	. = 1
+	if(!I || !user)
+		return 0
 	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
@@ -193,13 +194,13 @@ emp_act
 	if(istype(I,/obj/item/weapon/card/emag))
 		if(!(affecting.status & ORGAN_ROBOT))
 			user << "<span class='warning'>That limb isn't robotic.</span>"
-			return
+			return 0
 		if(affecting.sabotaged)
 			user << "<span class='warning'>[src]'s [affecting.display_name] is already sabotaged!</span>"
 		else
 			user << "<span class='warning'>You sneakily slide [I] into the dataport on [src]'s [affecting.display_name] and short out the safeties.</span>"
 			affecting.sabotaged = 1
-		return
+		return 0
 
 	if(istype(I.attack_verb, /list) && I.attack_verb.len)
 		visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] in the [hit_area] with [I.name] by [user]!</span>")
@@ -254,6 +255,7 @@ emp_act
 
 				if(bloody)
 					bloody_body(src)
+	return .
 
 /mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/bloody_hands() called tick#: [world.time]")
