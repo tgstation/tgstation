@@ -32,9 +32,13 @@
 		if(user && buckled_mob && user.buckled == src)
 			unbuckle()
 */
-/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
+/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/living/user)
 	var/mob/living/M = src.buckled_mob
 	if(M)
+		if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+			unbuckle_mob()
+			add_fingerprint(user)
+			return
 		if(M != user)
 			M.visible_message(\
 			"<span class='notice'>[user.name] pulls [M.name] free from the sticky nest!</span>",\
@@ -56,9 +60,9 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
-	if(istype(M,/mob/living/carbon/alien))
+	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		return
-	if(!istype(user,/mob/living/carbon/alien/humanoid))
+	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		return
 
 	unbuckle_mob()

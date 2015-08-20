@@ -98,7 +98,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	//MMI copypasta, magic and more magic
 	if(!mmi || !mmi.brainmob)
 		mmi = new(src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain = new /obj/item/organ/internal/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.locked = 1
 		mmi.icon_state = "mmi_full"

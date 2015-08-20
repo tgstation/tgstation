@@ -6,12 +6,12 @@
 	name = "butt extraction"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/extract_butt, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	location = "groin"
-	requires_organic_chest = 1
+	possible_locs = list("groin")
 
 
 //extract butt
 /datum/surgery_step/extract_butt
+	name = "extract butt"
 	accept_hand = 1
 	time = 64
 	var/obj/item/organ/butt/A = null

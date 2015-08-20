@@ -24,11 +24,11 @@
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
+	var/obj/item/organ/internal/brain/brain = null //The actual brain
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
+		if(istype(brain,/obj/item/organ/internal/brain/alien))
 			icon_state = "mmi_alien"
 			braintype = "Xenoborg" //HISS....Beep.
 		else
@@ -126,8 +126,8 @@
 /obj/item/device/mmi/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
 	if(try_handling_mommi_construction(O,user))
 		return
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
+	if(istype(O,/obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/newbrain = O
 		if(brain)
 			user << "<span class='danger'>There's already a brain in the MMI!</span>"
 			return
@@ -198,7 +198,7 @@
 	brainmob.container = src
 
 	if(istype(H))
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain
 

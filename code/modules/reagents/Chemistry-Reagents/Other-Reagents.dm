@@ -781,6 +781,13 @@ datum/reagent/stable_plasma
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
+/datum/reagent/stable_plasma/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(10)
+	..()
+	return
+
 datum/reagent/iodine
 	name = "Iodine"
 	id = "iodine"

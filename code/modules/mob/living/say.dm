@@ -232,6 +232,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 					if(!istype(M,/mob/new_player))
 						handle_render(M,themessage,src)
 				return 1
+	if(message_mode == MODE_ALIEN)
+		if(hivecheck())
+			alien_talk(message)
+			return 1
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(2)

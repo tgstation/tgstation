@@ -119,7 +119,7 @@ datum/design/cyberimp_medical_hud
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 100)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/eyes/hud/medical
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	category = list("Misc")
 
 datum/design/cyberimp_security_hud
@@ -130,7 +130,7 @@ datum/design/cyberimp_security_hud
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 300, MAT_GOLD = 300)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/eyes/hud/security
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
 	category = list("Misc")
 
 datum/design/cyberimp_xray
@@ -141,7 +141,7 @@ datum/design/cyberimp_xray
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 200, MAT_PLASMA = 200, MAT_URANIUM = 500, MAT_DIAMOND = 1000)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/eyes/xray
+	build_path = /obj/item/organ/internal/cyberimp/eyes/xray
 	category = list("Misc")
 
 datum/design/cyberimp_thermals
@@ -152,7 +152,7 @@ datum/design/cyberimp_thermals
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 200, MAT_GOLD = 200, MAT_PLASMA = 200, MAT_DIAMOND = 1000)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/eyes/thermals
+	build_path = /obj/item/organ/internal/cyberimp/eyes/thermals
 	category = list("Misc")
 
 datum/design/cyberimp_antidrop
@@ -163,7 +163,7 @@ datum/design/cyberimp_antidrop
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/brain/anti_drop
+	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
 	category = list("Misc")
 
 datum/design/cyberimp_antistun
@@ -174,7 +174,7 @@ datum/design/cyberimp_antistun
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/brain/anti_stun
+	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
 	category = list("Misc")
 
 
@@ -186,7 +186,7 @@ datum/design/cyberimp_nutriment
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/chest/nutriment
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
 	category = list("Misc")
 
 datum/design/cyberimp_nutriment_plus
@@ -197,7 +197,7 @@ datum/design/cyberimp_nutriment_plus
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
 	construction_time = 75
-	build_path = /obj/item/cybernetic_implant/chest/nutriment/plus
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
 	category = list("Misc")
 /*
 datum/design/cyberimp_reviver

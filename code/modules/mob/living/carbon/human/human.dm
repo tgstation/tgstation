@@ -22,10 +22,13 @@
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
 	for(var/obj/item/organ/limb/O in organs)
 		O.owner = src
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/heart
-	internal_organs += new /obj/item/organ/brain
-	internal_organs += new /obj/item/organ/butt
+	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/heart
+	internal_organs += new /obj/item/organ/internal/brain
+	internal_organs += new /obj/item/organ/butt //Could be argued to not actually be an internal organ
+
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
 
 	// for spawned humans; overwritten by other code
 	ready_dna(src)
