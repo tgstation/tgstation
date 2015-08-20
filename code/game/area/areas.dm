@@ -565,12 +565,9 @@ var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 
-	var/turf_amount = 0
-
 	for (var/turf/T in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
-		turf_amount++
 
 	var/list/refined_src = new/list()
 	for(var/turf/T in turfs_src)
@@ -590,10 +587,6 @@ var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f
 
 	var/list/fromupdate = new/list()
 	var/list/toupdate = new/list()
-
-	world << "Starting moving... [turf_amount] turfs"
-
-	var/moved_amount = 0
 
 	moving:
 		for (var/turf/T in refined_src)
@@ -709,10 +702,8 @@ var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f
 
 					refined_src -= T
 					refined_trg -= B
-					moved_amount++
 					continue moving
 
-	world << "[moved_amount] times moved"
 	var/list/doors = new/list()
 
 	if(toupdate.len)
