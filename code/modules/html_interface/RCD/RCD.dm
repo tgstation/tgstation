@@ -11,11 +11,13 @@
 	. = ..()
 	head += "<link rel='stylesheet' type='text/css' href='RCD.css'>"
 
-/datum/html_interface/rcd/sendResources(var/client/client)
-	. = ..()
-	client << browse_rsc('RCD.css')
+/datum/html_interface/rcd/registerResources()
+	register_asset("RCD.css", 'RCD.css')
 
 	//Send the icons.
 	for(var/path in typesof(/datum/rcd_schematic) - /datum/rcd_schematic)
 		var/datum/rcd_schematic/C = new path()
-		C.send_icons(client)
+		C.register_assets()
+
+/datum/html_interface/rcd/sendAssets(var/client/client)
+	send_asset("")

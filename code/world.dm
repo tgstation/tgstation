@@ -9,6 +9,8 @@
 
 var/savefile/panicfile
 /world/New()
+	populate_asset_cache()
+
 	// Honk honk, fuck you science
 	populate_seed_list()
 	for(var/i=1, i<=map.zLevels.len, i++)

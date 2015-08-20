@@ -600,7 +600,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(active_uplink_check(user))
 		return
 
-
 	// AUTOFIXED BY fix_string_idiocy.py
 	// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:313: var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 	var/dat = {"<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>
