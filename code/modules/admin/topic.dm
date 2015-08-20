@@ -1157,7 +1157,7 @@
 					var/DBQuery/query_reason = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
 					query_reason.Execute()
 					if(query_reason.NextRow())
-						var/watch_reason = query_reason.item[3]
+						var/watch_reason = query_reason.item[2]
 						var/new_reason = input("Insert new reason", "New Reason", "[watch_reason]", null) as null|text
 						new_reason = sanitizeSQL(new_reason)
 						if(!new_reason)
