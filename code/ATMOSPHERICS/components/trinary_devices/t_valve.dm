@@ -12,11 +12,12 @@
 
 	state = 0 // 0 = go straight, 1 = go to side
 
-/obj/machinery/atmospherics/trinary/tvalve/update_icon(animation)
+/obj/machinery/atmospherics/trinary/tvalve/update_icon(var/adjacent_procd, animation)
 	if(animation)
 		flick("tvalve[src.state][!src.state]",src)
 	else
 		icon_state = "tvalve[state]"
+	..()
 
 /obj/machinery/atmospherics/trinary/tvalve/investigation_log(var/subject, var/message)
 	activity_log += ..()
@@ -133,7 +134,7 @@
 	investigation_log(I_ATMOS,"was [state ? "opened (straight)" : "closed (side)"] by [key_name(usr)]")
 
 	src.add_fingerprint(usr)
-	update_icon(1)
+	update_icon(0,1)
 	sleep(10)
 	if (src.state)
 		src.go_straight()
@@ -166,12 +167,13 @@
 	icon_state = "tvalvem0"
 	pipe_flags = IS_MIRROR
 
-/obj/machinery/atmospherics/trinary/tvalve/mirrored/update_icon(animation)
+
+/obj/machinery/atmospherics/trinary/tvalve/mirrored/update_icon(var/adjacent_procd,animation)
 	if(animation)
 		flick("tvalvem[src.state][!src.state]",src)
 	else
 		icon_state = "tvalvem[state]"
-
+	..()
 
 ////////////////////
 ////DIGITAL T///////
@@ -241,7 +243,8 @@
 	icon_state = "tvalvem0"
 	pipe_flags = IS_MIRROR
 
-/obj/machinery/atmospherics/trinary/tvalve/digital/mirrored/update_icon(animation)
+/obj/machinery/atmospherics/trinary/tvalve/digital/mirrored/update_icon(var/adjacent_procd,animation)
+	..()
 	if(animation)
 		flick("tvalvem[src.state][!src.state]",src)
 	else

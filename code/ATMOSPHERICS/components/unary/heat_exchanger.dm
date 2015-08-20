@@ -15,7 +15,7 @@
 		icon_state = "intact"
 	else
 		icon_state = "exposed"
-
+	..()
 	return
 
 /obj/machinery/atmospherics/unary/heat_exchanger/initialize()

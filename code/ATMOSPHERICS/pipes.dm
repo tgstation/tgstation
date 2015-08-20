@@ -1,13 +1,12 @@
-
 // Regular pipe colors
 //                         #RRGGBB
-#define PIPE_COLOR_BLUE   "#0000FF"
-#define PIPE_COLOR_CYAN   "#00FFFF"
-#define PIPE_COLOR_GREEN  "#00FF00"
-#define PIPE_COLOR_GREY   "#FFFFFF" // White
+#define PIPE_COLOR_BLUE   "#0000B7"
+#define PIPE_COLOR_CYAN   "#00B8B8"
+#define PIPE_COLOR_GREEN  "#00B900"
+#define PIPE_COLOR_GREY   "#B4B4B4"
 #define PIPE_COLOR_PURPLE "#800080"
-#define PIPE_COLOR_RED    "#FF0000"
-#define PIPE_COLOR_YELLOW "#FFA800" // Orange, actually. Yellow looked awful.
+#define PIPE_COLOR_RED    "#B70000"
+#define PIPE_COLOR_ORANGE "#B77900"
 
 // Insulated pipes
 #define IPIPE_COLOR_RED   PIPE_COLOR_RED
@@ -23,15 +22,18 @@
 	var/alert_pressure = 80*ONE_ATMOSPHERE
 	var/baseicon=""
 
-	available_colors = list(
-		"grey"		= PIPE_COLOR_GREY,
-		"red"		= PIPE_COLOR_RED,
-		"blue"		= PIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
-	)
+/obj/machinery/atmospherics/pipe/proc/mass_colouration(var/mass_colour)
+	if (findtext(mass_colour,"#"))
+		var/datum/pipeline/pipeline = parent
+		var/list/update_later = list()
+		update_later += pipeline.edges
+		for(var/obj/machinery/atmospherics/pipe in pipeline.members)
+			pipe.color = mass_colour
+			if(!pipe.can_be_coloured)
+				pipe.default_colour = mass_colour
+				update_later |= pipe
+		for(var/obj/machinery/atmospherics/pipe in update_later)
+			pipe.update_icon()
 
 /obj/machinery/atmospherics/pipe/singularity_pull(/obj/machinery/singularity/S, size)
 	return
@@ -45,6 +47,14 @@
 	//Return 1 if parent should continue checking other pipes
 	//Return null if parent should stop checking other pipes. Recall: del(src) will by default return null
 	return 1
+
+/obj/machinery/atmospherics/pipe/update_icon(var/adjacent_procd)
+	if(color && centre_overlay)
+		centre_overlay.color = color
+		overlays.Cut()
+		overlays += centre_overlay
+	..()
+
 
 
 /obj/machinery/atmospherics/pipe/return_air()
@@ -99,11 +109,11 @@
 	var/obj/machinery/atmospherics/node2
 	var/minimum_temperature_difference = 300
 	var/thermal_conductivity = 0 //WALL_HEAT_TRANSFER_COEFFICIENT No
-
+	color = "#B4B4B4"
 	var/maximum_pressure = 100*ONE_ATMOSPHERE // 10132.5 kPa
 	var/fatigue_pressure = 80 *ONE_ATMOSPHERE //  8106   kPa
 	alert_pressure       = 80 *ONE_ATMOSPHERE
-
+	can_be_coloured = 1
 	// Type of burstpipe to use on burst()
 	var/burst_type = /obj/machinery/atmospherics/unary/vent/burstpipe
 
@@ -124,7 +134,6 @@
 			initialize_directions = SOUTH|EAST
 		if(SOUTHWEST)
 			initialize_directions = SOUTH|WEST
-
 
 /obj/machinery/atmospherics/pipe/simple/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
@@ -300,22 +309,11 @@
 	return list(node1, node2)
 
 
-/obj/machinery/atmospherics/pipe/simple/update_icon()
-	alpha = invisibility ? 128 : 255
-	//testing("PIPE UPDATE ICON: Updating icon on \the [src], _color: [_color]")
-	if(_color in available_colors)
-		color = available_colors[_color]
-
-	if(node1&&node2)
-		icon_state = "intact"
-
-	else
-		if(!node1&&!node2)
-			qdel(src) //TODO: silent deleting looks weird
-		var/have_node1 = node1?1:0
-		var/have_node2 = node2?1:0
-		icon_state = "exposed[have_node1][have_node2]"
-
+/obj/machinery/atmospherics/pipe/simple/update_icon(var/adjacent_procd)
+	var/node_list = list(node1,node2)
+	..(adjacent_procd,node_list)
+	if(!node1&&!node2)
+		qdel(src) //TODO: silent deleting looks weird
 
 /obj/machinery/atmospherics/pipe/simple/initialize(var/suppress_icon_check=0)
 	normalize_dir()
@@ -344,31 +342,24 @@
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers
 	name = "Scrubbers pipe"
-	_color = "red"
 	color=PIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/simple/supply
 	name = "Air supply pipe"
-	_color = "blue"
 	color=PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/simple/supplymain
 	name = "Main air supply pipe"
-	_color = "purple"
 	color=PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/simple/general
 	name = "Pipe"
-	_color = "grey"
 	color=PIPE_COLOR_GREY
 /obj/machinery/atmospherics/pipe/simple/yellow
 	name = "Pipe"
-	_color="yellow"
-	color=PIPE_COLOR_YELLOW
+	color=PIPE_COLOR_ORANGE
 /obj/machinery/atmospherics/pipe/simple/cyan
 	name = "Pipe"
-	_color="cyan"
 	color=PIPE_COLOR_CYAN
 /obj/machinery/atmospherics/pipe/simple/filtering
 	name = "Pipe"
-	_color = "green"
 	color=PIPE_COLOR_GREEN
 
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible
@@ -409,7 +400,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated
 	name = "\improper Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
-	icon = 'icons/obj/atmospherics/insulated.dmi'
 	minimum_temperature_difference = 10000
 	thermal_conductivity = 0
 
@@ -417,30 +407,21 @@
 	fatigue_pressure =  900000 // 900k kPa
 	alert_pressure   =  900000
 
-	available_colors = list(
-		"red"		= IPIPE_COLOR_RED,
-		"blue"		= IPIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
-	)
-	_color = "red"
+	can_be_coloured = 1
+	color = IPIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/simple/insulated/visible
 	icon_state = "intact"
 	level = 2
 	color=IPIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/simple/insulated/visible/blue
 	color=IPIPE_COLOR_BLUE
-	_color = "blue"
 /obj/machinery/atmospherics/pipe/simple/insulated/hidden
 	icon_state = "intact"
 	alpha=128
 	level = 1
 	color=IPIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/simple/insulated/hidden/blue
-	color=IPIPE_COLOR_BLUE
-	_color = "blue"
+	color= IPIPE_COLOR_BLUE
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
@@ -449,16 +430,15 @@
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	volume = 105
+	color = "#B4B4B4"
 	dir = SOUTH
 	initialize_directions = EAST|NORTH|WEST
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
-	var/list/node_list
-	var/image/manifold_centre
-	var/list/nodecon_overlays
 	level = 1
 	layer = 2.4 //under wires with their 2.44
+	var/global/image/manifold_centre = image('icons/obj/pipes.dmi',"manifold_centre")
 
 /obj/machinery/atmospherics/pipe/manifold/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
@@ -484,7 +464,6 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/New()
-	nodecon_overlays = list()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
@@ -494,14 +473,11 @@
 			initialize_directions = SOUTH|WEST|NORTH
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
+	centre_overlay = manifold_centre
+	centre_overlay.color = color
+	overlays += centre_overlay
 	..()
-	manifold_centre = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_centre")
-	manifold_centre.dir = dir
-	manifold_centre.pixel_x = pixel_x
-	manifold_centre.pixel_y = pixel_y
-	manifold_centre.color = _color
-	overlays += manifold_centre
-	//update_icon()
+
 
 /obj/machinery/atmospherics/pipe/manifold/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
@@ -574,47 +550,12 @@
 	..()
 
 
-/obj/machinery/atmospherics/pipe/manifold/update_icon()
-	node_list = list(node1,node2,node3)
-	alpha = invisibility ? 128 : 255
-	overlays.Cut()	// previously overlays = 0 and I'm pretty sure that's not very good
-	nodecon_overlays.Cut()
-	manifold_centre.color = _color
-	overlays += manifold_centre
-	var/list/is_node = list(0,0,0)
-	var/image/nodecon
-	var/list/directions = list(1,2,4,8)
-	directions -= dir
-	if(node1)
-		is_node[1] = 1
-	if(node2)
-		is_node[2] = 1
-	if(node3)
-		is_node[3] = 1
-	for (var/node in list(1,2,3))
-		var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
-		directions -= get_dir(src, connected_node) // finds all the directions that aren't pointed to by a node
-	for (var/node in list(1,2,3))
-		if (is_node[node])
-			var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
-			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con",dir = get_dir(src, connected_node))
-			if (connected_node.color)
-				nodecon.color = connected_node.color
-			else if (connected_node._color)
-				nodecon.color = connected_node._color
-			else
-				nodecon.color = _color
-			nodecon_overlays += nodecon
-		else
-			var/randomdir = pick(directions) // it picks a random direction from those that we don't have
-			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con_ex", dir = randomdir)
-			directions -= randomdir
-			nodecon.color = _color
-			nodecon_overlays += nodecon
-	overlays += nodecon_overlays
+
+/obj/machinery/atmospherics/pipe/manifold/update_icon(var/adjacent_procd)
+	var/node_list = list(node1,node2,node3)
+	..(adjacent_procd,node_list)
 	if(!node1 && !node2 && !node3)
 		qdel(src)
-	return
 
 
 /obj/machinery/atmospherics/pipe/manifold/initialize(var/skip_icon_update=0)
@@ -629,44 +570,33 @@
 
 /obj/machinery/atmospherics/pipe/manifold/scrubbers
 	name = "\improper Scrubbers pipe"
-	_color = "PIPE_COLOR_RED"
+	color = PIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/manifold/supply
 	name = "\improper Air supply pipe"
-	_color = PIPE_COLOR_BLUE
+	color = PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold/supplymain
 	name = "\improper Main air supply pipe"
-	_color = PIPE_COLOR_PURPLE
+	color = PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/manifold/general
 	name = "\improper Gas pipe"
-	_color = PIPE_COLOR_BLUE
+	color = PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold/yellow
 	name = "\improper Air supply pipe"
-	_color = PIPE_COLOR_YELLOW
+	color = PIPE_COLOR_ORANGE
 /obj/machinery/atmospherics/pipe/manifold/cyan
 	name = "\improper Air supply pipe"
-	_color = PIPE_COLOR_CYAN
+	color = PIPE_COLOR_CYAN
 /obj/machinery/atmospherics/pipe/manifold/filtering
 	name = "\improper Air filtering pipe"
-	_color = PIPE_COLOR_GREEN
+	color = PIPE_COLOR_GREEN
 /obj/machinery/atmospherics/pipe/manifold/insulated
 	name = "\improper Insulated pipe"
 	//icon = 'icons/obj/atmospherics/red_pipe.dmi'
-	icon = 'icons/obj/atmospherics/insulated.dmi'
 	icon_state = "manifold"
 	alert_pressure = 900*ONE_ATMOSPHERE
-	_color = "red"
 	color=IPIPE_COLOR_RED
 	level = 2
-
-	available_colors = list(
-		"red"		= IPIPE_COLOR_RED,
-		"blue"		= IPIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
-	)
-
+	can_be_coloured = 1
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
 	level = 2
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
@@ -690,18 +620,14 @@
 /obj/machinery/atmospherics/pipe/manifold/insulated/visible
 	level = 2
 	color=IPIPE_COLOR_RED
-	_color = "red"
 /obj/machinery/atmospherics/pipe/manifold/insulated/visible/blue
 	color=IPIPE_COLOR_BLUE
-	_color = "blue"
 /obj/machinery/atmospherics/pipe/manifold/insulated/hidden
 	level = 1
 	color=IPIPE_COLOR_RED
 	alpha=128
-	_color = "red"
 /obj/machinery/atmospherics/pipe/manifold/insulated/hidden/blue
 	color=IPIPE_COLOR_BLUE
-	_color = "blue"
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible
 	level = 2
 /obj/machinery/atmospherics/pipe/manifold/yellow/hidden
@@ -726,6 +652,7 @@
 	volume = 140
 	dir = SOUTH
 	initialize_directions = NORTH|SOUTH|EAST|WEST
+	color = "#B4B4B4"
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
@@ -733,9 +660,8 @@
 	level = 1
 	layer = 2.4 //under wires with their 2.44
 	baseicon="manifold4w"
-	var/list/node_list
-	var/image/manifold_centre
-	var/list/nodecon_overlays
+	var/global/image/manifold4w_centre = image('icons/obj/pipes.dmi',"manifold4w_centre")
+
 
 /obj/machinery/atmospherics/pipe/manifold4w/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
@@ -763,13 +689,10 @@
 	return 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/New()
-	nodecon_overlays = list()
 	..()
-	manifold_centre = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold4w_centre")
-	manifold_centre.pixel_x = pixel_x
-	manifold_centre.pixel_y = pixel_y
-	manifold_centre.color = _color
-	overlays += manifold_centre
+	centre_overlay = manifold4w_centre
+	centre_overlay.color = color
+	overlays += centre_overlay
 
 /obj/machinery/atmospherics/pipe/manifold4w/hide(var/i)
 	if(level == 1 && istype(loc, /turf/simulated))
@@ -850,46 +773,9 @@
 	..()
 
 
-/obj/machinery/atmospherics/pipe/manifold4w/update_icon()
-
-	node_list = list(node1,node2,node3,node4)
-	alpha = invisibility ? 128 : 255
-	overlays.Cut()	// previously overlays = 0 and I'm pretty sure that's not very good
-	nodecon_overlays.Cut()
-	manifold_centre.color = _color
-	overlays += manifold_centre
-	var/list/is_node = list(0,0,0,0)
-	var/image/nodecon
-	var/list/directions = list(1,2,4,8)
-	if(node1)
-		is_node[1] = 1
-	if(node2)
-		is_node[2] = 1
-	if(node3)
-		is_node[3] = 1
-	if(node4)
-		is_node[4] = 1
-	for (var/node in list(1,2,3,4))
-		var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
-		directions -= get_dir(src, connected_node) // finds all the directions that aren't pointed to by a node
-	for (var/node in list(1,2,3,4))
-		if (is_node[node])
-			var/obj/machinery/atmospherics/pipe/connected_node = node_list[node]
-			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con",dir = get_dir(src, connected_node))
-			if (connected_node.color)
-				nodecon.color = connected_node.color
-			else if (connected_node._color)
-				nodecon.color = connected_node._color
-			else
-				nodecon.color = _color
-			nodecon_overlays += nodecon
-		else
-			var/randomdir = pick(directions) // it picks a random direction from those that we don't have
-			nodecon = image('icons/obj/atmospherics/pipe_manifold.dmi',"manifold_con_ex", dir = randomdir)
-			directions -= randomdir
-			nodecon.color = _color
-			nodecon_overlays += nodecon
-	overlays += nodecon_overlays
+/obj/machinery/atmospherics/pipe/manifold4w/update_icon(var/adjacent_procd)
+	var/node_list = list(node1,node2,node3,node4)
+	..(adjacent_procd,node_list)
 	if(!node1 && !node2 && !node3 && !node4)
 		qdel(src)
 	return
@@ -906,38 +792,29 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
 	name = "\improper Scrubbers pipe"
-	_color = PIPE_COLOR_RED
+	color = PIPE_COLOR_RED
 /obj/machinery/atmospherics/pipe/manifold4w/supply
 	name = "\improper Air supply pipe"
-	_color = PIPE_COLOR_BLUE
+	color = PIPE_COLOR_BLUE
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain
 	name = "\improper Main air supply pipe"
-	_color = PIPE_COLOR_PURPLE
+	color = PIPE_COLOR_PURPLE
 /obj/machinery/atmospherics/pipe/manifold4w/general
 	name = "\improper Air supply pipe"
-	_color = PIPE_COLOR_GREY
+	color = PIPE_COLOR_GREY
 /obj/machinery/atmospherics/pipe/manifold4w/yellow
 	name = "\improper Air supply pipe"
-	_color = PIPE_COLOR_YELLOW
+	color = PIPE_COLOR_ORANGE
 /obj/machinery/atmospherics/pipe/manifold4w/filtering
 	name = "\improper Air filtering pipe"
-	_color = PIPE_COLOR_GREEN
+	color = PIPE_COLOR_GREEN
 /obj/machinery/atmospherics/pipe/manifold4w/insulated
-	icon = 'icons/obj/atmospherics/insulated.dmi'
 	name = "\improper Insulated pipe"
-	_color = "red"
+	color = IPIPE_COLOR_RED
 	alert_pressure = 900*ONE_ATMOSPHERE
 	color=IPIPE_COLOR_RED
 	level = 2
-
-	available_colors = list(
-		"red"		= IPIPE_COLOR_RED,
-		"blue"		= IPIPE_COLOR_BLUE,
-		"cyan"		= PIPE_COLOR_CYAN,
-		"green"		= PIPE_COLOR_GREEN,
-		"yellow"	= PIPE_COLOR_YELLOW,
-		"purple"	= PIPE_COLOR_PURPLE
-	)
+	can_be_coloured = 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible
 	level = 2
@@ -976,10 +853,8 @@
 	level = 2
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/hidden/blue
 	color=IPIPE_COLOR_BLUE
-	_color = "blue"
 /obj/machinery/atmospherics/pipe/manifold4w/insulated/visible/blue
 	color=IPIPE_COLOR_BLUE
-	_color = "blue"
 
 
 /obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -987,26 +862,22 @@
 		return // Coloring pipes.
 
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/red))
-		src._color = "red"
 		src.color = PIPE_COLOR_RED
 		user << "<span class='notice'>You paint the pipe red.</span>"
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/blue))
-		src._color = "blue"
 		src.color = PIPE_COLOR_BLUE
 		user << "<span class='notice'>You paint the pipe blue.</span>"
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/green))
-		src._color = "green"
 		src.color = PIPE_COLOR_GREEN
 		user << "<span class='notice'>You paint the pipe green.</span>"
 		update_icon()
 		return 1
 	if(istype(W, /obj/item/weapon/reagent_containers/glass/paint/yellow))
-		src._color = "yellow"
-		src.color = PIPE_COLOR_YELLOW
+		src.color = PIPE_COLOR_ORANGE
 		user << "<span class='notice'>You paint the pipe yellow.</span>"
 		update_icon()
 		return 1
@@ -1110,7 +981,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
 	overlays.len = 0
 	alpha = invisibility ? 128 : 255
-//	color = available_colors[_color]
 	icon_state = baseicon
 	if(other_node)
 		var/icon/con = new/icon(icon,"manifoldl_other_con")
@@ -1129,7 +999,6 @@
 			overlays += con
 
 	if(!other_node && !(locate(/obj/machinery/atmospherics) in layer_nodes))
-
 		qdel(src)
 	return
 

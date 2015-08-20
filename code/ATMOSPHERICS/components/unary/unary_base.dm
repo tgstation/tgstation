@@ -15,6 +15,10 @@
 	air_contents.temperature = T0C
 	air_contents.volume = starting_volume
 
+/obj/machinery/atmospherics/unary/update_icon(var/adjacent_procd,node_list)
+	node_list = list(node)
+	..(adjacent_procd,node_list)
+
 /obj/machinery/atmospherics/unary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
 	initialize_directions = pipe.get_pipe_dir()

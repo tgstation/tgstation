@@ -17,13 +17,15 @@ obj/machinery/atmospherics/trinary
 
 	var/activity_log = ""
 
+/obj/machinery/atmospherics/trinary/update_icon(var/adjacent_procd)
+	var/node_list = list(node1,node2,node3)
+	..(adjacent_procd,node_list)
+
 obj/machinery/atmospherics/trinary/New()
-	..()
 	initialize_directions()
 	air1 = new
 	air2 = new
 	air3 = new
-
 	air1.volume = starting_volume
 	air2.volume = starting_volume
 	air3.volume = starting_volume

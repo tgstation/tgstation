@@ -19,13 +19,7 @@
 		icon_state = "intact_off"
 	else if(node1 && node2)
 		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
+	..()
 	return
 
 /obj/machinery/atmospherics/binary/passive_gate/process()

@@ -39,15 +39,16 @@
 	name		= "Paint pipes"
 	category	= "Utilities"
 	flags		= RCD_RANGE
-
+	var/mass_colour = 0
 	var/list/available_colors = list(
-		"grey"		= "#CCCCCC",
-		"red"		= "#800000",
-		"blue"		= "#000080",
-		"cyan"		= "#1C94C4",
-		"green"		= "#00CC00",
-		"yellow"	= "#FFCC00",
-		"purple"	= "purple"
+		"grey"		= PIPE_COLOR_GREY,
+		"red"		= PIPE_COLOR_RED,
+		"blue"		= PIPE_COLOR_BLUE,
+		"cyan"		= PIPE_COLOR_CYAN,
+		"green"		= PIPE_COLOR_GREEN,
+		"orange"	= PIPE_COLOR_ORANGE,
+		"purple"	= PIPE_COLOR_PURPLE,
+		"custom" 	= "custom"
 	)
 
 	var/selected_color = "grey"
@@ -63,6 +64,8 @@
 
 	for(var/color_name in available_colors)
 		var/color = available_colors[color_name]
+		if (color == "custom")
+			color = "#000000"
 		color_css += {"
 			a.color.[color_name] {
 				color: [color];
@@ -75,7 +78,7 @@
 			}
 		"}
 
-	master.interface.head += "<style type='text/css'>[color_css]</style>"
+	master.interface.head += "<style type='text/css'>[color_css]</style><br><"
 
 /datum/rcd_schematic/paint_pipes/deselect(var/mob/user, var/datum/rcd_schematic/new_schematic)
 	. = ..()
@@ -83,12 +86,20 @@
 	selected_color = available_colors[1]
 
 /datum/rcd_schematic/paint_pipes/get_HTML()
+	. += "<h4>Colour Choice:</h4>"
 	for(var/color_name in available_colors)
 		var/selected = ""
 		if(color_name == selected_color)
 			selected = " selected"
-
+		if (selected_color == "custom")
+			selected_color = input("Select Colour to change the pipe to", "Custom Pipe Colour", selected_color) as color
+		if (selected_color == "#ffffff")
+			selected_color = "#fffffe"
 		. += "<a class='color [color_name][selected]' href='?src=\ref[master.interface];set_color=[color_name]'>&bull;</a>"
+	var/mass_colour_on = mass_colour ? "On" : "Off"
+	. += {" <br>
+			<h4>Mass Colour:</h4>
+			Mass Colouration: <b><A href='?src=\ref[master.interface];set_mass_colour=1'>[mass_colour_on]</a></b>"}
 
 /datum/rcd_schematic/paint_pipes/attack(var/atom/A, var/mob/user)
 	if(!istype(A, /obj/machinery/atmospherics))
@@ -96,26 +107,31 @@
 
 	var/obj/machinery/atmospherics/O = A
 
-	if(!O.available_colors || !O.available_colors.len)
-		return "you cannot paint this!"
-
-	if(!(selected_color in O.available_colors))
-		return "the color '[selected_color]' is not available for \a [O]"
-
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
-	O._color = selected_color
-
+	if (selected_color in available_colors)
+		selected_color = available_colors[selected_color]
+	if(mass_colour && istype(O, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/pipe_to_colour = O
+		var/datum/pipeline/pipe_line = pipe_to_colour.parent
+		var/list/pipeline_members = pipe_line.members
+		if (pipeline_members.len < 500)
+			O.color = selected_color
+			pipe_to_colour.mass_colouration(selected_color)
+		else return "That pipe network is simply too big to paint!"
+	else
+		O.color = selected_color
+		O.update_icon()
 	user.visible_message("<span class='notice'>[user] paints \the [O] [selected_color].</span>","<span class='notice'>You paint \the [O] [selected_color].</span>")
-	O.update_icon()
 
 /datum/rcd_schematic/paint_pipes/Topic(var/href, var/list/href_list)
 	if(href_list["set_color"])
 		if(href_list["set_color"] in available_colors)
 			selected_color = href_list["set_color"]
-
 			master.update_options_menu()
-
-		return 1
+	if(href_list["set_mass_colour"])
+		mass_colour = mass_colour ? 0:1
+		master.update_options_menu()
+	return 1
 
 //METERS AND SENSORS.
 
@@ -216,7 +232,7 @@
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=4"><div class="layer vertical four 			[layer == 4 ? "selected" : ""]"></div></a>
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=5"><div class="layer vertical five 			[layer == 5 ? "selected" : ""]"></div></a>
 		</div>
-		
+
 		<div class="layer_holder" style="left: 200px;">
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=1"><div class="layer horizontal one		[layer == 1 ? "selected" : ""]"></div></a>
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=2"><div class="layer horizontal two		[layer == 2 ? "selected" : ""]"></div></a>
@@ -226,9 +242,9 @@
 		</div>
 
 	"}
-	
+
 	. += "<h4>Directions</h4>"
-	
+
 	switch(pipe_type)
 		if(PIPE_BINARY)
 			. += render_dir_image(NORTH,	"Vertical")
@@ -291,7 +307,7 @@
 		var/n_layer = Clamp(round(text2num(href_list["set_layer"])), 1, 5)
 		if(layer == n_layer) //No point doing anything.
 			return 1
-		
+
 		layer = n_layer
 		master.update_options_menu()
 

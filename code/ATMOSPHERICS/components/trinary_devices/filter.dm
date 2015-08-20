@@ -1,9 +1,8 @@
 obj/machinery/atmospherics/trinary/filter
 	icon = 'icons/obj/atmospherics/filter.dmi'
-	icon_state = "intact_off"
-
+	icon_state = "hintact_off"
 	name = "Gas filter"
-
+	default_colour = "#b70000"
 	mirror = /obj/machinery/atmospherics/trinary/filter/mirrored
 
 	var/on = 0
@@ -39,14 +38,13 @@ obj/machinery/atmospherics/trinary/filter/New()
 
 obj/machinery/atmospherics/trinary/filter/update_icon()
 	if(stat & NOPOWER)
-		icon_state = "intact_off"
+		icon_state = "hintact_off"
 	else if(node2 && node3 && node1)
-		icon_state = "intact_[on?("on"):("off")]"
+		icon_state = "hintact_[on?("on"):("off")]"
 	else
-		icon_state = "intact_off"
+		icon_state = "hintact_off"
 		on = 0
-
-	return
+	..()
 
 obj/machinery/atmospherics/trinary/filter/power_change()
 	var/old_stat = stat

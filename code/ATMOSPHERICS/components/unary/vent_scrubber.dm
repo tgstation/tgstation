@@ -1,10 +1,9 @@
 /obj/machinery/atmospherics/unary/vent_scrubber
-	icon				= 'icons/obj/atmospherics/vent_scrubber.dmi'
-	icon_state			= "off"
-
-	name				= "\improper Air Scrubber"
-	desc				= "Has a valve and pump attached to it"
-	use_power			= 1
+	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
+	icon_state = "hoff"
+	name = "Air Scrubber"
+	desc = "Has a valve and pump attached to it"
+	use_power = 1
 
 	level				= 1
 
@@ -53,22 +52,23 @@
 		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon()
-	var/hidden=""
-	if(level == 1 && istype(loc, /turf/simulated))
-		hidden="h"
 	if(welded)
-		icon_state = "[hidden]weld"
-		return
+		icon_state = "hweld"
 	var/suffix=""
 	if(scrub_O2)
 		suffix="1"
 	if(node && on && !(stat & (NOPOWER|BROKEN)))
 		if(scrubbing)
-			icon_state = "[hidden]on[suffix]"
+			icon_state = "hon[suffix]"
 		else
-			icon_state = "[hidden]in"
+			icon_state = "hin"
 	else
-		icon_state = "[hidden]off"
+		icon_state = "hoff"
+	..()
+	if (istype(loc, /turf/simulated/floor) && node)
+		var/turf/simulated/floor/floor = loc
+		if(floor.floor_tile && node.alpha == 128)
+			underlays.Cut()
 	return
 
 /obj/machinery/atmospherics/unary/vent_scrubber/proc/set_frequency(new_frequency)
@@ -215,18 +215,11 @@
 			network.update = 1
 
 	return 1
-/* //unused piece of code
+
 /obj/machinery/atmospherics/unary/vent_scrubber/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(on&&node)
-		if(scrubbing)
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
-		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-	else
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		on = 0
+	update_icon()
 	return
-*/
+
 
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))

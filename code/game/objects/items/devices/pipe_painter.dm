@@ -18,10 +18,7 @@
 	if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/unary/tank) || istype(A,/obj/machinery/atmospherics/unary/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
 		return
 	var/obj/machinery/atmospherics/pipe/P = A
-	if(!(mode in P.available_colors))
-		user << "<span class='warning'>This [P] can't be painted [mode]. Available colors: [english_list(P.available_colors)]</span>"
-		return
-	P._color = mode
+	P.color = mode
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_icon()
 

@@ -18,7 +18,6 @@
 	activity_log += ..()
 
 /obj/machinery/atmospherics/binary/New()
-	..()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = NORTH|SOUTH
@@ -30,9 +29,13 @@
 			initialize_directions = EAST|WEST
 	air1 = new
 	air2 = new
-
+	update_icon()
 	air1.volume = 200
 	air2.volume = 200
+
+/obj/machinery/atmospherics/binary/update_icon(var/adjacent_procd)
+	var/node_list = list(node1,node2)
+	..(adjacent_procd,node_list)
 
 /obj/machinery/atmospherics/binary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
