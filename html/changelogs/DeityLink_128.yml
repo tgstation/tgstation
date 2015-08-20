@@ -1,0 +1,5 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Beekeeper hood no longer hides your hair, facial hair, glasses, or headset
+  - tweak: Anomaly hood no longer hides your facial hair or glasses
