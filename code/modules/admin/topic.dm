@@ -1640,6 +1640,7 @@
 			O << "<span class='game say'><span class='danger'>Nar-Sie</span> murmurs, <span class='sinister'>[input]</span></span>"
 
 		message_admins("Admin [key_name_admin(usr)] has talked with the Voice of Nar-Sie.")
+		log_narspeak("[key_name(usr)] Voice of Nar-Sie: [input]")
 
 	else if(href_list["cult_privatespeak"])
 		var/mob/M = locate(href_list["cult_privatespeak"])

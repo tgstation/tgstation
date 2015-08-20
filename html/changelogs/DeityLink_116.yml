@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Cult Communicate Runes' messages are now logged.
+  - rscadd: Voice of Nar-Sie messages are now logged.
+  - rscadd: Cultists who try to convert a loyalty implanted/cult banned crewmember now receive a custom message telling them that the ritual failed.
+  - tweak: Moved the colons in say logs AFTER the language description (after "as Sol Common")
