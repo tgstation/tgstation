@@ -114,7 +114,11 @@
 	. = ..()
 	selected = schematics[1]	//Reset the selection.
 
-/datum/rcd_schematic/con_airlock/send_icons(var/client/client)
+/datum/rcd_schematic/con_airlock/register_assets()
+	for(var/datum/airlock_schematic/C in schematics)
+		C.register_icon()
+
+/datum/rcd_schematic/con_airlock/send_assets(var/client/client)
 	for(var/datum/airlock_schematic/C in schematics)
 		C.send_icon(client)
 
@@ -275,17 +279,20 @@
 
 	D.autoclose	= 1
 
-//Schematics for schematics, I know, but it's OOP!
+// Schematics for schematics, I know, but it's OOP!
 /datum/airlock_schematic
 	var/name			= "airlock"						//Name of the airlock for the tooltip.
 	var/airlock_type	= /obj/machinery/door/airlock	//Type of the airlock.
 	var/img				= "rcd_airlock.png"				//Icon to send to the client AND to use for the preview.
 	var/icon			= 'icons/obj/doors/Doorint.dmi'	//Icon file to pull the icon from to send to the client.
 
-/datum/airlock_schematic/proc/send_icon(var/client/client)
-	client << browse_rsc(new /icon(icon, "door_closed"), img)
+/datum/airlock_schematic/proc/register_icon()
+	register_asset(img, new /icon(icon, "door_closed"))
 
-//ALL THE AIRLOCK TYPES.
+/datum/airlock_schematic/proc/send_icon(var/client/client)
+	send_asset(client, img)
+
+// ALL THE AIRLOCK TYPES.
 /datum/airlock_schematic/engie
 	name			= "\improper Engineering Airlock"
 	airlock_type	= /obj/machinery/door/airlock/engineering

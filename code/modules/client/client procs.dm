@@ -100,6 +100,9 @@
 	//CONNECT//
 	///////////
 /client/New(TopicData)
+	client_cache += src
+	client_cache[src] = list()
+
 	if(config)
 		winset(src, null, "outputwindow.output.style=[config.world_style_config];")
 		winset(src, null, "window1.msay_output.style=[config.world_style_config];") // it isn't possible to set two window elements in the same winset so we need to call it for each element we're assigning a stylesheet.
@@ -186,6 +189,9 @@
 		admins -= src
 	directory -= ckey
 	clients -= src
+
+	client_cache -= src
+
 	return ..()
 
 /client/proc/log_client_to_db()
@@ -313,22 +319,6 @@
 /client/proc/send_resources()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/send_resources() called tick#: [world.time]")
 //	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
-
-	spawn
-		// Preload the HTML interface. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244 (hidden issue)
-		// "browse_rsc() sometimes failed when an attempt was made to check on the status of a the file before it had finished downloading. This problem appeared only in threaded mode."
-		var/datum/html_interface/hi
-		for (var/type in typesof(/datum/html_interface))
-			hi = new type(null)
-			hi.sendResources(src)
-
-	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
-	//The above bug report thing doesn't exist anymore so uh, whatever.
-	spawn
-		send_html_resources()
-
-	// Send NanoUI resources to this client
-	spawn nanomanager.send_resources(src)
 
 	getFiles(
 		'html/search.js',
@@ -527,26 +517,17 @@
 		'icons/pda_icons/spesspets_icons/spesspets_dirty.png',
 		'icons/pda_icons/spesspets_icons/spesspets_hurt.png',
 		'icons/pda_icons/spesspets_icons/spesspets_mine.png',
-		'icons/pda_icons/spesspets_icons/spesspets_sleep.png',
-		'icons/spideros_icons/sos_1.png',
-		'icons/spideros_icons/sos_2.png',
-		'icons/spideros_icons/sos_3.png',
-		'icons/spideros_icons/sos_4.png',
-		'icons/spideros_icons/sos_5.png',
-		'icons/spideros_icons/sos_6.png',
-		'icons/spideros_icons/sos_7.png',
-		'icons/spideros_icons/sos_8.png',
-		'icons/spideros_icons/sos_9.png',
-		'icons/spideros_icons/sos_10.png',
-		'icons/spideros_icons/sos_11.png',
-		'icons/spideros_icons/sos_12.png',
-		'icons/spideros_icons/sos_13.png',
-		'icons/spideros_icons/sos_14.png',
-		'icons/xenoarch_icons/chart1.jpg',
-		'icons/xenoarch_icons/chart2.jpg',
-		'icons/xenoarch_icons/chart3.jpg',
-		'icons/xenoarch_icons/chart4.jpg'
-		)
+		'icons/pda_icons/spesspets_icons/spesspets_sleep.png'
+	)
+
+	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+	//The above bug report thing doesn't exist anymore so uh, whatever.
+	spawn
+		send_html_resources()
+
+	// Send NanoUI resources to this client
+	spawn nanomanager.send_resources(src)
+
 
 /client/proc/send_html_resources()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/send_html_resources() called tick#: [world.time]")
