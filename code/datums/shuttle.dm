@@ -411,11 +411,9 @@
 
 //This is awful
 /datum/shuttle/proc/supercharge()
-	name = "SUPER [name]"
 	cooldown = 0
 	pre_flight_delay = 0
 	transit_delay = 0
-	innacuracy += 2
 
 //Like input() in shuttles, but better
 /proc/select_shuttle_from_all(var/mob/user, var/message = "Select a shuttle", var/title = "Shuttle selection", var/list/omit_shuttles = null, var/show_lockdown = 0, var/show_cooldown = 0)

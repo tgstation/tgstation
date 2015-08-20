@@ -8202,7 +8202,7 @@
 "dbL" = (/obj/structure/docking_port/destination/admin/centcom{dir = 2},/turf/unsimulated/floor{name = "plating"},/area/centcom)
 "dbM" = (/turf/space,/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/shuttle/syndicate_elite/mothership)
 "dbN" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"; dir = 1},/turf/space,/area/shuttle/syndicate_elite/mothership)
-"dbO" = (/obj/machinery/door/airlock/external,/obj/structure/docking_port,/turf/simulated/floor/plating,/area/shuttle/administration/centcom)
+"dbO" = (/obj/machinery/door/airlock/external,/obj/structure/docking_port/shuttle,/turf/simulated/floor/plating,/area/shuttle/administration/centcom)
 "dbP" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 1},/turf/space,/area/shuttle/syndicate_elite/mothership)
 "dbQ" = (/turf/space,/turf/simulated/shuttle/wall{dir = 1; icon_state = "diagonalWall3"},/area/shuttle/syndicate_elite/mothership)
 "dbR" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/syndicate_elite/mothership)

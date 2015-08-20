@@ -167,7 +167,7 @@ move an amendment</a> to the drawing.</p>
 	usr << "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>"
 	interact()
 
-/obj/item/blueprints/proc/delete_area(var/mob/user)
+/obj/item/blueprints/proc/delete_area(var/mob/user) //This functionality is currently commented out!
 	var/area/station/custom/areadeleted = get_area()
 	var/area/space = get_area(locate(1,1,2)) //xd
 
@@ -186,7 +186,6 @@ move an amendment</a> to the drawing.</p>
 		for(var/atom/movable/AM in T.contents)
 			AM.change_area(areadeleted,space)
 	usr << "You've erased the \"[areadeleted]\" from the blueprints."
-	qdel(areadeleted) //Because the area is empty now, it can be safely deleted
 
 /obj/item/blueprints/proc/check_tile_is_border(var/turf/T2,var/dir)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/blueprints/proc/check_tile_is_border() called tick#: [world.time]")
