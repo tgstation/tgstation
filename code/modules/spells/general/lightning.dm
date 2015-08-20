@@ -124,7 +124,7 @@
 		var/mob/next_target
 		var/currdist = -1
 		for(var/mob/living/M in view(target,bounce_range))
-			if(M != holder && M != user && !(M in zapped))
+			if((M != holder && M != usr) && M != user && !(M in zapped))
 				var/dist = get_dist(M, holder)
 				if(currdist == -1)
 					currdist = dist
