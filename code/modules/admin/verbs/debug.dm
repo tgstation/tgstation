@@ -1836,6 +1836,8 @@ client/proc/check_convertables()
 			dat += "[M.real_name]/([ckey(src.key)]): <b>NOT HUMAN</b></br>"
 		else if(!is_convertable_to_cult(M.mind))
 			dat += "[M.real_name]/([ckey(src.key)]): <font color=red><b>UNCONVERTABLE</b></font></br>"
+		else if(jobban_isbanned(M, "cultist"))
+			dat += "[M.real_name]/([ckey(src.key)]): <font color=red><b>JOBBANNED</b></font></br>"
 		else if(M.mind in ticker.mode.cult)
 			dat += "[M.real_name]/([ckey(src.key)]): <font color=blue><b>CULTIST</b></font></br>"
 		else

@@ -500,7 +500,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/cult/proc/get_unconvertables() called tick#: [world.time]")
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player.mind && !is_convertable_to_cult(player.mind))
+		if(player.mind && (!is_convertable_to_cult(player.mind) || jobban_isbanned(player, "cultist")))
 			ucs += player.mind
 	return ucs
 
