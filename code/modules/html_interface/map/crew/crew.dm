@@ -109,6 +109,7 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 			src.update(z, TRUE)
 		else
 			hi = src.interfaces["[z]"]
+			src.update(z, TRUE)
 
 		hi = src.interfaces["[z]"]
 		hi.show(mob, currui)
@@ -141,6 +142,7 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 			var/life_status
 
 			for(var/mob/living/carbon/human/H in mob_list)
+				if(H.iscorpse) continue
 				// Check if their z-level is correct and if they are wearing a uniform.
 				// Accept H.z==0 as well in case the mob is inside an object.
 				if ((H.z == 0 || H.z == z) && istype(H.w_uniform, /obj/item/clothing/under))
@@ -193,8 +195,19 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 							pos_y = null
 							see_pos_x = null
 							see_pos_y = null
-
+						world << "adding [name] to zlevel [z] at [formatJumpTo(pos_x, pos_y, pos.z)]"
 						results[++results.len] = list(name, assignment, ijob, life_status, dam1, dam2, dam3, dam4, area, pos_x, pos_y, H.monitor_check(), see_pos_x, see_pos_y)
+			for(var/mob/living/carbon/brain/B in mob_list)
+				var/obj/item/device/mmi/M = B.loc
+				pos = get_turf(B)
+				if(pos && pos.z != CENTCOMM_Z && (pos.z == z) && istype(M) && M.brainmob == B && !isrobot(M.loc) )
+
+					var/area/parea = get_area(B)
+					area = format_text(parea.name)
+					see_pos_x = pos.x - WORLD_X_OFFSET[z]
+					see_pos_y = pos.y - WORLD_Y_OFFSET[z]
+
+					results[++results.len] = list(M.name, "MMI", 80, (B.stat || !B.key ? "false" : "true"), null, null, null, null, area, pos.x, pos.y, 1, see_pos_x, see_pos_y)
 
 			src.data = results
 			src.updateFor(null, hi, z) // updates for everyone

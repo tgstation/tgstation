@@ -226,6 +226,9 @@ mob/verb/test()
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\// /client/proc/send_resources() called tick#: [world.time]")
 		// causing file not found errors.
 //		src.sendResources(hclient.client)
+		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
+			//winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)
+			oldwindow.hide(hclient)
 
 		if (winexists(hclient.client, "browser_\ref[src]"))
 			src._renderTitle(hclient, TRUE)
@@ -237,8 +240,6 @@ mob/verb/test()
 			hclient.is_loaded = FALSE
 			hclient.client << output(replacetextEx(replacetextEx(file2text(default_html_file), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
 			winshow(hclient.client, "browser_\ref[src]", TRUE)
-		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
-			winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)
 
 		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 
