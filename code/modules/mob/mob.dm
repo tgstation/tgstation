@@ -1767,6 +1767,9 @@ mob/proc/walking()
 /mob/shuttle_act()
 	return
 
+/mob/shuttle_rotate(angle)
+	src.dir = turn(src.dir, angle) //rotating pixel_x and pixel_y is bad
+
 /mob/can_shuttle_move()
 	return 1
 

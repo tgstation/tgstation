@@ -839,57 +839,40 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=secrets")
 	return
 
+/datum/admins/var/datum/shuttle/selected_shuttle
 /datum/admins/proc/shuttle_magic()
-	var/dat = "<b>WARNING:</b> abuse will result in hilarity and removal of your flags.<br><h3>GENERAL COMMANDS:</h3><br>"
-	dat +={"<a href='?src=\ref[src];shuttle_create_destination=1'> Create a destination docking port</a><br>
-	<i>This will create a destination docking port at your location, facing the direction you are currently facing.</i><br>
+	var/dat = "<b>WARNING:</b> server may explode!<hr><br>"
 
-	<a href='?src=\ref[src];shuttle_add_destination=1'> Add a destination docking port to a shuttle</a><br>
-	<i>This will allow the shuttle to move to it.</i><br>
+	if(!istype(selected_shuttle))
+		dat += "<a href='?src=\ref[src];shuttle_select=1'>Select a shuttle</a><hr>"
+	else
+		dat += {"Selected shuttle: <b>[selected_shuttle.name]</b> (<i>[selected_shuttle.type]</i>)<br>
+		<a href='?_src_=vars;Vars=\ref[selected_shuttle]'>view variables</A> | <a href='?src=\ref[src];shuttle_teleport_to=1'>teleport to</a> | <a href='?src=\ref[src];shuttle_select=1'>select another shuttle</a><br>
+		cooldown: [selected_shuttle.cooldown] | pre-flight delay: [selected_shuttle.pre_flight_delay] | transit delay: [selected_shuttle.transit_delay]<br>
+		rotation [selected_shuttle.can_rotate ? "<b>ENABLED</b>" : "<b>DISABLED</b>"] | transit [selected_shuttle.use_transit ? "ENABLED" : "DISABLED"]<hr>
 
-	<a href='?src=\ref[src];shuttle_set_transit=1'> Set a destination docking port to be a shuttle's transit area</a><br>
-	<i>Use the \"Edit a shuttle's parameters\" option below to change how the transit area is used</i><br>
+		<a href='?src=\ref[src];shuttle_create_destination=1'>Create a destination docking port</a><br>
+		<a href='?src=\ref[src];shuttle_modify_destination=1'>Add a destination docking port</a><br>
+		<a href='?src=\ref[src];shuttle_set_transit=1'>Modify transit area</a><br>
+		<a href='?src=\ref[src];shuttle_get_console=1'>Get control console</a><br>
+		<a href='?src=\ref[src];shuttle_edit=1'>Modify parameters[selected_shuttle.is_special() ? " and pre-defined areas" : ""]</a>
+		<hr>
+		<a href='?src=\ref[src];shuttle_move_to=1'>Send</a><br>
+		<a href='?src=\ref[src];shuttle_forcemove=1'>Teleport</a><br>
+		<a href='?src=\ref[src];shuttle_supercharge=1'>Make movement instant</a><br>
+		<a href='?src=\ref[src];shuttle_show_overlay=1'>Draw outline</a>
+		<hr>
+		<a href='?src=\ref[src];shuttle_lockdown=1'>[selected_shuttle.lockdown ? "Lift lockdown" : "Lock down"]</a><br>
+		<a href='?src=\ref[src];shuttle_reset=1'>Reset</a><br>
+		<a href='?src=\ref[src];shuttle_delete=1'>Delete</a>
+		<hr>
+		"}
 
-	<a href='?src=\ref[src];shuttle_create_shuttleport=1'> Create a shuttle docking port</a><br>
-	<i>This will create a shuttle docking port at your location, facing the direction you are currently facing.</i><br>
-	<b>Please read</b>: <i>Shuttle docking ports are most optimally spawned on a border turf of a shuttle, facing AWAY from it.</i><br>
-
-	<a href='?src=\ref[src];shuttle_get_console=1'> Teleport to shuttle's control console</a><br>
-	<i>If the shuttle has no control consoles linked to it, you'll have the option to create one at your location.</i><br>
-
-	<a href='?src=\ref[src];shuttle_move_to=1'> Send a shuttle</a><br>
-	<i>This command allows you to send any existing shuttle to any destination docking port in the world. Cooldown, lockdown and other factors are respected.</i><br>
-
-	<a href='?src=\ref[src];shuttle_teleport_to=1'> Teleport to a shuttle</a><br><br>
-
-	<a href='?src=\ref[src];shuttle_teleport_to_dock=1'> Teleport to a destination docking port</a><br><br>
-
-	<a href='?src=\ref[src];shuttle_edit=1'> Edit a shuttle's parameters</a><br><br>
-
-	<a href='?src=\ref[src];shuttle_show_overlay=1'> Show a shuttle's outline</a><br>
-	<i>This command will create a transparent overlay in the shape of a selected shuttle next to you. Its position is calculated as if it were docked at a docking port at your location. The overlay is only visible to you.</i><br>
-
-	<h3>FUN BUTTONS:</h3><br>
-
-	<a href='?src=\ref[src];shuttle_shuttlify=1'> Turn current area into a shuttle</a><br>
-
-	<a href='?src=\ref[src];shuttle_forcemove=1'> Teleport a shuttle</a><br>
-	<i>This command allows you to instantly move a shuttle to any destination docking port in the world OR to your location, with no regard for cooldowns and delays.</i><br>
-
-	<a href='?src=\ref[src];shuttle_supercharge=1'> SUPERCHARGE a shuttle</a><br>
-	<i>Once you select a shuttle, its cooldown and movement delay will become 0, but it will sometimes miss its destination.</i><br>
-
-	<h3>EMERGENCY BUTTONS:</h3><br>
-	<a href='?src=\ref[src];shuttle_toggle_lockdown=1'> Toggle lockdown on a shuttle</a><br>
-
-	<a href='?src=\ref[src];shuttle_delete=1'> Delete a shuttle</a><br>
-	<i>You'll have the option of deleting all of its objects and turfs.</i><br>
-
-	<a href='?src=\ref[src];shuttle_reset=1'> Reset a shuttle</a><br>
-	<i>Reset a shuttle to its initial state. Changes to turfs, objects and the shuttle's location won't be reverted.</i><br>
-
-	<a href='?src=\ref[src];shuttle_mass_lockdown=1'> LOCKDOWN ALL SHUTTLES</a><br>
-	<i>IT'S LOOSE</i><br>"}
+	//The following commands don't need a selected shuttle
+	dat += {"
+	<a href='?src=\ref[src];shuttle_shuttlify=1'>Turn current area into a shuttle</a><br>
+	<a href='?src=\ref[src];shuttle_mass_lockdown=1'>Lock down all shuttles</a>
+	"}
 	usr << browse(dat, "window=shuttlemagic")
 
 
