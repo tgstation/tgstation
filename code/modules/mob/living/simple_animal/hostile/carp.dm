@@ -66,17 +66,16 @@ var/global/
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
+/mob/living/simple_animal/hostile/carp/IsInvalidTarget(atom/A)
+	if(ismob(A) && A.reagents)
+		if(A.reagents.has_reagent("carppheromones"))
+			return 1
+	..()
+
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
 		emote("nashes at [.]")
-
-/mob/living/simple_animal/hostile/carp/AttackTarget()
-	if(ismob(target) && target.reagents)
-		if(target.reagents.has_reagent("carppheromones"))
-			LoseTarget()
-			return 0
-	..()
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
