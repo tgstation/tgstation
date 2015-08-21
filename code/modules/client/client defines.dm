@@ -56,3 +56,4 @@
 	var/datum/media_manager/media = null
 
 	var/filling = 0 //SOME STUPID SHIT POMF IS DOING
+	var/haszoomed = 0
