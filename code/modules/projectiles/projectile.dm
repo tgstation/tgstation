@@ -178,7 +178,7 @@
 				loc = A
 			else
 				loc = A.loc
-			permutated.Add(A)
+			if(istype(permutated,/list)) permutated.Add(A)
 			return 0
 		if(istype(A,/turf))
 			for(var/obj/O in A)
