@@ -276,7 +276,7 @@ obj/machinery/gibber/New()
 
 	src.occupant.death(1)
 	src.occupant.ghostize()
-	del(src.occupant)
+	qdel(src.occupant)
 	spawn(src.gibtime)
 		operating = 0
 		for (var/i=1 to totalslabs)
@@ -349,7 +349,7 @@ obj/machinery/gibber/New()
 		else
 			var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
 			O.New(Tx,2)
-	del(victim)
+	qdel(victim)
 	spawn(src.gibtime)
 		playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
 		operating = 0
