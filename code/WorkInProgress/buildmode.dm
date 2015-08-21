@@ -251,7 +251,7 @@ obj/effect/bmode/buildholder/New()
 	var/turf/end = get_turf(over_location)
 	if(!start || !end) return
 	switch(buildmode)
-		if(1 || 2)
+		if(1 to 2)
 			var/list/fillturfs = block(start,end)
 			if(fillturfs.len)
 				if(alert("You're about to do a fill operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
@@ -287,7 +287,7 @@ obj/effect/bmode/buildholder/New()
 					message_admins(msglog)
 					log_admin(msglog)
 					usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>"
-					var/turf_op = ispath(whatfill)
+					var/turf_op = ispath(whatfill, /turf)
 					var/deletions = 0
 					for(var/turf/T in fillturfs)
 						if(areaAction == MASS_DELETE || areaAction == SELECTIVE_DELETE)
