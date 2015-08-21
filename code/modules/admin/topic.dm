@@ -505,7 +505,7 @@
 				feedback_inc("ban_appearance",1)
 				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
 				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
-				notes_add(M.ckey, "Appearance banned - [reason]")
+				add_note(M.ckey, "Appearance banned - [reason]", null, usr, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)]</span>")
 				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
 				M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -921,7 +921,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
+					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
 					M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -941,7 +941,7 @@
 							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [reason]")
+						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
 						M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -994,17 +994,48 @@
 			del(M.client)
 
 	//Player Notes
-	else if(href_list["notes"])
-		var/ckey = href_list["ckey"]
-		switch(href_list["notes"])
-			if("show")
-				notes_show(ckey)
-			if("add")
-				notes_add(ckey,href_list["text"], 1)
-				notes_show(ckey)
-			if("remove")
-				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
-				notes_show(ckey)
+	else if(href_list["addnote"])
+		var/target_ckey = href_list["addnote"]
+		add_note(target_ckey)
+
+	else if(href_list["addnoteempty"])
+		add_note()
+
+	else if(href_list["removenote"])
+		var/note_id = href_list["removenote"]
+		remove_note(note_id)
+
+	else if(href_list["editnote"])
+		var/note_id = href_list["editnote"]
+		edit_note(note_id)
+
+	else if(href_list["shownote"])
+		var/target = href_list["shownote"]
+		show_note(index = target)
+
+	else if(href_list["nonalpha"])
+		var/target = href_list["nonalpha"]
+		target = text2num(target)
+		show_note(index = target)
+
+	else if(href_list["shownoteckey"])
+		var/target_ckey = href_list["shownoteckey"]
+		show_note(target_ckey)
+
+	else if(href_list["notessearch"])
+		var/target = href_list["notessearch"]
+		show_note(index = target)
+
+	else if(href_list["noteedits"])
+		var/note_id = sanitizeSQL("[href_list["noteedits"]]")
+		var/DBQuery/query_noteedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("notes")] WHERE id = '[note_id]'")
+		if(!query_noteedits.Execute())
+			var/err = query_noteedits.ErrorMsg()
+			log_game("SQL ERROR obtaining edits from notes table. Error : \[[err]\]\n")
+			return
+		if(query_noteedits.NextRow())
+			var/edit_log = query_noteedits.item[1]
+			usr << browse(edit_log,"window=noteedits")
 
 	else if(href_list["removejobban"])
 		if(!check_rights(R_BAN))	return
@@ -1793,41 +1824,36 @@
 		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
 			obj_dir = 2
 		var/obj_name = sanitize(href_list["object_name"])
+
+
+		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
 		if (!( where in list("onfloor","inhand","inmarked") ))
 			where = "onfloor"
 
-		if( where == "inhand" )
-			usr << "Support for inhand not available yet. Will spawn on floor."
-			where = "onfloor"
 
-		if ( where == "inhand" )	//Can only give when human or monkey
-			if ( !( ishuman(usr) || ismonkey(usr) ) )
-				usr << "Can only spawn in hand when you're a human or a monkey."
-				where = "onfloor"
-			else if ( usr.get_active_hand() )
-				usr << "Your active hand is full. Spawning on floor."
-				where = "onfloor"
+		switch(where)
+			if("inhand")
+				if (!iscarbon(usr) && !isrobot(usr))
+					usr << "Can only spawn in hand when you're a carbon mob or cyborg."
+					where = "onfloor"
+				target = usr
 
-		if ( where == "inmarked" )
-			if ( !marked_datum )
-				usr << "You don't have any object marked. Abandoning spawn."
-				return
-			else
-				if ( !istype(marked_datum,/atom) )
-					usr << "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn."
-					return
-
-		var/atom/target //Where the object will be spawned
-		switch ( where )
-			if ( "onfloor" )
-				switch (href_list["offset_type"])
+			if("onfloor")
+				switch(href_list["offset_type"])
 					if ("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
 					if ("relative")
 						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
-			if ( "inmarked" )
-				target = marked_datum
+			if("inmarked")
+				if(!marked_datum)
+					usr << "You don't have any object marked. Abandoning spawn."
+					return
+				else if(!istype(marked_datum,/atom))
+					usr << "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn."
+					return
+				else
+					target = marked_datum
 
 		if(target)
 			for (var/path in paths)
@@ -1835,9 +1861,8 @@
 					if(path in typesof(/turf))
 						var/turf/O = target
 						var/turf/N = O.ChangeTurf(path)
-						if(N)
-							if(obj_name)
-								N.name = obj_name
+						if(N && obj_name)
+							N.name = obj_name
 					else
 						var/atom/O = new path(target)
 						if(O)
@@ -1847,6 +1872,18 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
+							if(where == "inhand" && isliving(usr) && istype(O, /obj/item))
+								var/mob/living/L = usr
+								var/obj/item/I = O
+								L.put_in_hands(I)
+								if(isrobot(L))
+									var/mob/living/silicon/robot/R = L
+									if(R.module)
+										R.module.modules += I
+										I.loc = R.module
+										R.module.rebuild()
+										R.activate_module(I)
+
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

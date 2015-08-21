@@ -20,7 +20,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 #define NODE3	"n3"
 
 /obj/machinery/atmospherics/components/
-	var/welded //Used on pumps and scrubbers
+	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
 
 	var/device_type = 0//used for initialization stuff
@@ -57,10 +57,17 @@ Iconnery
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/components/update_icon() //not working
+/obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
 
 	underlays.Cut()
+
+	var/turf/T = loc
+	if(level == 2 || !T.intact)
+		showpipe = 1
+	else
+		showpipe = 0
+
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
 
@@ -91,8 +98,6 @@ Pipenet stuff; housekeeping
 			if(target.initialize_directions & get_dir(target,src))
 				nodes["n[I]"] = target
 				break
-	if(level == 2)
-		showpipe = 1
 	update_icon()
 
 /obj/machinery/atmospherics/components/construction()

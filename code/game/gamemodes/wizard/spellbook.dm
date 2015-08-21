@@ -78,7 +78,7 @@
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
 			user.mind.spell_list.Remove(aspell)
-			del(S)
+			qdel(S)
 			return cost * (spell_levels+1)
 	return -1
 /datum/spellbook_entry/proc/GetInfo()
@@ -118,6 +118,11 @@
 	name = "Repulse"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
+
+/datum/spellbook_entry/timestop
+	name = "Time Stop"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	log_name = "TS"
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
@@ -419,7 +424,7 @@
 			entries |= E
 			categories |= E.category
 		else
-			del(E)
+			qdel(E)
 	tab = categories[1]
 
 /obj/item/weapon/spellbook/New()

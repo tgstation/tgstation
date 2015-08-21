@@ -19,7 +19,7 @@
 
 
 /datum/AI_Module/large/fireproof_core
-	module_name = "Core upgrade"
+	module_name = "Core Upgrade"
 	mod_pick_name = "coreup"
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 	cost = 50
@@ -36,7 +36,7 @@
 	src << "<span class='notice'>Core fireproofed.</span>"
 
 /datum/AI_Module/large/upgrade_turrets
-	module_name = "AI Turret upgrade"
+	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"
 	description = "Improves the power and health of all AI turrets. This effect is permanent."
 	cost = 50
@@ -121,7 +121,7 @@
 	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
 
 /datum/AI_Module/large/disable_rcd
-	module_name = "RCD disable"
+	module_name = "RCD Disable"
 	mod_pick_name = "rcd"
 	description = "Send a specialised pulse to break all RCD devices on the station."
 	cost = 50
@@ -217,7 +217,7 @@
 
 
 /datum/AI_Module/small/overload_machine
-	module_name = "Machine overload"
+	module_name = "Machine Overload"
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
@@ -246,7 +246,7 @@
 	else src << "<span class='notice'>That's not a machine.</span>"
 
 /datum/AI_Module/small/override_machine
-	module_name = "Machine override"
+	module_name = "Machine Override"
 	mod_pick_name = "override"
 	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4

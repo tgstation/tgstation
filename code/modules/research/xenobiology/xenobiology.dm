@@ -410,7 +410,7 @@
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	if(prob(50))	G.gender = "female"
 	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
-	
+
 	G.set_cloned_appearance()
 	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 	G.dna.species.auto_equip(G)
@@ -436,13 +436,16 @@
 	pixel_x = -64
 	pixel_y = -64
 	unacidable = 1
-	var/mob/living/immune = null // the one who creates the timestop is immune
+	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/freezerange = 2
 	var/duration = 140
 	alpha = 125
 
 /obj/effect/timestop/New()
 	..()
+	for(var/mob/living/M in player_list)
+		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
+			immune |= M
 	timestop()
 
 
@@ -451,7 +454,7 @@
 	while(loc)
 		if(duration)
 			for(var/mob/living/M in orange (freezerange, src.loc))
-				if(M == immune)
+				if(M in immune)
 					continue
 				M.stunned = 10
 				M.anchored = 1
@@ -477,6 +480,9 @@
 			return
 		sleep(1)
 
+
+/obj/effect/timestop/wizard
+	duration = 90
 
 
 /obj/item/stack/tile/bluespace

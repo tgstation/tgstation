@@ -137,4 +137,4 @@ var/global/normal_ooc_colour = "#002eb8"
 		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
 		return
 
-	see_own_notes()
+	show_note(usr, null, 1)

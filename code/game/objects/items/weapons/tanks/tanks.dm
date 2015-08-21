@@ -33,7 +33,7 @@
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
-		del(air_contents)
+		qdel(air_contents)
 
 	SSobj.processing.Remove(src)
 
