@@ -11,28 +11,14 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/New()
 	. = ..()
-	if(!ismommi(src) && (src.client || src.ckey || (iscarbon(src) && (!ismonkey(src) && !isslime(src))) || issilicon(src)))	//Only for humans, silicons and other sentients now
-		generateStaticOverlay()
-		if(staticOverlays.len)
-			for(var/mob/living/silicon/robot/mommi/M in player_list)
-				if(M && M.keeper)
-					if(M.staticChoice in staticOverlays)
-						M.staticOverlays |= staticOverlays[M.staticChoice]
-						M.client.images |= staticOverlays[M.staticChoice]
-					else //no choice? force static
-						M.staticOverlays |= staticOverlays["static"]
-						M.client.images |= staticOverlays["static"]
+
+	if(unique_name)
+		name = "[name] ([rand(1, 1000)])"
+		real_name = name
 
 
 /mob/living/Destroy()
 	..()
-
-	for(var/mob/living/silicon/robot/mommi/M in player_list)
-		for(var/image/I in staticOverlays)
-			M.staticOverlays.Remove(I)
-			M.client.images.Remove(I)
-			qdel(I)
-	staticOverlays.len = 0
 
 	return QDEL_HINT_HARDDEL_NOW
 

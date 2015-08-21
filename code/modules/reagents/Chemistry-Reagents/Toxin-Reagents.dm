@@ -60,6 +60,9 @@ datum/reagent/toxin/plasma
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
 	if(holder.has_reagent("inaprovaline"))
 		holder.remove_reagent("inaprovaline", 2*REM)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(20)
 	..()
 	return
 

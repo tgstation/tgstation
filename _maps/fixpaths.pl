@@ -3,4 +3,7 @@
 #
 use warnings;
 use strict;
-s@/turf/simulated/floor/fancy/@/turf/simulated/floor/@g;
+s@/obj/item/organ/heart@/obj/item/organ/internal/heart@g;
+s@/obj/item/organ/appendix@/obj/item/organ/internal/appendix@g;
+s@/obj/item/body_egg@/obj/item/organ/internal/body_egg@g;
+

@@ -427,15 +427,29 @@
 						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 						return
-					if(H.stat == 2)
+					if(H.stat == DEAD)
 						M.visible_message("<span class='warning'>[M]'s body convulses a bit.")
 						playsound(get_turf(src), "bodyfall", 50, 1)
 						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
-						for(var/obj/item/organ/limb/O in H.organs)
-							total_brute	+= O.brute_dam
-							total_burn	+= O.burn_dam
-						ghost = H.get_ghost()
-						if(total_burn <= 180 && total_brute <= 180 && !H.suiciding && !ghost && tplus < tlimit && !(NOCLONE in H.mutations))
+						total_brute	= H.getBruteLoss()
+						total_burn	= H.getFireLoss()
+
+						var/failed = null
+
+						if (H.suiciding || (NOCLONE in H.mutations))
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
+						else if ((tplus > tlimit) || !H.getorgan(/obj/item/organ/internal/heart))
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"
+						else if(total_burn >= 180 || total_brute >= 180)
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
+						else if(H.get_ghost() || !H.getorgan(/obj/item/organ/internal/brain))
+							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
+
+
+						if(failed)
+							user.visible_message(failed)
+							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+						else
 							//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 							if (H.health > halfwaycritdeath)
 								H.adjustOxyLoss(H.health - halfwaycritdeath)
@@ -446,30 +460,24 @@
 								H.adjustToxLoss((mobhealth - halfwaycritdeath) * (H.getToxLoss() / overall_damage))
 								H.adjustFireLoss((mobhealth - halfwaycritdeath) * (total_burn / overall_damage))
 								H.adjustBruteLoss((mobhealth - halfwaycritdeath) * (total_brute / overall_damage))
+								H.heart_attack = 0
 							user.visible_message("<span class='notice'>[defib] pings: Resuscitation successful.</span>")
 							playsound(get_turf(src), 'sound/machines/defib_success.ogg', 50, 0)
-							H.stat = 1
+							H.stat = UNCONSCIOUS
 							dead_mob_list -= H
 							living_mob_list |= list(H)
 							H.emote("gasp")
 							if(tplus > tloss)
 								H.setBrainLoss( max(0, min(99, ((tlimit - tplus) / tlimit * 100))))
-							defib.deductcharge(revivecost)
-							add_logs(user, M, "revived", object="defibrillator")
-						else
-							if (H.suiciding || (NOCLONE in H.mutations))
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>")
-							else if (tplus > tlimit)
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return for defibrillation. Further attempts futile.</span>")
-							else if(total_burn >= 180 || total_brute >= 180)
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - Severe tissue damage detected.</span>")
-							else
-								user.visible_message("<span class='warning'>[defib] buzzes: Resuscitation failed - No soul in patient body. Further attempts may be successful.</span>")
-							playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
-							defib.deductcharge(revivecost)
+							add_logs(user, M, "revived", defib)
+						defib.deductcharge(revivecost)
 						update_icon()
 						cooldown = 1
 						defib.cooldowncheck(user)
+					else if(H.heart_attack)
+						H.heart_attack = 0
+						user.visible_message("<span class='notice'>[defib] pings: Patient's heart is now beating again.</span>")
+						playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 					else
 						user.visible_message("<span class='warning'>[defib] buzzes: Patient is not in a valid state. Operation aborted.</span>")
 						playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)

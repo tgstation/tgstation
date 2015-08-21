@@ -14,15 +14,10 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying || isslime(src))
-		if(surgeries.len)
-			if(istype(I, /obj/item/weapon/surgical_drapes) || istype(I, /obj/item/weapon/bedsheet))
-				for(var/datum/surgery/S in surgeries)
-					S.cancel(user, src)
+		if(user.a_intent == "help")
+			for(var/datum/surgery/S in surgeries)
+				if(S.next_step(user, src))
 					return 1
-			if(user.a_intent == "help")
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
 	..()
 
 

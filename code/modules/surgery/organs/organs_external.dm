@@ -1,39 +1,12 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
-
-
-
-/obj/item/organ/heart
-	name = "heart"
-	icon_state = "heart-on"
-	var/beating = 1
-
-/obj/item/organ/heart/update_icon()
-	if(beating)
-		icon_state = "heart-on"
-	else
-		icon_state = "heart-off"
-
-
-/obj/item/organ/appendix
-	name = "appendix"
-	icon_state = "appendix"
-	var/inflamed = 1
+	var/mob/living/carbon/owner = null
+	var/status = ORGAN_ORGANIC
 
 /obj/item/organ/butt
 	name = "butt"
 	icon_state = "butt"
-
-/obj/item/organ/appendix/update_icon()
-	if(inflamed)
-		icon_state = "appendixinflamed"
-	else
-		icon_state = "appendix"
-
-
-//Looking for brains?
-//Try code/modules/mob/living/carbon/brain/brain_item.dm
 
 //Old Datum Limbs:
 // code/modules/unused/limbs.dm
@@ -41,14 +14,12 @@
 
 /obj/item/organ/limb
 	name = "limb"
-	var/mob/owner = null
 	var/body_part = null
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
-	var/status = ORGAN_ORGANIC
 	var/list/embedded_objects = list()
 
 
@@ -141,7 +112,7 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/organ/limb/proc/heal_damage(brute, burn, var/robotic)
+/obj/item/organ/limb/proc/heal_damage(brute, burn, robotic)
 
 	if(robotic && status != ORGAN_ROBOTIC) // This makes organic limbs not heal when the proc is in Robotic mode.
 		brute = max(0, brute - 3)
@@ -193,3 +164,11 @@
 		for(var/obj/item/I in L.embedded_objects)
 			L.embedded_objects -= I
 			I.loc = T
+
+	clear_alert("embeddedobject")
+
+/mob/living/carbon/human/proc/has_embedded_objects()
+	. = 0
+	for(var/obj/item/organ/limb/L in organs)
+		for(var/obj/item/I in L.embedded_objects)
+			return 1

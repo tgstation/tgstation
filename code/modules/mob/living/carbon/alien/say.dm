@@ -13,7 +13,7 @@
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/S in player_list)
-		if((!S.stat && (S.hivecheck())))
+		if((!S.stat && S.hivecheck()))
 			S << rendered
 	for (var/mob/M in dead_mob_list)
 		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping
@@ -28,5 +28,5 @@
 			return 1
 		return 0
 
-/mob/living/carbon/alien/hivecheck()
-	return 1
+/mob/living/carbon/hivecheck()
+	return getorgan(/obj/item/organ/internal/alien/hivenode)
