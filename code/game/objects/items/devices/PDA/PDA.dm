@@ -626,6 +626,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		switch (mode)
 			if (0)
 
+				if(user.client) //If we have a client to send to, in reality none of this proc is needed in that case but eh I don't care.
+					var/datum/asset/simple/C = new/datum/asset/simple/pda()
+					send_asset_list(user.client, C.assets)
+			
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
 				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.3</h2>
@@ -1018,6 +1022,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += {"</ul>"}
 
 			if (PDA_APP_SNAKEII)
+				if(user.client) //If we have a client to send to, in reality none of this proc is needed in that case but eh I don't care.
+					var/datum/asset/simple/C = new/datum/asset/simple/pda_snake()
+					send_asset_list(user.client, C.assets)
+
 				var/datum/pda_app/snake/app = locate(/datum/pda_app/snake) in applications
 				dat += {"<h4><img src=[app.icon].png> Snake II  <a href='byond://?src=\ref[src];choice=snakeVolume;vChange=-1'><b>-</b></a><img src="snake_volume[app.volume].png"/><a href='byond://?src=\ref[src];choice=snakeVolume;vChange=1'><b>+</b></a></h4>"}
 				if(app)
@@ -1155,6 +1163,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						"}
 
 			if (PDA_APP_MINESWEEPER)
+				if(user.client) //If we have a client to send to, in reality none of this proc is needed in that case but eh I don't care.
+					var/datum/asset/simple/C = new/datum/asset/simple/pda_mine()
+					send_asset_list(user.client, C.assets)
+
 				var/datum/pda_app/minesweeper/app = locate(/datum/pda_app/minesweeper) in applications
 				dat += {"<h4><img src=[app.icon].png> Minesweeper</h4>"}
 				if(app)
@@ -1239,6 +1251,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 			if (PDA_APP_SPESSPETS)
+				if(user.client) //If we have a client to send to, in reality none of this proc is needed in that case but eh I don't care.
+					var/datum/asset/simple/C = new/datum/asset/simple/pda_spesspets()
+					send_asset_list(user.client, C.assets)
+				
 				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
 				dat += {"<h4><img src=[app.icon].png> Spess Pets</h4>"}
 				if(app)

@@ -16,6 +16,10 @@
 	client << browse_rsc(asset_cache[asset_name], asset_name)
 	client_list += asset_name
 
+/proc/send_asset_list(var/client/client, var/list/asset_list)
+	for(var/asset_name in asset_list)
+		send_asset(client, asset_name)
+	
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
@@ -45,7 +49,7 @@
 		
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/*
+
 /datum/asset/simple/pda
 	assets = list(	
 		"pda_atmos.png"		= 'icons/pda_icons/pda_atmos.png',
@@ -212,7 +216,7 @@
 		"minesweeper_border_left.png"					= 'icons/pda_icons/minesweeper_icons/minesweeper_border_left.png',
 		"minesweeper_border_cornertopleft.png"		= 'icons/pda_icons/minesweeper_icons/minesweeper_border_cornertopleft.png',
 		"minesweeper_border_cornertopright.png"	= 'icons/pda_icons/minesweeper_icons/minesweeper_border_cornertopright.png',
-		"minesweeper_border_cornertopleft.png"		= 'icons/pda_icons/minesweeper_icons/minesweeper_border_cornerbotleft.png',
+		"minesweeper_border_cornerbotleft.png"		= 'icons/pda_icons/minesweeper_icons/minesweeper_border_cornerbotleft.png',
 		"minesweeper_border_cornerbotright.png"	= 'icons/pda_icons/minesweeper_icons/minesweeper_border_cornerbotright.png',
 		"minesweeper_bg_beginner.png"					= 'icons/pda_icons/minesweeper_icons/minesweeper_bg_beginner.png',
 		"minesweeper_bg_intermediate.png"			= 'icons/pda_icons/minesweeper_icons/minesweeper_bg_intermediate.png',
@@ -256,7 +260,7 @@
 		"spesspets_mine.png"		= 'icons/pda_icons/spesspets_icons/spesspets_mine.png',
 		"spesspets_sleep.png"		= 'icons/pda_icons/spesspets_icons/spesspets_sleep.png'
 	)
-*/
+
 
 //Registers HTML I assets.
 /datum/asset/HTML_interface/register()
