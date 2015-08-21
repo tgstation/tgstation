@@ -114,6 +114,9 @@ MASS SPECTROMETER
 // Used by the PDA medical scanner too
 /proc/healthscan(var/mob/living/user, var/mob/living/M, var/mode = 1)
 
+	if(!ishuman(M) || !ismonkey(M))
+		return
+
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
 	var/tox_loss = M.getToxLoss()
@@ -207,21 +210,23 @@ MASS SPECTROMETER
 
 
 /proc/chemscan(var/mob/living/user, var/mob/living/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.reagents)
-			if(H.reagents.reagent_list.len)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.reagents)
+			if(C.reagents.reagent_list.len)
 				user.show_message("<span class='notice'>Subject contains the following reagents:</span>")
-				for(var/datum/reagent/R in H.reagents.reagent_list)
+				for(var/datum/reagent/R in C.reagents.reagent_list)
 					user.show_message("<span class='notice'>[R.volume]u of [R.name][R.overdosed == 1 ? "</span> - <span class = 'userdanger'>OVERDOSING</span>" : ".</span>"]")
 			else
 				user.show_message("<span class = 'notice'>Subject contains no reagents.</span>")
-			if(H.reagents.addiction_list.len)
-				user.show_message("<span class='userdanger'>Subject is addicted to the following reagents:</span>")
-				for(var/datum/reagent/R in H.reagents.addiction_list)
-					user.show_message("<span class='danger'>[R.name]</span>")
-			else
-				user.show_message("<span class='notice'>Subject is not addicted to any reagents.</span>")
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(H.reagents.addiction_list.len)
+					user.show_message("<span class='userdanger'>Subject is addicted to the following reagents:</span>")
+					for(var/datum/reagent/R in H.reagents.addiction_list)
+						user.show_message("<span class='danger'>[R.name]</span>")
+				else
+					user.show_message("<span class='notice'>Subject is not addicted to any reagents.</span>")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
