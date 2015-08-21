@@ -44,7 +44,7 @@
 					kidnapped.ghostize()
 					qdel(kidnapped)
 				else
-					src << "<B>You happily devour...nothing? Your meal escaped at some point!</B>"	
+					src << "<B>You happily devour...nothing? Your meal vanished at some point!</B>"	
 			src.notransform = 0
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
