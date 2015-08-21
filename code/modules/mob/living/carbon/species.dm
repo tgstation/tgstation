@@ -399,7 +399,7 @@ var/global/list/whitelisted_species = list("Human")
 	flags = IS_WHITELISTED | HAS_LIPS | NO_BREATHE | NO_BLOOD
 
 	default_mutations=list(SKELETON)
-	brute_mode = 2.0
+	brute_mod = 2.0
 
 /datum/species/skellington/handle_speech(message, mob/living/carbon/human/H)
 	if (prob(25))
