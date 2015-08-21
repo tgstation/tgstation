@@ -481,4 +481,5 @@
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
+		usr = null
 		remove_from_storage(A,null)
