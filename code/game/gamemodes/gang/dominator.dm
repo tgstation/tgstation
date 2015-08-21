@@ -40,6 +40,9 @@
 /obj/machinery/dominator/process()
 	..()
 	if(gang && isnum(gang.dom_timer))
+		if(z > 1) //If it leaves the z-level, brick it
+			set_broken()
+			return
 		if(gang.dom_timer > 0)
 			playsound(loc, 'sound/items/timer.ogg', 30, 0)
 			if(!warned && (gang.dom_timer < 180))
