@@ -520,8 +520,8 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 
 	if(holder)
-		log_admin("[src] deadmined themself.")
-		message_admins("[src] deadmined themself.")
+		log_admin("[key_name(src)] deadmined themself.")
+		message_admins("[key_name_admin(src)] deadmined themself.")
 		deadmin()
 		verbs += /client/proc/readmin
 		deadmins += ckey
@@ -586,8 +586,8 @@ var/list/admin_verbs_hideable = list(
 		D = new(rank_names[rank],ckey)
 		var/client/C = directory[ckey]
 		D.associate(C)
-		message_admins("[src] re-adminned themselves.")
-		log_admin("[src] re-adminned themselves.")
+		message_admins("[key_name_admin(src)] re-adminned themselves.")
+		log_admin("[key_name(src)] re-adminned themselves.")
 		deadmins -= ckey
 		feedback_add_details("admin_verb","RAS")
 		return
