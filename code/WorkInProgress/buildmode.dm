@@ -367,7 +367,6 @@ obj/effect/bmode/buildholder/New()
 									setvar(holder.buildmode.varholder, holder.buildmode.valueholder, thing, reset)
 									edits++
 								tcheck(80,1)
-							if(areaAction == MASS_DELETE) T.ChangeTurf(get_base_turf(T.z))
 						edits++
 						tcheck(80,1)
 					if(edits) usr << "<span class='info'>Successfully edited [edits] [chosen]'\s</span>"
