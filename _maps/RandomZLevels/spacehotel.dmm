@@ -215,7 +215,7 @@
 "eg" = (/obj/item/toy/sword,/turf/simulated/floor/carpet,/area/awaymission)
 "eh" = (/obj/machinery/vending/cola,/turf/simulated/floor/carpet,/area/awaymission)
 "ei" = (/obj/item/candle,/obj/effect/decal/cleanable/blood/old,/turf/simulated/floor/engine/cult,/area/awaymission)
-"ej" = (/obj/effect/rune,/obj/item/organ/brain,/turf/simulated/floor/engine/cult,/area/awaymission)
+"ej" = (/obj/effect/rune,/obj/item/organ/internal/brain,/turf/simulated/floor/engine/cult,/area/awaymission)
 "ek" = (/obj/item/candle,/turf/simulated/floor/engine/cult,/area/awaymission)
 "el" = (/obj/item/weapon/tome,/turf/simulated/floor/engine/cult,/area/awaymission)
 "em" = (/obj/effect/rune,/turf/simulated/floor/engine/cult,/area/awaymission)
