@@ -1,3 +1,5 @@
+#define POWER_MONITOR_HIST_SIZE 15
+
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 /obj/machinery/power/monitor
@@ -21,14 +23,30 @@
 	var/datum/html_interface/interface
 	var/tmp/next_process = 0
 
+	//Lists used for the charts.
+	var/list/demand_hist[POWER_MONITOR_HIST_SIZE]
+	var/list/supply_hist[POWER_MONITOR_HIST_SIZE]
+	var/list/load_hist[POWER_MONITOR_HIST_SIZE]
+
 /obj/machinery/power/monitor/New()
 	..()
 
-	var/const/head = "<style type=\"text/css\">span.area { display: block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; width: auto; }</style>\
-	           <script type=\"text/javascript\">function checkSize(){ $(\"span.area\").css(\"width\", \"auto\");\
-	           if ($(window).width() < window.document.body.scrollWidth){ var width = 0; $(\"span.area\").each(function(){ width = Math.max(width, $(this).parent().outerWidth()); });\
-	           width = Math.round($(window).width() - (window.document.body.scrollWidth - width + 16 + 8));$(\"span.area\").css(\"width\", width + \"px\"); } }\
-	           $(window).on(\"resize\", checkSize); $(window).on(\"onUpdateContent\", checkSize); $(document).on(\"ready\", checkSize);</script>"
+	var/head = {"
+		<style type="text/css">
+			span.area
+			{
+				display: block;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				width: auto;
+			}
+		</style>
+		<script src="Chart.js"></script>
+		<script>var chartSize = [POWER_MONITOR_HIST_SIZE];</script>
+		<script src="powerChart.js"></script>
+	"}
+
 	src.interface = new/datum/html_interface/nanotrasen(src, "Power Monitoring", 420, 600, head)
 
 	var/obj/structure/cable/attached = null
@@ -39,36 +57,68 @@
 		powernet = attached.get_powernet()
 	html_machines += src
 
-/obj/machinery/power/monitor/attack_ai(mob/user)
-	add_fingerprint(user)
+	init_ui()
 
-	if(stat & (BROKEN|NOPOWER))
-		return
-	interact(user)
+/obj/machinery/power/monitor/proc/init_ui()
+	var/dat = {"
+		<div id="operatable">
+			<canvas id="powerChart" style="width: 261px;"><!--261px is as much as possible.-->
+
+			</canvas>
+			<div id="legend"float: right;"></div>
+			<table class="table" width="100%; table-layout: fixed;">
+				<colgroup><col style="width: 180px;"/><col/></colgroup>
+				<tr><td><strong>Total power:</strong></td><td id="totPower">X W</td></tr>
+				<tr><td><strong>Total load:</strong></td><td id="totLoad">X W</td></tr>
+				<tr><td><strong>Total demand:</strong></td><td id="totDemand">X W</td></tr>
+			</table>
+
+		<table class="table" width="100%; table-layout: fixed;">
+			<colgroup><col/><col style="width: 60px;"/><col style="width: 60px;"/><col style="width: 60px;"/><col style="width: 80px;"/><col style="width: 80px;"/><col style="width: 20px;"/></colgroup>
+			<thead><tr><th>Area</th><th>Eqp.</th><th>Lgt.</th><th>Env.</th><th align="right">Load</th><th align="right">Cell</th><th></th></tr></thead>
+			<tbody id="APCTable">				
+
+			</tbody>
+		</table>
+		</div>
+		<div id="n_operatable" style="display: none;">
+			<span class="error">No connection.</span>
+		</div>		
+	"}
+
+	interface.updateContent("content", dat)
+	
+/obj/machinery/power/monitor/attack_ai(mob/user)
+	. = attack_hand(user)
 
 /obj/machinery/power/monitor/Destroy()
 	..()
 	html_machines -= src
 
 /obj/machinery/power/monitor/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
+	. = ..()
+	if(.)
+		interface.hide(user)
 		return
+
 	interact(user)
 
+//Needs to be overriden because else it will use the shitty set_machine().
+/obj/machinery/power/monitor/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
+	return hclient.client.mob.html_mob_check(src.type)
+	
 /obj/machinery/power/monitor/interact(mob/user)
+	var/delay = 0
+	delay += send_asset(user.client, "Chart.js")
+	delay += send_asset(user.client, "powerChart.js")
+	interface.show(user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!(issilicon(user) || isobserver(user)))
-			user.unset_machine()
-			src.interface.hide(user)
-			return
+	spawn(delay) //To prevent Jscript issues with resource sending.
+		interface.executeJavaScript("makeChart()", user) //Making the chart in something like $("document").ready() won't work so I do it here
 
-
-	user.set_machine(src)
-	src.interface.show(user)
-
+		for(var/i = 1 to POWER_MONITOR_HIST_SIZE)
+			interface.callJavaScript("pushPowerData", list(demand_hist[i], supply_hist[i], load_hist[i]), user)
+	
 /obj/machinery/power/monitor/power_change()
 	..()
 	if(stat & BROKEN)
@@ -101,57 +151,54 @@
 				A.state = 4
 				A.icon_state = "4"
 
-			del(src)
+			qdel(src)
 	else
 		src.attack_hand(user)
 	return
 
 /obj/machinery/power/monitor/process()
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & (BROKEN|NOPOWER) || !powernet)
+		interface.executeJavaScript("setDisabled()")
 		return
+
+	else
+		interface.executeJavaScript("setEnabled()")
+
+	demand_hist += load()
+	supply_hist += avail()
+	load_hist += powernet.viewload
+
+	if(demand_hist.len > POWER_MONITOR_HIST_SIZE) //Should always be true but eh.
+		demand_hist.Cut(1, 2)
+		supply_hist.Cut(1, 2)
+		load_hist.Cut(1,2)
+
+	interface.callJavaScript("pushPowerData", list(load(), avail(), powernet.viewload))
+	
 	// src.next_process == 0 is in place to make it update the first time around, then wait until someone watches
 	if ((!src.next_process || src.interface.isUsed()) && world.time >= src.next_process)
 		src.next_process = world.time + 30
-		var/t
-	//	t += "<BR><HR><A href='?src=\ref[src.interface];update=1'>Refresh</A>"
-	//	t += "<BR><HR><A href='?src=\ref[src.interface];close=1'>Close</A>"
 
-		if(!powernet)
-			t += "<span class=\"error\">No connection.</span>"
-		else
+		interface.updateContent("totPower", "[avail()] W")
+		interface.updateContent("totLoad", "[num2text(powernet.viewload,10)] W")
+		interface.updateContent("totDemand", "[load()] W")
 
-			t = t + "<table class=\"table\" width=\"100%; table-layout: fixed;\">"
-			t = t + "<colgroup><col style=\"width: 180px;\"/><col/></colgroup>"
-			t = t + "<tr><td><strong>Total power:</strong></td><td>[powernet.avail] W</td></tr>"
-			t = t + "<tr><td><strong>Total load:</strong></td><td>[num2text(powernet.viewload,10)] W</td></tr>"
+		var/tbl = ""
 
-			var/tbl
-			var/total_demand = 0
+		var/list/S = list(" Off","AOff","  On", " AOn")
+		var/list/chg = list("N","C","F")
 
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
-			var/found = FALSE
+		for(var/obj/machinery/power/terminal/term in powernet.nodes)
+			if(istype(term.master, /obj/machinery/power/apc))
 
-			for(var/obj/machinery/power/terminal/term in powernet.nodes)
-				if(istype(term.master, /obj/machinery/power/apc))
-					found = TRUE
+				var/obj/machinery/power/apc/A = term.master
+				tbl += "<tr>"
+				tbl += "<td><span class=\"area\">["\The [A.areaMaster]"]</span></td>"
+				tbl += "<td>[S[A.equipment+1]]</td><td>[S[A.lighting+1]]</td><td>[S[A.environ+1]]</td>"
+				tbl += "<td align=\"right\">[A.lastused_total]</td>"
+				tbl += "[A.cell ? "<td align=\"right\">[round(A.cell.percent())]%</td><td align=\"right\">[chg[A.charging+1]]" : "<td colspan=\"2\" align=\"right\">N/C</td>"]"
+				tbl += "</tr>"
 
-					var/obj/machinery/power/apc/A = term.master
-					tbl = tbl + "<tr>"
-					tbl = tbl + "<td><span class=\"area\">["\The [A.areaMaster]"]</span></td>"
-					tbl = tbl + "<td>[S[A.equipment+1]]</td><td>[S[A.lighting+1]]</td><td>[S[A.environ+1]]</td>"
-					tbl = tbl + "<td align=\"right\">[A.lastused_total]</td>"
-					tbl = tbl + "[A.cell ? "<td align=\"right\">[round(A.cell.percent())]%</td><td align=\"right\">[chg[A.charging+1]]" : "<td colspan=\"2\" align=\"right\">N/C</td>"]"
-					tbl = tbl + "</tr>"
-					total_demand = total_demand + A.lastused_total
+		src.interface.updateContent("APCTable", tbl)
 
-			if (found)
-				t += "<tr><td><strong>Total demand:</strong></td><td>[total_demand] W</td></tr>"
-
-			t = t + "</table>"
-
-			t = t + "<table class=\"table\" width=\"100%; table-layout: fixed;\">"
-			t = t + "<colgroup><col /><col style=\"width: 60px;\"/><col style=\"width: 60px;\"/><col style=\"width: 60px;\"/><col style=\"width: 80px;\"/><col style=\"width: 80px;\"/><col style=\"width: 20px;\"/></colgroup>"
-			t = t + "<thead><tr><th>Area</th><th>Eqp.</th><th>Lgt.</th><th>Env.</th><th align=\"right\">Load</th><th align=\"right\">Cell</th><th></th></tr></thead>"
-			t = t + "<tbody>[tbl]</tbody></table>"
-		src.interface.updateContent("content", t)
+#undef POWER_MONITOR_HIST_SIZE

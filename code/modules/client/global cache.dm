@@ -10,11 +10,12 @@
 	ASSERT(client_list)
 
 	if(asset_name in client_list)
-		return
+		return 0
 
 	// world << "sending a client the asset '[asset_name]'"
 	client << browse_rsc(asset_cache[asset_name], asset_name)
 	client_list += asset_name
+	. = 1
 
 /proc/send_asset_list(var/client/client, var/list/asset_list)
 	for(var/asset_name in asset_list)
@@ -268,3 +269,8 @@
 		var/datum/html_interface/hi = new path()
 		hi.registerResources()
 
+/datum/asset/simple/chartJS
+	assets = list("Chart.js" = 'code/modules/html_interface/Chart.js')
+
+/datum/asset/simple/power_chart
+	assets = list("powerChart.js" = 'code/modules/power/powerChart.js')
