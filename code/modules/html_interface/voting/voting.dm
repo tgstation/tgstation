@@ -5,11 +5,17 @@ var/global/datum/controller/vote/vote = new()
 #define VOTE_SCREEN_HEIGHT 400
 
 
-/datum/html_interface/nanotrasen/sendResources(client/C)
+/datum/html_interface/nanotrasen/registerResources()
+	. = ..()
+
+	register_asset("voting.js", 'voting.js')
+	register_asset("voting.css", 'voting.css')
+
+/datum/html_interface/nanotrasen/sendAssets(var/client/client)
 	..()
-	C << browse_rsc('voting.js')
-	C << browse_rsc('voting.css')
-	return
+
+	send_asset(client, "voting.js")
+	send_asset(client, "voting.css")
 
 /datum/html_interface/nanotrasen/Topic(href, href_list[])
 	..()

@@ -3394,11 +3394,12 @@
 
 /datum/reagent/drink/milk/on_mob_life(var/mob/living/M as mob)
 	if(!holder) return
-	..()
 	if(M.getBruteLoss() && prob(20)) M.heal_organ_damage(1,0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10*REAGENTS_METABOLISM)
-	return
+	if(prob(50)) M.heal_organ_damage(1,0)
+	return ..()
+
 
 /datum/reagent/drink/milk/soymilk
 	name = "Soy Milk"

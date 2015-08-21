@@ -165,7 +165,8 @@
 							break
 						else
 							if(aspell.can_improve("speed") && aspell.can_improve("power"))
-								switch(alert(src, "Do you want to upgrade this spell's speed or power?", "Select Upgrade", "Speed", "Power", "Cancel"))
+								var/choice = alert(usr, "Do you want to upgrade this spell's speed or power?", "Select Upgrade", "Speed", "Power", "Cancel")
+								switch(choice)
 									if("Speed")
 										temp = aspell.quicken_spell()
 									if("Power")

@@ -65,6 +65,11 @@
 	if(empstun < 0)
 		empstun = 0
 
+/obj/structure/bed/chair/vehicle/buckle_mob(mob/M as mob, mob/user as mob)
+	if(isanimal(M)) return //Animals can't buckle
+
+	..()
+
 /obj/structure/bed/chair/vehicle/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

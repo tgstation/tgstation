@@ -167,18 +167,6 @@ var/list/beam_master = list()
 			M.playsound_local(src, "explosion", 50, 1)
 		..()
 
-/obj/item/projectile/beam/lightning/spell
-	var/basedamage = 40
-	damage = 0
-
-	on_hit(atom/target, blocked = 0)
-		..()
-		target.emp_act(2)
-		if(ismob(target))
-			var/mob/living/L = target
-			L.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
-
-
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"

@@ -30,9 +30,9 @@
 	if(beaker && href_list["createbar"])
 		var/obj/item/weapon/reagent_containers/food/snacks/snackbar/SB = new/obj/item/weapon/reagent_containers/food/snacks/snackbar(src.loc)
 		reagents.trans_to(SB, 10)
+		src.updateUsrDialog()
 		return 1
 
-	src.updateUsrDialog()
 	return
 
 /obj/machinery/chem_master/snackbar_machine/attack_hand(mob/user as mob)

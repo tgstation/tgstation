@@ -512,6 +512,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
 			loaded_pill_bottle = null
+		src.updateUsrDialog()
 		return 1
 
 	else if(href_list["close"])
@@ -549,6 +550,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if(amount < 0)
 					return
 				R.trans_id_to(src, id, amount)
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["addcustom"])
@@ -557,6 +559,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
 			src.Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["remove"])
@@ -570,6 +573,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					reagents.trans_id_to(beaker, id, amount)
 				else
 					reagents.remove_reagent(id, amount)
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["removecustom"])
@@ -578,19 +582,23 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			useramount = input("Select the amount to transfer.", 30, useramount) as num
 			useramount = isgoodnumber(useramount)
 			src.Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["toggle"])
 			mode = !mode
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["main"])
 			attack_hand(usr)
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["eject"])
 			if(beaker)
 				detach()
+			src.updateUsrDialog()
 			return 1
 
 		else if(href_list["createpill"] || href_list["createpill_multiple"])
@@ -643,10 +651,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					P.pixel_y = rand(-7, 7)
 					//P.icon_state = "bottle"+bottlesprite
 					reagents.trans_to(P,amount_per_bottle)
+				src.updateUsrDialog()
 				return 1
 			else
 				var/obj/item/weapon/reagent_containers/food/condiment/P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
 				reagents.trans_to(P, 50)
+				src.updateUsrDialog()
 				return 1
 
 		else if(href_list["change_pill"])
@@ -685,6 +695,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 		else if(href_list["pill_sprite"])
 			pillsprite = href_list["pill_sprite"]
+			src.updateUsrDialog()
 			return 1
 
 		/*
@@ -692,7 +703,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			bottlesprite = href_list["bottle_sprite"]
 		*/
 
-	src.updateUsrDialog()
 	return
 
 /obj/machinery/chem_master/proc/detach()

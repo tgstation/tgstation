@@ -80,6 +80,7 @@
 		switch(master.cl.buildmode)
 			if(1)
 				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Click and drag to do a fill operation</span>"
 				usr << "<span class='notice'>Left Mouse Button        = Construct / Upgrade</span>"
 				usr << "<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span>"
 				usr << "<span class='notice'>Left Mouse Button + ctrl = R-Window</span>"
@@ -90,15 +91,22 @@
 				usr << "<span class='notice'>***********************************************************</span>"
 			if(2)
 				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Click and drag to do a fill operation</span>"
 				usr << "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>"
 				usr << "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>"
 				usr << "<span class='notice'>Right Mouse Button                     = Delete objects</span>"
+				usr << "<span class='notice'>Middle Mouse Button                    = Copy atom</span>"
+				usr << ""
+				usr << "<span class='notice'>Ctrl+Shift+Left Mouse Button           = Sets bottom left corner for fill mode</span>"
+				usr << "<span class='notice'>Ctrl+Shift+Right Mouse Button           = Sets top right corner for fill mode</span>"
+
 				usr << ""
 				usr << "<span class='notice'>Use the button in the upper left corner to</span>"
 				usr << "<span class='notice'>change the direction of built objects.</span>"
 				usr << "<span class='notice'>***********************************************************</span>"
 			if(3)
 				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Click and drag to do a mass edit operation</span>"
 				usr << "<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span>"
 				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Set var(type) & value</span>"
 				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset var's value</span>"
@@ -221,6 +229,153 @@ obj/effect/bmode/buildholder/New()
 	set name = ".fillmouse_released"
 	if(src.filling)
 		src.mouse_pointer_icon = initial(src.mouse_pointer_icon)
+
+/client/MouseWheel(object,delta_x,delta_y,location,control,params)
+	if(mob.stat == DEAD || buildmode) //DEAD FAGS CAN ZOOM OUT THIS WILL END POORLY
+		if(delta_y > 0)
+			view--
+		else
+			view++
+	..()
+
+/client/MouseDrop(src_object,over_object,src_location,over_location,src_control,over_control,params)
+	if(!src.buildmode)
+		return ..()
+	var/obj/effect/bmode/buildholder/holder = null
+	for(var/obj/effect/bmode/buildholder/H in buildmodeholders)
+		if(H.cl == src)
+			holder = H
+			break
+	if(!holder) return
+	var/turf/start = get_turf(src_location)
+	var/turf/end = get_turf(over_location)
+	if(!start || !end) return
+	switch(buildmode)
+		if(1 to 2)
+			var/list/fillturfs = block(start,end)
+			if(fillturfs.len)
+				if(alert("You're about to do a fill operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
+					if(fillturfs.len > 150)
+						if(alert("Are you completely sure about filling [fillturfs.len] tiles?","Panic!!!!","Yes","No") != "Yes")
+							return
+					var/areaAction = alert("FILL tiles or DELETE them? areaAction will destroy EVERYTHING IN THE SELECTED AREA", "Create or destroy, your chance to be a GOD","FILL","DELETE") == "DELETE"
+					if(areaAction) areaAction = (alert("Selective(TYPE) Delete or MASS Delete?", "Scorched Earth or selective destruction?", "Selective", "MASS") == "Selective" ? 2 : 1)
+					else
+						areaAction = (alert("Mass FILL or Selective(Type => Type) FILL?", "Do they really need [fillturfs.len] of closets?", "Selective", "Mass") == "Selective" ? 3 : 0)
+
+					var/whatfill = (buildmode == 1 ? input("What are we filling with?", "So many choices") as null|anything in list(/turf/simulated/floor,/turf/simulated/wall,/turf/simulated/wall/r_wall,/obj/machinery/door/airlock, /obj/structure/window/reinforced) : holder.buildmode.objholder)
+					if(!whatfill) return
+					var/msglog = "<span class='danger'>[key_name_admin(usr)] just buildmode"
+					var/strict = 1
+					var/chosen
+					switch(areaAction)
+						if(MASS_DELETE)
+							msglog += " <big>DELETED EVERYTHING</big> in [fillturfs.len] tile\s "
+						if(SELECTIVE_DELETE)
+							chosen = easyTypeSelector()
+							if(!chosen) return
+							strict = alert("Delete all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
+							msglog += " <big>DELETED [!strict ? "ALL TYPES OF " :""][chosen]</big> in [fillturfs.len] tile\s "
+						if(SELECTIVE_FILL)
+							chosen = easyTypeSelector()
+							if(!chosen) return
+							strict = alert("Change all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
+							msglog += " Changed all [chosen] in [fillturfs.len] tile\s to [whatfill] "
+						else
+							msglog += " FILLED [fillturfs.len] tile\s with [whatfill] "
+					msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
+					message_admins(msglog)
+					log_admin(msglog)
+					usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the fill may take longer than typical.</span>"
+					var/turf_op = ispath(whatfill, /turf)
+					var/deletions = 0
+					for(var/turf/T in fillturfs)
+						if(areaAction == MASS_DELETE || areaAction == SELECTIVE_DELETE)
+							if(ispath(chosen, /turf))
+								T.ChangeTurf(chosen)
+								deletions++
+							else
+								for(var/atom/thing in T.contents)
+									if(thing==usr) continue
+									if(areaAction == MASS_DELETE || (strict && thing.type == chosen) || istype(thing,chosen))
+										qdel(thing)
+									deletions++
+									tcheck(80,1)
+								if(areaAction == MASS_DELETE) T.ChangeTurf(get_base_turf(T.z))
+						else
+							if(turf_op)
+								if(areaAction == SELECTIVE_FILL)
+									if(strict)
+										if(T.type != chosen) continue
+									else
+										if(!istype(T, chosen)) continue
+								T.ChangeTurf(whatfill)
+							else
+								if(areaAction == SELECTIVE_FILL)
+									for(var/atom/thing in T.contents)
+										if(strict)
+											if(thing.type != chosen) continue
+										else
+											if(!istype(thing, chosen)) continue
+										var/atom/A = new whatfill(T)
+										A.dir = thing.dir
+										qdel(thing)
+										tcheck(80,1)
+								else
+									var/obj/A = new whatfill(T)
+									if(istype(A))
+										A.dir = holder.builddir.dir
+						tcheck(80,1)
+					if(deletions) usr << "<span class='info'>Successfully deleted [deletions] [chosen]'\s</span>"
+		if(3)
+			var/list/fillturfs = block(start,end)
+			if(fillturfs.len)
+				if(alert("You're about to do a mass edit operation spanning [fillturfs.len] tiles, are you sure?","Panic","Yes","No") == "Yes")
+					if(fillturfs.len > 150)
+						if(alert("Are you completely sure about mass editng [fillturfs.len] tiles?","Panic!!!!","Yes","No") != "Yes")
+							return
+
+					var/areaAction = (alert("Selective(TYPE) Edit or MASS Edit?", "Editing things one by one sure is annoying", "Selective", "MASS") == "Selective" ? 2 : 1)
+					var/reset = alert("Reset target variable to initial value?", "Aw shit cletus i dun fucked up", "Yes", "No") == "Yes" ? 1 : 0
+
+
+					var/msglog = "<span class='danger'>[key_name_admin(usr)] just buildmode"
+					var/strict = 1
+					var/chosen
+					switch(areaAction)
+						if(MASS_DELETE)
+							msglog += " <big>EDITED EVERYTHING</big> in [fillturfs.len] tile\s "
+						if(SELECTIVE_DELETE)
+							chosen = easyTypeSelector()
+							if(!chosen) return
+							strict = alert("Edit all children of [chosen]?", "Children being all types and subtypes of [chosen]", "Yes", "No") == "No"
+							msglog += " <big>EDITED [!strict ? "ALL TYPES OF " :""][chosen]</big> in [fillturfs.len] tile\s "
+						else
+							return
+					msglog += "at ([formatJumpTo(start)] to [formatJumpTo(end)])</span>"
+					message_admins(msglog)
+					log_admin(msglog)
+					usr << "<span class='notice'>If the server is lagging the operation will periodically sleep so the mass edit may take longer than typical.</span>"
+					var/edits = 0
+					for(var/turf/T in fillturfs)
+						if(ispath(chosen, /turf))
+							setvar(holder.buildmode.varholder, holder.buildmode.valueholder, T, reset)
+						else
+							for(var/atom/thing in T.contents)
+								if(thing==usr) continue
+								if(areaAction == MASS_DELETE || (strict && thing.type == chosen) || istype(thing,chosen))
+									setvar(holder.buildmode.varholder, holder.buildmode.valueholder, thing, reset)
+									edits++
+								tcheck(80,1)
+							if(areaAction == MASS_DELETE) T.ChangeTurf(get_base_turf(T.z))
+						edits++
+						tcheck(80,1)
+					if(edits) usr << "<span class='info'>Successfully edited [edits] [chosen]'\s</span>"
+		else return
+
+
+
+
 
 /proc/build_click(var/mob/user, buildmode, params, var/obj/object)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/build_click() called tick#: [world.time]")
@@ -352,15 +507,11 @@ obj/effect/bmode/buildholder/New()
 									else
 										for(var/atom/thing in T.contents)
 											if(thing==usr) continue
-											if(strict && (thing.type == chosen))
-												qdel(thing)
-											else if(istype(thing, chosen))
-												qdel(thing)
-											else
+											if(areaAction == MASS_DELETE || (strict && thing.type == chosen) || istype(thing,chosen))
 												qdel(thing)
 											deletions++
 											tcheck(80,1)
-										T.ChangeTurf(get_base_turf(T.z))
+										if(areaAction == MASS_DELETE) T.ChangeTurf(get_base_turf(T.z))
 								else
 									if(turf_op)
 										if(areaAction == SELECTIVE_FILL)
@@ -505,6 +656,16 @@ obj/effect/bmode/buildholder/New()
 		if(!chosen)
 			return
 	return chosen
+
+/proc/setvar(varname, varvalue, atom/A, reset = 0)
+	if(!reset) //I cant believe this shit actually compiles.
+		if(A.vars.Find(varname))
+			log_admin("[key_name(usr)] modified [A.name]'s [varname] to [varvalue]")
+			A.vars[varname] = varvalue
+	else
+		if(A.vars.Find(varname))
+			log_admin("[key_name(usr)] modified [A.name]'s [varname] to initial")
+			A.vars[varname] = initial(A.vars[varname])
 
 #undef BOTTOM_LEFT
 #undef TOP_RIGHT

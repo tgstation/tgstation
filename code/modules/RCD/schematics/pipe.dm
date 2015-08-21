@@ -165,29 +165,43 @@
 	var/selected_dir	= NORTH
 	var/layer				= PIPING_LAYER_DEFAULT //Layer selected, at 0, no layer picker will be available (disposals).
 
-/datum/rcd_schematic/pipe/send_icons(var/client/client)
-	var/list/dir_list	//We get the dirs to loop through and send images to the client for.
-	switch(pipe_type)
-		if(PIPE_UNARY, PIPE_TRINARY)
-			dir_list = cardinal
+/datum/rcd_schematic/pipe/register_assets()
+	var/list/dir_list = get_dirs()
 
-		if(PIPE_BINARY)
-			dir_list = list(NORTH, EAST)
+	for(var/dir in dir_list)
+		register_icon(dir)
 
-		if(PIPE_BENT)
-			dir_list = diagonal
-
-		if(PIPE_TRIN_M)
-			dir_list = alldirs
-
-		else
-			dir_list = list()
+/datum/rcd_schematic/pipe/send_assets(var/client/client)
+	var/list/dir_list = get_dirs()
 
 	for(var/dir in dir_list)
 		send_icon(client, dir)
+		
+	send_asset(client, "RPD-layer-blended-1.png")
+	send_asset(client, "RPD-layer-blended-4.png")
+
+/datum/rcd_schematic/pipe/proc/get_dirs()
+	switch(pipe_type)
+		if(PIPE_UNARY, PIPE_TRINARY)
+			. = cardinal
+
+		if(PIPE_BINARY)
+			. = list(NORTH, EAST)
+
+		if(PIPE_BENT)
+			. = diagonal
+
+		if(PIPE_TRIN_M)
+			. = alldirs
+
+		else
+			.= list()
+
+/datum/rcd_schematic/pipe/proc/register_icon(var/dir)
+	register_asset("RPD_[pipe_id]_[dir].png", new/icon('icons/obj/pipe-item.dmi', pipeID2State[pipe_id + 1], dir))
 
 /datum/rcd_schematic/pipe/proc/send_icon(var/client/client, var/dir)
-	client << browse_rsc(new/icon('icons/obj/pipe-item.dmi', pipeID2State[pipe_id + 1], dir), "RPD_[pipe_id]_[dir].png")
+	send_asset(client, "RPD_[pipe_id]_[dir].png")
 
 /datum/rcd_schematic/pipe/get_HTML()
 	. += "<p>"
@@ -206,7 +220,7 @@
 		<div class="layer_holder" style="left: 200px;">
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=1"><div class="layer horizontal one		[layer == 1 ? "selected" : ""]"></div></a>
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=2"><div class="layer horizontal two		[layer == 2 ? "selected" : ""]"></div></a>
-			<a class="no_dec" href="?src=\ref[master.interface];set_layer=3"><div class="layer horizontal three	[layer == 3 ? "selected" : ""]"></div></a>
+			<a class="no_dec" href="?src=\ref[master.interface];set_layer=3"><div class="layer horizontal three		[layer == 3 ? "selected" : ""]"></div></a>
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=4"><div class="layer horizontal four		[layer == 4 ? "selected" : ""]"></div></a>
 			<a class="no_dec" href="?src=\ref[master.interface];set_layer=5"><div class="layer horizontal five		[layer == 5 ? "selected" : ""]"></div></a>
 		</div>
@@ -302,8 +316,11 @@
 	pipe_id			= DISP_PIPE_STRAIGHT
 	var/actual_id	= 0	//This is needed because disposals construction code is a shit.
 
+/datum/rcd_schematic/pipe/disposal/register_icon(var/dir)
+	register_asset("RPD_D_[pipe_id]_[dir].png", new/icon('icons/obj/pipes/disposal.dmi', disposalpipeID2State[pipe_id + 1], dir))
+
 /datum/rcd_schematic/pipe/disposal/send_icon(var/client/client, var/dir)
-	client << browse_rsc(new/icon('icons/obj/pipes/disposal.dmi', disposalpipeID2State[pipe_id + 1], dir), "RPD_D_[pipe_id]_[dir].png")
+	send_asset(client, "RPD_D_[pipe_id]_[dir].png")
 
 /datum/rcd_schematic/pipe/disposal/render_dir_image(var/dir, var/title)
 	var/selected = ""
@@ -327,7 +344,7 @@
 
 	C.add_fingerprint(user)
 
-var/global/list/disposalpipeID2State=list(
+var/global/list/disposalpipeID2State = list(
 	"pipe-s",
 	"pipe-c",
 	"pipe-j1",
@@ -342,14 +359,14 @@ var/global/list/disposalpipeID2State=list(
 
 //This is a meta thing to send a blended pipe sprite to clients, basically the default straight pipe, but blended blue.
 //Yes I tried to find a proper way to blend things in HTML/CSS, alas.
-/datum/rcd_schematic/pipe/blender/send_icons(var/client/client)
+/datum/rcd_schematic/pipe/blender/register_assets()
 	var/icon/I = new/icon('icons/obj/pipe-item.dmi', pipeID2State[1], 1)
 	I.Blend("#0000FF", ICON_MULTIPLY)	//Make it blue
-	client << browse_rsc(I, "RPD-layer-blended-1.png")
+	register_asset("RPD-layer-blended-1.png", I)
 
 	I = new/icon('icons/obj/pipe-item.dmi', pipeID2State[1], 4)
 	I.Blend("#0000FF", ICON_MULTIPLY)	//Make it blue
-	client << browse_rsc(I, "RPD-layer-blended-4.png")
+	register_asset("RPD-layer-blended-4.png", I)
 
 //PIPE DEFINES START HERE.
 

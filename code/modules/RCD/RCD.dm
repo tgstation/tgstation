@@ -90,7 +90,7 @@
 	interface.updateLayout(dat)
 
 	if(selected)
-		interface.updateContent("schematic_options",	selected.get_HTML())
+		update_options_menu()
 		interface.updateContent("selectedname",			selected.name)
 
 /obj/item/device/rcd/Topic(var/href, var/list/href_list)
@@ -164,7 +164,10 @@
 
 /obj/item/device/rcd/proc/update_options_menu()
 	if(selected)
-		interface.updateContent("schematic_options", selected.get_HTML())
+		for(var/client/client in interface.clients)
+			selected.send_assets(client)
+
+		interface.updateContent("schematic_options", selected.get_HTML())	
 	else
 		interface.updateContent("schematic_options", " ")
 

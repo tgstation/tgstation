@@ -911,7 +911,7 @@ var/list/slot_equipment_priority = list( \
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(var/atom/movable/AM)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/start_pulling() called tick#: [world.time]")
-	if ( !AM || !src || src==AM || !isturf(src.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if ( !AM || !src || src==AM || !isturf(AM.loc) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 
 	var/atom/movable/P = AM
@@ -1430,7 +1430,11 @@ var/list/slot_equipment_priority = list( \
 					stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 				else
 					stat(null, "processScheduler is not running.")
-
+	else
+		if(client && client.haszoomed)
+			if(stat != DEAD)
+				client.view = world.view
+				client.haszoomed = 0
 	if(client && client.inactivity < (1200))
 		if(listed_turf)
 			if(get_dist(listed_turf,src) > 1)
@@ -1453,8 +1457,6 @@ var/list/slot_equipment_priority = list( \
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S.connected_button)
 					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S.connected_button)
-	sleep(4/world.tick_lag) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
-
 
 
 // facing verbs
@@ -1766,6 +1768,9 @@ mob/proc/walking()
 
 /mob/shuttle_act()
 	return
+
+/mob/shuttle_rotate(angle)
+	src.dir = turn(src.dir, angle) //rotating pixel_x and pixel_y is bad
 
 /mob/can_shuttle_move()
 	return 1

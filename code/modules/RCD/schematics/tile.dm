@@ -18,14 +18,23 @@ s
 	var/datum/paint_info/selected
 	var/selected_dir	= 2
 
-/datum/rcd_schematic/tile/send_icons(var/client/client)
+/datum/rcd_schematic/tile/register_assets()
 	var/list/our_list = get_our_list()
 	if(!our_list)
 		return
 
 	for(var/datum/paint_info/P in our_list)
 		for(var/ndir in get_dir_list_by_dir_type(P.adirs))
-			client << browse_rsc(new/icon(P.icon, P.icon_state, ndir), "[P.file_name][P.icon_state]_[ndir].png")
+			register_asset("[P.file_name][P.icon_state]_[ndir].png", new/icon(P.icon, P.icon_state, ndir))
+
+/datum/rcd_schematic/tile/send_assets(var/client/client)
+	var/list/our_list = get_our_list()
+	if(!our_list)
+		return
+
+	for(var/datum/paint_info/P in our_list)
+		for(var/ndir in get_dir_list_by_dir_type(P.adirs))
+			send_asset(client, "[P.file_name][P.icon_state]_[ndir].png")
 
 /datum/rcd_schematic/tile/proc/get_dir_list_by_dir_type(var/adir)
 	switch(adir)
@@ -284,8 +293,8 @@ s
 /datum/rcd_schematic/tile/all
 	name = "All"
 
-//We override this so we DON'T send files twice, sending is handled in the specific ones.
-/datum/rcd_schematic/tile/all/send_icons(var/client/client)
+//We override this so we DON'T register assets twice, registering is handled in the specific ones.
+/datum/rcd_schematic/tile/all/register_assets()
 	return
 
 //We get EVERY paint info datum.

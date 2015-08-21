@@ -70,8 +70,13 @@
 
 /obj/structure/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/proc/buckle_mob() called tick#: [world.time]")
-	if(!ismob(M) || isanimal(M) || !Adjacent(user) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.locked_to || istype(user, /mob/living/silicon/pai) )
+	if(!ismob(M) || !Adjacent(user) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.locked_to || istype(user, /mob/living/silicon/pai) )
 		return
+
+	if(isanimal(M))
+		if(M.size <= SIZE_TINY) //Fuck off mice
+			user << "The [M] is too small to buckle in."
+			return
 
 	if(istype(M, /mob/living/carbon/slime))
 		user << "The [M] is too squishy to buckle in."
