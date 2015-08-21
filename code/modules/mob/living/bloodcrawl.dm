@@ -35,13 +35,16 @@
 				sleep(30)
 				playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 				sleep(30)
-				src << "<B>You devour [kidnapped]. Your health is fully restored.</B>"
-				src.adjustBruteLoss(-1000)
-				src.adjustFireLoss(-1000)
-				src.adjustOxyLoss(-1000)
-				src.adjustToxLoss(-1000)
-				kidnapped.ghostize()
-				qdel(kidnapped)
+				if(kidnapped)
+					src << "<B>You devour [kidnapped]. Your health is fully restored.</B>"
+					src.adjustBruteLoss(-1000)
+					src.adjustFireLoss(-1000)
+					src.adjustOxyLoss(-1000)
+					src.adjustToxLoss(-1000)
+					kidnapped.ghostize()
+					qdel(kidnapped)
+				else
+					src << "<B>You happily devour...nothing? Your meal escaped at some point!</B>"	
 			src.notransform = 0
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
