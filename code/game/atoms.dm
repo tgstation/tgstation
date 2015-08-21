@@ -107,7 +107,7 @@ var/global/list/ghdel_profiling = list()
 				step(src, turn(src.dir, 180))
 			if(istype(src,/mob/living))
 				var/mob/living/M = src
-				M.take_organ_damage(20)
+				M.take_organ_damage(10)
 
 /atom/proc/AddToProfiler()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/AddToProfiler() called tick#: [world.time]")
