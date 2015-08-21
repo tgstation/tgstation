@@ -147,6 +147,8 @@
 		x_offset -= range
 
 	var/turf/target_turf = locate(source.x + x_offset, source.y + y_offset, source.z)
+	if(!target_turf)
+		return null
 	if(source.canSmoothWith)
 		var/atom/A
 		for(var/a_type in source.canSmoothWith)
