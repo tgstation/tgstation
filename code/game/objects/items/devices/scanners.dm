@@ -114,7 +114,7 @@ MASS SPECTROMETER
 // Used by the PDA medical scanner too
 /proc/healthscan(var/mob/living/user, var/mob/living/M, var/mode = 1)
 
-	if(!ishuman(M) || !ismonkey(M))
+	if(!ishuman(M) && !ismonkey(M)) //Must be human/monkey to properly get scanned
 		return
 
 	//Damage specifics
