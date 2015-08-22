@@ -107,9 +107,11 @@
 /obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= "alien"
+	M.languages |= ALIEN
 
 /obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= "alien"
+	M.languages &= ~ALIEN
 	..()
 
 

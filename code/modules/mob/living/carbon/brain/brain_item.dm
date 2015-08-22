@@ -110,6 +110,7 @@
 
 /obj/item/organ/internal/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
+		brainmob.ghostize()
 		qdel(brainmob)
 		brainmob = null
 	..()
