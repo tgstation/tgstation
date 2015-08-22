@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 //#define DEBUG_LIFE
-#define PROFILE_LIFE
+//#define PROFILE_LIFE
 
 #define OXYCONCEN_PLASMEN_IGNITION 0.01 //1% is all it takes.
 var/global/list/unconscious_overlays = list("1" = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "passage1"),\
