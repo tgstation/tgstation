@@ -20,8 +20,6 @@
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
-		if(!is_pipe())    // bins/chutes/outlets are dense
-			density = 1
 	dir = direction
 
 // update iconstate and dpdir due to dir and type

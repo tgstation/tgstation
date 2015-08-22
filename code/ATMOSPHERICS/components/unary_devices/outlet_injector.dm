@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector
 	icon_state = "inje_map"
-	use_power = 1
+	use_power = 0
 
 	name = "air injector"
 	desc = "Has a valve and pump attached to it"
