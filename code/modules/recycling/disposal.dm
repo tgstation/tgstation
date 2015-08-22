@@ -158,6 +158,8 @@
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
 								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
+	if(target.buckled)
+		target.buckled.unbuckle_mob()
 	if(do_mob(user, target, 20))
 		if(!loc)
 			return
