@@ -14,6 +14,7 @@ var/global/list/mob/virtualhearer/virtualhearers = list()
 
 	alpha = 0
 	animate_movement = 0
+	ignoreinvert = 1
 	//This can be expanded with vision flags to make a device to hear through walls for example
 
 /mob/virtualhearer/New(attachedto)

@@ -54,6 +54,7 @@ var/list/all_doors = list()
 	var/soundeffect = 'sound/machines/airlock.ogg'
 
 	var/explosion_block = 0 //regular airlocks are 1, blast doors are 3, higher values mean increasingly effective at blocking explosions.
+	forceinvertredraw = 1
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (ismob(AM))

@@ -54,6 +54,7 @@
 
 	var/dynamic_lighting = 1
 
+	forceinvertredraw = 1
 /turf/proc/process()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/process() called tick#: [world.time]")
 	universe.OnTurfTick(src)

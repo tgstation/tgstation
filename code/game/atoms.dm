@@ -51,6 +51,10 @@ var/global/list/ghdel_profiling = list()
 	var/list/harm_label_examine //Messages that appears when examining the item if it is harm-labeled. Message in position 1 is if it is harm-labeled but the label is too short to work, while message in position 2 is if the harm-label works.
 	//var/harm_label_icon_state //Makes sense to have this, but I can't sprite. May be added later.
 	var/list/last_beamchecks // timings for beam checks.
+	var/ignoreinvert = 0
+	var/forceinvertredraw = 0
+	var/tempoverlay
+
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/beam_connect() called tick#: [world.time]")
