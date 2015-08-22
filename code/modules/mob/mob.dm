@@ -1476,8 +1476,8 @@ var/list/slot_equipment_priority = list( \
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_canmove() called tick#: [world.time]")
 	if(locked_to)
 		canmove = 0
-		if(locked_to.locked_should_lie)
-			lying = 1
+		lying = locked_to.locked_should_lie
+			
 
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		stop_pulling()

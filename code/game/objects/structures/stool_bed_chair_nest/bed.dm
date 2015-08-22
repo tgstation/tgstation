@@ -14,6 +14,8 @@
 	icon = 'icons/obj/stools-chairs-beds.dmi'
 
 	locked_should_lie = 1
+	dense_when_locking = 0
+	anchored = 1
 
 /obj/structure/bed/alien
 	name = "resting contraption"
@@ -111,6 +113,7 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
+	dense_when_locking = 1
 
 /obj/item/roller
 	name = "roller bed"
@@ -136,6 +139,7 @@
 		return
 
 	AM.pixel_y -= ROLLERBED_Y_OFFSET
+	icon_state = "down"
 
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
