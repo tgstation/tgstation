@@ -100,7 +100,7 @@
 	set category = "AI Commands"
 	set name = "Toggle Camera Acceleration"
 
-	if(usr.stat == 2) //won't work if dead
-		return
+	if(usr.stat == 2)
+		return //won't work if dead
 	acceleration = !acceleration
 	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
