@@ -24,46 +24,15 @@
 
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
-		var/list/meancritters = list(/mob/living/simple_animal/hostile/blob/blobspore, // list of possible hostile mobs
-									/mob/living/simple_animal/hostile/blob/blobbernaut,
-									/mob/living/simple_animal/hostile/carp/ranged/chaos,
-									/mob/living/simple_animal/hostile/carp/ranged,
-									/mob/living/simple_animal/hostile/carp/megacarp,
-									/mob/living/simple_animal/hostile/carp/eyeball,
-									/mob/living/simple_animal/hostile/carp,
-									/mob/living/simple_animal/hostile/alien/drone,
-									/mob/living/simple_animal/hostile/alien/sentinel,
-									/mob/living/simple_animal/hostile/alien/queen,
-									/mob/living/simple_animal/hostile/alien,
-									/mob/living/simple_animal/hostile/bear/Hudson,
-									/mob/living/simple_animal/hostile/bear,
-									/mob/living/simple_animal/hostile/poison/bees,
-									/mob/living/simple_animal/hostile/poison/giant_spider/nurse,
-									/mob/living/simple_animal/hostile/poison/giant_spider/hunter,
-									/mob/living/simple_animal/hostile/poison/giant_spider,
-									/mob/living/simple_animal/hostile/creature,
-									/mob/living/simple_animal/hostile/faithless,
-									/mob/living/simple_animal/hostile/headcrab,
-									/mob/living/simple_animal/hostile/hivebot/range,
-									/mob/living/simple_animal/hostile/hivebot/rapid,
-									/mob/living/simple_animal/hostile/hivebot/strong,
-									/mob/living/simple_animal/hostile/hivebot,
-									/mob/living/simple_animal/hostile/killertomato,
-									/mob/living/simple_animal/hostile/mimic/crate,
-									/mob/living/simple_animal/hostile/mimic,
-									/mob/living/simple_animal/hostile/statue,
-									/mob/living/simple_animal/hostile/viscerator,
-									/mob/living/simple_animal/hostile/tree/festivus,
-									/mob/living/simple_animal/hostile/tree)
-
-		var/list/nicecritters = list(/mob/living/simple_animal/crab,
-									/mob/living/simple_animal/mouse,
-									/mob/living/simple_animal/lizard,
-									/mob/living/simple_animal/parrot,
-									/mob/living/simple_animal/butterfly,
-									/mob/living/simple_animal/cow,
-									/mob/living/simple_animal/chicken) // and possible friendly mobs
-		nicecritters += typesof(/mob/living/simple_animal/pet) - /mob/living/simple_animal/pet
+		var/list/meancritters = list() // list of possible hostile mobs
+		var/list/nicecritters = list() // and possible friendly mobs
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/M = new T
+			switch(M.gold_core_spawnable)
+				if(1)
+					meancritters += M.type
+				if(2)
+					nicecritters += M.type
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
@@ -83,22 +52,17 @@
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
+			var/chosen
 			if (reaction_name == "Friendly Gold Slime")
-				var/chosen = pick(nicecritters)
-				var/mob/living/simple_animal/C = new chosen
-				C.faction |= mob_faction
-				C.loc = get_turf(holder.my_atom)
-				if(prob(50))
-					for(var/j = 1, j <= rand(1, 3), j++)
-						step(C, pick(NORTH,SOUTH,EAST,WEST))
+				chosen = pick(nicecritters)
 			else
-				var/chosen = pick(meancritters)
-				var/mob/living/simple_animal/hostile/C = new chosen
-				C.faction |= mob_faction
-				C.loc = get_turf(holder.my_atom)
-				if(prob(50))
-					for(var/j = 1, j <= rand(1, 3), j++)
-						step(C, pick(NORTH,SOUTH,EAST,WEST))
+				chosen = pick(meancritters)
+			var/mob/living/simple_animal/C = new chosen
+			C.faction |= mob_faction
+			C.loc = get_turf(holder.my_atom)
+			if(prob(50))
+				for(var/j = 1, j <= rand(1, 3), j++)
+					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 /datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))

@@ -57,6 +57,8 @@
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
 
+	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe

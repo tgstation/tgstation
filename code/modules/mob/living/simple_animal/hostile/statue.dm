@@ -44,6 +44,7 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
+	gold_core_spawnable = 1
 
 
 // No movement while seen code.
