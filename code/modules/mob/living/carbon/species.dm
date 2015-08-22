@@ -414,7 +414,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Siik'tajr"
 	tail = "tajtail"
 	attack_verb = "scratch"
-	punch_damage = 5
+	punch_damage = 2 //Claws add 3 damage without gloves, so the total is 5
 	darksight = 8
 
 	cold_level_1 = 200 //Default 260
