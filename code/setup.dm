@@ -1252,7 +1252,7 @@ var/proccalls = 1
  *
  *
  */
-#define WARNING(MSG) world << "##WARNING: [MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr]."
+#define WARNING(MSG) world.log << "##WARNING: [MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr]."
 #define warning(msg) world.log << "## WARNING: [msg]"
 #define testing(msg) world.log << "## TESTING: [msg]"
 #define log_game(text) diary << html_decode("\[[time_stamp()]]GAME: [text]")
