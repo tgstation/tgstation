@@ -110,6 +110,8 @@
 	melee_damage_upper = 8
 	melee_damage_lower = 8
 
+	pheromones_act = PHEROMONES_FOLLOW
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"

@@ -4,4 +4,4 @@ delete-after: True
 
 changes: 
   - rscadd: Added carp pheromones, created by mixing carpotoxin, leporazine and carbon.
-  - rscadd: Ingesting carp pheromones will make space carps not mind you around them. However, it won't affect carps who are already attacking you.
+  - rscadd: Adult space carps ignore mobs with carp pheromones, baby space carp follow them instead (without attacking).

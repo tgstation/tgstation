@@ -2768,6 +2768,7 @@
 	description = "A disgusting liquid with a horrible smell, which is used by space carps to mark their territory and food."
 	reagent_state = LIQUID
 	color = "#6AAA96" // rgb: 106, 170, 150
+	custom_metabolism = 0.1
 
 /datum/reagent/carp_pheromones/on_mob_life(var/mob/living/M as mob)
 	if(!holder) return
