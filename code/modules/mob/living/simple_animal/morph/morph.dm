@@ -29,17 +29,12 @@
 	wander = 0
 
 	var/morphed = 0
-	var/atom/movable/form = null
 	var/morph_time = 0
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
+	..()
 	if(morphed)
-		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
-		if(get_dist(user,src)<=3)
-			user << "<span class='notice'>Looks odd!</span>"
-	else
-		..()
-	return
+		user << "<span class='notice'>Looks odd!</span>"
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
 	if(istype(A,/obj/screen))
@@ -60,7 +55,7 @@
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
 	morphed = 1
-	form = target
+	desc = target.desc
 
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) No effect better than shit effect
 
@@ -88,7 +83,7 @@
 	if(!morphed)
 		return
 	morphed = 0
-	form = null
+	desc = initial(desc)
 
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
 
