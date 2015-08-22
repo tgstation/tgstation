@@ -1083,8 +1083,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
-	if(user.stat == 2)
-		user << "You can't send PDA messages because you are dead!"
+	if(user.stat == 2) //won't work if dead
 		return
 
 	if(src.aiPDA.toff)
@@ -1125,8 +1124,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
+	if(usr.stat == 2) //won't work if dead
 		return
 	if(!isnull(aiPDA))
 		aiPDA.toff = !aiPDA.toff
@@ -1137,8 +1135,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "PDA - Toggle Ringer"
-	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
+	if(usr.stat == 2) //won't work if dead
 		return
 	if(!isnull(aiPDA))
 		//0
@@ -1150,8 +1147,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /mob/living/silicon/ai/verb/cmd_use_chatroom()
 	set category = "AI Commands"
 	set name = "PDA - Chatrooms"
-	if(usr.stat == 2)
-		usr << "You can't do that because you are dead!"
+	if(usr.stat == 2) //won't work if dead
 		return
 	if(!isnull(aiPDA))
 		aiPDA.mode = 5
@@ -1160,8 +1156,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		usr << "You do not have a PDA. You should make an issue report about this."
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
-	if(user.stat == 2)
-		user << "You can't do that because you are dead!"
+	if(user.stat == 2) //won't work if dead
 		return
 	if(!isnull(aiPDA))
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
