@@ -68,7 +68,9 @@
 /spell/aoe_turf/fall/cast(list/targets)
 	var/turf/ourturf = get_turf(usr)
 
-	targets = circlerangeturfs(usr, range)
+	var/list/potentials = circlerangeturfs(usr, range)
+	if(istype(potentials) && potentials.len)
+		targets = potentials
 	/*spawn(120)
 		del(aoe_underlay)
 		buildimage()*/
