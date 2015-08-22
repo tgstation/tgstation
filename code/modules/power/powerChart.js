@@ -10,25 +10,25 @@ function makeChart()
 		labels: ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 		datasets: [
 			{
-				label: "power usage",
-				fillColor: "rgba(255,100,100,0.2)",
-				strokeColor: "rgba(255,100,100,1)",
-				pointColor: "rgba(255,0,0,1)",
-				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
-			},
-			{
 				label: "power production",
 				fillColor: "rgba(100,255,100,0.2)",
 				strokeColor: "rgba(100,255,100,1)",
 				pointColor: "rgba(0,255,0,1)",
 				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]                 
-			},
+			},			
 			{
 				label: "power load",
 				fillColor: "rgba(100,100,255,0.2)",
 				strokeColor: "rgba(100,100,255,1)",
 				pointColor: "rgba(0,0,255,1)",
 				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]                 
+			},			
+			{
+				label: "power usage",
+				fillColor: "rgba(255,100,100,0.2)",
+				strokeColor: "rgba(255,100,100,1)",
+				pointColor: "rgba(255,0,0,1)",
+				data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  
 			}
 		]
 	};
@@ -89,7 +89,7 @@ function pushPowerData(demand, supply, load)
 	{
 		powerChart.removeData();
 	}
-	powerChart.addData([demand, supply, load], "");
+	powerChart.addData([supply, load, demand], "");
 }
 
 var watt_suffixes = ["W", "KW", "MW", "GW", "TW", "PW", "EW", "ZW", "YW"];
@@ -100,7 +100,7 @@ function formatWatts(wattage)
 		return "0 W";
 	}
 	var i = 0;
-	while(Math.abs(Math.round(wattage / 1000)) >= 1)
+	while(Math.abs(Math.round(wattage / 1000)) >= 1 && i < watt_suffixes.length)
 	{
 		wattage /= 1000;
 		i++;

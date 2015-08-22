@@ -24,12 +24,17 @@
 	var/tmp/next_process = 0
 
 	//Lists used for the charts.
-	var/list/demand_hist[POWER_MONITOR_HIST_SIZE]
-	var/list/supply_hist[POWER_MONITOR_HIST_SIZE]
-	var/list/load_hist[POWER_MONITOR_HIST_SIZE]
+	var/list/demand_hist[0]
+	var/list/supply_hist[0]
+	var/list/load_hist[0]
 
 /obj/machinery/power/monitor/New()
 	..()
+
+	for(var/i = 1 to POWER_MONITOR_HIST_SIZE) //The chart doesn't like lists with null.
+		demand_hist.Add(list(0))
+		supply_hist.Add(list(0))
+		load_hist.Add(list(0))
 
 	var/head = {"
 		<style type="text/css">
@@ -65,7 +70,7 @@
 			<canvas id="powerChart" style="width: 261px;"><!--261px is as much as possible.-->
 
 			</canvas>
-			<div id="legend"float: right;"></div>
+			<div id="legend" style="float: right;"></div>
 			<table class="table" width="100%; table-layout: fixed;">
 				<colgroup><col style="width: 180px;"/><col/></colgroup>
 				<tr><td><strong>Total power:</strong></td><td id="totPower">X W</td></tr>
@@ -111,9 +116,10 @@
 	var/delay = 0
 	delay += send_asset(user.client, "Chart.js")
 	delay += send_asset(user.client, "powerChart.js")
-	interface.show(user)
 
 	spawn(delay) //To prevent Jscript issues with resource sending.
+		interface.show(user)
+
 		interface.executeJavaScript("makeChart()", user) //Making the chart in something like $("document").ready() won't work so I do it here
 
 		for(var/i = 1 to POWER_MONITOR_HIST_SIZE)
