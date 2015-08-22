@@ -321,7 +321,6 @@
 #include "code\datums\wires\rnd.dm"
 #include "code\datums\wires\robot.dm"
 #include "code\datums\wires\syndicatebomb.dm"
-#include "code\datums\wires\taperecorder.dm"
 #include "code\datums\wires\vending.dm"
 #include "code\datums\wires\wires.dm"
 #include "code\defines\procs\AStar.dm"
