@@ -191,18 +191,30 @@
 
 		var/tbl = ""
 
-		var/list/S = list(" Off","AOff","  On", " AOn")
-		var/list/chg = list("N","C","F")
+		var/list/S = list(" <span class='bad'>Off","<span class='bad'>AOff","  <span class='good'>On", " <span class='good'>AOn")
+		var/list/chg = list(" <span class='bad'>N","<span class='average'>C","<span class='good'>F")
 
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
 			if(istype(term.master, /obj/machinery/power/apc))
 
+							
 				var/obj/machinery/power/apc/A = term.master
 				tbl += "<tr>"
 				tbl += "<td><span class=\"area\">["\The [A.areaMaster]"]</span></td>"
-				tbl += "<td>[S[A.equipment+1]]</td><td>[S[A.lighting+1]]</td><td>[S[A.environ+1]]</td>"
+				tbl += "<td>[S[A.equipment+1]]</span></td><td>[S[A.lighting+1]]</span></td><td>[S[A.environ+1]]</span></td>"
 				tbl += "<td align=\"right\">[A.lastused_total]</td>"
-				tbl += "[A.cell ? "<td align=\"right\">[round(A.cell.percent())]%</td><td align=\"right\">[chg[A.charging+1]]" : "<td colspan=\"2\" align=\"right\">N/C</td>"]"
+				if(A.cell)
+					var/class = "good"
+
+					switch(A.cell.percent())
+						if(49 to 15)
+							class = "average"
+						if(15 to -INFINITY)
+							class = "bad"
+
+					tbl += "<td align='right' class='[class]'>[round(A.cell.percent())]%</td><td align='right'>[chg[A.charging+1]]</span>"
+				else
+					tbl += "<td colspan='2' align='right'>N/C</td>"
 				tbl += "</tr>"
 
 		src.interface.updateContent("APCTable", tbl)
