@@ -688,9 +688,11 @@
 		switch(S.initialize())
 			if(INIT_NO_AREA)
 				if(S.is_special())
-					warning("Invalid or missing starting area for [S.name] ([S.type]) [S.linked_area ? "- \"[S.linked_area]\" was given as a starting area." : ""]")
+					var/msg = S.linked_area ? "- \"[S.linked_area]\" was given as a starting area." : ""
+					warning("Invalid or missing starting area for [S.name] ([S.type]) [msg]")
 				else
-					world.log << "Invalid or missing starting area for [S.name] ([S.type]) [S.linked_area ? "- \"[S.linked_area]\" was given as a starting area." : ""]"
+					var/msg = S.linked_area ? "- \"[S.linked_area]\" was given as a starting area." : ""
+					world.log << "Invalid or missing starting area for [S.name] ([S.type]) [msg]"
 			if(INIT_NO_PORT)
 				if(S.is_special())
 					warning("Couldn't find a shuttle docking port for [S.name] ([S.type]).")
