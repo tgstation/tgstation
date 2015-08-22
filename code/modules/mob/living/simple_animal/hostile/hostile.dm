@@ -125,11 +125,11 @@
 		return 0
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
-		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
+		if(L.stat > stat_attack || (L.stat != stat_attack && stat_exclusive == 1))
 			return 0
 		if(L.flags & INVULNERABLE)
 			return 0
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
+		if((L.faction == src.faction && !attack_same) || (L.faction != src.faction && attack_same == 2) || (L.faction != attack_faction && attack_faction))
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0
