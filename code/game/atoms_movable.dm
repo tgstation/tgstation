@@ -26,7 +26,7 @@
 	//glide_size = 8
 
 	//Atom locking stuff.
-	var/list/locked_atoms[0]
+	var/list/locked_atoms
 	var/atom/movable/locked_to
 	var/locked_should_lie = 0	//Whether locked mobs should lie down, used by beds.
 	var/dense_when_locking = 1
@@ -41,7 +41,8 @@
 		I.MapColors(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
 		src.tempoverlay = I
 
-
+	locked_atoms = list()
+		
 /atom/movable/Destroy()
 	if(flags & HEAR && !ismob(src))
 		for(var/mob/virtualhearer/VH in virtualhearers)
@@ -140,9 +141,10 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-	if(.)	//The move was succesful, update locked atoms.
-		for(var/atom/movable/AM in locked_atoms)
-			AM.forceMove(loc)
+	if(. && locked_atoms && locked_atoms.len)	//The move was succesful, update locked atoms.
+		spawn(0)
+			for(var/atom/movable/AM in locked_atoms)
+				AM.forceMove(loc)
 
 	update_dir()
 
