@@ -639,10 +639,11 @@
 /datum/reagent/toxin/acid/reaction_turf(turf/T, reac_volume)
 	if (!istype(T))
 		return
+	var/datum/reagent/toxin/acid/self = src
 	src = null
 	reac_volume = round(reac_volume,0.1)
 	for(var/obj/O in T)
-		O.acid_act(acidpwr, reac_volume)
+		O.acid_act(self.acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
