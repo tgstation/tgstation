@@ -27,9 +27,11 @@
 	emote_taunt = list("growls")
 	taunt_chance = 20
 
-	//Space carp aren't affected by atmos.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	//Space carp aren't affected by atmos. //Space Carps no. But trees Yes
+	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 5
 	minbodytemp = 0
+	maxbodytemp = 400
 
 	faction = list("hostile")
 	var/drop_type = /obj/item/stack/sheet/mineral/wood
