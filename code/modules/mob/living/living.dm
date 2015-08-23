@@ -609,6 +609,7 @@ Thanks.
 	if (restrained())
 		stop_pulling()
 
+	var/turf/T = loc
 
 	var/t7 = 1
 	if (restrained())
@@ -616,7 +617,6 @@ Thanks.
 			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
 				t7 = null
 	if (t7 && pulling && (Adjacent(pulling) || pulling.loc == loc))
-		var/turf/T = loc
 		. = ..()
 
 		if (pulling && pulling.loc)
@@ -671,12 +671,16 @@ Thanks.
 	else
 		stop_pulling()
 		. = ..()
+
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+	if(T != loc)
+		handle_hookchain(direct)
 
 	if(.)
 		for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
@@ -690,6 +694,32 @@ Thanks.
 						M.NotTargeted(G)
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=loc))
+
+/mob/living/proc/handle_hookchain(var/direct)
+	for(var/obj/item/weapon/gun/hookshot/hookshot in src)
+		if(hookshot.clockwerk)
+			continue
+
+		for(var/i = 1;i<hookshot.maxlength;i++)
+			var/obj/effect/overlay/hookchain/HC = hookshot.links["[i]"]
+			if(HC.loc != hookshot)
+				HC.forceMove(get_step(HC,direct),direct)
+
+		if(hookshot.hook)
+			var/obj/item/projectile/hookshot/hook = hookshot.hook
+			hook.forceMove(get_step(hook,direct),direct)
+			if(direct & NORTH)
+				hook.override_starting_Y++
+				hook.override_target_Y++
+			if(direct & SOUTH)
+				hook.override_starting_Y--
+				hook.override_target_Y--
+			if(direct & EAST)
+				hook.override_starting_X++
+				hook.override_target_X++
+			if(direct & WEST)
+				hook.override_starting_X--
+				hook.override_target_X--
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -711,6 +741,18 @@ Thanks.
 			Location.drop_from_inventory(H)
 		del(H)
 		return
+
+	//Detaching yourself from a tether
+	if(L.tether)
+		var/mob/living/carbon/CM = L
+		if(!istype(CM) || !CM.handcuffed)
+			var/datum/chain/tether_datum = L.tether.chain_datum
+			if(tether_datum.extremity_B == src)
+				L.visible_message("<span class='danger'>\the [L] quickly grabs and removes \the [L.tether] tethered to his body!</span>",
+							  "<span class='warning'>You quickly grabs and remove \the [L.tether] tethered to your body.</span>")
+				L.tether = null
+				tether_datum.extremity_B = null
+				tether_datum.rewind_chain()
 
 	//Trying to unstick a stickybomb
 	for(var/obj/item/stickybomb/B in L)

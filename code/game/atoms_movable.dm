@@ -23,6 +23,10 @@
 
 	var/sound_override = 0 //Do we make a sound when bumping into something?
 	var/hard_deleted = 0
+
+	var/obj/effect/overlay/chain/tether = null
+	var/tether_pull = 0
+
 	//glide_size = 8
 
 	//Atom locking stuff.
@@ -106,6 +110,14 @@
 		var/mob/M = src
 		if(M.client)
 			move_delay = (3+(M.client.move_delayer.next_allowed - world.time))*world.tick_lag
+
+	var/can_pull_tether = 0
+	if(tether)
+		if(tether.attempt_to_follow(src,newLoc))
+			can_pull_tether = 1
+		else
+			return 0
+
 	glide_size = Ceiling(32 / move_delay * world.tick_lag) - 1 //We always split up movements into cardinals for issues with diagonal movements.
 	var/atom/oldloc = loc
 	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
@@ -151,6 +163,13 @@
 	if(!loc || (loc == oldloc && oldloc != newLoc))
 		last_move = 0
 		return
+
+	if(tether && can_pull_tether && !tether_pull)
+		tether.follow(src,oldloc)
+		var/datum/chain/tether_datum = tether.chain_datum
+		if(!tether_datum.Check_Integrity())
+			tether_datum.snap = 1
+			tether_datum.Delete_Chain()
 
 	last_move = Dir
 	src.move_speed = world.timeofday - src.l_move_time
@@ -431,6 +450,15 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/atom/movable/proc/attempt_to_follow(var/atom/movable/A,var/turf/T)
+	if(anchored)
+		return 0
+	if(get_dist(T,loc) <= 1)
+		return 1
+	else
+		var/turf/U = A.loc
+		return U.Enter(src,loc)
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR
