@@ -575,7 +575,7 @@ var/global/list/RPD_recipes=list(
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 2, target = A))
+			if(do_after(user, 20, target = A))
 				var/obj/structure/disposalconstruct/C = new (A, queued_p_type ,queued_p_dir)
 
 				if(!C.can_place())

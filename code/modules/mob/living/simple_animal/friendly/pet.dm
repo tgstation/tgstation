@@ -14,7 +14,7 @@
 		regenerate_icons()
 		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
 		if(P.tagname)
-			name = P.tagname
+			name = "\proper [P.tagname]"
 		qdel(P)
 		return
 	if(istype(O, /obj/item/weapon/newspaper))

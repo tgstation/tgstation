@@ -94,6 +94,9 @@
 /obj/item/weapon/restraints/handcuffs/cable/white
 	icon_state = "cuff_white"
 
+/obj/item/weapon/restraints/handcuffs/alien
+	icon_state = "handcuffAlien"
+
 /obj/item/weapon/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))

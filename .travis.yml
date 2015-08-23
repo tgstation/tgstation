@@ -3,8 +3,8 @@ language: c
 
 env:
     global:
-    - BYOND_MAJOR="507"
-    - BYOND_MINOR="1286"
+    - BYOND_MAJOR="508"
+    - BYOND_MINOR="1293"
     matrix:
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
