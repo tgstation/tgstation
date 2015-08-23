@@ -94,12 +94,12 @@
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
-	create_reagents(5)
+	create_reagents(10)
 
 	if(overmind && overmind.blob_reagent_datum)
-		reagents.add_reagent(overmind.blob_reagent_datum.id, 5)
+		reagents.add_reagent(overmind.blob_reagent_datum.id, 10)
 	else
-		reagents.add_reagent("spore", 5)
+		reagents.add_reagent("spore", 10)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)

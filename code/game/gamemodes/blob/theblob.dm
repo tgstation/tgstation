@@ -11,6 +11,7 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
+	var/mob/camera/blob/overmind
 
 
 /obj/effect/blob/New(loc)
@@ -62,6 +63,12 @@
 		update_icon()
 		health_timestamp = world.time + 10 // 1 seconds
 
+/obj/effect/blob/proc/pulseLoop(num)
+	var/a_color
+	if(overmind)
+		a_color = overmind.blob_reagent_datum.color
+	for(var/i = 1; i < 8; i += i)
+		Pulse(num, i, a_color)
 
 /obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0, a_color)//Todo: Fix spaceblob expand
 
@@ -191,6 +198,7 @@
 	else
 		B.adjustcolors(color)
 	qdel(src)
+	return B
 
 /obj/effect/blob/proc/adjustcolors(a_color)
 	if(a_color)

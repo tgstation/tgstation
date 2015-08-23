@@ -143,7 +143,7 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/internal/brain))
 		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
@@ -192,7 +192,7 @@ MASS SPECTROMETER
 				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
 
 		var/implant_detect
-		for(var/obj/item/cybernetic_implant/CI in H.internal_organs)
+		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
 			implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")

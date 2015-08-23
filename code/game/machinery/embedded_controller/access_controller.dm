@@ -21,6 +21,14 @@
 /obj/machinery/doorButtons/initialize()
 	findObjsByTag()
 
+/obj/machinery/doorButtons/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		req_access = list()
+		req_one_access = list()
+		playsound(src.loc, "sparks", 100, 1)
+		user << "<span class='warning'>You short out the access controller.</span>"
+
 /obj/machinery/doorButtons/proc/removeMe()
 
 

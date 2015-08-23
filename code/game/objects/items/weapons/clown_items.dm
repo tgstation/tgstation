@@ -100,6 +100,11 @@
 			spam_flag = 0
 	return
 
+/obj/item/weapon/bikehorn/Crossed(mob/living/L)
+	if(isliving(L))
+		playsound(loc, honksound, 50, 1, -1)
+	..()
+
 /obj/item/weapon/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"

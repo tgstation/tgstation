@@ -1,13 +1,32 @@
-/client/proc/admin_memo(task in list("Show","Write","Edit","Remove"))
+/client/proc/admin_memo()
 	set name = "Memo"
 	set category = "Server"
 	if(!check_rights(0))	return
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return
+	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
+	if(!memotask)
+		return
+	admin_memo_output(memotask)
+
+/client/proc/admin_memo_output(task)
+	if(!task)
+		return
+	if(!dbcon.IsConnected())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	switch(task)
 		if("Write")
+			var/DBQuery/query_memocheck = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")] WHERE (ckey = '[sql_ckey]')")
+			if(!query_memocheck.Execute())
+				var/err = query_memocheck.ErrorMsg()
+				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
+				return
+			if(query_memocheck.NextRow())
+				src << "You already have set a memo."
+				return
 			var/memotext = input(src,"Write your Memo","Memo") as text|null
 			if(!memotext)
 				return
@@ -26,13 +45,13 @@
 				var/err = query_memolist.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
 				return
-			if(!query_memolist.NextRow())
-				src << "No memos found in database."
-				return
 			var/list/memolist = list()
 			while(query_memolist.NextRow())
-				var/ckey = query_memolist.item[2]
-				memolist += "[ckey]"
+				var/lkey = query_memolist.item[1]
+				memolist += "[lkey]"
+			if(!memolist.len)
+				src << "No memos found in database."
+				return
 			var/target_ckey = input(src, "Select whose memo to edit", "Select memo") as null|anything in memolist
 			if(!target_ckey)
 				return
@@ -43,14 +62,14 @@
 				log_game("SQL ERROR obtaining ckey, memotext from memo table. Error : \[[err]\]\n")
 				return
 			if(query_memofind.NextRow())
-				var/old_memo = query_memofind.item[3]
+				var/old_memo = query_memofind.item[2]
 				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as null|text
 				if(!new_memo)
 					return
 				new_memo = sanitizeSQL(new_memo)
 				var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from<br>[old_memo]<br>to<br>[new_memo]<hr>"
 				edit_text = sanitizeSQL(edit_text)
-				var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(edits,'[edit_text]') WHERE (ckey = '[target_sql_ckey]')")
+				var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE (ckey = '[target_sql_ckey]')")
 				if(!update_query.Execute())
 					var/err = update_query.ErrorMsg()
 					log_game("SQL ERROR editing memo. Error : \[[err]\]\n")
@@ -62,18 +81,24 @@
 					log_admin("[key_name(src)] has edited [target_sql_ckey]'s memo from [old_memo] to [new_memo]")
 					message_admins("[key_name_admin(src)] has edited [target_sql_ckey]'s memo from<br>[old_memo]<br>to<br>[new_memo]")
 		if("Show")
-			var/DBQuery/query_memoshow = dbcon.NewQuery("SELECT id, ckey, memotext, timestamp, last_editor FROM [format_table_name("memo")])")
-			var/output
+			var/DBQuery/query_memoshow = dbcon.NewQuery("SELECT ckey, memotext, timestamp, last_editor FROM [format_table_name("memo")]")
+			if(!query_memoshow.Execute())
+				var/err = query_memoshow.ErrorMsg()
+				log_game("SQL ERROR obtaining ckey, memotext, timestamp, last_editor from memo table. Error : \[[err]\]\n")
+				return
+			var/output = null
 			while(query_memoshow.NextRow())
-				var/id = query_memoshow.item[1]
-				var/ckey = query_memoshow.item[2]
-				var/memotext = query_memoshow.item[3]
-				var/timestamp = query_memoshow.item[4]
-				var/last_editor = query_memoshow.item[5]
-				output += "<span class='memo'>Memo by <span class='prefix'>[ckey]</span> on [timestamp]:"
+				var/ckey = query_memoshow.item[1]
+				var/memotext = query_memoshow.item[2]
+				var/timestamp = query_memoshow.item[3]
+				var/last_editor = query_memoshow.item[4]
+				output += "<span class='memo'>Memo by <span class='prefix'>[ckey]</span> on [timestamp]"
 				if(last_editor)
-					output += "<br><span class='memoedit'>Last edit by [last_editor] <A href='?_src_=holder;memoeditlist=[id]'>(Click here to see edit log)</A></span>"
+					output += "<br><span class='memoedit'>Last edit by [last_editor] <A href='?_src_=holder;memoeditlist=[ckey]'>(Click here to see edit log)</A></span>"
 				output += "<br>[memotext]</span><br>"
+			if(!output)
+				src << "No memos found in database."
+				return
 			src << output
 		if("Remove")
 			var/DBQuery/query_memodellist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")]")
@@ -81,13 +106,13 @@
 				var/err = query_memodellist.ErrorMsg()
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
 				return
-			if(!query_memodellist.NextRow())
-				src << "No memos found in database."
-				return
 			var/list/memolist = list()
 			while(query_memodellist.NextRow())
-				var/ckey = query_memodellist.item[2]
+				var/ckey = query_memodellist.item[1]
 				memolist += "[ckey]"
+			if(!memolist.len)
+				src << "No memos found in database."
+				return
 			var/target_ckey = input(src, "Select whose memo to delete", "Select memo") as null|anything in memolist
 			if(!target_ckey)
 				return

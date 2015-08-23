@@ -57,6 +57,8 @@
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
 
+	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
+
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -74,10 +76,10 @@
 	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
-	if(..())
-		if(!client && !stat)
+	if(..()) //alive
+		if(!ckey)
 			handle_automated_movement()
-
+			handle_automated_action()
 			handle_automated_speech()
 		return 1
 
@@ -113,6 +115,9 @@
 
 	if(druggy)
 		druggy = 0
+
+/mob/living/simple_animal/proc/handle_automated_action()
+	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
@@ -254,7 +259,7 @@
 	if(!Proj)
 		return
 	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
 /mob/living/simple_animal/adjustFireLoss(amount)

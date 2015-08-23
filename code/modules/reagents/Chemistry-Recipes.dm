@@ -35,10 +35,9 @@
 			/mob/living/simple_animal/hostile/syndicate/ranged,
 			/mob/living/simple_animal/hostile/syndicate/ranged/space,
 			/mob/living/simple_animal/hostile/alien/queen/large,
-			/mob/living/simple_animal/hostile/retaliate,
-			/mob/living/simple_animal/hostile/retaliate/clown,
 			/mob/living/simple_animal/hostile/mushroom,
 			/mob/living/simple_animal/hostile/asteroid,
+			/mob/living/simple_animal/hostile/retaliate,
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goldgrub,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
@@ -48,9 +47,26 @@
 			/mob/living/simple_animal/hostile/mining_drone,
 			/mob/living/simple_animal/hostile/poison,
 			/mob/living/simple_animal/hostile/blob,
-			/mob/living/simple_animal/ascendant_shadowling
+			/mob/living/simple_animal/ascendant_shadowling,
+			/mob/living/simple_animal/hostile/guardian,
+			/mob/living/simple_animal/hostile/guardian/fire,
+			/mob/living/simple_animal/hostile/guardian/punch,
+			/mob/living/simple_animal/hostile/guardian/fast,
+			/mob/living/simple_animal/hostile/guardian/healer,
+			/mob/living/simple_animal/hostile/guardian/ranged,
+			/mob/living/simple_animal/hostile/guardian/bluespace,
+			/mob/living/simple_animal/hostile/guardian/bomb,
+			/mob/living/simple_animal/hostile/guardian/shield
 			)//exclusion list for things you don't want the reaction to create.
-		var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+		var/list/meancritters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+		var/list/nicecritters = list(/mob/living/simple_animal/crab,
+		                        /mob/living/simple_animal/mouse,
+		                        /mob/living/simple_animal/lizard,
+		                        /mob/living/simple_animal/parrot,
+		                        /mob/living/simple_animal/butterfly,
+		                        /mob/living/simple_animal/cow,
+		                        /mob/living/simple_animal/chicken) // and possible friendly mobs
+		nicecritters += typesof(/mob/living/simple_animal/pet) - /mob/living/simple_animal/pet
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
@@ -70,13 +86,22 @@
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
-			var/chosen = pick(critters)
-			var/mob/living/simple_animal/hostile/C = new chosen
-			C.faction |= mob_faction
-			C.loc = get_turf(holder.my_atom)
-			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
-					step(C, pick(NORTH,SOUTH,EAST,WEST))
+			if (reaction_name == "Friendly Gold Slime")
+				var/chosen = pick(nicecritters)
+				var/mob/living/simple_animal/C = new chosen
+				C.faction |= mob_faction
+				C.loc = get_turf(holder.my_atom)
+				if(prob(50))
+					for(var/j = 1, j <= rand(1, 3), j++)
+						step(C, pick(NORTH,SOUTH,EAST,WEST))
+			else
+				var/chosen = pick(meancritters)
+				var/mob/living/simple_animal/hostile/C = new chosen
+				C.faction |= mob_faction
+				C.loc = get_turf(holder.my_atom)
+				if(prob(50))
+					for(var/j = 1, j <= rand(1, 3), j++)
+						step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 /datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))

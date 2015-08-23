@@ -24,8 +24,8 @@
 		var/obj/item/weaponcrafting/ishotgunconstruction/I = new /obj/item/weaponcrafting/ishotgunconstruction
 		user.unEquip(src)
 		user.put_in_hands(I)
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 		return
 
 // SHOTGUN //
@@ -57,8 +57,8 @@
 		var/obj/item/weaponcrafting/ishotgunconstruction3/I = new /obj/item/weaponcrafting/ishotgunconstruction3
 		user.unEquip(src)
 		user.put_in_hands(I)
-		del(W)
-		del(src)
+		qdel(W)
+		qdel(src)
 		return
 
 /obj/item/weaponcrafting/ishotgunconstruction3

@@ -89,6 +89,10 @@
 			src.text = ""
 			src.build_changeling(correct_person)
 			return src.text
+		if("shadowling")
+			src.text = ""
+			src.build_shadowling(correct_person)
+			return src.text
 		else
 			return null
 
@@ -290,3 +294,9 @@
 	src.text += "These lifeforms are associated with the <B><U>[orgname1] [orgname2]</U></B> and may be attempting to acquire sensitive materials on their behalf.  "
 	src.text += "Please take care not to alarm the crew, as <B><U>[cname]</U></B> may take advantage of a panic situation. Remember, they can be anybody, suspect everybody!"
 	src.text += "<BR><HR>"
+
+/datum/intercept_text/proc/build_shadowling(datum/mind/correct_person)
+	src.text += "<br><br>Sightings of strange alien creatures have been observed in your area. These aliens supposedly possess the ability to enslave unwitting personnel and leech from their power. \
+	Be wary of dark areas and ensure all lights are kept well-maintained. Closely monitor all crew for suspicious behavior and perform dethralling surgery if they have obvious tells. Investigate all \
+	reports of odd or suspicious sightings in maintenance."
+	src.text += "<br><br>"

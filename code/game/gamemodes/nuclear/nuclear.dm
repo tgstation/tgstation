@@ -181,13 +181,9 @@
 	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(synd_mob)
-	W.imp_in = synd_mob
-	W.implanted = 1
-	W.implanted(synd_mob)
+	W.implant(synd_mob)
 	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
-	E.imp_in = synd_mob
-	E.implanted = 1
-	E.implanted(synd_mob)
+	E.implant(synd_mob)
 	synd_mob.faction |= "syndicate"
 	synd_mob.update_icons()
 	return 1

@@ -12,8 +12,7 @@
 Iconnery
 */
 
-/obj/machinery/atmospherics/components/unary/hide(var/intact)
-	showpipe = !intact
+/obj/machinery/atmospherics/components/unary/hide(intact)
 	update_icon()
 
 	..(intact)
@@ -38,10 +37,8 @@ Housekeeping and pipe network stuff below
 	nullifyPipenet(parents[PARENT1])
 	atmosinit()
 	node = nodes[NODE1]
-	initialize()
 	if(node)
 		node.atmosinit()
-		node.initialize()
 		node.addMember(src)
 	build_network()
 	. = 1

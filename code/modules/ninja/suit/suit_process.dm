@@ -4,25 +4,27 @@
 	set background = BACKGROUND_ENABLED
 
 	//Runs in the background while the suit is initialized.
-	spawn while(cell.charge)
+	//Requires charge or stealth to process.
+	spawn while(cell.charge || s_active)
 
-		//Let's check for some safeties.
 		if(s_initialized && !affecting)
 			terminate()//Kills the suit and attached objects.
 		if(!s_initialized)
-			return//When turned off the proc stops.
+			return
 
-		//Now let's do the normal processing.
-		if(s_coold)
-			s_coold--//Checks for ability s_cooldown first.
+		if(cell.charge)
+			if(s_coold)
+				s_coold--//Checks for ability s_cooldown first.
 
-		var/A = s_cost//s_cost is the default energy cost each ntick, usually 5.
-		if(s_active)//If stealth is active.
-			A += s_acost
-		cell.charge-=A
+			var/A = s_cost//s_cost is the default energy cost each ntick, usually 5.
+			if(s_active)//If stealth is active.
+				A += s_acost
+			cell.charge-=A
 
-		if(!cell.charge)
+		if(cell.charge <= 0)
 			cell.charge=0
 			cancel_stealth()
 
 		sleep(10)//Checks every second.
+
+

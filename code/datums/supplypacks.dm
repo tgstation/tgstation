@@ -233,6 +233,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "disabler crate"
 
+/datum/supply_packs/security/forensics
+	name = "Forensics Crate"
+	contains = list(/obj/item/device/detective_scanner,
+	                /obj/item/weapon/storage/box/evidence,
+	                /obj/item/device/camera,
+	                /obj/item/device/taperecorder,
+	                /obj/item/toy/crayon/white,
+	                /obj/item/clothing/head/det_hat)
+	cost = 20
+	containername ="forensics crate"
+
 ///// Armory stuff
 
 /datum/supply_packs/security/armory
@@ -1219,6 +1230,26 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
 
+/datum/supply_packs/misc/randomised/toys
+	name = "Toy Crate"
+	num_contained = 5
+	contains = list(/obj/item/toy/spinningtoy,
+	                /obj/item/toy/sword,
+	                /obj/item/toy/foamblade,
+	                /obj/item/toy/AI,
+	                /obj/item/toy/owl,
+	                /obj/item/toy/griffin,
+	                /obj/item/toy/nuke,
+	                /obj/item/toy/minimeteor,
+	                /obj/item/toy/carpplushie,
+	                /obj/item/weapon/coin/antagtoken,
+	                /obj/item/stack/tile/fakespace,
+	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+	                /obj/item/toy/redbutton)
+
+	cost = 50 // or play the arcade machines ya lazy bum
+	containername ="toy crate"
+
 /datum/supply_packs/misc/autodrobe
 	name = "Autodrobe Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/autodrobe,
@@ -1280,3 +1311,4 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 40
 	containername = "foam force pistols crate"
 	contraband = 1
+

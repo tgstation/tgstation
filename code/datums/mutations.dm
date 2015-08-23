@@ -214,10 +214,12 @@
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
-	if ((prob(1) && owner.paralysis < 1))
+	if((prob(1) && owner.paralysis < 1))
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
+		spawn(90)
+			owner.jitteriness = 10
 
 /datum/mutation/human/bad_dna
 
@@ -334,7 +336,7 @@
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
@@ -345,7 +347,7 @@
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(..())
 		return
-	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 
 /datum/mutation/human/stealth
@@ -364,7 +366,8 @@
 	if(T.lighting_lumcount <= 2)
 		owner.alpha -= 25
 	else
-		owner.alpha = round(255 * 0.80)
+		if(!owner.dna.check_mutation(CHAMELEON))
+			owner.alpha = round(255 * 0.80)
 
 /datum/mutation/human/stealth/on_losing(mob/living/carbon/human/owner)
 	if(..())

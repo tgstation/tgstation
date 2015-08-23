@@ -20,6 +20,9 @@ Sorry Giacom. Please don't be mad :(
 				else //no choice? force static
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
+	if(unique_name)
+		name = "[name] ([rand(1, 1000)])"
+		real_name = name
 
 
 /mob/living/Destroy()
@@ -99,22 +102,23 @@ Sorry Giacom. Please don't be mad :(
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
-		//TODO: Make this use Move(). we're pretty much recreating it here.
-		//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
 		var/oldloc = loc
-		loc = M.loc
-		M.loc = oldloc
-		M.LAssailant = src
+		var/oldMloc = M.loc
 
-		for(var/mob/living/simple_animal/slime/slime in view(1,M))
-			if(slime.Victim == M)
-				slime.UpdateFeed()
 
-		//cross any movable atoms on either turf
-		for(var/atom/movable/AM in loc)
-			AM.Crossed(src)
-		for(var/atom/movable/AM in oldloc)
-			AM.Crossed(M)
+		var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
+		var/src_passmob = (pass_flags & PASSMOB)
+		M.pass_flags |= PASSMOB
+		pass_flags |= PASSMOB
+
+		M.Move(oldloc)
+		Move(oldMloc)
+
+		if(!src_passmob)
+			pass_flags &= ~PASSMOB
+		if(!M_passmob)
+			M.pass_flags &= ~PASSMOB
+
 		now_pushing = 0
 		return 1
 
@@ -569,7 +573,8 @@ Sorry Giacom. Please don't be mad :(
 	else
 		stop_pulling()
 		. = ..()
-	if ((s_active && !( s_active in contents ) ))
+	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
+		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
 	for(var/mob/living/simple_animal/slime/M in oview(1,src))
@@ -834,12 +839,12 @@ Sorry Giacom. Please don't be mad :(
 
 	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/C_air_contents = C.airs[1]
+		var/datum/gas_mixture/G = C.airs["a1"]
 
-		if(C_air_contents.total_moles() < 10)
+		if(G.total_moles() < 10)
 			loc_temp = environment.temperature
 		else
-			loc_temp = C_air_contents.temperature
+			loc_temp = G.temperature
 
 	else
 		loc_temp = environment.temperature
