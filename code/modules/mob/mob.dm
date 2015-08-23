@@ -1430,11 +1430,10 @@ var/list/slot_equipment_priority = list( \
 					stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 				else
 					stat(null, "processScheduler is not running.")
-	else
-		if(client && client.haszoomed)
-			if(stat != DEAD)
-				client.view = world.view
-				client.haszoomed = 0
+	if(client && client.haszoomed)
+		if(stat != DEAD && !client.holder)
+			client.view = world.view
+			client.haszoomed = 0
 	if(client && client.inactivity < (1200))
 		if(listed_turf)
 			if(get_dist(listed_turf,src) > 1)
@@ -1477,7 +1476,7 @@ var/list/slot_equipment_priority = list( \
 	if(locked_to)
 		canmove = 0
 		lying = locked_to.locked_should_lie
-			
+
 
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		stop_pulling()

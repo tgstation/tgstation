@@ -236,6 +236,7 @@ obj/effect/bmode/buildholder/New()
 			view--
 		else
 			view++
+		haszoomed = 1
 	..()
 
 /client/MouseDrop(src_object,over_object,src_location,over_location,src_control,over_control,params)
