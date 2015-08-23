@@ -1339,6 +1339,10 @@
 	if(parent)
 		mutations = parent.mutations
 
+/obj/item/seeds/kudzuseed/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
 /obj/item/seeds/kudzuseed/harvest()
 	var/list/prod = ..()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
