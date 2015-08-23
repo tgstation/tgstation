@@ -137,10 +137,10 @@
 	if(recoil)
 		spawn()
 			shake_camera(user, recoil + 1, recoil)
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored )
+		if(user.locked_to && isobj(user.locked_to) && !user.locked_to.anchored )
 			var/direction = get_dir(user,target)
 			spawn()
-				var/obj/B = user.buckled
+				var/obj/B = user.locked_to
 				var/movementdirection = turn(direction,180)
 				B.Move(get_step(user,movementdirection), movementdirection)
 				sleep(1)

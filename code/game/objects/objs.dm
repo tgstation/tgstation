@@ -56,6 +56,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	return
 
 /obj/proc/cultify()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/cultify() called tick#: [world.time]")
 	qdel(src)
 
 /obj/proc/is_sharp()

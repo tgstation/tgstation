@@ -210,10 +210,6 @@ var/list/impact_master = list()
 						BM.LAssailant = null
 				else
 					BM.LAssailant = firer
-			else
-				BM.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(BM)]</b> with a <b>[type]</b>"
-				log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]</font>")
-				msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(BM)] with a [type]") //BS12 EDIT ALG
 	if (!forcedodge)
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 	if(forcedodge == -1) // the bullet passes through a dense object!

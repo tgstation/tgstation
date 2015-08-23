@@ -20,8 +20,3 @@ obj/structure/ex_act(severity)
 
 /obj/structure/projectile_check()
 	return PROJREACT_OBJS
-
-/obj/structure/Destroy()
-	if(hascall(src, "unbuckle"))
-		src:unbuckle()
-	..()

@@ -216,6 +216,14 @@ var/list/beam_master = list()
 		M.playsound_local(src, "explosion", 50, 1)
 	..()
 
+/obj/item/projectile/beam/lightning/spell
+	var/spell/lightning/our_spell
+	Bump(atom/A as mob|obj|turf|area)
+		. = ..()
+		if(.)
+			our_spell.lastbumped = A
+		return .
+
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"

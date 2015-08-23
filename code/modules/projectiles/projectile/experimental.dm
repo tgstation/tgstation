@@ -23,7 +23,7 @@
 		/obj/machinery/turretcover,
 		/obj/mecha,
 		/obj/structure/reagent_dispensers/fueltank,
-		/obj/structure/stool/bed/chair/vehicle,
+		/obj/structure/bed/chair/vehicle,
 		)
 
 /obj/item/projectile/ricochet/OnFired()	//The direction and position of the projectile when it spawns depends heavily on where the player clicks.
@@ -972,7 +972,7 @@
 			if(M_turf && (M_turf.z == starting.z))
 				M.playsound_local(starting, 'sound/weapons/hecate_fire_far.ogg', 25, 1)
 	for (var/mob/living/carbon/human/H in range(src,1))
-		if(!H.is_on_ears(/obj/item/clothing/ears/earmuffs))//TODO BEFORE MERGING ON THE MAIN SERVER: replace with H.earprot()
+		if(!H.earprot())
 			H.Weaken(2)
 			H.Stun(2)
 			H.ear_damage += rand(3, 5)
