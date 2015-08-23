@@ -100,3 +100,7 @@
 	new /obj/item/stack/cable_coil(src,30,color)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
+
+/obj/item/weapon/storage/toolbox/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] robusts \himself with the toolbox! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
