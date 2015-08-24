@@ -34,7 +34,7 @@
 		return 1
 	return 0
 
-/obj/item/weapon/gun/gravitywell/process()
+/obj/item/weapon/gun/gravitywell/process()//it takes 100 seconds to recharge and be able to fire again
 	charge = min(maxcharge,charge+1)
 	if(charge >= maxcharge)
 		update_icon()

@@ -38,12 +38,12 @@
 		var/obj/effect/overlay/hookchain/HC = new(src)
 		links["[i]"] = HC
 
-/obj/item/weapon/gun/hookshot/Destroy()
+/obj/item/weapon/gun/hookshot/Destroy()//if a single link of the chain is destroyed, the rest of the chain is instantly destroyed as well.
 	if(chain_datum)
 		chain_datum.Delete_Chain()
 	..()
 
-/obj/item/weapon/gun/hookshot/attack_self(mob/user)
+/obj/item/weapon/gun/hookshot/attack_self(mob/user)//clicking on the hookshot while tethered rewinds the chain without pulling the target.
 	if(check_tether())
 		var/atom/movable/AM = chain_datum.extremity_B
 		if(AM)
@@ -54,15 +54,15 @@
 /obj/item/weapon/gun/hookshot/process_chambered()
 	if(in_chamber)
 		return 1
-	if(!hook && !rewinding && !clockwerk && !check_tether())
-		hook = new/obj/item/projectile/hookshot(src)
+	if(!hook && !rewinding && !clockwerk && !check_tether())//if there is no projectile already, and we aren't currently rewinding the chain, or reeling in toward a target,
+		hook = new/obj/item/projectile/hookshot(src)		//and that the hookshot isn't currently sustaining a tether, then we can fire.
 		in_chamber = hook
 		firer = loc
 		update_icon()
 		return 1
 	return 0
 
-/obj/item/weapon/gun/hookshot/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
+/obj/item/weapon/gun/hookshot/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)//clicking anywhere reels the target to the player.
 	if(flag)	return //we're placing gun on a table or in backpack
 	if(check_tether())
 		if(istype(chain_datum.extremity_B,/mob/living/carbon))
@@ -100,7 +100,7 @@
 /obj/item/weapon/gun/hookshot/attack_hand(mob/user)
 	if(chain_datum && (chain_datum.extremity_A == src))
 		if(user.tether)
-
+			return//we cannot pick up a hookshot that is part of a tether if we are part of a different tether ourselves (for now)
 		else
 			var/obj/effect/overlay/chain/C = src.tether
 			C.extremity_A = user
@@ -110,7 +110,7 @@
 			src.tether = null
 	..()
 
-/obj/item/weapon/gun/hookshot/proc/check_tether()
+/obj/item/weapon/gun/hookshot/proc/check_tether()//checking whether the hookshot is currently sustaining a tether with its user as the base
 	if(chain_datum && istype(loc,/mob/living))
 		var/mob/living/L = loc
 		if(L.tether)
@@ -119,7 +119,7 @@
 				return 1
 	return 0
 
-/obj/item/weapon/gun/hookshot/proc/rewind_chain()
+/obj/item/weapon/gun/hookshot/proc/rewind_chain()//brings the links back toward the player
 	if(rewinding)
 		return
 	rewinding = 1
@@ -136,7 +136,7 @@
 	rewinding = 0
 	update_icon()
 
-/obj/item/weapon/gun/hookshot/proc/cancel_chain()
+/obj/item/weapon/gun/hookshot/proc/cancel_chain()//instantly delete the links
 	for(var/j = 1; j <= maxlength; j++)
 		var/obj/effect/overlay/hookchain/HC = links["[j]"]
 		HC.loc = src
@@ -144,7 +144,7 @@
 	clockwerk = 0
 	update_icon()
 
-/obj/item/weapon/gun/hookshot/proc/clockwerk_chain(var/length)
+/obj/item/weapon/gun/hookshot/proc/clockwerk_chain(var/length)//reel the player toward his target
 	if(clockwerk)
 		return
 	clockwerk = 1
@@ -162,6 +162,7 @@
 	clockwerk = 0
 	update_icon()
 
+//this datum contains all the data about a tether. It's extremities, which hookshot spawned it, and the list of all of its links.
 /datum/chain
 	var/list/links = list()
 	var/atom/movable/extremity_A = null
@@ -175,7 +176,7 @@
 	spawn(20)
 		process()
 
-/datum/chain/proc/process()
+/datum/chain/proc/process()//checking every 2 seconds if the links are still adjacent to each others, if not, break the tether.
 	while(!undergoing_deletion)
 		if(!Check_Integrity())
 			snap = 1
@@ -235,7 +236,7 @@
 				extremity_B = null
 			else
 				var/turf/U = C1.loc
-				if(U && U.Enter(C2,C2.loc))
+				if(U && U.Enter(C2,C2.loc))//if we cannot pull the target through the turf, we just let him go.
 					C2.loc = C1.loc
 				else
 					extremity_B.tether = null
@@ -289,7 +290,7 @@
 		else if(A == extremity_B)
 			return extremity_A.attempt_to_follow(src, A.loc)
 
-/obj/effect/overlay/chain/Move(newLoc,Dir=0,step_x=0,step_y=0)//if someone pulls the chain
+/obj/effect/overlay/chain/Move(newLoc,Dir=0,step_x=0,step_y=0)//for when someone pulls a part the chain.
 	var/turf/T = loc
 	if(..())
 		var/obj/effect/overlay/chain/CA = extremity_A
@@ -313,7 +314,7 @@
 		chain_datum.snap = 1
 		chain_datum.Delete_Chain()
 
-/obj/effect/overlay/chain/proc/follow(var/atom/movable/A,var/turf/T)
+/obj/effect/overlay/chain/proc/follow(var/atom/movable/A,var/turf/T)//this proc is called by links of the chain each time they get pulled, so they pull the rest of the chain.
 	var/turf/U = get_turf(A)
 	if(!T || !loc || (T.z != loc.z))
 		chain_datum.Delete_Chain()
@@ -335,7 +336,7 @@
 
 	forceMove(T, get_dir(src, T))
 
-	if(A == extremity_A)
+	if(A == extremity_A)//depending on which side is pulling the link, we'll pull the other side.
 		var/obj/effect/overlay/chain/CH = extremity_B
 		if(istype(CH))
 			CH.follow(src,R)
