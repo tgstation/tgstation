@@ -820,28 +820,6 @@ datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
 	return
 
 
-datum/reagent/medicine/antitoxin
-	name = "Anti-toxin"
-	id = "antitoxin"
-	description = "Heals toxin damage."
-	reagent_state = LIQUID
-	color = "#C8A5DC"
-	overdose_threshold = 30
-
-datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-2*REM)
-	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
-	..()
-	return
-
-datum/reagent/medicine/antitoxin/overdose_process(mob/living/M)
-	M.adjustToxLoss(4*REM) // End result is 2 toxin loss taken, because it heals 2 and then removes 4.
-	..()
-	return
-
-
 datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
 	id = "inaprovaline"
