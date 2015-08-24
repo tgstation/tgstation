@@ -47,7 +47,7 @@
 				if(prob(25))
 					var/amt = min(co2, 9)
 					T.air.carbon_dioxide -= amt
-					T.air.oxygen += amt/3*2
+					T.atmos_spawn_air(SPAWN_OXYGEN, amt/3*2)
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
