@@ -89,7 +89,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			possible_team_objectives += T
 
 	if(possible_team_objectives.len && prob(20*changelings.len))
-		changeling_team_objective_type = pick(possible_team_objectives)
+		if(changeling_team_objective_type = null)
+			changeling_team_objective_type = pick(possible_team_objectives)
 
 	for(var/datum/mind/changeling in changelings)
 		log_game("[changeling.key] (ckey) has been selected as a changeling")
@@ -186,7 +187,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/changeling/forge_changeling_objectives(datum/mind/changeling)
 	if(changeling_team_objective_type)
-		var/datum/objective/changeling_team_objective/team_objective = new changeling_team_objective_type
+		var/datum/objective/changeling_team_objective/team_objective = changeling_team_objective_type
 		team_objective.owner = changeling
 		changeling.objectives += team_objective
 
