@@ -674,7 +674,7 @@ var/list/beam_master = list()
 	var/count = 0
 	var/turf/T = get_turf(firer)
 	var/timer_total = 16
-	var/increment = timer_total/round(length/32)
+	var/increment = timer_total/max(1,round(length/32))
 	var/current_timer = 5
 
 	for(N,N<(length+16),N+=32)

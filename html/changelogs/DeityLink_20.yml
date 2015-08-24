@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Turrets and Mechas projectiles now have the same linearity that projectiles fired from guns have.
-  - tweak: Marauder missiles now cause a (0,1,2) explosion instead of the insignificant (0,0,2). Still a relatively small explosion but at least now it deals some damage.
-  - tweak: Turrets now make noises when they fire, the noise corresponds to which projectile they fire.
-  - tweak: Rockets fired from rocket launchers now pick up speed for the first half second after they get fired, instead of being at the same speed as bullets from the get-go.
