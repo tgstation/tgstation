@@ -343,3 +343,9 @@
 		if(D.vars.Find(varname))
 			if(D.vars[varname] == value)
 				return D
+
+//remove all nulls from a list
+/proc/removeNullsFromList(list/L)
+	while(L.Remove(null))
+		continue
+	return L
