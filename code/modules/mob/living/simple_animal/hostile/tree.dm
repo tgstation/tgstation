@@ -45,9 +45,9 @@
 			var/co2 = T.air.carbon_dioxide
 			if(co2 > 0)
 				if(prob(25))
-    					var/amt = min(co2, 9)
-    					T.air.carbon_dioxide -= amt
-    					T.air.oxygen += amt/3*2
+					var/amt = min(co2, 9)
+					T.air.carbon_dioxide -= amt
+					T.air.oxygen += amt/3*2
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
