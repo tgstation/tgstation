@@ -275,7 +275,9 @@
 	return valid
 
 /mob/living/simple_animal/pet/dog/corgi/proc/update_corgi_fluff()
-	switch(src.inventory_head.type)
+	if(!inventory_head)
+		return
+	switch(inventory_head.type)
 		if(/obj/item/clothing/head/helmet)
 			name = "Sergeant [real_name]"
 			desc = "The ever-loyal, the ever-vigilant."
