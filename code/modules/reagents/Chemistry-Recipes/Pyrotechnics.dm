@@ -49,7 +49,7 @@
 	name = "Black Powder"
 	id = "blackpowder"
 	result = "blackpowder"
-	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
+	required_reagents = list("saltpetre" = 1, "antitoxin" = 1, "sulfur" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/blackpowder_explosion

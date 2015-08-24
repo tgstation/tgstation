@@ -18,9 +18,9 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
 	new /obj/item/weapon/storage/box/rxglasses(src)
 
 /obj/structure/closet/secure_closet/medical2

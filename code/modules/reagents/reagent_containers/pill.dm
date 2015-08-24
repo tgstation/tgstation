@@ -103,11 +103,11 @@
 	icon_state = "pill18"
 	list_reagents = list("salbutamol" = 30)
 	roundstart = 1
-/obj/item/weapon/reagent_containers/pill/charcoal
+/obj/item/weapon/reagent_containers/pill/antitoxin
 	name = "antitoxin pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("antitoxin" = 50)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"

@@ -211,10 +211,10 @@
 	desc = "Contains epinephrine - used to stabilize patients."
 	list_reagents = list("epinephrine" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/charcoal
-	name = "syringe (charcoal)"
-	desc = "Contains charcoal."
-	list_reagents = list("charcoal" = 15)
+/obj/item/weapon/reagent_containers/syringe/antitoxin
+	name = "syringe (antitoxin)"
+	desc = "Contains anti-toxin."
+	list_reagents = list("antitoxin" = 15)
 
 /obj/item/weapon/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"

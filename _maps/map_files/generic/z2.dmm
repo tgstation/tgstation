@@ -4899,11 +4899,11 @@
 /area/shuttle/syndicate)
 "om" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe/charcoal,
-/obj/item/weapon/reagent_containers/syringe/charcoal{
+/obj/item/weapon/reagent_containers/syringe/antitoxin,
+/obj/item/weapon/reagent_containers/syringe/antitoxin{
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/syringe/charcoal{
+/obj/item/weapon/reagent_containers/syringe/antitoxin{
 	pixel_y = 4
 	},
 /turf/simulated/floor/plasteel/shuttle{

@@ -61,12 +61,12 @@
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	new /obj/item/weapon/reagent_containers/syringe/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/syringe/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/syringe/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
@@ -177,19 +177,19 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 
 
-/obj/item/weapon/storage/pill_bottle/charcoal
-	name = "bottle of charcoal pills"
+/obj/item/weapon/storage/pill_bottle/antitoxin
+	name = "bottle of antitoxin pills"
 	desc = "Contains pills used to counter toxins."
 
-/obj/item/weapon/storage/pill_bottle/charcoal/New()
+/obj/item/weapon/storage/pill_bottle/antitoxin/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
+	new /obj/item/weapon/reagent_containers/pill/antitoxin(src)
 
 /obj/item/weapon/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"

@@ -25,7 +25,7 @@
 	name = "inacusiate"
 	id = "inacusiate"
 	result = "inacusiate"
-	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
+	required_reagents = list("water" = 1, "carbon" = 1, "antitoxin" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/synaptizine
@@ -35,10 +35,10 @@
 	required_reagents = list("sugar" = 1, "lithium" = 1, "water" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/charcoal
-	name = "Charcoal"
-	id = "charcoal"
-	result = "charcoal"
+/datum/chemical_reaction/antitoxin
+	name = "Anti-toxin"
+	id = "antitoxin"
+	result = "antitoxin"
 	required_reagents = list("ash" = 1, "sodiumchloride" = 1)
 	result_amount = 2
 	mix_message = "The mixture yields a fine black powder."
@@ -57,14 +57,14 @@
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = "mine_salve"
 	result = "mine_salve"
 	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
 	id = "mine_salve"
@@ -153,7 +153,7 @@
 	name = "Oculine"
 	id = "oculine"
 	result = "oculine"
-	required_reagents = list("charcoal" = 1, "carbon" = 1, "hydrogen" = 1)
+	required_reagents = list("antitoxin" = 1, "carbon" = 1, "hydrogen" = 1)
 	result_amount = 3
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
@@ -197,7 +197,7 @@
 	name = "antihol"
 	id = "antihol"
 	result = "antihol"
-	required_reagents = list("ethanol" = 1, "charcoal" = 1, "copper" = 1)
+	required_reagents = list("ethanol" = 1, "antitoxin" = 1, "copper" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/cryoxadone

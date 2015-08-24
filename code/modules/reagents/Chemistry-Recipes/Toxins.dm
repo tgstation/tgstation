@@ -27,7 +27,7 @@
 	name = "Itching Powder"
 	id = "itching_powder"
 	result = "itching_powder"
-	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
+	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "antitoxin" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/facid
@@ -91,5 +91,5 @@
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
 	result = "mindbreaker"
-	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
+	required_reagents = list("silicon" = 1, "hydrogen" = 1, "antitoxin" = 1)
 	result_amount = 5
