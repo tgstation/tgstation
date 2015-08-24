@@ -10,11 +10,20 @@
 	ghost_read = 0 // Deactivate ghost touching.
 	ghost_write = 0
 
+	var/self_powered = 0
+
 	var/obj/item/weapon/charging = null
 
 	var/appearance_backup = null
 
 	machine_flags = WRENCHMOVE | FIXED2WORK
+
+/obj/machinery/recharger/New()
+	..()
+	if(self_powered)
+		use_power = 0
+		idle_power_usage = 0
+		active_power_usage = 0
 
 /obj/machinery/recharger/Destroy()
 	if(charging)
@@ -53,7 +62,8 @@
 		G.transform = M
 		user.drop_item(G, src)
 		charging = G
-		use_power = 2
+		if(!self_powered)
+			use_power = 2
 		update_icon()
 		return
 	..()
@@ -79,19 +89,20 @@
 		charging.loc = loc
 		user.put_in_hands(charging)
 		charging = null
-		use_power = 1
+		if(!self_powered)
+			use_power = 1
 		appearance_backup=null
 		update_icon()
 
 /obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
-obj/machinery/recharger/process()
+/obj/machinery/recharger/process()
 	if(!anchored)
 		icon_state = "recharger4"
 		return
 
-	if(stat & (NOPOWER|BROKEN))
+	if(!self_powered && (stat & (NOPOWER|BROKEN)))
 		icon_state = "recharger3"
 		return
 
@@ -101,7 +112,8 @@ obj/machinery/recharger/process()
 			if((E.power_supply.charge + 100) < E.power_supply.maxcharge)
 				E.power_supply.give(100)
 				icon_state = "recharger1"
-				use_power(250)
+				if(!self_powered)
+					use_power(250)
 				update_icon()
 			else
 				E.power_supply.charge = E.power_supply.maxcharge
@@ -113,7 +125,8 @@ obj/machinery/recharger/process()
 			if((M.bullets + 3) < M.max_bullets)
 				M.bullets = min(M.max_bullets,M.bullets+3)
 				icon_state = "recharger1"
-				use_power(250)
+				if(!self_powered)
+					use_power(250)
 				update_icon()
 			else
 				M.bullets = M.max_bullets
@@ -125,13 +138,14 @@ obj/machinery/recharger/process()
 			if(B.bcell)
 				if(B.bcell.give(175))
 					icon_state = "recharger1"
-					use_power(200)
+					if(!self_powered)
+						use_power(200)
 				else
 					icon_state = "recharger2"
 			else
 				icon_state = "recharger0"
 
-obj/machinery/recharger/emp_act(severity)
+/obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		..(severity)
 		return
@@ -147,7 +161,7 @@ obj/machinery/recharger/emp_act(severity)
 			B.bcell.charge = 0
 	..(severity)
 
-obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(charging)
 		overlays.len = 0
 		charging.update_icon()
@@ -157,12 +171,15 @@ obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to 
 		overlays.len = 0
 		icon_state = "recharger0"
 
-obj/machinery/recharger/wallcharger
+/obj/machinery/recharger/self_powered	//ideal for the Thunderdome
+	self_powered = 1
+
+/obj/machinery/recharger/wallcharger
 	name = "wall recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "wrecharger0"
 
-obj/machinery/recharger/wallcharger/process()
+/obj/machinery/recharger/wallcharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -172,7 +189,8 @@ obj/machinery/recharger/wallcharger/process()
 			if(E.power_supply.charge < E.power_supply.maxcharge)
 				E.power_supply.give(100)
 				icon_state = "wrecharger1"
-				use_power(250)
+				if(!self_powered)
+					use_power(250)
 			else
 				icon_state = "wrecharger2"
 			return
@@ -181,7 +199,8 @@ obj/machinery/recharger/wallcharger/process()
 			if(B.bcell)
 				if(B.bcell.give(175))
 					icon_state = "wrecharger1"
-					use_power(200)
+					if(!self_powered)
+						use_power(200)
 				else
 					icon_state = "wrecharger2"
 			else

@@ -205,6 +205,7 @@
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 250),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                        750),
 		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                  1000),
+		new /datum/data/mining_equipment("Hookshot", 			/obj/item/weapon/gun/hookshot,					                  1500),
 		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                      2000),
 	)
 

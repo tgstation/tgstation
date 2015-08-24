@@ -74,3 +74,13 @@
 	materials = list (MAT_IRON = 3750, MAT_GLASS = 2500, MAT_GOLD = 3750, MAT_SILVER = 1000)
 	category = "Armor"
 	build_path = /obj/item/clothing/head/advancedeod_helmet
+
+/datum/design/reactive_teleport_armor
+	name = "Reactive Teleport Armor"
+	desc = "Someone seperated our Research Director from his own head!"
+	id = "reactive_teleport_armor"
+	req_tech = list("bluespace" = 4, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_DIAMOND = 2000, MAT_IRON = 3000, MAT_URANIUM = 3750)
+	category = "Armor"
+	build_path = /obj/item/clothing/suit/armor/reactive

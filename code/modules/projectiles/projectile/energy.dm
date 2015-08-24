@@ -122,3 +122,27 @@
 	name = "buster pellet"
 	icon_state = "megabuster"
 	nodamage = 1
+
+/obj/item/projectile/energy/osipr
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "dark"
+	kill_count = 100
+	damage = 50
+	stun = 10
+	weaken = 10
+	stutter = 10
+	jittery = 30
+	destroy = 0
+	bounce_sound = 'sound/weapons/osipr_altbounce.ogg'
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
+	bounces = -1
+	phase_type = PROJREACT_OBJS|PROJREACT_MOBS
+	penetration = -1
+
+/obj/item/projectile/energy/osipr/Destroy()
+	var/turf/T = loc
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(4, 0, T)
+	s.start()
+	T.turf_animation('icons/obj/projectiles_impacts.dmi',"dark_explosion",0, 0, 13, 'sound/weapons/osipr_altexplosion.ogg')
+	..()

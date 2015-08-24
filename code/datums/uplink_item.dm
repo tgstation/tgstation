@@ -299,6 +299,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
 	cost = 3
 
+/datum/uplink_item/dangerous/gatling
+	name = "Gatling Gun"
+	desc = "A huge minigun. Makes up for its lack of mobility and discretion with sheer firepower. Has 200 bullets."
+	item = /obj/item/weapon/gun/gatling
+	cost = 20
+	gamemodes = list("nuclear emergency")
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons

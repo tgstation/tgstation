@@ -529,3 +529,247 @@ var/list/beam_master = list()
 			if((istype(M.wear_suit, /obj/item/clothing/suit/bluetag))||(istype(M.wear_suit, /obj/item/clothing/suit/redtag)))
 				M.Weaken(5)
 		return 1
+
+/obj/item/projectile/beam/bison
+	name = "heat ray"
+	damage_type = BURN
+	flag = "laser"
+	kill_count = 100
+	layer = 13
+	damage = 15
+	icon = 'icons/obj/lightning.dmi'
+	icon_state = "heatray"
+	animate_movement = 0
+	linear_movement = 0
+	pass_flags = PASSTABLE
+	var/drawn = 0
+	var/tang = 0
+	var/turf/last = null
+/obj/item/projectile/beam/bison/proc/adjustAngle(angle)
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
+	if(!angle)
+		angle = 1
+	/*if(angle < 0)
+		//angle = (round(abs(get_angle(A, user))) + 45) - 90
+		angle = round(angle) + 45 + 180
+	else
+		angle = round(angle) + 45*/
+	return angle
+
+/obj/item/projectile/beam/bison/process()
+	//calculating the turfs that we go through
+	var/lastposition = loc
+	target = get_turf(original)
+	dist_x = abs(target.x - src.x)
+	dist_y = abs(target.y - src.y)
+
+	if (target.x > src.x)
+		dx = EAST
+	else
+		dx = WEST
+
+	if (target.y > src.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+
+	if(dist_x > dist_y)
+		error = dist_x/2 - dist_y
+
+		spawn while(src && src.loc)
+			// only stop when we've hit something, or hit the end of the map
+			if(error < 0)
+				var/atom/step = get_step(src, dy)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				error += dist_x
+			else
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					break
+				src.Move(step)
+				error -= dist_y
+
+			if(isnull(loc))
+				draw_ray(lastposition)
+				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
+			if(kill_count < 1)
+				//del(src)
+				draw_ray(lastposition)
+				returnToPool(src)
+				return
+			kill_count--
+
+			if(!bumped && !isturf(original))
+				if(loc == target)
+					if(!(original in permutated))
+						draw_ray(target)
+						Bump(original)
+
+	else
+		error = dist_y/2 - dist_x
+		spawn while(src && src.loc)
+			// only stop when we've hit something, or hit the end of the map
+			if(error < 0)
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					break
+				src.Move(step)
+				error += dist_y
+			else
+				var/atom/step = get_step(src, dy)
+				if(!step)
+					break
+				src.Move(step)
+				error -= dist_x
+
+			if(isnull(loc))
+				draw_ray(lastposition)
+				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
+			if(kill_count < 1)
+				//del(src)
+				draw_ray(lastposition)
+				returnToPool(src)
+				return
+			kill_count--
+
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						draw_ray(target)
+						Bump(original)
+
+	return
+
+/obj/item/projectile/beam/bison/bullet_die()
+	draw_ray(loc)
+	..()
+
+/obj/item/projectile/beam/bison/proc/draw_ray(var/turf/lastloc)
+	if(drawn) return
+	drawn = 1
+	var/atom/curr = lastloc
+	var/Angle=round(Get_Angle(firer,curr))
+	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
+	var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
+	var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
+	I.Turn(Angle+45)
+	Istart.Turn(Angle+45)
+	Iend.Turn(Angle+45)
+	var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
+	var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
+	var/N=0
+	var/length=round(sqrt((DX)**2+(DY)**2))
+	var/count = 0
+	var/turf/T = get_turf(firer)
+	var/timer_total = 16
+	var/increment = timer_total/round(length/32)
+	var/current_timer = 5
+
+	for(N,N<(length+16),N+=32)
+		if(count >= kill_count)
+			break
+		count++
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,T,current_timer,1)
+		X.BeamSource=src
+		current_timer += increment
+		if((N+64>(length+16)) && (N+32<=(length+16)))
+			X.icon=Iend
+		else if(N==0)
+			X.icon=Istart
+		else if(N+32>(length+16))
+			X.icon=null
+		else
+			X.icon=I
+
+
+		var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
+		var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+		if(DX==0) Pixel_x=0
+		if(DY==0) Pixel_y=0
+		if(Pixel_x>32)
+			for(var/a=0, a<=Pixel_x,a+=32)
+				X.x++
+				Pixel_x-=32
+		if(Pixel_x<-32)
+			for(var/a=0, a>=Pixel_x,a-=32)
+				X.x--
+				Pixel_x+=32
+		if(Pixel_y>32)
+			for(var/a=0, a<=Pixel_y,a+=32)
+				X.y++
+				Pixel_y-=32
+		if(Pixel_y<-32)
+			for(var/a=0, a>=Pixel_y,a-=32)
+				X.y--
+				Pixel_y+=32
+
+		//Now that we've calculated the total offset in pixels, we move each beam parts to their closest corresponding turfs
+		var/x_increm = 0
+		var/y_increm = 0
+
+		while(Pixel_x >= 32 || Pixel_x <= -32)
+			if(Pixel_x > 0)
+				Pixel_x -= 32
+				x_increm++
+			else
+				Pixel_x += 32
+				x_increm--
+
+		while(Pixel_y >= 32 || Pixel_y <= -32)
+			if(Pixel_y > 0)
+				Pixel_y -= 32
+				y_increm++
+			else
+				Pixel_y += 32
+				y_increm--
+
+		X.x += x_increm
+		X.y += y_increm
+		X.pixel_x=Pixel_x
+		X.pixel_y=Pixel_y
+		var/turf/TT = get_turf(X.loc)
+		if(TT == firer.loc)
+			continue
+
+	return
+
+/obj/item/projectile/beam/bison/Bump(atom/A as mob|obj|turf|area)
+	//Heat Rays go through mobs
+	if(A == firer)
+		loc = A.loc
+		return 0 //cannot shoot yourself
+
+	if(firer && istype(A, /mob/living))
+		var/mob/living/M = A
+		A.bullet_act(src, def_zone)
+		loc = A.loc
+		permutated.Add(A)
+		visible_message("<span class='warning'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(istype(firer, /mob))
+			log_attack("<font color='red'>[key_name(firer)] shot [key_name(M)] with a [type]</font>")
+			M.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+			firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+			msg_admin_attack("[key_name(firer)] shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+			if(!iscarbon(firer))
+				M.LAssailant = null
+			else
+				M.LAssailant = firer
+		else
+			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+			msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+			log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
+		return 1
+	else
+		return ..()

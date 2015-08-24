@@ -20,7 +20,7 @@
 			for(var/datum/objective/OBJ in H.mind.objectives)
 				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 				obj_count++
-		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw")
+		var/randomizeguns = pick("taser","egun","laser","revolver","detective","smg","nuclear","deagle","gyrojet","pulse","silenced","cannon","doublebarrel","shotgun","combatshotgun","mateba","smg","uzi","crossbow","saw","hecate","osipr","gatling","bison","ricochet","spur")
 		var/randomizemagic = pick("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge","wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying")
 		if(!summon_type)
 			switch (randomizeguns)
@@ -65,6 +65,21 @@
 					new /obj/item/weapon/gun/energy/crossbow(get_turf(H))
 				if("saw")
 					new /obj/item/weapon/gun/projectile/automatic/l6_saw(get_turf(H))
+				if("hecate")
+					new /obj/item/weapon/gun/projectile/hecate(get_turf(H))
+					new /obj/item/ammo_casing/BMG50(get_turf(H))//can't give a full box of such deadly bullets. 3 shots is plenty.
+					new /obj/item/ammo_casing/BMG50(get_turf(H))
+				if("osipr")
+					new /obj/item/weapon/gun/osipr(get_turf(H))
+				if("gatling")
+					new /obj/item/weapon/gun/gatling(get_turf(H))
+				if("bison")
+					new /obj/item/weapon/gun/energy/bison(get_turf(H))
+				if("ricochet")
+					new /obj/item/weapon/gun/energy/ricochet(get_turf(H))
+				if("spur")
+					new /obj/item/weapon/gun/energy/polarstar(get_turf(H))
+					new /obj/item/device/modkit/spur_parts(get_turf(H))
 		else
 			switch (randomizemagic)
 				if("fireball")

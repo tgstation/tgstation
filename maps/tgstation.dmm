@@ -11653,7 +11653,7 @@
 "eqe" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/salvage/start)
 "eqf" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/fancy/matchbox,/obj/item/clothing/mask/cigarette/cigar,/obj/item/weapon/reagent_containers/food/drinks/flask{pixel_x = 8},/obj/item/clothing/accessory/medal/gold/captain,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
 "eqg" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
-"eqh" = (/obj/structure/closet/cabinet,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/shoes/jackboots,/obj/item/clothing/under/captain_fly{name = "Captain's uniform"},/obj/item/clothing/suit/hgpirate,/obj/item/clothing/head/hgpiratecap,/obj/item/clothing/glasses/eyepatch,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
+"eqh" = (/obj/structure/closet/cabinet,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/shoes/jackboots,/obj/item/clothing/under/captain_fly{name = "Captain's uniform"},/obj/item/clothing/suit/hgpirate,/obj/item/clothing/head/hgpiratecap,/obj/item/clothing/glasses/eyepatch,/obj/item/weapon/gun/energy/bison,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
 "eqi" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/door/airlock/multi_tile/glass{id_tag = "salvage_external"},/turf/simulated/floor/plating,/area/shuttle/salvage/start)
 "eqj" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/shuttle/salvage/start)
 "eqk" = (/obj/structure/bed/chair,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/anomaly)
