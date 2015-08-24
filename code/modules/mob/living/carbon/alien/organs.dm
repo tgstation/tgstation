@@ -79,6 +79,7 @@
 			var/mod = 1
 			if(!isalien(owner))
 				mod = 0.2
+			owner.adjustPlasma(plasma_rate/2)
 			owner.adjustBruteLoss(-heal_rate*mod)
 			owner.adjustFireLoss(-heal_rate*mod)
 			owner.adjustOxyLoss(-heal_rate*mod)

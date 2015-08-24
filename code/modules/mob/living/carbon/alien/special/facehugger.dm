@@ -187,7 +187,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
 								"<span class='userdanger'>[src] violates [target]'s face!</span>")
-	return
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
 	if(stat == DEAD || stat == CONSCIOUS)
@@ -196,19 +195,9 @@ var/const/MAX_ACTIVE_TIME = 400
 	stat = CONSCIOUS
 	icon_state = "[initial(icon_state)]"
 
-/*		for(var/mob/living/carbon/alien/alien in world)
-		var/image/activeIndicator = image('icons/mob/alien.dmi', loc = src, icon_state = "facehugger_active")
-		activeIndicator.override = 1
-		if(alien && alien.client)
-			alien.client.images += activeIndicator	*/
-
-	return
-
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
-
-/*		RemoveActiveIndicators()	*/
 
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
@@ -221,14 +210,11 @@ var/const/MAX_ACTIVE_TIME = 400
 	if(stat == DEAD)
 		return
 
-/*		RemoveActiveIndicators()	*/
-
 	icon_state = "[initial(icon_state)]_dead"
+	item_state = "facehugger_inactive"
 	stat = DEAD
 
 	visible_message("<span class='danger'>[src] curls up into a ball!</span>")
-
-	return
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
