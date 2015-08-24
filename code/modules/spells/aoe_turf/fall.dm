@@ -18,6 +18,7 @@
 	var/image/aoe_underlay
 	var/list/oureffects = list()
 	var/list/affected = list()
+	var/sleepfor
 
 
 /spell/aoe_turf/fall/New()
@@ -87,7 +88,7 @@
 	var/oursound = (invocation == "ZA WARUDO" ? 'sound/effects/theworld.ogg' :'sound/effects/fall.ogg')
 	playsound(usr, oursound, 100, 0, 0, 0, 0)
 
-	var/sleepfor = world.time + 100
+	sleepfor = world.time + 100
 	for(var/turf/T in targets)
 		//world << "Starting [T]"
 		oureffects += getFromPool(/obj/effect/stop/sleeping, T, sleepfor, usr:mind, src, invocation == "ZA WARUDO")
@@ -134,16 +135,19 @@
 	return
 
 /spell/aoe_turf/fall/after_cast(list/targets)
-	spawn(100)
-		//animate(aoe_underlay, transform = aoe_underlay.transform / 50, time = 2)
-		for(var/obj/effect/stop/sleeping/S in oureffects)
-			returnToPool(S)
-			oureffects -= S
-		for(var/atom/everything in affected)
-			var/icon/I = everything.tempoverlay
-			everything.overlays.Remove(I)
-			everything.ignoreinvert = initial(everything.ignoreinvert)
-		affected.len = 0
+	while(world.time < sleepfor)
+		for(var/mob/living/L in affected)
+			L.paralysis = max(L.paralysis, 1) //keep them down until its over
+		sleep(1)
+	//animate(aoe_underlay, transform = aoe_underlay.transform / 50, time = 2)
+	for(var/obj/effect/stop/sleeping/S in oureffects)
+		returnToPool(S)
+		oureffects -= S
+	for(var/atom/everything in affected)
+		var/icon/I = everything.tempoverlay
+		everything.overlays.Remove(I)
+		everything.ignoreinvert = initial(everything.ignoreinvert)
+	affected.len = 0
 
 	return
 
