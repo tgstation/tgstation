@@ -14,10 +14,6 @@
 /mob/camera/experience_pressure_difference()
 	return
 
-/mob/camera/Destroy()
-	..()
-	qdel(src)
-
 /mob/camera/Login()
 	..()
 	update_interface()
