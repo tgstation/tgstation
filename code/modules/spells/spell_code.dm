@@ -195,6 +195,9 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 	if(silenced > 0)
 		return
+	if(user.reagents && user.reagents.has_reagent("zombiepowder"))
+		user << "<span class='warning'>You just can't seem to focus enough to do this.</span>"
+		return 0
 
 	var/ourz = user.z
 	if(!ourz)
