@@ -38,18 +38,16 @@
 
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
-	var/atom/A = src.loc
-	if(istype(A, /turf/simulated))
-		var/turf/simulated/T = A
+	//Thank'e Phil  for the simplification
+	if(istype(src.loc, /turf/simulated))
+		var/turf/simulated/T = src.loc
 		if(T.air)
 			var/co2 = T.air.carbon_dioxide
-			if(prob(30))
-				if(co2 > 9)
-					T.air.carbon_dioxide -= 9
-					T.air.oxygen += 3
-				else if(co2 > 0)
-					T.air.oxygen += co2/3
-					T.air.carbon_dioxide = 0
+			if(co2 > 0)
+				if(prob(25))
+    					var/amt = min(co2, 9)
+    					T.air.carbon_dioxide -= amt
+    					T.air.oxygen += amt/3*2
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
