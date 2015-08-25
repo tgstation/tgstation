@@ -207,6 +207,17 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			return
 	return
 
+/obj/machinery/newscaster/bullet_act(var/obj/item/projectile/Proj)
+	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet)||istype(Proj,/obj/item/projectile/ricochet))
+		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+			hitstaken++
+			if(hitstaken>=3 && !(stat & BROKEN))
+				stat |= BROKEN
+				playsound(get_turf(src), 'sound/effects/Glassbr3.ogg', 100, 1)
+			else
+				playsound(get_turf(src), 'sound/effects/Glasshit.ogg', 100, 1)
+			update_icon()
+
 /obj/machinery/newscaster/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)

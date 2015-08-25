@@ -44,6 +44,10 @@
 	// wizard sleep spell probably better way to do this
 	var/sleeping = 0
 
+	// left by bullets that went all the way through
+	var/bullet_marks = 0
+	penetration_dampening = 10
+
 /*
  * Technically obsoleted by base_turf
 	//For building on the asteroid.
@@ -55,6 +59,12 @@
 	var/dynamic_lighting = 1
 
 	forceinvertredraw = 1
+
+/turf/examine(mob/user)
+	..()
+	if(bullet_marks)
+		user << "It has bullet markings on it."
+
 /turf/proc/process()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/process() called tick#: [world.time]")
 	universe.OnTurfTick(src)
@@ -84,7 +94,7 @@
 
 
 /turf/bullet_act(var/obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam/pulse))
+	if(Proj.destroy)
 		src.ex_act(2)
 	..()
 	return 0
@@ -587,6 +597,9 @@
 	if(istype(src, get_base_turf(src.z))) //Don't cultify the base turf, ever
 		return
 	ChangeTurf(get_base_turf(src.z))
+
+/turf/projectile_check()
+	return PROJREACT_WALLS
 
 /turf/singularity_act()
 	if(istype(src, get_base_turf(src.z))) //Don't singulo the base turf, ever

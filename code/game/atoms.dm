@@ -20,6 +20,7 @@ var/global/list/ghdel_profiling = list()
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 	var/pressure_resistance = ONE_ATMOSPHERE
+	var/penetration_dampening = 5 //drains some of a projectile's penetration power whenever it goes through the atom
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -247,6 +248,9 @@ var/global/list/ghdel_profiling = list()
 		return 1
 	return
 
+/atom/proc/projectile_check()
+	return
+
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
  //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \ *	atom/proc/search_contents_for() called tick#: [world.time]")
@@ -320,7 +324,7 @@ its easier to just keep the beam vertical.
 
 		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				del O							//pieces to a new orientation.
+				returnToPool(O)					//pieces to a new orientation.
 		var/Angle=round(Get_Angle(src,BeamTarget))
 		var/icon/I=new(icon,icon_state)
 		I.Turn(Angle)
@@ -329,7 +333,7 @@ its easier to just keep the beam vertical.
 		var/N=0
 		var/length=round(sqrt((DX)**2+(DY)**2))
 		for(N,N<length,N+=32)
-			var/obj/effect/overlay/beam/X=new(loc)
+			var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,loc)
 			X.BeamSource=src
 			if(N+32>length)
 				var/icon/II=new(icon,icon_state)
@@ -375,7 +379,7 @@ its easier to just keep the beam vertical.
 				break
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
+	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) returnToPool(O)
 
 //Woo hoo. Overtime
 //All atoms

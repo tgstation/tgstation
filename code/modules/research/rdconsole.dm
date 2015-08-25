@@ -71,6 +71,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	light_color = LIGHT_COLOR_PINK
 
+	var/part_sets = list(
+		"Stock Parts" = list(),
+		"Bluespace" = list(),
+		"Data" = list(),
+		"Engineering" = list(),
+		"Medical" = list(),
+		"Mining" = list(),
+		"Robotics" = list(),
+		"Weapons" = list(),
+		"Armor" = list(),
+		"Misc" = list(),
+		)
+
 /obj/machinery/computer/rdconsole/Destroy()
 	. = ..()
 	for(var/obj/machinery/r_n_d/R in linked_machines)
@@ -155,6 +168,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(/obj/machinery/r_n_d/fabricator/circuit_imprinter)
 				if(!linked_imprinter)
 					linked_imprinter = D
+	if(linked_lathe)
+		linked_lathe.part_sets = part_sets
 	return
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
@@ -228,6 +243,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		spawn(50)
 			screen = 1.2
 			files.AddTech2Known(t_disk.stored)
+			if(t_disk.stored.new_category && !(t_disk.stored.new_category in part_sets))
+				part_sets += t_disk.stored.new_category
+				part_sets[t_disk.stored.new_category] = list()
+				if(linked_lathe)
+					linked_lathe.part_sets = part_sets
 			updateUsrDialog()
 			griefProtection() //Update centcomm too
 

@@ -302,7 +302,7 @@
 				if(temp_turf && (temp_turf.z != 1 && temp_turf.z != 5) || remoteview_target.stat!=CONSCIOUS)
 					src << "<span class='warning'>Your psy-connection grows too faint to maintain!</span>"
 					isRemoteObserve = 0
-			if(!isRemoteObserve && client && !client.adminobs && !iscamera(client.eye))
+			if(!isRemoteObserve && client && !client.adminobs && !isTeleViewing(client.eye))
 				remoteview_target = null
 				reset_view(null)
 	return 1

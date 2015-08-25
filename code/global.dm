@@ -235,6 +235,8 @@ var/shuttlecoming = 0
 var/join_motd = null
 var/forceblob = 0
 
+var/polarstar = 0 //1 means that the polar star has been found, 2 means that the spur modification kit has been found
+
 // nanomanager, the manager for Nano UIs
 var/datum/nanomanager/nanomanager = new()
 

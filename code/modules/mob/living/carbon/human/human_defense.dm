@@ -9,28 +9,16 @@ emp_act
 */
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
-
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
-		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			var/reflectchance = 40 - round(P.damage/3)
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/forcebolt) || istype(P, /obj/item/projectile/change))
+			var/reflectchance = 60 - round(P.damage/3)
 			if(!(def_zone in list("chest", "groin")))
 				reflectchance /= 2
 			if(prob(reflectchance))
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
 
-				// Find a turf near or on the original location to bounce to
-				if(P.starting)
-					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/turf/curloc = get_turf(src)
-
-					// redirect the projectile
-					P.original = locate(new_x, new_y, P.z)
-					P.starting = curloc
-					P.current = curloc
-					P.firer = src
-					P.yo = new_y - curloc.y
-					P.xo = new_x - curloc.x
+				P.reflected = 1
+				P.rebound(src)
 
 				return -1 // complete projectile permutation
 
@@ -135,6 +123,12 @@ emp_act
 	return 0
 
 /mob/living/carbon/human/emp_act(severity)
+	for(var/obj/item/stickybomb/B in src)
+		if(B.stuck_to)
+			visible_message("<span class='warning'>\the [B] stuck on \the [src] suddenly deactivates itself and falls to the ground.</span>")
+			B.deactivate()
+			B.unstick()
+
 	if(flags & INVULNERABLE)
 		return
 
@@ -278,11 +272,11 @@ emp_act
 		w_uniform.add_blood(source)
 		update_inv_w_uniform(update)
 
-/mob/living/carbon/human/ex_act(severity)
+/mob/living/carbon/human/ex_act(severity,var/noblind = FALSE)
 	if(flags & INVULNERABLE)
 		return
 
-	if(!blinded)
+	if(!blinded && !noblind)
 		flick("flash", flash)
 
 	var/shielded = 0
@@ -329,13 +323,16 @@ emp_act
 
 		if(3.0)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
-				b_loss = b_loss/2
+			var/gotarmor = min(100,max(0,getarmor(null, "bomb")))
+
+			if (prob(gotarmor))
+				b_loss = (b_loss*((gotarmor-100)*-1))/100//equipments with armor[bomb]=100 will fully negate the damage of light explosives.
 			if (!earprot())
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)
-				Paralyse(10)
+				if (!prob((gotarmor-100)*-1))
+					Paralyse(10)
 
 	var/update = 0
 

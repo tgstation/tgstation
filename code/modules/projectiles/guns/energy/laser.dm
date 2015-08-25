@@ -50,7 +50,7 @@ obj/item/weapon/gun/energy/laser/retro
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-
+	projectile_type = /obj/item/projectile/beam/retro
 
 /obj/item/weapon/gun/energy/laser/captain
 	icon_state = "caplaser"

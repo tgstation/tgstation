@@ -8,7 +8,8 @@
 	var/changetype=null
 
 /obj/item/projectile/change/on_hit(var/atom/change)
-	wabbajack(change)
+	spawn(1)//fixes bugs caused by the target ceasing to exist before the projectile has died.
+		wabbajack(change)
 
 
 /obj/item/projectile/change/proc/wabbajack(var/mob/living/M) //WHY: as mob in living_mob_list

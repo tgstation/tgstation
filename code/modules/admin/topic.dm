@@ -2625,6 +2625,20 @@
 					W.icon_state = "revolver"
 					W.item_state = "gun"
 				message_admins("[key_name_admin(usr)] made every item look like a gun")
+			if("experimentalguns")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","GUN")
+				for(var/mob/living/carbon/C in player_list)
+					var/list/turflist = list()
+					for(var/turf/T in orange(src,1))
+						turflist += T
+					if(!turflist.len)
+						turflist += get_turf(C)
+					var/turf/U = pick(turflist)
+					var/obj/structure/closet/crate/secure/weapon/experimental/E = new(U)
+					C << "<span class='danger'>A crate appears next to you. You think you can read \"[E.chosen_set]\" scribbled on it</span>"
+					U.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg')
+				message_admins("[key_name_admin(usr)] distributed experimental guns to the entire crew")
 			if("schoolgirl")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SG")

@@ -970,6 +970,13 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define AUTOMAGDROP  2		//Does the mag drop when it's empty?
 #define EMPTYCASINGS 4		//Does the gun eject empty casings?
 
+//projectiles bouncing off and phasing through obstacles
+#define PROJREACT_WALLS		1//includes opaque doors
+#define PROJREACT_WINDOWS	2//includes transparent doors
+#define PROJREACT_OBJS		4//structures, machines and items
+#define PROJREACT_MOBS		8//all mobs
+#define PROJREACT_BLOB		16//blob
+
 ///////////////////////
 ///////RESEARCH////////
 ///////////////////////

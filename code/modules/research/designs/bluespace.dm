@@ -74,16 +74,6 @@
 	category = "Bluespace"
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact/large
 
-/datum/design/reactive_teleport_armor
-	name = "Reactive Teleport Armor"
-	desc = "Someone seperated our Research Director from his own head!"
-	id = "reactive_teleport_armor"
-	req_tech = list("bluespace" = 4, "materials" = 5)
-	build_type = PROTOLATHE
-	materials = list(MAT_DIAMOND = 2000, MAT_IRON = 3000, MAT_URANIUM = 3750)
-	category = "Armor"
-	build_path = /obj/item/clothing/suit/armor/reactive
-
 /datum/design/gps
 	name = "Global Positioning System"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
@@ -93,13 +83,3 @@
 	materials = list (MAT_IRON = 800, MAT_GLASS = 200)
 	category = "Bluespace"
 	build_path = /obj/item/device/gps/science
-
-/datum/design/mat_synth
-	name = "Material Synthesizer"
-	desc = "A device capable of producing very little rare material with a whole lot of investment."
-	id = "mat_synth"
-	req_tech = list("engineering" = 4, "materials" = 5, "powerstorage" = 3)
-	build_type = PROTOLATHE
-	materials = list (MAT_IRON = 3000, MAT_GLASS = 1500, MAT_DIAMOND = 1000, MAT_URANIUM = 3000)
-	category = "Engineering"
-	build_path = /obj/item/device/material_synth

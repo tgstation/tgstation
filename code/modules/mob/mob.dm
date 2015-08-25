@@ -49,6 +49,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	qdel(hud_used)
 	..()
 
+/mob/projectile_check()
+	return PROJREACT_MOBS
+
 /mob/proc/remove_screen_objs()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_screen_obj_references() called tick#: [world.time]")
 	if(flash)
@@ -1759,6 +1762,13 @@ mob/proc/walking()
 
 /mob/proc/dexterity_check()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")
+	return 0
+
+/mob/proc/isTeleViewing(var/client_eye)
+	if(istype(client_eye,/obj/machinery/camera))
+		return 1
+	if(istype(client_eye,/obj/item/projectile/nikita))
+		return 1
 	return 0
 
 /mob/proc/html_mob_check()

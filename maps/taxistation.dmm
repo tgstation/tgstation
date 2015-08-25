@@ -5971,7 +5971,7 @@
 "ckQ" = (/turf/simulated/shuttle/wall{icon_state = "wall3"},/area/shuttle/salvage/start)
 "ckR" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/fancy/matchbox,/obj/item/clothing/mask/cigarette/cigar,/obj/item/weapon/reagent_containers/food/drinks/flask{pixel_x = 8},/obj/item/clothing/accessory/medal/gold/captain,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
 "ckS" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
-"ckT" = (/obj/structure/closet/cabinet,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/shoes/jackboots,/obj/item/clothing/under/captain_fly{name = "Captain's uniform"},/obj/item/clothing/suit/hgpirate,/obj/item/clothing/head/hgpiratecap,/obj/item/clothing/glasses/eyepatch,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
+"ckT" = (/obj/structure/closet/cabinet,/obj/item/weapon/storage/backpack/satchel,/obj/item/clothing/shoes/jackboots,/obj/item/clothing/under/captain_fly{name = "Captain's uniform"},/obj/item/clothing/suit/hgpirate,/obj/item/clothing/head/hgpiratecap,/obj/item/clothing/glasses/eyepatch,/obj/item/weapon/gun/energy/bison,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet,/area/shuttle/salvage/start)
 "ckU" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/door/airlock/multi_tile/glass{id_tag = "salvage_external"},/turf/simulated/floor/plating,/area/shuttle/salvage/start)
 "ckV" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/shuttle/salvage/start)
 "ckW" = (/obj/structure/bed,/obj/item/weapon/bedsheet/clown,/turf/simulated/floor/carpet{icon_state = "carpetnoconnect"},/area/derelict/crew_quarters)
