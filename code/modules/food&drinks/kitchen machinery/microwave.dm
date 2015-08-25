@@ -166,7 +166,10 @@
 	return src.attack_hand(user)
 
 /obj/machinery/microwave/attack_ai(mob/user as mob)
-	return 0
+	if(..())
+		return
+	user.set_machine(src)
+	interact(user)
 
 /obj/machinery/microwave/attack_hand(mob/user as mob)
 	if(..())
