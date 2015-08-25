@@ -111,6 +111,7 @@
 		recharge_ticks = config.emag_recharge_ticks
 
 /obj/item/weapon/card/emag/process()
+	if(loc && loc:timestopped) return
 	if(energy < max_energy)
 		// Specified number of ticks has passed?  Add charge.
 		if(nticks >= recharge_ticks)

@@ -262,6 +262,8 @@
 		qdel(src)
 
 /obj/effect/plantsegment/proc/life()
+	if(timestopped) return 0 //under effects of time magick
+
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/life() called tick#: [world.time]")
 

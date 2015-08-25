@@ -68,6 +68,7 @@
 
 //self repair systems have a chance to bring the drone back to life
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Life()
+	if(timestopped) return 0 //under effects of time magick
 
 	//emps and lots of damage can temporarily shut us down
 	if(disabled > 0)

@@ -152,6 +152,7 @@ Attach to transfer valve and open. BOOM.
 
 
 /obj/fire/process()
+	if(timestopped) return 0
 	. = 1
 
 	// Get location and check if it is in a proper ZAS zone.

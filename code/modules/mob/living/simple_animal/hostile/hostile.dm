@@ -35,6 +35,7 @@
 	friends = list()
 
 /mob/living/simple_animal/hostile/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 	if(istype(loc, /obj/item/device/mobcapsule))
 		return 0

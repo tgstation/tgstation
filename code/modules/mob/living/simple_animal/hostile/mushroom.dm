@@ -37,6 +37,7 @@
 		user << "<span class='info'>It looks like it's been roughed up.</span>"
 
 /mob/living/simple_animal/hostile/mushroom/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		health = min(health+2, maxHealth)

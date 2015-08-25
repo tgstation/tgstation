@@ -346,6 +346,7 @@
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
 /mob/living/simple_animal/parrot/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 
 	//Sprite and AI update for when a parrot gets pulled

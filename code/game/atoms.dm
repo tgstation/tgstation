@@ -55,6 +55,7 @@ var/global/list/ghdel_profiling = list()
 	var/ignoreinvert = 0
 	var/forceinvertredraw = 0
 	var/tempoverlay
+	var/timestopped
 
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)

@@ -75,6 +75,7 @@
 	return
 
 /mob/living/simple_animal/hostile/scarybat/cult/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	if(emergency_shuttle.location == 1)
 		if(!enroute && !target)	//The shuttle docked, all monsters rush for the escape hallway

@@ -102,12 +102,14 @@
 				//world << "paralyzing [everything]"
 				affected += L
 				invertcolor(L)
-				L.Paralyse(5)
-				L.update_canmove()
+				spawn() recursive_timestop(L)
+				//L.Paralyse(5)
+				//L.update_canmove()
 				//world << "done"
 				L.playsound_local(L, invocation == "ZA WARUDO" ? 'sound/effects/theworld2.ogg' : 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
 			//world << "checking for color invertion"
 			else
+				spawn() recursive_timestop(everything)
 				if(everything.ignoreinvert)
 					//world << "[everything] is ignoring inverts."
 					continue
@@ -115,9 +117,10 @@
 				invertcolor(everything)
 				//world << "Done"
 				affected += everything
-
+			everything.timestopped = 1
 		//world << "inverting [T]"
 		invertcolor(T)
+		T.timestopped = 1
 		//world << "Done"
 		/*var/icon/I = T.tempoverlay
 
@@ -133,11 +136,25 @@
 
 		affected += T
 	return
+/spell/aoe_turf/fall/proc/recursive_timestop(var/atom/O)
+	var/list/processing_list = list(O)
+	var/list/processed_list = new/list()
+
+
+	while (processing_list.len)
+		var/atom/A = processing_list[1]
+		affected |= A
+		A.timestopped = 1
+
+		for (var/atom/B in A)
+			if (!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
 
 /spell/aoe_turf/fall/after_cast(list/targets)
 	while(world.time < sleepfor)
-		for(var/mob/living/L in affected)
-			L.paralysis = max(L.paralysis, 1) //keep them down until its over
 		sleep(1)
 	//animate(aoe_underlay, transform = aoe_underlay.transform / 50, time = 2)
 	for(var/obj/effect/stop/sleeping/S in oureffects)
@@ -147,6 +164,7 @@
 		var/icon/I = everything.tempoverlay
 		everything.overlays.Remove(I)
 		everything.ignoreinvert = initial(everything.ignoreinvert)
+		everything.timestopped = 0
 	affected.len = 0
 
 	return

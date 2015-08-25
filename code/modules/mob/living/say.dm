@@ -126,6 +126,7 @@ var/list/department_radio_keys = list(
 
 // /vg/edit: Added forced_by for handling braindamage messages and meme stuff
 /mob/living/say(var/message, bubble_type)
+	if(timestopped) return //under the effects of time magick
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	message = capitalize(message)
 

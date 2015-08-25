@@ -12,6 +12,8 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
+	if(timestopped) return 0 //under effects of time magick
+
 	if (monkeyizing)	return
 	if (update_muts)
 		update_muts=0

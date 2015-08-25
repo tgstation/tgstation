@@ -67,7 +67,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /spell/proc/process()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/spell/proc/process() called tick#: [world.time]")
 	spawn while(charge_counter < charge_max)
-		charge_counter++
+		if(!holder.timestopped)
+			charge_counter++
 		sleep(1)
 	return
 

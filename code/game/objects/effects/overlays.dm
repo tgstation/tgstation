@@ -33,6 +33,8 @@
 	spawn(lifetime)
 		returnToPool(src)
 
+/obj/effect/overlay/beam/persist/New()
+	return
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

@@ -321,6 +321,7 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/humanoid/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	if (handcuffed)
 		return 1
 	return 0

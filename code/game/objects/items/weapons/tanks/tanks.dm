@@ -218,6 +218,8 @@
 /obj/item/weapon/tank/proc/check_status()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/tank/proc/check_status() called tick#: [world.time]")
 	//Handle exploding, leaking, and rupturing of the tank
+	if(timestopped) return
+
 	var/cap = 0
 	var/uncapped = 0
 	if(!air_contents)

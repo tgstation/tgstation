@@ -69,12 +69,14 @@ var/list/beam_master = list()
 	var/length=round(sqrt((DX)**2+(DY)**2))
 	var/count = 0
 	var/turf/T = get_turf(src)
+	var/list/ouroverlays = list()
 	for(N,N<length,N+=32)
 		if(count >= kill_count)
 			break
 		count++
-		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,T)
+		var/obj/effect/overlay/beam/persist/X=getFromPool(/obj/effect/overlay/beam/persist,T)
 		X.BeamSource=src
+		ouroverlays += X
 		if((N+64>length) && (N+32<=length))
 			X.icon=Iend
 		else if(N==0)
@@ -131,6 +133,8 @@ var/list/beam_master = list()
 		X.pixel_x=Pixel_x
 		X.pixel_y=Pixel_y
 		var/turf/TT = get_turf(X.loc)
+		while((TT.timestopped || timestopped || X.timestopped) && count)
+			sleep(3)
 		if(TT == firer.loc)
 			continue
 		if(TT.density)
@@ -151,8 +155,14 @@ var/list/beam_master = list()
 			if(X)
 				del(X)
 			break
+	spawn(10) for(var/atom/thing in ouroverlays)
+		ouroverlays -= thing
+		returnToPool(thing)
 	spawn
 		while(loc) //Move until we hit something
+			//world << "[src] start of while loop curr [formatJumpTo(loc)] last [formatJumpTo(last)]"
+			while((loc.timestopped || timestopped) && !first)
+				sleep(3)
 			if(first)
 				icon = midicon
 			if((!( current ) || loc == current)) //If we pass our target
@@ -201,6 +211,7 @@ var/list/beam_master = list()
 				if(src.loc != current)
 					tang = adjustAngle(get_angle(src.loc,current))
 				icon_state = "[tang]"
+
 		//del(src)
 		returnToPool(src)
 	return
@@ -302,6 +313,7 @@ var/list/beam_master = list()
 	return
 
 /obj/item/projectile/beam/bresenham_step(var/distA, var/distB, var/dA, var/dB, var/lastposition, var/target_dir, var/reference)
+	var/first = 1
 	while(src && src.loc)// only stop when we've hit something, or hit the end of the map
 		if(error < 0)
 			var/atom/step = get_step(src, dB)
@@ -381,6 +393,9 @@ var/list/beam_master = list()
 					var/list/turfs = list()
 					turfs["[icon_state][target_dir]"] = list(loc)
 					beam_master[reference] = turfs
+		while((loc.timestopped || timestopped) && !first)
+			sleep(3)
+		first = 0
 
 
 	return reference
@@ -391,7 +406,7 @@ var/list/beam_master = list()
 
 	spawn(0)
 		var/target_dir = dir ? dir : src.dir// TODO: remove dir arg. Or don't because the way this was set up without it broke spacepods.
-
+		var/first = 1
 		while(loc) // Move until we hit something.
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 				returnToPool(src)
@@ -427,24 +442,35 @@ var/list/beam_master = list()
 				var/list/turfs = new
 				turfs["[icon_state][target_dir]"] = list(loc)
 				beam_master[reference] = turfs
+			while((loc.timestopped || timestopped) && !first)
+				sleep(3)
+			first = 0
+
 
 	cleanup(reference)
 
 /obj/item/projectile/beam/proc/cleanup(const/reference)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/projectile/beam/proc/cleanup() called tick#: [world.time]")
-	src = null // Redundant.
-				// No, if it's not set to null this proc will be silently killed.
+	var/TS
+	var/atom/lastloc
+	var/starttime = world.time
+	while(world.time - starttime <= 3 || TS)
+		if(loc)
+			lastloc = loc
+		TS = lastloc.timestopped
+		if(TS)
+			sleep(3)
+		else sleep(1)
 
-	spawn(3) // Waits .3 seconds then removes the overlay.
-		var/list/turf_master = beam_master[reference]
 
-		for(var/laser_state in turf_master)
-			var/list/turfs = turf_master[laser_state]
+	var/list/turf_master = beam_master[reference]
 
-			for(var/turf/T in turfs)
-				T.overlays.Remove(beam_master[laser_state])
+	for(var/laser_state in turf_master)
+		var/list/turfs = turf_master[laser_state]
 
-			turfs.len = 0
+		for(var/turf/T in turfs)
+			T.overlays.Remove(beam_master[laser_state])
+
+		turfs.len = 0
 
 /obj/item/projectile/beam/practice
 	name = "laser"

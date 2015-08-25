@@ -14,6 +14,7 @@
 	if (!loc) return
 	if (monkeyizing)
 		return
+	if(timestopped) return 0 //under effects of time magick
 
 	..()
 	var/datum/gas_mixture/enviroment = loc.return_air()

@@ -46,6 +46,7 @@
 		del(G)
 
 /mob/living/simple_animal/sculpture/Life()
+	if(timestopped) return 0 //under effects of time magick
 
 	//If we are hibernating, just don't do anything
 	if(hibernate)

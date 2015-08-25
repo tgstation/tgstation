@@ -131,6 +131,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	return
 
 /mob/living/simple_animal/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 
 	//Health
@@ -302,6 +303,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	return "says, \"[text]\"";
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
+	if(timestopped) return //under effects of time magick
 	if(stat)
 		return
 	if(act == "scream")

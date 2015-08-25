@@ -30,6 +30,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
@@ -124,6 +125,7 @@
 		..()
 
 /mob/living/simple_animal/cow/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 	if(stat == CONSCIOUS)
 		if(udder && prob(5))
@@ -175,6 +177,7 @@
 	pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. =..()
 	if(!.)
 		return
@@ -238,6 +241,7 @@
 		..()
 
 /mob/living/simple_animal/chicken/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. =..()
 	if(!.)
 		return

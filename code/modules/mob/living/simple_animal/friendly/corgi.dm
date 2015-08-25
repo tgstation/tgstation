@@ -32,8 +32,12 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	var/list/spin_emotes = list("dances around","chases its tail")
 
 /mob/living/simple_animal/corgi/Life()
+	if(timestopped) return 0 //under effects of time magick
+	spinaroo(spin_emotes)
+
 	. = ..()
 	if(.)
 		if(fire)
@@ -371,7 +375,7 @@
 
 	return valid
 
-/mob/living/simple_animal/corgi/proc/spinaroo(var/list/emotes = list("dances around","chases its tail"))
+/mob/living/simple_animal/corgi/proc/spinaroo(var/list/emotes)
     //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/corgi/proc/spinaroo() called tick#: [world.time]")
     if(!stat && !resting && !locked_to)
         if(prob(1))
@@ -394,11 +398,12 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+	spin_emotes = list("dances around","chases his tail")
 
 /mob/living/simple_animal/corgi/Ian/Life()
-	..()
+	if(timestopped) return 0 //under effects of time magick
 
-	spinaroo(list("dances around","chases its tail"))
+	..()
 
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && !resting && !locked_to && (ckey == null))
@@ -510,6 +515,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	spin_emotes = list("dances around","chases her of a tail")
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/corgi/Lisa/Topic(href, href_list)
@@ -517,10 +523,6 @@
 		usr << "<span class='warning'>[src] already has a cute bow!</span>"
 		return
 	..()
-
-/mob/living/simple_animal/corgi/Lisa/Life()
-	..()
-	spinaroo(list("dances around","chases her tail"))
 
 /mob/living/simple_animal/corgi/attack_hand(mob/living/carbon/human/M)
 	. = ..()
@@ -549,6 +551,7 @@
 	icon_state = "doby"
 	icon_living = "doby"
 	icon_dead = "doby_dead"
+	spin_emotes = list("prances around","chases her nub of a tail")
 
 //Sasha can't wear hats!
 /mob/living/simple_animal/corgi/sasha/Topic(href, href_list)
@@ -556,9 +559,3 @@
 		usr << "<span class='warning'>[src] won't wear that!</span>"
 		return
 	..()
-
-
-/mob/living/simple_animal/corgi/sasha/Life()
-    ..()
-
-    spinaroo(list("prances around","chases her nub of a tail"))

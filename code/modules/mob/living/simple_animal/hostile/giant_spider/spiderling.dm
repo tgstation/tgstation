@@ -69,6 +69,7 @@
 	stance = HOSTILE_STANCE_IDLE
 
 /mob/living/simple_animal/hostile/giant_spider/spiderling/Life()
+	if(timestopped) return 0 //under effects of time magick
 	if(travelling_in_vent)
 		if(istype(src.loc, /turf))
 			travelling_in_vent = 0

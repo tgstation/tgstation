@@ -154,6 +154,8 @@ var/global/list/organ_damage_overlays = list(
 
 	set invisibility = 0
 	//set background = 1
+	if(timestopped) return 0 //under effects of time magick
+
 #ifdef PROFILE_LIFE
 	debug_life("Started", "Starting Life() cycle [cycle]")
 #endif

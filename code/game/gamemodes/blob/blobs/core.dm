@@ -39,6 +39,8 @@
 	return
 
 /obj/effect/blob/core/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	if(!overmind)
 		create_overmind()
 	else
