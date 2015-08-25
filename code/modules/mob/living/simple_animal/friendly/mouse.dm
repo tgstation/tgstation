@@ -22,6 +22,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/mouse/New()
 	..()
@@ -77,6 +78,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+	gold_core_spawnable = 0
 
 /obj/item/trash/deadmouse
 	name = "dead mouse"
