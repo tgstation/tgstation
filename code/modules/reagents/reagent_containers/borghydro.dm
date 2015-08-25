@@ -23,7 +23,7 @@ Borg Hypospray
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("dexalin", "doctorsdelight", "anti_toxin", "inaprovaline", "spaceacillin")
+	var/list/reagent_ids = list("dexalin", "doctorsdelight", "anti_toxin", "inaprovaline", "spaceacillin","alkysine")
 	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
