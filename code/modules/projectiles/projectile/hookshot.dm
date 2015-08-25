@@ -1,5 +1,5 @@
 /obj/item/projectile/hookshot
-	name = "hookshot"
+	name = "hook"
 	icon = 'icons/obj/projectiles_experimental.dmi'
 	icon_state = "hookshot"
 	damage = 0
@@ -71,6 +71,14 @@
 		OnDeath()
 		returnToPool(src)
 
+/obj/item/projectile/hookshot/Destroy()
+	var/obj/item/weapon/gun/hookshot/hookshot = shot_from
+	if(hookshot)
+		if(!hookshot.clockwerk && !hookshot.rewinding)
+			hookshot.rewind_chain()
+		hookshot.hook = null
+	..()
+
 /obj/item/projectile/hookshot/Bump(atom/A as mob|obj|turf|area)
 	if(bumped)	return 0
 	bumped = 1
@@ -123,15 +131,16 @@
 					else
 						C.extremity_A = chain_datum.links["[i-1]"]
 						C.extremity_B = chain_datum.links["[i+1]"]
+
+				if(istype(firer, /mob) && isliving(AM))
+					var/mob/living/L = AM
+					log_attack("<font color='red'>[key_name(firer)] hooked [key_name(L)] with a [type]</font>")
+					L.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> hooked <b>[key_name(L)]</b> with a <b>[type]</b>"
+					firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> hooked <b>[key_name(L)]</b> with a <b>[type]</b>"
+
 				hookshot.cancel_chain()					//then we remove the chain laid by the projectile
 			else
 				hookshot.rewind_chain()
 		else
 			hookshot.rewind_chain()					//hit something that we can neither pull ourselves to nor drag to us? Just retract the chain.
 	bullet_die()
-
-/obj/effect/overlay/hookchain
-	name = "hookshot"
-	icon = 'icons/obj/projectiles_experimental.dmi'
-	icon_state = "hookshot_chain"
-	animate_movement = 0

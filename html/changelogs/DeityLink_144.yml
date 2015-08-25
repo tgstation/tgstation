@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Using the hookshot on a mob now creates attack logs.
+  - bugfix: Fixed a bug that would make hookshots unable to fire, and their projectile chain to remain on the ground.
+  - bugfix: Fixed a bug that would allow hookshots to let players clip through walls.

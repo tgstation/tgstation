@@ -1649,7 +1649,7 @@
 		for(var/obj/item/hand in handlist)
 			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand,1))
 				step_towards(hand, src)
-				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
+				src << "<span class = 'warning'>\The [S] pulls \the [hand] from your grip!</span>"
 	if(radiations)
 		apply_effect(current_size * radiations, IRRADIATE)
 	if(shoes)

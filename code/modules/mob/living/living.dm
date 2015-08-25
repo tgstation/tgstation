@@ -705,11 +705,11 @@ Thanks.
 		for(var/i = 1;i<hookshot.maxlength;i++)
 			var/obj/effect/overlay/hookchain/HC = hookshot.links["[i]"]
 			if(HC.loc != hookshot)
-				HC.forceMove(get_step(HC,direct),direct)
+				HC.Move(get_step(HC,direct),direct)
 
 		if(hookshot.hook)
 			var/obj/item/projectile/hookshot/hook = hookshot.hook
-			hook.forceMove(get_step(hook,direct),direct)
+			hook.Move(get_step(hook,direct),direct)
 			if(direct & NORTH)
 				hook.override_starting_Y++
 				hook.override_target_Y++
