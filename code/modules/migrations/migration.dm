@@ -7,9 +7,13 @@
 /datum/migration
 	var/name=""    // Displayed name of the migration.
 	var/package="" // Package ID of this migration. (15 chars max)
+	var/dbms=""    // Name of the DBMS (mysql, sqlite)
 	var/id=1       // Revision ID of this migration, incremented for each change.
 
-	var/DBConnection/db = null // Database connection
+	var/datum/migration_controller/MC // Database connection
+
+/datum/migration/New(var/datum/migration_controller/mc)
+	MC=mc
 
 /datum/migration/proc/up()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/up() called tick#: [world.time]")
@@ -23,40 +27,16 @@
 
 // Helpers
 /datum/migration/proc/query(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/query() called tick#: [world.time]")
-	var/DBQuery/query = db.NewQuery(sql)
-	if(!query.Execute())
-		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
-		return FALSE
-
-	var/list/rows=list()
-	while(query.NextRow())
-		rows += list(query.item)
-	return rows
+	return
 
 /datum/migration/proc/hasResult(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasResult() called tick#: [world.time]")
-	var/DBQuery/query = db.NewQuery(sql)
-	if(!query.Execute())
-		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
-		return FALSE
-
-	if (query.NextRow())
-		return TRUE
-	return FALSE
+	return
 
 /datum/migration/proc/execute(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/execute() called tick#: [world.time]")
-	var/DBQuery/query = db.NewQuery(sql)
-	if(!query.Execute())
-		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
-		return FALSE
-	return TRUE
+	return
 
 /datum/migration/proc/hasTable(var/tableName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasTable() called tick#: [world.time]")
-	return hasResult("SHOW TABLES LIKE '[tableName]'")
+	return
 
 /datum/migration/proc/hasColumn(var/tableName, var/columnName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration/proc/hasColumn() called tick#: [world.time]")
-	return hasResult("SHOW COLUMNS FROM [tableName] LIKE '[columnName]'")
+	return

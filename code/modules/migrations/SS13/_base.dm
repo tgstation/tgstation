@@ -1,2 +1,2 @@
-/datum/migration/ss13
+/datum/migration/mysql/ss13
 	package="ss13"
