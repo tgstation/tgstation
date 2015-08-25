@@ -5,13 +5,16 @@ var/global/datum/migration_controller/mysql/migration_controller_mysql = null
 	var/DBConnection/db
 
 /datum/migration_controller/mysql/setup()
-
-	// Change this if needed.
-	db = dbcon
-	/////////////////////////
-
-	if(!db || !db.IsConnected())
+	if(!dbcon || !istype(dbcon) || !dbcon.IsConnected())
+		testing("Something wrong with dbcon.")
 		return FALSE
+	var/DBQuery/Q = dbcon.NewQuery()
+	if(!Q)
+		testing("Something wrong with dbcon.NewQuery()")
+		return FALSE
+	Q.Close()
+	testing("MySQL is okay")
+	db = dbcon
 	return TRUE
 
 /datum/migration_controller/mysql/createMigrationTable()

@@ -11,6 +11,7 @@
 	var/database/query/Q = new()
 	Q.Add(sql)
 	if(!Q.Execute(dbfilename))
+		world.log << sql
 		world.log << "Error in [package]#[id]: [Q.ErrorMsg()]"
 		return null
 	var/list/O=list()
@@ -24,6 +25,7 @@
 	var/database/query/Q = new()
 	Q.Add(sql)
 	if(!Q.Execute(dbfilename))
+		world.log << sql
 		world.log << "Error in [package]#[id]: [Q.ErrorMsg()]"
 		return FALSE
 	return Q.NextRow()
@@ -32,6 +34,7 @@
 	var/database/query/Q = new()
 	Q.Add(sql)
 	if(!Q.Execute(dbfilename))
+		world.log << sql
 		world.log << "Error in [package]#[id]: [Q.ErrorMsg()]"
 		return FALSE
 	return TRUE

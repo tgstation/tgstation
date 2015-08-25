@@ -3,7 +3,33 @@
 	name = "Initial State"
 
 /datum/migration/sqlite/ss13_prefs/_001/up()
-	var/sql={"CREATE TABLE `body` (
+
+	var/sql={"CREATE TABLE `players` (
+	`ID`					INTEGER PRIMARY KEY AUTOINCREMENT,
+	`player_ckey`			TEXT NOT NULL,
+	`player_slot`			INTEGER NOT NULL,
+	`ooc_notes`				TEXT,
+	`real_name`				TEXT,
+	`random_name`			INTEGER,
+	`gender`				TEXT,
+	`age`					INTEGER,
+	`species`				TEXT,
+	`language`				TEXT,
+	`flavor_text`			TEXT,
+	`med_record`			TEXT,
+	`sec_record`			TEXT,
+	`gen_record`			TEXT,
+	`player_alt_titles`		TEXT,
+	`be_special`			TEXT,
+	`disabilities`			INTEGER,
+	`nanotrasen_relation`	TEXT,
+	UNIQUE(player_ckey, player_slot)
+);"}
+	if(!hasTable("players"))
+		if(!execute(sql))
+			return FALSE
+
+	sql={"CREATE TABLE `body` (
 	`ID`				INTEGER PRIMARY KEY AUTOINCREMENT,
 	`player_ckey`		TEXT NOT NULL,
 	`player_slot`		INTEGER NOT NULL,
@@ -47,31 +73,6 @@
 	UNIQUE(player_ckey, player_slot)
 );"}
 	if(!hasTable("jobs"))
-		if(!execute(sql))
-			return FALSE
-
-	sql={"CREATE TABLE `players` (
-	`ID`					INTEGER PRIMARY KEY AUTOINCREMENT,
-	`player_ckey`			TEXT NOT NULL,
-	`player_slot`			INTEGER NOT NULL,
-	`ooc_notes`				TEXT,
-	`real_name`				TEXT,
-	`random_name`			INTEGER,
-	`gender`				TEXT,
-	`age`					INTEGER,
-	`species`				TEXT,
-	`language`				TEXT,
-	`flavor_text`			TEXT,
-	`med_record`			TEXT,
-	`sec_record`			TEXT,
-	`gen_record`			TEXT,
-	`player_alt_titles`		TEXT,
-	`be_special`			TEXT,
-	`disabilities`			INTEGER,
-	`nanotrasen_relation`	TEXT,
-	UNIQUE(player_ckey, player_slot)
-);"}
-	if(!hasTable("players"))
 		if(!execute(sql))
 			return FALSE
 

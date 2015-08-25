@@ -6,39 +6,44 @@
 	var/id = ""
 
 /datum/migration_controller/proc/setup()
-	return
+	return FALSE
 /datum/migration_controller/proc/createMigrationTable()
-	return
+	return FALSE
 
 /datum/migration_controller/New()
-	if(!setup()) return
+	if(!setup())
+		world.log << "\[Migrations] ([id]): Setup() returned false, will not run migrations for this DBMS."
+	else
+		if(!hasTable(TABLE_NAME))
+			world.log << "\[Migrations] ([id]): Creating [TABLE_NAME]"
+			createMigrationTable()
 
-	if(!hasTable(TABLE_NAME))
-		createMigrationTable()
+		for(var/list/row in query("SELECT pkgID, version FROM [TABLE_NAME]"))
+			if(id=="mysql")
+				db_states[row[1]] = text2num(row[2])
+			else
+				db_states[row["pkgID"]] = text2num(row["version"])
 
-	for(var/list/row in query("SELECT pkgID, version FROM [TABLE_NAME]"))
-		db_states[row[1]] = text2num(row[2])
-
-	var/list/newpacks[0]
-	for(var/mtype in typesof(/datum/migration)-list(/datum/migration))
-		var/datum/migration/M = new mtype(src)
-		if(M.package == "" || M.name == "" || M.dbms != id) continue
-		if(!(M.package in newpacks))
-			newpacks[M.package]=list()
-		var/list/pack = newpacks[M.package]
-		pack += M
-	for(var/pkgID in newpacks)
-		if(!(pkgID in packages))
-			packages[pkgID]=list()
-		var/list/prepack = newpacks[pkgID]
-		var/list/pack[prepack.len]
-		for(var/datum/migration/M in newpacks[pkgID])
-			pack[M.id] = M
-			//world.log << "\[Migrations] [pkgID]#[M.id] = [M.type] - [M.name]"
-		packages[pkgID]=pack
-		world.log << "\[Migrations] Loaded [pack.len] [id] DB migrations from package [pkgID]."
-	//VersionCheck()
-	UpdateAll()
+		var/list/newpacks[0]
+		for(var/mtype in typesof(/datum/migration)-list(/datum/migration))
+			var/datum/migration/M = new mtype(src)
+			if(M.package == "" || M.name == "" || M.dbms != id) continue
+			if(!(M.package in newpacks))
+				newpacks[M.package]=list()
+			var/list/pack = newpacks[M.package]
+			pack += M
+		for(var/pkgID in newpacks)
+			if(!(pkgID in packages))
+				packages[pkgID]=list()
+			var/list/prepack = newpacks[pkgID]
+			var/list/pack[prepack.len]
+			for(var/datum/migration/M in newpacks[pkgID])
+				pack[M.id] = M
+				//world.log << "\[Migrations] [pkgID]#[M.id] = [M.type] - [M.name]"
+			packages[pkgID]=pack
+			world.log << "\[Migrations] Loaded [pack.len] [id] DB migrations from package [pkgID]."
+		//VersionCheck()
+		UpdateAll()
 
 /datum/migration_controller/proc/getCurrentVersion(var/pkgID)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/getCurrentVersion() called tick#: [world.time]")
