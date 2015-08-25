@@ -195,10 +195,9 @@
 	var/s_tone = 0.0
 	var/created_name = "Buttbot"
 
-	proc
-		transfer_buttdentity(var/mob/living/carbon/H)
-			name = "[H]'s butt"
-			return
+/obj/item/clothing/head/butt/proc/transfer_buttdentity(var/mob/living/carbon/H)
+	name = "[H.real_name]'s butt"
+	return
 
 /obj/item/clothing/head/tinfoil
 	name = "tinfoil hat"
