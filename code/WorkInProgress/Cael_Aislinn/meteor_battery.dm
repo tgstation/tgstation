@@ -14,7 +14,14 @@
 /obj/item/projectile/missile/process(var/turf/newtarget)
 	target = newtarget
 	dir = get_dir(src.loc, target)
-	walk_towards(src, target, MISSILE_SPEED)
+	//walk_towards(src, target, MISSILE_SPEED)
+	spawn()
+		while(loc)
+			if(timestopped)
+				sleep(world.tick_lag)
+				continue
+			step_towards(src,target)
+			sleep(MISSILE_SPEED)
 
 /obj/item/projectile/missile/Bump(atom/A)
 	spawn(0)

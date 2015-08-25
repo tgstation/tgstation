@@ -228,6 +228,8 @@
 	return
 
 /obj/effect/alien/weeds/proc/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/alien/weeds/proc/Life() called tick#: [world.time]")
 	//set background = 1
 	var/turf/U = get_turf(src)

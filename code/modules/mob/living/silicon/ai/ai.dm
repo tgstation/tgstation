@@ -347,6 +347,7 @@ var/list/ai_list = list()
 	return 0
 
 /mob/living/silicon/ai/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	return 0
 
 /mob/living/silicon/ai/emp_act(severity)

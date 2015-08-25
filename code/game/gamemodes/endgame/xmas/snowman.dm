@@ -34,6 +34,8 @@
 	var/obj/item/carrot = null
 
 /mob/living/simple_animal/hostile/retaliate/snowman/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(!ckey && !stat)
 		if(isturf(src.loc) && !resting && !locked_to)		//This is so it only moves if it's not inside a closet, gentics machine, etc.

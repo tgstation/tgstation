@@ -403,6 +403,7 @@
 	return 1
 
 /mob/living/carbon/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	if (handcuffed)
 		return 1
 	return

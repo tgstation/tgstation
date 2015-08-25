@@ -157,7 +157,7 @@
 	L.icon_state = "[L.tang]"
 	L.firer = user
 	L.def_zone = "chest"
-	L.original = user
+	L.original = target
 	L.current = U
 	L.starting = U
 	L.yo = U.y - T.y
@@ -187,7 +187,7 @@
 		target.emp_act(2)
 		target.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
 		target.Weaken(1)
-	else
+	else if(target)
 		spawn()
 			var/obj/item/projectile/beam/B = getFromPool(/obj/item/projectile/beam/lightning/spell)
 			B.damage = basedamage

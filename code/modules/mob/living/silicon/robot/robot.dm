@@ -631,6 +631,7 @@
 
 
 /mob/living/silicon/robot/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	return 0
 
 

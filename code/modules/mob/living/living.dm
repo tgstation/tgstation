@@ -52,6 +52,8 @@
 	..(user, " [capitalize(pronoun)] [size].[butchery]")
 
 /mob/living/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if (flags & INVULNERABLE)
 		bodytemperature = initial(bodytemperature)

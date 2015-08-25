@@ -21,6 +21,7 @@
 	var/obj/item/inventory_mask
 
 /mob/living/simple_animal/crab/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	//CRAB movement
 	if(!ckey && !stat)

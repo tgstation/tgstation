@@ -430,7 +430,11 @@ var/list/impact_master = list()
 	return 0
 
 /obj/item/projectile/process()
+	var/first = 1
 	spawn while(loc)
+		while((loc.timestopped || timestopped) && !first)
+			sleep(3)
+		first = 0
 		src.process_step()
 	return
 
@@ -445,6 +449,7 @@ var/list/impact_master = list()
 		OnDeath()
 		returnToPool(src)
 	kill_count--
+	var/first = 1
 	spawn while(loc)
 		var/turf/T = get_step(src, dir)
 		step_towards(src, T)
@@ -453,6 +458,9 @@ var/list/impact_master = list()
 				if(!(original in permutated))
 					Bump(original)
 					sleep(1)
+		while((loc.timestopped || timestopped) && !first)
+			sleep(3)
+		first = 0
 		sleep(1)
 	return
 

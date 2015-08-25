@@ -1,4 +1,6 @@
 /mob/living/silicon/ai/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	if (src.stat == 2)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist

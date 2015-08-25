@@ -33,6 +33,7 @@
 	return
 
 /mob/living/simple_animal/shade/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	if(stat == 2)
 		new /obj/item/weapon/ectoplasm (src.loc)
@@ -75,6 +76,7 @@
 ////////////////HUD//////////////////////
 
 /mob/living/simple_animal/shade/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 
 	if(pullin)

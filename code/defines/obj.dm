@@ -341,15 +341,17 @@ var/global/list/PDA_Manifest = list()
 			var/mob/living/L = A
 			if(L.mind != owner)
 				if(!L.stat) L.playsound_local(src, theworld == 1 ? 'sound/effects/theworld2.ogg' : 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
-				L.Paralyse(round(((sleeptime - world.time)/10)/2, 1))
-				L.update_canmove()
+				//L.Paralyse(round(((sleeptime - world.time)/10)/2, 1))
+				//L.update_canmove()
 				if(!(L in ourspell.affected))
 					invertcolor(L)
 					ourspell.affected += L
+					ourspell.recursive_timestop(L)
 		else
 			if(!(A in ourspell.affected))
 				invertcolor(A)
 				ourspell.affected += A
+				ourspell.recursive_timestop(A)
 
 
 /obj/effect/spawner

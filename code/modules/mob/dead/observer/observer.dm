@@ -151,6 +151,8 @@ Works together with spawning an observer, noted above.
 */
 
 /mob/dead/observer/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(!loc) return
 	if(!client) return 0

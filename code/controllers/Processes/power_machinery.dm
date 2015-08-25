@@ -15,6 +15,7 @@ var/global/list/power_machines = list()
 		try
 			if(istype(power_machines[i], /obj/machinery))
 				var/obj/machinery/M = power_machines[i]
+				if(M.timestopped) continue
 				if(!M.gcDestroyed)
 					#ifdef PROFILE_MACHINES
 					var/time_start = world.timeofday

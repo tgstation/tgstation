@@ -73,6 +73,8 @@
 		B.target = damagesource
 
 /mob/living/simple_animal/bee/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(stat != DEAD) //If we're alive, see if we can be calmed down.
 		//smoke, water and steam calms us down

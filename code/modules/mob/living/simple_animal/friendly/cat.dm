@@ -39,6 +39,8 @@
 	gender = FEMALE
 
 /mob/living/simple_animal/cat/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !locked_to)

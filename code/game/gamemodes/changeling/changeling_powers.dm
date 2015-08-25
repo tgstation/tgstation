@@ -146,6 +146,7 @@
 /mob/proc/changeling_power(var/required_chems=0, var/required_dna=0, var/max_genetic_damage=100, var/max_stat=0, var/deny_horror=0)
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/changeling_power() called tick#: [world.time]")
+	if(timestopped) return 0 //under effects of time magick
 
 	if(!src.mind)		return
 	if(!iscarbon(src))	return

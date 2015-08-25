@@ -354,6 +354,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 	return 0
 
 /mob/proc/Life()
+	if(timestopped) return 0 //under effects of time magick
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/Life() called tick#: [world.time]")
 	if(spell_masters && spell_masters.len)
 		for(var/obj/screen/movable/spell_master/spell_master in spell_masters)
@@ -466,6 +467,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 /mob/proc/restrained()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/restrained() called tick#: [world.time]")
+	if(timestopped) return 1 //under effects of time magick
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.

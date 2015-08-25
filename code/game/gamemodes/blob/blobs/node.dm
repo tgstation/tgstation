@@ -21,6 +21,8 @@
 	..()
 
 /obj/effect/blob/node/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	for(var/i = 1; i < 8; i += i)
 		Pulse(5, i)
 	health = min(initial(health), health + 1)

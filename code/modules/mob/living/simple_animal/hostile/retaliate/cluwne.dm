@@ -83,6 +83,7 @@
 	var/mob/living/target_mob
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/Life()
+	if(timestopped) return 0 //under effects of time magick
 	if(client || stat || stat==DEAD)
 		return //Lets not force players or dead/incap cluwnes to move
 	..()
@@ -294,6 +295,7 @@
 		Paralyse(10)
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/emote(var/act)
+	if(timestopped) return //under effects of time magick
 	var/message=pick("quietly sobs into a dirty handkerchief","cries into [gender==MALE?"his":"her"] hands","bawls like a cow")
 	message = "<B>[src]</B> [message]"
 	return ..(message)

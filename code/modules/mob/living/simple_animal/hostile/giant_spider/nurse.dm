@@ -25,6 +25,7 @@
 			stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/Life()
+	if(timestopped) return 0 //under effects of time magick
 	if(istype(loc,/obj/item/device/mobcapsule)) //Dont bother trying to do shit while inside of a capsule, stops self-web spinning
 		return
 	..()

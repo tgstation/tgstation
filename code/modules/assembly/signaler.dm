@@ -182,9 +182,13 @@
 	return
 
 /obj/item/device/assembly/signaler/process()
+	if(loc)
+		var/atom/A = loc
+		if(A.timestopped) return
 	if(!deadman)
 		processing_objects.Remove(src)
 	var/mob/M = src.loc
+
 	if(!M || !ismob(M))
 		if(prob(5))
 			signal()

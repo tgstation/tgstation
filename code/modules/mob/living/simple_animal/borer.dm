@@ -126,6 +126,8 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		//testing("Added [C.name] to borer.")
 
 /mob/living/simple_animal/borer/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(host)
 		if(!stat && !host.stat)

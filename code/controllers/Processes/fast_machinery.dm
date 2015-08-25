@@ -19,6 +19,7 @@ var/global/list/fast_machines = list()
 			var/obj/machinery/M = fast_machines[i]
 
 			if(istype(M) && !M.gcDestroyed)
+				if(M.timestopped) continue
 				#ifdef PROFILE_MACHINES
 				var/time_start = world.timeofday
 				#endif
