@@ -7,7 +7,7 @@
 
 /obj/item/unactivated_swarmer/attack_ghost(mob/user)
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_swarmer == "No" || gc_destroyed)
+	if(be_swarmer == "No" || qdeleted())
 		return
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))
 	S.key = user.key
@@ -16,12 +16,13 @@
 ////The Mob itself////
 
 /mob/living/simple_animal/hostile/swarmer
-	name = "swarmer"
+	name = "Swarmer"
+	unique_name = 1
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
-	health = 30
-	maxHealth = 30
+	health = 40
+	maxHealth = 40
 	status_flags = CANPUSH
 	icon_state = "swarmer"
 	icon_living = "swarmer"
@@ -36,17 +37,17 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_damage_type = STAMINA
-	ignored_damage_types = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	languages = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
-	attack_sound = null
+	attack_sound = 'sound/effects/EMPulse.ogg'
 	friendly = "pinches"
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
 	projectiletype = /obj/item/projectile/beam/disabler
 	pass_flags = PASSTABLE | PASSMOB
-	has_unlimited_silicon_privilege = 1
 	ventcrawler = 2
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam/disabler
@@ -57,7 +58,7 @@
 /mob/living/simple_animal/hostile/swarmer/Login()
 	..()
 	src << "<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>"
-	src << "<b>Ctrl + Click provides most of your swarmer specific interactions, such as cannibalizing metal or glass, or destroying the environment."
+	src << "<b>Ctrl + Click provides most of your swarmer specific interactions, such as cannibalizing metal or glass, destroying the environment, or teleporting mobs away from you."
 	src << "<b>Objectives:</b>"
 	src << "1. Consume resources and replicate until there are no more resources left."
 	src << "2. Ensure that the station is fit for invasion at a later date, do not perform actions that would render it dangerous or inhospitable."
@@ -70,7 +71,7 @@
 /mob/living/simple_animal/hostile/swarmer/Stat()
 	..()
 	if(statpanel("Status"))
-		stat("Resources",resources)
+		stat("Resources:",resources)
 
 /mob/living/simple_animal/hostile/swarmer/death(gibbed)
 	..(gibbed)
@@ -84,6 +85,14 @@
 		..()
 	health = 0
 
+/mob/living/simple_animal/hostile/swarmer/CanPass(atom/movable/O)
+	if(istype(O, /obj/item/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
+		return 1
+	if(isswarmer(O))
+		return 1
+	..()
+
+////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
 /mob/living/simple_animal/hostile/swarmer/CtrlClickOn(atom/A)
 	face_atom(A)
 	if(!isturf(loc))
@@ -92,69 +101,133 @@
 		return
 	if(!A.Adjacent(src))
 		return
-	if(isliving(A))
-		DisperseTarget(A)
-		return
-	if(istype(A, /obj/item))
-		Integrate(A)
-		return
-	if(istype(A, /turf/simulated/floor))//Stops you from disintegrating mobs to death or other assorted nonsense, as turf ex_act calls it on its contents
-		return
-	DisIntegrate(A)
+	A.swarmer_act(src)
 	return
+
+/atom/proc/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/item/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.Integrate(src)
+
+/obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
+	return
+
+/turf/simulated/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
+	return
+
+/obj/machinery/atmospherics/swarmer_act()
+	return
+
+/obj/structure/disposalpipe/swarmer_act()
+	return
+
+/obj/machinery/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DismantleMachine(src)
+
+/obj/machinery/light/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/machinery/door/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/machinery/camera/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+	deactivate(S, 0)
+
+/obj/machinery/particle_accelerator/control_box/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/machinery/gravity_generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/machinery/vending/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//It's more visually interesting than dismantling the machine
+	S.DisIntegrate(src)
+
+/obj/machinery/turretid/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisIntegrate(src)
+
+/obj/machinery/chem_dispenser/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>The volatile chemicals in this machine would destroy us. Aborting.</span>"
+
+/obj/machinery/nuclearbomb/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>"
+
+/obj/structure/reagent_dispensers/fueltank/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>Destroying this object would cause a chain reaction. Aborting.</span>"
+
+/obj/structure/cable/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+
+/obj/machinery/portable_atmospherics/canister/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>An inhospitable area may be created as a result of destroying this object. Aborting.</span>"
+
+/obj/machinery/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>"
+
+/obj/machinery/gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This bluespace source will be important to us later. Aborting.</span>"
+
+/turf/simulated/wall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	if(locate(/turf/space) in range(1, src))
+		S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
+		return
+	..()
+
+/obj/structure/window/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	if(locate(/turf/space) in range(1, src))
+		S << "<span class='warning'>Destroying this object has the potential to cause a hull breach. Aborting.</span>"
+		return
+	..()
+
+/obj/item/stack/cable_coil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//Wiring would be too effective as a resource
+	S << "<span class='warning'>This object does not contain enough materials to work with.</span>"
+
+/obj/machinery/porta_turret/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>Attempting to dismantle this machine would result in an immediate counterattack. Aborting.</span>"
+
+/mob/living/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S.DisperseTarget(src)
+
+/mob/living/simple_animal/slime/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This biological resource is somehow resisting our bluespace transceiver. Aborting.</span>"
+
+
+////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(var/atom/fabrication_object,var/fabrication_cost = 0)
 	if(!isturf(loc))
-		src << "This is not a suitable location for fabrication. We need more space."
+		src << "<span class='warning'>This is not a suitable location for fabrication. We need more space.</span>"
 	if(resources >= fabrication_cost)
 		resources -= fabrication_cost
 	else
-		src << "You do not have the necessary resources to fabricate this object"
+		src << "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>"
 		return 0
 	new fabrication_object(loc)
 	return 1
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(var/obj/item/target)
 	if(resources >= 100)
-		src << "We cannot hold more materials!"
-		return
-	if(istype(target, /obj/item/weapon/gun))
-		src << "This object has been adjusted to resist disintegration"//Stops swarmers from devouring the entire armory in seconds
+		src << "<span class='warning'>We cannot hold more materials!</span>"
 		return
 	if((target.materials[MAT_METAL]) || (target.materials[MAT_GLASS]))
-		if(istype(target, /obj/item/stack))
-			if(istype(target, /obj/item/stack/cable_coil))//Wiring is just too plentiful
-				src << "This object does not contain enough materials to work with."
-				return
-			var/obj/item/stack/S = target
-			resources++
-			S.amount--
-			if(S.amount > 0)
-				return
 		resources++
 		do_attack_animation(target)
+		changeNext_move(CLICK_CD_MELEE)
+		if(istype(target, /obj/item/stack))
+			var/obj/item/stack/S = target
+			S.use(1)
+			if(S.amount)
+				return
 		qdel(target)
 	else
-		src << "This object does not contain enough materials to work with."
+		src << "<span class='warning'>\the [target] is incompatible with our internal matter recycler.</span>"
 		return
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(var/atom/movable/target)
-	if(istype(target, /turf/simulated/wall) || istype(target, /obj/structure/window))
-		if(locate(/turf/space) in range(1, target))
-			src << "Destroying this object has the potential to cause a hull breach. Aborting."
-			return
-	if(istype(target, /obj/structure/reagent_dispensers/fueltank))
-		src << "Destroying this object would cause a chain reaction. Aborting."
-		return
-	if(istype(target, /obj/machinery/portable_atmospherics/canister))
-		src << "An inhospitable area may be created as a result of destroying this object. Aborting."
-		return
-	if(istype(target, /obj/structure/cable) || istype(target, /obj/machinery/power/apc) || istype(target, /obj/machinery/power/smes))
-		src << "Disrupting the power grid would bring no benefit to us. Aborting."
-		return
-	if(istype(target, /obj/machinery/power/emitter))//Stop trying to release the singularity you fuck
-		src << "This object is too risky to destroy. Aborting."
-		return
 	new /obj/effect/effect/sparks(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
@@ -163,7 +236,10 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(var/mob/living/target)
 	if(target != src)
-		src << "Attempting to remove this being from our presence."
+		src << "<span class='info'>Attempting to remove this being from our presence.</span>"
+		if(src.z != ZLEVEL_STATION)
+			src << "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>"
+			return
 		if(do_mob(src, target, 30))
 			var/cycle
 			for(cycle=0,cycle<100,cycle++)
@@ -184,6 +260,24 @@
 									playsound(src,'sound/effects/sparks4.ogg',50,1)
 									break
 			return
+
+/mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(var/obj/machinery/target)
+	do_attack_animation(target)
+	src << "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>"
+	new /obj/effect/effect/sparks(get_turf(target))
+	if(do_mob(src, target, 100))
+		src << "<span class='info'>Dismantling complete.</span>"
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(target.loc)
+		M.amount = 5
+		for(var/obj/item/I in target.component_parts)
+			I.loc = M.loc
+		new /obj/effect/effect/sparks(get_turf(target))
+		target.dropContents()
+		if(istype(target, /obj/machinery/computer))
+			var/obj/machinery/computer/C = target
+			if(C.circuit)
+				C.circuit.loc = M.loc
+		qdel(target)
 
 /obj/effect/swarmer //Default destroyable object for swarmer constructions
 	name = "swarmer construction"
@@ -234,7 +328,7 @@
 	set category = "Swarmer"
 	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources"
 	if(/obj/effect/swarmer/trap in loc)
-		src << "There is already a trap here. Aborting."
+		src << "<span class='warning'>There is already a trap here. Aborting.</span>"
 		return
 	Fabricate(/obj/effect/swarmer/trap, 5)
 	return
@@ -259,7 +353,7 @@
 	set category = "Swarmer"
 	set desc = "Creates a barricade that will stop anything but swarmers and disabler beams from passing through."
 	if(/obj/effect/swarmer/blockade in loc)
-		src << "There is already a blockade here. Aborting."
+		src << "<span class='warning'>There is already a blockade here. Aborting.</span>"
 		return
 	Fabricate(/obj/effect/swarmer/blockade, 5)
 	return
@@ -274,22 +368,21 @@
 	anchored = 1
 
 /obj/effect/swarmer/blockade/CanPass(atom/movable/O)
-	if(istype(O, /mob/living/simple_animal/hostile/swarmer))
+	if(isswarmer(O))
 		return 1
 	if(istype(O, /obj/item/projectile/beam/disabler))
 		return 1
-	..()
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateSwarmer()
 	set name = "Replicate"
 	set category = "Swarmer"
 	set desc = "Creates a shell for a new swarmer. Swarmers will self activate."
-	src << "We are attempting to replicate ourselves. We will need to stand still until the process is complete."
+	src << "<span class='info'>We are attempting to replicate ourselves. We will need to stand still until the process is complete.</span>"
 	if(resources < 50)
-		src << "We do not have the resources for this!"
+		src << "<span class='warning'>We do not have the resources for this!</span>"
 		return
 	if(!isturf(loc))
-		src << "This is not a suitable location for replicating ourselves. We need more room."
+		src << "<span class='warning'>This is not a suitable location for replicating ourselves. We need more room.</span>"
 		return
 	if(do_mob(src, src, 100))
 		if(Fabricate(/obj/item/unactivated_swarmer, 50))
@@ -301,10 +394,10 @@
 	set desc = "Attempts to repair damage to our body. You will have to remain motionless until repairs are complete."
 	if(!isturf(loc))
 		return
-	src << "Attempting to repair damage to our body, stand by..."
+	src << "<span class='info'>Attempting to repair damage to our body, stand by...</span>"
 	if(do_mob(src, src, 100))
 		adjustBruteLoss(-100)
-		src << "We successfully repaired ourselves."
+		src << "<span class='info'>We successfully repaired ourselves.</span>"
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
 	if(!luminosity)
@@ -315,9 +408,10 @@
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
 	if(message)
-		for(var/mob/living/simple_animal/hostile/swarmer/S in world)
-			if(S != src)
-				S << "<B>Swarm communication: [message]"
+		for(var/mob/M in mob_list)
+			if(isswarmer(M) || (M in dead_mob_list))
+				M << "<B>Swarm communication - </b> [M] states: [message]"
+
 
 
 ////HUD NONSENSE////

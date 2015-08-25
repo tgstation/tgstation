@@ -95,7 +95,10 @@
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		Stun(3)
 		Weaken(3)
-	return shock_damage
+	if(override)
+		return override
+	else
+		return shock_damage
 
 
 /mob/living/carbon/swap_hand()
