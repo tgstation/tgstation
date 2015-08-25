@@ -74,9 +74,9 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, override = 0)
 	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+	if(shock_damage<1 && !override)
 		return 0
 	take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)

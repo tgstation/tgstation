@@ -166,6 +166,7 @@
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
+	new /obj/item/stack/sheet/metal(loc)
 	dump_contents()
 	qdel(src)
 	..()
