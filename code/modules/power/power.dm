@@ -81,6 +81,12 @@
 	else
 		return 0
 
+/obj/machinery/power/proc/load()
+	if(get_powernet())
+		return powernet.load
+	else
+		return 0
+		
 /obj/machinery/power/proc/get_powernet()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/power/proc/get_powernet() called tick#: [world.time]")
 	check_rebuild()
