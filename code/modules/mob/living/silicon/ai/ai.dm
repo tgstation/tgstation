@@ -841,3 +841,6 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/html_mob_check()
 	return 1
+
+/mob/living/silicon/ai/isTeleViewing(var/client_eye)
+	return 1

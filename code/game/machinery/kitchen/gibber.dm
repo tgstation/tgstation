@@ -245,7 +245,11 @@ obj/machinery/gibber/New()
 	var/sourcename = src.occupant.real_name
 	var/sourcejob = src.occupant.job
 	var/sourcenutriment = src.occupant.nutrition / 15
-	var/sourcetotalreagents = src.occupant.reagents.total_volume
+	var/sourcetotalreagents
+
+	if(src.occupant.reagents)
+		sourcetotalreagents = src.occupant.reagents.total_volume
+
 	var/totalslabs = src.occupant.size
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
@@ -255,7 +259,10 @@ obj/machinery/gibber/New()
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob
 		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+
+		if(src.occupant.reagents)
+			src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+
 		allmeat[i] = newmeat
 
 	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <B>[key_name(user)]</B>" //One shall not simply gib a mob unnoticed!
@@ -299,7 +306,10 @@ obj/machinery/gibber/New()
 	var/sourcename = victim.real_name
 	var/sourcejob = victim.job
 	var/sourcenutriment = victim.nutrition / 15
-	var/sourcetotalreagents = victim.reagents.total_volume
+	var/sourcetotalreagents
+	if(victim.reagents)
+		sourcetotalreagents = victim.reagents.total_volume
+
 	var/totalslabs = victim.size
 
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/allmeat[totalslabs]
@@ -318,7 +328,10 @@ obj/machinery/gibber/New()
 		if(newmeat==null)
 			return
 		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
-		victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+
+		if(victim.reagents)
+			victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+
 		allmeat[i] = newmeat
 
 	victim.attack_log += "\[[time_stamp()]\] Was auto-gibbed by <B>[src]</B>" //One shall not simply gib a mob unnoticed!
@@ -336,7 +349,7 @@ obj/machinery/gibber/New()
 		else
 			var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
 			O.New(Tx,2)
-	del(victim)
+	qdel(victim)
 	spawn(src.gibtime)
 		playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
 		operating = 0

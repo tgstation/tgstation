@@ -441,11 +441,6 @@
 						else if(ishuman(movement_target.loc) )
 							if(prob(20))
 								emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	name = "Corgi meat"
-	desc = "Tastes like the tears of the station. Gives off the faint aroma of a valid salad. Just like mom used to make. This revalation horrifies you greatly."
-
 //PC stuff-Sieve
 
 /mob/living/simple_animal/corgi/regenerate_icons()

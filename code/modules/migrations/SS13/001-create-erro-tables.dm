@@ -1,8 +1,8 @@
-/datum/migration/ss13/_001
+/datum/migration/mysql/ss13/_001
 	id = 1
 	name = "Initial state"
 
-/datum/migration/ss13/_001/up()
+/datum/migration/mysql/ss13/_001/up()
 	var/sql = {"
 CREATE TABLE IF NOT EXISTS `erro_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

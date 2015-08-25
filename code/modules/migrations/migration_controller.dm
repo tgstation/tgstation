@@ -1,68 +1,49 @@
-
-
-var/global/datum/migration_controller/migration_controller = null
-
 /datum/migration_controller
 	var/list/db_states[0]
 	var/list/packages[0]
 
 	var/TABLE_NAME = "_migrations"
-	var/DBConnection/db
+	var/id = ""
+
+/datum/migration_controller/proc/setup()
+	return FALSE
+/datum/migration_controller/proc/createMigrationTable()
+	return FALSE
 
 /datum/migration_controller/New()
-	if(!fexists("players2.sqlite") && fexists("players2_empty.sqlite"))
-		fcopy("players2_empty.sqlite", "players2.sqlite")
-	//sqlite prefs
-	var/datum/migration/ss13/sqlite/sqli = new
-	sqli.up()
-	//end sqlite prefs
-	// Change this if needed.
-	db = dbcon
-	/////////////////////////
+	if(!setup())
+		world.log << "\[Migrations] ([id]): Setup() returned false, will not run migrations for this DBMS."
+	else
+		if(!hasTable(TABLE_NAME))
+			world.log << "\[Migrations] ([id]): Creating [TABLE_NAME]"
+			createMigrationTable()
 
-	if(!db || !db.IsConnected())
-		return
+		for(var/list/row in query("SELECT pkgID, version FROM [TABLE_NAME]"))
+			if(id=="mysql")
+				db_states[row[1]] = text2num(row[2])
+			else
+				db_states[row["pkgID"]] = text2num(row["version"])
 
-	var/DBQuery/Q=null
-
-	if(!hasTable(TABLE_NAME))
-		var/tableSQL = {"
-CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
-	pkgID VARCHAR(15) PRIMARY KEY, -- Implies NOT NULL
-	version INT(11) NOT NULL
-);
-		"}
-		Q = db.NewQuery(tableSQL)
-		Q.Execute()
-		Q.Close()
-
-	Q = db.NewQuery("SELECT pkgID, version FROM [TABLE_NAME]")
-	Q.Execute()
-	while(Q.NextRow())
-		db_states[Q.item[1]] = text2num(Q.item[2])
-
-	var/list/newpacks[0]
-	for(var/mtype in typesof(/datum/migration)-list(/datum/migration, /datum/migration/ss13/sqlite))
-		var/datum/migration/M = new mtype()
-		M.db = db
-		if(M.package == "" || M.name == "") continue
-		if(!(M.package in newpacks))
-			newpacks[M.package]=list()
-		var/list/pack = newpacks[M.package]
-		pack += M
-	for(var/pkgID in newpacks)
-		if(!(pkgID in packages))
-			packages[pkgID]=list()
-		var/list/prepack = newpacks[pkgID]
-		var/list/pack[prepack.len]
-		for(var/datum/migration/M in newpacks[pkgID])
-			pack[M.id] = M
-			//world.log << "\[Migrations] [pkgID]#[M.id] = [M.type] - [M.name]"
-		packages[pkgID]=pack
-		world.log << "\[Migrations] Loaded [pack.len] DB migrations from package [pkgID]."
-
-	//VersionCheck()
-	UpdateAll()
+		var/list/newpacks[0]
+		for(var/mtype in typesof(/datum/migration)-list(/datum/migration))
+			var/datum/migration/M = new mtype(src)
+			if(M.package == "" || M.name == "" || M.dbms != id) continue
+			if(!(M.package in newpacks))
+				newpacks[M.package]=list()
+			var/list/pack = newpacks[M.package]
+			pack += M
+		for(var/pkgID in newpacks)
+			if(!(pkgID in packages))
+				packages[pkgID]=list()
+			var/list/prepack = newpacks[pkgID]
+			var/list/pack[prepack.len]
+			for(var/datum/migration/M in newpacks[pkgID])
+				pack[M.id] = M
+				//world.log << "\[Migrations] [pkgID]#[M.id] = [M.type] - [M.name]"
+			packages[pkgID]=pack
+			world.log << "\[Migrations] Loaded [pack.len] [id] DB migrations from package [pkgID]."
+		//VersionCheck()
+		UpdateAll()
 
 /datum/migration_controller/proc/getCurrentVersion(var/pkgID)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/getCurrentVersion() called tick#: [world.time]")
@@ -113,7 +94,7 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 				world.log << "Failed to process migration [pkgID] #[M.id]"
 				return FALSE
 			else
-				M.execute("REPLACE INTO [TABLE_NAME] (pkgID,version) VALUES ('[pkgID]',[M.id])")
+				M.execute("REPLACE INTO [TABLE_NAME] (pkgID,version) VALUES ('[pkgID]',[M.id])") // SQLite also supports REPLACE.
 				world.log << "\[Migrations] Successfully applied [pkgID]#[M.id] ([M.name])"
 	world.log << "\[Migrations] Done!"
 	return TRUE
@@ -128,19 +109,10 @@ CREATE TABLE IF NOT EXISTS [TABLE_NAME] (
 	return rows
 
 /datum/migration_controller/proc/hasResult(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/hasResult() called tick#: [world.time]")
-	var/DBQuery/query = execute(sql)
-
-	if (query.NextRow())
-		return TRUE
 	return FALSE
 
 /datum/migration_controller/proc/execute(var/sql)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/execute() called tick#: [world.time]")
-	var/DBQuery/query = db.NewQuery(sql)
-	query.Execute()
-	return query
+	return list()
 
 /datum/migration_controller/proc/hasTable(var/tableName)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/migration_controller/proc/hasTable() called tick#: [world.time]")
-	return hasResult("SHOW TABLES LIKE '[tableName]")
+	return FALSE

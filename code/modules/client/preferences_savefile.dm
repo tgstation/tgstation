@@ -10,6 +10,8 @@
 //if a file can't be updated, return 0 to delete it and start again
 //if a file was updated, return 1
 
+/// IF YOU NEED A FIELD ADDED TO THE DATABASE, CREATE A MIGRATION SO SHIT GETS UPDATED.
+/// SEE code/modules/migrations/SS13_Prefs/
 
 /datum/preferences/proc/savefile_update()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/savefile_update() called tick#: [world.time]")
