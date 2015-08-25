@@ -14,7 +14,7 @@ var/global/list/borer_detached_verbs = list(
 )
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
-var/global/borer_unlock_types = typesof(/datum/borer_unlock) - /datum/borer_unlock - /datum/borer_unlock/chem_unlock
+var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock
 var/global/list/borer_avail_unlocks = list()
 
 /mob/living/simple_animal/borer
@@ -50,8 +50,8 @@ var/global/list/borer_avail_unlocks = list()
 	var/list/avail_chems=list()
 	var/list/avail_abilities=list()         // Unlocked powers.
 	var/numChildren=0
-	var/unlocking = 0
-	var/list/unlocked = list() // List of unlocked unlockables :V (Prerequisite checks)
+
+	var/datum/research_tree/borer/research
 
 	// Event handles
 	var/eh_emote
@@ -81,10 +81,12 @@ var/global/list/borer_avail_unlocks = list()
 			avail_chems[C.name]=C
 			//testing("Added [C.name] to borer.")
 
+	research = new (src)
+
 	if(!borer_avail_unlocks)
 		borer_avail_unlocks = list()
 		for(var/ultype in borer_unlock_types)
-			var/datum/borer_unlock/U = new ultype()
+			var/datum/unlockable/borer/U = new ultype()
 			borer_avail_unlocks[U.name]=U
 
 /mob/living/simple_animal/borer/Life()
@@ -257,7 +259,7 @@ var/global/list/borer_avail_unlocks = list()
 		src << "You cannot do that in your host's current state."
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
@@ -273,7 +275,7 @@ var/global/list/borer_avail_unlocks = list()
 
 /mob/living/simple_animal/borer/proc/do_bonding(var/rptext=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/do_bonding() called tick#: [world.time]")
-	if(!host || host.stat==DEAD || !src || controlling || unlocking)
+	if(!host || host.stat==DEAD || !src || controlling || research.unlocking)
 		return
 
 	src << "<span class='danger'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
@@ -309,7 +311,7 @@ var/global/list/borer_avail_unlocks = list()
 		src << "You cannot do that in your host's current state."
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
@@ -350,7 +352,7 @@ var/global/list/borer_avail_unlocks = list()
 		src << "You cannot do that in your host's current state."
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
@@ -382,25 +384,11 @@ var/global/list/borer_avail_unlocks = list()
 		src << "<span class='warning'>You cannot do that in your host's current state.</span>"
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
-	var/list/usable_unlocks=list()
-	for(var/datum/borer_unlock/U in borer_avail_unlocks)
-		if(!U.unlocked && U.cost <= chemicals && U.check_prerequisites(src))
-			usable_unlocks["[U.name] ([U.cost])"]=U
-	var/UID = input("Select an evolution path.", "Evolutions") in usable_unlocks|null
-	if(!UID)
-		return
-
-	var/datum/borer_unlock/unlock = usable_unlocks[UID]
-
-
-	if(!host || controlling || !src || stat) //Sanity check.
-		return
-
-	unlock.unlock(src)
+	research.display()
 
 
 /mob/living/simple_animal/borer/proc/secrete_chemicals()
@@ -425,7 +413,7 @@ var/global/list/borer_avail_unlocks = list()
 		src << "<span class='warning'>You cannot do that in your host's current state.</span>"
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
@@ -477,7 +465,7 @@ var/global/list/borer_avail_unlocks = list()
 		src << "<span class='warning'>You cannot leave your host in your current state.</span>"
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
@@ -522,7 +510,8 @@ mob/living/simple_animal/borer/proc/detach()
 		host.verbs -= /mob/living/carbon/proc/spawn_larvae
 
 		// Remove any unlocks that affect the host.
-		for(var/datum/borer_unlock/U in borer_avail_unlocks)
+		for(var/uid in research.unlocked.Copy())
+			var/datum/unlockable/borer/U = research.get(uid)
 			if(U && U.remove_on_detach)
 				U.remove_action()
 
@@ -552,7 +541,7 @@ mob/living/simple_animal/borer/proc/detach()
 		src << "You cannot infest a target in your current state."
 		return
 
-	if(unlocking)
+	if(research.unlocking)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 

@@ -6,6 +6,7 @@ changes:
   - bugfix: Borers cannot kill their hosts anymore.
   - bugfix: Captive brains can hear their host.
   - bugfix: Borers can hear and see their host's emotes.
+  - bugfix: Ventcrawling as borer fixed.
   - tweak: Borer thought-speak is more subtle.
   - tweak: Borers can secrete more chemicals (some of which are unlockable).
   - tweak: Borers now only have a survive objective.
