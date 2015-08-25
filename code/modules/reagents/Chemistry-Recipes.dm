@@ -66,7 +66,7 @@
 		                        /mob/living/simple_animal/butterfly,
 		                        /mob/living/simple_animal/cow,
 		                        /mob/living/simple_animal/chicken) // and possible friendly mobs
-		nicecritters += typesof(/mob/living/simple_animal/pet) - /mob/living/simple_animal/pet
+		nicecritters += typesof(/mob/living/simple_animal/pet) - /mob/living/simple_animal/pet - /mob/living/simple_animal/pet/dog
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
