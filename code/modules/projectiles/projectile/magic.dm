@@ -202,7 +202,7 @@
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
 							if("corgi")		new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
 							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
-							if("pug")		new_mob = new /mob/living/simple_animal/pet/pug(M.loc)
+							if("pug")		new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
 							if("cat")		new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
