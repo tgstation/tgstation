@@ -217,7 +217,7 @@
 	list_reagents = list("charcoal" = 15)
 
 /obj/item/weapon/reagent_containers/syringe/silver_sulf
-	name = "syringe (charcoal)"
+	name = "syringe (silver sulfadiazine)"
 	desc = "Contains silver sulfadiazine."
 	list_reagents = list("silver_sulfadiazine" = 15)
 
