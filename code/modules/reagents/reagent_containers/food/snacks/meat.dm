@@ -15,7 +15,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
-	desc = "Tastes like... well you know..."
+	desc = "Tastes like the tears of the station. Gives off the faint aroma of a valid salad. Just like mom used to make. This revelation horrifies you greatly."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 	name = "synthetic meat"

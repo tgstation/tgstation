@@ -116,7 +116,7 @@
 
 /datum/theft_objective/traitor/corgi
 	name = "a piece of corgi meat"
-	typepath = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	typepath = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
 
 /datum/theft_objective/traitor/rd_jumpsuit
 	name = "the research director's jumpsuit"
