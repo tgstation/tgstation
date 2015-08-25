@@ -14,11 +14,11 @@
             var/thing = new typepath(usr.loc)
             usr.put_in_hands(thing)
          else
-		var/obj/item/weapon/storage/box/box=new(usr.loc)
-		new typepath(box)
-		box.name="[name] package"
-		box.desc="A special gift for doing your job."
-		usr.put_in_hands(box)
+    		var/obj/item/weapon/storage/box/box=new(usr.loc)
+    		new typepath(box)
+    		box.name="[name] package"
+    		box.desc="A special gift for doing your job."
+    		usr.put_in_hands(box)
 	else
 		var/thing = new typepath(usr.loc)
 		usr.put_in_hands(thing)
