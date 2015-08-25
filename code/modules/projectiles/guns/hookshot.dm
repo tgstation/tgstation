@@ -298,6 +298,7 @@
 /obj/effect/overlay/hookchain/Destroy()
 	if(shot_from)
 		shot_from.panic = 1
+		shot_from = null
 	..()
 
 //THE CHAIN THAT TETHERS STUFF TOGETHER
