@@ -1,0 +1,5 @@
+author: PJB3005
+delete-after: true
+changes:
+  - rscadd: The power monitor now has a fancy chart.
+  - tweak: The power monitor now has colour coding.

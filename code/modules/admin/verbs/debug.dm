@@ -1831,17 +1831,17 @@ client/proc/check_convertables()
 	var/dat = ""
 	for(var/mob/M in player_list)
 		if(!M.mind)
-			dat += "[M.real_name]/([ckey(src.key)]): <font color=grey><b>NO MIND</b></font></br>"
+			dat += "[M.real_name]/([ckey(M.key)]): <font color=grey><b>NO MIND</b></font></br>"
 		else if(!istype(M,/mob/living/carbon/human))
-			dat += "[M.real_name]/([ckey(src.key)]): <b>NOT HUMAN</b></br>"
+			dat += "[M.real_name]/([ckey(M.key)]): <b>NOT HUMAN</b></br>"
 		else if(!is_convertable_to_cult(M.mind))
-			dat += "[M.real_name]/([ckey(src.key)]): <font color=red><b>UNCONVERTABLE</b></font></br>"
+			dat += "[M.real_name]/([ckey(M.key)]): <font color=red><b>UNCONVERTABLE</b></font></br>"
 		else if(jobban_isbanned(M, "cultist"))
-			dat += "[M.real_name]/([ckey(src.key)]): <font color=red><b>JOBBANNED</b></font></br>"
+			dat += "[M.real_name]/([ckey(M.key)]): <font color=red><b>JOBBANNED</b></font></br>"
 		else if(M.mind in ticker.mode.cult)
-			dat += "[M.real_name]/([ckey(src.key)]): <font color=blue><b>CULTIST</b></font></br>"
+			dat += "[M.real_name]/([ckey(M.key)]): <font color=blue><b>CULTIST</b></font></br>"
 		else
-			dat += "[M.real_name]/([ckey(src.key)]): <font color=green><b>CONVERTABLE</b></font></br>"
+			dat += "[M.real_name]/([ckey(M.key)]): <font color=green><b>CONVERTABLE</b></font></br>"
 
 	usr << dat
 

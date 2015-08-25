@@ -817,8 +817,8 @@
 /datum/recipe/corgikabob
 	items = list(
 		/obj/item/stack/rods,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi,
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/corgikabob
 
@@ -1527,7 +1527,7 @@
 /datum/recipe/cornydog
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi,
 		/obj/item/stack/rods)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cornydog
 
