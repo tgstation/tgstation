@@ -388,7 +388,7 @@ var/global/list/borer_avail_unlocks = list()
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
-	research.display()
+	research.display(src)
 
 
 /mob/living/simple_animal/borer/proc/secrete_chemicals()
