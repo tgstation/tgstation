@@ -283,11 +283,38 @@
 				else if(prob(15))
 					B = getFromPool(/obj/structure/boulder, src)
 
+				var/mineral/has_minerals = mineral
 				if(B)
 					GetDrilled(0)
 				else
 					GetDrilled(1)
+
+				if(!B && !has_minerals)
+					var/I = rand(1,500)
+					if(I == 1)
+						switch(polarstar)
+							if(0)
+								new/obj/item/weapon/gun/energy/polarstar(src)
+								polarstar = 1
+								visible_message("<span class='notice'>A gun was buried within!</span>")
+							if(1)
+								new/obj/item/device/modkit/spur_parts(src)
+								visible_message("<span class='notice'>Something came out of the wall! Looks like scrap metal.</span>")
+								polarstar = 2
 				return
+
+			if(finds && finds.len)
+				var/I = rand(1,100)
+				if(I == 1)
+					switch(polarstar)
+						if(0)
+							new/obj/item/weapon/gun/energy/polarstar(src)
+							polarstar = 1
+							visible_message("<span class='notice'>A gun was buried within!</span>")
+						if(1)
+							new/obj/item/device/modkit/spur_parts(src)
+							visible_message("<span class='notice'>Something came out of the wall! Looks like scrap metal.</span>")
+							polarstar = 2
 
 			excavation_level += P.excavation_amount
 
@@ -310,7 +337,6 @@
 				var/excav_quadrant = round(excavation_level / 25) + 1
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
 				overlays += excav_overlay
-
 /*
 			//drop some rocks
 			next_rock += P.excavation_amount * 10

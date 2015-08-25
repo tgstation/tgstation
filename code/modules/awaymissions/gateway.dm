@@ -20,6 +20,8 @@
 		return
 	icon_state = "off"
 
+/obj/machinery/gateway/shuttle_rotate()
+	return
 
 
 //this is da important part wot makes things go

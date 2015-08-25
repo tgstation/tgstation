@@ -22,11 +22,11 @@
 		if(world.time < next_shock)
 			user << "<span class='warning'>[src] aren't ready to shock again!</span>"
 			return
-		src.visible_message("<span class='warning'>[user.name] fires an arc of electricity!</span>", \
+		user.visible_message("<span class='warning'>[user.name] fires an arc of electricity!</span>", \
 			"<span class='warning'>You fire an arc of electricity!</span>", \
 			"You hear the loud crackle of electricity!")
 		var/datum/powernet/PN = cable.get_powernet()
-		var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, loc)
+		var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, T)
 		if(PN)
 			L.damage = PN.get_electrocute_damage()
 			if(L.damage >= 200)
@@ -50,7 +50,7 @@
 			L.icon_state = "[L.tang]"
 			L.firer = user
 			L.def_zone = user.get_organ_target()
-			L.original = user
+			L.original = A
 			L.current = U
 			L.starting = U
 			L.yo = U.y - T.y

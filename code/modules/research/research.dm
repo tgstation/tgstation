@@ -47,13 +47,18 @@ research holder datum.
 var/global/list/design_list = list()
 var/global/list/tech_list = list()
 
+var/global/list/hidden_tech = list(
+	/datum/tech,
+	/datum/tech/nanotrasen,
+	)
+
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
 	var/list/known_tech = list()			//List of locally known tech.
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 	if(!tech_list.len)
-		for(var/T in typesof(/datum/tech) - /datum/tech)
+		for(var/T in typesof(/datum/tech) - hidden_tech)
 			tech_list += new T()
 	if(!design_list.len)
 		for(var/D in typesof(/datum/design) - /datum/design)
@@ -122,9 +127,9 @@ var/global/list/tech_list = list()
 		if(T.id == known.id)
 			if(T.level > known.level)
 				known.level = T.level
-			return
+			return 1
 	known_tech += T
-	return
+	return 2
 
 /datum/research/proc/AddDesign2Known(var/datum/design/D)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/research/proc/AddDesign2Known() called tick#: [world.time]")
@@ -183,6 +188,7 @@ datum/tech	//Datum of individual technologies.
 	var/max_level  = 1					// Maximum level this can be at (for admin hax)
 	var/goal_level =-1					// Used for job objectives.  Set to max_level unless max_level is unobtainable.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
+	var/new_category = null
 
 /datum/tech/New()
 	if(goal_level==-1)
@@ -253,8 +259,16 @@ datum/tech/syndicate
 	name = "Illegal Technologies Research"
 	desc = "The study of technologies that violate standard Nanotrasen regulations."
 	id = "syndicate"
-	goal_level=0 // Don't count towards maxed research, since it's illegal.
+	goal_level=0 // Doesn't count towards maxed research, since it's illegal.
 	max_level=8
+
+datum/tech/nanotrasen
+	name = "Nanotrasen Experimental Technologies"
+	desc = "The research of miscellaneous bleeding-edge technologies, sponsored by Nanotrasen."
+	id = "nanotrasen"
+	goal_level=0 // Doesn't count towards maxed research, since it's bonus.
+	max_level=8
+	new_category = "Nanotrasen"
 
 /*
 datum/tech/arcane
@@ -298,3 +312,14 @@ datum/tech/robotics
 /obj/item/weapon/disk/tech_disk/New()
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/disk/tech_disk/nanotrasen
+	name = "Technology Disk (Nanotrasen 1)"
+
+/obj/item/weapon/disk/tech_disk/nanotrasen/New()
+	..()
+	stored = new/datum/tech/nanotrasen(src)
+
+/obj/item/weapon/paper/tech_nanotrasen
+	name = "paper - 'Nanotrasen Experimental Technologies'"
+	info = "<B>Thank you for participating in this Nanotrasen-sponsored initiative!</B><BR><BR>This technology disk will open you the doors of Nanotrasen's most bleeding-edge experimental devices, and we look forward to you testing them for us! Also, note that you will still need to perform some research before these designs become available for you to print, but here's a guide to the tech levels that they will require.<br><ol><li><b>Hookshot</b>: Materials=2, Engineering=3, Electromagnetic=2</li><li><b>Ricochet Rifle</b>: Materials=3, Power=3, Combat=3</li><li><b>Gravity Well Gun</b>: Materials=7, Bluespace=5, Electromagnetic=5</li></ol><br>We look forward to the results of your experiments. Depending on their success we might grant you access to even more bleeding-edge technologies in the future! Make Science proud!<br><br><i>Central Command R&D Lab</i>"

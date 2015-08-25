@@ -18,6 +18,8 @@
 	explosion_block = 2
 	girder_type = /obj/structure/girder/reinforced
 
+	penetration_dampening = 20
+
 	var/d_state = WALLCOMPLETED
 
 /turf/simulated/wall/r_wall/examine(mob/user)
@@ -56,6 +58,16 @@
 
 	if (!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+
+	if(istype(W,/obj/item/weapon/solder) && bullet_marks)
+		var/obj/item/weapon/solder/S = W
+		if(!S.remove_fuel(bullet_marks*2,user))
+			return
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		user << "<span class='notice'>You remove the bullet marks with \the [W].</span>"
+		bullet_marks = 0
+		icon = initial(icon)
 		return
 
 	//Get the user's location
@@ -402,12 +414,12 @@
 			else
 				dismantle_wall(1,1) //Fuck it up nicely
 		if(2.0)
-			if(prob(25)) //Fairly likely to stand, point-blank damage is "gone"
-				dismantle_wall(0,1)
-			else
+			if(prob(75) && (d_state == WALLCOMPLETED))//No more infinite plasteel generation!
 				src.d_state = WALLCOVERREMOVED
 				update_icon()
 				getFromPool(/obj/item/stack/sheet/plasteel, get_turf(src)) //Lose the plasteel needed to get there
+			else
+				dismantle_wall(0,1)
 		if(3.0)
 			if(prob(15))
 				dismantle_wall(0,1)

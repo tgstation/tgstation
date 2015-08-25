@@ -223,31 +223,23 @@
 	blocks_air = 1
 	explosion_block = 2
 
-/*
-/turf/simulated/shuttle/wall/lighting_build_overlays()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/lighting_build_overlays() called tick#: [world.time]")
-	var/atom/movable/lighting_overlay/O = ..()
+/turf/simulated/shuttle/wall/shuttle_rotate(angle) //delete this when autosmooth is added
+	src.transform = turn(src.transform, angle)
 
-	if(O)
-		if(icon_state in transparent_icons)
-			O.icon_state = "light1_corner"
-			O.dir = src.dir
-		else
-			switch(icon_state) //For incorrectly mapped corners
-				if("swall_s5")
-					O.icon_state = "light1_corner"
-					O.dir = SOUTH
-				if("swall_s6")
-					O.icon_state = "light1_corner"
-					O.dir = WEST
-				if("swall_s9")
-					O.icon_state = "light1_corner"
-					O.dir = EAST
-				if("swall_s10")
-					O.icon_state = "light1_corner"
-					O.dir = NORTH
-
-	return O*/
+/turf/simulated/shuttle/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.delayNextAttack(8)
+	if (!user.dexterity_check())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return
+	if(istype(W,/obj/item/weapon/solder) && bullet_marks)
+		var/obj/item/weapon/solder/S = W
+		if(!S.remove_fuel(bullet_marks*2,user))
+			return
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		user << "<span class='notice'>You remove the bullet marks with \the [W].</span>"
+		bullet_marks = 0
+		icon = initial(icon)
+	..()
 
 /turf/simulated/shuttle/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)

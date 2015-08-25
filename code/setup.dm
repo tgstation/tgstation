@@ -970,6 +970,13 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define AUTOMAGDROP  2		//Does the mag drop when it's empty?
 #define EMPTYCASINGS 4		//Does the gun eject empty casings?
 
+//projectiles bouncing off and phasing through obstacles
+#define PROJREACT_WALLS		1//includes opaque doors
+#define PROJREACT_WINDOWS	2//includes transparent doors
+#define PROJREACT_OBJS		4//structures, machines and items
+#define PROJREACT_MOBS		8//all mobs
+#define PROJREACT_BLOB		16//blob
+
 ///////////////////////
 ///////RESEARCH////////
 ///////////////////////
@@ -1244,3 +1251,38 @@ var/proccalls = 1
 //For mob/proc/show_message (code/modules/mob/mob.dm @ 248)
 #define MESSAGE_SEE		1 //Visible message
 #define MESSAGE_HEAR	2 //Hearable message
+
+/*
+ *
+ *
+ * Logging define
+ *
+ *
+ */
+#define WARNING(MSG) world.log << "##WARNING: [MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr]."
+#define warning(msg) world.log << "## WARNING: [msg]"
+#define testing(msg) world.log << "## TESTING: [msg]"
+#define log_game(text) diary << html_decode("\[[time_stamp()]]GAME: [text]")
+
+#define log_vote(text) diary << html_decode("\[[time_stamp()]]VOTE: [text]")
+
+#define log_access(text) diary << html_decode("\[[time_stamp()]]ACCESS: [text]")
+
+#define log_say(text) diary << html_decode("\[[time_stamp()]]SAY: [text]")
+
+#define log_ooc(text) diary << html_decode("\[[time_stamp()]]OOC: [text]")
+
+#define log_whisper(text) diary << html_decode("\[[time_stamp()]]WHISPER: [text]")
+
+#define log_cultspeak(text) diary << html_decode("\[[time_stamp()]]CULT: [text]")
+
+#define log_narspeak(text) diary << html_decode("\[[time_stamp()]]NARSIE: [text]")
+
+#define log_emote(text) diary << html_decode("\[[time_stamp()]]EMOTE: [text]")
+
+#define log_attack(text) diaryofmeanpeople << html_decode("\[[time_stamp()]]ATTACK: [text]")
+
+#define log_adminsay(text) diary << html_decode("\[[time_stamp()]]ADMINSAY: [text]")
+
+#define log_adminwarn(text) diary << html_decode("\[[time_stamp()]]ADMINWARN: [text]")
+#define log_pda(text) diary << html_decode("\[[time_stamp()]]PDA: [text]")

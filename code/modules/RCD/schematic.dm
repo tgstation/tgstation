@@ -71,13 +71,8 @@ params:
 /datum/rcd_schematic/proc/get_HTML()
 	return " "
 
-/*
-Called when a client logs in and the required resources need to be sent to the cache.
-Use client << browse_rsc() to sent the files.
+/datum/rcd_schematic/proc/send_assets(var/client/client)
+	return
 
-params:
-	- var/client/client: client to send to.
-*/
-
-/datum/rcd_schematic/proc/send_icons(var/client/client)
+/datum/rcd_schematic/proc/register_assets()
 	return

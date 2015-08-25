@@ -7,6 +7,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	penetration_dampening = 17
 	var/health = 20
 	var/health_timestamp = 0
 	var/brute_resist = 4
@@ -33,6 +34,9 @@
 /obj/effect/blob/Destroy()
 	blobs -= src
 	..()
+
+/obj/effect/blob/projectile_check()
+	return PROJREACT_BLOB
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0))	return 1

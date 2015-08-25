@@ -145,7 +145,7 @@ datum/shuttle_controller/proc/move_pod(var/start_type,var/end_type,var/direction
 
 	for(var/mob/M in end_location)
 		if(M.client)
-			spawn(0)
+			spawn()
 				if(M.locked_to)
 					shake_camera(M, 4, 1) // locked_to, not a lot of shaking
 				else

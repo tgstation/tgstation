@@ -119,10 +119,14 @@
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/circlerangeturfs() called tick#: [world.time]")
 
 	var/turf/centerturf = get_turf(center)
+	if(!centerturf)
+		usr << "cant get a center turf?"
+		return
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in range(radius, centerturf))
+		if(!T) continue
 		var/dx = T.x - centerturf.x
 		var/dy = T.y - centerturf.y
 		if(dx*dx + dy*dy <= rsq)

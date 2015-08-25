@@ -23,10 +23,14 @@
 
 	var/sound_override = 0 //Do we make a sound when bumping into something?
 	var/hard_deleted = 0
+
+	var/obj/effect/overlay/chain/tether = null
+	var/tether_pull = 0
+
 	//glide_size = 8
 
 	//Atom locking stuff.
-	var/list/locked_atoms[0]
+	var/list/locked_atoms
 	var/atom/movable/locked_to
 	var/locked_should_lie = 0	//Whether locked mobs should lie down, used by beds.
 	var/dense_when_locking = 1
@@ -36,7 +40,13 @@
 	areaMaster = get_area_master(src)
 	if(flags & HEAR && !ismob(src))
 		getFromPool(/mob/virtualhearer, src)
+	var/icon/I = icon(icon, icon_state, dir)
+	if(I)
+		I.MapColors(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)
+		src.tempoverlay = I
 
+	locked_atoms = list()
+		
 /atom/movable/Destroy()
 	if(flags & HEAR && !ismob(src))
 		for(var/mob/virtualhearer/VH in virtualhearers)
@@ -100,6 +110,14 @@
 		var/mob/M = src
 		if(M.client)
 			move_delay = (3+(M.client.move_delayer.next_allowed - world.time))*world.tick_lag
+
+	var/can_pull_tether = 0
+	if(tether)
+		if(tether.attempt_to_follow(src,newLoc))
+			can_pull_tether = 1
+		else
+			return 0
+
 	glide_size = Ceiling(32 / move_delay * world.tick_lag) - 1 //We always split up movements into cardinals for issues with diagonal movements.
 	var/atom/oldloc = loc
 	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
@@ -135,15 +153,23 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-	if(.)	//The move was succesful, update locked atoms.
-		for(var/atom/movable/AM in locked_atoms)
-			AM.forceMove(loc)
+	if(. && locked_atoms && locked_atoms.len)	//The move was succesful, update locked atoms.
+		spawn(0)
+			for(var/atom/movable/AM in locked_atoms)
+				AM.forceMove(loc)
 
 	update_dir()
 
 	if(!loc || (loc == oldloc && oldloc != newLoc))
 		last_move = 0
 		return
+
+	if(tether && can_pull_tether && !tether_pull)
+		tether.follow(src,oldloc)
+		var/datum/chain/tether_datum = tether.chain_datum
+		if(!tether_datum.Check_Integrity())
+			tether_datum.snap = 1
+			tether_datum.Delete_Chain()
 
 	last_move = Dir
 	src.move_speed = world.timeofday - src.l_move_time
@@ -424,6 +450,15 @@
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
+
+/atom/movable/proc/attempt_to_follow(var/atom/movable/A,var/turf/T)
+	if(anchored)
+		return 0
+	if(get_dist(T,loc) <= 1)
+		return 1
+	else
+		var/turf/U = A.loc
+		return U.Enter(src,loc)
 
 /////////////////////////////
 // SINGULOTH PULL REFACTOR

@@ -65,6 +65,11 @@
 	if(empstun < 0)
 		empstun = 0
 
+/obj/structure/bed/chair/vehicle/buckle_mob(mob/M as mob, mob/user as mob)
+	if(isanimal(M)) return //Animals can't buckle
+
+	..()
+
 /obj/structure/bed/chair/vehicle/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -92,7 +97,7 @@
 		return user.l_hand == mykey || user.r_hand == mykey
 	return 0
 
-/obj/structure/bed/chair/vehicle/relaymove(var/mob/user, direction)
+/obj/structure/bed/chair/vehicle/relaymove(var/mob/living/user, direction)
 	if(user.stat || user.stunned || user.weakened || user.paralysis  || destroyed)
 		unlock_atom(user)
 		return
@@ -108,8 +113,29 @@
 	if(istype(src.loc, /turf/space))
 		if(!src.Process_Spacemove(0))	return 0
 
+	var/can_pull_tether = 0
+	if(user.tether)
+		if(user.tether.attempt_to_follow(user,get_step(src,direction)))
+			can_pull_tether = 1
+		else
+			var/datum/chain/tether_datum = user.tether.chain_datum
+			tether_datum.snap = 1
+			tether_datum.Delete_Chain()
+	var/turf/T = loc
+
 	step(src, direction)
 	delayNextMove(getMovementDelay())
+
+	if(T != loc)
+		user.handle_hookchain(direction)
+
+	if(user.tether && can_pull_tether)
+		user.tether.follow(user,T)
+		var/datum/chain/tether_datum = user.tether.chain_datum
+		if(!tether_datum.Check_Integrity())
+			tether_datum.snap = 1
+			tether_datum.Delete_Chain()
+
 	update_mob()
 	/*
 	if(istype(src.loc, /turf/space) && (!src.Process_Spacemove(0, user)))

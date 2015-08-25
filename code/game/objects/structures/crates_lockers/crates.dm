@@ -537,3 +537,85 @@
 			return
 		else
 	return
+
+/obj/structure/closet/crate/secure/weapon/experimental
+	name = "Experimental Weapons Crate"
+	var/chosen_set = null
+
+/obj/structure/closet/crate/secure/weapon/experimental/New()
+	..()
+	if(!chosen_set)
+		chosen_set = pick("ricochet","bison","spur","gatling","stickybomb","nikita","osipr","hecate","gravitywell")
+
+	switch(chosen_set)
+		if("ricochet")
+			new/obj/item/clothing/suit/armor/laserproof(src)
+			new/obj/item/weapon/gun/energy/ricochet(src)
+			new/obj/item/weapon/gun/energy/ricochet(src)
+		if("bison")
+			new/obj/item/clothing/shoes/jackboots(src)
+			new/obj/item/clothing/suit/hgpirate(src)
+			new/obj/item/clothing/head/hgpiratecap(src)
+			new/obj/item/clothing/glasses/eyepatch(src)
+			new/obj/item/weapon/gun/energy/bison(src)
+		if("spur")
+			new/obj/item/clothing/suit/cardborg(src)
+			new/obj/item/clothing/head/cardborg(src)
+			new/obj/item/device/modkit/spur_parts(src)
+			new/obj/item/weapon/gun/energy/polarstar(src)
+		if("gatling")
+			new/obj/item/clothing/suit/armor/riot(src)
+			new/obj/item/clothing/head/helmet/riot(src)
+			new/obj/item/clothing/shoes/swat(src)
+			new/obj/item/clothing/gloves/swat(src)
+			new/obj/item/weapon/gun/gatling(src)
+		if("stickybomb")
+			new/obj/item/clothing/suit/bomb_suit/security(src)
+			new/obj/item/clothing/head/bomb_hood/security(src)
+			new/obj/item/weapon/gun/stickybomb(src)
+			new/obj/item/weapon/storage/box/stickybombs(src)
+		if("nikita")
+			for(var/i=1;i<=5;i++)
+				new/obj/item/ammo_casing/rocket_rpg/nikita(src)
+			new/obj/item/weapon/gun/projectile/rocketlauncher/nikita(src)
+		if("osipr")
+			new/obj/item/clothing/suit/space/syndicate/black(src)
+			new/obj/item/clothing/head/helmet/space/syndicate/black(src)
+			new/obj/item/weapon/gun/osipr(src)
+		if("hecate")
+			new/obj/item/weapon/gun/projectile/hecate(src)
+			new/obj/item/ammo_storage/box/BMG50(src)
+			new/obj/item/device/radio/headset/headset_earmuffs(src)
+			new/obj/item/clothing/glasses/thermal(src)
+		if("gravitywell")
+			new/obj/item/clothing/suit/radiation(src)
+			new/obj/item/clothing/head/radiation(src)
+			new/obj/item/clothing/shoes/magboots(src)
+			new/obj/item/weapon/gun/gravitywell(src)
+
+/obj/structure/closet/crate/secure/weapon/experimental/ricochet
+	chosen_set = "ricochet"
+
+/obj/structure/closet/crate/secure/weapon/experimental/bison
+	chosen_set = "bison"
+
+/obj/structure/closet/crate/secure/weapon/experimental/spur
+	chosen_set = "spur"
+
+/obj/structure/closet/crate/secure/weapon/experimental/gatling
+	chosen_set = "gatling"
+
+/obj/structure/closet/crate/secure/weapon/experimental/stickybomb
+	chosen_set = "stickybomb"
+
+/obj/structure/closet/crate/secure/weapon/experimental/nikita
+	chosen_set = "nikita"
+
+/obj/structure/closet/crate/secure/weapon/experimental/osipr
+	chosen_set = "osipr"
+
+/obj/structure/closet/crate/secure/weapon/experimental/hecate
+	chosen_set = "hecate"
+
+/obj/structure/closet/crate/secure/weapon/experimental/gravitywell
+	chosen_set = "gravitywell"

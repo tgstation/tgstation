@@ -390,6 +390,12 @@
 				// now with silicons
 
 /mob/living/emp_act(severity)
+	for(var/obj/item/stickybomb/B in src)
+		if(B.stuck_to)
+			visible_message("<span class='warning'>\the [B] stuck on \the [src] suddenly deactivates itself and falls to the ground.</span>")
+			B.deactivate()
+			B.unstick()
+
 	if(flags & INVULNERABLE)
 		return
 
@@ -603,6 +609,7 @@ Thanks.
 	if (restrained())
 		stop_pulling()
 
+	var/turf/T = loc
 
 	var/t7 = 1
 	if (restrained())
@@ -610,7 +617,6 @@ Thanks.
 			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
 				t7 = null
 	if (t7 && pulling && (Adjacent(pulling) || pulling.loc == loc))
-		var/turf/T = loc
 		. = ..()
 
 		if (pulling && pulling.loc)
@@ -665,12 +671,16 @@ Thanks.
 	else
 		stop_pulling()
 		. = ..()
+
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
+
+	if(T != loc)
+		handle_hookchain(direct)
 
 	if(.)
 		for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
@@ -684,6 +694,32 @@ Thanks.
 						M.NotTargeted(G)
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=loc))
+
+/mob/living/proc/handle_hookchain(var/direct)
+	for(var/obj/item/weapon/gun/hookshot/hookshot in src)
+		if(hookshot.clockwerk)
+			continue
+
+		for(var/i = 1;i<hookshot.maxlength;i++)
+			var/obj/effect/overlay/hookchain/HC = hookshot.links["[i]"]
+			if(HC.loc != hookshot)
+				HC.forceMove(get_step(HC,direct),direct)
+
+		if(hookshot.hook)
+			var/obj/item/projectile/hookshot/hook = hookshot.hook
+			hook.forceMove(get_step(hook,direct),direct)
+			if(direct & NORTH)
+				hook.override_starting_Y++
+				hook.override_target_Y++
+			if(direct & SOUTH)
+				hook.override_starting_Y--
+				hook.override_target_Y--
+			if(direct & EAST)
+				hook.override_starting_X++
+				hook.override_target_X++
+			if(direct & WEST)
+				hook.override_starting_X--
+				hook.override_target_X--
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -705,6 +741,34 @@ Thanks.
 			Location.drop_from_inventory(H)
 		del(H)
 		return
+
+	//Detaching yourself from a tether
+	if(L.tether)
+		var/mob/living/carbon/CM = L
+		if(!istype(CM) || !CM.handcuffed)
+			var/datum/chain/tether_datum = L.tether.chain_datum
+			if(tether_datum.extremity_B == src)
+				L.visible_message("<span class='danger'>\the [L] quickly grabs and removes \the [L.tether] tethered to his body!</span>",
+							  "<span class='warning'>You quickly grabs and remove \the [L.tether] tethered to your body.</span>")
+				L.tether = null
+				tether_datum.extremity_B = null
+				tether_datum.rewind_chain()
+
+	//Trying to unstick a stickybomb
+	for(var/obj/item/stickybomb/B in L)
+		if(B.stuck_to)
+			L.visible_message("<span class='danger'>\the [L] is trying to reach and pull off \the [B] stuck on his body!</span>",
+						  "<span class='warning'>You reach for \the [B] stuck on your body and start pulling.</span>")
+			if(do_after(L, src, 30, 10, FALSE))
+				L.visible_message("<span class='danger'>After struggling for an instant, \the [L] manages unstick \the [B] from his body!</span>",
+						  "<span class='warning'>It came off!</span>")
+				L.put_in_hands(B)
+				B.unstick(0)
+			else
+				L << "<span class='warning'>You need to stop moving around while you try to get a hold of \the [B]!</span>"
+			return
+		else
+			continue
 
 	//Resisting control by an alien mind.
 	if(istype(src.loc,/mob/living/simple_animal/borer))
@@ -843,9 +907,10 @@ Thanks.
 						BD.attack_hand(usr)
 					C.open()
 
-	//breaking out of handcuffs
+
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
+	//putting out a fire
 		if(CM.on_fire && CM.canmove)
 			CM.fire_stacks -= 5
 			CM.weakened = 5
@@ -856,6 +921,8 @@ Thanks.
 								   "<span class='notice'>You extinguish yourself.</span>")
 				ExtinguishMob()
 			return
+
+	//breaking out of handcuffs
 		if(CM.handcuffed && CM.canmove && CM.special_delayer.blocked())
 			CM.delayNext(DELAY_ALL,100)
 			if(isalienadult(CM) || (M_HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -932,6 +999,7 @@ Thanks.
 						CM.update_inv_legcuffed()
 					else
 						CM << "<span class='warning'>Your unlegcuffing attempt was interrupted.</span>"
+
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"

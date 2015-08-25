@@ -21,10 +21,18 @@
 	name="beam"
 	icon='icons/effects/beam.dmi'
 	icon_state="b_beam"
+	layer = 13
+	mouse_opacity = 0
 	var/tmp/atom/BeamSource
-	New()
-		..()
-		spawn(10) qdel(src)
+
+/obj/effect/overlay/beam/New(turf/loc, var/lifetime = 10, var/fade = 0, var/src_icon = 'icons/effects/beam.dmi')
+	..()
+	icon = src_icon
+	spawn if(fade)
+		animate(src, alpha=0, time=lifetime)
+	spawn(lifetime)
+		returnToPool(src)
+
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

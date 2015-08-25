@@ -202,15 +202,18 @@
 			M << "<span class='sinister'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</span>"
 			M << "<span class='sinister'>You can now speak and understand the forgotten tongue of the occult.</span>"
 			M.add_language("Cult")
-			log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at [M.loc.x], [M.loc.y], [M.loc.z]")
+			log_admin("[usr]([ckey(usr.key)]) has converted [M] ([ckey(M.key)]) to the cult at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.loc.x];Y=[M.loc.y];Z=[M.loc.z]'>([M.loc.x], [M.loc.y], [M.loc.z])</a>")
 			if(M.client)
-				src = null
-				sleep(100)//10 seconds sounds good
-				if(M && !M.client)
-					message_admins("[M] ([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
-					log_admin("[M]([ckey(M.key)]) ghosted/disconnected shortly after having been converted to the cult!")
+				spawn(600)
+					if(M && !M.client)
+						var/turf/T = get_turf(M)
+						message_admins("[M] ([ckey(M.key)]) ghosted/disconnected less than a minute after having been converted to the cult! ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+						log_admin("[M]([ckey(M.key)]) ghosted/disconnected less than a minute after having been converted to the cult! ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			return 1
 		else
+			usr << "<span class='danger'>The ritual didn't work, either something is disrupting it, or this person just isn't suited to be part of our cult.</span>"
+			if(M.silent && M.weakened)
+				usr << "<span class='danger'>You have to restrain him before the talisman's effects wear off!</span>"
 			M << "<span class='sinister'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>"
 			M << "<span class='danger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, stop it and its minions at all costs.</span>"
 			return 0
@@ -791,6 +794,8 @@
 
 	for(var/mob/dead/observer/O in player_list)
 		O << "<span class='game say'><b>[user.real_name]</b> communicates, <span class='sinister'>[input]</span></span>"
+
+	log_cultspeak("[key_name(user)] Cult Communicate Rune: [input]")
 
 	qdel(src)
 	return 1

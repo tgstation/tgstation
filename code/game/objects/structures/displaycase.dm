@@ -158,7 +158,7 @@
 	overlays = 0
 	if(occupant)
 		var/icon/occupant_icon=getFlatIcon(occupant)
-		occupant_icon.Scale(16,16)
+		occupant_icon.Scale(19,19)
 		occupant_overlay = image(occupant_icon)
 		occupant_overlay.pixel_x=8
 		occupant_overlay.pixel_y=8

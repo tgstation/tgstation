@@ -35,6 +35,7 @@
 
 /mob/proc/ClickOn( var/atom/A, var/params )
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/ClickOn() called tick#: [world.time]")
+	if(!click_delayer) click_delayer = new
 	if(click_delayer.blocked())
 		return
 	click_delayer.setDelay(1)

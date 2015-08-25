@@ -18,6 +18,7 @@
 	machine_flags = EMAGGABLE
 	soundeffect = 'sound/machines/windowdoor.ogg'
 	var/shard = /obj/item/weapon/shard
+	penetration_dampening = 2
 
 /obj/machinery/door/window/New()
 	..()
@@ -315,6 +316,7 @@
 	secure = 1
 	var/id_tag = null
 	health = 200
+	penetration_dampening = 4
 
 /obj/machinery/door/window/brigdoor/make_assembly(mob/user as mob)
 	var/obj/structure/windoor_assembly/WA = ..(user)
@@ -328,6 +330,7 @@
 	icon = 'icons/obj/doors/plasmawindoor.dmi'
 	health = 300
 	shard = /obj/item/weapon/shard/plasma
+	penetration_dampening = 6
 
 /obj/machinery/door/window/plasma/make_assembly(mob/user as mob)
 	// Windoor assembly
@@ -341,6 +344,7 @@
 	base_state = "leftsecure"
 	health = 400
 	secure = 1
+	penetration_dampening = 8
 
 /obj/machinery/door/window/plasma/secure/make_assembly(mob/user as mob)
 	var/obj/structure/windoor_assembly/plasma/WA = ..(user)

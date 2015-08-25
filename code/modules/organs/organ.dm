@@ -180,7 +180,7 @@
 		if(species && species.flags & NO_PAIN)
 			emote("scream",,, 1)
 		emote("collapse")
-		paralysis = 10
+		Paralyse(10)
 
 	//Check arms and legs for existence
 	//can_stand = 2 //can stand on both legs

@@ -23,6 +23,7 @@
 	var/sheettype = /obj/item/stack/sheet/glass //Used for deconstruction
 	var/sheetamount = 1 //Number of sheets needed to build this window (determines how much shit is spawned via Destroy())
 	var/reinforced = 0 //Used for deconstruction steps
+	penetration_dampening = 1
 
 	var/obj/Overlays/damage_overlay
 	var/cracked_base = "crack"
@@ -39,6 +40,9 @@
 	update_nearby_tiles()
 	update_nearby_icons()
 	update_icon()
+
+/obj/structure/window/projectile_check()
+	return PROJREACT_WINDOWS
 
 /obj/structure/window/examine(mob/user)
 
@@ -490,6 +494,7 @@
 	health = 40
 	d_state = WINDOWSECURE
 	reinforced = 1
+	penetration_dampening = 3
 
 /obj/structure/window/plasma
 
@@ -499,6 +504,7 @@
 	shardtype = /obj/item/weapon/shard/plasma
 	sheettype = /obj/item/stack/sheet/glass/plasmaglass
 	health = 120
+	penetration_dampening = 5
 
 	fire_temp_threshold = 32000
 	fire_volume_mod = 1000
@@ -511,6 +517,7 @@
 	shardtype = /obj/item/weapon/shard/plasma
 	sheettype = /obj/item/stack/sheet/glass/plasmarglass
 	health = 160
+	penetration_dampening = 7
 
 /obj/structure/window/reinforced/plasma/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return

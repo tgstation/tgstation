@@ -22,6 +22,7 @@
 
 	starting_materials = list(MAT_IRON = 2*CC_PER_SHEET_METAL)
 	w_type = RECYK_METAL
+	ignoreinvert = 1
 
 
 /obj/structure/closet/initialize()

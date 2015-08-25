@@ -6,15 +6,35 @@
 /*
  * print a warning message to world.log
  */
-#define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
-/proc/warning(msg)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/warning() called tick#: [world.time]")
-	world.log << html_decode("## WARNING: [msg]")
+/* see setup.dm
+#define WARNING(MSG) world << "##WARNING: [MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr]."
+#define warning(msg) world.log << "## WARNING: [msg]"
+#define testing(msg) world.log << "## TESTING: [msg]"
+#define log_game(text) diary << html_decode("\[[time_stamp()]]GAME: [text]")
 
-//print a testing-mode debug message to world.log
-/proc/testing(msg)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/testing() called tick#: [world.time]")
-	world.log << html_decode("## TESTING: [msg]")
+#define log_vote(text) diary << html_decode("\[[time_stamp()]]VOTE: [text]")
+
+#define log_access(text) diary << html_decode("\[[time_stamp()]]ACCESS: [text]")
+
+#define log_say(text) diary << html_decode("\[[time_stamp()]]SAY: [text]")
+
+#define log_ooc(text) diary << html_decode("\[[time_stamp()]]OOC: [text]")
+
+#define log_whisper(text) diary << html_decode("\[[time_stamp()]]WHISPER: [text]")
+
+#define log_cultspeak(text) diary << html_decode("\[[time_stamp()]]CULT: [text]")
+
+#define log_narspeak(text) diary << html_decode("\[[time_stamp()]]NARSIE: [text]")
+
+#define log_emote(text) diary << html_decode("\[[time_stamp()]]EMOTE: [text]")
+
+#define log_attack(text) diaryofmeanpeople << html_decode("\[[time_stamp()]]ATTACK: [text]")
+
+#define log_adminsay(text) diary << html_decode("\[[time_stamp()]]ADMINSAY: [text]")
+
+#define log_adminwarn(text) diary << html_decode("\[[time_stamp()]]ADMINWARN: [text]")
+#define log_pda(text) diary << html_decode("\[[time_stamp()]]PDA: [text]")
+*/
 
 /proc/log_admin(raw_text)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_admin() called tick#: [world.time]")
@@ -38,55 +58,7 @@
 			C << "DEBUG: [text]"
 
 
-/proc/log_game(text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_game() called tick#: [world.time]")
-	if (config.log_game)
-		diary << html_decode("\[[time_stamp()]]GAME: [text]")
 
-/proc/log_vote(text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_vote() called tick#: [world.time]")
-	if (config.log_vote)
-		diary << html_decode("\[[time_stamp()]]VOTE: [text]")
-
-/proc/log_access(text)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_access() called tick#: [world.time]")
-	if (config.log_access)
-		diary << html_decode("\[[time_stamp()]]ACCESS: [text]")
-
-/proc/log_say(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_say() called tick#: [world.time]")
-	if (config.log_say)
-		diary << html_decode("\[[time_stamp()]]SAY: [text]")
-
-/proc/log_ooc(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_ooc() called tick#: [world.time]")
-	if (config.log_ooc)
-		diary << html_decode("\[[time_stamp()]]OOC: [text]")
-
-/proc/log_whisper(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_whisper() called tick#: [world.time]")
-	if (config.log_whisper)
-		diary << html_decode("\[[time_stamp()]]WHISPER: [text]")
-
-/proc/log_emote(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_emote() called tick#: [world.time]")
-	if (config.log_emote)
-		diary << html_decode("\[[time_stamp()]]EMOTE: [text]")
-
-/proc/log_attack(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_attack() called tick#: [world.time]")
-	if (config.log_attack)
-		diaryofmeanpeople << html_decode("\[[time_stamp()]]ATTACK: [text]")
-
-/proc/log_adminsay(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_adminsay() called tick#: [world.time]")
-	if (config.log_adminchat)
-		diary << html_decode("\[[time_stamp()]]ADMINSAY: [text]")
-
-/proc/log_adminwarn(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_adminwarn() called tick#: [world.time]")
-	if (config.log_adminwarn)
-		diary << html_decode("\[[time_stamp()]]ADMINWARN: [text]")
 
 /proc/log_adminghost(text)
 //	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_adminghost() called tick#: [world.time]")
@@ -100,10 +72,6 @@
 		diary << html_decode("\[[time_stamp()]]GHOST: [text]")
 		message_admins("\[GHOST\] [text]")
 
-/proc/log_pda(text)
-//	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/log_pda() called tick#: [world.time]")
-	if (config.log_pda)
-		diary << html_decode("\[[time_stamp()]]PDA: [text]")
 
 /**
  * Helper proc to log attacks or similar events between two mobs.

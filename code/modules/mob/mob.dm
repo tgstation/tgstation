@@ -49,6 +49,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 	qdel(hud_used)
 	..()
 
+/mob/projectile_check()
+	return PROJREACT_MOBS
+
 /mob/proc/remove_screen_objs()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/remove_screen_obj_references() called tick#: [world.time]")
 	if(flash)
@@ -1430,7 +1433,10 @@ var/list/slot_equipment_priority = list( \
 					stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 				else
 					stat(null, "processScheduler is not running.")
-
+	if(client && client.haszoomed)
+		if(stat != DEAD && !client.holder)
+			client.view = world.view
+			client.haszoomed = 0
 	if(client && client.inactivity < (1200))
 		if(listed_turf)
 			if(get_dist(listed_turf,src) > 1)
@@ -1453,8 +1459,6 @@ var/list/slot_equipment_priority = list( \
 						statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S.connected_button)
 					if(Sp_HOLDVAR)
 						statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S.connected_button)
-	sleep(4/world.tick_lag) //Prevent updating the stat panel for the next .4 seconds, prevents clientside latency from updates
-
 
 
 // facing verbs
@@ -1474,8 +1478,8 @@ var/list/slot_equipment_priority = list( \
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/update_canmove() called tick#: [world.time]")
 	if(locked_to)
 		canmove = 0
-		if(locked_to.locked_should_lie)
-			lying = 1
+		lying = locked_to.locked_should_lie
+
 
 	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
 		stop_pulling()
@@ -1760,12 +1764,22 @@ mob/proc/walking()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")
 	return 0
 
+/mob/proc/isTeleViewing(var/client_eye)
+	if(istype(client_eye,/obj/machinery/camera))
+		return 1
+	if(istype(client_eye,/obj/item/projectile/nikita))
+		return 1
+	return 0
+
 /mob/proc/html_mob_check()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/html_mob_check() called tick#: [world.time]")
 	return 0
 
 /mob/shuttle_act()
 	return
+
+/mob/shuttle_rotate(angle)
+	src.dir = turn(src.dir, angle) //rotating pixel_x and pixel_y is bad
 
 /mob/can_shuttle_move()
 	return 1

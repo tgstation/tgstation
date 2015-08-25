@@ -49,6 +49,14 @@
 	ammo_type = "/obj/item/ammo_casing/c45"
 	max_ammo = 30
 
+/obj/item/ammo_storage/box/BMG50
+	name = "ammo box (.50 BMG)"
+	icon_state = "50BMG"
+	origin_tech = "combat=4"
+	ammo_type = "/obj/item/ammo_casing/BMG50"
+	max_ammo = 8
+	multiple_sprites = 1
+
 /obj/item/ammo_storage/box/flare
 	name = "ammo box (flare shells)"
 	icon_state = "flarebox"

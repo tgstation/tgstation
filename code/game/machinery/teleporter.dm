@@ -82,12 +82,20 @@
 	interact(user)
 
 /obj/machinery/computer/teleporter/interact(var/mob/user)
+	var/area/locked_area
 	if(locked)
-		var/area/locked_area = get_area(locked)
-		. = {"
-		<b>Destination:</b> [sanitize(locked_area.name)]<br>
-		<a href='?src=\ref[src];clear=1'>Clear destination</a><br>
-		"}
+		locked_area = get_area(locked)
+		if(!locked_area)
+			locked = null
+
+		if(locked) //If there's still a locked thing (incase it got cleared above)
+			locked_area = get_area(locked)
+			if(!locked_area)
+				locked = null
+			. = {"
+			<b>Destination:</b> [sanitize(locked_area.name)]<br>
+			<a href='?src=\ref[src];clear=1'>Clear destination</a><br>
+			"}
 	else
 		. = {"
 		<b>Destination unset!</b><br>
