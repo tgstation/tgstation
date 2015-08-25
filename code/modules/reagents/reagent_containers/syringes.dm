@@ -216,11 +216,6 @@
 	desc = "Contains charcoal."
 	list_reagents = list("charcoal" = 15)
 
-/obj/item/weapon/reagent_containers/syringe/silver_sulf
-	name = "syringe (silver sulfadiazine)"
-	desc = "Contains silver sulfadiazine."
-	list_reagents = list("silver_sulfadiazine" = 15)
-
 /obj/item/weapon/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."

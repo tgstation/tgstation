@@ -1,0 +1,7 @@
+author: bgobandit
+
+delete-after: True
+
+changes: 
+  - bugfix: "Overheard at CentComm: 'This burn kit said salicyclic acid would heal my burns! WHO MADE THIS SHIT?' A muffled honking is heard in the background. (Burn first-aid kits now contain an appropriate burn pill.)"
+  - rscadd: "Oxandrolone, a new burn healing medication, has been added to burn first-aid kits and to chemistry. Ingesting 25 units or more causes burn and brute damage."
