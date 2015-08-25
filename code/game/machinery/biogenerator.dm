@@ -41,6 +41,13 @@
 	other_amounts=list(5)
 	result=/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
 
+/datum/biogen_recipe/food/monkeycube
+	id="monkeycube"
+	name="monkey cube"
+	cost=250
+	other_amounts=list(5)
+	result=/obj/item/weapon/reagent_containers/food/snacks/monkeycube
+
 /datum/biogen_recipe/nutrient
 	category="Nutrients"
 
