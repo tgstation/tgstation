@@ -134,6 +134,13 @@
 	list_reagents = list("sal_acid" = 24)
 	roundstart = 1
 
+/obj/item/weapon/reagent_containers/pill/kelotane
+	name = "kelotane pill"
+	desc = "Catalyzes the healing of burns."
+	icon_state = "pill5"
+	list_reagents = list("kelotane" = 20)
+	roundstart = 1
+
 /obj/item/weapon/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
