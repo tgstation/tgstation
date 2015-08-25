@@ -56,7 +56,6 @@
 /obj/structure/closet/crate/secure/loot/bay_10
 	New()
 		..()
-		new/obj/item/clothing/under/shorts(src)
 		new/obj/item/clothing/under/shorts/red(src)
 		new/obj/item/clothing/under/shorts/blue(src)
 

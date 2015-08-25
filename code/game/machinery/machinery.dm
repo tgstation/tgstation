@@ -116,6 +116,8 @@ Class Procs:
 
 	w_type = NOT_RECYCLABLE
 
+	penetration_dampening = 5
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -193,6 +195,9 @@ Class Procs:
 		component_parts = null
 
 	..()
+
+/obj/machinery/projectile_check()
+	return PROJREACT_OBJS
 
 /obj/machinery/process() // If you dont use process or power why are you here
 	return PROCESS_KILL

@@ -61,7 +61,6 @@
 		ammo_to_load = max_ammo
 	for(var/i = 1, i <= ammo_to_load, i++)
 		stored_ammo += new ammo_type(src)
-	update_icon()
 
 /obj/item/ammo_storage/attackby(var/atom/A, var/mob/user) //now with loading
 	..()

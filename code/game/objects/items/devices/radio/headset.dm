@@ -229,7 +229,7 @@
 	name = "headset earmuffs"
 	desc = "Protective earmuffs for sound technicians that allow one to speak on radio channels. To access service, use :d. For engineering, use :e."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "earmuffs"
+	icon_state = "headset_earmuffs"
 	item_state = "earmuffs"
 
 	New()

@@ -30,9 +30,11 @@
 	A.firer = chassis.occupant
 	A.original = target
 	A.current = curloc
+	A.starting = curloc
 	A.yo = targloc.y - curloc.y
 	A.xo = targloc.x - curloc.x
 	chassis.use_power(energy_drain)
+	A.OnFired()
 	A.process()
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	do_after_cooldown()
@@ -76,7 +78,7 @@
 
 /obj/item/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
-	icon_state = "pulse1_bl"
+	icon_state = "u_laser"
 	var/life = 20
 
 /obj/item/projectile/beam/pulse/heavy/Bump(atom/A) //this is just awful
@@ -217,9 +219,11 @@
 		src.projectiles--
 		A.original = target
 		A.current = curloc
+		A.starting = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
 		set_ready_state(0)
+		A.OnFired()
 		A.process()
 	log_message("Fired from [src.name], targeting [target].")
 	do_after_cooldown()
@@ -259,8 +263,10 @@
 		src.projectiles--
 		A.original = target
 		A.current = curloc
+		A.starting = curloc
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
+		A.OnFired()
 		A.process()
 		sleep(2)
 	set_ready_state(0)
@@ -300,7 +306,7 @@
 
 /obj/item/missile/throw_impact(atom/hit_atom)
 	if(primed)
-		explosion(hit_atom, 0, 0, 2, 4)
+		explosion(hit_atom, 0, 1, 2, 4)
 		del(src)
 	else
 		..()

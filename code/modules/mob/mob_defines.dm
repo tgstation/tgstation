@@ -233,7 +233,9 @@
 
 
 
-	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
+	var/obj/control_object = null	//Used by admins to possess objects. All mobs should have this var
+
+	var/obj/orient_object = null	//Similar to control object. But only lets the mob manipulate which direction the object is facing.
 
 	//Whether or not mobs can understand other mobtypes. These stay in /mob so that ghosts can hear everything.
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
@@ -265,9 +267,12 @@
 
 	var/iscorpse = 0 //Keeps track of whether this was spawned from a landmark or not.
 
+	penetration_dampening = 7
+
 	var/list/languages[0]
 	var/stat_fucked = 0
 	var/event/on_uattack
+	forceinvertredraw = 1
 
 /mob/resetVariables()
 	..("callOnFace", "pinned", "embedded", "abilities", "grabbed_by", "requests", "mapobjs", "mutations", "spell_list", "viruses", "resistances", "radar_blips", "active_genes", "attack_log", "speak_emote", args)

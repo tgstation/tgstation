@@ -203,6 +203,12 @@
 
 
 /mob/living/carbon/slime/emp_act(severity)
+	for(var/obj/item/stickybomb/B in src)
+		if(B.stuck_to)
+			visible_message("<span class='warning'>\the [B] stuck on \the [src] suddenly deactivates itself and falls to the ground.</span>")
+			B.deactivate()
+			B.unstick()
+
 	if(flags & INVULNERABLE)
 		return
 

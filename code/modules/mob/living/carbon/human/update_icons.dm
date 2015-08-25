@@ -949,10 +949,13 @@ var/global/list/damage_icon_parts = list()
 		r_hand.screen_loc = ui_rhand	//TODO
 		var/t_state = r_hand.item_state
 		var/t_inhand_state = r_hand.inhand_states["right_hand"]
+		var/icon/check_dimensions = new(t_inhand_state)
 		if(!t_state)	t_state = r_hand.icon_state
 		var/obj/Overlays/O = obj_overlays[R_HAND_LAYER]
 		O.icon = t_inhand_state
 		O.icon_state = t_state
+		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
+		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
 		overlays += O
 		obj_overlays[R_HAND_LAYER] = O
 		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
@@ -968,11 +971,14 @@ var/global/list/damage_icon_parts = list()
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand	//TODO
 		var/t_state = l_hand.item_state
-		var/t_inhand_state = l_hand.inhand_states["left_hand"]
+		var/icon/t_inhand_state = l_hand.inhand_states["left_hand"]
+		var/icon/check_dimensions = new(t_inhand_state)
 		if(!t_state)	t_state = l_hand.icon_state
 		var/obj/Overlays/O = obj_overlays[L_HAND_LAYER]
 		O.icon = t_inhand_state
 		O.icon_state = t_state
+		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
+		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
 		overlays += O
 		obj_overlays[L_HAND_LAYER] = O
 		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")

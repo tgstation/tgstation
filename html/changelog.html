@@ -80,6 +80,74 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2015.08.24</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fix being able to cast spells while under the influence of zombie powder.</li>
+			</ul>
+
+			<h2 class="date">2015.08.22</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">The World</li>
+				<li class="bugfix">Fixed being able to sith lord somebody through a wall just because you can see them.</li>
+			</ul>
+
+			<h2 class="date">2015.08.21</h2>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="experiment">Diona now properly take extra damage from fire based attacks. Skeletons now take 2x damage from physical attacks. Plasmamen take half as much damage from fire as the-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHH</li>
+				<li class="tweak">Reduce damage from hitting something while being thrown by half.</li>
+			</ul>
+
+			<h2 class="date">2015.08.20</h2>
+			<h3 class="author">Clusterfack updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Mostly fix blood from being improperly cleaned and showing up where it isn't there</li>
+			</ul>
+			<h3 class="author">Deity Link updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Cult Communicate Runes' messages are now logged.</li>
+				<li class="rscadd">Voice of Nar-Sie messages are now logged.</li>
+				<li class="rscadd">Cultists who try to convert a loyalty implanted/cult banned crewmember now receive a custom message telling them that the ritual failed.</li>
+				<li class="tweak">Moved the colons in say logs AFTER the language description (after "as Sol Common")</li>
+			</ul>
+			<h3 class="author">Kurfurst updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Dropping an SPS no longer triggers its 'lost' text</li>
+				<li class="bugfix">Putting an SPS in a container no longer triggers its 'lost' text</li>
+				<li class="tweak">The SPS now only announces when it has been stripped (or the container it is within has been stripped) off</li>
+				<li class="rscadd">The SPS now fits on the security belt.</li>
+				<li class="rscadd">The SPS properly reports while inside containers.</li>
+				<li class="rscadd">New proc stripped(mob,mob)</li>
+			</ul>
+			<h3 class="author">PJB3005 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Conveyors now move more stuff and move twice as fast.</li>
+				<li class="tweak">Sorting & mining machinery now moved 5x as many things per tick to accomodate this.</li>
+				<li class="bugfix">You can no longer stick your ID into the recycling furnace console.</li>
+			</ul>
+			<h3 class="author">Pomf123 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Buildmode shit for admins.</li>
+				<li class="rscadd">Dead people or admins in buildmode can zoom in or out with mousewheel, don't make me regret this.</li>
+				<li class="tweak">Upped base lightning damage by 10 and damage is increased by 5 for each power upgrade.</li>
+				<li class="soundadd">mo lightnin sounds.</li>
+				<li class="rscadd">Lightning spell has speed upgrade now</li>
+				<li class="bugfix">Fixed stunbatons</li>
+				<li class="bugfix">Fixed lightning spell jumping based on distance from you, instead of the last bounce source.</li>
+			</ul>
+			<h3 class="author">Unid updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Animals can be buckled into chairs and beds. Doesn't affect mice and other tiny creatures.</li>
+				<li class="bugfix">Fixed the salvage shuttle not being able to move to its starting location or to the abandoned ship on metaclub</li>
+				<li class="tweak">Renamed some docking ports on taxistation (mainly for the salvage shuttle)</li>
+				<li class="tweak">The salvage shuttle can now travel to the abandoned mining outpost on taxistation</li>
+				<li class="rscadd">Shuttles can now be rotated (doesn't work well with multi-tile objects)</li>
+				<li class="tweak">Rehauled the admin menu for shuttle manipulation</li>
+				<li class="tweak">Docking port placement is now better</li>
+			</ul>
+
 			<h2 class="date">2015.08.19</h2>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">
@@ -610,7 +678,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="bugfix">Spiderbots wont be prevented from ventcrawling thanks to holding their own brain</li>
 				<li class="bugfix">Corpses from human-like simple mobs should now spawn correctly again</li>
 				<li class="tweak">Plastic flaps previously used both airtight mining flaps and regular station flaps. However constructable flaps were automatically airtight. Build stages have been adjusted so you can wrench down a flap to anchor it, and crowbar a normal plastic flap to make it airtight.</li>
-				<li class="experimental">Drastically balance changes vampires by making them respawn after the intended 30-45 second delay instead of 3-4.5 second delay</li>
+				<li class="experiment">Drastically balance changes vampires by making them respawn after the intended 30-45 second delay instead of 3-4.5 second delay</li>
 			</ul>
 			<h3 class="author">PJB3005 updated:</h3>
 			<ul class="changes bgimages16">
@@ -948,9 +1016,9 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Dylanstrategie updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Change the AI Reset Board's description to be much less vague (it only clears non-core laws, it does NOT reset the AI to Asimov)</li>
-				<li class="experimental">Use update_brightness() and update_icon() for all items on the list to minimize shit coding and standardize light items</li>
-				<li class="experimental">You can now light cigarettes and sub-types with anything tagged as is_hot(), works with fire (fire_act)</li>
-				<li class="experimental">Blunts can now hold 50 units of reagents. Don't ask me, it's a really fat blunt</li>
+				<li class="experiment">Use update_brightness() and update_icon() for all items on the list to minimize shit coding and standardize light items</li>
+				<li class="experiment">You can now light cigarettes and sub-types with anything tagged as is_hot(), works with fire (fire_act)</li>
+				<li class="experiment">Blunts can now hold 50 units of reagents. Don't ask me, it's a really fat blunt</li>
 				<li class="soundadd">Lighters (regular and zippo) now have sounds</li>
 				<li class="rscadd">Added a strike-anywhere matchbox. Can only be obtained for premium on cigarettes machines currently</li>
 				<li class="rscdel">You can no longer shove an entire matchbox into a cigarette pack</li>
@@ -985,7 +1053,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Dylanstrategie updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscdel">Removed PDA flashlight's custom color. Too close to white and blends badly in luminous areas</li>
-				<li class="experimental">Testing standardized procs designed to handle luminous items, please report any odd behaviour with RIG helmets</li>
+				<li class="experiment">Testing standardized procs designed to handle luminous items, please report any odd behaviour with RIG helmets</li>
 				<li class="rscadd">Add compatibility for disabling helmet lights after setup and adding in lit helmets at roundstart</li>
 				<li class="rscadd">Add standardized proc to disable action buttons whenever interesting (needs to be called)</li>
 				<li class="rscadd">Add examine() proc with extremely basic information (Can the helmet be lit, and is it lit or not ?)</li>
@@ -1013,7 +1081,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			</ul>
 			<h3 class="author">Clusterfack updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="experimental">All zlevels now have their own bluespace drift when using telescience.</li>
+				<li class="experiment">All zlevels now have their own bluespace drift when using telescience.</li>
 			</ul>
 			<h3 class="author">Dylanstrategie updated:</h3>
 			<ul class="changes bgimages16">
@@ -1061,7 +1129,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="tweak">Blast Doors are now less likely to be destroyed by explosion (previously they were as fragile as any other doors)</li>
 				<li class="rscadd">Unsimulated/Shuttle floors now get covered in soot when hit by explosions</li>
 				<li class="rscadd">Added a verb to the debug panel that lets you visualize in colours the impacts of an explosion (can be set to use either explosion methods, the colours disappear after 10 seconds)</li>
-				<li class="experimental">Pomf - server bomb cap raised to 7dev.</li>
+				<li class="experiment">Pomf - server bomb cap raised to 7dev.</li>
 			</ul>
 			<h3 class="author">Ririchiyo updated:</h3>
 			<ul class="changes bgimages16">
@@ -1103,7 +1171,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h2 class="date">2015.05.04</h2>
 			<h3 class="author">Comic updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="experimental">MoMMIs have an overlay of static over non silicon mobs. For funsies you can change between blackout, static, or MUD/Dorf mode. More info here https://github.com/d3athrow/vgstation13/pull/3116</li>
+				<li class="experiment">MoMMIs have an overlay of static over non silicon mobs. For funsies you can change between blackout, static, or MUD/Dorf mode. More info here https://github.com/d3athrow/vgstation13/pull/3116</li>
 			</ul>
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">
@@ -1177,7 +1245,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h2 class="date">2015.05.01</h2>
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="experimental">Made the speaker device 2spooky.</li>
+				<li class="experiment">Made the speaker device 2spooky.</li>
 			</ul>
 
 			<h2 class="date">2015.04.30</h2>
@@ -1238,7 +1306,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="bugfix">Emitter beams will properly re-emit when deleted by an outside source.</li>
 				<li class="bugfix">Fixed superfart being magic and affecting mobs through walls and windows when you've got xray vision.</li>
 				<li class="bugfix">Fixed custom job not working on id computer.</li>
-				<li class="experimental">Removed all traces of metaclub activity everywhere, panic.</li>
+				<li class="experiment">Removed all traces of metaclub activity everywhere, panic.</li>
 			</ul>
 
 			<h2 class="date">2015.04.26</h2>
@@ -1364,7 +1432,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h2 class="date">2015.04.19</h2>
 			<h3 class="author">Dylanstrategie updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="experimental">You can no longer "almost hear" emotes while incapped or sleeping. Which included your own gasps</li>
+				<li class="experiment">You can no longer "almost hear" emotes while incapped or sleeping. Which included your own gasps</li>
 				<li class="rscadd">You will now receive the "You can almost hear something" message when deaf, to know when someone is trying to talk to you</li>
 			</ul>
 			<h3 class="author">Pomf123 updated:</h3>
@@ -1728,7 +1796,7 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Antag roll at round end will show who had uplinks and what they spent and bought.</li>
-				<li class="experimental">The voice changer mask now has the ability to take the form of any other mask.</li>
+				<li class="experiment">The voice changer mask now has the ability to take the form of any other mask.</li>
 			</ul>
 
 			<h2 class="date">2015.03.19</h2>
@@ -1801,103 +1869,13 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			</ul>
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="experimental">Gender is a social construct you CISGendered scum, added debugging to find and squash humans becoming plural or neuter gender.</li>
+				<li class="experiment">Gender is a social construct you CISGendered scum, added debugging to find and squash humans becoming plural or neuter gender.</li>
 			</ul>
 
 			<h2 class="date">2015.03.10</h2>
 			<h3 class="author">Pomf123 updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">NanoUI interactive map Bhangmeter(doppler array)</li>
-			</ul>
-
-			<h2 class="date">2015.03.09</h2>
-			<h3 class="author">Clusterfack updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed a bug where you could use rpd's from far away</li>
-				<li class="bugfix">Fixes a bug where wrapping paper would magically reduce the size of objects</li>
-				<li class="bugfix">Made machine frames dropped from machines spawn at the right buildstage so you can wirecut them</li>
-				<li class="rscadd">Added a local narrate button for admins</li>
-				<li class="bugfix">Made stacks properly stack beneath you when welding shards for example</li>
-				<li class="bugfix">Made Mr. Clean not act like narsie and set the universal state</li>
-				<li class="rscadd">Made mommis/borgs able to interface with the all in one grinder</li>
-				<li class="rscadd">Improvements made to the become mommi verb for observers</li>
-				<li class="bugfix">Fixed a bug where using attack ghost on a mommi spawner wouldn't check your respawn timer</li>
-				<li class="bugfix">Fixed another bug where ghosts wouldn't always be put inside the spawned mommis body</li>
-				<li class="tweak">Fixes chem dispenser UI size so it properly shows all three columns</li>
-			</ul>
-			<h3 class="author">Velard Amakar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Fixed bugs with the vampire update</li>
-			</ul>
-
-			<h2 class="date">2015.03.08</h2>
-			<h3 class="author">ArthurDentist updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Can now order Grass Tiles, Carpet Tiles and Bloodbags at Cargo.</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fix big bug with unary vents connecting to pipes incorrectly in certain situations.</li>
-				<li class="tweak">Reduced cost of conveyor belt circuit board.</li>
-			</ul>
-
-			<h2 class="date">2015.03.06</h2>
-			<h3 class="author">Velard Amakar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">large slew of vampire-related additions, tweaks, and refactors</li>
-				<li class="tweak">Enthrall can be used for free, but you need at least 300 blood in your system to use it</li>
-				<li class="tweak">Full power is now called 'Maturity' is activated at 450 instead of 500</li>
-				<li class="rscadd">Blood can be used to unholy tiles outside of the chapel.</li>
-				<li class="tweak">Coffins now heal faster and cure Nullify and Smite</li>
-				<li class="tweak">Nullrod completely ruins the vampire's day if the chaplain is using it, don't even try to take him on hand to hand</li>
-				<li class="rscadd">Being burned when dead reduces your corpse to ashes</li>
-				<li class="tweak">Holywater fucks you up almost as bad as the sun, but slower</li>
-				<li class="tweak">Chapel kills a weak vampire almost as fast as the sun</li>
-				<li class="tweak">Sunlight is even more lethal</li>
-				<li class="tweak">Picking up a bible or a nullrod will smite you(but not enough to hurt you, trying to use them does that)</li>
-				<li class="rscadd">NEW POWER - Charisma, activates at 450 blood, increases Hypnotise & Glare stun time, and greatly decreases Enthrall time/cooldown.</li>
-				<li class="rscadd">NEW POWER - Shadowy Menace, activates at 450 blood, buffs Shadow Cloak, grants immunity to blessed tiles(but not in the chapel) and gives a chance to terrify anyone who sees you.</li>
-				<li class="rscadd">NEW POWER - Undying Lord of the Night, unlocks after 666 blood, grants the ability to revive after death(but not if you've been smote or gibbed) and spawn a free vampire cloak that can hold a few items, and has moderately decent defense against bullets, fire, and holy effects.</li>
-				<li class="bugfix">Various typos and poor grammar in shit fixed, also replacing "warning"(italic red text) with the "sinister"(spooky purple text) in vamp power text blurbs</li>
-				<li class="rscadd">Added check_holy() to mob_helpers.dm, which checks if a mob is on a holy tile</li>
-				<li class="tweak">Moved vampire-related code out of life.dm through use of the new callOnLife hook</li>
-				<li class="bugfix">Moved coffin healing vampires to vampire.dm where it belongs</li>
-				<li class="rscadd">Adds new smite debuff that is increased by holy things, but decreased by vampire powers and sleeping in coffins.</li>
-			</ul>
-
-			<h2 class="date">2015.03.05</h2>
-			<h3 class="author">Deity Link updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed a bug that prevented the Supermatter Cascade's bluespace blob from ever expanding.</li>
-				<li class="bugfix">Fixed a bug that prevented the Supermatter Cascade's Bluespace rift from teleporting the mobs in range.</li>
-				<li class="imageadd">The Bluespace Rift has a brand new sprite!</li>
-				<li class="tweak">The Bluespace Rift can now be seen through walls.</li>
-				<li class="tweak">Reduced the Bluespace Rift's teleport range so it matches its sprite (it's actually much easier to reach now anyway since you can see it from afar)</li>
-				<li class="rscadd">The world now bakes in a weak green/yellowish light during a Supermatter Cascade, improving visibility.</li>
-				<li class="soundadd">Added a sound that plays when a Supermatter Cascade is triggered.</li>
-				<li class="rscadd">All players are now actually flashed by a blinding light when a Supermatter Cascade is triggered</li>
-				<li class="soundadd">Added a new "Beach" playlist to the DJ jukebox and Superjuke. Featuring 16 tracks.</li>
-			</ul>
-			<h3 class="author">N3X15 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Library computers created tons of database lag.  They now return smaller recordsets and have many improvements.</li>
-				<li class="bugfix">Library computers refresh their menus when clicked.</li>
-				<li class="rscadd">Admins can now track who added a book to the library.</li>
-				<li class="rscadd">Admins can now easily delete books from the library (including all books by ckey).</li>
-				<li class="tweak">Library computer interfaces are now a little less ugly.</li>
-			</ul>
-			<h3 class="author">Pomf123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed being able to leech genetic mutations by standing in the middle of a rad storm with a rad suit while taking no damage.</li>
-				<li class="tweak">Make radiation event much shorter, lower the amount of radiation needed to receive a mutation during the event. You now get 30 seconds to get into a shielded area and each wave of radiation is about 2 seconds apart.</li>
-				<li class="bugfix">Sec belt can hold smoke grenades and tele baton now.</li>
-				<li class="bugfix">Fix dropping any child of food/drink causing you to transfer your luminosity to that object.</li>
-				<li class="bugfix">Attempt at fixing becoming immune to grabs due to some buckling issues.</li>
-				<li class="bugfix">Fixed hairstyles not showing up due to duplicate names!</li>
-			</ul>
-			<h3 class="author">iconleap updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fix coin with a string can be recover after getting the premium item.</li>
 			</ul>
 		</div>
 		<!--

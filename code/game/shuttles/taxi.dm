@@ -81,7 +81,7 @@ var/global/datum/shuttle/taxi/b/taxi_b = new(starting_area = TAXI_B_STARTING_ARE
 	areaname = "Abandoned Station"
 
 /obj/structure/docking_port/destination/taxi/a/transit
-	areaname = "Hyperspace"
+	areaname = "Hyperspace (taxi A)"
 
 /obj/structure/docking_port/destination/taxi/b/medbay_silicon
 	areaname = "Medical and Silicon Station"
@@ -96,7 +96,7 @@ var/global/datum/shuttle/taxi/b/taxi_b = new(starting_area = TAXI_B_STARTING_ARE
 	areaname = "Abandoned Station"
 
 /obj/structure/docking_port/destination/taxi/b/transit
-	areaname = "Hyperspace"
+	areaname = "Hyperspace (taxi B)"
 
 #undef TAXI_A_NAME
 #undef TAXI_B_NAME

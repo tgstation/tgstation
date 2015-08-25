@@ -459,8 +459,23 @@ turf/simulated/floor/proc/update_icon()
 	update_icon()
 	levelupdate()
 
-/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 
+/turf/simulated/floor/singularity_pull(S, current_size)
+	if(current_size >= STAGE_FIVE)
+		if(prob(75))
+			if(floor_tile && !broken && !burnt)
+				floor_tile.loc = src
+				floor_tile = null
+			make_plating()
+		return
+	if(current_size == STAGE_FOUR)
+		if(prob(30))
+			if(floor_tile && !broken && !burnt)
+				floor_tile.loc = src
+				floor_tile = null
+			make_plating()
+
+/turf/simulated/floor/attackby(obj/item/C as obj, mob/user as mob)
 	if(!C || !user)
 		return 0
 

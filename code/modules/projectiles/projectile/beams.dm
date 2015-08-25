@@ -15,6 +15,10 @@ var/list/beam_master = list()
 /obj/item/projectile/beam/captain
 	name = "captain laser"
 	damage = 40
+	linear_movement = 0
+
+/obj/item/projectile/beam/retro
+	linear_movement = 0
 
 /obj/item/projectile/beam/lightning
 	invisibility = 101
@@ -27,162 +31,206 @@ var/list/beam_master = list()
 	stutter = 50
 	eyeblur = 50
 	var/tang = 0
-	layer = 3
+	layer = 13
 	var/turf/last = null
-	kill_count = 20
+	kill_count = 6
 
-	process()
-		var/first = 1 //So we don't make the overlay in the same tile as the firer
-		var/broke = 0
-		var/broken
-		var/atom/curr = current
-		var/Angle=round(Get_Angle(firer,curr))
-		var/icon/I=new('icons/obj/zap.dmi',"lightning")
-		I.Turn(Angle)
-		if(!curr)
-			current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			curr = current
+/obj/item/projectile/beam/lightning/proc/adjustAngle(angle)
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
+	if(!angle)
+		angle = 1
+	/*if(angle < 0)
+		//angle = (round(abs(get_angle(A, user))) + 45) - 90
+		angle = round(angle) + 45 + 180
+	else
+		angle = round(angle) + 45*/
+	return angle
 
-		var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
-		var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
-		var/N=0
-		var/length=round(sqrt((DX)**2+(DY)**2))
-		var/count = 0
-		for(N,N<length,N+=32)
-			if(count >= kill_count)
-				break
-			count++
-			var/obj/effect/overlay/beam/X=new(loc)
-			X.BeamSource=src
-			if(N+32>length)
-				var/icon/II=new(icon,icon_state)
-				II.DrawBox(null,1,(length-N),32,32)
-				II.Turn(Angle)
-				X.icon=II
-			else X.icon=I
-			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
-			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
-			if(DX==0) Pixel_x=0
-			if(DY==0) Pixel_y=0
-			if(Pixel_x>32)
-				for(var/a=0, a<=Pixel_x,a+=32)
-					X.x++
-					Pixel_x-=32
-			if(Pixel_x<-32)
-				for(var/a=0, a>=Pixel_x,a-=32)
-					X.x--
-					Pixel_x+=32
-			if(Pixel_y>32)
-				for(var/a=0, a<=Pixel_y,a+=32)
-					X.y++
-					Pixel_y-=32
-			if(Pixel_y<-32)
-				for(var/a=0, a>=Pixel_y,a-=32)
-					X.y--
-					Pixel_y+=32
-			X.pixel_x=Pixel_x
-			X.pixel_y=Pixel_y
-			var/turf/TT = get_turf(X.loc)
-			if(TT == firer.loc)
-				continue
-			if(TT.density)
+/obj/item/projectile/beam/lightning/process()
+	icon_state = "lightning"
+	var/first = 1 //So we don't make the overlay in the same tile as the firer
+	var/broke = 0
+	var/broken
+	var/atom/curr = current
+	var/Angle=round(Get_Angle(firer,curr))
+	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
+	var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
+	var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
+	I.Turn(Angle+45)
+	Istart.Turn(Angle+45)
+	Iend.Turn(Angle+45)
+	var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
+	var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
+	var/N=0
+	var/length=round(sqrt((DX)**2+(DY)**2))
+	var/count = 0
+	var/turf/T = get_turf(src)
+	for(N,N<length,N+=32)
+		if(count >= kill_count)
+			break
+		count++
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,T)
+		X.BeamSource=src
+		if((N+64>length) && (N+32<=length))
+			X.icon=Iend
+		else if(N==0)
+			X.icon=Istart
+		else if(N+32>length)
+			X.icon=null
+		else
+			X.icon=I
+
+		var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
+		var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+		if(DX==0) Pixel_x=0
+		if(DY==0) Pixel_y=0
+		if(Pixel_x>32)
+			for(var/a=0, a<=Pixel_x,a+=32)
+				X.x++
+				Pixel_x-=32
+		if(Pixel_x<-32)
+			for(var/a=0, a>=Pixel_x,a-=32)
+				X.x--
+				Pixel_x+=32
+		if(Pixel_y>32)
+			for(var/a=0, a<=Pixel_y,a+=32)
+				X.y++
+				Pixel_y-=32
+		if(Pixel_y<-32)
+			for(var/a=0, a>=Pixel_y,a-=32)
+				X.y--
+				Pixel_y+=32
+
+		//Now that we've calculated the total offset in pixels, we move each beam parts to their closest corresponding turfs
+		var/x_increm = 0
+		var/y_increm = 0
+
+		while(Pixel_x >= 32 || Pixel_x <= -32)
+			if(Pixel_x > 0)
+				Pixel_x -= 32
+				x_increm++
+			else
+				Pixel_x += 32
+				x_increm--
+
+		while(Pixel_y >= 32 || Pixel_y <= -32)
+			if(Pixel_y > 0)
+				Pixel_y -= 32
+				y_increm++
+			else
+				Pixel_y += 32
+				y_increm--
+
+		X.x += x_increm
+		X.y += y_increm
+
+		X.pixel_x=Pixel_x
+		X.pixel_y=Pixel_y
+		var/turf/TT = get_turf(X.loc)
+		if(TT == firer.loc)
+			continue
+		if(TT.density)
+			del(X)
+			break
+		for(var/atom/O in TT)
+			if(!O.CanPass(src))
 				del(X)
+				broke = 1
 				break
-			for(var/atom/O in TT)
-				if(!O.CanPass(src))
+		for(var/mob/living/O in TT.contents)
+			if(istype(O, /mob/living))
+				if(O.density)
 					del(X)
 					broke = 1
 					break
-			for(var/mob/living/O in TT.contents)
-				if(istype(O, /mob/living))
-					if(O.density)
-						del(X)
-						broke = 1
-						break
-			if(broke)
-				if(X)
-					del(X)
-				break
-		spawn
-			while(loc) //Move until we hit something
-				if(first)
-					icon = midicon
-				if((!( current ) || loc == current)) //If we pass our target
-					broken = 1
-					icon = endicon
-					tang = adjustAngle(get_angle(original,current))
-					if(tang > 180)
-						tang -= 180
-					else
-						tang += 180
-					icon_state = "[tang]"
-					var/turf/simulated/floor/f = current
-					if(f && istype(f))
-						f.break_tile()
-						f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
-				if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-					//world << "deleting"
-					//del(src) //Delete if it passes the world edge
-					broken = 1
-					return
-				if(kill_count < 1)
-					//world << "deleting"
-					//del(src)
-					broken = 1
-				kill_count--
-				//world << "[x] [y]"
-				if(!bumped && !isturf(original))
-					if(loc == get_turf(original))
-						if(!(original in permutated))
-							icon = endicon
-						if(!broken)
-							tang = adjustAngle(get_angle(original,current))
-							if(tang > 180)
-								tang -= 180
-							else
-								tang += 180
-							icon_state = "[tang]"
-						Bump(original)
-				first = 0
-				if(broken)
-					//world << "breaking"
-					break
+		if(broke)
+			if(X)
+				del(X)
+			break
+	spawn
+		while(loc) //Move until we hit something
+			if(first)
+				icon = midicon
+			if((!( current ) || loc == current)) //If we pass our target
+				broken = 1
+				icon = endicon
+				tang = adjustAngle(get_angle(original,current))
+				if(tang > 180)
+					tang -= 180
 				else
-					last = get_turf(src.loc)
-					step_towards(src, current) //Move~
-					if(src.loc != current)
-						tang = adjustAngle(get_angle(src.loc,current))
-					icon_state = "[tang]"
-			//del(src)
-			returnToPool(src)
-		return
-	/*cleanup(reference) //Waits .3 seconds then removes the overlay.
-		//world << "setting invisibility"
-		sleep(50)
-		src.invisibility = 101
-		return*/
-	on_hit(atom/target, blocked = 0)
-		if(istype(target, /mob/living))
-			var/mob/living/M = target
-			M.playsound_local(src, "explosion", 50, 1)
-		..()
+					tang += 180
+				icon_state = "[tang]"
+				var/turf/simulated/floor/f = current
+				if(f && istype(f))
+					f.break_tile()
+					f.hotspot_expose(1000,CELL_VOLUME,surfaces=1)
+			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+				//world << "deleting"
+				//del(src) //Delete if it passes the world edge
+				broken = 1
+				return
+			if(kill_count < 1)
+				//world << "deleting"
+				//del(src)
+				broken = 1
+			kill_count--
+			//world << "[x] [y]"
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						icon = endicon
+					if(!broken)
+						tang = adjustAngle(get_angle(original,current))
+						if(tang > 180)
+							tang -= 180
+						else
+							tang += 180
+						icon_state = "[tang]"
+					Bump(original)
+			first = 0
+			if(broken)
+				//world << "breaking"
+				break
+			else
+				last = get_turf(src.loc)
+				step_towards(src, current) //Move~
+				if(src.loc != current)
+					tang = adjustAngle(get_angle(src.loc,current))
+				icon_state = "[tang]"
+		//del(src)
+		returnToPool(src)
+	return
+/*cleanup(reference) //Waits .3 seconds then removes the overlay.
+	//world << "setting invisibility"
+	sleep(50)
+	src.invisibility = 101
+	return*/
+
+/obj/item/projectile/beam/lightning/on_hit(atom/target, blocked = 0)
+	if(istype(target, /mob/living))
+		var/mob/living/M = target
+		M.playsound_local(src, "explosion", 50, 1)
+	..()
 
 /obj/item/projectile/beam/lightning/spell
-	var/basedamage = 40
-	damage = 0
-
-	on_hit(atom/target, blocked = 0)
-		..()
-		target.emp_act(2)
-		if(ismob(target))
-			var/mob/living/L = target
-			L.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
-
+	var/spell/lightning/our_spell
+	Bump(atom/A as mob|obj|turf|area)
+		. = ..()
+		if(.)
+			our_spell.lastbumped = A
+		return .
 
 /obj/item/projectile/beam
 	name = "laser"
 	icon_state = "laser"
 	invisibility = 101
+	animate_movement = 2
+	linear_movement = 1
+	layer = 13
 
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
@@ -191,44 +239,134 @@ var/list/beam_master = list()
 	eyeblur = 4
 	var/frequency = 1
 
-	process()
-		var/lastposition = loc
-		var/reference = "\ref[src]" //So we do not have to recalculate it a ton
-		var/first = 1 //So we don't make the overlay in the same tile as the firer
-		spawn while(loc) //Move until we hit something
-			if((!( current ) || loc == current)) //If we pass our target
-				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
-			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
-				//del(src) //Delete if it passes the world edge
-				returnToPool(src)
-				return
-			step_towards(src, current) //Move~
+/obj/item/projectile/beam/OnFired()	//if assigned, allows for code when the projectile gets fired
+	target = get_turf(original)
+	dist_x = abs(target.x - starting.x)
+	dist_y = abs(target.y - starting.y)
 
-			if(isnull(loc))
-				return
-			if(lastposition == loc)
-				kill_count = 0
-			lastposition = loc
-			if(kill_count < 1)
-				//del(src)
-				returnToPool(src)
-				return
-			kill_count--
+	override_starting_X = starting.x
+	override_starting_Y = starting.y
+	override_target_X = target.x
+	override_target_Y = target.y
 
-			if(!bumped && !isturf(original))
-				if(loc == get_turf(original))
-					if(!(original in permutated))
-						Bump(original)
+	if (target.x > starting.x)
+		dx = EAST
+	else
+		dx = WEST
 
-			if(!first) //Add the overlay as we pass over tiles
-				var/target_dir = get_dir(src, current) //So we don't call this too much
+	if (target.y > starting.y)
+		dy = NORTH
+	else
+		dy = SOUTH
 
-				//If the icon has not been added yet
-				if( !("[icon_state][target_dir]" in beam_master) )
-					var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
-					beam_master["[icon_state][target_dir]"] = I //And cache it!
+	if(dist_x > dist_y)
+		error = dist_x/2 - dist_y
+	else
+		error = dist_y/2 - dist_x
 
-				//Finally add the overlay
+	target_angle = round(Get_Angle(starting,target))
+
+	return 1
+
+/obj/item/projectile/beam/process()
+	var/lastposition = loc
+	var/reference = "\ref[src]" //So we do not have to recalculate it a ton
+
+	target = get_turf(original)
+	dist_x = abs(target.x - src.x)
+	dist_y = abs(target.y - src.y)
+
+	if (target.x > src.x)
+		dx = EAST
+	else
+		dx = WEST
+
+	if (target.y > src.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+	var/target_dir = SOUTH
+
+	if(dist_x > dist_y)
+		error = dist_x/2 - dist_y
+
+		spawn
+			reference = bresenham_step(dist_x,dist_y,dx,dy,lastposition,target_dir,reference)
+
+	else
+		error = dist_y/2 - dist_x
+		spawn
+			reference = bresenham_step(dist_y,dist_x,dy,dx,lastposition,target_dir,reference)
+
+	cleanup(reference)
+	return
+
+/obj/item/projectile/beam/bresenham_step(var/distA, var/distB, var/dA, var/dB, var/lastposition, var/target_dir, var/reference)
+	while(src && src.loc)// only stop when we've hit something, or hit the end of the map
+		if(error < 0)
+			var/atom/step = get_step(src, dB)
+			if(!step)
+				bullet_die()
+			src.Move(step)
+			error += distA
+			target_dir = null
+		else
+			var/atom/step = get_step(src, dA)
+			if(!step)
+				bullet_die()
+			src.Move(step)
+			error -= distB
+			target_dir = dA
+			if(error < 0)
+				target_dir = dA + dB
+
+		if(isnull(loc))
+			return reference
+		if(lastposition == loc)
+			kill_count = 0
+		lastposition = loc
+		if(kill_count < 1)
+			returnToPool(src)
+			return reference
+		kill_count--
+		if(bump_original_check())
+			return reference
+
+		if(linear_movement)
+			update_pixel()
+
+			//If the icon has not been added yet
+			if( !("[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]" in beam_master) )
+				var/image/I = image(icon,"[icon_state]_pixel",13,target_dir) //Generate it.
+				I.transform = turn(I.transform, target_angle+45)
+				I.pixel_x = PixelX
+				I.pixel_y = PixelY
+				beam_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"] = I //And cache it!
+
+			//Finally add the overlay
+			if(src.loc && target_dir)
+				src.loc.overlays += beam_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"]
+
+				//Add the turf to a list in the beam master so they can be cleaned up easily.
+				if(reference in beam_master)
+					var/list/turf_master = beam_master[reference]
+					if("[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]" in turf_master)
+						var/list/turfs = turf_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"]
+						turfs += loc
+					else
+						turf_master["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"] = list(loc)
+				else
+					var/list/turfs = list()
+					turfs["[icon_state]_angle[target_angle]_pX[PixelX]_pY[PixelY]"] = list(loc)
+					beam_master[reference] = turfs
+		else
+			//If the icon has not been added yet
+			if( !("[icon_state][target_dir]" in beam_master) )
+				var/image/I = image(icon,icon_state,10,target_dir) //Generate it.
+				beam_master["[icon_state][target_dir]"] = I //And cache it!
+
+			//Finally add the overlay
+			if(src.loc && target_dir)
 				src.loc.overlays += beam_master["[icon_state][target_dir]"]
 
 				//Add the turf to a list in the beam master so they can be cleaned up easily.
@@ -243,10 +381,10 @@ var/list/beam_master = list()
 					var/list/turfs = list()
 					turfs["[icon_state][target_dir]"] = list(loc)
 					beam_master[reference] = turfs
-			else
-				first = 0
-		cleanup(reference)
-		return
+
+
+	return reference
+
 
 /obj/item/projectile/beam/dumbfire(var/dir)
 	var/reference = "\ref[src]" // So we do not have to recalculate it a ton.
@@ -332,7 +470,7 @@ var/list/beam_master = list()
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-
+	destroy = 1
 
 /obj/item/projectile/beam/deathlaser
 	name = "death laser"
@@ -391,3 +529,247 @@ var/list/beam_master = list()
 			if((istype(M.wear_suit, /obj/item/clothing/suit/bluetag))||(istype(M.wear_suit, /obj/item/clothing/suit/redtag)))
 				M.Weaken(5)
 		return 1
+
+/obj/item/projectile/beam/bison
+	name = "heat ray"
+	damage_type = BURN
+	flag = "laser"
+	kill_count = 100
+	layer = 13
+	damage = 15
+	icon = 'icons/obj/lightning.dmi'
+	icon_state = "heatray"
+	animate_movement = 0
+	linear_movement = 0
+	pass_flags = PASSTABLE
+	var/drawn = 0
+	var/tang = 0
+	var/turf/last = null
+/obj/item/projectile/beam/bison/proc/adjustAngle(angle)
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
+	if(!angle)
+		angle = 1
+	/*if(angle < 0)
+		//angle = (round(abs(get_angle(A, user))) + 45) - 90
+		angle = round(angle) + 45 + 180
+	else
+		angle = round(angle) + 45*/
+	return angle
+
+/obj/item/projectile/beam/bison/process()
+	//calculating the turfs that we go through
+	var/lastposition = loc
+	target = get_turf(original)
+	dist_x = abs(target.x - src.x)
+	dist_y = abs(target.y - src.y)
+
+	if (target.x > src.x)
+		dx = EAST
+	else
+		dx = WEST
+
+	if (target.y > src.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+
+	if(dist_x > dist_y)
+		error = dist_x/2 - dist_y
+
+		spawn while(src && src.loc)
+			// only stop when we've hit something, or hit the end of the map
+			if(error < 0)
+				var/atom/step = get_step(src, dy)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				error += dist_x
+			else
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					break
+				src.Move(step)
+				error -= dist_y
+
+			if(isnull(loc))
+				draw_ray(lastposition)
+				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
+			if(kill_count < 1)
+				//del(src)
+				draw_ray(lastposition)
+				returnToPool(src)
+				return
+			kill_count--
+
+			if(!bumped && !isturf(original))
+				if(loc == target)
+					if(!(original in permutated))
+						draw_ray(target)
+						Bump(original)
+
+	else
+		error = dist_y/2 - dist_x
+		spawn while(src && src.loc)
+			// only stop when we've hit something, or hit the end of the map
+			if(error < 0)
+				var/atom/step = get_step(src, dx)
+				if(!step)
+					break
+				src.Move(step)
+				error += dist_y
+			else
+				var/atom/step = get_step(src, dy)
+				if(!step)
+					break
+				src.Move(step)
+				error -= dist_x
+
+			if(isnull(loc))
+				draw_ray(lastposition)
+				return
+			if(lastposition == loc)
+				kill_count = 0
+			lastposition = loc
+			if(kill_count < 1)
+				//del(src)
+				draw_ray(lastposition)
+				returnToPool(src)
+				return
+			kill_count--
+
+			if(!bumped && !isturf(original))
+				if(loc == get_turf(original))
+					if(!(original in permutated))
+						draw_ray(target)
+						Bump(original)
+
+	return
+
+/obj/item/projectile/beam/bison/bullet_die()
+	draw_ray(loc)
+	..()
+
+/obj/item/projectile/beam/bison/proc/draw_ray(var/turf/lastloc)
+	if(drawn) return
+	drawn = 1
+	var/atom/curr = lastloc
+	var/Angle=round(Get_Angle(firer,curr))
+	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
+	var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")
+	var/icon/Iend=new('icons/obj/lightning.dmi',"[icon_state]end")
+	I.Turn(Angle+45)
+	Istart.Turn(Angle+45)
+	Iend.Turn(Angle+45)
+	var/DX=(32*curr.x+curr.pixel_x)-(32*firer.x+firer.pixel_x)
+	var/DY=(32*curr.y+curr.pixel_y)-(32*firer.y+firer.pixel_y)
+	var/N=0
+	var/length=round(sqrt((DX)**2+(DY)**2))
+	var/count = 0
+	var/turf/T = get_turf(firer)
+	var/timer_total = 16
+	var/increment = timer_total/max(1,round(length/32))
+	var/current_timer = 5
+
+	for(N,N<(length+16),N+=32)
+		if(count >= kill_count)
+			break
+		count++
+		var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,T,current_timer,1)
+		X.BeamSource=src
+		current_timer += increment
+		if((N+64>(length+16)) && (N+32<=(length+16)))
+			X.icon=Iend
+		else if(N==0)
+			X.icon=Istart
+		else if(N+32>(length+16))
+			X.icon=null
+		else
+			X.icon=I
+
+
+		var/Pixel_x=round(sin(Angle)+32*sin(Angle)*(N+16)/32)
+		var/Pixel_y=round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+		if(DX==0) Pixel_x=0
+		if(DY==0) Pixel_y=0
+		if(Pixel_x>32)
+			for(var/a=0, a<=Pixel_x,a+=32)
+				X.x++
+				Pixel_x-=32
+		if(Pixel_x<-32)
+			for(var/a=0, a>=Pixel_x,a-=32)
+				X.x--
+				Pixel_x+=32
+		if(Pixel_y>32)
+			for(var/a=0, a<=Pixel_y,a+=32)
+				X.y++
+				Pixel_y-=32
+		if(Pixel_y<-32)
+			for(var/a=0, a>=Pixel_y,a-=32)
+				X.y--
+				Pixel_y+=32
+
+		//Now that we've calculated the total offset in pixels, we move each beam parts to their closest corresponding turfs
+		var/x_increm = 0
+		var/y_increm = 0
+
+		while(Pixel_x >= 32 || Pixel_x <= -32)
+			if(Pixel_x > 0)
+				Pixel_x -= 32
+				x_increm++
+			else
+				Pixel_x += 32
+				x_increm--
+
+		while(Pixel_y >= 32 || Pixel_y <= -32)
+			if(Pixel_y > 0)
+				Pixel_y -= 32
+				y_increm++
+			else
+				Pixel_y += 32
+				y_increm--
+
+		X.x += x_increm
+		X.y += y_increm
+		X.pixel_x=Pixel_x
+		X.pixel_y=Pixel_y
+		var/turf/TT = get_turf(X.loc)
+		if(TT == firer.loc)
+			continue
+
+	return
+
+/obj/item/projectile/beam/bison/Bump(atom/A as mob|obj|turf|area)
+	//Heat Rays go through mobs
+	if(A == firer)
+		loc = A.loc
+		return 0 //cannot shoot yourself
+
+	if(firer && istype(A, /mob/living))
+		var/mob/living/M = A
+		A.bullet_act(src, def_zone)
+		loc = A.loc
+		permutated.Add(A)
+		visible_message("<span class='warning'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(istype(firer, /mob))
+			log_attack("<font color='red'>[key_name(firer)] shot [key_name(M)] with a [type]</font>")
+			M.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+			firer.attack_log += "\[[time_stamp()]\] <b>[key_name(firer)]</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+			msg_admin_attack("[key_name(firer)] shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+			if(!iscarbon(firer))
+				M.LAssailant = null
+			else
+				M.LAssailant = firer
+		else
+			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN/(no longer exists)</b> shot <b>[key_name(M)]</b> with a <b>[type]</b>"
+			msg_admin_attack("UNKNOWN/(no longer exists) shot [key_name(M)] with a [type] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[firer.x];Y=[firer.y];Z=[firer.z]'>JMP</a>)") //BS12 EDIT ALG
+			log_attack("<font color='red'>UNKNOWN/(no longer exists) shot [key_name(M)] with a [type]</font>")
+		return 1
+	else
+		return ..()

@@ -130,14 +130,13 @@ mob/verb/test()
 /datum/html_interface/proc/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface/proc/specificRenderTitle() called tick#: [world.time]")
 
-/datum/html_interface/proc/sendResources(client/client)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\datum/html_interface/proc/sendResources() called tick#: [world.time]")
-	client << browse_rsc('jquery.min.js')
-	client << browse_rsc('bootstrap.min.js')
-	client << browse_rsc('bootstrap.min.css')
-	client << browse_rsc('html_interface.css')
-	client << browse_rsc('html_interface.js')
-	client << browse_rsc('html_interface_icons.css')
+/datum/html_interface/proc/registerResources()
+	register_asset("jquery.min.js",					'jquery.min.js')
+	register_asset("bootstrap.min.js",				'bootstrap.min.js')
+	register_asset("bootstrap.min.css",				'bootstrap.min.css')
+	register_asset("html_interface.css",				'html_interface.css')
+	register_asset("html_interface.js",				'html_interface.js')
+	register_asset("html_interface_icons.css",	'html_interface_icons.css')
 
 /datum/html_interface/proc/createWindow(datum/html_interface_client/hclient)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/html_interface/proc/createWindow() called tick#: [world.time]")
@@ -154,6 +153,16 @@ mob/verb/test()
 	winset(hclient.client, "browser_\ref[src]", list2params(params))
 
 	winset(hclient.client, "browser_\ref[src].browser", list2params(list("parent" = "browser_\ref[src]", "type" = "browser", "pos" = "0,0", "size" = "[width]x[height]", "anchor1" = "0,0", "anchor2" = "100,100", "use-title" = "true", "auto-format" = "false")))
+
+	sendAssets(hclient.client)
+	
+/datum/html_interface/proc/sendAssets(var/client/client)
+	send_asset(client, "jquery.min.js")
+	send_asset(client, "bootstrap.min.js")
+	send_asset(client, "bootstrap.min.css")
+	send_asset(client, "html_interface.css")
+	send_asset(client, "html_interface.js")
+	send_asset(client, "html_interface_icons.css")
 
 /*                 * Public API */
 /datum/html_interface/proc/getTitle()
@@ -226,6 +235,9 @@ mob/verb/test()
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\// /client/proc/send_resources() called tick#: [world.time]")
 		// causing file not found errors.
 //		src.sendResources(hclient.client)
+		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
+			//winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)
+			oldwindow.hide(hclient)
 
 		if (winexists(hclient.client, "browser_\ref[src]"))
 			src._renderTitle(hclient, TRUE)
@@ -237,8 +249,6 @@ mob/verb/test()
 			hclient.is_loaded = FALSE
 			hclient.client << output(replacetextEx(replacetextEx(file2text(default_html_file), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
 			winshow(hclient.client, "browser_\ref[src]", TRUE)
-		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
-			winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)
 
 		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 

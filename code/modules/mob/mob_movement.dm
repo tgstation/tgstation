@@ -201,6 +201,11 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
+/client/proc/Dir_object(direct)
+	if(mob && mob.orient_object)
+		var/obj/O = mob.orient_object
+		O.dir = direct
+
 /client/Move(loc,dir)
 	if(!mob)
 		return // Moved here to avoid nullrefs below. - N3X
@@ -215,6 +220,10 @@
 
 	if(mob.control_object)
 		Move_object(dir)
+
+	if(mob.orient_object)
+		Dir_object(dir)
+		return
 
 	if(mob.incorporeal_move)
 		Process_Incorpmove(dir)

@@ -15,6 +15,7 @@
 	var/lum_b
 
 	var/needs_update
+	ignoreinvert = 1
 
 /atom/movable/lighting_overlay/New()
 	. = ..()

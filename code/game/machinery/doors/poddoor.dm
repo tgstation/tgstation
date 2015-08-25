@@ -8,6 +8,7 @@ var/list/poddoors = list()
 	explosion_resistance = 25//used by the old deprecated explosion_recursive.dm
 
 	explosion_block = 3
+	penetration_dampening = 20
 
 	var/id_tag = 1.0
 

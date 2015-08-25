@@ -319,28 +319,38 @@ var/global/list/PDA_Manifest = list()
 	desc = "You can't resist."
 	// name = ""
 
-/obj/effect/sleeping
+/obj/effect/stop/sleeping
 	var/sleeptime
 	icon_state = "empty"
 	name = "Sleepy time"
 	var/datum/mind/owner
+	var/spell/aoe_turf/fall/ourspell
+	invisibility = 100
+	var/theworld
+	ignoreinvert = 1
 
-/obj/effect/sleeping/New(loc, ourtime, mind)
+/obj/effect/stop/sleeping/New(loc, ourtime, mind, var/spell/aoe_turf/fall/F, theworld)
 	..()
 	sleeptime = ourtime
 	owner = mind
-/obj/effect/sleeping/Crossed(atom/movable/A)
+	ourspell = F
+	src.theworld = theworld
+/obj/effect/stop/sleeping/Crossed(atom/movable/A)
 	if(sleeptime > world.time)
 		if(ismob(A))
 			var/mob/living/L = A
 			if(L.mind != owner)
-				if(!L.stat) L.playsound_local(src, 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
+				if(!L.stat) L.playsound_local(src, theworld == 1 ? 'sound/effects/theworld2.ogg' : 'sound/effects/fall2.ogg', 100, 0, 0, 0, 0)
 				L.Paralyse(round(((sleeptime - world.time)/10)/2, 1))
+				L.update_canmove()
+				if(!(L in ourspell.affected))
+					invertcolor(L)
+					ourspell.affected += L
+		else
+			if(!(A in ourspell.affected))
+				invertcolor(A)
+				ourspell.affected += A
 
 
 /obj/effect/spawner
 	name = "object spawner"
-
-/obj/proc/cultify()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/cultify() called tick#: [world.time]")
-	qdel(src)

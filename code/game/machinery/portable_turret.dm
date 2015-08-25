@@ -34,7 +34,8 @@
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null//holder for the shot when emagged
 	var/reqpower = 0 //holder for power needed
-	var/sound = null//So the taser can have sound
+	var/fire_sound = 'sound/weapons/Laser.ogg'
+	var/efire_sound = 'sound/weapons/Laser.ogg'
 	var/iconholder = null//holder for the icon_state
 	var/egun = null//holder to handle certain guns switching bullettypes
 
@@ -71,7 +72,6 @@
 			projectile = /obj/item/projectile/energy/electrode//holder for the projectile, here it is being set
 			eprojectile = /obj/item/projectile/beam//holder for the projectile when emagged, if it is different
 			reqpower = 200
-			sound = 1
 			iconholder = 1
 		else
 			var/obj/item/weapon/gun/energy/E=new installation
@@ -116,54 +116,72 @@
 					eprojectile = projectile
 					iconholder = null
 					reqpower = 700
+					fire_sound = 'sound/weapons/pulse.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/staff)
 					projectile = /obj/item/projectile/change
 					eprojectile = projectile
 					iconholder = 1
 					reqpower = 700
+					fire_sound = 'sound/weapons/radgun.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/ionrifle)
 					projectile = /obj/item/projectile/ion
 					eprojectile = projectile
 					iconholder = 1
 					reqpower = 700
+					fire_sound = 'sound/weapons/ion.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/taser)
 					projectile = /obj/item/projectile/energy/electrode
 					eprojectile = projectile
 					iconholder = 1
 					reqpower = 200
+					fire_sound = 'sound/weapons/Taser.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/stunrevolver)
 					projectile = /obj/item/projectile/energy/electrode
 					eprojectile = projectile
 					iconholder = 1
 					reqpower = 200
+					fire_sound = 'sound/weapons/Gunshot.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/lasercannon)
 					projectile = /obj/item/projectile/beam/heavylaser
 					eprojectile = projectile
 					iconholder = null
 					reqpower = 600
+					fire_sound = 'sound/weapons/lasercannonfire.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/decloner)
 					projectile = /obj/item/projectile/energy/declone
 					eprojectile = projectile
 					iconholder = null
 					reqpower = 600
+					fire_sound = 'sound/weapons/pulse3.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/crossbow/largecrossbow)
 					projectile = /obj/item/projectile/energy/bolt/large
 					eprojectile = projectile
 					iconholder = null
 					reqpower = 125
+					fire_sound = 'sound/weapons/ebow.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/crossbow)
 					projectile = /obj/item/projectile/energy/bolt
 					eprojectile = projectile
 					iconholder = null
 					reqpower = 50
+					fire_sound = 'sound/weapons/ebow.ogg'
+					efire_sound = fire_sound
 
 				if(/obj/item/weapon/gun/energy/laser)
 					projectile = /obj/item/projectile/beam
@@ -177,12 +195,14 @@
 					iconholder = 1
 					egun = 1
 					reqpower = 200
+					fire_sound = 'sound/weapons/Taser.ogg'
 			if(!eprojectile || !projectile)
 				projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
 				eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
 				iconholder = 1
 				egun = 1
 				reqpower = 200
+				fire_sound = 'sound/weapons/Taser.ogg'
 
 	Destroy()
 		// deletes its own cover with it
@@ -659,12 +679,13 @@ Status: []<BR>"},
 		icon_state = "[lasercolor]target_prism"
 	else
 		icon_state = "[lasercolor]orange_target_prism"
-	if(sound)
-		playsound(get_turf(src), 'sound/weapons/Taser.ogg', 75, 1)
+
 	var/obj/item/projectile/A
 	if(emagged)
+		playsound(get_turf(src), efire_sound, 75, 1)
 		A = new eprojectile( loc )
 	else
+		playsound(get_turf(src), fire_sound, 75, 1)
 		A = new projectile( loc )
 	A.original = target.loc
 	if(!emagged)
@@ -672,10 +693,12 @@ Status: []<BR>"},
 	else
 		use_power((reqpower*2))
 		// Shooting Code:
+	A.starting = T
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 1 )
+		A.OnFired()
 		A.process()
 	return
 
@@ -768,7 +791,7 @@ Status: []<BR>"},
 
 		if(3)
 			if(istype(W, /obj/item/weapon/gun/energy)) // the gun installation part
-
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 100, 1)
 				var/obj/item/weapon/gun/energy/E = W // typecasts the item to an energy gun
 				installation = W.type // installation becomes W.type
 				gun_charge = E.power_supply.charge // the gun's charge is stored in src.gun_charge
@@ -785,6 +808,7 @@ Status: []<BR>"},
 
 		if(4)
 			if(isprox(W))
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 100, 1)
 				build_step = 5
 				user << "<span class='notice'>You add the prox sensor to the turret.</span>"
 				qdel(W)

@@ -88,6 +88,9 @@
 /obj/item/blob_act()
 	qdel(src)
 
+/obj/item/projectile_check()
+	return PROJREACT_OBJS
+
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
 //BRUTELOSS = 1

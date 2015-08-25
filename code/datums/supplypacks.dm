@@ -436,7 +436,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Security"
 
 /datum/supply_packs/eweapons
-	name = "Experimental weapons crate"
+	name = "Incendiary weapons crate"
 	contains = list(/obj/item/weapon/flamethrower/full,
 					/obj/item/weapon/tank/plasma,
 					/obj/item/weapon/tank/plasma,
@@ -446,7 +446,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
-	containername = "Experimental weapons crate"
+	containername = "Incendiary weapons crate"
 	access = access_heads
 	group = "Security"
 
@@ -1032,6 +1032,40 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 //////SCIENCE//////
 
+/datum/supply_packs/research_parts
+	name = "RnD Stock Parts Crate"
+	contains = list(
+					/obj/item/weapon/circuitboard/protolathe,
+					/obj/item/weapon/circuitboard/rdconsole,
+					/obj/item/weapon/circuitboard/circuit_imprinter,
+					/obj/item/weapon/circuitboard/destructive_analyzer,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/matter_bin,
+					/obj/item/weapon/stock_parts/manipulator,
+					/obj/item/weapon/stock_parts/manipulator,
+					/obj/item/weapon/stock_parts/manipulator,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/reagent_containers/glass/beaker,
+					/obj/item/weapon/stock_parts/scanning_module,
+					/obj/item/weapon/stock_parts/micro_laser)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure/scisec
+	containername = "RnD Stock Parts Crate"
+	access = access_research
+	group = "Science"
+
+/datum/supply_packs/research_nanotrasen
+	name = "RnD Experimental Crate"
+	contains = list(
+		/obj/item/weapon/disk/tech_disk/nanotrasen,
+		/obj/item/weapon/paper/tech_nanotrasen,
+		)
+	cost = 80
+	containertype = /obj/structure/closet/crate/secure/scisec
+	containername = "RnD Experimental Crate"
+	access = access_research
+	group = "Science"
+
 /datum/supply_packs/robotics
 	name = "Robotics Assembly Crate"
 	contains = list(/obj/item/device/assembly/prox_sensor,
@@ -1068,28 +1102,6 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "Plasma assembly crate"
 	access = access_tox_storage
-	group = "Science"
-
-/datum/supply_packs/research_parts
-	name = "Research and Development Crate"
-	contains = list(
-					/obj/item/weapon/circuitboard/protolathe,
-					/obj/item/weapon/circuitboard/rdconsole,
-					/obj/item/weapon/circuitboard/circuit_imprinter,
-					/obj/item/weapon/circuitboard/destructive_analyzer,
-					/obj/item/weapon/stock_parts/matter_bin,
-					/obj/item/weapon/stock_parts/matter_bin,
-					/obj/item/weapon/stock_parts/manipulator,
-					/obj/item/weapon/stock_parts/manipulator,
-					/obj/item/weapon/stock_parts/manipulator,
-					/obj/item/weapon/reagent_containers/glass/beaker,
-					/obj/item/weapon/reagent_containers/glass/beaker,
-					/obj/item/weapon/stock_parts/scanning_module,
-					/obj/item/weapon/stock_parts/micro_laser)
-	cost = 30
-	containertype = /obj/structure/closet/crate/secure/scisec
-	containername = "Research and Development Crate"
-	access = access_research
 	group = "Science"
 
 //////HYDROPONICS//////

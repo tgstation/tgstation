@@ -18,6 +18,9 @@
 	var/allow_selecting_all = 0 //if 1, allow selecting ALL ports, not only those of linked shuttle
 								//only abusable by admins
 
+	var/allow_silicons = 1		//If 0, AIs and cyborgs can't use this computer
+								//used for admin-only shuttles so that borgs cant hijack 'em
+
 /obj/machinery/computer/shuttle_control/New()
 	if(shuttle)
 		name = "[shuttle.name] console"
@@ -39,11 +42,22 @@
 		span_s += "<font color='green'>"
 		span_e += "</font>"
 
+	if(D.docked_with) //If used by somebody
+		span_s = "<i>"
+		span_e = "</i>"
+
 	if(shuttle && !shuttle.linked_port)
 		span_s = ""
 		span_e = ""
 
 	return "[span_s][name][span_e]"
+
+/obj/machinery/computer/shuttle_control/attack_ai(mob/user as mob)
+	src.add_hiddenprint(user)
+	if(allow_silicons)
+		return attack_hand(user)
+	else
+		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
 /obj/machinery/computer/shuttle_control/attack_hand(user as mob)
 	if(..(user))
@@ -108,6 +122,7 @@
 			dat += {"<a href='?src=\ref[src];admin_unlink_shuttle=1'>Unlink current shuttle</a><br><i>Unlink this computer from [shuttle.name]</i><br>
 			<a href='?src=\ref[src];admin_toggle_lockdown=1'>[shuttle.lockdown ? "Lift lockdown" : "Lock down"]</a><br>
 			<a href='?src=\ref[src];admin_toggle_select_all=1'>[allow_selecting_all ? "Select only from ports linked to [shuttle.name]" : "Select from ALL ports"]</a><br>
+			<a href='?src=\ref[src];admin_toggle_silicon_use=1'>[allow_silicons ? "Forbid silicons from using this computer" : "Allow silicons to use this computer"]</a><br>
 			<a href='?src=\ref[src];admin_reset=1'>Reset shuttle</a><br><i>Revert the shuttle's areas to initial state</i><br>"}
 
 	user << browse("[dat]", "window=shuttle_control;size=575x450")
@@ -127,6 +142,9 @@
 			selected_port = pick(shuttle.docking_ports - shuttle.current_port)
 
 		if(!allow_selecting_all && !(selected_port in shuttle.docking_ports))
+			return
+
+		if(selected_port.docked_with) //If used by another shuttle, don't try to move this shuttle
 			return
 
 		//Send a message to the shuttle to move
@@ -250,6 +268,7 @@
 		else
 			shuttle.lockdown = 0
 
+		src.updateUsrDialog()
 	if(href_list["admin_toggle_select_all"])
 		if(!isAdminGhost(usr))
 			usr << "You must be an admin for this"
@@ -270,6 +289,19 @@
 
 		shuttle.initialize()
 		usr << "Shuttle's list of travel destinations has been reset"
+	if(href_list["admin_toggle_silicon_use"])
+		if(!isAdminGhost(usr))
+			usr << "You must be an admin for this"
+			return
+
+		if(allow_silicons)
+			allow_silicons = 0
+			usr << "Silicons can no longer use [src]."
+		else
+			allow_silicons = 1
+			usr << "Silicons may now use [src] again."
+
+		src.updateUsrDialog()
 
 /obj/machinery/computer/shuttle_control/bullet_act(var/obj/item/projectile/Proj)
 	visible_message("[Proj] ricochets off [src]!")

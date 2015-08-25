@@ -20,6 +20,7 @@ var/global/list/ghdel_profiling = list()
 	var/throwpass = 0
 	var/germ_level = 0 // The higher the germ level, the more germ on the atom.
 	var/pressure_resistance = ONE_ATMOSPHERE
+	var/penetration_dampening = 5 //drains some of a projectile's penetration power whenever it goes through the atom
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -51,6 +52,10 @@ var/global/list/ghdel_profiling = list()
 	var/list/harm_label_examine //Messages that appears when examining the item if it is harm-labeled. Message in position 1 is if it is harm-labeled but the label is too short to work, while message in position 2 is if the harm-label works.
 	//var/harm_label_icon_state //Makes sense to have this, but I can't sprite. May be added later.
 	var/list/last_beamchecks // timings for beam checks.
+	var/ignoreinvert = 0
+	var/forceinvertredraw = 0
+	var/tempoverlay
+
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/beam_connect() called tick#: [world.time]")
@@ -107,7 +112,7 @@ var/global/list/ghdel_profiling = list()
 				step(src, turn(src.dir, 180))
 			if(istype(src,/mob/living))
 				var/mob/living/M = src
-				M.take_organ_damage(20)
+				M.take_organ_damage(10)
 
 /atom/proc/AddToProfiler()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/AddToProfiler() called tick#: [world.time]")
@@ -243,6 +248,9 @@ var/global/list/ghdel_profiling = list()
 		return 1
 	return
 
+/atom/proc/projectile_check()
+	return
+
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
  //writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \ *	atom/proc/search_contents_for() called tick#: [world.time]")
@@ -316,7 +324,7 @@ its easier to just keep the beam vertical.
 
 		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				del O							//pieces to a new orientation.
+				returnToPool(O)					//pieces to a new orientation.
 		var/Angle=round(Get_Angle(src,BeamTarget))
 		var/icon/I=new(icon,icon_state)
 		I.Turn(Angle)
@@ -325,7 +333,7 @@ its easier to just keep the beam vertical.
 		var/N=0
 		var/length=round(sqrt((DX)**2+(DY)**2))
 		for(N,N<length,N+=32)
-			var/obj/effect/overlay/beam/X=new(loc)
+			var/obj/effect/overlay/beam/X=getFromPool(/obj/effect/overlay/beam,loc)
 			X.BeamSource=src
 			if(N+32>length)
 				var/icon/II=new(icon,icon_state)
@@ -371,7 +379,7 @@ its easier to just keep the beam vertical.
 				break
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
+	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) returnToPool(O)
 
 //Woo hoo. Overtime
 //All atoms
@@ -539,6 +547,23 @@ its easier to just keep the beam vertical.
 //Called when a shuttle collides with an atom
 /atom/proc/shuttle_act(var/datum/shuttle/S)
 	return
+
+//Called when a shuttle rotates
+/atom/proc/shuttle_rotate(var/angle)
+	src.dir = turn(src.dir, -angle)
+
+	if(canSmoothWith) //Smooth the smoothable
+		relativewall()
+		relativewall_neighbours()
+
+	if(pixel_x || pixel_y)
+		var/cosine	= cos(angle)
+		var/sine	= sin(angle)
+		var/newX = (cosine	* pixel_x) + (sine	* pixel_y)
+		var/newY = -(sine	* pixel_x) + (cosine* pixel_y)
+
+		pixel_x = newX
+		pixel_y = newY
 
 /atom/proc/singularity_pull()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/singularity_pull() called tick#: [world.time]")

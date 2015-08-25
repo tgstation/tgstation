@@ -61,7 +61,7 @@
 			return 1
 		else
 			make_more_mages()
-	return ..()
+	return 0
 
 /datum/game_mode/wizard/raginmages/proc/make_more_mages()
 

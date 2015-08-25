@@ -52,6 +52,7 @@
 	var/busy = 0
 	soundeffect = 'sound/machines/airlock.ogg'
 	var/pitch = 30
+	penetration_dampening = 10
 
 	explosion_block = 1
 
@@ -104,6 +105,7 @@
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	glass = 1
+	penetration_dampening = 3
 	//pitch = 100
 
 /obj/machinery/door/airlock/centcom
@@ -119,6 +121,7 @@
 	assembly_type = /obj/structure/door_assembly/door_assembly_vault
 
 	explosion_block = 3//that's some high quality plasteel door
+	penetration_dampening = 20
 
 /obj/machinery/door/airlock/freezer
 	name = "Freezer Airlock"
@@ -144,6 +147,7 @@
 	opacity = 0
 	assembly_type = /obj/structure/door_assembly/door_assembly_com
 	glass = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/glass_engineering
 	name = "Maintenance Hatch"
@@ -151,6 +155,7 @@
 	opacity = 0
 	assembly_type = /obj/structure/door_assembly/door_assembly_eng
 	glass = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/glass_security
 	name = "Maintenance Hatch"
@@ -158,6 +163,7 @@
 	opacity = 0
 	assembly_type = /obj/structure/door_assembly/door_assembly_sec
 	glass = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/glass_medical
 	name = "Maintenance Hatch"
@@ -188,6 +194,7 @@
 	assembly_type = /obj/structure/door_assembly/door_assembly_research
 	glass = 1
 	heat_proof = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/glass_mining
 	name = "Maintenance Hatch"
@@ -195,6 +202,7 @@
 	opacity = 0
 	assembly_type = /obj/structure/door_assembly/door_assembly_min
 	glass = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/glass_atmos
 	name = "Maintenance Hatch"
@@ -202,6 +210,7 @@
 	opacity = 0
 	assembly_type = /obj/structure/door_assembly/door_assembly_atmo
 	glass = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/gold
 	name = "Gold Airlock"
@@ -217,6 +226,7 @@
 	name = "Diamond Airlock"
 	icon = 'icons/obj/doors/Doordiamond.dmi'
 	mineral = "diamond"
+	penetration_dampening = 15
 
 /obj/machinery/door/airlock/uranium
 	name = "Uranium Airlock"
@@ -295,6 +305,7 @@
 	opacity = 0
 	assembly_type = /obj/structure/door_assembly/door_assembly_science
 	glass = 1
+	penetration_dampening = 3
 
 /obj/machinery/door/airlock/highsecurity
 	name = "High Tech Security Airlock"
