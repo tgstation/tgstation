@@ -12,6 +12,7 @@
 #define VERM_SPIDERS 2
 #define VERM_SLIMES  3
 #define VERM_BATS    4
+#define VERM_BORERS  5
 
 /datum/event/infestation
 	announceWhen = 15
@@ -26,6 +27,9 @@
 	location = rand(0,7)
 	var/list/turf/simulated/floor/turfs = list()
 	var/spawn_area_type
+
+	// TODO:  These locations should be specified by the map datum or by the area.
+	//  something like area.is_quiet=1 or map.quiet_areas=list()
 	switch(location)
 		if(LOC_KITCHEN)
 			spawn_area_type = /area/crew_quarters/kitchen
@@ -83,6 +87,10 @@
 		if(VERM_BATS)
 			spawn_types = /mob/living/simple_animal/hostile/scarybat
 			vermstring = "bats"
+		if(VERM_BATS)
+			spawn_types = /mob/living/simple_animal/borer
+			vermstring = "borers"
+			max_number = 5
 
 	spawn(0)
 		var/num = rand(2,max_number)

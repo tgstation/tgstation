@@ -13,3 +13,4 @@ changes:
   - rscdel: Forced-control on entering host is configurable. Add borer_takeover_immediately to gameconfig.txt to enable.  Default is off.
   - rscdel: Removed borers' ability to multiply, for now. (Balancing)
   - rscdel: Removed harmful chems and borer verbs.
+  - rscdel: Removed borer game-mode.  Borers now spawn in vermin events.

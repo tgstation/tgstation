@@ -710,10 +710,6 @@ mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 	if(src.mind)
 		src.mind.assigned_role = "Cortical Borer"
 
-		// Tell gamemode about us.
-		if(src.mind in ticker.mode.borers)
-			ticker.mode.borers.Add(src.mind)
-
 		// Assign objectives
 		forge_objectives()
 
