@@ -88,7 +88,7 @@
 			M.visible_message(\
 				"<span class='warning'>[M.name] is buckled to [src] by [user.name]!</span>",\
 				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
-				"<span class='italics'>You heat metal clanking.</span>")
+				"<span class='italics'>You hear metal clanking.</span>")
 
 /obj/proc/user_unbuckle_mob(mob/user)
 	var/mob/living/M = unbuckle_mob()

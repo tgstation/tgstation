@@ -45,6 +45,7 @@
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
+	gold_core_spawnable = 1
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse

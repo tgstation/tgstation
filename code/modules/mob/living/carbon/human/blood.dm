@@ -282,7 +282,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// Only a certain number of drips (or one large splatter) can be on a given turf.
 	for(var/obj/effect/decal/cleanable/blood/drip/drop in T)
 		drips |= drop.drips
-		del(drop)
+		qdel(drop)
 	if(!large && drips.len < 3)
 		decal_type = /obj/effect/decal/cleanable/blood/drip
 

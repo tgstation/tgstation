@@ -33,6 +33,7 @@
 
 	faction = list("hostile")
 	var/drop_type = /obj/item/stack/sheet/mineral/wood
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
