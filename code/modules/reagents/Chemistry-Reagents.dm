@@ -2762,6 +2762,34 @@
 		H.update_mutations()		//update our mutation overlays
 		H.update_body()
 
+/datum/reagent/carp_pheromones
+	name = "carp pheromones"
+	id = "carppheromones"
+	description = "A disgusting liquid with a horrible smell, which is used by space carps to mark their territory and food."
+	reagent_state = LIQUID
+	color = "#6AAA96" // rgb: 106, 170, 150
+	custom_metabolism = 0.1
+
+/datum/reagent/carp_pheromones/on_mob_life(var/mob/living/M as mob)
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	if(!data) data = 0
+	data++
+
+	var/stench_radius = Clamp(data * 0.1, 1, 6) //Stench starts out with 1 tile radius and grows after every 10 life ticks
+
+	if(prob(5)) // 5% chance of stinking per life()
+		for(var/mob/living/carbon/C in oview(stench_radius,M)) //All other carbons in 4 tile radius (excluding our mob)
+			if(C.stat) return
+			if(istype(C.wear_mask))
+				var/obj/item/clothing/mask/c_mask = C.wear_mask
+				if(c_mask.body_parts_covered & MOUTH) continue	//If the carbon's mouth is covered, let's assume they don't smell it
+
+			C << "<span class='warning'>You are engulfed by a [pick("tremendous","foul","disgusting","horrible")] stench emanating from [M]!</span>"
+
+	..()
+	return
+
 /datum/reagent/blackpepper
 	name = "Black Pepper"
 	id = "blackpepper"

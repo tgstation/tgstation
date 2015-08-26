@@ -81,14 +81,6 @@
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/mimic
-	name = "meat"
-	desc = "An ordinary slab of meat. Or is it?"
-	icon_state = "meat"
-	New()
-		..()
-		reagents.add_reagent("mimicinum", 3)
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/egg
 	name = "egg"
 	desc = "An egg!"

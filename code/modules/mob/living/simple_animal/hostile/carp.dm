@@ -1,4 +1,6 @@
-var/global/
+#define PHEROMONES_NO_EFFECT	0
+#define PHEROMONES_NEUTRAL		1
+#define PHEROMONES_FOLLOW		2
 
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
@@ -42,6 +44,9 @@ var/global/
 
 	faction = "carp"
 
+	var/pheromones_act = PHEROMONES_NEUTRAL //This variable determines how carps act to pheromones. Big carps won't attack the source,
+	//baby carps follow the source and holocarps don't give a shit
+
 /mob/living/simple_animal/hostile/carp/New()
 	.=..()
 	gender = pick(MALE, FEMALE)
@@ -66,12 +71,24 @@ var/global/
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(var/check_drift = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
+/mob/living/simple_animal/hostile/carp/IsInvalidTarget(atom/A)
+	if(ismob(A) && A.reagents)
+		if(pheromones_act == PHEROMONES_NEUTRAL && A.reagents.has_reagent("carppheromones"))
+			return 1 //Carps who avoid pheromones don't target mobs with pheromones in their system. They just ignore them!
+	..()
+
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
 		emote("nashes at [.]")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
+	if(!target) return
+
+	if(pheromones_act == PHEROMONES_FOLLOW && target.reagents && target.reagents.has_reagent("carppheromones"))
+		return	//This might be a bit hacky. The purpose of this is to prevent carps who are attracted to pheromones from attacking
+				//the source. Instead, it simply follows it.
+
 	. =..()
 	var/mob/living/carbon/L = .
 	if(istype(L))
@@ -93,11 +110,18 @@ var/global/
 	melee_damage_upper = 8
 	melee_damage_lower = 8
 
+	pheromones_act = PHEROMONES_FOLLOW
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	can_breed = 0
+	pheromones_act = PHEROMONES_NO_EFFECT
 
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
 	qdel(src)
 	return
+
+#undef PHEROMONES_NO_EFFECT
+#undef PHEROMONES_NEUTRAL
+#undef PHEROMONES_FOLLOW
