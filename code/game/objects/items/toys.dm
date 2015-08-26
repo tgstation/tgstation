@@ -1197,7 +1197,8 @@
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
 		spawn(45)
-			icon_state = "[initial(icon_state)]"
+			if(src)
+				icon_state = "[initial(icon_state)]"
 	else
 		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
 		return
