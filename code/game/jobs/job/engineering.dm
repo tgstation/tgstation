@@ -41,7 +41,7 @@ Chief Engineer
 	//Equip telebaton
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
-	announce_head(H.mind, list("Engineering")) //tell underlings (engineering radio) they have a head
+	announce_head(H, list("Engineering")) //tell underlings (engineering radio) they have a head
 
 /*
 Station Engineer

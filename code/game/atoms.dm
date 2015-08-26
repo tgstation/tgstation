@@ -59,7 +59,7 @@
 	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	del(giver)
+	qdel(giver)
 	return null
 
 /atom/proc/remove_air(amount)
@@ -258,7 +258,7 @@ its easier to just keep the beam vertical.
 /atom/proc/fire_act()
 	return
 
-/atom/proc/hitby(atom/movable/AM, skip, var/hitpush)
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
 		spawn(2)
 			step(AM,  turn(AM.dir, 180))
@@ -284,12 +284,8 @@ var/list/blood_splatter_icons = list()
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
 			return 0
-	if(rejects_blood())
+	if(rejects_blood() || !istype(M) || !check_dna_integrity(M))
 		return 0
-	if(!istype(M))
-		return 0
-	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
-		return 0					//no dna!
 	return 1
 
 /obj/add_blood(mob/living/carbon/M)

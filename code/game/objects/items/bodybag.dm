@@ -36,29 +36,35 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag"
 	var/foldedbag_path = /obj/item/bodybag
+	var/tagged = 0 // so closet code knows to put the tag overlay back
 	density = 0
 	mob_storage_capacity = 2
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/weapon/pen))
+	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null, 53)
 		if(user.get_active_hand() != I)
 			return
 		if(!in_range(src, user) && loc != user)
 			return
 		if(t)
-			name = "body bag - "
-			name += t
-			overlays += "bodybag_label"
+			name = "body bag - [t]"
+			tagged = 1
+			update_icon()
 		else
 			name = "body bag"
 		return
 	else if(istype(I, /obj/item/weapon/wirecutters))
-		user << "<span class='notice'>You cut the tag off of [src].</span>"
+		user << "<span class='notice'>You cut the tag off [src].</span>"
 		name = "body bag"
-		overlays.Cut()
+		tagged = 0
+		update_icon()
 
+/obj/structure/closet/body_bag/update_icon()
+	..()
+	if (tagged)
+		overlays += "bodybag_label"
 
 /obj/structure/closet/body_bag/close()
 	if(..())

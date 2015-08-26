@@ -145,11 +145,8 @@
 	return 2
 
 /obj/singularity_pull(S, current_size)
-	if(anchored)
-		if(current_size >= STAGE_FIVE)
-			anchored = 0
-			step_towards(src,S)
-	else step_towards(src,S)
+	if(!anchored || current_size >= STAGE_FIVE)
+		step_towards(src,S)
 
 /obj/proc/Deconstruct()
 	qdel(src)
@@ -176,6 +173,7 @@
 		Item.fire_act() //Set them on fire, too
 	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
 	A.desc = "Looks like this used to be a [name] some time ago."
+	SSobj.burning -= src
 	qdel(src)
 
 /obj/proc/extinguish()

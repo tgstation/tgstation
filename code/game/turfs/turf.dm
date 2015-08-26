@@ -224,38 +224,43 @@
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
 
-/turf/handle_slip(mob/slipper, s_amount, w_amount, obj/O, lube)
+/turf/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
 	if(has_gravity(src))
-		var/mob/living/carbon/M = slipper
-		if (M.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
-			return 0
-		if(!M.lying && (M.status_flags & CANWEAKEN)) // we slip those who are standing and can fall.
-			if(O)
-				M << "<span class='notice'>You slipped on the [O.name]!</span>"
-			else
-				M << "<span class='notice'>You slipped!</span>"
-			M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
-			playsound(M.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+		var/obj/buckled_obj
+		var/oldlying = C.lying
+		if(C.buckled)
+			buckled_obj = C.buckled
+			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+				return 0
+		else
+			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+				return 0
+			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+				return 0
 
-			M.accident(M.l_hand)
-			M.accident(M.r_hand)
+		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
-			var/olddir = M.dir
-			M.Stun(s_amount)
-			M.Weaken(w_amount)
-			M.stop_pulling()
-			if(lube&SLIDE)
-				for(var/i=1, i<5, i++)
-					spawn (i)
-						step(M, olddir)
-						M.spin(1,1)
-				if(M.lying) //did I fall over?
-					M.adjustBruteLoss(2)
+		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
+		C.accident(C.l_hand)
+		C.accident(C.r_hand)
 
-
-			return 1
-	return 0 // no success. Used in clown pda and wet floors
+		var/olddir = C.dir
+		C.Stun(s_amount)
+		C.Weaken(w_amount)
+		C.stop_pulling()
+		if(buckled_obj)
+			buckled_obj.unbuckle_mob()
+			step(buckled_obj, olddir)
+		else if(lube&SLIDE)
+			for(var/i=1, i<5, i++)
+				spawn (i)
+					step(C, olddir)
+					C.spin(1,1)
+		if(C.lying != oldlying) //did we actually fall?
+			C.adjustBruteLoss(2)
+		return 1
 
 /turf/singularity_act()
 	if(intact)
@@ -268,7 +273,7 @@
 	return(2)
 
 /turf/proc/can_have_cabling()
-	return !density
+	return 1
 
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
@@ -280,6 +285,7 @@
 	density = 1
 	blocks_air = 1
 	opacity = 1
+	explosion_block = 50
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"

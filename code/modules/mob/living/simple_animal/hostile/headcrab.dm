@@ -20,14 +20,17 @@
 	ventcrawler = 2
 	var/datum/mind/origin
 	var/egg_lain = 0
+	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/human/victim)
-	var/obj/item/body_egg/changeling_egg/egg = new(victim)
+/mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
+	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
+	egg.Insert(victim)
 	if(origin)
-		egg.owner = origin
+		egg.origin = origin
 	else if(mind) // Let's make this a feature
-		egg.owner = mind
-	victim.internal_organs += egg
+		egg.origin = mind
+	for(var/obj/item/organ/internal/I in src)
+		I.loc = egg
 	visible_message("<span class='warning'>[src] lays an egg in a [victim].</span>")
 	egg_lain = 1
 
@@ -35,9 +38,10 @@
 	if(egg_lain)
 		target.attack_animal(src)
 		return
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.stat == DEAD)
+	if(iscarbon(target) && !ismonkey(target))
+		// Changeling egg can survive in aliens!
+		var/mob/living/carbon/C = target
+		if(C.stat == DEAD)
 			Infect(target)
 			src << "<span class='userdanger'>With your egg laid you feel your death rapidly approaching, time to die...</span>"
 			spawn(100)
@@ -48,32 +52,36 @@
 
 
 
-/obj/item/body_egg/changeling_egg
+/obj/item/organ/internal/body_egg/changeling_egg
 	name = "changeling egg"
-	desc = "Twitching and disgusting"
-	var/datum/mind/owner
+	desc = "Twitching and disgusting."
+	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
+	var/datum/mind/origin
 	var/time
-	var/used
 
-/obj/item/body_egg/changeling_egg/egg_process()
-	//Changeling eggs grow in dead people
+/obj/item/organ/internal/body_egg/changeling_egg/egg_process()
+	// Changeling eggs grow in dead people
 	time++
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
+		Remove(owner)
+		qdel(src)
 
-/obj/item/body_egg/changeling_egg/proc/Pop()
-	if(!used)
-		var/mob/living/carbon/monkey/M = new(affected_mob.loc)
-		if(owner)
-			owner.transfer_to(M)
-			if(owner.changeling)
-				owner.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			M.key = owner.key
-		if(ishuman(affected_mob))
-			var/mob/living/carbon/human/H = affected_mob
-			H.internal_organs.Remove(src)
-		affected_mob.gib()
-		used = 1
-	qdel(src)
+/obj/item/organ/internal/body_egg/changeling_egg/proc/Pop()
+	var/mob/living/carbon/monkey/M = new(owner)
+	owner.stomach_contents += M
+
+	for(var/obj/item/organ/internal/I in src)
+		I.Insert(M, 1)
+
+	if(!origin && owner.mind)
+		origin = owner.mind
+
+	if(origin)
+		origin.transfer_to(M)
+		if(origin.changeling)
+			origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		M.key = origin.key
+	owner.gib()
 
 #undef EGG_INCUBATION_TIME

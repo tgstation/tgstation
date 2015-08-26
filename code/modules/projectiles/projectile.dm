@@ -60,19 +60,20 @@
 	if(!isliving(target))
 		return 0
 	var/mob/living/L = target
-
-	var/organ_hit_text = ""
-	if(L.has_limbs)
-		organ_hit_text = " in \the [parse_zone(def_zone)]"
-	if(suppressed)
-		playsound(loc, hitsound, 5, 1, -1)
-		L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
-	else
-		if(hitsound)
-			var/volume = vol_by_damage()
-			playsound(loc, hitsound, volume, 1, -1)
-		L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-							"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+	if(blocked != 100) // not completely blocked
+		var/organ_hit_text = ""
+		if(L.has_limbs)
+			organ_hit_text = " in \the [parse_zone(def_zone)]"
+		if(suppressed)
+			playsound(loc, hitsound, 5, 1, -1)
+			L << "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>"
+		else
+			if(hitsound)
+				var/volume = vol_by_damage()
+				playsound(loc, hitsound, volume, 1, -1)
+			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
+								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		L.on_hit(type)
 
 	var/reagent_note
 	if(reagents && reagents.reagent_list)
@@ -81,9 +82,8 @@
 			reagent_note += R.id + " ("
 			reagent_note += num2text(R.volume) + ") "
 
-	L.on_hit(type)
 	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, slur, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -94,9 +94,10 @@
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
 		return
-	if(A == firer || A == src)
-		loc = A.loc
-		return 0 //cannot shoot yourself
+	if(firer)
+		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
+			loc = A.loc
+			return 0
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
@@ -134,7 +135,7 @@
 				if((!( current ) || loc == current))
 					current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 				step_towards(src, current)
-				if((original && original.layer>=2.75) || ismob(original))
+				if(original && (original.layer>=2.75) || ismob(original))
 					if(loc == get_turf(original))
 						if(!(original in permutated))
 							Bump(original, 1)

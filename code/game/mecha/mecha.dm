@@ -137,7 +137,7 @@
 		loc.assume_air(cabin_air)
 		air_update_turf()
 	else
-		del(cabin_air)
+		qdel(cabin_air)
 	cabin_air = null
 	qdel(spark_system)
 	spark_system = null
@@ -240,7 +240,7 @@
 					loc.assume_air(leaked_gas)
 					air_update_turf()
 				else
-					del(leaked_gas)
+					qdel(leaked_gas)
 
 		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 			if(get_charge())
@@ -276,7 +276,7 @@
 				if(t_air)
 					t_air.merge(removed)
 				else //just delete the cabin gas, we're in space or some shit
-					del(removed)
+					qdel(removed)
 
 	if(occupant)
 		if(cell)
@@ -445,23 +445,17 @@
 		playsound(src,stepsound,40,1)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle)
-//	src.inertia_dir = null
-	if(istype(obstacle, /obj))
-		var/obj/O = obstacle
-		if(istype(O, /obj/effect/portal)) //derpfix
-			anchored = 0
-			O.Crossed(src)
-			src.anchored = 1
-		else if(!O.anchored)
+/obj/mecha/Bump(var/atom/obstacle, yes)
+	if(yes)
+		if(..()) //mech was thrown
+			return
+		if(istype(obstacle, /obj))
+			var/obj/O = obstacle
+			if(!O.anchored)
+				step(obstacle, dir)
+		else if(istype(obstacle, /mob))
 			step(obstacle, dir)
-		else //I have no idea why I disabled this
-			obstacle.Bumped(src)
-	else if(istype(obstacle, /mob))
-		step(obstacle, dir)
-	else
-		obstacle.Bumped(src)
-	return
+
 
 ///////////////////////////////////
 ////////  Internal damage  ////////

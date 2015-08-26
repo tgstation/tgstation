@@ -110,7 +110,6 @@
 
 /obj/machinery/bot/medbot/turn_off()
 	..()
-	updateicon()
 	updateUsrDialog()
 
 /obj/machinery/bot/medbot/bot_reset()
@@ -120,12 +119,14 @@
 	oldloc = null
 	last_found = world.time
 	declare_cooldown = 0
+	updateicon()
 
 /obj/machinery/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
 	path = list()
 	patient = null
 	mode = BOT_IDLE
 	last_found = world.time
+	updateicon()
 
 /obj/machinery/bot/medbot/set_custom_texts()
 
@@ -415,18 +416,14 @@
 
 	if(!istype(C))
 		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
+		soft_reset()
 		return
 
 	if(C.stat == 2)
 		var/death_message = pick("No! NO!","Live, damnit! LIVE!","I...I've never lost a patient before. Not today, I mean.")
 		speak(death_message)
 		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
+		soft_reset()
 		return
 
 	var/reagent_id = null
@@ -472,20 +469,16 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
-		oldpatient = patient
-		patient = null
-		mode = BOT_IDLE
-		last_found = world.time
 		var/message = pick("All patched up!","An apple a day keeps me away.","Feel better soon!")
 		speak(message)
-		updateicon()
+		bot_reset()
 		return
 	else
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
 			"<span class='userdanger'>[src] is trying to inject you!</span>")
 
 		spawn(30)
-			if ((get_dist(src, patient) <= 1) && (on))
+			if ((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 				if(reagent_id == "internal_beaker")
 					if(use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 						var/fraction = min(injection_amount/reagent_glass.reagents.total_volume, 1)
@@ -495,10 +488,10 @@
 					patient.reagents.add_reagent(reagent_id,injection_amount)
 				C.visible_message("<span class='danger'>[src] injects [patient] with its syringe!</span>", \
 					"<span class='userdanger'>[src] injects you with its syringe!</span>")
-				patient = null
+			else
+				visible_message("[src] retracts its syringe.")
 
-			mode = BOT_IDLE
-			updateicon()
+			soft_reset()
 			return
 
 	reagent_id = null

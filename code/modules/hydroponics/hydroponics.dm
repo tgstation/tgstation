@@ -542,6 +542,12 @@
 		adjustToxic(-round(S.get_reagent_amount("plantbgone") * 6))
 		adjustWeeds(-rand(4,8))
 
+	// why, just why
+	if(S.has_reagent("napalm", 1))
+		adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
+		adjustToxic(-round(S.get_reagent_amount("napalm") * 7))
+		adjustWeeds(-rand(5,9))
+
 	//Weed Spray
 	if(S.has_reagent("weedkiller", 1))
 		adjustToxic(round(S.get_reagent_amount("weedkiller") * 0.5))
@@ -564,6 +570,18 @@
 		adjustNutri(round(S.get_reagent_amount("ammonia") * 1))
 		adjustSYield(round(S.get_reagent_amount("ammonia") * 0.01))
 
+	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
+	if(S.has_reagent("saltpetre", 1))
+		adjustHealth(round(S.get_reagent_amount("saltpetre") * 0.25))
+		adjustSProduct(-round(S.get_reagent_amount("saltpetre") * 0.02))
+		adjustSPot(round(S.get_reagent_amount("saltpetre") * 0.01))
+
+	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
+	if(S.has_reagent("ash", 1))
+		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
+		adjustNutri(round(S.get_reagent_amount("ash") * 0.5))
+		adjustWeeds(-1)
+
 	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 	if(S.has_reagent("diethylamine", 1))
 		adjustHealth(round(S.get_reagent_amount("diethylamine") * 1))
@@ -575,6 +593,20 @@
 	if(S.has_reagent("nutriment", 1))
 		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
 		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
+
+	// Compost for EVERYTHING
+	if(S.has_reagent("virusfood", 1))
+		adjustNutri(round(S.get_reagent_amount("virusfood") * 0.5))
+		adjustHealth(-round(S.get_reagent_amount("virusfood") * 0.5))
+
+	// FEED ME
+	if(S.has_reagent("blood", 1))
+		adjustNutri(round(S.get_reagent_amount("blood") * 1))
+		adjustPests(rand(2,4))
+
+	// FEED ME SEYMOUR
+	if(S.has_reagent("strangereagent", 1))
+		spawnplant()
 
 	// The best stuff there is. For testing/debugging.
 	if(S.has_reagent("adminordrazine", 1))
@@ -654,7 +686,7 @@
 			H.applyChemicals(S)
 
 			S.clear_reagents()
-			del(S)
+			qdel(S)
 			H.update_icon()
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()
@@ -964,6 +996,12 @@
 		myseed.potency += adjustamt
 		myseed.potency = max(myseed.potency, 0)
 		myseed.potency = min(myseed.potency, 100)
+
+/obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
+	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
+	var/chosen = pick(livingplants)
+	var/mob/living/simple_animal/hostile/C = new chosen
+	C.faction = list("plants")
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!

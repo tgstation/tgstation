@@ -45,16 +45,9 @@
 #define GRAB_KILL		5
 
 
-//Hostile Mob Stances
-#define HOSTILE_STANCE_IDLE			1
-//#define HOSTILE_STANCE_ALERT		2 //Was only used by bears
-#define HOSTILE_STANCE_ATTACK		3
-#define HOSTILE_STANCE_ATTACKING	4
-//#define HOSTILE_STANCE_TIRED		5 //Was also only used by bears
-
 //Hostile Mob AI Status
 #define AI_ON		1
-#define AI_SLEEP	2
+#define AI_IDLE	2
 #define AI_OFF		3
 
 

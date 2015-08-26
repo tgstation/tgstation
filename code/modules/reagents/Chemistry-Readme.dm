@@ -69,7 +69,7 @@ About the Holder:
 			This proc calls the appropriate reaction procs of the reagents.
 			I.e. if A is an object, it will call the reagents reaction_obj
 			proc. The method var is used for reaction on mobs. It simply tells
-			us if the mob TOUCHed the reagent or if it INGESTed the reagent.
+			us if the mob TOUCHed the reagent, if it INGESTed the reagent, if the reagent was VAPORIZEd on them, or transfered via a PATCH to them..
 			Since the volume can be checked in a reagents proc, you might want to
 			use the volume_modifier var to modifiy the passed value without actually
 			changing the volume of the reagents.

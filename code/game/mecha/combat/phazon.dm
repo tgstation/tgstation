@@ -21,7 +21,7 @@
 	var/datum/action/mecha/mech_toggle_phasing/phasing_action = new
 
 /obj/mecha/combat/phazon/Bump(atom/obstacle)
-	if(phasing && get_charge()>=phasing_energy_drain)
+	if(phasing && get_charge()>=phasing_energy_drain && !throwing)
 		spawn()
 			if(can_move)
 				can_move = 0

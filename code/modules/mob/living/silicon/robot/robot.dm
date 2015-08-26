@@ -106,9 +106,8 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new(src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain = new /obj/item/organ/internal/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
-		mmi.locked = 1
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
 		mmi.brainmob = new(src)
@@ -863,9 +862,6 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
-				if (istype(tile, /turf/simulated/floor))
-					var/turf/simulated/floor/F = tile
-					F.dirt = 0
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(is_cleanable(A))

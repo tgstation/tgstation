@@ -271,7 +271,7 @@ var/list/uplink_items = list()
 /datum/uplink_item/ammo/ammobag
 	name = "Ammo Duffelbag - Shotgun Ammo Grab Bag"
 	desc = "A duffelbag filled with Bulldog ammo to kit out an entire team, at a discounted price."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
 	cost = 10 //bulk buyer's discount. Very useful if you're buying a mech and dont have TC left to buy people non-shotgun guns
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -303,10 +303,10 @@ var/list/uplink_items = list()
 	cost = 2
 	gamemodes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/bulltoxin
-	name = "Drum Magazine - 12g Bioterror"
-	desc = "An alternative 8-round toxic magazine for use in the Bulldog shotgun. Contains debilitating toxins to make your target die an excruciatingly rapid death."
-	item = /obj/item/ammo_box/magazine/m12g/bioterror
+/datum/uplink_item/ammo/bioterror
+	name = "Box of Bioterror Syringes"
+	desc = "A box full of preloaded syringes, containing various chemicals that seize up the victim's motor and broca system , making it impossible for them to move or speak while in their system."
+	item = /obj/item/weapon/storage/box/syndie_kit/bioterror
 	cost = 6
 	gamemodes = list(/datum/game_mode/nuclear)
 
@@ -511,9 +511,16 @@ var/list/uplink_items = list()
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, a Syndicate brand MMI, a straitjacket, and a muzzle."
-	item = /obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 4
 
+/datum/uplink_item/device_tools/military_belt
+	name = "Military Belt"
+	desc = "A robust seven-slot red belt made for carrying a broad variety of weapons, ammunition and explosives"
+	item = /obj/item/weapon/storage/belt/military
+	cost = 3
+	excludefrom = list(/datum/game_mode/nuclear)
+	
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \
@@ -669,6 +676,12 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 
+/datum/uplink_item/implants/storage
+	name = "Storage Implant"
+	desc = "An implant injected into the body and later used to store up to two big items in a subspace pocket."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_storage
+	cost = 8
+
 /datum/uplink_item/implants/microbomb
 	name = "Microbomb Implant"
 	desc = "An implant injected into the body, and later activated either manually or automatically upon death. The more implants inside of you, the higher the explosive power. \
@@ -688,25 +701,25 @@ var/list/uplink_items = list()
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision."
-	item = /obj/item/cybernetic_implant/eyes/thermals
+	item = /obj/item/organ/internal/cyberimp/eyes/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision."
-	item = /obj/item/cybernetic_implant/eyes/xray
+	item = /obj/item/organ/internal/cyberimp/eyes/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned."
-	item = /obj/item/cybernetic_implant/brain/anti_stun
+	item = /obj/item/organ/internal/cyberimp/brain/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness."
-	item = /obj/item/cybernetic_implant/chest/reviver
+	item = /obj/item/organ/internal/cyberimp/chest/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle
