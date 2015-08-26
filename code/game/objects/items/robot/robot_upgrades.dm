@@ -162,13 +162,13 @@
 /obj/item/borg/upgrade/ddrill/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
+	if(!istype(R.module, /obj/item/weapon/robot_module/miner) && !istype(R.module, /obj/item/weapon/robot_module/mommi))
 		R << "Upgrade mounting error!  No suitable hardpoint detected!"
 		usr << "There's no mounting point for the module!"
 		return 0
 	else
-		for(var/obj/item/weapon/pickaxe/drill/cyborg/D in R.module.modules)
-			qdel(D)
+		for(var/obj/item/weapon/pickaxe/P in R.module.modules)
+			qdel(P)
 		for(var/obj/item/weapon/shovel/S in R.module.modules)
 			qdel(S)
 		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
@@ -183,6 +183,9 @@
 
 /obj/item/borg/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
+
+	if(ismommi(R))
+		return 0
 
 	if(R.emagged == 1)
 		return 0
