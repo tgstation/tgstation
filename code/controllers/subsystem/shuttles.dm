@@ -287,7 +287,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
 		var/obj/structure/closet/critter/CritCrate = Crate
 		if(CritCrate.content_mob)
-			var/obj/crittername = CritCrate.content_mob
+			var/mob/crittername = CritCrate.content_mob
 			slip.info += "<li>[initial(crittername.name)]</li>"
 
 	if((errors & MANIFEST_ERROR_ITEM))
