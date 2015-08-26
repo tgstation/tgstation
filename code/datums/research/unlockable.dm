@@ -24,7 +24,28 @@
 /datum/unlockable/proc/unlock()
 	if(tree.unlocking)
 		return 0
+
+	begin_unlock()
+
+	// Lock tree
+	tree.unlocking=1
+	if(unlock_check())
+		sleep(time) // do_after has too many human-specific checks that don't work on a glorified datum.
+		            //  We don't have hands, and we can't control if the host moves.
+		if(unlock_check())
+			unlock_action()
+			end_unlock()
+	tree.unlocking=0
 	return 1
+
+// Do this, then wait and unlock.
+/datum/unlockable/proc/begin_unlock()
+	return
+
+
+// Finished unlocking.
+/datum/unlockable/proc/end_unlock()
+	return
 
 
 /datum/unlockable/proc/toTableRow(var/datum/research_tree/tree, var/mob/user)

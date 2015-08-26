@@ -1,21 +1,21 @@
 var/global/list/borer_attached_verbs = list(
-	/mob/living/simple_animal/borer/proc/bond_brain,
-	/mob/living/simple_animal/borer/proc/borer_speak,
-	// /mob/living/simple_animal/borer/proc/kill_host,
-	// /mob/living/simple_animal/borer/proc/damage_brain,
-	/mob/living/simple_animal/borer/proc/secrete_chemicals,
-	/mob/living/simple_animal/borer/proc/abandon_host,
+	///client/proc/borer_bond_brain,
+	/client/proc/borer_borer_speak,
+	// /client/proc/borer_kill_host,
+	// /client/proc/borer_damage_brain,
+	/client/proc/borer_secrete_chemicals,
+	/client/proc/borer_abandon_host,
+	/client/proc/borer_evolve
 )
 var/global/list/borer_detached_verbs = list(
-	/mob/living/simple_animal/borer/proc/infest,
-	/mob/living/simple_animal/borer/proc/ventcrawl,
-	/mob/living/simple_animal/borer/proc/hide,
-	/mob/living/simple_animal/borer/proc/evolve,
+	/client/proc/borer_infest,
+	/client/proc/borer_ventcrawl,
+	/client/proc/borer_hide,
 )
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock
-var/global/list/borer_avail_unlocks = list()
+var/global/list/borer_avail_unlocks = null
 
 /mob/living/simple_animal/borer
 	name = "cortical borer"
@@ -87,7 +87,8 @@ var/global/list/borer_avail_unlocks = list()
 		borer_avail_unlocks = list()
 		for(var/ultype in borer_unlock_types)
 			var/datum/unlockable/borer/U = new ultype()
-			borer_avail_unlocks[U.name]=U
+			if(U.id!="")
+				borer_avail_unlocks.Add(U)
 
 /mob/living/simple_animal/borer/Life()
 	..()
@@ -109,6 +110,7 @@ var/global/list/borer_avail_unlocks = list()
 	else
 		verbs -= borer_attached_verbs
 		verbs += borer_detached_verbs
+	//src << "<span class='warning'>At the moment, BYOND has a bug where you won't get sent the proper verbs.  If you find your verbs are broken/backwards, right-click on the titlebar and select Client > Reconnect.</span>"
 
 /mob/living/simple_animal/borer/player_panel_controls(var/mob/user)
 	var/html="<h2>[src] Controls</h2>"
@@ -216,8 +218,19 @@ var/global/list/borer_avail_unlocks = list()
 		stat("Chemicals", chemicals)
 
 // VERBS!
+/client/proc/borer_borer_speak()
+	set category = "Alien"
+	set name = "Borer Speak"
+	set desc = "Communicate with your bretheren"
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.borer_speak()
 
 /mob/living/simple_animal/borer/proc/borer_speak(var/message)
+	set category = "Alien"
+	set name = "Borer Speak"
+	set desc = "Communicate with your bretheren"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/borer_speak() called tick#: [world.time]")
 	if(!message)
 		return
@@ -240,6 +253,16 @@ var/global/list/borer_avail_unlocks = list()
 				controls += ") in [host]"
 
 			M << "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>"
+
+
+/client/proc/borer_bond_brain()
+	set category = "Alien"
+	set name = "Assume Control"
+	set desc = "Fully connect to the brain of your host."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.bond_brain()
 
 /mob/living/simple_animal/borer/proc/bond_brain()
 	set category = "Alien"
@@ -290,6 +313,15 @@ var/global/list/borer_avail_unlocks = list()
 	host.verbs += /mob/living/carbon/proc/punish_host
 	host.verbs += /mob/living/carbon/proc/spawn_larvae
 
+/client/proc/borer_kill_host()
+	set category = "Alien"
+	set name = "Kill Host"
+	set desc = "Give the host massive brain damage, killing them nearly instantly."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.kill_host()
+
 /**
  * Kill switch for shit hosts.
  */
@@ -334,6 +366,15 @@ var/global/list/borer_avail_unlocks = list()
 			message_admins("Borer [key_name_admin(src)] killed [key_name_admin(host)] for reason: [reason]")
 		detach()
 
+/client/proc/borer_damage_brain()
+	set category = "Alien"
+	set name = "Retard Host"
+	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.damage_brain()
+
 /mob/living/simple_animal/borer/proc/damage_brain()
 	set category = "Alien"
 	set name = "Retard Host"
@@ -362,11 +403,19 @@ var/global/list/borer_avail_unlocks = list()
 	host.adjustBrainLoss(15)
 
 
+/client/proc/borer_evolve()
+	set category = "Alien"
+	set name = "Evolve"
+	set desc = "Upgrade yourself or your host."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.evolve()
+
 /mob/living/simple_animal/borer/proc/evolve()
 	set category = "Alien"
 	set name = "Evolve"
 	set desc = "Upgrade yourself or your host."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/secrete_chemicals() called tick#: [world.time]")
 
 	if(!host)
 		src << "<span class='warning'>You are not inside a host body.</span>"
@@ -390,6 +439,15 @@ var/global/list/borer_avail_unlocks = list()
 
 	research.display(src)
 
+// HACK
+/client/proc/borer_secrete_chemicals()
+	set category = "Alien"
+	set name = "Secrete Chemicals"
+	set desc = "Push some chemicals into your host's bloodstream."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.secrete_chemicals()
 
 /mob/living/simple_animal/borer/proc/secrete_chemicals()
 	set category = "Alien"
@@ -451,6 +509,14 @@ var/global/list/borer_avail_unlocks = list()
 	host.reagents.add_reagent(chem.name, units)
 	chemicals -= chem.cost*units
 
+/client/proc/borer_abandon_host()
+	set category = "Alien"
+	set name = "Abandon Host"
+	set desc = "Slither out of your host."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.abandon_host()
 /mob/living/simple_animal/borer/proc/abandon_host()
 	set category = "Alien"
 	set name = "Abandon Host"
@@ -527,6 +593,15 @@ mob/living/simple_animal/borer/proc/detach()
 	host = null
 	update_verbs(0)
 
+/client/proc/borer_infest()
+	set category = "Alien"
+	set name = "Infest"
+	set desc = "Infest a suitable humanoid host."
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.infest()
+
 /mob/living/simple_animal/borer/proc/infest()
 	set category = "Alien"
 	set name = "Infest"
@@ -596,6 +671,9 @@ mob/living/simple_animal/borer/proc/detach()
 	if(!M || !istype(M))
 		error("[src]: Unable to perform_infestation on [M]!")
 		return 0
+
+	update_verbs(1) // Must be called before being removed from turf. (BYOND verb transfer bug)
+
 	src.host = M
 	src.loc = M
 
@@ -613,18 +691,26 @@ mob/living/simple_animal/borer/proc/detach()
 	if(config.borer_takeover_immediately)
 		do_bonding(rptext=1)
 
-	update_verbs(1)
-
 // So we can hear our host doing things.
 // NOTE:  We handle both visible and audible emotes because we're a brainslug that can see the impulses and shit.
 /mob/living/simple_animal/borer/proc/host_emote(var/list/args)
 	src.show_message(args["message"], args["m_type"])
 	host_brain.show_message(args["message"], args["m_type"])
 
+/client/proc/borer_ventcrawl()
+	set name = "Crawl through Vent"
+	set desc = "Enter an air vent and crawl through the pipe system."
+	set category = "Alien"
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.ventcrawl()
+
 /mob/living/simple_animal/borer/proc/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Alien"
+
 
 	var/mob/living/simple_animal/borer/B = src
 	var/atom/pipe
@@ -641,6 +727,15 @@ mob/living/simple_animal/borer/proc/detach()
 	if(B.canmove && pipe)
 		handle_ventcrawl(pipe)
 
+/client/proc/borer_hide()
+	set name = "Hide"
+	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
+	set category = "Alien"
+
+	var/mob/living/simple_animal/borer/B=mob
+	if(!istype(B)) return
+	B.hide()
+
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/proc/hide()
 	set name = "Hide"
@@ -656,7 +751,7 @@ mob/living/simple_animal/borer/proc/detach()
 		src << text("<span class='notice'>You have stopped hiding.</span>")
 
 //Procs for grabbing players.
-mob/living/simple_animal/borer/proc/request_player()
+/mob/living/simple_animal/borer/proc/request_player()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/request_player() called tick#: [world.time]")
 	var/list/candidates=list()
 	//testing("Polling for borers.")
@@ -687,7 +782,7 @@ mob/living/simple_animal/borer/proc/request_player()
 
 	return 0
 
-mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
+/mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/transfer_personality() called tick#: [world.time]")
 
@@ -715,7 +810,7 @@ mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 			src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
-mob/living/simple_animal/borer/proc/forge_objectives()
+/mob/living/simple_animal/borer/proc/forge_objectives()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/forge_objectives() called tick#: [world.time]")
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = mind

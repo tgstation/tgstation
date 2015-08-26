@@ -25,9 +25,11 @@
 	U.set_context(src)
 	return U
 
-/datum/research_tree/proc/get_usable_unlocks()
-	var/list/usable_unlocks=list()
+/datum/research_tree/proc/load_usable_unlocks()
+	usable_unlocks=list()
+	avail_unlocks=list()
 	for(var/datum/unlockable/U in get_avail_unlocks())
+		if(!U.id) continue
 		if(!U.unlocked && U.can_buy(src) && U.check_prerequisites(src))
 			usable_unlocks[U.id]="\ref[U]"
 		avail_unlocks[U.id]="\ref[U]"
@@ -36,18 +38,21 @@
 	return "<th>Name</th><th>Cost</th>"
 
 /datum/research_tree/proc/display(var/mob/user)
+	testing("Entering display...")
 	var/html = "<h2>[title]</h2>[blurb]"
 	html += "<table class=\"prettytable\"><thead>[get_thead()]</thead>"
-	usable_unlocks=get_usable_unlocks()
+	load_usable_unlocks()
 	for(var/id in usable_unlocks)
 		var/datum/unlockable/U=locate(usable_unlocks[id])
 		html += U.toTableRow(src,user)
 	html += "</table>"
-	testing(html)
-	user << browse(html,"window=researchTree;size=550x650")
+
+	popup = new /datum/browser/clean(user, "\ref[src]_research", "Research Tree", 300, 300)
+	popup.set_content(html)
+	popup.open()
 
 /datum/research_tree/proc/close(var/mob/user)
-	user << browse(null,"window=researchTree")
+	user << browse(null,"window=\ref[src]_research")
 
 
 /datum/research_tree/Topic(href, href_list)

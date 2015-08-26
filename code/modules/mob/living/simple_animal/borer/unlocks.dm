@@ -7,6 +7,9 @@
 /datum/research_tree/borer/New(var/mob/living/simple_animal/borer/B)
 	borer=B
 
+/datum/research_tree/borer/get_avail_unlocks()
+	return borer_avail_unlocks
+
 /datum/unlockable/borer
 	var/remove_on_detach=1
 	var/mob/living/simple_animal/borer/borer
@@ -16,22 +19,13 @@
 	borer=T.borer
 
 // INTERNAL: Begin unlocking process.
-/datum/unlockable/borer/unlock()
-	if(!..())
-		return
-	// Freeze borer
-	tree.unlocking=1
+/datum/unlockable/borer/begin_unlock()
 	borer << "<span class='warning'>You begin concentrating intensely on producing the necessary changes.</span>"
 	borer << "<span class='danger'>You will be unable to use any borer abilities until the process completes.</span>"
-	if(unlock_check())
-		sleep(time) // do_after has too many human-specific checks that don't work on a glorified datum.
-		            //  We don't have hands, and we can't control if the host moves.
-		if(unlock_check())
-			unlock_action()
-			borer.chemicals -= cost
-	tree.unlocking=0
 
-	borer << "<span class='info'>You finally finish your task.</span>"
+/datum/unlockable/borer/end_unlock()
+	//Redundant borer << "<span class='info'>You finally finish your task.</span>"
+	borer.chemicals -= cost
 
 // additional checks to perform when unlocking things.
 /datum/unlockable/borer/unlock_check()
