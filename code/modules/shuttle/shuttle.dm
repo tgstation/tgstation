@@ -376,8 +376,8 @@
 			//	areaInstance.contents += O
 				if(O.invisibility >= 101)
 					continue
-			//	if(O == T0.lighting_object)
-			//		continue
+//				if(O == T0.lighting_object)
+//					continue
 				O.loc = T1
 				O.update_all_lights()
 
@@ -429,10 +429,10 @@
 		for(var/turf/T in L1)
 			if(!T)
 				continue
-//			if(!T.lighting_overlay)
-//				T.lighting_build_overlays()
 			T.update_overlay()
 			T.reconsider_lights()
+			if(!T.lighting_overlay)
+				T.lighting_fix_overlays()
 
 
 /*
