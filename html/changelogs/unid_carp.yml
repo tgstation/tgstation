@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - rscadd: Added carp pheromones, created by mixing carpotoxin, leporazine and carbon.
-  - rscadd: Adult space carps ignore mobs with carp pheromones, baby space carp follow them instead (without attacking).

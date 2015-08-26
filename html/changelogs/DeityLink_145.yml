@@ -1,8 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Gravity Wells no longer try to move atoms that are already on top of them.
-  - bugfix: Gravity Well Gun projectiles aren't affected by singularities or narsie anymore, and thus can reliably keep them stuck in a place for the duration of the Gravity Well (Note that the Gravity Well can only pull singularities to its center once it has reached a certain size, which it takes about 12 seconds to reach).
-  - bugfix: Singularities cannot be eaten by smaller singularities anymore.
-  - bugfix: Fixed the Hookshot being able to pull you through grilles and closing doors and stuff.
-  - bugfix: You can no longer holster the PGM Hecate II, the Stickybomb launcher, or the Gatling gun.
