@@ -15,7 +15,7 @@
 
 /obj/item/device/electropack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
-	return (BRUTELOSS)
+	return (FIRELOSS)
 
 /obj/item/device/electropack/initialize()
 	if(radio_controller)

@@ -38,7 +38,7 @@
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] crams the bar of soap down \his throat! It looks like \he's trying to commit suicide..</span>")
 	. = TOXLOSS
-	qdel(src)
+	src.loc = user
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
