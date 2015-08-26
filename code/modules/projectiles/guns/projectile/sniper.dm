@@ -17,6 +17,9 @@
 	load_method = 0
 	var/backup_view = 7
 
+/obj/item/weapon/gun/projectile/hecate/isHandgun()
+	return 0
+
 /obj/item/weapon/gun/projectile/hecate/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	if(flag)	return //we're placing gun on a table or in backpack
 	if(harm_labeled >= min_harm_label)

@@ -19,6 +19,9 @@
 
 	var/current_shells = 200
 
+/obj/item/weapon/gun/stickybomb/isHandgun()
+	return 0
+
 /obj/item/weapon/gun/stickybomb/New()
 	..()
 	loaded = list(
