@@ -188,11 +188,10 @@
 		target.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
 		target.Weaken(1)
 	else if(target)
-		spawn()
-			var/obj/item/projectile/beam/B = getFromPool(/obj/item/projectile/beam/lightning/spell)
-			B.damage = basedamage
-			target.bullet_act(B)
-			returnToPool(B)
+		var/obj/item/projectile/beam/B = getFromPool(/obj/item/projectile/beam/lightning/spell)
+		B.damage = basedamage
+		target.bullet_act(B)
+		returnToPool(B)
 	if(chained)
 		//DO IT AGAIN
 		var/mob/next_target

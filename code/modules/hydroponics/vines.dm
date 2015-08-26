@@ -81,7 +81,7 @@
 
 /obj/effect/plantsegment/proc/manual_unbuckle(mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/plantsegment/proc/manual_unbuckle() called tick#: [world.time]")
-	if(locked_atoms.len)
+	if(locked_atoms && locked_atoms.len)
 		if(prob(seed ? min(max(0,100 - seed.potency),100) : 50))
 			var/mob/M = locked_atoms[1]
 			if(M != user)
