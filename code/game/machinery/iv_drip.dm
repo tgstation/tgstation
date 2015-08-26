@@ -138,6 +138,8 @@
 			var/datum/reagent/B = T.take_blood(beaker,amount)
 
 			if (B)
+				T.reagents.trans_to(beaker, 6, 1,1) // This will allow doctors to perform Dialysis on their patients. With blood
+				//With blood transfer at 4 and reagent at 6, a 50u beaker will fill with 20u of Blood and 30u of reagents.
 				beaker.reagents.reagent_list |= B
 				beaker.reagents.update_total()
 				beaker.on_reagent_change()
