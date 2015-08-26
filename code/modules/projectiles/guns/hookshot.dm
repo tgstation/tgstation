@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/hookshot
+/obj/item/weapon/gun/hookshot	//-by Deity Link
 	name = "hookshot"
 	desc = "Used to create tethers! It's a very experimental device, recently developped by Nanotrasen."
 	icon = 'icons/obj/gun_experimental.dmi'
@@ -188,10 +188,15 @@
 		if(!isturf(HC.loc) || (loc != firer))
 			cancel_chain()
 			break
+		var/turf/oldLoc = firer.loc
 		var/bckp = firer.pass_flags
 		firer.pass_flags = PASSTABLE
 		firer.Move(HC.loc,get_dir(firer,HC.loc))
 		firer.pass_flags = bckp
+		if(firer.loc == oldLoc)//we're bumping into something, abort!
+			clockwerk = 0
+			rewind_chain()
+			return
 		HC.loc = src
 		sleep(1)
 	clockwerk = 0

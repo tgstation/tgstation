@@ -15,6 +15,9 @@
 	var/max_shells = 200
 	var/current_shells = 200
 
+/obj/item/weapon/gun/gatling/isHandgun()
+	return 0
+
 /obj/item/weapon/gun/gatling/examine(mob/user)
 	..()
 	user << "<span class='info'>Has [current_shells] round\s remaining.</span>"
