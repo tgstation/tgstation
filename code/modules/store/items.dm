@@ -9,19 +9,17 @@
 
 /datum/storeitem/proc/deliver(var/mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/storeitem/proc/deliver() called tick#: [world.time]")
-	var/thing
-	if(!istype(typepath,/obj/item/weapon/storage))
-		if(istype(typepath,/obj/machinery))
-			thing=new typepath(user.loc)
-		else
-			var/obj/item/weapon/storage/box/box=new(user.loc)
-			new typepath(box)
-			box.name="[name] package"
-			box.desc="A special gift for doing your job."
-			thing=box
+	if(istype(typepath,/obj/item/weapon/storage))
+		var/thing = new typepath(user.loc)
+		user.put_in_hands(thing)
+	else if(istype(typepath,/obj/item))
+		var/obj/item/weapon/storage/box/box=new(user.loc)
+		new typepath(box)
+		box.name="[name] package"
+		box.desc="A special gift for doing your job."
+		user.put_in_hands(box)
 	else
-		thing = new typepath(user.loc)
-	user.put_in_hands(thing)
+		new typepath(user.loc)
 
 
 /////////////////////////////
