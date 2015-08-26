@@ -1,0 +1,11 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Darksight now has its own icon."
+  - rscadd: "Empowered thralls have been added. While obvious, they are more powerful and can resist dethralling while conscious. Only 5 can exist at one time."
+  - rscadd: "Shadowlings can now change their night vision radius by using the action button their eyes (glasses) now provide."
+  - tweak: "Torches are dimmer, being as bright as flashlights, and no longer fit on belts."
+  - tweak: "Black Recuperation now has a 1 minute cooldown, down from 5. It can also be used to empower living thralls."
+  - tweak: "Guise can now be used outside of darkness and makes the user more invisible than before."
+  - bugfix: "Enthrall now functions properly when a shadowling is not hatched, allowing them to enthrall up to 5 people before hatching."
