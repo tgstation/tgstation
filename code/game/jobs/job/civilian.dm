@@ -109,7 +109,7 @@
 			if("Botanist")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/botany(H), slot_w_uniform)
 			if("Beekeeper")
-				H.equip_or_collect(new /obj/item/clothing/under/rank/botany(H), slot_w_uniform)//TODO: add a custom beekeeper jumpsuit
+				H.equip_or_collect(new /obj/item/clothing/under/rank/beekeeper(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/clothing/gloves/botanic_leather(H), slot_gloves)
 		H.equip_or_collect(new /obj/item/clothing/suit/apron(H), slot_wear_suit)
