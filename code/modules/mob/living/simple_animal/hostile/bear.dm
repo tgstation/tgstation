@@ -51,6 +51,11 @@
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space bears!
 
+/mob/living/simple_animal/hostile/bear/CanAttack(var/atom/the_target)
+	. = ..()
+	for(var/obj/effect/decal/cleanable/crayon/C in get_turf(the_target))
+		if(C.icon_state == "o") //drawing a circle around yourself is the only way to ward off space bears!
+			return 0
 
 
 
