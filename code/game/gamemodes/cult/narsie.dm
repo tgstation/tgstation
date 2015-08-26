@@ -24,6 +24,9 @@ var/global/list/narsie_list = list()
 	narsie_list.Remove(src)
 	..()
 
+/obj/machinery/singularity/narsie/singularity_act()//elder gods don't give a shit about black holes
+	return()
+
 /obj/machinery/singularity/narsie/large
 	name = "Nar-Sie"
 	icon = 'icons/obj/narsie.dmi'

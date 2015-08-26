@@ -1501,6 +1501,7 @@
 #include "code\modules\projectiles\projectile\energy.dm"
 #include "code\modules\projectiles\projectile\flare.dm"
 #include "code\modules\projectiles\projectile\force.dm"
+#include "code\modules\projectiles\projectile\gravitywell.dm"
 #include "code\modules\projectiles\projectile\hookshot.dm"
 #include "code\modules\projectiles\projectile\ricochet.dm"
 #include "code\modules\projectiles\projectile\rocket.dm"
