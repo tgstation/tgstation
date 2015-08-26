@@ -1187,7 +1187,7 @@
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
-	if(cooldown < world.time)
+	if(cooldown <= world.time)
 		cooldown = (world.time + 50) //5 second cooldown
 		user.visible_message("<span class='notice'>[user] pulls back the string on [src].</span>")
 		icon_state = "[initial(icon_state)]_used"
@@ -1197,7 +1197,7 @@
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
 		spawn(45)
-		icon_state = "[initial(icon_state)]"
+			icon_state = "[initial(icon_state)]"
 	else
 		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
 		return
