@@ -12,7 +12,6 @@
 	if(!istype(typepath,/obj/item/weapon/storage))
         if(istype(typepath,/obj/machinery))
             var/thing = new typepath(usr.loc)
-            usr.put_in_hands(thing)
          else
     		var/obj/item/weapon/storage/box/box=new(usr.loc)
     		new typepath(box)
