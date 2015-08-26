@@ -363,12 +363,17 @@
 		var/error = dist_x/2 - dist_y
 
 
-
+		var/tS = 0
 		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
-			if(timestopped && dist_travelled > 0)
-				sleep(1)
-				continue
+			if(tS && dist_travelled)
+				timestopped = loc.timestopped
+				tS = 0
+			if(timestopped && !dist_travelled)
+				timestopped = 0
+				tS = 1
+			while((loc.timestopped || timestopped) && dist_travelled)
+				sleep(3)
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
