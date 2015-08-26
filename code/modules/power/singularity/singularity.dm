@@ -552,12 +552,14 @@
 	explosion(get_turf(src), dist, dist * 2, dist * 4)
 	qdel(src)
 
-/obj/machinery/singularity/singularity_act()
-	var/gain = (energy/2)
-	var/dist = max((current_size - 2), 1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
-	qdel(src)
-	return(gain)
+/obj/machinery/singularity/singularity_act(var/other_size=0)
+	if(other_size >= current_size)
+		var/gain = (energy/2)
+		var/dist = max((current_size - 2), 1)
+		explosion(src.loc,(dist),(dist*2),(dist*4))
+		qdel(src)
+		return(gain)
+	return
 
 /obj/machinery/singularity/shuttle_act() //Shuttles can't kill the singularity honk
 	return

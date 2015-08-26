@@ -215,6 +215,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 	//Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
+	..()
 	if(blackbox)
 		if(istype(blackbox,/obj/machinery/blackbox_recorder))
 			del(src)
