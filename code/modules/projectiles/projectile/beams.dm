@@ -134,9 +134,7 @@ var/list/beam_master = list()
 		X.pixel_x=Pixel_x
 		X.pixel_y=Pixel_y
 		var/turf/TT = get_turf(X.loc)
-		var/wasTS = 0
 		while((TT.timestopped || timestopped || X.timestopped) && count)
-			wasTS = 1
 			sleep(2)
 		if(TT == firer.loc)
 			continue
