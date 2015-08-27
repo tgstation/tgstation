@@ -172,7 +172,6 @@ var/list/beam_master = list()
 			while((loc.timestopped || timestopped) && !first)
 				tS = 1
 				sleep(3)
-			if(tS) world << "[src] broke out of timestop at [formatJumpTo(loc)] last was [formatJumpTo(last)] current is [current][formatJumpTo(current)]"
 			if(first)
 				icon = midicon
 				if(timestopped || loc.timestopped)
