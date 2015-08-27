@@ -28,7 +28,7 @@ var/global/mulebot_count = 0
 	var/turf/target				// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) 
+	req_access = list(access_cargo)
 
 	mode = BOT_IDLE
 
@@ -71,6 +71,12 @@ var/global/mulebot_count = 0
 		if(!suffix)
 			suffix = "#[mulebot_count]"
 		name = "\improper Mulebot ([suffix])"
+
+/obj/machinery/bot/mulebot/Destroy()
+	qdel(wires)
+	wires = null
+	load = null
+	return ..()
 
 obj/machinery/bot/mulebot/bot_reset()
 	..()

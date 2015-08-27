@@ -324,10 +324,12 @@ About the new airlock wires panel:
 	update_icon()
 
 /obj/machinery/door/airlock/Destroy()
+	qdel(wires)
+	wires = null
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in world)
 			D.removeMe(src)
-	..()
+	return ..()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
