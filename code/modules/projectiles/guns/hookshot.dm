@@ -86,12 +86,7 @@
 	if(check_tether())
 		if(istype(chain_datum.extremity_B,/mob/living/carbon))
 			var/mob/living/carbon/C = chain_datum.extremity_B
-			if(!(C.flags & INVULNERABLE) && (C.a_intent == I_HELP))	//players who don't see it coming (ie: are on Help intent) get briefly stunned and drop the items in their hands.
-				C.Weaken(1)											//I guess that players on other intents than Help assume a more stable pose.
-				C.Stun(1)
-				C << "<span class='warning'>\The [src]'s pull makes you lose your balance and you fall as it drags you.</span>"
-			else
-				C << "<span class='warning'>\The [src] reels you in but you hold your balance.</span>"
+			C << "<span class='warning'>\The [src] reels you in!</span>"
 		chain_datum.rewind_chain()
 		return
 	..()
