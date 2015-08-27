@@ -440,7 +440,7 @@ var/list/camera_names=list()
 	return
 
 /obj/machinery/camera/arena/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
-	user.visible_message("<span class='warning'>\The [user] slashes at \the [src]!...but that didn't affect it at all.</span>","<span class='warning'>You slashe at \the [src]!...but that didn't affect it at all.</span>")
+	user.visible_message("<span class='warning'>\The [user] slashes at \the [src], but that didn't affect it at all.</span>","<span class='warning'>You slash at \the [src], but that didn't affect it at all.</span>")
 	return
 
 /obj/machinery/camera/arena/update_icon()
