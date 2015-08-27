@@ -80,9 +80,9 @@ var/global/mulebot_count = 0
 		name = "\improper Mulebot ([suffix])"
 
 /obj/machinery/bot/mulebot/Destroy()
+	unload(0)
 	qdel(wires)
 	wires = null
-	load = null
 	return ..()
 
 obj/machinery/bot/mulebot/bot_reset()
@@ -861,10 +861,6 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 
 	new /obj/effect/decal/cleanable/oil(loc)
 	qdel(src)
-
-/obj/machinery/bot/mulebot/Destroy()
-	unload(0)
-	return ..()
 
 #undef SIGH
 #undef ANNOYED
