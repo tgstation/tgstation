@@ -114,7 +114,8 @@ var/global/list/bombermangear = list()
 			arena.end()
 	var/list/turfs = list()
 	for(var/turf/T in range(loc,1))
-		turfs += T
+		if(!T.density)
+			turfs += T
 	while(skate > 0)
 		new/obj/structure/powerup/skate(pick(turfs))
 		skate--
@@ -309,11 +310,14 @@ obj/structure/bomberflame/Destroy()
 /obj/structure/bomberflame/proc/collisions(var/turf/T)
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/bomberflame/proc/collisions() called tick#: [world.time]")
+	for(var/obj/item/weapon/bomberman/dispenser in T)
+		dispenser.lost()
+		T.turf_animation('icons/obj/bomberman.dmi',"dispenser_break",0,0,MOB_LAYER-0.1,'sound/bomberman/bombed.ogg')
 
-	for(var/mob/living/carbon/C in T)
-		for(var/obj/item/weapon/bomberman/dispenser in C.contents)
-			C.u_equip(dispenser,1)
-			dispenser.loc = C.loc
+	for(var/mob/living/L in T)
+		for(var/obj/item/weapon/bomberman/dispenser in L)
+			L.u_equip(dispenser,1)
+			dispenser.loc = L.loc
 			//dispenser.dropped(C)
 			dispenser.lost()
 			T.turf_animation('icons/obj/bomberman.dmi',"dispenser_break",0,0,MOB_LAYER-0.1,'sound/bomberman/bombed.ogg')
@@ -426,7 +430,7 @@ obj/structure/bomberflame/Destroy()
 	density = 0
 	mouse_opacity = 0
 	spawn(5)
-		if(prob(35))
+		if(prob(45))
 			pick_a_powerup()
 		spawn(5)
 			qdel(src)
@@ -616,14 +620,16 @@ obj/structure/bomberflame/Destroy()
 			dispenser.speed_bonus = MAX_SPEED_BONUS
 			dispenser.cure(disease)
 		if("Change")
-			for(var/mob/living/carbon/C in player_list)
-				var/obj/item/weapon/bomberman/target = locate() in C
+			for(var/mob/living/L_other in player_list)
+				var/obj/item/weapon/bomberman/target = locate() in L_other
 				if(target)
-					var/turf/T = get_turf(src)
-					var/mob/living/L = src.loc
-					L.loc = C.loc
-					C.loc = T
-					playsound(get_turf(src), 'sound/bomberman/disease.ogg', 50, 1)
+					var/mob/living/L_self = src.loc
+					var/turf/T_self = get_turf(L_self)
+					var/turf/T_other = get_turf(L_other)
+					L_self.loc = T_other
+					L_other.loc = T_self
+					playsound(T_self, 'sound/bomberman/disease.ogg', 50, 1)
+					playsound(T_other, 'sound/bomberman/disease.ogg', 50, 1)
 					qdel(src)
 					return
 		if("Fire")
@@ -712,13 +718,17 @@ obj/structure/bomberflame/Destroy()
 ///////////////////////////////ARENA BUILDER///////////////////////////
 
 var/global/list/arenas = list()
+var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 
 /datum/bomberman_spawn
 	var/turf/spawnpoint = null
 	var/availability = 0
-	var/mob/living/carbon/human/player = null
-	var/datum/player_mind = null
+	var/mob/living/carbon/human/player_mob = null
+	var/client/player_client = null
 	var/obj/structure/planner/spawnpoint/icon = null
+
+/datum/bomberman_spawn/New()
+	arena_spawnpoints += src
 
 
 /datum/bomberman_arena
@@ -727,6 +737,7 @@ var/global/list/arenas = list()
 	var/shape = ""
 	var/violence = 0
 	var/opacity = 0
+	var/min_number_of_players = 2
 	var/area/arena = null
 	var/area/under = null
 	var/turf/center = null		//middle of the arena.
@@ -735,8 +746,10 @@ var/global/list/arenas = list()
 	var/list/spawns = list()	//player spawns.
 	var/list/turfs = list()		//all of the arena's turfs. they get reverted to space tiles when the arena is removed.
 	var/list/swalls = list()	//all of the soft walls. randomly spread over the arena between round.
-	var/list/players = list()	//players that registered with this arena.
+	var/list/gladiators = list()//players that registered with this arena.
 	var/list/tools = list()		//clothes and bomb dispensers spawned by the arena.
+	var/auto_start = 60			//how long (in seconds) till the game automatically begins when at least two players have registered
+	var/counting = 0
 
 /datum/bomberman_arena/New(var/turf/a_center=null, var/size="",mob/user)
 	if(!a_center)	return
@@ -750,7 +763,7 @@ var/global/list/arenas = list()
 
 	shape = size
 	for(var/datum/bomberman_spawn/S in spawns)
-		var/obj/structure/planner/P = new /obj/structure/planner/spawnpoint(S.spawnpoint, src, S)
+		var/obj/structure/planner/spawnpoint/P = new(S.spawnpoint, src, S)
 		S.icon = P
 		planners += P
 
@@ -773,7 +786,7 @@ var/global/list/arenas = list()
 			h = 22
 
 	if(planner(size,user))
-		var/obj/machinery/camera/C = new /obj/machinery/camera(center)
+		var/obj/machinery/camera/arena/C = new(center)
 		cameras += C
 		C.name = name
 		C.c_tag = name
@@ -782,7 +795,7 @@ var/global/list/arenas = list()
 			"SS13",		//security monitors
 			)
 
-		var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+		var/obj/structure/planner/pencil = new(center, src)
 		pencil.x -= (w/2)
 		pencil.y -=	(h/2)
 		x = pencil.x
@@ -822,14 +835,14 @@ var/global/list/arenas = list()
 		T = pencil.loc
 
 		if(!(size == "15x13 (2 players)"))
-			var/datum/bomberman_spawn/sp1 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp1 = new()
 			sp1.spawnpoint = T
 			spawns += sp1
 
 		pencil.x = x+w-1
 		T = pencil.loc
 
-		var/datum/bomberman_spawn/sp2 = new/datum/bomberman_spawn()
+		var/datum/bomberman_spawn/sp2 = new()
 		sp2.spawnpoint = T
 		spawns += sp2
 
@@ -837,14 +850,14 @@ var/global/list/arenas = list()
 		T = pencil.loc
 
 		if(!(size == "15x13 (2 players)"))
-			var/datum/bomberman_spawn/sp3 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp3 = new()
 			sp3.spawnpoint = T
 			spawns += sp3
 
 		pencil.x = x+1
 		T = pencil.loc
 
-		var/datum/bomberman_spawn/sp4 = new/datum/bomberman_spawn()
+		var/datum/bomberman_spawn/sp4 = new()
 		sp4.spawnpoint = T
 		spawns += sp4
 
@@ -852,37 +865,37 @@ var/global/list/arenas = list()
 			pencil.x = x + 10
 			pencil.y = y + 7
 			T = pencil.loc
-			var/datum/bomberman_spawn/sp5 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp5 = new()
 			sp5.spawnpoint = T
 			spawns += sp5
 			pencil.x = x + 10
 			pencil.y = y + 15
 			T = pencil.loc
-			var/datum/bomberman_spawn/sp6 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp6 = new()
 			sp6.spawnpoint = T
 			spawns += sp6
 			pencil.x = x + 19
 			pencil.y = y + 1
 			T = pencil.loc
-			var/datum/bomberman_spawn/sp7 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp7 = new()
 			sp7.spawnpoint = T
 			spawns += sp7
 			pencil.x = x + 19
 			pencil.y = y + h - 1
 			T = pencil.loc
-			var/datum/bomberman_spawn/sp8 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp8 = new()
 			sp8.spawnpoint = T
 			spawns += sp8
 			pencil.x = x + 28
 			pencil.y = y + 7
 			T = pencil.loc
-			var/datum/bomberman_spawn/sp9 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp9 = new()
 			sp9.spawnpoint = T
 			spawns += sp9
 			pencil.x = x + 28
 			pencil.y = y + 15
 			T = pencil.loc
-			var/datum/bomberman_spawn/sp10 = new/datum/bomberman_spawn()
+			var/datum/bomberman_spawn/sp10 = new()
 			sp10.spawnpoint = T
 			spawns += sp10
 
@@ -895,7 +908,7 @@ var/global/list/arenas = list()
 				if(istype(T, /turf/simulated/floor/plating))
 					if(prob(60))
 						T = pencil.loc
-						var/obj/structure/softwall/W = new /obj/structure/softwall(T)
+						var/obj/structure/softwall/W = new(T)
 						swalls += W
 						if(opacity)
 							W.opacity = 1
@@ -907,6 +920,8 @@ var/global/list/arenas = list()
 		pencil.y = y+h
 		T = pencil.loc
 		T.maptext = name
+		T.maptext_width = 256
+		T.maptext_y = 20
 
 		qdel(pencil)	//RIP sweet prince
 
@@ -950,7 +965,7 @@ var/global/list/arenas = list()
 
 /datum/bomberman_arena/proc/spawn_player(var/turf/T)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/spawn_player() called tick#: [world.time]")
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	var/mob/living/carbon/human/M = new(T)
 	M.name = "Bomberman #[rand(1,999)]"
 	M.real_name = M.name
 	var/list/randomhexes = list(
@@ -972,10 +987,10 @@ var/global/list/arenas = list()
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/darkblue(M), slot_w_uniform)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/purple(M), slot_shoes)
 	M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/bomberman(M), slot_head)
-	var/obj/item/clothing/suit/space/bomberman/bombsuit = new /obj/item/clothing/suit/space/bomberman(M)
+	var/obj/item/clothing/suit/space/bomberman/bombsuit = new(M)
 	M.equip_to_slot_or_del(bombsuit, slot_wear_suit)
 	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/purple(M), slot_gloves)
-	var/obj/item/weapon/bomberman/B = new/obj/item/weapon/bomberman(M)
+	var/obj/item/weapon/bomberman/B = new(M)
 	tools += B
 	B.arena = src
 	if(violence)
@@ -991,47 +1006,86 @@ var/global/list/arenas = list()
 		if(violence)
 			C.armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
-/datum/bomberman_arena/proc/start(var/list/minds)
+/datum/bomberman_arena/proc/start()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/start() called tick#: [world.time]")
 	status = ARENA_INGAME
+
+	if(counting)
+		counting = 0
+		auto_start = 60
+		for(var/obj/structure/planner/spawnpoint/S in arena)
+			S.overlays.len = 0
+
 	for(var/obj/structure/planner/spawnpoint/P in planners)
 		P.icon_state = "planner_ready"
-	var/i=1
+
+	var/readied = 0
 	for(var/datum/bomberman_spawn/S in spawns)
-		if(!S.player_mind)	continue
-		var/datum/mind/p_mind = S.player_mind
-		p_mind = minds[i]
-		if(p_mind in ready_gladiators)
-			ready_gladiators -= p_mind
+		S.availability = 0
+		S.icon.icon_state = "planner_ready"
+
+		if(!S.player_client)
+			continue
+		var/client/C = 	S.player_client
+
+		var/mob/client_mob = C.mob
+		if(C in ready_gladiators)
+			ready_gladiators -= C
+
+		if(!isobserver(client_mob))
+			continue
+
 		var/mob/living/carbon/human/M = spawn_player(S.spawnpoint)
 		dress_player(M)
-		M.canmove = 0
-		S.player = M
-		var/mob/dead/observer/D = null
-		for(var/mob/dead/observer/O in observers)
-			if(O.ckey == p_mind.key)
-				D = O
-		if(!D)	continue
-		M.key = D.ckey
-		players += M
-		S.availability = 0
+		M.stunned = 3
+		M.ckey = C.ckey
+		gladiators += M
+
+		if(S.player_mob)
+			del(S.player_mob)
+
+		S.player_mob = M
+
+		if(S.player_mob.ckey)
+			readied++
+
+	if(readied < min_number_of_players)
+		status = ARENA_AVAILABLE
+
+		for(var/mob/M in arena)
+			M << "<span class='danger'>Not enough players. Round canceled.</span>"
+
+		for(var/mob/M in gladiators)
+			del(M)
+
+		gladiators = list()
+		for (var/datum/bomberman_spawn/S in spawns)
+			S.player_mob = null
+			S.player_client = null
+			S.availability = 1
+			S.icon.icon_state = "planner"
+		return
+
+	for(var/mob/M in arena)
 		if(violence)
-			S.player << "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!"
-		if(S.player.client)
-			S.player.client << sound('sound/bomberman/start.ogg')
-		i++
+			M << "Violence Mode activated! Bombs hurt players! Suits offer no protections! Initial Flame Range increased!"
+		if(M.client)
+			M.client << sound('sound/bomberman/start.ogg')
+		M << "<b>READY?</b>"
 
 	for(var/obj/machinery/computer/security/telescreen/entertainment/E in machines)
-		E.visible_message("\icon[E] \The [E] brightens as it appears that a round is starting in [name].")
+		E.visible_message("<span style='color:grey'>\icon[E] \The [E] brightens as it appears that a round is starting in [name].</span>")
 		flick("entertainment_arena",E)
 
 	for(var/mob/dead/observer/O in observers)
 		O << "<b>A round has began in <A HREF='?src=\ref[O];jumptoarenacood=1;X=[center.x];Y=[center.y];Z=[center.z]'>[name]</A>!</b>"
 
 	sleep(40)
-	for(var/datum/bomberman_spawn/S in spawns)
-		if(S.player)
-			S.player.canmove = 1
+
+	for(var/mob/M in arena)
+		M << "<span class='danger'>GO!</span>"
+
+	return
 
 /datum/bomberman_arena/proc/end()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/end() called tick#: [world.time]")
@@ -1043,53 +1097,53 @@ var/global/list/arenas = list()
 		W.hurt_players = 1	//FINISH THEM!
 		if(istype(W.loc, /mob/living))
 			winner = W.loc
-	for(var/mob/living/M in players)
-		M << "[winner ? "[winner.key] as [winner.name] wins this round! " : ""]Resetting arena in 30 seconds."
 
-	if(winner.key in arena_leaderboard)
-		arena_leaderboard[winner.key] = arena_leaderboard[winner.key] + 1
-	else
-		arena_leaderboard += winner.key
-		arena_leaderboard[winner.key] = 1
+	for(var/mob/M in arena)
+		if(winner)
+			M << "[winner ? "<b>[winner.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds."
+		else
+			M << "Couldn't find a winner. Resetting arena in 20 seconds."
+
+	if(winner)
+		if(winner.key in arena_leaderboard)
+			arena_leaderboard[winner.key] = arena_leaderboard[winner.key] + 1
+		else
+			arena_leaderboard += winner.key
+			arena_leaderboard[winner.key] = 1
 
 	arena_rounds++
 
-	sleep(300)
+	sleep(200)
 	reset()
 
 
-/datum/bomberman_arena/proc/reset(var/remove_players=1)
+/datum/bomberman_arena/proc/reset()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/reset() called tick#: [world.time]")
 	status = ARENA_SETUP
 
-	for(var/obj/structure/powerup/P in arena.contents)
+	if(counting)
+		counting = 0
+		auto_start = 60
+		for(var/obj/structure/planner/spawnpoint/S in arena)
+			S.overlays.len = 0
+
+	for (var/datum/bomberman_spawn/S in spawns)
+		S.availability = 0
+		S.icon.icon_state = "planner_ready"
+
+	for(var/obj/structure/powerup/P in arena)
 		qdel(P)
 
-	for(var/obj/item/clothing/C in arena.contents)
+	for(var/obj/item/clothing/C in arena)
 		qdel(C)
 
-	for(var/obj/structure/planner/spawnpoint/P in planners)
-		P.icon_state = "planner"
+	for(var/obj/item/weapon/organ/O in arena)//gibs
+		qdel(O)
 
-	if(!remove_players)
-		for(var/datum/bomberman_spawn/S in spawns)
-			if(S.player_mind)
-				if(S.player)
-					S.player.revive(1)
-					S.player.canmove = 0
-					S.player.loc = S.spawnpoint
-				else	//if the player got gibbed
-					var/mob/living/carbon/human/M = spawn_player(S.spawnpoint)
-					var/datum/mind/p_mind = S.player_mind
-					S.player = M
-					dress_player(S.player)
-					S.player.canmove = 0
-					p_mind.transfer_to(S.player)
-	else
-		for(var/mob/living/M in players)
-			if(M)
-				del(M)	//qdel doesn't work nicely with mobs
-		players = list()
+	for(var/mob/living/M in gladiators)
+		if(M)
+			del(M)	//qdel doesn't work nicely with mobs
+	gladiators = list()
 
 	for(var/obj/structure/softwall/W in swalls)
 		qdel(W)
@@ -1100,7 +1154,7 @@ var/global/list/arenas = list()
 	tools = list()
 
 
-	var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+	var/obj/structure/planner/pencil = new(center, src)
 	var/w = 1
 	var/h = 1
 	switch(shape)
@@ -1130,7 +1184,7 @@ var/global/list/arenas = list()
 			if(istype(T, /turf/simulated/floor/plating))
 				if(prob(60))
 					T = pencil.loc
-					var/obj/structure/softwall/W = new /obj/structure/softwall(T)
+					var/obj/structure/softwall/W = new(T)
 					swalls += W
 					if(opacity)
 						W.opacity = 1
@@ -1144,17 +1198,14 @@ var/global/list/arenas = list()
 		for (var/obj/structure/softwall/W in range(S.spawnpoint,1))
 			swalls -= W
 			qdel(W)
-
-		S.player = null
-		S.player_mind = null
+		if(S.player_client)
+			ready_gladiators -= S.player_client
+		S.player_mob = null
+		S.player_client = null
 		S.availability = 1
+		S.icon.icon_state = "planner"
 
-	if(!remove_players)
-		for(var/datum/bomberman_spawn/S in spawns)
-			S.player.canmove = 1
-		status = ARENA_INGAME
-	else
-		status = ARENA_AVAILABLE
+	status = ARENA_AVAILABLE
 
 /datum/bomberman_arena/proc/close(var/open_space=1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/close() called tick#: [world.time]")
@@ -1174,10 +1225,23 @@ var/global/list/arenas = list()
 		qdel(T)
 	tools = list()
 
-	for(var/mob/living/M in players)
+	for(var/mob/living/M in gladiators)
 		if(M)
 			del(M)	//qdel doesn't work nicely with mobs
-	players = list()
+	gladiators = list()
+
+	for(var/obj/item/weapon/organ/O in arena)//gibs
+		qdel(O)
+
+	for(var/obj/effect/decal/cleanable/C in arena)
+		qdel(C)
+
+	for(var/datum/bomberman_spawn/S in arena)
+		arena_spawnpoints -= S
+		if(S.player_client)
+			ready_gladiators -= S.player_client
+		S.player_client = null
+		S.player_mob = null
 
 	under.contents.Add(turfs)
 	for(var/turf/T in turfs)
@@ -1192,24 +1256,51 @@ var/global/list/arenas = list()
 	arenas -= src
 	return
 
-/datum/bomberman_arena/proc/ready()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/ready() called tick#: [world.time]")
+/datum/bomberman_arena/proc/update_ready()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/update_ready() called tick#: [world.time]")
 	var/list/ready = list()
 	var/slots = 0
 	for(var/datum/bomberman_spawn/S in spawns)
 		slots++
-		if(S.player_mind)
-			ready += S.player_mind
+		if(S.player_client)
+			if(isobserver(S.player_client.mob))
+				ready += S.player_client
+			else
+				S.icon.ghost_unsubscribe(S.player_client.mob)
 	if(slots == ready.len)
 		start(ready)
+	else if(ready.len >= min_number_of_players)
+		if(!counting)
+			counting = 1
+			spawn()
+				countin()
+	else if(counting)
+		counting = 0
+		auto_start = 60
+		for(var/obj/structure/planner/spawnpoint/S in arena)
+			S.overlays.len = 0
 
+/datum/bomberman_arena/proc/countin()
+	if(counting)
+		auto_start--
+		for(var/obj/structure/planner/spawnpoint/S in arena)
+			S.update_overlay(auto_start)
+		if(auto_start <= 0)
+			counting = 0
+			auto_start = 60
+			for(var/obj/structure/planner/spawnpoint/S in arena)
+				S.overlays.len = 0
+			start()
+			return
+		sleep(10)
+		countin()
 
 /datum/bomberman_arena/proc/planner(var/size,mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/bomberman_arena/proc/planner() called tick#: [world.time]")
 	var/choice = 0
 	switch(size)
 		if("15x13 (2 players)")
-			var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+			var/obj/structure/planner/pencil = new(center, src)
 			var/w = 14
 			var/h = 12
 			pencil.x -= (w/2)
@@ -1221,7 +1312,7 @@ var/global/list/arenas = list()
 				pencil.x = x
 				while(pencil.x <= (x+w))
 					T = pencil.loc
-					var/obj/structure/planner/P = new /obj/structure/planner(T, src)
+					var/obj/structure/planner/P = new(T, src)
 					if(P.loc)
 						planners += P
 					pencil.x++
@@ -1234,7 +1325,7 @@ var/global/list/arenas = list()
 
 		if("15x15 (4 players)")
 			for(var/turf/T in range(center,7))
-				var/obj/structure/planner/P = new /obj/structure/planner(T, src)
+				var/obj/structure/planner/P = new(T, src)
 				if(P.loc)
 					planners += P
 			if(planners.len == 225)
@@ -1244,7 +1335,7 @@ var/global/list/arenas = list()
 			else
 				user << "<span class='warning'>Part of the arena was outside the Z-Level.</span>"
 		if("39x23 (10 players)")
-			var/obj/structure/planner/pencil = new /obj/structure/planner(center, src)
+			var/obj/structure/planner/pencil = new(center, src)
 			var/w = 38
 			var/h = 22
 			pencil.x -= (w/2)
@@ -1256,7 +1347,7 @@ var/global/list/arenas = list()
 				pencil.x = x
 				while(pencil.x <= (x+w))
 					T = pencil.loc
-					var/obj/structure/planner/P = new /obj/structure/planner(T, src)
+					var/obj/structure/planner/P = new(T, src)
 					if(P.loc)
 						planners += P
 					pencil.x++
@@ -1305,22 +1396,37 @@ var/global/list/arenas = list()
 /obj/structure/planner/spawnpoint/attack_ghost(mob/user)
 	if(arena.status != ARENA_AVAILABLE)	return
 
-	if(!user.mind)	//Just an ugly hack that gives a propper blank mind to the mindless
-		var/mob/living/carbon/human/M = new(user.loc)
-		M.ckey = user.ckey
-		qdel(M)
-		return
-
 	if(spawnpoint.availability)
-		if(!(user.mind in never_gladiators) && !(user.mind in ready_gladiators))
-			spawnpoint.player_mind = user.mind
-			ready_gladiators += user.mind
-			spawnpoint.availability = 0
-			icon_state = "planner_ready"
-			arena.ready()
+		if(!(user.client in never_gladiators) && !(user.client in ready_gladiators))
+			ghost_subscribe(user)
 	else
-		if(spawnpoint.player_mind == user.mind)
-			spawnpoint.player_mind = null
-			ready_gladiators -= user.mind
-			spawnpoint.availability = 1
-			icon_state = "planner"
+		if(spawnpoint.player_client == user.client)
+			ghost_unsubscribe(user)
+
+	arena.update_ready()
+
+/obj/structure/planner/spawnpoint/proc/ghost_subscribe(mob/user)
+	spawnpoint.player_client = user.client
+	ready_gladiators += user.client
+	spawnpoint.availability = 0
+	icon_state = "planner_ready"
+
+/obj/structure/planner/spawnpoint/proc/ghost_unsubscribe(mob/user)
+	spawnpoint.player_client = null
+	ready_gladiators -= user.client
+	spawnpoint.availability = 1
+	icon_state = "planner"
+
+/obj/structure/planner/spawnpoint/proc/update_overlay(var/currentcount)
+	overlays.len = 0
+	if(arena.counting)
+		var/first = round(currentcount/10)
+		var/second = currentcount%10
+		var/image/I1 = new('icons/obj/centcomm_stuff.dmi',src,"[first]",30)
+		var/image/I2 = new('icons/obj/centcomm_stuff.dmi',src,"[second]",30)
+		I1.pixel_x += 10
+		I2.pixel_x += 17
+		I1.pixel_y -= 11
+		I2.pixel_y -= 11
+		overlays += I1
+		overlays += I2

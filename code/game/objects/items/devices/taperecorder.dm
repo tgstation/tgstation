@@ -247,6 +247,4 @@
 
 /obj/item/device/taperecorder/proc/recorder_message(var/msg)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/taperecorder/proc/recorder_message() called tick#: [world.time]")
-	var/turf/T = get_turf(src)
-	for(var/mob/M in viewers(T))
-		M.show_message("<font color=Maroon><B>Tape Recorder</B>: " + msg + "</font>", 2)
+	visible_message("<font color=Maroon><B>Tape Recorder</B>: [msg]</font>")

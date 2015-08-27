@@ -19,6 +19,12 @@
 	..()
 	upgradeMotion()
 
+// HEARING
+
+/obj/machinery/camera/hearing/New()
+	..()
+	upgradeHearing()
+
 // ALL UPGRADES
 
 /obj/machinery/camera/all/New()
@@ -26,6 +32,7 @@
 	upgradeEmpProof()
 	upgradeXRay()
 	upgradeMotion()
+	upgradeHearing()
 	update_icon()
 
 // AUTONAME
@@ -66,6 +73,11 @@
 	var/O = locate(/obj/item/device/assembly/prox_sensor) in assembly.upgrades
 	return O
 
+/obj/machinery/camera/proc/isHearing()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/isMotion() called tick#: [world.time]")
+	var/O = locate(/obj/item/device/assembly/voice) in assembly.upgrades
+	return O
+
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/upgradeEmpProof()
@@ -80,3 +92,8 @@
 /obj/machinery/camera/proc/upgradeMotion()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/upgradeMotion() called tick#: [world.time]")
 	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
+
+/obj/machinery/camera/proc/upgradeHearing()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/isMotion() called tick#: [world.time]")
+	assembly.upgrades.Add(new /obj/item/device/assembly/voice(assembly))
+	update_hear()

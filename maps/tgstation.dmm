@@ -8784,7 +8784,7 @@
 "dmV" = (/obj/machinery/flasher{id_tag = "flash"; name = "Thunderdome Flash"},/turf/simulated/floor/bluegrid,/area/tdome)
 "dmW" = (/obj/machinery/camera{pixel_x = 12; pixel_y = -10; network = list("thunder"); c_tag = "Green Team"},/obj/effect/landmark{name = "tdome1"},/turf/unsimulated/floor{name = "plating"},/area/tdome/tdome1)
 "dmX" = (/obj/machinery/atmospherics/unary/vent,/turf/simulated/floor/bluegrid,/area/tdome)
-"dmY" = (/obj/machinery/camera{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
+"dmY" = (/obj/machinery/camera/arena{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
 "dmZ" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 5},/turf/simulated/floor,/area/tdome)
 "dna" = (/obj/machinery/atmospherics/pipe/manifold/general/visible{dir = 1},/turf/simulated/floor,/area/tdome)
 "dnb" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 9},/turf/simulated/floor,/area/tdome)
