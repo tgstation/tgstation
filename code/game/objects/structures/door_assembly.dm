@@ -14,9 +14,10 @@
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
 	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
+	var/material = null //icon state logic
 
 /obj/structure/door_assembly/New()
-	overlays += get_airlock_overlay("panel_c1", overlays_file)
+	update_icon()
 
 /obj/structure/door_assembly/door_assembly_0
 	name = "airlock assembly"
@@ -36,6 +37,7 @@
 
 /obj/structure/door_assembly/door_assembly_com/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_sec
 	name = "security airlock assembly"
@@ -49,6 +51,7 @@
 
 /obj/structure/door_assembly/door_assembly_sec/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_eng
 	name = "engineering airlock assembly"
@@ -62,6 +65,7 @@
 
 /obj/structure/door_assembly/door_assembly_eng/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_min
 	name = "mining airlock assembly"
@@ -75,6 +79,7 @@
 
 /obj/structure/door_assembly/door_assembly_min/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_atmo
 	name = "atmospherics airlock assembly"
@@ -88,6 +93,7 @@
 
 /obj/structure/door_assembly/door_assembly_atmo/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_research
 	name = "research airlock assembly"
@@ -101,6 +107,7 @@
 
 /obj/structure/door_assembly/door_assembly_research/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_science
 	name = "science airlock assembly"
@@ -114,6 +121,7 @@
 
 /obj/structure/door_assembly/door_assembly_science/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_med
 	name = "medical airlock assembly"
@@ -127,6 +135,7 @@
 
 /obj/structure/door_assembly/door_assembly_med/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_mai
 	name = "maintenance airlock assembly"
@@ -184,6 +193,7 @@
 	anchored = 1
 	state = 1
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_gold
 	name = "gold airlock assembly"
@@ -292,6 +302,7 @@
 
 /obj/structure/door_assembly/door_assembly_viro/glass
 	mineral = "glass"
+	material = "glass"
 
 /obj/structure/door_assembly/door_assembly_centcom
 	typetext = "centcom"
@@ -583,6 +594,7 @@
 							name = "near finished window airlock assembly"
 						G.use(1)
 						mineral = "glass"
+						material = "glass"
 						//This list contains the airlock paintjobs that have a glass version:
 						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min"))
 							src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
@@ -634,5 +646,12 @@
 				qdel(src)
 	else
 		..()
+	update_icon()
+
+/obj/structure/door_assembly/update_icon()
 	overlays.Cut()
+	if(!material)
+		overlays += get_airlock_overlay("fill_construction", icon)
+	else
+		overlays += get_airlock_overlay("[material]_construction", overlays_file)
 	overlays += get_airlock_overlay("panel_c[state+1]", overlays_file)
