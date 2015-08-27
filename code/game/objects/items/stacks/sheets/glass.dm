@@ -160,7 +160,7 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.get_amount()] sheet\s left)"
-	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
+	switch(input(title, "Would you like full tile glass, a one direction glass pane, or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
@@ -257,7 +257,7 @@
 
 /obj/item/weapon/shard
 	name = "shard"
-	desc = "A nasty looking shard of glass."
+	desc = "A nasty-looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	w_class = 1.0
@@ -297,7 +297,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves)
+		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems and shit
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)
