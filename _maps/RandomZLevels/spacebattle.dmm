@@ -327,7 +327,7 @@
 "go" = (/obj/structure/artilleryplaceholder{tag = "icon-35"; icon_state = "35"},/turf/simulated/floor/plating/airless,/area/awaymission/spacebattle/cruiser)
 "gp" = (/obj/structure/closet/crate/secure/weapon,/obj/item/ammo_casing/a357,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "gq" = (/obj/structure/closet/crate,/obj/item/weapon/lipstick/black,/obj/item/weapon/lipstick/jade,/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
-"gr" = (/obj/machinery/door_control{dir = 2; id = "spacebattlestorage"; name = "Secure Storage"; pixel_x = 24; pixel_y = 0},/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
+"gr" = (/obj/machinery/button/door{dir = 2; id = "spacebattlestorage"; name = "Secure Storage"; pixel_x = 24; pixel_y = 0},/turf/simulated/floor/plating,/area/awaymission/spacebattle/cruiser)
 "gs" = (/obj/machinery/computer/operating,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/awaymission/spacebattle/cruiser)
 "gt" = (/obj/structure/table/reinforced,/obj/item/weapon/scalpel,/obj/item/weapon/circular_saw,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/awaymission/spacebattle/cruiser)
 "gu" = (/obj/structure/table/reinforced,/obj/item/weapon/retractor,/turf/simulated/floor/plasteel{icon_state = "whitehall"; dir = 2},/area/awaymission/spacebattle/cruiser)

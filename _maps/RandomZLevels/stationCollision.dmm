@@ -164,7 +164,7 @@
 "dh" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/sign/securearea{pixel_x = 32},/obj/item/clothing/under/rank/security,/obj/item/clothing/suit/armor/riot,/obj/item/clothing/head/helmet/swat,/obj/effect/decal/remains/human,/obj/item/weapon/gun/energy/laser/practice/sc_laser,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/awaymission/research)
 "di" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
 "dj" = (/obj/structure/sign/securearea{pixel_x = 32},/obj/item/clothing/under/rank/security,/obj/item/clothing/suit/armor/riot,/obj/item/clothing/head/helmet/swat,/obj/effect/decal/remains/human,/obj/item/weapon/gun/energy/laser/practice/sc_laser,/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
-"dk" = (/obj/machinery/door_control{id = "Narsiedoor"; name = "Blast Door Control"; pixel_x = -28},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
+"dk" = (/obj/machinery/button/door{id = "Narsiedoor"; name = "Blast Door Control"; pixel_x = -28},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
 "dl" = (/obj/machinery/door/poddoor{id = "Narsiedoor"; name = "Blast Doors"},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
 "dm" = (/obj/machinery/power/emitter{anchored = 1; dir = 8; state = 2},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/awaymission/research)
 "dn" = (/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor/plasteel/airless{icon_state = "damaged2"},/area/awaymission/northblock)

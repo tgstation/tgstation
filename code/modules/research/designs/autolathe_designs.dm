@@ -383,7 +383,7 @@
 	id = "camera_assembly"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 250)
-	build_path = /obj/item/weapon/camera_assembly
+	build_path = /obj/item/wallframe/camera
 	category = list("initial", "Construction")
 
 /datum/design/newscaster_frame
@@ -391,7 +391,7 @@
 	id = "newscaster_frame"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 14000, MAT_GLASS = 8000)
-	build_path = /obj/item/newscaster_frame
+	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
 
 /datum/design/syringe

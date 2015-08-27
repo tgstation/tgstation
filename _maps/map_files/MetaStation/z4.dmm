@@ -207,7 +207,7 @@
 "dY" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/derelict/gravity_generator)
 "dZ" = (/turf/simulated/floor/plating,/area/derelict/bridge/access)
 "ea" = (/turf/simulated/floor/plasteel/airless{icon_state = "solarpanel"},/area/space)
-"eb" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/item/apc_frame,/turf/simulated/floor/plating,/area/derelict/gravity_generator)
+"eb" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/item/wallframe/apc,/turf/simulated/floor/plating,/area/derelict/gravity_generator)
 "ec" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/derelict/gravity_generator)
 "ed" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/derelict/gravity_generator)
 "ee" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/constructable_frame/machine_frame,/turf/simulated/floor/plating,/area/derelict/gravity_generator)

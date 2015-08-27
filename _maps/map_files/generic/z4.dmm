@@ -584,7 +584,7 @@
 "ll" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"},/turf/simulated/floor/plasteel/airless,/area/space)
 "lm" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/turf/simulated/floor/plasteel/airless{icon_state = "bcircuit"; tag = "icon-bcircuit"},/area/derelict/bridge/ai_upload)
 "ln" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating/airless,/area/derelict/gravity_generator)
-"lo" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/item/apc_frame,/turf/simulated/floor/plating/airless,/area/derelict/gravity_generator)
+"lo" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/item/wallframe/apc,/turf/simulated/floor/plating/airless,/area/derelict/gravity_generator)
 "lp" = (/obj/machinery/door/window,/turf/simulated/floor/plasteel,/area/derelict/bridge/ai_upload)
 "lq" = (/obj/item/weapon/ore/slag,/turf/simulated/floor/plasteel/airless{icon_state = "damaged4"},/area/derelict/gravity_generator)
 "lr" = (/obj/structure/rack,/obj/item/weapon/circuitboard/smes,/turf/simulated/floor/plasteel,/area/derelict/bridge/access)
