@@ -91,6 +91,7 @@ var/global/list/rockTurfEdgeCache
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
 		"Silver" = 12, "Plasma" = 20, "Iron" = 40,
 		"Gibtonite" = 4, "Cave" = 2, "BScrystal" = 1,
+		"Bananium" = 1
 		/*, "Adamantine" =5*/)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
@@ -136,7 +137,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 35, "Diamond" = 30,
 		"Gold" = 45, "Silver" = 50, "Plasma" = 50,
-		"BScrystal" = 20)
+		"BScrystal" = 20, "Bananium" = 5)
 
 /turf/simulated/mineral/random/high_chance/New()
 	icon_state = "rock"
@@ -148,7 +149,7 @@ var/global/list/rockTurfEdgeCache
 	mineralSpawnChanceList = list(
 		"Uranium" = 2, "Diamond" = 1, "Gold" = 4,
 		"Silver" = 6, "Plasma" = 15, "Iron" = 40,
-		"Gibtonite" = 2, "BScrystal" = 1)
+		"Gibtonite" = 2, "BScrystal" = 1, "Bananium" = 1)
 
 /turf/simulated/mineral/random/low_chance/New()
 	icon_state = "rock"
@@ -210,7 +211,8 @@ var/global/list/rockTurfEdgeCache
 	mineralAmt = 3
 	spreadChance = 0
 	spread = 0
-	hidden = 0
+	hidden = 1
+	scan_state = "rock_Clown"
 
 /turf/simulated/mineral/bscrystal
 	name = "bluespace crystal deposit"
