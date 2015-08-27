@@ -240,57 +240,57 @@ About the new airlock wires panel:
 		if(AIRLOCK_CLOSED)
 			frame_overlay = get_airlock_overlay("closed", icon)
 			if(airlock_material)
-				filling_overlay = get_airlock_overlay("[airlock_material]_closed")
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closed", icon)
 			if(p_open)
-				panel_overlay = get_airlock_overlay("panel_closed")
+				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
-				weld_overlay = get_airlock_overlay("welded")
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(lights)
 				if(locked)
-					lights_overlay = get_airlock_overlay("lights_bolts")
+					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
-					lights_overlay = get_airlock_overlay("lights_emergency")
+					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 		if(AIRLOCK_DENY)
-			overlays += get_airlock_overlay("lights_denied")
+			overlays += get_airlock_overlay("lights_denied", overlays_file)
 			sleep(4)
 			update_icon(AIRLOCK_CLOSED)
 			return
 		if(AIRLOCK_EMAG)
-			overlays += get_airlock_overlay("sparks")
+			overlays += get_airlock_overlay("sparks", overlays_file)
 			return
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
 			if(airlock_material)
-				filling_overlay = get_airlock_overlay("[airlock_material]_closing")
+				filling_overlay = get_airlock_overlay("[airlock_material]_closing", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_closing", icon)
 			if(lights)
-				lights_overlay = get_airlock_overlay("lights_closing")
+				lights_overlay = get_airlock_overlay("lights_closing", overlays_file)
 			if(p_open)
-				panel_overlay = get_airlock_overlay("panel_closing")
+				panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
 			if(airlock_material)
-				filling_overlay = get_airlock_overlay("[airlock_material]_open")
+				filling_overlay = get_airlock_overlay("[airlock_material]_open", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_open", icon)
 			if(p_open)
-				panel_overlay = get_airlock_overlay("panel_open")
+				panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
 			if(airlock_material)
-				filling_overlay = get_airlock_overlay("[airlock_material]_opening")
+				filling_overlay = get_airlock_overlay("[airlock_material]_opening", overlays_file)
 			else
 				filling_overlay = get_airlock_overlay("fill_opening", icon)
 			if(lights)
-				lights_overlay = get_airlock_overlay("lights_opening")
+				lights_overlay = get_airlock_overlay("lights_opening", overlays_file)
 			if(p_open)
-				panel_overlay = get_airlock_overlay("panel_opening")
+				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
 	overlays.Cut()
 	overlays += frame_overlay
@@ -300,12 +300,11 @@ About the new airlock wires panel:
 	overlays += weld_overlay
 	overlays += sparks_overlay
 
-/obj/machinery/door/airlock/proc/get_airlock_overlay(iconstate, icon_file=overlays_file)
-	var/iconkey = "[iconstate][icon_file]"
+/proc/get_airlock_overlay(icon_state, icon_file)
+	var/iconkey = "[icon_state][icon_file]"
 	if(airlock_overlays[iconkey])
 		return airlock_overlays[iconkey]
-	world << "CREATING: [iconkey]"
-	airlock_overlays[iconkey] = image(icon_file, iconstate)
+	airlock_overlays[iconkey] = image(icon_file, icon_state)
 	return airlock_overlays[iconkey]
 
 /obj/machinery/door/airlock/do_animate(animation)

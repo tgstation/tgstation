@@ -133,7 +133,6 @@
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
-	desc = "And they said I was crazy."
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	var/mineral = "uranium"
 	doortype = /obj/structure/door_assembly/door_assembly_uranium
