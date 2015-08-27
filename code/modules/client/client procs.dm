@@ -340,6 +340,7 @@
 		crewmonitor.sendResources(src)
 	if(adv_camera && minimapinit)
 		adv_camera.sendResources(src)
+	vote.interface.sendAssets(src)
 
 /proc/get_role_desire_str(var/rolepref)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_role_desire_str() called tick#: [world.time]")
