@@ -227,7 +227,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	stat = DEAD
 
 	visible_message("<span class='danger'>[src] curls up into a ball!</span>")
-
+	item_state = "facehugger_inactive"
 	return
 
 /proc/CanHug(mob/living/M)

@@ -515,7 +515,7 @@ obj/structure/cable/proc/avail()
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
-	if(user)
+	if(user && affecting.status == ORGAN_ROBOTIC)
 		if(H != user)
 			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [H].</span>", "<span class='green'>You fix some of the burnt wires on [H].</span>")
 		else
@@ -528,8 +528,6 @@ obj/structure/cable/proc/avail()
 			if(!do_mob(user, H, self_delay))
 				return
 			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [t_himself].</span>", "<span class='green'>You fixed some of the burnt wires on yourself.</span>")
-
-	if(affecting.status == ORGAN_ROBOTIC)
 		item_heal_robotic(H, user, 0, 30)
 		src.use(1)
 		return
