@@ -84,6 +84,7 @@
 /obj/item/clothing/head/bio_hood/beekeeping
 	name = "beekeeping hood"
 	icon_state = "bio_beekeeping"
+	flags_inv = null
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
 
