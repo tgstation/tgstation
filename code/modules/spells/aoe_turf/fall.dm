@@ -19,6 +19,7 @@
 	var/list/oureffects = list()
 	var/list/affected = list()
 	var/sleepfor
+	var/the_world_chance = 30
 
 
 /spell/aoe_turf/fall/New()
@@ -53,7 +54,7 @@
 		return
 	var/list/targets = choose_targets(user)
 	if(targets && targets.len)
-		if(prob(15)) invocation = "ZA WARUDO"
+		if(prob(the_world_chance)) invocation = "ZA WARUDO"
 		invocation(user, targets)
 		take_charge(user, skipcharge)
 
@@ -161,6 +162,7 @@
 		returnToPool(S)
 		oureffects -= S
 	for(var/atom/everything in affected)
+		if(!istype(everything)) continue
 		var/icon/I = everything.tempoverlay
 		everything.overlays.Remove(I)
 		everything.ignoreinvert = initial(everything.ignoreinvert)
