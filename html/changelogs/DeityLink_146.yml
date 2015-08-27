@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Hopefully fixed Bomberman Arenas not properly putting players inside the spawned Bombermen
+  - rscadd: Bomberman Arenas with more than 2 players now starts a 60 seconds countdown as soon as 2 players have registered, Which for example allows 2-9 players to fight on the 10-players map without requiring an admin to force-start the round.
+  - rscadd: Thunderdome/Arena cameras are now fucking indestructible.
+  - rscadd: You can now add voice analyzers to cameras, which will allow people near security camera computers connected to them to hear what people in view of those cameras are saying. Entertainment monitors broadcast to everyone that can see them.
