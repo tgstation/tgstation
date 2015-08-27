@@ -24,7 +24,7 @@
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
-	icon = 'icons/obj/doors/Doormining.dmi'
+	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_min
 
 /obj/machinery/door/airlock/atmos

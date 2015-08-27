@@ -65,7 +65,7 @@ var/list/airlock_overlays = list()
 	wires = new(src)
 	if(src.closeOtherId != null)
 		spawn (5)
-			for (var/obj/machinery/door/airlock/A in world)
+			for (var/obj/machinery/door/airlock/A in airlocks)
 				if(A.closeOtherId == src.closeOtherId && A != src)
 					src.closeOther = A
 					break
@@ -224,7 +224,7 @@ About the new airlock wires panel:
 			icon_state = ""
 		if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
 			icon_state = ""
-		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING)
+		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
 	set_airlock_overlays(state)
 
@@ -754,6 +754,9 @@ About the new airlock wires panel:
 	if(istype(C, /obj/item/device/detective_scanner))
 		return
 
+	if(istype(C, /obj/item/weapon/card/emag))
+		return
+
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
@@ -1035,75 +1038,63 @@ About the new airlock wires panel:
 	if(!W.can_use(user))
 		return
 
-	if(glass == 1)
-		//These airlocks have a glass version.
-		var optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
-		var paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-		if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
-		switch(paintjob)
-			if("Default")
-				icon = 'icons/obj/doors/Doorglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_glass
-			if("Engineering")
-				icon = 'icons/obj/doors/Doorengglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_eng/glass
-			if("Atmospherics")
-				icon = 'icons/obj/doors/Dooratmoglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_atmo/glass
-			if("Security")
-				icon = 'icons/obj/doors/Doorsecglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_sec/glass
-			if("Command")
-				icon = 'icons/obj/doors/Doorcomglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_com/glass
-			if("Medical")
-				icon = 'icons/obj/doors/Doormedglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_med/glass
-			if("Research")
-				icon = 'icons/obj/doors/Doorresearchglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_research/glass
-			if("Mining")
-				icon = 'icons/obj/doors/Doorminingglass.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_min/glass
+	var/list/optionlist
+	if(airlock_material == "glass")
+		optionlist = list("Public", "Public2", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance")
 	else
-		//These airlocks have a regular version.
-		var optionlist = list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
-		var paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-		if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
-		switch(paintjob)
-			if("Default")
-				icon = 'icons/obj/doors/Doorint.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_0
-			if("Engineering")
-				icon = 'icons/obj/doors/Dooreng.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_eng
-			if("Atmospherics")
-				icon = 'icons/obj/doors/Dooratmo.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_atmo
-			if("Security")
-				icon = 'icons/obj/doors/Doorsec.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_sec
-			if("Command")
-				icon = 'icons/obj/doors/Doorcom.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_com
-			if("Medical")
-				icon = 'icons/obj/doors/Doormed.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_med
-			if("Research")
-				icon = 'icons/obj/doors/Doorresearch.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_research
-			if("Mining")
-				icon = 'icons/obj/doors/Doormining.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_min
-			if("Maintenance")
-				icon = 'icons/obj/doors/Doormaint.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_mai
-			if("External")
-				icon = 'icons/obj/doors/Doorext.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_ext
-			if("High Security")
-				icon = 'icons/obj/doors/hightechsecurity.dmi'
-				doortype = /obj/structure/door_assembly/door_assembly_highsecurity
+		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+
+	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))	return
+	switch(paintjob)
+		if("Public")
+			icon = 'icons/obj/doors/airlocks/station/public.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_0
+		if("Public2")
+			icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_glass
+		if("Engineering")
+			icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_eng
+		if("Atmospherics")
+			icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_atmo
+		if("Security")
+			icon = 'icons/obj/doors/airlocks/station/security.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_sec
+		if("Command")
+			icon = 'icons/obj/doors/airlocks/station/command.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_com
+		if("Medical")
+			icon = 'icons/obj/doors/airlocks/station/medical.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_med
+		if("Research")
+			icon = 'icons/obj/doors/airlocks/station/research.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_research
+		if("Mining")
+			icon = 'icons/obj/doors/airlocks/station/mining.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_min
+		if("Maintenance")
+			icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_mai
+		if("External")
+			icon = 'icons/obj/doors/airlocks/external/external.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_ext
+		if("High Security")
+			icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
+			doortype = /obj/structure/door_assembly/door_assembly_highsecurity
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)
