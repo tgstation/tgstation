@@ -340,6 +340,8 @@
 		crewmonitor.sendResources(src)
 	if(adv_camera && minimapinit)
 		adv_camera.sendResources(src)
+	while(!vote || !vote.interface)
+		sleep(1)
 	vote.interface.sendAssets(src)
 
 /proc/get_role_desire_str(var/rolepref)
