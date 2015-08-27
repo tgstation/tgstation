@@ -22,7 +22,7 @@ var/global/list/mob/virtualhearer/virtualhearers = list()
 	virtualhearers += src
 	loc = get_turf(attachedto)
 	attached = attachedto
-	if(istype(attached,/obj/item/device/radio/intercom))
+	if(istype(attached,/obj/item/device/radio/intercom) || istype(attached,/obj/machinery/camera))
 		virtualhearers -= src
 
 /mob/virtualhearer/Destroy()
