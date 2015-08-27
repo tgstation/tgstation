@@ -7597,7 +7597,7 @@
 "cQe" = (/obj/machinery/flasher{id = "flash"; name = "Thunderdome Flash"},/turf/simulated/floor/bluegrid,/area/tdome)
 "cQf" = (/obj/machinery/camera{c_tag = "Green Team"; network = "Thunderdome"; pixel_x = 12; pixel_y = -10},/obj/effect/landmark{name = "tdome1"},/turf/unsimulated/floor{name = "plating"},/area/tdome/tdome2)
 "cQg" = (/obj/machinery/atmospherics/pipe/vent,/turf/simulated/floor/bluegrid,/area/tdome)
-"cQh" = (/obj/machinery/camera{c_tag = "Arena"; network = "Thunderdome"; pixel_x = 10},/turf/simulated/floor/bluegrid,/area/tdome)
+"cQh" = (/obj/machinery/camera/arena{c_tag = "Arena"; network = "Thunderdome"; pixel_x = 10},/turf/simulated/floor/bluegrid,/area/tdome)
 "cQi" = (/obj/machinery/atmospherics/pipe/simple{dir = 5; icon_state = "intact"; level = 2},/turf/simulated/floor,/area/tdome)
 "cQj" = (/obj/machinery/atmospherics/pipe/manifold{dir = 1; icon_state = "manifold"; level = 2},/turf/simulated/floor,/area/tdome)
 "cQk" = (/obj/machinery/atmospherics/pipe/simple{dir = 9; icon_state = "intact"; level = 2},/turf/simulated/floor,/area/tdome)

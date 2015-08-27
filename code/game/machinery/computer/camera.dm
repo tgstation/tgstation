@@ -1,5 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+var/global/list/tv_monitors = list()
 
 /obj/machinery/computer/security
 	name = "Security Cameras"
@@ -12,6 +13,14 @@
 	var/mapping = 0//For the overview file, interesting bit of code.
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/security/New()
+	..()
+	tv_monitors += src
+
+/obj/machinery/computer/security/Destroy()
+	tv_monitors -= src
+	..()
 
 /obj/machinery/computer/security/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
@@ -86,7 +95,7 @@
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
-	desc = "Used for watching an empty arena."
+	desc = "Used for watching arena fights and variety shows."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
 	network = list("thunder")
@@ -94,6 +103,10 @@
 	circuit = null
 
 	light_color = null
+
+/obj/machinery/computer/security/telescreen/examine(mob/user)
+	..()
+	user << "Looks like the current channel is \"<span class='info'>[current.c_tag]</span>\""
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -103,7 +116,7 @@
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
-	desc = "Damn, they better have /tg/thechannel on these things."
+	desc = "Damn, they better have chicken-channel on these things."
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
 	network = list("thunder")
