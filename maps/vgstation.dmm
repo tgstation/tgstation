@@ -7254,7 +7254,7 @@
 "cJz" = (/obj/structure/table/reinforced,/obj/item/weapon/clipboard,/obj/item/weapon/stamp,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/centcom/evac)
 "cJA" = (/turf/space,/area/shuttle/escape_pod5/centcom)
 "cJB" = (/obj/machinery/atmospherics/pipe/vent,/turf/simulated/floor/bluegrid,/area/tdome)
-"cJC" = (/obj/machinery/camera{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
+"cJC" = (/obj/machinery/camera/arena{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
 "cJD" = (/obj/machinery/computer/secure_data,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/centcom/evac)
 "cJE" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/centcom/evac)
 "cJF" = (/turf/unsimulated/wall,/area/syndicate_mothership)

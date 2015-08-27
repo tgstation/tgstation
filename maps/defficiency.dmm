@@ -8218,7 +8218,7 @@
 "dcb" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/syndicate_station/start)
 "dcc" = (/obj/machinery/door/airlock/external,/obj/structure/docking_port/destination/research/outpost{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/research_outpost/entry)
 "dcd" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/space,/area/syndicate_station/start)
-"dce" = (/obj/machinery/camera{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
+"dce" = (/obj/machinery/camera/arena{pixel_x = 10; network = list("thunder"); c_tag = "Arena"},/turf/simulated/floor/bluegrid,/area/tdome)
 "dcf" = (/obj/machinery/door/airlock/external{name = "Mining Shuttle Airlock"; req_access_txt = "48"},/obj/structure/docking_port/destination/mining/outpost{dir = 8},/turf/simulated/floor/plating,/area/mine/living_quarters)
 "dcg" = (/obj/structure/docking_port/destination/syndicate/start,/turf/unsimulated/floor{icon = 'icons/turf/snow.dmi'; icon_state = "snow"},/area/syndicate_mothership)
 "dch" = (/obj/machinery/door/poddoor{density = 0; opacity = 0; icon_state = "pdoor0"; id_tag = "thunderdomegen"; name = "General Supply"},/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)
