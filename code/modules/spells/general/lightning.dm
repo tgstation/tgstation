@@ -185,8 +185,7 @@
 				//world << "new target is [formatJumpTo(target)](<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)"
 	if(istype(target))
 		target.emp_act(2)
-		target.apply_damage(basedamage, BURN, "chest", "blocked" = 0)
-		target.Weaken(1)
+		target.apply_damage((issilicon(target) ? basedamage*0.66 : basedamage), BURN, "chest", "blocked" = 0)
 	else if(target)
 		var/obj/item/projectile/beam/B = getFromPool(/obj/item/projectile/beam/lightning/spell)
 		B.damage = basedamage

@@ -33,7 +33,7 @@ var/list/beam_master = list()
 	var/tang = 0
 	layer = 13
 	var/turf/last = null
-	kill_count = 6
+	kill_count = 12
 
 /obj/item/projectile/beam/lightning/proc/adjustAngle(angle)
 	angle = round(angle) + 45
@@ -70,7 +70,8 @@ var/list/beam_master = list()
 	var/count = 0
 	var/turf/T = get_turf(src)
 	var/list/ouroverlays = list()
-	for(N,N<length,N+=32)
+
+	spawn() for(N,N<length,N+=32)
 		if(count >= kill_count)
 			break
 		count++
@@ -133,8 +134,10 @@ var/list/beam_master = list()
 		X.pixel_x=Pixel_x
 		X.pixel_y=Pixel_y
 		var/turf/TT = get_turf(X.loc)
+		var/wasTS = 0
 		while((TT.timestopped || timestopped || X.timestopped) && count)
-			sleep(3)
+			wasTS = 1
+			sleep(2)
 		if(TT == firer.loc)
 			continue
 		if(TT.density)
@@ -155,16 +158,26 @@ var/list/beam_master = list()
 			if(X)
 				del(X)
 			break
-	spawn(10) for(var/atom/thing in ouroverlays)
-		ouroverlays -= thing
-		returnToPool(thing)
+	spawn(10)
+		for(var/atom/thing in ouroverlays)
+			if(!thing.timestopped && !thing.loc.timestopped)
+				ouroverlays -= thing
+				returnToPool(thing)
 	spawn
+		var/tS = 0
 		while(loc) //Move until we hit something
-			//world << "[src] start of while loop curr [formatJumpTo(loc)] last [formatJumpTo(last)]"
+			if(tS)
+				tS = 0
+				timestopped = loc.timestopped
 			while((loc.timestopped || timestopped) && !first)
+				tS = 1
 				sleep(3)
+			if(tS) world << "[src] broke out of timestop at [formatJumpTo(loc)] last was [formatJumpTo(last)] current is [current][formatJumpTo(current)]"
 			if(first)
 				icon = midicon
+				if(timestopped || loc.timestopped)
+					tS = 1
+					timestopped = 0
 			if((!( current ) || loc == current)) //If we pass our target
 				broken = 1
 				icon = endicon
@@ -211,6 +224,11 @@ var/list/beam_master = list()
 				if(src.loc != current)
 					tang = adjustAngle(get_angle(src.loc,current))
 				icon_state = "[tang]"
+		if(ouroverlays.len)
+			sleep(10)
+			for(var/atom/thing in ouroverlays)
+				ouroverlays -= thing
+				returnToPool(thing)
 
 		//del(src)
 		returnToPool(src)
@@ -229,11 +247,13 @@ var/list/beam_master = list()
 
 /obj/item/projectile/beam/lightning/spell
 	var/spell/lightning/our_spell
-	Bump(atom/A as mob|obj|turf|area)
-		. = ..()
-		if(.)
-			our_spell.lastbumped = A
-		return .
+	weaken = 0
+	stun = 0
+/obj/item/projectile/beam/lightning/spell/Bump(atom/A as mob|obj|turf|area)
+	. = ..()
+	if(.)
+		our_spell.lastbumped = A
+	return .
 
 /obj/item/projectile/beam
 	name = "laser"
@@ -314,7 +334,11 @@ var/list/beam_master = list()
 
 /obj/item/projectile/beam/bresenham_step(var/distA, var/distB, var/dA, var/dB, var/lastposition, var/target_dir, var/reference)
 	var/first = 1
+	var/tS = 0
 	while(src && src.loc)// only stop when we've hit something, or hit the end of the map
+		if(first && timestopped)
+			tS = 1
+			timestopped = 0
 		if(error < 0)
 			var/atom/step = get_step(src, dB)
 			if(!step)
@@ -334,7 +358,7 @@ var/list/beam_master = list()
 
 		if(isnull(loc))
 			return reference
-		if(lastposition == loc)
+		if(lastposition == loc && (!tS && !timestopped && !loc.timestopped))
 			kill_count = 0
 		lastposition = loc
 		if(kill_count < 1)
@@ -393,6 +417,9 @@ var/list/beam_master = list()
 					var/list/turfs = list()
 					turfs["[icon_state][target_dir]"] = list(loc)
 					beam_master[reference] = turfs
+		if(tS)
+			timestopped = loc.timestopped
+			tS = 0
 		while((loc.timestopped || timestopped) && !first)
 			sleep(3)
 		first = 0
@@ -407,13 +434,18 @@ var/list/beam_master = list()
 	spawn(0)
 		var/target_dir = dir ? dir : src.dir// TODO: remove dir arg. Or don't because the way this was set up without it broke spacepods.
 		var/first = 1
+		var/tS = 0
 		while(loc) // Move until we hit something.
 			if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 				returnToPool(src)
 				break
-
+			if(first && timestopped)
+				tS = 1
+				timestopped = 0
 			step(src, target_dir) // Move.
-
+			if(tS)
+				tS = 0
+				timestopped = loc.timestopped
 			if(bumped)
 				break
 
@@ -453,15 +485,27 @@ var/list/beam_master = list()
 	var/TS
 	var/atom/lastloc
 	var/starttime = world.time
-	while(world.time - starttime <= 3 || TS)
+	var/cleanedup = 0
+	while(world.time - starttime < 3 || TS)
 		if(loc)
 			lastloc = loc
 		TS = lastloc.timestopped
 		if(TS)
-			sleep(3)
+			if(world.time - starttime > 3)
+				if(!cleanedup)
+					var/list/turf_master = beam_master[reference]
+
+					for(var/laser_state in turf_master)
+						var/list/turfs = turf_master[laser_state]
+						for(var/turf/T in turfs)
+							if(!T.timestopped)
+								T.overlays.Remove(beam_master[laser_state])
+					cleanedup = 1
+			sleep(2)
+
 		else sleep(1)
 
-
+	if(cleanedup) sleep(2)
 	var/list/turf_master = beam_master[reference]
 
 	for(var/laser_state in turf_master)

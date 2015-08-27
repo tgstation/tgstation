@@ -431,11 +431,18 @@ var/list/impact_master = list()
 
 /obj/item/projectile/process()
 	var/first = 1
+	var/tS = 0
 	spawn while(loc)
+		if(first && timestopped)
+			tS = 1
+			timestopped = 0
 		while((loc.timestopped || timestopped) && !first)
 			sleep(3)
 		first = 0
 		src.process_step()
+		if(tS)
+			timestopped = loc.timestopped
+			tS = 0
 	return
 
 /obj/item/projectile/proc/dumbfire(var/dir) // for spacepods, go snowflake go
@@ -450,7 +457,11 @@ var/list/impact_master = list()
 		returnToPool(src)
 	kill_count--
 	var/first = 1
+	var/tS = 0
 	spawn while(loc)
+		if(first && timestopped)
+			tS = 1
+			timestopped = 0
 		var/turf/T = get_step(src, dir)
 		step_towards(src, T)
 		if(!bumped && !isturf(original))
@@ -461,6 +472,9 @@ var/list/impact_master = list()
 		while((loc.timestopped || timestopped) && !first)
 			sleep(3)
 		first = 0
+		if(tS)
+			timestopped = loc.timestopped
+			tS = 0
 		sleep(1)
 	return
 
