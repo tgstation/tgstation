@@ -82,6 +82,9 @@
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+/obj/item/weapon/paper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] scratches a grid on their wrist with the paper! It looks like \he's trying to commit sudoku..</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/paper/attack_self(mob/user)
 	user.examinate(src)
