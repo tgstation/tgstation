@@ -117,7 +117,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	proj_lifespan = 10
-	max_targets = 6
+	max_targets = 4
 
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
