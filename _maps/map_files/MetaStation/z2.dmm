@@ -5418,7 +5418,7 @@
 /area/wizard_station)
 "ov" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Break Room"
 	},
 /turf/simulated/floor/plasteel/cult,
@@ -6011,7 +6011,7 @@
 /area/wizard_station)
 "qb" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Corridor A"
 	},
 /turf/simulated/floor/plasteel/cult,
@@ -6132,14 +6132,14 @@
 /area/centcom/holding)
 "qu" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Personal Quarters"
 	},
 /turf/simulated/floor/plasteel/cult,
 /area/wizard_station)
 "qv" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Engine Room B"
 	},
 /turf/space,
