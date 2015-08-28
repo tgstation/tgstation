@@ -2,54 +2,54 @@
 //Ok so it's technically a double linked list, bite me.
 
 /datum/linked_list
-	var/datum/linked_element/head
-	var/datum/linked_element/tail
-	var/element_amt = 0
+	var/datum/linked_node/head
+	var/datum/linked_node/tail
+	var/node_amt = 0
 
 
-/datum/linked_element
+/datum/linked_node
 	var/value = null
 	var/datum/linked_list/linked_list = null
-	var/datum/linked_element/next_element_pointer = null
-	var/datum/linked_element/previous_element_pointer = null
+	var/datum/linked_node/next_node = null
+	var/datum/linked_node/previous_node = null
 
 
-/datum/linked_list/proc/is_empty()
-	. = element_amt ? 0 : 1
+/datum/linked_list/proc/IsEmpty()
+	. = (node_amt <= 0)
 
 
-//Add a linked_element (or value, creating a linked_element) at position
-//the added element BECOMES the position-th element,
-//eg: add("Test",5), the 5th element is now "Test", the previous 5th moves up to become the 6th
-/datum/linked_list/proc/add(element, position)
-	var/datum/linked_element/adding
-	if(istype(element, /datum/linked_element))
-		adding = element
+//Add a linked_node (or value, creating a linked_node) at position
+//the added node BECOMES the position-th element,
+//eg: add("Test",5), the 5th node is now "Test", the previous 5th moves up to become the 6th
+/datum/linked_list/proc/Add(node, position)
+	var/datum/linked_node/adding
+	if(istype(node, /datum/linked_node))
+		adding = node
 	else
 		adding = new()
-		adding.value = element
+		adding.value = node
 
 	if(!adding.linked_list || (adding.linked_list && (adding.linked_list != src)))
-		element_amt++
+		node_amt++
 
 	adding.linked_list = src
 
-	if(position && position < element_amt)
+	if(position && position < node_amt)
 		//Replacing head
 		if(position == 1)
 			if(head)
-				head.previous_element_pointer = adding
-				adding.next_element_pointer = head
+				head.previous_node = adding
+				adding.next_node = head
 			head = adding
 
-		//Replacing any middle element
+		//Replacing any middle node
 		else
 			var/location = 0
-			var/datum/linked_element/at
-			while((location != position) && (location <= element_amt))
+			var/datum/linked_node/at
+			while((location != position) && (location <= node_amt))
 				if(at)
-					if(at.next_element_pointer)
-						at = at.next_element_pointer
+					if(at.next_node)
+						at = at.next_node
 					else
 						break
 				else
@@ -57,29 +57,29 @@
 				location++
 
 			//Push at up and assume it's place as the position-th element
-			if(at && at.previous_element_pointer)
-				at.previous_element_pointer.next_element_pointer = adding
-				adding.previous_element_pointer = at.previous_element_pointer
-				at.previous_element_pointer = adding
-				adding.next_element_pointer = at
+			if(at && at.previous_node)
+				at.previous_node.next_node = adding
+				adding.previous_node = at.previous_node
+				at.previous_node = adding
+				adding.next_node = at
 		return
 
 	//Replacing tail
 	if(tail)
-		tail.next_element_pointer = adding
-		adding.previous_element_pointer = tail
-		if(!tail.previous_element_pointer)
+		tail.next_node = adding
+		adding.previous_node = tail
+		if(!tail.previous_node)
 			head = tail
 	tail = adding
 
 
 
-//Remove a linked_element or the linked_element of a value
+//Remove a linked_node or the linked_node of a value
 //If you specify a value the FIRST ONE is removed
-/datum/linked_list/proc/remove(element)
-	var/datum/linked_element/removing
-	if(istype(element,/datum/linked_element))
-		removing = element
+/datum/linked_list/proc/Remove(node)
+	var/datum/linked_node/removing
+	if(istype(node,/datum/linked_node))
+		removing = node
 	else
 		//optimise removing head and tail, no point looping for them, especially the tail
 		if(removing == head)
@@ -89,97 +89,103 @@
 		else
 			var/location = 1
 			var/current_value = null
-			var/datum/linked_element/at = null
-			while((current_value != element) && (location <= element_amt))
+			var/datum/linked_node/at = null
+			while((current_value != node) && (location <= node_amt))
 				if(at)
-					if(at.next_element_pointer)
-						at = at.next_element_pointer
+					if(at.next_node)
+						at = at.next_node
 				else
 					at = head
 				location++
 				if(at)
 					current_value = at.value
-					if(current_value == element)
+					if(current_value == node)
 						removing = at
 						break
 
 	//Adjust pointers of where removing -was- in the chain.
 	if(removing)
-		if(removing.previous_element_pointer)
+		if(removing.previous_node)
 			if(removing == tail)
-				tail = removing.previous_element_pointer
-			if(removing.next_element_pointer)
+				tail = removing.previous_node
+			if(removing.next_node)
 				if(removing == head)
-					head = removing.next_element_pointer
-				removing.next_element_pointer.previous_element_pointer = removing.previous_element_pointer
-				removing.previous_element_pointer.next_element_pointer = removing.next_element_pointer
+					head = removing.next_node
+				removing.next_node.previous_node = removing.previous_node
+				removing.previous_node.next_node = removing.next_node
 			else
-				removing.previous_element_pointer.next_element_pointer = null
+				removing.previous_node.next_node = null
 		else
-			if(removing.next_element_pointer)
+			if(removing.next_node)
 				if(removing == head)
-					head = removing.next_element_pointer
-				removing.next_element_pointer.previous_element_pointer = null
+					head = removing.next_node
+				removing.next_node.previous_node = null
 
-		//if this is still true at this point, there's no more elements to replace them with
+		//if this is still true at this point, there's no more nodes to replace them with
 		if(removing == head)
 			head = null
 		if(removing == tail)
 			tail = null
 
-		removing.next_element_pointer = null
-		removing.previous_element_pointer = null
+		removing.next_node = null
+		removing.previous_node = null
 		if(removing.linked_list == src)
-			element_amt--
+			node_amt--
 		removing.linked_list = null
 
 		return removing
 	return 0
 
 
-//Removes and deletes a element
-/datum/linked_list/proc/removeDelete(element)
-	var/datum/linked_element/dead = remove(element)
+//Removes and deletes a node or value
+/datum/linked_list/proc/RemoveDelete(node)
+	var/datum/linked_node/dead = Remove(node)
 	if(dead)
 		qdel(dead)
 		return 1
 	return 0
 
 
-//Empty the linked_list, deleting all elements
-/datum/linked_list/proc/empty()
-	var/datum/linked_element/e = head
-	while(e)
-		var/next = e.next_element_pointer
-		remove(e)
-		qdel(e)
-		e = next
-	element_amt = 0
+//Empty the linked_list, deleting all nodes
+/datum/linked_list/proc/Empty()
+	var/datum/linked_node/n = head
+	while(n)
+		var/next = n.next_node
+		Remove(n)
+		qdel(n)
+		n = next
+	node_amt = 0
 
 
 //Some debugging tools
-/datum/linked_list/proc/check_node_links()
-	var/datum/linked_element/e = head
-	while(e)
-		. = "|[e.value]|"
-		if(e.previous_element_pointer)
-			. = "[e.previous_element_pointer.value]<-" + .
-		if(e.next_element_pointer)
-			. += "->[e.next_element_pointer.value]"
-		e = e.next_element_pointer
+/datum/linked_list/proc/CheckNodeLinks()
+	var/datum/linked_node/n = head
+	while(n)
+		. = "|[n.value]|"
+		if(n.previous_node)
+			. = "[n.previous_node.value]<-" + .
+		if(n.next_node)
+			. += "->[n.next_node.value]"
+		n = n.next_node
 		. += "<BR>"
 
-/datum/linked_list/proc/draw_node_links()
+
+/datum/linked_list/proc/DrawNodeLinks()
 	. = "|<-"
-	var/datum/linked_element/e = head
-	while(e)
-		if(e.previous_element_pointer)
+	var/datum/linked_node/n = head
+	while(n)
+		if(n.previous_node)
 			. += "<-"
-		. += "[e.value]"
-		if(e.next_element_pointer)
+		. += "[n.value]"
+		if(n.next_node)
 			. += "->"
-		e = e.next_element_pointer
+		n = n.next_node
 	. += "->|"
 
 
-
+/datum/linked_list/proc/ToList()
+	. = list()
+	var/datum/linked_node/n = head
+	while(n)
+		. += n
+		n = n.next_node

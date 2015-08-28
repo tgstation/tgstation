@@ -1476,7 +1476,6 @@
 #include "code\modules\scripting\Errors.dm"
 #include "code\modules\scripting\IDE.dm"
 #include "code\modules\scripting\Options.dm"
-#include "code\modules\scripting\stack.dm"
 #include "code\modules\scripting\AST\AST Nodes.dm"
 #include "code\modules\scripting\AST\Blocks.dm"
 #include "code\modules\scripting\AST\Statements.dm"
