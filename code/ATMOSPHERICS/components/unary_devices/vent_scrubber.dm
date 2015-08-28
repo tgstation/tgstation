@@ -44,10 +44,6 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
-		src.atmosinit()
-		src.initialize()
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	if(radio_controller)
@@ -138,12 +134,9 @@
 	radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
 	if (frequency)
 		set_frequency(frequency)
+	broadcast_status()
 	check_turfs()
 	..()
-/obj/machinery/atmospherics/components/unary/vent_scrubber/initialize()
-	..()
-	broadcast_status()
-
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	..()

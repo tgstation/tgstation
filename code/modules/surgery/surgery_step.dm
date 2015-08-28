@@ -4,8 +4,7 @@
 	var/accept_hand = 0				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10					//how long does the step take?
-	var/new_organ = null 			//Used for multilocation operations
-	var/list/allowed_organs = list()//Allowed organs, see Handle_Multi_Loc below - RR
+	var/name
 
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -39,12 +38,11 @@
 /datum/surgery_step/proc/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	surgery.step_in_progress = 1
 
-	if(surgery.has_multi_loc) //if it is multi-location, handle that
-		Handle_Multi_Loc(user, target)
+	if(preop(user, target, target_zone, tool, surgery) == -1)
+		surgery.step_in_progress = 0
+		return
 
-	preop(user, target, target_zone, tool)
 	if(do_after(user, time, target = target))
-
 		var/advance = 0
 		var/prob_chance = 100
 
@@ -73,61 +71,11 @@
 
 /datum/surgery_step/proc/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] succeeds!", "<span class='notice'>You succeed.</span>")
-	feedback_add_details("surgery_step_success","[src.type]")
-	return 1
-
-/datum/surgery_step/saw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(ishuman(target) || ismonkey(target) || isalienadult(target))
-		var/mob/living/carbon/M = target
-		M.apply_damage(75,"brute","[target_zone]")
-		user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
-		feedback_add_details("surgery_step_success","[src.type]")
 	return 1
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='warning'>[user] screws up!</span>", "<span class='warning'>You screw up!</span>")
-	feedback_add_details("surgery_step_failed","[src.type]")
 	return 0
-
-/datum/surgery_step/close/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(locate(/datum/surgery_step/saw) in surgery.steps)
-		target.heal_organ_damage(45,0)
-	return ..()
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return 1
-
-/datum/surgery_step/proc/Handle_Multi_Loc(mob/user, mob/living/carbon/target) //this is here so MultiLoc Surgeries don't need to rewrite it each time - RR
-
-
-	if(user.zone_sel.selecting in allowed_organs)
-
-		switch(user.zone_sel.selecting) //Switch, for Aran - RR
-			if("r_arm")
-				new_organ = target.getlimb(/obj/item/organ/limb/r_arm)
-			if("l_arm")
-				new_organ = target.getlimb(/obj/item/organ/limb/l_arm)
-			if("r_leg")
-				new_organ = target.getlimb(/obj/item/organ/limb/r_leg)
-			if("l_leg")
-				new_organ = target.getlimb(/obj/item/organ/limb/l_leg)
-			if("chest")
-				new_organ = target.getlimb(/obj/item/organ/limb/chest)
-			if("groin")
-				new_organ = target.getlimb(/obj/item/organ/limb/chest)
-			if("head")
-				new_organ = target.getlimb(/obj/item/organ/limb/head)
-			if("eyes")
-				new_organ = target.getlimb(/obj/item/organ/limb/head)
-			if("mouth")
-				new_organ = target.getlimb(/obj/item/organ/limb/head)
-			else
-				user << "<span class='warning'>You cannot perform this operation on this body part!</span>" //Explain to the surgeon what went wrong - RR
-				return 0
-
-		return new_organ
-
-	else
-		return 0
-
-

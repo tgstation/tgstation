@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/emote(act)
+/mob/living/carbon/alien/humanoid/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -6,56 +6,56 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
 	var/muzzled = is_muzzled()
-	var/m_type = 1
-	var/message
 
 	switch(act) //Alphabetical please
-		if ("deathgasp")
+		if ("deathgasp","deathgasps")
 			message = "<span class='name'>[src]</span> lets out a waning guttural screech, green blood bubbling from its maw..."
 			m_type = 2
 
-		if ("gnarl")
+		if ("gnarl","gnarls")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> gnarls and shows its teeth.."
 				m_type = 2
 
-		if ("hiss")
+		if ("hiss","hisses")
 			if(!muzzled)
 				message = "<span class='name'>[src]</span> hisses."
 				m_type = 2
 
-		if ("moan")
+		if ("me")
+			..()
+			return
+
+		if ("moan","moans")
 			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
 
-		if ("roar")
+		if ("roar","roars")
 			if (!muzzled)
 				message = "<span class='name'>[src]</span> roars."
 				m_type = 2
 
-		if ("roll")
+		if ("roll","rolls")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
 
-		if ("scratch")
+		if ("scratch","scratches")
 			if (!src.restrained())
 				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
 
-		if ("scretch")
+		if ("screech","screeches")
 			if (!muzzled)
-				message = "<span class='name'>[src]</span> scretches."
+				message = "<span class='name'>[src]</span> screeches."
 				m_type = 2
 
-		if ("shiver")
+		if ("shiver","shivers")
 			message = "<span class='name'>[src]</span> shivers."
 			m_type = 2
 
-		if ("sign")
+		if ("sign","signs")
 			if (!src.restrained())
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
@@ -65,7 +65,7 @@
 			m_type = 1
 
 		if ("help") //This is an exception
-			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, scretch, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, screech, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)

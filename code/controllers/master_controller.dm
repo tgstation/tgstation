@@ -61,10 +61,8 @@ calculate the longest number of ticks the MC can wait between each cycle without
 	for(var/datum/subsystem/S in subsystems)
 		S.Initialize(world.timeofday, zlevel)
 		sleep(-1)
-	for(var/datum/subsystem/S in subsystems)
-		S.AfterInitialize(zlevel)
+
 	world << "<span class='boldannounce'>Initializations complete</span>"
-	world.log << "Initializations complete"
 
 	world.sleep_offline = 1
 	world.fps = config.fps
@@ -105,7 +103,7 @@ calculate the longest number of ticks the MC can wait between each cycle without
 								var/oldwait = SS.wait
 								var/GlobalCostDelta = (SSCostPerSecond-(SS.cost/(SS.wait/10)))-1
 								var/NewWait = MC_AVERAGE(oldwait,(SS.cost-SS.dwait_buffer+GlobalCostDelta)*SS.dwait_delta)
-								SS.wait = Clamp(round(NewWait,world.tick_lag),SS.dwait_lower,SS.dwait_upper)
+								SS.wait = Clamp(NewWait,SS.dwait_lower,SS.dwait_upper)
 								if (oldwait != SS.wait)
 									calculateGCD()
 							SS.next_fire += SS.wait

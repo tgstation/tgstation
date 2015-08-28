@@ -46,6 +46,7 @@
 					overlays += "unlocked"
 			else
 				overlays += "off"
+
 	else
 		if(icon_door_override)
 			overlays += "[icon_door]_open"
@@ -165,6 +166,7 @@
 
 /obj/structure/closet/ex_act(severity, target)
 	contents_explosion(severity, target)
+	new /obj/item/stack/sheet/metal(loc)
 	dump_contents()
 	qdel(src)
 	..()

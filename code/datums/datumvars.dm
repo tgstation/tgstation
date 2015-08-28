@@ -252,15 +252,17 @@
 		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
-		if(ishuman(D))
+		if(iscarbon(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
-			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
+			body += "<option value='?_src_=vars;editorgans=\ref[D]'>Modify organs</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
-			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
+		if(ishuman(D))
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
+			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
+			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 	if(isobj(D))
@@ -700,6 +702,17 @@ body
 				if("left")	A.dir = turn(A.dir, 45)
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
+		else if(href_list["editorgans"])
+			if(!check_rights(0))	return
+
+			var/mob/living/carbon/C = locate(href_list["editorgans"])
+			if(!istype(C))
+				usr << "This can only be done to instances of type /mob/living/carbon"
+				return
+
+			manipulate_organs(C)
+			href_list["datumrefresh"] = href_list["editorgans"]
+
 		else if(href_list["makehuman"])
 			if(!check_rights(R_SPAWN))	return
 
@@ -773,9 +786,9 @@ body
 		else if(href_list["makeai"])
 			if(!check_rights(R_SPAWN))	return
 
-			var/mob/living/carbon/human/H = locate(href_list["makeai"])
+			var/mob/living/carbon/H = locate(href_list["makeai"])
 			if(!istype(H))
-				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				usr << "This can only be done to instances of type /mob/living/carbon"
 				return
 
 			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return

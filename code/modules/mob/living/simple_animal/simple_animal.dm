@@ -44,6 +44,8 @@
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	var/list/ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 0, CLONE = 0, STAMINA = 1, OXY = 0) //Set 0 to receive that damage type, 1 to ignore
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -59,6 +61,9 @@
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
+
+	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
+	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
 /mob/living/simple_animal/New()
 	..()
@@ -77,10 +82,10 @@
 	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
-	if(..())
-		if(!client && !stat)
+	if(..()) //alive
+		if(!ckey)
 			handle_automated_movement()
-
+			handle_automated_action()
 			handle_automated_speech()
 		return 1
 
@@ -116,6 +121,9 @@
 
 	if(druggy)
 		druggy = 0
+
+/mob/living/simple_animal/proc/handle_automated_action()
+	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
@@ -250,18 +258,31 @@
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage)
+		attack_threshold_check(damage,M.melee_damage_type)
 		return 1
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
+/mob/living/simple_animal/adjustBruteLoss(amount)
+	if(!ignored_damage_types[BRUTE])
+		..()
+
 /mob/living/simple_animal/adjustFireLoss(amount)
-	adjustBruteLoss(amount)
+	if(!ignored_damage_types[BURN])
+		adjustBruteLoss(amount)
+
+/mob/living/simple_animal/adjustToxLoss(amount)
+	if(!ignored_damage_types[TOX])
+		..(amount)
+
+/mob/living/simple_animal/adjustCloneLoss(amount)
+	if(!ignored_damage_types[CLONE])
+		..(amount)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -331,8 +352,8 @@
 		attack_threshold_check(damage)
 		return 1
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage)
-	if(damage <= force_threshold)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+	if(damage <= force_threshold || ignored_damage_types[damagetype])
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
 		adjustBruteLoss(damage)

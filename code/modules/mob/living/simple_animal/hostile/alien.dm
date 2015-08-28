@@ -28,6 +28,8 @@
 	minbodytemp = 0
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	unique_name = 1
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -40,14 +42,14 @@
 	var/plant_cooldown = 30
 	var/plants_off = 0
 
-/mob/living/simple_animal/hostile/alien/drone/Life()
-	..()
-	if(!stat)
-		plant_cooldown--
-		if(stance==HOSTILE_STANCE_IDLE)
-			if(!plants_off && prob(10) && plant_cooldown<=0)
-				plant_cooldown = initial(plant_cooldown)
-				SpreadPlants()
+/mob/living/simple_animal/hostile/alien/drone/handle_automated_action()
+	if(!..()) //AIStatus is off
+		return
+	plant_cooldown--
+	if(AIStatus == AI_IDLE)
+		if(!plants_off && prob(10) && plant_cooldown<=0)
+			plant_cooldown = initial(plant_cooldown)
+			SpreadPlants()
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
@@ -82,23 +84,24 @@
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
+	unique_name = 0
 	var/sterile = 1
 	var/plants_off = 0
 	var/egg_cooldown = 30
 	var/plant_cooldown = 30
 
-/mob/living/simple_animal/hostile/alien/queen/Life()
-	..()
-	if(!stat)
-		egg_cooldown--
-		plant_cooldown--
-		if(stance==HOSTILE_STANCE_IDLE)
-			if(!plants_off && prob(10) && plant_cooldown<=0)
-				plant_cooldown = initial(plant_cooldown)
-				SpreadPlants()
-			if(!sterile && prob(10) && egg_cooldown<=0)
-				egg_cooldown = initial(egg_cooldown)
-				LayEggs()
+/mob/living/simple_animal/hostile/alien/queen/handle_automated_action()
+	if(!..()) //AIStatus is off
+		return
+	egg_cooldown--
+	plant_cooldown--
+	if(AIStatus == AI_IDLE)
+		if(!plants_off && prob(10) && plant_cooldown<=0)
+			plant_cooldown = initial(plant_cooldown)
+			SpreadPlants()
+		if(!sterile && prob(10) && egg_cooldown<=0)
+			egg_cooldown = initial(egg_cooldown)
+			LayEggs()
 
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
 	if(!isturf(loc) || istype(loc, /turf/space))
@@ -128,6 +131,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	mob_size = MOB_SIZE_LARGE
+	gold_core_spawnable = 0
 
 /obj/item/projectile/neurotox
 	name = "neurotoxin"

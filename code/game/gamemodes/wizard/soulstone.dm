@@ -115,8 +115,10 @@
 					for(var/obj/item/W in T)
 						T.unEquip(W)
 				init_shade(C, T, U)
-				//qdel T		//Gib instead
 				return 1
+			else
+				U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+				getCultGhost(C,T,U)
 			return 0
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
@@ -134,7 +136,8 @@
 					U << "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!"
 				else
 					if(T.client == null)
-						U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame."
+						U << "<span class='userdanger'>Capture failed!</span>: The soul has already fled it's mortal frame. You attempt to bring it back..."
+						getCultGhost(C,T,U)
 					else
 						if(C.contents.len)
 							U << "<span class='userdanger'>Capture failed!</span>: The soul stone is full! Use or free an existing soul to make room."
@@ -237,3 +240,37 @@
 	if(vic)
 		U << "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone."
 		U << "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls."
+
+
+/obj/item/device/soulstone/proc/getCultGhost(obj/item/device/soulstone/C, mob/living/carbon/human/T, mob/U)
+	var/list/candidates = get_candidates(BE_CULTIST)
+
+	shuffle(candidates)
+
+	var/time_passed = world.time
+	var/list/consenting_candidates = list()
+
+	for(var/candidate in candidates)
+
+		spawn(0)
+			switch(alert(candidate, "Would you like to play as a Shade? Please choose quickly!","Confirmation","Yes","No"))
+				if("Yes")
+					if((world.time-time_passed)>=50 || !src)
+						return
+					consenting_candidates += candidate
+
+	sleep(50)
+
+	if(consenting_candidates.len)
+		var/client/ghost = null
+		ghost = pick(consenting_candidates)
+		if(C.contents.len) //If they used the soulstone on someone else in the meantime
+			return 0
+		if(!T.client) //If the original returns in the alloted time
+			T.client = ghost
+		for(var/obj/item/W in T)
+			T.unEquip(W)
+		init_shade(C, T, U)
+		qdel(T)
+	else
+		U << "<span class='danger'>The ghost has fled beyond your grasp.</span>"

@@ -24,33 +24,15 @@
 
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
-		var/blocked = list(/mob/living/simple_animal/hostile,
-			/mob/living/simple_animal/hostile/pirate,
-			/mob/living/simple_animal/hostile/pirate/ranged,
-			/mob/living/simple_animal/hostile/russian,
-			/mob/living/simple_animal/hostile/russian/ranged,
-			/mob/living/simple_animal/hostile/syndicate,
-			/mob/living/simple_animal/hostile/syndicate/melee,
-			/mob/living/simple_animal/hostile/syndicate/melee/space,
-			/mob/living/simple_animal/hostile/syndicate/ranged,
-			/mob/living/simple_animal/hostile/syndicate/ranged/space,
-			/mob/living/simple_animal/hostile/alien/queen/large,
-			/mob/living/simple_animal/hostile/retaliate,
-			/mob/living/simple_animal/hostile/retaliate/clown,
-			/mob/living/simple_animal/hostile/mushroom,
-			/mob/living/simple_animal/hostile/asteroid,
-			/mob/living/simple_animal/hostile/asteroid/basilisk,
-			/mob/living/simple_animal/hostile/asteroid/goldgrub,
-			/mob/living/simple_animal/hostile/asteroid/goliath,
-			/mob/living/simple_animal/hostile/asteroid/hivelord,
-			/mob/living/simple_animal/hostile/asteroid/hivelordbrood,
-			/mob/living/simple_animal/hostile/carp/holocarp,
-			/mob/living/simple_animal/hostile/mining_drone,
-			/mob/living/simple_animal/hostile/poison,
-			/mob/living/simple_animal/hostile/blob,
-			/mob/living/simple_animal/ascendant_shadowling
-			)//exclusion list for things you don't want the reaction to create.
-		var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+		var/list/meancritters = list() // list of possible hostile mobs
+		var/list/nicecritters = list() // and possible friendly mobs
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/M = new T
+			switch(M.gold_core_spawnable)
+				if(1)
+					meancritters += M.type
+				if(2)
+					nicecritters += M.type
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
@@ -70,8 +52,12 @@
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
-			var/chosen = pick(critters)
-			var/mob/living/simple_animal/hostile/C = new chosen
+			var/chosen
+			if (reaction_name == "Friendly Gold Slime")
+				chosen = pick(nicecritters)
+			else
+				chosen = pick(meancritters)
+			var/mob/living/simple_animal/C = new chosen
 			C.faction |= mob_faction
 			C.loc = get_turf(holder.my_atom)
 			if(prob(50))

@@ -83,7 +83,6 @@ Contents:
 	cell.charge = 9000
 
 
-
 /obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)
 		affecting << browse(null, "window=hack spideros")

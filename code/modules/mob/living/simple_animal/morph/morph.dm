@@ -128,7 +128,7 @@
 /mob/living/simple_animal/hostile/morph/LoseAggro()
 	vision_range = idle_vision_range
 
-/mob/living/simple_animal/hostile/morph/AIShouldSleep()
+/mob/living/simple_animal/hostile/morph/AIShouldSleep(var/list/possible_targets)
 	. = ..()
 	if(.)
 		var/list/things = list()
@@ -160,6 +160,9 @@
 				I.loc = src
 			return
 	target.attack_animal(src)
+
+/mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
+	return
 
 //Spawn Event
 

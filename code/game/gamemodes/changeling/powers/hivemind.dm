@@ -31,9 +31,9 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/dna/DNA in (changeling.absorbed_dna+changeling.protected_dna))
-		if(!(DNA in hivemind_bank))
-			names += DNA.real_name
+	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
+		if(!(prof in hivemind_bank))
+			names += prof.name
 
 	if(names.len <= 0)
 		user << "<span class='notice'>The airwaves already have all of our DNA.</span>"
@@ -43,7 +43,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_name)
 		return
 
-	var/datum/dna/chosen_dna = changeling.get_dna(chosen_name)
+	var/datum/changelingprofile/chosen_dna = changeling.get_dna(chosen_name)
 	if(!chosen_dna)
 		return
 
@@ -62,7 +62,8 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!..())
 		return
 	var/datum/changeling/changeling = user.mind.changeling
-	if(changeling.absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
+	var/datum/changelingprofile/first_prof = changeling.stored_profiles[1]
+	if(first_prof.name == user.real_name)//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return
 	return 1
@@ -70,9 +71,9 @@ var/list/datum/dna/hivemind_bank = list()
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/list/names = list()
-	for(var/datum/dna/DNA in hivemind_bank)
-		if(!(DNA in changeling.absorbed_dna))
-			names[DNA.real_name] = DNA
+	for(var/datum/changelingprofile/prof in hivemind_bank)
+		if(!(prof in changeling.stored_profiles))
+			names[prof.name] = prof
 
 	if(names.len <= 0)
 		user << "<span class='notice'>There's no new DNA to absorb from the air.</span>"
@@ -80,13 +81,11 @@ var/list/datum/dna/hivemind_bank = list()
 
 	var/S = input("Select a DNA absorb from the air: ", "Absorb DNA", null) as null|anything in names
 	if(!S)	return
-	var/datum/dna/chosen_dna = names[S]
-	if(!chosen_dna)
+	var/datum/changelingprofile/chosen_prof = names[S]
+	if(!chosen_prof)
 		return
 
-	if(changeling.absorbed_dna.len)
-		changeling.absorbed_dna.Cut(1,2)
-	changeling.store_dna(chosen_dna, user)
+	changeling.add_profile(chosen_prof, user)
 	user << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")
 	return 1

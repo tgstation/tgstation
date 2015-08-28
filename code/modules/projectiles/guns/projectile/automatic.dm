@@ -190,13 +190,22 @@
 	burst_size = 3
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
-/obj/item/weapon/gun/projectile/automatic/m90/unrestricted
-	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
+
+/obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/automatic/m90/unrestricted/New()
+	..()
+	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/unrestricted(src)
+	update_icon()
+	return
+
 /obj/item/weapon/gun/projectile/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
