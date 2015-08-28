@@ -13,6 +13,7 @@
 	health = 25
 	maxHealth = 25
 	see_in_dark = 255
+	healable = 0
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	languages = ALL
 	response_help   = "passes through"

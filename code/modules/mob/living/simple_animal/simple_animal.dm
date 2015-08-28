@@ -34,6 +34,9 @@
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
 
+	//Healable by medical stacks? Defaults to yes.
+	var/healable = 1
+
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
 	var/unsuitable_atmos_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
@@ -339,29 +342,6 @@
 /mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
 	if(O.flags & NOBLUDGEON)
 		return
-
-	if(istype(O, /obj/item/stack/medical))
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
-			if(health < maxHealth)
-				if(MED.amount >= 1)
-					if(MED.heal_brute >= 1)
-						adjustBruteLoss(-MED.heal_brute)
-						MED.amount -= 1
-						if(MED.amount <= 0)
-							qdel(MED)
-						visible_message("<span class='notice'>[user] applies [MED] on [src].</span>")
-						return
-					else
-						user << "<span class='notice'>[MED] won't help at all.</span>"
-						return
-			else
-				user << "<span class='notice'>[src] is at full health.</span>"
-				return
-		else
-			user << "<span class='notice'>[src] is dead, medical items won't bring it back to life.</span>"
-			return
 
 	if((butcher_results) && (stat == DEAD))
 		user.changeNext_move(CLICK_CD_MELEE)

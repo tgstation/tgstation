@@ -23,6 +23,7 @@
 	attacktext = "wildly tears into"
 	maxHealth = 250
 	health = 250
+	healable = 0
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
