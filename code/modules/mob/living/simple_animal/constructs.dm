@@ -84,7 +84,7 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
-	speed = 3
+	speed = 2 //upped them to a walk to compensait for the drop in reflect chance
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
@@ -96,7 +96,7 @@
 
 /mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 80 - round(P.damage/3)
+		var/reflectchance = 40 - round(P.damage/3) 
 		if(prob(reflectchance))
 			if(P.damage_type == BURN || P.damage_type == BRUTE)
 				adjustBruteLoss(P.damage * 0.5)
@@ -133,8 +133,8 @@
 	desc = "A wicked bladed shell contraption piloted by a bound spirit"
 	icon_state = "floating"
 	icon_living = "floating"
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
@@ -161,7 +161,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attacktext = "rams"
-	speed = 0
+	speed = 1 //can no longer effectivly yackity sax away from humans
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
@@ -185,7 +185,7 @@
 	maxHealth = 60
 	health = 60
 	melee_damage_lower = 1
-	melee_damage_upper = 5
+	melee_damage_upper = 1 //this isnt the tool your suposed to be using
 	attacktext = "prods"
 	speed = 0
 	environment_smash = 1
