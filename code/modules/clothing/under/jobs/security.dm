@@ -30,6 +30,13 @@
 	siemens_coefficient = 0.9
 	species_fit = list("Vox")
 
+/obj/item/clothing/under/rank/security/sneaksuit
+	name = "sneaking suit"
+	icon_state = "sneakingsuit"
+	item_state = "sneakingsuit"
+	_color = "sneakingsuit"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/metalgear.dmi', "right_hand" = 'icons/mob/in-hand/right/metalgear.dmi')
+
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
 	desc = "A dress shirt and khakis with a security patch sewn on."
