@@ -75,7 +75,7 @@
 	if(ismob(A) && A.reagents)
 		if(pheromones_act == PHEROMONES_NEUTRAL && A.reagents.has_reagent("carppheromones"))
 			return 1 //Carps who avoid pheromones don't target mobs with pheromones in their system. They just ignore them!
-	..()
+	return ..(A)
 
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()

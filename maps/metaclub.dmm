@@ -1513,7 +1513,7 @@
 "aDe" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 2; on = 1; scrub_Toxins = 0},/turf/simulated/floor/wood,/area/maintenance/ghettobar)
 "aDf" = (/obj/item/weapon/dice/d20,/obj/item/weapon/dice,/obj/structure/table/woodentable,/obj/machinery/light_construct/small,/turf/simulated/floor/wood,/area/maintenance/ghettobar)
 "aDg" = (/obj/machinery/light/small{dir = 8},/turf/simulated/shuttle/floor,/area/shuttle/mining/station)
-"aDh" = (/obj/machinery/door/unpowered/shuttle{name = "Mining Shuttle Airlock"; req_access_txt = "0"},/turf/simulated/shuttle/floor,/area/shuttle/mining/station)
+"aDh" = (/obj/machinery/door/unpowered/shuttle{name = "Mining Shuttle Airlock"; req_access_txt = "0"},/obj/structure/docking_port/shuttle{dir = 4},/turf/simulated/shuttle/floor,/area/shuttle/mining/station)
 "aDi" = (/turf/simulated/floor/plating,/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"; dir = 2},/area/shuttle/escape_pod2/station)
 "aDj" = (/obj/machinery/door/airlock/glass_mining{name = "Mining Dock"; req_access_txt = "0"},/obj/machinery/door/firedoor/border_only{dir = 8; name = "Firelock West"},/turf/simulated/floor,/area/supply/miningdock{name = "\improper Mining Office"})
 "aDk" = (/obj/machinery/hologram/holopad,/turf/simulated/floor,/area/supply/miningdock{name = "\improper Mining Office"})
