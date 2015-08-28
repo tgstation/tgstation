@@ -329,6 +329,40 @@
 	..()
 	return
 
+/datum/reagent/medicine/calomel
+	name = "Calomel"
+	id = "calomel"
+	description = "Quickly purges the body of all chemicals. If your health is above 20, toxin damage is dealt. When you hit 20 health or lower, the damage will cease."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/calomel/on_mob_life(mob/living/M)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,2.5)
+	if(M.health > 20)
+		M.adjustToxLoss(2.5*REM)
+	..()
+	return
+
+/datum/reagent/medicine/hunchback // Technically a bar mix, but it's ghetto calomel.
+	name = "Hunchback"
+	id = "hunchback"
+	description = "Flushes other chemicals more rapidly than Calomel, but does so at significant risk to the consumer. Aside from constant and violent vomiting, the health cap and depletion rate are significantly lower."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 0.3 * REAGENTS_METABOLISM
+
+/datum/reagent/medicine/hunchback/on_mob_life(mob/living/M)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(R != src)
+			M.reagents.remove_reagent(R.id,6)
+	if(M.health > 10)
+		M.adjustToxLoss(4*REM)
+	..()
+	return
+
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"
 	id = "potass_iodide"

@@ -93,3 +93,35 @@
 	result = "mindbreaker"
 	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
 	result_amount = 5
+
+/datum/chemical_reaction/vx_nerve_agent
+	name = "VX Nerve Agent"
+	id = "vx_nerve_agent"
+	result = "vx_nerve_agent"
+	required_reagents = list("methyl_phosphonous_dichloride" = 1, "ethanol" = 1, "sulfur" = 1)
+	result_amount = 3
+	required_temp = 343
+
+/datum/chemical_reaction/zyklon_b
+	name = "Zyklon B"
+	id = "zyklon_b"
+	result = "zyklon_b"
+	required_reagents = list("ash" = 1, "carbon" = 1, "diethylamine" = 1, "cyanide" = 1, "fluorine" = 1)
+	required_catalysts = list("plasma" = 5)
+	result_amount = 5
+	required_temp = 1000
+
+/datum/chemical_reaction/sarin
+	name = "Sarin"
+	id = "sarin"
+	result = "sarin"
+	required_reagents = list("enzyme" = 1, "ethanol" = 1, "fuel" = 1, "phosphorus" = 1, "plasma" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/fluoroantimonic_acid
+	name = "fluoroantimonic acid"
+	id = "fluoroantimonic_acid"
+	result = "fluoroantimonic_acid"
+	required_reagents = list("clf3" = 10, "sacid" = 10, "facid" = 10)
+	result_amount = 10
+	required_temp = 1000

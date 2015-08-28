@@ -609,6 +609,80 @@
 	M.adjustOxyLoss(1*REM)
 	..()
 
+/datum/reagent/toxin/sarin
+	name = "Sarin"
+	id = "sarin"
+	description = "Banned by the Space Geneva Convention."
+	reagent_state = LIQUID
+	color = "#CF3600"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 1.3
+
+/datum/reagent/toxin/sarin/on_mob_life(mob/living/M)
+	M.losebreath += 3
+	M.adjustOxyLoss(5)
+	if(prob(25))
+		M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
+					"<span class='userdanger'>You throw up on the floor!</span>")
+
+		M.nutrition -= 20
+
+		var/turf/pos = get_turf(M)
+		pos.add_vomit_floor(M)
+		playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	M.adjustStaminaLoss(3)
+	if(prob(25))
+		M.adjustBrainLoss(5)
+		M.adjustBruteLoss(3)
+	..()
+
+/datum/reagent/toxin/zyklon_b
+	name = "Zyklon B"
+	id = "zyklon_b"
+	description = "Deals intense toxin and oxygen loss damage."
+	reagent_state = LIQUID
+	color = "#CF3600"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 1.5
+
+/datum/reagent/toxin/zyklon_b/on_mob_life(mob/living/M)
+	M.losebreath += 3
+	M.adjustOxyLoss(5)
+	M.adjustFireLoss(2) // sorry
+	..()
+
+/datum/reagent/toxin/vx_nerve_agent
+	name = "VX Nerve Agent"
+	id = "vx_nerve_agent"
+	description = "Only a Space Nazi could come up with this vile mixture."
+	reagent_state = LIQUID
+	color = "#CF3600"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 1.5
+
+/datum/reagent/toxin/vx_nerve_agent/on_mob_life(mob/living/M)
+	M.losebreath += 3
+	M.adjustOxyLoss(5)
+	if(prob(25))
+		M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
+					"<span class='userdanger'>You throw up on the floor!</span>")
+		M.nutrition -= 50
+		var/turf/pos = get_turf(M)
+		pos.add_vomit_floor(M)
+		playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+	if(prob(10))
+		M.Stun(5)
+		M.Weaken(5)
+		M << "<span class = 'userdanger'>You lose control of your muscles!</span>"
+	if(prob(50))
+		M.adjustStaminaLoss(5)
+	if(prob(25))
+		M.adjustBrainLoss(5)
+		M.adjustBruteLoss(3)
+	M.eye_blurry += 3
+	M.dizziness += 3
+	M.confused += 3
+	..()
 
 //ACID
 
@@ -652,3 +726,10 @@
 	toxpwr = 2
 	acidpwr = 20
 
+/datum/reagent/toxin/acid/fluoroantimonic_acid
+	name = "Fluoroantimonic Acid"
+	id = "fluoroantimonic_acid"
+	description = "Fluoroantimonic Acid is quite possibly the most corrosive volatile substance mankind will ever create."
+	color = "#8E18A9" // rgb: 142, 24, 169
+	toxpwr = 4
+	acidpwr = 50
