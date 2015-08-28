@@ -1099,17 +1099,17 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 			winner = W.loc
 
 	for(var/mob/M in arena)
-		if(winner)
-			M << "[winner ? "<b>[winner.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds."
+		if(winner && winner.client)
+			M << "[winner ? "<b>[winner.client.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds."
 		else
 			M << "Couldn't find a winner. Resetting arena in 20 seconds."
 
 	if(winner)
-		if(winner.key in arena_leaderboard)
-			arena_leaderboard[winner.key] = arena_leaderboard[winner.key] + 1
+		if(winner.client.key in arena_leaderboard)
+			arena_leaderboard[winner.client.key] = arena_leaderboard[winner.client.key] + 1
 		else
-			arena_leaderboard += winner.key
-			arena_leaderboard[winner.key] = 1
+			arena_leaderboard += winner.client.key
+			arena_leaderboard[winner.client.key] = 1
 
 	arena_rounds++
 

@@ -430,6 +430,7 @@ var/list/camera_names=list()
 	..()
 	pixel_x = 0
 	pixel_y = 0
+	upgradeXRay()
 	upgradeHearing()
 
 /obj/machinery/camera/arena/attackby(W as obj, mob/living/user as mob)
