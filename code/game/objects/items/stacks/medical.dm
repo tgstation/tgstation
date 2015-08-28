@@ -25,8 +25,8 @@
 		user << "<span class='danger'>\The [M] is dead, you cannot help [t_him]!</span>"
 		return
 
-	if(!istype(M))
-		user << "<span class='danger'>You don't know how to apply \the [src] to [M]...</span>"
+	if(!istype(M) || isdrone(M))
+		user << "<span class='danger'>You cannot apply \the [src] to [M]!</span>"
 		return 1
 
 	if(!user.IsAdvancedToolUser())
