@@ -509,7 +509,6 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01

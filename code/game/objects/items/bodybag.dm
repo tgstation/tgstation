@@ -65,9 +65,6 @@
 	..()
 	if (tagged)
 		overlays += "bodybag_label"
-	else
-		overlays.Cut()
-
 
 /obj/structure/closet/body_bag/close()
 	if(..())

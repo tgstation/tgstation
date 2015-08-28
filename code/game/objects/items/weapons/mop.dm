@@ -25,9 +25,6 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
 		A.thermite = 0
-		var/turf/simulated/floor/F = A
-		if(istype(F))
-			F.dirt = 0
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
 				qdel(O)
