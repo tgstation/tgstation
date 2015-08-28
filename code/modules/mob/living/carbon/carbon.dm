@@ -1,3 +1,7 @@
+/mob/living/carbon/New()
+	create_reagents(1000)
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
