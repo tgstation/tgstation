@@ -26,7 +26,7 @@
 		return
 
 	if(!istype(M, /mob/living/carbon) && !istype(M, /mob/living/simple_animal))
-		user << "<span class='danger'>You don't know how to apply \the [src] to [M]</span>..."
+		user << "<span class='danger'>You don't know how to apply \the [src] to [M]!</span>"
 		return 1
 
 	if(!user.IsAdvancedToolUser())
