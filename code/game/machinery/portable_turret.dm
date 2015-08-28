@@ -1092,7 +1092,7 @@ Status: []<BR>"},
 		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
 		emagged = 1
 		locked = 0
-		if(user.machine==src)
+		if(user && user.machine==src)
 			src.attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)

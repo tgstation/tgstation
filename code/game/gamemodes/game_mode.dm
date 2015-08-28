@@ -114,7 +114,7 @@
 		if(G.reroll_friendly)
 			usable_modes += G
 		else
-			del(G)
+			qdel(G)
 
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")

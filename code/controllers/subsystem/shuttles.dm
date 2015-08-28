@@ -64,15 +64,12 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/fire()
 	points += points_per_decisecond * wait
-
-	var/i=1
 	for(var/thing in mobile)
 		if(thing)
 			var/obj/docking_port/mobile/P = thing
 			P.check()
-			++i
 			continue
-		mobile.Cut(i, i+1)
+		mobile.Remove(thing)
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)

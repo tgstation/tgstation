@@ -196,7 +196,7 @@
 
 	New(obj/item/sample)
 		if(!istype(sample))
-			del(src)
+			qdel(src)
 		sample_object = sample
 		number = 1
 
