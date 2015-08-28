@@ -72,7 +72,7 @@
 
 //Wrapper procs that handle sanity and user feedback
 /obj/proc/user_buckle_mob(mob/living/M, mob/user)
-	if(!user.Adjacent(M) || user.restrained() || user.lying || user.stat)
+	if(!user.Adjacent(M) || user.lying || user.incapacitated())
 		return
 
 	add_fingerprint(user)
@@ -88,7 +88,7 @@
 			M.visible_message(\
 				"<span class='warning'>[M.name] is buckled to [src] by [user.name]!</span>",\
 				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
-				"<span class='italics'>You heat metal clanking.</span>")
+				"<span class='italics'>You hear metal clanking.</span>")
 
 /obj/proc/user_unbuckle_mob(mob/user)
 	var/mob/living/M = unbuckle_mob()

@@ -646,10 +646,6 @@
 
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
-	if(istype(T, /turf/simulated/floor))
-		var/turf/simulated/floor/F = T
-		if(reac_volume >= 1)
-			F.dirt = 0
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || VAPOR)
