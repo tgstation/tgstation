@@ -727,6 +727,8 @@ var/list/beam_master = list()
 	if(drawn) return
 	drawn = 1
 	var/atom/curr = lastloc
+	if(!firer)
+		firer = starting
 	var/Angle=round(Get_Angle(firer,curr))
 	var/icon/I=new('icons/obj/lightning.dmi',icon_state)
 	var/icon/Istart=new('icons/obj/lightning.dmi',"[icon_state]start")

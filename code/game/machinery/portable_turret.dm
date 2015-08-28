@@ -60,154 +60,187 @@
 
 	machine_flags = EMAGGABLE
 
-	New()
-		..()
-		icon_state = "[lasercolor]grey_target_prism"
-		// Sets up a spark system
-		spark_system = new /datum/effect/effect/system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
-		sleep(10)
-		if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
-			projectile = /obj/item/projectile/energy/electrode//holder for the projectile, here it is being set
-			eprojectile = /obj/item/projectile/beam//holder for the projectile when emagged, if it is different
-			reqpower = 200
-			iconholder = 1
-		else
-			var/obj/item/weapon/gun/energy/E=new installation
-					// All energy-based weapons are applicable
-			switch(E.type)
-				if(/obj/item/weapon/gun/energy/laser/bluetag)
-					projectile = /obj/item/projectile/beam/lastertag/blue
-					eprojectile = /obj/item/projectile/beam/lastertag/omni//This bolt will stun ERRYONE with a vest
-					iconholder = null
-					reqpower = 100
-					lasercolor = "b"
-					req_access = list(access_maint_tunnels)
-					check_records = 0
-					criminals = 0
-					auth_weapons = 1
-					stun_all = 0
-					check_anomalies = 0
-					shot_delay = 30
+/obj/machinery/porta_turret/New()
+	..()
+	icon_state = "[lasercolor]grey_target_prism"
+	// Sets up a spark system
+	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
+	spawn(10)
+		update_gun()
 
-				if(/obj/item/weapon/gun/energy/laser/redtag)
-					projectile = /obj/item/projectile/beam/lastertag/red
-					eprojectile = /obj/item/projectile/beam/lastertag/omni
-					iconholder = null
-					reqpower = 100
-					lasercolor = "r"
-					req_access = list(access_maint_tunnels)
-					check_records = 0
-					criminals = 0
-					auth_weapons = 1
-					stun_all = 0
-					check_anomalies = 0
-					shot_delay = 30
+/obj/machinery/porta_turret/proc/update_gun()
+	if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
+		projectile = /obj/item/projectile/energy/electrode//holder for the projectile, here it is being set
+		eprojectile = /obj/item/projectile/beam//holder for the projectile when emagged, if it is different
+		reqpower = 200
+		iconholder = 1
+	else
+		var/obj/item/weapon/gun/energy/E=new installation
+				// All energy-based weapons are applicable
+		switch(E.type)
+			if(/obj/item/weapon/gun/energy/laser/bluetag)
+				projectile = /obj/item/projectile/beam/lastertag/blue
+				eprojectile = /obj/item/projectile/beam/lastertag/omni//This bolt will stun ERRYONE with a vest
+				iconholder = null
+				reqpower = 100
+				lasercolor = "b"
+				req_access = list(access_maint_tunnels)
+				check_records = 0
+				criminals = 0
+				auth_weapons = 1
+				stun_all = 0
+				check_anomalies = 0
+				shot_delay = 30
 
-				if(/obj/item/weapon/gun/energy/laser/practice)
-					projectile = /obj/item/projectile/beam/practice
-					eprojectile = /obj/item/projectile/beam
-					iconholder = null
-					reqpower = 100
+			if(/obj/item/weapon/gun/energy/laser/redtag)
+				projectile = /obj/item/projectile/beam/lastertag/red
+				eprojectile = /obj/item/projectile/beam/lastertag/omni
+				iconholder = null
+				reqpower = 100
+				lasercolor = "r"
+				req_access = list(access_maint_tunnels)
+				check_records = 0
+				criminals = 0
+				auth_weapons = 1
+				stun_all = 0
+				check_anomalies = 0
+				shot_delay = 30
 
-				if(/obj/item/weapon/gun/energy/pulse_rifle)
-					projectile = /obj/item/projectile/beam/pulse
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 700
-					fire_sound = 'sound/weapons/pulse.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/laser/practice)
+				projectile = /obj/item/projectile/beam/practice
+				eprojectile = /obj/item/projectile/beam
+				iconholder = null
+				reqpower = 100
 
-				if(/obj/item/weapon/gun/energy/staff)
-					projectile = /obj/item/projectile/change
-					eprojectile = projectile
-					iconholder = 1
-					reqpower = 700
-					fire_sound = 'sound/weapons/radgun.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/pulse_rifle)
+				projectile = /obj/item/projectile/beam/pulse
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 700
+				fire_sound = 'sound/weapons/pulse.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/ionrifle)
-					projectile = /obj/item/projectile/ion
-					eprojectile = projectile
-					iconholder = 1
-					reqpower = 700
-					fire_sound = 'sound/weapons/ion.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/staff)
+				projectile = /obj/item/projectile/change
+				eprojectile = projectile
+				iconholder = 1
+				reqpower = 700
+				fire_sound = 'sound/weapons/radgun.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/taser)
-					projectile = /obj/item/projectile/energy/electrode
-					eprojectile = projectile
-					iconholder = 1
-					reqpower = 200
-					fire_sound = 'sound/weapons/Taser.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/ionrifle)
+				projectile = /obj/item/projectile/ion
+				eprojectile = projectile
+				iconholder = 1
+				reqpower = 700
+				fire_sound = 'sound/weapons/ion.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/stunrevolver)
-					projectile = /obj/item/projectile/energy/electrode
-					eprojectile = projectile
-					iconholder = 1
-					reqpower = 200
-					fire_sound = 'sound/weapons/Gunshot.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/taser)
+				projectile = /obj/item/projectile/energy/electrode
+				eprojectile = projectile
+				iconholder = 1
+				reqpower = 200
+				fire_sound = 'sound/weapons/Taser.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/lasercannon)
-					projectile = /obj/item/projectile/beam/heavylaser
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 600
-					fire_sound = 'sound/weapons/lasercannonfire.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/stunrevolver)
+				projectile = /obj/item/projectile/energy/electrode
+				eprojectile = projectile
+				iconholder = 1
+				reqpower = 200
+				fire_sound = 'sound/weapons/Gunshot.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/decloner)
-					projectile = /obj/item/projectile/energy/declone
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 600
-					fire_sound = 'sound/weapons/pulse3.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/lasercannon)
+				projectile = /obj/item/projectile/beam/heavylaser
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 600
+				fire_sound = 'sound/weapons/lasercannonfire.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/crossbow/largecrossbow)
-					projectile = /obj/item/projectile/energy/bolt/large
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 125
-					fire_sound = 'sound/weapons/ebow.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/decloner)
+				projectile = /obj/item/projectile/energy/declone
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 600
+				fire_sound = 'sound/weapons/pulse3.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/crossbow)
-					projectile = /obj/item/projectile/energy/bolt
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 50
-					fire_sound = 'sound/weapons/ebow.ogg'
-					efire_sound = fire_sound
+			if(/obj/item/weapon/gun/energy/crossbow/largecrossbow)
+				projectile = /obj/item/projectile/energy/bolt/large
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 125
+				fire_sound = 'sound/weapons/ebow.ogg'
+				efire_sound = fire_sound
 
-				if(/obj/item/weapon/gun/energy/laser)
-					projectile = /obj/item/projectile/beam
-					eprojectile = projectile
-					iconholder = null
-					reqpower = 500
+			if(/obj/item/weapon/gun/energy/crossbow)
+				projectile = /obj/item/projectile/energy/bolt
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 50
+				fire_sound = 'sound/weapons/ebow.ogg'
+				efire_sound = fire_sound
 
-				else // Energy gun shots
-					projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
-					eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
-					iconholder = 1
-					egun = 1
-					reqpower = 200
-					fire_sound = 'sound/weapons/Taser.ogg'
-			if(!eprojectile || !projectile)
+			if(/obj/item/weapon/gun/energy/laser)
+				projectile = /obj/item/projectile/beam
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 500
+
+			if(/obj/item/weapon/gun/energy/ricochet)
+				projectile = /obj/item/projectile/ricochet
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 500
+
+			if(/obj/item/weapon/gun/energy/bison)
+				projectile = /obj/item/projectile/beam/bison
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 250
+				fire_sound = 'sound/weapons/bison_fire.ogg'
+				efire_sound = fire_sound
+
+			if(/obj/item/weapon/gun/energy/polarstar/spur)
+				projectile = /obj/item/projectile/spur
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 700
+				fire_sound = 'sound/weapons/spur_high.ogg'
+				efire_sound = fire_sound
+
+			if(/obj/item/weapon/gun/energy/polarstar)
+				projectile = /obj/item/projectile/spur/polarstar
+				eprojectile = projectile
+				iconholder = null
+				reqpower = 400
+				fire_sound = 'sound/weapons/spur_high.ogg'
+				efire_sound = fire_sound
+
+			else // Energy gun shots
 				projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
 				eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
 				iconholder = 1
 				egun = 1
 				reqpower = 200
 				fire_sound = 'sound/weapons/Taser.ogg'
+		if(!eprojectile || !projectile)
+			projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
+			eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
+			iconholder = 1
+			egun = 1
+			reqpower = 200
+			fire_sound = 'sound/weapons/Taser.ogg'
 
-	Destroy()
-		// deletes its own cover with it
-		qdel(cover)
-		..()
+/obj/machinery/porta_turret/Destroy()
+	// deletes its own cover with it
+	qdel(cover)
+	..()
 
 
 /obj/machinery/porta_turret/attack_ai(mob/user as mob)
@@ -694,6 +727,7 @@ Status: []<BR>"},
 		use_power((reqpower*2))
 		// Shooting Code:
 	A.starting = T
+	A.shot_from = src
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -859,11 +893,7 @@ Status: []<BR>"},
 					Turret.name = finish_name
 					Turret.installation = src.installation
 					Turret.gun_charge = src.gun_charge
-
-//					Turret.cover=new/obj/machinery/porta_turret_cover(src.loc)
-//					Turret.cover.Parent_Turret=Turret
-//					Turret.cover.name = finish_name
-					Turret.New()
+					Turret.update_gun()
 					qdel(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))

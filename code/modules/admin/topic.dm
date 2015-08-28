@@ -2884,6 +2884,24 @@
 				if(choice == "No, let's have perfectly circular explosions")
 					message_admins("[key_name_admin(usr)] has set explosions to completely pass through walls and obstacles.")
 					explosion_newmethod = 0
+			if("placeturret")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","TUR")
+				var/list/possible_guns = list()
+				for(var/path in typesof(/obj/item/weapon/gun/energy))
+					possible_guns += path
+				var/choice = input("What energy gun do you want inside the turret?") in possible_guns
+				if(!choice)
+					return
+				var/obj/item/weapon/gun/energy/gun = new choice()
+				var/obj/machinery/porta_turret/Turret = new(get_turf(usr))
+				Turret.installation = choice
+				Turret.gun_charge = gun.power_supply.charge
+				Turret.update_gun()
+				qdel(gun)
+				var/emag = input("Emag the turret?") in list("Yes", "No")
+				if(emag=="Yes")
+					Turret.emag(usr)
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)
