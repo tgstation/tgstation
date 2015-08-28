@@ -1,0 +1,12 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - experimental: "Cultists will now be able to create all runes without needing to research or collect words. This is subject to change."
+  - tweak: "Cult code has been significantly improved and will run much faster and be more responsive."
+  - tweak: "Many runes have received tweaks or changes. Conversion runes can now be invoked with less than three cultists (but take some time), sacrifice runes only require one cultist, armor runes no longer give different armors, astral journey runes now pull the user back if they're moved and give them a different color, summon and freeing runes have been combined and require two cultists rather than three, sacrifice and raise dead runes now give target selection, and more!"
+  - tweak: "Nar-Sie now has a new summon sound."
+  - tweak: "The Nar-Sie summon rune has a new 3x3 sprite."
+  - tweak: "The stun rune no longer stuns cultists."
+  - rscadd: "The Rite of False Truths had been added, that will make all nearby runes appear as if they were drawn in crayon."
+  - rscadd: "Runes can now be examined by cultists to determine their name, function, and words."
