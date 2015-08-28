@@ -112,7 +112,7 @@
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
 	school = "evocation"
-	charge_max = 400
+	charge_max = 600
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
