@@ -921,7 +921,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 		T = pencil.loc
 		T.maptext = name
 		T.maptext_width = 256
-		T.maptext_y = 20
+		//T.maptext_y = 20
 
 		qdel(pencil)	//RIP sweet prince
 
