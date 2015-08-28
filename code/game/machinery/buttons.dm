@@ -152,8 +152,7 @@
 	icon_state = "[skin]1"
 
 	if(device)
-		spawn(0)
-			device.activate()
+		device.pulsed()
 
 	spawn(15)
 		update_icon()

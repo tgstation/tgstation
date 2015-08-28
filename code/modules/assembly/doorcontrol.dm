@@ -14,20 +14,19 @@
 
 
 /obj/item/device/assembly/control/activate()
-	spawn(0)
-		cooldown = 1
-		var/openclose
-		for(var/obj/machinery/door/poddoor/M in machines)
-			if(M.id == src.id)
-				if(openclose == null)
-					openclose = M.density
-				spawn(0)
-					if(M)
-						if(openclose)	M.open()
-						else			M.close()
-					return
-		sleep(10)
-		cooldown = 0
+	cooldown = 1
+	var/openclose
+	for(var/obj/machinery/door/poddoor/M in machines)
+		if(M.id == src.id)
+			if(openclose == null)
+				openclose = M.density
+			spawn(0)
+				if(M)
+					if(openclose)	M.open()
+					else			M.close()
+				return
+	sleep(10)
+	cooldown = 0
 
 
 /obj/item/device/assembly/control/airlock
@@ -44,28 +43,27 @@
 	*/
 
 /obj/item/device/assembly/control/airlock/activate()
-	spawn(0)
-		cooldown = 1
-		for(var/obj/machinery/door/airlock/D in airlocks)
-			if(D.id_tag == src.id)
-				if(specialfunctions & OPEN)
-					spawn(0)
-						if(D)
-							if(D.density)	D.open()
-							else			D.close()
-						return
-				if(specialfunctions & IDSCAN)
-					D.aiDisabledIdScanner = !D.aiDisabledIdScanner
-				if(specialfunctions & BOLTS)
-					if(!D.isWireCut(4) && D.hasPower())
-						D.locked = !D.locked
-						D.update_icon()
-				if(specialfunctions & SHOCK)
-					D.secondsElectrified = D.secondsElectrified ? 0 : -1
-				if(specialfunctions & SAFE)
-					D.safe = !D.safe
-		sleep(10)
-		cooldown = 0
+	cooldown = 1
+	for(var/obj/machinery/door/airlock/D in airlocks)
+		if(D.id_tag == src.id)
+			if(specialfunctions & OPEN)
+				spawn(0)
+					if(D)
+						if(D.density)	D.open()
+						else			D.close()
+					return
+			if(specialfunctions & IDSCAN)
+				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
+			if(specialfunctions & BOLTS)
+				if(!D.isWireCut(4) && D.hasPower())
+					D.locked = !D.locked
+					D.update_icon()
+			if(specialfunctions & SHOCK)
+				D.secondsElectrified = D.secondsElectrified ? 0 : -1
+			if(specialfunctions & SAFE)
+				D.safe = !D.safe
+	sleep(10)
+	cooldown = 0
 
 
 /obj/item/device/assembly/control/massdriver
@@ -73,30 +71,29 @@
 	desc = "A small electronic device able to control a mass driver."
 
 /obj/item/device/assembly/control/massdriver/activate()
-	spawn(0)
-		cooldown = 1
-		for(var/obj/machinery/door/poddoor/M in machines)
-			if (M.id == src.id)
-				spawn( 0 )
-					M.open()
-					return
+	cooldown = 1
+	for(var/obj/machinery/door/poddoor/M in machines)
+		if (M.id == src.id)
+			spawn( 0 )
+				M.open()
+				return
 
-		sleep(10)
+	sleep(10)
 
-		for(var/obj/machinery/mass_driver/M in machines)
-			if(M.id == src.id)
-				M.drive()
+	for(var/obj/machinery/mass_driver/M in machines)
+		if(M.id == src.id)
+			M.drive()
 
-		sleep(60)
+	sleep(60)
 
-		for(var/obj/machinery/door/poddoor/M in machines)
-			if (M.id == src.id)
-				spawn( 0 )
-					M.close()
-					return
+	for(var/obj/machinery/door/poddoor/M in machines)
+		if (M.id == src.id)
+			spawn( 0 )
+				M.close()
+				return
 
-		sleep(10)
-		cooldown = 0
+	sleep(10)
+	cooldown = 0
 
 
 /obj/item/device/assembly/control/igniter
@@ -104,21 +101,20 @@
 	desc = "A remote controller for a mounted igniter."
 
 /obj/item/device/assembly/control/igniter/activate()
-	spawn(0)
-		cooldown = 1
-		for(var/obj/machinery/sparker/M in machines)
-			if (M.id == src.id)
-				spawn( 0 )
-					M.ignite()
+	cooldown = 1
+	for(var/obj/machinery/sparker/M in machines)
+		if (M.id == src.id)
+			spawn( 0 )
+				M.ignite()
 
-		for(var/obj/machinery/igniter/M in machines)
-			if(M.id == src.id)
-				M.use_power(50)
-				M.on = !M.on
-				M.icon_state = "igniter[M.on]"
+	for(var/obj/machinery/igniter/M in machines)
+		if(M.id == src.id)
+			M.use_power(50)
+			M.on = !M.on
+			M.icon_state = "igniter[M.on]"
 
-		sleep(30)
-		cooldown = 0
+	sleep(30)
+	cooldown = 0
 
 
 /obj/item/device/assembly/control/flasher
@@ -126,16 +122,14 @@
 	desc = "A remote controller for a mounted flasher."
 
 /obj/item/device/assembly/control/flasher/activate()
+	cooldown = 1
+	for(var/obj/machinery/flasher/M in machines)
+		if(M.id == src.id)
+			spawn(0)
+				M.flash()
 
-	spawn(0)
-		cooldown = 1
-		for(var/obj/machinery/flasher/M in machines)
-			if(M.id == src.id)
-				spawn(0)
-					M.flash()
-
-		sleep(50)
-		cooldown = 0
+	sleep(50)
+	cooldown = 0
 
 
 /obj/item/device/assembly/control/crematorium
@@ -143,11 +137,10 @@
 	desc = "An evil-looking remote controller for a crematorium."
 
 /obj/item/device/assembly/control/crematorium/activate()
-	spawn(0)
-		cooldown = 1
-		for (var/obj/structure/bodycontainer/crematorium/C in crematoriums)
-			if (C.id == id)
-				C.cremate(usr)
+	cooldown = 1
+	for (var/obj/structure/bodycontainer/crematorium/C in crematoriums)
+		if (C.id == id)
+			C.cremate(usr)
 
-		sleep(50)
-		cooldown = 0
+	sleep(50)
+	cooldown = 0
