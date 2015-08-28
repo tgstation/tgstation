@@ -91,6 +91,11 @@
 				for(var/mob/living/carbon/M in D.loc)
 					if(!istype(M,/mob/living/carbon)) continue
 					if(M == user) continue
+
+					var/blocked = 0
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						blocked = istype(H.wear_suit, /obj/item/clothing/suit/space) // Block the syringe if the guy's wearing a spess suit.
 					//Syringe gun attack logging by Yvarov
 					var/R
 					if(D.reagents)
@@ -98,32 +103,37 @@
 							R += A.id + " ("
 							R += num2text(A.volume) + "),"
 					if (istype(M, /mob))
-						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						msg_admin_attack("[user] ([user.ckey]) shot [M] ([M.ckey]) with a syringegun ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R]) [blocked ? "\[BLOCKED\]" : ""]"
+						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R]) [blocked ? "\[BLOCKED\]" : ""]"
+						msg_admin_attack("[user] ([user.ckey]) shot [M] ([M.ckey]) with a syringegun ([R]) [blocked ? "\[BLOCKED\]" : ""] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 						if(!iscarbon(user))
 							M.LAssailant = null
 						else
 							M.LAssailant = user
 
 					else
-						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R]) [blocked ? "\[BLOCKED\]" : ""]"
+						msg_admin_attack("UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R]) [blocked ? "\[BLOCKED\]" : ""] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-					if(D.reagents)
-						D.reagents.trans_to(M, 15)
-					M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
+					if(!blocked)
+						if(D.reagents)
+							D.reagents.trans_to(M, 15)
+						M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 
-					del(D)
+					else
+						var/mob/living/carbon/human/H = M
+						M.visible_message("<span class='danger'>[M] is hit by the syringe, but \his [H.wear_suit] blocked it!</span>") // Fuck you validhunters.
+						
+					qdel(D)
 					break
 			if(D)
 				for(var/atom/A in D.loc)
 					if(A == user) continue
-					if(A.density) del(D)
+					if(A.density) qdel(D)
 
 			sleep(1)
 
-		if (D) spawn(10) del(D)
+		if (D) spawn(10) qdel(D)
 
 		return
 
