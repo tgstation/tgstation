@@ -395,6 +395,14 @@ obj/structure/bomberflame/Destroy()
 				computer.verbs -= x
 			computer.set_broken()
 
+		else if(istype(obstacle, /obj/mecha))
+			if(fuel <= 2)
+				obstacle.ex_act(3)
+			else if(fuel <= 10)
+				obstacle.ex_act(2)
+			else
+				obstacle.ex_act(1)
+
 	..()
 
 /obj/structure/bomberflame/ex_act(severity)
@@ -735,7 +743,7 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 	var/name = "Bomberman Arena"
 	var/status = ARENA_SETUP
 	var/shape = ""
-	var/violence = 0
+	var/violence = 1
 	var/opacity = 0
 	var/min_number_of_players = 2
 	var/area/arena = null
@@ -1099,17 +1107,17 @@ var/global/list/arena_spawnpoints = list()//used by /mob/dead/observer/Logout()
 			winner = W.loc
 
 	for(var/mob/M in arena)
-		if(winner)
-			M << "[winner ? "<b>[winner.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds."
+		if(winner && winner.client)
+			M << "[winner ? "<b>[winner.client.key]</b> as <b>[winner.name]</b> wins this round! " : ""]Resetting arena in 20 seconds."
 		else
 			M << "Couldn't find a winner. Resetting arena in 20 seconds."
 
 	if(winner)
-		if(winner.key in arena_leaderboard)
-			arena_leaderboard[winner.key] = arena_leaderboard[winner.key] + 1
+		if(winner.client.key in arena_leaderboard)
+			arena_leaderboard[winner.client.key] = arena_leaderboard[winner.client.key] + 1
 		else
-			arena_leaderboard += winner.key
-			arena_leaderboard[winner.key] = 1
+			arena_leaderboard += winner.client.key
+			arena_leaderboard[winner.client.key] = 1
 
 	arena_rounds++
 
