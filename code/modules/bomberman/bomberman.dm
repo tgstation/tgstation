@@ -395,6 +395,14 @@ obj/structure/bomberflame/Destroy()
 				computer.verbs -= x
 			computer.set_broken()
 
+		else if(istype(obstacle, /obj/mecha))
+			if(fuel <= 2)
+				obstacle.ex_act(3)
+			else if(fuel <= 10)
+				obstacle.ex_act(2)
+			else
+				obstacle.ex_act(1)
+
 	..()
 
 /obj/structure/bomberflame/ex_act(severity)
