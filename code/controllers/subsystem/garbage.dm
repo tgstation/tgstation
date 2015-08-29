@@ -119,6 +119,11 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				del(A)
 			if (QDEL_HINT_PUTINPOOL)	//qdel will put this object in the pool.
 				PlaceInPool(A,0)
+			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
+				#ifdef TESTING
+				A.find_references(remove_from_queue = FALSE)
+				#endif
+				SSgarbage.Queue(A)
 			else
 				SSgarbage.Queue(A)
 
@@ -132,9 +137,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
-// Return true if the the GC controller should allow the object to continue existing. (Useful if pooling objects.)
+// Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy()
-	//del(src)
 	tag = null
 	return QDEL_HINT_QUEUE
 
@@ -142,40 +146,40 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 #ifdef TESTING
 /client/var/running_find_references
+/datum/var/running_find_references
 
-/datum/verb/find_references()
+/datum/verb/find_references(remove_from_queue = TRUE as num)
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
 	set src in world
 
-	if(!usr || !usr.client)
-		return
+	running_find_references = type
+	if(usr && usr.client)
+		if(usr.client.running_find_references)
+			testing("CANCELLED search for references to a [usr.client.running_find_references].")
+			usr.client.running_find_references = null
+			running_find_references = null
+			return
 
-	if(usr.client.running_find_references)
-		testing("CANCELLED search for references to a [usr.client.running_find_references].")
-		usr.client.running_find_references = null
-		return
-
-	if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-		return
-
+		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+			running_find_references = null
+			return
 	// Remove this object from the list of things to be auto-deleted.
-	if(SSgarbage && ("\ref[src]" in SSgarbage.queue))
+	if(remove_from_queue && SSgarbage && ("\ref[src]" in SSgarbage.queue))
 		SSgarbage.queue -= "\ref[src]"
+	if(usr && usr.client)
+		usr.client.running_find_references = type
 
-	usr.client.running_find_references = type
 	testing("Beginning search for references to a [type].")
 	var/list/things = list()
 	for(var/client/thing)
 		things |= thing
 	for(var/datum/thing)
 		things |= thing
-	for(var/atom/thing)
-		things |= thing
 	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
 	for(var/datum/thing in things)
-		if(!usr.client.running_find_references) return
+		if(usr && usr.client && !usr.client.running_find_references) return
 		for(var/varname in thing.vars)
 			var/variable = thing.vars[varname]
 			if(variable == src)
@@ -184,7 +188,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				if(src in variable)
 					testing("Found [src.type] \ref[src] in [thing.type]'s [varname] list var.")
 	testing("Completed search for references to a [type].")
-	usr.client.running_find_references = null
+	if(usr && usr.client)
+		usr.client.running_find_references = null
+	running_find_references = null
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
@@ -195,4 +201,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				del(o)
 				SSgarbage.totaldels++
 			SSgarbage.queue.Cut(1, 2)
+
+/datum/verb/qdel_then_find_references()
+	set category = "Debug"
+	set name = "qdel() then Find References"
+	set background = 1
+	set src in world
+
+	qdel(src)
+	if(!running_find_references)
+		find_references(remove_from_queue = FALSE)
 #endif
