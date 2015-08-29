@@ -96,6 +96,7 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/weapon/melee/classic_baton/telescopic(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("facid", 250)
@@ -132,6 +133,7 @@
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/weapon/melee/classic_baton/telescopic(src)
 
 	var/datum/robot_energy_storage/metal/metstore = new /datum/robot_energy_storage/metal(src)
 	var/datum/robot_energy_storage/glass/glastore = new /datum/robot_energy_storage/glass(src)
@@ -167,19 +169,6 @@
 	storages += wirestore
 	fix_modules()
 
-/obj/item/weapon/robot_module/security
-	name = "security robot module"
-
-/obj/item/weapon/robot_module/security/New()
-	..()
-	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
-	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
-	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
-	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
-	fix_modules()
-
-
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
 
@@ -190,6 +179,7 @@
 	modules += new /obj/item/weapon/mop/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
+	modules += new /obj/item/weapon/melee/classic_baton/telescopic(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
@@ -208,6 +198,7 @@
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/instrument/violin(src)
 	modules += new /obj/item/device/instrument/guitar(src)
+	modules += new /obj/item/weapon/melee/classic_baton/telescopic(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -238,6 +229,7 @@
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	modules += new /obj/item/weapon/melee/classic_baton/telescopic(src)
 	fix_modules()
 
 
