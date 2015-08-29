@@ -37,6 +37,8 @@
 	R.notify_ai(2)
 	R.update_icons()
 	R.update_headlamp()
+	R.maxHealth = 100
+	R.health = R.health > 100 ? R.health - 100 : R.health
 
 	return 1
 
