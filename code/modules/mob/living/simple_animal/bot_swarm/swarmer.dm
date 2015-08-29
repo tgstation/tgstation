@@ -5,9 +5,22 @@
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
 
+/obj/item/unactivated_swarmer/New()
+	notify_ghosts("An unactivated swarmer has been created in [get_area(src)]! <a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>")
+	..()
+
+/obj/item/unactivated_swarmer/Topic(href, href_list)
+	if(href_list["ghostjoin"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
+
 /obj/item/unactivated_swarmer/attack_ghost(mob/user)
 	var/be_swarmer = alert("Become a swarmer? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_swarmer == "No" || qdeleted())
+	if(be_swarmer == "No")
+		return
+	if(qdeleted(src))
+		user << "Swarmer has been occupied by someone else."
 		return
 	var/mob/living/simple_animal/hostile/swarmer/S = new /mob/living/simple_animal/hostile/swarmer(get_turf(loc))
 	S.key = user.key
@@ -155,6 +168,9 @@
 
 /obj/machinery/nuclearbomb/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>"
+
+/obj/machinery/dominator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	S << "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>"
 
 /obj/structure/reagent_dispensers/fueltank/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>Destroying this object would cause a chain reaction. Aborting.</span>"
@@ -410,7 +426,7 @@
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M) || (M in dead_mob_list))
-				M << "<B>Swarm communication - </b> [M] states: [message]"
+				M << "<B>Swarm communication - </b> [src] states: [message]"
 
 
 
