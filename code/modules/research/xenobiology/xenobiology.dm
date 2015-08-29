@@ -16,7 +16,7 @@
 	var/enhanced = 0 //has it been enhanced before?
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/slimesteroid2))
+	if(istype(O, /obj/item/slimepotion/steroid))
 		if(enhanced == 1)
 			user << "<span class='warning'>This extract has already been enhanced!</span>"
 			return ..()
@@ -120,15 +120,24 @@
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
 
-////Pet Slime Creation///
+////Slime-derived potions///
 
 /obj/item/slimepotion
+	name = "slime potion"
+	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
+	w_class = 1
+	origin_tech = "biotech=5"
+
+/obj/item/slimepotion/attack_self(mob/user)
+	user << "<span class='notice'>You try to open [src], but cannot breach it. It appears the potion must be given directly to a slime to absorb.</span>" // le fluff faec
+
+/obj/item/slimepotion/docility
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
 
-/obj/item/slimepotion/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/docility/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		user << "<span class='warning'>The potion only works on slimes!</span>"
 		return ..()
@@ -139,7 +148,7 @@
 	M.docile = 1
 	M.nutrition = 700
 	M <<"<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>"
-	user <<"<span class='notice'>You feed the slime the potion, removing it's hunger and calming it.</span>"
+	user <<"<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>"
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
@@ -148,7 +157,7 @@
 	M.real_name = newname
 	qdel(src)
 
-/obj/item/slimepotion2
+/obj/item/slimepotion/sentience
 	name = "sentience potion"
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
 	icon = 'icons/obj/chemical.dmi'
@@ -156,7 +165,7 @@
 	var/list/not_interested = list()
 	var/being_used = 0
 
-/obj/item/slimepotion2/afterattack(mob/living/M, mob/user)
+/obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
 	if(being_used || !ismob(M))
 		return
 	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
@@ -203,26 +212,26 @@
 		M.key = C.key
 		M.languages |= HUMAN
 		M.faction -= "neutral"
-		M << "<span class='warning'>All at once it makes sense, you know what you are and who you are! Self awareness is yours!</span>"
+		M << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
 		M << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
 		user << "<span class='notice'>[M] is suddenly attentive and aware. It worked!</span>"
 		qdel(src)
 	else
-		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later...</span>"
+		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down and expels the potion. Maybe you should try again later.</span>"
 		being_used = 0
 		..()
 
-/obj/item/weapon/slimesteroid
+/obj/item/slimepotion/steroid
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
-/obj/item/weapon/slimesteroid/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
 		user << "<span class='warning'>The steroid only works on baby slimes!</span>"
 		return ..()
-	if(M.is_adult) //Can't tame adults
+	if(M.is_adult) //Can't steroidify adults
 		user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
 		return..()
 	if(M.stat)
@@ -236,14 +245,7 @@
 	M.cores = 3
 	qdel(src)
 
-
-/obj/item/weapon/slimesteroid3
-	name = "slime steroid"
-	desc = "A potent chemical mix that will cause a slime to generate more extract."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
-
-/obj/item/weapon/slimesteroid2
+/obj/item/slimepotion/enhancer
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract three uses."
 	icon = 'icons/obj/chemical.dmi'
@@ -263,13 +265,13 @@
 			qdel(src)*/
 
 
-/obj/item/weapon/slimestabilizer
+/obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
 	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 
-/obj/item/weapon/slimestabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		user << "<span class='warning'>The stabilizer only works on slimes!</span>"
 		return ..()
@@ -284,13 +286,13 @@
 	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
 	qdel(src)
 
-/obj/item/weapon/slimemutator
+/obj/item/slimepotion/mutator
 	name = "slime mutator"
 	desc = "A potent chemical mix that will increase the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 
-/obj/item/weapon/slimemutator/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
 		user << "<span class='warning'>The mutator only works on slimes!</span>"
 		return ..()
