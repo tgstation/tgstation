@@ -5,12 +5,26 @@
 	var/flags			= 0			//Bitflags.
 
 	var/obj/item/device/rcd/master	//Okay all of the vars here are obvious...
+	var/icon
+	var/icon_state
+	var/obj/screen/schematics/ourobj
+	var/datum/selection_schematic/selected
 
 /datum/rcd_schematic/New(var/obj/item/device/rcd/n_master)
 	master = n_master
 	. = ..()
+	ourobj = getFromPool(/obj/screen/schematics, null, src)
 
-
+/datum/rcd_schematic/Destroy()
+	master = null
+	if(ourobj)
+		for(var/client/C in clients)
+			C.screen.Remove(ourobj)
+		returnToPool(ourobj)
+		ourobj = null
+	..()
+/datum/rcd_schematic/proc/show()
+	return 0
 /*
 Called when the RCD this thing belongs to attacks an atom.
 params:
@@ -26,6 +40,9 @@ return value:
 /datum/rcd_schematic/proc/attack(var/atom/A, var/mob/user)
 	return 0
 
+/datum/rcd_schematic/proc/clicked(var/mob/user)
+	select(user, master.selected)
+	return 0
 
 /*
 Called when the RCD's schematic changes away from this one.
@@ -55,6 +72,13 @@ return value:
 */
 
 /datum/rcd_schematic/proc/select(var/mob/user, var/datum/rcd_schematic/old_schematic)
+	if(old_schematic)
+		old_schematic.deselect(user, src)
+
+	master.spark()
+
+	master.selected = src
+
 	return 1
 
 
@@ -76,3 +100,7 @@ params:
 
 /datum/rcd_schematic/proc/register_assets()
 	return
+
+/datum/rcd_schematic/proc/build_ui()
+	master.interface.updateLayout("<div id='schematic_options'> </div>")
+

@@ -61,6 +61,8 @@
 
 	//
 	var/list/callOnLife = list() //
+	var/obj/screen/schematics_background
+	var/shown_schematics_background = 0
 
 /mob/living/proc/unsubLife(datum/sub)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/unsubLife() called tick#: [world.time]")

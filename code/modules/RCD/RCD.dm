@@ -27,6 +27,8 @@
 
 	var/datum/html_interface/rcd/interface
 	var/datum/effect/effect/system/spark_spread/spark_system
+	
+	var/obj/screen/close/closer
 
 /obj/item/device/rcd/New()
 	. = ..()
@@ -56,7 +58,7 @@
 /obj/item/device/rcd/Destroy()
 	for(var/cat in schematics)
 		for(var/datum/rcd_schematic/C in schematics[cat])
-			C.master = null
+			C.Destroy()
 
 	schematics = null
 
@@ -64,6 +66,11 @@
 	del(spark_system)
 
 	. = ..()
+
+/obj/item/device/rcd/dropped(var/mob/living/dropped_by)
+	..()
+	if(istype(dropped_by))
+		dropped_by.hud_used.toggle_show_schematics_display(null,1, src)
 
 /obj/item/device/rcd/attack_self(var/mob/user)
 	interface.show(user)
@@ -167,9 +174,13 @@
 		for(var/client/client in interface.clients)
 			selected.send_assets(client)
 
-		interface.updateContent("schematic_options", selected.get_HTML())	
+		interface.updateContent("schematic_options", selected.get_HTML(args))
 	else
 		interface.updateContent("schematic_options", " ")
+
+/obj/item/device/rcd/borg/attack_self(var/mob/living/user)
+	if(!selected || user.shown_schematics_background || !selected.show(user))
+		user.hud_used.toggle_show_schematics_display(schematics["Construction"], 0, src)
 
 /obj/item/device/rcd/borg
 	var/cell_power_per_energy = 30
@@ -200,6 +211,10 @@
 /obj/item/device/rcd/matter
 	var/matter			= 0
 	var/max_matter		= 30
+
+/obj/item/device/rcd/matter/engineering/attack_self(var/mob/living/user)
+	if(!selected || user.shown_schematics_background || !selected.show(user))
+		user.hud_used.toggle_show_schematics_display(schematics["Construction"], 0, src)
 
 /obj/item/device/rcd/matter/examine(var/mob/user)
 	..()
@@ -232,3 +247,8 @@
 
 /obj/item/device/rcd/matter/get_energy(var/mob/user)
 	return matter
+
+/obj/item/device/rcd/proc/show_default(var/mob/living/user)
+	if(selected)
+		if(selected.show(user,1)) return
+	user.hud_used.toggle_show_schematics_display(null, 1, src)
