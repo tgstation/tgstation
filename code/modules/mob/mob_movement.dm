@@ -136,6 +136,12 @@
 
 	if(isturf(mob.loc))
 
+
+		var/turf/T = mob.loc
+		move_delay = world.time//set move delay
+
+		move_delay += T.slowdown
+
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
@@ -146,13 +152,6 @@
 					else
 						M.stop_pulling()
 
-		//We are now going to move
-		moving = 1
-		move_delay = 0
-
-		var/turf/T = mob.loc
-		move_delay += T.slowdown
-
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
@@ -160,12 +159,18 @@
 				move_delay += config.run_speed
 			if("walk")
 				move_delay += config.walk_speed
-
 		move_delay += mob.movement_delay()
 
-		//Something with pulling things //This really needs to be redone by someone, NOT ME THOUGH HA HA!
+		if(config.Tickcomp)
+			move_delay -= 1.3
+			var/tickcomp = (1 / (world.tick_lag)) * 1.3
+			move_delay = move_delay + tickcomp
+
+		//We are now going to move
+		moving = 1
+		//Something with pulling things
 		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, 7)
+			move_delay = max(move_delay, world.time + 7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -195,22 +200,6 @@
 							M.animate_movement = 2
 							return
 
-		var/ticks = Ceiling(move_delay / world.tick_lag)
-		if(ticks <= 0)
-			ticks = 1
-		var/target_glide_size = world.icon_size / ticks
-
-		glide_size = target_glide_size
-		mob.glide_size = target_glide_size
-
-		//byond floor()'s glide_size, we want it to Ceiling(),
-		//but we don't want it to Ceiling() if they fix it to accept floating point numbers
-		if(glide_size != target_glide_size)
-			glide_size = Ceiling(target_glide_size)
-			mob.glide_size = glide_size
-
-		move_delay += world.time - 0.0001 //Ensure we're on the right tick even if there's rounding errors
-
 		if(mob.confused && IsEven(world.time))
 			step(mob, pick(cardinal))
 		else
@@ -219,6 +208,8 @@
 		moving = 0
 		if(mob && .)
 			mob.throwing = 0
+
+		return .
 
 
 ///Process_Grab()
