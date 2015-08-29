@@ -174,16 +174,17 @@
 		);
 		</script>
 
-		<a id="accessListShowButton">Show access controls</a><br/>
 
 
-		<form action="?src=\ref[master.interface]" method="get" id="accessList" style="display:block;">
+		<form action="?src=\ref[master.interface]" method="get" id="accessList" style="display:inline-block;font-size:100%">
 			<input type="hidden" name="src" value="\ref[master.interface]"/> 
 			[istype(D) ? "<input type=\"hidden\" name = \"target\" value=\"\ref[D]\"/>" : ""]
 			<input type="submit" value="Save Access Settings"/><br/><br/>
 
 
 			Access requirement is set to: <br/>
+		<table style='width:100%'>
+		<tr>
 		"}
 		if((D && D.req_one_access && D.req_one_access.len) || (!D && one_access))	//So we check the correct button by default
 			. += {"
@@ -191,7 +192,6 @@
 			<br/>
 			<input type="radio" name="oneAccess" value="1" checked/>ONE
 			"}
-
 		else
 			. += {"
 			<input type="radio" name="oneAccess" value="0" checked/>ALL
@@ -199,6 +199,24 @@
 			<input type="radio" name="oneAccess" value="1"/>ONE
 			"}
 
+		for(var/i = 1; i <= 7; i++)
+			. += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
+		. += "</tr><tr>"
+		for(var/i = 1; i <= 7; i++)
+			. += "<td style='width:14%' valign='top'>"
+			for(var/A in get_region_accesses(i))
+				var/access_name = get_access_desc(A)
+				if(!access_name) continue
+				if((D && (A in D.req_access) || (A in D.req_one_access)) || (!D && (A in selected_access)))
+					. += {"<input type="checkbox" name="[A]" checked/> [access_name] <br/>"}
+				else
+					. += {"<input type="checkbox" name="[A]"/> [access_name] <br/>"}
+				. += "<br>"
+			. += "</td>"
+		. += "</tr></table>"
+		. = "</form><tt>[.]</tt></p>"
+
+/*
 		. += {"<br/>
 		Access levels: <br/>
 		"}
@@ -224,6 +242,7 @@
 		. += "</form>"
 
 	. += "</p>"
+*/
 /datum/rcd_schematic/con_airlock/build_ui()
 	master.interface.updateLayout("<div id='schematic_options'> </div>")
 	master.update_options_menu()
