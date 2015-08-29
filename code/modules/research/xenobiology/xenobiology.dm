@@ -11,7 +11,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	origin_tech = "biotech=4"
+	origin_tech = "biotech=3"
 	var/Uses = 1 // uses before it goes inert
 	var/enhanced = 0 //has it been enhanced before?
 
@@ -126,10 +126,12 @@
 	name = "slime potion"
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
 	w_class = 1
-	origin_tech = "biotech=5"
+	origin_tech = "biotech=4"
 
-/obj/item/slimepotion/attack_self(mob/user)
-	user << "<span class='notice'>You try to open [src], but cannot breach it. It appears the potion must be given directly to a slime to absorb.</span>" // le fluff faec
+/obj/item/slimepotion/afterattack(obj/item/weapon/reagent_containers/target, mob/user , proximity)
+	if (istype(target))
+		user << "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" // le fluff faec
+		return
 
 /obj/item/slimepotion/docility
 	name = "docility potion"
@@ -159,9 +161,10 @@
 
 /obj/item/slimepotion/sentience
 	name = "sentience potion"
-	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
+	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
+	origin_tech = "biotech=5"
 	var/list/not_interested = list()
 	var/being_used = 0
 
@@ -175,7 +178,7 @@
 		user << "<span class='warning'>[M] is dead!</span>"
 		return..()
 
-	user << "<span class='notice'>You begin to apply the potion to [M]...</span>"
+	user << "<span class='notice'>You offer the sentience potion to [M]...</span>"
 	being_used = 1
 
 	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
@@ -214,10 +217,10 @@
 		M.faction -= "neutral"
 		M << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
 		M << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
-		user << "<span class='notice'>[M] is suddenly attentive and aware. It worked!</span>"
+		user << "<span class='notice'>[M] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
 		qdel(src)
 	else
-		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down and expels the potion. Maybe you should try again later.</span>"
+		user << "<span class='notice'>[M] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
 		being_used = 0
 		..()
 
