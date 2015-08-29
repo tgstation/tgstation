@@ -25,7 +25,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
 
-
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
@@ -61,7 +60,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		if(GCd_at_time > time_to_kill)
 			break // Everything else is newer, skip them
 
-		var/atom/A
+		var/datum/A
 		if (!istext(refID))
 			del(A)
 		else
@@ -76,7 +75,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			else
 				++gcedlasttick
 				++totalgcs
-
 		queue.Cut(1, 2)
 
 
@@ -145,7 +143,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 #ifdef TESTING
 /client/var/running_find_references
 
-/atom/verb/find_references()
+/datum/verb/find_references()
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
@@ -163,18 +161,18 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		return
 
 	// Remove this object from the list of things to be auto-deleted.
-	if(garbage)
-		garbage.destroyed -= "\ref[src]"
+	if(SSgarbage && ("\ref[src]" in SSgarbage.queue))
+		SSgarbage.queue -= "\ref[src]"
 
 	usr.client.running_find_references = type
 	testing("Beginning search for references to a [type].")
 	var/list/things = list()
 	for(var/client/thing)
-		things += thing
+		things |= thing
 	for(var/datum/thing)
-		things += thing
+		things |= thing
 	for(var/atom/thing)
-		things += thing
+		things |= thing
 	testing("Collected list of things in search for references to a [type]. ([things.len] Thing\s)")
 	for(var/datum/thing in things)
 		if(!usr.client.running_find_references) return
@@ -190,11 +188,11 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
-	if(garbage)
-		while(garbage.destroyed.len)
-			var/datum/o = locate(garbage.destroyed[1])
+	if(SSgarbage)
+		while(SSgarbage.queue.len)
+			var/datum/o = locate(SSgarbage.queue[1])
 			if(istype(o) && o.gc_destroyed)
 				del(o)
-				garbage.dels++
-			garbage.destroyed.Cut(1, 2)
+				SSgarbage.totaldels++
+			SSgarbage.queue.Cut(1, 2)
 #endif
