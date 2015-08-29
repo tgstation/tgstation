@@ -67,7 +67,7 @@
 	S.use(amt)
 	return amt
 
-/datum/material_container/proc/insert_item(obj/item/I)
+/datum/material_container/proc/insert_item(obj/item/I, multiplier = 1)
 	if(!I)
 		return 0
 	if(istype(I,/obj/item/stack))
@@ -77,7 +77,7 @@
 	if(!material_amount || !has_space(material_amount))
 		return 0
 
-	insert_materials(I)
+	insert_materials(I, multiplier)
 	return material_amount
 
 /datum/material_container/proc/insert_materials(obj/item/I, multiplier = 1) //for internal usage only
