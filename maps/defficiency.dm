@@ -26,4 +26,6 @@
 		)
 
 ////////////////////////////////////////////////////////////////
+#include "defficiency/pipes.dm" // Atmos layered pipes.
+
 #include "defficiency.dmm"

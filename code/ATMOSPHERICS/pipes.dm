@@ -925,6 +925,11 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/New()
 	for(var/pipelayer = PIPING_LAYER_MIN; pipelayer <= PIPING_LAYER_MAX; pipelayer += PIPING_LAYER_INCREMENT)
 		layer_nodes.Add(null)
+	switch(dir)
+		if(NORTH,SOUTH)
+			initialize_directions = NORTH|SOUTH
+		if(EAST,WEST)
+			initialize_directions = EAST|WEST
 	..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer(var/new_layer = PIPING_LAYER_DEFAULT)
@@ -1083,6 +1088,174 @@
 
 		user.ventcrawl_layer = Clamp(user.ventcrawl_layer + layer_mod, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 		user << "You align yourself with the [user.ventcrawl_layer]\th output."
+		return 1
+	else
+		return ..()
+
+
+/obj/machinery/atmospherics/pipe/layer_adapter
+	name = "pipe-layer adapter"
+
+	icon = 'icons/obj/atmospherics/pipe_adapter.dmi'
+	icon_state = "adapter_1"
+	baseicon = "adapter"
+
+	dir = SOUTH
+	initialize_directions = NORTH|SOUTH
+
+	volume = 260 //6 averaged pipe segments
+
+	pipe_flags = ALL_LAYER
+
+	var/obj/machinery/atmospherics/layer_node = null
+	var/obj/machinery/atmospherics/mid_node = null
+
+/obj/machinery/atmospherics/pipe/layer_adapter/New()
+	..()
+	switch(dir)
+		if(NORTH,SOUTH)
+			initialize_directions = NORTH|SOUTH
+		if(EAST,WEST)
+			initialize_directions = EAST|WEST
+
+/obj/machinery/atmospherics/pipe/layer_adapter/setPipingLayer(var/new_layer = PIPING_LAYER_DEFAULT)
+	piping_layer = new_layer
+
+/obj/machinery/atmospherics/pipe/layer_adapter/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
+	dir = pipe.dir
+	initialize_directions = pipe.get_pipe_dir()
+	var/turf/T = loc
+	level = T.intact ? 2 : 1
+	initialize(1)
+	if(!mid_node && !layer_node)
+		usr << "<span class='warning'>There's nothing to connect this adapter to! A pipe segment must be connected to at least one other object!</span>"
+		return 0
+	update_icon()
+	build_network()
+	if (mid_node)
+		mid_node.initialize()
+		mid_node.build_network()
+	if (layer_node)
+		layer_node.initialize()
+		layer_node.build_network()
+	return 1
+
+/obj/machinery/atmospherics/pipe/layer_adapter/hide(var/i)
+	if(level == 1 && istype(loc, /turf/simulated))
+		invisibility = i ? 101 : 0
+	update_icon()
+
+/obj/machinery/atmospherics/pipe/layer_adapter/pipeline_expansion()
+	return list(layer_node, mid_node)
+
+
+/obj/machinery/atmospherics/pipe/layer_adapter/process()
+	if(!parent)
+		. = ..()
+	atmos_machines.Remove(src)
+
+/obj/machinery/atmospherics/pipe/layer_adapter/Destroy()
+	if(mid_node)
+		mid_node.disconnect(src)
+	if(layer_node)
+		layer_node.disconnect(src)
+	..()
+
+
+/obj/machinery/atmospherics/pipe/layer_adapter/disconnect(var/obj/machinery/atmospherics/reference)
+	if(reference == mid_node)
+		if(istype(mid_node, /obj/machinery/atmospherics/pipe))
+			returnToDPool(parent)
+		mid_node = null
+	if(reference == layer_node)
+		if(istype(layer_node, /obj/machinery/atmospherics/pipe))
+			returnToDPool(parent)
+		layer_node = null
+
+	update_icon()
+
+	..()
+
+/obj/machinery/atmospherics/pipe/layer_adapter/update_icon()
+	overlays.len = 0
+	alpha = invisibility ? 128 : 255
+	icon_state = "[baseicon]_[piping_layer]"
+	if(layer_node)
+		var/layer_diff = piping_layer - PIPING_LAYER_DEFAULT
+
+		var/image/con = image(icon(src.icon,"layer_con",turn(src.dir,180)))
+		con.pixel_x = layer_diff * PIPING_LAYER_P_X
+		con.pixel_y = layer_diff * PIPING_LAYER_P_Y
+
+		overlays += con
+	if(!mid_node && !layer_node)
+		qdel(src)
+	return
+
+
+/obj/machinery/atmospherics/pipe/layer_adapter/initialize(var/skip_update_icon=0)
+
+	findAllConnections(initialize_directions)
+
+	var/turf/T = src.loc			// hide if turf is not intact
+	hide(T.intact)
+	if(!skip_update_icon)
+		update_icon()
+
+/obj/machinery/atmospherics/pipe/layer_adapter/findAllConnections(var/connect_dirs)
+	for(var/direction in cardinal)
+		if(connect_dirs & direction)
+			if(direction == dir) //we're facing this
+				var/obj/machinery/atmospherics/found
+				var/node_type=getNodeType(direction)
+				switch(node_type)
+					if(PIPE_TYPE_STANDARD)
+						found = findConnecting(direction, PIPING_LAYER_DEFAULT)
+					if(PIPE_TYPE_HE)
+						found = findConnectingHE(direction, PIPING_LAYER_DEFAULT)
+					else
+						error("UNKNOWN RESPONSE FROM [src.type]/getNodeType([direction]): [node_type]")
+				if(!found)
+					continue
+				mid_node = found
+			else
+				var/obj/machinery/atmospherics/found
+				var/node_type=getNodeType(direction)
+				switch(node_type)
+					if(PIPE_TYPE_STANDARD)
+						found = findConnecting(direction, piping_layer) //we pass the layer to find the pipe
+					if(PIPE_TYPE_HE)
+						found = findConnectingHE(direction, piping_layer)
+					else
+						error("UNKNOWN RESPONSE FROM [src.type]/getNodeType([piping_layer]): [node_type]")
+						return
+				if(!found)
+					continue
+				layer_node = found
+
+/obj/machinery/atmospherics/pipe/layer_adapter/isConnectable(var/obj/machinery/atmospherics/target, var/direction, var/given_layer)
+	if(direction == dir)
+		return (given_layer == PIPING_LAYER_DEFAULT)
+	return ..()
+
+/obj/machinery/atmospherics/pipe/layer_adapter/getNodeType()
+	return PIPE_TYPE_STANDARD
+
+//We would normally set layer here, but I don't want to
+/obj/machinery/atmospherics/pipe/layer_adapter/Entered()
+	return
+
+/obj/machinery/atmospherics/pipe/layer_adapter/relaymove(mob/living/user, direction)
+	if(!(direction & initialize_directions)) //can't go in a way we aren't connecting to
+		var/on_offset_layer = user.ventcrawl_layer == layer_node.piping_layer
+
+		on_offset_layer = !on_offset_layer
+
+		if(on_offset_layer)
+			user.ventcrawl_layer = layer_node.piping_layer
+		else
+			user.ventcrawl_layer = mid_node.piping_layer
+		user << "You align yourself with the [user.ventcrawl_layer]\th layer." // ????
 		return 1
 	else
 		return ..()

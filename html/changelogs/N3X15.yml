@@ -1,2 +1,5 @@
 author: N3X15
-changes: []
+changes:
+  - rscadd: "Layer Adapter Pipe: Allows you to link a single layered pipe with a non-layered pipe.  Doesn't look as ugly as a manifold, but is not as flexible."
+  - bugfix: "Defficiency's Supermatter Engine has been overhauled. Gasses have been added, piping re-routed, and the control room actually works, among other fixes.  Still requires work to get running, but not as much as before."
+  - bugfix: "Defficiency's Atmospherics has been reworked a bit to use layered piping in some rather crowded areas.  A broken three-way valve has also been fixed."
