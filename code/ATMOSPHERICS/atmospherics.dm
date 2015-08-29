@@ -36,6 +36,10 @@ Pipelines + Other Objects -> Pipe network
 		stored = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			nullifyNode(I)
+
 	SSair.atmos_machinery -= src
 	if(stored)
 		qdel(stored)
@@ -48,6 +52,13 @@ Pipelines + Other Objects -> Pipe network
 		qdel(pipe_vision_img)
 
 	..()
+
+/obj/machinery/atmospherics/proc/nullifyNode(I)
+	var/obj/machinery/atmospherics/N = NODE_I
+	N.disconnect(src)
+	NODE_I = null
+
+
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
@@ -106,11 +117,15 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	for(DEVICE_TYPE_LOOP)
 		if(reference == NODE_I)
+		//	world << "[reference] found in nodes of [src]"
 			if(istype(NODE_I, /obj/machinery/atmospherics/pipe))
 				var/obj/machinery/atmospherics/pipe/P = NODE_I
 				qdel(P.parent)
+		//		world << "[reference] has qdel'd its parent"
 			NODE_I = null
+		//	world << "NODE[I]: [NODE_I]"
 			break
+		//world << "[reference] not yet disconnected from [src]"
 	update_icon()
 
 /obj/machinery/atmospherics/update_icon()

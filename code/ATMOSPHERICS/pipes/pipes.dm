@@ -18,16 +18,10 @@
 	color = pipe_color
 	..()
 
-/obj/machinery/atmospherics/pipe/Destroy()
-	for(DEVICE_TYPE_LOOP)
-		var/obj/machinery/atmospherics/N = NODE_I
-		if(N)
-			var/obj/machinery/atmospherics/oldN = N
-			N.disconnect(src)
-			NODE_I = null
-			oldN.build_network()
-	releaseAirToTurf()
+/obj/machinery/atmospherics/pipe/nullifyNode(I)
+	var/obj/machinery/atmospherics/oldN = NODE_I
 	..()
+	oldN.build_network()
 
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
 	if(NODE1&&NODE2)
@@ -83,6 +77,10 @@
 	parent = P
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	releaseAirToTurf()
+	qdel(air_temporary)
+	air_temporary = null
+
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
 		if(meter.target == src)

@@ -23,11 +23,11 @@ On top of that, now people can add component-speciic procs/vars if they want!
 Iconnery
 */
 
-/obj/machinery/atmospherics/components/proc/icon_addintact(var/obj/machinery/atmospherics/node, var/connected = 0)
+/obj/machinery/atmospherics/components/proc/icon_addintact(var/obj/machinery/atmospherics/node)
 	var/image/img = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "pipe_intact", get_dir(src,node), node.pipe_color)
 	underlays += img
 
-	return connected | img.dir
+	return img.dir
 
 /obj/machinery/atmospherics/components/proc/icon_addbroken(var/connected = 0)
 	var/unconnected = (~connected) & initialize_directions
@@ -56,7 +56,7 @@ Iconnery
 
 	for(DEVICE_TYPE_LOOP) //adds intact pieces
 		if(NODE_I)
-			connected = icon_addintact(NODE_I, connected)
+			connected |= icon_addintact(NODE_I)
 
 	icon_addbroken(connected) //adds broken pieces
 
@@ -64,17 +64,12 @@ Iconnery
 /*
 Pipenet stuff; housekeeping
 */
-/obj/machinery/atmospherics/components/Destroy()
-	for(DEVICE_TYPE_LOOP)
-		var/obj/machinery/atmospherics/N = NODE_I
-		if(N)
-			N.disconnect(src)
-			NODE_I = null
-			nullifyPipenet(PARENT_I)
+
+/obj/machinery/atmospherics/components/nullifyNode(I)
 	..()
-
-
-
+	nullifyPipenet(PARENT_I)
+	qdel(AIR_I)
+	AIR_I = null
 
 /obj/machinery/atmospherics/components/construction()
 	..()
@@ -93,6 +88,7 @@ Pipenet stuff; housekeeping
 		if(reference == PARENT_I)
 			var/datum/pipeline/P = PARENT_I
 			P.other_airs -= AIR_I
+			P.other_atmosmch -= src
 			PARENT_I = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
