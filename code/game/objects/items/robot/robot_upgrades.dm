@@ -169,9 +169,9 @@
 	else
 		for(var/obj/item/weapon/pickaxe/P in R.module.modules)
 			qdel(P)
-		for(var/obj/item/weapon/shovel/S in R.module.modules)
-			qdel(S)
-		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(src)
+		/*for(var/obj/item/weapon/shovel/S in R.module.modules)
+			qdel(S)*/ //shovels have unique functionality.
+		R.module.modules += new /obj/item/weapon/pickaxe/drill/diamonddrill(R.module) // can't be used unless drill has the module for its loc
 		R.module.rebuild()
 		return 1
 
