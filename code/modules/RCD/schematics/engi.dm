@@ -244,10 +244,8 @@
 		if(href_list["target"])
 			D = locate(href_list["target"])
 			if(!istype(D))
-				usr << "we lost the door"
 				return
 			if(!D.Adjacent(usr))
-				usr << "too far away"
 				return
 			D.name = copytext(sanitize(href_list["new_name"]), 1, MAX_NAME_LEN)
 			master.update_options_menu(list2params(list(D)))
@@ -263,10 +261,8 @@
 		if(href_list["target"])
 			D = locate(href_list["target"])
 			if(!istype(D))
-				usr << "we lost the door"
 				return
 			if(!D.Adjacent(usr))
-				usr << "too far away"
 				return
 		var/list/new_access = new
 		//Along with oneAccess, the hrefs for access levels get called, as such we process them here before we return 1
