@@ -1,7 +1,7 @@
 
 /obj/machinery/atmospherics/unary/tank
 	icon = 'icons/obj/atmospherics/pipe_tank.dmi'
-	icon_state = "intact"
+	icon_state = "co2"
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 	starting_volume = 2000 //in liters, 1 meters by 1 meters by 2 meters
@@ -32,7 +32,7 @@
 
 
 /obj/machinery/atmospherics/unary/tank/toxins
-	icon = 'icons/obj/atmospherics/orange_pipe_tank.dmi'
+	icon_state = "plasma"
 	name = "Pressure Tank (Plasma)"
 
 /obj/machinery/atmospherics/unary/tank/toxins/New()
@@ -42,7 +42,7 @@
 
 
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b
-	icon = 'icons/obj/atmospherics/red_orange_pipe_tank.dmi'
+	icon_state = "plasma"
 	name = "Pressure Tank (Oxygen + Plasma)"
 
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b/New()
@@ -55,7 +55,7 @@
 
 
 /obj/machinery/atmospherics/unary/tank/oxygen
-	icon = 'icons/obj/atmospherics/blue_pipe_tank.dmi'
+	icon_state = "o2"
 	name = "Pressure Tank (Oxygen)"
 
 /obj/machinery/atmospherics/unary/tank/oxygen/New()
@@ -64,7 +64,7 @@
 	air_contents.oxygen = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/unary/tank/nitrogen
-	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
+	icon_state = "n2"
 	name = "Pressure Tank (Nitrogen)"
 
 /obj/machinery/atmospherics/unary/tank/nitrogen/New()
@@ -73,7 +73,7 @@
 	air_contents.nitrogen = (25*ONE_ATMOSPHERE)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/unary/tank/air
-	icon = 'icons/obj/atmospherics/red_pipe_tank.dmi'
+	icon_state = "air"
 	name = "Pressure Tank (Air)"
 
 /obj/machinery/atmospherics/unary/tank/air/New()
@@ -83,11 +83,7 @@
 	air_contents.nitrogen = (25*ONE_ATMOSPHERE*N2STANDARD)*(starting_volume)/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
-	if(node)
-		icon_state = "intact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "exposed"
+	..()
 
 /obj/machinery/atmospherics/unary/tank/disconnect(obj/machinery/atmospherics/reference)
 	..()

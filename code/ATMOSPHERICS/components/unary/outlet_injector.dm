@@ -23,13 +23,17 @@
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon()
 	if(node)
 		if(on && !(stat & NOPOWER))
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
+			icon_state = "hon"
 		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+			icon_state = "hoff"
 	else
 		icon_state = "exposed"
 		on = 0
-
+	..()
+	if (istype(loc, /turf/simulated/floor) && node)
+		var/turf/simulated/floor/floor = loc
+		if(floor.floor_tile && node.alpha == 128)
+			underlays.Cut()
 	return
 
 /obj/machinery/atmospherics/unary/outlet_injector/power_change()

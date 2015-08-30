@@ -4,7 +4,6 @@
 	var/vent_pump = null
 	var/mode = "stabilize"
 	var/vent_type = 0//0 for unary vents, 1 for DP vents
-
 	var/list/modes = list("stabilize", "purge")
 
 /datum/automation/set_vent_pump_mode/Export()

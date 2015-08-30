@@ -23,25 +23,23 @@ Pipelines + Other Objects -> Pipe network
 	active_power_usage = 0
 	power_channel = ENVIRON
 	var/nodealert = 0
-
+	var/update_icon_ready = 0 // don't update icons before they're ready or if they don't want to be
 	var/starting_volume = 200
 	// Which directions can we connect with?
 	var/initialize_directions = 0
-
-	// Pipe painter color setting.
-	var/_color
-
-	var/list/available_colors
-
+	var/can_be_coloured = 0
+	var/image/centre_overlay = null
 	// Investigation logs
 	var/log
-
+	var/global/list/node_con = list()
+	var/global/list/node_ex = list()
 	var/pipe_flags = 0
 	var/obj/machinery/atmospherics/mirror //not actually an object reference, but a type. The reflection of the current pipe
-
+	var/default_colour = null
 	var/image/pipe_image
 
 	var/piping_layer = PIPING_LAYER_DEFAULT //used in multi-pipe-on-tile - pipes only connect if they're on the same pipe layer
+
 
 /obj/machinery/atmospherics/New()
 	..()
@@ -57,7 +55,63 @@ Pipelines + Other Objects -> Pipe network
 			M.client.screen -= pipe_image
 		pipe_image = null
 	atmos_machines -= src
+	centre_overlay = null
 	..()
+
+
+
+/obj/machinery/atmospherics/update_icon(var/adjacent_procd,node_list)
+	if(!can_be_coloured && color)
+		default_colour = color
+		color = null
+	else if(can_be_coloured && default_colour)
+		color = default_colour
+		default_colour = null
+	if((!node_con.len)||(!node_ex.len))
+		node_con["[NORTH]"] = image('icons/obj/pipes.dmi',"pipe_intact",dir = 1)
+		node_con["[SOUTH]"] = image('icons/obj/pipes.dmi',"pipe_intact",dir = 2)
+		node_con["[EAST]"] = image('icons/obj/pipes.dmi',"pipe_intact",dir = 4)
+		node_con["[WEST]"] = image('icons/obj/pipes.dmi',"pipe_intact",dir = 8)
+		node_ex["[NORTH]"] = image('icons/obj/pipes.dmi',"pipe_exposed",dir = 1)
+		node_ex["[SOUTH]"] = image('icons/obj/pipes.dmi',"pipe_exposed",dir = 2)
+		node_ex["[EAST]"] = image('icons/obj/pipes.dmi',"pipe_exposed",dir = 4)
+		node_ex["[WEST]"] = image('icons/obj/pipes.dmi',"pipe_exposed",dir = 8)
+	alpha = invisibility ? 128 : 255
+	if (!update_icon_ready)
+		update_icon_ready = 1
+	else underlays.Cut()
+	var/list/missing_nodes = list()
+	for(var/direction in cardinal)
+		if(direction & initialize_directions)
+			missing_nodes += direction
+	for (var/obj/machinery/atmospherics/connected_node in node_list)
+		var/con_dir = get_dir(src, connected_node)
+		missing_nodes -= con_dir // finds all the directions that aren't pointed to by a node
+		var/image/nodecon = node_con["[con_dir]"]
+		if (default_colour&& connected_node.default_colour) // if both pipes have special colours - average them
+			var/list/centre_colour = GetHexColors(default_colour)
+			var/list/other_colour = GetHexColors(connected_node.default_colour)
+			var/list/average_colour = list(((centre_colour[1]+other_colour[1])/2),((centre_colour[2]+other_colour[2])/2),((centre_colour[3]+other_colour[3])/2))
+			nodecon.color = rgb(average_colour[1],average_colour[2],average_colour[3])
+		else if (color)
+			nodecon.color = null
+		else if (connected_node.color)
+			nodecon.color = connected_node.color
+		else if(default_colour)
+			nodecon.color = default_colour
+		else if(connected_node.default_colour && connected_node.default_colour != "#B4B4B4")
+			nodecon.color = connected_node.default_colour
+		else nodecon.color = "#B4B4B4"
+		underlays += nodecon
+		if (!adjacent_procd && connected_node.update_icon_ready)
+			connected_node.update_icon(1)
+	for (var/missing_dir in missing_nodes)
+		var/image/nodeex = node_ex["[missing_dir]"]
+		if(!color)
+			nodeex.color = default_colour ? default_colour : "#B4B4B4"
+		else nodeex.color = null
+		underlays += nodeex
+
 
 /obj/machinery/atmospherics/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
 	piping_layer = new_layer
@@ -160,9 +214,6 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/disconnect() called tick#: [world.time]")
-
-/obj/machinery/atmospherics/update_icon()
-	return null
 
 /obj/machinery/atmospherics/proc/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atmospherics/proc/buildFrom() called tick#: [world.time]")

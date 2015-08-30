@@ -22,8 +22,7 @@ obj/machinery/atmospherics/trinary/mixer/update_icon()
 	else
 		icon_state = "intact_off"
 		on = 0
-
-	return
+	..()
 
 obj/machinery/atmospherics/trinary/mixer/power_change()
 	var/old_stat = stat
@@ -34,6 +33,7 @@ obj/machinery/atmospherics/trinary/mixer/power_change()
 obj/machinery/atmospherics/trinary/mixer/New()
 	..()
 	air3.volume = 300
+
 
 obj/machinery/atmospherics/trinary/mixer/process()
 	. = ..()
@@ -144,6 +144,7 @@ obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
 	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/mixer/mirrored/update_icon()
+	..()
 	if(stat & NOPOWER)
 		icon_state = "intactm_off"
 	else if(node2 && node3 && node1)
@@ -151,5 +152,4 @@ obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
 	else
 		icon_state = "intactm_off"
 		on = 0
-
 	return

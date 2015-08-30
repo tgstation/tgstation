@@ -30,19 +30,12 @@ Thus, the two variables affect pump operation are set in New():
 	on = 1
 	icon_state = "intact_on"
 
-/obj/machinery/atmospherics/binary/volume_pump/update_icon()
+/obj/machinery/atmospherics/binary/volume_pump/update_icon(var/adjacent_procd)
 	if(stat & NOPOWER)
 		icon_state = "intact_off"
 	else if(node1 && node2)
 		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-	return
+	..()
 
 /obj/machinery/atmospherics/binary/volume_pump/process()
 	. = ..()

@@ -39,10 +39,14 @@
 /obj/machinery/atmospherics/unary/vent/update_icon()
 	if(node)
 		icon_state = "intact"
-		//dir = get_dir(src, node)
-
 	else
 		icon_state = "exposed"
+	..()
+	if (istype(loc, /turf/simulated/floor) && node)
+		var/turf/simulated/floor/floor = loc
+		if(floor.floor_tile && node.alpha == 128)
+			underlays.Cut()
+
 
 
 /obj/machinery/atmospherics/unary/vent/initialize()
@@ -56,11 +60,7 @@
 
 
 /obj/machinery/atmospherics/unary/vent/hide(var/i)
-	if(node)
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "exposed"
+	update_icon()
 
 /obj/machinery/atmospherics/unary/vent/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	if(pipe)
