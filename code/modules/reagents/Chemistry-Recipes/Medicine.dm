@@ -57,14 +57,14 @@
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = "mine_salve"
 	result = "mine_salve"
 	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
 	id = "mine_salve"
@@ -94,6 +94,13 @@
 	required_reagents = list("mercury" = 1, "chlorine" = 1)
 	result_amount = 2
 	required_temp = 374
+
+/datum/chemical_reaction/hunchback
+	name = "Hunchback"
+	id = "hunchback"
+	result = "hunchback"
+	required_reagents = list("rum" = 1, "cola" = 1, "tomatojuice" = 1)
+	result_amount = 3
 
 /datum/chemical_reaction/potass_iodide
 	name = "Potassium Iodide"

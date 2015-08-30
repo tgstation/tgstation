@@ -12,14 +12,14 @@
 	result = "lube"
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
-	
+
 /datum/chemical_reaction/spraytan
 	name = "Spray Tan"
 	id = "spraytan"
 	result = "spraytan"
 	required_reagents = list("orangejuice" = 1, "oil" = 1)
 	result_amount = 2
-	
+
 /datum/chemical_reaction/spraytan2
 	name = "Spray Tan"
 	id = "spraytan"
@@ -352,3 +352,17 @@
 	result = "saltpetre"
 	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
 	result_amount = 3
+
+/datum/chemical_reaction/phosphorus_trichloride
+	name = "Phosphorus Trichloride"
+	id = "phosphorus_trichloride"
+	result = "phosphorus_trichloride"
+	required_reagents = list("phosphorus" = 1, "chlorine" = 3)
+	result_amount = 4
+
+/datum/chemical_reaction/methyl_phosphonous_dichloride
+	name = "Methyl Phosphonous Dichloride"
+	id = "methyl_phosphonous_dichloride"
+	result = "methyl_phosphonous_dichloride"
+	required_reagents = list("phosphorus_trichloride" = 1, "moonshine" = 1)
+	result_amount = 2
