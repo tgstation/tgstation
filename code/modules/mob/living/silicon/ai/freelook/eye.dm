@@ -22,8 +22,13 @@
 		forceEnter(destination)
 
 		cameranet.visibility(src)
-		if(ai.client)
+		if(ai.client && ai.client.eye != src) // Set the eye to us and give the AI the sight & visibility flags it needs.
 			ai.client.eye = src
+			ai.sight |= SEE_TURFS
+			ai.sight |= SEE_MOBS
+			ai.sight |= SEE_OBJS
+			ai.see_in_dark = 8
+			ai.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 		//Holopad
 		if(istype(ai.current, /obj/machinery/hologram/holopad))
@@ -142,8 +147,12 @@
 		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 		src.eyeobj.forceMove(src.loc)
 
-	if(client && client.eye)
+	if(client && client.eye) // Reset these things so the AI can't view through walls and stuff.
 		client.eye = src
+		sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+		see_in_dark = 0
+		see_invisible = SEE_INVISIBLE_LIVING
+
 	for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
 		c.remove(eyeobj)
 
