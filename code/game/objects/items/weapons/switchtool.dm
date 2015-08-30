@@ -28,7 +28,7 @@
 /obj/item/weapon/switchtool/preattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(istype(target, /obj/item/weapon/storage)) //we place automatically
 		return
-	if(deployed && user.Adjacent(target))
+	if(deployed && proximity_flag)
 		target.attackby(deployed, user)
 		deployed.afterattack(target, user, proximity_flag, click_parameters)
 		if(deployed.loc != src)
