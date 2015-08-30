@@ -1,34 +1,46 @@
 /obj/machinery/atmospherics/unary/vent_scrubber
-	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
-	icon_state = "off"
+	icon				= 'icons/obj/atmospherics/vent_scrubber.dmi'
+	icon_state			= "off"
 
-	name = "Air Scrubber"
-	desc = "Has a valve and pump attached to it"
-	use_power = 1
+	name				= "\improper Air Scrubber"
+	desc				= "Has a valve and pump attached to it"
+	use_power			= 1
 
-	level = 1
+	level				= 1
 
-	var/id_tag = null
-	var/frequency = 1439
+	var/id_tag			= null
+	var/frequency		= 1439
 	var/datum/radio_frequency/radio_connection
 
-	var/on = 0
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
-	var/scrub_CO2 = 1
-	var/scrub_Toxins = 1
-	var/scrub_N2O = 0
-	var/scrub_O2 = 0
-	var/scrub_N2 = 0
+	var/on				= 0
+	var/scrubbing		= 1 //0 = siphoning, 1 = scrubbing
+	var/scrub_CO2		= 1
+	var/scrub_Toxins	= 1
+	var/scrub_N2O		= 0
+	var/scrub_O2		= 0
+	var/scrub_N2		= 0
 
-	var/volume_rate = 1000 // 120
-	var/panic = 0 //is this scrubber panicked?
-	var/welded = 0
+	var/volume_rate		= 1000 // 120
+	var/panic			= 0 //is this scrubber panicked?
+	var/welded			= 0
 
 	var/area_uid
 	var/radio_filter_out
 	var/radio_filter_in
 
-	machine_flags = MULTITOOL_MENU
+	machine_flags		= MULTITOOL_MENU
+
+/obj/machinery/atmospherics/unary/vent_scrubber/on
+	on					= 1
+	icon_state			= "on"
+
+/obj/machinery/atmospherics/unary/vent_scrubber/on/burn_chamber
+	name				= "\improper Burn Chamber Scrubber" 
+
+	frequency			= 1449
+	id_tag				= "inc_out"
+
+	scrub_Toxins		= 0
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
