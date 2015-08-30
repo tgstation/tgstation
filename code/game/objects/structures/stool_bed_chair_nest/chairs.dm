@@ -3,7 +3,7 @@
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
 	locked_should_lie = 0
-	dense_when_locking = 1
+	dense_when_locking = 0
 
 	var/sheet_type = /obj/item/stack/sheet/metal
 	var/sheet_amt = 2
