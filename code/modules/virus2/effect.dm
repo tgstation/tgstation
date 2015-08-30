@@ -365,12 +365,8 @@
 	name = "Biolobulin Effect"
 	stage = 4
 /datum/disease2/effect/orbweapon/activate(var/mob/living/carbon/mob,var/multiplier)
-	//
-
-	var/obj/item/toy/snappop/virus = new /obj/item/toy/snappop/virus
-	mob.equip_to_slot(virus, slot_l_hand)
-
-
+	var/obj/item/toy/snappop/virus/virus = new /obj/item/toy/snappop/virus
+	mob.equip_to_slot_or_drop(virus, slot_l_hand)
 
 /obj/item/clothing/mask/gas/virusclown_hat
 
