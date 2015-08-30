@@ -487,12 +487,12 @@
 	if(!isnull(seed))
 
 		if(draw_warnings && health <= (seed.endurance / 2))
-			overlays += "over_lowhealth3"
+			overlays += icon(seed.plant_dmi,"over_lowhealth3")
 
 		if(dead)
-			overlays += "[seed.plant_icon]-dead"
+			overlays += icon(seed.plant_dmi,"[seed.plant_icon]-dead")
 		else if(harvest)
-			overlays += "[seed.plant_icon]-harvest"
+			overlays += icon(seed.plant_dmi,"[seed.plant_icon]-harvest")
 		else if(age < seed.maturation)
 
 			var/t_growthstate
@@ -501,10 +501,10 @@
 			else
 				t_growthstate = round(seed.maturation / seed.growth_stages)
 
-			overlays += "[seed.plant_icon]-grow[t_growthstate]"
+			overlays += icon(seed.plant_dmi,"[seed.plant_icon]-grow[t_growthstate]")
 			lastproduce = age
 		else
-			overlays += "[seed.plant_icon]-grow[seed.growth_stages]"
+			overlays += icon(seed.plant_dmi,"[seed.plant_icon]-grow[seed.growth_stages]")
 
 	//Draw the cover.
 	if(closed_system)

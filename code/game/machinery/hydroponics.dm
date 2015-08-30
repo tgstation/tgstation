@@ -722,8 +722,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				user.client.screen -= O
 			O.dropped(user)
 			updateicon()
-			if(istype(0, /obj/item/seeds/replicapod))
-				var/obj/item/seeds/replicapod/RP = O
+			if(istype(0, /obj/item/seeds/dionanode))
+				var/obj/item/seeds/dionanode/RP = O
 				if(!RP.source)
 					RP.request_player()
 		else
@@ -983,7 +983,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/hydroponics/proc/update_tray() called tick#: [world.time]")
 	harvest = 0
 	lastproduce = age
-	if((yieldmod * myseed.yield) <= 0 || istype(myseed,/obj/item/seeds/replicapod))
+	if((yieldmod * myseed.yield) <= 0 || istype(myseed,/obj/item/seeds/dionanode))
 		user << text("<span class='warning'>You fail to harvest anything useful.</span>")
 	else
 		user << text("You harvest from the [myseed.plantname].")

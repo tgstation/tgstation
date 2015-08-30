@@ -106,6 +106,7 @@ proc/populate_seed_list()
 	var/alter_temp                  // If set, the plant will periodically alter local temp by this amount.
 
 	// Cosmetics.
+	var/plant_dmi = 'icons/obj/hydroponics.dmi'// DMI  to use for the plant growing in the tray.
 	var/plant_icon                  // Icon to use for the plant growing in the tray.
 	var/product_icon                // Base to use for fruit coming from this plant (if a vine).
 	var/product_colour              // Colour to apply to product base (if a vine).
@@ -115,6 +116,8 @@ proc/populate_seed_list()
 	var/flowers                     // Plant has a flower overlay.
 	var/flower_icon = "vine_fruit"  // Which overlay to use.
 	var/flower_colour               // Which colour to use.
+
+	var/mob_drop					// Seed type dropped by the mobs when it dies without an host
 
 //Creates a random seed. MAKE SURE THE LINE HAS DIVERGED BEFORE THIS IS CALLED.
 /datum/seed/proc/randomize()
@@ -188,7 +191,7 @@ proc/populate_seed_list()
 		list("seed-cocoapod",           "cocoapod"),
 		list("seed-cherry",             "cherry"),
 		list("seed-kudzu",              "kudzu"),
-		list("seed-replicapod",         "replicapod")
+		list("seed-dionanode",          "dionanode")
 		))
 
 	packet_icon = plant_icons[1]
@@ -1623,10 +1626,12 @@ proc/populate_seed_list()
 	name = "diona"
 	seed_name = "diona"
 	seed_noun = "nodes"
-	display_name = "replicant pods"
-	packet_icon = "seed-replicapod"
+	display_name = "diona nodes"
+	packet_icon = "seed-dionanode"
 	products = list(/mob/living/carbon/monkey/diona)
-	plant_icon = "replicapod"
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "dionanode"
+	mob_drop = /obj/item/seeds/dionanode
 	product_requires_player = 1
 	immutable = 1
 

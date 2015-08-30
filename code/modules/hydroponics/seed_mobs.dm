@@ -20,9 +20,12 @@
 			host.stat = 2 // handle death() properly. Better safe than etc.
 			host.visible_message("<span class='warning'><b>[host] is malformed and unable to survive. It expires pitifully, leaving behind some seeds.</span>")
 
-			var/obj/item/seeds/S = new(get_turf(host))
-			S.seed_type = name
-			S.update_seed()
+			if(mob_drop)
+				new mob_drop(get_turf(host))
+			else
+				var/obj/item/seeds/S = new(get_turf(host))
+				S.seed_type = name
+				S.update_seed()
 
 //poll="Someone is harvesting [display_name]. Would you like to play as one?"
 
