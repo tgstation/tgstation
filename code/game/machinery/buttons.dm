@@ -6,7 +6,7 @@
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
 	var/obj/item/device/assembly/device
-	var/obj/item/weapon/airlock_electronics/board
+	var/obj/item/weapon/electronics/airlock/board
 	var/device_type = null
 	var/id = null
 
@@ -79,7 +79,7 @@
 			device = W
 			user << "<span class='notice'>You add [W] to the button.</span>"
 
-		if(!board && istype(W, /obj/item/weapon/airlock_electronics))
+		if(!board && istype(W, /obj/item/weapon/electronics/airlock))
 			if(!user.unEquip(W))
 				user << "<span class='warning'>\The [W] is stuck to you!</span>"
 				return

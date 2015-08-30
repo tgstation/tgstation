@@ -398,7 +398,7 @@
 						user.visible_message(\
 							"[user.name] has removed the power control board from [src.name]!",\
 							"<span class='notice'>You remove the power control board.</span>")
-						new /obj/item/weapon/module/power_control(loc)
+						new /obj/item/weapon/electronics/apc(loc)
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			update_icon()
@@ -496,7 +496,7 @@
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 
-	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/weapon/electronics/apc) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -505,7 +505,7 @@
 				has_electronics = 1
 				user << "<span class='notice'>You place the power control board inside the frame.</span>"
 				qdel(W)
-	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/weapon/electronics/apc) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "<span class='warning'>You cannot put the board inside, the frame is damaged!</span>"
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
@@ -1232,15 +1232,7 @@
 #undef APC_UPDATE_ICON_COOLDOWN
 
 /*Power module, used for APC construction*/
-/obj/item/weapon/module
-	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
-	w_class = 2.0
-	item_state = "electronic"
-	flags = CONDUCT
-
-
-/obj/item/weapon/module/power_control
+/obj/item/weapon/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."

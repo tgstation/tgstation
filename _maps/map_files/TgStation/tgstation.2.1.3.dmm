@@ -21342,8 +21342,8 @@
 /area/storage/tools)
 "aSo" = (
 /obj/structure/table,
-/obj/item/weapon/module/power_control,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/apc,
+/obj/item/weapon/electronics/airlock,
 /turf/simulated/floor/plasteel,
 /area/storage/tools)
 "aSp" = (
@@ -24734,7 +24734,7 @@
 	dir = 8;
 	 layer = 2.9
 	},
-/obj/item/weapon/module/power_control,
+/obj/item/weapon/electronics/apc,
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
@@ -39267,8 +39267,8 @@
 /area/storage/tech)
 "bCh" = (
 /obj/structure/table,
-/obj/item/weapon/module/power_control,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/apc,
+/obj/item/weapon/electronics/airlock,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -44857,7 +44857,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint2)
 "bMS" = (
-/obj/item/weapon/airalarm_electronics,
+/obj/item/weapon/electronics/airalarm,
 /obj/item/weapon/circuitboard/seed_extractor,
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -54769,8 +54769,8 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -55638,9 +55638,9 @@
 /area/engine/engineering)
 "ciF" = (
 /obj/structure/table,
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/module/power_control,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/apc,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -55687,7 +55687,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/solar_control,
-/obj/item/weapon/tracker_electronics,
+/obj/item/weapon/electronics/tracker,
 /obj/item/weapon/paper/solar,
 /turf/simulated/floor/plasteel,
 /area/engine/engineering)
@@ -58488,8 +58488,8 @@
 	 pixel_y = -7
 	},
 /obj/item/stack/cable_coil,
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
 /turf/simulated/floor/plasteel,
 /area/engine/engineering)
 "cnX" = (

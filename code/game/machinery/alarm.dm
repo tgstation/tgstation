@@ -750,7 +750,7 @@
 				if (do_after(user, 20, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
-						new /obj/item/weapon/airalarm_electronics( src.loc )
+						new /obj/item/weapon/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
@@ -777,7 +777,7 @@
 						update_icon()
 				return
 		if(0)
-			if(istype(W, /obj/item/weapon/airalarm_electronics))
+			if(istype(W, /obj/item/weapon/electronics/airalarm))
 				if(user.unEquip(W))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					buildstage = 1
@@ -817,14 +817,9 @@
 AIR ALARM CIRCUIT
 Just a object used in constructing air alarms
 */
-/obj/item/weapon/airalarm_electronics
+/obj/item/weapon/electronics/airalarm
 	name = "air alarm electronics"
-	icon = 'icons/obj/module.dmi'
 	icon_state = "airalarm_electronics"
-	desc = "Looks like a circuit. Probably is."
-	w_class = 2.0
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
-
 
 /*
 AIR ALARM ITEM
@@ -979,11 +974,11 @@ FIRE ALARM
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
 							else
 								user << "<span class='notice'>You pry out the circuit.</span>"
-								new /obj/item/weapon/firealarm_electronics(user.loc)
+								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
 			if(0)
-				if(istype(W, /obj/item/weapon/firealarm_electronics))
+				if(istype(W, /obj/item/weapon/electronics/firealarm))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					qdel(W)
 					buildstage = 1
@@ -1140,13 +1135,9 @@ FIRE ALARM
 FIRE ALARM CIRCUIT
 Just a object used in constructing fire alarms
 */
-/obj/item/weapon/firealarm_electronics
+/obj/item/weapon/electronics/firealarm
 	name = "fire alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = 2.0
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*

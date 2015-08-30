@@ -357,7 +357,7 @@ RCD
 							activate()
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 
-							T.electronics = new/obj/item/weapon/airlock_electronics( src.loc )
+							T.electronics = new/obj/item/weapon/electronics/airlock( src.loc )
 
 							if(conf_access)
 								T.electronics.conf_access = conf_access.Copy()

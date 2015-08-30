@@ -86,3 +86,14 @@
 			usr << "<span class='notice'>You cut the cables and disassemble the unused power terminal.</span>"
 			qdel(T)
 	return 1
+
+
+/obj/item/weapon/electronics
+	desc = "Looks like a circuit. Probably is."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "door_electronics"
+	item_state = "electronic"
+	flags = CONDUCT
+	w_class = 2
+	origin_tech = "engineering=2;programming=1"
+	materials = list(MAT_METAL=50, MAT_GLASS=50)
