@@ -6,10 +6,8 @@
 			color = "#C80000" // rgb: 200, 0, 0
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	var/datum/reagent/blood/self = src
-	src = null
-	if(self.data && self.data["viruses"])
-		for(var/datum/disease/D in self.data["viruses"])
+	if(data && data["viruses"])
+		for(var/datum/disease/D in data["viruses"])
 
 			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
 				continue
@@ -28,7 +26,7 @@
 		src.data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
 		if(src.data["viruses"] || data["viruses"])
 
-			var/list/mix1 = src.data["viruses"]
+			var/list/mix1 = data["viruses"]
 			var/list/mix2 = data["viruses"]
 
 			// Stop issues with the list changing during mixing.
@@ -51,39 +49,36 @@
 /datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
 	if(!istype(T))
 		return
-	var/datum/reagent/blood/self = src
-	src = null
 	if(reac_volume < 3)
 		return
-	//var/datum/disease/D = self.data["virus"]
-	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
+	if(!data["donor"] || istype(data["donor"], /mob/living/carbon/human))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
 			blood_prop = new(T)
-			blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
+			blood_prop.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
-		for(var/datum/disease/D in self.data["viruses"])
+		for(var/datum/disease/D in data["viruses"])
 			var/datum/disease/newVirus = D.Copy(1)
 			blood_prop.viruses += newVirus
 			newVirus.holder = blood_prop
 
 
-	else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+	else if(istype(data["donor"], /mob/living/carbon/monkey))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in self.data["viruses"])
+		for(var/datum/disease/D in data["viruses"])
 			var/datum/disease/newVirus = D.Copy(1)
 			blood_prop.viruses += newVirus
 			newVirus.holder = blood_prop
 
-	else if(istype(self.data["donor"], /mob/living/carbon/alien))
+	else if(istype(data["donor"], /mob/living/carbon/alien))
 		var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in self.data["viruses"])
+		for(var/datum/disease/D in data["viruses"])
 			var/datum/disease/newVirus = D.Copy(1)
 			blood_prop.viruses += newVirus
 			newVirus.holder = blood_prop
@@ -96,13 +91,11 @@
 	color = "#C81040" // rgb: 200, 16, 64
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	var/datum/reagent/vaccine/self = src
-	src = null
-	if(islist(self.data) && method == INGEST)
+	if(islist(data) && method == INGEST)
 		for(var/datum/disease/D in M.viruses)
-			if(D.GetDiseaseID() in self.data)
+			if(D.GetDiseaseID() in data)
 				D.cure()
-		M.resistances |= self.data
+		M.resistances |= data
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
@@ -122,7 +115,6 @@
 /datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
-	src = null
 	if(reac_volume >= 10)
 		T.MakeSlippery()
 
@@ -143,8 +135,6 @@
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	src = null
-
 	if(istype(O,/obj/item))
 		var/obj/item/Item = O
 		Item.extinguish()
@@ -250,7 +240,6 @@
 
 /datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
-	src = null
 	if(reac_volume >= 1)
 		T.MakeSlippery(2)
 
@@ -384,7 +373,6 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 
 /datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	src = null
 	if(method != TOUCH)
 		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
@@ -466,7 +454,6 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(!istype(T, /turf/space))
 		new /obj/effect/decal/cleanable/dirt(T)
 
@@ -542,7 +529,6 @@
 	return
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
@@ -587,7 +573,6 @@
 	..()
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
@@ -646,10 +631,6 @@
 
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
-	if(istype(T, /turf/simulated/floor))
-		var/turf/simulated/floor/F = T
-		if(reac_volume >= 1)
-			F.dirt = 0
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || VAPOR)
@@ -719,7 +700,6 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	src = null
 	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
@@ -730,7 +710,6 @@
 	color = "#535E66" // rgb: 83, 94, 102
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
-	src = null
 	if(method==PATCH || method==INGEST || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 

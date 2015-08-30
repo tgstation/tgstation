@@ -66,7 +66,6 @@
 	color = "#aa77aa"
 	icon_state = "vinefloor"
 	broken_states = list()
-	ignoredirt = 1
 
 
 //All of this shit is useless for vines

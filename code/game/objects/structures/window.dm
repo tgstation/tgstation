@@ -168,7 +168,7 @@
 
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
+	if(M.melee_damage_upper <= 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
 		return
 
 	attack_generic(M, M.melee_damage_upper)
