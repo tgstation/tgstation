@@ -156,10 +156,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/fake_flood/Destroy()
 	SSobj.processing.Remove(src)
-	del(flood_turfs)
+	qdel(flood_turfs)
 	if(target.client) target.client.images.Remove(flood_images)
 	target = null
-	del(flood_images)
+	qdel(flood_images)
 	return
 
 /obj/effect/hallucination/simple/xeno
@@ -188,19 +188,20 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(!U.welded)
 			pump = U
 			break
-	xeno = new(pump.loc,target)
-	sleep(10)
-	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
-	sleep(10)
-	xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
-	xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
-	sleep(10)
-	var/xeno_name = xeno.name
-	target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
-	sleep(10)
-	qdel(xeno)
-	target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
+	if(pump)
+		xeno = new(pump.loc,target)
+		sleep(10)
+		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		xeno.throw_at(target,7,1, spin = 0, diagonals_first = 1)
+		sleep(10)
+		xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi',-32,-32)
+		xeno.throw_at(pump,7,1, spin = 0, diagonals_first = 1)
+		sleep(10)
+		var/xeno_name = xeno.name
+		target << "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>"
+		sleep(10)
+		qdel(xeno)
+		target << "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>"
 	qdel(src)
 
 /obj/effect/hallucination/singularity_scare

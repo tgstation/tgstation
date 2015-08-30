@@ -9,7 +9,7 @@
 	var/mineral = null
 	var/typetext = ""
 	var/icontext = ""
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
@@ -540,7 +540,7 @@
 			src.state = 0
 			src.name = "secured airlock assembly"
 
-	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 )
+	else if(istype(W, /obj/item/weapon/electronics/airlock) && state == 1 )
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", \
 							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
@@ -568,9 +568,9 @@
 			user << "<span class='notice'>You remove the airlock electronics.</span>"
 			src.state = 1
 			src.name = "wired airlock assembly"
-			var/obj/item/weapon/airlock_electronics/ae
+			var/obj/item/weapon/electronics/airlock/ae
 			if (!electronics)
-				ae = new/obj/item/weapon/airlock_electronics( src.loc )
+				ae = new/obj/item/weapon/electronics/airlock( src.loc )
 			else
 				ae = electronics
 				electronics = null

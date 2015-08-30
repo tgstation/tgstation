@@ -477,7 +477,7 @@
 				if(lings_aboard)
 					if(event == ORION_TRAIL_LING || prob(55))
 						event = ORION_TRAIL_LING_ATTACK
-						event()
+				event()
 			turns += 1
 		if(emagged)
 			var/mob/living/carbon/M = usr //for some vars
@@ -568,13 +568,13 @@
 		turns += 1
 		event = null
 	else if(href_list["useengine"]) //use parts
-		engine -= 1
+		engine = max(0, --engine)
 		event = null
 	else if(href_list["useelec"]) //use parts
-		electronics -= 1
+		electronics = max(0, --electronics)
 		event = null
 	else if(href_list["usehull"]) //use parts
-		hull -= 1
+		hull = max(0, --hull)
 		event = null
 	else if(href_list["wait"]) //wait 3 days
 		food -= ((alive+lings_aboard)*2)*3
@@ -789,7 +789,7 @@
 
 		if(ORION_TRAIL_LING)
 			eventdat += "Strange reports warn of changelings infiltrating crews on trips to Orion..."
-			if(settlers.len <= 1)
+			if(settlers.len <= 2)
 				eventdat += "<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];eventclose=1'>Continue</a></P>"
 				eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
