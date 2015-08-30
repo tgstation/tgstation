@@ -9,6 +9,7 @@
 	enemy_name = "black ops agent"
 	var/AI_magnet_applied = FALSE
 	var/datum/mind/blackops_objective_holder = new/datum/mind
+	disable_nuke = 1
 
 /datum/game_mode/nuclear/blackops/announce()
 	world << "<B>The current game mode is - Black Ops!</B>"
@@ -24,12 +25,13 @@
 			synd_spawn += get_turf(A)
 			continue
 
-	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
+	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly // no you arent
+	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
 
 	var/leader_selected = 0
 	var/agent_number = 1
 	var/spawnpos = 1
-	forge_blackops_objectives(blackops_objective_holder)
+	forge_blackops_objectives()
 	for(var/datum/mind/synd_mind in syndicates)
 		if(spawnpos > synd_spawn.len)
 			spawnpos = 2
@@ -49,7 +51,8 @@
 
 	if(uplinklocker)
 		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
-
+	if(nuke_spawn)
+		new /obj/machinery/computer/syndicate_blackops_console(nuke_spawn.loc)
 	return ..()
 
 /datum/game_mode/nuclear/blackops/proc/greet_blackops(datum/mind/syndicate, you_are=1)
@@ -79,37 +82,56 @@
 	return
 
 
-/datum/game_mode/nuclear/blackops/proc/forge_blackops_objectives(datum/mind/syndicate)
+/datum/game_mode/nuclear/blackops/proc/forge_blackops_objectives()
 	// Blacks ops, being a nuke squad with no nuke needed, get 10 objectives to accomplish.
 	// It's held on the holder mind so that the crew can share objectives.
 	var/datum/objective/assassinate/syndobj1 = new
 	syndobj1.owner = blackops_objective_holder
 	blackops_objective_holder.objectives += syndobj1
+	syndobj1.find_target()
+
 	var/datum/objective/assassinate/syndobj2 = new
 	syndobj2.owner = blackops_objective_holder
 	blackops_objective_holder.objectives += syndobj2
+	syndobj2.find_target()
+
 	var/datum/objective/assassinate/syndobj3 = new
 	syndobj3.owner = blackops_objective_holder
 	blackops_objective_holder.objectives += syndobj3
+	syndobj3.find_target()
+
 	var/datum/objective/kidnap/syndobj4 = new
 	syndobj4.owner = blackops_objective_holder
 	blackops_objective_holder.objectives += syndobj4
+	syndobj4.find_target()
+
 	var/datum/objective/kidnap/syndobj5 = new
 	syndobj5.owner = blackops_objective_holder
 	blackops_objective_holder.objectives += syndobj5
+	syndobj5.find_target()
 
 	var/list/possible_targets = active_ais(1)
-	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
-	var/target = target_ai.mind
+	if(possible_targets.len)
+		var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+		var/target = target_ai.mind
 
-	if(target)
-		var/datum/objective/ai_mag/syndobj6 = new
-		syndobj6.owner = blackops_objective_holder
-		blackops_objective_holder.objectives += syndobj6
+		if(target)
+			var/datum/objective/ai_mag/syndobj6 = new
+			syndobj6.owner = blackops_objective_holder
+			blackops_objective_holder.objectives += syndobj6
+			syndobj6.find_target()
+
+		else
+			var/datum/objective/kidnap/syndobj6 = new
+			syndobj6.owner = blackops_objective_holder
+			blackops_objective_holder.objectives += syndobj6
+			syndobj6.find_target()
+
 	else
 		var/datum/objective/kidnap/syndobj6 = new
 		syndobj6.owner = blackops_objective_holder
 		blackops_objective_holder.objectives += syndobj6
+		syndobj6.find_target()
 
 /datum/game_mode/nuclear/blackops/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
@@ -138,4 +160,5 @@
 					feedback_add_details("traitor_objective","[objective.type]|FAIL")
 				count++
 			text += objectives
-		return 1
+		world << text
+		..()
