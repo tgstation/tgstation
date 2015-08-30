@@ -80,7 +80,7 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
-	..()
+	return ..()
 
 /mob/living/simple_animal/drone/Login()
 	..()
