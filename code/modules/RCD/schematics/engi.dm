@@ -186,7 +186,7 @@
 		<table style='width:100%'>
 		<tr>
 		"}
-		if((D && D.req_one_access && D.req_one_access.len) || (!D && one_access))	//So we check the correct button by default
+		if((istype(D) && D.req_one_access && D.req_one_access.len) || (!istype(D) && one_access))	//So we check the correct button by default
 			. += {"
 			<input type="radio" name="oneAccess" value="0"/>ALL
 			<br/>
@@ -207,10 +207,20 @@
 			for(var/A in get_region_accesses(i))
 				var/access_name = get_access_desc(A)
 				if(!access_name) continue
-				if((D && (A in D.req_access) || (A in D.req_one_access)) || (!D && (A in selected_access)))
+				var/checked = ""//((D && (D.req_access.Find(A)) || (D.req_one_access.Find(A)))) || (!D && (selected_access.Find(A))) ? " checked" : ""
+				if(istype(D))
+					if(D.req_access.Find(A) || D.req_one_access.Find(A))
+						checked = " checked"
+				else
+					if(selected_access.Find(A))
+						checked = " checked"
+				/*if((D && (A in D.req_access) || (A in D.req_one_access)) || (!D && (A in selected_access)))
 					. += {"<input type="checkbox" name="[A]" checked/> [access_name] <br/>"}
 				else
 					. += {"<input type="checkbox" name="[A]"/> [access_name] <br/>"}
+				*/
+				. += {"<input type="checkbox" name="[A]"[checked]/> [access_name] <br/>"}
+				//world << "[access_name]([A]) is [checked ? "in" : "not in"] selected access. [selected_access.Find(A) ? "find returned true" : "find returned false"]"
 				. += "<br>"
 			. += "</td>"
 		. += "</tr></table>"
