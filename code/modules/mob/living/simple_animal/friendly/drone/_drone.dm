@@ -24,6 +24,7 @@
 	wander = 0
 	speed = 0
 	ventcrawler = 2
+	healable = 0
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)

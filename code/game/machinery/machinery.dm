@@ -230,6 +230,8 @@ Class Procs:
 		return
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return
 	if(no_dextery)
 		if(be_close && in_range(M, src))
 			return 1

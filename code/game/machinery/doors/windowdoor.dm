@@ -235,10 +235,8 @@
 		return
 	var/mob/living/simple_animal/M = user
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
-		return
-	attack_generic(M, M.melee_damage_upper)
-
+	if(M.melee_damage_upper > 0 && (M.melee_damage_type == BRUTE || M.melee_damage_type == BURN))
+		attack_generic(M, M.melee_damage_upper)
 
 /obj/machinery/door/window/attack_slime(mob/living/simple_animal/slime/user)
 	user.do_attack_animation(src)

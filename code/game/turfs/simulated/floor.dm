@@ -32,8 +32,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	var/list/burnt_states = list()
-	var/dirt = 0
-	var/ignoredirt = 0
 
 /turf/simulated/floor/New()
 	..()
@@ -166,23 +164,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/simulated/floor/narsie_act()
 	if(prob(20))
 		ChangeTurf(/turf/simulated/floor/plasteel/cult)
-
-/turf/simulated/floor/Entered(atom/A, atom/OL)
-	..()
-	if(!ignoredirt)
-		if(has_gravity(src))
-			if(istype(A,/mob/living/carbon))
-				var/mob/living/carbon/M = A
-				if(M.lying)	return
-				if(prob(80))
-					dirt++
-				var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, src)
-				if(dirt >= 100)
-					if(!dirtoverlay)
-						dirtoverlay = new/obj/effect/decal/cleanable/dirt(src)
-						dirtoverlay.alpha = 10
-					else if(dirt > 100)
-						dirtoverlay.alpha = min(dirtoverlay.alpha+10, 200)
 
 /turf/simulated/floor/can_have_cabling()
 	return !burnt & !broken & !lava

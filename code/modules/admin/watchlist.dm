@@ -1,4 +1,4 @@
-client/proc/watchlist_add(target_ckey, browse = 0)
+/client/proc/watchlist_add(target_ckey, browse = 0)
 	if(!target_ckey)
 		var/new_ckey = ckey(input(usr,"Who would you like to add to the watchlist?","Enter a ckey",null) as text)
 		if(!new_ckey)
@@ -37,7 +37,7 @@ client/proc/watchlist_add(target_ckey, browse = 0)
 	if(browse)
 		watchlist_show(target_sql_ckey)
 
-client/proc/watchlist_remove(target_ckey, browse = 0)
+/client/proc/watchlist_remove(target_ckey, browse = 0)
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watchdel = dbcon.NewQuery("DELETE FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")
 	if(!query_watchdel.Execute())
@@ -49,7 +49,7 @@ client/proc/watchlist_remove(target_ckey, browse = 0)
 	if(browse)
 		watchlist_show()
 
-client/proc/watchlist_edit(target_ckey, browse = 0)
+/client/proc/watchlist_edit(target_ckey, browse = 0)
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watchreason = dbcon.NewQuery("SELECT reason FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")
 	if(!query_watchreason.Execute())
@@ -75,7 +75,7 @@ client/proc/watchlist_edit(target_ckey, browse = 0)
 		if(browse)
 			watchlist_show(target_sql_ckey)
 
-client/proc/watchlist_show(search)
+/client/proc/watchlist_show(search)
 	var/output
 	output += "<form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
@@ -105,7 +105,7 @@ client/proc/watchlist_show(search)
 		output += "<br>[reason]<hr style='background:#000000; border:0; height:1px'>"
 	usr << browse(output, "window=watchwin;size=900x500")
 
-client/proc/check_watchlist(target_ckey)
+/client/proc/check_watchlist(target_ckey)
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watch = dbcon.NewQuery("SELECT reason FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")
 	if(!query_watch.Execute())

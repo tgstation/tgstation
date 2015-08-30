@@ -148,7 +148,8 @@
 		var/search
 		output += "<center><a href='?_src_=holder;addnoteempty=1'>\[Add Note\]</a></center>"
 		output += ruler
-		index = sanitizeSQL(index)
+		if(!isnum(index))
+			index = sanitizeSQL(index)
 		switch(index)
 			if(1)
 				search = "^."
