@@ -1,0 +1,7 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - tweak: "Blood crawling is now a spell."
+
