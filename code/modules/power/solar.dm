@@ -255,7 +255,7 @@
 		return 1
 
 	if(!tracker)
-		if(istype(W, /obj/item/weapon/tracker_electronics))
+		if(istype(W, /obj/item/weapon/electronics/tracker))
 			if(!user.drop_item())
 				return
 			tracker = 1
@@ -264,7 +264,7 @@
 			return 1
 	else
 		if(istype(W, /obj/item/weapon/crowbar))
-			new /obj/item/weapon/tracker_electronics(src.loc)
+			new /obj/item/weapon/electronics/tracker(src.loc)
 			tracker = 0
 			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1

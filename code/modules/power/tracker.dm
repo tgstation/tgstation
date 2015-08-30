@@ -76,9 +76,5 @@
 
 // Tracker Electronic
 
-/obj/item/weapon/tracker_electronics
-
+/obj/item/weapon/electronics/tracker
 	name = "tracker electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
-	w_class = 2.0
