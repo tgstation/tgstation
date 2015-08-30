@@ -27,12 +27,11 @@
 		var/list/meancritters = list() // list of possible hostile mobs
 		var/list/nicecritters = list() // and possible friendly mobs
 		for(var/T in typesof(/mob/living/simple_animal))
-			var/mob/living/simple_animal/M = new T
-			switch(M.gold_core_spawnable)
+			switch(initial(T:gold_core_spawnable))
 				if(1)
-					meancritters += M.type
+					meancritters += T
 				if(2)
-					nicecritters += M.type
+					nicecritters += T
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
