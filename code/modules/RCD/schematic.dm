@@ -22,7 +22,7 @@
 			C.screen.Remove(ourobj)
 		returnToPool(ourobj)
 		ourobj = null
-	..()
+
 /datum/rcd_schematic/proc/show()
 	return 0
 /*

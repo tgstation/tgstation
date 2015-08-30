@@ -212,7 +212,7 @@
 	var/matter			= 0
 	var/max_matter		= 30
 
-/obj/item/device/rcd/matter/engineering/attack_self(var/mob/living/user)
+/obj/item/device/rcd/matter/attack_self(var/mob/living/user)
 	if(!selected || user.shown_schematics_background || !selected.show(user))
 		user.hud_used.toggle_show_schematics_display(schematics["Construction"], 0, src)
 
