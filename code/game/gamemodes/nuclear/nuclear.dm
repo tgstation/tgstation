@@ -10,6 +10,7 @@
 	recommended_enemies = 5
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
+	var/enemy_name = "nuclear operative"
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
@@ -42,7 +43,7 @@
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
+		log_game("[synd_mind.key] (ckey) has been selected as a [enemy_name].")
 	return 1
 
 
@@ -276,7 +277,7 @@
 
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear) ) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 
 		var/purchases = ""
