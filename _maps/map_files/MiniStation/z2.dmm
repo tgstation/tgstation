@@ -624,7 +624,7 @@
 "ma" = (/obj/machinery/recharger{pixel_y = 4},/obj/effect/landmark{name = "tdome1"},/turf/simulated/floor/plating,/area/tdome/tdome1)
 "mb" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/wizard_station)
 "mc" = (/turf/simulated/wall/shuttle,/area/wizard_station)
-"md" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/charcoal,/obj/item/weapon/reagent_containers/syringe/charcoal{pixel_y = 2},/obj/item/weapon/reagent_containers/syringe/charcoal{pixel_y = 4},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
+"md" = (/obj/structure/table,/obj/item/weapon/reagent_containers/syringe/antitoxin,/obj/item/weapon/reagent_containers/syringe/antitoxin{pixel_y = 2},/obj/item/weapon/reagent_containers/syringe/antitoxin{pixel_y = 4},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
 "me" = (/obj/structure/table,/obj/item/weapon/gun/syringe{pixel_x = 1; pixel_y = 2},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
 "mf" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plasteel/shuttle/red,/area/shuttle/syndicate)
 "mg" = (/obj/machinery/igniter,/turf/simulated/floor/plasteel,/area/tdome/arena)

@@ -238,9 +238,9 @@
 	name = "silver sulfadiazine reserve tank"
 	list_reagents = list("silver_sulfadiazine" = 50)
 
-/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal
+/obj/item/weapon/reagent_containers/glass/beaker/large/antitoxin
 	name = "antitoxin reserve tank"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("antitoxin" = 50)
 
 /obj/item/weapon/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank"

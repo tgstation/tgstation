@@ -44,11 +44,11 @@
 	icon_state = "bottle20"
 	list_reagents = list("chloralhydrate" = 15)
 
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "antitoxin bottle"
-	desc = "A small bottle of charcoal."
+	desc = "A small bottle of anti-toxin."
 	icon_state = "bottle17"
-	list_reagents = list("charcoal" = 30)
+	list_reagents = list("antitoxin" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	name = "unstable mutagen bottle"

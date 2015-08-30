@@ -12,7 +12,7 @@
 	user << "<span class='notice'>We cleanse impurities from our form.</span>"
 	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("potass_iodide", 10)
-	user.reagents.add_reagent("charcoal", 20)
+	user.reagents.add_reagent("antitoxin", 20)
 
 	for(var/datum/disease/D in user.viruses)
 		D.cure()

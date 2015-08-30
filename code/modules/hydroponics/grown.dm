@@ -1016,7 +1016,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/add_juice()
 	if(..())
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
-		reagents.add_reagent("charcoal", 1 + round((potency / 25), 1))
+		reagents.add_reagent("antitoxin", 1 + round((potency / 25), 1))
 		bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 
@@ -1047,14 +1047,14 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/add_juice()
 	..()
 	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("charcoal", 3+round(potency / 3, 1))
+	reagents.add_reagent("antitoxin", 3+round(potency / 3, 1))
 	reagents.add_reagent("morphine", 3+round(potency / 3, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(obj/item/O, mob/user, params)
 	. = ..()
 	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "<span class='info'>- Anti-Toxin: <i>[reagents.get_reagent_amount("charcoal")]%</i></span>"
+		user << "<span class='info'>- Anti-Toxin: <i>[reagents.get_reagent_amount("antitoxin")]%</i></span>"
 		user << "<span class='info'>- Morphine: <i>[reagents.get_reagent_amount("morphine")]%</i></span>"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
