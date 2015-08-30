@@ -97,7 +97,9 @@ the new version.
 
 All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
-If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
+If you want to load a different map, open up the tgstation.dme file in Dream Maker and scroll to the bottom. The currently included map is located there, in order to load a different map you'll need to change it.
+
+Ideally however you'll want to create your own .dme file and include the /tg/station dme. This allows you to work independently from us and will simplify the process of merging our content in the future.
 
 Anytime you want to make changes to a map it's imperative you use the [Map Merging tools](http://tgstation13.org/wiki/Map_Merger)
 
