@@ -18,6 +18,7 @@
 	activity_log += ..()
 
 /obj/machinery/atmospherics/binary/New()
+	..()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = NORTH|SOUTH

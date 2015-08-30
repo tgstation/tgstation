@@ -22,6 +22,7 @@ obj/machinery/atmospherics/trinary
 	..(adjacent_procd,node_list)
 
 obj/machinery/atmospherics/trinary/New()
+	..()
 	initialize_directions()
 	air1 = new
 	air2 = new
