@@ -7,7 +7,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
-	explosion_block = 2
+	explosion_block = 1
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
