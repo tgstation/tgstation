@@ -138,7 +138,9 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
-	..()
+	qdel(wires)
+	wires = null
+	return ..()
 
 
 /mob/living/silicon/robot/proc/pick_module()

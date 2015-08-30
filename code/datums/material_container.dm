@@ -39,6 +39,10 @@
 	if(mat_list[MAT_BANANIUM])
 		materials[MAT_BANANIUM] = new /datum/material/bananium()
 
+/datum/material_container/Destroy()
+	owner = null
+	return ..()
+
 //For inserting an amount of material
 /datum/material_container/proc/insert_amount(amt, material_type = null)
 	if(amt > 0 && has_space(amt))
