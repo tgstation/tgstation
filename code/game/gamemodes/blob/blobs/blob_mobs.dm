@@ -26,7 +26,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore
 	name = "blob"
-	desc = "Some blob thing."
+	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	health = 40
@@ -145,7 +145,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut
 	name = "blobbernaut"
-	desc = "Some HUGE blob thing."
+	desc = "A hulking, mobile chunk of blobmass."
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"

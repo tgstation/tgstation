@@ -3,10 +3,11 @@
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 3
-	desc = "Some blob creature thingy"
+	desc = "A thick wall of writhing tendrils."
 	density = 0
 	opacity = 0
 	anchored = 1
+	explosion_block = 2
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
