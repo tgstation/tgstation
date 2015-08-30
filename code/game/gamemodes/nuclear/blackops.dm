@@ -1,9 +1,9 @@
 /datum/game_mode/nuclear/blackops
 	name = "black ops"
 	config_tag = "blackops"
-	required_players = 1 // 20 players - 5 players to be the nuke ops = 15 players remaining
-	required_enemies = 1
-	recommended_enemies = 1
+	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
+	required_enemies = 5
+	recommended_enemies = 5
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
 	enemy_name = "black ops agent"
