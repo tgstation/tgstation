@@ -88,7 +88,7 @@ Pipelines + Other Objects -> Pipe network
 		var/con_dir = get_dir(src, connected_node)
 		missing_nodes -= con_dir // finds all the directions that aren't pointed to by a node
 		var/image/nodecon = node_con["[con_dir]"]
-		if (default_colour&& connected_node.default_colour) // if both pipes have special colours - average them
+		if (default_colour && connected_node.default_colour && (connected_node.default_colour != default_colour)) // if both pipes have special colours - average them
 			var/list/centre_colour = GetHexColors(default_colour)
 			var/list/other_colour = GetHexColors(connected_node.default_colour)
 			var/list/average_colour = list(((centre_colour[1]+other_colour[1])/2),((centre_colour[2]+other_colour[2])/2),((centre_colour[3]+other_colour[3])/2))
@@ -103,7 +103,7 @@ Pipelines + Other Objects -> Pipe network
 			nodecon.color = connected_node.default_colour
 		else nodecon.color = "#B4B4B4"
 		underlays += nodecon
-		if (!adjacent_procd && connected_node.update_icon_ready)
+		if (!adjacent_procd && connected_node.update_icon_ready && !(istype(connected_node,/obj/machinery/atmospherics/pipe/simple)))
 			connected_node.update_icon(1)
 	for (var/missing_dir in missing_nodes)
 		var/image/nodeex = node_ex["[missing_dir]"]
