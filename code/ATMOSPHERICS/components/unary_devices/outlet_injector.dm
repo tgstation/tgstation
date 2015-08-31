@@ -19,7 +19,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = 1

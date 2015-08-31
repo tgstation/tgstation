@@ -56,7 +56,7 @@
 		initial_loc = null
 	for(var/I in adjacent_turfs)
 		I = null
-	..()
+	return ..()
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!powered(power_channel))
 		return 0

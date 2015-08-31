@@ -65,7 +65,7 @@
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
 		initial_loc = null
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"

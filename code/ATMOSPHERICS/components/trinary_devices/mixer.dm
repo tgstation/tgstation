@@ -29,7 +29,7 @@
 				overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction, node.pipe_color)
 				continue
 			overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon_nopipes()
 	if(!(stat & NOPOWER) && on && NODE1 && NODE2 && NODE3)

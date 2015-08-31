@@ -52,6 +52,7 @@ Pipelines + Other Objects -> Pipe network
 		qdel(pipe_vision_img)
 
 	..()
+	return QDEL_HINT_FINDREFERENCE
 
 /obj/machinery/atmospherics/proc/nullifyNode(I)
 	var/obj/machinery/atmospherics/N = NODE_I
