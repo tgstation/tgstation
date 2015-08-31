@@ -130,6 +130,9 @@
 #undef CHAT_PULLR
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
+	if (reason == 1) //special reboot, do none of the normal stuff
+		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
+		return ..(1)
 	var/delay
 	if(time)
 		delay = time
