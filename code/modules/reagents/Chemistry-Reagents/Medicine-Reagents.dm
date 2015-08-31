@@ -469,12 +469,13 @@ datum/reagent/medicine/silver_sulfadiazine
 
 datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(iscarbon(M))
-		if(method == TOUCH)
+		if(method == TOUCH && M.stat != DEAD)
 			M.adjustFireLoss(-volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing!</span>"
-			M.emote("scream")
-		if(method == INGEST)
+			if(!M.stat)
+				M.emote("scream")
+		if(method == INGEST && M.stat != DEAD)
 			M.adjustToxLoss(0.5*volume)
 			if(show_message)
 				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
@@ -491,13 +492,13 @@ datum/reagent/medicine/styptic_powder
 
 datum/reagent/medicine/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
 	if(iscarbon(M))
-		if(method == TOUCH)
+		if(method == TOUCH && M.stat != DEAD)
 			M.adjustBruteLoss(-volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
-			if(M.stat)
+			if(!M.stat)
 				M.emote("scream")
-		if(method == INGEST)
+		if(method == INGEST && M.stat != DEAD)
 			M.adjustToxLoss(0.5*volume)
 			if(show_message)
 				M << "<span class='notice'>You feel kind of ill. Maybe you ate a medicine you shouldn't have?</span>"
