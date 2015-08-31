@@ -173,3 +173,11 @@
 		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	return ..()
+
+/obj/machinery/atmospherics/unary/outlet_injector/canClone(var/obj/O)
+	return istype(O, /obj/machinery/atmospherics/unary/outlet_injector)
+
+/obj/machinery/atmospherics/unary/outlet_injector/clone(var/obj/machinery/atmospherics/unary/outlet_injector/O)
+	id_tag = O.id_tag
+	set_frequency(O.frequency)
+	return 1

@@ -173,7 +173,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 			anchored = 0
 			step_towards(src, S)
 	else step_towards(src, S)
-
+	
 /obj/proc/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/multitool_menu() called tick#: [world.time]")
 	return "<b>NO MULTITOOL_MENU!</b>"
@@ -198,6 +198,12 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/getLink() called tick#: [world.time]")
 	return null
 
+/obj/proc/canClone(var/obj/O)
+	return 0
+
+/obj/proc/clone(var/obj/O)
+	return 0
+	
 /obj/proc/linkMenu(var/obj/O)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/linkMenu() called tick#: [world.time]")
 	var/dat=""
@@ -219,6 +225,19 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 
 	if(!istype(P))
 		return 0
+
+	// Cloning stuff goes here.
+	if(P.clone && P.buffer) // Cloning is on.
+		if(!canClone(P.buffer))
+			user << "<span class='attack'>A red light flashes on \the [P]; you cannot clone to this device!</span>"
+			return
+
+		if(!clone(P.buffer))
+			user << "<span class='attack'>A red light flashes on \the [P]; something went wrong when cloning to this device!</span>"
+			return
+
+		user << "<span class='confirm'>A green light flashes on \the [P], confirming the device was cloned to.</span>"
+		return
 
 	var/dat = {"<html>
 	<head>
