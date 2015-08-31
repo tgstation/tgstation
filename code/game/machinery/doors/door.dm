@@ -37,8 +37,7 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	airlocks -= src
-	..()
-	return
+	return ..()
 
 //process()
 	//return

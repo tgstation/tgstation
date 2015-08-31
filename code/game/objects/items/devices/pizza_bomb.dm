@@ -99,6 +99,10 @@
 	..()
 	wires = new(src)
 
+/obj/item/device/pizza_bomb/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/item/device/pizza_bomb/proc/disarm()
 	audible_message("\icon[src] \The [src] suddenly stops beeping and seems lifeless.")

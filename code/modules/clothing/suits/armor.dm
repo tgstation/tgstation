@@ -105,7 +105,7 @@
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
-		hit_reflect_chance = 0
+		return 0
 	if (prob(hit_reflect_chance))
 		return 1
 
