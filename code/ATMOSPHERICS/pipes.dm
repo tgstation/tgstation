@@ -26,14 +26,16 @@
 	if (findtext(mass_colour,"#"))
 		var/datum/pipeline/pipeline = parent
 		var/list/update_later = list()
-		update_later += pipeline.edges
 		for(var/obj/machinery/atmospherics/pipe in pipeline.members)
 			pipe.color = mass_colour
 			if(!pipe.can_be_coloured)
 				pipe.default_colour = mass_colour
-				update_later |= pipe
-		for(var/obj/machinery/atmospherics/pipe in update_later)
+				update_later += pipe
+		for(var/obj/machinery/atmospherics/pipe in pipeline.edges)
 			pipe.update_icon()
+		update_later -= pipeline.edges
+		for(var/obj/machinery/atmospherics/pipe in update_later)
+			pipe.update_icon(1)
 
 /obj/machinery/atmospherics/pipe/singularity_pull(/obj/machinery/singularity/S, size)
 	return
@@ -311,7 +313,13 @@
 
 /obj/machinery/atmospherics/pipe/simple/update_icon(var/adjacent_procd)
 	var/node_list = list(node1,node2)
-	..(adjacent_procd,node_list)
+	if(!node1||!node2)
+		icon_state = "exposed"
+		..(adjacent_procd,node_list)
+	else if(!adjacent_procd)
+		for(var/obj/machinery/atmospherics/node in node_list)
+			if(node.update_icon_ready && !(istype(node,/obj/machinery/atmospherics/pipe/simple)))
+				node.update_icon(1)
 	if(!node1&&!node2)
 		qdel(src) //TODO: silent deleting looks weird
 

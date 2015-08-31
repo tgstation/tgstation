@@ -50,8 +50,9 @@
 		"purple"	= PIPE_COLOR_PURPLE,
 		"custom" 	= "custom"
 	)
-
+	var/last_colouration = 0
 	var/selected_color = "grey"
+	var/colouring_delay = 0
 
 /datum/rcd_schematic/paint_pipes/New(var/obj/item/device/rcd/n_master)
 	. = ..()
@@ -110,11 +111,15 @@
 	playsound(get_turf(master), 'sound/machines/click.ogg', 50, 1)
 	if (selected_color in available_colors)
 		selected_color = available_colors[selected_color]
+	if(mass_colour && world.timeofday < last_colouration + colouring_delay)
+		return "We aren't ready to mass paint again; please wait [(last_colouration+colouring_delay)-world.timeofday] more seconds!"
 	if(mass_colour && istype(O, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/pipe_to_colour = O
 		var/datum/pipeline/pipe_line = pipe_to_colour.parent
 		var/list/pipeline_members = pipe_line.members
 		if (pipeline_members.len < 500)
+			last_colouration = world.timeofday
+			colouring_delay = (pipeline_members.len)/2
 			O.color = selected_color
 			pipe_to_colour.mass_colouration(selected_color)
 		else return "That pipe network is simply too big to paint!"
@@ -192,7 +197,7 @@
 
 	for(var/dir in dir_list)
 		send_icon(client, dir)
-		
+
 	send_asset(client, "RPD-layer-blended-1.png")
 	send_asset(client, "RPD-layer-blended-4.png")
 
