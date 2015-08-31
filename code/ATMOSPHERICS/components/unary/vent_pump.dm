@@ -368,3 +368,15 @@
 	name = replacetext(name,newarea,oldarea)
 	area_uid = areaMaster.uid
 	broadcast_status()
+
+/obj/machinery/atmospherics/unary/vent_pump/canClone(var/obj/O)
+	return istype(O, /obj/machinery/atmospherics/unary/vent_pump)
+
+/obj/machinery/atmospherics/unary/vent_pump/clone(var/obj/machinery/atmospherics/unary/vent_pump/O)
+	if(frequency == 1439) // Note: if the frequency stays at 1439 we'll be readded to the area in set_frequency().
+		areaMaster.air_vent_info -= id_tag
+		areaMaster.air_vent_names -= id_tag
+	id_tag = O.id_tag
+
+	set_frequency(O.frequency)
+	return 1

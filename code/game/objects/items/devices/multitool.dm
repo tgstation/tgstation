@@ -9,27 +9,44 @@
  //////////////////////////////////////////////////////////
 
 /obj/item/device/multitool
-	name = "multitool"
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
-	icon_state = "multitool"
-	flags = FPRINT
-	siemens_coefficient = 1
-	force = 5.0
-	w_class = 2.0
-	throwforce = 5.0
-	throw_range = 15
-	throw_speed = 3
-	starting_materials = list(MAT_IRON = 50, MAT_GLASS = 20)
-	w_type = RECYK_ELECTRONIC
-	melt_temperature = MELTPOINT_SILICON
-	origin_tech = "magnets=1;engineering=1"
+	name					= "multitool"
+	desc					= "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	icon_state				= "multitool"
+	flags					= FPRINT
+	siemens_coefficient		= 1
+	force					= 5.0
+	w_class					= 2.0
+	throwforce				= 5.0
+	throw_range				= 15
+	throw_speed				= 3
+	starting_materials		= list(MAT_IRON = 50, MAT_GLASS = 20)
+	w_type					= RECYK_ELECTRONIC
+	melt_temperature		= MELTPOINT_SILICON
+	origin_tech				= "magnets=1;engineering=1"
 	// VG: We dun changed dis so we can link simple machines. - N3X
 	var/obj/machinery/buffer // simple machine buffer for device linkage
+	var/clone				= 0 // If this is on cloning will happen, this is handled in machinery code.
+
 /obj/item/device/multitool/proc/IsBufferA(var/typepath)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/multitool/proc/IsBufferA() called tick#: [world.time]")
 	if(!buffer)
 		return 0
 	return istype(buffer,typepath)
+
+/obj/item/device/multitool/attack_self(var/mob/user)
+	if(!buffer && !clone) // Can't enable cloning without buffer.
+		return
+
+	clone = !clone
+	if(clone)
+		user << "<span class='notice'>You enable cloning on \the [src].</span>"
+	else
+		user << "<span class='notice'>You disable cloning on \the [src].</span>"
+
+/obj/item/device/multitool/examine(var/mob/user)
+	. = ..()
+	user << "<span class='notice'>Cloning is [clone ? "enabled" : "disabled"].</span>"
+
 /////////////////////////
 //Disguised AI detector// - changes color based on proximity to various surveillance devices
 /////////////////////////

@@ -342,3 +342,10 @@
 
 /obj/effect/beam/emitter/get_damage()
 	return damage * power
+
+/obj/machinery/power/emitter/canClone(var/obj/machinery/power/emitter/O)
+	return istype(O)
+
+/obj/machinery/power/emitter/clone(var/obj/machinery/power/emitter/O)
+	id_tag = O.id_tag
+	set_frequency(O.id_tag)
