@@ -129,7 +129,6 @@
 						C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
 
-#define R_SERVER	16
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -173,7 +172,6 @@
 			C << link("byond://[config.server]")
 	..(0)
 
-#undef R_SERVER
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
