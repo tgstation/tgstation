@@ -41,6 +41,8 @@
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	var/list/ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 0, CLONE = 0, STAMINA = 1, OXY = 0) //Set 0 to receive that damage type, 1 to ignore
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -253,7 +255,7 @@
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage)
+		attack_threshold_check(damage,M.melee_damage_type)
 		return 1
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
@@ -263,8 +265,21 @@
 	Proj.on_hit(src)
 	return 0
 
+/mob/living/simple_animal/adjustBruteLoss(amount)
+	if(!ignored_damage_types[BRUTE])
+		..()
+
 /mob/living/simple_animal/adjustFireLoss(amount)
-	adjustBruteLoss(amount)
+	if(!ignored_damage_types[BURN])
+		adjustBruteLoss(amount)
+
+/mob/living/simple_animal/adjustToxLoss(amount)
+	if(!ignored_damage_types[TOX])
+		..(amount)
+
+/mob/living/simple_animal/adjustCloneLoss(amount)
+	if(!ignored_damage_types[CLONE])
+		..(amount)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
@@ -334,8 +349,8 @@
 		attack_threshold_check(damage)
 		return 1
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage)
-	if(damage <= force_threshold)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+	if(damage <= force_threshold || ignored_damage_types[damagetype])
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
 		adjustBruteLoss(damage)
