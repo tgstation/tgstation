@@ -121,10 +121,13 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				PlaceInPool(A,0)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				#ifdef TESTING
-				A.find_references(remove_from_queue = FALSE)
-				#endif
+				A.to_be_queued = TRUE
+				A.find_references()
+				#else
 				SSgarbage.Queue(A)
+				#endif
 			else
+				testing("WARNING: \ref[A] \[[A.type]] is not returning a qdel hint. It is being placed in the queue.")
 				SSgarbage.Queue(A)
 
 // Returns 1 if the object has been queued for deletion.
@@ -147,8 +150,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 #ifdef TESTING
 /client/var/running_find_references
 /datum/var/running_find_references
+/datum/var/to_be_queued = FALSE
 
-/datum/verb/find_references(remove_from_queue = TRUE as num)
+/datum/verb/find_references()
 	set category = "Debug"
 	set name = "Find References"
 	set background = 1
@@ -166,7 +170,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			running_find_references = null
 			return
 	// Remove this object from the list of things to be auto-deleted.
-	if(remove_from_queue && SSgarbage && ("\ref[src]" in SSgarbage.queue))
+	if(SSgarbage && ("\ref[src]" in SSgarbage.queue))
 		SSgarbage.queue -= "\ref[src]"
 	if(usr && usr.client)
 		usr.client.running_find_references = type
@@ -192,6 +196,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = null
 	running_find_references = null
 
+	if(to_be_queued == TRUE)
+		to_be_queued = FALSE
+		SSgarbage.Queue(src)
+
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
 	if(SSgarbage)
@@ -210,5 +218,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	qdel(src)
 	if(!running_find_references)
-		find_references(remove_from_queue = FALSE)
+		to_be_queued = TRUE		//find_references removes the object from the queue;
+		find_references()		//this ensures the object will be queued again once find_references has completed
 #endif
