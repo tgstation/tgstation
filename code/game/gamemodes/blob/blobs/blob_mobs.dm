@@ -117,7 +117,7 @@
 	if(contents)
 		for(var/mob/M in contents)
 			M.loc = src.loc
-	..()
+	return ..()
 
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()

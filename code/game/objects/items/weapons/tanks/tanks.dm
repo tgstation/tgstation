@@ -37,7 +37,7 @@
 
 	SSobj.processing.Remove(src)
 
-	..()
+	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src

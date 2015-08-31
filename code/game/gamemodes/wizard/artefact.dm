@@ -204,7 +204,7 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/Destroy()
 	multiverse.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")

@@ -168,7 +168,7 @@
 		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
 	if(terminal)
 		disconnect_terminal()
-	..()
+	return ..()
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this

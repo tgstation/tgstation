@@ -194,7 +194,7 @@
 /obj/structure/foamedmetal/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 
 /obj/structure/foamedmetal/Move()

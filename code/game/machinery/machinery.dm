@@ -128,7 +128,7 @@ Class Procs:
 	SSmachine.processing -= src
 	if(occupant)
 		dropContents()
-	..()
+	return ..()
 
 /obj/machinery/proc/locate_machinery()
 	return

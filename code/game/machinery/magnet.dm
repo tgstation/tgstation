@@ -45,7 +45,7 @@
 /obj/machinery/magnetic_module/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, freq)
-	..()
+	. = ..()
 	center = null
 
 // update the invisibility and icon
@@ -244,7 +244,7 @@
 /obj/machinery/magnetic_controller/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
-	..()
+	. = ..()
 	magnets = null
 	rpath = null
 

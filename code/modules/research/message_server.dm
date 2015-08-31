@@ -96,8 +96,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 /obj/machinery/message_server/Destroy()
 	message_servers -= src
-	..()
-	return
+	return ..()
 
 /obj/machinery/message_server/proc/GenerateKey()
 	//Feel free to move to Helpers.
@@ -258,7 +257,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 		BR.messages_admin = messages_admin
 		if(blackbox != BR)
 			blackbox = BR
-	..()
+	return ..()
 
 /obj/machinery/blackbox_recorder/proc/find_feedback_datum(variable)
 	for (var/datum/feedback_variable/FV in feedback)

@@ -463,7 +463,7 @@
 	close_all()
 	qdel(boxes)
 	qdel(closer)
-	..()
+	return ..()
 
 
 /obj/item/weapon/storage/emp_act(severity)

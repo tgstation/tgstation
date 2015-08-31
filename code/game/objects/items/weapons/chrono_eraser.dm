@@ -22,7 +22,7 @@
 
 /obj/item/weapon/chrono_eraser/Destroy()
 	dropped()
-	..()
+	return ..()
 
 /obj/item/weapon/chrono_eraser/ui_action_click()
 	var/mob/living/carbon/user = src.loc
@@ -74,7 +74,7 @@
 		TED = null
 	if(field)
 		field_disconnect(field)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
@@ -181,7 +181,7 @@
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))
 		gun.field_disconnect(src)
-	..()
+	return ..()
 
 /obj/effect/chrono_field/update_icon()
 	var/ttk_frame = 1 - (tickstokill / initial(tickstokill))

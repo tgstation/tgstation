@@ -147,7 +147,7 @@ var/list/ai_list = list()
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	qdel(eyeobj) // No AI, no Eye
-	..()
+	return ..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
