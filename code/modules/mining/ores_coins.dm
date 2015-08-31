@@ -232,43 +232,43 @@
 /obj/item/weapon/coin/gold
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
-	materials = list(MAT_GOLD = 100)
+	materials = list(MAT_GOLD = 200)
 	value = 160
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
-	materials = list(MAT_SILVER = 100)
+	materials = list(MAT_SILVER = 200)
 	value = 40
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
-	materials = list(MAT_DIAMOND = 100)
+	materials = list(MAT_DIAMOND = 200)
 	value = 120
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
-	materials = list(MAT_METAL = 100)
+	materials = list(MAT_METAL = 200)
 	value = 20
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
-	materials = list(MAT_PLASMA = 100)
+	materials = list(MAT_PLASMA = 200)
 	value = 80
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
-	materials = list(MAT_URANIUM = 100)
+	materials = list(MAT_URANIUM = 200)
 	value = 160
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
-	materials = list(MAT_BANANIUM = 100)
+	materials = list(MAT_BANANIUM = 200)
 	value = 600 //makes the clown cri
 
 /obj/item/weapon/coin/adamantine
