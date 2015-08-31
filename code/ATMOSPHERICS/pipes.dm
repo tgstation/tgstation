@@ -433,7 +433,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-	icon_state = "manifold"
+	icon_state = "map"
 	baseicon = "manifold"
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
@@ -560,6 +560,7 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon(var/adjacent_procd)
+	icon_state = "manifold"
 	var/node_list = list(node1,node2,node3)
 	..(adjacent_procd,node_list)
 	if(!node1 && !node2 && !node3)
@@ -654,7 +655,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w
 	icon = 'icons/obj/atmospherics/pipe_manifold.dmi'
-	icon_state = "manifold4w"
+	icon_state = "map_4way"
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	volume = 140
@@ -783,6 +784,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon(var/adjacent_procd)
 	var/node_list = list(node1,node2,node3,node4)
+	icon_state = "manifold4w"
 	..(adjacent_procd,node_list)
 	if(!node1 && !node2 && !node3 && !node4)
 		qdel(src)
