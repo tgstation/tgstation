@@ -912,7 +912,7 @@
 		/obj/item/seeds/potatoseed,
 		/obj/item/seeds/pumpkinseed,
 		/obj/item/seeds/reishimycelium,
-		/obj/item/seeds/replicapod,
+		/obj/item/seeds/dionanode,
 		/obj/item/seeds/riceseed,
 		/obj/item/seeds/soyaseed,
 		/obj/item/seeds/sugarcaneseed,
