@@ -1837,6 +1837,7 @@
 #include "interface\skin.dmf"
 #include "maps\_map.dm"
 #include "maps\tgstation.dm"
+#include "maps\defficiency\pipes.dm"
 #include "maps\RandomZLevels\Academy.dm"
 #include "maps\RandomZLevels\challenge.dm"
 #include "maps\RandomZLevels\stationCollision.dm"

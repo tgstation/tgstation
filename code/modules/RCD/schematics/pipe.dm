@@ -448,6 +448,26 @@ var/global/list/disposalpipeID2State = list(
 	pipe_id		= PIPE_LAYER_MANIFOLD
 	pipe_type	= PIPE_UNARY
 
+/datum/rcd_schematic/pipe/layer_adapter
+	name		= "Layer Adapter"
+
+	pipe_id		= PIPE_LAYER_ADAPTER
+	pipe_type	= PIPE_UNARY
+
+/datum/rcd_schematic/pipe/layer_adapter/register_icon(var/dir)
+	register_asset("RPD_[pipe_id]_[dir]_[layer].png", new/icon('icons/obj/atmospherics/pipe_adapter.dmi', "adapter_[layer]", dir))
+
+/datum/rcd_schematic/pipe/layer_adapter/send_icon(var/client/client, var/dir)
+	send_asset(client, "RPD_[pipe_id]_[dir]_[layer].png")
+
+
+/datum/rcd_schematic/pipe/layer_adapter/render_dir_image(var/dir, var/title)
+	var/selected = ""
+	if(selected_dir == dir)
+		selected = " class='selected'"
+
+	return "<a href='?src=\ref[master.interface];set_dir=[dir]'[selected] title='[title]'><img src='RPD_[pipe_id]_[dir]_[layer].png'/></a>"
+
 //DEVICES.
 
 /datum/rcd_schematic/pipe/connector
