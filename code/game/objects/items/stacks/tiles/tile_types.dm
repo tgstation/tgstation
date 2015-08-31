@@ -147,3 +147,19 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor/noslip
 	origin_tech = "material=3"
+
+/*
+ * Carpets
+ */
+/obj/item/stack/tile/pool
+	name = "pool"
+	singular_name = "pool"
+	desc = "A pool tile. The water comes included."
+	icon_state = "tile_pool"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 9
+	turf_type = /turf/simulated/floor/pool

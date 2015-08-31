@@ -379,7 +379,14 @@ datum/reagent/carbon
 datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(!istype(T, /turf/space))
-		new /obj/effect/decal/cleanable/dirt(T)
+		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents   //check for existing blood splatter
+		if(!T)
+			new /obj/effect/decal/cleanable/dirt(T)
+			return 1 //we bloodied the floor
+		else
+			var/icon/new_icon = D.icon
+			new_icon.ChangeOpacity(2)
+			D.icon = new_icon
 
 datum/reagent/chlorine
 	name = "Chlorine"
