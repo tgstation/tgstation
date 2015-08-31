@@ -54,7 +54,7 @@ Pipelines + Other Objects -> Pipe network
 		M.forceMove(src.loc)
 	if(pipe_image)
 		for(var/mob/M in player_list)
-			M.client.screen -= pipe_image
+			M.client.images -= pipe_image
 		pipe_image = null
 	atmos_machines -= src
 	..()

@@ -1357,18 +1357,6 @@ var/list/slot_equipment_priority = list( \
 			stat(null, FUCK)
 			if(!src.stat_fucked)
 				if (garbageCollector)
-					/*stat(null, "MasterController-[last_tick_duration] ([master_controller.processing?"On":"Off"]-[master_controller.iteration])")
-					stat(null, "Air-[master_controller.air_cost]")
-					stat(null, "Sun-[master_controller.sun_cost]")
-					stat(null, "Mob-[master_controller.mobs_cost]\t#[mob_list.len]")
-					stat(null, "Dis-[master_controller.diseases_cost]\t#[active_diseases.len]")
-					stat(null, "Mch-[master_controller.machines_cost]\t#[machines.len]")
-					stat(null, "Obj-[master_controller.objects_cost]\t#[processing_objects.len]")
-					stat(null, "PiNet-[master_controller.networks_cost]\t#[pipe_networks.len]")
-					stat(null, "Ponet-[master_controller.powernets_cost]\t#[powernets.len]")
-					stat(null, "NanoUI-[master_controller.nano_cost]\t#[nanomanager.processing_uis.len]")
-					stat(null, "Tick-[master_controller.ticker_cost]")
-					stat(null, "garbage collector - [master_controller.garbageCollectorCost]")*/
 					stat(null, "\tqdel - [garbageCollector.del_everything ? "off" : "on"]")
 					stat(null, "\ton queue - [garbageCollector.queue.len]")
 					stat(null, "\ttotal delete - [garbageCollector.dels_count]")
@@ -1435,10 +1423,6 @@ var/list/slot_equipment_priority = list( \
 					stat(null, "EVE([events.len])\t - #[process.getTicks()]\t - [process.getLastRunTime()]")
 				else
 					stat(null, "processScheduler is not running.")
-	if(client && client.haszoomed)
-		if(stat != DEAD && !client.holder)
-			client.view = world.view
-			client.haszoomed = 0
 	if(client && client.inactivity < (1200))
 		if(listed_turf)
 			if(get_dist(listed_turf,src) > 1)

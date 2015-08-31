@@ -21,7 +21,7 @@
 			if(S.type==W.type)
 				return permit_sheets ? 0 : S
 	else
-		return locate(W) in src.module.modules
+		return (W in src.module.modules)
 
 #define MOMMI_LOW_POWER 100
 
