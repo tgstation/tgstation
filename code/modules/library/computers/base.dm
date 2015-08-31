@@ -41,6 +41,8 @@
 		if(query.category && query.category != "")
 			//world << "\red query category ([query.category])"
 			searchquery += " [!where ? "WHERE" : "AND"] category LIKE '%[query.category]%'"
+			if(query.category == "Fiction")
+				searchquery += " AND category NOT LIKE '%Non-Fiction%'"
 			where = 1
 	var/sql = "SELECT id, author, title, category, ckey FROM library [searchquery] LIMIT [page_num * LIBRARY_BOOKS_PER_PAGE], [LIBRARY_BOOKS_PER_PAGE]"
 

@@ -474,7 +474,7 @@
 	if (prob(15))
 		mob.emote("me",1,"vomits up a chicken egg!")
 		playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/egg(get_turf(mob))
+		new /obj/item/weapon/reagent_containers/food/snacks/egg(get_turf(mob))
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"

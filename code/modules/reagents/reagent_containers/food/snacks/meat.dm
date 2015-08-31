@@ -80,7 +80,7 @@
 		reagents.add_reagent("nutriment", 12)
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
-
+/*
 /obj/item/weapon/reagent_containers/food/snacks/meat/egg
 	name = "egg"
 	desc = "An egg!"
@@ -149,4 +149,4 @@
 		icon_state = "egg-[clr]"
 		_color = clr
 	else
-		..()
+		..()*/

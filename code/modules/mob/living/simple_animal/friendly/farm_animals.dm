@@ -248,14 +248,14 @@
 	if(!stat && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/egg/E = new(get_turf(src))
+		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
 		if(animal_count[src.type] < ANIMAL_CHILD_CAP && prob(10))
 			processing_objects.Add(E)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/var/amount_grown = 0
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/process()
+/obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
+/obj/item/weapon/reagent_containers/food/snacks/egg/process()
 	if(isturf(loc))
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)

@@ -82,7 +82,8 @@
 				for(var/i = 0, i < copies, i++)
 					if(!copying) break
 					if(toner > 0)
-						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						var/obj/item/weapon/paper/paper_type = copy.type
+						var/obj/item/weapon/paper/c = new paper_type(loc)
 						if(toner > 10)	//lots of toner, make it dark
 							c.info = "<font color = #101010>"
 						else			//no toner? shitty copies for you!

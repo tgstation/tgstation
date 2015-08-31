@@ -75,14 +75,14 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/meat/egg")
+	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 	foldable = /obj/item/stack/sheet/cardboard
 
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
 	for(var/i=1; i <= storage_slots; i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/egg(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
 	return
 
 /*
