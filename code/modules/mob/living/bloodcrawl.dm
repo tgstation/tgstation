@@ -60,7 +60,7 @@
 
 /obj/effect/decal/cleanable/blood/CtrlClick(mob/living/user)
 	..()
-	if(user.bloodcrawl)
+	if(istype(user) && user.bloodcrawl)
 		if(user.holder)
 			user.phasein(src)
 		else
@@ -69,7 +69,7 @@
 
 /obj/effect/decal/cleanable/trail_holder/CtrlClick(mob/living/user)
 	..()
-	if(user.bloodcrawl)
+	if(istype(user) && user.bloodcrawl)
 		if(user.holder)
 			user.phasein(src)
 		else
@@ -79,7 +79,7 @@
 
 /turf/CtrlClick(var/mob/living/user)
 	..()
-	if(user.bloodcrawl)
+	if(istype(user) && user.bloodcrawl)
 		for(var/obj/effect/decal/cleanable/B in src.contents)
 			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))
 				if(user.holder)
