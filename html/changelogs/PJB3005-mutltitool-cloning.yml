@@ -1,4 +1,0 @@
-author: PJB3005
-delete-after: true
-changes:
-  - rscadd: "Multitool device cloning, add a device to a multitool's linking buffer, click the multitool in-hand, then click other devices of the same kind to clone the ID and frequency! Currently unary / DP vents, scrubbers, air injectors and emitters supported."
