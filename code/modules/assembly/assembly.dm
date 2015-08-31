@@ -25,6 +25,13 @@
 	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
 	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
 
+/obj/item/device/assembly/Destroy()
+	qdel(connected)
+	connected = null
+	qdel(holder)
+	holder = null
+	return ..()
+
 /obj/item/device/assembly/proc/holder_movement()							//Called when the holder is moved
 	return
 
@@ -51,10 +58,12 @@
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/device/assembly/proc/pulsed(radio = 0)
-	if(holder && (wires & WIRE_RECEIVE))
-		activate()
+	if(wires & WIRE_RECEIVE)
+		spawn(0)
+			activate()
 	if(radio && (wires & WIRE_RADIO_RECEIVE))
-		activate()
+		spawn(0)
+			activate()
 	return 1
 
 

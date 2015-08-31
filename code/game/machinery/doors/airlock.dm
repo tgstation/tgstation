@@ -42,7 +42,7 @@
 	var/justzap = 0
 	var/safe = 1
 	normalspeed = 1
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	var/autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
@@ -324,10 +324,12 @@ About the new airlock wires panel:
 	update_icon()
 
 /obj/machinery/door/airlock/Destroy()
+	qdel(wires)
+	wires = null
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in world)
 			D.removeMe(src)
-	..()
+	return ..()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
@@ -990,9 +992,9 @@ About the new airlock wires panel:
 						return
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
 
-					var/obj/item/weapon/airlock_electronics/ae
+					var/obj/item/weapon/electronics/airlock/ae
 					if(!electronics)
-						ae = new/obj/item/weapon/airlock_electronics( src.loc )
+						ae = new/obj/item/weapon/electronics/airlock( src.loc )
 						if(req_one_access)
 							ae.use_one_access = 1
 							ae.conf_access = src.req_one_access

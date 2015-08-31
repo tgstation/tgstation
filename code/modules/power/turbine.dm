@@ -208,15 +208,6 @@
 		if(!compressor)
 			stat |= BROKEN
 
-
-// THIS MAKES IT WORK!!!!!
-
-// OLD FIX . Dunno how other engines handle this but this is how it should work: Turbine and compressor should be
-// treated as walls to avoid conductivity and gas spread. This was the problem of the original turbine which was just
-// a machinery - it didn't block the gas passage.
-// /obj/machinery/power/turbine/CanPass(atom/movable/mover, turf/target, height=0)
-//		return !density
-
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)

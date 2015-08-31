@@ -10,8 +10,6 @@
 
 
 /mob/living/carbon/alien/humanoid/queen/New()
-	create_reagents(100)
-
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
 		if(Q == src)		continue

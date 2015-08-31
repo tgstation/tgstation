@@ -1,5 +1,6 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
+	desc = "A canister for the storage of gas."
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
@@ -21,31 +22,37 @@
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "canister: \[N2O\]"
+	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	canister_color = "redws"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "canister: \[N2\]"
+	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "canister: \[O2\]"
+	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	canister_color = "blue"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/toxins
-	name = "canister \[Toxin (Bio)\]"
+	name = "canister \[Plasma\]"
+	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "canister \[CO2\]"
+	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	canister_color = "black"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/air
 	name = "canister \[Air\]"
+	desc = "Pre-mixed air."
 	icon_state = "grey"
 	canister_color = "grey"
 	can_label = 0
@@ -347,7 +354,7 @@ update_flag
 					"\[N2O\]" = "redws", \
 					"\[N2\]" = "red", \
 					"\[O2\]" = "blue", \
-					"\[Toxin (Bio)\]" = "orange", \
+					"\[Plasma\]" = "orange", \
 					"\[CO2\]" = "black", \
 					"\[Air\]" = "grey", \
 					"\[CAUTION\]" = "yellow", \
