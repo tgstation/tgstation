@@ -35,7 +35,7 @@
 	SSobj.processing += src
 
 /obj/item/device/camera_bug/Destroy()
-	qdel(src)
+
 //Easier to just call del() than this nonsense
 // ya no, del() takes 0.8ds to run on avg. this takes less than 0.01
 	get_cameras()
