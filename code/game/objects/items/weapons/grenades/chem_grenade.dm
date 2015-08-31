@@ -20,6 +20,9 @@
 	create_reagents(1000)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
 
+/obj/item/weapon/grenade/chem_grenade/Destroy()
+	nadeassembly = null
+	return ..()
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state

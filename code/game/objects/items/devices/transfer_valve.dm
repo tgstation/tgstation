@@ -214,3 +214,10 @@
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/device/transfer_valve/proc/c_state()
 	return
+
+/obj/item/device/transfer_valve/Destroy()
+	tank_one = null
+	tank_two = null
+	attached_device = null
+	attacher = null
+	return ..()

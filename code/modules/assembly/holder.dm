@@ -122,3 +122,8 @@
 	if(master)
 		master.receive_signal()
 	return 1
+
+/obj/item/device/assembly_holder/Destroy()
+	a_left = null
+	a_right = null
+	return ..()
