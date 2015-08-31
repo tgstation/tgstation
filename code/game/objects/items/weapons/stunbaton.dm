@@ -9,7 +9,7 @@
 	w_class = 3
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	var/stunforce = 4
+	var/stunforce = 5
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
@@ -191,7 +191,7 @@
 	item_state = "prod"
 	force = 3
 	throwforce = 5
-	stunforce = 2
+	stunforce = 3
 	hitcost = 2500
 	losspertick = 5
 	slot_flags = null
