@@ -1,0 +1,6 @@
+author: BarneyGumball
+changes: 
+  - bugfix: Library's visitor computer doesn't show non-fiction when searching for fiction any more.
+  - bugfix: Photocopied nano paper now has the correct sprite.
+  - tweak: Eggs are no longer a type of meat, meaning you can make waffles again.
+  - tweak: Traitors should now fail the Escape objective if they are restrained by a straight jacket in the shuttle's brig.

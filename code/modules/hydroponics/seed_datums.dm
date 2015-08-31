@@ -913,7 +913,7 @@ proc/populate_seed_list()
 	name = "realeggplant"
 	seed_name = "egg-plant"
 	display_name = "egg-plants"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/meat/egg)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/egg)
 	mutants = null
 	packet_icon = "seed-eggy"
 	plant_icon = "eggy"

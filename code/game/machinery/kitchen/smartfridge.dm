@@ -22,7 +22,8 @@
 	var/list/accepted_types = list(	/obj/item/weapon/reagent_containers/food/snacks/grown,
 									/obj/item/weapon/grown,
 									/obj/item/seeds/,
-									/obj/item/weapon/reagent_containers/food/snacks/meat)
+									/obj/item/weapon/reagent_containers/food/snacks/meat,
+									/obj/item/weapon/reagent_containers/food/snacks/egg)
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | EJECTNOTDEL
 

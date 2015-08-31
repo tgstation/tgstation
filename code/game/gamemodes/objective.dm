@@ -374,7 +374,11 @@ datum/objective/escape
 			return 0
 
 		if(istype(location, /turf/simulated/shuttle/floor4)) // Fails tratiors if they are in the shuttle brig -- Polymorph
-			if(istype(owner.current, /mob/living/carbon))
+			if(istype(owner.current, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner.current
+				if(!H.restrained()) // Technically, traitors will fail the objective if they are time stopped by a wizard
+					return 1
+			else if(istype(owner.current, /mob/living/carbon)) // I don't think non-humanoid carbons can get the escape objective, but I'm leaving it to be safe
 				var/mob/living/carbon/C = owner.current
 				if (!C.handcuffed)
 					return 1

@@ -1545,6 +1545,7 @@
 #include "code\modules\reagents\reagent_containers\food\drinks\holy_water.dm"
 #include "code\modules\reagents\reagent_containers\food\drinks\jar.dm"
 #include "code\modules\reagents\reagent_containers\food\drinks\bottle\robot.dm"
+#include "code\modules\reagents\reagent_containers\food\snacks\egg.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\grown.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\meat.dm"
 #include "code\modules\reagents\reagent_containers\food\snacks\snackbar.dm"
