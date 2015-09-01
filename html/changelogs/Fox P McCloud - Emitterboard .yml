@@ -1,0 +1,7 @@
+
+author: Fox P McCloud
+
+delete-after: True
+
+changes: 
+  - tweak: "Adds the emitter board to to the circuit imprinter for R&D."
