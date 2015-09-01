@@ -51,7 +51,7 @@
 
 #define MIN_COMPILER_VERSION 508
 #if DM_VERSION < MIN_COMPILER_VERSION //Update this whenever you need to take advantage of more recent byond features
-#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update.
+#error Your version of BYOND is too out-of-date to compile this project. Go to byond.com/download and update. As for August of 2015, it uses the BETA version of BYOND.
 #endif
 
 #define USE_BYGEX
