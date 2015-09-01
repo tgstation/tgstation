@@ -37,6 +37,7 @@
 
 	var/opened = 0
 	var/emagged = 0
+	var/emag_cooldown = 0
 	var/wiresexposed = 0
 	var/locked = 1
 	var/list/req_access = list(access_robotics)
@@ -580,11 +581,26 @@
 				user << "<span class='warning'>The cover is already unlocked!</span>"
 			return
 		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+			if((world.time - 100) < emag_cooldown)
+				return
+
+			var/ai_is_antag = 0
+			if(connected_ai && connected_ai.mind)
+				if(connected_ai.mind.special_role)
+					ai_is_antag = (connected_ai.mind.special_role == "malfunction") || (connected_ai.mind.special_role == "traitor")
+			if(ai_is_antag)
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+				connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"
+				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] slaved to traitor AI [connected_ai].")
+				emag_cooldown = world.time
+				return
+
 			if(wiresexposed)
 				user << "<span class='warning'>You must close the cover first!</span>"
 				return
 			else
+				emag_cooldown = world.time
 				sleep(6)
 				SetEmagged(1)
 				SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
