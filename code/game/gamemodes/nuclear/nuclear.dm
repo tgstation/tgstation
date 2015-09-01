@@ -7,11 +7,12 @@
 	config_tag = "nuclear"
 	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
 	required_enemies = 5
+	lowpop_required_players = 10
 	recommended_enemies = 5
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
 
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
+	var/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -314,3 +315,12 @@
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
 		synd_mind.current.real_name = synd_mind.name
 	return
+
+/datum/game_mode/nuclear/setup_lowpop()
+	required_enemies = 2
+	recommended_enemies = 2
+	agents_possible = 2
+	max_players = 2
+
+	lowpop_variant = 1
+	return 1

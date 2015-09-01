@@ -27,6 +27,9 @@
 	var/required_players = 0
 	var/required_enemies = 0
 	var/recommended_enemies = 0
+	var/max_players = 0
+	var/lowpop_required_players = 0
+	var/lowpop_variant = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/datum/mind/sacrifice_target = null
 	var/mob/living/living_antag_player = null
@@ -53,6 +56,11 @@
 			playerC++
 	if(!Debug2)
 		if(playerC < required_players)
+			if(lowpop_required_players && playerC < lowpop_required_players)
+				return 0
+			if(!setup_lowpop())
+				return 0
+		if(max_players && playerC > max_players)
 			return 0
 	antag_candidates = get_players_for_role(antag_flag)
 	if(!Debug2)
@@ -515,3 +523,6 @@
 		return 0
 
 	return max(0, enemy_minimum_age - C.player_age)
+
+/datum/game_mode/proc/setup_lowpop()
+	return 0
