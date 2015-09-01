@@ -81,3 +81,7 @@
 	if (isobj(loc))
 		var/obj/location = loc
 		location.on_log()
+
+	if(client && client.haszoomed && !client.holder)
+		client.view = world.view
+		client.haszoomed = 0

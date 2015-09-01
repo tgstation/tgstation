@@ -216,11 +216,12 @@ obj/effect/bmode/buildholder/New()
 	return Click(object,location,control,params)
 
 /client/MouseWheel(object,delta_x,delta_y,location,control,params)
-	if(mob.stat == DEAD || buildmode) //DEAD FAGS CAN ZOOM OUT THIS WILL END POORLY
+	if(istype(mob,/mob/dead/observer) || buildmode) //DEAD FAGS CAN ZOOM OUT THIS WILL END POORLY
 		if(delta_y > 0)
 			view--
 		else
 			view++
+		view = max(view,1)
 		haszoomed = 1
 	..()
 
