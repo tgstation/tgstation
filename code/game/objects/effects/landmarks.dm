@@ -81,7 +81,8 @@
 	start_landmarks_list += src
 	return 1
 
-/obj/effect/landmark/start/Destroy()	start_landmarks_list -= src
+/obj/effect/landmark/start/Destroy()
+	start_landmarks_list -= src
 	return ..()
 
 //Costume spawner landmarks
