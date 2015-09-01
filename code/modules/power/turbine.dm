@@ -81,7 +81,10 @@
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	spawn(5)
+
+/obj/machinery/power/compressor/initialize()
+	..()
+	spawn(10)
 		locate_machinery()
 		if(!turbine)
 			stat |= BROKEN
@@ -200,10 +203,10 @@
 
 	outturf = get_step(src, dir)
 
-	spawn(5)
 
-// compressor is found in the opposite direction
-
+/obj/machinery/power/turbine/initialize()
+	..()
+	spawn(10)
 		locate_machinery()
 		if(!compressor)
 			stat |= BROKEN
@@ -341,9 +344,9 @@
 
 
 
-/obj/machinery/computer/turbine_computer/New()
+/obj/machinery/computer/turbine_computer/initialize()
 	..()
-	spawn(5)
+	spawn(10)
 		locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
