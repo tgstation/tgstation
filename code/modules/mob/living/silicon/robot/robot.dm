@@ -9,6 +9,7 @@
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
+	var/magpulse = 0
 
 //Hud stuff
 
@@ -219,6 +220,7 @@
 			animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
+			magpulse = 1
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
