@@ -97,7 +97,7 @@ proc/make_mining_asteroid_secret()
 			theme = "xenoden"
 			floortypes = list(/turf/simulated/floor/plating/asteroid/airless, /turf/simulated/floor/plating/beach/sand)
 			treasureitems = list(/obj/item/clothing/mask/facehugger=1)
-			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/xenoblood/xsplatter=5)
+			fluffitems = list(/obj/effect/decal/remains/human=1,/obj/effect/decal/cleanable/blood/xeno/xsplatter=5)
 
 		if("hitech")
 			theme = "hitech"

@@ -120,6 +120,9 @@
 
 	// Upgrades!
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
+		if((W.flags & NODROP) || !user.unEquip(W))
+			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into the camera.</span>"
+			return 1
 		user << "You attach \the [W] into the assembly inner circuits."
 		upgrades += W
 		user.drop_item()

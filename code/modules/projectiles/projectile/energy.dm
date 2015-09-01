@@ -11,8 +11,8 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = 1
-	stun = 2
-	weaken = 2
+	stun = 3
+	weaken = 3
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'

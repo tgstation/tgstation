@@ -13,6 +13,7 @@ MASS SPECTROMETER
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
+	var/invis_objects = list()
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
@@ -23,6 +24,8 @@ MASS SPECTROMETER
 
 	on = !on
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
+
+	invis_update()
 
 	if(on)
 		SSobj.processing |= src
@@ -44,24 +47,23 @@ MASS SPECTROMETER
 			continue
 
 		for(var/obj/O in T.contents)
-
 			if(O.level != 1)
 				continue
 
 			if(O.invisibility == 101)
 				O.invisibility = 0
-				spawn(10)
-					if(O)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = 101
+				invis_objects += O
+		spawn(5)
+			invis_update()
 
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
+
+/obj/item/device/t_scanner/proc/invis_update()
+	for(var/obj/O in invis_objects)
+		if(!on || !(O in range(2, get_turf(src))))
+			invis_objects -= O
+			var/turf/T = O.loc
+			if(T && T.intact)
+				O.invisibility = 101
 
 
 /obj/item/device/healthanalyzer

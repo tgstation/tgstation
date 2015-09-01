@@ -393,6 +393,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
 	anchored = 0
+	density = 0
 	var/obj/item/asteroid/goliath_hide/G = new /obj/item/asteroid/goliath_hide(src.loc)
 	G.layer = 4.1
 	..(gibbed)

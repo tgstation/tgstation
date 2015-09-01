@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(var/act)
+/mob/living/carbon/monkey/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -10,8 +10,6 @@
 		act = copytext(act,1,length(act))
 
 	var/muzzled = is_muzzled()
-	var/m_type = 1
-	var/message
 
 	switch(act) //Ooh ooh ah ah keep this alphabetical ooh ooh ah ah!
 		if ("deathgasp")
@@ -23,10 +21,9 @@
 				message = "<B>[src]</B> gnarls and shows its teeth.."
 				m_type = 2
 
-		if ("paw")
-			if (!src.restrained())
-				message = "<B>[src]</B> flails its paw."
-				m_type = 1
+		if ("me")
+			..()
+			return
 
 		if ("moan")
 			message = "<B>[src]</B> moans!"
@@ -61,6 +58,11 @@
 				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
+		if ("paw")
+			if (!src.restrained())
+				message = "<B>[src]</B> flails its paw."
+				m_type = 1
+
 		if ("tail")
 			message = "<B>[src]</B> waves its tail."
 			m_type = 1
@@ -69,7 +71,7 @@
 			src << "Help for monkey emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, gnarl, giggle, glare-(none)/mob, grin, jump, laugh, look, me, moan, nod, paw, point-(atom), roar, roll, scream, scratch, scretch, shake, shiver, sigh, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave whimper, wink, yawn"
 
 		else
-			..(act)
+			..()
 
 	if ((message && src.stat == 0))
 		if(src.client)

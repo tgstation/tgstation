@@ -20,7 +20,7 @@
 
 	var/move_delay_add = 0 // movement delay to add
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	gib_type = /obj/effect/decal/cleanable/blood/gibs/xgibs
 
 	status_flags = CANPARALYSE|CANPUSH
 	var/heat_protection = 0.5
