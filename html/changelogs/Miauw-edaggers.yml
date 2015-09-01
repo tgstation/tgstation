@@ -1,7 +1,0 @@
-#working traitor items are power creep
-author: Miauw
-
-delete-after: True
-
-changes: 
-  - tweak: "Edaggers actually work now and have been buffed to 18 brute and 2 TC."
