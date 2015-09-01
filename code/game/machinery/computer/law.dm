@@ -4,7 +4,7 @@
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
 
-/obj/machinery/computer/upload/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/M = O
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
@@ -25,7 +25,7 @@
 	else
 		..()
 
-/obj/machinery/computer/upload/proc/can_upload_to(var/mob/living/silicon/S as mob)
+/obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
 	if(S.stat == DEAD || S.syndicate)
 		return 0
 	return 1
@@ -35,7 +35,7 @@
 	desc = "Used to upload laws to the AI."
 	circuit = /obj/item/weapon/circuitboard/aiupload
 
-/obj/machinery/computer/upload/ai/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/upload/ai/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -46,7 +46,7 @@
 	else
 		user << "[src.current.name] selected for law changes."
 
-/obj/machinery/computer/upload/ai/can_upload_to(var/mob/living/silicon/ai/A as mob)
+/obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
 		return 0
 	if(A.control_disabled)
@@ -59,7 +59,7 @@
 	desc = "Used to upload laws to Cyborgs."
 	circuit = /obj/item/weapon/circuitboard/borgupload
 
-/obj/machinery/computer/upload/borg/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/upload/borg/attack_hand(mob/user)
 	if(..())
 		return
 
@@ -70,7 +70,7 @@
 	else
 		user << "[src.current.name] selected for law changes."
 
-/obj/machinery/computer/upload/borg/can_upload_to(var/mob/living/silicon/robot/B as mob)
+/obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !isrobot(B))
 		return 0
 	if(B.scrambledcodes || B.emagged)

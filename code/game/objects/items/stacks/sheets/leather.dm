@@ -12,6 +12,14 @@
 	icon_state = "sheet-corgi"
 	origin_tech = null
 
+var/global/list/datum/stack_recipe/corgi_recipes = list ( \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/animalhide/corgi/New(var/loc, var/amount=null)
+	recipes = corgi_recipes
+	return ..()
+
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
 	desc = "The by-product of cat farming."
@@ -108,7 +116,7 @@ var/global/list/datum/stack_recipe/xeno_recipes = list ( \
 
 //Step one - dehairing.
 
-/obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_sharp(W))
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")

@@ -25,6 +25,7 @@
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
+	..()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -35,7 +36,7 @@
 			break
 	return power_station
 
-/obj/machinery/computer/teleporter/attackby(I as obj, mob/living/user as mob, params)
+/obj/machinery/computer/teleporter/attackby(obj/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
@@ -268,6 +269,7 @@
 	if (power_station)
 		power_station.teleporter_hub = null
 		power_station = null
+	..()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
@@ -391,7 +393,7 @@
 		teleporter_console = null
 	..()
 
-/obj/machinery/teleport/station/attackby(var/obj/item/weapon/W, mob/user, params)
+/obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)

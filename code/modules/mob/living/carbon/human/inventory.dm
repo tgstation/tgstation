@@ -167,9 +167,9 @@
 			return
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
-				update_inv_l_hand(0)
+				update_inv_l_hand()
 			else
-				update_inv_r_hand(0)
+				update_inv_r_hand()
 		else if(s_active && s_active.can_be_inserted(I,1))	//if storage active insert there
 			s_active.handle_item_insertion(I)
 		else if(istype(S, /obj/item/weapon/storage) && S.can_be_inserted(I,1))	//see if we have box in other hand
@@ -250,7 +250,7 @@
 		wear_suit = null
 		if(I.flags_inv & HIDEJUMPSUIT)
 			update_inv_w_uniform()
-		update_inv_wear_suit(0)
+		update_inv_wear_suit()
 	else if(I == w_uniform)
 		if(r_store)
 			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
@@ -262,45 +262,45 @@
 			unEquip(belt)
 		w_uniform = null
 		update_suit_sensors()
-		update_inv_w_uniform(0)
+		update_inv_w_uniform()
 	else if(I == gloves)
 		gloves = null
-		update_inv_gloves(0)
+		update_inv_gloves()
 	else if(I == glasses)
 		glasses = null
-		update_inv_glasses(0)
+		update_inv_glasses()
 	else if(I == ears)
 		ears = null
-		update_inv_ears(0)
+		update_inv_ears()
 	else if(I == shoes)
 		shoes = null
-		update_inv_shoes(0)
+		update_inv_shoes()
 	else if(I == belt)
 		belt = null
-		update_inv_belt(0)
+		update_inv_belt()
 	else if(I == wear_mask)
 		wear_mask = null
 		if(I.flags & BLOCKHAIR)
-			update_hair(0)	//rebuild hair
+			update_hair()	//rebuild hair
 		if(internal)
 			if(internals)
 				internals.icon_state = "internal0"
 			internal = null
 		sec_hud_set_ID()
-		update_inv_wear_mask(0)
+		update_inv_wear_mask()
 	else if(I == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
-		update_inv_wear_id(0)
+		update_inv_wear_id()
 	else if(I == r_store)
 		r_store = null
-		update_inv_pockets(0)
+		update_inv_pockets()
 	else if(I == l_store)
 		l_store = null
-		update_inv_pockets(0)
+		update_inv_pockets()
 	else if(I == s_store)
 		s_store = null
-		update_inv_s_store(0)
+		update_inv_s_store()
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
@@ -391,14 +391,14 @@
 			return
 
 //Cycles through all clothing slots and tests them for destruction
-/mob/living/carbon/human/proc/shred_clothing(var/bomb,var/shock)
+/mob/living/carbon/human/proc/shred_clothing(bomb,shock)
 	var/covered_parts = 0	//The body parts that are protected by exterior clothing/armor
 	var/head_absorbed = 0	//How much of the shock the headgear absorbs when it is shredded. -1=it survives
 	var/suit_absorbed = 0	//How much of the shock the exosuit absorbs when it is shredded. -1=it survives
 
 	//Backpacks can never be protected but are annoying as fuck to lose, so they get a lower chance to be shredded
 	if(back)
-		back.shred(bomb,shock-30,src)
+		back.shred(bomb,shock-20,src)
 
 	if(head)
 		covered_parts |= head.flags_inv
@@ -437,9 +437,9 @@
 	if(w_uniform)
 		var/absorbed = ((covered_parts & HIDEJUMPSUIT) ? suit_absorbed : 0)
 		if(absorbed >= 0)
-			w_uniform.shred(bomb,shock-absorbed,src)
+			w_uniform.shred(bomb,shock-20-absorbed,src)	//Uniforms are also annoying to get shredded
 
-/obj/item/proc/shred(var/bomb,var/shock,var/mob/living/carbon/human/Human)
+/obj/item/proc/shred(bomb,shock,mob/living/carbon/human/Human)
 	if(flags & ABSTRACT)
 		return -1
 
@@ -452,7 +452,7 @@
 			shredded = -1 //Heat protection = Fireproof
 
 	else if(shock > 0)
-		if(prob(Clamp(shock,0,90)))
+		if(prob(max(shock-armor["bomb"],0)))
 			shredded = armor["bomb"] + 10 //It gets shredded, but it also absorbs the shock the clothes underneath would recieve by this amount
 		else
 			shredded = -1 //It survives explosion

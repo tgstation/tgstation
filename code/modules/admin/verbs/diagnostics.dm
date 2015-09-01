@@ -1,4 +1,4 @@
-/client/proc/air_status(turf/target as turf)
+/client/proc/air_status(turf/target)
 	set category = "Debug"
 	set name = "Display Air Status"
 

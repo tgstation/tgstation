@@ -1,6 +1,7 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
 	icon_state = "alien_s"
+	pass_flags = PASSTABLE
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -13,23 +14,13 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	create_reagents(1000)
-	if(name == "alien")
-		name = text("alien ([rand(1, 1000)])")
-	real_name = name
-
-	AddAbility(new/obj/effect/proc_holder/alien/plant(null))
-	AddAbility(new/obj/effect/proc_holder/alien/whisper(null))
-	AddAbility(new/obj/effect/proc_holder/alien/transfer(null))
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
-
 	..()
+
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
 	. += move_delay_add + config.alien_delay	//move_delay_add is used to slow aliens with stuns
-
-///mob/living/carbon/alien/humanoid/bullet_act(var/obj/item/projectile/Proj) taken care of in living
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
@@ -46,7 +37,7 @@
 		step_away(src,user,15)
 		return 1
 
-/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)
 			if ("harm")
@@ -60,7 +51,7 @@
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 					adjustBruteLoss(damage)
-					add_logs(M, src, "attacked", admin=0)
+					add_logs(M, src, "attacked")
 					updatehealth()
 				else
 					playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
@@ -71,7 +62,7 @@
 					if (prob(5))
 						Paralyse(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed", admin=0)
+						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
@@ -147,5 +138,5 @@
 /mob/living/carbon/alien/humanoid/check_ear_prot()
 	return 1
 
-/mob/living/carbon/alien/carbon/alien/humanoid/get_permeability_protection()
+/mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8

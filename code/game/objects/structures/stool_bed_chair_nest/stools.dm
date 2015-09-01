@@ -11,11 +11,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if (prob(70))
+				new /obj/item/stack/sheet/metal(loc)
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(5))
+			if (prob(50))
+				new /obj/item/stack/sheet/metal(loc)
 				qdel(src)
 				return
 	return
@@ -25,7 +27,7 @@
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
 
-/obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/stool/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)

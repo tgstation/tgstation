@@ -114,7 +114,9 @@ Contents:
 		switch(chance)
 			if(1 to 50)//High chance of a regular name.
 				voice = "[rand(0,1) == 1 ? pick(first_names_female) : pick(first_names_male)] [pick(last_names)]"
-			if(51 to 80)//Smaller chance of a clown name.
+			if(51 to 70)//Smaller chance of a lizard name.
+				voice = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+			if(71 to 80)//Small chance of a clown name.
 				voice = "[pick(clown_names)]"
 			if(81 to 90)//Small chance of a wizard name.
 				voice = "[pick(wizard_first)] [pick(wizard_second)]"

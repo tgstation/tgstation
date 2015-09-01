@@ -76,7 +76,7 @@
 					body += "</td><td align='center'>";
 
 					body += "<a href='?_src_=holder;adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;notes=show;ckey="+ckey+"'>N</a> - "
+					body += "<a href='?_src_=holder;shownoteckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
@@ -194,7 +194,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information - <a href='?_src_=holder;secretsadmin=check_antagonist'>Check antagonists</a> - Kick <a href='?_src_=holder;secretsadmin=kick_all_from_lobby;afkonly=0'>everyone</a>/<a href='?_src_=holder;secretsadmin=kick_all_from_lobby;afkonly=1'>AFKers</a> in lobby
+					Hover over a line to see more information - <a href='?_src_=holder;check_antagonist=1'>Check antagonists</a> - Kick <a href='?_src_=holder;kick_all_from_lobby=1;afkonly=0'>everyone</a>/<a href='?_src_=holder;kick_all_from_lobby=1;afkonly=1'>AFKers</a> in lobby
 					<p>
 				</td>
 			</tr>
@@ -264,7 +264,11 @@
 				M_job = "New player"
 
 			else if(isobserver(M))
-				M_job = "Ghost"
+				var/mob/dead/observer/O = M
+				if(O.started_as_observer)//Did they get BTFO or are they just not trying?
+					M_job = "Observer"
+				else
+					M_job = "Ghost"
 
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)

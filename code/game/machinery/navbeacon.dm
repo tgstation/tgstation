@@ -59,7 +59,7 @@
 
 // called when turf state changes
 // hide the object if turf is intact
-/obj/machinery/navbeacon/hide(var/intact)
+/obj/machinery/navbeacon/hide(intact)
 	invisibility = intact ? 101 : 0
 	updateicon()
 
@@ -73,7 +73,7 @@
 	else
 		icon_state = "[state]"
 
-/obj/machinery/navbeacon/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
@@ -97,16 +97,16 @@
 			user << "<span class='warning'>You must open the cover first!</span>"
 	return
 
-/obj/machinery/navbeacon/attack_ai(var/mob/user)
+/obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)
 
 /obj/machinery/navbeacon/attack_paw()
 	return
 
-/obj/machinery/navbeacon/attack_hand(var/mob/user)
+/obj/machinery/navbeacon/attack_hand(mob/user)
 	interact(user, 0)
 
-/obj/machinery/navbeacon/interact(var/mob/user, var/ai = 0)
+/obj/machinery/navbeacon/interact(mob/user, ai = 0)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed

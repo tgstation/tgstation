@@ -55,13 +55,13 @@
 
 
 
-/obj/effect/accelerated_particle/proc/toxmob(var/mob/living/M)
+/obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	M.irradiate(energy*6)
 	M.updatehealth()
 	return
 
 
-/obj/effect/accelerated_particle/proc/move(var/lag)
+/obj/effect/accelerated_particle/proc/move(lag)
 	if(loc == null)
 		return
 	if(!step(src,dir))

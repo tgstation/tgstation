@@ -6,8 +6,6 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
-	var/last_bumped = 0
-	var/throwpass = 0
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -16,11 +14,6 @@
 	var/list/image/hud_list = list()
 	//HUD images that this atom can provide.
 	var/list/hud_possible
-
-	//var/chem_is_open_container = 0
-	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
-	///Chemistry.
-	var/allow_spin = 1
 
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
@@ -55,30 +48,10 @@
 
 	return 0
 
-/atom/proc/throw_impact(atom/hit_atom,mob/thrower)
-	if(istype(hit_atom,/mob/living))
-		var/mob/living/M = hit_atom
-		M.hitby(src,thrower)
-
-	else if(isobj(hit_atom))
-		var/obj/O = hit_atom
-		if(!O.anchored)
-			step(O, src.dir)
-		O.hitby(src)
-
-	else if(isturf(hit_atom))
-		var/turf/T = hit_atom
-		if(T.density)
-			spawn(2)
-				step(src, turn(src.dir, 180))
-			if(istype(src,/mob/living))
-				var/mob/living/M = src
-				M.take_organ_damage(20)
-
 /atom/proc/attack_hulk(mob/living/carbon/human/hulk, do_attack_animation = 0)
 	if(do_attack_animation)
 		hulk.changeNext_move(CLICK_CD_MELEE)
-		add_logs(hulk, src, "punched", "hulk powers", admin=0)
+		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
 	return
 
@@ -86,7 +59,7 @@
 	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	del(giver)
+	qdel(giver)
 	return null
 
 /atom/proc/remove_air(amount)
@@ -98,7 +71,7 @@
 	else
 		return null
 
-/atom/proc/check_eye(user as mob)
+/atom/proc/check_eye(mob/user)
 	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
 		return 1
 	return
@@ -134,7 +107,7 @@
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
-/atom/proc/emp_act(var/severity)
+/atom/proc/emp_act(severity)
 	return
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -285,9 +258,10 @@ its easier to just keep the beam vertical.
 /atom/proc/fire_act()
 	return
 
-/atom/proc/hitby(atom/movable/AM as mob|obj)
-	return
-
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush)
+	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
+		spawn(2)
+			step(AM,  turn(AM.dir, 180))
 
 var/list/blood_splatter_icons = list()
 
@@ -310,12 +284,8 @@ var/list/blood_splatter_icons = list()
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
 			return 0
-	if(rejects_blood())
+	if(rejects_blood() || !istype(M) || !check_dna_integrity(M))
 		return 0
-	if(!istype(M))
-		return 0
-	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
-		return 0					//no dna!
 	return 1
 
 /obj/add_blood(mob/living/carbon/M)
@@ -371,7 +341,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/rejects_blood()
 	return 0
 
-/atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
+/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
 		if(M.reagents)
@@ -386,7 +356,7 @@ var/list/blood_splatter_icons = list()
 			newDisease.holder = this*/
 
 // Only adds blood on the floor -- Skie
-/atom/proc/add_blood_floor(mob/living/carbon/M as mob)
+/atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
 		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
@@ -441,7 +411,7 @@ var/list/blood_splatter_icons = list()
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+/atom/proc/acid_act(acidpwr, toxpwr, acid_volume)
 	return
 
 /atom/proc/emag_act()
@@ -452,3 +422,6 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
+
+//This proc is called on the location of an atom when the atom is Destroy()'d
+/atom/proc/handle_atom_del(atom/A)

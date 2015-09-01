@@ -12,7 +12,7 @@
 	var/temp = "" // output message
 
 
-/obj/machinery/telecomms/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
 
 	var/icon_closed = initial(icon_state)
 	var/icon_open = "[initial(icon_state)]_o"
@@ -34,10 +34,10 @@
 	default_deconstruction_crowbar(P)
 
 
-/obj/machinery/telecomms/attack_ai(var/mob/user as mob)
+/obj/machinery/telecomms/attack_ai(mob/user)
 	attack_hand(user)
 
-/obj/machinery/telecomms/attack_hand(var/mob/user as mob)
+/obj/machinery/telecomms/attack_hand(mob/user)
 
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
@@ -126,7 +126,7 @@
 
 // Returns a multitool from a user depending on their mobtype.
 
-/obj/machinery/telecomms/proc/get_multitool(mob/user as mob)
+/obj/machinery/telecomms/proc/get_multitool(mob/user)
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
@@ -313,7 +313,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/telecomms/proc/canAccess(var/mob/user)
+/obj/machinery/telecomms/proc/canAccess(mob/user)
 	if(issilicon(user) || in_range(user, src))
 		return 1
 	return 0

@@ -51,7 +51,7 @@
 	var/chargesa = 1
 	var/insistinga = 0
 
-/obj/machinery/wish_granter_dark/attack_hand(var/mob/living/carbon/human/user as mob)
+/obj/machinery/wish_granter_dark/attack_hand(mob/living/carbon/human/user)
 	usr.set_machine(src)
 
 	if(chargesa <= 0)

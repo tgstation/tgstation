@@ -19,7 +19,7 @@
 		icon_state = "implantpad-0"
 
 
-/obj/item/weapon/implantpad/attack_hand(mob/user as mob)
+/obj/item/weapon/implantpad/attack_hand(mob/user)
 	if(case && (user.l_hand == src || user.r_hand == src))
 		user.put_in_active_hand(case)
 

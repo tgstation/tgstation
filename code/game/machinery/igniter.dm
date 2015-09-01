@@ -10,13 +10,13 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 
-/obj/machinery/igniter/attack_ai(mob/user as mob)
+/obj/machinery/igniter/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/igniter/attack_paw(mob/user as mob)
+/obj/machinery/igniter/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/igniter/attack_hand(mob/user as mob)
+/obj/machinery/igniter/attack_hand(mob/user)
 	if(..())
 		return
 	add_fingerprint(user)
@@ -69,7 +69,7 @@
 		icon_state = "[base_state]-p"
 //		src.sd_SetLuminosity(0)
 
-/obj/machinery/sparker/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if (istype(W, /obj/item/weapon/screwdriver))
@@ -116,42 +116,3 @@
 		return
 	ignite()
 	..(severity)
-
-/obj/machinery/ignition_switch/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user as mob, params)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_hand(mob/user as mob)
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-
-	use_power(5)
-
-	active = 1
-	icon_state = "launcheract"
-
-	for(var/obj/machinery/sparker/M in world)
-		if (M.id == src.id)
-			spawn( 0 )
-				M.ignite()
-
-	for(var/obj/machinery/igniter/M in world)
-		if(M.id == src.id)
-			use_power(50)
-			M.on = !( M.on )
-			M.icon_state = text("igniter[]", M.on)
-
-	sleep(50)
-
-	icon_state = "launcherbtt"
-	active = 0
-
-	return

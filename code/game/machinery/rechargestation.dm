@@ -43,7 +43,7 @@
 		process_occupant()
 	return 1
 
-/obj/machinery/recharge_station/relaymove(mob/user as mob)
+/obj/machinery/recharge_station/relaymove(mob/user)
 	if(user.stat)
 		return
 	open_machine()
@@ -62,13 +62,13 @@
 		open_machine()
 	..()
 
-/obj/machinery/recharge_station/attack_paw(user as mob)
+/obj/machinery/recharge_station/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attack_ai(user as mob)
+/obj/machinery/recharge_station/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attackby(obj/item/P as obj, mob/user as mob, params)
+/obj/machinery/recharge_station/attackby(obj/item/P, mob/user, params)
 	if(state_open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
@@ -81,7 +81,7 @@
 
 	default_deconstruction_crowbar(P)
 
-/obj/machinery/recharge_station/attack_hand(user as mob)
+/obj/machinery/recharge_station/attack_hand(mob/user)
 	if(..(user,1,set_machine = 0))
 		return
 

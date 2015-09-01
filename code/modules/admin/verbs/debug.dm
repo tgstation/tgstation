@@ -40,7 +40,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		switch(alert("Proc owned by something?",,"Yes","No"))
 			if("Yes")
 				targetselected = 1
-				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
+				if(src.holder && src.holder.marked_datum)
+					class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client","Marked datum ([holder.marked_datum.type])")
+					if(class == "Marked datum ([holder.marked_datum.type])")
+						class = "Marked datum"
+				else
+					class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
 				switch(class)
 					if("Obj")
 						target = input("Enter target:","Target",usr) as obj in world
@@ -53,6 +58,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 						for(var/client/C)
 							keys += C
 						target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
+					if("Marked datum")
+						target = holder.marked_datum
 					else
 						return
 			if("No")
@@ -61,7 +68,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 		if(!procname)	return
-
+		if(targetselected && !hascall(target,procname))
+			usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
+			return
 		var/list/lst = get_callproc_args()
 		if(!lst)
 			return
@@ -69,9 +78,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(targetselected)
 			if(!target)
 				usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
-				return
-			if(!hascall(target,procname))
-				usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
 				return
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
@@ -83,7 +89,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
 		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/callproc_datum(var/A as null|area|mob|obj|turf)
+/client/proc/callproc_datum(A as null|area|mob|obj|turf)
 	set category = "Debug"
 	set name = "Atom ProcCall"
 
@@ -93,16 +99,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
 	if(!procname)
 		return
-
+	if(!hascall(A,procname))
+		usr << "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>"
+		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(!A || !IsValidSrc(A))
 		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
-		return
-	if(!hascall(A,procname))
-		usr << "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>"
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 
@@ -115,15 +120,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/get_callproc_args()
 	var/argnum = input("Number of arguments","Number:",0) as num|null
 	if(!argnum && (argnum!=0))	return
-
+	
 	var/list/lst = list()
 	//TODO: make a list to store whether each argument was initialised as null.
 	//Reason: So we can abort the proccall if say, one of our arguments was a mob which no longer exists
 	//this will protect us from a fair few errors ~Carn
 
 	while(argnum--)
+		var/class = null
 		// Make a list with each index containing one variable, to be given to the proc
-		var/class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+		if(src.holder && src.holder.marked_datum)
+			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","Marked datum ([holder.marked_datum.type])","CANCEL")
+			if(holder.marked_datum && class == "Marked datum ([holder.marked_datum.type])")
+				class = "Marked datum"
+		else
+			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
 		switch(class)
 			if("CANCEL")
 				return null
@@ -158,6 +169,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if("mob's area")
 				var/mob/temp = input("Select mob", "Selection", usr) as mob in world
 				lst += temp.loc
+			if("Marked datum")
+				lst += holder.marked_datum
 	return lst
 
 
@@ -182,7 +195,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_robotize(var/mob/M in mob_list)
+/client/proc/cmd_admin_robotize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Robot"
 
@@ -198,7 +211,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_blobize(var/mob/M in mob_list)
+/client/proc/cmd_admin_blobize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Blob"
 
@@ -215,7 +228,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 
 
-/client/proc/cmd_admin_animalize(var/mob/M in mob_list)
+/client/proc/cmd_admin_animalize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
@@ -236,7 +249,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		M.Animalize()
 
 
-/client/proc/makepAI(var/turf/T in mob_list)
+/client/proc/makepAI(turf/T in mob_list)
 	set category = "Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
@@ -263,7 +276,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			SSpai.candidates.Remove(candidate)
 	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_alienize(var/mob/M in mob_list)
+/client/proc/cmd_admin_alienize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Alien"
 
@@ -280,7 +293,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_admin_slimeize(var/mob/M in mob_list)
+/client/proc/cmd_admin_slimeize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make slime"
 
@@ -398,8 +411,9 @@ var/list/TYPES_SHORTCUTS = list(
 	/obj/item/weapon/reagent_containers = "REAGENT_CONTAINERS",
 	/obj/machinery/atmospherics = "ATMOS",
 	/obj/machinery/portable_atmospherics = "PORT_ATMOS",
-	/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack = "MECHA_MISSILE_RACK",
+	/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack = "MECHA_MISSILE_RACK",
 	/obj/item/mecha_parts/mecha_equipment = "MECHA_EQUIP",
+	/obj/item/organ/internal = "ORGAN_INT",
 )
 
 var/global/list/g_fancy_list_of_types = null
@@ -425,7 +439,7 @@ var/global/list/g_fancy_list_of_types = null
 	return matches
 
 //TODO: merge the vievars version into this or something maybe mayhaps
-/client/proc/cmd_debug_del_all(var/object as text)
+/client/proc/cmd_debug_del_all(object as text)
 	set category = "Debug"
 	set name = "Del-All"
 
@@ -456,7 +470,7 @@ var/global/list/g_fancy_list_of_types = null
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
+/client/proc/cmd_admin_grantfullaccess(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
@@ -496,7 +510,7 @@ var/global/list/g_fancy_list_of_types = null
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
-/client/proc/cmd_assume_direct_control(var/mob/M in mob_list)
+/client/proc/cmd_assume_direct_control(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
@@ -603,7 +617,7 @@ var/global/list/g_fancy_list_of_types = null
 	for(var/areatype in areas_without_camera)
 		world << "* [areatype]"
 
-/client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in mob_list)
+/client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
@@ -1091,7 +1105,7 @@ var/global/list/g_fancy_list_of_types = null
 
 
 //Deathsquad
-/proc/equip_deathsquad(var/mob/living/carbon/human/M, var/officer)
+/proc/equip_deathsquad(mob/living/carbon/human/M, officer)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
@@ -1142,7 +1156,7 @@ var/global/list/g_fancy_list_of_types = null
 	M.equip_to_slot_or_del(W, slot_wear_id)
 
 //Emergency Response Team
-/proc/equip_emergencyresponsesquad(var/mob/living/carbon/human/M, var/ertrole, var/alert)
+/proc/equip_emergencyresponsesquad(mob/living/carbon/human/M, ertrole, alert)
 	var/obj/item/weapon/card/id/W = null
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/headset_cent/alt(M)
 	R.set_frequency(CENTCOM_FREQ)
@@ -1260,7 +1274,7 @@ var/global/list/g_fancy_list_of_types = null
 		W.update_label(W.registered_name, W.assignment)
 
 
-/proc/equip_centcomofficial(var/mob/living/carbon/human/M)
+/proc/equip_centcomofficial(mob/living/carbon/human/M)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(M), slot_w_uniform)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(M), slot_shoes)
 	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(M), slot_gloves)

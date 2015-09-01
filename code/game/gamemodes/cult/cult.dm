@@ -7,7 +7,7 @@
 	var/list/cult_objectives = list()
 
 
-/proc/iscultist(mob/living/M as mob)
+/proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
@@ -19,7 +19,7 @@
 		if(mind.current == ticker.mode.sacrifice_target)	return 0
 	return 1
 
-/proc/cultist_commune(var/mob/living/user, var/clear = 0, var/say = 0, var/message)
+/proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
 	if(!message)
 		return
 	if(say)
@@ -128,7 +128,7 @@
 	..()
 
 
-/datum/game_mode/cult/proc/memorize_cult_objectives(var/datum/mind/cult_mind)
+/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
 		var/explanation
 		switch(cult_objectives[obj_count])
@@ -195,7 +195,7 @@
 //			startwords -= word
 //	return ..(cult_mob,word)
 
-/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
+/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if(!wordtravel)
 		runerandom()
 	if (!word)

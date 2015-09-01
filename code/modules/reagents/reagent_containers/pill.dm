@@ -40,7 +40,7 @@
 
 
 	user.unEquip(src) //icon update
-	add_logs(user, M, "fed", object="[reagentlist(src)]")
+	add_logs(user, M, "fed", reagentlist(src))
 	loc = M //Put the pill inside the mob. This fixes the issue where the pill appears to drop to the ground after someone eats it.
 
 	if(reagents.total_volume)
@@ -132,6 +132,12 @@
 	desc = "Used to dull pain."
 	icon_state = "pill5"
 	list_reagents = list("sal_acid" = 24)
+	roundstart = 1
+/obj/item/weapon/reagent_containers/pill/oxandrolone
+	name = "oxandrolone pill"
+	desc = "Used to stimulate burn healing."
+	icon_state = "pill5"
+	list_reagents = list("oxandrolone" = 24)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin

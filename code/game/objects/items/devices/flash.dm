@@ -28,7 +28,7 @@
 	visible_message("The [src.name] burns out!")
 
 
-/obj/item/device/flash/proc/flash_recharge(var/interval=10)
+/obj/item/device/flash/proc/flash_recharge(interval=10)
 	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
 		burn_out()
 		return 0
@@ -41,7 +41,7 @@
 	times_used = max(0, times_used) //sanity
 	return 1
 
-/obj/item/device/flash/proc/try_use_flash(var/mob/user = null)
+/obj/item/device/flash/proc/try_use_flash(mob/user = null)
 	flash_recharge(10)
 
 	if(broken)
@@ -57,8 +57,8 @@
 	return 1
 
 
-/obj/item/device/flash/proc/flash_carbon(var/mob/living/carbon/M, var/mob/user = null, var/power = 5, targeted = 1)
-	add_logs(user, M, "flashed", object="[src.name]")
+/obj/item/device/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 5, targeted = 1)
+	add_logs(user, M, "flashed", src)
 	if(user && targeted)
 		if(M.weakeyes)
 			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
@@ -89,7 +89,7 @@
 		return 1
 
 	else if(issilicon(M))
-		add_logs(user, M, "flashed", object="[src.name]")
+		add_logs(user, M, "flashed", src)
 		flick("e_flash", M.flash)
 		M.Weaken(rand(5,10))
 		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
@@ -115,7 +115,7 @@
 	..()
 
 
-/obj/item/device/flash/proc/terrible_conversion_proc(var/mob/M, var/mob/user)
+/obj/item/device/flash/proc/terrible_conversion_proc(mob/M, mob/user)
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
 		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
 			if(M.client)
@@ -150,7 +150,7 @@
 	..()
 	cyborg_flash_animation(user)
 
-/obj/item/device/flash/cyborg/proc/cyborg_flash_animation(var/mob/living/user)
+/obj/item/device/flash/cyborg/proc/cyborg_flash_animation(mob/living/user)
 	var/atom/movable/overlay/animation = new(user.loc)
 	animation.layer = user.layer + 1
 	animation.icon_state = "blank"

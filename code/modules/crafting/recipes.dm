@@ -17,6 +17,7 @@
 	parts = list(/obj/item/weapon/gun = 1)
 	tools = list(/obj/item/weapon/gun/energy/plasmacutter, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
 	time = 100
+	category = CAT_WEAPON
 
 /datum/table_recipe/IED
 	name = "IED"
@@ -26,6 +27,15 @@
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
+	time = 80
+	category = CAT_WEAPON
+
+/datum/table_recipe/molotov
+	name = "Molotov"
+	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+	reqs = list(/obj/item/weapon/reagent_containers/glass/rag = 1,
+				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
+	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	time = 80
 	category = CAT_WEAPON
 

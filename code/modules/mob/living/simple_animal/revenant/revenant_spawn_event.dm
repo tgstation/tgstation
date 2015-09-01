@@ -3,16 +3,16 @@
 /datum/round_event_control/revenant
 	name = "Spawn Revenant"
 	typepath = /datum/round_event/revenant
-	weight = 0 //Admin only
+	weight = 7
 	max_occurrences = 3
-	earliest_start = 0 //Meant to mix things up early-game.
+	earliest_start = 6000 //Meant to mix things up early-game.
 
 
 /datum/round_event/revenant
 	var/key_of_revenant
 
 
-/datum/round_event/revenant/proc/get_revenant(var/end_if_fail = 0)
+/datum/round_event/revenant/proc/get_revenant(end_if_fail = 0)
 	var/deadMobs = 0
 	for(var/mob/M in dead_mob_list)
 		deadMobs++

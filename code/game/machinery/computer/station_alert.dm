@@ -49,7 +49,7 @@
 	return
 
 
-/obj/machinery/computer/station_alert/proc/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+/obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
 	if(stat & (BROKEN))
@@ -74,7 +74,7 @@
 	return 1
 
 
-/obj/machinery/computer/station_alert/proc/cancelAlarm(var/class, area/A as area, obj/origin)
+/obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat & (BROKEN))
 		return
 	var/list/L = src.alarms[class]

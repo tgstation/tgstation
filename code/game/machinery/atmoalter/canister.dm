@@ -1,5 +1,6 @@
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
+	desc = "A canister for the storage of gas."
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
@@ -21,31 +22,37 @@
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "canister: \[N2O\]"
+	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	icon_state = "redws"
 	canister_color = "redws"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "canister: \[N2\]"
+	desc = "Nitrogen gas. Reportedly useful for something."
 	icon_state = "red"
 	canister_color = "red"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "canister: \[O2\]"
+	desc = "Oxygen. Necessary for human life."
 	icon_state = "blue"
 	canister_color = "blue"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/toxins
-	name = "canister \[Toxin (Bio)\]"
+	name = "canister \[Plasma\]"
+	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	canister_color = "orange"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "canister \[CO2\]"
+	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	icon_state = "black"
 	canister_color = "black"
 	can_label = 0
 /obj/machinery/portable_atmospherics/canister/air
 	name = "canister \[Air\]"
+	desc = "Pre-mixed air."
 	icon_state = "grey"
 	canister_color = "grey"
 	can_label = 0
@@ -201,7 +208,7 @@ update_flag
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(Proj.damage)
 			src.health -= round(Proj.damage / 2)
@@ -230,7 +237,7 @@ update_flag
 			return
 	return
 
-/obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
 		visible_message("<span class='danger'>[user] hits \the [src] with a [W]!</span>")
 		investigate_log("was smacked with \a [W] by [key_name(user)]", "atmos")
@@ -253,16 +260,16 @@ update_flag
 
 	..()
 
-/obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/canister/attack_paw(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/canister/attack_tk(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_tk(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/canister/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/canister/attack_hand(mob/user)
 	return src.ui_interact(user)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user, ui_key = "main")
@@ -271,7 +278,7 @@ update_flag
 
 	SSnano.try_update_ui(user, src, ui_key, null, src.get_ui_data())
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if (src.destroyed)
 		return
 
@@ -347,7 +354,7 @@ update_flag
 					"\[N2O\]" = "redws", \
 					"\[N2\]" = "red", \
 					"\[O2\]" = "blue", \
-					"\[Toxin (Bio)\]" = "orange", \
+					"\[Plasma\]" = "orange", \
 					"\[CO2\]" = "black", \
 					"\[Air\]" = "grey", \
 					"\[CAUTION\]" = "yellow", \

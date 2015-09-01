@@ -12,7 +12,7 @@
 	var/key_of_slaughter
 
 
-/datum/round_event/slaughter/proc/get_slaughter(var/end_if_fail = 0)
+/datum/round_event/slaughter/proc/get_slaughter(end_if_fail = 0)
 	key_of_slaughter = null
 	if(!key_of_slaughter)
 		var/list/candidates = get_candidates(BE_ALIEN)
@@ -36,9 +36,9 @@
 					spawn_locs += L.loc
 	if(!spawn_locs)
 		return find_slaughter()
-	var /obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(pick(spawn_locs))
+	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,(pick(spawn_locs)))
 	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
-	S.phased = TRUE
+	S.holder = holder
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"
 	player_mind.special_role = "Slaughter Demon"

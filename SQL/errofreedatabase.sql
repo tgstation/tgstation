@@ -12,5 +12,4 @@ ALTER TABLE erro_poll_option RENAME TO SS13_poll_option;
 ALTER TABLE erro_poll_question RENAME TO SS13_poll_question;
 ALTER TABLE erro_poll_textreply RENAME TO SS13_poll_textreply;
 ALTER TABLE erro_poll_vote RENAME TO SS13_poll_vote;
-ALTER TABLE erro_privacy RENAME TO SS13_privacy;
 ALTER TABLE erro_watch RENAME TO SS13_watch;

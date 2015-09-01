@@ -1,5 +1,5 @@
 /var/create_mob_html = null
-/datum/admins/proc/create_mob(var/mob/user)
+/datum/admins/proc/create_mob(mob/user)
 	if (!create_mob_html)
 		var/mobjs = null
 		mobjs = list2text(typesof(/mob), ";")
@@ -10,7 +10,7 @@
 
 /proc/randomize_human(mob/living/carbon/human/H)
 	H.gender = pick(MALE, FEMALE)
-	H.real_name = random_name(H.gender)
+	H.real_name = random_unique_name(H.gender)
 	H.name = H.real_name
 	H.dna.generate_uni_identity(H)
 	H.underwear = random_underwear(H.gender)

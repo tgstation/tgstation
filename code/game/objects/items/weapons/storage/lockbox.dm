@@ -17,7 +17,7 @@
 	var/icon_broken = "lockbox+b"
 
 
-/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
 	if (W.GetID())
 		if(src.broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
@@ -48,7 +48,7 @@
 		return 0
 	..()
 
-/obj/item/weapon/storage/lockbox/emag_act(mob/user as mob)
+/obj/item/weapon/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = 1
 		locked = 0
@@ -57,7 +57,7 @@
 		for(var/mob/O in viewers(user, 3))
 			O.show_message(text("\The [src] has been broken by [] with an electromagnetic card!", user), 1, text("<span class='italics'>You hear a faint electrical spark.</span>"), 2)
 			return
-/obj/item/weapon/storage/lockbox/show_to(mob/user as mob)
+/obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
 		user << "<span class='warning'>It's locked!</span>"
 	else

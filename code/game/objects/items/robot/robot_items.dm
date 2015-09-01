@@ -9,7 +9,7 @@
 	icon = 'icons/mob/robot_items.dmi'
 	icon_state = "elecarm"
 
-/obj/item/borg/stun/attack(mob/M as mob, mob/living/silicon/robot/user as mob)
+/obj/item/borg/stun/attack(mob/M, mob/living/silicon/robot/user)
 
 	user.cell.charge -= 30
 
@@ -22,7 +22,7 @@
 		if (O.client)
 			O.show_message("<span class='danger'>[user] has prodded [M] with an electrically-charged arm!</span>", 1,
 							 "<span class='italics'>You hear someone fall.</span>", 2)
-	add_logs(user, M, "stunned", object="[src.name]", addition="(INTENT: [uppertext(user.a_intent)])")
+	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/overdrive
 	name = "overdrive"

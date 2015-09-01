@@ -5,7 +5,7 @@
 #define AREA_BUILDMODE 5
 #define NUM_BUILDMODES 5
 
-/proc/togglebuildmode(mob/M as mob in player_list)
+/proc/togglebuildmode(mob/M in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
@@ -197,7 +197,7 @@
 	return 1
 
 
-/proc/build_click(var/mob/user, buildmode, params, var/obj/object)
+/proc/build_click(mob/user, buildmode, params, obj/object)
 	var/obj/effect/bmode/buildholder/holder = null
 	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)

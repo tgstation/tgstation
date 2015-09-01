@@ -7,7 +7,7 @@ Passive gate is similar to the regular pump except:
 
 */
 
-/obj/machinery/atmospherics/binary/passive_gate
+/obj/machinery/atmospherics/components/binary/passive_gate
 	icon_state = "passgate_map"
 
 	name = "passive gate"
@@ -22,23 +22,26 @@ Passive gate is similar to the regular pump except:
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/atmospherics/binary/passive_gate/Destroy()
+/obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-/obj/machinery/atmospherics/binary/passive_gate/update_icon_nopipes()
+/obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
 	if(!on)
 		icon_state = "passgate_off"
 		overlays.Cut()
 		return
 
-	overlays += getpipeimage('icons/obj/atmospherics/binary_devices.dmi', "passgate_on")
+	overlays += getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "passgate_on")
 
-/obj/machinery/atmospherics/binary/passive_gate/process_atmos()
+/obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
 	..()
 	if(!on)
 		return 0
+
+	var/datum/gas_mixture/air1 = airs[AIR1]
+	var/datum/gas_mixture/air2 = airs[AIR2]
 
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
@@ -59,20 +62,18 @@ Passive gate is similar to the regular pump except:
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 		air2.merge(removed)
 
-		parent1.update = 1
-
-		parent2.update = 1
+		update_parents()
 
 
 //Radio remote control
 
-/obj/machinery/atmospherics/binary/passive_gate/proc/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/binary/passive_gate/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/binary/passive_gate/proc/broadcast_status()
+/obj/machinery/atmospherics/components/binary/passive_gate/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
@@ -92,25 +93,25 @@ Passive gate is similar to the regular pump except:
 
 	return 1
 
-/obj/machinery/atmospherics/binary/passive_gate/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "atmos_gas_pump.tmpl", name, 400, 120, 0)
 
-/obj/machinery/atmospherics/binary/passive_gate/get_ui_data()
+/obj/machinery/atmospherics/components/binary/passive_gate/get_ui_data()
 	var/data = list()
 	data["on"] = on
 	data["pressure_set"] = round(target_pressure*100) //Nano UI can't handle rounded non-integers, apparently.
 	data["max_pressure"] = MAX_OUTPUT_PRESSURE
 	return data
 
-/obj/machinery/atmospherics/binary/passive_gate/atmosinit()
+/obj/machinery/atmospherics/components/binary/passive_gate/atmosinit()
 	..()
 	if(frequency)
 		set_frequency(frequency)
 
-/obj/machinery/atmospherics/binary/passive_gate/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/binary/passive_gate/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -144,7 +145,7 @@ Passive gate is similar to the regular pump except:
 
 
 
-/obj/machinery/atmospherics/binary/passive_gate/attack_hand(user as mob)
+/obj/machinery/atmospherics/components/binary/passive_gate/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_fingerprint(usr)
@@ -155,7 +156,7 @@ Passive gate is similar to the regular pump except:
 	ui_interact(user)
 	return
 
-/obj/machinery/atmospherics/binary/passive_gate/Topic(href,href_list)
+/obj/machinery/atmospherics/components/binary/passive_gate/Topic(href,href_list)
 	if(..()) return
 	if(href_list["power"])
 		on = !on
@@ -172,13 +173,13 @@ Passive gate is similar to the regular pump except:
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/atmospherics/binary/passive_gate/power_change()
+/obj/machinery/atmospherics/components/binary/passive_gate/power_change()
 	..()
 	update_icon()
 
 
 
-/obj/machinery/atmospherics/binary/passive_gate/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob, params)
+/obj/machinery/atmospherics/components/binary/passive_gate/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (on)

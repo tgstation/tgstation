@@ -15,6 +15,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
+	var/obj/screen/lamp_button = null
 
 	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
@@ -60,6 +61,9 @@
 	var/tonermax = 40
 	var/jetpackoverlay = 0
 	var/braintype = "Cyborg"
+	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
+	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
+	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -102,9 +106,8 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new(src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain = new /obj/item/organ/internal/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
-		mmi.locked = 1
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
 		mmi.brainmob = new(src)
@@ -130,11 +133,18 @@
 		else
 			src << "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
-			ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
+			spawn(0)
+				throw EXCEPTION("Borg MMI lacked a brainmob")
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
-	..()
+	qdel(wires)
+	qdel(module)
+	wires = null
+	module = null
+	camera = null
+	cell = null
+	return ..()
 
 
 /mob/living/silicon/robot/proc/pick_module()
@@ -198,7 +208,7 @@
 			icon_state = "secborg"
 			animation_length = 28
 			modtype = "Sec"
-			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
+			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
@@ -221,6 +231,7 @@
 	transform_animation(animation_length)
 	notify_ai(2)
 	update_icons()
+	update_headlamp()
 	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
 /mob/living/silicon/robot/proc/transform_animation(animation_length)
@@ -250,6 +261,8 @@
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
 	set name = "Show Alerts"
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	robot_alerts()
 
 //for borg hotkeys, here module refers to borg inv slot, not core module
@@ -351,7 +364,7 @@
 	if(prob(75) && Proj.damage > 0) spark_system.start()
 	return 2
 
-/mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/obj/alarmsource)
+/mob/living/silicon/robot/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
 	if (stat == 2)
@@ -378,7 +391,7 @@
 	return 1
 
 
-/mob/living/silicon/robot/cancelAlarm(var/class, area/A as area, obj/origin)
+/mob/living/silicon/robot/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
 	var/cleared = 0
 	for (var/I in L)
@@ -396,7 +409,7 @@
 	return !cleared
 
 
-/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
@@ -555,7 +568,7 @@
 			spark_system.start()
 		return ..()
 
-/mob/living/silicon/robot/emag_act(mob/user as mob)
+/mob/living/silicon/robot/emag_act(mob/user)
 	if(user != src)//To prevent syndieborgs from emagging themselves
 		if(!opened)//Cover is closed
 			if(locked)
@@ -608,6 +621,8 @@
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
 	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
+	if(stat == DEAD)
+		return //won't work if dead
 	if(locked)
 		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
@@ -615,7 +630,7 @@
 				update_icons()
 				usr << "<span class='notice'>You unlock your cover.</span>"
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (M.a_intent =="disarm")
 		if(!(lying))
 			M.do_attack_animation(src)
@@ -624,7 +639,7 @@
 				step(src,get_dir(M,src))
 				spawn(5)
 					step(src,get_dir(M,src))
-				add_logs(M, src, "pushed", admin=0)
+				add_logs(M, src, "pushed")
 				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 								"<span class='userdanger'>[M] has forced back [src]!</span>")
@@ -638,7 +653,7 @@
 
 
 
-/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime shock
 		flick("noise", flash)
 		var/stunprob = M.powerlevel * 7 + 10
@@ -720,12 +735,17 @@
 /mob/living/silicon/robot/update_icons()
 
 	overlays.Cut()
-	if(stat == CONSCIOUS)
+	if(stat != DEAD && !(paralysis || stunned || weakened)) //Not dead, not stunned.
+		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
 				overlays += "eyes-standard"
+				state_name = "standard"
+			if("mediborg")
+				overlays += "eyes-mediborg"
 			if("toiletbot")
-				overlays += "eyes-toiletbot"
+				overlays += "eyes-mediborg"
+				state_name = "mediborg"
 			if("secborg")
 				overlays += "eyes-secborg"
 			if("engiborg")
@@ -738,6 +758,9 @@
 				overlays += "eyes-syndie_bloodhound"
 			else
 				overlays += "eyes"
+				state_name = "serviceborg"
+		if(lamp_intensity > 2)
+			overlays += "eyes-[state_name]-lights"
 
 	if(opened)
 		if(wiresexposed)
@@ -750,8 +773,6 @@
 	if(jetpackoverlay)
 		overlays += "minerjetpack"
 	update_fire()
-
-
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
@@ -851,9 +872,6 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
-				if (istype(tile, /turf/simulated/floor))
-					var/turf/simulated/floor/F = tile
-					F.dirt = 0
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(is_cleanable(A))
@@ -866,16 +884,16 @@
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
 								cleaned_human.head.clean_blood()
-								cleaned_human.update_inv_head(0)
+								cleaned_human.update_inv_head()
 							if(cleaned_human.wear_suit)
 								cleaned_human.wear_suit.clean_blood()
-								cleaned_human.update_inv_wear_suit(0)
+								cleaned_human.update_inv_wear_suit()
 							else if(cleaned_human.w_uniform)
 								cleaned_human.w_uniform.clean_blood()
-								cleaned_human.update_inv_w_uniform(0)
+								cleaned_human.update_inv_w_uniform()
 							if(cleaned_human.shoes)
 								cleaned_human.shoes.clean_blood()
-								cleaned_human.update_inv_shoes(0)
+								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
@@ -939,7 +957,7 @@
 
 	return
 
-/mob/living/silicon/robot/proc/SetLockdown(var/state = 1)
+/mob/living/silicon/robot/proc/SetLockdown(state = 1)
 	// They stay locked down if their wire is cut.
 	if(wires.LockedCut())
 		state = 1
@@ -950,7 +968,7 @@
 	lockcharge = state
 	update_canmove()
 
-/mob/living/silicon/robot/proc/SetEmagged(var/new_state)
+/mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
 	if(new_state)
 		if(src.module)
@@ -970,13 +988,47 @@
 	set category = "Robot Commands"
 	set name = "State Laws"
 
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	checklaws()
 
 /mob/living/silicon/robot/verb/set_automatic_say_channel() //Borg version of setting the radio for autosay messages.
 	set name = "Set Auto Announce Mode"
 	set desc = "Modify the default radio setting for stating your laws."
 	set category = "Robot Commands"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	set_autosay()
+
+/mob/living/silicon/robot/proc/control_headlamp()
+	if(stat || lamp_recharging)
+		src << "<span class='danger'>This function is currently offline.</span>"
+		return
+
+//Some sort of magical "modulo" thing which somehow increments lamp power by 2, until it hits the max and resets to 0.
+	lamp_intensity = (lamp_intensity+2) % (lamp_max+2)
+	src << "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]"
+	update_headlamp()
+
+/mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
+	SetLuminosity(0)
+
+	if(lamp_intensity && (turn_off || stat))
+		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
+		lamp_intensity = 0
+		lamp_recharging = 1
+		spawn(cooldown) //10 seconds by default, if the source of the deactivation does not keep stat that long.
+			lamp_recharging = 0
+	else
+		AddLuminosity(lamp_intensity)
+
+	if(lamp_button)
+		lamp_button.icon_state = "lamp[lamp_intensity]"
+
+	update_icons()
+
+
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
@@ -1038,7 +1090,7 @@
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
 
-/mob/living/silicon/robot/proc/notify_ai(var/notifytype, var/oldname, var/newname)
+/mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
 		return
 	switch(notifytype)

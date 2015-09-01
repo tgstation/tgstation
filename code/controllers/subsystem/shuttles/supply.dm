@@ -143,6 +143,32 @@
 				if(istype(thing, /obj/item/documents/syndicate))
 					++intel_count
 
+				// Sell tech levels
+				if(istype(thing, /obj/item/weapon/disk/tech_disk))
+					var/obj/item/weapon/disk/tech_disk/disk = thing
+					if(!disk.stored) continue
+					var/datum/tech/tech = disk.stored
+
+					var/cost = tech.getCost(SSshuttle.techLevels[tech.id])
+					if(cost)
+						SSshuttle.techLevels[tech.id] = tech.level
+						SSshuttle.points += cost
+						msg += "<font color=green>+[cost]</font>: [tech.name] - new data.<BR>"
+
+				// Sell max reliablity designs
+				if(istype(thing, /obj/item/weapon/disk/design_disk))
+					var/obj/item/weapon/disk/design_disk/disk = thing
+					if(!disk.blueprint) continue
+					var/datum/design/design = disk.blueprint
+					if(design.id in SSshuttle.researchDesigns) continue
+
+					if(initial(design.reliability) < 100 && design.reliability >= 100)
+						// Maxed out reliability designs only.
+						SSshuttle.points += SSshuttle.points_per_design
+						SSshuttle.researchDesigns += design.id
+						msg += "<font color=green>+[SSshuttle.points_per_design]</font>: Reliable [design.name] design.<BR>"
+
+				// Sell exotic plants
 				if(istype(thing, /obj/item/seeds))
 					var/obj/item/seeds/S = thing
 					if(S.rarity == 0) // Mundane species
@@ -201,7 +227,7 @@
 	return 0
 
 
-/obj/machinery/computer/ordercomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/ordercomp/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -303,7 +329,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(mob/user)
 	if(!allowed(user))
 		user << "<span class='warning'>Access Denied.</span>"
 		return
@@ -514,7 +540,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
+/obj/machinery/computer/supplycomp/proc/post_signal(command)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

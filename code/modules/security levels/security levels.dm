@@ -6,7 +6,7 @@
 
 //config.alert_desc_blue_downto
 
-/proc/set_security_level(var/level)
+/proc/set_security_level(level)
 	switch(level)
 		if("green")
 			level = SEC_LEVEL_GREEN
@@ -23,7 +23,7 @@
 			if(SEC_LEVEL_GREEN)
 				minor_announce(config.alert_desc_green, "Attention! Security level lowered to green:")
 				security_level = SEC_LEVEL_GREEN
-				for(var/obj/machinery/firealarm/FA in world)
+				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
@@ -32,7 +32,7 @@
 				else
 					minor_announce(config.alert_desc_blue_downto, "Attention! Security level lowered to blue:")
 				security_level = SEC_LEVEL_BLUE
-				for(var/obj/machinery/firealarm/FA in world)
+				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
@@ -47,15 +47,19 @@
 				if(CC)
 					CC.post_status("alert", "redalert")*/
 
-				for(var/obj/machinery/firealarm/FA in world)
+				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
+				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
+					pod.admin_controlled = 0
 			if(SEC_LEVEL_DELTA)
 				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
 				security_level = SEC_LEVEL_DELTA
-				for(var/obj/machinery/firealarm/FA in world)
+				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
+				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
+					pod.admin_controlled = 0
 	else
 		return
 
@@ -70,7 +74,7 @@
 		if(SEC_LEVEL_DELTA)
 			return "delta"
 
-/proc/num2seclevel(var/num)
+/proc/num2seclevel(num)
 	switch(num)
 		if(SEC_LEVEL_GREEN)
 			return "green"
@@ -81,7 +85,7 @@
 		if(SEC_LEVEL_DELTA)
 			return "delta"
 
-/proc/seclevel2num(var/seclevel)
+/proc/seclevel2num(seclevel)
 	switch( lowertext(seclevel) )
 		if("green")
 			return SEC_LEVEL_GREEN

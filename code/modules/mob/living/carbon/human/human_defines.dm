@@ -23,7 +23,7 @@
 	var/underwear = "Nude"	//Which underwear the player wants
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
-	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
+	var/backbag = 1		//Which backpack type the player has chosen. Backpack.or Satchel
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -52,3 +52,5 @@
 	var/datum/martial_art/martial_art = null
 
 	var/name_override //For temporary visible name changes
+
+	var/heart_attack = 0

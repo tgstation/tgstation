@@ -36,7 +36,7 @@
   *
   * @return nothing
   */
-/atom/movable/proc/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/atom/movable/proc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	return
 
 /atom/movable/proc/get_ui_data(mob/user)

@@ -19,7 +19,7 @@
 	dir = NORTH
 
 	var/ini_dir
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/created_name = null
 
 	//Vars to help with the icon's name
@@ -53,13 +53,13 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CanAtmosPass(var/turf/T)
+/obj/structure/windoor_assembly/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
@@ -68,7 +68,7 @@
 		return 1
 
 
-/obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	add_fingerprint(user)
 	switch(state)
@@ -189,7 +189,7 @@
 						name = "anchored windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/airlock_electronics))
+			else if(istype(W, /obj/item/weapon/electronics/airlock))
 				if(!user.drop_item())
 					return
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -219,7 +219,7 @@
 						return
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
 					name = "wired windoor assembly"
-					var/obj/item/weapon/airlock_electronics/ae
+					var/obj/item/weapon/electronics/airlock/ae
 					ae = electronics
 					electronics = null
 					ae.loc = loc

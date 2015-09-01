@@ -33,7 +33,7 @@
 	//check_stability()
 	return
 
-/obj/item/weapon/am_containment/proc/usefuel(var/wanted)
+/obj/item/weapon/am_containment/proc/usefuel(wanted)
 	if(fuel < wanted)
 		wanted = fuel
 	fuel -= wanted

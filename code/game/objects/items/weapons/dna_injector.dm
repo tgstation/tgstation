@@ -52,7 +52,7 @@
 		var/mob/living/carbon/human/humantarget = target
 		if (!humantarget.can_inject(user, 1))
 			return
-	add_logs(user, target, "attempted to inject", object="[name]")
+	add_logs(user, target, "attempted to inject", src)
 
 	if(target != user)
 		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", "<span class='userdanger'>[user] is trying to inject [target] with [src]!</span>")
@@ -63,7 +63,7 @@
 	else
 		user << "<span class='notice'>You inject yourself with [src].</span>"
 
-	add_logs(user, target, "injected", object="[name]")
+	add_logs(user, target, "injected", src)
 
 	inject(target, user)	//Now we actually do the heavy lifting.
 	qdel(src)

@@ -69,7 +69,7 @@
 	..()
 	return 1
 
-/datum/game_mode/traitor/make_antag_chance(var/mob/living/carbon/human/character) //Assigns traitor to latejoiners
+/datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
 	if(ticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
@@ -80,11 +80,11 @@
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
 
-/datum/game_mode/traitor/proc/add_latejoin_traitor(var/datum/mind/character)
+/datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
 	character.make_Traitor()
 
 
-/datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
+/datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
 	if(istype(traitor.current, /mob/living/silicon))
 		var/objective_count = 0
 
@@ -169,7 +169,7 @@
 
 
 
-/datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
+/datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
@@ -272,7 +272,7 @@
 	return 1
 
 
-/datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, var/safety = 0)
+/datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, safety = 0)
 	if (!istype(traitor_mob))
 		return
 	. = 1
@@ -325,7 +325,7 @@
 	if(!safety)//If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
 
-/datum/game_mode/proc/assign_exchange_role(var/datum/mind/owner)
+/datum/game_mode/proc/assign_exchange_role(datum/mind/owner)
 	//set faction
 	var/faction = "red"
 	if(owner == exchange_blue)

@@ -31,13 +31,13 @@ effective or pretty fucking useless.
 	var/max_uses = 2
 
 
-/obj/item/device/batterer/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+/obj/item/device/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user) 	return
 	if(times_used >= max_uses)
 		user << "<span class='danger'>The mind batterer has been burnt out!</span>"
 		return
 
-	add_logs(user, null, "knocked down people in the area", admin=0, object="[src]")
+	add_logs(user, null, "knocked down people in the area", src)
 
 	for(var/mob/living/carbon/human/M in orange(10, user))
 		spawn()
@@ -86,9 +86,9 @@ effective or pretty fucking useless.
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
 
-/obj/item/device/rad_laser/attack(mob/living/M as mob, mob/living/user as mob)
+/obj/item/device/rad_laser/attack(mob/living/M, mob/living/user)
 	if(!used)
-		add_logs(user, M, "irradiated", object="[src.name]")
+		add_logs(user, M, "irradiated", src)
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 		var/cooldown = round(max(100,(((intensity*8)-(wavelength/2))+(intensity*2))*10))
 		used = 1
@@ -102,16 +102,16 @@ effective or pretty fucking useless.
 	else
 		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
 
-/obj/item/device/rad_laser/proc/handle_cooldown(var/cooldown)
+/obj/item/device/rad_laser/proc/handle_cooldown(cooldown)
 	spawn(cooldown)
 		used = 0
 		icon_state = "health"
 
-/obj/item/device/rad_laser/attack_self(mob/user as mob)
+/obj/item/device/rad_laser/attack_self(mob/user)
 	..()
 	interact(user)
 
-/obj/item/device/rad_laser/interact(mob/user as mob)
+/obj/item/device/rad_laser/interact(mob/user)
 	user.set_machine(src)
 
 	var/cooldown = round(max(10,((intensity*8)-(wavelength/2))+(intensity*2)))

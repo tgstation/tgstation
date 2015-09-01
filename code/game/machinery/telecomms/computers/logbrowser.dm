@@ -16,7 +16,7 @@
 	req_access = list(access_tcomsat)
 	circuit = "/obj/item/weapon/circuitboard/comm_server"
 
-/obj/machinery/computer/telecomms/server/attack_hand(mob/user as mob)
+/obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
@@ -197,7 +197,7 @@
 			temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
 
 			SelectedServer.log_entries.Remove(D)
-			del(D)
+			qdel(D)
 
 		else
 			temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
@@ -225,7 +225,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/telecomms/server/emag_act(mob/user as mob)
+/obj/machinery/computer/telecomms/server/emag_act(mob/user)
 	if(!emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1

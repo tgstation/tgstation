@@ -6,8 +6,8 @@
 	icon_dead = "mouse_gray_dead"
 	speak = list("Squeek!","SQUEEK!","Squeek?")
 	speak_emote = list("squeeks")
-	emote_hear = list("squeeks")
-	emote_see = list("runs in a circle", "shakes")
+	emote_hear = list("squeeks.")
+	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -22,6 +22,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/mouse/New()
 	..()
@@ -77,6 +78,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+	gold_core_spawnable = 0
 
 /obj/item/trash/deadmouse
 	name = "dead mouse"

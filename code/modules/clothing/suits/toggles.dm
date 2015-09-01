@@ -57,7 +57,7 @@
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
 
-/obj/item/clothing/suit/toggle/AltClick(var/mob/user)
+/obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(user))
 		user << "<span class='warning'>You can't do that right now!</span>"
@@ -90,7 +90,6 @@
 	user << "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
 	if(!jetpack)
@@ -98,7 +97,16 @@
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	qdel(helmet)
+	if(helmet)
+		helmet.suit = null
+		qdel(helmet)
+	qdel(jetpack)
+	..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/Destroy()
+	if(suit)
+		suit.helmet = null
+		qdel(suit)
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
@@ -106,6 +114,7 @@
 		return
 	if(!helmet)
 		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
+		W.suit = src
 		helmet = W
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
@@ -120,7 +129,7 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
-	if(!helmettype)
+	if(!helmet)
 		return
 	suittoggled = 0
 	if(ishuman(helmet.loc))

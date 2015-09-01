@@ -42,11 +42,12 @@
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE	1
-#define PASSGLASS	2
-#define PASSGRILLE	4
-#define PASSBLOB	8
-#define PASSMOB		16
+#define PASSTABLE		1
+#define PASSGLASS		2
+#define PASSGRILLE		4
+#define PASSBLOB		8
+#define PASSMOB			16
+#define LETPASSTHROW	32
 
 //flags for species
 
@@ -77,3 +78,4 @@
 #define ROBOT 8
 #define SLIME 16
 #define DRONE 32
+#define SWARMER 64

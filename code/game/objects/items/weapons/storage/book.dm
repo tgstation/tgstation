@@ -66,7 +66,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
 
-/obj/item/weapon/storage/book/bible/proc/setupbiblespecifics(var/obj/item/weapon/storage/book/bible/B, var/mob/living/carbon/human/H)
+/obj/item/weapon/storage/book/bible/proc/setupbiblespecifics(obj/item/weapon/storage/book/bible/B, mob/living/carbon/human/H)
 	switch(B.icon_state)
 		if("honk1","honk2")
 			new /obj/item/weapon/bikehorn(B)
@@ -114,7 +114,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 		usr << browse(null, "window=editicon") // Close window
 
-/obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M as mob)
+/obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
@@ -124,13 +124,13 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 					H.update_damage_overlays(0)
 	return
 
-/obj/item/weapon/storage/book/bible/attack(mob/living/M as mob, mob/living/carbon/human/user as mob)
+/obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
 
 	var/chaplain = 0
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		chaplain = 1
 
-	add_logs(user, M, "attacked", object="[src.name]")
+
 
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -183,13 +183,14 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 			playsound(src.loc, "punch", 25, 1, -1)
+			add_logs(user, M, "attacked", src)
 
 	else if(M.stat == 2)
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
 	return
 
-/obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user as mob, proximity)
+/obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if (istype(A, /turf/simulated/floor))
@@ -208,6 +209,6 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
 
-/obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
 	..()

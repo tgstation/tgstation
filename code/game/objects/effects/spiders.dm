@@ -20,7 +20,7 @@
 				qdel(src)
 	return
 
-/obj/effect/spider/attackby(var/obj/item/weapon/W, var/mob/user, params)
+/obj/effect/spider/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.attack_verb.len)
 		visible_message("<span class='danger'>[user] has [pick(W.attack_verb)] \the [src] with \the [W]!</span>")
 	else
@@ -38,7 +38,7 @@
 	health -= damage
 	healthcheck()
 
-/obj/effect/spider/bullet_act(var/obj/item/projectile/Proj)
+/obj/effect/spider/bullet_act(obj/item/projectile/Proj)
 	..()
 	health -= Proj.damage
 	healthcheck()
@@ -77,6 +77,8 @@
 	icon_state = "eggs"
 	var/amount_grown = 0
 	var/player_spiders = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
 
 /obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
@@ -89,6 +91,8 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
+			S.poison_type = poison_type
+			S.poison_per_bite = poison_per_bite
 			if(player_spiders)
 				S.player_spiders = 1
 		qdel(src)
@@ -102,9 +106,11 @@
 	health = 3
 	var/amount_grown = 0
 	var/grow_as = null
-	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
 
 /obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
@@ -133,12 +139,13 @@
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.parent.other_atmosmch)
+			var/datum/pipeline/entry_vent_parent = entry_vent.parents["p1"]
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
 				entry_vent = null
 				return
-			var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
+			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
 								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
@@ -177,7 +184,7 @@
 				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
@@ -188,6 +195,8 @@
 			if(!grow_as)
 				grow_as = pick(typesof(/mob/living/simple_animal/hostile/poison/giant_spider))
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
+			S.poison_per_bite = poison_per_bite
+			S.poison_type = poison_type
 			if(player_spiders)
 				var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 

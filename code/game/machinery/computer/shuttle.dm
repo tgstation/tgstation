@@ -7,7 +7,7 @@
 	var/list/authorized = list()
 
 
-/obj/machinery/computer/emergency_shuttle/attackby(var/obj/item/weapon/card/W as obj, var/mob/user as mob, params)
+/obj/machinery/computer/emergency_shuttle/attackby(obj/item/weapon/card/W, mob/user, params)
 	if(stat & (BROKEN|NOPOWER))	return
 	if(!istype(W, /obj/item/weapon/card))
 		return
@@ -65,7 +65,7 @@
 					minor_announce("All authorizations to launch the shuttle early have been revoked.")
 					authorized.Cut()
 
-/obj/machinery/computer/emergency_shuttle/emag_act(mob/user as mob)
+/obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
 	if(!emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
 		var/time = SSshuttle.emergency.timeLeft()
 		message_admins("[key_name_admin(user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has emagged the emergency shuttle  [time] seconds before launch.",0,1)
@@ -93,7 +93,9 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying && !ismonkey(M) && !isslime(M))	//If your not laying down, or a small creature, no pass.
+		if(M.buckled && istype(M.buckled, /obj/machinery/bot/mulebot)) // mulebot passenger gets a free pass.
+			return 1
+		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
 

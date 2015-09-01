@@ -21,6 +21,7 @@
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "resin"
 	density = 1
 	opacity = 1
@@ -28,19 +29,13 @@
 	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
+	smooth = 1
 
 
 /obj/structure/alien/resin/New(location)
-	relativewall_neighbours()
 	..()
 	air_update_turf(1)
 	return
-
-/obj/structure/alien/resin/Destroy()
-	var/turf/T = loc
-	loc = null
-	T.relativewall_neighbours()
-	..()
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -53,12 +48,10 @@
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "wall0"	//same as resin, but consistency ho!
 	resintype = "wall"
-
-/obj/structure/alien/resin/wall/New()
-	..()
-	relativewall_neighbours()
+	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -71,14 +64,12 @@
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
+	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
 	health = 120
 	resintype = "membrane"
-
-/obj/structure/alien/resin/membrane/New()
-	relativewall_neighbours()
-	..()
+	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
 /obj/structure/alien/resin/proc/healthcheck()
 	if(health <=0)
@@ -333,8 +324,11 @@
 		Grow()
 
 
-/obj/structure/alien/egg/attack_paw(mob/user)
-	if(isalien(user))
+/obj/structure/alien/egg/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/obj/structure/alien/egg/attack_hand(mob/living/user)
+	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -349,24 +343,19 @@
 				Burst(0)
 				return
 	else
-		return attack_hand(user)
-
-
-/obj/structure/alien/egg/attack_hand(mob/user)
-	user << "<span class='notice'>It feels slimy.</span>"
-	user.changeNext_move(CLICK_CD_MELEE)
+		user << "<span class='notice'>It feels slimy.</span>"
+		user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
 	return locate(/obj/item/clothing/mask/facehugger) in contents
-
 
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
 	status = GROWN
 
 
-/obj/structure/alien/egg/proc/Burst(var/kill = 1)	//drops and kills the hugger if any is remaining
+/obj/structure/alien/egg/proc/Burst(kill = 1)	//drops and kills the hugger if any is remaining
 	if(status == GROWN || status == GROWING)
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
@@ -430,7 +419,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.status_flags & XENO_HOST)
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(0)

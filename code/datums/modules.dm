@@ -24,20 +24,20 @@ var/list/modules = list(			// global associative list
 	var/mneed = mods.inmodlist(type)		// find if this type has modules defined
 
 	if(!mneed)		// not found in module list?
-		del(src)	// delete self, thus ending proc
+		qdel(src)	// delete self, thus ending proc
 
 	var/needed = mods.getbitmask(type)		// get a bitmask for the number of modules in this object
 	status = needed
 	installed = needed
 
-/datum/moduletypes/proc/addmod(var/type, var/modtextlist)
+/datum/moduletypes/proc/addmod(type, modtextlist)
 	modules += type	// index by type text
 	modules[type] = modtextlist
 
-/datum/moduletypes/proc/inmodlist(var/type)
+/datum/moduletypes/proc/inmodlist(type)
 	return ("[type]" in modules)
 
-/datum/moduletypes/proc/getbitmask(var/type)
+/datum/moduletypes/proc/getbitmask(type)
 	var/count = modcount["[type]"]
 	if(count)
 		return 2**count-1

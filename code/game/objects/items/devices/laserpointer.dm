@@ -64,12 +64,12 @@
 	..()
 	return
 
-/obj/item/device/laser_pointer/afterattack(var/atom/target, var/mob/living/user, flag, params)
+/obj/item/device/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)	//we're placing the object on a table or in backpack
 		return
 	laser_act(target, user)
 
-/obj/item/device/laser_pointer/proc/laser_act(var/atom/target, var/mob/living/user)
+/obj/item/device/laser_pointer/proc/laser_act(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
 		return
 	if (!diode)
@@ -98,7 +98,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_sel.selecting == "eyes")
-			add_logs(user, C, "shone in the eyes", object="laser pointer")
+			add_logs(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -123,7 +123,7 @@
 			S.Weaken(rand(5,10))
 			S << "<span class='danger'>Your sensors were overloaded by a laser!</span>"
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
-			add_logs(user, S, "shone in the sensors", object="laser pointer")
+			add_logs(user, S, "shone in the sensors", src)
 		else
 			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
 
@@ -133,7 +133,7 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(1)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", object="laser pointer")
+			add_logs(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 

@@ -7,7 +7,7 @@
 	req_stat = UNCONSCIOUS
 
 //Heals the things that the other regenerative abilities don't.
-/obj/effect/proc_holder/changeling/panacea/sting_action(var/mob/user)
+/obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
 
 	user << "<span class='notice'>We cleanse impurities from our form.</span>"
 	user.reagents.add_reagent("mutadone", 10)

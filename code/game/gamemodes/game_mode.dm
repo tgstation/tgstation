@@ -72,7 +72,7 @@
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(var/report=1)
+/datum/game_mode/proc/post_setup(report=1)
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
@@ -91,7 +91,7 @@
 
 ///make_antag_chance()
 ///Handles late-join antag assignments
-/datum/game_mode/proc/make_antag_chance(var/mob/living/carbon/human/character)
+/datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	if(replacementmode && round_converted == 2)
 		replacementmode.make_antag_chance(character)
 	return
@@ -114,7 +114,7 @@
 		if(G.reroll_friendly)
 			usable_modes += G
 		else
-			del(G)
+			qdel(G)
 
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
@@ -258,7 +258,7 @@
 
 
 /datum/game_mode/proc/send_intercept()
-	var/intercepttext = "<FONT size = 3><B>Centcom Update</B> Requested staus information:</FONT><HR>"
+	var/intercepttext = "<FONT size = 3><B>Centcom Update</B> Requested status information:</FONT><HR>"
 	intercepttext += "<B> Centcom has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
@@ -287,7 +287,7 @@
 		set_security_level(SEC_LEVEL_BLUE)
 
 
-/datum/game_mode/proc/get_players_for_role(var/role)
+/datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
@@ -471,23 +471,20 @@
 		if(M.client && M.client.holder)
 			M << msg
 
-/datum/game_mode/proc/printplayer(var/datum/mind/ply)
-	var/role = "\improper[ply.assigned_role]"
-	var/text = "<br><b>[ply.name]</b>(<b>[ply.key]</b>) as \a <b>[role]</b> ("
+/datum/game_mode/proc/printplayer(datum/mind/ply)
+	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
-			text += "died"
+			text += " <font color='red'><b>died</b></font>"
 		else
-			text += "survived"
+			text += " <font color='green'><b>survived</b></font>"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
 	else
-		text += "body destroyed"
-	text += ")"
-
+		text += " <font color='red'><b>had their body destroyed</b></font>"
 	return text
 
-/datum/game_mode/proc/printobjectives(var/datum/mind/ply)
+/datum/game_mode/proc/printobjectives(datum/mind/ply)
 	var/text = ""
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)

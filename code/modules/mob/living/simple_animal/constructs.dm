@@ -3,10 +3,11 @@
 	real_name = "Construct"
 	desc = ""
 	speak_emote = list("hisses")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails.","screeches.")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
+	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
 	a_intent = "harm"
@@ -15,15 +16,16 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+	healable = 0
 	faction = list("cult")
 	flying = 1
+	unique_name = 1
 	var/list/construct_spells = list()
 	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 
+
 /mob/living/simple_animal/construct/New()
 	..()
-	name = text("[initial(name)] ([rand(1, 1000)])")
-	real_name = name
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 
@@ -48,19 +50,19 @@
 
 	user << msg
 
-/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		adjustBruteLoss(-5)
 		M.emote("me", 1, "mends some of \the <EM>[src]'s</EM> wounds.")
 	else if(src != M)
 		..()
 
-/mob/living/simple_animal/construct/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/construct/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
 /mob/living/simple_animal/construct/narsie_act()
@@ -93,7 +95,7 @@
 	playstyle_string = "<B>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls and even deflect energy weapons, and rip apart enemies and walls alike.</B>"
 
-/mob/living/simple_animal/construct/armored/bullet_act(var/obj/item/projectile/P)
+/mob/living/simple_animal/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -194,5 +196,5 @@
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/construct/harvester/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return 1

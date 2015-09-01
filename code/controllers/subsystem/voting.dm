@@ -116,11 +116,20 @@ var/datum/subsystem/vote/SSvote
 					else
 						master_mode = .
 	if(restart)
-		world.Reboot("Restart vote successful.", "end_error", "restart vote")
+		var/active_admins = 0
+		for(var/client/C in admins)
+			if(!C.is_afk() && check_rights_for(C, R_SERVER))
+				active_admins = 1
+				break
+		if(!active_admins)
+			world.Reboot("Restart vote successful.", "end_error", "restart vote")
+		else
+			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
+			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
 	return .
 
-/datum/subsystem/vote/proc/submit_vote(var/vote)
+/datum/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -131,7 +140,7 @@ var/datum/subsystem/vote/SSvote
 				return vote
 	return 0
 
-/datum/subsystem/vote/proc/initiate_vote(var/vote_type, var/initiator_key)
+/datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	if(!mode)
 		if(started_time != null)
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -162,7 +171,7 @@ var/datum/subsystem/vote/SSvote
 		return 1
 	return 0
 
-/datum/subsystem/vote/proc/interface(var/client/C)
+/datum/subsystem/vote/proc/interface(client/C)
 	if(!C)	return
 	var/admin = 0
 	var/trialmin = 0

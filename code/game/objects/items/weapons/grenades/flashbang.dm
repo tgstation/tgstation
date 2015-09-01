@@ -18,7 +18,7 @@
 		B.update_icon()
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/M)
+/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/effects/bang.ogg', 25, 1)
 
@@ -34,8 +34,7 @@
 		M.Stun(15)
 		M.eye_stat += 8
 
-	if(M.flash_eyes())
-		M.eye_stat += rand(1, 3)
+	if(M.flash_eyes(affect_silicon = 1))
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
 

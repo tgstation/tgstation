@@ -25,7 +25,7 @@ Bonus
 	level = 6
 	severity = 5
 
-/datum/symptom/flesh_eating/Activate(var/datum/disease/advance/A)
+/datum/symptom/flesh_eating/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

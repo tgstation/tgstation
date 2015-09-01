@@ -34,6 +34,9 @@
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
 
+	//Healable by medical stacks? Defaults to yes.
+	var/healable = 1
+
 	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
 	var/unsuitable_atmos_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
@@ -41,6 +44,8 @@
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	var/list/ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 0, CLONE = 0, STAMINA = 1, OXY = 0) //Set 0 to receive that damage type, 1 to ignore
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -56,6 +61,9 @@
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
+
+	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
+	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
 /mob/living/simple_animal/New()
 	..()
@@ -74,10 +82,10 @@
 	health = Clamp(health, 0, maxHealth)
 
 /mob/living/simple_animal/Life()
-	if(..())
-		if(!client && !stat)
+	if(..()) //alive
+		if(!ckey)
 			handle_automated_movement()
-
+			handle_automated_action()
 			handle_automated_speech()
 		return 1
 
@@ -113,6 +121,9 @@
 
 	if(druggy)
 		druggy = 0
+
+/mob/living/simple_animal/proc/handle_automated_action()
+	return
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
@@ -214,7 +225,7 @@
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(3)
 
-/mob/living/simple_animal/gib(var/animation = 0)
+/mob/living/simple_animal/gib(animation = 0)
 	if(icon_gib)
 		flick(icon_gib, src)
 	if(butcher_results)
@@ -236,7 +247,7 @@
 			return "[emote], \"[input]\""
 	return ..()
 
-/mob/living/simple_animal/emote(var/act, var/m_type=1, var/message = null)
+/mob/living/simple_animal/emote(act, m_type=1, message = null)
 	if(stat)
 		return
 	if(act == "scream")
@@ -244,26 +255,39 @@
 		act = "me"
 	..(act, m_type, message)
 
-/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
+/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage)
+		attack_threshold_check(damage,M.melee_damage_type)
 		return 1
 
-/mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
+/mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
 	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
-/mob/living/simple_animal/adjustFireLoss(var/amount)
-	adjustBruteLoss(amount)
+/mob/living/simple_animal/adjustBruteLoss(amount)
+	if(!ignored_damage_types[BRUTE])
+		..()
 
-/mob/living/simple_animal/adjustStaminaLoss(var/amount)
+/mob/living/simple_animal/adjustFireLoss(amount)
+	if(!ignored_damage_types[BURN])
+		adjustBruteLoss(amount)
+
+/mob/living/simple_animal/adjustToxLoss(amount)
+	if(!ignored_damage_types[TOX])
+		..(amount)
+
+/mob/living/simple_animal/adjustCloneLoss(amount)
+	if(!ignored_damage_types[CLONE])
+		..(amount)
+
+/mob/living/simple_animal/adjustStaminaLoss(amount)
 	return
 
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
+/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
 	switch(M.a_intent)
 
 		if("help")
@@ -279,11 +303,11 @@
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
-			add_logs(M, src, "attacked", admin=1)
+			add_logs(M, src, "attacked")
 			updatehealth()
 			return 1
 
-/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M as mob)
+/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
@@ -296,23 +320,23 @@
 
 	return
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == "disarm")
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] [response_disarm] [name]!</span>", \
 					"<span class='userdanger'>[M] [response_disarm] [name]!</span>")
-			add_logs(M, src, "disarmed", admin=1)
+			add_logs(M, src, "disarmed")
 		else
 			var/damage = rand(15, 30)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 					"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			add_logs(M, src, "attacked", admin=1)
 			attack_threshold_check(damage)
+			add_logs(M, src, "attacked")
 		return 1
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L as mob)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite
 		var/damage = rand(5, 10)
 		if(stat != DEAD)
@@ -320,7 +344,7 @@
 			attack_threshold_check(damage)
 		return 1
 
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M as mob)
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)
@@ -328,40 +352,17 @@
 		attack_threshold_check(damage)
 		return 1
 
-/mob/living/simple_animal/proc/attack_threshold_check(var/damage)
-	if(damage <= force_threshold)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+	if(damage <= force_threshold || ignored_damage_types[damagetype])
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else
 		adjustBruteLoss(damage)
 		updatehealth()
 
 
-/mob/living/simple_animal/attackby(var/obj/item/O as obj, var/mob/living/user as mob, params) //Marker -Agouri
+/mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
 	if(O.flags & NOBLUDGEON)
 		return
-
-	if(istype(O, /obj/item/stack/medical))
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
-			if(health < maxHealth)
-				if(MED.amount >= 1)
-					if(MED.heal_brute >= 1)
-						adjustBruteLoss(-MED.heal_brute)
-						MED.amount -= 1
-						if(MED.amount <= 0)
-							qdel(MED)
-						visible_message("<span class='notice'>[user] applies [MED] on [src].</span>")
-						return
-					else
-						user << "<span class='notice'>[MED] won't help at all.</span>"
-						return
-			else
-				user << "<span class='notice'>[src] is at full health.</span>"
-				return
-		else
-			user << "<span class='notice'>[src] is dead, medical items won't bring it back to life.</span>"
-			return
 
 	if((butcher_results) && (stat == DEAD))
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -412,7 +413,7 @@
 			adjustBruteLoss(30)
 	updatehealth()
 
-/mob/living/simple_animal/proc/CanAttack(var/atom/the_target)
+/mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
 		return 0
 	if (isliving(the_target))
@@ -487,9 +488,11 @@
 		..()
 
 /mob/living/simple_animal/update_canmove()
-	if(paralysis || stunned || weakened || stat || resting || buckled)
+	if(paralysis || stunned || weakened || stat || resting)
 		drop_r_hand()
 		drop_l_hand()
+		canmove = 0
+	else if(buckled)
 		canmove = 0
 	else
 		canmove = 1

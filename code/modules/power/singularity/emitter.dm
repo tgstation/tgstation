@@ -79,7 +79,7 @@
 		icon_state = "emitter"
 
 
-/obj/machinery/power/emitter/attack_hand(mob/user as mob)
+/obj/machinery/power/emitter/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)
@@ -106,7 +106,7 @@
 		return 1
 
 
-/obj/machinery/power/emitter/emp_act(var/severity)//Emitters are hardened but still might have issues
+/obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
 //	add_load(1000)
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
@@ -181,7 +181,8 @@
 			user << "<span class='warning'>Turn off \the [src] first!</span>"
 			return
 		switch(state)
-			if(0 && !isinspace())
+			if(0)
+				if(isinspace()) return
 				state = 1
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
@@ -260,8 +261,9 @@
 	..()
 	return
 
-/obj/machinery/power/emitter/emag_act(mob/user as mob)
+/obj/machinery/power/emitter/emag_act(mob/user)
 	if(!emagged)
 		locked = 0
 		emagged = 1
-		user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+		if(user)
+			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")

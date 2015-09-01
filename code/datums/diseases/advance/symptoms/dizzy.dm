@@ -25,7 +25,7 @@ Bonus
 	level = 4
 	severity = 2
 
-/datum/symptom/dizzy/Activate(var/datum/disease/advance/A)
+/datum/symptom/dizzy/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

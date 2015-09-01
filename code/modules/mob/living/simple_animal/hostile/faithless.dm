@@ -9,6 +9,8 @@
 	response_help = "passes through"
 	response_disarm = "shoves"
 	response_harm = "hits"
+	emote_taunt = list("wails")
+	taunt_chance = 25
 	speed = 0
 	maxHealth = 80
 	health = 80
@@ -24,14 +26,10 @@
 	minbodytemp = 0
 
 	faction = list("faithless")
+	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/faithless/Process_Spacemove(var/movement_dir = 0)
+/mob/living/simple_animal/hostile/faithless/Process_Spacemove(movement_dir = 0)
 	return 1
-
-/mob/living/simple_animal/hostile/faithless/FindTarget()
-	. = ..()
-	if(.)
-		emote("me", 1, "wails at [.]!")
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
 	..()

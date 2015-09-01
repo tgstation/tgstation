@@ -10,7 +10,7 @@
 	cooldown_min = 30
 	selection_type = "view"
 	random_target = 1
-	var/energy = 0
+	var/start_time = 0
 	var/ready = 0
 	var/image/halo = null
 	var/sound/Snd // so far only way i can think of to stop a sound, thank MSO for the idea.
@@ -18,7 +18,7 @@
 	action_icon_state = "lightning"
 
 /obj/effect/proc_holder/spell/targeted/lightning/Click()
-	if(!ready && energy==0)
+	if(!ready && start_time==0)
 		if(cast_check())
 			StartChargeup()
 	else
@@ -33,16 +33,14 @@
 	halo = image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = EFFECTS_LAYER)
 	user.overlays.Add(halo)
 	playsound(get_turf(usr), Snd, 50, 0)
-	spawn(0)
-		while(ready)
-			energy++
-			if(energy >= 100 && ready)
-				Discharge()
-			sleep(1)
+	start_time = world.time
+	if(do_mob(user,user,100,uninterruptible=1))
+		if(ready)
+			Discharge()
 
 /obj/effect/proc_holder/spell/targeted/lightning/proc/Reset(mob/user = usr)
 	ready = 0
-	energy = 0
+	start_time = 0
 	if(halo)
 		user.overlays.Remove(halo)
 
@@ -72,26 +70,18 @@
 	playsound(get_turf(usr), 'sound/magic/lightningbolt.ogg', 50, 1)
 	user.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 
-	switch(energy)
-		if(1 to 25)
-			target.electrocute_act(10,"Lightning Bolt")
-			playsound(get_turf(target), 'sound/magic/LightningShock.ogg', 50, 1, -1)
-		if(25 to 75)
-			target.electrocute_act(25,"Lightning Bolt")
-			playsound(get_turf(target), 'sound/magic/LightningShock.ogg', 50, 1, -1)
-		if(75 to 100)
-			//CHAIN LIGHTNING
-			Bolt(user,target,energy,user)
+	var/energy = min(world.time - start_time,100)
+	Bolt(user,target,max(15,energy/2),5,user) //5 bounces for energy/2 burn
 	Reset(user)
 
-/obj/effect/proc_holder/spell/targeted/lightning/proc/Bolt(mob/origin,mob/target,bolt_energy,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/lightning/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
 	origin.Beam(target,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 	var/mob/living/carbon/current = target
-	if(bolt_energy < 75)
-		current.electrocute_act(25,"Lightning Bolt")
+	if(bounces < 1)
+		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
 		playsound(get_turf(current), 'sound/magic/LightningShock.ogg', 50, 1, -1)
 	else
-		current.electrocute_act(25,"Lightning Bolt")
+		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
 		playsound(get_turf(current), 'sound/magic/LightningShock.ogg', 50, 1, -1)
 		var/list/possible_targets = new
 		for(var/mob/living/M in view_or_range(range,target,"view"))
@@ -102,4 +92,4 @@
 			return
 		var/mob/living/next = pick(possible_targets)
 		if(next)
-			Bolt(current,next,bolt_energy-6,user) // 5 max bounces
+			Bolt(current,next,bolt_energy,bounces-1,user)

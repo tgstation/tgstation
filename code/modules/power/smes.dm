@@ -159,6 +159,9 @@
 
 	//crowbarring it !
 	default_deconstruction_crowbar(I)
+	message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+	log_game("[src] has been deconstructed by [key_name(user)]")
+	investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 
 /obj/machinery/power/smes/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
@@ -172,7 +175,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(var/turf/T)
+/obj/machinery/power/smes/proc/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.dir = get_dir(T,src)
 	terminal.master = src
@@ -306,7 +309,7 @@
 	return
 
 
-/obj/machinery/power/smes/add_load(var/amount)
+/obj/machinery/power/smes/add_load(amount)
 	if(terminal && terminal.powernet)
 		terminal.powernet.load += amount
 
@@ -322,7 +325,7 @@
 	ui_interact(user)
 
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(!user)
 		return
 
@@ -412,7 +415,7 @@
 		output_level = Clamp(output_level, 0, output_level_max)
 		log_smes(usr.ckey)
 
-/obj/machinery/power/smes/proc/log_smes(var/user = "")
+/obj/machinery/power/smes/proc/log_smes(user = "")
 	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]","singulo")
 
 

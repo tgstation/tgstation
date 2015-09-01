@@ -33,7 +33,7 @@
 	var/cooldown = 0
 	var/on = 1
 
-/obj/item/weapon/melee/classic_baton/attack(mob/target as mob, mob/living/user as mob)
+/obj/item/weapon/melee/classic_baton/attack(mob/target, mob/living/user)
 	if(on)
 		add_fingerprint(user)
 		if((CLUMSY in user.disabilities) && prob(50))
@@ -57,7 +57,7 @@
 			if(cooldown <= 0)
 				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 				target.Weaken(3)
-				add_logs(user, target, "stunned", object="classic baton")
+				add_logs(user, target, "stunned", src)
 				src.add_fingerprint(user)
 				target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
 					"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
@@ -86,7 +86,7 @@
 	force = 0
 	on = 0
 
-/obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user as mob)
+/obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)
 		user << "<span class ='warning'>You extend the baton.</span>"

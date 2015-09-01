@@ -18,7 +18,7 @@
 
 
 
-/obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
+/obj/item/weapon/teleportation_scroll/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
 	dat += "Number of uses: [src.uses]<BR>"
@@ -46,7 +46,7 @@
 		attack_self(H)
 	return
 
-/obj/item/weapon/teleportation_scroll/proc/teleportscroll(var/mob/user)
+/obj/item/weapon/teleportation_scroll/proc/teleportscroll(mob/user)
 
 	var/A
 

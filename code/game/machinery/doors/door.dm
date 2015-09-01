@@ -37,16 +37,15 @@
 	air_update_turf(1)
 	update_freelook_sight()
 	airlocks -= src
-	..()
-	return
+	return ..()
 
 //process()
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
 	if(operating || emagged) return
-	if(ismob(AM))
-		var/mob/M = AM
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
 		if(!M.restrained())
@@ -87,7 +86,7 @@
 /obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
 	return !density
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
+/obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
 	src.add_fingerprint(user)
@@ -102,24 +101,24 @@
 	return
 
 
-/obj/machinery/door/attack_ai(mob/user as mob)
+/obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_paw(mob/user as mob)
+/obj/machinery/door/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	return src.attackby(user, user)
 
 
-/obj/machinery/door/attack_tk(mob/user as mob)
+/obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob, params)
+/obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
@@ -139,7 +138,7 @@
 		flick("door_deny", src)
 	return
 
-/obj/machinery/door/emag_act(mob/user as mob)
+/obj/machinery/door/emag_act(mob/user)
 	if(density && hasPower() && !emagged)
 		flick("door_spark", src)
 		sleep(6)

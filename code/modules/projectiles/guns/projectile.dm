@@ -17,7 +17,7 @@
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1)
+/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 //	if(in_chamber)
 //		return 1
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -46,7 +46,7 @@
 		return 0
 	return 1
 
-/obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
@@ -87,7 +87,7 @@
 			return
 	return 0
 
-/obj/item/weapon/gun/projectile/attack_hand(mob/user as mob)
+/obj/item/weapon/gun/projectile/attack_hand(mob/user)
 	if(loc == user)
 		if(suppressed)
 			var/obj/item/weapon/suppressor/S = suppressed
@@ -103,7 +103,7 @@
 			return
 	..()
 
-/obj/item/weapon/gun/projectile/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
 		magazine.loc = get_turf(src.loc)
@@ -126,7 +126,7 @@
 	..()
 	user << "Has [get_ammo()] round\s remaining."
 
-/obj/item/weapon/gun/projectile/proc/get_ammo(var/countchambered = 1)
+/obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++

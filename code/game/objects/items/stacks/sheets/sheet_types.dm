@@ -28,16 +28,18 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
-	new/datum/stack_recipe("light fixture frame", /obj/item/light_fixture_frame, 2), \
-	new/datum/stack_recipe("small light fixture frame", /obj/item/light_fixture_frame/small, 1), \
+	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2), \
+	new/datum/stack_recipe("small light fixture frame", /obj/item/wallframe/light_fixture/small, 1), \
 	null, \
-	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
-	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2), \
-	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2), \
+	new/datum/stack_recipe("apc frame", /obj/item/wallframe/apc, 2), \
+	new/datum/stack_recipe("air alarm frame", /obj/item/wallframe/alarm, 2), \
+	new/datum/stack_recipe("fire alarm frame", /obj/item/wallframe/firealarm, 2), \
+	new/datum/stack_recipe("button frame", /obj/item/wallframe/button, 1), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
 )

@@ -3,13 +3,27 @@
 /obj/structure/stool/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest"
 	var/health = 100
+	smooth = 1
+	can_be_unanchored = 0
+	canSmoothWith = null
+	var/image/nest_overlay
 
-/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user as mob)
+/obj/structure/stool/bed/nest/New()
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	return ..()
+
+/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/living/user)
 	if(buckled_mob && buckled_mob.buckled == src)
 		var/mob/living/M = buckled_mob
+
+		if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+			unbuckle_mob()
+			add_fingerprint(user)
+			return
+
 		if(M != user)
 			M.visible_message(\
 				"[user.name] pulls [M.name] free from the sticky nest!",\
@@ -34,13 +48,13 @@
 		unbuckle_mob()
 		add_fingerprint(user)
 
-/obj/structure/stool/bed/nest/user_buckle_mob(mob/M as mob, mob/user as mob)
+/obj/structure/stool/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
-	if(istype(M,/mob/living/carbon/alien))
+	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		return
-	if(!istype(user,/mob/living/carbon/alien/humanoid))
+	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		return
 
 	unbuckle_mob()
@@ -56,14 +70,14 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = MOB_LAYER - 0.3
-		overlays += image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+		overlays += nest_overlay
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
 		M.layer = initial(M.layer)
-		overlays.Cut()
+		overlays -= nest_overlay
 
-/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user, params)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)

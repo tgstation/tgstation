@@ -171,7 +171,7 @@
 	spawn(50)
 		PlaceInPool(virt)
 
-/proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
+/proc/Broadcast_SimpleMessage(source, frequency, text, data, mob/M, compression, level)
 
   /* ###### Prepare the radio connection ###### */
 

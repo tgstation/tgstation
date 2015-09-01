@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(var/message)
+/mob/living/silicon/ai/say(message)
 	if(parent && istype(parent) && parent.stat != 2) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message)
 		return
@@ -39,7 +39,7 @@
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(var/message)
+/mob/living/silicon/ai/proc/holopad_talk(message)
 	log_say("[key_name(src)] : [message]")
 
 	message = trim(message)
@@ -69,6 +69,8 @@ var/const/VOX_DELAY = 600
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
+	if(usr.stat == 2)
+		return //won't work if dead
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\
@@ -141,7 +143,7 @@ var/const/VOX_DELAY = 600
 */
 
 
-/proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
+/proc/play_vox_word(word, z_level, mob/only_listener)
 
 	word = lowertext(word)
 

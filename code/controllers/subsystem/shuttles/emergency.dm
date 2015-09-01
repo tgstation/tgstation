@@ -91,6 +91,14 @@
 				timer = world.time
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+
+				//Gangs only have one attempt left if the shuttle has docked with the station to prevent suffering from dominator delays
+				for(var/datum/gang/G in ticker.mode.gangs)
+					if(isnum(G.dom_timer))
+						G.dom_attempts = 0
+					else
+						G.dom_attempts = min(1,G.dom_attempts)
+
 		if(SHUTTLE_DOCKED)
 			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
 				priority_announce("Hostile enviroment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
@@ -98,7 +106,8 @@
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod to its corresponding transit dock
 				for(var/obj/docking_port/mobile/pod/M in SSshuttle.mobile)
-					M.enterTransit()
+					if(M.z == ZLEVEL_STATION) //Will not launch from the mine/planet
+						M.enterTransit()
 				//now move the actual emergency shuttle to its transit dock
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
@@ -123,16 +132,13 @@
 	width = 3
 	height = 4
 
-	New()
-		if(id == "pod")
-			WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
-		..()
+/obj/docking_port/mobile/pod/New()
+	if(id == "pod")
+		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+	..()
 
-	request()
-		return
-
-	cancel()
-		return
+/obj/docking_port/mobile/pod/cancel()
+	return
 
 /*
 	findTransitDock()
@@ -140,3 +146,27 @@
 		if(.)	return .
 		return ..()
 */
+
+/obj/machinery/computer/shuttle/pod
+	name = "pod control computer"
+	admin_controlled = 1
+	shuttleId = "pod"
+	possible_destinations = "pod_asteroid"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_available"
+	density = 0
+
+/obj/machinery/computer/shuttle/pod/update_icon()
+	return
+
+/obj/machinery/computer/shuttle/pod/emag_act(mob/user as mob)
+	user << "<span class='warning'> Access requirements overridden. The pod may now be launched manually at any time.</span>"
+	admin_controlled = 0
+	icon_state = "dorm_emag"
+
+/obj/docking_port/stationary/random/initialize()
+	..()
+	var/target_area = /area/mine/unexplored
+	var/turfs = get_area_turfs(target_area)
+	var/T=pick(turfs)
+	src.loc = T

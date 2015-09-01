@@ -31,7 +31,7 @@
 
 
 
-/obj/structure/sign/barsign/proc/set_sign(var/datum/barsign/sign)
+/obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
 		return
 	icon_state = sign.icon
@@ -43,12 +43,12 @@
 
 
 
-/obj/structure/sign/barsign/attack_ai(mob/user as mob)
+/obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
 
-/obj/structure/sign/barsign/attack_hand(mob/user as mob)
+/obj/structure/sign/barsign/attack_hand(mob/user)
 	if (!src.allowed(user))
 		user << "<span class='info'>Access denied.</span>"
 		return
@@ -60,7 +60,7 @@
 
 
 
-/obj/structure/sign/barsign/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
 	if(!allowed(user))
 		user << "<span class='info'>Access denied.</span>"
 		return
@@ -246,7 +246,7 @@
 /datum/barsign/emergencyrumparty
 	name = "The Emergency Rum Party"
 	icon = "emergencyrumparty"
-	desc = "Still serving drinks that were banned years ago."
+	desc = "Recently relicensed after a long closure."
 
 /datum/barsign/combocafe
 	name = "The Combo Cafe"
@@ -276,7 +276,7 @@
 /datum/barsign/thenet
 	name = "The Net"
 	icon = "thenet"
-	desc = "The sea of drinkformation." //you couldn't come up with something better?
+	desc = "You just seem to get caught up in it for hours."
 
 
 /datum/barsign/hiddensigns

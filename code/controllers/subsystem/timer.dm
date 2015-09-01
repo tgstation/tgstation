@@ -44,7 +44,7 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 
-/proc/addtimer(var/thingToCall, var/procToCall, var/wait, var/argList = list())
+/proc/addtimer(thingToCall, procToCall, wait, argList = list())
 	if (!SStimer) //can't run timers before the mc has been created
 		return
 	if (!thingToCall || !procToCall || wait <= 0)
@@ -63,7 +63,7 @@ var/datum/subsystem/timer/SStimer
 
 	return event.id
 
-/proc/deltimer(var/id)
+/proc/deltimer(id)
 	for (var/datum/timedevent/event in SStimer.processing)
 		if (event.id == id)
 			qdel(event)

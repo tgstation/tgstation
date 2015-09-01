@@ -234,7 +234,7 @@
 	print_to_host(menu)
 	return
 
-/obj/item/weapon/cartridge/proc/print_to_host(var/text)
+/obj/item/weapon/cartridge/proc/print_to_host(text)
 	if (!istype(loc, /obj/item/device/pda))
 		return
 	loc:cart = text
@@ -245,7 +245,7 @@
 
 	return
 
-/obj/item/weapon/cartridge/proc/post_status(var/command, var/data1, var/data2)
+/obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 

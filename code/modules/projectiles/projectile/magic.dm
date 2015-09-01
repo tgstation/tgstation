@@ -10,7 +10,7 @@
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/item/projectile/magic/death/on_hit(var/target)
+/obj/item/projectile/magic/death/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -22,7 +22,6 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
-	flag = "magic"
 
 /obj/item/projectile/magic/fireball/Range()
 	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
@@ -31,7 +30,7 @@
 		return
 	..()
 
-/obj/item/projectile/magic/fireball/on_hit(var/target)
+/obj/item/projectile/magic/fireball/on_hit(target)
 	. = ..()
 	var/turf/T = get_turf(target)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
@@ -45,9 +44,8 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/resurrection/on_hit(var/mob/living/carbon/target)
+/obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(ismob(target))
 		var/old_stat = target.stat
@@ -69,11 +67,10 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(var/mob/target)
+/obj/item/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
@@ -93,9 +90,8 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/door/on_hit(var/atom/target)
+/obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
 	var/atom/T = target.loc
 	if(isturf(target) && target.density)
@@ -103,7 +99,7 @@
 	else if (isturf(T) && T.density)
 		CreateDoor(T)
 
-/obj/item/projectile/magic/door/proc/CreateDoor(var/turf/T)
+/obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	new /obj/structure/mineral_door/wood(T)
 	T.ChangeTurf(/turf/simulated/floor/plating)
 
@@ -114,9 +110,8 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/change/on_hit(var/atom/change)
+/obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
 
@@ -205,7 +200,7 @@
 						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
 						switch(animal)
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-							if("corgi")		new_mob = new /mob/living/simple_animal/pet/corgi(M.loc)
+							if("corgi")		new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
 							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
 							if("pug")		new_mob = new /mob/living/simple_animal/pet/pug(M.loc)
 							if("cat")		new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
@@ -232,6 +227,7 @@
 							if(!S.dangerous_existence)
 								all_species += speciestype
 						hardset_dna(H, null, null, null, null, pick(all_species))
+						H.real_name = H.dna.species.random_name(H.gender,1)
 					H.update_icons()
 				else
 					return
@@ -247,7 +243,7 @@
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			del(M)
+			qdel(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
@@ -256,9 +252,8 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "magic"
 
-/obj/item/projectile/magic/animate/Bump(var/atom/change)
+/obj/item/projectile/magic/animate/Bump(atom/change)
 	..()
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		if(istype(change, /obj/structure/closet/statue))

@@ -31,7 +31,7 @@
 		if(locate(/obj/structure/lattice, get_step(src, dir)))
 			L = locate(/obj/structure/lattice, get_step(src, dir))
 			L.updateOverlays(src.loc)
-	..()
+	return ..()
 
 /obj/structure/lattice/blob_act()
 	qdel(src)
@@ -50,7 +50,7 @@
 		else
 	return
 
-/obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob, params)
+/obj/structure/lattice/attackby(obj/item/C, mob/user, params)
 	var/turf/T = get_turf(src)
 	if (istype(C, /obj/item/stack/tile/plasteel))
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead (for building plating)
@@ -107,7 +107,7 @@
 		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/attackby(obj/item/C as obj, mob/user as mob, params)
+/obj/structure/lattice/catwalk/attackby(obj/item/C, mob/user, params)
 	..()
 	if(istype(C, /obj/item/stack/cable_coil))
 		var/turf/T = get_turf(src)

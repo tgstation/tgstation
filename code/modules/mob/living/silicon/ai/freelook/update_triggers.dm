@@ -78,7 +78,7 @@
 
 // An addition to deactivate which removes/adds the camera from the chunk list based on if it works or not.
 
-/obj/machinery/camera/deactivate(user as mob, var/choice = 1)
+/obj/machinery/camera/deactivate(mob/user, choice = 1)
 	..(user, choice)
 	if(src.can_use())
 		cameranet.addCamera(src)

@@ -3,9 +3,9 @@
 /obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use some more flair."
 	name = "bartender's uniform"
-	icon_state = "bar_suit"
+	icon_state = "barman"
 	item_state = "bar_suit"
-	item_color = "bar_suit"
+	item_color = "barman"
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.

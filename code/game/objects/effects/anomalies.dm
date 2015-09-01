@@ -75,7 +75,7 @@
 	gravShock(A)
 	return
 
-/obj/effect/anomaly/grav/proc/gravShock(var/mob/A)
+/obj/effect/anomaly/grav/proc/gravShock(mob/A)
 	if(boing && isliving(A) && !A.stat)
 		A.Weaken(2)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
@@ -156,7 +156,7 @@
 		else
 			O.ex_act(2)
 
-/obj/effect/anomaly/bhole/proc/grav(var/r, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
+/obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
 		affect_coord(x+t, y-r, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x-t, y+r, ex_act_force, pull_chance, turf_removal_chance)
@@ -164,7 +164,7 @@
 		affect_coord(x-r, y-t, ex_act_force, pull_chance, turf_removal_chance)
 	return
 
-/obj/effect/anomaly/bhole/proc/affect_coord(var/x, var/y, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
+/obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
 	var/turf/T = locate(x, y, z)
 	if(isnull(T))	return

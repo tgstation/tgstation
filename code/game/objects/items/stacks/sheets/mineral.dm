@@ -138,6 +138,8 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 		message_admins("Plasma sheets ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma sheets ignited by [key_name(user)] in ([x],[y],[z])")
 		fire_act()
+	else
+		..()
 
 /obj/item/stack/sheet/mineral/plasma/fire_act()
 	atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, amount*10)

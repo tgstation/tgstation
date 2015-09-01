@@ -25,7 +25,7 @@
 	message_admins("[key_name_admin(usr)] jumped to [A]")
 	feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/jumptoturf(var/turf/T in world)
+/client/proc/jumptoturf(turf/T in world)
 	set name = "Jump to Turf"
 	set category = "Admin"
 	if(!src.holder)
@@ -38,7 +38,7 @@
 	feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/jumptomob(var/mob/M in mob_list)
+/client/proc/jumptomob(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -96,7 +96,7 @@
 
 	feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getmob(var/mob/M in mob_list)
+/client/proc/Getmob(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -135,7 +135,7 @@
 		usr.loc = M.loc
 		feedback_add_details("admin_verb","GK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/sendmob(var/mob/M in sortmobs())
+/client/proc/sendmob(mob/M in sortmobs())
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)
@@ -148,11 +148,11 @@
 		log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
 		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 
-/proc/admin_forcemove(var/mob/mover, var/atom/newloc)
+/proc/admin_forcemove(mob/mover, atom/newloc)
 	mover.loc = newloc
 	mover.on_forcemove(newloc)
 
-/mob/proc/on_forcemove(var/atom/newloc)
+/mob/proc/on_forcemove(atom/newloc)
 	return
 
 

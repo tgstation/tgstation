@@ -30,7 +30,7 @@
 	if(prob(50))
 		qdel(src)
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user, params)
 	return
 
 /obj/structure/reagent_dispensers/New()
@@ -49,6 +49,10 @@
 	if (N)
 		amount_per_transfer_from_this = N
 
+/obj/structure/reagent_dispensers/examine(mob/user)
+	..()
+	user << "It contains [reagents.total_volume] units."
+
 //Dispensers
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
@@ -56,9 +60,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("water",1000)
+
+/obj/structure/reagent_dispensers/watertank/New()
+	..()
+	reagents.add_reagent("water",1000)
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
@@ -89,12 +94,13 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("welding_fuel",1000)
+
+/obj/structure/reagent_dispensers/fueltank/New()
+	..()
+	reagents.add_reagent("welding_fuel",1000)
 
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
@@ -127,9 +133,10 @@
 	anchored = 1
 	density = 0
 	amount_per_transfer_from_this = 45
-	New()
-		..()
-		reagents.add_reagent("condensedcapsaicin",1000)
+
+/obj/structure/reagent_dispensers/peppertank/New()
+	..()
+	reagents.add_reagent("condensedcapsaicin",1000)
 
 
 /obj/structure/reagent_dispensers/water_cooler
@@ -141,11 +148,12 @@
 	possible_transfer_amounts = null
 	anchored = 1
 	var/cups = 50
-	New()
-		..()
-		reagents.add_reagent("water",500)
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(var/mob/living/carbon/human/user)
+/obj/structure/reagent_dispensers/water_cooler/New()
+	..()
+	reagents.add_reagent("water",500)
+
+/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))
 		return
 	if(cups <= 0)
@@ -155,7 +163,7 @@
 	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
 	user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
 
-/obj/structure/reagent_dispensers/water_cooler/attackby(var/obj/item/I, var/mob/user, params)
+/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))
 		if(!user.drop_item())
 			return
@@ -170,9 +178,10 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("beer",1000)
+
+/obj/structure/reagent_dispensers/beerkeg/New()
+	..()
+	reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
@@ -186,6 +195,6 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-	New()
-		..()
-		reagents.add_reagent("virusfood", 1000)
+/obj/structure/reagent_dispensers/virusfood/New()
+	..()
+	reagents.add_reagent("virusfood", 1000)

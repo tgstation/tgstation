@@ -83,7 +83,6 @@ Contents:
 	cell.charge = 9000
 
 
-
 /obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)
 		affecting << browse(null, "window=hack spideros")
@@ -108,7 +107,7 @@ Contents:
 
 
 //This proc prevents the suit from being taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H, var/checkIcons = 0)
+/obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H, checkIcons = 0)
 	if(!istype(H))
 		return 0
 	if(checkIcons)

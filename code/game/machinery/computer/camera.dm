@@ -9,7 +9,7 @@
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
-/obj/machinery/computer/security/check_eye(var/mob/user as mob)
+/obj/machinery/computer/security/check_eye(mob/user)
 	if ((get_dist(user, src) > 1 || user.eye_blind || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 		return null
 	var/list/viewing = viewers(src)
@@ -19,14 +19,14 @@
 	return 1
 
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(mob/user)
 	if(!stat)
 
 		if (!network)
-			ERROR("A computer lacks a network at [x],[y],[z].")
+			throw EXCEPTION("No camera network")
 			return
 		if (!(istype(network,/list)))
-			ERROR("The computer at [x],[y],[z] has a network that is not a list!")
+			throw EXCEPTION("Camera network is not a list")
 			return
 
 		if(..())
@@ -44,10 +44,12 @@
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
 			if(!C.network)
-				ERROR("[C.c_tag] has no camera network.")
+				spawn(0)
+					throw EXCEPTION("Camera in a cameranet has no camera network")
 				continue
 			if(!(istype(C.network,/list)))
-				ERROR("[C.c_tag]'s camera network is not a list!")
+				spawn(0)
+					throw EXCEPTION("Camera in a cameranet has a non-list camera network")
 				continue
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)

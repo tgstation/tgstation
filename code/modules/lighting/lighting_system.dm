@@ -235,7 +235,7 @@
 	var/atom/movable/light/lighting_object //Will be null for space turfs and anything in a static lighting area
 	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
 
-/turf/ChangeTurf(var/path)
+/turf/ChangeTurf(path)
 	if(!path || path == type) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
@@ -295,7 +295,7 @@
 	if(config.starlight)
 		update_starlight()
 
-/turf/proc/redraw_lighting(var/instantly = 0)
+/turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
 		var/newalpha
 		if(lighting_lumcount <= 0)

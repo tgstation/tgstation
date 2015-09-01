@@ -8,7 +8,7 @@
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 
-/obj/machinery/computer/aifixer/attackby(I as obj, user as mob, params)
+/obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
 		if(stat & (NOPOWER|BROKEN))
 			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
@@ -18,7 +18,7 @@
 	else
 		..()
 
-/obj/machinery/computer/aifixer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
@@ -121,7 +121,7 @@
 		else
 			overlays += "ai-fixer-empty"
 
-/obj/machinery/computer/aifixer/transfer_ai(var/interaction, var/mob/user, var/mob/living/silicon/ai/AI, var/obj/item/device/aicard/card)
+/obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
 		return
 	//Downloading AI from card to terminal.

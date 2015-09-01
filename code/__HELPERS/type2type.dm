@@ -235,7 +235,7 @@
 	return
 
 //Converts an angle (degrees) into an ss13 direction
-/proc/angle2dir(var/degree)
+/proc/angle2dir(degree)
 
 	degree = SimplifyDegrees(degree)
 
@@ -250,7 +250,7 @@
 
 //returns the north-zero clockwise angle in degrees, given a direction
 
-/proc/dir2angle(var/D)
+/proc/dir2angle(D)
 	switch(D)
 		if(NORTH)		return 0
 		if(SOUTH)		return 180
@@ -263,7 +263,7 @@
 		else			return null
 
 //Returns the angle in english
-/proc/angle2text(var/degree)
+/proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
 //Converts a blend_mode constant to one acceptable to icon.Blend()
@@ -460,7 +460,7 @@ for(var/t in test_times)
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this)
-/proc/body_parts_covered2organ_names(var/bpc)
+/proc/body_parts_covered2organ_names(bpc)
 	var/list/covered_parts = list()
 
 	if(!bpc)
@@ -544,7 +544,7 @@ for(var/t in test_times)
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-/proc/color2hex(var/color)	//web colors
+/proc/color2hex(color)	//web colors
 	if(!color)
 		return "#000000"
 
@@ -587,3 +587,44 @@ for(var/t in test_times)
 			return "#4B0082"
 		else
 			return "#FFFFFF"
+
+
+//This is a weird one:
+//It returns a list of all var names found in the string
+//These vars must be in the [var_name] format
+//It's only a proc because it's used in more than one place
+
+//Takes a string and a datum
+//The string is well, obviously the string being checked
+//The datum is used as a source for var names, to check validity
+//Otherwise every single word could technically be a variable!
+/proc/string2listofvars(var/t_string, var/datum/var_source)
+	if(!t_string || !var_source)
+		return list()
+
+	. = list()
+
+	var/var_found = findtext(t_string,"\[") //Not the actual variables, just a generic "should we even bother" check
+	if(var_found)
+		//Find var names
+
+		// "A dog said hi [name]!"
+		// text2list() --> list("A dog said hi ","name]!"
+		// list2text() --> "A dog said hi name]!"
+		// text2list() --> list("A","dog","said","hi","name]!")
+
+		t_string = replacetext(t_string,"\[","\[ ")//Necessary to resolve "word[var_name]" scenarios
+		var/list/list_value = text2list(t_string,"\[")
+		var/intermediate_stage = list2text(list_value)
+
+		list_value = text2list(intermediate_stage," ")
+		for(var/value in list_value)
+			if(findtext(value,"]"))
+				value = text2list(value,"]") //"name]!" --> list("name","!")
+				for(var/A in value)
+					if(var_source.vars.Find(A))
+						. += A
+
+
+
+

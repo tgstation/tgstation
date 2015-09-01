@@ -17,7 +17,7 @@
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
-	var/obj/item/weapon/camera_assembly/assembly = null
+	var/obj/machinery/camera_assembly/assembly = null
 
 	//OTHER
 
@@ -32,8 +32,6 @@
 /obj/machinery/camera/New()
 	assembly = new(src)
 	assembly.state = 4
-	assembly.anchored = 1
-	assembly.update_icon()
 
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -82,7 +80,8 @@
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 						spawn(100)
-							cancelCameraAlarm()
+							if(!qdeleted(src))
+								cancelCameraAlarm()
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -102,16 +101,16 @@
 	qdel(src)
 	return
 
-/obj/machinery/camera/proc/setViewRange(var/num = 7)
+/obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/proc/shock(var/mob/living/user)
+/obj/machinery/camera/proc/shock(mob/living/user)
 	if(!istype(user))
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
+/obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
 	user.do_attack_animation(src)
@@ -150,7 +149,6 @@
 				assembly.loc = src.loc
 				assembly.state = 1
 				assembly.dir = src.dir
-				assembly.update_icon()
 				assembly = null
 				qdel(src)
 				return
@@ -247,7 +245,8 @@
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		spawn(100)
-			cancelCameraAlarm()
+			if(!qdeleted(src))
+				cancelCameraAlarm()
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -327,7 +326,7 @@
 
 	return null
 
-/obj/machinery/camera/proc/weld(var/obj/item/weapon/weldingtool/WT, var/mob/living/user)
+/obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(busy)
 		return 0
 	if(!WT.remove_fuel(0, user))
@@ -344,7 +343,7 @@
 	busy = 0
 	return 0
 
-/obj/machinery/camera/bullet_act(var/obj/item/projectile/proj)
+/obj/machinery/camera/bullet_act(obj/item/projectile/proj)
 	if(proj.damage_type == BRUTE)
 		health = max(0, health - proj.damage)
 		if(!health && status)

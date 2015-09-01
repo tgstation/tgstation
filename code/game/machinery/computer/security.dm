@@ -24,7 +24,7 @@
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
 
-/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, mob/user as mob, params)
+/obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		if(!user.drop_item())
 			return
@@ -35,7 +35,7 @@
 		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
 	if(..())
 		return
 	if(src.z > 6)
@@ -418,7 +418,7 @@ What a mess.*/
 			if("Purge All Records")
 				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", "records")
 				for(var/datum/data/record/R in data_core.security)
-					del(R)
+					qdel(R)
 				data_core.security.Cut()
 				temp = "All Security records deleted."
 
@@ -667,7 +667,7 @@ What a mess.*/
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if(active2)
 							data_core.security -= active2
-							del(active2)
+							qdel(active2)
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
@@ -675,14 +675,14 @@ What a mess.*/
 							for(var/datum/data/record/R in data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									data_core.medical -= R
-									del(R)
+									qdel(R)
 									break
 							data_core.general -= active1
-							del(active1)
+							qdel(active1)
 
 						if(active2)
 							data_core.security -= active2
-							del(active2)
+							qdel(active2)
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
@@ -690,7 +690,7 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
+/obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null
 	if(istype(user, /mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
@@ -711,7 +711,10 @@ What a mess.*/
 		if(prob(10/severity))
 			switch(rand(1,8))
 				if(1)
-					R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
+					if(prob(10))
+						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
+					else
+						R.fields["name"] = "[pick(pick(first_names_male), pick(first_names_female))] [pick(last_names)]"
 				if(2)
 					R.fields["sex"] = pick("Male", "Female")
 				if(3)
@@ -731,7 +734,7 @@ What a mess.*/
 			continue
 
 		else if(prob(1))
-			del(R)
+			qdel(R)
 			continue
 
 	..(severity)

@@ -54,7 +54,7 @@
 		return !mind.miming
 	return 1
 
-/mob/living/carbon/human/proc/SetSpecialVoice(var/new_voice)
+/mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)
 		special_voice = new_voice
 	return

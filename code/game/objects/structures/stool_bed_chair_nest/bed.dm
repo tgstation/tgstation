@@ -24,16 +24,14 @@
 /obj/structure/stool/bed/Move(atom/newloc, direct) //Some bed children move
 	. = ..()
 	if(buckled_mob)
-		buckled_mob.buckled = null
 		if(!buckled_mob.Move(loc, direct))
 			loc = buckled_mob.loc //we gotta go back
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
 			. = 0
-		buckled_mob.buckled = src
 
-/obj/structure/stool/bed/Process_Spacemove(var/movement_dir = 0)
+/obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
 	if(buckled_mob)
 		return buckled_mob.Process_Spacemove(movement_dir)
 	return ..()
@@ -43,10 +41,10 @@
 		return 1
 	return ..()
 
-/obj/structure/stool/bed/attack_paw(mob/user as mob)
+/obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/stool/bed/attack_animal(var/mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
+/obj/structure/stool/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
@@ -144,3 +142,11 @@
 	icon_state = "dogbed"
 	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
 	anchored = 0
+
+/obj/structure/stool/bed/dogbed/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		new /obj/item/stack/sheet/mineral/wood(loc, 10)
+		qdel(src)
+
+

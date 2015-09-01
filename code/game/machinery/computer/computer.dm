@@ -58,7 +58,7 @@
 		else
 	return
 
-/obj/machinery/computer/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))
 		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 			set_broken()
@@ -97,7 +97,7 @@
 		update_icon()
 	return
 
-/obj/machinery/computer/attackby(I as obj, user as mob, params)
+/obj/machinery/computer/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'> You start to disconnect the monitor...</span>"

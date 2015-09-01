@@ -11,7 +11,6 @@ var/global/posibrain_notif_cooldown = 0
 	var/askDelay = 10 * 60 * 1
 	brainmob = null
 	req_access = list(access_robotics)
-	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
 
@@ -21,14 +20,14 @@ var/global/posibrain_notif_cooldown = 0
 		if(istype(ghost))
 			activate(ghost)
 
-/obj/item/device/mmi/posibrain/proc/ping_ghosts(var/msg)
+/obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
 	if(!posibrain_notif_cooldown)
-		notify_ghosts("Positronic Brain [msg] in [get_area(src)]. <a href=?src=\ref[src];activate=1>(Enter)</a>")
+		notify_ghosts("Positronic brain [msg] in [get_area(src)]! <a href=?src=\ref[src];activate=1>(Click to enter)</a>", 'sound/effects/ghost2.ogg')
 		posibrain_notif_cooldown = 1
 		spawn(askDelay) //Global one minute cooldown to avoid spam.
 			posibrain_notif_cooldown = 0
 
-/obj/item/device/mmi/posibrain/attack_self(mob/user as mob)
+/obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && !notified)
 		//Start the process of notified for a new user.
 		user << "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
@@ -56,7 +55,7 @@ var/global/posibrain_notif_cooldown = 0
 		return
 	transfer_personality(user)
 
-/obj/item/device/mmi/posibrain/transfer_identity(var/mob/living/carbon/H)
+/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
 	name = "positronic brain ([H])"
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
@@ -77,7 +76,7 @@ var/global/posibrain_notif_cooldown = 0
 	update_icon()
 	return
 
-/obj/item/device/mmi/posibrain/proc/transfer_personality(var/mob/candidate)
+/obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(brainmob && brainmob.key) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
 		candidate << "This brain has already been taken! Please try your possesion again later!"
 		return
@@ -135,7 +134,7 @@ var/global/posibrain_notif_cooldown = 0
 	..()
 
 
-/obj/item/device/mmi/posibrain/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/item/device/mmi/posibrain/attackby(obj/item/O, mob/user)
 	return
 
 

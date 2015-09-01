@@ -286,6 +286,6 @@
 	item_color = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/tie/petcollar/attack_self(mob/user as mob)
+/obj/item/clothing/tie/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"

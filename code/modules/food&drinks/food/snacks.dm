@@ -92,7 +92,7 @@
 
 				if(!do_mob(user, M))
 					return
-				add_logs(user, M, "fed", object="[reagentlist(src)]")
+				add_logs(user, M, "fed", reagentlist(src))
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] feeds [M] to eat [src].</span>")
 
@@ -162,7 +162,7 @@
 			var/amount = bonus_reagents[r_id]
 			reagents.add_reagent(r_id, amount)
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/slice(var/accuracy, obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
 		return 0
 

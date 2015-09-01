@@ -24,7 +24,7 @@ BONUS
 	level = 4
 	severity = 1
 
-/datum/symptom/vitiligo/Activate(var/datum/disease/advance/A)
+/datum/symptom/vitiligo/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
@@ -68,7 +68,7 @@ BONUS
 	level = 4
 	severity = 1
 
-/datum/symptom/revitiligo/Activate(var/datum/disease/advance/A)
+/datum/symptom/revitiligo/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

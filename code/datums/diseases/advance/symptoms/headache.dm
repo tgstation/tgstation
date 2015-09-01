@@ -26,7 +26,7 @@ BONUS
 	level = 1
 	severity = 1
 
-/datum/symptom/headache/Activate(var/datum/disease/advance/A)
+/datum/symptom/headache/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob

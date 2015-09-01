@@ -20,18 +20,18 @@
 
 /datum/atom_hud/data/medical/basic
 
-/datum/atom_hud/data/medical/basic/proc/check_sensors(var/mob/living/carbon/human/H)
+/datum/atom_hud/data/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
 	if(!istype(H)) return 0
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U)) return 0
 	if(U.sensor_mode <= 2) return 0
 	return 1
 
-/datum/atom_hud/data/medical/basic/add_to_single_hud(var/mob/M, var/mob/living/carbon/H)
+/datum/atom_hud/data/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)
 	if(check_sensors(H))
 		..()
 
-/datum/atom_hud/data/medical/basic/proc/update_suit_sensors(var/mob/living/carbon/H)
+/datum/atom_hud/data/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
 	check_sensors(H) ? add_to_hud(H) : remove_from_hud(H)
 
 /datum/atom_hud/data/medical/advanced

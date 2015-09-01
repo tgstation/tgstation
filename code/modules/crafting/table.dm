@@ -78,7 +78,7 @@
 			if(istype(I, /obj/item/weapon/reagent_containers/food/snacks))
 				var/obj/item/weapon/reagent_containers/food/snacks/S = I
 				S.create_reagents(S.volume)
-				feedback_add_details("food_made","[S.name]")
+				feedback_add_details("food_made","[S.type]")
 				send_feedback = 0
 			var/list/parts = del_reqs(R, I)
 			for(var/A in parts)
@@ -93,7 +93,7 @@
 					I.reagents.reagent_list.Add(A)
 			I.CheckParts()
 			if(send_feedback)
-				feedback_add_details("object_crafted","[I.name]")
+				feedback_add_details("object_crafted","[I.type]")
 			return 1
 	return 0
 
@@ -252,7 +252,7 @@
 	if(. <= 0)
 		. = categories.len
 
-/obj/structure/table/proc/build_recipe_text(var/datum/table_recipe/R)
+/obj/structure/table/proc/build_recipe_text(datum/table_recipe/R)
 	. = ""
 	var/name_text = ""
 	var/req_text = ""
@@ -275,19 +275,20 @@
 				req_text += " [R.reqs[A]] [RE.name]"
 				qdel(RE)
 
-			if(R.chem_catalysts.len)
-				catalist_text += ", Catalysts:"
-				for(var/C in R.chem_catalysts)
-					if(ispath(C, /datum/reagent))
-						var/datum/reagent/RE = new C
-						catalist_text += " [R.chem_catalysts[C]] [RE.name]"
-						qdel(RE)
-			if(R.tools.len)
-				tool_text += ", Tools:"
-				for(var/O in R.tools)
-					if(ispath(O, /obj))
-						var/obj/T = new O
-						tool_text += " [R.tools[O]] [T.name]"
-						qdel(T)
+		if(R.chem_catalysts.len)
+			catalist_text += ", Catalysts:"
+			for(var/C in R.chem_catalysts)
+				if(ispath(C, /datum/reagent))
+					var/datum/reagent/RE = new C
+					catalist_text += " [R.chem_catalysts[C]] [RE.name]"
+					qdel(RE)
 
-			. = "[name_text][req_text][tool_text][catalist_text]<BR>"
+		if(R.tools.len)
+			tool_text += ", Tools:"
+			for(var/O in R.tools)
+				if(ispath(O, /obj))
+					var/obj/T = new O
+					tool_text += " [R.tools[O]] [T.name]"
+					qdel(T)
+
+		. = "[name_text][req_text][tool_text][catalist_text]<BR>"

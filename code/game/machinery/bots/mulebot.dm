@@ -6,6 +6,11 @@
 
 var/global/mulebot_count = 0
 
+
+#define SIGH 0
+#define ANNOYED 1
+#define DELIGHT 2
+
 /obj/machinery/bot/mulebot
 	name = "\improper MULEbot"
 	desc = "A Multiple Utility Load Effector bot."
@@ -14,21 +19,23 @@ var/global/mulebot_count = 0
 	density = 1
 	anchored = 1
 	animate_movement=1
-	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
+	health = 150
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/atom/movable/load = null		// the loaded crate (usually)
+	var/atom/movable/load = null
 	bot_type = MULE_BOT
 	model = "MULE"
 	blood_DNA = list()
+	can_buckle = 1
+	buckle_lying = 0
 
 	suffix = ""
 
 	var/turf/target				// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(access_cargo)
 
 	mode = BOT_IDLE
 
@@ -62,7 +69,6 @@ var/global/mulebot_count = 0
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	botcard.access = J.get_access()
 	prev_access = botcard.access
-//	botcard.access += access_robotics //Why --Ikki
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000
@@ -73,17 +79,43 @@ var/global/mulebot_count = 0
 			suffix = "#[mulebot_count]"
 		name = "\improper Mulebot ([suffix])"
 
+/obj/machinery/bot/mulebot/Destroy()
+	unload(0)
+	qdel(wires)
+	wires = null
+	return ..()
+
 obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
 
+
+obj/machinery/bot/mulebot/Move(atom/newloc, direct)
+	. = ..()
+	if(buckled_mob)
+		if(!buckled_mob.Move(loc, direct))
+			loc = buckled_mob.loc //we gotta go back
+			last_move = buckled_mob.last_move
+			inertia_dir = last_move
+			buckled_mob.inertia_dir = last_move
+			. = 0
+
+obj/machinery/bot/mulebot/Process_Spacemove(movement_dir = 0)
+	if(buckled_mob)
+		return buckled_mob.Process_Spacemove(movement_dir)
+	return ..()
+
+obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(mover == buckled_mob)
+		return 1
+	return ..()
 
 // attack by item
 // emag : lock/unlock,
 // screwdriver: open/close hatch
 // cell: insert it
 // other: chance to knock rider off bot
-/obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user, params)
+/obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(toggle_lock(user))
 			user << "<span class='notice'>Controls [(locked ? "locked" : "unlocked")].</span>"
@@ -132,13 +164,13 @@ obj/machinery/bot/mulebot/bot_reset()
 		..()
 	return
 
-/obj/machinery/bot/mulebot/emag_act(mob/user as mob)
+/obj/machinery/bot/mulebot/emag_act(mob/user)
 	locked = !locked
 	user << "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>"
 	flick("mulebot-emagged", src)
 	playsound(loc, 'sound/effects/sparks1.ogg', 100, 0)
 
-/obj/machinery/bot/mulebot/ex_act(var/severity)
+/obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)
 	switch(severity)
 		if(1)
@@ -150,7 +182,7 @@ obj/machinery/bot/mulebot/bot_reset()
 			wires.RandomCut()
 	return
 
-/obj/machinery/bot/mulebot/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/bot/mulebot/bullet_act(obj/item/projectile/Proj)
 	if(..())
 		if(prob(50) && !isnull(load))
 			unload(0)
@@ -159,18 +191,18 @@ obj/machinery/bot/mulebot/bot_reset()
 			wires.RandomCut()
 
 
-/obj/machinery/bot/mulebot/attack_ai(var/mob/user)
+/obj/machinery/bot/mulebot/attack_ai(mob/user)
 	user.set_machine(src)
 	interact(user, 1)
 
-/obj/machinery/bot/mulebot/attack_hand(var/mob/user)
+/obj/machinery/bot/mulebot/attack_hand(mob/user)
 	. = ..()
 	if (.)
 		return
 	user.set_machine(src)
 	interact(user, 0)
 
-/obj/machinery/bot/mulebot/interact(var/mob/user, var/ai=0)
+/obj/machinery/bot/mulebot/interact(mob/user, ai=0)
 	var/dat
 	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
 	dat += "<b>ID:</b> [suffix]<BR>"
@@ -184,8 +216,6 @@ obj/machinery/bot/mulebot/bot_reset()
 		switch(mode)
 			if(BOT_IDLE)
 				dat += "<span class='good'>Ready</span>"
-			if(BOT_LOADING)
-				dat += "<span class='good'>[mode_name[BOT_LOADING]]</span>"
 			if(BOT_DELIVER)
 				dat += "<span class='good'>[mode_name[BOT_DELIVER]]</span>"
 			if(BOT_GO_HOME)
@@ -308,7 +338,7 @@ obj/machinery/bot/mulebot/bot_reset()
 		usr.unset_machine()
 	return
 
-/obj/machinery/bot/mulebot/bot_control(var/command, mob/user, pda= 0)
+/obj/machinery/bot/mulebot/bot_control(command, mob/user, pda= 0)
 	if(pda && !wires.RemoteRX()) //MULE wireless is controlled by wires.
 		return
 
@@ -359,7 +389,7 @@ obj/machinery/bot/mulebot/bot_reset()
 				updateDialog()
 
 		if("unload")
-			if(load && mode !=1)
+			if(load && mode != BOT_HUNT)
 				if(loc == target)
 					unload(loaddir)
 				else
@@ -380,12 +410,11 @@ obj/machinery/bot/mulebot/bot_reset()
 
 
 
-
 // returns true if the bot has power
 /obj/machinery/bot/mulebot/proc/has_power()
 	return !open && cell && cell.charge > 0 && wires.HasPower()
 
-/obj/machinery/bot/mulebot/proc/toggle_lock(var/mob/user)
+/obj/machinery/bot/mulebot/proc/toggle_lock(mob/user)
 	if(allowed(user))
 		locked = !locked
 		updateDialog()
@@ -394,85 +423,111 @@ obj/machinery/bot/mulebot/bot_reset()
 		user << "<span class='danger'>Access denied.</span>"
 		return 0
 
+/obj/machinery/bot/mulebot/proc/buzz(type)
+	switch(type)
+		if(SIGH)
+			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		if(ANNOYED)
+			visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+		if(DELIGHT)
+			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
+			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+
+
 // mousedrop a crate to load the bot
 // can load anything if emagged
+/obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
 
-/obj/machinery/bot/mulebot/MouseDrop_T(var/atom/movable/C, mob/user)
-
-	if(user.stat)
+	if(user.incapacitated() || user.lying)
 		return
 
-	if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+	if (!istype(AM))
 		return
 
-	if(load)
-		return
-
-	load(C)
-
+	load(AM)
 
 // called to load a crate
-/obj/machinery/bot/mulebot/proc/load(var/atom/movable/C)
-	if(wires.LoadCheck() && !istype(C,/obj/structure/closet/crate))
-		visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-		return		// if not emagged, only allow crates to be loaded
-
-	//I'm sure someone will come along and ask why this is here... well people were dragging screen items onto the mule, and that was not cool.
-	//So this is a simple fix that only allows a selection of item types to be considered. Further narrowing-down is below.
-	if(!istype(C,/obj/item) && !istype(C,/obj/machinery) && !istype(C,/obj/structure) && !ismob(C))
-		return
-	if(!isturf(C.loc)) //To prevent the loading from stuff from someone's inventory, which wouldn't get handled properly.
+/obj/machinery/bot/mulebot/proc/load(atom/movable/AM)
+	if(load ||  AM.anchored)
 		return
 
-	if(get_dist(C, src) > 1 || load || !on)
+	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
-	mode = BOT_LOADING
 
-	// if a create, close before loading
-	var/obj/structure/closet/crate/crate = C
-	if(istype(crate))
-		crate.close()
+	var/obj/structure/closet/crate/CRATE
+	if(istype(AM,/obj/structure/closet/crate))
+		CRATE = AM
+	else
+		if(wires.LoadCheck())
+			buzz(SIGH)
+			return		// if not emagged, only allow crates to be loaded
 
-	C.loc = loc
-	sleep(2)
-	if(C.loc != loc) //To prevent you from going onto more thano ne bot.
-		return
-	C.loc = src
-	load = C
+	if(CRATE) // if it's a crate, close before loading
+		CRATE.close()
 
-	C.pixel_y += 9
-	if(C.layer < layer)
-		C.layer = layer + 0.1
-	overlays += C
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+			buzz(SIGH)
+			return
 
-	if(ismob(C))
-		var/mob/M = C
-		if(M.client)
-			M.client.perspective = EYE_PERSPECTIVE
-			M.client.eye = src
+	if(isliving(AM))
+		if(!buckle_mob(AM))
+			return
+	else
+		AM.loc = src
+		AM.pixel_y += 9
+		if(AM.layer < layer)
+			AM.layer = layer + 0.1
+		overlays += AM
 
+	load= AM
 	mode = BOT_IDLE
+
+/obj/machinery/bot/mulebot/buckle_mob(mob/living/M)
+	if(M.buckled)
+		return 0
+	var/turf/T = get_turf(src)
+	if(M.loc != T)
+		density = 0
+		var/can_step = step_towards(M, T)
+		density = 1
+		if(!can_step)
+			return 0
+	return ..()
+
+
+/obj/machinery/bot/mulebot/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob) //post buckling
+		M.pixel_y = initial(M.pixel_y) + 9
+		if(M.layer < layer)
+			M.layer = layer + 0.1
+
+	else //post unbuckling
+		load = null
+		M.layer = initial(M.layer)
+		M.pixel_y = initial(M.pixel_y)
+
 
 // called to unload the bot
 // argument is optional direction to unload
 // if zero, unload at bot's location
-/obj/machinery/bot/mulebot/proc/unload(var/dirn)
+/obj/machinery/bot/mulebot/proc/unload(dirn)
 	if(!load)
 		return
 
-	mode = BOT_LOADING
+	mode = BOT_IDLE
+
 	overlays.Cut()
 
-	if(ismob(load))
-		var/mob/M = load
-		if(M.client)
-			M.client.perspective = MOB_PERSPECTIVE
-			M.client.eye = src
-
+	if(buckled_mob)
+		unbuckle_mob()
+		return
 
 	load.loc = loc
-	load.pixel_y -= 9
+	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
 	if(dirn)
 		var/turf/T = loc
@@ -482,22 +537,7 @@ obj/machinery/bot/mulebot/bot_reset()
 
 	load = null
 
-	// in case non-load items end up in contents, dump every else too
-	// this seems to happen sometimes due to race conditions
-	// with items dropping as mobs are loaded
 
-	for(var/atom/movable/AM in src)
-		if(AM == cell || istype(AM , botcard) || AM == Radio) continue
-
-		AM.loc = loc
-		AM.layer = initial(AM.layer)
-		AM.pixel_y = initial(AM.pixel_y)
-		if(ismob(AM))
-			var/mob/M = AM
-			if(M.client)
-				M.client.perspective = MOB_PERSPECTIVE
-				M.client.eye = src
-	mode = BOT_IDLE
 
 /obj/machinery/bot/mulebot/call_bot()
 	..()
@@ -537,13 +577,13 @@ obj/machinery/bot/mulebot/bot_reset()
 	if(refresh) updateDialog()
 
 /obj/machinery/bot/mulebot/proc/process_bot()
-	//if(mode) world << "Mode: [mode]"
+
+	if(!on)
+		return
 
 	switch(mode)
 		if(BOT_IDLE)		// idle
 			icon_state = "mulebot0"
-			return
-		if(BOT_LOADING)		// loading/unloading
 			return
 
 		if(BOT_DELIVER,BOT_GO_HOME,BOT_BLOCKED)		// navigating to deliver,home, or blocked
@@ -604,26 +644,22 @@ obj/machinery/bot/mulebot/bot_reset()
 						blockcount++
 						mode = BOT_BLOCKED
 						if(blockcount == 3)
-							visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-							playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+							buzz(ANNOYED)
 
 						if(blockcount > 10)	// attempt 10 times before recomputing
 							// find new path excluding blocked turf
-							visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-							playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+							buzz(SIGH)
 
 							spawn(2)
 								calc_path(next)
 								if(path.len > 0)
-									visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
-									playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+									buzz(DELIGHT)
 								mode = BOT_BLOCKED
 							mode = BOT_WAIT_FOR_NAV
 							return
 						return
 				else
-					visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-					playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+					buzz(ANNOYED)
 					//world << "Bad turf."
 					mode = BOT_NAV
 					return
@@ -642,38 +678,32 @@ obj/machinery/bot/mulebot/bot_reset()
 				if(path.len > 0)
 					blockcount = 0
 					mode = BOT_BLOCKED
-					visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
-					playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+					buzz(DELIGHT)
 
 				else
-					visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-					playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+					buzz(SIGH)
 
 					mode = BOT_NO_ROUTE
-		//if(6)
-			//world << "Pending path calc."
-		//if(7)
-			//world << "No dest / no route."
-
-	return
 
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/mulebot/calc_path(var/turf/avoid = null)
+/obj/machinery/bot/mulebot/calc_path(turf/avoid = null)
 	path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 250, id=botcard, exclude=avoid)
 
 
 // sets the current destination
 // signals all beacons matching the delivery code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/mulebot/proc/set_destination(var/new_dest)
+/obj/machinery/bot/mulebot/proc/set_destination(new_dest)
 	new_destination = new_dest
 	get_nav()
 	updateDialog()
 
 // starts bot moving to current destination
 /obj/machinery/bot/mulebot/proc/start()
+	if(!on)
+		return
 	if(destination == home_destination)
 		mode = BOT_GO_HOME
 	else
@@ -684,6 +714,8 @@ obj/machinery/bot/mulebot/bot_reset()
 // starts bot moving to home
 // sends a beacon query to find
 /obj/machinery/bot/mulebot/proc/start_home()
+	if(!on)
+		return
 	spawn(0)
 		set_destination(home_destination)
 		mode = BOT_BLOCKED
@@ -720,7 +752,7 @@ obj/machinery/bot/mulebot/bot_reset()
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM)
+				if(AM && AM.Adjacent(src))
 					load(AM)
 					if(report_delivery)
 						speak("Now loading [load] at <b>[get_area(src)]</b>.", radio_frequency)
@@ -736,7 +768,7 @@ obj/machinery/bot/mulebot/bot_reset()
 	return
 
 // called when bot bumps into anything
-/obj/machinery/bot/mulebot/Bump(var/atom/obs)
+/obj/machinery/bot/mulebot/Bump(atom/obs)
 	if(!wires.MobAvoid())		//usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
@@ -747,7 +779,7 @@ obj/machinery/bot/mulebot/bot_reset()
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
-	..()
+	return ..()
 
 /obj/machinery/bot/mulebot/alter_health()
 	return get_turf(src)
@@ -755,7 +787,7 @@ obj/machinery/bot/mulebot/bot_reset()
 
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
-/obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
+/obj/machinery/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
@@ -774,12 +806,11 @@ obj/machinery/bot/mulebot/bot_reset()
 	bloodiness += 4
 
 // player on mulebot attempted to move
-/obj/machinery/bot/mulebot/relaymove(var/mob/user)
-	if(user.stat)
+/obj/machinery/bot/mulebot/relaymove(mob/user)
+	if(user.incapacitated())
 		return
 	if(load == user)
 		unload(0)
-	return
 
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
@@ -829,5 +860,8 @@ obj/machinery/bot/mulebot/bot_reset()
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	unload(0)
 	qdel(src)
+
+#undef SIGH
+#undef ANNOYED
+#undef DELIGHT

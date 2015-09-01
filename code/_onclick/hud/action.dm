@@ -14,7 +14,7 @@
 	var/name = "Generic Action"
 	var/action_type = AB_ITEM
 	var/procname = null
-	var/atom/movable/target = null
+	var/obj/item/target = null
 	var/check_flags = 0
 	var/processing = 0
 	var/active = 0
@@ -45,7 +45,8 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
+		qdel(button)
+		button = null
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null
@@ -104,7 +105,7 @@
 		if(owner.stat)
 			return 0
 	if(check_flags & AB_CHECK_INSIDE)
-		if(!(target in owner))
+		if(!(target in owner) && !(target.action_button_internal))
 			return 0
 	return 1
 
@@ -135,12 +136,15 @@
 	var/image/img
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
-		img = image(I.icon, src , I.icon_state)
+		var/old = I.layer
+		I.layer = FLOAT_LAYER //AAAH
+		overlays += I
+		I.layer = old
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
-	img.pixel_x = 0
-	img.pixel_y = 0
-	overlays += img
+		img.pixel_x = 0
+		img.pixel_y = 0
+		overlays += img
 
 	if(!owner.IsAvailable())
 		color = rgb(128,0,0,128)
@@ -166,7 +170,7 @@
 	usr.update_action_buttons()
 
 
-/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(var/mob/living/user)
+/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
 	if(isalien(user))
 		icon_state = "bg_alien"
 	else
@@ -188,7 +192,7 @@
 #define AB_NORTH_OFFSET 26
 #define AB_MAX_COLUMNS 10
 
-/datum/hud/proc/ButtonNumberToScreenCoords(var/number) // TODO : Make this zero-indexed for readabilty
+/datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
 	var/coord_col = "+[col-1]"
@@ -197,7 +201,7 @@
 	var/coord_row_offset = 26
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
 
-/datum/hud/proc/SetButtonCoords(var/obj/screen/button,var/number)
+/datum/hud/proc/SetButtonCoords(obj/screen/button,number)
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
 	var/x_offset = 32*(col-1) + 4 + 2*col
@@ -217,6 +221,21 @@
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
+/datum/action/organ_action
+	check_flags = AB_CHECK_ALIVE
+
+/datum/action/organ_action/CheckRemoval(mob/living/carbon/user)
+	if(!iscarbon(user))
+		return 1
+	if(target in user.internal_organs)
+		return 0
+	return 1
+
+/datum/action/organ_action/IsAvailable()
+	var/obj/item/organ/internal/I = target
+	if(!I.owner)
+		return 0
+	return ..()
 
 //Preset for spells
 /datum/action/spell_action

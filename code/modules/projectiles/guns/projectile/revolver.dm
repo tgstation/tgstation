@@ -14,7 +14,7 @@
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
-/obj/item/weapon/gun/projectile/revolver/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
@@ -26,7 +26,7 @@
 		if(istype(A, /obj/item/weapon/pen))
 			rename_gun(user)
 
-/obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user as mob)
+/obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
@@ -44,7 +44,7 @@
 /obj/item/weapon/gun/projectile/revolver/can_shoot()
 	return get_ammo(0,0)
 
-/obj/item/weapon/gun/projectile/revolver/get_ammo(var/countchambered = 0, var/countempties = 1)
+/obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
@@ -73,18 +73,17 @@
 	options["The Peacemaker"] = "detective_peacemaker"
 	options["Cancel"] = null
 
-/obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, var/message = 1, params)
+/obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params)
 	if(magazine.caliber != initial(magazine.caliber))
 		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 			playsound(user, fire_sound, 50, 1)
 			user << "<span class='userdanger'>[src] blows up in your face!</span>"
 			user.take_organ_damage(0,20)
 			user.unEquip(src)
-			qdel(src)
 			return 0
 	..()
 
-/obj/item/weapon/gun/projectile/revolver/detective/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user, params)
 	..()
 	if(istype(A, /obj/item/weapon/screwdriver))
 		if(magazine.caliber == "38")
@@ -144,7 +143,7 @@
 		chamber_round()
 	spun = 1
 
-/obj/item/weapon/gun/projectile/revolver/russian/attackby(var/obj/item/A as obj, mob/user as mob, params)
+/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = ..()
 	if(num_loaded)
 		user.visible_message("[user] loads a single bullet into the revolver and spins the chamber.", "<span class='notice'>You load a single bullet into the chamber and spin it.</span>")
@@ -156,7 +155,7 @@
 	A.update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user as mob)
+/obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
 	if(!spun && can_shoot())
 		user.visible_message("[user] spins the chamber of the revolver.", "<span class='notice'>You spin the revolver's chamber.</span>")
 		Spin()

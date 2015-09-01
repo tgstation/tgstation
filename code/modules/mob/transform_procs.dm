@@ -3,15 +3,18 @@
 		return
 	//Handle items on mob
 
-	//first implants
+	//first implants & organs
 	var/list/implants = list()
+	var/list/int_organs = list()
+
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
-	if(tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants))
-			unEquip(W)
+	if (tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in internal_organs)
+			int_organs += I
+			I.Remove(src, 1)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -70,6 +73,14 @@
 		I.loc = O
 		I.implanted = O
 
+	//re-add organs to new mob
+	if(tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in O.internal_organs)
+			qdel(I)
+
+		for(var/obj/item/organ/internal/I in int_organs)
+			I.Insert(O, 1)
+
 	//transfer mind and delete old mob
 	if(mind)
 		mind.transfer_to(O)
@@ -98,11 +109,18 @@
 		return
 	//Handle items on mob
 
-	//first implants
+	//first implants & organs
 	var/list/implants = list()
+	var/list/int_organs = list()
+
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
+
+	if (tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in internal_organs)
+			int_organs += I
+			I.Remove(src, 1)
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -156,7 +174,7 @@
 		O.real_name = newname
 	else
 		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
-			O.dna.real_name = random_name(O.gender)
+			O.dna.real_name = random_unique_name(O.gender)
 		O.real_name = O.dna.real_name
 		O.name = O.real_name
 
@@ -186,6 +204,13 @@
 		I.loc = O
 		I.implanted = O
 	O.sec_hud_set_implants()
+
+	if(tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in O.internal_organs)
+			qdel(I)
+
+		for(var/obj/item/organ/internal/I in int_organs)
+			I.Insert(O, 1)
 
 	if(mind)
 		mind.transfer_to(O)
@@ -290,7 +315,7 @@
 
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(var/delete_items = 0)
+/mob/living/carbon/human/proc/Robotize(delete_items = 0)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -430,7 +455,7 @@
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
-	var/mob/living/simple_animal/pet/corgi/new_corgi = new /mob/living/simple_animal/pet/corgi (loc)
+	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
 	new_corgi.a_intent = "harm"
 	new_corgi.key = key
 
@@ -497,7 +522,7 @@
  * This proc is here to force coders to manually place their mob in this list, hopefully tested.
  * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
  */
-/mob/proc/safe_animal(var/MP)
+/mob/proc/safe_animal(MP)
 
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
@@ -509,7 +534,7 @@
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/pet/cat))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/pet/corgi))
+	if(ispath(MP, /mob/living/simple_animal/pet/dog/corgi))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/crab))
 		return 1

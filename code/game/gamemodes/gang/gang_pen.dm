@@ -36,7 +36,7 @@
 	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
-	var/cooldown_time = 300+(900*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3.5mins, 3recruiters=5mins
+	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
 	cooldown = 1
 	icon_state = "pen_blink"
@@ -67,6 +67,7 @@
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
 	activated = 0
+	origin_tech = "materials=2;biotech=4;programming=4;syndicate=4"
 	var/datum/gang/gang
 
 /obj/item/weapon/implant/gang/New(loc,var/setgang)
@@ -85,31 +86,38 @@
 				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
 	return dat
 
-/obj/item/weapon/implant/gang/implanted(mob/target)
-	..()
-	for(var/obj/item/weapon/implant/I in target)
-		if(I != src)
-			qdel(I)
+/obj/item/weapon/implant/gang/implant(mob/target)
+	if(..())
+		for(var/obj/item/weapon/implant/I in target)
+			if(I != src)
+				qdel(I)
 
-	if(target.stat != DEAD)
-		ticker.mode.remove_gangster(target.mind,0,1)
+		var/success
+		if(target.stat != DEAD)
+			if(target.mind in ticker.mode.get_gangsters())
+				if(ticker.mode.remove_gangster(target.mind,0,1))
+					success = 1	//Was not a gang boss, convert as usual
+			else
+				success = 1	//Not a gangster, convert as usual
 
-	if(!target.mind)
-		return
+		if(!target.mind)
+			return 0
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.sec_hud_set_implants()
-		if(ticker.mode.add_gangster(target.mind,gang))
-			target.Paralyse(5)
-		else
-			target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
-	qdel(src)
+		if(ishuman(target))
+			if(success && ticker.mode.add_gangster(target.mind,gang,0))
+				target.Paralyse(5)
+			else
+				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 
-/obj/item/weapon/implanter/gang/New(loc,var/gang)
+		qdel(src)
+		return -1
+
+/obj/item/weapon/implanter/gang
+	name = "implanter (gang)"
+
+/obj/item/weapon/implanter/gang/New(loc, var/gang)
 	if(!gang)
 		qdel(src)
 		return
 	imp = new /obj/item/weapon/implant/gang(src,gang)
 	..()
-	update_icon()

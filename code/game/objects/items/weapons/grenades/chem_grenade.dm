@@ -122,7 +122,7 @@
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
 
 
-/obj/item/weapon/grenade/chem_grenade/proc/stage_change(var/N)
+/obj/item/weapon/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
 		stage = N
 	if(stage == EMPTY)
@@ -355,11 +355,11 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("condensedcapsaicin", 70)
-	B1.reagents.add_reagent("potassium", 30)
-	B2.reagents.add_reagent("phosphorus", 30)
-	B2.reagents.add_reagent("sugar", 30)
-	B1.reagents.add_reagent("condensedcapsaicin", 40)
+	B1.reagents.add_reagent("condensedcapsaicin", 60)
+	B1.reagents.add_reagent("potassium", 40)
+	B2.reagents.add_reagent("phosphorus", 40)
+	B2.reagents.add_reagent("sugar", 40)
+	B1.reagents.add_reagent("condensedcapsaicin", 20)
 
 	beakers += B1
 	beakers += B2
