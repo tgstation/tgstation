@@ -291,7 +291,7 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/Destroy()
 		SSobj.processing.Remove(src)
-		..()
+		return ..()
 
 /obj/item/device/flashlight/emp/process()
 		charge_tick++

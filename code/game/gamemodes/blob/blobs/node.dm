@@ -25,7 +25,7 @@
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/blob/node/Life()
 	pulseLoop(5)

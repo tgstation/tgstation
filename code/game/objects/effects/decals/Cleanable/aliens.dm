@@ -17,7 +17,7 @@
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	viruses = null
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	spawn (0)

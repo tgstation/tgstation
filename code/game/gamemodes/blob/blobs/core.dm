@@ -39,7 +39,7 @@
 		overmind.blob_core = null
 	overmind = null
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return

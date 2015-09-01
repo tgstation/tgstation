@@ -26,7 +26,7 @@
 /obj/structure/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	..()
+	return ..()
 
 /obj/structure/New()
 	..()
@@ -38,7 +38,7 @@
 /obj/effect/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	..()
+	return ..()
 
 /obj/effect/New()
 	..()
@@ -94,6 +94,6 @@
 /obj/machinery/camera/Destroy()
 	cameranet.cameras -= src
 	cameranet.removeCamera(src)
-	..()
+	return ..()
 
 #undef BORG_CAMERA_BUFFER

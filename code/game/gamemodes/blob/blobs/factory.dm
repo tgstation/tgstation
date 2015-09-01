@@ -17,7 +17,7 @@
 		if(spore.factory == src)
 			spore.factory = null
 	spores = null
-	..()
+	return ..()
 
 /obj/effect/blob/factory/PulseAnimation(activate = 0)
 	if(activate)

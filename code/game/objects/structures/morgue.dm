@@ -30,7 +30,7 @@
 	if(connected)
 		qdel(connected)
 		connected = null
-	..()
+	return ..()
 
 /obj/structure/bodycontainer/on_log()
 	update_icon()
@@ -135,7 +135,7 @@ var/global/list/crematoriums = new/list()
 
 /obj/structure/bodycontainer/crematorium/Destroy()
 	crematoriums.Remove(src)
-	..()
+	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
@@ -214,7 +214,7 @@ var/global/list/crematoriums = new/list()
 		connected.connected = null
 		connected.update_icon()
 		connected = null
-	..()
+	return ..()
 
 /obj/structure/tray/attack_paw(mob/user)
 	return src.attack_hand(user)

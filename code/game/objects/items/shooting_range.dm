@@ -11,7 +11,7 @@
 	removeOverlays()
 	if(pinnedLoc)
 		pinnedLoc.nullPinnedTarget()
-	..()
+	return ..()
 
 /obj/item/target/proc/nullPinnedLoc()
 	pinnedLoc = null
