@@ -253,10 +253,11 @@ obj/item/device/flashlight/lamp/bananalamp
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
 	w_class = 4
-	brightness_on = 7
+	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
 	on_damage = 10
+	slot_flags = null
 
 /obj/item/device/flashlight/lantern
 	name = "lantern"
