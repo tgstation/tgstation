@@ -263,7 +263,7 @@ emp_act
 /mob/living/carbon/human/proc/knock_out_teeth(mob/user)
 	var/mob/living/L = user
 	var/datum/butchering_product/teeth/T = locate(/datum/butchering_product/teeth) in src.butchering_drops
-	if(!istype(T)) return
+	if(!istype(T) || T.amount == 0) return
 
 	var/amount = rand(1,3)
 	if(M_HULK in L.mutations) //just like the mountain
