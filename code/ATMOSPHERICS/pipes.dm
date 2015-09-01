@@ -317,10 +317,12 @@
 		icon_state = "exposed"
 		..(adjacent_procd,node_list)
 	else
+		underlays.Cut()
+		icon_state = "intact"
 		alpha = invisibility ? 128 : 255
 		if(!adjacent_procd)
 			for(var/obj/machinery/atmospherics/node in node_list)
-				if(node.update_icon_ready && !((istype(node,/obj/machinery/atmospherics/pipe/simple) && node.icon_state == "intact")))
+				if(node.update_icon_ready && !(istype(node,/obj/machinery/atmospherics/pipe/simple)))
 					node.update_icon(1)
 	if(!node1&&!node2)
 		qdel(src) //TODO: silent deleting looks weird
