@@ -12,6 +12,11 @@
 
 	var/animal_type
 
+/obj/item/stack/teeth/New()
+	.=..()
+	pixel_x = rand(-24,24)
+	pixel_y = rand(-24,24)
+
 /obj/item/stack/teeth/can_stack_with(obj/item/other_stack)
 	if(src.type == other_stack.type)
 		var/obj/item/stack/teeth/T = other_stack

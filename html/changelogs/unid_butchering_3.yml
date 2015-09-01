@@ -4,6 +4,7 @@ delete-after: True
 
 changes: 
   -rscadd: Teeth of aliens and some other animals may be harvested now
+  -rscadd: Hitting a human in the mouth with a heavy object or punching him has a chance to knock some of his teeth out. Currently this doesn't negatively affect the victim.
   -rscadd: Aliens and monkeys can be butchered and skinned. In addition, aliens can be declawed.
   -tweak: Butchering non-animals (aliens and monkeys) requires you to use a new Butcher verb, and doesn't destroy their corpses.
   -tweak: Species with claws (tajara) or beaks (vox) can butcher things faster, and can do so without any tools

@@ -126,6 +126,7 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
+	init_butchering_list() // While animals only generate list of their teeth/skins on death, humans generate it when they're born.
 
 	// Set up DNA.
 	if(!delay_ready_dna)

@@ -220,6 +220,14 @@
 					target = get_ranged_target_turf(T, M.dir, M.species.punch_throw_range)
 				src.throw_at(target,100,M.species.punch_throw_speed)
 
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.zone_sel && H.zone_sel.selecting == "mouth")
+					var/chance = 0.5 * damage
+					if(M_HULK in H.mutations) chance += 50
+					if(prob(chance))
+						knock_out_teeth(H)
+
 
 		if(I_DISARM)
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")

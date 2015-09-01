@@ -414,9 +414,9 @@
 	var/butchery = "" //More information about butchering status, check out "code/datums/helper_datums/butchering.dm"
 	if(butchering_drops.len)
 		for(var/datum/butchering_product/B in butchering_drops)
-			butchery = "[butchery][B.desc_modifier(src)]"
+			butchery = "[butchery][B.desc_modifier(src, user)]"
 	if(butchery)
-		msg += "<span class='info'>[butchery]</span>"
+		msg += "<span class='info'>[butchery]</span>\n"
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"

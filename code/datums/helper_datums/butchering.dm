@@ -11,34 +11,59 @@
 	//Something like "skinning"
 
 	var/amount = 1
+	var/initial_amount = 1
 	//How much results you can spawn before this datum disappears
+
+/datum/butchering_product/New()
+	..()
+
+	initial_amount = amount
 
 /datum/butchering_product/proc/spawn_result(location, mob/parent)
 	if(amount > 0)
-		new result(location)
 		amount--
+		return new result(location)
 
 //This is added to the description of dead mobs! It's important to add a space at the end (like this: "It has been skinned. ").
-/datum/butchering_product/proc/desc_modifier(mob/parent)
+/datum/butchering_product/proc/desc_modifier(mob/parent, mob/user) //User - the guy who is looking at Parent
 	return
+
+//==============Teeth============
 
 /datum/butchering_product/teeth
 	result = /obj/item/stack/teeth
 	verb_name = "harvest teeth"
 	verb_gerund = "removing teeth from"
 
-/datum/butchering_product/teeth/desc_modifier(mob/parent)
+/datum/butchering_product/teeth/desc_modifier(mob/parent, mob/user)
+	if(amount == initial_amount) return
+	if(!isliving(parent)) return
+
+	var/mob/living/L = parent
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		var/datum/organ/external/head = H.get_organ("head")
+		if((head.status & ORGAN_DESTROYED) || !head)
+			return //If he has no head, you can't see whether he has teeth or not!
+
+		var/obj/item/clothing/mask/M = H.wear_mask
+		if(istype(M) && (M.body_parts_covered & MOUTH)) return //If his mouth is covered, we can't see his teeth
+
+	var/pronoun = "Its"
+	if(L.gender == MALE) pronoun = "His"
+	if(L.gender == FEMALE) pronoun = "Her"
+
 	if(amount == 0)
-		if(ishuman(parent))
-			var/mob/living/carbon/human/H = parent
-			if(H.is_destroyed["head"]) then return //If he has no head, you can't see whether he has teeth or not!
+		return "[pronoun] teeth are gone. "
+	else
+		if(parent.Adjacent(user))
+			return "[(initial_amount - amount)] of [lowertext(pronoun)] teeth are missing."
+		else
+			return "Some of [lowertext(pronoun)] teeth are missing. "
 
-		var/pronoun = "Its"
-		if(parent.gender == MALE) pronoun = "His"
-		if(parent.gender == FEMALE) pronoun = "Her"
-		return "[pronoun] teeth are missing. "
-
-/datum/butchering_product/teeth/spawn_result(location, mob/parent)
+#define ALL_TEETH -1
+/datum/butchering_product/teeth/spawn_result(location, mob/parent, drop_amount = ALL_TEETH)
 	if(amount <= 0) return
 
 	var/obj/item/stack/teeth/T = new(location)
@@ -47,21 +72,43 @@
 			var/mob/living/L = parent
 			var/mob/parent_species = L.species_type
 			var/parent_species_name = initial(parent_species.name)
+
+			if(ishuman(parent))
+				parent_species_name = "[parent]'s" //Like "Dick Johnson's"
+
 			T.name = "[parent_species_name] teeth"
 			T.singular_name = "[parent_species_name] tooth"
 			T.animal_type = parent_species
 
-	T.amount = amount
-	amount = 0
+	if(drop_amount == ALL_TEETH) //Drop ALL teeth
+		T.amount = amount
+		amount = 0
+	else //Drop a random amount
+		var/actual_amount = min(src.amount, drop_amount)
+		T.amount = actual_amount
+		src.amount -= actual_amount
+
+	return T
 
 /datum/butchering_product/teeth/few/New()
-	amount = rand(1,4)
+	amount = rand(4,8)
+	..()
 
 /datum/butchering_product/teeth/bunch/New()
-	amount = rand(4,8)
+	amount = rand(8,16)
+	..()
 
 /datum/butchering_product/teeth/lots/New()
-	amount = rand(6,12)
+	amount = rand(16,24)
+	..()
+
+/datum/butchering_product/teeth/human/New()
+	amount = 32
+	..()
+
+#undef ALL_TEETH
+
+//===============Skin=============
 
 /datum/butchering_product/skin
 	result = /obj/item/stack/sheet/animalhide
@@ -106,7 +153,7 @@
 /datum/butchering_product/skin/monkey
 	result = /obj/item/stack/sheet/animalhide/monkey
 
-//--------------
+//--------------Spider legs-------
 
 /datum/butchering_product/spider_legs
 	result = /obj/item/weapon/reagent_containers/food/snacks/spiderleg
@@ -118,6 +165,8 @@
 	if(amount < 8)
 		return "It only has [amount] [amount==1 ? "leg" : "legs"]. "
 
+//=============Alien claws========
+
 /datum/butchering_product/xeno_claw
 	result = /obj/item/xenos_claw
 	verb_name = "declaw"
@@ -127,9 +176,10 @@
 	if(!amount)
 		return "Its claws have been cut off. "
 
-#define TEETH_FEW		/datum/butchering_product/teeth/few		//1-4
-#define TEETH_BUNCH		/datum/butchering_product/teeth/bunch	//4-8
-#define TEETH_LOTS		/datum/butchering_product/teeth/lots	//6-12
+#define TEETH_FEW		/datum/butchering_product/teeth/few		//4-8
+#define TEETH_BUNCH		/datum/butchering_product/teeth/bunch	//8-16
+#define TEETH_LOTS		/datum/butchering_product/teeth/lots	//16-24
+#define TEETH_HUMAN		/datum/butchering_product/teeth/human	//32
 
 var/global/list/animal_butchering_products = list(
 	/mob/living/simple_animal/cat						= list(/datum/butchering_product/skin/cat),
@@ -142,7 +192,12 @@ var/global/list/animal_butchering_products = list(
 	/mob/living/simple_animal/hostile/alien				= list(/datum/butchering_product/xeno_claw, /datum/butchering_product/skin/xeno, TEETH_BUNCH), //Same as the player-controlled aliens
 	/mob/living/simple_animal/hostile/retaliate/cluwne	= list(TEETH_BUNCH), //honk
 	/mob/living/simple_animal/hostile/creature			= list(TEETH_LOTS),
-	/mob/living/carbon/monkey							= list(/datum/butchering_product/skin/monkey)
+	/mob/living/carbon/monkey							= list(/datum/butchering_product/skin/monkey),
+
+	/mob/living/carbon/human							= list(TEETH_HUMAN),
+	/mob/living/carbon/human/skellington				= list(TEETH_HUMAN),
+	/mob/living/carbon/human/tajaran					= list(TEETH_HUMAN),
+
 )
 
 #undef TEETH_FEW
