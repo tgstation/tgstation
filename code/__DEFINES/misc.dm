@@ -244,3 +244,7 @@
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
 
+//Turf wet states
+#define TURF_DRY		0
+#define TURF_WET_WATER	1
+#define TURF_WET_LUBE	2

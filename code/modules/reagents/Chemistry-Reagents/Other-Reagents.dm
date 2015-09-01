@@ -1009,3 +1009,19 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
+/datum/reagent/drying_agent
+	name = "Drying agent"
+	id = "drying_agent"
+	description = "Can be used to dry things."
+	reagent_state = LIQUID
+	color = "#A70FFF"
+
+/datum/reagent/drying_agent/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T) && T.wet)
+		T.MakeDry(TURF_WET_WATER)
+
+/datum/reagent/drying_agent/reaction_obj(obj/O, reac_volume)
+	if(O.type == /obj/item/clothing/shoes/galoshes)
+		var/t_loc = get_turf(O)
+		qdel(O)
+		new /obj/item/clothing/shoes/galoshes/dry(t_loc)
