@@ -51,7 +51,7 @@
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
-	..()
+	return ..()
 /obj/machinery/atmospherics/components/unary/vent_scrubber/auto_use_power()
 	if(!powered(power_channel))
 		return 0

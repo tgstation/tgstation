@@ -27,7 +27,7 @@
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
-	..()
+	. = ..()
 	holder = null
 
 /datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)

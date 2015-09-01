@@ -90,7 +90,7 @@ Pipenet stuff; housekeeping
 			N.disconnect(src)
 			nodes["n[I]"] = null
 			nullifyPipenet(parents["p[I]"])
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/atmosinit(var/list/node_connects)
 	for(var/I = 1; I <= device_type; I++)

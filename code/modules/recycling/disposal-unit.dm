@@ -49,7 +49,7 @@
 	eject()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

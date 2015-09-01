@@ -29,7 +29,7 @@
 /obj/structure/mineral_door/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc

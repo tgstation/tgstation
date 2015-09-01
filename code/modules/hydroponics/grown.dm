@@ -305,7 +305,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/Destroy()
 	if(istype(loc,/mob))
 		loc.AddLuminosity(round(-potency / 5,1))
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/pickup(mob/user)
 	src.SetLuminosity(0)
@@ -1208,7 +1208,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))
 		loc.AddLuminosity(round(-potency / 10,1))
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	SetLuminosity(0)

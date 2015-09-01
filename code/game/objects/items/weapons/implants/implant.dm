@@ -69,7 +69,7 @@
 /obj/item/weapon/implant/Destroy()
 	if(imp_in)
 		removed(imp_in)
-	..()
+	return ..()
 
 
 /obj/item/weapon/implant/proc/get_data()

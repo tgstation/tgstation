@@ -28,7 +28,7 @@
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-	..()
+	return ..()
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)

@@ -48,13 +48,13 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
 	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
-	if(M.client.check_watchlist(M.client.ckey))
-		body += "<A href='?_src_=holder;watchremove=[M.ckey]'>Remove from Watchlist</A> | "
-		body += "<A href='?_src_=holder;watchedit=[M.ckey]'>Edit Watchlist reason</A> "
-	else
-		body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
-
 	if(M.client)
+		if(M.client.check_watchlist(M.client.ckey))
+			body += "<A href='?_src_=holder;watchremove=[M.ckey]'>Remove from Watchlist</A> | "
+			body += "<A href='?_src_=holder;watchedit=[M.ckey]'>Edit Watchlist reason</A> "
+		else
+			body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
+
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted

@@ -1,0 +1,6 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - rscadd: "Engineering cyborgs now have a constant magpulse."

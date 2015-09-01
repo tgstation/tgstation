@@ -78,4 +78,4 @@
 			M.color = initial(M.color)
 		message += "...</span>"
 		M << message
-	..()
+	return ..()
