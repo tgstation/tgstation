@@ -22,8 +22,13 @@
 	return PIPE_TYPE_HE
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/update_icon(var/adjacent_procd)
-	..(adjacent_procd)
-	underlays.Cut()
+	var/node_list = list(node1,node2)
+	if(!node1 && !node2)
+		qdel(src)
+	if(!adjacent_procd)
+		for(var/obj/machinery/atmospherics/node in node_list)
+			if(node.update_icon_ready && !(istype(node,/obj/machinery/atmospherics/pipe/simple)))
+				node.update_icon(1)
 
 	// BubbleWrap
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
