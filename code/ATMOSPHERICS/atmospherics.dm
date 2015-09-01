@@ -103,7 +103,7 @@ Pipelines + Other Objects -> Pipe network
 			nodecon.color = connected_node.default_colour
 		else nodecon.color = "#B4B4B4"
 		underlays += nodecon
-		if (!adjacent_procd && connected_node.update_icon_ready && !(istype(connected_node,/obj/machinery/atmospherics/pipe/simple)))
+		if (!adjacent_procd && connected_node.update_icon_ready && !(istype(connected_node,/obj/machinery/atmospherics/pipe/simple) && connected_node.icon_state == "intact"))
 			connected_node.update_icon(1)
 	for (var/missing_dir in missing_nodes)
 		var/image/nodeex = node_ex["[missing_dir]"]

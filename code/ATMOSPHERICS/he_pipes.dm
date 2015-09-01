@@ -21,6 +21,10 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/getNodeType(var/node_id)
 	return PIPE_TYPE_HE
 
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/update_icon(var/adjacent_procd)
+	..(adjacent_procd)
+	underlays.Cut()
+
 	// BubbleWrap
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
 	..()
