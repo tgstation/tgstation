@@ -16,6 +16,17 @@
 			int_organs += I
 			I.Remove(src, 1)
 
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants))
+			unEquip(W)
+			if (client)
+				client.screen -= W
+			if (W)
+				W.loc = loc
+				W.dropped(src)
+				W.layer = initial(W.layer)
+
 	//Make mob invisible and spawn animation
 	regenerate_icons()
 	notransform = 1
