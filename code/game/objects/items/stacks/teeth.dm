@@ -1,6 +1,7 @@
 /obj/item/stack/teeth
-	name = "teeth"
+	name = "bunch of teeth"
 	singular_name = "tooth"
+	irregular_plural = "teeth"
 	icon = 'icons/obj/butchering_products.dmi'
 	icon_state = "tooth"
 	amount = 1
@@ -37,7 +38,7 @@
 			X.teeth_amount = amount
 			X.update_name()
 			user.put_in_active_hand(X)
-			user << "<span class='info'>You create a [X] out of [amount] [src] and \the [C].</span>"
+			user << "<span class='info'>You create a [X.name] out of [amount] [src] and \the [C].</span>"
 
 			qdel(src)
 		else

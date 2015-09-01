@@ -16,7 +16,7 @@
 
 	if(.)
 		if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTFOR / 10
+			nutrition -= HUNGER_FACTOR / 10
 
 			if(m_intent == "run")
 				nutrition -= HUNGER_FACTOR / 10
