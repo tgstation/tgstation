@@ -376,7 +376,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "security clothing crate"
 
-
+/datum/supply_packs/security/forensics
+	name = "Forensics Crate"
+	contains = list(/obj/item/device/detective_scanner,
+					/obj/item/weapon/evidencebag,
+					/obj/item/weapon/evidencebag,
+					/obj/item/weapon/evidencebag,
+					/obj/item/clothing/gloves/color/latex/nitrile,
+					/obj/item/device/camera,
+					/obj/item/device/taperecorder)
+	cost = 20
+	containername = "forensics crate"
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1037,6 +1047,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/paper/conveyor)
 	cost = 15
 	containername = "conveyor assembly crate"
+
+/datum/supply_packs/misc/water_pool
+	name = "9 Water Pool Tiles"
+	contains = list(/obj/item/stack/tile/pool)
+	amount = 9
+	cost = 25
+	containername = "water pool tiles crate"
 
 /datum/supply_packs/misc/watertank
 	name = "Water Tank Crate"
