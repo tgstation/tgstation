@@ -35,10 +35,13 @@
 	spawn(rand(790, 820)) // Purely so for visual effect
 		if(!istype(src, /turf/simulated)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
 			return
-		if(wet > wet_setting) return
-		wet = 0
-		if(wet_overlay)
-			overlays -= wet_overlay
+		MakeDry(wet_setting)
+
+/turf/simulated/proc/MakeDry(wet_setting = 1)
+	if(wet > wet_setting) return
+	wet = 0
+	if(wet_overlay)
+		overlays -= wet_overlay
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	..()
