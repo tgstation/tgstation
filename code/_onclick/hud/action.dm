@@ -30,6 +30,7 @@
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
+	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
 	if(owner)

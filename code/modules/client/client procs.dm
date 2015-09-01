@@ -129,6 +129,7 @@ var/next_external_rsc = 0
 	if(holder)
 		add_admin_verbs()
 		admin_memo_output("Show")
+		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
 
@@ -234,11 +235,10 @@ var/next_external_rsc = 0
 	while (query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
 
-	var/DBQuery/query_watch = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
-	query_watch.Execute()
-	if(query_watch.NextRow())
-		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is flagged for watching and has just connected - Reason: [query_watch.item[2]]</font>")
-		send2irc_adminless_only("Watchlist", "[key_name(src)] is flagged for watching and has just connected - Reason: [query_watch.item[2]]")
+	var/watchreason = check_watchlist(sql_ckey)
+	if(watchreason)
+		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
+		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)

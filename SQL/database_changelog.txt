@@ -1,3 +1,13 @@
+27 August 2015, by Jordie0608
+
+Modified table 'watch', removing 'id' column, making 'ckey' primary and adding the columns 'timestamp', 'adminckey', 'last_editor' and 'edits'.
+
+ALTER TABLE `feedback`.`watch` DROP COLUMN `id`, ADD COLUMN `timestamp` datetime NOT NULL AFTER `reason`, ADD COLUMN `adminckey` varchar(32) NOT NULL AFTER `timestamp`, ADD COLUMN `last_editor` varchar(32) NULL AFTER `adminckey`, ADD COLUMN `edits` text NULL AFTER `last_editor`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`)
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
 14 August 2015, by Jordie0608
 
 Added new table 'notes' to replace BYOND's .sav note system.

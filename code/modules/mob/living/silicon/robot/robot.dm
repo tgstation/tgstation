@@ -9,6 +9,7 @@
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
+	var/magpulse = 0
 
 //Hud stuff
 
@@ -138,7 +139,13 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
-	..()
+	qdel(wires)
+	qdel(module)
+	wires = null
+	module = null
+	camera = null
+	cell = null
+	return ..()
 
 
 /mob/living/silicon/robot/proc/pick_module()
@@ -213,6 +220,7 @@
 			animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
+			magpulse = 1
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -255,6 +263,8 @@
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
 	set name = "Show Alerts"
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	robot_alerts()
 
 //for borg hotkeys, here module refers to borg inv slot, not core module
@@ -613,6 +623,8 @@
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
 	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
+	if(stat == DEAD)
+		return //won't work if dead
 	if(locked)
 		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
@@ -978,12 +990,17 @@
 	set category = "Robot Commands"
 	set name = "State Laws"
 
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	checklaws()
 
 /mob/living/silicon/robot/verb/set_automatic_say_channel() //Borg version of setting the radio for autosay messages.
 	set name = "Set Auto Announce Mode"
 	set desc = "Modify the default radio setting for stating your laws."
 	set category = "Robot Commands"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	set_autosay()
 
 /mob/living/silicon/robot/proc/control_headlamp()

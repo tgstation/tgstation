@@ -21,7 +21,7 @@
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	src.target = null
-	..()
+	return ..()
 
 /obj/machinery/meter/initialize()
 	if (!target)

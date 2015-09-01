@@ -38,7 +38,7 @@
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++
@@ -78,7 +78,7 @@
 
 /obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++

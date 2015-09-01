@@ -14,7 +14,6 @@
 
 
 /mob/living/carbon/human/New()
-	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 	//initialise organs

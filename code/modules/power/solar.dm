@@ -27,7 +27,7 @@
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
-	..()
+	return ..()
 
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(obj/machinery/power/solar_control/SC)
@@ -255,7 +255,7 @@
 		return 1
 
 	if(!tracker)
-		if(istype(W, /obj/item/weapon/tracker_electronics))
+		if(istype(W, /obj/item/weapon/electronics/tracker))
 			if(!user.drop_item())
 				return
 			tracker = 1
@@ -264,7 +264,7 @@
 			return 1
 	else
 		if(istype(W, /obj/item/weapon/crowbar))
-			new /obj/item/weapon/tracker_electronics(src.loc)
+			new /obj/item/weapon/electronics/tracker(src.loc)
 			tracker = 0
 			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1
@@ -308,7 +308,7 @@
 		M.unset_control()
 	if(connected_tracker)
 		connected_tracker.unset_control()
-	..()
+	return ..()
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()

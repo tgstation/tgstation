@@ -56,7 +56,7 @@
 
 /obj/item/weapon/gun/magic/Destroy()
 	if(can_charge)	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/gun/magic/process()
