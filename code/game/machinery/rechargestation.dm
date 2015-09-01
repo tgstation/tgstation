@@ -152,15 +152,7 @@
 						F.broken = 0
 						F.times_used = 0
 						F.icon_state = "flash"
-				// Security
-				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
-					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O
-					if(T.power_supply.charge < T.power_supply.maxcharge)
-						var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-						T.power_supply.give(S.e_cost * coeff)
-						T.update_icon()
-					else
-						T.charge_tick = 0
+
 				if(istype(O,/obj/item/weapon/melee/baton))
 					var/obj/item/weapon/melee/baton/B = O
 					if(B.bcell)
