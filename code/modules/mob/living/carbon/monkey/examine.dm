@@ -33,6 +33,14 @@
 	if (src.digitalcamo)
 		msg += "It is repulsively uncanny!\n"
 
+	var/butchery = "" //More information about butchering status, check out "code/datums/helper_datums/butchering.dm"
+	if(butchering_drops.len)
+		for(var/datum/butchering_product/B in butchering_drops)
+			butchery = "[butchery][B.desc_modifier(src)]"
+	if(butchery)
+		msg += "<span class='info'>[butchery]</span>"
+
 	msg += "*---------*</span>"
+
 
 	user << msg

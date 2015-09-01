@@ -19,7 +19,7 @@
 		amount--
 
 //This is added to the description of dead mobs! It's important to add a space at the end (like this: "It has been skinned. ").
-/datum/butchering_product/proc/desc_modifier()
+/datum/butchering_product/proc/desc_modifier(mob/parent)
 	return
 
 /datum/butchering_product/teeth
@@ -27,9 +27,16 @@
 	verb_name = "harvest teeth"
 	verb_gerund = "removing teeth from"
 
-/datum/butchering_product/teeth/desc_modifier()
+/datum/butchering_product/teeth/desc_modifier(mob/parent)
 	if(amount == 0)
-		return "Its teeth are missing. "
+		if(ishuman(parent))
+			var/mob/living/carbon/human/H = parent
+			if(H.is_destroyed["head"]) then return //If he has no head, you can't see whether he has teeth or not!
+
+		var/pronoun = "Its"
+		if(parent.gender == MALE) pronoun = "His"
+		if(parent.gender == FEMALE) pronoun = "Her"
+		return "[pronoun] teeth are missing. "
 
 /datum/butchering_product/teeth/spawn_result(location, mob/parent)
 	if(amount <= 0) return
@@ -61,9 +68,12 @@
 	verb_name = "skin"
 	verb_gerund = "skinning"
 
-/datum/butchering_product/skin/desc_modifier()
+/datum/butchering_product/skin/desc_modifier(mob/parent)
 	if(!amount)
-		return "It has been skinned. "
+		var/pronoun = "It"
+		if(parent.gender == MALE) pronoun = "He"
+		if(parent.gender == FEMALE) pronoun = "She"
+		return "[pronoun] has been skinned. "
 
 /datum/butchering_product/skin/cat
 	result = /obj/item/stack/sheet/animalhide/cat
