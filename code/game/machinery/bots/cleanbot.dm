@@ -8,7 +8,7 @@
 	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3.
 	var/created_name = "Cleanbot"
 
 
@@ -151,7 +151,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 				PoolOrNew(/obj/effect/effect/foam, loc)
 
 	else if (prob(5))
-		visible_message("[src] makes an excited beeping booping sound!")
+		audible_message("[src] makes an excited beeping booping sound!")
 
 	if(!target) //Search for cleanables it can see.
 		target = scan(/obj/effect/decal/cleanable/)
