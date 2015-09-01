@@ -28,6 +28,11 @@
 
 	var/law_change_counter = 0
 
+/mob/living/silicon/Destroy()
+	radio = null
+	aicamera = null
+	return ..()
+
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
@@ -153,7 +158,7 @@
 /mob/living/silicon/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src,2)
+	Proj.on_hit(src)
 	return 2
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
@@ -381,7 +386,19 @@
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 /mob/living/silicon/attack_paw(mob/living/user)

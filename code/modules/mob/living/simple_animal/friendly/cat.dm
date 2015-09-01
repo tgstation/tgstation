@@ -20,6 +20,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
+	gold_core_spawnable = 2
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -31,6 +32,7 @@
 	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	//MICE!
@@ -69,6 +71,7 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -80,3 +83,19 @@
 	density = 0
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+
+/mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	switch(M.a_intent)
+		if("help")	wuv(1,M)
+		if("harm")	wuv(-1,M)
+
+/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
+	if(change)
+		if(change > 0)
+			if(M && stat != DEAD)
+				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				emote("me", 1, "purrs!")
+		else
+			if(M && stat != DEAD)
+				emote("me", 1, "hisses!")

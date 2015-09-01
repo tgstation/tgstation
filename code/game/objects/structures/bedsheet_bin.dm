@@ -7,8 +7,8 @@ LINEN BINS
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sheet"
+	icon = 'icons/obj/bedsheets.dmi'
+	icon_state = "sheetwhite"
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
 	layer = 4.0
@@ -64,7 +64,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/rainbow
 	name = "rainbow bedsheet"
-	desc = "A multicolored blanket.  It's actually several different sheets cut up and sewn together."
+	desc = "A multicolored blanket. It's actually several different sheets cut up and sewn together."
 	icon_state = "sheetrainbow"
 	item_color = "rainbow"
 
@@ -84,7 +84,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/clown
 	name = "clown's blanket"
-	desc = "A rainbow blanket with a clown mask woven in.  It smells faintly of bananas."
+	desc = "A rainbow blanket with a clown mask woven in. It smells faintly of bananas."
 	icon_state = "sheetclown"
 	item_color = "clown"
 
@@ -108,25 +108,25 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cmo
 	name = "chief medical officer's bedsheet"
-	desc = "It's a sterilized blanket that has a cross emblem.  There's some cat fur on it, likely from Runtime."
+	desc = "It's a sterilized blanket that has a cross emblem. There's some cat fur on it, likely from Runtime."
 	icon_state = "sheetcmo"
 	item_color = "cmo"
 
 /obj/item/weapon/bedsheet/hos
 	name = "head of security's bedsheet"
-	desc = "It is decorated with a shield emblem.  While crime doesn't sleep, you do, but you are still THE LAW!"
+	desc = "It is decorated with a shield emblem. While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
 	item_color = "hosred"
 
 /obj/item/weapon/bedsheet/hop
 	name = "head of personnel's bedsheet"
-	desc = "It is decorated with a key emblem.  For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
+	desc = "It is decorated with a key emblem. For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
 	icon_state = "sheethop"
 	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
 	name = "chief engineer's bedsheet"
-	desc = "It is decorated with a wrench emblem.  It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
+	desc = "It is decorated with a wrench emblem. It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
 	item_color = "chief"
 
@@ -154,15 +154,19 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
-	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an eldritch presence."
+	desc = "You might dream of Nar'Sie if you sleep with this. It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
 	item_color = "cult"
 
 /obj/item/weapon/bedsheet/wiz
 	name = "wizard's bedsheet"
-	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
+	desc = "A special fabric enchanted with magic so you can have an enchanted night. It even glows!"
 	icon_state = "sheetwiz"
 	item_color = "wiz"
+
+/obj/item/weapon/bedsheet/ian
+	icon_state = "sheetian"
+	item_color = "ian"
 
 
 /obj/structure/bedsheetbin

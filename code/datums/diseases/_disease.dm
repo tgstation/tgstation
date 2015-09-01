@@ -6,7 +6,7 @@
 //Disease Flags
 #define CURABLE		1
 #define CAN_CARRY	2
-#define CAN_RESIST	3
+#define CAN_RESIST	4
 
 //Spread Flags
 #define SPECIAL 1
@@ -138,7 +138,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 		for(var/datum/disease/D in affected_mob.viruses)
 			if(D != src)
 				if(IsSame(D))
-					del(D)
+					qdel(D)
 
 		if(holder == affected_mob)
 			if(affected_mob.stat != DEAD)
@@ -156,7 +156,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
 				remove_virus()
-	del(src)
+	qdel(src)
 
 
 /datum/disease/New()

@@ -18,7 +18,7 @@
 		UpdateAffectingLights()
 	if(smooth)
 		smooth_icon_neighbors(src)
-	..()
+	return ..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")

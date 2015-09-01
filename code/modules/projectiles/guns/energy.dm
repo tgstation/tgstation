@@ -11,6 +11,7 @@
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = 1 //Can it be charged in a recharger?
 	ammo_x_offset = 2
+	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
@@ -87,9 +88,12 @@
 			itemState += "[shot.select_name]"
 	if(power_supply.charge < shot.e_cost)
 		overlays += "[icon_state]_empty"
-		ratio = 0
-	for(var/i = ratio, i >= 1, i--)
-		overlays += image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1))
+	else
+		if(!shaded_charge)
+			for(var/i = ratio, i >= 1, i--)
+				overlays += image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1))
+		else
+			overlays += image(icon = icon, icon_state = "[icon_state]_charge[ratio]")
 	if(F)
 		var/iconF = "flight"
 		if(F.on)

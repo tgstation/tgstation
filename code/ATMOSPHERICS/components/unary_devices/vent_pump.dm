@@ -55,15 +55,11 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
-		src.atmosinit()
-		src.initialize()
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
@@ -193,10 +189,8 @@
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
-	..()
-/obj/machinery/atmospherics/components/unary/vent_pump/initialize()
-	..()
 	broadcast_status()
+	..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -311,7 +305,7 @@
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
-	..()
+	return ..()
 
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()

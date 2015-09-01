@@ -1,7 +1,9 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-var/const/TOUCH = 1
-var/const/INGEST = 2
+var/const/TOUCH = 1 //splashing
+var/const/INGEST = 2 //injection, ingestion
+var/const/VAPOR = 3 //smoke, foam, spray, blob attack
+var/const/PATCH = 4 //patches
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +54,7 @@ var/const/INGEST = 2
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 /datum/reagents/Destroy()
-	..()
+	. = ..()
 	SSobj.processing.Remove(src)
 	for(var/datum/reagent/R in reagent_list)
 		qdel(R)
@@ -429,7 +431,7 @@ var/const/INGEST = 2
 	if(isliving(A))
 		var/mob/living/L = A
 		var/touch_protection = 0
-		if(method == TOUCH)
+		if(method == VAPOR)
 			touch_protection = L.get_permeability_protection()
 		for(var/datum/reagent/R in reagent_list)
 			R.reaction_mob(L, method, R.volume*volume_modifier, show_message, touch_protection)

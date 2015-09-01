@@ -48,9 +48,6 @@
 	if(expansion)
 		qdel(expansion)
 		expansion = null
-	del(src)
-//Easier to just call del() than this nonsense
-// ya no, del() takes 0.8ds to run on avg. this takes less than 0.01
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -59,7 +56,7 @@
 	bugged_cameras = list()
 	if(tracking)
 		tracking = null
-	..()
+	return ..()
 
 
 /obj/item/device/camera_bug/interact(mob/user = usr)

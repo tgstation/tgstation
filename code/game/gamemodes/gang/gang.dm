@@ -106,6 +106,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	var/obj/item/device/gangtool/gangtool = new(mob)
 	var/obj/item/weapon/pen/gang/T = new(mob)
 	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob,gang)
+	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob,gang)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -139,8 +140,14 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		. += 1
 	else
 		mob << "The <b>territory spraycan</b> in your [where3] can be used to claim areas of the station for your gang. The more territory your gang controls, the more influence you get. All gangsters can use these, so distribute them to grow your influence faster."
-	mob.update_icons()
 
+	var/where4 = mob.equip_in_one_of_slots(C, slots)
+	if (!where4)
+		mob << "Your Syndicate benefactors were unfortunately unable to get you a chameleon security HUD."
+		. += 1
+	else
+		mob << "The <b>chameleon security HUD</b> in your [where4] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+	mob.update_icons()
 	return .
 
 
@@ -308,4 +315,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
+			ticker.mode.explosion_in_progress = 1
+			ticker.station_explosion_cinematic(1)
+			ticker.mode.explosion_in_progress = 0
 			ticker.force_ending = pick(winners)

@@ -35,7 +35,7 @@
 		destination.dna.unique_enzymes = unique_enzymes
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
-		hardset_dna(destination, null, null, null, null, species)
+		hardset_dna(destination, null, null, null, null, species.type)
 		destination.dna.features = features
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
@@ -433,10 +433,7 @@
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-			var/mob/dead/observer/ghost = occupant.get_ghost()
-			if(ghost)
-				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Return to your body if you want to be cloned!</span> (Verbs -> Ghost -> Re-enter corpse)"
-				ghost << sound('sound/effects/genetics.ogg')
+			occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!")
 	return 1
 
 /obj/machinery/dna_scannernew/open_machine()

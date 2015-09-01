@@ -78,7 +78,7 @@
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
 			user.mind.spell_list.Remove(aspell)
-			del(S)
+			qdel(S)
 			return cost * (spell_levels+1)
 	return -1
 /datum/spellbook_entry/proc/GetInfo()
@@ -105,7 +105,7 @@
 
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 	log_name = "DG"
 
 /datum/spellbook_entry/disabletech
@@ -118,6 +118,11 @@
 	name = "Repulse"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
+
+/datum/spellbook_entry/timestop
+	name = "Time Stop"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	log_name = "TS"
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
@@ -174,7 +179,7 @@
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
-	spell_type = /obj/effect/proc_holder/spell/targeted/inflict_handler/flesh_to_stone
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
 	log_name = "FS"
 
 /datum/spellbook_entry/summonitem
@@ -273,12 +278,6 @@
 	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
 	item_path = /obj/item/device/necromantic_stone
 	log_name = "NS"
-
-/datum/spellbook_entry/item/multiverse
-	name = "Multiverse Blade"
-	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
-	item_path = /obj/item/weapon/multisword
-	log_name = "MV"
 
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"
@@ -425,7 +424,7 @@
 			entries |= E
 			categories |= E.category
 		else
-			del(E)
+			qdel(E)
 	tab = categories[1]
 
 /obj/item/weapon/spellbook/New()

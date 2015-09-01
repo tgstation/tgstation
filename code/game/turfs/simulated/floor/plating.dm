@@ -162,6 +162,11 @@
 /turf/simulated/floor/plating/lava
 	icon_state = "lava"
 
+/turf/simulated/floor/plating/lava/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"

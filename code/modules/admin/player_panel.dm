@@ -76,7 +76,7 @@
 					body += "</td><td align='center'>";
 
 					body += "<a href='?_src_=holder;adminplayeropts="+ref+"'>PP</a> - "
-					body += "<a href='?_src_=holder;notes=show;ckey="+ckey+"'>N</a> - "
+					body += "<a href='?_src_=holder;shownoteckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;traitor="+ref+"'>TP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
@@ -264,7 +264,11 @@
 				M_job = "New player"
 
 			else if(isobserver(M))
-				M_job = "Ghost"
+				var/mob/dead/observer/O = M
+				if(O.started_as_observer)//Did they get BTFO or are they just not trying?
+					M_job = "Observer"
+				else
+					M_job = "Ghost"
 
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)

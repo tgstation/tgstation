@@ -32,7 +32,7 @@
 	SSobj.processing.Remove(src)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/Exit(atom/movable/O)
 	return 0
@@ -75,6 +75,7 @@
 	log_message("[patient] ejected. Life support functions disabled.")
 	patient.reset_view()
 	SSobj.processing.Remove(src)
+	patient = null
 	update_equip_info()
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/detach()
@@ -82,7 +83,6 @@
 		occupant_message("<span class='warning'>Unable to detach [src] - equipment occupied!</span>")
 		return
 	SSobj.processing.Remove(src)
-	update_equip_info()
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/get_equip_info()
@@ -188,15 +188,15 @@
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/update_equip_info()
 	if(..())
-		send_byjax(chassis.occupant,"msleeper.browser","lossinfo",get_patient_dam())
-		send_byjax(chassis.occupant,"msleeper.browser","reagents",get_patient_reagents())
-		send_byjax(chassis.occupant,"msleeper.browser","injectwith",get_available_reagents())
+		if(patient)
+			send_byjax(chassis.occupant,"msleeper.browser","lossinfo",get_patient_dam())
+			send_byjax(chassis.occupant,"msleeper.browser","reagents",get_patient_reagents())
+			send_byjax(chassis.occupant,"msleeper.browser","injectwith",get_available_reagents())
 		return 1
 	return
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/container_resist()
 	go_out()
-
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/process()
 	if(!chassis)
@@ -259,7 +259,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/syringe_gun/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/syringe_gun/critfail()
 	..()
@@ -505,6 +505,7 @@
 		occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
 		log_message("Reagent processing stopped.")
 		SSobj.processing.Remove(src)
+		return
 	if(anyprob(reliability))
 		critfail()
 	var/amount = synth_speed / processed_reagents.len

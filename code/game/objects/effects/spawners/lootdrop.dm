@@ -101,6 +101,7 @@
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,
 				/obj/item/weapon/reagent_containers/spray/pestspray = 1,
+				/obj/item/weapon/reagent_containers/glass/rag = 3,
 				/obj/item/weapon/stock_parts/cell = 3,
 				/obj/item/weapon/storage/belt/utility = 2,
 				/obj/item/weapon/storage/box = 2,

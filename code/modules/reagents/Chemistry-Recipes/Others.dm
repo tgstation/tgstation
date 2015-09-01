@@ -12,6 +12,20 @@
 	result = "lube"
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
+	
+/datum/chemical_reaction/spraytan
+	name = "Spray Tan"
+	id = "spraytan"
+	result = "spraytan"
+	required_reagents = list("orangejuice" = 1, "oil" = 1)
+	result_amount = 2
+	
+/datum/chemical_reaction/spraytan2
+	name = "Spray Tan"
+	id = "spraytan"
+	result = "spraytan"
+	required_reagents = list("orangejuice" = 1, "cornoil" = 1)
+	result_amount = 2
 
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
@@ -308,7 +322,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /mob/living/simple_animal/pet/corgi(location)
+	new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
 
 /datum/chemical_reaction/hair_dye

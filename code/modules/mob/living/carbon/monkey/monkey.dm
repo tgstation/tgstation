@@ -10,19 +10,18 @@
 	ventcrawler = 1
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
+	unique_name = 1
 
 /mob/living/carbon/monkey/New()
-	create_reagents(1000)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/heart
-	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/internal/appendix
+	internal_organs += new /obj/item/organ/internal/heart
+	internal_organs += new /obj/item/organ/internal/brain
 
-	if(name == "monkey")
-		name = text("monkey ([rand(1, 1000)])")
-	real_name = name
+	for(var/obj/item/organ/internal/I in internal_organs)
+		I.Insert(src)
 	gender = pick(MALE, FEMALE)
 
 	..()
@@ -155,7 +154,19 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 
@@ -273,3 +284,10 @@
 		protection = max(1 - wear_mask.permeability_coefficient, protection)
 	protection = protection/7 //the rest of the body isn't covered.
 	return protection
+
+/mob/living/carbon/monkey/check_eye_prot()
+	var/number = ..()
+	if(istype(src.wear_mask, /obj/item/clothing/mask))
+		var/obj/item/clothing/mask/MFP = src.wear_mask
+		number += MFP.flash_protect
+	return number

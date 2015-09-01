@@ -19,7 +19,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = 1
@@ -107,12 +107,8 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
 	set_frequency(frequency)
-	..()
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/initialize()
-	..()
 	broadcast_status()
-
+	..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))

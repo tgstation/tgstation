@@ -11,6 +11,7 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
+	var/mob/camera/blob/overmind
 
 
 /obj/effect/blob/New(loc)
@@ -27,7 +28,7 @@
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-	..()
+	return ..()
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
@@ -62,6 +63,12 @@
 		update_icon()
 		health_timestamp = world.time + 10 // 1 seconds
 
+/obj/effect/blob/proc/pulseLoop(num)
+	var/a_color
+	if(overmind)
+		a_color = overmind.blob_reagent_datum.color
+	for(var/i = 1; i < 8; i += i)
+		Pulse(num, i, a_color)
 
 /obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0, a_color)//Todo: Fix spaceblob expand
 
@@ -183,13 +190,15 @@
 
 /obj/effect/blob/proc/change_to(type)
 	if(!ispath(type))
-		ERROR("[type] is an invalid type for the blob.")
+		throw EXCEPTION("change_to(): invalid type for blob")
+		return
 	var/obj/effect/blob/B = new type(src.loc)
 	if(!istype(type, /obj/effect/blob/core) || !istype(type, /obj/effect/blob/node))
 		B.color = color
 	else
 		B.adjustcolors(color)
 	qdel(src)
+	return B
 
 /obj/effect/blob/proc/adjustcolors(a_color)
 	if(a_color)

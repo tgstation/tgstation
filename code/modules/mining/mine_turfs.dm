@@ -432,11 +432,10 @@ var/global/list/rockTurfEdgeCache
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/simulated/mineral)) //sanity check against turf being deleted during digspeed delay
+			if(istype(src, /turf/simulated/mineral))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
-				P.update_icon()
 				gets_drilled(user)
-				feedback_add_details("pick_used_mining","[P.name]")
+				feedback_add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 	return
@@ -456,6 +455,13 @@ var/global/list/rockTurfEdgeCache
 	if(user.environment_smash >= 2)
 		gets_drilled()
 	..()
+
+/turf/simulated/mineral/attack_alien(mob/living/carbon/alien/M)
+	M << "<span class='notice'>You start digging into the rock...</span>"
+	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
+	if(do_after(M,40, target = src))
+		M << "<span class='notice'>You tunnel into the rock.</span>"
+		gets_drilled(M)
 
 /*
 /turf/simulated/mineral/proc/setRandomMinerals()
@@ -503,7 +509,6 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
@@ -541,27 +546,14 @@ var/global/list/rockTurfEdgeCache
 	//note that this proc does not call ..()
 	if(!W || !user)
 		return 0
-
-	if ((istype(W, /obj/item/weapon/shovel)))
-		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
-			return
-
-		if (dug)
-			user << "<span class='warning'>This area has already been dug!</span>"
-			return
-
-		user << "<span class='notice'>You start digging...</span>"
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-
-		sleep(20)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dig a hole.</span>"
-			gets_dug()
-			return
-
-	if ((istype(W, /obj/item/weapon/pickaxe)))
+	var/digging_speed = 0
+	if (istype(W, /obj/item/weapon/shovel))
+		var/obj/item/weapon/shovel/S = W
+		digging_speed = S.digspeed
+	else if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
+		digging_speed = P.digspeed
+	if (digging_speed)
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -573,11 +565,11 @@ var/global/list/rockTurfEdgeCache
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
 
-		sleep(P.digspeed)
-		if ((user.loc == T && user.get_active_hand() == W))
-			user << "<span class='notice'>You dig a hole.</span>"
-			gets_dug()
-			return
+		if(do_after(user, digging_speed, target = src))
+			if(istype(src, /turf/simulated/floor/plating/asteroid))
+				user << "<span class='notice'>You dig a hole.</span>"
+				gets_dug()
+				feedback_add_details("pick_used_mining","[W.type]")
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
@@ -609,6 +601,17 @@ var/global/list/rockTurfEdgeCache
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 	return
+
+/turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
+	if(current_size == STAGE_THREE)
+		if(prob(30))
+			gets_dug()
+	else if(current_size == STAGE_FOUR)
+		if(prob(50))
+			gets_dug()
+	else if(current_size >= STAGE_FIVE)
+		if(prob(90))
+			gets_dug()
 
 /turf/proc/updateMineralOverlays()
 	src.overlays.Cut()

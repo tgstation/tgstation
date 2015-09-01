@@ -573,6 +573,7 @@
 /**********************Facehugger toy**********************/
 
 /obj/item/clothing/mask/facehugger/toy
+	item_state = "facehugger_inactive"
 	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
 	throwforce = 0
 	real = 0
@@ -623,7 +624,7 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat)
-			if(stance != HOSTILE_STANCE_IDLE)
+			if(AIStatus == AI_ON)
 				user << "<span class='info'>[src] is moving around too much to repair!</span>"
 				return
 			if(maxHealth == health)

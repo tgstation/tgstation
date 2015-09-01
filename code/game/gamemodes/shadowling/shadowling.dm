@@ -1,6 +1,6 @@
 #define LIGHT_DAM_THRESHOLD 4
 #define LIGHT_HEAL_THRESHOLD 2
-#define LIGHT_DAMAGE_TAKEN 10
+#define LIGHT_DAMAGE_TAKEN 7
 /*
 
 SHADOWLING: A gamemode based on previously-run events
@@ -131,26 +131,60 @@ Made by Xhuis
 
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
 	var/mob/living/carbon/human/S = shadow_mind.current
-	shadow_mind.current.verbs += /mob/living/carbon/human/proc/shadowling_hatch
-	shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
+	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hatch(null))
+	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
+	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind(null))
 	spawn(0)
-		shadow_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		update_shadow_icons_added(shadow_mind)
 		if(shadow_mind.assigned_role == "Clown")
 			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
-	if (!istype(new_thrall_mind))
+	if(!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
 		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
+		new_thrall_mind.special_role = "thrall"
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
-		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
-		new_thrall_mind.current << "<b>The objectives of the shadowlings:</b> [objective_explanation]"
-		new_thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_shadowling_hivemind(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_shadow_walk(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/thrall_vision(null))
+		new_thrall_mind.current << "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>"
+		new_thrall_mind.current << "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>"
+		new_thrall_mind.current << "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>"
+		new_thrall_mind.current << "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>"
+		new_thrall_mind.current << "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>"
+		new_thrall_mind.current << "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>"
 		return 1
+
+/datum/game_mode/proc/remove_thrall(datum/mind/thrall_mind, var/kill = 0)
+	if(!istype(thrall_mind) || !(thrall_mind in thralls) || !isliving(thrall_mind.current)) return 0 //If there is no mind, the mind isn't a thrall, or the mind's mob isn't alive, return
+	update_shadow_icons_removed(thrall_mind)
+	thralls.Remove(thrall_mind)
+	thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Dethralled</span>"
+	thrall_mind.special_role = null
+	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadowling_hivemind)
+	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
+	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadow_walk)
+	thrall_mind.remove_spell(/obj/effect/proc_holder/spell/targeted/thrall_vision)
+	if(kill && ishuman(thrall_mind.current)) //If dethrallization surgery fails, kill the mob as well as dethralling them
+		var/mob/living/carbon/human/H = thrall_mind.current
+		H.visible_message("<span class='warning'>[H] jerks violently and falls still.</span>", \
+						  "<span class='userdanger'>A piercing white light floods your mind, banishing your memories as a thrall and--</span>")
+		H.death()
+		return 1
+	var/mob/living/M = thrall_mind.current
+	if(issilicon(M))
+		M.audible_message("<span class='notice'>[M] lets out a short blip.</span>", \
+						  "<span class='userdanger'>You have been turned into a robot! You are no longer a thrall! Though you try, you cannot remember anything about your servitude...</span>")
+	else
+		M.visible_message("<span class='big'>[M] looks like their mind is their own again!</span>", \
+						  "<span class='userdanger'>A piercing white light floods your eyes. Your mind is your own again! Though you try, you cannot remember anything about the shadowlings or your time \
+						  under their command...</span>")
+	return 1
 
 /datum/game_mode/shadowling/proc/check_shadow_victory()
 	var/success = 0 //Did they win?
@@ -165,7 +199,7 @@ Made by Xhuis
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 		world << "<span class='redtext'><b>The shadowlings have been killed by the crew!</b></span>"
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		world << "<span class='redtext'><b>The crew has escaped the station before the shadowlings could ascend!</b></span>"
+		world << "<span class='redtext'><b>The crew escaped the station before the shadowlings could ascend!</b></span>"
 	else
 		world << "<span class='redtext'><b>The shadowlings have failed!</b></span>"
 	..()
@@ -198,27 +232,24 @@ Made by Xhuis
 	id = "shadowling"
 	say_mod = "chitters"
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
-	burnmod = 2 //2x burn damage lel
-	heatmod = 2
+	burnmod = 1.5 //1.5x burn damage, 2x is excessive 
+	heatmod = 1.5
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
-	//H.shadowling_status = 1 //If they are affected more strongly by flashes and stuff
+	if(!H.weakeyes) H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs
 	var/light_amount = 0
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
-	if(isturf(H.loc)) //Copypasta
+	if(isturf(H.loc))
 		var/turf/T = H.loc
-		var/area/A = T.loc
-		if(A)
-			if(A.lighting_use_dynamic)	light_amount = T.lighting_lumcount
-			else						light_amount =  10
-		if(light_amount > LIGHT_DAM_THRESHOLD) //Not complete blackness - they can live in very small light levels plus starlight
+		light_amount = T.get_lumcount()
+		if(light_amount > LIGHT_DAM_THRESHOLD && !H.incorporeal_move) //Can survive in very small light levels. Also doesn't take damage while incorporeal, for shadow walk purposes
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			H << "<span class='userdanger'>The light burns you!</span>"
 			H << 'sound/weapons/sear.ogg'
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)
 			H.adjustToxLoss(-5)
-			H.adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+			H.adjustBrainLoss(-25) //Shad O. Ling gibbers, "CAN U BE MY THRALL?!!"
 			H.adjustCloneLoss(-1)
 			H.SetWeakened(0)
 			H.SetStunned(0)
@@ -232,3 +263,12 @@ Made by Xhuis
 	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)
+
+/turf/proc/get_lumcount()
+	var/light_amount
+	if(!src || !istype(src)) return
+	var/area/A = src.loc
+	if(!A || !istype(src)) return
+	if(A.lighting_use_dynamic) light_amount = src.lighting_lumcount
+	else light_amount =  10
+	return light_amount

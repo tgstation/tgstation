@@ -36,11 +36,9 @@
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
-	if(DD.disease_flags & CAN_CARRY && prob(5))
-		DD.carrier = 1
 
 	//Copy properties over. This is so edited diseases persist.
-	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars")
+	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
 	for(var/V in DD.vars)
 		if(V in skipped)
 			continue

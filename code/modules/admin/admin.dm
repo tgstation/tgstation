@@ -47,10 +47,14 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
-	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> | "
-	body += "<A href='?_src_=holder;watchlist=\ref[M]'>Watchlist Flag</A> "
-
+	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
 	if(M.client)
+		if(M.client.check_watchlist(M.client.ckey))
+			body += "<A href='?_src_=holder;watchremove=[M.ckey]'>Remove from Watchlist</A> | "
+			body += "<A href='?_src_=holder;watchedit=[M.ckey]'>Edit Watchlist reason</A> "
+		else
+			body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
+
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
@@ -805,3 +809,20 @@ var/global/floorIsLava = 0
 	qdel(frommob)
 
 	return 1
+
+/client/proc/adminGreet()
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/string = pick(
+			"I welcome you to the server [key]!",
+			"Happy to see you [key]!",
+			"Ah, [key] logged, say hello!",
+			"The server welcomes you [key]!",
+			"Exceptional! [key] joined us, what an honour!",
+			"Another amazing day, because [key] logged, say hi!",
+			"Did anyone see? [key] logged, welcome!",
+			"Monday to sunday, the server warmly welcomes you [key]!",
+			"It's a pleasure to see you [key], greetings!",
+			"Not a bad day if [key] joins, welcome, welcome!",
+			"Surely it's nice to see you [key], have a heartly welcome!")
+			//I really do
+		message_admins("[string]")

@@ -24,10 +24,13 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/points_per_decisecond = 0.005	//points gained every decisecond
 	var/points_per_slip = 2				//points gained per slip returned
 	var/points_per_crate = 5			//points gained per crate returned
-	var/points_per_intel = 100			//points gained per intel returned
+	var/points_per_intel = 250			//points gained per intel returned
 	var/points_per_plasma = 5			//points gained per plasma returned
+	var/points_per_design = 25			//points gained per max reliability research design returned (only for initilally unreliable designs)
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Unique typepaths for unusual things we've already sent CentComm, associated with their potencies
+	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
+	var/list/techLevels = list()
+	var/list/researchDesigns = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
@@ -61,15 +64,12 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/fire()
 	points += points_per_decisecond * wait
-
-	var/i=1
 	for(var/thing in mobile)
 		if(thing)
 			var/obj/docking_port/mobile/P = thing
 			P.check()
-			++i
 			continue
-		mobile.Cut(i, i+1)
+		mobile.Remove(thing)
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -85,7 +85,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		ERROR("There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
+		throw EXCEPTION("requestEvac(): There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
 		return
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
@@ -109,7 +109,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			user << "The emergency shuttle has been disabled by Centcom."
 			return
 
-	call_reason = html_encode(trim(call_reason))
+	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
 		user << "You must provide a reason."
@@ -284,6 +284,12 @@ var/datum/subsystem/shuttle/SSshuttle
 			A:amount = object.amount
 		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
 
+	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
+		var/obj/structure/closet/critter/CritCrate = Crate
+		if(CritCrate.content_mob)
+			var/mob/crittername = CritCrate.content_mob
+			slip.info += "<li>[initial(crittername.name)]</li>"
+
 	if((errors & MANIFEST_ERROR_ITEM))
 		//secure and large crates cannot lose items
 		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/largecrate/"))
@@ -306,7 +312,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/obj/structure/largecrate/LC = Crate
 		LC.manifest = slip
 		LC.update_icon()
-	
+
 	return Crate
 
 /datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)

@@ -20,6 +20,7 @@
 	icon_state = "hoslaser"
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+	ammo_x_offset = 4
 
 /obj/item/weapon/gun/energy/gun/dragnet
 	name = "DRAGnet"
@@ -63,7 +64,7 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()

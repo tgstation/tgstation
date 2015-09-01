@@ -205,7 +205,7 @@
 	SSobj.processing.Remove(src)
 	if(chassis)
 		chassis.overlays -= droid_overlay
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M as obj)
 	..()
@@ -286,7 +286,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
 	SSobj.processing.Remove(src)
@@ -378,7 +378,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/plasma(src)

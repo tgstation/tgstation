@@ -8,7 +8,7 @@
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
-
+	shaded_charge = 1
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -40,7 +40,7 @@
 
 /obj/item/weapon/gun/energy/laser/captain/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/gun/energy/laser/captain/process()
@@ -122,7 +122,7 @@
 
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/laser/bluetag/process()
 	charge_tick++
@@ -154,7 +154,7 @@
 
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/laser/redtag/process()
 	charge_tick++

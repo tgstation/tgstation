@@ -46,6 +46,10 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
 
+/datum/wires/Destroy()
+	holder = null
+	return ..()
+
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
@@ -205,6 +209,11 @@ var/const/POWER = 8
 		return index
 	else
 		CRASH("[colour] is not a key in wires.")
+
+/datum/wires/proc/GetColour(index)
+	for(var/colour in wires)
+		if(wires[colour] == index)
+			return colour
 
 //
 // Is Index/Colour Cut procs

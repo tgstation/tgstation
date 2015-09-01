@@ -17,7 +17,7 @@
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
-	var/obj/item/weapon/camera_assembly/assembly = null
+	var/obj/machinery/camera_assembly/assembly = null
 
 	//OTHER
 
@@ -32,8 +32,6 @@
 /obj/machinery/camera/New()
 	assembly = new(src)
 	assembly.state = 4
-	assembly.anchored = 1
-	assembly.update_icon()
 
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -58,7 +56,7 @@
 			bug.current = null
 		bug = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	..()
+	return ..()
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
@@ -82,7 +80,8 @@
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
 						spawn(100)
-							cancelCameraAlarm()
+							if(!qdeleted(src))
+								cancelCameraAlarm()
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -150,7 +149,6 @@
 				assembly.loc = src.loc
 				assembly.state = 1
 				assembly.dir = src.dir
-				assembly.update_icon()
 				assembly = null
 				qdel(src)
 				return
@@ -247,7 +245,8 @@
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		spawn(100)
-			cancelCameraAlarm()
+			if(!qdeleted(src))
+				cancelCameraAlarm()
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")

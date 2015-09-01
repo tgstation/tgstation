@@ -19,7 +19,7 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
-	..()
+	return ..()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = 1

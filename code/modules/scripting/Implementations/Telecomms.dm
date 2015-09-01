@@ -306,7 +306,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 		var/obj/item/device/radio/hradio = S.server_radio
 
 		if(!hradio)
-			ERROR("[src] has no radio.")
+			throw EXCEPTION("tcombroadcast(): signal has no radio")
 			return
 
 		if((!message) && message != 0)

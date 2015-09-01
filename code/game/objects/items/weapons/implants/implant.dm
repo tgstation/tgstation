@@ -3,16 +3,18 @@
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	action_button_is_hands_free = 1
+	origin_tech = "materials=2;biotech=3;programming=2"
+
 	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
 	var/implanted = null
 	var/mob/living/imp_in = null
 	item_color = "b"
-	var/allow_reagents = 0
+	var/allow_multiple = 0
+	var/uses = -1
 
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
 	return
-
 
 /obj/item/weapon/implant/proc/activate()
 	return
@@ -22,15 +24,52 @@
 
 
 //What does the implant do upon injection?
-//return 0 if the implant fails (ex. Revhead and loyalty implant.)
-//return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
-/obj/item/weapon/implant/proc/implanted(mob/source)
+//return 1 if the implant injects
+//return -1 if the implant fails to inject
+//return 0 if there is no room for implant
+/obj/item/weapon/implant/proc/implant(var/mob/source, var/mob/user)
+	var/obj/item/weapon/implant/imp_e = locate(src.type) in source
+	if(!allow_multiple && imp_e && imp_e != src)
+		if(imp_e.uses < initial(imp_e.uses)*2)
+			if(uses == -1)
+				imp_e.uses = -1
+			else
+				imp_e.uses = min(imp_e.uses + uses, initial(imp_e.uses)*2)
+			qdel(src)
+			return 1
+		else
+			return 0
+
+
 	if(activated)
 		action_button_name = "Activate [src.name]"
+	src.loc = source
+	imp_in = source
+	implanted = 1
 	if(istype(source, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = source
 		H.sec_hud_set_implants()
+
+	if(user)
+		add_logs(user, source, "implanted", object="[name]")
+
 	return 1
+
+/obj/item/weapon/implant/proc/removed(var/mob/source)
+	src.loc = null
+	imp_in = null
+	implanted = 0
+
+	if(istype(source, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = source
+		H.sec_hud_set_implants()
+
+	return 1
+
+/obj/item/weapon/implant/Destroy()
+	if(imp_in)
+		removed(imp_in)
+	return ..()
 
 
 /obj/item/weapon/implant/proc/get_data()
@@ -45,6 +84,7 @@
 	name = "tracking implant"
 	desc = "Track with this."
 	activated = 0
+	origin_tech = "materials=2;magnets=2;programming=2;biotech=2"
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
@@ -68,6 +108,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
+	origin_tech = "materials=2;magnets=2;programming=2;biotech=5;syndicate=5"
 	activated = 0
 
 /obj/item/weapon/implant/weapons_auth/get_data()
@@ -78,181 +119,13 @@
 				<b>Function:</b> Allows operation of implant-locked weaponry, preventing equipment from falling into enemy hands."}
 	return dat
 
-/obj/item/weapon/implant/explosive
-	name = "microbomb implant"
-	desc = "And boom goes the weasel."
-	icon_state = "explosive"
-	var/weak = 1.6
-	var/medium = 0.8
-	var/heavy = 0.4
-	var/delay = 7
-
-/obj/item/weapon/implant/explosive/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-				<b>Life:</b> Activates upon death.<BR>
-				<b>Important Notes:</b> Explodes<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-				<b>Special Features:</b> Explodes<BR>
-				<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
-	return dat
-
-/obj/item/weapon/implant/explosive/trigger(emote, mob/source)
-	if(emote == "deathgasp")
-		activate("death")
-
-/obj/item/weapon/implant/explosive/activate(cause)
-	if(!cause || !imp_in)	return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your microbomb implant? This will cause you to explode!", "Microbomb Implant Confirmation", "Yes", "No") != "Yes")
-		return 0
-	for(var/obj/item/weapon/implant/explosive/E in imp_in)
-		heavy += 0.4
-		medium += 0.8
-		weak += 1.6
-		delay += 7
-		if(E != src)
-			qdel(E)
-	heavy = round(heavy)
-	medium = round(medium)
-	weak = round(weak)
-	imp_in << "<span class='notice'>You activate your microbomb implant.</span>"
-//If the delay is short, just blow up already jeez
-	if(delay <= 7)
-		imp_in.gib()
-		explosion(src,heavy,medium,weak,weak, flame_range = weak)
-		qdel(src)
-		return
-	timed_explosion()
-
-/obj/item/weapon/implant/explosive/proc/timed_explosion()
-	imp_in.visible_message("<span class = 'warning'>[imp_in] starts beeping ominously!</span>")
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	if(imp_in.stat)
-		imp_in.visible_message("<span class = 'warning'>[imp_in] doubles over in pain!</span>")
-		imp_in.Weaken(7)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
-	sleep(delay/4)
-	imp_in.gib()
-	explosion(src,heavy,medium,weak,weak, flame_range = weak)
-	qdel(src)
-
-/obj/item/weapon/implant/explosive/macro
-	name = "macrobomb implant"
-	desc = "And boom goes the weasel. And everything else nearby."
-	icon_state = "explosive"
-	weak = 16
-	medium = 8
-	heavy = 4
-	delay = 70
-
-/obj/item/weapon/implant/explosive/macro/activate(cause)
-	if(!cause || !imp_in)	return 0
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your macrobomb implant? This will cause you to explode and gib!", "Macrobomb Implant Confirmation", "Yes", "No") != "Yes")
-		return 0
-	for(var/obj/item/weapon/implant/explosive/macro/E in imp_in)
-		if(E != src)
-			qdel(E)
-	imp_in << "<span class='notice'>You activate your macrobomb implant.</span>"
-	timed_explosion()
-
-/obj/item/weapon/implant/chem
-	name = "chem implant"
-	desc = "Injects things."
-	icon_state = "reagents"
-	allow_reagents = 1
-
-/obj/item/weapon/implant/chem/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
-				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
-				<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
-				will suffer from an increased appetite.</B><BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
-				the implant releases the chemicals directly into the blood stream.<BR>
-				<b>Special Features:</b>
-				<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
-				Can only be loaded while still in its original case.<BR>
-				<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
-				the implant may become unstable and either pre-maturely inject the subject or simply break."}
-	return dat
-
-/obj/item/weapon/implant/chem/New()
-	..()
-	create_reagents(50)
-
-/obj/item/weapon/implant/chem/trigger(emote, mob/source)
-	if(emote == "deathgasp")
-		activate(reagents.total_volume)
-
-/obj/item/weapon/implant/chem/activate(cause)
-	if(!cause || !imp_in)	return 0
-	var/mob/living/carbon/R = imp_in
-	var/injectamount = null
-	if (cause == "action_button")
-		injectamount = reagents.total_volume
-	else
-		injectamount = cause
-	reagents.trans_to(R, injectamount)
-	R << "<span class='italics'>You hear a faint beep.</span>"
-	if(!reagents.total_volume)
-		R << "<span class='italics'>You hear a faint click from your chest.</span>"
-		qdel(src)
-
-
-/obj/item/weapon/implant/loyalty
-	name = "loyalty implant"
-	desc = "Makes you loyal or such."
-	activated = 0
-
-/obj/item/weapon/implant/loyalty/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-				<b>Life:</b> Ten years.<BR>
-				<b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
-				<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
-	return dat
-
-
-/obj/item/weapon/implant/loyalty/implanted(mob/target)
-	..()
-	if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_shadow_or_thrall(target))
-		target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
-		return 0
-	if(target.mind in ticker.mode.get_gangsters())
-		ticker.mode.remove_gangster(target.mind)
-		target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>")
-		return 0
-	if(target.mind in ticker.mode.revolutionaries)
-		ticker.mode.remove_revolutionary(target.mind)
-	if(target.mind in ticker.mode.cult)
-		target << "<span class='warning'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>"
-	else
-		target << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
-	return 1
-
-/obj/item/weapon/implant/loyalty/Destroy()
-	if(imp_in.stat != DEAD)
-		imp_in << "<span class='boldnotice'>You feel a sense of liberation as Nanotrasen's grip on your mind fades away.</span>"
-	..()
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenal implant"
 	desc = "Removes all stuns and knockdowns."
 	icon_state = "adrenal"
-	var/uses = 3
+	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
+	uses = 3
 
 /obj/item/weapon/implant/adrenalin/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -285,8 +158,8 @@
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
-
-	var/uses = 2
+	origin_tech = "materials=2;biotech=3;magnets=4;syndicate=4"
+	uses = 2
 
 /obj/item/weapon/implant/emp/activate()
 	if (src.uses < 1)	return 0

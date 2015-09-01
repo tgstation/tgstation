@@ -256,7 +256,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 	spawn
 		for (var/z = 1 to world.maxz) src.generateMiniMap(z)
 
-		NOTICE("MINIMAP: All minimaps have been generated.")
+		world << "<span class='boldannounce'>All minimaps have been generated."
 
 		for (var/client/C in clients)
 			src.sendResources(C)
@@ -345,7 +345,6 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 		ASSERT(map_icon.Width() == MAX_ICON_DIMENSION && map_icon.Height() == MAX_ICON_DIMENSION)
 
-		NOTICE("MINIMAP: Generating minimap for z-level [z].")
 
 		var/i = 0
 		var/icon/turf_icon
@@ -411,11 +410,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 				if ((++i) % 512 == 0) sleep(1) // deliberate delay to avoid lag spikes
 
-				if ((i % 1024) == 0) NOTICE("MINIMAP: Generated [i] of [tiles.len] tiles.")
 			else
 				sleep(-1) // avoid sleeping if possible: prioritize pending procs
-
-		NOTICE("MINIMAP: Generated [tiles.len] of [tiles.len] tiles.")
 
 		// BYOND BUG: map_icon now contains 4 directions? Create a new icon with only a single state.
 		var/icon/result_icon = new/icon()

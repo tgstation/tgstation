@@ -90,7 +90,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	cable_list -= src							//remove it from global cable list
-	..()										// then go ahead and delete the cable
+	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/Deconstruct()
 	var/turf/T = loc
@@ -432,12 +432,15 @@ By design, d1 is the smallest direction and d2 is the highest
 				P.disconnect_from_network() //remove from current network (and delete powernet)
 		return
 
+	var/obj/O = P_list[1]
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	loc = null
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
-	var/datum/powernet/newPN = new()// creates a new powernet...
-	propagate_network(P_list[1], newPN)//... and propagates it to the other side of the cable
+	spawn(0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+		if(O && !qdeleted(O))
+			var/datum/powernet/newPN = new()// creates a new powernet...
+			propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
 	// Disconnect machines connected to nodes
 	if(d1 == 0) // if we cut a node (O-X) cable
