@@ -113,7 +113,7 @@
 /obj/machinery/bot/Destroy()
 	qdel(Radio)
 	qdel(botcard)
-	..()
+	return ..()
 
 
 /obj/machinery/bot/proc/explode()

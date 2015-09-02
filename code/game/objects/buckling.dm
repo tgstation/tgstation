@@ -24,11 +24,6 @@
 	. = ..()
 	unbuckle_mob()
 
-/obj/Del()
-	. = ..()
-	unbuckle_mob()
-
-
 //procs that handle the actual buckling and unbuckling
 /obj/proc/buckle_mob(mob/living/M)
 	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || (buckle_requires_restraints && !M.restrained()))

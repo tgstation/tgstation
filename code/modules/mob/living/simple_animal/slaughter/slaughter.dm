@@ -23,6 +23,7 @@
 	attacktext = "wildly tears into"
 	maxHealth = 200
 	health = 200
+	healable = 0
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -54,7 +55,7 @@
 
 
 /mob/living/simple_animal/slaughter/phasein()
-	..()
+	. = ..()
 	speed = 0
 	boost = world.time + 30
 
@@ -70,7 +71,12 @@
 
 /obj/item/weapon/demonheart/attack_self(mob/living/user)
 	visible_message("[user] feasts upon the [src].")
+	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
+		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
+			user <<"<span class='notice'>You already know how to blood crawl.</span>"
+			qdel(src)
+			return
 	user << "You absorb some of the demon's power!"
-	user.bloodcrawl = BLOODCRAWL
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl)
 	qdel(src)
 

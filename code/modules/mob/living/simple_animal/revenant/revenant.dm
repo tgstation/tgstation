@@ -12,6 +12,7 @@
 	invisibility = INVISIBILITY_OBSERVER
 	health = 25
 	maxHealth = 25
+	healable = 0
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	languages = ALL
 	response_help   = "passes through"

@@ -45,7 +45,6 @@
 		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
 	beaker = null
 	return ..()
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1

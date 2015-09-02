@@ -7,7 +7,6 @@
 	color = "#673910" // rgb: 103, 57, 16
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(reac_volume >= 1 && istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/Wall = T
 		if(istype(Wall, /turf/simulated/wall/r_wall))

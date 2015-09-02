@@ -66,7 +66,7 @@ Pipenet stuff; housekeeping
 */
 
 /obj/machinery/atmospherics/components/nullifyNode(I)
-	..()
+	return ..()
 	nullifyPipenet(PARENT_I)
 	qdel(AIR_I)
 	AIR_I = null

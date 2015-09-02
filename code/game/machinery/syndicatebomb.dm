@@ -40,6 +40,10 @@
 	update_icon()
 	..()
 
+/obj/machinery/syndicatebomb/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()

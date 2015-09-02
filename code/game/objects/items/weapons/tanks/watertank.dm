@@ -66,8 +66,7 @@
 		remove_noz()
 		qdel(noz)
 		noz = null
-	..()
-	return
+	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
 	if(src.loc == user)

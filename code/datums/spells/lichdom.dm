@@ -38,7 +38,7 @@
 				charge_counter = charge_max
 				return
 
-			if(!marked_item.loc) //Wait nevermind
+			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
 				user << "<span class='warning'>Your phylactery is gone!</span>"
 				return
 

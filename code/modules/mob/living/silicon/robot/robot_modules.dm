@@ -10,6 +10,12 @@
 	var/obj/item/emag = null
 	var/list/storages = list()
 
+/obj/item/weapon/robot_module/Destroy()
+	modules.Cut()
+	emag = null
+	storages.Cut()
+	return ..()
+
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)

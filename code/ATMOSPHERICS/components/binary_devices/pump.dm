@@ -32,7 +32,6 @@ Thus, the two variables affect pump operation are set in New():
 	if(radio_connection)
 		radio_connection = null
 	return ..()
-
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = 1
 

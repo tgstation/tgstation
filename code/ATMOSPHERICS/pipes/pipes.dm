@@ -87,7 +87,7 @@
 			var/obj/item/pipe_meter/PM = new (T)
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(DEVICE_TYPE_LOOP)
