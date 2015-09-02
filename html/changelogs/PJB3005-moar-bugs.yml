@@ -1,0 +1,6 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: Strange rocks should work again.
+  - bugfix: You can no longer use airlock electronics on multiple windoor assemblies at once.
+  - bugfix: "The CE's advanced toolbelt should be able to hold RCDs/RPDs/tile painters again."

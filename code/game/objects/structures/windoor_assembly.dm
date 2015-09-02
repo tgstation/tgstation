@@ -172,16 +172,16 @@ obj/structure/windoor_assembly/Destroy()
 			else if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
 				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+				user.drop_item(W, src) // To prevent you using the airlock electronics on 2 windoors at once.
 
 				if(do_after(user, src, 40))
 					if(!src) return
 
-					user.drop_item(W, src)
 					user << "<span class='notice'>You've installed the airlock electronics!</span>"
 					src.name = "Near finished Windoor Assembly"
 					src.electronics = W
 				else
-					W.loc = src.loc
+					W.forceMove(src.loc)
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver) && electronics)
