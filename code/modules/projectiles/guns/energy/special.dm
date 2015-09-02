@@ -61,7 +61,7 @@
 
 /obj/item/weapon/gun/energy/floragun/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/gun/energy/floragun/process()
@@ -97,7 +97,7 @@
 
 /obj/item/weapon/gun/energy/meteorgun/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/meteorgun/process()
 	charge_tick++
@@ -301,7 +301,7 @@
 
 /obj/item/weapon/gun/energy/printer/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/printer/process()
 	charge_tick++

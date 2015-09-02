@@ -133,7 +133,7 @@
 	if(!on_fire)
 		return 1
 	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.2) //the fire is slowly consumed
+		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
 		ExtinguishMob()
 		return
@@ -145,7 +145,7 @@
 	location.hotspot_expose(700, 50, 1)
 
 /mob/living/fire_act()
-	adjust_fire_stacks(0.5)
+	adjust_fire_stacks(3)
 	IgniteMob()
 
 

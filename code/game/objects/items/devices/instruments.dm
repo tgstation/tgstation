@@ -14,7 +14,7 @@
 /obj/item/device/instrument/Destroy()
 	qdel(song)
 	song = null
-	..()
+	return ..()
 
 /obj/item/device/instrument/initialize()
 	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded

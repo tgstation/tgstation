@@ -10,7 +10,7 @@
 	if(istype(src, /mob/living/silicon))
 		var/mob/living/silicon/S = src
 		desig = trim_left(S.designation + " " + S.job)
-	var/message_a = say_quote(message)
+	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/M in player_list)
 		if(M.binarycheck() || (M in dead_mob_list))

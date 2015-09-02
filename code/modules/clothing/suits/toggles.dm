@@ -10,7 +10,7 @@
 
 /obj/item/clothing/suit/hooded/Destroy()
 	qdel(hood)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
@@ -101,13 +101,13 @@
 		helmet.suit = null
 		qdel(helmet)
 	qdel(jetpack)
-	..()
+	return ..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
 	if(suit)
 		suit.helmet = null
 		qdel(suit)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
 	if(!helmettype)

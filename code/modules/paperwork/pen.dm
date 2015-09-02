@@ -3,6 +3,7 @@
  *		Pens
  *		Sleepy Pens
  *		Parapens
+ *		Edaggers
  */
 
 
@@ -48,13 +49,17 @@
 	if(!istype(M))
 		return
 
-	if(M.can_inject(user, 1))
-		user << "<span class='warning'>You stab [M] with the pen.</span>"
-		if(!stealth)
-			M << "<span class='danger'>You feel a tiny prick!</span>"
-		. = 1
+	if(!force)
+		if(M.can_inject(user, 1))
+			user << "<span class='warning'>You stab [M] with the pen.</span>"
+			if(!stealth)
+				M << "<span class='danger'>You feel a tiny prick!</span>"
+			. = 1
 
-	add_logs(user, M, "stabbed", src)
+		add_logs(user, M, "stabbed", src)
+
+	else
+		. = ..()
 
 /*
  * Sleepypens
@@ -78,3 +83,42 @@
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()
+
+/*
+ * (Alan) Edaggers
+ */
+/obj/item/weapon/pen/edagger
+	origin_tech = "combat=3;syndicate=5"
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	var/on = 0
+
+/obj/item/weapon/pen/edagger/attack_self(mob/living/user)
+	if(on)
+		on = 0
+		force = initial(force)
+		w_class = initial(w_class)
+		name = initial(name)
+		hitsound = initial(hitsound)
+		embed_chance = initial(embed_chance)
+		throwforce = initial(throwforce)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
+		user << "<span class='warning'>[src] can now be concealed.</span>"
+	else
+		on = 1
+		force = 18
+		w_class = 3
+		name = "energy dagger"
+		hitsound = 'sound/weapons/blade1.ogg'
+		embed_chance = 100 //rule of cool
+		throwforce = 35
+		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
+		user << "<span class='warning'>[src] is now active.</span>"
+	update_icon()
+
+/obj/item/weapon/pen/edagger/update_icon()
+	if(on)
+		icon_state = "edagger"
+		item_state = "edagger"
+	else
+		icon_state = initial(icon_state) //looks like a normal pen when off.
+		item_state = initial(item_state)

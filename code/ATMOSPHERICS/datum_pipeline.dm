@@ -18,7 +18,7 @@
 		P.parent = null
 	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
 		C.nullifyPipenet(src)
-	..()
+	return ..()
 
 /datum/pipeline/process()
 	if(update)

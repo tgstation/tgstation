@@ -3,10 +3,11 @@
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 3
-	desc = "Some blob creature thingy"
+	desc = "A thick wall of writhing tendrils."
 	density = 0
 	opacity = 0
 	anchored = 1
+	explosion_block = 1
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
@@ -28,7 +29,7 @@
 	blobs -= src
 	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
-	..()
+	return ..()
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)

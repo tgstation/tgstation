@@ -22,7 +22,7 @@
 
 /datum/song/Destroy()
 	instrumentObj = null
-	..()
+	return ..()
 
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
@@ -322,7 +322,7 @@
 /obj/structure/piano/Destroy()
 	qdel(song)
 	song = null
-	..()
+	return ..()
 
 /obj/structure/piano/initialize()
 	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded

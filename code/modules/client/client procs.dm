@@ -129,6 +129,7 @@ var/next_external_rsc = 0
 	if(holder)
 		add_admin_verbs()
 		admin_memo_output("Show")
+		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
 
@@ -322,20 +323,6 @@ var/next_external_rsc = 0
 		'icons/pda_icons/pda_scanner.png',
 		'icons/pda_icons/pda_signaler.png',
 		'icons/pda_icons/pda_status.png',
-		'icons/spideros_icons/sos_1.png',
-		'icons/spideros_icons/sos_2.png',
-		'icons/spideros_icons/sos_3.png',
-		'icons/spideros_icons/sos_4.png',
-		'icons/spideros_icons/sos_5.png',
-		'icons/spideros_icons/sos_6.png',
-		'icons/spideros_icons/sos_7.png',
-		'icons/spideros_icons/sos_8.png',
-		'icons/spideros_icons/sos_9.png',
-		'icons/spideros_icons/sos_10.png',
-		'icons/spideros_icons/sos_11.png',
-		'icons/spideros_icons/sos_12.png',
-		'icons/spideros_icons/sos_13.png',
-		'icons/spideros_icons/sos_14.png',
 		'icons/stamp_icons/large_stamp-clown.png',
 		'icons/stamp_icons/large_stamp-deny.png',
 		'icons/stamp_icons/large_stamp-ok.png',

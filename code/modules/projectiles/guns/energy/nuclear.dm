@@ -64,7 +64,7 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/process()

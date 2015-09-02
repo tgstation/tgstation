@@ -56,7 +56,7 @@
 			bug.current = null
 		bug = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	..()
+	return ..()
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())

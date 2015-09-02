@@ -30,7 +30,7 @@
 /obj/machinery/portable_atmospherics/Destroy()
 	qdel(air_contents)
 	SSair.atmos_machinery -= src
-	..()
+	return ..()
 
 /obj/machinery/portable_atmospherics/update_icon()
 	return null
