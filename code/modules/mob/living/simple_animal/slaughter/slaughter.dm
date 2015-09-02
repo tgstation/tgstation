@@ -36,6 +36,13 @@
 						Pulling a dead or critical mob while you enter a pool will pull them in with you, allowing you to feast. \
 						You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
 
+/mob/living/simple_animal/slaughter/New()
+	..()
+	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
+	AddSpell(bloodspell)
+	if(istype(loc, /obj/effect/dummy/slaughter))
+		bloodspell.phased = 1
+
 /mob/living/simple_animal/slaughter/Life()
 	..()
 	if(boost<world.time)
