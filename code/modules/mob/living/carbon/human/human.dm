@@ -5,6 +5,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
+	can_butcher = 0
 	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
@@ -125,6 +126,7 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
+	init_butchering_list() // While animals only generate list of their teeth/skins on death, humans generate it when they're born.
 
 	// Set up DNA.
 	if(!delay_ready_dna)

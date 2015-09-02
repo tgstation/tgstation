@@ -23,7 +23,8 @@
 	projectilesound = 'sound/weapons/punchmiss.ogg'
 	projectiletype = /obj/item/projectile/snowball
 	environment_smash = 0
-	meat_type = null
+
+	can_butcher = 0
 
 	minbodytemp = 0
 	maxbodytemp = MELTPOINT_SNOW

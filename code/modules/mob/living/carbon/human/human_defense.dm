@@ -205,6 +205,15 @@ emp_act
 	if(armor >= 2)	return 1 //We still connected
 	if(!I.force)	return 1
 
+	//Knocking teeth out!
+	if(user.zone_sel.selecting == "mouth" && target_zone == "head") //You can't actually hit people in the mouth - this checks if the user IS targetting mouth, and if he didn't miss!
+		if((!armor) && (I.force >= 8 || I.w_class >= 2) && (I.is_sharp() < 1))//Minimum force=8, minimum w_class=2. Sharp items can't knock out teeth. Armor prevents this completely!
+			var/datum/butchering_product/teeth/T = locate(/datum/butchering_product/teeth) in src.butchering_drops
+			if(T && T.amount > 0) //If the guy has some teeth
+				var/chance = min(I.force * I.w_class, 40) //an item with w_class=3 and force of 10 has a 30% chance of knocking a few teeth out. Chance is capped at 40%
+				if(prob(chance))
+					knock_out_teeth(user)
+
 	apply_damage(I.force, I.damtype, affecting, armor , I.is_sharp(), I)
 
 	var/bloody = 0
@@ -250,6 +259,24 @@ emp_act
 				if(bloody)
 					bloody_body(src)
 	return .
+
+/mob/living/carbon/human/proc/knock_out_teeth(mob/user)
+	var/mob/living/L = user
+	var/datum/butchering_product/teeth/T = locate(/datum/butchering_product/teeth) in src.butchering_drops
+	if(!istype(T) || T.amount == 0) return
+
+	var/amount = rand(1,3)
+	if(M_HULK in L.mutations) //just like the mountain
+		amount += 8
+
+	var/obj/item/stack/teeth/teeth = T.spawn_result(get_turf(src), src, amount)
+
+	var/turf/throw_to = get_step(get_turf(src), src.dir) //Throw them in the direction we're facing!
+	teeth.throw_at(throw_to, 2, 2)
+	src.visible_message("<span class='danger'>[user] knocks [(amount < 3) ? "some" : "a bunch"] of [src]'s teeth out!</span>",\
+		"<span class='danger'>[user] knocks [(amount < 3) ? "some" : "a bunch"] of your teeth out!</span>",\
+		drugged_message = "<span class='info'>[user] starts brushing [src]'s teeth.</span>",\
+		self_drugged_message = "<span class='info'>[user] has removed some of your wisdom teeth.</span>")
 
 /mob/living/carbon/human/proc/bloody_hands(var/mob/living/source, var/amount = 2)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/bloody_hands() called tick#: [world.time]")

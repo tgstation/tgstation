@@ -21,8 +21,11 @@
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
+	var/can_butcher = 1 //Whether it's possible to butcher this mob manually
 	var/meat_taken = 0 //How much meat has been taken from this mob by butchering
 	var/meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	var/being_butchered = 0 //To prevent butchering an animal almost instantly
+	var/list/butchering_drops //See code/datums/butchering.dm, stuff like skinning goes here
 
 	var/list/image/static_overlays
 
@@ -59,6 +62,7 @@
 	var/last_played_vent
 	var/is_ventcrawling = 0
 
+	var/species_type
 	//
 	var/list/callOnLife = list() //
 	var/obj/screen/schematics_background

@@ -145,8 +145,8 @@
 			if(can_bite)
 				if ((prob(75) && health > 0))
 					playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						O.show_message("<span class='danger'>[M.name] has bit [name]!</span>", 1)
+					src.visible_message("<span class='danger'>[M.name] has bit [name]!</span>")
+
 					var/damage = rand(1, 5)
 					adjustBruteLoss(damage)
 					health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -190,7 +190,8 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(M_HULK in M.mutations)			damage += 5
+			if(M_HULK in M.mutations)							damage += 5
+			if((M_CLAWS in M.mutations) && !istype(M.gloves))	damage += 3 //Claws mutation + no gloves
 
 
 			if(M.species.attack_verb == "punch")
@@ -218,6 +219,14 @@
 				else						// otherwise limit to 10 tiles
 					target = get_ranged_target_turf(T, M.dir, M.species.punch_throw_range)
 				src.throw_at(target,100,M.species.punch_throw_speed)
+
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.zone_sel && H.zone_sel.selecting == "mouth")
+					var/chance = 0.5 * damage
+					if(M_HULK in H.mutations) chance += 50
+					if(prob(chance))
+						knock_out_teeth(H)
 
 
 		if(I_DISARM)

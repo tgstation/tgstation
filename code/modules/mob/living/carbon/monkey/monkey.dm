@@ -9,6 +9,7 @@
 	update_icon = 0		///no need to call regenerate_icon
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
+	species_type = /mob/living/carbon/monkey
 
 	mob_bump_flag = MONKEY
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL
@@ -47,6 +48,7 @@
 	speak_emote = list("mews")
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
+	species_type = /mob/living/carbon/monkey/tajara
 
 /mob/living/carbon/monkey/skrell
 	name = "neaera"
@@ -54,6 +56,7 @@
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
+	species_type = /mob/living/carbon/monkey/skrell
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"
@@ -62,6 +65,7 @@
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
 	canWearClothes = 0
+	species_type = /mob/living/carbon/monkey/unathi
 
 /mob/living/carbon/monkey/New()
 	var/datum/reagents/R = new/datum/reagents(1000)

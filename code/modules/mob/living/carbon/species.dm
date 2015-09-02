@@ -414,7 +414,7 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Siik'tajr"
 	tail = "tajtail"
 	attack_verb = "scratch"
-	punch_damage = 5
+	punch_damage = 2 //Claws add 3 damage without gloves, so the total is 5
 	darksight = 8
 
 	cold_level_1 = 200 //Default 260
@@ -428,6 +428,8 @@ var/global/list/whitelisted_species = list("Human")
 	primitive = /mob/living/carbon/monkey/tajara
 
 	flags = IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_TAIL
+
+	default_mutations=list(M_CLAWS)
 
 	flesh_color = "#AFA59E"
 
@@ -546,6 +548,7 @@ var/global/list/whitelisted_species = list("Human")
 	eyes = "vox_eyes_s"
 	breath_type = "nitrogen"
 
+	default_mutations = list(M_BEAK)
 	flags = IS_WHITELISTED | NO_SCAN
 
 	blood_color = "#2299FC"

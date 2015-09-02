@@ -161,7 +161,7 @@
 	speak_chance = 2
 	turns_per_move = 2
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
-	species = /mob/living/simple_animal/chicken
+	species_type = /mob/living/simple_animal/chicken
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"

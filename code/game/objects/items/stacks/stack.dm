@@ -1,3 +1,5 @@
+#define CORRECT_STACK_NAME ((irregular_plural && amount > 1) ? irregular_plural : "[singular_name]\s")
+
 /* Stack type objects!
  * Contains:
  * 		Stacks
@@ -12,6 +14,7 @@
 	origin_tech = "materials=1"
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
+	var/irregular_plural //"Teeth", for example. Without this, you'd see "There are 30 tooths in the stack."
 	var/amount = 1
 	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
@@ -31,7 +34,10 @@
 
 /obj/item/stack/examine(mob/user)
 	..()
-	user << "<span class='info'>There are [src.amount] [src.singular_name]\s in the stack.</span>"
+	var/be = "are"
+	if(amount == 1) be = "is"
+
+	user << "<span class='info'>There [be] [src.amount] [CORRECT_STACK_NAME] in the stack.</span>"
 
 /obj/item/stack/attack_self(mob/user as mob)
 	list_recipes(user)
@@ -60,10 +66,12 @@
 
 		if (istype(E, /datum/stack_recipe_list))
 			var/datum/stack_recipe_list/srl = E
+
+			var/stack_name = (irregular_plural && srl.req_amount > 1) ? irregular_plural : "[singular_name]\s"
 			if (src.amount >= srl.req_amount)
-				t1 += "<a href='?src=\ref[src];sublist=[i]'>[srl.title] ([srl.req_amount] [src.singular_name]\s)</a>"
+				t1 += "<a href='?src=\ref[src];sublist=[i]'>[srl.title] ([srl.req_amount] [stack_name])</a>"
 			else
-				t1 += "[srl.title] ([srl.req_amount] [src.singular_name]\s)<br>"
+				t1 += "[srl.title] ([srl.req_amount] [stack_name]\s)<br>"
 
 		if (istype(E, /datum/stack_recipe))
 			var/datum/stack_recipe/R = E
@@ -81,9 +89,11 @@
 				title+= "[R.res_amount]x [R.title]\s"
 			else
 				title+= "[R.title]"
-			title+= " ([R.req_amount] [src.singular_name]\s)"
+			//title+= " ([R.req_amount] [src.singular_name]\s)"
+			title+= " ([R.req_amount] [CORRECT_STACK_NAME]"
+
 			if (can_build)
-				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i]'>[title]</A>  ")
+				t1 += text("<A href='?src=\ref[src];sublist=[recipes_sublist];make=[i]'>[title]</A>)")
 			else
 				t1 += text("[]", title)
 				continue
@@ -238,7 +248,7 @@
 	if (can_stack_with(target))
 		var/obj/item/stack/S = target
 		if (amount >= max_amount)
-			user << "\The [src] cannot hold anymore [singular_name]."
+			user << "\The [src] cannot hold anymore [CORRECT_STACK_NAME]."
 			return 1
 		var/to_transfer as num
 		if (user.get_inactive_hand()==S)
@@ -246,7 +256,7 @@
 		else
 			to_transfer = min(S.amount, max_amount-amount)
 		amount+=to_transfer
-		user << "You add [to_transfer] [singular_name] to \the [src]. It now contains [amount] [singular_name]\s."
+		user << "You add [to_transfer] [((to_transfer > 1) && S.irregular_plural) ? S.irregular_plural : "[S.singular_name]\s"] to \the [src]. It now contains [amount] [CORRECT_STACK_NAME]."
 		if (S && user.machine==S)
 			spawn(0) interact(user)
 		S.use(to_transfer)
@@ -308,3 +318,5 @@
 		I.preattack(src, user, 1)
 		return
 	return ..()
+
+#undef CORRECT_STACK_NAME

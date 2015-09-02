@@ -1,3 +1,6 @@
+/obj/item/stack/sheet/animalhide
+	icon = 'icons/obj/butchering_products.dmi'
+
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
 	desc = "The by-product of human farming."
@@ -45,16 +48,33 @@
 	name = "alien chitin"
 	desc = "A piece of the hide of a terrible creature."
 	singular_name = "alien hide piece"
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/obj/butchering_products.dmi'
 	icon_state = "chitin"
 	origin_tech = ""
 
 /obj/item/xenos_claw
 	name = "alien claw"
 	desc = "The claw of a terrible creature."
-	icon = 'icons/mob/alien.dmi'
+	icon = 'icons/obj/butchering_products.dmi'
 	icon_state = "claw"
 	origin_tech = ""
+
+/obj/item/xenos_claw/attackby(obj/item/W, mob/user)
+	.=..()
+
+	if(istype(W,/obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
+
+		if(C.use(5))
+			user.drop_item(src)
+
+			var/obj/item/clothing/mask/necklace/xeno_claw/X = new(get_turf(src))
+			user.put_in_active_hand(X)
+			user << "<span class='info'>You create a necklace out of \the [src] and \the [C].</span>"
+
+			qdel(src)
+		else
+			user << "<span class='info'>You need at least 5 lengths of cable to do this!</span>"
 
 /obj/item/weed_extract
 	name = "weed extract"
@@ -67,6 +87,7 @@
 	name = "hairless hide"
 	desc = "This hide was stripped of it's hair, but still needs tanning."
 	singular_name = "hairless hide piece"
+	icon = 'icons/obj/butchering_products.dmi'
 	icon_state = "sheet-hairlesshide"
 	origin_tech = ""
 
@@ -74,6 +95,7 @@
 	name = "wet leather"
 	desc = "This leather has been cleaned but still needs to be dried."
 	singular_name = "wet leather piece"
+	icon = 'icons/obj/butchering_products.dmi'
 	icon_state = "sheet-wetleather"
 	origin_tech = ""
 	var/wetness = 30 //Reduced when exposed to high temperautres
@@ -83,6 +105,7 @@
 	name = "leather"
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
+	icon = 'icons/obj/butchering_products.dmi'
 	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 

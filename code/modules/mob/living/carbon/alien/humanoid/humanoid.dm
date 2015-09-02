@@ -9,6 +9,8 @@
 	var/caste = ""
 	update_icon = 1
 
+	species_type = /mob/living/carbon/alien/humanoid
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	var/datum/reagents/R = new/datum/reagents(100)
