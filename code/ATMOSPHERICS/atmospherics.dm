@@ -51,15 +51,13 @@ Pipelines + Other Objects -> Pipe network
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	..()
-	return QDEL_HINT_FINDREFERENCE
+	return ..()
+	//return QDEL_HINT_FINDREFERENCE
 
 /obj/machinery/atmospherics/proc/nullifyNode(I)
 	var/obj/machinery/atmospherics/N = NODE_I
 	N.disconnect(src)
 	NODE_I = null
-
-
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
@@ -88,10 +86,7 @@ Pipelines + Other Objects -> Pipe network
 		return 1
 
 /obj/machinery/atmospherics/proc/pipeline_expansion()
-	var/list/return_nodes = list()
-	for(DEVICE_TYPE_LOOP)
-		return_nodes |= NODE_I
-	return return_nodes
+	return nodes
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -116,17 +111,11 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	for(DEVICE_TYPE_LOOP)
-		if(reference == NODE_I)
-		//	world << "[reference] found in nodes of [src]"
-			if(istype(NODE_I, /obj/machinery/atmospherics/pipe))
-				var/obj/machinery/atmospherics/pipe/P = NODE_I
-				qdel(P.parent)
-		//		world << "[reference] has qdel'd its parent"
-			NODE_I = null
-		//	world << "NODE[I]: [NODE_I]"
-			break
-		//world << "[reference] not yet disconnected from [src]"
+	if(istype(reference, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = reference
+		qdel(P.parent)
+	var/I = nodes.Find(reference)
+	NODE_I = null
 	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
@@ -191,9 +180,6 @@ Pipelines + Other Objects -> Pipe network
 		stored = null
 
 	qdel(src)
-
-/obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
-	P.other_atmosmch -= src
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 

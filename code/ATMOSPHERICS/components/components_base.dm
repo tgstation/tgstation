@@ -66,7 +66,7 @@ Pipenet stuff; housekeeping
 */
 
 /obj/machinery/atmospherics/components/nullifyNode(I)
-	return ..()
+	..()
 	nullifyPipenet(PARENT_I)
 	qdel(AIR_I)
 	AIR_I = null
@@ -82,43 +82,34 @@ Pipenet stuff; housekeeping
 			var/datum/pipeline/P = PARENT_I
 			P.build_pipeline(src)
 
-/obj/machinery/atmospherics/components/nullifyPipenet(datum/pipeline/reference)
-	..()
-	for(DEVICE_TYPE_LOOP)
-		if(reference == PARENT_I)
-			var/datum/pipeline/P = PARENT_I
-			P.other_airs -= AIR_I
-			P.other_atmosmch -= src
-			PARENT_I = null
+/obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
+	var/I = parents.Find(reference)
+	reference.other_airs -= AIR_I
+	reference.other_atmosmch -= src
+	PARENT_I = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
-	for(DEVICE_TYPE_LOOP)
-		if(reference == PARENT_I)
-			return AIR_I
+	var/I = parents.Find(reference)
+	return AIR_I
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
 	if(reference)
-		for(DEVICE_TYPE_LOOP)
-			if(PARENT_I == reference)
-				return list(NODE_I)
+		var/I = parents.Find(reference)
+		return list(NODE_I)
 	else
 		return ..()
 
 /obj/machinery/atmospherics/components/setPipenet(datum/pipeline/reference, obj/machinery/atmospherics/A)
-	for(DEVICE_TYPE_LOOP)
-		if(A == NODE_I)
-			PARENT_I = reference
-			break
+	var/I = nodes.Find(A)
+	PARENT_I = reference
 
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = NODE1) //returns PARENT1 if called without argument
-	for(DEVICE_TYPE_LOOP)
-		if(A == NODE_I)
-			return PARENT_I
+	var/I = nodes.Find(A)
+	return PARENT_I
 
 /obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
-	for(DEVICE_TYPE_LOOP)
-		if(PARENT_I == Old)
-			PARENT_I = New
+	var/I = parents.Find(Old)
+	PARENT_I = New
 
 /obj/machinery/atmospherics/components/unsafe_pressure_release(var/mob/user, var/pressures)
 	..()

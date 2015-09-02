@@ -81,6 +81,9 @@
 	qdel(air_temporary)
 	air_temporary = null
 
+	if(parent)
+		parent.members -= src
+
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
 		if(meter.target == src)
