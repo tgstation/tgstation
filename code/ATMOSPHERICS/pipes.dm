@@ -316,10 +316,14 @@
 	if(!node1||!node2)
 		icon_state = "exposed"
 		..(adjacent_procd,node_list)
-	else if(!adjacent_procd)
-		for(var/obj/machinery/atmospherics/node in node_list)
-			if(node.update_icon_ready && !(istype(node,/obj/machinery/atmospherics/pipe/simple)))
-				node.update_icon(1)
+	else
+		underlays.Cut()
+		icon_state = "intact"
+		alpha = invisibility ? 128 : 255
+		if(!adjacent_procd)
+			for(var/obj/machinery/atmospherics/node in node_list)
+				if(node.update_icon_ready && !(istype(node,/obj/machinery/atmospherics/pipe/simple)))
+					node.update_icon(1)
 	if(!node1&&!node2)
 		qdel(src) //TODO: silent deleting looks weird
 
@@ -472,6 +476,7 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/New()
+	icon_state = "manifold"
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
@@ -560,7 +565,6 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon(var/adjacent_procd)
-	icon_state = "manifold"
 	var/node_list = list(node1,node2,node3)
 	..(adjacent_procd,node_list)
 	if(!node1 && !node2 && !node3)
@@ -698,6 +702,7 @@
 	return 1
 
 /obj/machinery/atmospherics/pipe/manifold4w/New()
+	icon_state = "manifold4w"
 	..()
 	centre_overlay = manifold4w_centre
 	centre_overlay.color = color
@@ -784,7 +789,6 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/update_icon(var/adjacent_procd)
 	var/node_list = list(node1,node2,node3,node4)
-	icon_state = "manifold4w"
 	..(adjacent_procd,node_list)
 	if(!node1 && !node2 && !node3 && !node4)
 		qdel(src)

@@ -212,16 +212,13 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 
 
 /obj/machinery/atmospherics/trinary/filter/mirrored
-	icon_state = "intactm_off"
+	icon_state = "hintactm_off"
 	pipe_flags = IS_MIRROR
 
-/obj/machinery/atmospherics/trinary/filter/mirrored/update_icon()
+/obj/machinery/atmospherics/trinary/filter/mirrored/update_icon(var/adjacent_procd)
 	if(stat & NOPOWER)
-		icon_state = "intactm_off"
-	else if(node2 && node3 && node1)
-		icon_state = "intactm_[on?("on"):("off")]"
-	else
-		icon_state = "intactm_off"
+		icon_state = "hintactm_off"
+	else if(!(node2 && node3 && node1))
 		on = 0
-
-	return
+	icon_state = "hintactm_[on?("on"):("off")]"
+	..(adjacent_procd)
