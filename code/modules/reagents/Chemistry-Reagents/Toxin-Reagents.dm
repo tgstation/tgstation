@@ -33,7 +33,6 @@ datum/reagent/toxin/mutagen/reaction_mob(var/mob/living/carbon/M, var/method=TOU
 		return
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	src = null
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
 		randmuti(M)
 		if(prob(98))
@@ -67,7 +66,6 @@ datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/reac_volume)
-	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
 		if (egg.grown)
@@ -76,7 +74,6 @@ datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/reac_volume)
 	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 
 datum/reagent/toxin/plasma/reaction_turf(var/turf/simulated/T, var/reac_volume)
-	src = null
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 	return
@@ -194,7 +191,6 @@ datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/reac_volume)
 		SV.on_chem_effect(src)
 
 datum/reagent/toxin/plantbgone/reaction_mob(var/mob/living/M, var/method=TOUCH, var/reac_volume)
-	src = null
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
@@ -216,7 +212,6 @@ datum/reagent/toxin/pestkiller
 	toxpwr = 1
 
 datum/reagent/toxin/pestkiller/reaction_mob(var/mob/living/M, var/method=TOUCH, var/reac_volume)
-	src = null
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask

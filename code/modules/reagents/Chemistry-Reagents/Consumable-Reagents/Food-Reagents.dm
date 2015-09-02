@@ -353,7 +353,6 @@ datum/reagent/consumable/cornoil
 /datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T))
 		return
-	src = null
 	if(reac_volume >= 3)
 		T.MakeSlippery()
 
@@ -412,7 +411,6 @@ datum/reagent/consumable/flour
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
 datum/reagent/consumable/flour/reaction_turf(var/turf/T, var/volume)
-	src = null
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
 		reagentdecal.reagents.add_reagent("flour", volume)

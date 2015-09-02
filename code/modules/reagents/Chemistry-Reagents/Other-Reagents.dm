@@ -7,7 +7,6 @@ datum/reagent/blood
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	var/datum/reagent/blood/self = src
-	src = null
 	if(self.data && self.data["viruses"])
 		for(var/datum/disease/D in self.data["viruses"])
 
@@ -51,7 +50,6 @@ datum/reagent/blood/on_merge(var/list/data)
 /datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
 	if(!istype(T)) return
 	var/datum/reagent/blood/self = src
-	src = null
 	if(reac_volume < 3) return
 	//var/datum/disease/D = self.data["virus"]
 	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
@@ -95,7 +93,6 @@ datum/reagent/vaccine
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	var/datum/reagent/vaccine/self = src
-	src = null
 	if(islist(self.data) && method == INGEST)
 		for(var/datum/disease/D in M.viruses)
 			if(D.GetDiseaseID() in self.data)
@@ -122,7 +119,6 @@ datum/reagent/water
 /datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
-	src = null
 	if(reac_volume >= 10)
 		T.MakeSlippery()
 
@@ -145,7 +141,6 @@ datum/reagent/water
  */
 
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
-	src = null
 	// Monkey cube
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -251,7 +246,6 @@ datum/reagent/lube
 
 datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
-	src = null
 	if(reac_volume >= 1)
 		T.MakeSlippery(2)
 
@@ -296,7 +290,6 @@ datum/reagent/aslimetoxin
 	color = "#13BC5E" // rgb: 19, 188, 94
 
 /datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	src = null
 	M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
 datum/reagent/serotrotium
@@ -319,15 +312,13 @@ datum/reagent/oxygen
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
-datum/reagent/oxygen/reaction_obj(var/obj/O, var/volume)
-	src = null
-	if((!O) || (!volume))	return 0
-	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, volume)
+datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))	return 0
+	O.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
 
-datum/reagent/oxygen/reaction_turf(var/turf/simulated/T, var/volume)
-	src = null
+datum/reagent/oxygen/reaction_turf(turf/simulated/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, volume)
+		T.atmos_spawn_air(SPAWN_OXYGEN|SPAWN_20C, reac_volume/2)
 	return
 
 datum/reagent/copper
@@ -344,15 +335,13 @@ datum/reagent/nitrogen
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 
-datum/reagent/nitrogen/reaction_obj(var/obj/O, var/volume)
-	src = null
-	if((!O) || (!volume))	return 0
-	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, volume)
+datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume))	return 0
+	O.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
 
-datum/reagent/nitrogen/reaction_turf(var/turf/simulated/T, var/volume)
-	src = null
+datum/reagent/nitrogen/reaction_turf(turf/simulated/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, volume)
+		T.atmos_spawn_air(SPAWN_NITROGEN|SPAWN_20C, reac_volume)
 	return
 
 datum/reagent/hydrogen
@@ -399,7 +388,6 @@ datum/reagent/carbon
 	color = "#1C1300" // rgb: 30, 20, 0
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents   //check for existing dirt
 		if(!T)
@@ -482,7 +470,6 @@ datum/reagent/radium/on_mob_life(var/mob/living/M as mob)
 	return
 
 datum/reagent/radium/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
@@ -529,7 +516,6 @@ datum/reagent/uranium/on_mob_life(var/mob/living/M as mob)
 
 
 datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
-	src = null
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
@@ -647,8 +633,7 @@ datum/reagent/nanites
 	color = "#535E66" // rgb: 83, 94, 102
 
 datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	src = null
-	if( (prob(10) && method==VAPOR) || method==INGEST)
+	if( (prob(10) && method==VAPOR) || method==INGEST || method==TOUCH)
 		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
 
 datum/reagent/xenomicrobes
@@ -658,8 +643,7 @@ datum/reagent/xenomicrobes
 	color = "#535E66" // rgb: 83, 94, 102
 
 datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	src = null
-	if( (prob(10) && method==VAPOR) || method==INGEST)
+	if( (prob(10) && method==VAPOR) || method==INGEST|| method==TOUCH)
 		M.ContractDisease(new /datum/disease/transformation/xeno(0))
 
 datum/reagent/fluorosurfactant//foam precursor
