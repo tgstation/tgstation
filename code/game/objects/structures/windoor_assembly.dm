@@ -35,7 +35,7 @@
 /obj/structure/windoor_assembly/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc

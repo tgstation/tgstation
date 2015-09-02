@@ -172,7 +172,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	src.cleanup()
-	..()
+	return ..()
 
 
 
