@@ -1,5 +1,7 @@
 /obj/effect/decal/cleanable
 	var/list/random_icon_states = list()
+	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
+	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 
 /obj/effect/decal/cleanable/New()
 	if (random_icon_states && length(src.random_icon_states) > 0)
@@ -41,3 +43,28 @@
 		reagents.chem_temp += 30
 		reagents.handle_reactions()
 	..()
+
+
+//Add "bloodiness" of this blood's type, to the human's shoes
+//This is on /cleanable because fuck this ancient mess
+/obj/effect/decal/cleanable/Crossed(atom/movable/O)
+	if(ishuman(O))
+		var/mob/living/carbon/human/H = O
+		if(H.shoes && blood_state)
+			var/obj/item/clothing/shoes/S = H.shoes
+			var/add_blood = 0
+			if(bloodiness >= BLOOD_GAIN_PER_STEP)
+				add_blood = BLOOD_GAIN_PER_STEP
+			else
+				add_blood = bloodiness
+			bloodiness -= add_blood
+			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
+			S.blood_state = blood_state
+			alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
+			update_icon()
+			H.update_inv_shoes()
+			if(!bloodiness)
+				animate(src,alpha = 0,BLOOD_FADEOUT_TIME)
+				sleep(BLOOD_FADEOUT_TIME)
+				qdel(src)
+				return

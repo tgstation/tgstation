@@ -1,4 +1,24 @@
 /obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(istype(H.shoes))
+			var/obj/item/clothing/shoes/S = H.shoes
+			var/turf/T = get_turf(H)
+			if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
+				var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
+				if(oldFP && oldFP.blood_state == S.blood_state)
+					return
+				else
+					//No oldFP or it's a different kind of blood
+					S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
+					var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
+					FP.blood_state = S.blood_state
+					FP.entered_dirs |= H.dir
+					FP.bloodiness = S.bloody_shoes[S.blood_state]
+					FP.update_icon()
+					H.update_inv_shoes()
+
+
 
 /obj/item/clothing/shoes/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bashing their own head in with [src]! Ain't that a kick in the head?</span>")
