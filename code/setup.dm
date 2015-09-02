@@ -1252,6 +1252,12 @@ var/proccalls = 1
 #define MESSAGE_SEE		1 //Visible message
 #define MESSAGE_HEAR	2 //Hearable message
 
+//Food flags. code/modules/reagents/reagent_containers/food/snacks.dm
+#define FOOD_MEAT	1
+#define FOOD_ANIMAL	2
+#define FOOD_SWEET	4
+#define FOOD_LIQUID	8
+
 /*
  *
  *
