@@ -23,6 +23,21 @@
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
 	stored_ammo += new ammo_type(src)
 
+/obj/item/ammo_box/magazine/internal/cylinder/rus357/polish
+	name = "russian revolver cylinder"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+	max_ammo = 6
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/rus357/polish/New()
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src) //Do you feel lucky, punk?
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
 	desc = "Oh god, this shouldn't be here"

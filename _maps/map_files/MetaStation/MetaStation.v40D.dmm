@@ -6053,7 +6053,7 @@
 "cmu" = (/obj/structure/closet/secure_closet/bar{pixel_x = -3; pixel_y = -1; req_access_txt = "25"},/turf/simulated/floor/wood,/area/maintenance/aft{name = "Aft Maintenance"})
 "cmv" = (/turf/simulated/floor/wood,/area/maintenance/aft{name = "Aft Maintenance"})
 "cmw" = (/turf/simulated/floor/wood{tag = "icon-wood-broken7"; icon_state = "wood-broken7"},/area/maintenance/aft{name = "Aft Maintenance"})
-"cmx" = (/obj/item/weapon/reagent_containers/glass/rag,/obj/structure/table/wood,/turf/simulated/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/maintenance/aft{name = "Aft Maintenance"})
+"cmx" = (/obj/item/weapon/reagent_containers/glass/rag,/obj/structure/table/wood,/obj/item/weapon/gun/projectile/revolver/russian/polish,/turf/simulated/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/maintenance/aft{name = "Aft Maintenance"})
 "cmy" = (/turf/simulated/floor/wood{tag = "icon-wood-broken5"; icon_state = "wood-broken5"},/area/maintenance/aft{name = "Aft Maintenance"})
 "cmz" = (/obj/structure/stool,/turf/simulated/floor/plating{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/maintenance/aft{name = "Aft Maintenance"})
 "cmA" = (/obj/structure/stool/bed/chair,/obj/structure/sign/nosmoking_2{pixel_x = -28},/turf/simulated/floor/plasteel{icon_state = "dark"},/area/medical/surgery)
