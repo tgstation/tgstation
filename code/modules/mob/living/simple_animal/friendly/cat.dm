@@ -20,6 +20,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
+	gold_core_spawnable = 2
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
@@ -31,6 +32,7 @@
 	gender = FEMALE
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	//MICE!
@@ -69,6 +71,7 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"

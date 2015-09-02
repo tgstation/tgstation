@@ -109,7 +109,7 @@
 /obj/machinery/dominator/Destroy()
 	if(operating != -1)
 		set_broken()
-	..()
+	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
 	healthcheck(100)

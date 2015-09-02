@@ -73,15 +73,17 @@
 /obj/item/organ/internal/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
-		if(owner.health >= owner.maxHealth - owner.getCloneLoss())
+		if(owner.health >= owner.maxHealth)
 			owner.adjustPlasma(plasma_rate)
 		else
-			var/mod = 1
+			var/heal_amt = heal_rate
 			if(!isalien(owner))
-				mod = 0.2
-			owner.adjustBruteLoss(-heal_rate*mod)
-			owner.adjustFireLoss(-heal_rate*mod)
-			owner.adjustOxyLoss(-heal_rate*mod)
+				heal_amt *= 0.2
+			owner.adjustPlasma(plasma_rate*0.5)
+			owner.adjustBruteLoss(-heal_amt)
+			owner.adjustFireLoss(-heal_amt)
+			owner.adjustOxyLoss(-heal_amt)
+			owner.adjustCloneLoss(-heal_amt)
 
 /obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()

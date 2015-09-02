@@ -64,15 +64,12 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/fire()
 	points += points_per_decisecond * wait
-
-	var/i=1
 	for(var/thing in mobile)
 		if(thing)
 			var/obj/docking_port/mobile/P = thing
 			P.check()
-			++i
 			continue
-		mobile.Cut(i, i+1)
+		mobile.Remove(thing)
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -112,7 +109,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			user << "The emergency shuttle has been disabled by Centcom."
 			return
 
-	call_reason = html_encode(trim(call_reason))
+	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
 		user << "You must provide a reason."
@@ -286,6 +283,12 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(object.amount && A.vars.Find("amount") && A:amount)
 			A:amount = object.amount
 		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
+
+	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
+		var/obj/structure/closet/critter/CritCrate = Crate
+		if(CritCrate.content_mob)
+			var/mob/crittername = CritCrate.content_mob
+			slip.info += "<li>[initial(crittername.name)]</li>"
 
 	if((errors & MANIFEST_ERROR_ITEM))
 		//secure and large crates cannot lose items

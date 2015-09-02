@@ -23,6 +23,7 @@
 	density = 1
 
 /obj/machinery/flasher/New()
+	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	bulb = new /obj/item/device/flash/handheld(src)
 
 /obj/machinery/flasher/power_change()
@@ -68,6 +69,7 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
+
 	if (!powered() || !bulb)
 		return
 
@@ -133,36 +135,3 @@
 
 	else
 		..()
-
-/obj/machinery/flasher_button/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/flasher_button/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user, params)
-	return attack_hand(user)
-
-/obj/machinery/flasher_button/attack_hand(mob/user)
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-
-	use_power(5)
-
-	active = 1
-	icon_state = "launcheract"
-
-	for(var/obj/machinery/flasher/M in world)
-		if(M.id == id)
-			spawn()
-				M.flash()
-
-	sleep(50)
-
-	icon_state = "launcherbtt"
-	active = 0
-
-	return

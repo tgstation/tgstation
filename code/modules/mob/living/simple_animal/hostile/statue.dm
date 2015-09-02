@@ -16,6 +16,7 @@
 	speed = -1
 	maxHealth = 50000
 	health = 50000
+	healable = 0
 
 	harm_intent_damage = 70
 	melee_damage_lower = 68
@@ -44,6 +45,7 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
+	gold_core_spawnable = 1
 
 
 // No movement while seen code.

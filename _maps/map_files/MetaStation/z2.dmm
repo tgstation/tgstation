@@ -1317,14 +1317,14 @@
 /turf/simulated/floor/light,
 /area/centcom/ferry)
 "dX" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	dir = 2;
 	 id = "QMLoaddoor2";
 	 name = "Loading Doors";
 	 pixel_x = 24;
 	 pixel_y = 8
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "QMLoaddoor";
 	 name = "Loading Doors";
 	 pixel_x = 24;
@@ -2157,7 +2157,7 @@
 	},
 /area/shuttle/escape)
 "fU" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "adminshut";
 	 name = "Administrative Shutter-Control";
 	 pixel_y = 26
@@ -3148,7 +3148,7 @@
 /turf/simulated/floor/plasteel/black,
 /area/centcom/control)
 "ip" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for port-side blast doors.";
 	 icon_state = "doorctrl0";
 	 id = "CentComPort";
@@ -3282,7 +3282,7 @@
 /area/shuttle/syndicate)
 "iK" = (
 /obj/structure/table,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "syndieshutters";
 	 name = "remote shutter control";
 	 req_access_txt = "150"
@@ -3752,7 +3752,7 @@
 /turf/simulated/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "kb" = (
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "emshuttlebridgeflash";
 	 name = "cockpit flasher button";
 	 pixel_y = 24;
@@ -4071,7 +4071,7 @@
 /obj/structure/stool/bed/chair{
 	dir = 1
 	},
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "emshuttleflash";
 	 name = "brig flasher button";
 	 pixel_y = -23;
@@ -4814,7 +4814,7 @@
 	},
 /area/wizard_station)
 "mT" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "nukeop_ready";
 	 name = "mission launch control";
 	 pixel_x = -26;
@@ -4931,7 +4931,7 @@
 	 id = "smindicate";
 	 name = "outer blast door"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "smindicate";
 	 name = "external door control";
 	 pixel_x = -26;
@@ -5418,7 +5418,7 @@
 /area/wizard_station)
 "ov" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Break Room"
 	},
 /turf/simulated/floor/plasteel/cult,
@@ -6011,7 +6011,7 @@
 /area/wizard_station)
 "qb" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Corridor A"
 	},
 /turf/simulated/floor/plasteel/cult,
@@ -6100,7 +6100,7 @@
 /turf/simulated/floor/plasteel/redyellow,
 /area/tdome/tdomeadmin)
 "qq" = (
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "tdomeflash";
 	 pixel_x = 0;
 	 pixel_y = 0
@@ -6132,14 +6132,14 @@
 /area/centcom/holding)
 "qu" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Personal Quarters"
 	},
 /turf/simulated/floor/plasteel/cult,
 /area/wizard_station)
 "qv" = (
 /obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/Dooruranium.dmi';
+	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	 name = "Engine Room B"
 	},
 /turf/space,
@@ -6191,7 +6191,7 @@
 /area/wizard_station)
 "qF" = (
 /obj/structure/table,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "thunderdomehea";
 	 name = "Heavy Supply Control";
 	 pixel_y = 0;
@@ -6204,7 +6204,7 @@
 /area/centcom/holding)
 "qH" = (
 /obj/structure/table,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "thunderdomegen";
 	 name = "General Supply Control";
 	 pixel_y = 0;
@@ -6214,7 +6214,7 @@
 /area/tdome/tdomeadmin)
 "qI" = (
 /obj/structure/table,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "thunderdome";
 	 name = "Main Blast Doors Control";
 	 pixel_y = 0;

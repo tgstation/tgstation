@@ -16,7 +16,7 @@
 
 /obj/item/device/radio/intercom/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)

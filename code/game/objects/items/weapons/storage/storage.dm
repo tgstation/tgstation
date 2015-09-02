@@ -463,7 +463,7 @@
 	close_all()
 	qdel(boxes)
 	qdel(closer)
-	..()
+	return ..()
 
 
 /obj/item/weapon/storage/emp_act(severity)
@@ -481,4 +481,5 @@
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
-		remove_from_storage(A,null)
+		usr = null
+		remove_from_storage(A, loc)

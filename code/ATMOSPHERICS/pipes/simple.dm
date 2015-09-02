@@ -77,7 +77,7 @@ The regular pipe you see everywhere, including bent ones.
 		node2 = null
 		A.build_network()
 	releaseAirToTurf()
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)

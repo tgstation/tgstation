@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = OBJ_LAYER + 0.05 //above table, below windoor/airlock/foamed metal.
+	layer = OBJ_LAYER - 0.5 //above table, below windoor/airlock/foamed metal.
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
@@ -91,14 +91,8 @@
 
 
 /obj/effect/effect/foam/proc/spread_foam()
-	for(var/direction in cardinal)
-		var/turf/T = get_step(src,direction)
-		if(!T)
-			continue
-
-		if(!T.Enter(src))
-			continue
-
+	var/turf/t_loc = get_turf(src)
+	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue
@@ -194,7 +188,7 @@
 /obj/structure/foamedmetal/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 
 /obj/structure/foamedmetal/Move()

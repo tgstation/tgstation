@@ -44,7 +44,7 @@ Pipelines + Other Objects -> Pipe network
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	..()
+	return ..()
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit()
