@@ -214,6 +214,7 @@
 /obj/item/weapon/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
+	raredesc = "Somebody once asked could I spare some change for gas."
 	icon_state = "coin__heads"
 	flags = CONDUCT
 	force = 1

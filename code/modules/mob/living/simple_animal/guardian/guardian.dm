@@ -2,6 +2,7 @@
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by it's charge, ever vigilant."
+	raredesc = "Somebody once told me the world is gonna roll me."
 	speak_emote = list("intones")
 	response_help  = "passes through"
 	response_disarm = "flails at"

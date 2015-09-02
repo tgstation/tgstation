@@ -265,6 +265,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/brainrot
 	name = "Brainrot culture bottle"
 	desc = "A small bottle. Contains Cryptococcus Cosmosis culture in synthblood medium."
+	raredesc = "Your brain gets smart but your head gets dumb."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/brainrot
 

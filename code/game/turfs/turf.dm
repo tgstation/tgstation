@@ -289,6 +289,7 @@
 
 /turf/indestructible/splashscreen
 	name = "Space Station 13"
+	raredesc = "So much to do, so much to see."
 	icon = 'icons/misc/fullscreen.dmi'
 	icon_state = "title"
 	layer = FLY_LAYER

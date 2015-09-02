@@ -150,6 +150,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
  */
 /obj/item/stack/sheet/mineral/gold
 	name = "gold"
+	raredesc = "And all that glitters is gold."
 	icon_state = "sheet-gold"
 	singular_name = "gold bar"
 	force = 5.0

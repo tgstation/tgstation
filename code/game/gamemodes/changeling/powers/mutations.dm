@@ -123,6 +123,7 @@
 /obj/item/weapon/melee/arm_blade
 	name = "arm blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter"
+	raredesc = "She was looking kind of dumb with her finger and her thumb in the shape of an L on her forehead."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"

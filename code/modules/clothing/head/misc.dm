@@ -204,6 +204,7 @@
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
+	raredesc = "So what's wrong with taking the back streets?"
 	name = "warning cone"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cone"

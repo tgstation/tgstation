@@ -88,6 +88,7 @@
 /obj/effect/meteor
 	name = "the concept of meteor"
 	desc = "You should probably run instead of gawking at this."
+	raredesc = "Only shooting stars break the mold."
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small"
 	density = 1

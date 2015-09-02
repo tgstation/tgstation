@@ -36,6 +36,7 @@
 
 /turf/simulated/floor/plating/beach/water
 	name = "Water"
+	raredesc = "The water's getting warm so you might as well swim."
 	icon_state = "water"
 
 /turf/simulated/floor/plating/ironsand/New()

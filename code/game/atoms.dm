@@ -1,5 +1,6 @@
 /atom
 	layer = 2
+	var/raredesc
 	var/level = 2
 	var/flags = 0
 	var/list/fingerprints
@@ -230,7 +231,11 @@ its easier to just keep the beam vertical.
 	user << "\icon[src] That's [f_name]"
 
 	if(desc)
-		user << desc
+		if(raredesc && prob(0.1))
+			user << raredesc
+		else
+			user << desc
+
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 

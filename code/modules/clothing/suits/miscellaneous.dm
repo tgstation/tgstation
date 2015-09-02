@@ -330,6 +330,7 @@
 /obj/item/clothing/suit/hooded/wintercoat
 	name = "winter coat"
 	desc = "A heavy jacket made from 'synthetic' animal furs."
+	raredesc = "You're bundled up now but wait 'til you get older."
 	icon_state = "coatwinter"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
