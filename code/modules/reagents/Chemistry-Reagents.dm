@@ -4,9 +4,6 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
-//so that it can continue working when the reagent is deleted while the proc is still active.
-
 
 //Various reagents
 //Toxin & acid reagents
@@ -34,47 +31,21 @@ datum/reagent/Destroy() // This should only be called by the holder, so it's alr
 	..()
 	holder = null
 
-datum/reagent/proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/show_message = 1) //By default we have a chance to transfer some
-	if(!istype(M, /mob/living))
+/datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!istype(M))
 		return 0
-	var/datum/reagent/self = src
-	src = null										  //of the reagent to the mob on TOUCHING it.
-
-	if(!istype(self && self.holder && self.holder.my_atom, /obj/effect/effect/smoke/chem))
-				// If the chemicals are in a smoke cloud, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
-
-		if(method == TOUCH)
-
-			var/chance = 1
-			var/block  = 0
-
-			for(var/obj/item/clothing/C in M.get_equipped_items())
-				if(C.permeability_coefficient < chance) chance = C.permeability_coefficient
-				if(istype(C, /obj/item/clothing/suit/bio_suit))
-					// bio suits are just about completely fool-proof - Doohl
-					// kind of a hacky way of making bio suits more resistant to chemicals but w/e
-					if(prob(75))
-						block = 1
-
-				if(istype(C, /obj/item/clothing/head/bio_hood))
-					if(prob(75))
-						block = 1
-
-			chance = chance * 100
-
-			if(prob(chance) && !block)
-				if(M.reagents)
-					M.reagents.add_reagent(self.id,self.volume/2)
+	if(method == VAPOR) //smoke, foam, spray
+		if(M.reagents)
+			var/modifier = Clamp((1 - touch_protection), 0, 1)
+			var/amount = round(volume*modifier, 0.1)
+			if(amount >= 1)
+				M.reagents.add_reagent(id, amount)
 	return 1
 
-datum/reagent/proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-	src = null						//if it can hold reagents. nope!
-	//if(O.reagents)
-	//	O.reagents.add_reagent(id,volume/3)
+/datum/reagent/proc/reaction_obj(obj/O, volume)
 	return
 
-datum/reagent/proc/reaction_turf(var/turf/T, var/volume)
-	src = null
+/datum/reagent/proc/reaction_turf(turf/T, volume)
 	return
 
 datum/reagent/proc/on_mob_life(var/mob/living/M as mob)

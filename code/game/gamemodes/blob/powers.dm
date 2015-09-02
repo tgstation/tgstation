@@ -255,30 +255,28 @@
 	var/turf/T = get_turf(src)
 	expand_blob(T)
 
-/mob/camera/blob/proc/expand_blob(var/turf/T)
-	if(!T)
-		return
-
+/mob/camera/blob/proc/expand_blob(turf/T)
 	if(!can_attack())
 		return
 	var/obj/effect/blob/B = locate() in T
 	if(B)
 		src << "There is a blob here!"
 		return
-
 	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
 		src << "There is no blob adjacent to you."
 		return
-
 	if(!can_buy(5))
 		return
 	last_attack = world.time
 	OB.expand(T, 0, blob_reagent_datum.color)
 	for(var/mob/living/L in T)
-		blob_reagent_datum.reaction_mob(L, TOUCH)
+		if("blob" in L.faction) //no friendly fire
+			continue
+		var/mob_protection = L.get_permeability_protection()
+		blob_reagent_datum.reaction_mob(L, VAPOR, 25, 1, mob_protection)
+		blob_reagent_datum.send_message(L)
 	OB.color = blob_reagent_datum.color
-	return
 
 
 /mob/camera/blob/verb/rally_spores_power()

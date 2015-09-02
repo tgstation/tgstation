@@ -64,8 +64,8 @@
 
 
 //Wrapper procs that handle sanity and user feedback
-/obj/proc/user_buckle_mob(mob/living/M, mob/user)
-	if(!user.Adjacent(M) || user.restrained() || user.lying || user.stat)
+/obj/proc/user_buckle_mob(mob/living/M, mob/living/user)
+	if(!user.Adjacent(M) || user.restrained() || user.lying || user.stat || !istype(user))
 		return
 
 	add_fingerprint(user)

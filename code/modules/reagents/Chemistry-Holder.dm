@@ -1,7 +1,8 @@
 
-var/const/TOUCH = 1
-var/const/INGEST = 2
-
+var/const/TOUCH = 1 //splashing
+var/const/INGEST = 2 //injection, ingestion
+var/const/VAPOR = 3 //smoke, foam, spray, blob attack
+var/const/PATCH = 4 //patches
 
 
 datum/reagents
@@ -102,7 +103,7 @@ datum/reagents/proc/get_master_reagent_id()
 
 	return the_id
 
-datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+datum/reagents/proc/trans_to(var/atom/movable/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if (!target )
 		return
 	var/datum/reagents/R
@@ -125,7 +126,7 @@ datum/reagents/proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, src.chem_temp)
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, src.chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
 		src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
 	src.update_total()
@@ -438,25 +439,27 @@ datum/reagents/proc/clear_reagents()
 		del_reagent(R.id)
 	return 0
 
-datum/reagents/proc/reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=1,var/show_message=1)
-	for(var/datum/reagent/R in reagent_list)
-		if(ismob(A))
-			R.reaction_mob(A, method, R.volume*volume_modifier, show_message)
-		if(isturf(A))
+/datum/reagents/proc/reaction(atom/A, method=TOUCH, volume_modifier=1,show_message=1)
+	if(isliving(A))
+		var/mob/living/L = A
+		var/touch_protection = 0
+		if(method == VAPOR)
+			touch_protection = L.get_permeability_protection()
+		for(var/datum/reagent/R in reagent_list)
+			R.reaction_mob(L, method, R.volume*volume_modifier, show_message, touch_protection)
+	else if(isturf(A))
+		for(var/datum/reagent/R in reagent_list)
 			R.reaction_turf(A, R.volume*volume_modifier, show_message)
-		if(isobj(A))
+	else if(isobj(A))
+		for(var/datum/reagent/R in reagent_list)
 			R.reaction_obj(A, R.volume*volume_modifier, show_message)
 
-	return
-
-datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var/reagtemp = 300)
-	if(!isnum(amount)) return 1
-	if(!amount)
-		return
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+	if(!isnum(amount) || !amount)
+		return 1
 	update_total()
 	if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-	if((total_volume + amount) != 0)
-		chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
+	chem_temp = round(((amount * reagtemp) + (total_volume * chem_temp)) / (total_volume + amount)) //equalize with new chems
 
 	for(var/A in reagent_list)
 
@@ -466,7 +469,8 @@ datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var
 			update_total()
 			my_atom.on_reagent_change()
 			R.on_merge(data)
-			handle_reactions()
+			if(!no_react)
+				handle_reactions()
 			return 0
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
@@ -480,19 +484,16 @@ datum/reagents/proc/add_reagent(var/reagent, var/amount, var/list/data=null, var
 			R.data = data
 			R.on_new(data)
 
-		//debug
-		//world << "Adding data"
-		//for(var/D in R.data)
-		//	world << "Container data: [D] = [R.data[D]]"
-		//debug
 		update_total()
 		my_atom.on_reagent_change()
-		handle_reactions()
+		if(!no_react)
+			handle_reactions()
 		return 0
 	else
 		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
 
-	handle_reactions()
+	if(!no_react)
+		handle_reactions()
 
 	return 1
 

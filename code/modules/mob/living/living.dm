@@ -934,3 +934,6 @@ Sorry Giacom. Please don't be mad :(
 		loc_temp = environment.temperature
 
 	return loc_temp
+
+/mob/living/proc/get_permeability_protection()
+	return 0

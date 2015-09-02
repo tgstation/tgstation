@@ -11,7 +11,7 @@
 	//can_be_unanchored = 1 not sure if it's needed
 	floor_tile = /obj/item/stack/tile/pool
 	reagents = new(0) //reagents inside the tile
-	var/chem_dose = 2 //reagents to remove per tick
+	var/chem_dose = 5 //reagents to remove per tick
 	var/chem_share = 0 //ammount of chems to give neighbours, changed dynamically.
 	flags = OPENCONTAINER
 	var/pool_count = 0
@@ -23,7 +23,21 @@
 	reagents.maximum_volume = 200
 	var/image/water_effect = image('icons/effects/water.dmi', src, "water_pool")
 	overlays += water_effect
+	update_icon()
 	..()
+
+
+/turf/simulated/floor/pool/ChangeTurf(path)
+	SSobj.processing -= src
+	if(smooth)
+		smooth_icon_neighbors(src)
+	return ..()
+
+/turf/simulated/floor/pool/Destroy()
+	SSobj.processing -= src
+	if(smooth)
+		smooth_icon_neighbors(src)
+	return ..()
 
 /turf/simulated/floor/pool/update_icon()
 	if(smooth)
@@ -31,17 +45,18 @@
 		smooth_icon_neighbors(src)
 
 /turf/simulated/floor/pool/process()
-	if(smooth)
-		smooth_icon(src)
-		smooth_icon_neighbors(src)
 
-	for(var/mob/living/L in src)
-		reagents.reaction(L, TOUCH)
-		reagents.remove_any(chem_dose/10)		//reaction() doesn't use up the reagents
+	for(var/mob/living/carbon/L in src)
+		if(reagents.total_volume)
+			var/fraction = ((chem_dose)/reagents.total_volume)
+			reagents.reaction(L, VAPOR, fraction)
+			reagents.remove_any(chem_dose)		//reaction() doesn't use up the reagents
 
 	for(var/obj/item/O in src)	//This will make acid melt items. Might need to decrease the scope of it though.
-		reagents.reaction(O, TOUCH)
-		reagents.remove_any(chem_dose)
+		if(reagents.total_volume)
+			var/fraction = (chem_dose/reagents.total_volume)
+			reagents.reaction(O, VAPOR, fraction)
+			reagents.remove_any(chem_dose)
 
 	//find adjacent pools to spread chems.
 	pool_count = 1

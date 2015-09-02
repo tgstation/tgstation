@@ -102,8 +102,6 @@
 
 	var/in_throw_mode = 0
 
-	var/coughedtime = null
-
 	var/music_lastplayed = "null"
 
 	var/job = null//Living

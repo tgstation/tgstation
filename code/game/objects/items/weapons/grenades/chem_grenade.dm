@@ -18,7 +18,8 @@
 
 /obj/item/weapon/grenade/chem_grenade/New()
 	create_reagents(1000)
-	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
+	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY
+	..()
 
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
@@ -55,39 +56,41 @@
 				user << "<span class='notice'>You lock the [initial(name)] assembly.</span>"
 				playsound(loc, 'sound/items/Screwdriver.ogg', 25, -3)
 			else
-				user << "<span class='notice'>You need to add at least one beaker before locking the [initial(name)] assembly.</span>"
+				user << "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>"
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
 			user << "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>"
 		else if(stage == EMPTY)
-			user << "<span class='notice'>You need to add an activation mechanism.</span>"
+			user << "<span class='warning'>You need to add an activation mechanism!</span>"
 
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		if(beakers.len == 2)
-			user << "<span class='notice'>[src] can not hold more containers.</span>"
+			user << "<span class='warning'>[src] can not hold more containers!</span>"
 			return
 		else
 			if(I.reagents.total_volume)
+				if(!user.unEquip(I))
+					return
 				user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-				user.drop_item()
 				I.loc = src
 				beakers += I
 			else
-				user << "<span class='notice'>[I] is empty.</span>"
+				user << "<span class='warning'>[I] is empty!</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
 		var/obj/item/device/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
+		if(!user.unEquip(I))
+			return
 
-		user.drop_item()
 		nadeassembly = A
 		A.master = src
 		A.loc = src
 		assemblyattacher = user.ckey
 
 		stage_change(WIRED)
-		user << "<span class='notice'>You add [A] to the [initial(name)] assembly!</span>"
+		user << "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>"
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
@@ -96,7 +99,7 @@
 			stage_change(WIRED)
 			user << "<span class='notice'>You rig the [initial(name)] assembly.</span>"
 		else
-			user << "<span class='warning'>You need one length of coil to wire the assembly.</span>"
+			user << "<span class='warning'>You need one length of coil to wire the assembly!</span>"
 			return
 
 	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
@@ -120,7 +123,7 @@
 		user << "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>"
 
 
-/obj/item/weapon/grenade/chem_grenade/proc/stage_change(var/N)
+/obj/item/weapon/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
 		stage = N
 	if(stage == EMPTY)
@@ -180,40 +183,50 @@
 
 	mix_reagents()
 
-	if(reagents.total_volume)	//The possible reactions didnt use up all reagents.
+	if(reagents && reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 		steam.set_up(10, 0, get_turf(src))
 		steam.attach(src)
 		steam.start()
 
-	var/list/viewable = view(affected_area, loc)
-	var/list/accessible = can_flood_from(loc, affected_area)
-	var/list/reactable = accessible
-	var/mycontents = GetAllContents()
-	for(var/turf/T in accessible)
-		for(var/atom/A in T.GetAllContents())
-			if(A in mycontents) continue
-			if(!(A in viewable)) continue
-			reactable |= A
-	var/fraction = (reagents.total_volume/reactable.len) - reagents.total_volume
-	for(var/atom/A in reactable)
-		reagents.reaction(A, TOUCH, fraction)
+		var/list/viewable = view(affected_area, loc)
+		var/list/accessible = can_flood_from(loc, affected_area)
+		var/list/reactable = accessible
+		var/mycontents = GetAllContents()
+		for(var/turf/T in accessible)
+			for(var/atom/A in T.GetAllContents())
+				if(A in mycontents) continue
+				if(!(A in viewable)) continue
+				reactable |= A
+		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
+			qdel(src)
+			return
+		var/fraction = 1/reactable.len
+		for(var/atom/A in reactable)
+			reagents.reaction(A, TOUCH, fraction)
 
-	invisibility = INVISIBILITY_MAXIMUM		//Why am i doing this?
-	spawn(50)		   //To make sure all reagents can work
-		qdel(src)	   //correctly before deleting the grenade.
+	qdel(src)
 
 /obj/item/weapon/grenade/chem_grenade/proc/mix_reagents()
 	var/total_temp
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
 		total_temp += G.reagents.chem_temp
-	reagents.chem_temp = total_temp
+	if(reagents)
+		reagents.chem_temp = total_temp
 
 /obj/item/weapon/grenade/chem_grenade/proc/can_flood_from(myloc, maxrange)
+	var/turf/myturf = get_turf(myloc)
 	var/list/reachable = list(myloc)
 	for(var/i=1; i<=maxrange; i++)
+		var/list/turflist = list()
 		for(var/turf/T in (orange(i, myloc) - orange(i-1, myloc)))
+			turflist |= T
+		for(var/turf/T in turflist)
+			if( !(get_dir(T,myloc) in cardinal) && (abs(T.x - myturf.x) == abs(T.y - myturf.y) ))
+				turflist.Remove(T)
+				turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
+		for(var/turf/T in turflist)
 			if(T in reachable) continue
 			for(var/turf/NT in orange(1, T))
 				if(!(NT in reachable)) continue
@@ -252,8 +265,9 @@
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/weapon/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/slime_extract) && stage == WIRED)
+		if(!user.unEquip(I))
+			return
 		user << "<span class='notice'>You add [I] to the [initial(name)] assembly.</span>"
-		user.drop_item()
 		I.loc = src
 		beakers += I
 	else
@@ -288,8 +302,8 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminium", 25)
-	B2.reagents.add_reagent("plasma", 25)
+	B1.reagents.add_reagent("phosphorus", 25)
+	B2.reagents.add_reagent("stable_plasma", 25)
 	B2.reagents.add_reagent("sacid", 25)
 
 	beakers += B1
@@ -340,13 +354,14 @@
 
 /obj/item/weapon/grenade/chem_grenade/teargas/New()
 	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
 
-	B1.reagents.add_reagent("condensedcapsaicin", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("condensedcapsaicin", 60)
+	B1.reagents.add_reagent("potassium", 40)
+	B2.reagents.add_reagent("phosphorus", 40)
+	B2.reagents.add_reagent("sugar", 40)
+	B1.reagents.add_reagent("condensedcapsaicin", 20)
 
 	beakers += B1
 	beakers += B2
@@ -359,16 +374,18 @@
 
 /obj/item/weapon/grenade/chem_grenade/pacid/New()
 	..()
-	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
-	B1.reagents.add_reagent("pacid", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent("pacid", 290)
+	B1.reagents.add_reagent("potassium", 10)
+	B2.reagents.add_reagent("phosphorus", 10)
+	B2.reagents.add_reagent("sugar", 10)
+	B2.reagents.add_reagent("pacid", 280)
 
 	beakers += B1
 	beakers += B2
+
 
 /obj/item/weapon/grenade/chem_grenade/colorful
 	name = "colorful grenade"
@@ -387,6 +404,26 @@
 
 	beakers += B1
 	beakers += B2
+
+
+/obj/item/weapon/grenade/chem_grenade/clf3
+	name = "clf3 grenade"
+	desc = "BURN!-brand foaming clf3. In a special applicator for rapid purging of wide areas."
+	stage = READY
+
+/obj/item/weapon/grenade/chem_grenade/clf3/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+
+	B1.reagents.add_reagent("fluorosurfactant", 250)
+	B1.reagents.add_reagent("clf3", 50)
+	B2.reagents.add_reagent("water", 250)
+	B2.reagents.add_reagent("clf3", 50)
+
+	beakers += B1
+	beakers += B2
+
 
 #undef EMPTY
 #undef WIRED

@@ -307,7 +307,7 @@
 			H.bodytemperature = max(H.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise //no you will never ever fix this shit
 		if(beaker && next_trans == 0)
 			beaker.reagents.trans_to(occupant, 1, 10)
-			beaker.reagents.reaction(occupant)
+			beaker.reagents.reaction(occupant, VAPOR)
 	next_trans++
 	if(next_trans == 10)
 		next_trans = 0

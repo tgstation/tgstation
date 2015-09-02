@@ -467,16 +467,16 @@ datum/reagent/medicine/silver_sulfadiazine
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-datum/reagent/medicine/silver_sulfadiazine/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+/datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
-		if(method == TOUCH && M.stat != DEAD)
-			M.adjustFireLoss(-volume)
+		if((method == VAPOR || method == TOUCH || method == PATCH) && M.stat != DEAD)
+			M.adjustFireLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your burns healing!</span>"
 			if(!M.stat)
 				M.emote("scream")
 		if(method == INGEST && M.stat != DEAD)
-			M.adjustToxLoss(0.5*volume)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You probably shouldn't have eaten that. Maybe you should of splashed it on, or applied a patch?</span>"
 	..()
@@ -490,16 +490,16 @@ datum/reagent/medicine/styptic_powder
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-datum/reagent/medicine/styptic_powder/reaction_mob(var/mob/living/M as mob, var/method=TOUCH, var/volume, var/show_message = 1)
+datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
-		if(method == TOUCH && M.stat != DEAD)
-			M.adjustBruteLoss(-volume)
+		if((method == VAPOR || method == TOUCH || method == PATCH) && M.stat != DEAD)
+			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel your wounds knitting back together!</span>"
 			if(!M.stat)
 				M.emote("scream")
 		if(method == INGEST && M.stat != DEAD)
-			M.adjustToxLoss(0.5*volume)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				M << "<span class='notice'>You feel kind of ill. Maybe you ate a medicine you shouldn't have?</span>"
 	..()
@@ -918,7 +918,7 @@ datum/reagent/medicine/strange_reagent //
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/strange_reagent/reaction_mob(var/mob/living/carbon/human/M as mob, var/method=TOUCH, var/volume)
+/datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
 		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")

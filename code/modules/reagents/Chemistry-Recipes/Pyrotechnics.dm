@@ -119,23 +119,26 @@
 	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
 	result_amount = 4
 
-/datum/chemical_reaction/sorium/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	holder.remove_reagent("sorium", created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	goonchem_vortex(T, 1, 5, 6)
+	var/range = Clamp(sqrt(created_volume), 1, 6)
+	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
 	name = "sorium_vortex"
 	id = "sorium_vortex"
 	result = null
+	result_amount = 1
 	required_reagents = list("sorium" = 1)
 	required_temp = 474
 
-/datum/chemical_reaction/sorium_vortex/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	goonchem_vortex(T, 1, 5, 6)
+	var/range = Clamp(sqrt(created_volume), 1, 6)
+	goonchem_vortex(T, 1, range)
 
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -145,23 +148,26 @@
 	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/liquid_dark_matter/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	holder.remove_reagent("liquid_dark_matter", created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	goonchem_vortex(T, 0, 5, 6)
+	var/range = Clamp(sqrt(created_volume), 1, 6)
+	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
 	name = "LDM Vortex"
 	id = "ldm_vortex"
 	result = null
+	result_amount = 1
 	required_reagents = list("liquid_dark_matter" = 1)
 	required_temp = 474
 
-/datum/chemical_reaction/ldm_vortex/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/simulated/T = get_turf(holder.my_atom)
-	goonchem_vortex(T, 0, 5, 6)
+	var/range = Clamp(sqrt(created_volume/2), 1, 6)
+	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
@@ -212,23 +218,20 @@
 	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
 	result_amount = 3
 
-/datum/chemical_reaction/smoke_powder/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	holder.remove_reagent("smoke_powder", created_volume)
+	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		if(S)
-			S.set_up(holder, 10, 0, location)
-			S.start()
-			sleep(10)
-			S.start()
-		if(holder && holder.my_atom)
-			holder.clear_reagents()
-	return
+	if(S)
+		S.set_up(holder, smoke_amount, 0, location)
+		S.start()
+	if(holder && holder.my_atom)
+		holder.clear_reagents()
 
 /datum/chemical_reaction/smoke_powder_smoke
 	name = "smoke_powder_smoke"
@@ -240,20 +243,17 @@
 	secondary = 1
 	mob_react = 1
 
-/datum/chemical_reaction/smoke_powder_smoke/on_reaction(var/datum/reagents/holder, var/created_volume)
+/datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		if(S)
-			S.set_up(holder, 10, 0, location)
-			S.start()
-			sleep(10)
-			S.start()
-		if(holder && holder.my_atom)
-			holder.clear_reagents()
-	return
+	if(S)
+		S.set_up(holder, smoke_amount, 0, location)
+		S.start()
+	if(holder && holder.my_atom)
+		holder.clear_reagents()
 
 
 /datum/chemical_reaction/sonic_powder
