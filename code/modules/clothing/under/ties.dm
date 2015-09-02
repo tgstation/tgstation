@@ -84,7 +84,7 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	item_color = "bronze"
-	materials = list(MAT_METAL=250)
+	materials = list(MAT_METAL=1000)
 	burn_state = -1 //Won't burn in fires
 
 //Pinning medals on people
@@ -126,7 +126,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
-	materials = list(MAT_SILVER=250)
+	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/tie/medal/silver/valor
 	name = "medal of valor"
@@ -141,7 +141,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
-	materials = list(MAT_GOLD=250)
+	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
