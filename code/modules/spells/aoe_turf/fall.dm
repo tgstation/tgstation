@@ -7,20 +7,33 @@
 
 	selection_type = "range"
 	school = "transmutation"
-	charge_max = 600 // now 2min
+	charge_max = 900 // now 2min
 	invocation = "OMNIA RUINAM"
 	invocation_type = SpI_SHOUT
-	range = 8
-	cooldown_min = 300
+	range = 4
+	cooldown_min = 600
 	cooldown_reduc = 100
-	level_max = list(Sp_TOTAL = 3, Sp_SPEED = 3, Sp_POWER = 0)
+	level_max = list(Sp_TOTAL = 3, Sp_SPEED = 3, Sp_POWER = 3)
 	hud_state = "wiz_timestop"
 	var/image/aoe_underlay
 	var/list/oureffects = list()
 	var/list/affected = list()
 	var/sleepfor
 	var/the_world_chance = 30
+	var/sleeptime = 30
 
+/spell/aoe_turf/fall/empower_spell()
+	if(!can_improve(Sp_POWER))
+		return 0
+	spell_levels[Sp_POWER]++
+	var/temp = ""
+	range++
+	sleeptime += 10
+	switch(level_max[Sp_POWER] - spell_levels[Sp_POWER])
+		if(2)
+			temp = "Your control over time strengthens, you can now stop time for [sleeptime/10] second\s and in a radius of [range*2] meter\s."
+
+	return temp
 
 /spell/aoe_turf/fall/New()
 	..()
@@ -79,7 +92,7 @@
 	spawn()
 		for(var/client/C in clients)
 			if(C.mob)
-				C.mob.see_fall(ourturf)
+				C.mob.see_fall(ourturf, range)
 		spawn(10)
 		for(var/client/C in clients)
 			if(C.mob)
@@ -89,7 +102,7 @@
 	var/oursound = (invocation == "ZA WARUDO" ? 'sound/effects/theworld.ogg' :'sound/effects/fall.ogg')
 	playsound(usr, oursound, 100, 0, 0, 0, 0)
 
-	sleepfor = world.time + 100
+	sleepfor = world.time + sleeptime
 	for(var/turf/T in targets)
 		//world << "Starting [T]"
 		oureffects += getFromPool(/obj/effect/stop/sleeping, T, sleepfor, usr:mind, src, invocation == "ZA WARUDO")
@@ -173,7 +186,7 @@
 
 /mob/var/image/fallimage
 
-/mob/proc/see_fall(var/turf/T)
+/mob/proc/see_fall(var/turf/T, range = 8)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/see_rift() called tick#: [world.time]")
 	var/turf/T_mob = get_turf(src)
 	if((!T || isnull(T)) && fallimage)
@@ -182,11 +195,12 @@
 		del(fallimage)
 		return
 	else if(T && T_mob && (T.z == T_mob.z) && (get_dist(T,T_mob) <= 15))// &&!(T in view(T_mob)))
+		var/matrix/original
 		if(!fallimage)
 			fallimage = image(icon = 'icons/effects/640x640.dmi', icon_state = "fall", layer = 2.1)
+			original = fallimage.transform
 			fallimage.transform /= 50
 			fallimage.mouse_opacity = 0
-
 		var/new_x = 32 * (T.x - T_mob.x) - 304
 		var/new_y = 32 * (T.y - T_mob.y) - 304
 		fallimage.pixel_x = new_x
@@ -194,7 +208,7 @@
 		fallimage.loc = T_mob
 
 		src << fallimage
-		animate(fallimage, transform = null, time = 3)
+		animate(fallimage, transform = original / (8/range), time = 3)
 
 /proc/invertcolor(atom/A)
 	//world << "invert color start"
