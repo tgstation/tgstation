@@ -30,7 +30,14 @@
 /obj/item/clothing/mask/necklace/teeth/proc/update_name()
 	var/animal_name = "teeth"
 	if(animal_type)
-		animal_name = "[initial(animal_type.name)] teeth"
+		if(ispath(animal_type, /mob/living/carbon/human))
+			animal_name = "human teeth"
+			if(animal_type == /mob/living/carbon/human/skellington)
+				animal_name = "skellington teeth"
+			if(animal_type == /mob/living/carbon/human/tajaran)
+				animal_name = "tajaran teeth"
+		else
+			animal_name = "[initial(animal_type.name)] teeth"
 
 	var/prefix = ""
 	if(teeth_amount >= 20)
@@ -40,7 +47,7 @@
 	if(teeth_amount >= 50)
 		prefix = "masterwork "
 	if(teeth_amount >= 100)
-		prefix = "legendary"
+		prefix = "legendary "
 
 	name = "[prefix][animal_name] necklace"
 	desc = "A necklace made out of [teeth_amount] [animal_name]."
