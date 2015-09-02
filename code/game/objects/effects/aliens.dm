@@ -196,13 +196,13 @@
 		qdel(src)
 		return
 
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
+
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
 		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 			continue
-
-		if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-			return
 
 		new /obj/structure/alien/weeds(T, linked_node)
 
