@@ -47,16 +47,18 @@
 /turf/simulated/floor/pool/process()
 
 	for(var/mob/living/carbon/L in src)
-		if(reagents.total_volume)
+		if(istype(L, /mob/living/carbon) && reagents.total_volume)
 			var/fraction = ((chem_dose)/reagents.total_volume)
 			reagents.reaction(L, VAPOR, fraction)
 			reagents.remove_any(chem_dose)		//reaction() doesn't use up the reagents
 
-	for(var/obj/item/O in src)	//This will make acid melt items. Might need to decrease the scope of it though.
-		if(reagents.total_volume)
-			var/fraction = (chem_dose/reagents.total_volume)
-			reagents.reaction(O, VAPOR, fraction)
-			reagents.remove_any(chem_dose)
+	//for(var/obj/item/O in src)	//This will make acid melt items. Might need to decrease the scope of it though.
+	//	if(istype(L, /obj/item) && reagents.total_volume)
+	//		var/fraction = (chem_dose/reagents.total_volume)
+	//		reagents.reaction(O, VAPOR, fraction)
+	//		reagents.remove_any(chem_dose)
+
+	//This is gonna need a new check to make sure it doesn't spend 300 chems in one pen.
 
 	//find adjacent pools to spread chems.
 	pool_count = 1
