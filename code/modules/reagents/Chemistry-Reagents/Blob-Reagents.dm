@@ -95,13 +95,13 @@
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BRUTE)
 
-/datum/reagent/blob/sorium //does brute damage and throws or pushes nearby objects away from the target
+/datum/reagent/blob/b_sorium //does brute damage and throws or pushes nearby objects away from the target
 	name = "Sorium"
-	id = "sorium"
+	id = "b_sorium"
 	color = "#808000"
 	message = "The blob slams into you, and sends you flying"
 
-/datum/reagent/blob/sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	reagent_vortex(M, 1, reac_volume)
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BRUTE)
