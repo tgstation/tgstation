@@ -48,3 +48,9 @@
 			qdel(src)
 		else
 			user << "<span class='info'>You need at least 5 lengths of cable to do this!</span>"
+
+/obj/item/stack/teeth/copy_evidences(obj/item/stack/from as obj)
+	.=..()
+	if(istype(from, /obj/item/stack/teeth))
+		var/obj/item/stack/teeth/original_teeth = from
+		src.animal_type = original_teeth.animal_type
