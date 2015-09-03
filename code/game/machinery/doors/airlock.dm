@@ -89,13 +89,13 @@ About the new airlock wires panel:
 // You can find code for the airlock wires in the wire datum folder.
 
 /obj/machinery/door/airlock/proc/bolt()
-	if(locked)
+	if(locked || operating)
 		return
 	locked = 1
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
-	if(!locked)
+	if(!locked || operating)
 		return
 	locked = 0
 	update_icon()
@@ -136,7 +136,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/proc/isWireCut(wireIndex)
 	// You can find the wires in the datum folder.
-	return wires.IsIndexCut(wireIndex)
+	return (wires && wires.IsIndexCut(wireIndex))
 
 /obj/machinery/door/airlock/proc/canAIControl()
 	return ((src.aiControlDisabled!=1) && (!src.isAllPowerCut()));
@@ -565,21 +565,22 @@ About the new airlock wires panel:
 					//disrupt main power
 					if(src.secondsMainPowerLost == 0)
 						src.loseMainPower()
+						update_icon()
 					else
 						usr << "Main power is already offline."
 				if(3)
 					//disrupt backup power
 					if(src.secondsBackupPowerLost == 0)
 						src.loseBackupPower()
+						update_icon()
 					else
 						usr << "Backup power is already offline."
 				if(4)
 					//drop door bolts
 					if(src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						usr << "You can't drop the door bolts - The door bolt dropping wire has been cut."
-					else if(src.locked!=1)
-						src.locked = 1
-						update_icon()
+					else
+						bolt()
 				if(5)
 					//un-electrify door
 					if(src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
@@ -626,6 +627,7 @@ About the new airlock wires panel:
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (src.lights)
 						lights = 0
+						update_icon()
 					else
 						usr << text("Door bolt lights are already disabled!")
 
@@ -633,6 +635,7 @@ About the new airlock wires panel:
 					// Emergency access
 					if (src.emergency)
 						emergency = 0
+						update_icon()
 					else
 						usr << text("Emergency access is already disabled!")
 
@@ -656,8 +659,7 @@ About the new airlock wires panel:
 						usr << text("The door bolts are already up.<br>\n")
 					else
 						if(src.hasPower())
-							src.locked = 0
-							update_icon()
+							unbolt()
 						else
 							usr << text("Cannot raise door bolts due to power failure.<br>\n")
 
@@ -730,6 +732,7 @@ About the new airlock wires panel:
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (!src.lights)
 						lights = 1
+						update_icon()
 						src.updateUsrDialog()
 					else
 						usr << text("Door bolt lights are already enabled!")
@@ -738,11 +741,11 @@ About the new airlock wires panel:
 					// Emergency access
 					if (!src.emergency)
 						emergency = 1
+						update_icon()
 					else
 						usr << text("Emergency access is already enabled!")
 
 	add_fingerprint(usr)
-	update_icon()
 	if(!nowindow)
 		updateUsrDialog()
 	return
