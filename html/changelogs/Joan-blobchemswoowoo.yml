@@ -4,7 +4,7 @@ delete-after: True
 
 changes: 
   - rscadd: "New blob chemical; Cryogenic Liquid. Cools down targets."
-  - tweak: "Tweaked names, colors, and effects of remaining blob chemicals;
+  - tweak: "Tweaked names, colors, and effects of remaining blob chemicals;"
   - tweak: "Skin Ripper is now Ripping Tendrils and does minor stamina damage, in addition to the brute damage."
   - tweak: "Toxic Goop is now Envenomed Filaments and injects targets with spore toxin and causes hallucinations, in addition to the toxin damage."
   - tweak: "Lung Destroying Toxin is now Lexorin Jelly and does brute damage instead of toxin damage. The oxygen loss it causes can also no longer crit you in one hit."
