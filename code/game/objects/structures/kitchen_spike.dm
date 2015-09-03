@@ -1,13 +1,13 @@
 
-#define SKINTYPE_MONKEY 1
-#define SKINTYPE_ALIEN 2
-#define SKINTYPE_BEAR 3
-#define SKINTYPE_CORGI 4
+#define SKINTYPE_MONKEY	/obj/item/stack/sheet/animalhide/monkey
+#define SKINTYPE_ALIEN	/obj/item/stack/sheet/animalhide/xeno
+#define SKINTYPE_BEAR	/obj/item/clothing/head/bearpelt
+#define SKINTYPE_CORGI	/obj/item/stack/sheet/animalhide/corgi
 
-#define MEATTYPE_MONKEY 1
-#define MEATTYPE_ALIEN 2
-#define MEATTYPE_BEAR 3
-#define MEATTYPE_CORGI 4
+#define MEATTYPE_MONKEY	/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
+#define MEATTYPE_ALIEN	/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+#define MEATTYPE_BEAR	/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear
+#define MEATTYPE_CORGI	/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi
 
 //////Kitchen Spike
 
@@ -109,44 +109,19 @@
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(..())
 		return
-	if(src.occupied)
-		if (src.meat > 1)
-			switch(src.meattype)
-				if(MEATTYPE_MONKEY)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc )
-				if(MEATTYPE_ALIEN)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src.loc )
-				if(MEATTYPE_BEAR)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc )
-				if(MEATTYPE_CORGI)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src.loc )
-			src.meat--
-			usr << "<span class='notice'>You remove some meat from [src].</span>"
-		else if (src.meat == 1)
-			switch(src.meattype)
-				if(MEATTYPE_MONKEY)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc)
-				if(MEATTYPE_ALIEN)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src.loc)
-				if(MEATTYPE_BEAR)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc)
-				if(MEATTYPE_CORGI)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src.loc)
-			src.meat--
-		else if(src.skin >=1)
-			switch(src.skintype)
-				if(SKINTYPE_MONKEY)
-					new /obj/item/stack/sheet/animalhide/monkey(src.loc)
-				if(SKINTYPE_ALIEN)
-					new /obj/item/stack/sheet/animalhide/xeno(src.loc)
-				if(SKINTYPE_BEAR)
-					new /obj/item/clothing/head/bearpelt(src.loc)
-				if(SKINTYPE_CORGI)
-					new	/obj/item/stack/sheet/animalhide/corgi(src.loc)
-			src.skin--
-			usr << "<span class='notice'>You remove the hide from [src].</span>"
-			src.icon_state = "spike"
-			src.occupied = 0
+	if(occupied)
+		if(meat >= 1)
+			new meattype(src.loc)
+			meat--
+			if(meat > 1)
+				usr << "<span class='notice'>You remove some meat from [src].</span>"
+			return
+	if(src.skin >=1)
+		new skintype(src.loc)
+		skin--
+		usr << "<span class='notice'>You remove the hide from [src].</span>"
+		src.icon_state = "spike"
+		src.occupied = 0
 
 
 #undef SKINTYPE_MONKEY
