@@ -811,7 +811,7 @@ var/global/floorIsLava = 0
 	return 1
 
 /client/proc/adminGreet(logout)
-	if(ticker && ticker.current_state == GAME_STATE_PLAYING && config && config.announce_admin_login)
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		var/string
 		if(logout && config && config.announce_admin_logout)
 			string = pick(
