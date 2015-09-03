@@ -4,6 +4,7 @@
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	health = 400
+	maxhealth = 400
 	explosion_block = 6
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
@@ -67,7 +68,10 @@
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
-	health = min(initial(health), health + 1)
+	if(health < maxhealth)
+		health += health_regen
+		if(health > maxhealth)
+			health = maxhealth
 	if(overmind)
 		overmind.update_health()
 	pulseLoop(0)

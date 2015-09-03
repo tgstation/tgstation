@@ -4,6 +4,7 @@
 	icon_state = "blob_resource"
 	desc = "A thin spire of slightly swaying tendrils."
 	health = 60
+	maxhealth = 60
 	var/resource_delay = 0
 
 /obj/effect/blob/resource/update_icon()

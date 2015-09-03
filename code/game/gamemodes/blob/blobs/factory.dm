@@ -4,6 +4,7 @@
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
 	health = 200
+	maxhealth = 200
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0

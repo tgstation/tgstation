@@ -4,6 +4,7 @@
 	icon_state = "blob_resource"
 	desc = "A huge, smooth mass supported by tendrils."
 	health = 60
+	maxhealth = 60
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)
