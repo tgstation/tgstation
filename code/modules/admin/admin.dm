@@ -813,10 +813,10 @@ var/global/floorIsLava = 0
 /client/proc/adminGreet(logout)
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING && config && config.announce_admin_login)
 		var/string
-		if(logout)
+		if(logout && config && config.announce_admin_logout)
 			string = pick(
 				"Admin logout: [key_name(src)]")
-		else
+		else if(!logout && config && config.announce_admin_login)
 			string = pick(
 				"Admin login: [key_name(src)]")
 		message_admins("[string]")
