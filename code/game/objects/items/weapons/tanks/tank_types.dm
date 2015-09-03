@@ -75,6 +75,7 @@
 /obj/item/weapon/tank/internals/plasma
 	name = "plasma tank"
 	desc = "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
+	raredesc = "I could use a little fuel myself."
 	icon_state = "plasma"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!

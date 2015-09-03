@@ -81,6 +81,7 @@
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
 	desc = "For the love of god, make sure you're aiming this the right way!"
+	raredesc = "But the meteor men beg to differ."
 	icon_state = "riotgun"
 	item_state = "c20r"
 	w_class = 4

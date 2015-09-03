@@ -4,6 +4,7 @@
 /obj/item/weapon/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
+	raredesc = "And we could all use a little change."
 	fire_sound = "sound/magic/Staff_Change.ogg"
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"

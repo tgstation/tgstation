@@ -139,6 +139,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
+	raredesc = "The ice we skate is getting pretty thin."
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
 	spillable = 1

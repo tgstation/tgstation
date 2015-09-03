@@ -88,6 +88,7 @@
 /obj/machinery/computer/arcade/battle
 	name = "arcade machine"
 	desc = "Does not support Pinball."
+	raredesc = "Hey, now, you're an All Star get your game on, go play."
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade/battle
 	var/enemy_name = "Space Villian"

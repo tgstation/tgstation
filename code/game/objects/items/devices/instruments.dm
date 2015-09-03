@@ -49,6 +49,7 @@
 /obj/item/device/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
+	raredesc = "Hey, now, you're a Rock Star get the show on get paid."
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"

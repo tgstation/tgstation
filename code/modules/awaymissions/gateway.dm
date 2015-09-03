@@ -1,6 +1,7 @@
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
+	raredesc = "You'll never know if you don't go."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	density = 1

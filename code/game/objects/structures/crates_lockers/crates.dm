@@ -58,6 +58,7 @@
 
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
+	raredesc = "It's a cool place and they say it gets colder."
 	name = "freezer"
 	icon_crate = "freezer"
 	icon_state = "freezer"

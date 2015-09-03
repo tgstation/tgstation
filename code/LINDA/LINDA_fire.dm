@@ -41,6 +41,7 @@
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
+	raredesc = "My world's on fire. How about yours?"
 	anchored = 1
 	mouse_opacity = 0
 	unacidable = 1//So you can't melt fire with acid.

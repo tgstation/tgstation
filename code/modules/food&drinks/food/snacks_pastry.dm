@@ -24,6 +24,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
+	raredesc = "That's the way I like it and I'll never get bored."
 	bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/New()

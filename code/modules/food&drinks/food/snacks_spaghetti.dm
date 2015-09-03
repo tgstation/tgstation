@@ -54,6 +54,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
 	desc = "A lawyers favourite."
+	raredesc = "Fed to the rules and I hit the ground running."
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spesslaw"
 	trash = /obj/item/trash/plate
