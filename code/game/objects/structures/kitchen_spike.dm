@@ -139,7 +139,7 @@
 				if(MEATTYPE_BEAR)
 					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear(src.loc )
 				if(MEATTYPE_CORGI)
-					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src,loc )
+					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src.loc )
 			src.meat--
 			usr << "<span class='notice'>You remove some meat from [src].</span>"
 		else if (src.meat == 1)
