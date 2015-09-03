@@ -44,7 +44,7 @@
 	if(beaker)
 		beaker.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
 	beaker = null
-	..()
+	return ..()
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
 	..()
 	var/datum/gas_mixture/air_contents = airs[AIR1]
@@ -314,7 +314,7 @@
 				occupant.heal_organ_damage(heal_brute,heal_fire)
 		if(beaker && next_trans == 0)
 			beaker.reagents.trans_to(occupant, 1, 10)
-			beaker.reagents.reaction(occupant)
+			beaker.reagents.reaction(occupant, VAPOR)
 	next_trans++
 	if(next_trans == 10)
 		next_trans = 0

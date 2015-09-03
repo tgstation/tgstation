@@ -216,7 +216,7 @@
 				nag()
 
 	if(prob(5))
-		visible_message("[src] makes an excited booping beeping sound!")
+		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
 	if(!target && emagged < 2 && amount > 0)
@@ -289,7 +289,7 @@
 					F.break_tile_to_plating()
 				else
 					F.ReplaceWithLattice()
-				visible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
+				audible_message("<span class='danger'>[src] makes an excited booping sound.</span>")
 				spawn(50)
 					amount ++
 					anchored = 0

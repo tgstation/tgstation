@@ -38,7 +38,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /datum/effect/effect/system/Destroy()
 	holder = null
 	location = null
-	..()
+	return ..()
 
 /datum/effect/effect/system/proc/set_up(n = 3, c = 0, turf/loc)
 	if(n > 10)

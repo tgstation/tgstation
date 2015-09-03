@@ -610,5 +610,5 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 /obj/machinery/computer/communications/Destroy()
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
-	..()
+	return ..()
 

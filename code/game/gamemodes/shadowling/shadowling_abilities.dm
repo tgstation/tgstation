@@ -1,6 +1,9 @@
+#define EMPOWERED_THRALL_LIMIT 5
+
 /obj/effect/proc_holder/spell/proc/shadowling_check(var/mob/living/carbon/human/H)
 	if(!H || !istype(H)) return
 	if(H.dna.species.id == "shadowling" && is_shadow(H)) return 1
+	if(H.dna.species.id == "l_shadowling" && is_thrall(H)) return 1
 	if(!is_shadow_or_thrall(usr)) usr << "<span class='warning'>You can't wrap your head around how to do this.</span>"
 	else if(is_thrall(usr)) usr << "<span class='warning'>You aren't powerful enough to do this.</span>"
 	else if(is_shadow(usr)) usr << "<span class='warning'>Your telepathic ability is suppressed. Hatch or regenerate first.</span>"
@@ -171,7 +174,7 @@
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
 	var/mob/living/carbon/human/user = usr
 	listclearnulls(ticker.mode.thralls)
-	if(!shadowling_check(usr)) return
+	if(!(usr.mind in ticker.mode.shadows)) return
 	if(user.dna.species.id != "shadowling")
 		if(ticker.mode.thralls.len >= 5)
 			user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
@@ -229,7 +232,7 @@
 						for(var/obj/item/weapon/implant/loyalty/L in target)
 							if(L && L.implanted)
 								qdel(L)
-								target << "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies. You feel a sense of liberation which is quickly stifled by terror.</span>"
+								target << "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies.</span>"
 				if(3)
 					usr << "<span class='notice'>You begin rearranging [target]'s memories.</span>"
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly.</span>")
@@ -511,46 +514,96 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall //Completely revives a dead thrall
 	name = "Black Recuperation"
-	desc = "Brings a dead thrall back to life."
+	desc = "Revives or empowers a thrall."
 	panel = "Shadowling Abilities"
 	range = 1
-	charge_max = 3000
+	charge_max = 600
 	clothes_req = 0
 	include_user = 0
 	action_icon_state = "revive_thrall"
-	var/list/thralls_in_world = list()
 
 /obj/effect/proc_holder/spell/targeted/revive_thrall/cast(list/targets)
 	if(!shadowling_check(usr))
 		charge_counter = charge_max
 		return
 	for(var/mob/living/carbon/human/thrallToRevive in targets)
-		if(!is_thrall(thrallToRevive))
-			usr << "<span class='warning'>[thrallToRevive] is not a thrall.</span>"
-			charge_counter = charge_max
-			return
-		if(thrallToRevive.stat != DEAD)
-			usr << "<span class='warning'>[thrallToRevive] is not dead.</span>"
-			charge_counter = charge_max
-			return
-		usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
-							"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
-		thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.")
-		if(!do_mob(usr, thrallToRevive, 30))
-			usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
-			charge_counter= charge_max
-			return
-		usr << "<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>"
-		usr.visible_message("<span class='boldannounce'><i>Red lightning surges from [usr]'s hands into [thrallToRevive]'s chest!</i></span>")
-		playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
-		playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
-		sleep(10)
-		thrallToRevive.revive()
-		thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] draws in a huge breath, blinding violet light shining from their eyes.</span>", \
-									   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
-		thrallToRevive.Weaken(4)
-		thrallToRevive.emote("gasp")
-		playsound(thrallToRevive, "bodyfall", 50, 1)
+		var/choice = alert(usr,"Empower a living thrall or revive a dead one?",,"Empower","Revive","Cancel")
+		switch(choice)
+			if("Empower")
+				if(!is_thrall(thrallToRevive))
+					usr << "<span class='warning'>[thrallToRevive] is not a thrall.</span>"
+					charge_counter = charge_max
+					return
+				if(thrallToRevive.stat != CONSCIOUS)
+					usr << "<span class='warning'>[thrallToRevive] must be conscious to become empowered.</span>"
+					charge_counter = charge_max
+					return
+				var/empowered_thralls = 0
+				for(var/datum/mind/M in ticker.mode.thralls)
+					if(!ishuman(M.current))
+						return
+					var/mob/living/carbon/human/H = M.current
+					if(H.dna.species.id == "l_shadowling")
+						empowered_thralls++
+				if(empowered_thralls >= EMPOWERED_THRALL_LIMIT)
+					usr << "<span class='warning'>You cannot spare this much energy. There are too many empowered thralls.</span>"
+					charge_counter = charge_max
+					return
+				usr.visible_message("<span class='danger'>[usr] places their hands over [thrallToRevive]'s face, red light shining from beneath.</span>", \
+									"<span class='shadowling'>You place your hands on [thrallToRevive]'s face and begin gathering energy...</span>")
+				thrallToRevive << "<span class='userdanger'>[usr] places their hands over your face. You feel energy gathering. Stand still...</span>"
+				if(!do_mob(usr, thrallToRevive, 80))
+					usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
+					charge_counter = charge_max
+					return
+				usr << "<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>"
+				usr.visible_message("<span class='boldannounce'><i>Red lightning surges into [thrallToRevive]'s face!</i></span>")
+				playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
+				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
+				usr.Beam(thrallToRevive,icon_state="red_lightning",icon='icons/effects/effects.dmi',time=1)
+				thrallToRevive.Weaken(5)
+				thrallToRevive.visible_message("<span class='warning'><b>[thrallToRevive] collapses, their skin and face distorting!</span>", \
+											   "<span class='userdanger'><i>AAAAAAAAAAAAAAAAAAAGH-</i></span>")
+				sleep(20)
+				thrallToRevive.visible_message("<span class='warning'>[thrallToRevive] slowly rises, no longer recognizable as human.</span>", \
+											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
+											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
+				hardset_dna(thrallToRevive, null, null, null, null, /datum/species/shadow/ling/lesser)
+				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
+				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadow_walk)
+				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
+				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow_walk(null))
+			if("Revive")
+				if(!is_thrall(thrallToRevive))
+					usr << "<span class='warning'>[thrallToRevive] is not a thrall.</span>"
+					charge_counter = charge_max
+					return
+				if(thrallToRevive.stat != DEAD)
+					usr << "<span class='warning'>[thrallToRevive] is not dead.</span>"
+					charge_counter = charge_max
+					return
+				usr.visible_message("<span class='danger'>[usr] kneels over [thrallToRevive], placing their hands on \his chest.</span>", \
+									"<span class='shadowling'>You crouch over the body of your thrall and begin gathering energy...</span>")
+				thrallToRevive.notify_ghost_cloning("Your masters are resuscitating you! Re-enter your corpse if you wish to be brought to life.")
+				if(!do_mob(usr, thrallToRevive, 30))
+					usr << "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>"
+					charge_counter = charge_max
+					return
+				usr << "<span class='shadowling'><b><i>You release a massive surge of power into [thrallToRevive]!</b></i></span>"
+				usr.visible_message("<span class='boldannounce'><i>Red lightning surges from [usr]'s hands into [thrallToRevive]'s chest!</i></span>")
+				playsound(thrallToRevive, 'sound/weapons/Egloves.ogg', 50, 1)
+				playsound(thrallToRevive, 'sound/machines/defib_zap.ogg', 50, 1)
+				usr.Beam(thrallToRevive,icon_state="red_lightning",icon='icons/effects/effects.dmi',time=1)
+				sleep(10)
+				thrallToRevive.revive()
+				thrallToRevive.visible_message("<span class='boldannounce'>[thrallToRevive] heaves in breath, dim red light shining in their eyes.</span>", \
+											   "<span class='shadowling'><b><i>You have returned. One of your masters has brought you from the darkness beyond.</b></i></span>")
+				thrallToRevive.Weaken(4)
+				thrallToRevive.emote("gasp")
+				playsound(thrallToRevive, "bodyfall", 50, 1)
+			else
+				charge_counter = charge_max
+				return
 
 
 // THRALL ABILITIES BEYOND THIS POINT //
@@ -599,15 +652,8 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 
 /obj/effect/proc_holder/spell/targeted/lesser_shadow_walk/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/lumcount = 0
-		var/turf/T = user.loc
-		lumcount = T.get_lumcount()
-		if(lumcount > LIGHT_DAM_THRESHOLD)
-			user << "<span class='warning'>It's too bright to do that!</span>"
-			charge_counter = charge_max
-			return
 		user.visible_message("<span class='warning'>[user] suddenly fades away!</span>", "<span class='shadowling'>You veil yourself in darkness, making you harder to see.</span>")
-		user.alpha = 20
+		user.alpha = 10
 		sleep(40)
 		user.visible_message("<span class='warning'>[user] appears from nowhere!</span>", "<span class='shadowling'>Your shadowy guise slips away.</span>")
 		user.alpha = initial(user.alpha)
@@ -621,7 +667,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	range = -1
 	include_user = 1
 	clothes_req = 0
-	action_icon_state = "collective_mind"
+	action_icon_state = "darksight"
 	var/active = 0
 
 /obj/effect/proc_holder/spell/targeted/thrall_vision/cast(list/targets)
@@ -831,7 +877,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 
 /obj/effect/proc_holder/spell/targeted/ascendant_transmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", "")
+		var/text = stripped_input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", "")
 		if(!text)
 			return
 		world << "<font size=4><span class='shadowling'><b>\"[text]\"</font></span>"

@@ -22,13 +22,14 @@
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
 	gender = MALE
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -39,6 +40,7 @@
 	icon_living = "pug"
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/corgi/New()
 	..()
@@ -183,6 +185,7 @@
 						/obj/item/weapon/tank/internals/oxygen,
 						/obj/item/weapon/tank/internals/air,
 						/obj/item/weapon/extinguisher,
+						/obj/item/clothing/suit/hooded/ian_costume,
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -274,7 +277,9 @@
 	return valid
 
 /mob/living/simple_animal/pet/dog/corgi/proc/update_corgi_fluff()
-	switch(src.inventory_head.type)
+	if(!inventory_head)
+		return
+	switch(inventory_head.type)
 		if(/obj/item/clothing/head/helmet)
 			name = "Sergeant [real_name]"
 			desc = "The ever-loyal, the ever-vigilant."
@@ -387,6 +392,7 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()
@@ -510,6 +516,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	gold_core_spawnable = 0
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)

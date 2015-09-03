@@ -204,7 +204,7 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/Destroy()
 	multiverse.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
@@ -505,9 +505,19 @@ var/global/list/multiverse = list()
 	return src.loc == user
 
 /obj/item/voodoo/attack_self(mob/user)
-	if(!target)
+	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
+	
+	if(user.zone_sel.selecting == "chest")
+		if(link)
+			target = null
+			link.loc = get_turf(src)
+			user << "<span class='notice'>You remove the [link] from the doll.</span>"
+			link = null
+			update_targets()
+			return
+	
 	if(target && cooldown < world.time)
 		switch(user.zone_sel.selecting)
 			if("mouth")
@@ -542,13 +552,6 @@ var/global/list/multiverse = list()
 				target.Dizzy(10)
 				target << "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>"
 				GiveHint(target,user)
-			if("chest")
-				if(link)
-					target = null
-					link.loc = get_turf(src)
-					user << "<span class='notice'>You remove the [link] from the doll.</span>"
-					link = null
-					update_targets()
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()

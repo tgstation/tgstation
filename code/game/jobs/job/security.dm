@@ -52,7 +52,7 @@ Head of Security
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
-	announce_head(H.mind, list("Security")) //tell underlings (security radio) they have a head
+	announce_head(H, list("Security")) //tell underlings (security radio) they have a head
 
 /*
 Warden

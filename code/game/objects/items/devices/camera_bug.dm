@@ -1,9 +1,3 @@
-#define VANILLA_BUG		0
-#define UNIVERSAL_BUG	1
-#define NETWORK_BUG		2
-#define SABOTAGE_BUG	3
-#define ADVANCED_BUG	4
-#define ADMIN_BUG		5
 
 #define BUGMODE_LIST	0
 #define BUGMODE_MONITOR	1
@@ -22,13 +16,9 @@
 	throw_range	= 20
 
 	var/obj/machinery/camera/current = null
-	var/obj/item/expansion = null
-	var/bugtype = VANILLA_BUG
 
 	var/last_net_update = 0
-	var/last_bugtype = VANILLA_BUG
 	var/list/bugged_cameras = list()
-	var/skip_bugcheck = 0
 
 	var/track_mode = BUGMODE_LIST
 	var/last_tracked = 0
@@ -45,12 +35,6 @@
 	SSobj.processing += src
 
 /obj/item/device/camera_bug/Destroy()
-	if(expansion)
-		qdel(expansion)
-		expansion = null
-	del(src)
-//Easier to just call del() than this nonsense
-// ya no, del() takes 0.8ds to run on avg. this takes less than 0.01
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -59,7 +43,7 @@
 	bugged_cameras = list()
 	if(tracking)
 		tracking = null
-	..()
+	return ..()
 
 
 /obj/item/device/camera_bug/interact(mob/user = usr)
@@ -78,7 +62,7 @@
 		return null
 
 	var/turf/T = get_turf(user.loc)
-	if(T.z != current.z || (!skip_bugcheck && current.bug != src) || !current.can_use())
+	if(T.z != current.z || !current.can_use())
 		user << "<span class='danger'>[src] has lost the signal.</span>"
 		current = null
 		user.reset_view(null)
@@ -88,22 +72,13 @@
 	return 1
 
 /obj/item/device/camera_bug/proc/get_cameras()
-	if(bugtype != last_bugtype || ( (bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG)) && world.time > (last_net_update + 100)))
+	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
-		last_bugtype = bugtype
 		for(var/obj/machinery/camera/camera in cameranet.cameras)
 			if(camera.stat || !camera.can_use())
 				continue
-			switch(bugtype)
-				if(VANILLA_BUG,SABOTAGE_BUG,ADVANCED_BUG)
-					if(camera.bug == src)
-						bugged_cameras[camera.c_tag] = camera
-				if(UNIVERSAL_BUG)
-					if(camera.bug)
-						bugged_cameras[camera.c_tag] = camera
-				if(NETWORK_BUG,ADMIN_BUG)
-					if(length(list("SS13","MINE")&camera.network))
-						bugged_cameras[camera.c_tag] = camera
+			if(length(list("SS13","MINE")&camera.network))
+				bugged_cameras[camera.c_tag] = camera
 	sortList(bugged_cameras)
 	return bugged_cameras
 
@@ -119,16 +94,10 @@
 			for(var/entry in cameras)
 				var/obj/machinery/camera/C = cameras[entry]
 				var/functions = ""
-				switch(bugtype)
-					if(SABOTAGE_BUG)
-						functions = " - <a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
-					if(ADVANCED_BUG)
-						functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a>"
-					if(ADMIN_BUG)
-						if(C.bug == src)
-							functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a> <a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
-						else
-							functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a>"
+				if(C.bug == src)
+					functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a> <a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
+				else
+					functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a>"
 				html += "<tr><td><a href='?src=\ref[src];view=\ref[C]'>[entry]</a></td><td>[functions]</td></tr>"
 
 		if(BUGMODE_MONITOR)
@@ -157,6 +126,9 @@
 						var/s = (time_diff - 4*m) * 15
 						if(!s) s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
+					if( C && (C.bug == src)) //Checks to see if the camera has a bug
+						html += "<a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
+
 				else
 					html += "Not yet seen."
 			else
@@ -309,63 +281,6 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/device/camera_bug/attackby(obj/item/W,mob/living/user, params)
-	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
-		expansion.loc = get_turf(loc)
-		user << "<span class='notice'>You unscrew [expansion].</span>"
-		user.put_in_inactive_hand(expansion)
-		expansion = null
-		bugtype = VANILLA_BUG
-		skip_bugcheck = 0
-		track_mode = BUGMODE_LIST
-		tracking = null
-		return
-
-	if(expansion || !W)
-		return ..(W,user)
-
-	// I am not sure that this list is or should be final
-	// really I do not know what to do here.
-	var/static/list/expandables = list(
-		/obj/item/weapon/research = ADMIN_BUG, // could have been anything spawn-only
-
-		// these are all so hackish I am sorry
-
-		/obj/item/device/analyzer = UNIVERSAL_BUG,
-		/obj/item/weapon/stock_parts/subspace/analyzer = UNIVERSAL_BUG,
-
-		/obj/item/device/assembly/igniter = SABOTAGE_BUG,
-		/obj/item/device/assembly/infra = SABOTAGE_BUG, // ir blaster to disable camera
-		/obj/item/weapon/stock_parts/subspace/amplifier = SABOTAGE_BUG,
-
-		/obj/item/device/radio = NETWORK_BUG,
-		/obj/item/device/assembly/signaler = NETWORK_BUG,
-		/obj/item/weapon/stock_parts/subspace/transmitter = NETWORK_BUG,
-
-		/obj/item/device/detective_scanner = ADVANCED_BUG,
-		/obj/item/device/paicard = ADVANCED_BUG,
-		/obj/item/weapon/stock_parts/scanning_module = ADVANCED_BUG
-		)
-
-	for(var/entry in expandables)
-		if(istype(W,entry))
-			if(!user.unEquip(W))
-				return
-			bugtype = expandables[entry]
-			W.loc = src
-			expansion = W
-			user << "<span class='notice'>You add [W] to [src].</span>"
-			get_cameras() // the tracking code will want to know the new camera list
-			if(bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG))
-				skip_bugcheck = 1
-			return
-
-#undef VANILLA_BUG
-#undef UNIVERSAL_BUG
-#undef NETWORK_BUG
-#undef SABOTAGE_BUG
-#undef ADVANCED_BUG
-#undef ADMIN_BUG
 
 #undef BUGMODE_LIST
 #undef BUGMODE_MONITOR

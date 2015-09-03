@@ -45,8 +45,7 @@
 		var/datum/game_mode/blob/blob_mode = src
 		if(blob_mode.infected_crew.len)
 			var/text = "<FONT size = 2><B>The blob[(blob_mode.infected_crew.len > 1 ? "s were" : " was")]:</B></FONT>"
-
 			for(var/datum/mind/blob in blob_mode.infected_crew)
-				text += "<br><b>[blob.key]</b> was <b>[blob.name]</b>"
+				text += printplayer(blob)
 			world << text
 		return 1

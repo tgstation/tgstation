@@ -147,7 +147,7 @@ var/list/ai_list = list()
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	qdel(eyeobj) // No AI, no Eye
-	..()
+	return ..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -300,16 +300,15 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(src.stat == DEAD)
-		src << "You can't call the shuttle because you are dead!"
-		return
+	if(stat == 2)
+		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
 			usr << "Wireless control is disabled!"
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
+	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -330,6 +329,8 @@ var/list/ai_list = list()
 	set name = "Toggle Floor Bolts"
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
+	if(stat == 2)
+		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
 
 	src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
@@ -340,9 +341,8 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
-	if(src.stat == 2)
-		src << "You can't send the shuttle back because you are dead!"
-		return
+	if(stat == 2)
+		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
@@ -507,8 +507,7 @@ var/list/ai_list = list()
 	set name = "Access Robot Control"
 	set desc = "Wirelessly control various automatic robots."
 	if(stat == 2)
-		src << "<span class='danger'>Critical error. System offline.</span>"
-		return
+		return //won't work if dead
 
 	if(control_disabled)
 		src << "Wireless communication is disabled."
@@ -623,9 +622,8 @@ var/list/ai_list = list()
 	cameraFollow = null
 	var/cameralist[0]
 
-	if(usr.stat == 2)
-		usr << "You can't change your camera network because you are dead!"
-		return
+	if(stat == 2)
+		return //won't work if dead
 
 	var/mob/living/silicon/ai/U = usr
 
@@ -668,9 +666,8 @@ var/list/ai_list = list()
 	set category = "AI Commands"
 	set name = "AI Status"
 
-	if(usr.stat == 2)
-		usr <<"You cannot change your emotional status because you are dead!"
-		return
+	if(stat == 2)
+		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
@@ -693,6 +690,8 @@ var/list/ai_list = list()
 	set desc = "Change the default hologram available to AI to something else."
 	set category = "AI Commands"
 
+	if(stat == 2)
+		return //won't work if dead
 	var/input
 	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member","Unique")=="Crew Member")
 
@@ -705,7 +704,7 @@ var/list/ai_list = list()
 			input = input("Select a crew member:") as null|anything in personnel_list
 			var/icon/character_icon = personnel_list[input]
 			if(character_icon)
-				del(holo_icon)//Clear old icon so we're not storing it in memory.
+				qdel(holo_icon)//Clear old icon so we're not storing it in memory.
 				holo_icon = getHologramIcon(icon(character_icon))
 		else
 			alert("No suitable records found. Aborting.")
@@ -719,7 +718,7 @@ var/list/ai_list = list()
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
-			del(holo_icon)
+			qdel(holo_icon)
 			switch(input)
 				if("default")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
@@ -788,6 +787,8 @@ var/list/ai_list = list()
 	set desc = "Allows you to change settings of your radio."
 	set category = "AI Commands"
 
+	if(stat == 2)
+		return //won't work if dead
 	src << "Accessing Subspace Transceiver control..."
 	if (radio)
 		radio.interact(src)
@@ -801,6 +802,8 @@ var/list/ai_list = list()
 	set desc = "Modify the default radio setting for your automatic announcements."
 	set category = "AI Commands"
 
+	if(stat == 2)
+		return //won't work if dead
 	set_autosay()
 
 /mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)

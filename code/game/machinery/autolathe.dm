@@ -59,6 +59,13 @@
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
 
+/obj/machinery/autolathe/Destroy()
+	qdel(wires)
+	wires = null
+	qdel(materials)
+	materials = null
+	return ..()
+
 /obj/machinery/autolathe/interact(mob/user)
 	if(!is_operational())
 		return

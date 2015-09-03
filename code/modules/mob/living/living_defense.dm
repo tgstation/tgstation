@@ -44,7 +44,7 @@
 		else
 				return 0
 
-/mob/living/hitby(atom/movable/AM)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
@@ -75,7 +75,7 @@
 			add_logs(I.thrownby, src, "hit", I)
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	return ..()
+	..()
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
@@ -133,7 +133,7 @@
 	if(!on_fire)
 		return 1
 	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.2) //the fire is slowly consumed
+		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
 		ExtinguishMob()
 		return
@@ -145,7 +145,7 @@
 	location.hotspot_expose(700, 50, 1)
 
 /mob/living/fire_act()
-	adjust_fire_stacks(0.5)
+	adjust_fire_stacks(3)
 	IgniteMob()
 
 

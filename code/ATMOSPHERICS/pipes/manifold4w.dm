@@ -77,7 +77,7 @@
 		node4 = null
 		A.build_network()
 	releaseAirToTurf()
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/pipe/manifold4w/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)

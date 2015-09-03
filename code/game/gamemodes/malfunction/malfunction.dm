@@ -285,21 +285,13 @@
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
 		var/text = "<br><FONT size=3><B>The malfunctioning AIs were:</B></FONT>"
-
+		var/module_text_temp = "<br><b>Purchased modules:</b><br>" //Added at the end
 		for(var/datum/mind/malf in malf_ai)
-
-			text += "<br><b>[malf.key]</b> was <b>[malf.name]</b> ("
+			text += printplayer(malf, 1)
 			if(malf.current)
-				if(malf.current.stat == DEAD)
-					text += "deactivated"
-				else
-					text += "operational"
-				if(malf.current.real_name != malf.name)
-					text += " as <b>[malf.current.real_name]</b>"
-			else
-				text += "hardware destroyed"
-			text += ")"
-		text += "<br>"
-
+				var/mob/living/silicon/ai/AI = malf.current
+				for(var/datum/AI_Module/mod in AI.current_modules)
+					module_text_temp += mod.module_name + "<br>"
+		text += module_text_temp
 		world << text
 	return 1

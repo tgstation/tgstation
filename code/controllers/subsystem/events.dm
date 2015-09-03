@@ -36,13 +36,11 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events/fire()
 	checkEvent()
-	var/i=1
 	for(var/thing in running)
 		if(thing)
 			thing:process()
-			++i
 			continue
-		running.Cut(i,i+1)
+		running.Remove(thing)
 
 
 //checks if we should select a random event yet, and reschedules if necessary

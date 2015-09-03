@@ -14,7 +14,7 @@
 
 /obj/structure/statue/Destroy()
 	density = 0
-	..()
+	return ..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -45,6 +45,7 @@
 				anchored = 1
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,30, target = src))
@@ -212,7 +213,7 @@
 			log_game("Plasma statue ignited by [key_name(Proj.firer)] in ([x],[y],[z])")
 		else
 			message_admins("Plasma statue ignited by [Proj]. No known firer.(<A HREF='?_src_=holder;adminmoreinfo=\ref[Proj.firer]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Proj.firer]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-			log_game("Plasma statue ignited by [Proj] in ([x],[y],[z]). No known firer.")	
+			log_game("Plasma statue ignited by [Proj] in ([x],[y],[z]). No known firer.")
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)

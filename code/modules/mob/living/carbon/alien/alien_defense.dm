@@ -1,5 +1,5 @@
-/mob/living/carbon/alien/hitby(atom/movable/AM)
-	..(AM, skip = 1)
+/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
+	..(AM, skipcatch = 1, hitpush = 0)
 
 
 /*Code for aliens attacking aliens. Because aliens act on a hivemind, I don't see them as very aggressive with each other.
@@ -73,7 +73,19 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 /mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)

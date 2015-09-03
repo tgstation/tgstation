@@ -24,7 +24,7 @@
 	if(Beacon)
 		qdel(Beacon)
 	Beacon = null
-	..()
+	return ..()
 
 // update the invisibility and icon
 /obj/machinery/bluespace_beacon/hide(intact)

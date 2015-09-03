@@ -450,7 +450,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/melting_threshold = 100
 	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulphuric
 		return
-
 	for(var/V in armor)
 		if(armor[V] > 0)
 			.-- //it survives the acid...
@@ -476,7 +475,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
-	return A.hitby(src,thrownby, 0, itempush)
+	return A.hitby(src, 0, itempush)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	thrownby = thrower

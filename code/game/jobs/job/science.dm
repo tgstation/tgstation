@@ -37,7 +37,7 @@ Research Director
 	H.equip_to_slot_or_del(new /obj/item/device/laser_pointer(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 
-	announce_head(H.mind, list("Science")) //tell underlings (science radio) they have a head
+	announce_head(H, list("Science")) //tell underlings (science radio) they have a head
 
 /*
 Scientist

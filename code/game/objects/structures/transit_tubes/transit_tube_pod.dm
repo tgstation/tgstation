@@ -23,7 +23,7 @@
 	for(var/atom/movable/AM in contents)
 		AM.loc = loc
 
-	..()
+	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
