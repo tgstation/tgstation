@@ -4,7 +4,7 @@
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 3
 	desc = "A thick wall of writhing tendrils."
-	density = 1
+	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
 	anchored = 1
 	explosion_block = 1
