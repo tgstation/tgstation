@@ -197,5 +197,14 @@
 	vampire_blood_display.layer = 20
 
 	mymob.client.screen += list(vampire_blood_display)
+	
+/datum/hud/proc/changeling_hud()
+	vampire_blood_display = getFromPool(/obj/screen)
+	vampire_blood_display.name = "Changeling Chems"
+	vampire_blood_display.icon_state = "dark128"
+	vampire_blood_display.screen_loc = "14:28,9:15"
+	vampire_blood_display.layer = 20
+	
+	mymob.client.screen += list(vampire_blood_display)
 
 

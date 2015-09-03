@@ -1,2 +1,4 @@
 author: BarneyGumball
-changes: []
+changes: 
+  - rscadd: Aliens now have a HUD show their current Plasma amount and maximum Plasma they can store.
+  - rscadd: Changelings now have a HUD showing their current amount of chems and total absorbed genomes.

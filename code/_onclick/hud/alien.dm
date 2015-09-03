@@ -236,8 +236,18 @@
 	mymob.zone_sel.icon = 'icons/mob/screen1_alien.dmi'
 	mymob.zone_sel.overlays.len = 0
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
-
+	
+	plasma_hud()
+	
 	mymob.client.reset_screen()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, vampire_blood_display) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
+	
+/datum/hud/proc/plasma_hud()
+	// Displaying plasma levels
+	vampire_blood_display = getFromPool(/obj/screen)
+	vampire_blood_display.name = "Alien Plasma"
+	vampire_blood_display.icon_state = "dark128"
+	vampire_blood_display.screen_loc = "14:28,9:15"
+	vampire_blood_display.layer = 20

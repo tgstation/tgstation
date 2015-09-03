@@ -36,8 +36,19 @@
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
+	updatePlasmaHUD()
 	return
 
+/mob/living/carbon/alien/proc/updatePlasmaHUD()
+	if(hud_used)
+		if(!hud_used.vampire_blood_display)
+			hud_used.plasma_hud()
+			//hud_used.human_hud(hud_used.ui_style)
+		hud_used.vampire_blood_display.maptext_width = 64
+		hud_used.vampire_blood_display.maptext_height = 32
+		hud_used.vampire_blood_display.maptext = "<div align='left' valign='top' style='position:relative; top:0px; left:6px'> P:<font color='#E9DAE9' size='1'>[storedPlasma]</font><br>  / <font color='#BE7DBE' size='1'>[max_plasma]</font></div>"
+	return
+	
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
 		..(amount * 2)
