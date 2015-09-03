@@ -87,7 +87,7 @@
 /datum/reagent/blob/dark_matter //does brute damage and throws or pulls nearby objects at the target
 	name = "Dark Matter"
 	id = "dark_matter"
-	color = "#800080"
+	color = "#61407E"
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
 /datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
