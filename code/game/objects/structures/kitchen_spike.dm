@@ -61,17 +61,20 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-		if(do_after(user, 20, target = src))
-			user << "<span class='notice'>You pry the spikes out of the frame.</span>"
-			new /obj/item/stack/rods(loc, 4)
-			var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
-			transfer_fingerprints_to(F)
-			qdel(src)
+		if(!src.occupied)
+			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+			if(do_after(user, 20, target = src))
+				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
+				new /obj/item/stack/rods(loc, 4)
+				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+				transfer_fingerprints_to(F)
+				qdel(src)
+		else
+			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
 	else if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living/carbon/monkey) || istype (G.affecting, /mob/living/carbon/alien) || istype (G.affecting, /mob/living/simple_animal/hostile/bear) || istype (G.affecting, /mob/living/simple_animal/pet/dog/corgi))
-			if(src.occupied == 0)
+			if(!src.occupied)
 				src.occupied = 1
 				src.meat = 5
 				src.skin = 1
@@ -102,7 +105,7 @@
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			var/mob/living/carbon/human/H = G.affecting
 			H.visible_message("<span class='danger'>[user] slams [G.affecting] into the meat spike!</span>", "<span class='userdanger'>[user] slams you into the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-			H.adjustBruteLoss(25)
+			H.adjustBruteLoss(20)
 		else
 			user << "<span class='danger'>You can't use that on the spike!</span>"
 			return
@@ -118,19 +121,7 @@
 	if(..())
 		return
 	if(src.occupied)
-		if(src.skin >=1)
-			switch(src.skintype)
-				if(SKINTYPE_MONKEY)
-					new /obj/item/stack/sheet/animalhide/monkey(src.loc)
-				if(SKINTYPE_ALIEN)
-					new /obj/item/stack/sheet/animalhide/xeno(src.loc)
-				if(SKINTYPE_BEAR)
-					new /obj/item/clothing/head/bearpelt(src.loc)
-				if(SKINTYPE_CORGI)
-					new	/obj/item/stack/sheet/animalhide/corgi(src.loc)
-			src.skin--
-			usr << "<span class='notice'>You remove the hide from [src].</span>"
-		else if (src.meat > 1)
+		if (src.meat > 1)
 			switch(src.meattype)
 				if(MEATTYPE_MONKEY)
 					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src.loc )
@@ -153,9 +144,20 @@
 				if(MEATTYPE_CORGI)
 					new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src.loc)
 			src.meat--
+		else if(src.skin >=1)
+			switch(src.skintype)
+				if(SKINTYPE_MONKEY)
+					new /obj/item/stack/sheet/animalhide/monkey(src.loc)
+				if(SKINTYPE_ALIEN)
+					new /obj/item/stack/sheet/animalhide/xeno(src.loc)
+				if(SKINTYPE_BEAR)
+					new /obj/item/clothing/head/bearpelt(src.loc)
+				if(SKINTYPE_CORGI)
+					new	/obj/item/stack/sheet/animalhide/corgi(src.loc)
+			src.skin--
+			usr << "<span class='notice'>You remove the hide from [src].</span>"
 			src.icon_state = "spike"
 			src.occupied = 0
-			usr << "<span class='notice'>You remove the last piece of meat from [src].</span>"
 
 
 #undef SKINTYPE_MONKEY
