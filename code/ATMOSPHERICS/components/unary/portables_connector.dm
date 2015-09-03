@@ -17,26 +17,15 @@
 	..()
 
 /obj/machinery/atmospherics/unary/portables_connector/update_icon()
-	if(node)
-		icon_state = "hintact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "hexposed"
 	..()
-	if (level == 1 && istype(loc, /turf/simulated))
-		underlays.Cut()
-	return
-
-/obj/machinery/atmospherics/unary/portables_connector/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(node)
-		icon_state = "hintact"
-
-	else
-		icon_state = "hexposed"
 	if (istype(loc, /turf/simulated/floor) && node)
 		var/turf/simulated/floor/floor = loc
 		if(floor.floor_tile && node.alpha == 128)
 			underlays.Cut()
+	return
+
+/obj/machinery/atmospherics/unary/portables_connector/hide(var/i) //to make the little pipe section invisible, the icon changes.
+	update_icon()
 
 /obj/machinery/atmospherics/unary/portables_connector/process()
 	. = ..()

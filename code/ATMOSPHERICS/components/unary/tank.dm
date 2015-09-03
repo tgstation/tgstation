@@ -8,7 +8,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH
 	density = 1
-
+	default_colour = "#b77900"
 /obj/machinery/atmospherics/unary/tank/process()
 	if(!network)
 		. = ..()
@@ -24,7 +24,6 @@
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide
 	name = "Pressure Tank (Carbon Dioxide)"
-
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide/New()
 	..()
 
@@ -57,6 +56,7 @@
 /obj/machinery/atmospherics/unary/tank/oxygen
 	icon_state = "o2"
 	name = "Pressure Tank (Oxygen)"
+	default_colour = "#00b8b8"
 
 /obj/machinery/atmospherics/unary/tank/oxygen/New()
 	..()
@@ -66,6 +66,7 @@
 /obj/machinery/atmospherics/unary/tank/nitrogen
 	icon_state = "n2"
 	name = "Pressure Tank (Nitrogen)"
+	default_colour = "#00b8b8"
 
 /obj/machinery/atmospherics/unary/tank/nitrogen/New()
 	..()
@@ -75,6 +76,7 @@
 /obj/machinery/atmospherics/unary/tank/air
 	icon_state = "air"
 	name = "Pressure Tank (Air)"
+	default_colour = "#0000b7"
 
 /obj/machinery/atmospherics/unary/tank/air/New()
 	..()

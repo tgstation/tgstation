@@ -55,8 +55,9 @@
 	var/node_connect = dir
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 		if(target.initialize_directions & get_dir(target,src))
-			node = target
-			break
+			if(target.piping_layer == piping_layer || target.pipe_flags & ALL_LAYER)
+				node = target
+				break
 	update_icon()
 
 /obj/machinery/atmospherics/unary/build_network()
