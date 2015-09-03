@@ -208,7 +208,7 @@
 
 /obj/effect/blob/examine(mob/user)
 	..()
-	user << "It looks like it's of a [get_chem_name()] kind."
+	user << "It seems to be made of [get_chem_name()]."
 	return
 
 /obj/effect/blob/proc/get_chem_name()
