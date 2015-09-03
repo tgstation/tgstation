@@ -1,4 +1,3 @@
-
 #define SKINTYPE_MONKEY	/obj/item/stack/sheet/animalhide/monkey
 #define SKINTYPE_ALIEN	/obj/item/stack/sheet/animalhide/xeno
 #define SKINTYPE_BEAR	/obj/item/clothing/head/bearpelt
@@ -45,6 +44,13 @@
 	var/skin = 0
 	var/skintype = null
 
+	var/global/list/allowed_types = list( //ugh I know it's a whitelist but it's not as god-awful and hacky as before. at least this way it's sustainable. i don't think there's even a better way than this.
+		/mob/living/carbon/monkey,
+		/mob/living/carbon/alien,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/pet/dog/corgi,
+	)
+
 	var/global/list/meatlist = list(
 		"monkey"	= MEATTYPE_MONKEY,
 		"alien"		= MEATTYPE_ALIEN,
@@ -61,6 +67,12 @@
 /obj/structure/kitchenspike/attack_paw(mob/user)
 	return src.attack_hand(usr)
 
+/obj/structure/kitchenspike/proc/is_mob_allowed(var/obj/item/weapon/grab/G)
+	for(var/I in allowed_types)
+		if(istype(G.affecting, I))
+			return I
+	return 0
+
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!src.occupied)
@@ -73,16 +85,19 @@
 				qdel(src)
 		else
 			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
-	else if(istype(I, /obj/item/weapon/grab))
+		return
+	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
-		if(istype(G.affecting, /mob/living/carbon/monkey) || istype (G.affecting, /mob/living/carbon/alien) || istype (G.affecting, /mob/living/simple_animal/hostile/bear) || istype (G.affecting, /mob/living/simple_animal/pet/dog/corgi))
-			if(!src.occupied)
-				src.occupied = 1
-				src.meat = 5
-				src.skin = 1
+		var/allowed_type = is_mob_allowed(G)
+		if(allowed_type)
+			if(!occupied)
+				occupied = 1
+				meat = 5
+				skin = 1
 
-				var/list/affecting_path = text2list(path2text(G.affecting.type), "/")	//we want affecting_type to be the last part of affecting's type path
-				var/affecting_type = affecting_path[affecting_path.len]					//ex. if affecting.type is /mob/living/carbon/monkey, this will set affecting_type to "monkey"
+				var/list/affecting_path = text2list("[allowed_type]", "/")		//we want a specific part of the type path for this: the last part of the path in allowed_types
+				var/affecting_type = affecting_path[affecting_path.len]			//ex. 1 if affecting.type is /mob/living/carbon/monkey, this will set affecting_type to "monkey"
+																				//ex. 2 if affecting.type is /mob/living/carbon/alien/humanoid/queen, this will set affecting_type to "alien"
 
 				//set these vars to the appropriate values based on type
 				icon_state = "spikebloody[affecting_type]"
@@ -90,22 +105,22 @@
 				skintype = skinlist["[affecting_type]"]
 
 				var/mob/living/O = G.affecting
-				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
+				O.visible_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 				qdel(G.affecting)
 				qdel(G)
 			else
-				user << "<span class='danger'>The spike already has something on it, finish collecting its meat first!</span>"
-		else if(istype(G.affecting, /mob/living/carbon/human))
+				user << "<span class='danger'>The spike already has something on it; finish collecting its meat first!</span>"
+			return
+		if(istype(G.affecting, /mob/living/carbon/human))
 			user.changeNext_move(CLICK_CD_MELEE)
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			var/mob/living/carbon/human/H = G.affecting
 			H.visible_message("<span class='danger'>[user] slams [G.affecting] into the meat spike!</span>", "<span class='userdanger'>[user] slams you into the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			H.adjustBruteLoss(20)
-		else
-			user << "<span class='danger'>You can't use that on the spike!</span>"
 			return
-	else
-		..()
+		user << "<span class='danger'>You can't use that on the spike!</span>"
+		return
+	..()
 
 ///obj/structure/kitchenspike/MouseDrop_T(var/atom/movable/C, mob/user)
 //	if(istype(C, /obj/mob/carbon/monkey)
@@ -126,8 +141,8 @@
 		new skintype(src.loc)
 		skin--
 		usr << "<span class='notice'>You remove the hide from [src].</span>"
-		src.icon_state = "spike"
-		src.occupied = 0
+		icon_state = "spike"
+		occupied = 0
 
 
 #undef SKINTYPE_MONKEY
