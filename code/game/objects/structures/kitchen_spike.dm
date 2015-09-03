@@ -19,17 +19,6 @@
 	density = 1
 	anchored = 0
 
-/obj/structure/kitchenspike_frame/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	if(istype(W))
-		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time, target = src))
-			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
-			anchored = !anchored
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		return 1
-	return 0
-
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
