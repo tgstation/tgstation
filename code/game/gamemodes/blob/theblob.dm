@@ -4,13 +4,13 @@
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 3
 	desc = "A thick wall of writhing tendrils."
-	density = 0
+	density = 1
 	opacity = 0
 	anchored = 1
 	explosion_block = 1
 	var/health = 30
 	var/health_timestamp = 0
-	var/brute_resist = 4
+	var/brute_resist = 2
 	var/fire_resist = 1
 	var/mob/camera/blob/overmind
 
@@ -221,6 +221,7 @@
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
+	brute_resist = 4
 
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)

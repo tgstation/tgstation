@@ -3,8 +3,7 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
 	desc = "A huge, smooth mass supported by tendrils."
-	health = 30
-	fire_resist = 2
+	health = 60
 
 /obj/effect/blob/storage/update_icon()
 	if(health <= 0)

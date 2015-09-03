@@ -3,8 +3,7 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
-	health = 100
-	fire_resist = 2
+	health = 200
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0

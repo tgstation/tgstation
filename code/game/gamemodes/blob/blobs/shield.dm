@@ -3,9 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
 	desc = "A solid wall of slightly twitching tendrils."
-	health = 75
+	health = 150
 	explosion_block = 3
-	fire_resist = 2
 
 
 /obj/effect/blob/shield/update_icon()
