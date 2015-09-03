@@ -45,6 +45,19 @@
 	var/skin = 0
 	var/skintype = null
 
+	var/global/list/meatlist = list(
+		"monkey"	= MEATTYPE_MONKEY,
+		"alien"		= MEATTYPE_ALIEN,
+		"bear"		= MEATTYPE_BEAR,
+		"corgi"		= MEATTYPE_CORGI,
+	)
+	var/global/list/skinlist = list(
+		"monkey"	= SKINTYPE_MONKEY,
+		"alien"		= SKINTYPE_ALIEN,
+		"bear"		= SKINTYPE_BEAR,
+		"corgi"		= SKINTYPE_CORGI,
+	)
+
 /obj/structure/kitchenspike/attack_paw(mob/user)
 	return src.attack_hand(usr)
 
@@ -67,24 +80,17 @@
 				src.occupied = 1
 				src.meat = 5
 				src.skin = 1
-				if(istype(G.affecting, /mob/living/carbon/monkey))
-					src.meattype = MEATTYPE_MONKEY
-					src.skintype = SKINTYPE_MONKEY
-					src.icon_state = "spikebloody"
-				if(istype(G.affecting, /mob/living/carbon/alien))
-					src.icon_state = "spikebloodygreen"
-					src.meattype = MEATTYPE_ALIEN
-					src.skintype = SKINTYPE_ALIEN
-				if(istype(G.affecting, /mob/living/simple_animal/hostile/bear))
-					src.icon_state = "spikebloodybearz"
-					src.meattype = MEATTYPE_BEAR
-					src.skintype = SKINTYPE_BEAR
-				if(istype(G.affecting, /mob/living/simple_animal/pet/dog/corgi))
-					src.icon_state = "spikecorgi"
-					src.meattype = MEATTYPE_CORGI
-					src.skintype = SKINTYPE_CORGI
-					var/mob/living/O = G.affecting
-					O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
+
+				var/list/affecting_path = text2list(path2text(G.affecting.type), "/")	//we want affecting_type to be the last part of affecting's type path
+				var/affecting_type = affecting_path[affecting_path.len]					//ex. if affecting.type is /mob/living/carbon/monkey, this will set affecting_type to "monkey"
+
+				//set these vars to the appropriate values based on type
+				icon_state = "spikebloody[affecting_type]"
+				meattype = meatlist["[affecting_type]"]
+				skintype = skinlist["[affecting_type]"]
+
+				var/mob/living/O = G.affecting
+				O.show_message(text("<span class='danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>"))
 				qdel(G.affecting)
 				qdel(G)
 			else
