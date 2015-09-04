@@ -40,7 +40,7 @@
 
 
 /obj/item/weapon/robot_module/New()
-	modules += new /obj/item/device/flash/cyborg(src)
+	modules += new /obj/item/device/assembly/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 	return

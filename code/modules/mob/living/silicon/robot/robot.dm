@@ -473,7 +473,7 @@
 			user << "<span class='notice'>You insert the power cell.</span>"
 		update_icons()
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
+	else if (wires.IsInteractionTool(W))
 		if (wiresexposed)
 			wires.Interact(user)
 		else
@@ -1084,7 +1084,7 @@
 		new /obj/item/robot_parts/head(T)
 		var/b
 		for(b=0, b!=2, b++)
-			var/obj/item/device/flash/handheld/F = new /obj/item/device/flash/handheld(T)
+			var/obj/item/device/assembly/flash/handheld/F = new /obj/item/device/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
 		cell.loc = T
