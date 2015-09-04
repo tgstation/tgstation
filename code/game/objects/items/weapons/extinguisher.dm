@@ -172,7 +172,7 @@
 		if(locate(/obj) in src)
 			for(var/obj/thing in src)
 				thing.loc = get_turf(src)
-				thing.throw_at(target,10,rand(45,50))
+				thing.throw_at(target,10,rand(12,14))//roughly double the speed of forks/spoons
 				user.visible_message(
 					"<span class='danger'>[user] fires [src] and launches [thing] at [target]!</span>",
 					"<span class='danger'>You fire [src] and launch [thing] at [target]!</span>")
