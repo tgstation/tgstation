@@ -329,7 +329,6 @@
 	var/playing = 0
 	var/gameover = 0
 	var/alive = 4
-
 	var/eventdat = null
 	var/event = null
 	var/list/settlers = list("Harry","Larry","Bob")
@@ -384,8 +383,6 @@
 	gameover = 0
 	lings_aboard = 0
 
-
-
 	//spaceport junk
 	spaceport_raided = 0
 	spaceport_freebie = 0
@@ -426,7 +423,6 @@
 			playing = 0 //also a new game
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
-
 
 	else if(event)
 		dat = eventdat
@@ -994,8 +990,6 @@
 	emagged = 0
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
-
-
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(!emagged)
