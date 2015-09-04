@@ -62,8 +62,8 @@
 	if(health_timestamp > world.time)
 		return 0
 	health = min(maxhealth, health+health_regen)
-		update_icon()
-		health_timestamp = world.time + 10 // 1 seconds
+	update_icon()
+	health_timestamp = world.time + 10 // 1 seconds
 
 /obj/effect/blob/proc/pulseLoop(num)
 	var/a_color
@@ -111,9 +111,6 @@
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1, a_color)
 	if(prob && !prob(health))	return
-	var/blobtype = /obj/effect/blob/normal
-	if(istype(T, /turf/space))
-		blobtype = /obj/effect/blob/normal/fragile
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -124,7 +121,10 @@
 			else	T = null
 
 	if(!T)	return 0
-	var/obj/effect/blob/B = new blobtype(src.loc)
+	var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+	if(istype(T, /turf/space))
+		B.health = 5
+		B.update_icon()
 	B.color = a_color
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.loc = T
