@@ -85,30 +85,10 @@
 /datum/game_mode/nuclear/blackops/proc/forge_blackops_objectives()
 	// Blacks ops, being a nuke squad with no nuke needed, get 10 objectives to accomplish.
 	// It's held on the holder mind so that the crew can share objectives.
-	var/datum/objective/assassinate/syndobj1 = new
-	syndobj1.owner = blackops_objective_holder
-	blackops_objective_holder.objectives += syndobj1
-	syndobj1.find_target()
-
-	var/datum/objective/assassinate/syndobj2 = new
-	syndobj2.owner = blackops_objective_holder
-	blackops_objective_holder.objectives += syndobj2
-	syndobj2.find_target()
-
-	var/datum/objective/assassinate/syndobj3 = new
-	syndobj3.owner = blackops_objective_holder
-	blackops_objective_holder.objectives += syndobj3
-	syndobj3.find_target()
-
-	var/datum/objective/kidnap/syndobj4 = new
-	syndobj4.owner = blackops_objective_holder
-	blackops_objective_holder.objectives += syndobj4
-	syndobj4.find_target()
-
-	var/datum/objective/kidnap/syndobj5 = new
-	syndobj5.owner = blackops_objective_holder
-	blackops_objective_holder.objectives += syndobj5
-	syndobj5.find_target()
+	for(var/i = 0, i < 3, i++)
+		add_objective(blackops_objective_holder, /datum/objective/default/assassinate)
+	for(var/i = 0, i < 3, i++)
+		add_objective(blackops_objective_holder, /datum/objective/kidnap)
 
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
@@ -116,22 +96,13 @@
 		var/target = target_ai.mind
 
 		if(target)
-			var/datum/objective/ai_mag/syndobj6 = new
-			syndobj6.owner = blackops_objective_holder
-			blackops_objective_holder.objectives += syndobj6
-			syndobj6.find_target()
+			add_objective(blackops_objective_holder, /datum/objective/ai_mag)
 
 		else
-			var/datum/objective/kidnap/syndobj6 = new
-			syndobj6.owner = blackops_objective_holder
-			blackops_objective_holder.objectives += syndobj6
-			syndobj6.find_target()
+			add_objective(blackops_objective_holder, /datum/objective/kidnap)
 
 	else
-		var/datum/objective/kidnap/syndobj6 = new
-		syndobj6.owner = blackops_objective_holder
-		blackops_objective_holder.objectives += syndobj6
-		syndobj6.find_target()
+		add_objective(blackops_objective_holder, /datum/objective/kidnap)
 
 /datum/game_mode/nuclear/blackops/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)

@@ -60,13 +60,7 @@
 	current.clear_zeroth_law(0)
 	for(var/i = 0, i < 10, i++)
 		current.add_ion_law(generate_ion_law())
-	current.show_laws()
-	if(isAI(current))
-		var/mob/living/silicon/ai/A = current
-		for(var/mob/living/silicon/robot/R in A.connected_robots)
-			if(R.lawupdate)
-				R << "From now on, these are your laws:"
-				R.show_laws()
+	current.laws_update()
 	if(ticker && ticker.mode)
 		if(istype(ticker.mode, /datum/game_mode/nuclear/blackops))
 			var/datum/game_mode/nuclear/blackops/bops = ticker.mode

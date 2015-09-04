@@ -52,3 +52,13 @@
 /mob/living/silicon/proc/clear_zeroth_law(force)
 	laws_sanity_check()
 	laws.clear_zeroth_law(force)
+
+/mob/living/silicon/proc/laws_update()
+	show_laws()
+	law_change_counter++
+	if(isAI(src))
+		var/mob/living/silicon/ai/A = src
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
+			if(R.lawupdate)
+				R.show_laws(1, 1)
+				R.law_change_counter++

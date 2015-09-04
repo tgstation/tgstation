@@ -279,11 +279,9 @@ var/global/list/multiverse = list()
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
-		new_objective.owner = M.mind
+		var/datum/objective/default/protect/new_objective = add_objective(M.mind, /datum/objective/default/protect)
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
-		M.mind.objectives += new_objective
 		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] protect the station.")
