@@ -226,13 +226,6 @@
 	health_regen = 1
 	brute_resist = 4
 
-/obj/effect/blob/normal/fragile
-	name = "fragile blob"
-	desc = "A thin lattice of slightly twitching tendrils."
-	icon_state = "blob_damaged"
-	health = 5
-	brute_resist = 1
-
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
 		qdel(src)
