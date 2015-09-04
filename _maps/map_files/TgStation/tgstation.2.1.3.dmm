@@ -52144,7 +52144,7 @@
 "cby" = (
 /obj/structure/table,
 /obj/item/weapon/stamp,
-/obj/item/weapon/contraband/poster/legit,
+/obj/item/weapon/poster/legit,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint2)
 "cbz" = (
@@ -62451,7 +62451,7 @@
 	 name = "2maintenance loot spawner"
 	},
 /obj/item/toy/minimeteor,
-/obj/item/weapon/contraband/poster,
+/obj/item/weapon/poster/contraband,
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "cvS" = (
