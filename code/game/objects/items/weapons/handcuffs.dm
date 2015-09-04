@@ -1,6 +1,7 @@
 
 /obj/item/weapon/restraints
 	var/breakouttime = 600
+	var/cufftime = 30 //allows configuration of the time to cuff someone
 
 
 
@@ -18,6 +19,7 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 5
+	cufftime = 20  //Slightly better than cabel cuffs
 	materials = list(MAT_METAL=500)
 	origin_tech = "materials=1"
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -34,7 +36,7 @@
 							"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 		playsound(loc, cuffsound, 30, 1, -2)
-		if(do_mob(user, C, 30))
+		if(do_mob(user, C, cufftime))
 			apply_cuffs(C,user)
 			user << "<span class='notice'>You handcuff [C].</span>"
 			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
@@ -112,7 +114,7 @@
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
+			if(do_mob(user, C, cufftime))
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 					C.update_inv_handcuffed(0)
@@ -126,6 +128,7 @@
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	icon_state = "cuff_white"
 	breakouttime = 450 //Deciseconds = 45s
+	cufftime = 15 //slithgtly faster than normal cuffs
 	trashtype = /obj/item/weapon/restraints/handcuffs/cable/zipties/used
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used

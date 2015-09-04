@@ -472,7 +472,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		C.visible_message("<span class='danger'>[user] is trying to put energy cuffs on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put energy cuffs on [C]!</span>")
-		if(do_mob(user, C, 30))
+		if(do_mob(user, C, 20)) //hardcoded to be the same as normal cuffs
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 				C.update_inv_handcuffed(0)
@@ -501,6 +501,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "cuff_white" // Needs sprite
 	breakouttime = 450
 	unacidable = 1
+	cufftime = 20 //on par with normal cuffs
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 
 /obj/item/weapon/restraints/handcuffs/energy/used
