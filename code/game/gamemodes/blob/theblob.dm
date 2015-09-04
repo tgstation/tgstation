@@ -61,10 +61,7 @@
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
 		return 0
-	if(health < maxhealth)
-		health += health_regen
-		if(health > maxhealth)
-			health = maxhealth
+	health = min(maxhealth, health+health_regen)
 		update_icon()
 		health_timestamp = world.time + 10 // 1 seconds
 

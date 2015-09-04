@@ -68,10 +68,7 @@
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
-	if(health < maxhealth)
-		health += health_regen
-		if(health > maxhealth)
-			health = maxhealth
+	health = min(maxhealth, health+health_regen)
 	if(overmind)
 		overmind.update_health()
 	pulseLoop(0)
