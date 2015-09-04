@@ -320,6 +320,7 @@
 	icon_state = "arcade"
 	circuit = /obj/item/weapon/circuitboard/arcade/orion_trail
 	var/busy = 0 //prevent clickspam that allowed people to ~speedrun~ the game.
+	var/Won = 0
 	var/engine = 0
 	var/hull = 0
 	var/electronics = 0
@@ -329,6 +330,7 @@
 	var/playing = 0
 	var/gameover = 0
 	var/alive = 4
+
 	var/eventdat = null
 	var/event = null
 	var/list/settlers = list("Harry","Larry","Bob")
@@ -382,6 +384,8 @@
 	playing = 1
 	gameover = 0
 	lings_aboard = 0
+	Won = 0
+
 
 	//spaceport junk
 	spaceport_raided = 0
@@ -464,9 +468,9 @@
 		return
 	busy = 1
 
-	if (href_list["continue"]) //Continue your travels
+	if (href_list["continue"] && !Won) //Continue your travels
 		if(turns >= ORION_TRAIL_WINTURN)
-			busy = 1
+			Won = 1
 			win()
 		else
 			food -= (alive+lings_aboard)*2
@@ -979,7 +983,6 @@
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()
-
 	playing = 0
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
@@ -991,7 +994,7 @@
 	emagged = 0
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
-	busy = 0
+
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(!emagged)
