@@ -4,13 +4,9 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
-<<<<<<< HEAD
  *		High Energy Frequency Blade
  */
-=======
- */
 
->>>>>>> 71627d562457ea3706353ca79ab8022f5f2f4fbd
 
 ///////////OFFHAND///////////////
 //what the mob gets when wielding something
@@ -165,11 +161,17 @@
 /obj/item/weapon/katana/hfrequency/update_wield(mob/user)
 	..()
 	item_state = "hfrequency[wielded ? 1 : 0]"
-	force = wielded ? 120 : 40
+	force = wielded ? 200 : 50
 	if(user)
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
 	return
+
+/obj/item/weapon/katana/hfrequency/IsShield()
+	if(wielded)
+		return 1
+	else
+		return 0
 
 
 //spears

@@ -143,3 +143,9 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
 		del(I)
 		del(src)
+
+
+obj/item/weapon/banhammer/admin
+	desc = "A banhammer specifically reserved for admins. Legends tell of a weapon that destroys the target to the utmost capacity"
+	throwforce = 999
+	force = 999
