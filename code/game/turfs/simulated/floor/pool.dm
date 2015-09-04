@@ -21,8 +21,9 @@
 	SSobj.processing += src
 	create_reagents(200)
 	reagents.maximum_volume = 200
-	var/image/water_effect = image('icons/effects/water.dmi', src, "water_pool")
-	overlays += water_effect
+	//var/image/water_effect = image('icons/effects/water.dmi', src, "water_pool")
+	//overlays += water_effect Overlays don't work. Better find a better alternative.
+	new /obj/effect/water_overlay(get_turf(src))
 	update_icon()
 	..()
 
@@ -72,7 +73,45 @@
 	for(var/turf/simulated/floor/pool/T in orange(1,src))
 		reagents.trans_to(T,chem_share)
 		T.reagents.update_total()
+
+	reagents.maximum_volume = 250 //simulate water in the pool, we add 50 units of it.
+	reagents.add_reagent("water",50)
+	reagents.handle_reactions()
+	reagents.remove_reagent("water",50)
 	reagents.maximum_volume = 200
 	reagents.update_total()
 
-	color = mix_color_from_reagents(reagents)
+/obj/effect/water_overlay
+		name = "Pool"
+		desc = "That's water."
+		icon = 'icons/effects/pool_effect.dmi'
+		//smooth = 1  //Does not work because it's not a turf
+		anchored = 1
+		unacidable = 1
+		mouse_opacity = 0
+		layer = 5
+		var/update_flag = 0 //test to see if it should update itself or not
+
+/obj/effect/water_overlay/New()
+	SSobj.processing += src
+	spawn(1)
+		update_icon()
+
+/obj/effect/water_overlay/process()
+	var/turf/T = get_turf(src.loc)
+	if(T)
+		if(!istype(T,/turf/simulated/floor/pool))
+			qdel(src)
+		else
+			update_icon()
+
+/obj/effect/water_overlay/Destroy()
+	SSobj.processing -= src
+	return ..()
+
+/obj/effect/water_overlay/update_icon()
+	var/turf/T = get_turf(src.loc)
+	if(T)
+		clearlist(overlays)
+		overlays += T.overlays.[T.overlays.len] //overlays are stored in funny way that allow this
+		overlays += T.overlays.[T.overlays.len-1] //takes the two last overlays, they're the bottom of the tile one's.
