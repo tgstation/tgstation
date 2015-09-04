@@ -7,7 +7,20 @@
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
-	force = 999 //Because why shouldn't the banhammer be the ultimate weapon?
+	throw_speed = 7
+	throw_range = 15
+	attack_verb = list("banned")
+
+/obj/item/weapon/banhammer/admin
+	desc = "A banhammer specifically reserved for admins. Legends tell of a weapon that destroys the target to the utmost capacity"
+	name = "banhammer"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "toyhammer"
+	flags = FPPRINT
+	slot_flags = SLOT_BELT
+	throwforce = 999
+	force = 999
+	w_class = 1.0
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
