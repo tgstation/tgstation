@@ -7,6 +7,7 @@
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
+	force = 999 //Because why shouldn't the banhammer be the ultimate weapon?
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
