@@ -816,7 +816,8 @@ var/global/floorIsLava = 0
 		if(logout && config && config.announce_admin_logout)
 			string = pick(
 				"Admin logout: [key_name(src)]")
-		else if(!logout && config && config.announce_admin_login)
+		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
 			string = pick(
 				"Admin login: [key_name(src)]")
-		message_admins("[string]")
+		if(string)
+			message_admins("[string]")
