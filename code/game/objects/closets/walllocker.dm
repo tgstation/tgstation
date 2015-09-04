@@ -8,6 +8,7 @@
 	icon_state = "wall-locker"
 	density = 0
 	anchored = 1
+	wall_mounted = 1
 	pick_up_stuff = 0 // #367 - Picks up stuff at src.loc, rather than the offset location.
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
