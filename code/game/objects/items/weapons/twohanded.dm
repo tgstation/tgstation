@@ -5,7 +5,7 @@
  *		Double-Bladed Energy Swords
  *		Spears
  *		High Energy Frequency Blade
-
+ */
 
 ///////////OFFHAND///////////////
 //what the mob gets when wielding something
