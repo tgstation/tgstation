@@ -360,3 +360,10 @@
 	desc = "A purple polka-dotted jester's hat with yellow pompons."
 	icon_state = "clownpiece"
 	item_state = "clownpiece"
+
+/obj/item/clothing/head/headband
+	name = "head band"
+	desc = "You wear this around your head."
+	icon_state = "headband"
+	item_state = "headband"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/metalgear.dmi', "right_hand" = 'icons/mob/in-hand/right/metalgear.dmi')
