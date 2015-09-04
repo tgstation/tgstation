@@ -37,7 +37,7 @@
 		user << "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
-	if(!bananium.can_insert(O))
+	if(!bananium.get_item_material_amount(O))
 		user << "<span class='notice'>This item has no bananium!</span>"
 		return
 	if(!user.unEquip(O))
