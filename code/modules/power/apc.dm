@@ -570,9 +570,7 @@
 		else
 			if (istype(user, /mob/living/silicon))
 				return src.attack_hand(user)
-			if (!opened && wiresexposed && \
-				(istype(W, /obj/item/device/multitool) || \
-				istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/assembly/signaler)))
+			if (!opened && wiresexposed && wires.IsInteractionTool(W))
 				return src.attack_hand(user)
 			..()
 

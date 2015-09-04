@@ -209,12 +209,12 @@
 
 /obj/item/weapon/storage/box/flashes/New()
 	..()
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"

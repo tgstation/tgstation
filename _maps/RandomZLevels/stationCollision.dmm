@@ -400,7 +400,7 @@
 "hJ" = (/turf/simulated/floor/plasteel{icon_state = "red"; dir = 8},/area/awaymission/arrivalblock)
 "hK" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor/plasteel,/area/awaymission/arrivalblock)
 "hL" = (/obj/structure/table,/obj/item/weapon/storage/fancy/donut_box,/turf/simulated/floor/plasteel,/area/awaymission/arrivalblock)
-"hM" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flash,/turf/simulated/floor/plasteel,/area/awaymission/arrivalblock)
+"hM" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs,/obj/item/device/assembly/flash/handheld,/turf/simulated/floor/plasteel,/area/awaymission/arrivalblock)
 "hN" = (/turf/simulated/floor/plasteel{icon_state = "red"; dir = 4},/area/awaymission/arrivalblock)
 "hO" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/blue,/obj/effect/decal/remains/human,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
 "hP" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/purple,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
