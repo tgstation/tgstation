@@ -466,6 +466,7 @@
 
 	if (href_list["continue"]) //Continue your travels
 		if(turns >= ORION_TRAIL_WINTURN)
+			busy = 1
 			win()
 		else
 			food -= (alive+lings_aboard)*2
@@ -978,6 +979,7 @@
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()
+
 	playing = 0
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
@@ -989,6 +991,7 @@
 	emagged = 0
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+	busy = 0
 
 /obj/machinery/computer/arcade/orion_trail/emag_act(mob/user)
 	if(!emagged)
