@@ -34,7 +34,7 @@
 	. = stack[stack.len]
 
 /datum/stack/proc/is_empty()
-	. = (stack.len > 0)
+	. = stack.len ? 0 : 1
 
 //Rotate entire stack left with the leftmost looping around to the right
 /datum/stack/proc/RotateLeft()
