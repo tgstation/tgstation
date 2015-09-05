@@ -4,13 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
-<<<<<<< HEAD
- *		High Energy Frequency Blade
  */
-=======
- */
-
->>>>>>> 71627d562457ea3706353ca79ab8022f5f2f4fbd
 
 ///////////OFFHAND///////////////
 //what the mob gets when wielding something

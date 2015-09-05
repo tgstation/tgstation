@@ -57,6 +57,14 @@
 	max_ammo = 8
 	multiple_sprites = 1
 
+/obj/item/ammo_storage/box/b762x55
+	name = "ammo box (7.62x55mmR)"
+	icon_state = "b762x55"
+	origin_tech = "combat=3"
+	ammo_type = "/obj/item/ammo_casing/a762x55"
+	max_ammo = 8
+	multiple_sprites = 1
+
 /obj/item/ammo_storage/box/flare
 	name = "ammo box (flare shells)"
 	icon_state = "flarebox"
