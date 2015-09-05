@@ -136,7 +136,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/proc/isWireCut(wireIndex)
 	// You can find the wires in the datum folder.
-	return (wires && wires.IsIndexCut(wireIndex))
+	return wires.IsIndexCut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
 	return ((src.aiControlDisabled!=1) && (!src.isAllPowerCut()));
@@ -172,6 +172,8 @@ About the new airlock wires panel:
 			var/cont = 1
 			while (cont)
 				sleep(10)
+				if(qdeleted(src))
+					return
 				cont = 0
 				if(src.secondsMainPowerLost>0)
 					if((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
@@ -860,20 +862,24 @@ About the new airlock wires panel:
 				if(beingcrowbarred == 0) //being fireaxe'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn(0)	open(2)
+						spawn(0)
+							open(2)
 					else
 						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
 				else
-					spawn(0)	open(2)
+					spawn(0)
+						open(2)
 			else
 				if(beingcrowbarred == 0)
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn(0)	close(2)
+						spawn(0)
+							close(2)
 					else
 						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
 				else
-					spawn(0)	close(2)
+					spawn(0)
+						close(2)
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
@@ -1028,7 +1034,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/autoclose()
-	if(!density && !operating && !locked && !welded && autoclose)
+	if(!qdeleted(src) && !density && !operating && !locked && !welded && autoclose)
 		close()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
@@ -1114,6 +1120,8 @@ About the new airlock wires panel:
 	if(density && hasPower() && !emagged)
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
+		if(qdeleted(src))
+			return
 		open()
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
