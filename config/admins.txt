@@ -92,3 +92,4 @@ Dunc = Game Master
 MMMiracles = Game Master
 bear1ake = Game Master
 CoreOverload = Game Master
+Anonus Tanir = Game Master
