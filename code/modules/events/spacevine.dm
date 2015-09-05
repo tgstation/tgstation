@@ -9,7 +9,7 @@
 
 	for(var/area/hallway/A in world)
 		for(var/turf/simulated/F in A)
-			if(!F.density && !F.contents.len)
+			if(!F.density || !F.contents.len)
 				turfs += F
 
 	if(turfs.len) //Pick a turf to spawn at if we can
