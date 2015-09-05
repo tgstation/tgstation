@@ -122,6 +122,8 @@ var/global/list/whitelisted_species = list("Human")
 
 	//If we will apply mutant race overlays or not.
 	var/has_mutant_race = 1
+	
+	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
 
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_speech() called tick#: [world.time]")
@@ -407,6 +409,8 @@ var/global/list/whitelisted_species = list("Human")
 	has_organ = list(
 		"brain" =    /datum/organ/internal/brain,
 		)
+	
+	move_speed_mod = 3
 
 /datum/species/skellington/handle_speech(message, mob/living/carbon/human/H)
 	if (prob(25))
@@ -523,6 +527,8 @@ var/global/list/whitelisted_species = list("Human")
 		// Unequip existing suits and hats.
 		H.u_equip(H.wear_suit,1)
 		H.u_equip(H.head,1)
+	
+	move_speed_mod = 1
 
 /datum/species/skrell
 	name = "Skrell"
@@ -700,4 +706,6 @@ var/global/list/whitelisted_species = list("Human")
 
 	has_mutant_race = 0
 	burn_mod = 2.5 //treeeeees
+	
+	move_speed_mod = 7
 
