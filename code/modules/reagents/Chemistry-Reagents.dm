@@ -1655,7 +1655,7 @@
 	M.adjustToxLoss(3*REM)
 	..()
 	return
-
+/*
 /datum/reagent/plasma/reaction_obj(var/obj/O, var/volume)
 	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
@@ -1678,7 +1678,7 @@
 	fuel.moles = 5
 	napalm.trace_gases += fuel
 	T.assume_air(napalm)
-	return
+	return*/
 
 /datum/reagent/leporazine
 	name = "Leporazine"
