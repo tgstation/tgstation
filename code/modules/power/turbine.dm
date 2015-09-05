@@ -84,10 +84,9 @@
 
 /obj/machinery/power/compressor/initialize()
 	..()
-	spawn(10)
-		locate_machinery()
-		if(!turbine)
-			stat |= BROKEN
+	locate_machinery()
+	if(!turbine)
+		stat |= BROKEN
 
 
 #define COMPFRICTION 5e5
@@ -206,10 +205,9 @@
 
 /obj/machinery/power/turbine/initialize()
 	..()
-	spawn(10)
-		locate_machinery()
-		if(!compressor)
-			stat |= BROKEN
+	locate_machinery()
+	if(!compressor)
+		stat |= BROKEN
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
