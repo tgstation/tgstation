@@ -96,8 +96,9 @@ log transactions
 				authenticated_account = null
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
+			var/obj/item/weapon/spacecash/dosh = I
 			//consume the money
-			authenticated_account.money += I:worth * I:amount
+			authenticated_account.money += dosh.worth * dosh.amount
 			if(prob(50))
 				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
 			else
@@ -107,7 +108,7 @@ log transactions
 			var/datum/transaction/T = new()
 			T.target_name = authenticated_account.owner_name
 			T.purpose = "Credit deposit"
-			T.amount = I:worth
+			T.amount = dosh.worth * dosh.amount
 			T.source_terminal = machine_id
 			T.date = current_date_string
 			T.time = worldtime2text()
@@ -115,7 +116,7 @@ log transactions
 
 			user << "<span class='info'>You insert [I] into [src].</span>"
 			src.attack_hand(user)
-			del I
+			qdel(I)
 	else
 		..()
 
