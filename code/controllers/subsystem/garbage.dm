@@ -126,8 +126,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 				A.find_references()
 				#endif
 			else
-				if(!("[A.type]" in noqdelhint))
-					noqdelhint += "[A.type]"
+				if(!("[A.type]" in SSgarbage.noqdelhint))
+					SSgarbage.noqdelhint += "[A.type]"
 					testing("WARNING: [A.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				SSgarbage.Queue(A)
 
