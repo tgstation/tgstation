@@ -1,3 +1,6 @@
+#define SIPHONING	0
+#define SCRUBBING	1
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map"
 
@@ -22,7 +25,7 @@
 	var/list/turf/simulated/adjacent_turfs = list()
 
 	var/on = 0
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
+	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
@@ -66,14 +69,14 @@
 
 	var/amount = idle_power_usage
 
-	if (scrubbing)
+	if(scrubbing & SCRUBBING)
 		if (scrub_CO2)
 			amount += idle_power_usage
 		if (scrub_Toxins)
 			amount += idle_power_usage
 		if (scrub_N2O)
 			amount += idle_power_usage
-	else
+	if(scrubbing & SIPHONING)
 		amount = active_power_usage
 
 	if (widenet)
@@ -94,9 +97,9 @@
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing)
+	if(scrubbing & SCRUBBING)
 		icon_state = "scrub_on"
-	else
+	if(scrubbing & SIPHONING)
 		icon_state = "scrub_purge"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
@@ -165,7 +168,7 @@
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = AIR1
 
-	if(scrubbing)
+	if(scrubbing & SCRUBBING)
 		if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
@@ -200,7 +203,7 @@
 			tile.assume_air(removed)
 			tile.air_update_turf()
 
-	else //Just siphoning all air
+	if(scrubbing & SIPHONING) //Just siphoning all air
 		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 			return
 
@@ -316,3 +319,6 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
+
+#undef SIPHONING
+#undef SCRUBBING

@@ -37,8 +37,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/Destroy()
 	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			nullifyNode(I)
+		nullifyNode(I)
 
 	SSair.atmos_machinery -= src
 	if(stored)
@@ -55,9 +54,10 @@ Pipelines + Other Objects -> Pipe network
 	//return QDEL_HINT_FINDREFERENCE
 
 /obj/machinery/atmospherics/proc/nullifyNode(I)
-	var/obj/machinery/atmospherics/N = NODE_I
-	N.disconnect(src)
-	NODE_I = null
+	if(NODE_I)
+		var/obj/machinery/atmospherics/N = NODE_I
+		N.disconnect(src)
+		NODE_I = null
 
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
