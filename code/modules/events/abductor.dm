@@ -6,7 +6,7 @@
 
 	earliest_start = 180000 // 30 min
 
-	gamemode_blacklist = list("nuclear","wizard","cult","gang","revolution","abduction","blob")
+	gamemode_blacklist = list("nuclear","wizard","revolution","abduction")
 
 /datum/round_event/abductor
 
