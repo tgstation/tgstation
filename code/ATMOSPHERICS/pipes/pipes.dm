@@ -81,16 +81,17 @@
 	qdel(air_temporary)
 	air_temporary = null
 
-	if(parent)
-		parent.members -= src
-
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
 		if(meter.target == src)
 			var/obj/item/pipe_meter/PM = new (T)
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
-	return ..()
+	. = ..()
+
+	if(!parent.gc_destroyed)
+		qdel(parent)
+	parent = null
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(DEVICE_TYPE_LOOP)
