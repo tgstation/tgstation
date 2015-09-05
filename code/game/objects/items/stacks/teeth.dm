@@ -12,7 +12,7 @@
 
 	var/animal_type
 
-/obj/item/stack/teeth/New()
+/obj/item/stack/teeth/New(loc, amount)
 	.=..()
 	pixel_x = rand(-24,24)
 	pixel_y = rand(-24,24)
