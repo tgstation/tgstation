@@ -62,6 +62,8 @@
 /obj/machinery/computer/shuttle_control/attack_hand(user as mob)
 	if(..(user))
 		return
+
+	user.set_machine(src)
 	src.add_fingerprint(usr)
 	var/shuttle_name = "Unknown shuttle"
 	var/dat
@@ -126,6 +128,7 @@
 			<a href='?src=\ref[src];admin_reset=1'>Reset shuttle</a><br><i>Revert the shuttle's areas to initial state</i><br>"}
 
 	user << browse("[dat]", "window=shuttle_control;size=575x450")
+	onclose(user, "shuttle_control")
 
 /obj/machinery/computer/shuttle_control/Topic(href, href_list)
 	if(..())
