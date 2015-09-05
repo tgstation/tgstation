@@ -1421,9 +1421,11 @@
 
 	if(src.species)
 		//if(src.species.language)	src.remove_language(species.language)
-		if(src.species.abilities)	src.verbs -= species.abilities
+		if(src.species.abilities)
+			src.verbs -= species.abilities
 		if(species.language)
 			remove_language(species.language)
+		species.clear_organs(src)
 
 	src.species = all_species[new_species_name]
 
@@ -1434,7 +1436,8 @@
 	if(src.species.abilities)
 		//if(src.species.language)	src.add_language(species.language)
 		if(src.species.abilities)	src.verbs |= species.abilities
-	if(force_organs || !src.organs || !src.organs.len)	src.species.create_organs(src)
+	if(force_organs || !src.organs || !src.organs.len)
+		src.species.create_organs(src)
 	src.see_in_dark = species.darksight
 	if(src.see_in_dark > 2)	src.see_invisible = SEE_INVISIBLE_LEVEL_ONE
 	else					src.see_invisible = SEE_INVISIBLE_LIVING

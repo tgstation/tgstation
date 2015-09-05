@@ -894,7 +894,7 @@ body
 			usr << "Mob doesn't exist anymore"
 			return
 
-		if(H.set_species(new_species))
+		if(H.set_species(new_species, force_organs=1))
 			usr << "Set species of [H] to [H.species]."
 			H.regenerate_icons()
 		else

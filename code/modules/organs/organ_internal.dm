@@ -16,7 +16,6 @@
 	var/obj/item/organ/organ_holder
 	var/datum/dna/owner_dna
 
-
 /datum/organ/internal/Copy()
 	var/datum/organ/internal/I = ..()
 	I.damage = damage
@@ -52,6 +51,10 @@
 		E.internal_organs |= src
 		H.internal_organs |= src
 		src.owner = H
+
+/datum/organ/internal/proc/Life()
+	// Now organs support Life() processes.
+	return
 
 /datum/organ/internal/process()
 
@@ -166,25 +169,6 @@
 	name = "heart"
 	parent_organ = "chest"
 	removed_type = /obj/item/organ/heart
-
-/datum/organ/internal/lungs
-	name = "lungs"
-	parent_organ = "chest"
-	removed_type = /obj/item/organ/lungs
-
-	process()
-		..()
-		if (germ_level > INFECTION_LEVEL_ONE)
-			if(prob(5))
-				owner.emote("cough")		//respitory tract infection
-
-		if(is_bruised())
-			if(prob(2))
-				spawn owner.emote("me", 1, "coughs up blood!")
-				owner.drip(10)
-			if(prob(4))
-				spawn owner.emote("me", 1, "gasps for air!")
-				owner.losebreath += 5
 
 /datum/organ/internal/liver
 	name = "liver"

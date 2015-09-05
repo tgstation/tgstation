@@ -1403,6 +1403,8 @@
 #include "code\modules\organs\organ_objects.dm"
 #include "code\modules\organs\pain.dm"
 #include "code\modules\organs\wound.dm"
+#include "code\modules\organs\internal\lungs\filter.dm"
+#include "code\modules\organs\internal\lungs\lung.dm"
 #include "code\modules\overlays\mobs.dm"
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\filingcabinet.dm"

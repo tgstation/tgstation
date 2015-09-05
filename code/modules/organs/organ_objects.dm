@@ -104,12 +104,28 @@
 	organ_type = /datum/organ/internal/heart
 
 /obj/item/organ/lungs
-	name = "lungs"
+	name = "human lungs"
 	icon_state = "lungs"
 	prosthetic_name = "gas exchange system"
 	prosthetic_icon = "lungs-prosthetic"
 	organ_tag = "lungs"
 	organ_type = /datum/organ/internal/lungs
+
+/obj/item/organ/lungs/vox
+	name = "vox lungs"
+	icon_state = "vox-lungs"
+	organ_type = /datum/organ/internal/lungs/vox
+
+/obj/item/organ/lungs/plasmaman
+	name = "weird pink lungs"
+	icon_state = "plasmaman-lungs"
+	organ_type = /datum/organ/internal/lungs/plasmaman
+
+/obj/item/organ/lungs/filter
+	name = "advanced lungs"
+	icon_state = "filter-lungs"
+	organ_type = /datum/organ/internal/lungs/filter
+	robotic=2
 
 /obj/item/organ/kidneys
 	name = "kidneys"

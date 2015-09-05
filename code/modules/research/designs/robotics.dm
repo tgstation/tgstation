@@ -21,6 +21,16 @@
 	build_path = /obj/item/device/mmi
 	category = "Robotics"
 
+/datum/design/adv_lungs
+	name = "Advanced Lungs"
+	desc = "These lungs can operate at higher pressures, and provide built-in filtering capabilities."
+	id = "adv_lungs"
+	req_tech = list("programming" = 2, "biotech" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(MAT_IRON = 2000, MAT_GLASS = 500)
+	build_path = /obj/item/organ/lungs/filter
+	category = "Robotics"
+
 /datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
