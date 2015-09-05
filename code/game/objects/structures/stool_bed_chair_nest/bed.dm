@@ -41,6 +41,10 @@
 		return 1
 	return ..()
 
+/*/obj/structure/stool/bed/attack_hand(mob/user)
+	user_unbuckle_mob(user)
+	return*/
+
 /obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 
@@ -49,6 +53,13 @@
 		new /obj/item/stack/sheet/metal(src.loc)
 		qdel(src)
 		return
+
+/*/obj/structure/stool/bed/MouseDrop_T(mob/M, mob/user)
+	if(!M || !user)
+		return
+	world << "user is [user]"
+	user_buckle_mob(M, user)
+	return*/
 
 
 /*
