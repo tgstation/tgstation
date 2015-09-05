@@ -6,7 +6,6 @@
  *		Spears
  */
 
-
 ///////////OFFHAND///////////////
 //what the mob gets when wielding something
 /obj/item/offhand

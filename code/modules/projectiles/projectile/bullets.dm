@@ -263,3 +263,10 @@
 			return 0
 	else
 		return 0
+
+/obj/item/projectile/bullet/a762x55
+	damage = 65
+	stun = 5
+	weaken = 5
+	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS
+	penetration = 10
