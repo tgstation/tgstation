@@ -416,7 +416,7 @@
 		for(var/datum/butchering_product/B in butchering_drops)
 			butchery = "[butchery][B.desc_modifier(src, user)]"
 	if(butchery)
-		msg += "<span class='info'>[butchery]</span>\n"
+		msg += "<span class='warning'>[butchery]</span>\n"
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"
