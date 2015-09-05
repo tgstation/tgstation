@@ -81,6 +81,13 @@
 			if(wrapped)
 				target << "<span class='warning'>You can't eat wrapped food!</span>"
 				return 0
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species.chem_flags & NO_EAT)
+					user.drop_from_inventory(src)
+					src.forceMove(get_turf(H))
+					H.visible_message("<span class='warning'>As [M] attempts to eat \the [src] it falls through and onto the ground as if untouched.</span>", "<span class='notice'>As you attempt to eat \the [src] it falls through your body and onto the ground as if untouched.</span>")
+					return 0
 			else if(fullness <= 50)
 				target.visible_message("<span class='notice'>[target] hungrily [eatverb]s some of \the [src] and gobbles it down!</span>", \
 				"<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
@@ -112,6 +119,13 @@
 
 				if(!do_mob(user, target))
 					return
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.chem_flags & NO_EAT)
+						user.drop_from_inventory(src)
+						src.forceMove(get_turf(H))
+						H.visible_message("<span class='warning'>As [user] attempts to feed [M] \the [src] it falls through and onto the ground as if untouched.</span>", "<span class='notice'>As [user] attempts to feed you \the [src] it falls through your body and onto the ground as if untouched.</span>")
+						return 0
 
 				add_logs(user, target, "fed", object="[reagentlist(src)]")
 				target.visible_message("<span class='danger'>[user] feeds [target] \the [src].</span>", \

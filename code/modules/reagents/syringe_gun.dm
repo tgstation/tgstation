@@ -91,10 +91,14 @@
 				for(var/mob/living/carbon/M in D.loc)
 					if(!istype(M,/mob/living/carbon)) continue
 					if(M == user) continue
-
 					var/blocked = 0
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
+						if(H.species && (H.species.chem_flags & NO_INJECT))
+							H.visible_message("<span class='warning'>\The [D] bounces harmlessly off of [H].</span>", "<span class='notice'>\The [D] bounces off you harmlessly and breaks as it hits the ground.</span>")
+							qdel(D)
+							return
+
 						blocked = istype(H.wear_suit, /obj/item/clothing/suit/space) // Block the syringe if the guy's wearing a spess suit.
 					//Syringe gun attack logging by Yvarov
 					var/R
@@ -123,7 +127,7 @@
 					else
 						var/mob/living/carbon/human/H = M
 						M.visible_message("<span class='danger'>[M] is hit by the syringe, but \his [H.wear_suit] blocked it!</span>") // Fuck you validhunters.
-						
+
 					qdel(D)
 					break
 			if(D)

@@ -12,7 +12,7 @@
 			return 0
 
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.encased && affected.open >= 2
+		return affected.encased && (affected.open >= 2 || (target.species.flags & NO_SKIN))
 
 
 
@@ -31,7 +31,7 @@
 	if (!hasorgans(target))
 		return
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return ..() && affected.open == 2
+	return ..() && (affected.open == 2 || (target.species.flags & NO_SKIN))
 
 /datum/surgery_step/open_encased/saw/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 

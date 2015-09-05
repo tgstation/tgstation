@@ -508,7 +508,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		else if(W.damage_type == BURN)
 			burn_dam += W.damage
 
-		if(!(status & (ORGAN_ROBOT|ORGAN_PEG)) && W.bleeding())
+		if(!(status & (ORGAN_ROBOT|ORGAN_PEG)) && W.bleeding() && !(owner.species.flags & NO_BLOOD))
 			W.bleed_timer--
 			status |= ORGAN_BLEEDING
 
@@ -516,7 +516,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		number_wounds += W.amount
 
-	if (open && !clamped && !(status & (ORGAN_ROBOT|ORGAN_PEG)))	//things tend to bleed if they are CUT OPEN
+	if (open && !clamped && !(status & (ORGAN_ROBOT|ORGAN_PEG)) && !(owner.species.flags & NO_BLOOD))	//things tend to bleed if they are CUT OPEN
 		status |= ORGAN_BLEEDING
 
 

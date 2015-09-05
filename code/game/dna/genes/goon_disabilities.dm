@@ -405,7 +405,7 @@
 	charge_type = Sp_CHARGES
 	charge_max = 1
 
-	spell_flags = INCLUDEUSER
+	spell_flags = INCLUDEUSER | STATALLOWED
 	invocation_type = SpI_NONE
 	range = -1
 	max_targets = 1
@@ -418,6 +418,9 @@
 	for(var/mob/M in targets)
 		if (istype(M,/mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = M
+			if(H.species && H.species.name == "Skellington")
+				H << "<span class='warning'>You have no flesh left to melt!</span>"
+				return 0
 
 			H.visible_message("<span class='danger'>[H.name]'s flesh melts right off! Holy shit!</span>")
 			//if (H.gender == "female")
@@ -427,10 +430,12 @@
 			//playsound(H.loc, 'bubbles.ogg', 50, 0)
 			//playsound(H.loc, 'loudcrunch2.ogg', 50, 0)
 			var/mob/living/carbon/human/skellington/nH = new /mob/living/carbon/human/skellington(H.loc, delay_ready_dna=1)
-			if(nH.has_brain())
-				var/datum/organ/internal/brain/skellBrain = nH.internal_organs_by_name["brain"]
-				del(skellBrain)
+			nH.lying = H.lying
+			//if(nH.has_brain())
+				//var/datum/organ/internal/brain/skellBrain = nH.internal_organs_by_name["brain"]
+				///del(skellBrain)
 			nH.real_name = H.real_name
+			nH.ckey = H.ckey
 			nH.name = "[H.name]'s skeleton"
 			//H.decomp_stage = 4
 			H.gib(1)

@@ -849,6 +849,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define IS_SYNTHETIC 16384 // from baystation
 
+#define NO_SKIN 32768
+
+//species chemical flags
+#define NO_DRINK 1
+#define NO_EAT 2
+#define NO_SPLASH 4
+#define NO_INJECT 8
+#define NO_CRYO 16
+
+
 
 // from bay station
 #define INFECTION_LEVEL_ONE 100

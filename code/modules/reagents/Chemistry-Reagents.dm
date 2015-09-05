@@ -99,6 +99,8 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_update() called tick#: [world.time]")
 	return
 
+/datum/reagent/proc/on_removal(var/data)
+	return 1
 /datum/reagent/muhhardcores
 	name = "Hardcores"
 	id = "bustanut"
@@ -212,6 +214,12 @@
 	if(volume >= 5 && !istype(T.loc, /area/chapel)) //blood desanctifies non-chapel tiles
 		T.holy = 0
 	return
+
+/datum/reagent/blood/on_removal(var/data)
+	if(holder && holder.my_atom)
+		var/mob/living/carbon/human/H = holder.my_atom
+		if(istype(H))
+			if(H.species && H.species.flags & NO_BLOOD) return 0
 
 /datum/reagent/vaccine
 	//data must contain virus type
