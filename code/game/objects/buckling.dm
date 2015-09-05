@@ -82,7 +82,7 @@
 		else
 			M.visible_message(\
 				"<span class='warning'>[user] buckles [M] to [src]!</span>",\
-				"<span class='warning'>[user] buckels you to [src]!</span>",\
+				"<span class='warning'>[user] buckles you to [src]!</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 
 /obj/proc/user_unbuckle_mob(mob/user)
