@@ -5,7 +5,7 @@
 	desc = "Grows a translucent filament over our eyes, allowing our vision to be protected."
 	helptext = "The filament will be obvious to anyone observing. It will protect our eyes from flashes and the glow of welding tools."
 	chemical_cost = 10
-	dna_cost = 1 //Would be 1 without thermal vision
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/ocular_shield/sting_action(mob/living/carbon/human/user)
 	if(!istype(user))
