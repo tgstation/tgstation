@@ -8,7 +8,7 @@
 	priority = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/datum/organ/external/affected = target.get_organ(target_zone)
-		return affected.open == (affected.encased ? 3 : 2) && !(affected.status & ORGAN_BLEEDING)
+		return (affected.open == (affected.encased ? 3 : 2) || (!affected.encased ? (target.species.flags & NO_SKIN) : 0)) && !(affected.status & ORGAN_BLEEDING)
 
 /datum/surgery_step/cavity/proc/get_max_wclass(datum/organ/external/affected)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/surgery_step/cavity/proc/get_max_wclass() called tick#: [world.time]")

@@ -86,6 +86,7 @@ var/global/list/whitelisted_species = list("Human")
 	var/list/default_block_names = list() // Use this instead, using the names from setupgame.dm
 
 	var/flags = 0       // Various specific features.
+	var/chem_flags = 0 //how we handle chemicals and eating/drinking i guess
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
@@ -396,10 +397,16 @@ var/global/list/whitelisted_species = list("Human")
 	language = "Clatter"
 	attack_verb = "punch"
 
-	flags = IS_WHITELISTED | HAS_LIPS | NO_BREATHE | NO_BLOOD
+	flags = IS_WHITELISTED | HAS_LIPS | NO_BREATHE | NO_BLOOD | NO_SKIN
+
+	chem_flags = NO_DRINK | NO_EAT | NO_INJECT
 
 	default_mutations=list(SKELETON)
 	brute_mod = 2.0
+	
+	has_organ = list(
+		"brain" =    /datum/organ/internal/brain,
+		)
 
 /datum/species/skellington/handle_speech(message, mob/living/carbon/human/H)
 	if (prob(25))

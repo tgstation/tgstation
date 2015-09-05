@@ -34,6 +34,11 @@
 		return
 	if (!( istype(M, /mob) ))
 		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species && (H.species.chem_flags & NO_INJECT))
+			user << "<span classs='notice'>\The [src]'s needle fails to pierce [H]"
+			return
 
 	var/inject_message = "<span class='notice'>You inject [M] with [src].</span>"
 	if(M == user)

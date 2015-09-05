@@ -439,7 +439,7 @@ Round Duration: [round(hours)]h [round(mins)]m<br>"}
 	if(client.prefs.species)
 		chosen_species = all_species[client.prefs.species]
 	if(chosen_species)
-		if(is_alien_whitelisted(src, client.prefs.species) || !config.usealienwhitelist || !(chosen_species.flags & WHITELISTED) || (client.holder.rights & R_ADMIN) )// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
+		if(is_alien_whitelisted(src, client.prefs.species) || !config.usealienwhitelist || !(chosen_species.flags & WHITELISTED) || (client && client.holder && (client.holder.rights & R_ADMIN)) )// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
 			new_character.set_species(client.prefs.species)
 			//if(chosen_species.language)
 				//new_character.add_language(chosen_species.language)
