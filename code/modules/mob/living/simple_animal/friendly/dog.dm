@@ -538,7 +538,7 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/pet/pug/Life()
+/mob/living/simple_animal/pet/dog/pug/Life()
 	..()
 
 	if(!stat && !resting && !buckled)
