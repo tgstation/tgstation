@@ -126,8 +126,10 @@
 		B.health = 5
 		B.update_icon()
 	B.color = a_color
+	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.loc = T
+		B.density = initial(density)
 	else
 		T.blob_act()//If we cant move in hit the turf
 		B.loc = null //So we don't play the splat sound, see Destroy()
