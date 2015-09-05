@@ -89,7 +89,7 @@
 			qdel(meter)
 	. = ..()
 
-	if(!parent.gc_destroyed)
+	if(parent && !parent.gc_destroyed)
 		qdel(parent)
 	parent = null
 
