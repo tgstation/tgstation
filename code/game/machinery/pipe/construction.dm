@@ -214,7 +214,6 @@ var/global/list/pipeID2State = list(
 	var/obj/machinery/atmospherics/components/trinary/T = A
 	if(istype(T))
 		T.flipped = flipped
-
 	A.construction(pipe_type, color)
 
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
