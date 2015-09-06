@@ -350,6 +350,27 @@ var/global/list/status_display_images = list(
 	.=..()
 	status_displays -= src
 
+/obj/machinery/ai_status_display/attack_ai(mob/user)
+	if(spookymode)	return
+	if(user.stat)	return
+
+	if(isAI(user)) //This allows AIs to load any image into the status displays
+		var/mob/living/silicon/ai/A = user
+
+		//Some fluff
+		if(user.stat)
+			user << "<span class='warning'>Unable to connect to [src] (error #408)</span>"
+			return
+		if(stat & (BROKEN|NOPOWER))
+			user << "<span class='warning'>Unable to connect to [src] (error #[(stat & BROKEN) ? "120" : "408"])</span>"
+			return
+
+		var/new_icon = input(A, "Load an image to be desplayed on [src].", "AI status display") in status_display_images
+
+		if(new_icon)
+			src.mode = MODE_EMOTION
+			src.set_picture(status_display_images[new_icon])
+
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
 		overlays.len = 0

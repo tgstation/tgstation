@@ -1,0 +1,7 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: Added a bunch of AI status images
+  - tweak: The AI can individually change any status display, making it display either text, image, emergency shuttle timer or supply shuttle timer.
