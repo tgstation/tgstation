@@ -1,7 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - tweak: Doubled the price of hookshots from Mining vendors (from 1500 to 3000).
-  - tweak: Upped the Engineering tech requirement for Hookshots from 3 to 5.
-  - tweak: Increased the material cost of hookshots (from Iron=5000 to Iron=75000,Diamond=500. That means 20 sheets of iron and 1/4 sheet of diamond)
-  - tweak: Increased the material cost of gravity well gun (from Gold=7000,Glass=5000,Diamond=3000,Silver=7000,Uranium=12000 to Gold=10000,Glass=37500,Diamond=6000,Silver=10000,Uranium=26000. That means 5 sheets of gold, 10 sheets of glass, 3 sheets of diamonds, 5 sheets of silver and 13 sheets of uranium)
