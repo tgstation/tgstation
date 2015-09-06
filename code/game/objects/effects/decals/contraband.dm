@@ -1,9 +1,9 @@
 
 //########################## POSTERS ##################################
 
-#define NUM_OF_POSTER_DESIGNS 33 // contraband posters
+#define NUM_OF_POSTER_DESIGNS 34 // contraband posters
 
-#define NUM_OF_POSTER_DESIGNS_LEGIT 33 // corporate approved posters
+#define NUM_OF_POSTER_DESIGNS_LEGIT 34 // corporate approved posters
 
 
 //########################## THE LIST OF POSTERS AND DESCS #####################
@@ -45,7 +45,8 @@ var/global/list/posternames = list(
 "- Red Rum",
 "- CC 64K Ad",
 "- Punch Shit",
-"- The Griffin" )
+"- The Griffin",
+"- Free Drone" )
 
 var/global/list/posterdescs = list(
 " A salvaged shred of a much larger flag, colors bled together and faded from age.",
@@ -75,12 +76,13 @@ var/global/list/posterdescs = list(
 " Who cares about lung cancer when you're high as a kite?",
 " Because seven shots are all you need.",
 " A promotional poster for some rapper.",
-" A poster advertising syndicate pistols as being 'Classy as fuck'. It is covered in faded gang tags.",
+" A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags.",
 " All the colors of the bloody murder rainbow.",,
 " Looking at this poster makes you want to kill.",
 " The latest portable computer from Comrade Computing, with a whole 64kB of ram!",
 " Fight things for no reason, like a man!",
-" The Griffin commands you to be the worst you can be. Will you?" )
+" The Griffin commands you to be the worst you can be. Will you?",
+" This poster commemorates the bravery of the rogue drone banned by CentComm." )
 
 // LEGIT
 
@@ -118,7 +120,8 @@ var/global/list/legitposternames = list(
 "- Nanomichi Ad",
 "- 12 Gauge",
 "- High-Class Martini",
-"- The Owl" )
+"- The Owl",
+"- Carbon Dioxide" )
 
 var/global/list/legitposterdescs = list(
 " A poster glorifying the station's security force.",
@@ -153,7 +156,8 @@ var/global/list/legitposterdescs = list(
 " A poster advertising Nanomichi brand audio cassettes.",
 " A poster boasting about the superiority of 12 gauge shotgun shells.",
 " I told you to shake it, no stirring.",
-" The Owl would do his best to protect the station. Will you?" )
+" The Owl would do his best to protect the station. Will you?",
+" This informational poster teaches the viewer about carbon dioxide." )
 
 //########################## THE ACTUAL POSTER CODE ###########################
 
