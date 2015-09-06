@@ -103,6 +103,8 @@ var/global/list/RPD_recipes=list(
 	"Heat Exchange" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
 		//"Bent Pipe"      = new /datum/pipe_info(PIPE_HE,				5, PIPE_BENT),
+		"Manifold"       = new /datum/pipe_info(PIPE_HE_MANIFOLD, 		1, PIPE_TRINARY),
+		"4-Way Manifold" = new /datum/pipe_info(PIPE_HE_4WAYMANIFOLD,	1, PIPE_QUAD),
 		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
 	),

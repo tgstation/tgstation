@@ -128,6 +128,7 @@
 #include "code\ATMOSPHERICS\pipes\simple.dm"
 #include "code\ATMOSPHERICS\pipes\heat_exchange\he_pipes.dm"
 #include "code\ATMOSPHERICS\pipes\heat_exchange\junction.dm"
+#include "code\ATMOSPHERICS\pipes\heat_exchange\manifold.dm"
 #include "code\ATMOSPHERICS\pipes\heat_exchange\simple.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\failsafe.dm"
