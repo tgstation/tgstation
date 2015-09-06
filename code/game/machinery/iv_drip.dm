@@ -52,6 +52,7 @@
 		var/mob/living/carbon/human/H = over_object
 		if(H.species && (H.species.chem_flags & NO_INJECT))
 			H.visible_message("<span class='warning'>[usr] struggles to place the IV into [H] but fails.</span>","<span class='notice'>[usr] tries to place the IV into your arm but is unable to.</span>")
+			return
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
 		src.update_icon()
