@@ -278,22 +278,34 @@
 	return 1
 
 /obj/machinery/singularity/proc/eat()
-	set background = BACKGROUND_ENABLED
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/eat() called tick#: [world.time]")
-
+	// This is causing issues. Do not renable - N3X
+	// Specifically, eat() builds up in the background from taking too long and eventually crashes the singo.
+	//set background = BACKGROUND_ENABLED
+	var/ngrabbed=0
 	for(var/atom/X in orange(grav_pull, src))
-		var/dist = get_dist(X, src)
-		var/obj/machinery/singularity/S = src
-		if(!istype(src))
+		// Caps grabbing shit at 100 items.
+		if(ngrabbed==100)
+			//warning("Singularity eat() capped at [ngrabbed]")
 			return
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
+		ngrabbed++
+		try
+			var/dist = get_dist(X, src)
+			var/obj/machinery/singularity/S = src
+			if(!istype(src))
+				return
+			if(dist > consume_range)
+				X.singularity_pull(S, current_size)
+			else if(dist <= consume_range)
+				consume(X)
+		catch(var/exception/e)
+			error("Singularity eat() caught exception:")
+			error(e)
+			continue
 
 	//for(var/turf/T in trange(grav_pull, src)) // TODO: Create a similar trange for orange to prevent snowflake of self check.
 	//	consume(T)
 
+	//testing("Singularity eat() ate [ngrabbed] items.")
 	return
 /*
  * Singulo optimization.
