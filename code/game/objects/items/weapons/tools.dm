@@ -195,6 +195,10 @@
 	..()
 	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
+/obj/item/weapon/weldingtool/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] welds \his every orifice closed! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
+
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))

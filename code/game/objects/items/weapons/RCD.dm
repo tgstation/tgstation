@@ -63,6 +63,10 @@ RCD
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
 
+/obj/item/weapon/rcd/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down his throat! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
 /obj/item/weapon/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"
 	set category = "Object"
