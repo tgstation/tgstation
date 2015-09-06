@@ -8,7 +8,7 @@
 	for(var/infection in viruses)
 		qdel(infection)
 	ghostize()
-	..()
+	return ..()
 
 /mob/proc/sac_act(obj/effect/rune/R, mob/victim)
 	return

@@ -18,7 +18,7 @@
 		P.parent = null
 	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
 		C.nullifyPipenet(src)
-	..()
+	return ..()
 
 /datum/pipeline/process()
 	if(update)
@@ -185,6 +185,7 @@ var/pipenetwarnings = 10
 			air.temperature += self_temperature_delta
 
 			modeled_location.air.temperature += sharer_temperature_delta
+			modeled_location.air_update_turf()
 
 
 	else

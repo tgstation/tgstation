@@ -1,7 +1,10 @@
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
+
+	level = 1
 	layer = 2.4 //under wires with their 2.44
+
 	use_power = 0
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
@@ -11,8 +14,32 @@
 	buckle_requires_restraints = 1
 	buckle_lying = -1
 
-/obj/machinery/atmospherics/proc/pipeline_expansion()
-	return null
+/obj/machinery/atmospherics/pipe/New()
+	color = pipe_color
+	..()
+
+/obj/machinery/atmospherics/pipe/nullifyNode(I)
+	var/obj/machinery/atmospherics/oldN = NODE_I
+	..()
+	oldN.build_network()
+
+/obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
+	if(NODE1&&NODE2)
+		icon_state = "intact[invisibility ? "-f" : "" ]"
+	else
+		var/have_node1 = NODE1?1:0
+		var/have_node2 = NODE2?1:0
+		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
+
+/obj/machinery/atmospherics/pipe/atmosinit()
+	var/turf/T = loc			// hide if turf is not intact
+	hide(T.intact)
+	..()
+
+/obj/machinery/atmospherics/pipe/hide(i)
+	if(level == 1 && istype(loc, /turf/simulated))
+		invisibility = i ? 101 : 0
+	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
 	//Return 1 if parent should continue checking other pipes
@@ -50,14 +77,24 @@
 	parent = P
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	releaseAirToTurf()
+	qdel(air_temporary)
+	air_temporary = null
+
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
 		if(meter.target == src)
 			var/obj/item/pipe_meter/PM = new (T)
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
-	..()
+	. = ..()
+
+	if(parent && !parent.gc_destroyed)
+		qdel(parent)
+	parent = null
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
-	//Used for pipe painting. Overriden in the children.
-	return
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			var/obj/machinery/atmospherics/N = NODE_I
+			N.update_icon()

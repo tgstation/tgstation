@@ -121,6 +121,11 @@
 	var/attacher = "UNKNOWN"
 	var/datum/wires/explosive/gibtonite/wires
 
+/obj/item/weapon/twohanded/required/gibtonite/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
+
 /obj/item/weapon/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/device/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
@@ -131,7 +136,7 @@
 		return
 
 	if(wires && !primed)
-		if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler))
+		if(wires.IsInteractionTool(I))
 			wires.Interact(user)
 			return
 

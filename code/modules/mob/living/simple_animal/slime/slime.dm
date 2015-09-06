@@ -24,6 +24,7 @@
 
 	maxHealth = 150
 	health = 150
+	healable = 0
 	gender = NEUTER
 
 	nutrition = 700

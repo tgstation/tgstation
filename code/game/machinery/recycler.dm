@@ -14,9 +14,7 @@ var/const/SAFETY_COOLDOWN = 100
 	var/blood = 0
 	var/eat_dir = WEST
 	var/amount_produced = 1
-	var/probability_mod = 1
-	var/extra_materials = 0
-	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
+	var/datum/material_container/materials
 
 /obj/machinery/recycler/New()
 	// On us
@@ -25,25 +23,20 @@ var/const/SAFETY_COOLDOWN = 100
 	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_URANIUM=1, MAT_BANANIUM=1))
 	RefreshParts()
 	update_icon()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
-	var/prob_mod = 0
+	var/mat_mod = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		amt_made = 1 * B.rating
+		mat_mod = 2 * B.rating
+	mat_mod *= 50000
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		if(M.rating > 1)
-			prob_mod = 2 * M.rating
-		else
-			prob_mod = 1 * M.rating
-		if(M.rating >= 3)
-			extra_materials = 1
-		else
-			extra_materials = 0
-	probability_mod = prob_mod
-	amount_produced = amt_made
+		amt_made = 25 * M.rating //% of materials salvaged
+	materials.max_amount = mat_mod
+	amount_produced = min(100, amt_made)
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
@@ -121,36 +114,18 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/recycle(obj/item/I, sound = 1)
 	I.loc = src.loc
-	if(is_type_in_list(I, blacklist))
-		qdel(I)
-		if(sound)
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	if(!istype(I))
 		return
-	qdel(I)
-	if(prob(15 + probability_mod))
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(loc)
-		M.amount = amount_produced
-	if(prob(10 + probability_mod))
-		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(loc)
-		G.amount = amount_produced
-	if(prob(2 + probability_mod))
-		var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel(loc)
-		P.amount = amount_produced
-	if(prob(1 + probability_mod))
-		var/obj/item/stack/sheet/rglass/R = new /obj/item/stack/sheet/rglass(loc)
-		R.amount = amount_produced
-	if(extra_materials)
-		if(prob(3 + probability_mod))
-			var/obj/item/stack/sheet/mineral/gold/GS = new /obj/item/stack/sheet/mineral/gold(loc)
-			GS.amount = amount_produced
-		if(prob(2 + probability_mod))
-			var/obj/item/stack/sheet/mineral/silver/S = new /obj/item/stack/sheet/mineral/silver(loc)
-			S.amount = amount_produced
-		if(prob(1 + probability_mod))
-			var/obj/item/stack/sheet/mineral/bananium/B = new /obj/item/stack/sheet/mineral/bananium(loc)
-			B.amount = amount_produced
+
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	var/material_amount = materials.can_insert(I)
+	if(!material_amount)
+		qdel(I)
+		return
+	materials.insert_item(I, multiplier = (amount_produced / 100))
+	qdel(I)
+	materials.retrieve_all()
 
 
 /obj/machinery/recycler/proc/stop(mob/living/L)

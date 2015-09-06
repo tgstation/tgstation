@@ -8,7 +8,7 @@
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/reinf = 0
 
 /obj/machinery/door/window/New()
@@ -24,7 +24,7 @@
 	if(health == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
-	..()
+	return ..()
 
 
 
@@ -309,9 +309,9 @@
 
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
 
-					var/obj/item/weapon/airlock_electronics/ae
+					var/obj/item/weapon/electronics/airlock/ae
 					if(!electronics)
-						ae = new/obj/item/weapon/airlock_electronics( src.loc )
+						ae = new/obj/item/weapon/electronics/airlock( src.loc )
 						if(req_one_access)
 							ae.use_one_access = 1
 							ae.conf_access = src.req_one_access

@@ -9,7 +9,6 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
-
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -25,14 +24,21 @@ Pipelines + Other Objects -> Pipe network
 
 	var/image/pipe_vision_img = null
 
+	var/device_type = 0
+	var/list/obj/machinery/atmospherics/nodes = list()
+
 /obj/machinery/atmospherics/New()
 	..()
+	nodes.len = device_type
 	SSair.atmos_machinery += src
 	SetInitDirections()
 	if(can_unwrench)
 		stored = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
+	for(DEVICE_TYPE_LOOP)
+		nullifyNode(I)
+
 	SSair.atmos_machinery -= src
 	if(stored)
 		qdel(stored)
@@ -44,11 +50,43 @@ Pipelines + Other Objects -> Pipe network
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	..()
+	return ..()
+	//return QDEL_HINT_FINDREFERENCE
+
+/obj/machinery/atmospherics/proc/nullifyNode(I)
+	if(NODE_I)
+		var/obj/machinery/atmospherics/N = NODE_I
+		N.disconnect(src)
+		NODE_I = null
 
 //this is called just after the air controller sets up turfs
-/obj/machinery/atmospherics/proc/atmosinit()
-	return
+/obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
+	if(!node_connects) //for pipes where order of nodes doesn't matter
+		node_connects = list()
+		node_connects.len = device_type
+
+		for(DEVICE_TYPE_LOOP)
+			for(var/D in cardinal)
+				if(D & GetInitDirections())
+					if(D in node_connects)
+						continue
+					node_connects[I] = D
+					break
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
+			if(can_be_node(target, I))
+				NODE_I = target
+				break
+
+	update_icon()
+
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+	if(target.initialize_directions & get_dir(target,src))
+		return 1
+
+/obj/machinery/atmospherics/proc/pipeline_expansion()
+	return nodes
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
@@ -73,7 +111,12 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	return
+	if(istype(reference, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = reference
+		qdel(P.parent)
+	var/I = nodes.Find(reference)
+	NODE_I = null
+	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
 	return
@@ -137,9 +180,6 @@ Pipelines + Other Objects -> Pipe network
 		stored = null
 
 	qdel(src)
-
-/obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
-	P.other_atmosmch -= src
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 

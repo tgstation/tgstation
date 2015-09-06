@@ -944,7 +944,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "permabolt3";
 	 name = "Cell Bolt Control";
 	 normaldoorcontrol = 1;
@@ -986,7 +986,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "permabolt2";
 	 name = "Cell Bolt Control";
 	 normaldoorcontrol = 1;
@@ -1033,7 +1033,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "permabolt1";
 	 name = "Cell Bolt Control";
 	 normaldoorcontrol = 1;
@@ -1452,7 +1452,7 @@
 	pixel_x = -3;
 	 pixel_y = 0
 	},
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/item/weapon/reagent_containers/spray/pepper,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -1701,12 +1701,12 @@
 /turf/space,
 /area/solar/auxstarboard)
 "adD" = (
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "executionflash";
 	 pixel_x = 24;
 	 pixel_y = 5
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "executionspaceblast";
 	 name = "Vent to Space";
 	 pixel_x = 25;
@@ -1772,12 +1772,12 @@
 	 scrub_N2O = 0;
 	 scrub_Toxins = 0
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/button/ignition{
 	id = "executionburn";
 	 pixel_x = 24;
 	 pixel_y = 5
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "executionfireblast";
 	 name = "Transfer Area Lockdown";
 	 pixel_x = 25;
@@ -1790,14 +1790,14 @@
 	},
 /area/security/transfer)
 "adJ" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "permacell3";
 	 name = "Cell 3 Lockdown";
 	 pixel_x = -4;
 	 pixel_y = 25;
 	 req_access_txt = "2"
 	},
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "PCell 3";
 	 pixel_x = 6;
 	 pixel_y = 24
@@ -1845,14 +1845,14 @@
 	},
 /area/security/prison)
 "adN" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "permacell2";
 	 name = "Cell 2 Lockdown";
 	 pixel_x = -4;
 	 pixel_y = 25;
 	 req_access_txt = "2"
 	},
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "PCell 2";
 	 pixel_x = 6;
 	 pixel_y = 24
@@ -1868,14 +1868,14 @@
 /turf/simulated/floor/plasteel,
 /area/security/prison)
 "adP" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "permacell1";
 	 name = "Cell 1 Lockdown";
 	 pixel_x = -4;
 	 pixel_y = 25;
 	 req_access_txt = "2"
 	},
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "PCell 1";
 	 pixel_x = 6;
 	 pixel_y = 24
@@ -2170,7 +2170,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "armory"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "armory";
 	 name = "Armory Shutters";
 	 pixel_x = 0;
@@ -2615,7 +2615,7 @@
 	},
 /area/security/prison)
 "afl" = (
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "insaneflash";
 	 pixel_y = -26
 	},
@@ -3167,7 +3167,7 @@
 /area/security/main)
 "agi" = (
 /obj/structure/table,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/simulated/floor/plasteel,
 /area/security/main)
@@ -3998,14 +3998,14 @@
 /obj/effect/landmark/start{
 	name = "Warden"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Prison Gate";
 	 name = "Prison Wing Lockdown";
 	 pixel_x = -27;
 	 pixel_y = 8;
 	 req_access_txt = "2"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Secure Gate";
 	 name = "Cell Shutters";
 	 pixel_x = -27;
@@ -5797,7 +5797,7 @@
 	},
 /area/security/brig)
 "akV" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "briggate";
 	 name = "Desk Shutters";
 	 pixel_x = -26;
@@ -5809,7 +5809,7 @@
 	 d2 = 2;
 	 icon_state = "1-2"
 	},
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "brigentry";
 	 pixel_x = -28;
 	 pixel_y = -8
@@ -6110,7 +6110,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
 	 id = "outerbrig";
 	 name = "Brig Exterior Doors Control";
@@ -6119,7 +6119,7 @@
 	 pixel_y = -5;
 	 req_access_txt = "63"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
 	 id = "innerbrig";
 	 name = "Brig Interior Doors Control";
@@ -6264,7 +6264,7 @@
 	},
 /area/shuttle/labor)
 "alR" = (
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "gulagshuttleflasher";
 	 name = "Flash Control";
 	 pixel_x = 0;
@@ -6587,7 +6587,7 @@
 	},
 /area/security/processing)
 "ams" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the exit.";
 	 id = "laborexit";
 	 name = "exit button";
@@ -9087,7 +9087,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Dorm4";
 	 name = "Dorm Bolt Control";
 	 normaldoorcontrol = 1;
@@ -9164,7 +9164,7 @@
 "arY" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/red,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Dorm5";
 	 name = "Cabin Bolt Control";
 	 normaldoorcontrol = 1;
@@ -9183,7 +9183,7 @@
 "asa" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/red,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Dorm6";
 	 name = "Cabin Bolt Control";
 	 normaldoorcontrol = 1;
@@ -9267,7 +9267,7 @@
 	},
 /area/maintenance/fsmaint2)
 "ask" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "maint3";
 	 name = "Blast Door Control C";
 	 pixel_x = 0;
@@ -9547,7 +9547,7 @@
 /area/lawoffice)
 "asV" = (
 /obj/machinery/photocopier,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "lawyer_blast";
 	 name = "Privacy Shutters";
 	 pixel_x = 25;
@@ -10715,14 +10715,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint2)
 "avz" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "maint2";
 	 name = "Blast Door Control B";
 	 pixel_x = -28;
 	 pixel_y = 4;
 	 req_access_txt = "0"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "maint1";
 	 name = "Blast Door Control A";
 	 pixel_x = -28;
@@ -10832,8 +10832,8 @@
 	icon_state = "tube1";
 	 dir = 4
 	},
-/obj/item/weapon/camera_assembly,
-/obj/item/weapon/camera_assembly,
+/obj/item/wallframe/camera,
+/obj/item/wallframe/camera,
 /obj/machinery/alarm{
 	dir = 8;
 	 icon_state = "alarm0";
@@ -11548,7 +11548,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Dorm3";
 	 name = "Dorm Bolt Control";
 	 normaldoorcontrol = 1;
@@ -12793,7 +12793,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Dorm2";
 	 name = "Dorm Bolt Control";
 	 normaldoorcontrol = 1;
@@ -15065,7 +15065,7 @@
 	},
 /area/chapel/main)
 "aEl" = (
-/obj/machinery/driver_button{
+/obj/machinery/button/massdriver{
 	id = "chapelgun";
 	 name = "Chapel Mass Driver";
 	 pixel_x = 25
@@ -15136,7 +15136,7 @@
 "aEt" = (
 /obj/item/device/radio/off,
 /obj/item/weapon/crowbar,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/structure/table,
 /turf/simulated/floor/plasteel{
 	icon_state = "red";
@@ -16902,7 +16902,7 @@
 	dir = 1;
 	 on = 1
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "stationawaygate";
 	 name = "Gateway Access Shutter Control";
 	 pixel_x = -1;
@@ -17245,7 +17245,7 @@
 /area/chapel/office)
 "aIC" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/crema_switch{
+/obj/machinery/button/crematorium{
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
@@ -17896,7 +17896,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Dorm1";
 	 name = "Dorm Bolt Control";
 	 normaldoorcontrol = 1;
@@ -20724,8 +20724,8 @@
 /area/storage/tools)
 "aQS" = (
 /obj/structure/table/reinforced,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel,
 /area/bridge)
 "aQT" = (
@@ -20767,7 +20767,7 @@
 	dir = 1;
 	 name = "Command Station"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "bridge blast";
 	 name = "Bridge Blast Door Control";
 	 pixel_x = 28;
@@ -21342,8 +21342,8 @@
 /area/storage/tools)
 "aSo" = (
 /obj/structure/table,
-/obj/item/weapon/module/power_control,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/apc,
+/obj/item/weapon/electronics/airlock,
 /turf/simulated/floor/plasteel,
 /area/storage/tools)
 "aSp" = (
@@ -23815,7 +23815,7 @@
 	dir = 1;
 	 icon_state = "pipe-c"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "kitchen";
 	 name = "Kitchen Shutters Control";
 	 pixel_x = -1;
@@ -24734,7 +24734,7 @@
 	dir = 8;
 	 layer = 2.9
 	},
-/obj/item/weapon/module/power_control,
+/obj/item/weapon/electronics/apc,
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
@@ -24796,7 +24796,7 @@
 /turf/simulated/floor/wood,
 /area/bridge/meeting_room)
 "aZP" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "heads_meeting";
 	 name = "Security Shutters";
 	 pixel_x = 0;
@@ -27222,7 +27222,7 @@
 	},
 /area/quartermaster/storage)
 "bfp" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "qm_warehouse";
 	 name = "Warehouse Door Control";
 	 pixel_x = -1;
@@ -27514,7 +27514,7 @@
 	 pixel_y = 9
 	},
 /obj/item/weapon/pen,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
 	 id = "MedbayFoyer";
 	 name = "Medbay Doors Control";
@@ -28267,7 +28267,7 @@
 /turf/simulated/floor/plasteel,
 /area/assembly/chargebay)
 "bhz" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	dir = 2;
 	 id = "Skynet_launch";
 	 name = "Mech Bay Door Control";
@@ -28321,7 +28321,7 @@
 	 dir = 2;
 	 network = list("SS13","RD")
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	dir = 2;
 	 id = "robotics";
 	 name = "Shutters Control Button";
@@ -28412,7 +28412,7 @@
 	 network = list("SS13","RD");
 	 pixel_x = 22
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	dir = 2;
 	 id = "rnd";
 	 name = "Shutters Control Button";
@@ -28630,7 +28630,7 @@
 /turf/simulated/floor/plasteel,
 /area/quartermaster/storage)
 "bij" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "qm_warehouse";
 	 name = "Warehouse Door Control";
 	 pixel_x = -1;
@@ -29194,14 +29194,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "bjq" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Disposal Exit";
 	 name = "Disposal Vent Control";
 	 pixel_x = -25;
 	 pixel_y = 4;
 	 req_access_txt = "12"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/button/massdriver{
 	id = "trash";
 	 pixel_x = -26;
 	 pixel_y = -6
@@ -29762,11 +29762,11 @@
 	 pixel_y = 0
 	},
 /obj/structure/table,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel{
 	icon_state = "white"
 	},
@@ -30255,7 +30255,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
 	 id = "MedbayFoyer";
 	 name = "Medbay Doors Control";
@@ -30526,8 +30526,8 @@
 	amount = 10
 	},
 /obj/item/stack/cable_coil,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel,
 /area/assembly/robotics)
 "blV" = (
@@ -30808,19 +30808,19 @@
 	},
 /area/hallway/primary/central)
 "bmC" = (
-/obj/machinery/flasher_button{
+/obj/machinery/button/flasher{
 	id = "hopflash";
 	 pixel_x = 6;
 	 pixel_y = 36
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "hop";
 	 name = "Privacy Shutters Control";
 	 pixel_x = 6;
 	 pixel_y = 25;
 	 req_access_txt = "28"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "hopqueue";
 	 name = "Queue Shutters Control";
 	 pixel_x = -4;
@@ -31711,7 +31711,7 @@
 /area/medical/chemistry)
 "boh" = (
 /obj/structure/stool/bed/roller,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the medbay foyer.";
 	 id = "MedbayFoyer";
 	 name = "Medbay Exit Button";
@@ -32727,7 +32727,7 @@
 	},
 /area/assembly/robotics)
 "bqe" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	dir = 2;
 	 id = "robotics2";
 	 name = "Shutters Control Button";
@@ -33879,14 +33879,14 @@
 	c_tag = "Cargo Recieving Dock";
 	 dir = 4
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "QMLoaddoor";
 	 layer = 4;
 	 name = "Loading Doors";
 	 pixel_x = -24;
 	 pixel_y = -8
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	dir = 2;
 	 id = "QMLoaddoor2";
 	 layer = 4;
@@ -34901,7 +34901,7 @@
 	},
 /area/medical/medbay)
 "bua" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control switch for the genetics doors.";
 	 id = "GeneticsDoor";
 	 name = "Genetics Exit Button";
@@ -36532,14 +36532,14 @@
 	})
 "bxb" = (
 /obj/structure/table,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Biohazard";
 	 name = "Biohazard Shutter Control";
 	 pixel_x = -5;
 	 pixel_y = 5;
 	 req_access_txt = "47"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "rnd2";
 	 name = "Research Lab Shutter Control";
 	 pixel_x = 5;
@@ -37159,7 +37159,7 @@
 	pixel_x = 8;
 	 pixel_y = 28
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Biohazard";
 	 name = "Biohazard Shutter Control";
 	 pixel_x = -5;
@@ -38635,7 +38635,7 @@
 	},
 /area/crew_quarters/hor)
 "bAV" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "telelab";
 	 name = "Test Chamber Blast Doors";
 	 pixel_x = 25;
@@ -39257,8 +39257,8 @@
 	pixel_x = 1;
 	 pixel_y = 5
 	},
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/ai_status_display{
 	pixel_x = -32;
 	 pixel_y = 0
@@ -39267,8 +39267,8 @@
 /area/storage/tech)
 "bCh" = (
 /obj/structure/table,
-/obj/item/weapon/module/power_control,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/apc,
+/obj/item/weapon/electronics/airlock,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -41017,7 +41017,7 @@
 /area/medical/medbay)
 "bFF" = (
 /obj/structure/closet/secure_closet/personal/patient,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "medpriv4";
 	 name = "Privacy Shutters";
 	 pixel_y = 25
@@ -41322,7 +41322,7 @@
 /turf/simulated/floor/plasteel,
 /area/toxins/mixing)
 "bGe" = (
-/obj/machinery/driver_button{
+/obj/machinery/button/massdriver{
 	dir = 2;
 	 id = "toxinsdriver";
 	 pixel_y = 24
@@ -43255,7 +43255,7 @@
 	},
 /area/toxins/xenobiology)
 "bJC" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "misclab";
 	 name = "Test Chamber Blast Doors";
 	 pixel_x = 0;
@@ -43696,7 +43696,7 @@
 /area/medical/medbay)
 "bKz" = (
 /obj/structure/closet/secure_closet/personal/patient,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "medpriv1";
 	 name = "Privacy Shutters";
 	 pixel_y = -25
@@ -44857,7 +44857,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint2)
 "bMS" = (
-/obj/item/weapon/airalarm_electronics,
+/obj/item/weapon/electronics/airalarm,
 /obj/item/weapon/circuitboard/seed_extractor,
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -45021,14 +45021,14 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "mixvent";
 	 name = "Mixing Room Vent Control";
 	 pixel_x = -25;
 	 pixel_y = 5;
 	 req_access_txt = "7"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/button/ignition{
 	id = "mixingsparker";
 	 pixel_x = -25;
 	 pixel_y = -5
@@ -46453,7 +46453,7 @@
 	 icon_state = "4-8";
 	 pixel_y = 0
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "xenobio8";
 	 name = "Containment Blast Doors";
 	 pixel_x = 0;
@@ -46654,7 +46654,7 @@
 	dir = 4;
 	 icon_state = "tube1"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "atmos";
 	 name = "Atmospherics Lockdown";
 	 pixel_x = 24;
@@ -47341,7 +47341,7 @@
 /area/toxins/xenobiology)
 "bSf" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "xenobio3";
 	 name = "Containment Blast Doors";
 	 pixel_x = 0;
@@ -48410,7 +48410,7 @@
 	 icon_state = "4-8";
 	 pixel_y = 0
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "xenobio7";
 	 name = "Containment Blast Doors";
 	 pixel_x = 0;
@@ -48929,12 +48929,12 @@
 "bVm" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/obj/machinery/ignition_switch{
+/obj/machinery/button/ignition{
 	id = "testigniter";
 	 pixel_x = -6;
 	 pixel_y = 2
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "testlab";
 	 name = "Test Chamber Blast Doors";
 	 pixel_x = 4;
@@ -49484,7 +49484,7 @@
 /area/toxins/xenobiology)
 "bWl" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "xenobio2";
 	 name = "Containment Blast Doors";
 	 pixel_x = 0;
@@ -49758,7 +49758,7 @@
 /obj/item/weapon/screwdriver{
 	pixel_y = 10
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control-switch for the engineering security doors.";
 	 id = "Engineering";
 	 name = "Engineering Lockdown";
@@ -50319,7 +50319,7 @@
 "bXU" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "xenobio6";
 	 name = "Containment Blast Doors";
 	 pixel_x = 0;
@@ -51301,7 +51301,7 @@
 /area/toxins/xenobiology)
 "bZO" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "xenobio1";
 	 name = "Containment Blast Doors";
 	 pixel_x = 0;
@@ -54402,7 +54402,7 @@
 /area/engine/engineering)
 "cgf" = (
 /obj/machinery/computer/station_alert,
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control-switch for the engineering security doors.";
 	 id = "Engineering";
 	 name = "Engineering Lockdown";
@@ -54410,7 +54410,7 @@
 	 pixel_y = -10;
 	 req_access_txt = "10"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	desc = "A remote control-switch for secure storage.";
 	 id = "Secure Storage";
 	 name = "Engineering Secure Storage";
@@ -54418,7 +54418,7 @@
 	 pixel_y = 0;
 	 req_access_txt = "11"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "atmos";
 	 name = "Atmospherics Lockdown";
 	 pixel_x = -24;
@@ -54769,8 +54769,8 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -55638,9 +55638,9 @@
 /area/engine/engineering)
 "ciF" = (
 /obj/structure/table,
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/module/power_control,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/apc,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -55687,7 +55687,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/weapon/circuitboard/solar_control,
-/obj/item/weapon/tracker_electronics,
+/obj/item/weapon/electronics/tracker,
 /obj/item/weapon/paper/solar,
 /turf/simulated/floor/plasteel,
 /area/engine/engineering)
@@ -55933,7 +55933,7 @@
 	 pixel_y = -26;
 	 req_access_txt = "12"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/button/ignition{
 	id = "Incinerator";
 	 pixel_x = -6;
 	 pixel_y = -24
@@ -58192,7 +58192,7 @@
 	},
 /area/engine/engineering)
 "cno" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Singularity";
 	 name = "Shutters Control";
 	 pixel_x = 25;
@@ -58210,7 +58210,7 @@
 	},
 /area/engine/engineering)
 "cnp" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Singularity";
 	 name = "Shutters Control";
 	 pixel_x = -25;
@@ -58238,7 +58238,7 @@
 /turf/simulated/floor/plating,
 /area/engine/engineering)
 "cnt" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Singularity";
 	 name = "Shutters Control";
 	 pixel_x = 25;
@@ -58251,7 +58251,7 @@
 	},
 /area/engine/engineering)
 "cnu" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "Singularity";
 	 name = "Shutters Control";
 	 pixel_x = -25;
@@ -58488,8 +58488,8 @@
 	 pixel_y = -7
 	},
 /obj/item/stack/cable_coil,
-/obj/item/weapon/airlock_electronics,
-/obj/item/weapon/airlock_electronics,
+/obj/item/weapon/electronics/airlock,
+/obj/item/weapon/electronics/airlock,
 /turf/simulated/floor/plasteel,
 /area/engine/engineering)
 "cnX" = (
@@ -59926,7 +59926,7 @@
 /turf/simulated/floor/plating,
 /area/aisat)
 "crn" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "teledoor";
 	 name = "AI Satellite Teleport Shutters Control";
 	 pixel_x = 25;
@@ -62094,14 +62094,14 @@
 /turf/simulated/floor/plating,
 /area/maintenance/incinerator)
 "cve" = (
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "auxincineratorvent";
 	 name = "Auxiliary Vent Control";
 	 pixel_x = 6;
 	 pixel_y = -24;
 	 req_access_txt = "32"
 	},
-/obj/machinery/door_control{
+/obj/machinery/button/door{
 	id = "turbinevent";
 	 name = "Turbine Vent Control";
 	 pixel_x = -6;

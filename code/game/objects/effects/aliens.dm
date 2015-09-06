@@ -186,7 +186,7 @@
 	for (var/obj/structure/alien/weeds/W in range(1,T))
 		W.updateWeedOverlays()
 	linked_node = null
-	..()
+	return ..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
@@ -473,6 +473,11 @@
 
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/T = target
+			T.dump_contents()
+			qdel(target)
 
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target

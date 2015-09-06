@@ -13,6 +13,10 @@
 	var/frequency = 1449
 	var/shock_cooldown = 0
 
+/obj/item/device/electropack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
+
 /obj/item/device/electropack/initialize()
 	if(radio_controller)
 		radio_controller.add_object(src, frequency, RADIO_CHAT)
@@ -20,7 +24,7 @@
 /obj/item/device/electropack/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
-	..()
+	return ..()
 
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))

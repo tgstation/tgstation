@@ -81,7 +81,7 @@
 	can_toggle = 1
 	toggle_cooldown = 20
 	active_sound = 'sound/items/WEEOO1.ogg'
-	
+
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."

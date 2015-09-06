@@ -17,7 +17,7 @@
 /obj/structure/disposalholder/Destroy()
 	qdel(gas)
 	active = 0
-	..()
+	return ..()
 
 	// initialize a holder from the contents of a disposal unit
 /obj/structure/disposalholder/proc/init(obj/machinery/disposal/D)
@@ -194,13 +194,12 @@
 				AM.loc = T
 				AM.pipe_eject(0)
 			qdel(H)
-			..()
-			return
+			return ..()
 
 		// otherwise, do normal expel from turf
 		if(H)
 			expel(H, T, 0)
-	..()
+	return ..()
 
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
@@ -642,7 +641,7 @@
 		else if(istype(linked, /obj/machinery/disposal))
 			var/obj/machinery/disposal/D = linked
 			D.trunk = null
-	..()
+	return ..()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
@@ -783,7 +782,7 @@
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
 		trunk.linked = null
-	..()
+	return ..()
 
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet

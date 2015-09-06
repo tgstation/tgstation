@@ -35,6 +35,7 @@
 							/obj/item/toy/griffin									= 2,
 							/obj/item/weapon/coin/antagtoken						= 2,
 							/obj/item/stack/tile/fakespace/loaded					= 2,
+							/obj/item/toy/toy_xeno									= 2,
 							)
 
 /obj/machinery/computer/arcade/New()
@@ -423,7 +424,6 @@
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
-
 	else if(event)
 		dat = eventdat
 	else if(playing)
@@ -453,7 +453,8 @@
 	return
 
 /obj/machinery/computer/arcade/orion_trail/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	if(href_list["close"])
 		usr.unset_machine()
@@ -978,6 +979,7 @@
 
 /obj/machinery/computer/arcade/orion_trail/proc/win()
 	playing = 0
+	turns = 1
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
 		new /obj/item/weapon/orion_ship(src.loc)

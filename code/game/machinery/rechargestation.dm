@@ -146,12 +146,12 @@
 				st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
 			for(var/obj/O in um)
 				//General
-				if(istype(O,/obj/item/device/flash))
-					var/obj/item/device/flash/F = O
-					if(F.broken)
-						F.broken = 0
+				if(istype(O,/obj/item/device/assembly/flash))
+					var/obj/item/device/assembly/flash/F = O
+					if(F.crit_fail)
+						F.crit_fail = 0
 						F.times_used = 0
-						F.icon_state = "flash"
+						F.update_icon()
 				// Security
 				if(istype(O,/obj/item/weapon/gun/energy/gun/advtaser/cyborg))
 					var/obj/item/weapon/gun/energy/gun/advtaser/cyborg/T = O

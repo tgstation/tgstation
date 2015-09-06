@@ -353,6 +353,12 @@ var/list/uplink_items = list()
 	cost = 6
 	excludefrom = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/edagger
+	name = "Energy Dagger"
+	desc = "A dagger made of energy that looks and functions as a pen when off."
+	item = /obj/item/weapon/pen/edagger
+	cost = 2
+
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun (with Stun Darts)"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade darts, to incapacitate a target."
@@ -471,7 +477,7 @@ var/list/uplink_items = list()
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
-	desc = "Enables you to bug cameras to view them remotely. Adding particular items to it alters its functions."
+	desc = "Enables you to view all cameras on the network and track a target. Bugging cameras allows you to disable them remotely"
 	item = /obj/item/device/camera_bug
 	cost = 1
 	surplus = 90
@@ -520,7 +526,7 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/belt/military
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
 	desc = "The syndicate medkit is a suspicious black and red. Included is a combat stimulant injector for rapid healing, a medical hud for quick identification of injured comrades, \

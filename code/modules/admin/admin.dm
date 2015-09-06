@@ -48,9 +48,13 @@ var/global/floorIsLava = 0
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
 	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
-	body += "<A href='?_src_=holder;watchlist=\ref[M]'>Watchlist Flag</A> "
-
 	if(M.client)
+		if(M.client.check_watchlist(M.client.ckey))
+			body += "<A href='?_src_=holder;watchremove=[M.ckey]'>Remove from Watchlist</A> | "
+			body += "<A href='?_src_=holder;watchedit=[M.ckey]'>Edit Watchlist reason</A> "
+		else
+			body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
+
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
@@ -805,3 +809,15 @@ var/global/floorIsLava = 0
 	qdel(frommob)
 
 	return 1
+
+/client/proc/adminGreet(logout)
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/string
+		if(logout && config && config.announce_admin_logout)
+			string = pick(
+				"Admin logout: [key_name(src)]")
+		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
+			string = pick(
+				"Admin login: [key_name(src)]")
+		if(string)
+			message_admins("[string]")

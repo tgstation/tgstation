@@ -20,7 +20,7 @@
 	qdel(keyslot2)
 	keyslot = null
 	keyslot2 = null
-	..()
+	return ..()
 
 /obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
