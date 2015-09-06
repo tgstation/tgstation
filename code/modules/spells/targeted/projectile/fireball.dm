@@ -37,3 +37,5 @@
 /obj/item/projectile/spell_projectile/fireball
 	name = "fireball"
 	icon_state = "fireball"
+	animate_movement = 2
+	linear_movement = 0
