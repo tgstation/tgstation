@@ -59,7 +59,7 @@
 
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)	//M is target of attack action, user is the one initiating it
+/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, eat_override = 0)	//M is target of attack action, user is the one initiating it
 	if(!eatverb)
 		eatverb = pick("bite", "chew", "nibble", "gnaw", "gobble", "chomp")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
@@ -81,7 +81,7 @@
 			if(wrapped)
 				target << "<span class='warning'>You can't eat wrapped food!</span>"
 				return 0
-			if (ishuman(M))
+			if (!eat_override && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.chem_flags & NO_EAT)
 					user.drop_from_inventory(src)
