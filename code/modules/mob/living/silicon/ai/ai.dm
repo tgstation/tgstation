@@ -671,7 +671,7 @@ var/list/ai_list = list()
 
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions //ai_emotions can be found in code/game/machinery/status_display.dm @ 213 (above the AI status display)
 
-	for (var/obj/machinery/M in machines) //change status
+	for (var/obj/machinery/M in status_displays) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
 			AISD.emotion = emote
