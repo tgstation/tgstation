@@ -86,9 +86,10 @@
 				if(H.species.chem_flags & NO_EAT)
 					user.drop_from_inventory(src)
 					src.forceMove(get_turf(H))
+					playsound(get_turf(H),'sound/items/eatfood.ogg', rand(10,50), 1)
 					H.visible_message("<span class='warning'>As [M] attempts to eat \the [src] it falls through and onto the ground as if untouched.</span>", "<span class='notice'>As you attempt to eat \the [src] it falls through your body and onto the ground as if untouched.</span>")
 					return 0
-			else if(fullness <= 50)
+			if(fullness <= 50)
 				target.visible_message("<span class='notice'>[target] hungrily [eatverb]s some of \the [src] and gobbles it down!</span>", \
 				"<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
 			else if(fullness > 50 && fullness < 150)
