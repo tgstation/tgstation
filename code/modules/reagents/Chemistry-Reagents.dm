@@ -71,6 +71,15 @@
 	src = null
 	return
 
+/datum/reagent/proc/metabolize(var/mob/living/carbon/human/H)
+	if(H)
+		var/datum/organ/internal/liver/L = H.internal_organs_by_name["liver"]
+		if(L)
+			L.metabolize_reagent(H, src.id, custom_metabolism)
+			return
+	holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
+
+
 /datum/reagent/proc/on_mob_life(var/mob/living/M as mob, var/alien)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_mob_life() called tick#: [world.time]")
 	if(!istype(M, /mob/living))
@@ -78,7 +87,7 @@
 	if( (overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
 	if(!holder) return
-	holder.remove_reagent(src.id, custom_metabolism) //By default it slowly disappears.
+	metabolize(M)
 	return
 
 /datum/reagent/proc/on_move(var/mob/M)

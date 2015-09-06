@@ -3,6 +3,11 @@
 	name = "liver"
 	parent_organ = "chest"
 	var/process_accuracy = 10
+	var/efficiency = 1
+
+	var/reagent_efficiencies=list(
+		// "reagent" = 2,
+	)
 	removed_type = /obj/item/organ/liver
 
 	Copy()
@@ -49,3 +54,10 @@
 				for(var/toxin in list("toxin", "plasma", "sacid", "pacid", "cyanide", "lexorin", "amatoxin", "chloralhydrate", "carpotoxin", "zombiepowder", "mindbreaker"))
 					if(owner.reagents.has_reagent(toxin))
 						owner.adjustToxLoss(0.3 * process_accuracy)
+
+	proc/metabolize_reagent(var/reagent_id, var/metabolism)
+		var/mob/living/carbon/human/H=owner
+		var/reagent_efficiency = 1
+		if(reagent_id in reagent_efficiencies)
+			reagent_efficiency = reagent_efficiencies[reagent_id]
+		H.reagents.remove_reagent(reagent_id, metabolism * efficiency * reagent_efficiency)
