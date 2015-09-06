@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/automatic/pistol
-	name = "\improper Stetchkin Pistol"
+	name = "\improper Stetchkin pistol"
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = 2
@@ -24,7 +24,7 @@
 	can_suppress = 0
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle
-	name = "\improper Desert Eagle"
+	name = "\improper Desert Eagle pistol"
 	desc = "A robust .50 AE handgun."
 	icon_state = "deagle"
 	force = 14
