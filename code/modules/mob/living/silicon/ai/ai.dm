@@ -826,3 +826,11 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
+
+/mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
+		spark_system.set_up(5, 0, src)
+		spark_system.attach(src)
+		spark_system.start()
+	return ..()
