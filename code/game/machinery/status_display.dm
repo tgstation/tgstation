@@ -100,7 +100,7 @@ var/global/list/status_displays = list() //This list contains both normal status
 				message2 = input(A, "Write the second line: ", "Status display", message2)
 				mode = MODE_MESSAGE
 			if("Picture")
-				var/new_icon = input(A, "Load an image to be desplayed on [src].", "Status display") in list(status_display_images)
+				var/new_icon = input(A, "Load an image to be desplayed on [src].", "Status display") in status_display_images
 
 				if(new_icon)
 					src.mode = MODE_IMAGE
@@ -140,6 +140,8 @@ var/global/list/status_displays = list() //This list contains both normal status
 			else
 				remove_display()
 		if(MODE_MESSAGE)				//custom messages
+			remove_display()
+
 			var/line1
 			var/line2
 
