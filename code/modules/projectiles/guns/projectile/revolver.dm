@@ -126,7 +126,7 @@
 // You can spin the chamber to randomize the position of the bullet.
 
 /obj/item/weapon/gun/projectile/revolver/russian
-	name = "/improper russian revolver"
+	name = "\improper russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
