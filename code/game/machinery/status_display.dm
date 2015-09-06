@@ -11,6 +11,14 @@
 // Alert status
 // And arbitrary messages set by comms computer
 
+#define MODE_BLANK				0
+#define MODE_SHUTTLE_TIMER		1
+#define MODE_MESSAGE			2
+#define MODE_IMAGE				3
+#define MODE_CARGO_TIMER		4
+
+var/global/list/status_displays = list() //This list contains both normal status displays, and AI status dispays
+
 /obj/machinery/status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
@@ -45,9 +53,14 @@
 // register for radio system
 /obj/machinery/status_display/New()
 	..()
+	status_displays |= src
 	spawn(5)	// must wait for map loading to finish
 		if(radio_controller)
 			radio_controller.add_object(src, frequency)
+
+/obj/machinery/status_display/Destroy()
+	.=..()
+	status_displays -= src
 
 // timed process
 /obj/machinery/status_display/process()
@@ -59,6 +72,41 @@
 		remove_display()
 		return
 	update()
+
+/obj/machinery/status_display/attack_ai(mob/user)
+	if(spookymode)	return
+	if(user.stat)	return
+
+	if(isAI(user)) //This allows AIs to load any image into the status displays
+		//Some fluff
+		if(user.stat)
+			user << "<span class='warning'>Unable to connect to [src] (error #408)</span>"
+			return
+		if(stat & (BROKEN|NOPOWER))
+			user << "<span class='warning'>Unable to connect to [src] (error #[(stat & BROKEN) ? "120" : "408"])</span>"
+			return
+
+		var/mob/living/silicon/ai/A = user
+
+		var/choice = input(A, "Select a mode for [src].", "Status display") in list("Blank", "Emergency shuttle timer", "Text message", "Picture", "Supply shuttle timer")
+
+		switch(choice)
+			if("Blank")
+				mode = MODE_BLANK
+			if("Emergency shuttle timer")
+				mode = MODE_SHUTTLE_TIMER
+			if("Text message")
+				message1 = input(A, "Write the first line: ", "Status display", message1)
+				message2 = input(A, "Write the second line: ", "Status display", message2)
+				mode = MODE_MESSAGE
+			if("Picture")
+				var/new_icon = input(A, "Load an image to be desplayed on [src].", "Status display") in list(status_display_images)
+
+				if(new_icon)
+					src.mode = MODE_IMAGE
+					src.set_picture(status_display_images[new_icon])
+			if("Supply shuttle timer")
+				mode = MODE_CARGO_TIMER
 
 /obj/machinery/status_display/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -76,9 +124,9 @@
 		return
 
 	switch(mode)
-		if(0)				//blank
+		if(MODE_BLANK)				//blank
 			remove_display()
-		if(1)				//emergency shuttle timer
+		if(MODE_SHUTTLE_TIMER)				//emergency shuttle timer
 			if(emergency_shuttle.online)
 				var/line1
 				var/line2 = get_shuttle_timer()
@@ -91,7 +139,7 @@
 				update_display(line1, line2)
 			else
 				remove_display()
-		if(2)				//custom messages
+		if(MODE_MESSAGE)				//custom messages
 			var/line1
 			var/line2
 
@@ -113,7 +161,7 @@
 				if(index2 > message2_len)
 					index2 -= message2_len
 			update_display(line1, line2)
-		if(4)				// supply shuttle timer
+		if(MODE_CARGO_TIMER)				// supply shuttle timer
 			var/line1 = "SUPPLY"
 			var/line2
 			if(supply_shuttle.moving)
@@ -130,7 +178,7 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
-		if(1,2,4)
+		if(MODE_SHUTTLE_TIMER,MODE_MESSAGE,MODE_CARGO_TIMER)
 			user << "<span class='info'>The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp></span>"
 
 
@@ -209,6 +257,72 @@
 	if(..())
 		spookymode = 1
 
+#undef MODE_BLANK
+#undef MODE_SHUTTLE_TIMER
+#undef MODE_MESSAGE
+#undef MODE_IMAGE
+#undef MODE_CARGO_TIMER
+
+//This list contains ALL possible overlays for AI status display. It contains overlay's name (like "Very Happy"), associated with the name of the icon state ("ai_veryhappy").
+var/global/list/ai_emotions = list(
+	"Very Happy"		= "ai_veryhappy",
+	"Happy"				= "ai_happy",
+	"Neutral"			= "ai_neutral",
+	"Unsure"			= "ai_unsure",
+	"Confused"			= "ai_confused",
+	"Sad"				= "ai_sad",
+	"Surprised"			= "ai_surprised",
+	"Agree"				= "ai_agree",
+	"Disagree"			= "ai_disagree",
+	"Crying"			= "ai_cry",
+	"Awesome"			= "ai_awesome",
+	"BSOD"				= "ai_bsod",
+	"Problems?"			= "ai_trollface",
+	"Facepalm"			= "ai_facepalm",
+	"Friend Computer"	= "ai_friend",
+	"Retro Dorfy"		= "ai_urist",
+	"Modern Dorfy"		= "ai_dwarf",
+	"Beer"				= "ai_beer",
+	"Tribunal"			= "ai_tribunal",
+	"Malf Tribunal"		= "ai_tribunal_malf",
+	"Plump Helmet"		= "ai_plump",
+	"Fish Tank"			= "ai_fishtank",
+)
+
+//This list contains ALL possible overlays for both AI status displays, and normal status displays
+var/global/list/status_display_images = list(
+	"NT Logo"			= "default",
+	"Red Alert"			= "redalert",
+	"Biohazard"			= "biohazard",
+	"Lockdown"			= "lockdown",
+
+	"Very Happy"		= "ai_veryhappy",
+	"Happy"				= "ai_happy",
+	"Neutral"			= "ai_neutral",
+	"Unsure"			= "ai_unsure",
+	"Confused"			= "ai_confused",
+	"Sad"				= "ai_sad",
+	"Surprised"			= "ai_surprised",
+	"Agree"				= "ai_agree",
+	"Disagree"			= "ai_disagree",
+	"Crying"			= "ai_cry",
+	"Awesome"			= "ai_awesome",
+	"BSOD"				= "ai_bsod",
+	"Problems?"			= "ai_trollface",
+	"Facepalm"			= "ai_facepalm",
+	"Friend Computer"	= "ai_friend",
+	"Retro Dorfy"		= "ai_urist",
+	"Modern Dorfy"		= "ai_dwarf",
+	"Beer"				= "ai_beer",
+	"Tribunal"			= "ai_tribunal",
+	"Malf Tribunal"		= "ai_tribunal_malf",
+	"Plump Helmet"		= "ai_plump",
+	"Fish Tank"			= "ai_fishtank",)
+
+#define MODE_BLANK		0
+#define MODE_EMOTION	1
+#define MODE_BSOD		2
+
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
@@ -225,6 +339,14 @@
 	var/picture_state	// icon_state of ai picture
 
 	var/emotion = "Neutral"
+
+/obj/machinery/ai_status_display/New()
+	..()
+	status_displays |= src
+
+/obj/machinery/ai_status_display/Destroy()
+	.=..()
+	status_displays -= src
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
@@ -246,45 +368,18 @@
 
 /obj/machinery/ai_status_display/proc/update()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/ai_status_display/proc/update() called tick#: [world.time]")
-	if(mode==0) //Blank
-		overlays.len = 0
-		return
+	switch(mode)
+		if(MODE_BLANK)
+			overlays = list()
 
-	if(mode==1)	// AI emoticon
-		switch(emotion)
-			if("Very Happy")
-				set_picture("ai_veryhappy")
-			if("Happy")
-				set_picture("ai_happy")
-			if("Neutral")
-				set_picture("ai_neutral")
-			if("Unsure")
-				set_picture("ai_unsure")
-			if("Confused")
-				set_picture("ai_confused")
-			if("Sad")
-				set_picture("ai_sad")
-			if("BSOD")
-				set_picture("ai_bsod")
-			if("Blank")
-				set_picture("ai_off")
-			if("Problems?")
-				set_picture("ai_trollface")
-			if("Awesome")
-				set_picture("ai_awesome")
-			if("Dorfy")
-				set_picture("ai_urist")
-			if("Facepalm")
-				set_picture("ai_facepalm")
-			if("Friend Computer")
-				set_picture("ai_friend")
+		if(MODE_EMOTION)
+			if(emotion in ai_emotions)
+				set_picture(ai_emotions[emotion])
+			else
+				set_picture("ai_bsod") //Can't find icon state for our emotion - throw a BSOD
 
-		return
-
-	if(mode==2)	// BSOD
-		set_picture("ai_bsod")
-		return
-
+		if(MODE_BSOD)
+			set_picture("ai_bsod")
 
 /obj/machinery/ai_status_display/proc/set_picture(var/state)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/ai_status_display/proc/set_picture() called tick#: [world.time]")
@@ -295,6 +390,10 @@
 
 /obj/machinery/ai_status_display/spook()
 	spookymode = 1
+
+#undef MODE_BLANK
+#undef MODE_EMOTION
+#undef MODE_BSOD
 
 #undef CHARS_PER_LINE
 #undef FOND_SIZE
