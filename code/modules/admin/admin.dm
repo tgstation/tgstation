@@ -825,4 +825,4 @@ var/global/floorIsLava = 0
 			"Not a bad day if [key] joins, welcome, welcome!",
 			"Surely it's nice to see you [key], have a heartly welcome!")
 			//I really do
-		message_admins("[string]")
+		src << string
