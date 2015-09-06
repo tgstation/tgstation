@@ -66,6 +66,7 @@
 
 	post_equip(H)
 
+	return 1
 //Example
 /datum/outfit/test
 	name = "Test Outfit"
