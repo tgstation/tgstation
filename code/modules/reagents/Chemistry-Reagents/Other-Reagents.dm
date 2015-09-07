@@ -115,9 +115,11 @@
 /datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
-	if(reac_volume >= 10)
+	if(reac_volume >= 1)
 		T.MakeSlippery()
-
+		T.clean_blood()
+		for(var/obj/effect/decal/cleanable/C in T)
+			qdel(C)
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
 
@@ -150,6 +152,11 @@
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
+	if(istype(O,/obj/effect/decal/cleanable))
+		qdel(O)
+	else
+		if(O)
+			O.clean_blood()
 	return
 
 /*
