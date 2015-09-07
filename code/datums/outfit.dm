@@ -17,13 +17,19 @@
 	var/suit_store = null
 	var/r_hand = null
 	var/l_hand = null
-	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
+	var/list/backpack_contents = list() // In the list(path=count,otherpath=count) format
+
+/datum/outfit/proc/pre_equip(mob/living/carbon/human/H)
+	//to be overriden for customization depending on client prefs,species etc
+	return
 
 /datum/outfit/proc/post_equip(mob/living/carbon/human/H)
 	//to be overriden for toggling internals, id binding, access etc
 	return
 
 /datum/outfit/proc/equip(mob/living/carbon/human/H)
+	pre_equip(H)
+
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
 		H.equip_to_slot_or_del(new uniform(H),slot_w_uniform)
