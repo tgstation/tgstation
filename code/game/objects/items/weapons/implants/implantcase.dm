@@ -9,6 +9,7 @@
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
+	flags = OPENCONTAINER
 	var/obj/item/weapon/implant/imp = null
 
 
