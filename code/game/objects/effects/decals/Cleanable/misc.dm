@@ -108,14 +108,19 @@
 
 	if(perp.shoes)
 		perp.shoes:track_blood = max(amount,perp.shoes:track_blood)		//Adding vomit to shoes
-		if(!perp.shoes.blood_overlay)
+
+		if(!blood_overlays[perp.shoes.type])
 			perp.shoes.generate_blood_overlay()
-		if(!perp.shoes.blood_DNA)
-			perp.shoes.blood_DNA = list()
-		perp.shoes.overlays -= perp.shoes.blood_overlay
+		if(perp.shoes.blood_overlay)
+			overlays -= perp.shoes.blood_overlay
+		else
+			perp.shoes.blood_overlay = blood_overlays[perp.shoes.type]
 		perp.shoes.blood_overlay.color = basecolor
 		perp.shoes.overlays += perp.shoes.blood_overlay
 		perp.shoes.blood_color=basecolor
+
+		if(!perp.shoes.blood_DNA)
+			perp.shoes.blood_DNA = list()
 		perp.update_inv_shoes(1)
 	else
 		perp.track_blood = max(amount,perp.track_blood)				//Or feet
