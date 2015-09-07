@@ -55,5 +55,23 @@
 				if(!has_gravity(loc))
 					return
 				var/obj/item/clothing/shoes/S = shoes
+
+				//Bloody footprints
+				var/turf/T = get_turf(src)
+				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
+					var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
+					if(oldFP && oldFP.blood_state == S.blood_state)
+						return
+					else
+						//No oldFP or it's a different kind of blood
+						S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
+						var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
+						FP.blood_state = S.blood_state
+						FP.entered_dirs |= dir
+						FP.bloodiness = S.bloody_shoes[S.blood_state]
+						FP.update_icon()
+						update_inv_shoes()
+				//End bloody footprints
+
 				S.step_action()
 
