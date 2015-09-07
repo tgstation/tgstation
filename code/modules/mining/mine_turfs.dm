@@ -85,7 +85,7 @@ var/global/list/rockTurfEdgeCache
 	new src.type(T)
 
 /turf/simulated/mineral/random
-	name = "mineral deposit"
+	name = "rock"
 	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
