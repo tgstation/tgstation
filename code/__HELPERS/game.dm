@@ -380,7 +380,7 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
@@ -389,6 +389,9 @@
 	for(var/mob/dead/observer/G in player_list)
 		if(!G.key || !G.client)
 			continue
+		if(be_special_flag)
+			if(!(G.client.prefs.be_special & be_special_flag))
+				continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))
 				continue
