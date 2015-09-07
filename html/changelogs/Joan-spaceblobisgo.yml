@@ -1,0 +1,6 @@
+author: Joan
+
+delete-after: True
+
+changes: 
+  - rscadd: "Blobs can now expand into space. The resulting tiles will, however, be extremely fragile, enough that a few wrench hits will kill them."
