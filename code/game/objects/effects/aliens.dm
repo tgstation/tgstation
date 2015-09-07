@@ -196,21 +196,15 @@
 		qdel(src)
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
-				continue
+	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
+		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
