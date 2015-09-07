@@ -128,14 +128,6 @@
 	list_reagents = list("coffee" = 30)
 	spillable = 1
 
-/obj/item/weapon/reagent_containers/food/drinks/tea
-	name = "Duke Purple Tea"
-	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
-	icon_state = "tea"
-	item_state = "coffee"
-	list_reagents = list("tea" = 30)
-	spillable = 1
-
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
@@ -143,13 +135,28 @@
 	list_reagents = list("ice" = 30)
 	spillable = 1
 
-/obj/item/weapon/reagent_containers/food/drinks/h_chocolate
-	name = "Dutch Hot Coco"
-	desc = "Made in Space South America."
+/obj/item/weapon/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
+	name = "mug"
+	desc = "A drink served in a classy mug."
 	icon_state = "tea"
 	item_state = "coffee"
-	list_reagents = list("hot_coco" = 30, "sugar" = 5)
 	spillable = 1
+
+/obj/item/weapon/reagent_containers/food/drinks/mug/on_reagent_change()
+	if(reagents.total_volume)
+		icon_state = "tea"
+	else
+		icon_state = "tea_empty"
+
+/obj/item/weapon/reagent_containers/food/drinks/mug/tea
+	name = "Duke Purple Tea"
+	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+	list_reagents = list("tea" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/mug/coco
+	name = "Dutch Hot Coco"
+	desc = "Made in Space South America."
+	list_reagents = list("hot_coco" = 30, "sugar" = 5)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
