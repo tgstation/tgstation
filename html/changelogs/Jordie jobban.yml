@@ -1,0 +1,5 @@
+author: Jordie0608
+delete-after: True
+
+changes: 
+  - rscadd: "You can now view the reason of a jobban from character setup."
