@@ -515,8 +515,9 @@ Class Procs:
 
 	if(!anchored)
 		if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring shit to shuttles / space
-			user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
-			return
+			if( !(istype(src.loc, /turf/simulated/shuttle) && (machine_flags & SHUTTLEWRENCH)) ) //If NOT (on top of a shuttle AND can be secured to shuttles)
+				user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
+				return
 
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")

@@ -10,6 +10,8 @@ var/global/list/taxi_computers = list()
 	icon_state = "syndishuttle"
 	req_access = list(access_taxi)
 
+	machine_flags = EMAGGABLE | MULTITOOL_MENU | SHUTTLEWRENCH //Can be emagged, can be wrenched to shuttles (they SHOULDN'T get unwrenched, but who knows what might happen)
+
 	var/datum/shuttle/taxi/shuttle //The shuttle this computer is connected to
 
 	var/id_tag = ""
