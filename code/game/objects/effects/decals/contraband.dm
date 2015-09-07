@@ -1,9 +1,9 @@
 
 //########################## POSTERS ##################################
 
-#define NUM_OF_POSTER_DESIGNS 34 // contraband posters
+#define NUM_OF_POSTER_DESIGNS 35 // contraband posters
 
-#define NUM_OF_POSTER_DESIGNS_LEGIT 34 // corporate approved posters
+#define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
 
 //########################## THE LIST OF POSTERS AND DESCS #####################
@@ -46,6 +46,7 @@ var/global/list/posternames = list(
 "- CC 64K Ad",
 "- Punch Shit",
 "- The Griffin",
+"- Lizard",
 "- Free Drone" )
 
 var/global/list/posterdescs = list(
@@ -82,6 +83,7 @@ var/global/list/posterdescs = list(
 " The latest portable computer from Comrade Computing, with a whole 64kB of ram!",
 " Fight things for no reason, like a man!",
 " The Griffin commands you to be the worst you can be. Will you?",
+" This lewd poster depicts a lizard preparing to mate.",
 " This poster commemorates the bravery of the rogue drone banned by CentComm." )
 
 // LEGIT
@@ -121,6 +123,7 @@ var/global/list/legitposternames = list(
 "- 12 Gauge",
 "- High-Class Martini",
 "- The Owl",
+"- No ERP",
 "- Carbon Dioxide" )
 
 var/global/list/legitposterdescs = list(
@@ -157,6 +160,7 @@ var/global/list/legitposterdescs = list(
 " A poster boasting about the superiority of 12 gauge shotgun shells.",
 " I told you to shake it, no stirring.",
 " The Owl would do his best to protect the station. Will you?",
+" This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations.",
 " This informational poster teaches the viewer about carbon dioxide." )
 
 //########################## THE ACTUAL POSTER CODE ###########################
