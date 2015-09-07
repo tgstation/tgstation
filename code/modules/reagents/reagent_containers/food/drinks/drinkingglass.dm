@@ -620,7 +620,7 @@
 					name = "Recharger"
 					desc = "Helps you get back on your feet after a long day of robot maintenance. Can also be used as a substitute for motor oil."
 				if("greytea")
-					icon_state = "greytide"
+					icon_state = "greytea"
 					name = "Tide"
 					desc = "This probably shouldn't be considered tea..."
 

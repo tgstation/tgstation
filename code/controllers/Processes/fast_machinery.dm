@@ -51,7 +51,4 @@ var/global/list/fast_machines = list()
 			if(!fast_machines.Remove(M))
 				fast_machines.Cut(i, i + 1)
 
-		if(!(i % 500))
-			sleep(2)
-
-		scheck()
+		if(!(i % 20)) scheck()

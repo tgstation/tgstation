@@ -218,6 +218,14 @@ var/list/uplink_items = list()
 	cost = 7
 	job = list("Station Engineer","Chief Engineer")
 
+//Atmos Tech
+/datum/uplink_item/jobspecific/contortionist
+	name = "Contortionist's Jumpsuit"
+	desc = "A highly flexible jumpsuit that will help you navigate the ventilation loops of the station internally. Comes with pockets and ID slot, but can't be used without stripping off most gear, including backpack, belt, helmet, and exosuit. Free hands are also necessary to crawl around inside."
+	item = /obj/item/clothing/under/contortionist
+	cost = 7
+	job = list("Atmospheric Technician","Chief Engineer")
+
 //Geneticist
 /datum/uplink_item/jobspecific/radgun
 	name = "Radgun"

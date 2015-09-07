@@ -614,6 +614,9 @@ Class Procs:
 			wirejack(M)
 		return 1
 
+	if(istype(O, /obj/item/weapon/storage/bag/gadgets/part_replacer))
+		return exchange_parts(user, O)
+
 /obj/machinery/proc/wirejack(var/mob/living/silicon/pai/P)
 	if(!(machine_flags & WIREJACK))
 		return 0
@@ -668,3 +671,36 @@ Class Procs:
 /obj/machinery/proc/check_rebuild()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/proc/check_rebuild() called tick#: [world.time]")
 	return
+
+/obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/bag/gadgets/part_replacer/W)
+	var/shouldplaysound = 0
+	if(component_parts)
+		if(panel_open)
+			var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+			var/P
+			for(var/obj/item/A in component_parts)
+				for(var/D in CB.req_components)
+					D = text2path(D) //For some stupid reason these are strings by default.
+					if(ispath(A.type, D))
+						P = D
+						break
+				for(var/obj/item/B in W.contents)
+					if(istype(B, P) && istype(A, P))
+						if(B.get_rating() > A.get_rating())
+							W.remove_from_storage(B, src)
+							W.handle_item_insertion(A, 1)
+							component_parts -= A
+							component_parts += B
+							B.loc = null
+							user << "<span class='notice'>[A.name] replaced with [B.name].</span>"
+							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
+							break
+			RefreshParts()
+		else
+			user << "<span class='notice'>Following parts detected in the machine:</span>"
+			for(var/var/obj/item/C in component_parts)
+				user << "<span class='notice'>    [C.name]</span>"
+		if(shouldplaysound)
+			W.play_rped_sound()
+		return 1
+	return 0

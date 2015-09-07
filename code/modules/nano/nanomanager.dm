@@ -25,7 +25,6 @@
 	var/list/nano_asset_dirs = list(\
 		"nano/css/",\
 		"nano/images/",\
-		"nano/images/[map.map_dir]/",\
 		"nano/js/",\
 		"nano/templates/"\
 	)
@@ -49,7 +48,6 @@
 	var/list/nano_asset_dirs = list(\
 		"nano/css/",\
 		"nano/images/",\
-		"nano/images/[map.map_dir]/",\
 		"nano/js/",\
 		"nano/templates/"\
 	)

@@ -82,6 +82,9 @@
 			usr << "<span class='warning'>Invalid volume.</span>"
 	updateDialog()
 
+#define SYSTEMISDONE 2
+#define SYSTEMISKINDADONE 1
+#define SYSTEMISNOTDONE 0
 
 /obj/machinery/media/receiver/boombox/wallmount
 	name = "Sound System"
@@ -91,13 +94,93 @@
 	icon_state="wallradio"
 	anchored=1
 	volume=0.25 // 25% of user's set volume.
+	var/buildstage = 0
+
+/obj/machinery/media/receiver/boombox/wallmount/New(turf/loc,var/ndir=0,var/building=2)
+	..()
+	buildstage = building
+	if(!buildstage)
+		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 28 : -28)
+		pixel_y = (ndir & 3)? (ndir ==1 ? 28 : -28) : 0
+		dir=ndir
+		on = 0
+	update_icon()
+
+/obj/machinery/media/receiver/boombox/wallmount/Topic(href,href_list)
+	..()
+	relay_area_configuration()
 
 /obj/machinery/media/receiver/boombox/wallmount/update_on()
 	..()
-	if(on)
+	update_icon()
+
+/obj/machinery/media/receiver/boombox/wallmount/update_icon()
+	if(buildstage==SYSTEMISDONE && on)
 		icon_state="wallradio-p"
 	else
 		icon_state="wallradio"
+
+/obj/machinery/media/receiver/boombox/wallmount/attack_hand(var/mob/user)
+	if(buildstage<SYSTEMISDONE)
+		return
+	else
+		return ..()
+
+/obj/machinery/media/receiver/boombox/wallmount/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	switch(buildstage)
+		if(SYSTEMISDONE)
+			if(iscrowbar(W))
+				user << "<span class='notice'>You pry the cover off [src].</span>"
+				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				if(do_after(user, src, 10) && buildstage==SYSTEMISDONE)
+					on = 0
+					buildstage = SYSTEMISKINDADONE
+					update_icon()
+				return 1
+			else return ..()
+		if(SYSTEMISKINDADONE)
+			if(isscrewdriver(W))
+				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(do_after(user, src, 10) && buildstage==SYSTEMISKINDADONE)
+					on = 1
+					buildstage = SYSTEMISDONE
+					user << "<span class='notice'>You secure the cover.</span>"
+					update_icon()
+				return 1
+			else if(iswirecutter(W))
+				playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 50, 1)
+				if(do_after(user, src, 10) && buildstage==SYSTEMISKINDADONE)
+					getFromPool(/obj/item/stack/cable_coil,get_turf(src),5)
+					buildstage = SYSTEMISNOTDONE
+					update_icon()
+
+		if(SYSTEMISNOTDONE)
+			if(iscoil(W))
+				var/obj/item/stack/cable_coil/coil = W
+				if(coil.amount < 5)
+					user << "<span class='warning'>You need more cable for this!</span>"
+					return
+				if(do_after(user, src, 10) && buildstage==SYSTEMISNOTDONE)
+					coil.use(5)
+					user << "<span class='notice'>You wire \the [src]!</span>"
+					buildstage = SYSTEMISKINDADONE
+				return 1
+			if(iswrench(W))
+				user << "<span class='notice'>You remove the securing bolts...</span>"
+				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+				if(do_after(user, src, 10) && buildstage==SYSTEMISNOTDONE)
+					new /obj/item/mounted/frame/soundsystem(get_turf(src))
+					user << "<span class='notice'>The frame pops off.</span>"
+					qdel(src)
+				return 1
+	return 0
+
+/obj/machinery/media/receiver/boombox/wallmount/proc/relay_area_configuration()
+	for(var/obj/machinery/media/receiver/boombox/wallmount/W in areaMaster)
+		W.on = src.on
+		W.media_frequency=src.media_frequency
+		W.volume = src.volume
+		W.update_icon()
 
 /obj/machinery/media/receiver/boombox/wallmount/shuttle
 	on=1

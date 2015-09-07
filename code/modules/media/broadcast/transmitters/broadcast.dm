@@ -6,6 +6,7 @@
 	icon_state = "broadcaster"
 	light_color = LIGHT_COLOR_BLUE
 	use_power = 1
+	density = 1
 	idle_power_usage = 50
 	active_power_usage = 1000
 
@@ -15,9 +16,21 @@
 	var/heating_power=40000
 	var/list/autolink = null
 
+	var/datum/wires/transmitter/wires = null
+
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
-	machine_flags = MULTITOOL_MENU
+	machine_flags = MULTITOOL_MENU | SCREWTOGGLE
+
+/obj/machinery/media/transmitter/broadcast/New()
+	..()
+	wires = new(src)
+
+/obj/machinery/media/transmitter/broadcast/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+	..()
 
 /obj/machinery/media/transmitter/broadcast/initialize()
 	testing("[type]/initialize() called!")
@@ -55,12 +68,28 @@
 	. = ..()
 	if(.)
 		return .
+	if(panel_open && (istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters)))
+		attack_hand(user)
+	if(issolder(W))
+		if(integrity>=100)
+			user << "<span class='warning'>[src] doesn't need to be repaired!</span>"
+			return
+		var/obj/item/weapon/solder/S = W
+		if(!S.remove_fuel(4,user))
+			return
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		if(do_after(user, src,40))
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			integrity = 100
+			user << "<span class='notice'>You repair the blown fuses on [src].</span>"
 
 /obj/machinery/media/transmitter/broadcast/attack_ai(var/mob/user as mob)
 	src.add_hiddenprint(user)
 	attack_hand(user)
 
 /obj/machinery/media/transmitter/broadcast/attack_hand(var/mob/user as mob)
+	if(panel_open)
+		wires.Interact(user)
 	. = ..()
 	if(.)
 		return .
@@ -111,7 +140,7 @@
 
 /obj/machinery/media/transmitter/broadcast/update_icon()
 	overlays = 0
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || wires.IsIndexCut(TRANS_POWER))
 		return
 	if(on)
 		overlays+="broadcaster on"
@@ -159,11 +188,14 @@
 			else
 				usr << "<span class='warning'>Invalid FM frequency. (90.0, 200.0)</span>"
 
+/obj/machinery/media/transmitter/broadcast/proc/count_rad_wires()
+	return !wires.IsIndexCut(TRANS_RAD_ONE) + !wires.IsIndexCut(TRANS_RAD_TWO)
+
 /obj/machinery/media/transmitter/broadcast/process()
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || wires.IsIndexCut(TRANS_POWER))
 		return
 	if(on)
-		if(integrity<=0)
+		if(integrity<=0 || count_rad_wires()==0) //Shut down if too damaged OR if no rad wires
 			on=0
 			update_on()
 
@@ -171,7 +203,7 @@
 		for(var/mob/living/carbon/M in view(src,3))
 			var/rads = RADS_PER_TICK * sqrt( 1 / (get_dist(M, src) + 1) )
 			if(istype(M,/mob/living/carbon/human))
-				M.apply_effect((rads*3),IRRADIATE)
+				M.apply_effect((rads*count_rad_wires()),IRRADIATE)
 			else
 				M.radiation += rads
 

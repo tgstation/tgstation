@@ -141,6 +141,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/dump_chemreactions,
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/getSchedulerContext,
 	/client/proc/cmd_admin_list_open_jobs,
 	/proc/getbrokeninhands,
 	/client/proc/Debug2,
@@ -174,6 +175,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/mob_list,
 	/client/proc/cure_disease,
 	/client/proc/check_bomb,
+	/client/proc/set_teleport_pref,
 	/client/proc/cmd_admin_find_bad_blood_tracks,
 #ifdef PROFILE_MACHINES
 	/client/proc/cmd_admin_dump_macprofile,

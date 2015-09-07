@@ -225,6 +225,17 @@
 		keyslot2 = new /obj/item/device/encryptionkey/headset_servsci
 		..()
 
+/obj/item/device/radio/headset/headset_earmuffs
+	name = "headset earmuffs"
+	desc = "Protective earmuffs for sound technicians that allow one to speak on radio channels. To access service, use :d. For engineering, use :e."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "earmuffs"
+	item_state = "earmuffs"
+
+	New()
+		//keyslot2 = new /obj/item/device/encryptionkey/headset_serveng
+		..()
+
 /obj/item/device/radio/headset/deathsquad
 	name = "Deathsquad headset"
 	desc = "A headset used by the dark side of Nanotrasen's Spec Ops. Channels are as follows: :0 - Deathsquad :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."

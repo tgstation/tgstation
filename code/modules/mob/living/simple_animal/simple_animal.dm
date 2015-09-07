@@ -76,6 +76,8 @@
 
 	universal_speak = 1
 	universal_understand = 1
+	
+	var/life_tick = 0
 
 /mob/living/simple_animal/apply_beam_damage(var/obj/effect/beam/B)
 	var/lastcheck=last_beamchecks["\ref[B]"]
@@ -130,9 +132,11 @@
 
 	if(health < 1 && stat != DEAD)
 		Die()
+		return 0
+	
+	life_tick++
 
-	if(health > maxHealth)
-		health = maxHealth
+	health = min(health, maxHealth)
 
 	if(stunned)
 		AdjustStunned(-1)

@@ -392,7 +392,7 @@ var/global/floorIsLava = 0
 				I.rank = "N/A"
 				update_file = 1
 			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.author == usr.key)
+			if(I.author == usr.key || check_rights(R_PERMISSIONS, show_msg = 0))
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
 			dat += "<br><br>"
 		if(update_file) info << infos
@@ -1408,7 +1408,7 @@ proc/formatJumpTo(location, where = "")
 	if (where == "")
 		where = formatLocation(loc)
 
-	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>[where]</a>"
+	return "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc ? loc.x : "mystery"];Y=[loc ? loc.y : "mystery"];Z=[loc ? loc.z : "mystery"]'>[where]</a>"
 
 proc/formatLocation(location)
 	//writepanic("[__FILE__].[__LINE__] \\/proc/formatLocation() called tick#: [world.time]")

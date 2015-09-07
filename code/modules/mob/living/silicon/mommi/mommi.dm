@@ -166,9 +166,11 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		nmmi.invisibility = 0
 	..()
 
-/mob/living/silicon/robot/mommi/remove_screen_obj_references()
+/mob/living/silicon/robot/mommi/remove_screen_objs()
 	..()
-	inv_tool = null
+	if(inv_tool)
+		returnToPool(inv_tool)
+		inv_tool = null
 
 /mob/living/silicon/robot/mommi/updatename(var/prefix as text)
 

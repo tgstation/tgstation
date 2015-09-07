@@ -142,10 +142,10 @@ var/global/global_playlists = list()
 		return str
 
 
-var/global/loopModeNames=list(
+var/global/list/loopModeNames=list(
 	JUKEMODE_SHUFFLE     = "Shuffle",
 	JUKEMODE_REPEAT_SONG = "Single",
-	JUKEMODE_PLAY_ONCE   = "Once",
+	JUKEMODE_PLAY_ONCE   = "Once"
 )
 /obj/machinery/media/jukebox
 	name = "Jukebox"
@@ -162,6 +162,7 @@ var/global/loopModeNames=list(
 	playing=0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
+	var/list/allowed_modes = null
 
 	// Server-side playlist IDs this jukebox can play.
 	var/list/playlists=list() // ID = Label
@@ -187,16 +188,28 @@ var/global/loopModeNames=list(
 
 	var/state_base = "jukebox2"
 
-	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE | MULTITOOL_MENU
+	var/datum/wires/jukebox/wires = null
+	var/pick_allowed = 1 //Allows you to pick songs
+	var/access_unlocked = 0 //Allows you to access settings
+
+	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE | MULTITOOL_MENU | SCREWTOGGLE
 	mech_flags = MECH_SCAN_FAIL
 	emag_cost = 0 // because fun/unlimited uses.
 
 /obj/machinery/media/jukebox/New(loc)
 	..(loc)
+	allowed_modes = loopModeNames.Copy()
+	wires = new(src)
 	if(department)
 		linked_account = department_accounts[department]
 	else
 		linked_account = station_account
+
+/obj/machinery/media/jukebox/Destroy()
+	if(wires)
+		wires.Destroy()
+		wires = null
+	..()
 
 /obj/machinery/media/jukebox/attack_ai(var/mob/user)
 	attack_hand(user)
@@ -209,15 +222,19 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/power_change()
 	..()
-	if(emagged && !(stat & (NOPOWER|BROKEN)))
+	if(emagged && !(stat & (NOPOWER|BROKEN)) && !any_power_cut())
 		playing = 1
 		if(current_song)
 			update_music()
 	update_icon()
 
+/obj/machinery/media/jukebox/proc/any_power_cut()
+	var/total = wires.IsIndexCut(JUKE_POWER_ONE) || wires.IsIndexCut(JUKE_POWER_TWO) || wires.IsIndexCut(JUKE_POWER_THREE)
+	return total
+
 /obj/machinery/media/jukebox/update_icon()
 	overlays = 0
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(stat & (NOPOWER|BROKEN) || !anchored || any_power_cut())
 		if(stat & BROKEN)
 			icon_state = "[state_base]-broken"
 		else
@@ -236,7 +253,7 @@ var/global/loopModeNames=list(
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/jukebox/attack_hand(var/mob/user)
-	if(stat & NOPOWER)
+	if(stat & NOPOWER || any_power_cut())
 		usr << "<span class='warning'>You don't see anything to mess with.</span>"
 		return
 	if(stat & BROKEN && playlist!=null)
@@ -246,10 +263,11 @@ var/global/loopModeNames=list(
 		playing=emagged
 		update_icon()
 		return
-
+	if(panel_open)
+		wires.Interact(user)
 	var/t = "<div class=\"navbar\">"
 	t += "<a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_MAIN]\">Main</a>"
-	if(allowed(user))
+	if(allowed(user)|| access_unlocked)
 		t += " | <a href=\"?src=\ref[src];screen=[JUKEBOX_SCREEN_SETTINGS]\">Settings</a>"
 	t += "</div>"
 	switch(screen)
@@ -267,11 +285,11 @@ var/global/loopModeNames=list(
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/media/jukebox/proc/ScreenMain() called tick#: [world.time]")
 	var/t = "<h1>Jukebox Interface</h1>"
 	t += "<b>Power:</b> <a href='?src=\ref[src];power=1'>[playing?"On":"Off"]</a><br />"
-	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[loopModeNames[loop_mode]]</a><br />"
+	t += "<b>Play Mode:</b> <a href='?src=\ref[src];mode=1'>[allowed_modes[loop_mode]]</a><br />"
 	if(playlist == null)
 		t += "\[DOWNLOADING PLAYLIST, PLEASE WAIT\]"
 	else
-		if(req_access.len == 0 || allowed(user))
+		if(req_access.len == 0 || allowed(user) || access_unlocked)
 			if(check_reload())
 				t += "<b>Playlist:</b> "
 				for(var/plid in playlists)
@@ -366,6 +384,10 @@ var/global/loopModeNames=list(
 	. = ..()
 	if(.)
 		return .
+	if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
+		if(panel_open)
+			wires.Interact(user)
+		return
 	if(istype(W,/obj/item/weapon/card/id))
 		if(!selected_song || screen!=JUKEBOX_SCREEN_PAYMENT)
 			visible_message("<span class='notice'>The machine buzzes.</span>","<span class='warning'>You hear a buzz.</span>")
@@ -413,19 +435,26 @@ var/global/loopModeNames=list(
 		attack_hand(user)
 
 /obj/machinery/media/jukebox/emag(mob/user)
-	current_song = 0
 	if(!emagged)
-		playlist_id = "emagged"
-		last_reload=world.time
-		playlist=null
-		loop_mode = JUKEMODE_SHUFFLE
-		emagged = 1
-		playing = 1
 		user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
-		update_icon()
-		update_music()
-		return 1
+		wires.CutWireIndex(JUKE_CONFIG)
+		short()
 	return
+
+/obj/machinery/media/jukebox/proc/short()
+	emagged = !emagged
+	current_song = 0
+	playing = 1
+	if(!wires.IsIndexCut(JUKE_SHUFFLE))
+		loop_mode = JUKEMODE_SHUFFLE
+	if(emagged)
+		playlist_id = "emagged"
+	else
+		playlist_id = playlists[1] //Set to whatever our first is. Usually bar.
+	last_reload=world.time
+	playlist=null
+	update_icon()
+	update_music()
 
 /obj/machinery/media/jukebox/wrenchAnchor(mob/user)
 	if(..())
@@ -438,6 +467,14 @@ var/global/loopModeNames=list(
 		next_song = selected_song
 		selected_song = 0
 		screen = JUKEBOX_SCREEN_MAIN
+
+/obj/machinery/media/jukebox/proc/rad_pulse() //Called by pulsing the transmit wire
+	for(var/mob/living/carbon/M in view(src,3))
+		var/rads = 50 * sqrt( 1 / (get_dist(M, src) + 1) ) //It's like a transmitter, but 1/3 as powerful
+		if(istype(M,/mob/living/carbon/human))
+			M.apply_effect((rads*2),IRRADIATE)
+		else
+			M.radiation += rads
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	if(isobserver(usr) && !isAdminGhost(usr))
@@ -498,6 +535,9 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
+		if(wires.IsIndexCut(JUKE_CAPITAL))
+			usr << "<span class='warning'>You select a song, but [src] is unresponsive...</span>"
+			return
 		if(isobserver(usr) && !canGhostWrite(usr,src,""))
 			usr << "<span class='warning'>You can't do that.</span>"
 			return

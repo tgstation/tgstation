@@ -89,6 +89,7 @@
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == I_HURT)
 			M.take_overall_damage(dam_force)
+			if(!M) return //we killed some sort of simple animal and the corpse was deleted.
 			M.adjustOxyLoss(round(dam_force/2))
 			M.updatehealth()
 			occupant_message("<span class='warning'>You squeeze [target] with [src.name]. Something cracks.</span>")

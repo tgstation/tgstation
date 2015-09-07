@@ -135,3 +135,7 @@
 		for(var/obj/item/weapon/bomberman/dispenser in src)
 			if(dispenser.spam_bomb)
 				dispenser.attack_self(src)
+
+		var/obj/item/weapon/rcl/R = get_active_hand()
+		if(R && istype(R) && R.active)
+			R.trigger(src)

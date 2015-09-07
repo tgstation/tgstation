@@ -59,7 +59,7 @@
 		if(brainmob.mind in ticker.mode.head_revolutionaries)
 			user << "<span class='warning'>The [src]'s firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the brain.</span>"
 			return TRUE
-		if(jobban_isbanned(brainmob, "Cyborg"))
+		if(jobban_isbanned(brainmob, "Mobile MMI"))
 			user << "<span class='warning'>This brain does not seem to fit.</span>"
 			return TRUE
 		//canmove = 0

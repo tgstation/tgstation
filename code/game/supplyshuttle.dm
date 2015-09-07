@@ -107,7 +107,9 @@ var/list/mechtoys = list(
 	desc = "Heavy duty, airtight, plastic flaps."
 	airtight = 1
 
-
+/obj/structure/plasticflaps/cultify()
+	new /obj/structure/grille/cult(get_turf(src))
+	..()
 
 /obj/machinery/computer/supplycomp
 	name = "Supply shuttle console"

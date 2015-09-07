@@ -541,3 +541,19 @@ var/global/mr_clean_targets = list(
 /obj/machinery/singularity/narsie/large/clean/on_release()
 	chained = 0
 	move_self = 1
+
+/obj/machinery/singularity/narsie/large/calm//for when we want a Nar-Sie that stays put and doesn't end the round. Mostly for debug purposes.
+	announce = 0
+	move_self = 0
+	consume_range = 0
+
+/obj/machinery/singularity/narsie/large/calm/New()
+	narsie_cometh = 1//so we don't force a shuttle call
+	..()
+	narsie_cometh = 0
+
+/obj/machinery/singularity/narsie/large/calm/pickcultist()
+	if(!move_self)
+		return
+	else
+		..()

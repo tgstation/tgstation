@@ -292,4 +292,15 @@
 	max_combined_w_class = 200
 	max_w_class = 3
 	w_class = 1
-	can_hold = list("/obj/item/weapon/stock_parts")
+	can_hold = list("/obj/item/weapon/stock_parts", "/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/cell")
+
+/obj/item/weapon/storage/bag/gadgets/mass_remove(atom/A)
+	var/lowest_rating = INFINITY //Get the lowest rating, so only mass drop the lowest parts.
+	for(var/obj/item/B in contents)
+		if(B.get_rating() < lowest_rating)
+			lowest_rating = B.get_rating()
+
+	for(var/obj/item/B in contents) //Now that we have the lowest rating we can dump only parts at the lowest rating.
+		if(B.get_rating() > lowest_rating)
+			continue
+		remove_from_storage(B, A)

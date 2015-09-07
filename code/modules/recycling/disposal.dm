@@ -128,8 +128,7 @@
 			user.drop_item(I, src)
 			return
 		user << "<span class='notice'> You empty the [B].</span>"
-		for(var/obj/item/O in B.contents)
-			B.remove_from_storage(O,src)
+		B.mass_remove(src)
 		B.update_icon()
 		update_icon()
 		return
@@ -140,13 +139,13 @@
 			var/mob/GM = G.affecting
 			user.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
 			GM.attack_log += "<span class='warning'> [user]([user.ckey]) has attempted to put [GM]([GM.ckey]) in disposals.</span>"
-			user.visible_message("[usr] starts putting [GM.name] into the [src].", "You start putting the [GM.name] into the [src].", "You hear some clunking.")
+			user.visible_message("[usr] starts putting [GM.name] into \the [src].", "You start putting \the [GM.name] into the [src].", "You hear some clunking.")
 			if(do_after(usr, src, 20))
 				if (GM.client)
 					GM.client.perspective = EYE_PERSPECTIVE
 					GM.client.eye = src
 				GM.loc = src
-				user.visible_message("<span class='warning'>[GM.name] has been placed in the [src] by [user].</span>, <span class='warning'>[GM.name] has been placed in the [src] by you.</span>", "<span class='warning'>You hear a loud clunk.</span>")
+				user.visible_message("<span class='warning'>[GM.name] has been placed in \the [src] by [user].</span>", "<span class='warning'>[GM.name] has been placed in \the [src] by you.</span>", "<span class='warning'>You hear a loud clunk.</span>")
 				qdel(G)
 				log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
 		return

@@ -14,7 +14,7 @@
 // Uncomment to spam console with debug info.
 //#define BEAM_DEBUG
 
-#define BEAM_MAX_STEPS 100 // Or whatever
+#define BEAM_MAX_STEPS 50 // Or whatever
 
 #define BEAM_DEL(x) del(x)
 
@@ -319,6 +319,7 @@
 	return 1
 
 /obj/effect/beam/emitter/Destroy()
+	..()
 	if(sources && sources.len)
 		for(var/obj/machinery/power/emitter/E in sources)
 			if(E.beam == src)
@@ -330,7 +331,6 @@
 			for(var/thing in M.emitted_beams)
 				if(thing == src)
 					M.emitted_beams -= thing
-	..()
 
 /obj/effect/beam/Destroy()
 	var/obj/effect/beam/ourselves = src
@@ -343,33 +343,42 @@
 			continue
 		if(ourselves in M.beams)
 			M.beams -= ourselves
+
 	for(var/obj/machinery/field_generator/F in field_gen_list)
 		if(!F)
 			continue
 		if(ourselves in F.beams)
 			F.beams -= ourselves
+
 	for(var/obj/machinery/prism/P in prism_list)
 		if(ourselves == P.beam)
 			P.beam = null
 		if(ourselves in P.beams)
 			P.beams -= ourselves
+
 	for(var/obj/machinery/power/photocollector/PC in photocollector_list)
 		if(ourselves in PC.beams)
 			PC.beams -= ourselves
+
 	if(!am_connector && !master)
 		beam_testing("\ref[get_master()] - Disconnecting (deleted)")
 		disconnect(0)
+
 	if(master)
 		if(master.target && master.target.beams)
 			master.target.beams -= ourselves
+
 		for(var/obj/effect/beam/B in master.children)
 			if(B.next == ourselves)
 				B.next = null
+
 		if(master.next == ourselves)
 			master.next = null
+
 		master.children.Remove(ourselves)
 		master = null
 	else if(children && children.len)
+
 		killKids()
 	if(next)
 		//BEAM_DEL(next)
@@ -377,6 +386,7 @@
 		qdel(next)
 		next=null
 	..()
+
 	if(ourselves._re_emit && ourmaster._re_emit)
 		ourmaster.emit(ourmaster.sources)
 

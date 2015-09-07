@@ -5,7 +5,7 @@
  *		Ushanka
  *		Pumpkin head
  *		Kitty ears
- *
+ *		Tinfoil Hat
  */
 
 /*
@@ -199,3 +199,11 @@
 		transfer_buttdentity(var/mob/living/carbon/H)
 			name = "[H]'s butt"
 			return
+
+/obj/item/clothing/head/tinfoil
+	name = "tinfoil hat"
+	desc = "There's no evidence that the security staff is NOT out to get you."
+	icon_state = "foilhat"
+	item_state = "paper"
+	siemens_coefficient = 2
+	flags_inv = HIDEHAIR

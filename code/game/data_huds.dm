@@ -32,6 +32,8 @@ proc/process_med_hud(var/mob/M, var/mob/eye)
 	else
 		T = get_turf(M)
 	for(var/mob/living/carbon/human/patient in range(T))
+		if(patient.head && istype(patient.head,/obj/item/clothing/head/tinfoil)) //Tinfoil hat? Move along.
+			continue
 		if(M.see_invisible < patient.invisibility)
 			continue
 		var/foundVirus = 0
@@ -84,6 +86,9 @@ proc/process_sec_hud(var/mob/M, var/advanced_mode,var/mob/eye)
 		if(!holder)
 			continue
 		holder.icon_state = "hudno_id"
+		if(perp.head && istype(perp.head,/obj/item/clothing/head/tinfoil)) //Tinfoil hat? Move along.
+			C.images += holder
+			continue
 		var/obj/item/weapon/card/id/card = perp.get_id_card()
 		if(card)
 			holder.icon_state = "hud[ckey(card.GetJobName())]"

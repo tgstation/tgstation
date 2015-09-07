@@ -1,8 +1,3 @@
-
-// Vent crawling whitelisted items, whoo
-/mob/living
-	var/canEnterVentWith = "/obj/item/weapon/implant=0&/obj/item/clothing/mask/facehugger=0&/obj/item/device/radio/borg=0&/obj/machinery/camera=0"
-
 /mob/living/carbon/Login()
 	..()
 	update_hud()

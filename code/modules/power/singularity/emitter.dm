@@ -94,8 +94,10 @@
 			beam.dir = dir
 			beam.emit(spawn_by=src)
 	else
-		qdel(beam)
-		beam = null
+		if(beam)
+			beam._re_emit = 0
+			qdel(beam)
+			beam = null
 
 /obj/machinery/power/emitter/receive_signal(datum/signal/signal)
 

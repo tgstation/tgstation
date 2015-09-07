@@ -60,8 +60,8 @@
 		R.module.modules += new/obj/item/weapon/cautery
 		R.module.modules += new/obj/item/weapon/hemostat
 		R.module.modules += new/obj/item/weapon/retractor*/
-		R.module.modules += new /obj/item/weapon/melee/defibrillator(src)
-		R.module.modules += new /obj/item/weapon/reagent_containers/borghypo/upgraded(src)
+		R.module.modules += new /obj/item/weapon/melee/defibrillator(R.module)
+		R.module.modules += new /obj/item/weapon/reagent_containers/borghypo/upgraded(R.module)
 
 		return 1
 
@@ -189,7 +189,7 @@
 	if(..()) return 0
 
 	if(istype(R.module, /obj/item/weapon/robot_module/miner) || istype(R.module, /obj/item/weapon/robot_module/engineering) || isMoMMI(R))
-		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(src)
+		R.module.modules += new/obj/item/weapon/tank/jetpack/carbondioxide(R.module)
 		for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules)
 			R.internals = src
 		//R.icon_state="Miner+j"
@@ -237,6 +237,6 @@
 	var/obj/item/weapon/wrench/socket/W = locate(/obj/item/weapon/wrench/socket) in R.module.modules
 	if(W) return 0
 
-	R.module.modules += new/obj/item/weapon/wrench/socket(src)
+	R.module.modules += new/obj/item/weapon/wrench/socket(R.module)
 
 	return 1

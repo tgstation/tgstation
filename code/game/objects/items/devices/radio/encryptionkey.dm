@@ -136,6 +136,12 @@
 	icon_state = "servsci_cypherkey"
 	channels = list("Science" = 1, "Service" = 1)
 
+/obj/item/device/encryptionkey/headset_serveng
+	name = "Sound Technician Radio Encryption Key"
+	desc = "An encryption key for a radio headset.  Contains cypherkeys."
+	icon_state = "serveng_cypherkey"
+	channels = list("Engineering" = 1, "Service" = 1)
+
 /obj/item/device/encryptionkey/deathsquad
 	name = "Deathsquad Radio Encryption Key"
 	desc = "An encryption key for a radio headset.  Contains cypherkeys."

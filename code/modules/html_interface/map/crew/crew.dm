@@ -258,5 +258,5 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 
 /datum/interactive_map/crewmonitor/sendResources(client/C)
 	..()
-	C << browse_rsc('crew.js', "crewmonitor.js")
-	C << browse_rsc('crew.css', "crewmonitor.css")
+	C << browse_rsc('crewmonitor.js')
+	C << browse_rsc('crewmonitor.css')

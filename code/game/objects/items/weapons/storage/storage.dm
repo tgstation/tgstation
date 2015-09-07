@@ -285,7 +285,7 @@
 	if(usr)
 		usr.u_equip(W,1)
 		usr.update_icons()	//update our overlays
-	W.loc = src
+	W.forceMove(src)
 	W.on_enter_storage(src)
 	if(usr)
 		if (usr.client && usr.s_active != src)
@@ -309,9 +309,15 @@
 	return 1
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
-/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
+//force needs to be 1 if you want to override the can_be_inserted() if the target's a storage item.
+/obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location, var/force = 0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/storage/proc/remove_from_storage() called tick#: [world.time]")
 	if(!istype(W)) return 0
+
+	if(!force && istype(new_location, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/A = new_location
+		if(!A.can_be_inserted(W, 1))
+			return 0
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src
@@ -332,9 +338,13 @@
 			W.pickup(M)
 			M.put_in_active_hand(W)
 		else
-			W.loc = new_location
+			if(istype(new_location, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/A = new_location
+				A.handle_item_insertion(W, 1)
+			else
+				W.forceMove(new_location)
 	else
-		W.loc = get_turf(src)
+		W.forceMove(get_turf(src))
 
 	if(usr)
 		src.orient2hud(usr)
@@ -456,8 +466,7 @@
 
 	var/turf/T = get_turf(src)
 	hide_from(usr)
-	for(var/obj/item/I in contents)
-		remove_from_storage(I, T)
+	mass_remove(T)
 
 /obj/item/weapon/storage/New()
 	. = ..()
@@ -603,3 +612,7 @@
 /obj/item/weapon/storage/stripped(mob/wearer as mob, mob/stripper as mob)
 	for(var/obj/item/I in contents)
 		I.stripped(wearer,stripper)
+
+/obj/item/weapon/storage/proc/mass_remove(var/atom/A)
+	for(var/obj/item/O in contents)
+		remove_from_storage(O, A)

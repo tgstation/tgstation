@@ -408,7 +408,13 @@ var/global/list/organ_damage_overlays = list(
 						"Don't tell Chase", \
 						"not so tough now huh", \
 						"WERE NOT BAY!!", \
-						"BLAME HOSHI!!!"))
+						"BLAME HOSHI!!!", \
+						"ARRPEE IZ DED!!!", \
+						"THERE ALL JUS MEATAFRIENDS!", \
+						"SOTP MESING WITH THE ROUNS SHITMAN!!!", \
+						"SKELINGTON IS 4 SHITERS!", \
+						"MOMMSI R THE WURST SCUM!!", \
+						"OMG I SED LAW 2 U FAG MOMIM LAW 2!!!"))
 				if(3)
 					emote("drool")
 
@@ -1254,11 +1260,11 @@ var/global/list/organ_damage_overlays = list(
 		//Ears
 		if(sdisabilities & DEAF)	//disabled-deaf, doesn't get better on its own
 			ear_deaf = max(ear_deaf, 1)
+		else if(earprot())	//resting your ears with earmuffs heals ear damage faster
+			ear_damage = max(ear_damage-0.15, 0)
+			ear_deaf = max(ear_deaf, 1) //This MUST be above the following else if or deafness cures itself while wearing earmuffs
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
-		else if(is_on_ears(/obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
-			ear_damage = max(ear_damage-0.15, 0)
-			ear_deaf = max(ear_deaf, 1)
 		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 			ear_damage = max(ear_damage-0.05, 0)
 
@@ -1998,7 +2004,11 @@ var/global/list/organ_damage_overlays = list(
 				visible_message("<span class='warning'>The bucket's content spills on [src]</span>")
 				spawn(5) B.reagents.clear_reagents()
 
-
+/mob/living/carbon/human/proc/earprot()
+	var/detect = 0
+	if(is_on_ears(/obj/item/clothing/ears/earmuffs)||is_on_ears(/obj/item/device/radio/headset/headset_earmuffs))
+		detect=1
+	return detect
 
 // Need this in species.
 //#undef HUMAN_MAX_OXYLOSS

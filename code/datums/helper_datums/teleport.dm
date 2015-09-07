@@ -192,6 +192,14 @@
 			teleatom.visible_message("<span class='danger'>The Bag of Holding bounces off of the portal!</span>")
 			return 0
 
+	if(istype(teleatom,/obj/item/clothing/head/tinfoil))
+		return 0
+
+	if(istype(teleatom,/mob/living/carbon/human)) //Tinfoil hats resist teleportation, but only when worn
+		var/mob/living/carbon/human/H = teleatom
+		if(H.head && istype(H.head,/obj/item/clothing/head/tinfoil))
+			H << "<span class'info'>Your headgear has 'foiled' a teleport!</span>"
+			return 0
 
 	if(destination.z > 7) //Away mission z-levels
 		return 0

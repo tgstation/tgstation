@@ -50,6 +50,9 @@
 		/obj/machinery/bunsen_burner
 		)
 
+/obj/item/weapon/reagent_containers/glass/get_rating()
+	return volume / 50
+
 /obj/item/weapon/reagent_containers/glass/New()
 	..()
 	base_name = name

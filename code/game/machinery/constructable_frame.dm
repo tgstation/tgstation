@@ -34,7 +34,11 @@
 		D += "."
 	desc = D
 
-/obj/machinery/constructable_frame/machine_frame
+/obj/machinery/constructable_frame/proc/get_req_components_amt()
+	var/amt = 0
+	for(var/path in req_components)
+		amt += req_components[path]
+	return amt
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
 	if(P.crit_fail)
@@ -153,46 +157,59 @@
 							components = null
 							qdel(src)
 					else
-						if(istype(P, /obj/item/weapon)||istype(P, /obj/item/stack))
-							for(var/I in req_components)
-								if(istype(P, text2path(I)) && (req_components[I] > 0))
-									playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-									if(istype(P, /obj/item/stack/cable_coil))
-										var/obj/item/stack/cable_coil/CP = P
-										if(CP.amount >= req_components[I])
-											var/camt = min(CP.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
-											var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src)
-											CC.amount = camt
-											CC.update_icon()
-											CP.use(camt)
-											components += CC
-											req_components[I] -= camt
-											update_desc()
-											break
-										else
-											user << "<span class='warning'>You do not have enough [P]!</span>"
-									if(istype(P, /obj/item/stack/rods))
-										var/obj/item/stack/rods/R = P
-										if(R.amount >= req_components[I])
-											var/camt = min(R.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
-											var/obj/item/stack/rods/RR = new /obj/item/stack/rods(src)
-											RR.amount = camt
-											RR.update_icon()
-											R.use(camt)
-											components += RR
-											req_components[I] -= camt
-											update_desc()
-											break
-										else
-											user << "<span class='warning'>You do not have enough [P]!</span>"
-									user.drop_item(P, src)
-									components += P
-									req_components[I]--
-									update_desc()
-									break
-							user << desc
-							if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-								user << "<span class='warning'>You cannot add that component to the machine!</span>"
+						if(istype(P, /obj/item/weapon/storage/bag/gadgets/part_replacer) && P.contents.len && get_req_components_amt())
+							var/obj/item/weapon/storage/bag/gadgets/part_replacer/replacer = P
+							var/list/added_components = list()
+							var/list/part_list = replacer.contents.Copy()
+
+							//Sort the parts. This ensures that higher tier items are applied first.
+							part_list = sortTim(part_list, /proc/cmp_rped_sort)
+
+							for(var/path in req_components)
+								while(req_components[path] > 0 && (locate(text2path(path)) in part_list))
+									var/obj/item/part = (locate(text2path(path)) in part_list)
+									if(!part.crit_fail)
+										added_components[part] = path
+										replacer.remove_from_storage(part, src)
+										req_components[path]--
+										part_list -= part
+
+							for(var/obj/item/weapon/stock_parts/part in added_components)
+								components += part
+								user << "<span class='notice'>[part.name] applied.</span>"
+							replacer.play_rped_sound()
+
+							update_desc()
+
+						else
+							if(istype(P, /obj/item/weapon) || istype(P, /obj/item/stack))
+								for(var/I in req_components)
+									if(istype(P, text2path(I)) && (req_components[I] > 0))
+										playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+										if(istype(P, /obj/item/stack))
+											var/obj/item/stack/CP = P
+											if(CP.amount >= req_components[I])
+												var/camt = min(CP.amount, req_components[I]) // amount of the stack to take, idealy amount required, but limited by amount provided
+												var/obj/item/stack/CC = getFromPool(text2path(I), src)
+												CC.amount = camt
+												CC.update_icon()
+												CP.use(camt)
+												components += CC
+												req_components[I] -= camt
+												update_desc()
+												break
+											else
+												user << "<span class='warning'>You do not have enough [P]!</span>"
+
+										user.drop_item(P, src)
+										components += P
+										req_components[I]--
+										update_desc()
+										break
+								user << desc
+
+								if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
+									user << "<span class='warning'>You cannot add that component to the machine!</span>"
 
 /obj/machinery/constructable_frame/machine_frame/proc/set_build_state(var/state)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/constructable_frame/machine_frame/proc/set_build_state() called tick#: [world.time]")
@@ -217,14 +234,16 @@ to destroy them and players will be able to make replacements.
 	desc = "A blank circuitboard ready for design."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "blank_mod"
-	var/datum/circuits/local_fuses = null
+	//var/datum/circuits/local_fuses = null
+	var/list/allowed_boards = list("autolathe"=/obj/item/weapon/circuitboard/autolathe,"intercom"=/obj/item/weapon/intercom_electronics,"conveyor"=/obj/item/weapon/circuitboard/conveyor,"air alarm"=/obj/item/weapon/circuitboard/air_alarm,"fire alarm"=/obj/item/weapon/circuitboard/fire_alarm,"airlock"=/obj/item/weapon/circuitboard/airlock,"APC"=/obj/item/weapon/circuitboard/power_control,"vendomat"=/obj/item/weapon/circuitboard/vendomat,"microwave"=/obj/item/weapon/circuitboard/microwave)
+	var/soldering = 0 //Busy check
 
 /obj/item/weapon/circuitboard/blank/New()
 	..()
-	local_fuses = new(src)
+	//local_fuses = new(src)
 
 /obj/item/weapon/circuitboard/blank/attackby(obj/item/O as obj, mob/user as mob)
-	if(ismultitool(O))
+	/*if(ismultitool(O))
 		var/boardType = local_fuses.assigned_boards["[local_fuses.localbit]"] //Localbit is an int, but this is an associative list organized by strings
 		if(boardType)
 			if(ispath(boardType))
@@ -236,8 +255,21 @@ to destroy them and players will be able to make replacements.
 				user << "<span class='warning'>A fatal error with the board type occurred. Report this message.</span>"
 		else
 			user << "<span class='warning'>The multitool flashes red briefly.</span>"
-	else if(issolder(O))
-		local_fuses.Interact(user)
+	else */if(!soldering&&issolder(O))
+		//local_fuses.Interact(user)
+		var/t = input(user, "Which board should be designed?") as null|anything in allowed_boards
+		if(!t) return
+		var/obj/item/weapon/solder/S = O
+		if(!S.remove_fuel(4,user)) return
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		soldering = 1
+		if(do_after(user, src,40))
+			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			var/boardType = allowed_boards[t]
+			var/obj/item/I = new boardType(get_turf(user))
+			qdel(src)
+			user.put_in_hands(I)
+		soldering = 0
 	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		if(WT.remove_fuel(1,user))

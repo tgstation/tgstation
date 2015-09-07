@@ -13,6 +13,8 @@
 
 	log_access("Logout: [key_name(src)] ([formatLocation(loc)])")
 
+	remove_screen_objs() //Used to remove hud elements
+
 	if(admin_datums[src.ckey])
 		if (ticker && ticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
 			var/admins_number = admins.len

@@ -465,17 +465,9 @@
 
 /obj/machinery/computer/cloning/update_icon()
 	overlays = 0
-	if(stat & BROKEN)
-		icon_state = "cloningb"
-	else if(powered())
-		icon_state = initial(icon_state)
-		stat &= ~NOPOWER
-
+	if(!(stat & (NOPOWER | BROKEN)))
 		if(scanner && scanner.occupant)
 			overlays += "cloning-scan"
 		if(pod1 && pod1.occupant)
 			overlays += "cloning-pod"
-	else
-		spawn(rand(0, 15))
-			src.icon_state = "c_unpowered"
-			stat |= NOPOWER
+

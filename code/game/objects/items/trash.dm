@@ -58,6 +58,20 @@
 	name = "Plate"
 	icon_state = "plate"
 
+/obj/item/trash/pietin
+	name = "Pie tin"
+	icon_state = "pietin"
+	autoignition_temperature = 0
+	siemens_coefficient = 2 //Do not touch live wires
+	melt_temperature = MELTPOINT_SILICON //Not as high as steel
+
+/obj/item/trash/pietin/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/trash/pietin))
+		var/obj/item/I = new /obj/item/clothing/head/tinfoil(get_turf(src))
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(I)
+
 /obj/item/trash/snack_bowl
 	name = "Snack bowl"
 	icon_state	= "snack_bowl"

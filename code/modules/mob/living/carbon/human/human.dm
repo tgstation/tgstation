@@ -215,7 +215,7 @@
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
+			if (!earprot())
 				ear_damage += 30
 				ear_deaf += 120
 			if (prob(70) && !shielded)
@@ -225,7 +225,7 @@
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!earprot())
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)
@@ -667,6 +667,10 @@
 			return "h_store"
 		else
 			return ""
+
+/mob/living/carbon/human/hear_radio_only()
+	if(!ears) return 0
+	return is_on_ears(/obj/item/device/radio/headset/headset_earmuffs)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	var/pickpocket = 0
@@ -1209,11 +1213,15 @@
 		return 0
 	if((temp_turf.z != our_turf.z) || M.stat!=CONSCIOUS) //Not on the same zlevel as us or they're dead.
 		//world << "[(temp_turf.z != our_turf.z) ? "not on the same zlevel as [M]" : "[M] is not concious"]"
-		src << "Cannot establish a telepathic link with [M]."
+		src << "The mind of [M] is too faint..."
 		return 0
 	if(M_PSY_RESIST in M.mutations)
 		//world << "[M] has psy resist"
-		src << "Cannot maintain a telepathic link with [M]."
+		src << "The mind of [M] is resisting!"
+		return 0
+	var/mob/living/carbon/human/H = M
+	if(H.head && istype(H.head,/obj/item/clothing/head/tinfoil))
+		src << "Interference is disrupting the connection with the mind of [M]."
 		return 0
 	return 1
 

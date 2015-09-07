@@ -84,6 +84,14 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	update_beams()
 	return 1
 
+/obj/machinery/mirror/wrenchAnchor(var/mob/user)
+	. = ..()
+	if(. == 1)
+		if(beams && beams.len)
+			kill_all_beams()
+			update_beams()
+	return .
+
 /obj/machinery/mirror/beam_connect(var/obj/effect/beam/emitter/B)
 	if(istype(B))
 		if(B.HasSource(src))
@@ -135,7 +143,7 @@ var/global/list/obj/machinery/mirror/mirror_list = list()
 	var/list/spawners = list(src)
 
 	//testing("Beam count: [beams.len]")
-	if(beams.len>0)
+	if(beams.len>0 && anchored)
 		// Figure out what we're getting hit by.
 		//var/BN=0
 		for(var/obj/effect/beam/B in beams)
