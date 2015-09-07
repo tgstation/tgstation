@@ -128,21 +128,23 @@ var/datum/subsystem/shuttle/SSshuttle
 	return
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(canRecall())
+		emergency.cancel(get_area(user))
+		log_game("[key_name(user)] has recalled the shuttle.")
+		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		return 1
+
+/datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
-
 	if(ticker.mode.name == "meteor")
 		return
-
-	if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return
-	else if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-		return
-
-	emergency.cancel(get_area(user))
-	log_game("[key_name(user)] has recalled the shuttle.")
-	message_admins("[key_name_admin(user)] has recalled the shuttle.")
+	else
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
