@@ -13,19 +13,14 @@
 	throw_range = 6
 	origin_tech = "biotech=3"
 	var/Uses = 1 // uses before it goes inert
-	var/enhanced = 0 //has it been enhanced before?
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/slimepotion/steroid))
-		if(enhanced == 1)
-			user << "<span class='warning'>This extract has already been enhanced!</span>"
+	if(istype(O, /obj/item/slimepotion/enhancer))
+		if(Uses >= 5)
+			user << "<span class='warning'>You cannot enhance this extract further!</span>"
 			return ..()
-		if(Uses == 0)
-			user << "<span class='warning'>You can't enhance a used extract!</span>"
-			return ..()
-		user <<"<span class='notice'>You apply the enhancer. It now has triple the amount of uses.</span>"
-		Uses = 3
-		enhanced = 1
+		user <<"<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>"
+		Uses++
 		qdel(O)
 
 /obj/item/slime_extract/New()
@@ -226,7 +221,7 @@
 
 /obj/item/slimepotion/steroid
 	name = "slime steroid"
-	desc = "A potent chemical mix that will cause a slime to generate more extract."
+	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
@@ -240,33 +235,19 @@
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
-	if(M.cores == 3)
+	if(M.cores >= 5)
 		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
 		return..()
 
-	user <<"<span class='notice'>You feed the slime the steroid. It now has triple the amount of extract.</span>"
-	M.cores = 3
+	user <<"<span class='notice'>You feed the slime the steroid. It will now produce one more extract.</span>"
+	M.cores++
 	qdel(src)
 
 /obj/item/slimepotion/enhancer
 	name = "extract enhancer"
-	desc = "A potent chemical mix that will give a slime extract three uses."
+	desc = "A potent chemical mix that will give a slime extract an additional use."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-
-	/*afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/item/slime_extract))
-			if(target.enhanced == 1)
-				user << "<span class='warning'>This extract has already been enhanced!</span>"
-				return ..()
-			if(target.Uses == 0)
-				user << "<span class='warning'>You can't enhance a used extract!</span>"
-				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
-			target.Uses = 3
-			target.enahnced = 1
-			qdel(src)*/
-
 
 /obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
