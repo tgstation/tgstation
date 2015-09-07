@@ -5,163 +5,95 @@
 
 #define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
+#define POSTERNAME "name"
 
-//########################## THE LIST OF POSTERS AND DESCS #####################
+#define POSTERDESC "desc"
+
+
+//########################## LISTS OF POSTERS AND DESCS #####################
 
 // please add new posters and names to their respective lists and update constant(s) above
+// use the format below, including punctuation, this will become important later
 
 // CONTRABAND
 
-var/global/list/posternames = list(
-"- Free Tonto",
-"- Atmosia Declaration of Independence",
-"- Fun Police",
-"- Lusty Xenomorph",
-"- Syndicate Recruitment",
-"- Clown",
-"- Smoke",
-"- Grey Tide",
-"- Missing Gloves",
-"- Hacking Guide",
-"- RIP Badger",
-"- Ambrosia Vulgaris",
-"- Donut Corp.",
-"- EAT",
-"- Tools",
-"- Power",
-"- Power to the People",
-"- Communist State",
-"- Lamarr",
-"- Borg Fancy",
-"- Borg Fancy v2",
-"- Kosmicheskaya Stantsiya 13 Does Not Exist",
-"- Rebels Unite",
-"- C-20r",
-"- Have a Puff",
-"- Revolver",
-"- D-Day Promo",
-"- Syndicate Pistol",
-"- Energy Swords",
-"- Red Rum",
-"- CC 64K Ad",
-"- Punch Shit",
-"- The Griffin",
-"- Lizard",
-"- Free Drone" )
+var/global/list/contrabandposters = list(
 
-var/global/list/posterdescs = list(
-" A salvaged shred of a much larger flag, colors bled together and faded from age.",
-" A relic of a failed rebellion.",
-" A poster condemning the station's security forces.",
-" A heretical poster depicting the titular star of an equally heretical book.",
-" See the galaxy! Shatter corrupt megacorporations! Join today!",
-" Honk.",
-" A poster advertising a rival corporate brand of cigarettes.",
-" A rebellious poster symbolizing assistant solidarity.",
-" This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases.",
-" This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date.",
-" This seditious poster references Nanotrasen's genocide of a space station full of badgers.",
-" This poster is lookin' pretty trippy man.",
-" This poster is an advertisement for Donut Corp.",
-" This poster is advising rank gluttony.",
-" This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm.",
-" A poster that positions the seat of power outside Nanotrasen.",
-" Screw those EDF guys!",
-" All hail the Communist party!",
-" This poster depicts Lamarr. Probably made by a traitorous Research Director.",
-" Being fancy can be for any borg, just need a suit.",
-" Borg Fancy, Now only taking the most fancy.",
-" A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13.",
-" A poster telling the viewer to rebel against Nanotrasen.",
-" A poster advertising the Scarborough Arms C-20r.",
-" Who cares about lung cancer when you're high as a kite?",
-" Because seven shots are all you need.",
-" A promotional poster for some rapper.",
-" A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags.",
-" All the colors of the bloody murder rainbow.",,
-" Looking at this poster makes you want to kill.",
-" The latest portable computer from Comrade Computing, with a whole 64kB of ram!",
-" Fight things for no reason, like a man!",
-" The Griffin commands you to be the worst you can be. Will you?",
-" This lewd poster depicts a lizard preparing to mate.",
-" This poster commemorates the bravery of the rogue drone banned by CentComm." )
+list(name = "- Free Tonto", desc = " A salvaged shred of a much larger flag, colors bled together and faded from age."),
+list(name = "- Atmosia Declaration of Independence", desc = " A relic of a failed rebellion."),
+list(name = "- Fun Police", desc = " A poster condemning the station's security forces."),
+list(name = "- Lusty Xenomorph", desc = " A heretical poster depicting the titular star of an equally heretical book."),
+list(name = "- Syndicate Recruitment", desc = " See the galaxy! Shatter corrupt megacorporations! Join today!"),
+list(name = "- Clown", desc = " Honk."),
+list(name = "- Smoke", desc = " A poster advertising a rival corporate brand of cigarettes."),
+list(name = "- Grey Tide", desc = " A rebellious poster symbolizing assistant solidarity."),
+list(name = "- Missing Gloves", desc = " This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."),
+list(name = "- Hacking Guide", desc = " This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."),
+list(name = "- RIP Badger", desc = " This seditious poster references Nanotrasen's genocide of a space station full of badgers."),
+list(name = "- Ambrosia Vulgaris", desc = " This poster is lookin' pretty trippy man."),
+list(name = "- Donut Corp.", desc = " This poster is an unauthorized advertisement for Donut Corp."),
+list(name = "- EAT.", desc = " This poster promotes rank gluttony."),
+list(name = "- Tools", desc = " This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."),
+list(name = "- Power", desc = " A poster that positions the seat of power outside Nanotrasen."),
+list(name = "- Power to the People", desc = " Screw those EDF guys!"),
+list(name = "- Communist State", desc = " All hail the Communist party!"),
+list(name = "- Lamarr", desc = " This poster depicts Lamarr. Probably made by a traitorous Research Director."),
+list(name = "- Borg Fancy", desc = " Being fancy can be for any borg, just need a suit."),
+list(name = "- Borg Fancy v2", desc = " Borg Fancy, Now only taking the most fancy."),
+list(name = "- Kosmicheskaya Stantsiya 13 Does Not Exist", desc = " A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13."),
+list(name = "- Rebels Unite", desc = " A poster urging the viewer to rebel against Nanotrasen."),
+list(name = "- C-20r", desc = " A poster advertising the Scarborough Arms C-20r."),
+list(name = "- Have a Puff", desc = " Who cares about lung cancer when you're high as a kite?"),
+list(name = "- Revolver", desc = " Because seven shots are all you need."),
+list(name = "- D-Day Promo", desc = " A promotional poster for some rapper."),
+list(name = "- Syndicate Pistol", desc = " A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags."),
+list(name = "- Energy Swords", desc = " All the colors of the bloody murder rainbow."),
+list(name = "- Red Rum", desc = " Looking at this poster makes you want to kill."),
+list(name = "- CC 64K Ad", desc = " The latest portable computer from Comrade Computing, with a whole 64kB of ram!"),
+list(name = "- Punch Shit", desc = " Fight things for no reason, like a man!"),
+list(name = "- The Griffin", desc = " The Griffin commands you to be the worst you can be. Will you?"),
+list(name = "- Lizard", desc = " This lewd poster depicts a lizard preparing to mate."),
+list(name = "- Free Drone", desc = " This poster commemorates the bravery of the rogue drone banned by CentComm.") )
 
 // LEGIT
 
-var/global/list/legitposternames = list(
+var/global/list/legitposters = list(
 
-"- Here For Your Safety",
-"- Nanotrasen Logo",
-"- Cleanliness",
-"- Help Others",
-"- Build",
-"- Bless This Spess",
-"- Science",
-"- Ian",
-"- Obey",
-"- Walk",
-"- State Laws",
-"- Love Ian",
-"- Space Cops",
-"- Ue No",
-"- Get Your LEGS",
-"- Do Not Question",
-"- Work For a Future",
-"- Soft Cap Pop Art",
-"- Safety: Internals",
-"- Safety: Eye Protection",
-"- Safety: Report",
-"- Report Crimes", // WHY ARE THERE TWO OF THESE
-"- Ion Rifle",
-"- Foam Force Ad",
-"- Cohiba Robusto Ad",
-"- 50th Anniversary Vintage Reprint",
-"- Fruit Bowl",
-"- ThinkTronic PDA 6000 Ad",
-"- Enlist",
-"- Nanomichi Ad",
-"- 12 Gauge",
-"- High-Class Martini",
-"- The Owl",
-"- No ERP",
-"- Carbon Dioxide" )
-
-var/global/list/legitposterdescs = list(
-" A poster glorifying the station's security force.",
-" A poster depicting the Nanotrasen logo.",
-" A poster warning of the dangers of poor hygiene.",
-" A poster encouraging you to help fellow crewmembers.",
-" A poster glorifying the engineering team.",
-" A poster blessing this area.",
-" A poster depicting an atom.",
-" Arf Arf.",
-" A poster instructing the viewer to obey authority.",
-" A poster instructing the viewer to walk instead of running.",
-" A poster instructing cyborgs to state their laws.",
-" Ian is love, Ian is life.",
-" A poster advertising the television show Space Cops.",
-" This thing is all in Japanese.",
-" LEGS: Leadership, Experience, Genius, Subordination.",
-" A poster instructing the viewer not to ask about things they aren't meant to know.",
-" A poster encouraging you to work for your future.",
-" A poster reprint of some cheap pop art.",
-" A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic.",
-" A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights.",
-" A poster instructing the viewer to report suspicious activity to the security force.",
-" A poster encouraging the swift reporting of crime or seditious behavior to station security.", // seriously
-" A poster displaying an Ion Rifle.",
-" Foam Force, it's Foam or be Foamed!",
-" Cohiba Robusto, the classy cigar.",
-" A reprint of a poster from 2505, commemorating the 50th Aniversery of Nanoposters Manufacturing, a subsidary of Nanotrasen.",
-" Simple, yet awe inspiring.",
-" A poster advertising the latest PDA from Nanotrasen suppliers.",
-" Enlist in the Nanotrasen Deathsquadron reserves today!",
-" A poster advertising Nanomichi brand audio cassettes.",
-" A poster boasting about the superiority of 12 gauge shotgun shells.",
-" I told you to shake it, no stirring.",
-" The Owl would do his best to protect the station. Will you?",
-" This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations.",
-" This informational poster teaches the viewer about carbon dioxide." )
+list(name = "- Here For Your Safety", desc = " A poster glorifying the station's security force."),
+list(name = "- Nanotrasen Logo", desc = " A poster depicting the Nanotrasen logo."),
+list(name = "- Cleanliness", desc = " A poster warning of the dangers of poor hygiene."),
+list(name = "- Help Others", desc = " A poster encouraging you to help fellow crewmembers."),
+list(name = "- Build", desc = " A poster glorifying the engineering team."),
+list(name = "- Bless This Spess", desc = " A poster blessing this area."),
+list(name = "- Science", desc = " A poster depicting an atom."),
+list(name = "- Ian", desc = " Arf arf. Yap."),
+list(name = "- Obey", desc = " A poster instructing the viewer to obey authority."),
+list(name = "- Walk", desc = " A poster instructing the viewer to walk instead of running."),
+list(name = "- State Laws", desc = " A poster instructing cyborgs to state their laws."),
+list(name = "- Love Ian", desc = " Ian is love, Ian is life."),
+list(name = "- Space Cops.", desc = " A poster advertising the television show Space Cops."),
+list(name = "- Ue No.", desc = " This thing is all in Japanese."),
+list(name = "- Get Your LEGS", desc = " LEGS: Leadership, Experience, Genius, Subordination."),
+list(name = "- Do Not Question", desc = " A poster instructing the viewer not to ask about things they aren't meant to know."),
+list(name = "- Work For A Future", desc = " A poster encouraging you to work for your future."),
+list(name = "- Soft Cap Pop Art", desc = " A poster reprint of some cheap pop art."),
+list(name = "- Safety: Internals", desc = " A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic."),
+list(name = "- Safety: Eye Protection", desc = " A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights."),
+list(name = "- Safety: Report", desc = " A poster instructing the viewer to report suspicious activity to the security force."),
+list(name = "- Report Crimes", desc = " A poster encouraging the swift reporting of crime or seditious behavior to station security."),
+list(name = "- Ion Rifle", desc = " A poster displaying an Ion Rifle."),
+list(name = "- Foam Force Ad", desc = " Foam Force, it's Foam or be Foamed!"),
+list(name = "- Cohiba Robusto Ad", desc = " Cohiba Robusto, the classy cigar."),
+list(name = "- 50th Anniversary Vintage Reprint", desc = " A reprint of a poster from 2505, commemorating the 50th Aniversery of Nanoposters Manufacturing, a subsidary of Nanotrasen."),
+list(name = "- Fruit Bowl", desc = " Simple, yet awe-inspiring."),
+list(name = "- PDA Ad", desc = " A poster advertising the latest PDA from Nanotrasen suppliers."),
+list(name = "- Enlist", desc = " Enlist in the Nanotrasen Deathsquadron reserves today!"),
+list(name = "- Nanomichi Ad", desc = " A poster advertising Nanomichi brand audio cassettes."),
+list(name = "- 12 Gauge", desc = " A poster boasting about the superiority of 12 gauge shotgun shells."),
+list(name = "- High-Class Martini", desc = " I told you to shake it, no stirring."),
+list(name = "- The Owl", desc = " The Owl would do his best to protect the station. Will you?"),
+list(name = "- No ERP", desc = " This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations."),
+list(name = "- Carbon Dioxide", desc = " This informational poster teaches the viewer what carbon dioxide is.") )
 
 //########################## THE ACTUAL POSTER CODE ###########################
 
@@ -258,12 +190,12 @@ var/global/list/legitposterdescs = list(
 			serial_number = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
 	if(!official)
 		icon_state = "poster[serial_number]"
-		name += posternames[serial_number]
-		desc += posterdescs[serial_number]
+		name += contrabandposters[serial_number][POSTERNAME]
+		desc += contrabandposters[serial_number][POSTERDESC]
 	else if (official)
 		icon_state = "poster[serial_number]_legit"
-		name += legitposternames[serial_number]
-		desc += legitposterdescs[serial_number]
+		name += legitposters[serial_number][POSTERNAME]
+		desc += legitposters[serial_number][POSTERDESC]
 	..()
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
