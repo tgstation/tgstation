@@ -218,10 +218,9 @@
 		if(target_turf)
 			var/tdir=get_dir(src,target_turf) // This was called thrice.  Optimize.
 			var/turf/move_to=get_step(src, tdir) // Called twice.
-			if (!(DirBlocked(move_to,tdir))) // Check for windows and doors!
-				Move(move_to)
-				if (prob(0.1))
-					src.visible_message("<span class='notice'>The bees swarm after [target]!</span>")
+			walk_to(src,move_to)
+			if (prob(1))
+				src.visible_message("<span class='notice'>The bees swarm after [target]!</span>")
 			if(src.loc == target_turf)
 				target_turf = null
 				wander = 1
