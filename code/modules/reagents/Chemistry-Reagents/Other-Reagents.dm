@@ -116,12 +116,10 @@
 	if (!istype(T)) return
 	var/CT = cooling_temperature
 	if(reac_volume >= 10)
+		T.MakeSlippery()
 		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
-	if(reac_volume >= 10)
-		T.MakeSlippery()
-
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
 
