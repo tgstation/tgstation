@@ -42,9 +42,6 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"
 	player_mind.special_role = "Slaughter Demon"
-	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
-	bloodspell.phased = 1
-	player_mind.AddSpell(bloodspell)
 	ticker.mode.traitors |= player_mind
 	S << S.playstyle_string
 	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"

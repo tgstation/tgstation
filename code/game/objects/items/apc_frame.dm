@@ -66,6 +66,7 @@
 	icon = 'icons/obj/apc_repair.dmi'
 	icon_state = "apc_frame"
 	result_path = /obj/machinery/power/apc
+	inverse = 1
 
 
 /obj/item/wallframe/apc/try_build(turf/on_wall)

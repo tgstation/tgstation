@@ -67,7 +67,7 @@
 
 //Wrapper procs that handle sanity and user feedback
 /obj/proc/user_buckle_mob(mob/living/M, mob/user)
-	if(!user.Adjacent(M) || user.lying || user.incapacitated())
+	if(!in_range(user, src) || user.stat || user.restrained())
 		return
 
 	add_fingerprint(user)
@@ -76,28 +76,27 @@
 	if(buckle_mob(M))
 		if(M == user)
 			M.visible_message(\
-				"[M.name] buckles themselves to [src].",\
+				"[M] buckles themself to [src].",\
 				"<span class='notice'>You buckle yourself to [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		else
 			M.visible_message(\
-				"<span class='warning'>[M.name] is buckled to [src] by [user.name]!</span>",\
-				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
+				"<span class='warning'>[user] buckles [M] to [src]!</span>",\
+				"<span class='warning'>[user] buckles you to [src]!</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 
 /obj/proc/user_unbuckle_mob(mob/user)
 	var/mob/living/M = unbuckle_mob()
-
 	if(M)
 		if(M != user)
 			M.visible_message(\
-				"[M.name] was unbuckled by [user.name].",\
-				"<span class='notice'>You were unbuckled from [src] by [user.name].</span>",\
+				"<span class='notice'>[user] unbuckles you from [src].",\
+				"<span class='notice'>[user] unbuckles you from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		else
 			M.visible_message(\
-				"<span class='notice'>[M.name] unbuckled themselves!</span>",\
-				"<span class='notice'>You unbuckled yourself from [src].</span>",\
+				"<span class='notice'>[M] unbuckles themselves from [src].</span>",\
+				"<span class='notice'>You unbuckle yourself from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M

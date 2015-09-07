@@ -345,8 +345,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 				if(user.client)
 					if(user.client.holder)
-						dat += "<b>Adminhelp Sound:</b> "
-						dat += "<a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
+						dat += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
+						dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
 					if(unlock_content || check_rights_for(user.client, R_ADMIN))
 						dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
@@ -955,6 +955,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					if("hear_adminhelps")
 						toggles ^= SOUND_ADMINHELP
+					if("announce_login")
+						toggles ^= ANNOUNCE_LOGIN
 
 					if("ui")
 						switch(UI_style)

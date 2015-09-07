@@ -185,6 +185,7 @@ var/pipenetwarnings = 10
 			air.temperature += self_temperature_delta
 
 			modeled_location.air.temperature += sharer_temperature_delta
+			modeled_location.air_update_turf()
 
 
 	else

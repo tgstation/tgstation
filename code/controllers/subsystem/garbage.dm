@@ -25,6 +25,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
 
+	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
+
 /datum/subsystem/garbage_collector/New()
 	NEW_SS_GLOBAL(SSgarbage)
 
@@ -99,7 +101,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if (!A)
 		return
 	if (!istype(A))
-		//warning("qdel() passed object of type [A.type]. qdel() can only handle /datum types.")
 		del(A)
 	else if (isnull(A.gc_destroyed))
 		// Let our friend know they're about to get fucked up.
@@ -120,14 +121,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_PUTINPOOL)	//qdel will put this object in the pool.
 				PlaceInPool(A,0)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
-				#ifdef TESTING
-				A.to_be_queued = TRUE
-				A.find_references()
-				#else
 				SSgarbage.Queue(A)
+				#ifdef TESTING
+				A.find_references()
 				#endif
 			else
-				testing("WARNING: \ref[A] \[[A.type]] is not returning a qdel hint. It is being placed in the queue.")
+				if(!("[A.type]" in SSgarbage.noqdelhint))
+					SSgarbage.noqdelhint += "[A.type]"
+					testing("WARNING: [A.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 				SSgarbage.Queue(A)
 
 // Returns 1 if the object has been queued for deletion.
@@ -150,7 +151,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 #ifdef TESTING
 /client/var/running_find_references
 /datum/var/running_find_references
-/datum/var/to_be_queued = FALSE
 
 /datum/verb/find_references()
 	set category = "Debug"
@@ -164,14 +164,18 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			testing("CANCELLED search for references to a [usr.client.running_find_references].")
 			usr.client.running_find_references = null
 			running_find_references = null
+			//restart the garbage collector
+			SSgarbage.can_fire = 1
+			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
 		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
 			running_find_references = null
 			return
-	// Remove this object from the list of things to be auto-deleted.
-	if(SSgarbage && ("\ref[src]" in SSgarbage.queue))
-		SSgarbage.queue -= "\ref[src]"
+
+	//this keeps the garbage collector from failing to collect objects being searched for in here
+	SSgarbage.can_fire = 0
+
 	if(usr && usr.client)
 		usr.client.running_find_references = type
 
@@ -196,9 +200,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = null
 	running_find_references = null
 
-	if(to_be_queued == TRUE)
-		to_be_queued = FALSE
-		SSgarbage.Queue(src)
+	//restart the garbage collector
+	SSgarbage.can_fire = 1
+	SSgarbage.next_fire = world.time + world.tick_lag
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
@@ -218,6 +222,5 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	qdel(src)
 	if(!running_find_references)
-		to_be_queued = TRUE		//find_references removes the object from the queue;
-		find_references()		//this ensures the object will be queued again once find_references has completed
+		find_references()
 #endif

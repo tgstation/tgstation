@@ -184,6 +184,7 @@ var/next_external_rsc = 0
 	//////////////
 /client/Del()
 	if(holder)
+		adminGreet(1)
 		holder.owner = null
 		admins -= src
 	directory -= ckey

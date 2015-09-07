@@ -126,7 +126,7 @@
 			mob.dna.remove_mutation(CLOWNMUT)
 
 
-	var/obj/item/device/flash/T = new(mob)
+	var/obj/item/device/assembly/flash/T = new(mob)
 	var/obj/item/toy/crayon/spraycan/R = new(mob)
 	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob)
 
