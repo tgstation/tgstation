@@ -115,7 +115,7 @@
 /datum/reagent/water/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
-	if(reac_volume >= 10)
+	if(reac_volume >= 1)
 		T.MakeSlippery()
 		T.clean_blood()
 		for(var/obj/effect/decal/cleanable/C in T)
