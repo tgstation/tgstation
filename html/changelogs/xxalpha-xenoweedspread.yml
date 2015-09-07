@@ -1,7 +1,0 @@
-author: xxalpha
-
-delete-after: True
-
-changes:
-  - tweak: "Changed xeno weed spread to be like gas spread."
-
