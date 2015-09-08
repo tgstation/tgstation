@@ -7,10 +7,10 @@
  *		effect/acid
  */
 
-#define WEED_NORTH_EDGING "north"
-#define WEED_SOUTH_EDGING "south"
-#define WEED_EAST_EDGING "east"
-#define WEED_WEST_EDGING "west"
+#define WEED_NORTH_EDGING "[NORTH]"
+#define WEED_SOUTH_EDGING "[SOUTH]"
+#define WEED_EAST_EDGING "[EAST]"
+#define WEED_WEST_EDGING "[WEST]"
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
@@ -163,9 +163,15 @@
 	density = 0
 	layer = 2
 	var/health = 15
-	var/obj/structure/alien/weeds/node/linked_node = null
-	var/static/list/weedImageCache
+	var/node_range = 0
+	var/obj/structure/alien/weeds/linked_node = null
 
+	var/type_of_weed = /obj/structure/alien/weeds
+
+	var/max_temp_sustainable = 300
+	var/temp_damage = 5
+
+	var/static/list/weedImageCache
 
 /obj/structure/alien/weeds/New(pos, node)
 	..()
@@ -173,8 +179,7 @@
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
-	if(icon_state == "weeds")
-		icon_state = pick("weeds", "weeds1", "weeds2")
+	randomizeIconState()
 	fullUpdateWeedOverlays()
 	spawn(rand(150, 200))
 		if(src)
@@ -183,8 +188,9 @@
 /obj/structure/alien/weeds/Destroy()
 	var/turf/T = loc
 	loc = null
-	for (var/obj/structure/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
+	for(var/obj/sctructure/alien/weeds/W in range(1,T))
+		if(istype(W, type_of_weed)) //so that you don't get weeds connecting to frost
+			W.updateWeedOverlays()
 	linked_node = null
 	return ..()
 
@@ -201,15 +207,17 @@
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+		if (locate(type_of_weed) in T || istype(T, /turf/space))
 			continue
 
-		new /obj/structure/alien/weeds(T, linked_node)
+		new type_of_weed(T, linked_node)
 
+/obj/structure/alien/weeds/proc/randomizeIconState()
+	if(icon_state == "weeds")
+		icon_state = pick("weeds", "weeds1", "weeds2")
 
 /obj/structure/alien/weeds/ex_act(severity, target)
 	qdel(src)
-
 
 /obj/structure/alien/weeds/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -235,15 +243,11 @@
 
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		health -= 5
+	if(exposed_temperature > max_temp_sustainable)
+		health -= temp_damage
 		healthcheck()
 
-
-/obj/structure/alien/weeds/proc/updateWeedOverlays()
-
-	overlays.Cut()
-
+/obj/structure/alien/weeds/proc/setImageCache()
 	if(!weedImageCache || !weedImageCache.len)
 		weedImageCache = list()
 		weedImageCache.len = 4
@@ -252,27 +256,25 @@
 		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
 		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
 
-	var/turf/N = get_step(src, NORTH)
-	var/turf/S = get_step(src, SOUTH)
-	var/turf/E = get_step(src, EAST)
-	var/turf/W = get_step(src, WEST)
-	if(!locate(/obj/structure/alien) in N.contents)
-		if(istype(N, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_SOUTH_EDGING]
-	if(!locate(/obj/structure/alien) in S.contents)
-		if(istype(S, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_NORTH_EDGING]
-	if(!locate(/obj/structure/alien) in E.contents)
-		if(istype(E, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_WEST_EDGING]
-	if(!locate(/obj/structure/alien) in W.contents)
-		if(istype(W, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_EAST_EDGING]
+/obj/structure/alien/weeds/proc/getWeedOverlay(C = 0)
+	return weedImageCache["[C]"]
 
+/obj/structure/alien/weeds/proc/updateWeedOverlays()
+
+	overlays.Cut()
+
+	setImageCache()
+
+	for(var/C in cardinals)
+		var/turf/T = get_step(src, C)
+		if(!locate(/obj/structure/alien) in C.contents)
+			if(istype(C, /turf/simulated/floor))
+				overlays += getWeedOverlay(C)
 
 /obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
 	for (var/obj/structure/alien/weeds/W in range(1,src))
-		W.updateWeedOverlays()
+		if(istype(W, weed_type))
+			W.updateWeedOverlays()
 
 //Weed nodes
 /obj/structure/alien/weeds/node
@@ -280,14 +282,11 @@
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
 	luminosity = 1
-	var/node_range = NODERANGE
+	node_range = NODERANGE
 
 
 /obj/structure/alien/weeds/node/New()
 	..(loc, src)
-
-#undef NODERANGE
-
 
 /*
  * Egg
@@ -499,8 +498,3 @@
 	spawn(1)
 		if(src)
 			tick()
-
-#undef WEED_NORTH_EDGING
-#undef WEED_SOUTH_EDGING
-#undef WEED_EAST_EDGING
-#undef WEED_WEST_EDGING

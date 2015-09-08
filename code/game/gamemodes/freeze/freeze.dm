@@ -7,7 +7,7 @@
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.frost_scions)
 /proc/is_pawn(datum/mind/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.frost_pawns)
-/proc/is_frost_legion(datum/mind/M)
+/proc/is_frosty(datum/mind/M)
 	return is_scion(M) || is_pawn(M)
 
 /datum/game_mode/freeze
@@ -48,8 +48,6 @@
 	for(var/datum/mind/scion in frost_scions)
 		log_game("[scion.key] (ckey) has been selected as a Scion of the Kingdom.")
 		sleep(10)
-		scion.current << "<br>"
-		scion.current << "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>"
 		greet_scion(scion)
 		finalize_scion(scion)
 		memorize_frost_objectives(scion)
@@ -58,6 +56,10 @@
 
 /datum/game_mode/freeze/proc/pick_objectives()
 	frost_objectives += "freeze" //maybe more later? who knows
+
+/datum/game_mode/freeze/proc/greet_scion(datum/mind/scion)
+	scion.current << "<br>"
+	scion.current << "<span class='shadowling'><b><font size=3>You are a Scion of the Frost Kingdom!</font></b></span>"
 
 /datum/game_mode/freeze/proc/memorize_frost_objectives(datum/mind/frost_mind)
 	for(var/i in 1 to frost_objectives.len)
@@ -68,7 +70,7 @@
 		frost_mind.current << "<B>Objective #[i]</B>: [explanation]<BR>"
 		frost_mind.memory += "<B>Objective #[i]</B>: [explanation]<BR>"
 
-/datum/game_mode/freeze/proc/finalize_scion(datum/mind/scion)
+/datum/game_mode/proc/finalize_scion(datum/mind/scion)
 	scion.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/spread_frost(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/chilling_grasp(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/scion_transform(null))
@@ -77,3 +79,11 @@
 			var/mob/living/carbon/human/S = scion.current
 			S << "<span class='notice'>Your REALLY COLD, LIKE, YOU'RE LITERALLY ICE nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
+
+/datum/game_mode/proc/make_pawn(datum/mind/pawn_mind)
+	if(!istype(pawn_mind))
+		return 0
+	if(!(pawn_mind in frost_pawns))
+		//add stuff blah balh
+		pawn_mind.special_role = "FrostPawn"
+		return 1
