@@ -21,6 +21,7 @@ public class MapPatcher
     String str6 = "usage: [me] -merge [original] [local] [remote] [output]";
 
     for (int i = 0; i < paramArrayOfString.length; i++)
+        //Check silent mode on/off
       if (paramArrayOfString[i].equalsIgnoreCase("-silent"))
       {
         silent = true;
@@ -33,6 +34,7 @@ public class MapPatcher
     int i2;
     int i3;
     int i5;
+    //Want to merge maps
     if ((paramArrayOfString.length > 0) && (paramArrayOfString[0].equalsIgnoreCase("-merge")))
     {
       if (paramArrayOfString.length < 5)
@@ -41,44 +43,60 @@ public class MapPatcher
         try { System.in.read(); } catch (Exception localException1) {
         }return;
       }
-
+     //original map
       Map localMap1 = new Map(new File(paramArrayOfString[1]));
+      //Local map
       localObject = new Map(new File(paramArrayOfString[2]));
+      //remote map
       Map localMap8 = new Map(new File(paramArrayOfString[3]));
+      //Output
       Map localMap9 = new Map();
 
       if ((localMap1.minx != ((Map)localObject).minx) || (localMap1.minx != localMap8.minx) || (localMap1.maxx != ((Map)localObject).maxx) || (localMap1.maxx != localMap8.maxx) || (localMap1.miny != ((Map)localObject).miny) || (localMap1.miny != localMap8.miny) || (localMap1.maxy != ((Map)localObject).maxy) || (localMap1.maxy != localMap8.maxy) || (localMap1.minz != ((Map)localObject).minz) || (localMap1.minz != localMap8.minz) || (localMap1.maxz != ((Map)localObject).maxz) || (localMap1.maxz != localMap8.maxz))
-      {
+      {//make sure maps are all the same size
         Systemoutprintln("Map sizes differ");
         System.exit(1);
       }
       try
       {
+          //for each z level
         for (int n = localMap1.minz; n <= localMap1.maxz; n++)
+            //Go through x and y coords
           for (i2 = localMap1.miny; i2 <= localMap1.maxy; i2++)
             for (i3 = localMap1.minx; i3 <= localMap1.maxx; i3++)
             {
+                //do original mapitems == local map items??
               boolean bool1 = localMap1.contentAt(i3, i2, n).equals(((Map)localObject).contentAt(i3, i2, n));
+              //do original map items == remote map items??
               boolean bool2 = localMap1.contentAt(i3, i2, n).equals(localMap8.contentAt(i3, i2, n));
-              i5 = ((Map)localObject).contentAt(i3, i2, n).equals(localMap8.contentAt(i3, i2, n));
+              i5 = ((Map)localObject).contentAt(i3, i2, n).equals(localMap8.contentAt(i3, i2, n));// Do local items == remote map items
               if ((!bool1) && (!bool2))
+               //If original and local differ, and remote and original differ
               {
+                  //If item on local and remote is the same?? 
+                  //Unsure if this will be true if they're the same or different
                 if (i5 == 0)
                 {
+                    //Unresolvable diff, die
                   Systemoutprintln(i3 + "," + i2 + "," + n + " local and remote don't match original and differ");
                   System.exit(1);
                 }
+                //Output value is the local change
                 else {
                   localMap9.setAt(i3, i2, n, ((Map)localObject).contentAt(i3, i2, n));
                 }
-              } else if (!bool1)
+              } else if (!bool1)//Original not match local
+                  //Output value is local
                 localMap9.setAt(i3, i2, n, ((Map)localObject).contentAt(i3, i2, n));
-              else if (!bool2)
+              else if (!bool2) //orignial not match remote (upstream change)
+                //output value is remote
                 localMap9.setAt(i3, i2, n, localMap8.contentAt(i3, i2, n));
               else
+                  //No change, outputvalue is original
                 localMap9.setAt(i3, i2, n, localMap1.contentAt(i3, i2, n));
             }
         Systemoutprintln("Saving");
+        //Save out new output
         localMap9.saveReferencing(new File(paramArrayOfString[4]), localMap1);
         Systemoutprintln("Done");
       }
@@ -91,6 +109,7 @@ public class MapPatcher
     {
       int m;
       int i1;
+      //Diff mode
       if ((paramArrayOfString.length > 0) && (paramArrayOfString[0].equalsIgnoreCase("-diff")))
       {
         if (paramArrayOfString.length < 4)
@@ -99,7 +118,8 @@ public class MapPatcher
           try { System.in.read(); } catch (Exception localException2) {
           }return;
         }
-
+//old map
+//new map
         Map localMap2 = new Map(new File(paramArrayOfString[1]));
         localObject = new Map(new File(paramArrayOfString[2]));
 
@@ -109,6 +129,7 @@ public class MapPatcher
         i2 = Math.min(localMap2.maxy, ((Map)localObject).maxy);
         i3 = Math.max(localMap2.minz, ((Map)localObject).minz);
         int i4 = Math.min(localMap2.maxz, ((Map)localObject).maxz);
+        //Calculate min/max points
         Systemoutprintln("Comparing: x(" + j + "-" + m + ") y(" + i1 + "-" + i2 + ") z(" + i3 + "-" + i4 + ")");
         try
         {
@@ -119,8 +140,9 @@ public class MapPatcher
             Systemoutprintln("Z-level " + i6);
             for (int i7 = i1; i7 <= i2; i7++)
               for (int i8 = j; i8 <= m; i8++)
-                if (!localMap2.contentAt(i8, i7, i6).equals(((Map)localObject).contentAt(i8, i7, i6)))
+                if (!localMap2.contentAt(i8, i7, i6).equals(((Map)localObject).contentAt(i8, i7, i6)))//If items differ
                 {
+                    //Write out diff 
                   localFileWriter2.write("(" + i8 + "," + (1 + ((Map)localObject).maxy - i7) + "," + i6 + ")=" + ((Map)localObject).contentAt(i8, i7, i6) + "\n");
                   i5++;
                 }
@@ -128,6 +150,7 @@ public class MapPatcher
           localFileWriter2.flush();
           localFileWriter2.close();
           if (i5 == 0)
+              //No changes
             Systemoutprintln("Files do match");
           else
             Systemoutprintln("Writed out " + i5 + " differences");
@@ -143,6 +166,7 @@ public class MapPatcher
       {
         String str7;
         String str8;
+        //Patch map from diff file
         if ((paramArrayOfString.length > 0) && (paramArrayOfString[0].equalsIgnoreCase("-patch")))
         {
           if (paramArrayOfString.length < 4)
@@ -171,9 +195,11 @@ public class MapPatcher
                 m = str7.indexOf(")", 1);
                 i3 = Integer.parseInt(str7.substring(1, m));
                 str8 = str7.substring(str7.indexOf("=") + 1);
+                //Foreach item in diff, calculate code, and location adn patch into given map
                 localMap3.setAt(i1, 1 + localMap3.maxy - i2, i3, str8);
               }
             }
+            //WRite out map
             localMap3.save(new File(paramArrayOfString[3]));
           }
           catch (Exception localException8)
@@ -184,6 +210,7 @@ public class MapPatcher
           Systemoutprintln("Done");
         }
         else if ((paramArrayOfString.length > 0) && (paramArrayOfString[0].equalsIgnoreCase("-pack")))
+            //pack mode
         {
           if (paramArrayOfString.length < 3)
           {
@@ -195,6 +222,7 @@ public class MapPatcher
           Map localMap4 = new Map();
           try {
             BufferedReader localBufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(paramArrayOfString[1])));
+            //Load in a bunch of files paths?
             Systemoutprintln("Loading");
 
             while ((str7 = localBufferedReader.readLine()) != null)
@@ -265,11 +293,13 @@ public class MapPatcher
             try { System.in.read(); } catch (Exception localException6) {
             }return;
           }
-
+          //old map
           Map localMap6 = new Map(new File(paramArrayOfString[1]), true);
+          //new map
           Map localMap7 = new Map(new File(paramArrayOfString[2]));
           try
           {
+            //save new map, trying to closely match the old map
             localMap7.saveReferencing(new File(paramArrayOfString[3]), localMap6);
             Systemoutprintln("Done");
           }
