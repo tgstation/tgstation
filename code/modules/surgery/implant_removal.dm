@@ -15,8 +15,8 @@
 	var/obj/item/weapon/implant/I = null
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	I = locate(/obj/item/weapon/implant) in target.internal_organs
-	if(I)
+	I = locate(/obj/item/weapon/implant) in target
+	if(I && I.imp_in == target)
 		user.visible_message("[user] begins to extract [I] from [target]'s [target_zone].", "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>")
 	else
 		user.visible_message("[user] looks for an implant in [target]'s [target_zone].", "<span class='notice'>You look for an implant in [target]'s [target_zone]...</span>")
