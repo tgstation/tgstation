@@ -225,7 +225,7 @@
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
 				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
+					if(/mob/living/silicon) //Borgs are technically dead anyways
 						continue
 				if(get_area(player) == A)
 					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
