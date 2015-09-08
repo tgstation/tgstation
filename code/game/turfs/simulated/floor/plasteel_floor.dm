@@ -345,6 +345,7 @@
 
 /turf/simulated/floor/plasteel/solarpanel
 	icon_state = "solarpanel"
+	desc = "Solar panels with none of that fancy turning"
 
 /turf/simulated/floor/plasteel/cmo
 	icon_state = "cmo"
