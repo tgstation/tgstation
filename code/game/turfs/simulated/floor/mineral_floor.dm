@@ -64,7 +64,7 @@
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
 	icons = list("gold","gold_dam")
-	desc = "A floor made of gold. Shiny"
+	desc = "A floor made of gold. Shiny."
 
 //SILVER
 
@@ -73,7 +73,7 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
-	desc = "A floor made of silver. Shiny"
+	desc = "A floor made of silver. Shiny."
 
 //BANANIUM
 
@@ -132,7 +132,7 @@
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
 	icons = list("diamond","diamond_dam")
-	desc = "A floor made from diamonds, guaranteed unscrachable."
+	desc = "A floor made from diamonds, guaranteed unscratchable."
 
 //URANIUM
 
@@ -143,7 +143,7 @@
 	icons = list("uranium","uranium_dam")
 	var/last_event = 0
 	var/active = null
-	desc = "a floor made of uranium. I wonder where that lead lined suit went."
+	desc = "A floor made of uranium. I wonder where that lead lined suit went."
 
 /turf/simulated/floor/mineral/uranium/Entered(var/mob/AM)
 	.=..()
