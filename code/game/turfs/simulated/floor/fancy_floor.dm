@@ -80,6 +80,7 @@
 
 
 /turf/simulated/floor/fakespace
+	name = "space"
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
