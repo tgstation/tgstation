@@ -85,7 +85,7 @@
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
-	desc = "carpet with a starscape pattern"
+	desc = "The stars never looked so close."
 
 /turf/simulated/floor/fakespace/New()
 	..()
