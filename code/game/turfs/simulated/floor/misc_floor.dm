@@ -28,7 +28,7 @@
 /turf/simulated/floor/plating/beach/sand
 	name = "Sand"
 	icon_state = "sand"
-	desc = "A sandy beach"
+	desc = "A sandy beach."
 
 /turf/simulated/floor/plating/beach/coastline
 	name = "Coastline"
@@ -38,7 +38,7 @@
 /turf/simulated/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
-	desc = "A warm ocean"
+	desc = "A warm ocean."
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
@@ -49,13 +49,13 @@
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	desc = "Snow, must be cold."
 
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
 
 /turf/simulated/floor/plating/snow/gravsnow
 	icon_state = "gravsnow"
-	desc = "Snow, must be cold"
 
 /turf/simulated/floor/plating/snow/gravsnow/corner
 	icon_state = "gravsnow_corner"
