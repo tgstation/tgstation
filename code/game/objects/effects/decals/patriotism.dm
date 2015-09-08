@@ -106,7 +106,7 @@ obj/structure/sign/flag/New(serial,subtype)
 				desc += " Bietan jarrai!"
 			if(5)
 				name += " - Flag of The Puerto Rican Nationalist Party"
-				desc += " ¡Despierta, borinqueño, que han dado la señal!
+				desc += " ¡Despierta, borinqueño, que han dado la señal!"
 			if(6)
 				name += " - Flag of The Democratic People's Republic of Korea"
 				desc += " Kangsong Daeguk!"
