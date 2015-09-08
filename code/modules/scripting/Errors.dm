@@ -81,7 +81,7 @@
 	A basic description as to what went wrong.
 */
 		message
-		stack/stack
+		datum/stack/stack
 
 	proc
 /*

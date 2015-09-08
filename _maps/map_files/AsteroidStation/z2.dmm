@@ -196,7 +196,7 @@
 "dN" = (/obj/structure/stool/bed/chair{dir = 1},/turf/simulated/floor/plasteel/shuttle,/area/centcom/evac)
 "dO" = (/obj/machinery/computer/secure_data,/turf/simulated/floor/plasteel/shuttle,/area/centcom/evac)
 "dP" = (/obj/structure/table/reinforced,/obj/item/weapon/clipboard,/obj/item/weapon/stamp,/turf/simulated/floor/plasteel/shuttle,/area/centcom/evac)
-"dQ" = (/obj/structure/table,/obj/item/device/flash/handheld,/turf/simulated/floor/plasteel/shuttle,/area/centcom/evac)
+"dQ" = (/obj/structure/table,/obj/item/device/assembly/flash/handheld,/turf/simulated/floor/plasteel/shuttle,/area/centcom/evac)
 "dR" = (/turf/indestructible/fakedoor{name = "Thunderdome Admin"},/area/tdome/tdomeadmin)
 "dS" = (/obj/structure/table,/obj/machinery/button/door{id = "thunderdomehea"; name = "Heavy Supply Control"; pixel_y = 0; req_access_txt = "102"},/turf/simulated/floor/plasteel,/area/tdome/tdomeadmin)
 "dT" = (/obj/structure/table,/obj/machinery/button/door{id = "thunderdome"; name = "Main Blast Doors Control"; pixel_y = 0; req_access_txt = "102"},/turf/simulated/floor/plasteel,/area/tdome/tdomeadmin)

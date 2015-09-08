@@ -26,7 +26,6 @@ var/global/mulebot_count = 0
 	var/atom/movable/load = null
 	bot_type = MULE_BOT
 	model = "MULE"
-	blood_DNA = list()
 	can_buckle = 1
 	buckle_lying = 0
 
@@ -426,13 +425,13 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 /obj/machinery/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
-			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			audible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		if(ANNOYED)
-			visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			audible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		if(DELIGHT)
-			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
+			audible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 
@@ -725,7 +724,7 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_frequency = SUPP_FREQ //Supply channel
-		visible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
+		audible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
 
@@ -801,8 +800,8 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(loc)
-	B.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
-	blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
+	B.add_blood_list(H)
+	add_blood_list(H)
 	bloodiness += 4
 
 // player on mulebot attempted to move

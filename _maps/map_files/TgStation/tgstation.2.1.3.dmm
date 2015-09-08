@@ -1452,7 +1452,7 @@
 	pixel_x = -3;
 	 pixel_y = 0
 	},
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/item/weapon/reagent_containers/spray/pepper,
 /turf/simulated/floor/plasteel{
 	icon_state = "dark"
@@ -3167,7 +3167,7 @@
 /area/security/main)
 "agi" = (
 /obj/structure/table,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/simulated/floor/plasteel,
 /area/security/main)
@@ -15136,7 +15136,7 @@
 "aEt" = (
 /obj/item/device/radio/off,
 /obj/item/weapon/crowbar,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/structure/table,
 /turf/simulated/floor/plasteel{
 	icon_state = "red";
@@ -20724,8 +20724,8 @@
 /area/storage/tools)
 "aQS" = (
 /obj/structure/table/reinforced,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel,
 /area/bridge)
 "aQT" = (
@@ -29762,11 +29762,11 @@
 	 pixel_y = 0
 	},
 /obj/structure/table,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel{
 	icon_state = "white"
 	},
@@ -30526,8 +30526,8 @@
 	amount = 10
 	},
 /obj/item/stack/cable_coil,
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel,
 /area/assembly/robotics)
 "blV" = (
@@ -39257,8 +39257,8 @@
 	pixel_x = 1;
 	 pixel_y = 5
 	},
-/obj/item/device/flash/handheld,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/ai_status_display{
 	pixel_x = -32;
 	 pixel_y = 0

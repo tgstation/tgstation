@@ -89,7 +89,7 @@
 		else
 			attack_hand(user)
 			return
-	if(istype(I, /obj/item/device/multitool))
+	if(wires.IsInteractionTool(I))
 		attack_hand(user)
 		return
 

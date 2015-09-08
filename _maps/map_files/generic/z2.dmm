@@ -1060,7 +1060,7 @@
 /area/centcom/evac)
 "df" = (
 /obj/structure/table,
-/obj/item/device/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /turf/simulated/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},

@@ -11,6 +11,7 @@
 	..()
 	icon_state += "-old"
 	blood_DNA["Non-human DNA"] = "A+"
+	bloodiness = rand(10,50)
 
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
@@ -21,6 +22,7 @@
 	icon_state += "-old"
 	dir = pick(1,2,4,8)
 	blood_DNA["Non-human DNA"] = "A+"
+	bloodiness = rand(10,50)
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"

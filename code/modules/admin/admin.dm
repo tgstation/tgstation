@@ -810,19 +810,14 @@ var/global/floorIsLava = 0
 
 	return 1
 
-/client/proc/adminGreet()
+/client/proc/adminGreet(logout)
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
-		var/string = pick(
-			"I welcome you to the server [key]!",
-			"Happy to see you [key]!",
-			"Ah, [key] logged, say hello!",
-			"The server welcomes you [key]!",
-			"Exceptional! [key] joined us, what an honour!",
-			"Another amazing day, because [key] logged, say hi!",
-			"Did anyone see? [key] logged, welcome!",
-			"Monday to sunday, the server warmly welcomes you [key]!",
-			"It's a pleasure to see you [key], greetings!",
-			"Not a bad day if [key] joins, welcome, welcome!",
-			"Surely it's nice to see you [key], have a heartly welcome!")
-			//I really do
-		message_admins("[string]")
+		var/string
+		if(logout && config && config.announce_admin_logout)
+			string = pick(
+				"Admin logout: [key_name(src)]")
+		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
+			string = pick(
+				"Admin login: [key_name(src)]")
+		if(string)
+			message_admins("[string]")

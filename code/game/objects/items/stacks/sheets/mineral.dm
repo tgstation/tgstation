@@ -159,7 +159,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=4"
 	sheettype = "gold"
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
