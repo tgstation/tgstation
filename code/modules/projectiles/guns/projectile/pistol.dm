@@ -49,6 +49,7 @@
 	name = "security pistol"
 	desc = "Standard issue sidearm used by Nanotrasen security forces. Chambers modified .45 lethal and non-lethal ammo. Designated the Mark 58 Pistol."
 	icon_state = "secgundark"
+	w_class = 3
 	mag_type = /obj/item/ammo_box/magazine/stun45
 
 

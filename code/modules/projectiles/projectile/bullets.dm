@@ -31,9 +31,7 @@
 	damage = 15
 
 /obj/item/projectile/bullet/riflebullet
-	damage = 80
-	stamina = 55
-	stutter = 5
+	damage = 50
 
 /obj/item/projectile/bullet/pellet/weak
 	damage = 3
