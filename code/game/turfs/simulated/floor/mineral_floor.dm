@@ -12,6 +12,7 @@
 	name = "mineral floor"
 	icon_state = ""
 	var/list/icons = list()
+	desc = "A floor made of nothing. Contact your local coding and mapping hotline."
 
 
 
