@@ -44,7 +44,8 @@
 		action_button_name = "Activate [src.name]"
 	src.loc = source
 	imp_in = source
-	source.internal_organs += src
+	// This needs to be fixed.
+	// source.internal_organs += src
 	implanted = 1
 	if(istype(source, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = source
