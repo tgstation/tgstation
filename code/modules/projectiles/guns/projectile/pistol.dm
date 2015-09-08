@@ -44,3 +44,19 @@
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
 	item_state = "deagleg"
+
+/obj/item/weapon/gun/projectile/automatic/pistol/mark58
+	name = "security pistol"
+	desc = "Standard issue sidearm used by Nanotrasen security forces. Chambers modified .45 lethal and non-lethal ammo. Designated the Mark 58 Pistol."
+	icon_state = "secgundark"
+	mag_type = /obj/item/ammo_box/magazine/stun45
+
+
+/obj/item/weapon/gun/projectile/automatic/pistol/mark58/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+
+/obj/item/weapon/gun/projectile/automatic/pistol/mark58/officer
+	name = "officers security pistol"
+	desc = "Standard issue sidearm issued to high ranking security officers. Has a custom wooden grip. Chambers .45 ammo and is designated the Mark 58 Pistol."
+	icon_state = "secgun"

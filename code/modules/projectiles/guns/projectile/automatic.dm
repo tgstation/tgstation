@@ -109,6 +109,36 @@
 	icon_state = "c20r[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	return
 
+/obj/item/weapon/gun/projectile/automatic/wt550
+	name = "security auto rifle"
+	desc = "A outdated personal defence weapon. Uses 9mm rounds and is designated the WT-550 Automatic Rifle."
+	icon_state = "wt550"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/wt550m9
+	fire_delay = 2
+	can_suppress = 0
+	burst_size = 2
+
+/obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
+	..()
+	icon_state = "wt550[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/z8rifle
+	name = "security marksman rifle"
+	desc = "Powerful semi-automatic high calibre rifle. Designated the Z8 Marksman Rifle."
+	icon_state = "carbine"
+	item_state = "z8carbine"
+	mag_type = /obj/item/ammo_box/magazine/z8m
+	fire_delay = 10
+	can_suppress = 0
+	burst_size = 0
+
+
+/obj/item/weapon/gun/projectile/automatic/z8rifle/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
