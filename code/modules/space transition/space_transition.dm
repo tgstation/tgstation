@@ -1,5 +1,11 @@
 //This is realisation of the working torus-looping randomized-per-round space map, this kills the cube
 
+#define Z_LEVEL_NORTH 		"1"
+#define Z_LEVEL_SOUTH 		"2"
+#define Z_LEVEL_EAST 		"4"
+#define Z_LEVEL_WEST 		"8"
+
+
 var/list/z_levels_list = list()
 
 /datum/space_level
@@ -12,7 +18,7 @@ var/list/z_levels_list = list()
 
 /datum/space_level/New()
 	neigbours = list()
-	var/list/L = list("1","2","4","8")
+	var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
 	for(var/A in L)
 		neigbours[A] = src
 
@@ -20,18 +26,18 @@ var/list/z_levels_list = list()
 	for(var/datum/point/P in L)
 		if(P.x == xi)
 			if(P.y == yi+1)
-				neigbours["1"] = P.spl
-				P.spl.neigbours["2"] = src
+				neigbours[Z_LEVEL_NORTH] = P.spl
+				P.spl.neigbours[Z_LEVEL_SOUTH] = src
 			else if(P.y == yi-1)
-				neigbours["2"] = P.spl
-				P.spl.neigbours["1"] = src
+				neigbours[Z_LEVEL_SOUTH] = P.spl
+				P.spl.neigbours[Z_LEVEL_NORTH] = src
 		else if(P.y == yi)
 			if(P.x == xi+1)
-				neigbours["4"] = P.spl
-				P.spl.neigbours["8"] = src
+				neigbours[Z_LEVEL_EAST] = P.spl
+				P.spl.neigbours[Z_LEVEL_WEST] = src
 			else if(P.x == xi-1)
-				neigbours["8"] = P.spl
-				P.spl.neigbours["4"] = src
+				neigbours[Z_LEVEL_WEST] = P.spl
+				P.spl.neigbours[Z_LEVEL_EAST] = src
 
 /datum/point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
 	var/list/neigbours = list()
@@ -126,51 +132,56 @@ var/list/z_levels_list = list()
 	for(var/turf/space/S in world) //Define the transistions of the z levels
 		if(S.x <= TRANSITIONEDGE)
 			D = grid["[S.z]"]
-			if(D.neigbours["8"] != D)
-				D = D.neigbours["8"]
+			if(D.neigbours[Z_LEVEL_WEST] != D)
+				D = D.neigbours[Z_LEVEL_WEST]
 				S.destination_z = D.z_value
 			else
-				while(D.neigbours["4"] != D)
-					D = D.neigbours["4"]
+				while(D.neigbours[Z_LEVEL_EAST] != D)
+					D = D.neigbours[Z_LEVEL_EAST]
 				S.destination_z = D.z_value
 			S.destination_x = world.maxx - TRANSITIONEDGE - 2
 			S.destination_y = S.y
 
 		if(S.x >= (world.maxx - TRANSITIONEDGE - 1))
 			D = grid["[S.z]"]
-			if(D.neigbours["4"] != D)
-				D = D.neigbours["4"]
+			if(D.neigbours[Z_LEVEL_EAST] != D)
+				D = D.neigbours[Z_LEVEL_EAST]
 				S.destination_z = D.z_value
 			else
-				while(D.neigbours["8"] != D)
-					D = D.neigbours["8"]
+				while(D.neigbours[Z_LEVEL_WEST] != D)
+					D = D.neigbours[Z_LEVEL_WEST]
 				S.destination_z = D.z_value
 			S.destination_x = TRANSITIONEDGE + 2
 			S.destination_y = S.y
 
 		if(S.y <= TRANSITIONEDGE)
 			D = grid["[S.z]"]
-			if(D.neigbours["2"] != D)
-				D = D.neigbours["2"]
+			if(D.neigbours[Z_LEVEL_SOUTH] != D)
+				D = D.neigbours[Z_LEVEL_SOUTH]
 				S.destination_z = D.z_value
 			else
-				while(D.neigbours["1"] != D)
-					D = D.neigbours["1"]
+				while(D.neigbours[Z_LEVEL_NORTH] != D)
+					D = D.neigbours[Z_LEVEL_NORTH]
 				S.destination_z = D.z_value
 			S.destination_x = S.x
 			S.destination_y = world.maxy - TRANSITIONEDGE - 2
 
 		if(S.y >= (world.maxy - TRANSITIONEDGE - 1))
 			D = grid["[S.z]"]
-			if(D.neigbours["1"] != D)
-				D = D.neigbours["1"]
+			if(D.neigbours[Z_LEVEL_NORTH] != D)
+				D = D.neigbours[Z_LEVEL_NORTH]
 				S.destination_z = D.z_value
 			else
-				while(D.neigbours["2"] != D)
-					D = D.neigbours["2"]
+				while(D.neigbours[Z_LEVEL_SOUTH] != D)
+					D = D.neigbours[Z_LEVEL_SOUTH]
 				S.destination_z = D.z_value
 			S.destination_x = S.x
 			S.destination_y = TRANSITIONEDGE + 2
 
 	for(var/A in grid)
 		z_levels_list[A] = grid[A]
+
+#undef Z_LEVEL_NORTH
+#undef Z_LEVEL_SOUTH
+#undef Z_LEVEL_EAST
+#undef Z_LEVEL_WEST
