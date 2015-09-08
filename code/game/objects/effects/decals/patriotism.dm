@@ -134,7 +134,7 @@ obj/structure/sign/flag/New(serial,subtype)
 				desc += " Sweden Yes!"
 			if(6)
 				name += " - Flag of The United Kingdom"
-				desc +- " God Save The Queen!"
+				desc += " God Save The Queen!"
 			if(7)
 				name += " - Flag of Finland"
 				desc += " :DDDDDD"
