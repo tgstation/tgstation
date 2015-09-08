@@ -189,6 +189,9 @@
 	else if(istype(W,/obj/item/weapon/contraband/poster))
 		place_poster(W,user)
 		return 1
+	else if(istype(W,/obj/item/weapon/patriotic/flag))
+		place_flag(W,user)
+		return 1
 
 	return 0
 

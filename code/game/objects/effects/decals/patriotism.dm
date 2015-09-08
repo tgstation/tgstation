@@ -13,7 +13,7 @@
 
 
 /obj/item/weapon/patriotism/flag
-	name = "rolled-up flag"
+	name = "folded flag"
 	desc = "The flag comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its controversal nature has made it contraband aboard Nanotrasen space facilities."
 	icon_state = "folded_flag"
 	var/serial_number = 0
