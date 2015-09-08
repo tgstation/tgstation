@@ -28,6 +28,9 @@
 			reagents.reaction(C, INGEST)
 			reagents.trans_to(C, reagents.total_volume)
 			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
+			var/reagentlist = pretty_string_from_reagent_list(A.reagents)
+			log_game("[key_name(user)] smothered [key_name(A)] with a damp rag containing [reagentlist]")
+			log_attack("[key_name(user)] smothered [key_name(A)] with a damp rag containing [reagentlist]")
 		else
 			reagents.reaction(C, TOUCH)
 			reagents.clear_reagents()

@@ -108,3 +108,10 @@
 		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
+/proc/pretty_string_from_reagent_list(var/list/reagent_list)
+	//Convert reagent list to a printable string for logging etc
+	var/result = "| "
+	for (var/datum/reagent/R in reagent_list)
+		result += "[R.name], [R.volume] | "
+
+	return result

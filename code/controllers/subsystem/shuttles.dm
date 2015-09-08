@@ -201,19 +201,6 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
-
-/*
-/proc/push_mob_back(var/mob/living/L, var/dir)
-	if(iscarbon(L) && isturf(L.loc))
-		if(prob(88))
-			var/turf/T = get_step(L, dir)
-			if(T)
-				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1))
-						return
-				L.Move(get_step(L, dir), dir)
-*/
-
 /datum/supply_order
 	var/ordernum
 	var/datum/supply_packs/object = null
@@ -335,11 +322,3 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return O
 
-/*
-/datum/subsystem/shuttle/proc/getShuttleFromArea(area/A)
-	if(!A)
-		return
-	for(var/obj/docking_port/mobile/M in SSshuttle.mobile)
-		if(M.areaInstance == A)
-			return M
-*/
