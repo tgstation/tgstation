@@ -508,7 +508,7 @@ var/global/list/rockTurfEdgeCache
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
-	desc = "Loose sand lightly packed down"
+	desc = "Loose sand lightly packed down."
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 
 /turf/simulated/floor/plating/asteroid/airless
@@ -601,7 +601,7 @@ var/global/list/rockTurfEdgeCache
 	dug = 1
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
-	desc = "This pach of sand has been exausted."
+	desc = "This patch of sand has been exhausted."
 	return
 
 /turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
