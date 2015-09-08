@@ -14,7 +14,7 @@
 	intact = 0
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
-	desc = "The floor under the floor"
+	desc = "The floor under the floor."
 
 /turf/simulated/floor/plating/New()
 	..()
@@ -173,7 +173,7 @@
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
-	desc = "ayyyyyy"
+	desc = "Ayyyyyy LMAO."
 
 /turf/simulated/floor/plating/abductor/New()
 	..()
