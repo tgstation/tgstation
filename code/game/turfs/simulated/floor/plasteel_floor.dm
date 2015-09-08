@@ -3,6 +3,7 @@
 	floor_tile = /obj/item/stack/tile/plasteel
 	broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	burnt_states = list("floorscorched1", "floorscorched2")
+	desc = "A floor made of steel."
 
 /turf/simulated/floor/plasteel/update_icon()
 	if(!..())
@@ -278,6 +279,7 @@
 
 /turf/simulated/floor/plasteel/circuit
 	icon_state = "bcircuit"
+	desc = "a floor with a cool circuitboard pattern"
 /turf/simulated/floor/plasteel/circuit/off
 	icon_state = "bcircuitoff"
 
@@ -297,6 +299,7 @@
 
 /turf/simulated/floor/plasteel/loadingarea
 	icon_state = "loadingarea"
+	desc = "WARNING: AUTOMATED INDUSTRIAL EQUIPTMENT. STAND CLEAR."
 /turf/simulated/floor/plasteel/loadingarea/dirty
 	icon_state = "loadingareadirty1"
 /turf/simulated/floor/plasteel/loadingarea/dirtydirty
@@ -305,9 +308,11 @@
 
 /turf/simulated/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"
+	desc = "Please remain seated while the craft is in motion."
 /turf/simulated/floor/plasteel/shuttle/red
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
+	desc = "You're in for it now."
 /turf/simulated/floor/plasteel/shuttle/yellow
 	icon_state = "shuttlefloor2"
 /turf/simulated/floor/plasteel/shuttle/white
@@ -318,6 +323,7 @@
 
 /turf/simulated/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
+	desc = "A floor made of steel. Sand has setteled betwen the tiles."
 /turf/simulated/floor/plasteel/asteroid/warning
 	icon_state = "asteroidwarning"
 
@@ -373,6 +379,7 @@
 /turf/simulated/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
+	desc = "A weird floor with pattens that make you sick .Spooky"
 
 /turf/simulated/floor/plasteel/goonplaque
 	icon_state = "plaque"
