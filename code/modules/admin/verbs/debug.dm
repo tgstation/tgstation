@@ -627,7 +627,7 @@ var/global/list/g_fancy_list_of_types = null
 	
 
 	var/list/outfits = list("Naked","Custom","As Job...")
-	var/list/paths = typesof(/datum/outfit) - /datum/outfit
+	var/list/paths = typesof(/datum/outfit) - /datum/outfit - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
@@ -645,6 +645,16 @@ var/global/list/g_fancy_list_of_types = null
 		jobdatum = SSjob.GetJob(jobname)
 
 
+	var/datum/outfit/custom = null
+	if (dresscode == "Custom")
+		var/list/custom_names = list()
+		for(var/datum/outfit/D in custom_outfits)
+			custom_names[D.name] = D
+		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in custom_names
+		custom = custom_names[selected_name]
+		if(isnull(custom))
+			return
+
 	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
 		if (istype(I, /obj/item/weapon/implant))
@@ -655,6 +665,7 @@ var/global/list/g_fancy_list_of_types = null
 			//do nothing
 		if ("Custom")
 			//use custom one
+			M.equipOutfit(custom)
 		if ("As Job...")
 			if(jobdatum)
 				dresscode = jobdatum.title

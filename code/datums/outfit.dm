@@ -73,18 +73,3 @@
 	post_equip(H)
 
 	return 1
-//Example
-/datum/outfit/test
-	name = "Test Outfit"
-
-	uniform = /obj/item/clothing/under/color/grey
-	suit = /obj/item/clothing/suit/space
-	shoes = /obj/item/clothing/shoes/sneakers/black
-	head = /obj/item/clothing/head/helmet/space
-	back = /obj/item/weapon/storage/backpack
-	mask = /obj/item/clothing/mask/breath
-	backpack_contents = list(/obj/item/weapon/c4=5,/obj/item/weapon/kitchen/knife=1)
-	r_hand = /obj/item/weapon/c4
-
-/datum/outfit/test/post_equip(mob/living/carbon/human/H)
-	H.say("I love bombs!")
