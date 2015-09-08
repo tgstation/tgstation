@@ -38,7 +38,7 @@
 /turf/simulated/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
-	"A warm ocean"
+	desc = "A warm ocean"
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
