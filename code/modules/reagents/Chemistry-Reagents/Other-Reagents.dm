@@ -26,7 +26,7 @@
 		src.data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
 		if(src.data["viruses"] || data["viruses"])
 
-			var/list/mix1 = data["viruses"]
+			var/list/mix1 = src.data["viruses"]
 			var/list/mix2 = data["viruses"]
 
 			// Stop issues with the list changing during mixing.
