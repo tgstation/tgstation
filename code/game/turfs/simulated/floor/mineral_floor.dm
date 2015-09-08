@@ -142,7 +142,7 @@
 	icons = list("uranium","uranium_dam")
 	var/last_event = 0
 	var/active = null
-	desc = "a floor made of uranium. You wonder where that lead lined suit went."
+	desc = "a floor made of uranium. I wonder where that lead lined suit went."
 
 /turf/simulated/floor/mineral/uranium/Entered(var/mob/AM)
 	.=..()
