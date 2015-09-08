@@ -293,7 +293,7 @@ public class MapPatcher
             try { System.in.read(); } catch (Exception localException6) {
             }return;
           }
-          //old map
+          //old map (we only calculate the existing content types (Because we are going to throw away the layout options and kepe new ones?????, seems most likely option)
           Map localMap6 = new Map(new File(paramArrayOfString[1]), true);
           //new map
           Map localMap7 = new Map(new File(paramArrayOfString[2]));

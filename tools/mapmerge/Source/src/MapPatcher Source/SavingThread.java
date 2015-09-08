@@ -7,7 +7,6 @@ class SavingThread extends Thread
   StringBuilder result;
 
   public SavingThread(int paramInt1, Map paramMap, int paramInt2)
-//Given some map, a starting z and soem other param (todo figure out) (doesn't seem to be used at all (possibly unfinished code?)
   {
     this.z = paramInt1;
     this.mymap = paramMap;

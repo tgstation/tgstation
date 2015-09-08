@@ -35,6 +35,7 @@ public class Map
     this(paramFile, false);
   }
 
+  //Path to map file, boolean noLocationRead (if set it will nto read in actual location information (used when you're usually throwing that information away)
   public Map(File paramFile, boolean paramBoolean)
   {
     this.sizeunknown = true;
@@ -74,10 +75,13 @@ public class Map
           this.codes_by_value.put(str3, str2);
         }
       }
-      //total number of tiles
+      //total number of tile types
       MapPatcher.Systemoutprintln(new StringBuilder().append(" ").append(this.tile_types.size()).toString());
-      //Tags are now calculated, if some bool is set, now calculate the actual map layout from the rest of the file
+      //Tags -> data are now calculated, now figure out the actual map layout of tiles on xyz plane
       if (!paramBoolean)
+          //SKip this if told to avoid it (done for when we clean maps ( we don't care about original map layout new map takes precedence))
+          //We only  really want to avoid changing the tile definitions needlessly if they already are existing
+          //We also keep all old location -> tile content tags, and only rewrite new ones (this avoids spurious diff info)
       {
         MapPatcher.Systemoutprintln("Loading levels");
         while (true)
@@ -101,12 +105,12 @@ public class Map
                 MapPatcher.Systemoutprintln(new StringBuilder().append("New map part from (").append(m).append(",").append(n).append(",").append(i1).append(")").toString());
 
             int i3 = n;// currY = read y
-            if (this.sizeunknown) //If size not know already
+            if (this.sizeunknown) //only calculate min and max x,yz at beginning of location loading
             {
               this.minx = m; this.maxx = this.minx;//set minmax to given z, y ,z
               this.miny = n; this.maxy = this.miny;
               this.minz = i1; this.maxz = this.minz;
-              this.sizeunknown = false;
+              this.sizeunknown = false; 
             }
             if (this.minz > i1) this.minz = i1;//if currz < minz set new minz
             if (this.maxz < i1) this.maxz = i1;//if currz > maxz, set new maxz
@@ -124,7 +128,7 @@ public class Map
                 Location localLocation = new Location(i2, i3, i1);
                 if (this.minx > i2) this.minx = i2;//if currx < minx set
                 if (this.maxx < i2) this.maxx = i2;//if currx > maxx set
-                //Get tile type and put at location
+                //Get tiles is a map of location -> tiletype
                 this.tiles.put(localLocation, this.tile_types.get(str4));
                 //Move string up
                 str1 = str1.substring(i);
@@ -146,6 +150,7 @@ public class Map
   }
 
   public void mirrorY()
+      //TODO, used for packing, we may not care
   {
     for (int i = this.minz; i <= this.maxz; i++)
       for (int j = this.minx; j <= this.maxx; j++)
@@ -207,48 +212,48 @@ public class Map
   public void saveReferencing(File paramFile, Map paramMap) throws Exception
   {
     FileWriter localFileWriter = new FileWriter(paramFile);
-
+    //throw out tile_types and codes by value
     this.tile_types.clear();
     this.codes_by_value.clear();
+    //Array of all tile keycodes
     Vector localVector1 = new Vector();
-    //Foreach localLocation in locations on map
+    //Foreach x,y,z locations on map calcualte the unique set of tile tags ("aab, "acc") etc we need
     for (Object localObject1 = this.tiles.keySet().iterator(); ((Iterator)localObject1).hasNext(); ) { Location localLocation = (Location)((Iterator)localObject1).next();
-
+        //Foreach key, get the mapping key ("aab", "aac') etc
       String str1 = (String)this.tiles.get(localLocation);
-      //Get key code at this location
       if (!localVector1.contains(str1))
-          //If key code not in local key codes array add it
+          //If key not in keys, add it
         localVector1.add(str1);
     }
     MapPatcher.Systemoutprintln(new StringBuilder().append("We have ").append(localVector1.size()).append(" different tiles").toString());
-    //Possible list of all hash hash keys?
+    //Possible list of all hash hash keys - My guess is this is used to generate the new tags after all preexisting ones have been written out
     localObject1 = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
     int i = 1;
     int j = localObject1.length;
     while (j < localVector1.size())
-        //While length of hash array smaller than number of potential map keys
+        //While length of potential new keys smaller than the number of tiles needed
     {
-      j *= localObject1.length; //multiple J by object1 length (the fuck???)
+      j *= localObject1.length; //J is equal to j * length??? still need to figure this, possibly it's marking increments along the keycode list (jumping by all possible key hashes each time)
       i++;//Increment i
     }
-    //New items to write vector
+    //calculate and store all "NEW" codes we need to write
     Vector localVector2;
     if (paramMap == null) {
-        //If no map to look up
+        //If no map to reference then all are "NEW"
       localVector2 = localVector1;//Set to all items
     }
     else {
       localVector2 = new Vector();
       for (Iterator localIterator = localVector1.iterator(); localIterator.hasNext(); ) { localObject2 = (String)localIterator.next();
-          //foreach item in local tiles possible
+          //foreach location key 
           //Item already exists as tile in our old map (don't add to new items vector)
         if (paramMap.codes_by_value.containsKey(localObject2))
         {
           localObject3 = paramMap.getIdFor((String)localObject2);
-          //Add to our own tile types as a key for our item
+          //Add old tile type
           this.tile_types.put(localObject3, localObject2);
-          //Add to our own codes as a reverse mapping
+          //Add old code
           this.codes_by_value.put(localObject2, localObject3);
         }
         else {
@@ -261,13 +266,15 @@ public class Map
     int k = 0;
     for (Object localObject2 = localVector2.iterator(); ((Iterator)localObject2).hasNext(); ) { localObject3 = (String)((Iterator)localObject2).next();
         //For each new item in our new items array
+        //Generate a new key and add it to the tile_types
       do
       {
-        //calculate new code from our hash map keys 
+        //calculate new code from our read in data 
         str2 = int2code((String[])localObject1, k, i);
         k++;
+        //If key already exists keep regenning until you find free kee
       }while (this.tile_types.containsKey(str2));
-      //while the key is a valid tyle type, add the new location tile
+      //Safe key found, now save it
       this.tile_types.put(str2, localObject3);
       this.codes_by_value.put(localObject3, str2);
     }
@@ -276,30 +283,34 @@ public class Map
 
     k = 0;
     for (int m = 0; m < this.tile_types.size(); m++)
-    //Now write out our new file in the dmm format
-    //FOr each item in tile_types
     {
       do
       {
-        //Calculate key
+        //walk through every single key
         localObject3 = int2code((String[])localObject1, k, i);
         k++;
+        //if key doesn't exist, go to next key
       }while (!this.tile_types.containsKey(localObject3));
-      //If not in tile types, write out to end of file
+      //key exists, write out to file
       str2 = (String)this.tile_types.get(localObject3);
       localFileWriter.write(new StringBuilder().append("\"").append((String)localObject3).append("\" = ").append(str2).append("\r\n").toString());
     }
     localVector2.clear();
 
+    //Tiles are now written
+    //Now we write the new location map
+
     localFileWriter.write("\n");
     //how many threads to spawn possibly??? TO DO instrument and confirm
-    //For 1 z level 1 + (1-0) = 2 
-    //for 2 z level 1 + (2-0) = 2
-    //for 3 z level 1 + (3-0) = 4 
+    //For 1 z level 1 + (1-1) = 1 
+    //for 2 z level 1 + (2-1) = 2 
+    //for 3 z level 1 + (3-1) = 3
+    //for 4 z level 1+ (4-1) = 4
+    //This pattern smells wrong to me (why not just use maxz?? seems backwards)
     m = 1 + this.maxz - this.minz;
     Object localObject3 = new SavingThread[m]; //array of savingthreads?
-    //what is n??? some kind of way of partioning the map up by threads?
-    int n = (this.maxy - this.miny) * ((this.maxx - this.minx) * i + 2) + 32;//Buest guess is half the map is partitioned to it
+    //what is n -- appears to be total potential string length (not sure why stringbuilder needs this) possibly optimization done behind the scenes?
+    int n = (this.maxy - this.miny) * ((this.maxx - this.minx) * i + 2) + 32;
     for (k = 0; k < m; k++)
     {
         //Create new thread for each part of the map and store in our SavingThread array
@@ -347,18 +358,25 @@ public class Map
   }
 
   //Given a list of possible hash items, calculate a byond map hash key based on an x/y parameter ?
+  //Really need to figure this out (what is param1, what is param2)
+  //Param1 seems to be starting point, param2 seems to be total length needed
   public String int2code(String[] paramArrayOfString, int paramInt1, int paramInt2)
   {
     String str = "";
+    //while starting point > = length of hash keys??
     while (paramInt1 >= paramArrayOfString.length)
     {
-      int i = paramInt1 % paramArrayOfString.length;
+      int i = paramInt1 % paramArrayOfString.length;//Circular ring buffer of some kind here
       str = new StringBuilder().append(paramArrayOfString[i]).append(str).toString();
       paramInt1 -= i;
       paramInt1 /= paramArrayOfString.length;
+      //Calculate proper starting point
     }
+    //Now build a keyset, of length x, walking along
     str = new StringBuilder().append(paramArrayOfString[paramInt1]).append(str).toString();
-    while (str.length() < paramInt2) str = new StringBuilder().append(paramArrayOfString[0]).append(str).toString();
+    while (str.length() < paramInt2) {
+        str = new StringBuilder().append(paramArrayOfString[0]).append(str).toString();
+    }
     return str;
   }
 }
