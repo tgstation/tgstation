@@ -80,6 +80,8 @@
 			colour = "blue"
 		else
 			colour = "black"
+	user << "<span class='notice'>[src] will now write in [src.colour].</span>"
+	//user << "<span class='notice'>[src] will now write in <span style='color=[colour]'>[colour]</span>.</span>" // If anyone feels lucky
 	desc = "It's a fancy four-color ink pen, set to [src.colour]."
 	
 /*
