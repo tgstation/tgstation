@@ -279,7 +279,7 @@
 
 /turf/simulated/floor/plasteel/circuit
 	icon_state = "bcircuit"
-	desc = "a floor with a cool circuitboard pattern"
+	desc = "A floor with a cool circuitboard pattern."
 /turf/simulated/floor/plasteel/circuit/off
 	icon_state = "bcircuitoff"
 
@@ -323,7 +323,7 @@
 
 /turf/simulated/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
-	desc = "A floor made of steel. Sand has setteled betwen the tiles."
+	desc = "A floor made of steel. Sand has settled between the tiles."
 /turf/simulated/floor/plasteel/asteroid/warning
 	icon_state = "asteroidwarning"
 
@@ -345,7 +345,7 @@
 
 /turf/simulated/floor/plasteel/solarpanel
 	icon_state = "solarpanel"
-	desc = "Solar panels with none of that fancy turning"
+	desc = "Solar panels without all of that fancy turning."
 
 /turf/simulated/floor/plasteel/cmo
 	icon_state = "cmo"
@@ -380,7 +380,7 @@
 /turf/simulated/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
-	desc = "A weird floor with pattens that make you sick .Spooky"
+	desc = "A weird floor with pattens that make you sick. Spooky."
 
 /turf/simulated/floor/plasteel/goonplaque
 	icon_state = "plaque"
