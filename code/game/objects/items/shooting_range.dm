@@ -55,6 +55,10 @@
 #define DECALTYPE_SCORCH 1
 #define DECALTYPE_BULLET 2
 
+/obj/item/target/clown/bullet_act(obj/item/projectile/P)
+	..()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+
 /obj/item/target/bullet_act(obj/item/projectile/P)
 	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"
 	var/p_y = P.p_y + pick(0,0,0,0,0,-1,1)
