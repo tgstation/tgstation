@@ -84,7 +84,7 @@
 /obj/effect/water_overlay
 		name = "Pool"
 		desc = "That's water."
-		icon = 'icons/effects/pool_effect.dmi'
+		icon = 'icons/turf/pool.dmi'
 		//smooth = 1  //Does not work because it's not a turf
 		anchored = 1
 		unacidable = 1
