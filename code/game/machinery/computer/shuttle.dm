@@ -126,7 +126,7 @@
 	if(T)
 		if(istype(T, /turf/simulated/floor))
 			T.blocks_air = 0
-	..()
+	return ..()
 
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"

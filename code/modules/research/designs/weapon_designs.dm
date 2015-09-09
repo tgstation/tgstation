@@ -126,7 +126,7 @@
 	category = list("Weapons")
 
 /datum/design/smg
-	name = "Prototype Submachine Gun"
+	name = "NanoTrasen Saber SMG"
 	desc = "A prototype weapon made using lightweight materials on a traditional frame, designed to fire standard 9mm rounds."
 	id = "smg"
 	req_tech = list("combat" = 4, "materials" = 3)

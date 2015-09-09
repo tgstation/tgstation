@@ -1,6 +1,7 @@
 #define LIGHT_DAM_THRESHOLD 4
 #define LIGHT_HEAL_THRESHOLD 2
 #define LIGHT_DAMAGE_TAKEN 7
+
 /*
 
 SHADOWLING: A gamemode based on previously-run events
@@ -14,7 +15,7 @@ The game will end under two conditions:
 
 Shadowling strengths:
 	- The dark
-	- Hard vacuum (They are not affected by it)
+	- Hard vacuum (They are not affected by it, but are affected by starlight!)
 	- Their thralls who are not harmed by the light
 	- Stealth
 
@@ -22,8 +23,7 @@ Shadowling weaknesses:
 	- The light
 	- Fire
 	- Enemy numbers
-	- Lasers (Lasers are concentrated light and do more damage)
-	- Flashbangs (High stun and high burn damage; if the light stuns humans, you bet your ass it'll hurt the shadowling very much!)
+	- Burn-based weapons and items (flashbangs, lasers, etc.)
 
 Shadowlings start off disguised as normal crew members, and they only have two abilities: Hatch and Enthrall.
 They can still enthrall and perhaps complete their objectives in this form.
@@ -76,7 +76,7 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
-	world << "<b>There are alien <span class='deadsay'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can eat or enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
+	world << "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
 
 /datum/game_mode/shadowling/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -104,7 +104,7 @@ Made by Xhuis
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
 		sleep(10)
 		shadow.current << "<br>"
-		shadow.current << "<span class='deadsay'><b><font size=3>You are a shadowling!</font></b></span>"
+		shadow.current << "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>"
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
@@ -113,9 +113,9 @@ Made by Xhuis
 	return
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	shadow.current << "<b>Currently, you are disguised as an employee aboard [world.name].</b>"
+	shadow.current << "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>"
 	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
-	shadow.current << "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>"
+	shadow.current << "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>"
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
 
 
@@ -195,13 +195,13 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
-		world << "<span class='greentext'><b>The shadowlings have ascended and taken over the station!</b></span>"
+		world << "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>"
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
-		world << "<span class='redtext'><b>The shadowlings have been killed by the crew!</b></span>"
+		world << "<span class='redtext'>The shadowlings have been killed by the crew!</span>"
 	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		world << "<span class='redtext'><b>The crew escaped the station before the shadowlings could ascend!</b></span>"
+		world << "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>"
 	else
-		world << "<span class='redtext'><b>The shadowlings have failed!</b></span>"
+		world << "<span class='redtext'>The shadowlings have failed!</span>"
 	..()
 	return 1
 
@@ -232,7 +232,7 @@ Made by Xhuis
 	id = "shadowling"
 	say_mod = "chitters"
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
-	burnmod = 1.5 //1.5x burn damage, 2x is excessive 
+	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
@@ -253,6 +253,29 @@ Made by Xhuis
 			H.adjustCloneLoss(-1)
 			H.SetWeakened(0)
 			H.SetStunned(0)
+
+/datum/species/shadow/ling/lesser //Empowered thralls. Obvious, but powerful
+	name = "Lesser Shadowling"
+	id = "l_shadowling"
+	say_mod = "chitters"
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	burnmod = 1.1
+	heatmod = 1.1
+
+/datum/species/shadow/ling/lesser/spec_life(mob/living/carbon/human/H)
+	if(!H.weakeyes) H.weakeyes = 1
+	var/light_amount = 0
+	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
+	if(isturf(H.loc))
+		var/turf/T = H.loc
+		light_amount = T.get_lumcount()
+		if(light_amount > LIGHT_DAM_THRESHOLD && !H.incorporeal_move)
+			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN/2)
+		else if (light_amount < LIGHT_HEAL_THRESHOLD)
+			H.heal_overall_damage(2,2)
+			H.adjustToxLoss(-5)
+			H.adjustBrainLoss(-25)
+			H.adjustCloneLoss(-1)
 
 /datum/game_mode/proc/update_shadow_icons_added(datum/mind/shadow_mind)
 	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]

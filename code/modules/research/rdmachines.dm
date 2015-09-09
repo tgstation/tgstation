@@ -20,6 +20,11 @@
 	..()
 	wires = new(src)
 
+/obj/machinery/r_n_d/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
+
 /obj/machinery/r_n_d/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0

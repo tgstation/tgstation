@@ -256,9 +256,9 @@
 			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
+			var/obj/item/device/assembly/flash/flash = locate() in L
 			if (flash)
-				if(!flash.broken)
+				if(!flash.crit_fail)
 					text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>."
 				else
 					text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>|<a href='?src=\ref[src];revolution=repairflash'>repair</a>."
@@ -807,18 +807,19 @@
 
 			if("takeflash")
 				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
+				var/obj/item/device/assembly/flash/flash = locate() in L
 				if (!flash)
 					usr << "<span class='danger'>Deleting flash failed!</span>"
 				qdel(flash)
 
 			if("repairflash")
 				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
+				var/obj/item/device/assembly/flash/flash = locate() in L
 				if (!flash)
 					usr << "<span class='danger'>Repairing flash failed!</span>"
 				else
-					flash.broken = 0
+					flash.crit_fail = 0
+					flash.update_icon()
 
 
 
@@ -1372,7 +1373,7 @@
 	ticker.mode.greet_revolutionary(src,0)
 
 	var/list/L = current.get_contents()
-	var/obj/item/device/flash/flash = locate() in L
+	var/obj/item/device/assembly/flash/flash = locate() in L
 	qdel(flash)
 	take_uplink()
 	var/fail = 0

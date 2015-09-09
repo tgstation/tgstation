@@ -131,6 +131,8 @@
 	set name = "Print Image"
 	set src in usr
 
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	borgprint()
 
 /obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)

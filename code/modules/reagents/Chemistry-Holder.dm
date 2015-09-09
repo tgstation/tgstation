@@ -54,7 +54,7 @@ var/const/PATCH = 4 //patches
 				break // Don't bother adding ourselves to other reagent ids, it is redundant.
 
 /datum/reagents/Destroy()
-	..()
+	. = ..()
 	SSobj.processing.Remove(src)
 	for(var/datum/reagent/R in reagent_list)
 		qdel(R)

@@ -602,6 +602,12 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "asteroid_dug"
 	return
 
+/turf/simulated/floor/plating/asteroid/singularity_act()
+	return
+
+/turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
+	return
+
 /turf/proc/updateMineralOverlays()
 	src.overlays.Cut()
 

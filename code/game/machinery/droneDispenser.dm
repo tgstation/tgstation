@@ -16,7 +16,7 @@
 
 /obj/machinery/droneDispenser/Destroy()
 	SSmachine.processing -= src
-	..()
+	return ..()
 
 /obj/machinery/droneDispenser/preloaded
 	metal = 5000

@@ -128,7 +128,7 @@ Class Procs:
 	SSmachine.processing -= src
 	if(occupant)
 		dropContents()
-	..()
+	return ..()
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -336,6 +336,7 @@ Class Procs:
 		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		transfer_fingerprints_to(M)
 		M.state = 2
 		M.icon_state = "box_1"
 		for(var/obj/item/I in component_parts)

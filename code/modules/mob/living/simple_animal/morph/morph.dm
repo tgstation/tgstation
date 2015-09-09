@@ -20,6 +20,7 @@
 	minbodytemp = 0
 	maxHealth = 150
 	health = 150
+	healable = 0
 	environment_smash = 1
 	melee_damage_lower = 20
 	melee_damage_upper = 20

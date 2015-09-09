@@ -16,6 +16,7 @@
 	speed = -1
 	maxHealth = 50000
 	health = 50000
+	healable = 0
 
 	harm_intent_damage = 70
 	melee_damage_lower = 68

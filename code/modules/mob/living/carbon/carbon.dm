@@ -1,3 +1,7 @@
+/mob/living/carbon/New()
+	create_reagents(1000)
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -575,4 +579,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		if(locate(/obj/item/device/assembly/health) in src)
+			stat(null, "Health: [health]")
+
 	add_abilities_to_panel()

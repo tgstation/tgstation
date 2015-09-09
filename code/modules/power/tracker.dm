@@ -23,7 +23,7 @@
 
 /obj/machinery/power/tracker/Destroy()
 	unset_control() //remove from control computer
-	..()
+	return ..()
 
 //set the control of the tracker to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/tracker/proc/set_control(obj/machinery/power/solar_control/SC)
@@ -76,9 +76,5 @@
 
 // Tracker Electronic
 
-/obj/item/weapon/tracker_electronics
-
+/obj/item/weapon/electronics/tracker
 	name = "tracker electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
-	w_class = 2.0

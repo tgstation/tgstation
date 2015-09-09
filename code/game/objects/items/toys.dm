@@ -15,7 +15,8 @@
  *		Carp plushie
  *		Foam armblade
  *		Toy big red button
- 		Beach ball
+ *		Beach ball
+ *		Toy xeno
  */
 
 
@@ -1172,3 +1173,32 @@
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed)
+
+/*
+ * Xenomorph action figure
+ */
+
+/obj/item/toy/toy_xeno
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toy_xeno"
+	name = "xenomorph action figure"
+	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
+	w_class = 2
+	var/cooldown = 0
+
+/obj/item/toy/toy_xeno/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = (world.time + 50) //5 second cooldown
+		user.visible_message("<span class='notice'>[user] pulls back the string on [src].</span>")
+		icon_state = "[initial(icon_state)]_used"
+		sleep(5)
+		audible_message("<span class='danger'>\icon[src] Hiss!</span>")
+		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
+		var/chosen_sound = pick(possible_sounds)
+		playsound(get_turf(src), chosen_sound, 50, 1)
+		spawn(45)
+			if(src)
+				icon_state = "[initial(icon_state)]"
+	else
+		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
+		return

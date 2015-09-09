@@ -28,6 +28,11 @@
 
 	var/law_change_counter = 0
 
+/mob/living/silicon/Destroy()
+	radio = null
+	aicamera = null
+	return ..()
+
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
