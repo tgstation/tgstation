@@ -85,8 +85,8 @@
 ///////////////////////
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction
-	name = "bolt action rifle"
-	desc = "This piece of junk looks like something that could have been used 700 years ago."
+	name = "\improper Mosin Nagant rifle"
+	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
 	slot_flags = 0 //no SLOT_BACK sprite, alas
@@ -248,7 +248,7 @@
 // Bulldog shotgun //
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	name = "syndicate shotgun"
+	name = "\improper MLG-12 'Bulldog' Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"

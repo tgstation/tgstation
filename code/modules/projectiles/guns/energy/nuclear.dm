@@ -16,6 +16,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/gun/hos
+	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	force = 10
@@ -23,7 +24,7 @@
 	ammo_x_offset = 4
 
 /obj/item/weapon/gun/energy/gun/dragnet
-	name = "DRAGnet"
+	name = "\improper DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
 	origin_tech = "combat=3;magnets=3;materials=4; bluespace=4"
