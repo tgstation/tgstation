@@ -175,8 +175,8 @@ TYPE: /obj/manifest >
 TYPE: /obj/morgue > /obj/structure/morgue
 TYPE: /obj/move/airtunnel/connector >
 TYPE: /obj/move/airtunnel/connector/wall >
-TYPE: /obj/move/floor >
-TYPE: /obj/move/wall >
+TYPE: /obj/move/floor > /turf/simulated/floor
+TYPE: /obj/move/wall > /turf/simulated/wall
 TYPE: /obj/rack > /obj/structure/rack
 TYPE: /obj/secloset/animal > /obj/structure/closet/secure_closet/animal
 TYPE: /obj/secloset/highsec > /obj/structure/closet/secure_closet/security
