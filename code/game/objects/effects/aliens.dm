@@ -487,9 +487,13 @@
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
 
-		if(istype(target, /turf/simulated/wall))
-			var/turf/simulated/wall/W = target
-			W.dismantle_wall(1)
+		if(istype(target, /turf))
+			var/turf/T = target
+			if(istype(target, /turf/simulated/wall))
+				var/turf/simulated/wall/W = target
+				W.dismantle_wall(1)
+			else
+				T.ChangeTurf(T.baseturf)
 		else
 			qdel(target)
 
@@ -510,6 +514,6 @@
 		if(80)
 			visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
 
-	spawn(1)
+	spawn(1)		//Doesn't use processing lists for some strange reason
 		if(src)
 			tick()

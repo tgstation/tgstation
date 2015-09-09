@@ -1102,6 +1102,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 8
 	containername = "Corporate Posters Crate"
 
+/datum/supply_packs/misc/flags
+	name = "Flag Crate"
+	contains = list(/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit)
+	cost = 16
+	containername = "Flag Crate"
+
 
 ///////////// Paper Work
 
@@ -1116,6 +1126,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/pen,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
+					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/folder/blue,
 					/obj/item/weapon/folder/red,
 					/obj/item/weapon/folder/yellow,
@@ -1253,6 +1264,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/misc/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/contraband/poster,
+					/obj/item/weapon/patriotism/flag,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband Crate"
