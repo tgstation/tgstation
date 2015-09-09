@@ -47,6 +47,11 @@
 	desc = "A shooting target that looks like a xenomorphic alien."
 	hp = 2350
 
+/obj/item/target/clown
+	icon_state = "target_c"
+	desc = "A shooting target that looks like a useless clown."
+	hp = 2000
+
 #define DECALTYPE_SCORCH 1
 #define DECALTYPE_BULLET 2
 
