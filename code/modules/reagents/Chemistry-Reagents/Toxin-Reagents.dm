@@ -221,7 +221,7 @@
 	id = "spore"
 	description = "A toxic spore cloud which blocks vision when ingested."
 	color = "#9ACD32"
-	toxpwr = 0.5
+	toxpwr = 1
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
 	M.damageoverlaytemp = 60

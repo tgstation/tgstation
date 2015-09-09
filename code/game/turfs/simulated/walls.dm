@@ -165,7 +165,7 @@
 			F.attach(src)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 
