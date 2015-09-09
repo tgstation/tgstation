@@ -244,6 +244,30 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername ="forensics crate"
 
+/datum/supply_packs/security/mark58
+	name = "Mark 58 Pistol Crate"
+	contains = list(/obj/item/weapon/gun/projectile/automatic/pistol/mark58,
+					/obj/item/weapon/gun/projectile/automatic/pistol/mark58,
+					/obj/item/weapon/gun/projectile/automatic/pistol/mark58)
+	cost = 15
+	containername = "mark 58 crate"
+
+/datum/supply_packs/security/mark58ammo
+	name = "Mark 58 Pistol Ammo Crate"
+	contains = list(/obj/item/ammo_box/magazine/stun45,
+					/obj/item/ammo_box/magazine/stun45,
+					/obj/item/ammo_box/magazine/stun45,
+					/obj/item/ammo_box/magazine/stun45,
+					/obj/item/ammo_box/magazine/stun45,
+					/obj/item/ammo_box/magazine/stun45/lethal,
+					/obj/item/ammo_box/magazine/stun45/lethal,
+					/obj/item/ammo_box/magazine/stun45/lethal,
+					/obj/item/ammo_box/magazine/stun45/lethal,
+					/obj/item/ammo_box/magazine/stun45/lethal)
+	cost = 20
+	containername = "mark 58 ammo crate"
+
+
 ///// Armory stuff
 
 /datum/supply_packs/security/armory
@@ -327,6 +351,23 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "incendiary weapons crate"
 	access = access_heads
+
+/datum/supply_packs/security/armory/wt550
+	name = "WT-550 Auto Rifle Crate"
+	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
+					/obj/item/weapon/gun/projectile/automatic/wt550)
+	cost = 30
+	containername = "auto rifle crate"
+
+/datum/supply_packs/security/armory/wt550ammo
+	name = "WT-550 Rifle Ammo Crate"
+	contains = list(/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9)
+	cost = 30
+	containername = "auto rifle ammo crate"
 
 /////// Implants & etc
 
