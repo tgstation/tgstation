@@ -128,21 +128,23 @@ var/datum/subsystem/shuttle/SSshuttle
 	return
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(canRecall())
+		emergency.cancel(get_area(user))
+		log_game("[key_name(user)] has recalled the shuttle.")
+		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		return 1
+
+/datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
-
 	if(ticker.mode.name == "meteor")
 		return
-
-	if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return
-	else if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-		return
-
-	emergency.cancel(get_area(user))
-	log_game("[key_name(user)] has recalled the shuttle.")
-	message_admins("[key_name_admin(user)] has recalled the shuttle.")
+	else
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
@@ -198,19 +200,6 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(M.dock(getDock(dockId)))
 			return 2
 	return 0	//dock successful
-
-
-/*
-/proc/push_mob_back(var/mob/living/L, var/dir)
-	if(iscarbon(L) && isturf(L.loc))
-		if(prob(88))
-			var/turf/T = get_step(L, dir)
-			if(T)
-				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1))
-						return
-				L.Move(get_step(L, dir), dir)
-*/
 
 /datum/supply_order
 	var/ordernum
@@ -333,11 +322,3 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return O
 
-/*
-/datum/subsystem/shuttle/proc/getShuttleFromArea(area/A)
-	if(!A)
-		return
-	for(var/obj/docking_port/mobile/M in SSshuttle.mobile)
-		if(M.areaInstance == A)
-			return M
-*/

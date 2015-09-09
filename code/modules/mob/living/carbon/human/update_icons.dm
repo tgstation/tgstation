@@ -362,7 +362,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 			standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-layer2use)
 		overlays_standing[SHOES_LAYER]	= standing
 
+		//Bloody shoes
+		var/obj/item/clothing/shoes/S = shoes
+		var/bloody = 0
 		if(shoes.blood_DNA)
+			bloody = 1
+		else
+			bloody = S.bloody_shoes[BLOOD_STATE_HUMAN]
+
+		if(bloody)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
 	apply_overlay(SHOES_LAYER)

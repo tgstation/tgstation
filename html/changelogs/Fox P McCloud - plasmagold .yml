@@ -1,7 +1,0 @@
-
-author: Fox P McCloud
-
-delete-after: True
-
-changes: 
-  - bugfix: "fixes gold sheets having plasma as their material."
