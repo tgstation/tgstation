@@ -5,7 +5,7 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	antag_flag = BE_MALF
-	required_players = 1
+	required_players = 25
 	required_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 30 //Same as AI minimum age
