@@ -219,14 +219,14 @@ public class Map
     Vector localVector1 = new Vector();
     //Foreach x,y,z locations on map calcualte the unique set of tile tags ("aab, "acc") etc we need
     for (Object localObject1 = this.tiles.keySet().iterator(); ((Iterator)localObject1).hasNext(); ) { Location localLocation = (Location)((Iterator)localObject1).next();
-        //Foreach key, get the mapping key ("aab", "aac') etc
+        //Foreach location, get the mapping key ("aab", "aac') etc
       String str1 = (String)this.tiles.get(localLocation);
       if (!localVector1.contains(str1))
-          //If key not in keys, add it
+          //If key not in our list of all possible keys, add it
         localVector1.add(str1);
-    }
+    }//It's possible this was a hashmap.get_values() call at some point and the compiler optimized it inline
     MapPatcher.Systemoutprintln(new StringBuilder().append("We have ").append(localVector1.size()).append(" different tiles").toString());
-    //Possible list of all hash hash keys - My guess is this is used to generate the new tags after all preexisting ones have been written out
+    //Possible list of all the values used as hash keys in byond, we use this to rewrite all the key tags
     localObject1 = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
     int i = 1;
@@ -234,8 +234,8 @@ public class Map
     while (j < localVector1.size())
         //While length of potential new keys smaller than the number of tiles needed
     {
-      j *= localObject1.length; //J is equal to j * length??? still need to figure this, possibly it's marking increments along the keycode list (jumping by all possible key hashes each time)
-      i++;//Increment i
+      j *= localObject1.length; //J is equal to j * length // some kind of circual ring buffer logic here (it's trying to find the point at which it's safe to write new keys for the new items we don't have codes for)
+      i++;//Increment i (this is the actual starting point into the key array
     }
     //calculate and store all "NEW" codes we need to write
     Vector localVector2;
@@ -269,7 +269,7 @@ public class Map
         //Generate a new key and add it to the tile_types
       do
       {
-        //calculate new code from our read in data 
+        //calculate new code from our read in data, length item and starting point i
         str2 = int2code((String[])localObject1, k, i);
         k++;
         //If key already exists keep regenning until you find free kee
@@ -360,19 +360,19 @@ public class Map
   //Given a list of possible hash items, calculate a byond map hash key based on an x/y parameter ?
   //Really need to figure this out (what is param1, what is param2)
   //Param1 seems to be starting point, param2 seems to be total length needed
+  //Param 2 is actually starting point, param1 is a ring buffer value that we can walk along
   public String int2code(String[] paramArrayOfString, int paramInt1, int paramInt2)
   {
     String str = "";
-    //while starting point > = length of hash keys??
+    //length of j is longer than aray length
     while (paramInt1 >= paramArrayOfString.length)
     {
-      int i = paramInt1 % paramArrayOfString.length;//Circular ring buffer of some kind here
-      str = new StringBuilder().append(paramArrayOfString[i]).append(str).toString();
-      paramInt1 -= i;
+      int i = paramInt1 % paramArrayOfString.length;//Circular ring buffer calculation to get actual string
+      str = new StringBuilder().append(paramArrayOfString[i]).append(str).toString(); //Get first value
+      paramInt1 -= i;//j now goes down by i and divided once by length
       paramInt1 /= paramArrayOfString.length;
-      //Calculate proper starting point
-    }
-    //Now build a keyset, of length x, walking along
+    }//Repeat at least 3 times
+    //Now build a keyset, of length param2, walking along
     str = new StringBuilder().append(paramArrayOfString[paramInt1]).append(str).toString();
     while (str.length() < paramInt2) {
         str = new StringBuilder().append(paramArrayOfString[0]).append(str).toString();
