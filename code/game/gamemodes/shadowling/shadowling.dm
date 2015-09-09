@@ -200,7 +200,7 @@ Made by Xhuis
 		M.visible_message("<span class='big'>[M] screams and contorts!</span>", \
 						  "<span class='userdanger'>THE LIGHT-- YOUR MIND-- <i>BURNS--</i></span>")
 		spawn(30)
-			if(!M || qdeled(M))
+			if(!M || qdeleted(M))
 				return
 			M.visible_message("<span class='warning'>[M] suddenly bloats and explodes!</span>", \
 							  "<span class='warning'><b>AAAAAAAAA<font size=3>AAAAAAAAAAAAA</font><font size=4>AAAAAAAAAAAA----</font></span>")

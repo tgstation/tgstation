@@ -621,9 +621,6 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		charge_counter = charge_max
 		return
 	for(var/mob/living/carbon/human/target in targets)
-		if(!ishuman(target) || !target)
-			charge_counter = charge_max
-			return
 		if(target.stat)
 			charge_counter = charge_max
 			return
