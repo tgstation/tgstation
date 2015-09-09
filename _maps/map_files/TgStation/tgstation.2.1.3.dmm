@@ -13227,7 +13227,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/simulated/floor/bluegrid{
-	icon_state = "gcircuit";
 	 luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
@@ -13244,7 +13243,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/simulated/floor/bluegrid{
-	icon_state = "gcircuit";
 	 luminosity = 2
 	},
 /area/ai_monitored/nuke_storage)
