@@ -54,6 +54,9 @@
 	var/flight_x_offset = 0
 	var/flight_y_offset = 0
 
+	var/draw_time = 0
+	var/last_draw = 0
+
 /obj/item/weapon/gun/New()
 	..()
 	if(pin)
@@ -152,6 +155,10 @@
 		return 0
 
 	if(!handle_pins(user))
+		return 0
+
+	if(last_draw+draw_time>=world.time)
+		user << "<span class='warning'>You're still drawing the gun!</span>"
 		return 0
 
 	if(trigger_guard)
@@ -360,3 +367,7 @@
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return
+
+/obj/item/weapon/gun/on_exit_storage(obj/item/weapon/storage/S)
+	last_draw = world.time
+	return
