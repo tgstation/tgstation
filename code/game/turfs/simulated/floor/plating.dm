@@ -173,7 +173,7 @@
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
-	desc = "Ayyyyyy LMAO."
+	desc = "This floor looks out of this world."
 
 /turf/simulated/floor/plating/abductor/New()
 	..()
