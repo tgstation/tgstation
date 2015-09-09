@@ -25,16 +25,6 @@
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
-/obj/item/ammo_casing/w9mm
-	desc = "A 9mm bullet casing."
-	caliber = "9mm"
-	projectile_type = /obj/item/projectile/bullet/weakbullet4
-
-/obj/item/ammo_casing/z8c
-	desc = "A 7.62×51mm bullet casing."
-	caliber = "7.62×51mm"
-	projectile_type = /obj/item/projectile/bullet/riflebullet
-
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"

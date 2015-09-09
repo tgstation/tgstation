@@ -47,6 +47,7 @@ Head of Security
 	H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol/mark58/officer(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/stun45(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
@@ -181,7 +182,6 @@ Security Officer
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/stun45(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/stun45(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)

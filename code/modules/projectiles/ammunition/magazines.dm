@@ -156,28 +156,6 @@
 	..()
 	icon_state = "45L-[round(ammo_count(),1)]"
 
-/obj/item/ammo_box/magazine/wt550m9
-	name = "wt550 magazine (9mm)"
-	icon_state = "9mmt-20"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
-	max_ammo = 20
-
-/obj/item/ammo_box/magazine/wt550m9/update_icon()
-	..()
-	icon_state = "9mmt-[round(ammo_count(),4)]"
-
-/obj/item/ammo_box/magazine/z8m
-	name = "z8rifle magazine"
-	icon_state = "z8-5"
-	ammo_type = /obj/item/ammo_casing/z8c
-	caliber = "7.62×51mm"
-	max_ammo = 5
-
-/obj/item/ammo_box/magazine/z8m/lethal/update_icon()
-	..()
-	icon_state = "z8m-[round(ammo_count(),5)]"
-
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"
