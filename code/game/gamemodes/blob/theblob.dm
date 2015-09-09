@@ -123,7 +123,8 @@
 	if(!T)	return 0
 	var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
 	if(istype(T, /turf/space))
-		B.health = 7
+		B.health = 5
+		B.maxhealth = 10
 		B.update_icon()
 	B.color = a_color
 	B.density = 1
