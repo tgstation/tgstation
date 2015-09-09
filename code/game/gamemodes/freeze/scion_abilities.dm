@@ -8,11 +8,12 @@
 	action_icon_state = "frost"
 
 /obj/effect/proc_holder/spell/aoe_turf/spread_frost/cast(list/targets)
+	var/mob/living/carbon/human/user = usr
 	for(var/turf/T in targets)
-		if(locate(/obj/structure/alien/weeds/node/frost) in T.contents)
+		if(locate(/obj/structure/alien/weeds/frost/node) in T.contents)
 			user << "<span class='warning'>There is already thick frost here!</span>"
 			return 0
-		new obj/structure/alien/weeds/node/frost(T)
+		new /obj/structure/alien/weeds/frost/node(T)
 	user.visible_message("<span class='notice'>[user] has formed some thick frost!</span>")
 	return 1
 
@@ -29,8 +30,8 @@
 
 /obj/effect/proc_holder/spell/targeted/chilling_grasp/cast(list/targets)
 	var/mob/living/carbon/human/user = usr
-	listclearnulls(ticker.mode.scions)
-	if(!(user.mind in ticker.mode.scions))
+	listclearnulls(ticker.mode.frost_scions)
+	if(!(user.mind in ticker.mode.frost_scions))
 		return
 	/*
 	if(user.dna.species.id != "shadowling")
@@ -98,17 +99,17 @@
 					user.visible_message("<span class='danger'>[user]'s eyes turn completely white.</span>")
 					target << "<span class='boldannounce'>Your entire body is numb. You feel nothing but [user]'s hand on your chest, even colder than you.</span>"
 			if(!do_mob(user, target, 100)) //around 30 seconds total for turning, 45 for someone with a loyalty implant
-				user << "<span class='warning'>The turning has been interrupted - your target is once again heating \himself internally.</span>"
+				user << "<span class='warning'>The turning has been interrupted - [target] is once again heating \himself internally.</span>"
 				target << "<span class='userdanger'>You suddenly feel your heratbeat speeding up as you start to warm yourself again.</span>"
 				turning = 0
 				return 0
 
-		enthralling = 0
+		turning = 0
 		usr << "<span class='notice'>You have turned <b>[target]</b>!</span>"
 		target.visible_message("<span class='big'>[target] looks to have been frozen solid!</span>", \
 							   "<span class='warning'>Your heart stops.</b></span>")
-		target.setOxyLoss(0) //In case the shadowling was choking them out
-		ticker.mode.add_pawn(target.mind)
+		target.setOxyLoss(0) //In case the scion was choking them out
+		ticker.mode.make_pawn(target.mind)
 		target.mind.special_role = "FrostPawn"
 		return 1
 

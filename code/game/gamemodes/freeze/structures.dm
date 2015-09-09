@@ -7,6 +7,8 @@
 	icon = 'icons/obj/frost.dmi'
 	icon_state = "frost"
 
+	var/super_coefficient = 1 //for making the frost better, may be used in the future
+
 	health = 20
 	max_temp_sustainable = T20C //any hotter than room temp and these'll start to melt
 	temp_damage = 2
@@ -26,10 +28,16 @@
 /obj/structure/alien/weeds/frost/getWeedOverlay(C)
 	return frostImageCache["[C]"]
 
-/obj/structure/alien/weeds/frost/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/weeds/frost/New(super_coefficient = src.super_coefficient)
 	..()
-	if(exposed_temperature > max_temp_sustainable)
-		//TODO: make it wet ;)
+	health *= super_coefficient
+	max_temp_sustainable *= super_coefficient
+	temp_damage /= super_coefficient
+
+/obj/structure/alien/weeds/frost/Destroy()
+	. = ..()
+	var/turf/simulated/T = loc
+	T.MakeSlippery()
 
 /obj/structure/alien/weeds/frost/node
 	name = "thick frost"
@@ -37,7 +45,30 @@
 
 	icon_state = "frostnode"
 
-	noderange = NODERANGE
+	node_range = NODERANGE
+	var/temperature_delta = 15 //this value is subtracted from T20C to get the temperature this node attempts to lowers its tile to
 
-/obj/structure/alien/weeds/frost/node/New()
-	..(loc, src)
+/obj/structure/alien/weeds/frost/node/New(super_coefficient = src.super_coefficient)
+	..(loc, src, super_coefficient)
+	node_range *= super_coefficient
+	temperature_delta *= super_coefficient
+	SSobj.processing += src
+
+/obj/structure/alien/weeds/frost/node/Destroy()
+	SSobj.processing -= src
+	return ..()
+
+/obj/structure/alien/weeds/frost/node/process()
+	var/turf/simulated/T = loc
+	var/datum/gas_mixture/A = T.air
+
+	if(A.temperature >= T20C)
+		A.temperature -= temperature_delta
+	else
+		A.temperature = T20C - temperature_delta
+	A.temperature = max(0, A.temperature) //I have seen negative temperature and trust me you do not want to
+
+	T.air.temperature_share(A, WINDOW_HEAT_TRANSFER_COEFFICIENT) //same value as h/e pipes. I dunno mang it works for them.
+
+/obj/structure/alien/weeds/frost/node/infinity
+	super_coefficient = INFINITY //lmao

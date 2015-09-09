@@ -7,11 +7,6 @@
  *		effect/acid
  */
 
-#define WEED_NORTH_EDGING "[NORTH]"
-#define WEED_SOUTH_EDGING "[SOUTH]"
-#define WEED_EAST_EDGING "[EAST]"
-#define WEED_WEST_EDGING "[WEST]"
-
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
 
@@ -152,8 +147,6 @@
  * Weeds
  */
 
-#define NODERANGE 3
-
 /obj/structure/alien/weeds
 	gender = PLURAL
 	name = "resin floor"
@@ -188,8 +181,8 @@
 /obj/structure/alien/weeds/Destroy()
 	var/turf/T = loc
 	loc = null
-	for(var/obj/sctructure/alien/weeds/W in range(1,T))
-		if(istype(W, type_of_weed)) //so that you don't get weeds connecting to frost
+	for(var/obj/structure/alien/weeds/W in range(1,T))
+		if(istype(W, type_of_weed)) //so that you don't get weeds connecting to other subtypes
 			W.updateWeedOverlays()
 	linked_node = null
 	return ..()
@@ -251,6 +244,7 @@
 	if(!weedImageCache || !weedImageCache.len)
 		weedImageCache = list()
 		weedImageCache.len = 4
+		//these defines found in __DEFINES/misc.dm
 		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
 		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
 		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
@@ -265,15 +259,15 @@
 
 	setImageCache()
 
-	for(var/C in cardinals)
+	for(var/C in cardinal)
 		var/turf/T = get_step(src, C)
-		if(!locate(/obj/structure/alien) in C.contents)
-			if(istype(C, /turf/simulated/floor))
+		if(!locate(/obj/structure/alien) in T.contents)
+			if(istype(T, /turf/simulated/floor))
 				overlays += getWeedOverlay(C)
 
 /obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
 	for (var/obj/structure/alien/weeds/W in range(1,src))
-		if(istype(W, weed_type))
+		if(istype(W, type_of_weed))
 			W.updateWeedOverlays()
 
 //Weed nodes

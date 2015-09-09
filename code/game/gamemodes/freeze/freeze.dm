@@ -3,11 +3,11 @@
 	var/datum/mind/list/frost_pawns = list()
 	var/list/frost_objectives = list()
 
-/proc/is_scion(datum/mind/M)
+/proc/is_scion(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.frost_scions)
-/proc/is_pawn(datum/mind/M)
+/proc/is_pawn(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.frost_pawns)
-/proc/is_frosty(datum/mind/M)
+/proc/is_frosty(mob/living/M)
 	return is_scion(M) || is_pawn(M)
 
 /datum/game_mode/freeze
@@ -37,7 +37,7 @@
 	while(scions)
 		var/datum/mind/scion = pick(antag_candidates)
 		frost_scions += scion
-		antag_candidate -= scion
+		antag_candidates -= scion
 		scion.special_role = "FrostScion"
 		scion.restricted_roles = restricted_jobs
 		scions--
@@ -75,7 +75,7 @@
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/chilling_grasp(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/scion_transform(null))
 	spawn(0)
-		if(scion_mind.assigned_role == "Clown")
+		if(scion.assigned_role == "Clown")
 			var/mob/living/carbon/human/S = scion.current
 			S << "<span class='notice'>Your REALLY COLD, LIKE, YOU'RE LITERALLY ICE nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
