@@ -653,7 +653,7 @@
 		if(!(lying))
 			M.do_attack_animation(src)
 			if (prob(85))
-				Stun(7)
+				Stun(2)
 				step(src,get_dir(M,src))
 				spawn(5)
 					step(src,get_dir(M,src))

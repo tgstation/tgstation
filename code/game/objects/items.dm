@@ -189,9 +189,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if (loc == user)
 		if(!user.unEquip(src))
 			return
-	else
-		if(isliving(loc))
-			return
+
 	pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
