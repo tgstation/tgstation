@@ -52,7 +52,7 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process()
 	var/datum/gas_mixture/pipe_air = return_air()
-	if(!return_air)
+	if(!pipe_air)
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
 	//Heat causes pipe to glow
