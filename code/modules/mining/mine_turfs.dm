@@ -10,7 +10,7 @@ var/global/list/rockTurfEdgeCache
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock_nochance"
-	baseturf = /turf/space
+	baseturf = /turf/simulated/floor/plating/asteroid
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
@@ -604,16 +604,11 @@ var/global/list/rockTurfEdgeCache
 	desc = "This patch of sand has been exhausted."
 	return
 
+/turf/simulated/floor/plating/asteroid/singularity_act()
+	return
+
 /turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
-	if(current_size == STAGE_THREE)
-		if(prob(30))
-			gets_dug()
-	else if(current_size == STAGE_FOUR)
-		if(prob(50))
-			gets_dug()
-	else if(current_size >= STAGE_FIVE)
-		if(prob(90))
-			gets_dug()
+	return
 
 /turf/proc/updateMineralOverlays()
 	src.overlays.Cut()
