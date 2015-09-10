@@ -18,13 +18,14 @@
 	needs_permit = 0
 
 /obj/item/weapon/gun/energy/laser/retro
-	name ="retro laser"
+	name ="retro laser gun"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
 
 /obj/item/weapon/gun/energy/laser/captain
+	name = "\improper QSJ 01 Premium laser pistol"
 	icon_state = "caplaser"
 	item_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
