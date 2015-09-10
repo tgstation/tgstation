@@ -7,7 +7,7 @@
 		if(M.a_intent == "harm")
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
-			var/damage = prob(90) ? 25 : 0
+			var/damage = prob(90) ? 20 : 0
 			if(!damage)
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
