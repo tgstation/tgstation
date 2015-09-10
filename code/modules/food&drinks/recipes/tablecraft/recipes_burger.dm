@@ -36,7 +36,7 @@
 /datum/table_recipe/appendixburger
 	name = "Appendix burger"
 	reqs = list(
-		/obj/item/organ/appendix = 1,
+		/obj/item/organ/internal/appendix = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
@@ -45,7 +45,7 @@
 /datum/table_recipe/brainburger
 	name = "Brain burger"
 	reqs = list(
-		/obj/item/organ/brain = 1,
+		/obj/item/organ/internal/brain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/brain

@@ -125,19 +125,19 @@
 	create_reagents(50)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
-	var/deflect = 0
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
-			..()
-			reagents.trans_to(M, reagents.total_volume)
-			return 1
-		else
-			deflect = 1
-			target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
-								   "<span class='userdanger'>You were protected against the [name]!</span>")
-	if(!deflect)
-		..()
+		if(blocked != 100) // not completely blocked
+			if(M.can_inject(null,0,hit_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+				..()
+				reagents.trans_to(M, reagents.total_volume)
+				return 1
+			else
+				blocked = 100
+				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
+									   "<span class='userdanger'>You were protected against the [name]!</span>")
+
+	..(target, blocked, hit_zone)
 	flags &= ~NOREACT
 	reagents.handle_reactions()
 	return 1

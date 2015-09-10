@@ -20,6 +20,7 @@
 	minbodytemp = 0
 	maxHealth = 150
 	health = 150
+	healable = 0
 	environment_smash = 1
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -35,7 +36,7 @@
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
 		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
-		if(get_dist(user,src)<=3) 
+		if(get_dist(user,src)<=3)
 			user << "<span class='notice'>Looks odd!</span>"
 	else
 		..()
@@ -61,7 +62,7 @@
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
 	morphed = 1
 	form = target
-	
+
 	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) No effect better than shit effect
 
 	//Todo : update to .appearance once 508 hits
@@ -89,9 +90,9 @@
 		return
 	morphed = 0
 	form = null
-	
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir) 
-	
+
+	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
+
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -127,7 +128,7 @@
 /mob/living/simple_animal/hostile/morph/LoseAggro()
 	vision_range = idle_vision_range
 
-/mob/living/simple_animal/hostile/morph/AIShouldSleep()
+/mob/living/simple_animal/hostile/morph/AIShouldSleep(var/list/possible_targets)
 	. = ..()
 	if(.)
 		var/list/things = list()
@@ -159,6 +160,9 @@
 				I.loc = src
 			return
 	target.attack_animal(src)
+
+/mob/living/simple_animal/hostile/morph/update_action_buttons() //So all eaten objects are not counted every life
+	return
 
 //Spawn Event
 

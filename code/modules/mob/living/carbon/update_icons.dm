@@ -96,11 +96,18 @@
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 	if(istype(wear_mask, /obj/item/clothing/mask))
+
+		var/layer2use
+		if(wear_mask.alternate_worn_layer)
+			layer2use = wear_mask.alternate_worn_layer
+		if(!layer2use)
+			layer2use = FACEMASK_LAYER
+
 		var/image/standing
 		if(wear_mask.alternate_worn_icon)
-			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
+			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-FACEMASK_LAYER)
+			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
 
 		overlays_standing[FACEMASK_LAYER]	= standing
 
@@ -111,11 +118,18 @@
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
 	if(back)
+
+		var/layer2use
+		if(back.alternate_worn_layer)
+			layer2use = back.alternate_worn_layer
+		if(!layer2use)
+			layer2use = BACK_LAYER
+
 		var/image/standing
 		if(back.alternate_worn_icon)
-			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
+			standing = image("icon"=back.alternate_worn_icon, "icon_state"="[back.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-BACK_LAYER)
+			standing = image("icon"='icons/mob/back.dmi', "icon_state"="[back.icon_state]", "layer"=-layer2use)
 
 		overlays_standing[BACK_LAYER] = standing
 		return back
@@ -124,11 +138,18 @@
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
+
+		var/layer2use
+		if(head.alternate_worn_layer)
+			layer2use = head.alternate_worn_layer
+		if(!layer2use)
+			layer2use = HEAD_LAYER
+
 		var/image/standing
 		if(head.alternate_worn_icon)
-			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+			standing = image("icon"=head.alternate_worn_icon, "icon_state"="[head.icon_state]", "layer"=-layer2use)
 		if(!standing)
-			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-HEAD_LAYER)
+			standing = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-layer2use)
 		standing.color = head.color // For now, this is here solely for kitty ears, but everything should do this eventually
 		standing.alpha = head.alpha
 

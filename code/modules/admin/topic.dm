@@ -443,15 +443,14 @@
 					mins = minutes - CMinutes
 				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
 				if(!mins)	return
-				mins = min(525599,mins)
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Reason?","reason",reason2) as text|null
+				reason = input(usr,"Please State Reason","Reason",reason2) as message
 				if(!reason)	return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Reason?","reason",reason2) as text|null
+				reason = input(usr,"Please State Reason","Reason",reason2) as message
 				if(!reason)	return
 
 		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
@@ -497,7 +496,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Reason?","reason","Metafriender") as text|null
+				var/reason = input(usr,"Please State Reason","Reason") as message
 				if(!reason)
 					return
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
@@ -505,7 +504,7 @@
 				feedback_inc("ban_appearance",1)
 				DB_ban_record(BANTYPE_APPEARANCE, M, -1, reason)
 				appearance_fullban(M, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
-				notes_add(M.ckey, "Appearance banned - [reason]")
+				add_note(M.ckey, "Appearance banned - [reason]", null, usr.ckey, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)]</span>")
 				M << "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>"
 				M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -905,7 +904,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = input(usr,"Reason?","Please State Reason","") as text|null
+					var/reason = input(usr,"Please State Reason","Reason") as message
 					if(!reason)
 						return
 
@@ -921,7 +920,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					notes_add(M.ckey, "Banned  from [msg] - [reason]")
+					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
 					M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -929,7 +928,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Reason?","Please State Reason","") as text|null
+					var/reason = input(usr,"Please State Reason","Reason") as message
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -941,7 +940,7 @@
 							jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 							if(!msg)	msg = job
 							else		msg += ", [job]"
-						notes_add(M.ckey, "Banned  from [msg] - [reason]")
+						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
 						M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -994,17 +993,48 @@
 			del(M.client)
 
 	//Player Notes
-	else if(href_list["notes"])
-		var/ckey = href_list["ckey"]
-		switch(href_list["notes"])
-			if("show")
-				notes_show(ckey)
-			if("add")
-				notes_add(ckey,href_list["text"], 1)
-				notes_show(ckey)
-			if("remove")
-				notes_remove(ckey,text2num(href_list["from"]),text2num(href_list["to"]))
-				notes_show(ckey)
+	else if(href_list["addnote"])
+		var/target_ckey = href_list["addnote"]
+		add_note(target_ckey)
+
+	else if(href_list["addnoteempty"])
+		add_note()
+
+	else if(href_list["removenote"])
+		var/note_id = href_list["removenote"]
+		remove_note(note_id)
+
+	else if(href_list["editnote"])
+		var/note_id = href_list["editnote"]
+		edit_note(note_id)
+
+	else if(href_list["shownote"])
+		var/target = href_list["shownote"]
+		show_note(index = target)
+
+	else if(href_list["nonalpha"])
+		var/target = href_list["nonalpha"]
+		target = text2num(target)
+		show_note(index = target)
+
+	else if(href_list["shownoteckey"])
+		var/target_ckey = href_list["shownoteckey"]
+		show_note(target_ckey)
+
+	else if(href_list["notessearch"])
+		var/target = href_list["notessearch"]
+		show_note(index = target)
+
+	else if(href_list["noteedits"])
+		var/note_id = sanitizeSQL("[href_list["noteedits"]]")
+		var/DBQuery/query_noteedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("notes")] WHERE id = '[note_id]'")
+		if(!query_noteedits.Execute())
+			var/err = query_noteedits.ErrorMsg()
+			log_game("SQL ERROR obtaining edits from notes table. Error : \[[err]\]\n")
+			return
+		if(query_noteedits.NextRow())
+			var/edit_log = query_noteedits.item[1]
+			usr << browse(edit_log,"window=noteedits")
 
 	else if(href_list["removejobban"])
 		if(!check_rights(R_BAN))	return
@@ -1034,8 +1064,7 @@
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(!mins)
 					return
-				if(mins >= 525600) mins = 525599
-				var/reason = input(usr,"Reason?","reason","Griefer") as text|null
+				var/reason = input(usr,"Please State Reason","Reason") as message
 				if(!reason)
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
@@ -1055,7 +1084,7 @@
 				del(M.client)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
-				var/reason = input(usr,"Reason?","reason","Griefer") as text|null
+				var/reason = input(usr,"Please State Reason","Reason") as message
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1095,61 +1124,46 @@
 				unjobbanpanel()
 
 	//Watchlist
-	else if(href_list["watchlist"])
-		if(!check_rights(R_ADMIN))	return
-		var/mob/M = locate(href_list["watchlist"])
-		if(!dbcon.IsConnected())
-			usr << "<span class='danger'>Failed to establish database connection.</span>"
+	else if(href_list["watchadd"])
+		var/target_ckey = locate(href_list["watchadd"])
+		usr.client.watchlist_add(target_ckey)
+
+	else if(href_list["watchremove"])
+		var/target_ckey = href_list["watchremove"]
+		usr.client.watchlist_remove(target_ckey)
+
+	else if(href_list["watchedit"])
+		var/target_ckey = href_list["watchedit"]
+		usr.client.watchlist_edit(target_ckey)
+
+	else if(href_list["watchaddbrowse"])
+		usr.client.watchlist_add(null, 1)
+
+	else if(href_list["watchremovebrowse"])
+		var/target_ckey = href_list["watchremovebrowse"]
+		usr.client.watchlist_remove(target_ckey, 1)
+
+	else if(href_list["watcheditbrowse"])
+		var/target_ckey = href_list["watcheditbrowse"]
+		usr.client.watchlist_edit(target_ckey, 1)
+
+	else if(href_list["watchsearch"])
+		var/target_ckey = href_list["watchsearch"]
+		usr.client.watchlist_show(target_ckey)
+
+	else if(href_list["watchshow"])
+		usr.client.watchlist_show()
+
+	else if(href_list["watcheditlog"])
+		var/target_ckey = sanitizeSQL("[href_list["watcheditlog"]]")
+		var/DBQuery/query_watchedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("watch")] WHERE ckey = '[target_ckey]'")
+		if(!query_watchedits.Execute())
+			var/err = query_watchedits.ErrorMsg()
+			log_game("SQL ERROR obtaining edits from watch table. Error : \[[err]\]\n")
 			return
-		if(!ismob(M))
-			usr << "This can only be used on instances of type /mob"
-			return
-		if(!M.ckey)
-			usr << "This mob has no ckey"
-			return
-		var/sql_ckey = sanitizeSQL(M.ckey)
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
-		query.Execute()
-		if(query.NextRow())
-			switch(alert(usr, "[sql_ckey] is already on the watchlist, do you want to:", "Ckey already flagged", "Remove", "Edit reason", "Cancel"))
-				if("Cancel")
-					return
-				if("Remove")
-					var/DBQuery/query_watchdel = dbcon.NewQuery("DELETE FROM [format_table_name("watch")] WHERE ckey = '[sql_ckey]'")
-					if(!query_watchdel.Execute())
-						var/err = query_watchdel.ErrorMsg()
-						log_game("SQL ERROR during removing watch entry. Error : \[[err]\]\n")
-						return
-					log_admin("[key_name(usr)] has removed [key_name_admin(M)] from the watchlist")
-					message_admins("[key_name_admin(usr)] has removed [key_name_admin(M)] from the watchlist", 1)
-				if("Edit reason")
-					var/DBQuery/query_reason = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
-					query_reason.Execute()
-					if(query_reason.NextRow())
-						var/watch_reason = query_reason.item[3]
-						var/new_reason = input("Insert new reason", "New Reason", "[watch_reason]", null) as null|text
-						new_reason = sanitizeSQL(new_reason)
-						if(!new_reason)
-							return
-						var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("watch")] SET reason = '[new_reason]' WHERE (ckey = '[sql_ckey]')")
-						if(!update_query.Execute())
-							var/err = update_query.ErrorMsg()
-							log_game("SQL ERROR during edit watch entry reason. Error : \[[err]\]\n")
-							return
-						log_admin("[key_name(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
-						message_admins("[key_name_admin(usr)] has edited [sql_ckey]'s reason from [watch_reason] to [new_reason]",1)
-		else
-			var/reason = input(usr,"Reason?","reason","Metagaming") as text|null
-			if(!reason)
-				return
-			reason = sanitizeSQL(reason)
-			var/DBQuery/query_watchadd = dbcon.NewQuery("INSERT INTO [format_table_name("watch")] (ckey, reason) VALUES ('[sql_ckey]', '[reason]')")
-			if(!query_watchadd.Execute())
-				var/err = query_watchadd.ErrorMsg()
-				log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
-				return
-			log_admin("[key_name(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]")
-			message_admins("[key_name_admin(usr)] has added [key_name_admin(M)] to the watchlist - Reason: [reason]", 1)
+		if(query_watchedits.NextRow())
+			var/edit_log = query_watchedits.item[1]
+			usr << browse(edit_log,"window=watchedits")
 
 	else if(href_list["mute"])
 		if(!check_rights(R_ADMIN))	return
@@ -1793,41 +1807,36 @@
 		if(!obj_dir || !(obj_dir in list(1,2,4,8,5,6,9,10)))
 			obj_dir = 2
 		var/obj_name = sanitize(href_list["object_name"])
+
+
+		var/atom/target //Where the object will be spawned
 		var/where = href_list["object_where"]
 		if (!( where in list("onfloor","inhand","inmarked") ))
 			where = "onfloor"
 
-		if( where == "inhand" )
-			usr << "Support for inhand not available yet. Will spawn on floor."
-			where = "onfloor"
 
-		if ( where == "inhand" )	//Can only give when human or monkey
-			if ( !( ishuman(usr) || ismonkey(usr) ) )
-				usr << "Can only spawn in hand when you're a human or a monkey."
-				where = "onfloor"
-			else if ( usr.get_active_hand() )
-				usr << "Your active hand is full. Spawning on floor."
-				where = "onfloor"
+		switch(where)
+			if("inhand")
+				if (!iscarbon(usr) && !isrobot(usr))
+					usr << "Can only spawn in hand when you're a carbon mob or cyborg."
+					where = "onfloor"
+				target = usr
 
-		if ( where == "inmarked" )
-			if ( !marked_datum )
-				usr << "You don't have any object marked. Abandoning spawn."
-				return
-			else
-				if ( !istype(marked_datum,/atom) )
-					usr << "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn."
-					return
-
-		var/atom/target //Where the object will be spawned
-		switch ( where )
-			if ( "onfloor" )
-				switch (href_list["offset_type"])
+			if("onfloor")
+				switch(href_list["offset_type"])
 					if ("absolute")
 						target = locate(0 + X,0 + Y,0 + Z)
 					if ("relative")
 						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
-			if ( "inmarked" )
-				target = marked_datum
+			if("inmarked")
+				if(!marked_datum)
+					usr << "You don't have any object marked. Abandoning spawn."
+					return
+				else if(!istype(marked_datum,/atom))
+					usr << "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn."
+					return
+				else
+					target = marked_datum
 
 		if(target)
 			for (var/path in paths)
@@ -1835,9 +1844,8 @@
 					if(path in typesof(/turf))
 						var/turf/O = target
 						var/turf/N = O.ChangeTurf(path)
-						if(N)
-							if(obj_name)
-								N.name = obj_name
+						if(N && obj_name)
+							N.name = obj_name
 					else
 						var/atom/O = new path(target)
 						if(O)
@@ -1847,6 +1855,18 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
+							if(where == "inhand" && isliving(usr) && istype(O, /obj/item))
+								var/mob/living/L = usr
+								var/obj/item/I = O
+								L.put_in_hands(I)
+								if(isrobot(L))
+									var/mob/living/silicon/robot/R = L
+									if(R.module)
+										R.module.modules += I
+										I.loc = R.module
+										R.module.rebuild()
+										R.activate_module(I)
+
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

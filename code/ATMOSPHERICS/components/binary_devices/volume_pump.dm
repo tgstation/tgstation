@@ -29,7 +29,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = 1
@@ -48,8 +48,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on)
 		return 0
 
-	var/datum/gas_mixture/air1 = airs[AIR1]
-	var/datum/gas_mixture/air2 = airs[AIR2]
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -125,7 +125,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = airs[AIR1]
+		var/datum/gas_mixture/air1 = AIR1
 		transfer_rate = Clamp(
 			text2num(signal.data["set_transfer_rate"]),
 			0,

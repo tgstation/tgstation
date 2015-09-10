@@ -204,7 +204,7 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/Destroy()
 	multiverse.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
@@ -458,3 +458,121 @@ var/global/list/multiverse = list()
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
 	M.equip_to_slot_or_del(W, slot_wear_id)
+
+
+/obj/item/voodoo
+	name = "wicker doll"
+	desc = "Something creepy about it."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "voodoo"
+	item_state = "electronic"
+	var/mob/living/carbon/human/target = null
+	var/list/mob/living/carbon/human/possible = list()
+	var/obj/item/link = null
+	var/cooldown_time = 30 //3s
+	var/cooldown = 0
+	burntime = 0
+	burn_state = 0
+
+/obj/item/voodoo/attackby(obj/item/I, mob/user, params)
+	if(target && cooldown < world.time)
+		if(is_hot(I))
+			target << "<span class='userdanger'>You suddenly feel very hot</span>"
+			target.bodytemperature += 50
+			GiveHint(target)
+		else if(is_pointed(I))
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_sel.selecting)]!</span>"
+			target.Weaken(2)
+			GiveHint(target)
+		else if(istype(I,/obj/item/weapon/bikehorn))
+			target << "<span class='userdanger'>HONK</span>"
+			target << 'sound/items/AirHorn.ogg'
+			target.adjustEarDamage(0,3)
+			GiveHint(target)
+		cooldown = world.time +cooldown_time
+		return
+
+	if(!link)
+		if(I.loc == user && istype(I) && I.w_class <= 2)
+			user.drop_item()
+			I.loc = src
+			link = I
+			user << "You attach [I] to the doll."
+			update_targets()
+	..()
+
+/obj/item/voodoo/check_eye(mob/user)
+	return src.loc == user
+
+/obj/item/voodoo/attack_self(mob/user)
+	if(!target && possible.len)
+		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
+		return
+	
+	if(user.zone_sel.selecting == "chest")
+		if(link)
+			target = null
+			link.loc = get_turf(src)
+			user << "<span class='notice'>You remove the [link] from the doll.</span>"
+			link = null
+			update_targets()
+			return
+	
+	if(target && cooldown < world.time)
+		switch(user.zone_sel.selecting)
+			if("mouth")
+				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
+				target.say(wgw)
+				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
+			if("eyes")
+				user.set_machine(src)
+				if(user.client)
+					user.client.eye = target
+					user.client.perspective = EYE_PERSPECTIVE
+				spawn(100)
+					user.reset_view()
+					user.unset_machine()
+			if("r_leg","l_leg")
+				user << "<span class='notice'>You move the doll's legs around.</span>"
+				var/turf/T = get_step(target,pick(cardinal))
+				target.Move(T)
+			if("r_arm","l_arm")
+				//use active hand on random nearby mob
+				var/list/nearby_mobs = list()
+				for(var/mob/living/L in range(target,1))
+					if(L!=target)
+						nearby_mobs |= L
+				if(nearby_mobs.len)
+					var/mob/living/T = pick(nearby_mobs)
+					log_game("[user][user.key] made [target][target.key] click on [T] with a voodoo doll.")
+					target.ClickOn(T)
+					GiveHint(target)
+			if("head")
+				user << "<span class='notice'>You smack the doll's head with your hand.</span>"
+				target.Dizzy(10)
+				target << "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>"
+				GiveHint(target,user)
+		cooldown = world.time + cooldown_time
+
+/obj/item/voodoo/proc/update_targets()
+	possible = list()
+	if(!link)
+		return
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(md5(H.dna.uni_identity) in link.fingerprints)
+			possible |= H
+
+/obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
+	if(prob(50) || force)
+		var/way = dir2text(get_dir(victim,get_turf(src)))
+		victim << "<span class='notice'>You feel a dark presence from [way]</span>"
+	if(prob(20) || force)
+		var/area/A = get_area(src)
+		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
+
+/obj/item/voodoo/fire_act()
+	if(target)
+		target.adjust_fire_stacks(20)
+		target.IgniteMob()
+		GiveHint(target,1)
+	return ..()

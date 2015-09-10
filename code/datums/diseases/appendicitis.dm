@@ -12,18 +12,16 @@
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = NON_CONTAGIOUS
 	visibility_flags = HIDDEN_PANDEMIC
-	required_organs = list(/obj/item/organ/limb/chest)
-
+	required_organs = list(/obj/item/organ/internal/appendix)
 
 /datum/disease/appendicitis/stage_act()
 	..()
-
 	switch(stage)
 		if(1)
 			if(prob(5))
 				affected_mob.emote("cough")
 		if(2)
-			var/obj/item/organ/appendix/A = affected_mob.getorgan(/obj/item/organ/appendix)
+			var/obj/item/organ/internal/appendix/A = affected_mob.getorgan(/obj/item/organ/internal/appendix)
 			if(A)
 				A.inflamed = 1
 				A.update_icon()

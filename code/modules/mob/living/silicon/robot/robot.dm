@@ -9,6 +9,7 @@
 	var/custom_name = ""
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
+	var/magpulse = 0
 
 //Hud stuff
 
@@ -36,6 +37,7 @@
 
 	var/opened = 0
 	var/emagged = 0
+	var/emag_cooldown = 0
 	var/wiresexposed = 0
 	var/locked = 1
 	var/list/req_access = list(access_robotics)
@@ -106,9 +108,8 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new(src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain = new /obj/item/organ/internal/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
-		mmi.locked = 1
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
 		mmi.brainmob = new(src)
@@ -139,7 +140,13 @@
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
-	..()
+	qdel(wires)
+	qdel(module)
+	wires = null
+	module = null
+	camera = null
+	cell = null
+	return ..()
 
 
 /mob/living/silicon/robot/proc/pick_module()
@@ -214,6 +221,7 @@
 			animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
+			magpulse = 1
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -256,6 +264,8 @@
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
 	set name = "Show Alerts"
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	robot_alerts()
 
 //for borg hotkeys, here module refers to borg inv slot, not core module
@@ -463,7 +473,7 @@
 			user << "<span class='notice'>You insert the power cell.</span>"
 		update_icons()
 
-	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool) || istype(W, /obj/item/device/assembly/signaler))
+	else if (wires.IsInteractionTool(W))
 		if (wiresexposed)
 			wires.Interact(user)
 		else
@@ -571,11 +581,26 @@
 				user << "<span class='warning'>The cover is already unlocked!</span>"
 			return
 		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+			if((world.time - 100) < emag_cooldown)
+				return
+
+			var/ai_is_antag = 0
+			if(connected_ai && connected_ai.mind)
+				if(connected_ai.mind.special_role)
+					ai_is_antag = (connected_ai.mind.special_role == "malfunction") || (connected_ai.mind.special_role == "traitor")
+			if(ai_is_antag)
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+				connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"
+				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] slaved to traitor AI [connected_ai].")
+				emag_cooldown = world.time
+				return
+
 			if(wiresexposed)
 				user << "<span class='warning'>You must close the cover first!</span>"
 				return
 			else
+				emag_cooldown = world.time
 				sleep(6)
 				SetEmagged(1)
 				SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
@@ -614,6 +639,8 @@
 	set category = "Robot Commands"
 	set name = "Unlock Cover"
 	set desc = "Unlocks your own cover if it is locked. You can not lock it again. A human will have to lock it for you."
+	if(stat == DEAD)
+		return //won't work if dead
 	if(locked)
 		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
@@ -863,9 +890,6 @@
 			var/turf/tile = loc
 			if(isturf(tile))
 				tile.clean_blood()
-				if (istype(tile, /turf/simulated/floor))
-					var/turf/simulated/floor/F = tile
-					F.dirt = 0
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(is_cleanable(A))
@@ -982,12 +1006,17 @@
 	set category = "Robot Commands"
 	set name = "State Laws"
 
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	checklaws()
 
 /mob/living/silicon/robot/verb/set_automatic_say_channel() //Borg version of setting the radio for autosay messages.
 	set name = "Set Auto Announce Mode"
 	set desc = "Modify the default radio setting for stating your laws."
 	set category = "Robot Commands"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
 	set_autosay()
 
 /mob/living/silicon/robot/proc/control_headlamp()
@@ -1055,7 +1084,7 @@
 		new /obj/item/robot_parts/head(T)
 		var/b
 		for(b=0, b!=2, b++)
-			var/obj/item/device/flash/handheld/F = new /obj/item/device/flash/handheld(T)
+			var/obj/item/device/assembly/flash/handheld/F = new /obj/item/device/assembly/flash/handheld(T)
 			F.burn_out()
 	if (cell) //Sanity check.
 		cell.loc = T

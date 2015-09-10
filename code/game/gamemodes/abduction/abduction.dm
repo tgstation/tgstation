@@ -257,10 +257,7 @@
 	scientist.equip_to_slot_or_del(G, slot_in_backpack)
 
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
-	beamplant.imp_in = scientist
-	beamplant.implanted = 1
-	beamplant.implanted(scientist)
-	beamplant.home = console.pad
+	beamplant.implant(scientist)
 
 
 /datum/game_mode/abduction/check_finished()
@@ -280,9 +277,9 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greentext'><b>[team_name] team fullfilled its mission!</b></span>"
+			world << "<span class='greenannounce'>[team_name] team fullfilled its mission!</span>"
 		else
-			world << "<span class='greentext'><b>[team_name] team failed its mission.</b></span>"
+			world << "<span class='boldannounce'>[team_name] team failed its mission.</span>"
 	..()
 	return 1
 

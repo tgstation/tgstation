@@ -121,7 +121,7 @@
 
 /obj/effect/meteor/Destroy()
 	walk(src,0) //this cancels the walk_towards() proc
-	..()
+	return ..()
 
 /obj/effect/meteor/New()
 	..()
@@ -165,8 +165,7 @@
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
-		var/obj/item/O = new meteordrop(get_turf(src))
-		O.throw_at(dest, 5, 10)
+		new meteordrop(get_turf(src))
 
 /obj/effect/meteor/proc/meteor_effect(sound=1)
 	if(sound)

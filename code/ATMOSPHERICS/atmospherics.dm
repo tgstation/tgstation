@@ -9,7 +9,6 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
-
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
@@ -25,7 +24,11 @@ Pipelines + Other Objects -> Pipe network
 
 	var/image/pipe_vision_img = null
 
+	var/device_type = 0
+	var/list/obj/machinery/atmospherics/nodes = list()
+
 /obj/machinery/atmospherics/New()
+	nodes.len = device_type
 	..()
 	SSair.atmos_machinery += src
 	SetInitDirections()
@@ -33,10 +36,13 @@ Pipelines + Other Objects -> Pipe network
 		stored = new(src, make_from=src)
 
 /obj/machinery/atmospherics/Destroy()
+	for(DEVICE_TYPE_LOOP)
+		nullifyNode(I)
+
 	SSair.atmos_machinery -= src
-	if (stored)
+	if(stored)
 		qdel(stored)
-	stored = null
+		stored = null
 
 	for(var/mob/living/L in src)
 		L.remove_ventcrawl()
@@ -44,14 +50,49 @@ Pipelines + Other Objects -> Pipe network
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	..()
+	return ..()
+	//return QDEL_HINT_FINDREFERENCE
+
+/obj/machinery/atmospherics/proc/nullifyNode(I)
+	if(NODE_I)
+		var/obj/machinery/atmospherics/N = NODE_I
+		N.disconnect(src)
+		NODE_I = null
 
 //this is called just after the air controller sets up turfs
-/obj/machinery/atmospherics/proc/atmosinit()
-	return
+/obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
+	if(!node_connects) //for pipes where order of nodes doesn't matter
+		node_connects = list()
+		node_connects.len = device_type
+
+		for(DEVICE_TYPE_LOOP)
+			for(var/D in cardinal)
+				if(D & GetInitDirections())
+					if(D in node_connects)
+						continue
+					node_connects[I] = D
+					break
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
+			if(can_be_node(target, I))
+				NODE_I = target
+				break
+
+	update_icon()
+
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+	if(target.initialize_directions & get_dir(target,src))
+		return 1
+
+/obj/machinery/atmospherics/proc/pipeline_expansion()
+	return nodes
 
 /obj/machinery/atmospherics/proc/SetInitDirections()
 	return
+
+/obj/machinery/atmospherics/proc/GetInitDirections()
+	return initialize_directions
 
 /obj/machinery/atmospherics/proc/returnPipenet()
 	return
@@ -70,7 +111,12 @@ Pipelines + Other Objects -> Pipe network
 	return
 
 /obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	return
+	if(istype(reference, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = reference
+		qdel(P.parent)
+	var/I = nodes.Find(reference)
+	NODE_I = null
+	update_icon()
 
 /obj/machinery/atmospherics/update_icon()
 	return
@@ -129,15 +175,11 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
-		var/turf/T = loc
-		stored.loc = T
+		stored.loc = src.loc
 		transfer_fingerprints_to(stored)
 		stored = null
 
 	qdel(src)
-
-/obj/machinery/atmospherics/proc/nullifyPipenet(datum/pipeline/P)
-	P.other_atmosmch -= src
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
 
@@ -160,13 +202,11 @@ Pipelines + Other Objects -> Pipe network
 
 	return img
 
-/obj/machinery/atmospherics/construction(D, P, pipe_type, obj_color)
-	dir = D
-	initialize_directions = P
+/obj/machinery/atmospherics/construction(pipe_type, obj_color)
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
-		stored.dir = D				  //need to define them here, because the obj directions...
+		stored.dir = src.dir		  //need to define them here, because the obj directions...
 		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
 		stored.color = obj_color
 	var/turf/T = loc
@@ -194,6 +234,9 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!(direction & initialize_directions)) //cant go this way.
+		return
+
+	if(buckled_mob == user) // fixes buckle ventcrawl edgecase fuck bug
 		return
 
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)

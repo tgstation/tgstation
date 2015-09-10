@@ -9,20 +9,15 @@
 	origin_tech = "biotech=3"
 	var/braintype = "Cyborg"
 
-	req_access = list(access_robotics)
-
-	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
-
-	var/locked = 0
 	var/syndiemmi = 0 //Whether or not this is a Syndicate MMI
 	var/mob/living/carbon/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
+	var/obj/item/organ/internal/brain/brain = null //The actual brain
 
 /obj/item/device/mmi/update_icon()
 	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
+		if(istype(brain,/obj/item/organ/internal/brain/alien))
 			icon_state = "mmi_alien"
 			braintype = "Xenoborg" //HISS....Beep.
 		else
@@ -31,16 +26,10 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/Topic(href, href_list)
-	if(href_list["reenter"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.reenter_corpse(ghost)
-
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
+	if(istype(O,/obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/newbrain = O
 		if(brain)
 			user << "<span class='warning'>There's already a brain in the MMI!</span>"
 			return
@@ -52,11 +41,7 @@
 			return
 		var/mob/living/carbon/brain/B = newbrain.brainmob
 		if(!B.key)
-			var/mob/dead/observer/ghost = B.get_ghost()
-			if(ghost)
-				if(ghost.client)
-					ghost << "<span class='ghostalert'>Someone has put your brain in a MMI!</span> <a href=?src=\ref[src];reenter=1>(Click to enter)</a>"
-					ghost << sound('sound/effects/genetics.ogg')
+			B.notify_ghost_cloning("Someone has put your brain in a MMI!")
 		visible_message("[user] sticks \a [newbrain] into \the [src].")
 
 		brainmob = newbrain.brainmob
@@ -73,19 +58,10 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		locked = 1
-
 		feedback_inc("cyborg_mmis_filled",1)
 
 		return
 
-	if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
-		if(allowed(user))
-			locked = !locked
-			user << "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>"
-		else
-			user << "<span class='danger'>Access denied.</span>"
-		return
 	if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
 		return
@@ -94,10 +70,8 @@
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brain)
 		user << "<span class='warning'>You upend the MMI, but there's nothing in it!</span>"
-	else if(locked)
-		user << "<span class='warning'>You upend the MMI, but the brain is clamped into place!</span>"
 	else
-		user << "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>"
+		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
 
 		brainmob.container = null //Reset brainmob mmi var.
 		brainmob.loc = brain //Throw mob into brain.
@@ -120,13 +94,12 @@
 	brainmob.container = src
 
 	if(istype(H))
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()
-	locked = 1
 	return
 
 /obj/item/device/mmi/radio_enabled
@@ -174,7 +147,7 @@
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
-	..()
+	return ..()
 
 /obj/item/device/mmi/examine(mob/user)
 	..()

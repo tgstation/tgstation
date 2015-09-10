@@ -137,7 +137,7 @@ var/datum/subsystem/ticker/ticker
 		mode = config.pick_mode(master_mode)
 		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
-			del(mode)
+			qdel(mode)
 			SSjob.ResetOccupations()
 			return 0
 
@@ -148,7 +148,7 @@ var/datum/subsystem/ticker/ticker
 
 	if(!Debug2)
 		if(!can_continue)
-			del(mode)
+			qdel(mode)
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
@@ -243,6 +243,7 @@ var/datum/subsystem/ticker/ticker
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
+					sleep(70)
 				if("fake") //The round isn't over, we're just freaking people out for fun
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -288,8 +289,8 @@ var/datum/subsystem/ticker/ticker
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					sleep(100)
-					if(cinematic)	del(cinematic)
-					if(temp_buckle)	del(temp_buckle)
+					if(cinematic)	qdel(cinematic)
+					if(temp_buckle)	qdel(temp_buckle)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)

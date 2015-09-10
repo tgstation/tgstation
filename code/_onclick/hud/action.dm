@@ -30,6 +30,7 @@
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
+	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
 	if(owner)
@@ -45,7 +46,8 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
+		qdel(button)
+		button = null
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null
@@ -135,7 +137,10 @@
 	var/image/img
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
-		overlays += I.appearance
+		var/old = I.layer
+		I.layer = FLOAT_LAYER //AAAH
+		overlays += I
+		I.layer = old
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
 		img.pixel_x = 0
@@ -217,6 +222,21 @@
 /datum/action/item_action/hands_free
 	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
+/datum/action/organ_action
+	check_flags = AB_CHECK_ALIVE
+
+/datum/action/organ_action/CheckRemoval(mob/living/carbon/user)
+	if(!iscarbon(user))
+		return 1
+	if(target in user.internal_organs)
+		return 0
+	return 1
+
+/datum/action/organ_action/IsAvailable()
+	var/obj/item/organ/internal/I = target
+	if(!I.owner)
+		return 0
+	return ..()
 
 //Preset for spells
 /datum/action/spell_action

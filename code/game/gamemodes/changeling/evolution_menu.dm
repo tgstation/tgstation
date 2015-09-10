@@ -371,7 +371,8 @@ var/list/sting_paths
 			S.on_purchase(src)
 
 	var/mob/living/carbon/C = src		//only carbons have dna now, so we have to typecaste
-	mind.changeling.absorbed_dna |= C.dna
+	var/datum/changelingprofile/prof = mind.changeling.add_profile(C) //not really a point in typecasting here but somebody will probably get mad at me if i dont
+	mind.changeling.first_prof = prof
 	return 1
 
 /datum/changeling/proc/reset()
@@ -388,6 +389,7 @@ var/list/sting_paths
 	if(ishuman(src) || ismonkey(src))
 		if(mind && mind.changeling)
 			digitalcamo = 0
+			digitalinvis = 0
 			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)

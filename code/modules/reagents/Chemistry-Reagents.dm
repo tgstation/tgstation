@@ -4,10 +4,6 @@
 
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
-//so that it can continue working when the reagent is deleted while the proc is still active.
-
-
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
@@ -28,32 +24,27 @@
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
-	var/overdosed = 0 // You fucked up and this is now triggering it's overdose effects, purge that shit quick.
+	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
-	..()
+	. = ..()
 	holder = null
 
-/datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, volume, show_message = 1, touch_protection = 0)
+/datum/reagent/proc/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
 		return 0
-	var/datum/reagent/self = src
-	src = null
-
-	if(method == TOUCH)
+	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = Clamp((1 - touch_protection) + rand(-5,5)/100, 0, 1)
+			var/modifier = Clamp((1 - touch_protection), 0, 1)
 			var/amount = round(volume*modifier, 0.1)
 			if(amount >= 1)
-				M.reagents.add_reagent(self.id, amount)
+				M.reagents.add_reagent(id, amount)
 	return 1
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
-	src = null
 	return
 
 /datum/reagent/proc/reaction_turf(turf/T, volume)
-	src = null
 	return
 
 /datum/reagent/proc/on_mob_life(mob/living/M)
@@ -117,3 +108,10 @@
 		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
+/proc/pretty_string_from_reagent_list(var/list/reagent_list)
+	//Convert reagent list to a printable string for logging etc
+	var/result = "| "
+	for (var/datum/reagent/R in reagent_list)
+		result += "[R.name], [R.volume] | "
+
+	return result

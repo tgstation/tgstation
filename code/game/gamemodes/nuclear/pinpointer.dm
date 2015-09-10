@@ -14,7 +14,7 @@
 
 /obj/item/weapon/pinpointer/Destroy()
 	active = 0
-	..()
+	return ..()
 
 /obj/item/weapon/pinpointer/attack_self()
 	if(!active)

@@ -22,13 +22,14 @@
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
 	gender = MALE
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = /mob/living/simple_animal/pet/dog/corgi/puppy
 	species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/facehugger
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -39,6 +40,7 @@
 	icon_living = "pug"
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/corgi/New()
 	..()
@@ -108,6 +110,8 @@
 				icon_state = icon_dead
 		return
 	..()
+	update_corgi_fluff()
+
 
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
@@ -181,6 +185,7 @@
 						/obj/item/weapon/tank/internals/oxygen,
 						/obj/item/weapon/tank/internals/air,
 						/obj/item/weapon/extinguisher,
+						/obj/item/clothing/suit/hooded/ian_costume,
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -208,6 +213,7 @@
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
 //Many  hats added, Some will probably be removed, just want to see which ones are popular.
+
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
 	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
@@ -221,7 +227,6 @@
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
-
 	var/valid = 0
 
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
@@ -231,128 +236,16 @@
 		switch(item_to_add.type)
 			if( /obj/item/clothing/glasses/sunglasses, /obj/item/clothing/head/that, /obj/item/clothing/head/collectable/paper,
 					/obj/item/clothing/head/hardhat, /obj/item/clothing/head/collectable/hardhat, /obj/item/clothing/head/hardhat/white,
-					/obj/item/weapon/paper)
-				valid = 1
-
-			if(/obj/item/clothing/head/helmet)
-				name = "Sergeant [real_name]"
-				desc = "The ever-loyal, the ever-vigilant."
-				valid = 1
-
-			if(/obj/item/clothing/head/chefhat,	/obj/item/clothing/head/collectable/chef)
-				name = "Sous chef [real_name]"
-				desc = "Your food will be taste-tested.  All of it."
-				valid = 1
-
-			if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
-				name = "Captain [real_name]"
-				desc = "Probably better than the last captain."
-				valid = 1
-
-			if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
-				name = "Runtime"
-				emote_see = list("coughs up a furball", "stretches")
-				emote_hear = list("purrs")
-				speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
-				desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
-				valid = 1
-
-			if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
-				name = "Hoppy"
-				emote_see = list("twitches its nose", "hops around a bit")
-				desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit"
-				valid = 1
-
-			if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
-				name = "Yann"
-				desc = "Mon dieu! C'est un chien!"
-				speak = list("le woof!", "le bark!", "JAPPE!!")
-				emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of him.")
-				valid = 1
-
-			if(/obj/item/clothing/head/det_hat)
-				name = "Detective [real_name]"
-				desc = "[name] sees through your lies..."
-				emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.")
-				valid = 1
-
-			if(/obj/item/clothing/head/nursehat)
-				name = "Nurse [real_name]"
-				desc = "[name] needs 100cc of beef jerky... STAT!"
-				valid = 1
-
-			if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
-				name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
-				desc = "Yaarghh!! Thar' be a scurvy dog!"
-				emote_see = list("hunts for treasure.","stares coldly...","gnashes his tiny corgi teeth!")
-				emote_hear = list("growls ferociously!", "snarls.")
-				speak = list("Arrrrgh!!","Grrrrrr!")
-				valid = 1
-
-			if(/obj/item/clothing/head/ushanka)
-				name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
-				desc = "A follower of Karl Barx."
-				emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vanguardism.")
-				valid = 1
-
-			if(/obj/item/clothing/head/warden, /obj/item/clothing/head/collectable/police)
-				name = "Officer [real_name]"
-				emote_see = list("drools.","looks for donuts.")
-				desc = "Stop right there criminal scum!"
-				valid = 1
-
-			if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
-				name = "Grandwizard [real_name]"
-				speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
-				valid = 1
-
-			if(/obj/item/clothing/head/cardborg)
-				name = "Borgi"
-				speak = list("Ping!","Beep!","Woof!")
-				emote_see = list("goes rogue.", "sniffs out non-humans.")
-				desc = "Result of robotics budget cuts."
-				valid = 1
-
-			if(/obj/item/weapon/bedsheet)
-				name = "\improper Ghost"
-				speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
-				emote_see = list("stumbles around.", "shivers.")
-				emote_hear = list("howls!","groans.")
-				desc = "Spooky!"
-				valid = 1
-
-			if(/obj/item/clothing/head/helmet/space/santahat)
-				name = "Santa's Corgi Helper"
-				emote_hear = list("barks Christmas songs.", "yaps merrily!")
-				emote_see = list("looks for presents.", "checks his list.")
-				desc = "He's very fond of milk and cookies."
-				valid = 1
-
-			if(/obj/item/clothing/head/soft)
-				name = "Corgi Tech [real_name]"
-				desc = "The reason your yellow gloves have chew-marks."
-				valid = 1
-
-			if(/obj/item/clothing/head/hardhat/reindeer)
-				name = "[real_name] the red-nosed Corgi"
-				emote_hear = list("lights the way!", "illuminates.", "yaps!")
-				desc = "He has a very shiny nose."
-				SetLuminosity(1)
-				valid = 1
-
-			if(/obj/item/clothing/head/sombrero)
-				name = "Segnor [real_name]"
-				desc = "You must respect elder [real_name]"
-				valid = 1
-
-			if(/obj/item/clothing/head/hopcap)
-				name = "Lieutenant [real_name]"
-				desc = "Can actually be trusted to not run off on his own."
-				valid = 1
-
-			if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
-				name = "Trooper [real_name]"
-				desc = "That's not red paint. That's real corgi blood."
+					/obj/item/weapon/paper, /obj/item/clothing/head/helmet, /obj/item/clothing/head/chefhat, /obj/item/clothing/head/collectable/chef,
+					/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain, /obj/item/clothing/head/kitty,
+					/obj/item/clothing/head/collectable/kitty, /obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears,
+					/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret, /obj/item/clothing/head/det_hat,
+					/obj/item/clothing/head/nursehat, /obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate,
+					/obj/item/clothing/head/ushanka, /obj/item/clothing/head/warden, /obj/item/clothing/head/collectable/police,
+					/obj/item/clothing/head/wizard/fake, /obj/item/clothing/head/wizard, /obj/item/clothing/head/collectable/wizard,
+					/obj/item/clothing/head/cardborg, /obj/item/weapon/bedsheet, /obj/item/clothing/head/helmet/space/santahat,
+					/obj/item/clothing/head/soft, /obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/sombrero,
+					/obj/item/clothing/head/hopcap, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
 				valid = 1
 
 	if(valid)
@@ -367,8 +260,8 @@
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
+		update_corgi_fluff()
 		regenerate_icons()
-
 	else
 		if(user && !user.drop_item())
 			user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
@@ -383,6 +276,110 @@
 
 	return valid
 
+/mob/living/simple_animal/pet/dog/corgi/proc/update_corgi_fluff()
+	if(!inventory_head)
+		return
+	switch(inventory_head.type)
+		if(/obj/item/clothing/head/helmet)
+			name = "Sergeant [real_name]"
+			desc = "The ever-loyal, the ever-vigilant."
+
+		if(/obj/item/clothing/head/chefhat,	/obj/item/clothing/head/collectable/chef)
+			name = "Sous chef [real_name]"
+			desc = "Your food will be taste-tested.  All of it."
+
+
+		if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
+			name = "Captain [real_name]"
+			desc = "Probably better than the last captain."
+
+		if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
+			name = "Runtime"
+			emote_see = list("coughs up a furball", "stretches")
+			emote_hear = list("purrs")
+			speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
+			desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
+
+		if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
+			name = "Hoppy"
+			emote_see = list("twitches its nose", "hops around a bit")
+			desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit"
+
+		if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
+			name = "Yann"
+			desc = "Mon dieu! C'est un chien!"
+			speak = list("le woof!", "le bark!", "JAPPE!!")
+			emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of him.")
+
+		if(/obj/item/clothing/head/det_hat)
+			name = "Detective [real_name]"
+			desc = "[name] sees through your lies..."
+			emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.")
+
+		if(/obj/item/clothing/head/nursehat)
+			name = "Nurse [real_name]"
+			desc = "[name] needs 100cc of beef jerky... STAT!"
+
+		if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
+			name = "[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]"
+			desc = "Yaarghh!! Thar' be a scurvy dog!"
+			emote_see = list("hunts for treasure.","stares coldly...","gnashes his tiny corgi teeth!")
+			emote_hear = list("growls ferociously!", "snarls.")
+			speak = list("Arrrrgh!!","Grrrrrr!")
+
+		if(/obj/item/clothing/head/ushanka)
+			name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
+			desc = "A follower of Karl Barx."
+			emote_see = list("contemplates the failings of the capitalist economic model.", "ponders the pros and cons of vanguardism.")
+
+		if(/obj/item/clothing/head/warden, /obj/item/clothing/head/collectable/police)
+			name = "Officer [real_name]"
+			emote_see = list("drools.","looks for donuts.")
+			desc = "Stop right there criminal scum!"
+
+		if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
+			name = "Grandwizard [real_name]"
+			speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+
+		if(/obj/item/clothing/head/cardborg)
+			name = "Borgi"
+			speak = list("Ping!","Beep!","Woof!")
+			emote_see = list("goes rogue.", "sniffs out non-humans.")
+			desc = "Result of robotics budget cuts."
+
+		if(/obj/item/weapon/bedsheet)
+			name = "\improper Ghost"
+			speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
+			emote_see = list("stumbles around.", "shivers.")
+			emote_hear = list("howls!","groans.")
+			desc = "Spooky!"
+
+		if(/obj/item/clothing/head/helmet/space/santahat)
+			name = "Santa's Corgi Helper"
+			emote_hear = list("barks Christmas songs.", "yaps merrily!")
+			emote_see = list("looks for presents.", "checks his list.")
+			desc = "He's very fond of milk and cookies."
+
+		if(/obj/item/clothing/head/soft)
+			name = "Corgi Tech [real_name]"
+			desc = "The reason your yellow gloves have chew-marks."
+
+		if(/obj/item/clothing/head/hardhat/reindeer)
+			name = "[real_name] the red-nosed Corgi"
+			emote_hear = list("lights the way!", "illuminates.", "yaps!")
+			desc = "He has a very shiny nose."
+
+		if(/obj/item/clothing/head/sombrero)
+			name = "Segnor [real_name]"
+			desc = "You must respect elder [real_name]"
+
+		if(/obj/item/clothing/head/hopcap)
+			name = "Lieutenant [real_name]"
+			desc = "Can actually be trusted to not run off on his own."
+
+		if(/obj/item/clothing/head/helmet/space/hardsuit/deathsquad)
+			name = "Trooper [real_name]"
+			desc = "That's not red paint. That's real corgi blood."
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/Ian
@@ -395,6 +392,7 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	..()
@@ -518,6 +516,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	gold_core_spawnable = 0
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
@@ -539,7 +538,7 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/pet/pug/Life()
+/mob/living/simple_animal/pet/dog/pug/Life()
 	..()
 
 	if(!stat && !resting && !buckled)

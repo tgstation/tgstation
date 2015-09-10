@@ -233,6 +233,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containername = "disabler crate"
 
+/datum/supply_packs/security/forensics
+	name = "Forensics Crate"
+	contains = list(/obj/item/device/detective_scanner,
+	                /obj/item/weapon/storage/box/evidence,
+	                /obj/item/device/camera,
+	                /obj/item/device/taperecorder,
+	                /obj/item/toy/crayon/white,
+	                /obj/item/clothing/head/det_hat)
+	cost = 20
+	containername ="forensics crate"
+
 ///// Armory stuff
 
 /datum/supply_packs/security/armory
@@ -470,7 +481,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly, // 21 Solar Assemblies. 1 Extra for the controller
 					/obj/item/weapon/circuitboard/solar_control,
-					/obj/item/weapon/tracker_electronics,
+					/obj/item/weapon/electronics/tracker,
 					/obj/item/weapon/paper/solar)
 	cost = 20
 	containername = "solar pack crate"
@@ -748,6 +759,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/condiment/rice,
 					/obj/item/weapon/reagent_containers/food/condiment/milk,
 					/obj/item/weapon/reagent_containers/food/condiment/soymilk,
+					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+					/obj/item/weapon/reagent_containers/food/condiment/peppermill,
 					/obj/item/weapon/storage/fancy/egg_box,
 					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 					/obj/item/weapon/reagent_containers/food/condiment/sugar,
@@ -1053,11 +1066,11 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/posters
 	name = "Corporate Posters Crate"
-	contains = list(/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit)
+	contains = list(/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit)
 	cost = 8
 	containername = "Corporate Posters Crate"
 
@@ -1211,13 +1224,33 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/randomised/contraband
 	num_contained = 5
-	contains = list(/obj/item/weapon/contraband/poster,
+	contains = list(/obj/item/weapon/poster/contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband Crate"
 	cost = 30
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
+
+/datum/supply_packs/misc/randomised/toys
+	name = "Toy Crate"
+	num_contained = 5
+	contains = list(/obj/item/toy/spinningtoy,
+	                /obj/item/toy/sword,
+	                /obj/item/toy/foamblade,
+	                /obj/item/toy/AI,
+	                /obj/item/toy/owl,
+	                /obj/item/toy/griffin,
+	                /obj/item/toy/nuke,
+	                /obj/item/toy/minimeteor,
+	                /obj/item/toy/carpplushie,
+	                /obj/item/weapon/coin/antagtoken,
+	                /obj/item/stack/tile/fakespace,
+	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+	                /obj/item/toy/redbutton)
+
+	cost = 50 // or play the arcade machines ya lazy bum
+	containername ="toy crate"
 
 /datum/supply_packs/misc/autodrobe
 	name = "Autodrobe Supply Crate"
@@ -1280,3 +1313,4 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 40
 	containername = "foam force pistols crate"
 	contraband = 1
+

@@ -94,7 +94,7 @@
 		/obj/item/weapon/grenade/chem_grenade/teargas,
 		/obj/item/weapon/reagent_containers/spray/pepper,
 		/obj/item/weapon/restraints/handcuffs,
-		/obj/item/device/flash/handheld,
+		/obj/item/device/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
@@ -205,6 +205,7 @@
 		/obj/item/weapon/gun/projectile/revolver,
 		/obj/item/ammo_box,
 		)
+	alternate_worn_layer = UNDER_SUIT_LAYER
 
 /obj/item/weapon/storage/belt/fannypack
 	name = "fannypack"

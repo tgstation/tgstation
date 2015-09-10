@@ -152,12 +152,13 @@
 	area.power_change()
 	if(occupier)
 		malfvacate(1)
-	del(wires)
+	qdel(wires)
+	wires = null
 	if(cell)
 		qdel(cell)
 	if(terminal)
 		disconnect_terminal()
-	..()
+	return ..()
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
@@ -398,7 +399,7 @@
 						user.visible_message(\
 							"[user.name] has removed the power control board from [src.name]!",\
 							"<span class='notice'>You remove the power control board.</span>")
-						new /obj/item/weapon/module/power_control(loc)
+						new /obj/item/weapon/electronics/apc(loc)
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			update_icon()
@@ -496,7 +497,7 @@
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 
-	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/weapon/electronics/apc) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
 		user.visible_message("[user.name] inserts the power control board into [src].", \
 							"<span class='notice'>You start to insert the power control board into the frame...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -505,7 +506,7 @@
 				has_electronics = 1
 				user << "<span class='notice'>You place the power control board inside the frame.</span>"
 				qdel(W)
-	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/weapon/electronics/apc) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "<span class='warning'>You cannot put the board inside, the frame is damaged!</span>"
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
@@ -525,13 +526,13 @@
 					"[user.name] has cut [src] apart with [W].",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
-				new /obj/item/apc_frame(loc)
+				new /obj/item/wallframe/apc(loc)
 				user.visible_message(\
 					"[user.name] has cut [src] from the wall with [W].",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return
-	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
+	else if (istype(W, /obj/item/wallframe/apc) && opened && emagged)
 		emagged = 0
 		if (opened==2)
 			opened = 1
@@ -540,7 +541,7 @@
 			"<span class='notice'>You replace the damaged APC frontal panel with a new one.</span>")
 		qdel(W)
 		update_icon()
-	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
+	else if (istype(W, /obj/item/wallframe/apc) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
 			user << "<span class='warning'>You cannot repair this APC until you remove the electronics still inside!</span>"
 			return
@@ -569,9 +570,7 @@
 		else
 			if (istype(user, /mob/living/silicon))
 				return src.attack_hand(user)
-			if (!opened && wiresexposed && \
-				(istype(W, /obj/item/device/multitool) || \
-				istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/assembly/signaler)))
+			if (!opened && wiresexposed && wires.IsInteractionTool(W))
 				return src.attack_hand(user)
 			..()
 
@@ -1232,15 +1231,7 @@
 #undef APC_UPDATE_ICON_COOLDOWN
 
 /*Power module, used for APC construction*/
-/obj/item/weapon/module
-	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
-	w_class = 2.0
-	item_state = "electronic"
-	flags = CONDUCT
-
-
-/obj/item/weapon/module/power_control
+/obj/item/weapon/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."

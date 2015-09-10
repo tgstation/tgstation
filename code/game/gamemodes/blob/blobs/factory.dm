@@ -2,12 +2,12 @@
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
+	desc = "A thick spire of tendrils."
 	health = 100
 	fire_resist = 2
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
-	var/mob/camera/blob/overmind
 
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)
@@ -18,7 +18,7 @@
 		if(spore.factory == src)
 			spore.factory = null
 	spores = null
-	..()
+	return ..()
 
 /obj/effect/blob/factory/PulseAnimation(activate = 0)
 	if(activate)

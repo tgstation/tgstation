@@ -180,7 +180,7 @@
 					C.inject_blood(src,5)
 				else
 					src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+				user << "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
 				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
@@ -220,6 +220,11 @@
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
 	list_reagents = list("spaceacillin" = 15)
+
+/obj/item/weapon/reagent_containers/syringe/bioterror
+	name = "bioterror syringe"
+	desc = "Contains several paralyzing reagents."
+	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
 
 /obj/item/weapon/reagent_containers/syringe/stimulants
 	name = "Stimpack"

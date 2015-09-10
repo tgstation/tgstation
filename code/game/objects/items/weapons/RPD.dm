@@ -5,7 +5,7 @@ CONTAINS:
 RPD
 */
 #define PIPE_BINARY		0
-#define PIPE_BENT		1
+#define PIPE_BENDABLE	1
 #define PIPE_TRINARY	2
 #define PIPE_TRIN_M		3
 #define PIPE_UNARY		4
@@ -24,14 +24,14 @@ RPD
 	var/id=-1
 	var/categoryId = CATEGORY_ATMOS
 	var/dir=SOUTH
-	var/dirtype=PIPE_BINARY
+	var/dirtype = PIPE_BENDABLE
 	var/icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	var/icon_state=""
 	var/selected=0
 
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
-	src.icon_state=pipeID2State[pid+1]
+	src.icon_state=pipeID2State["[pid]"]
 	src.dir=direction
 	src.dirtype=dt
 
@@ -81,8 +81,8 @@ var/global/list/disposalpipeID2State=list(
 //find these defines in code\game\machinery\pipe\consruction.dm
 var/global/list/RPD_recipes=list(
 	"Regular Pipes" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE_STRAIGHT,	1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE_BENT, 		5, PIPE_BENT),
+		"Pipe"           = new /datum/pipe_info(PIPE_SIMPLE,			1, PIPE_BENDABLE),
+		//"Bent Pipe"      = new /datum/pipe_info(PIPE_SIMPLE,	 		5, PIPE_BENT),
 		"Manifold"       = new /datum/pipe_info(PIPE_MANIFOLD, 			1, PIPE_TRINARY),
 		"Manual Valve"   = new /datum/pipe_info(PIPE_MVALVE, 			1, PIPE_BINARY),
 		"Digital Valve"  = new /datum/pipe_info(PIPE_DVALVE,			1, PIPE_BINARY),
@@ -101,19 +101,19 @@ var/global/list/RPD_recipes=list(
 //		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
-		"Pipe"           = new /datum/pipe_info(PIPE_HE_STRAIGHT,		1, PIPE_BINARY),
-		"Bent Pipe"      = new /datum/pipe_info(PIPE_HE_BENT,			5, PIPE_BENT),
+		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
+		//"Bent Pipe"      = new /datum/pipe_info(PIPE_HE,				5, PIPE_BENT),
 		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
 	),
 	"Disposal Pipes" = list(
 		"Pipe"          = new /datum/pipe_info/disposal(DISP_PIPE_STRAIGHT,	PIPE_BINARY),
 		"Bent Pipe"     = new /datum/pipe_info/disposal(DISP_PIPE_BENT,		PIPE_TRINARY),
-		"Junction"      = new /datum/pipe_info/disposal(DISP_JUNCTION,			PIPE_TRINARY),
+		"Junction"      = new /datum/pipe_info/disposal(DISP_JUNCTION,		PIPE_TRINARY),
 		"Y-Junction"    = new /datum/pipe_info/disposal(DISP_YJUNCTION,		PIPE_TRINARY),
 		"Trunk"         = new /datum/pipe_info/disposal(DISP_END_TRUNK,		PIPE_TRINARY),
-		"Bin"           = new /datum/pipe_info/disposal(DISP_END_BIN,			PIPE_QUAD),
-		"Outlet"        = new /datum/pipe_info/disposal(DISP_END_OUTLET,		PIPE_UNARY),
+		"Bin"           = new /datum/pipe_info/disposal(DISP_END_BIN,		PIPE_QUAD),
+		"Outlet"        = new /datum/pipe_info/disposal(DISP_END_OUTLET,	PIPE_UNARY),
 		"Chute"         = new /datum/pipe_info/disposal(DISP_END_CHUTE,		PIPE_UNARY),
 		"Sort Junction" = new /datum/pipe_info/disposal(DISP_SORTJUNCTION,	PIPE_TRINARY),
 	)
@@ -159,6 +159,11 @@ var/global/list/RPD_recipes=list(
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+/obj/item/weapon/pipe_dispenser/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()
 
 /obj/item/weapon/pipe_dispenser/attack_self(mob/user)
 	show_menu(user)
@@ -261,14 +266,20 @@ var/global/list/RPD_recipes=list(
 			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
 		</p>
 				"}
-		if(PIPE_BENT) // Bent, N-W, N-E etc
+
+		if(PIPE_BENDABLE) // Bent, N-W, N-E etc
 			if(preview)
+				user << browse_rsc(new /icon(preview, dir=NORTH), "vertical.png")
+				user << browse_rsc(new /icon(preview, dir=EAST), "horizontal.png")
 				user << browse_rsc(new /icon(preview, dir=NORTHWEST),  "nw.png")
 				user << browse_rsc(new /icon(preview, dir=NORTHEAST),  "ne.png")
 				user << browse_rsc(new /icon(preview, dir=SOUTHWEST),  "sw.png")
 				user << browse_rsc(new /icon(preview, dir=SOUTHEAST),  "se.png")
 
 				dirsel += "<p>"
+				dirsel += render_dir_img(1,"vertical.png","Vertical")
+				dirsel += render_dir_img(4,"horizontal.png","Horizontal")
+				dirsel += "<br />"
 				dirsel += render_dir_img(9,"nw.png","West to North")
 				dirsel += render_dir_img(5,"ne.png","North to East")
 				dirsel += "<br />"
@@ -278,6 +289,9 @@ var/global/list/RPD_recipes=list(
 			else
 				dirsel+={"
 		<p>
+			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
+			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
+			<br />
 			<a href="?src=\ref[src];setdir=9; flipped=0" title="West to North">&#9565;</a>
 			<a href="?src=\ref[src];setdir=5; flipped=0" title="North to East">&#9562;</a>
 			<br />
@@ -349,7 +363,7 @@ var/global/list/RPD_recipes=list(
 			<a href="?src=\ref[src];setdir=10; flipped=1" title="South, East, North">&#9568;</a>
 		</p>
 				"}
-		if(PIPE_UNARY) // Unary
+		if(PIPE_UNARY) // Stuff with four directions - includes pumps etc.
 			if(preview)
 				user << browse_rsc(new /icon(preview, dir=NORTH), "n.png")
 				user << browse_rsc(new /icon(preview, dir=EAST),  "e.png")
@@ -471,7 +485,7 @@ var/global/list/RPD_recipes=list(
 		show_menu(usr)
 
 	if(href_list["makepipe"])
-		p_type = text2num(href_list["makepipe"])
+		p_type = text2path(href_list["makepipe"])
 		p_dir = text2num(href_list["dir"])
 		p_conntype = text2num(href_list["type"])
 		p_class = ATMOS_MODE

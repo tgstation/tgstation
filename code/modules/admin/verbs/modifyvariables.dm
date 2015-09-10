@@ -28,7 +28,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		src.modify_variables(ticker)
 		feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/mod_list_add_ass() //haha
+/client/proc/mod_list_add_ass(atom/O) //haha
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -49,7 +49,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as null|text
+			var_value = input("Enter new text:","Text") as null|message
 
 		if("num")
 			var_value = input("Enter new number:","Num") as null|num
@@ -73,6 +73,14 @@ var/list/VVckey_edit = list("key", "ckey")
 			var_value = holder.marked_datum
 
 	if(!var_value) return
+
+	if(istext(var_value))
+		if(findtext(var_value,"\["))
+			var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+			if(process_vars == "Yes")
+				var/list/varsvars = string2listofvars(var_value, O)
+				for(var/V in varsvars)
+					var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
 
 	return var_value
 
@@ -98,7 +106,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as text
+			var_value = input("Enter new text:","Text") as message
 
 		if("num")
 			var_value = input("Enter new number:","Num") as num
@@ -123,12 +131,18 @@ var/list/VVckey_edit = list("key", "ckey")
 
 	if(!var_value) return
 
+	if(istext(var_value))
+		if(findtext(var_value,"\["))
+			var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+			if(process_vars == "Yes")
+				var/list/varsvars = string2listofvars(var_value, O)
+				for(var/V in varsvars)
+					var_value = replacetext(var_value,"\[[V]]","[O.vars[V]]")
+
+	L += var_value
 	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
 		if("Yes")
-			L += var_value
-			L[var_value] = mod_list_add_ass() //haha
-		if("No")
-			L += var_value
+			L[var_value] = mod_list_add_ass(O) //haha
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: ADDED=[var_value]"
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
@@ -288,7 +302,15 @@ var/list/VVckey_edit = list("key", "ckey")
 			return
 
 		if("text")
-			new_var = input("Enter new text:","Text") as text
+			new_var = input("Enter new text:","Text") as message
+
+			if(findtext(new_var,"\["))
+				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+				if(process_vars == "Yes")
+					var/list/varsvars = string2listofvars(new_var, O)
+					for(var/V in varsvars)
+						new_var = replacetext(new_var,"\[[V]]","[O.vars[V]]")
+
 			if(assoc)
 				L[assoc_key] = new_var
 			else
@@ -535,8 +557,16 @@ var/list/VVckey_edit = list("key", "ckey")
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|text
+			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
 			if(var_new==null) return
+
+			if(findtext(var_new,"\["))
+				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
+				if(process_vars == "Yes")
+					var/list/varsvars = string2listofvars(var_new, O)
+					for(var/V in varsvars)
+						var_new = replacetext(var_new,"\[[V]]","[O.vars[V]]")
+
 			O.vars[variable] = var_new
 
 		if("num")

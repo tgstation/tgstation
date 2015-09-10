@@ -35,7 +35,7 @@
 		destination.dna.unique_enzymes = unique_enzymes
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
-		hardset_dna(destination, null, null, null, null, species)
+		hardset_dna(destination, null, null, null, null, species.type)
 		destination.dna.features = features
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations
@@ -420,12 +420,6 @@
 
 		open_machine()
 
-/obj/machinery/dna_scannernew/Topic(href, href_list)
-	if(href_list["reenter"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.reenter_corpse(ghost)
-
 /obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
 		return 0
@@ -439,10 +433,7 @@
 			|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
 			|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
 
-			var/mob/dead/observer/ghost = occupant.get_ghost()
-			if(ghost)
-				ghost << "<span class='ghostalert'>Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned! <a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
-				ghost << sound('sound/effects/genetics.ogg')
+			occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!")
 	return 1
 
 /obj/machinery/dna_scannernew/open_machine()

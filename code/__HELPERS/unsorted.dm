@@ -1227,17 +1227,29 @@ var/list/WALLITEMS = list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
-	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
+	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
 	)
-/proc/gotwallitem(loc, dir)
+
+var/list/WALLITEMS_EXTERNAL = list(
+	/obj/machinery/camera, /obj/machinery/camera_assembly,
+	/obj/machinery/light_construct, /obj/machinery/light)
+
+var/list/WALLITEMS_INVERSE = list(
+	/obj/machinery/light_construct, /obj/machinery/light)
+
+
+/proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_list(O, WALLITEMS))
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(O.dir == dir)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
+				if(O.dir == turn(dir, 180))
+					return 1
+			else if(O.dir == dir)
 				return 1
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
@@ -1245,9 +1257,16 @@ var/list/WALLITEMS = list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
+		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
+				if(O.dir == turn(dir, 180))
+					return 1
+			else if(O.dir == dir)
+				return 1
+
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_list(O, WALLITEMS))
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -1394,3 +1413,38 @@ B --><-- A
  B
 
 */
+
+
+/atom/movable/var/atom/orbiting = null
+//This is just so you can stop an orbit.
+//orbit() can run without it (swap orbiting for A)
+//but then you can never stop it and that's just silly.
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
+	if(!istype(A))
+		return
+	orbiting = A
+	var/angle = 0
+	var/matrix/initial_transform = matrix(transform)
+	spawn
+		while(orbiting)
+			loc = orbiting.loc
+
+			angle += angle_increment
+
+			var/matrix/shift = matrix(initial_transform)
+			shift.Translate(radius,0)
+			if(clockwise)
+				shift.Turn(angle)
+			else
+				shift.Turn(-angle)
+			animate(src,transform = shift,2)
+
+			sleep(0.6) //the effect breaks above 0.6 delay
+		animate(src,transform = initial_transform,2)
+
+
+/atom/movable/proc/stop_orbit()
+	if(orbiting)
+		loc = get_turf(orbiting)
+		orbiting = null

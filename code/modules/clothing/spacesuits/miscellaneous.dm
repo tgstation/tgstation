@@ -1,3 +1,18 @@
+//miscellaneous spacesuits
+/*
+Contains:
+ - Captain's spacesuit
+ - Death squad's hardsuit
+ - Officer's beret/spacesuit
+ - NASA Voidsuit
+ - Father Christmas' magical clothes
+ - Pirate's spacesuit
+ - ERT hardsuit: command, sec, engi, med
+ - EVA spacesuit
+ - Freedom's spacesuit (freedom from vacuum's oppression)
+ - Carp hardsuit
+*/
+
 	//Captain's space suit, not hardsuits because no flashlight!
 /obj/item/clothing/head/helmet/space/captain
 	name = "captain's space helmet"
@@ -25,7 +40,7 @@
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
-	armor = list(melee = 50, bullet = 40, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100)
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
@@ -40,7 +55,7 @@
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 50, bullet = 40, laser = 30,energy = 50, bomb = 50, bio = 100, rad = 100)
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	slowdown = 1
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
@@ -53,7 +68,7 @@
 	icon_state = "beret_badge"
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
-	armor = list(melee = 50, bullet = 40, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100)
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
@@ -68,7 +83,7 @@
 	flags_inv = 0
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 50, bullet = 40, laser = 30,energy = 50, bomb = 50, bio = 100, rad = 100)
+	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100)
 	slowdown = 1
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
@@ -235,3 +250,27 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
+
+//Carpsuit, bestsuit, lovesuit
+/obj/item/clothing/head/helmet/space/hardsuit/carp
+	name = "carp helmet"
+	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
+	icon_state = "carp_helm"
+	item_state = "syndicate"
+	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75)	//As whimpy as a space carp
+	brightness_on = 0 //luminosity when on
+	action_button_name = ""
+	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
+
+
+/obj/item/clothing/suit/space/hardsuit/carp
+	name = "carp space suit"
+	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
+	icon_state = "carp_suit"
+	item_state = "space_suit_syndicate"
+	slowdown = 0	//Space carp magic, never stop believing
+	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75) //As whimpy whimpy whoo
+	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/projectile/automatic/speargun)	//I'm giving you a hint here
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp

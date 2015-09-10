@@ -20,6 +20,9 @@ Sorry Giacom. Please don't be mad :(
 				else //no choice? force static
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
+	if(unique_name)
+		name = "[name] ([rand(1, 1000)])"
+		real_name = name
 
 
 /mob/living/Destroy()
@@ -570,7 +573,8 @@ Sorry Giacom. Please don't be mad :(
 	else
 		stop_pulling()
 		. = ..()
-	if ((s_active && !( s_active in contents ) ))
+	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
+		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
 	for(var/mob/living/simple_animal/slime/M in oview(1,src))
@@ -835,12 +839,12 @@ Sorry Giacom. Please don't be mad :(
 
 	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/C_air_contents = C.airs[1]
+		var/datum/gas_mixture/G = C.AIR1
 
-		if(C_air_contents.total_moles() < 10)
+		if(G.total_moles() < 10)
 			loc_temp = environment.temperature
 		else
-			loc_temp = C_air_contents.temperature
+			loc_temp = G.temperature
 
 	else
 		loc_temp = environment.temperature
@@ -879,7 +883,7 @@ Sorry Giacom. Please don't be mad :(
 		return 0
 	if(invisibility || alpha == 0)//cloaked
 		return 0
-	if(digitalcamo)
+	if(digitalcamo || digitalinvis)
 		return 0
 
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)

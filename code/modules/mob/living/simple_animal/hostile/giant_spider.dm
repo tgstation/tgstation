@@ -13,10 +13,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.reagents)
-			L.reagents.add_reagent("toxin", poison_per_bite)
-			if(prob(poison_per_bite))
-				L << "<span class='danger'>You feel a tiny prick.</span>"
-				L.reagents.add_reagent(poison_type, poison_per_bite)
+			L.reagents.add_reagent(poison_type, poison_per_bite)
 
 
 
@@ -47,6 +44,8 @@
 	ventcrawler = 2
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+	unique_name = 1
+	gold_core_spawnable = 1
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -77,20 +76,18 @@
 	poison_per_bite = 5
 	move_to_delay = 5
 
-/mob/living/simple_animal/hostile/poison/giant_spider/Life()
-	..()
-	if(!stat && !ckey)
-		if(stance == HOSTILE_STANCE_IDLE)
-			//1% chance to skitter madly away
-			if(!busy && prob(1))
-				/*var/list/move_targets = list()
-				for(var/turf/T in orange(20, src))
-					move_targets.Add(T)*/
-				stop_automated_movement = 1
-				Goto(pick(orange(20, src)), move_to_delay)
-				spawn(50)
-					stop_automated_movement = 0
-					walk(src,0)
+/mob/living/simple_animal/hostile/poison/giant_spider/handle_automated_action()
+	if(!..()) //AIStatus is off
+		return 0
+	if(AIStatus == AI_IDLE)
+		//1% chance to skitter madly away
+		if(!busy && prob(1))
+			stop_automated_movement = 1
+			Goto(pick(orange(20, src)), move_to_delay)
+			spawn(50)
+				stop_automated_movement = 0
+				walk(src,0)
+		return 1
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
 	spawn(100)
@@ -100,53 +97,50 @@
 			busy = 0
 			stop_automated_movement = 0
 
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/Life()
-	..()
-	if(!stat && !ckey)
-		if(stance == HOSTILE_STANCE_IDLE)
-			var/list/can_see = view(src, 10)
-			//30% chance to stop wandering and do something
-			if(!busy && prob(30))
-				//first, check for potential food nearby to cocoon
-				for(var/mob/living/C in can_see)
-					if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))
-						cocoon_target = C
-						busy = MOVING_TO_TARGET
-						Goto(C, move_to_delay)
-						//give up if we can't reach them after 10 seconds
-						GiveUp(C)
-						return
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
+	if(..())
+		var/list/can_see = view(src, 10)
+		if(!busy && prob(30))	//30% chance to stop wandering and do something
+			//first, check for potential food nearby to cocoon
+			for(var/mob/living/C in can_see)
+				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))
+					cocoon_target = C
+					busy = MOVING_TO_TARGET
+					Goto(C, move_to_delay)
+					//give up if we can't reach them after 10 seconds
+					GiveUp(C)
+					return
 
-				//second, spin a sticky spiderweb on this tile
-				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
-				if(!W)
-					Web()
+			//second, spin a sticky spiderweb on this tile
+			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+			if(!W)
+				Web()
+			else
+				//third, lay an egg cluster there
+				if(fed)
+					LayEggs()
 				else
-					//third, lay an egg cluster there
-					if(fed)
-						LayEggs()
-					else
-						//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
-						for(var/obj/O in can_see)
+					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
+					for(var/obj/O in can_see)
 
-							if(O.anchored)
-								continue
+						if(O.anchored)
+							continue
 
-							if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
-								cocoon_target = O
-								busy = MOVING_TO_TARGET
-								stop_automated_movement = 1
-								Goto(O, move_to_delay)
-								//give up if we can't reach them after 10 seconds
-								GiveUp(O)
+						if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+							cocoon_target = O
+							busy = MOVING_TO_TARGET
+							stop_automated_movement = 1
+							Goto(O, move_to_delay)
+							//give up if we can't reach them after 10 seconds
+							GiveUp(O)
 
-			else if(busy == MOVING_TO_TARGET && cocoon_target)
-				if(get_dist(src, cocoon_target) <= 1)
-					Wrap()
+		else if(busy == MOVING_TO_TARGET && cocoon_target)
+			if(get_dist(src, cocoon_target) <= 1)
+				Wrap()
 
-		else
-			busy = 0
-			stop_automated_movement = 0
+	else
+		busy = 0
+		stop_automated_movement = 0
 
 /mob/living/simple_animal/hostile/poison/giant_spider/verb/Web()
 	set name = "Lay Web"
@@ -161,7 +155,7 @@
 		busy = SPINNING_WEB
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 		stop_automated_movement = 1
-		spawn(40)
+		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/effect/spider/stickyweb(T)
 			busy = 0
@@ -192,7 +186,7 @@
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 		stop_automated_movement = 1
 		walk(src,0)
-		spawn(50)
+		if(do_after(src, 50, target = src))
 			if(busy == SPINNING_COCOON)
 				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
 					var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
@@ -242,13 +236,15 @@
 		busy = LAYING_EGGS
 		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 		stop_automated_movement = 1
-		spawn(50)
+		if(do_after(src, 50, target = src.loc))
 			if(busy == LAYING_EGGS)
 				E = locate() in get_turf(src)
 				if(!E)
 					var/obj/effect/spider/eggcluster/C = new /obj/effect/spider/eggcluster(src.loc)
 					if(ckey)
 						C.player_spiders = 1
+					C.poison_type = poison_type
+					C.poison_per_bite = poison_per_bite
 					fed--
 			busy = 0
 			stop_automated_movement = 0

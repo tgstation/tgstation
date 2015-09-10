@@ -2,9 +2,9 @@
 	name = "blob node"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
+	desc = "A large, pulsating yellow mass."
 	health = 100
 	fire_resist = 2
-	var/mob/camera/blob/overmind
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
@@ -26,11 +26,10 @@
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/blob/node/Life()
-	for(var/i = 1; i < 8; i += i)
-		Pulse(5, i, overmind.blob_reagent_datum.color)
+	pulseLoop(5)
 	health = min(initial(health), health + 1)
 	color = null
 

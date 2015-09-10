@@ -31,12 +31,12 @@
 /obj/effect/effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	lifetime += rand(-1,1)
 
 /obj/effect/effect/smoke/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/effect/smoke/proc/kill_smoke()
 	SSobj.processing.Remove(src)
@@ -156,10 +156,10 @@
 		for(var/obj/O in range(1,src))
 			if(O.type == src.type)
 				continue
-			reagents.reaction(O, TOUCH, fraction)
+			reagents.reaction(O, VAPOR, fraction)
 
 		for(var/turf/T in range(1,src))
-			reagents.reaction(T, TOUCH, fraction)
+			reagents.reaction(T, VAPOR, fraction)
 
 		var/hit = 0
 		for(var/mob/living/L in range(1,src))
@@ -173,7 +173,7 @@
 	if(!istype(M))
 		return 0
 	var/fraction = 1/initial(lifetime)
-	reagents.reaction(M, TOUCH, fraction)
+	reagents.reaction(M, VAPOR, fraction)
 	lifetime--
 	return 1
 
@@ -192,8 +192,7 @@
 
 /datum/effect/effect/system/smoke_spread/chem/Destroy()
 	chemholder = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	return ..()
 
 /datum/effect/effect/system/smoke_spread/chem/set_up(datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)
@@ -276,8 +275,9 @@
 	lifetime = 10
 
 /obj/effect/effect/smoke/sleeping/process()
-	for(var/mob/living/carbon/M in range(1,src))
-		smoke_mob(M)
+	if(..())
+		for(var/mob/living/carbon/M in range(1,src))
+			smoke_mob(M)
 
 /obj/effect/effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
 	if(..())

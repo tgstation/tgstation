@@ -18,6 +18,7 @@
 	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
+	storage_slots = 21
 	burn_state = 0 //Burnable
 	burntime = 20
 
@@ -109,7 +110,6 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = 4.0
-	storage_slots = 20 //Can store a lot.
 	max_w_class = 3
 	max_combined_w_class = 60
 
@@ -270,7 +270,6 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = 3 //Can fit in backpacks itself.
-	storage_slots = 5
 	max_combined_w_class = 15
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
@@ -292,31 +291,37 @@
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "dufflebag"
-	desc = "A large dufflebag for holding extra things"
+	desc = "A large dufflebag for holding extra things."
 	icon_state = "duffle"
 	item_state = "duffle"
-	storage_slots = 9
 	slowdown = 1
-	max_combined_w_class = 27
+	max_combined_w_class = 30
 
-/obj/item/weapon/storage/backpack/dufflebag/syndiemed
+/obj/item/weapon/storage/backpack/dufflebag/syndie
+	name = "suspicious looking dufflebag"
+	desc = "A large dufflebag for holding extra tactical supplies."
+	icon_state = "duffle-syndie"
+	item_state = "duffle-syndiemed"
+	origin_tech = "syndicate=1"
+	silent = 1
+	slowdown = 0
+
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med
 	name = "medical dufflebag"
 	desc = "A large dufflebag for holding extra tactical medical supplies."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
-	slowdown = 0
 
-/obj/item/weapon/storage/backpack/dufflebag/syndieammo
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
 	name = "ammunition dufflebag"
 	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
 	icon_state = "duffle-syndieammo"
 	item_state = "duffle-syndieammo"
-	slowdown = 0
 
-/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded
 	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndieammo/loaded/New()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/loaded/New()
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m12g(src)
@@ -330,14 +335,13 @@
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 	return
 
-/obj/item/weapon/storage/backpack/dufflebag/syndiesurgery
-	name = "Syndicate surgery dufflebag"
-	desc = "A menacingly looking dufflebag for holding surgery tools."
+/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
+	name = "surgery dufflebag"
+	desc = "A suspicious looking dufflebag for holding surgery tools."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
-	storage_slots = 10
 
-/obj/item/weapon/storage/backpack/dufflebag/syndiesurgery/New()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery/New()
 	..()
 	contents = list()
 	new /obj/item/weapon/scalpel(src)

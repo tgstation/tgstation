@@ -13,7 +13,7 @@
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
-	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
+	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/is_cyborg = 0 // It's 1 if module is used by a cyborg, and uses its storage
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
@@ -27,7 +27,7 @@
 /obj/item/stack/Destroy()
 	if (usr && usr.machine==src)
 		usr << browse(null, "window=stack")
-	..()
+	return ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
@@ -133,7 +133,6 @@
 		if (R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
-			new_item.add_to_stacks(usr) //try to merge with existing stacks on current tile
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
@@ -184,7 +183,7 @@
 /obj/item/stack/proc/zero_amount()
 	if(is_cyborg)
 		return source.energy < cost
-	if (amount < 1)
+	if(amount < 1)
 		qdel(src)
 		return 1
 	return 0
@@ -196,26 +195,33 @@
 		src.amount += amount
 	update_icon()
 
-/obj/item/stack/proc/add_to_stacks(mob/usr)
-	var/obj/item/stack/oldsrc = src
-	src = null
-	for (var/obj/item/stack/item in usr.loc)
-		if (item==oldsrc)
-			continue
-		if (!istype(item, oldsrc.type))
-			continue
-		if (item.amount>=item.max_amount)
-			continue
-		oldsrc.attackby(item, usr)
-		usr << "<span class='notice'>You add new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.</span>"
-		if(oldsrc.amount <= 0)
-			break
-	oldsrc.update_icon()
+/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+	var/transfer = get_amount()
+	if(S.is_cyborg)
+		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
+	else
+		transfer = min(transfer, S.max_amount - S.amount)
+	if(pulledby)
+		pulledby.start_pulling(S)
+	S.copy_evidences(src)
+	use(transfer)
+	S.add(transfer)
+
+/obj/item/stack/Crossed(obj/o)
+	if(istype(o, src.type) && !o.throwing)
+		merge(o)
+	return ..()
+
+/obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
+	if(istype(AM, src.type))
+		merge(AM)
+	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())	return
 		var/obj/item/stack/F = new src.type( user, 1)
+		. = F
 		F.copy_evidences(src)
 		user.put_in_hands(F)
 		src.add_fingerprint(user)
@@ -228,34 +234,10 @@
 	return
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
-
-	if (istype(W, src.type))
-		if(zero_amount())	return
+	if(istype(W, src.type))
 		var/obj/item/stack/S = W
-		if (S.is_cyborg)
-			var/to_transfer = min(src.amount, round((S.source.max_energy - S.source.energy) / S.cost))
-			S.add(to_transfer)
-			if (S && usr.machine==S)
-				spawn(0) S.interact(usr)
-			src.use(to_transfer)
-			if (src && usr.machine==src)
-				spawn(0) src.interact(usr)
-		else
-			if (S.amount >= max_amount)
-				return
-			var/to_transfer as num
-			if (user.get_inactive_hand()==src)
-				to_transfer = 1
-			else
-				to_transfer = min(src.amount, S.max_amount-S.amount)
-			S.amount+=to_transfer
-			if (S && usr.machine==S)
-				spawn(0) S.interact(usr)
-			src.use(to_transfer)
-			if (src && usr.machine==src)
-				spawn(0) src.interact(usr)
-			S.update_icon()
-
+		merge(S)
+		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
 	else
 		..()
 

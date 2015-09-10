@@ -127,7 +127,9 @@
 	if(exchange_parts(user, O))
 		return
 
-	default_deconstruction_crowbar(O)
+	if(panel_open && istype(O, /obj/item/weapon/crowbar))
+		default_deconstruction_crowbar(O)
+		return
 
 	if(!checkCircumstances(O))
 		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
@@ -138,10 +140,10 @@
 	if (!linked_console)
 		user << "<span class='warning'>The [src] must be linked to an R&D console first!</span>"
 		return
-	if (busy)
-		user << "<span class='warning'>The [src] is busy right now.</span>"
+	if (loaded_item)
+		user << "<span class='warning'>The [src] is already loaded.</span>"
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if (istype(O, /obj/item))
 		if(!O.origin_tech)
 			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
@@ -154,7 +156,6 @@
 			return
 		if(!user.drop_item())
 			return
-		busy = 1
 		loaded_item = O
 		O.loc = src
 		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
@@ -512,7 +513,7 @@
 				trackedIan.loc = src.loc
 				investigate_log("Experimentor has stolen Ian!", "experimentor") //...if anyone ever fixes it...
 			else
-				new /mob/living/simple_animal/pet/corgi(src.loc)
+				new /mob/living/simple_animal/pet/dog/corgi(src.loc)
 				investigate_log("Experimentor has spawned a new corgi.", "experimentor")
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
@@ -544,7 +545,6 @@
 
 	spawn(resetTime)
 		icon_state = "h_lathe"
-		busy = 0
 		recentlyExperimented = 0
 
 /obj/machinery/r_n_d/experimentor/Topic(href, href_list)
@@ -562,7 +562,6 @@
 		if(D)
 			linked_console = D
 	else if(scantype == "eject")
-		busy = 0
 		ejectItem()
 	else if(scantype == "refresh")
 		src.updateUsrDialog()
@@ -578,7 +577,7 @@
 		experiment(dotype,process)
 		use_power(750)
 		if(dotype != FAIL)
-			if(process.origin_tech)
+			if(process && process.origin_tech)
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
@@ -658,7 +657,7 @@
 
 /obj/item/weapon/relic/proc/corgicannon(mob/user)
 	playsound(src.loc, "sparks", rand(25,50), 1)
-	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/corgi(get_turf(user))
+	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)),10,rand(3,8))
 	throwSmoke(get_turf(C))
 	warn_admins(user, "Corgi Cannon", 0)
@@ -681,7 +680,7 @@
 	user << message
 	var/animals = rand(1,25)
 	var/counter
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
+	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/dog/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/dog/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
 	for(counter = 1; counter < animals; counter++)
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))
@@ -703,7 +702,8 @@
 		R.realProc = realProc
 		R.revealed = TRUE
 		dupes |= R
-		R.throw_at(pick(oview(7,get_turf(src))),10,1)
+		spawn()
+			R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
 	spawn(rand(10,100))
 		for(counter = 1; counter <= dupes.len; counter++)

@@ -114,7 +114,7 @@
 		if(G.reroll_friendly)
 			usable_modes += G
 		else
-			del(G)
+			qdel(G)
 
 	if(!usable_modes)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
@@ -471,17 +471,19 @@
 		if(M.client && M.client.holder)
 			M << msg
 
-/datum/game_mode/proc/printplayer(datum/mind/ply)
+/datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
 	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
-			text += " <font color='red'><b>died</b></font>"
+			text += " <span class='boldannounce'>died</span>"
 		else
-			text += " <font color='green'><b>survived</b></font>"
+			text += " <span class='greenannounce'>survived</span>"
+		if(fleecheck && ply.current.z > ZLEVEL_STATION)
+			text += " while <span class='boldannounce'>fleeing the station</span>"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
 	else
-		text += " <font color='red'><b>had their body destroyed</b></font>"
+		text += " <span class='boldannounce'>had their body destroyed</span>"
 	return text
 
 /datum/game_mode/proc/printobjectives(datum/mind/ply)
@@ -489,9 +491,9 @@
 	var/count = 1
 	for(var/datum/objective/objective in ply.objectives)
 		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='greenannounce'>Success!</span>"
 		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
+			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='boldannounce'>Fail.</span>"
 		count++
 	return text
 

@@ -111,7 +111,7 @@
 	id = "power control"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
-	build_path = /obj/item/weapon/module/power_control
+	build_path = /obj/item/weapon/electronics/apc
 	category = list("initial", "Electronics")
 
 /datum/design/airlock_board
@@ -119,7 +119,7 @@
 	id = "airlock_board"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
-	build_path = /obj/item/weapon/airlock_electronics
+	build_path = /obj/item/weapon/electronics/airlock
 	category = list("initial", "Electronics")
 
 /datum/design/firelock_board
@@ -127,7 +127,7 @@
 	id = "firelock_board"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
-	build_path = /obj/item/weapon/firelock_board
+	build_path = /obj/item/weapon/electronics/firelock
 	category = list("initial", "Electronics")
 
 /datum/design/airalarm_electronics
@@ -135,7 +135,7 @@
 	id = "airalarm_electronics"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
-	build_path = /obj/item/weapon/airalarm_electronics
+	build_path = /obj/item/weapon/electronics/airalarm
 	category = list("initial", "Electronics")
 
 /datum/design/firealarm_electronics
@@ -143,7 +143,7 @@
 	id = "firealarm_electronics"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
-	build_path = /obj/item/weapon/firealarm_electronics
+	build_path = /obj/item/weapon/electronics/firealarm
 	category = list("initial", "Electronics")
 
 /datum/design/pipe_painter
@@ -190,7 +190,7 @@
 	name = "Compressed matter cardridge"
 	id = "rcd_ammo"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 16000, MAT_GLASS=8000)
+	materials = list(MAT_METAL = 3000, MAT_GLASS=2000)
 	build_path = /obj/item/weapon/rcd_ammo
 	category = list("initial","Construction")
 
@@ -264,6 +264,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_GLASS = 2500)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/large
+	category = list("initial", "Medical")
+
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	id = "healthanalyzer"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 50)
+	build_path = /obj/item/device/healthanalyzer
 	category = list("initial", "Medical")
 
 /datum/design/beanbag_slug
@@ -346,6 +354,14 @@
 	build_path = /obj/item/device/assembly/infra
 	category = list("initial", "Misc")
 
+/datum/design/health_sensor
+	name = "Health sensor"
+	id = "health_sensor"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 800, MAT_GLASS = 200)
+	build_path = /obj/item/device/assembly/health
+	category = list("initial", "Medical")
+
 /datum/design/timer
 	name = "Timer"
 	id = "timer"
@@ -383,7 +399,7 @@
 	id = "camera_assembly"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 250)
-	build_path = /obj/item/weapon/camera_assembly
+	build_path = /obj/item/wallframe/camera
 	category = list("initial", "Construction")
 
 /datum/design/newscaster_frame
@@ -391,7 +407,7 @@
 	id = "newscaster_frame"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 14000, MAT_GLASS = 8000)
-	build_path = /obj/item/newscaster_frame
+	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
 
 /datum/design/syringe

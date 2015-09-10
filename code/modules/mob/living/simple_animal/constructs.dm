@@ -16,15 +16,16 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+	healable = 0
 	faction = list("cult")
 	flying = 1
+	unique_name = 1
 	var/list/construct_spells = list()
 	var/playstyle_string = "<B>You are a generic construct! Your job is to not exist.</B>"
 
+
 /mob/living/simple_animal/construct/New()
 	..()
-	name = text("[initial(name)] ([rand(1, 1000)])")
-	real_name = name
 	for(var/spell in construct_spells)
 		mob_spell_list += new spell(src)
 
@@ -61,7 +62,7 @@
 		return
 	if(Proj.damage_type == BURN || Proj.damage_type == BRUTE)
 		adjustBruteLoss(Proj.damage)
-	Proj.on_hit(src, 0)
+	Proj.on_hit(src)
 	return 0
 
 /mob/living/simple_animal/construct/narsie_act()

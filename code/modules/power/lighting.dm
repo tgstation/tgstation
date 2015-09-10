@@ -11,61 +11,20 @@
 
 
 
-/obj/item/light_fixture_frame
+/obj/item/wallframe/light_fixture
 	name = "light fixture frame"
 	desc = "Used for building lights."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-item"
-	flags = CONDUCT
-	var/fixture_type = "tube"
-	var/obj/machinery/light/newlight = null
-	var/sheets_refunded = 2
+	result_path = /obj/machinery/light_construct
+	inverse = 1
 
-/obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-		qdel(src)
-		return
-	..()
-
-/obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-	var/ndir = get_dir(usr,on_wall)
-	if (!(ndir in cardinal))
-		return
-	var/turf/loc = get_turf(usr)
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>[src.name] cannot be placed on this spot!</span>"
-		return
-	usr << "<span class='notice'>You begin attaching [src] to the wall...</span>"
-	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
-	var/constrdir = usr.dir
-	var/constrloc = usr.loc
-	if (!do_after(usr, 30, target = src))
-		return
-	switch(fixture_type)
-		if("bulb")
-			newlight = new /obj/machinery/light_construct/small(constrloc)
-		if("tube")
-			newlight = new /obj/machinery/light_construct(constrloc)
-	newlight.dir = constrdir
-	newlight.fingerprints = src.fingerprints
-	newlight.fingerprintshidden = src.fingerprintshidden
-	newlight.fingerprintslast = src.fingerprintslast
-
-	usr.visible_message("[usr.name] attaches [src] to the wall.", \
-		"<span class='notice'>You attach [src] to the wall.</span>")
-	qdel(src)
-
-/obj/item/light_fixture_frame/small
+/obj/item/wallframe/light_fixture/small
 	name = "small light fixture frame"
-	desc = "Used for building small lights."
-	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-item"
-	flags = CONDUCT
-	fixture_type = "bulb"
-	sheets_refunded = 1
+	result_path = /obj/machinery/light_construct/small
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+
 
 /obj/machinery/light_construct
 	name = "light fixture frame"
@@ -79,10 +38,10 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New()
+/obj/machinery/light_construct/New(loc, ndir, building)
 	..()
-	if (fixture_type == "bulb")
-		icon_state = "bulb-construct-stage1"
+	if(building)
+		dir = ndir
 
 /obj/machinery/light_construct/examine(mob/user)
 	..()
@@ -172,12 +131,7 @@
 
 /obj/machinery/light_construct/small
 	name = "small light fixture frame"
-	desc = "A small light fixture under construction."
-	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-stage1"
-	anchored = 1
-	layer = 5
-	stage = 1
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
@@ -254,7 +208,7 @@
 	if(A)
 		on = 0
 //		A.update_lights()
-	..()
+	return ..()
 
 /obj/machinery/light/update_icon()
 

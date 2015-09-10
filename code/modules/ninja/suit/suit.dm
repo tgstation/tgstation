@@ -83,11 +83,10 @@ Contents:
 	cell.charge = 9000
 
 
-
 /obj/item/clothing/suit/space/space_ninja/Destroy()
 	if(affecting)
 		affecting << browse(null, "window=hack spideros")
-	..()
+	return ..()
 
 
 //Simply deletes all the attachments and self, killing all related procs.

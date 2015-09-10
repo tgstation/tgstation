@@ -161,6 +161,10 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
+/obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] axes \himself from head to toe! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit

@@ -42,7 +42,6 @@
 		if (V.get_amount() >= 1 && src.get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 			RG.add_fingerprint(user)
-			RG.add_to_stacks(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
 			var/replace = (user.get_inactive_hand()==G)
@@ -298,7 +297,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves)
+		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)

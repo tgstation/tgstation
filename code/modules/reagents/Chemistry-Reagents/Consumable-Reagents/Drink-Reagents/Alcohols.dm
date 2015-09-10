@@ -34,13 +34,13 @@
 		M.adjustToxLoss(2)
 	..()
 	return
-/datum/reagent/consumable/ethanol/reaction_obj(obj/O, volume)
+/datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
 		usr << "The solution melts away the ink on the paper."
 	if(istype(O,/obj/item/weapon/book))
-		if(volume >= 5)
+		if(reac_volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
 			affectedbook.dat = null
 			usr << "The solution melts away the ink on the book."
@@ -48,12 +48,12 @@
 			usr << "It wasn't enough..."
 	return
 
-/datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
+/datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH)
-		M.adjust_fire_stacks(volume / 15)
-		return
+	if(method == TOUCH || method == VAPOR)
+		M.adjust_fire_stacks(reac_volume / 15)
+	..()
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

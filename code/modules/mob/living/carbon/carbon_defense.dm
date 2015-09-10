@@ -1,5 +1,5 @@
-/mob/living/carbon/hitby(atom/movable/AM, skip)
-	if(!skip)	//ugly, but easy
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+	if(!skipcatch)	//ugly, but easy
 		if(in_throw_mode && !get_active_hand())	//empty active hand and we're in throw mode
 			if(canmove && !restrained())
 				if(istype(AM, /obj/item))
@@ -9,8 +9,13 @@
 						visible_message("<span class='warning'>[src] catches [I]!</span>")
 						throw_mode_off()
 						return 1
-	return ..()
+	..()
 
+/mob/living/carbon/throw_impact(atom/hit_atom)
+	. = ..()
+	if(hit_atom.density && isturf(hit_atom))
+		Weaken(1)
+		take_organ_damage(10)
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying)

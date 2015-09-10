@@ -122,12 +122,9 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
-/obj/machinery/alarm/New(nloc, ndir, nbuild)
+/obj/machinery/alarm/New(loc, ndir, nbuild)
 	..()
 	wires = new(src)
-	if(nloc)
-		loc = nloc
-
 	if(ndir)
 		dir = ndir
 
@@ -151,7 +148,9 @@
 /obj/machinery/alarm/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
-	..()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/machinery/alarm/initialize()
 	set_frequency(frequency)
@@ -753,7 +752,7 @@
 				if (do_after(user, 20, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
-						new /obj/item/weapon/airalarm_electronics( src.loc )
+						new /obj/item/weapon/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
@@ -780,7 +779,7 @@
 						update_icon()
 				return
 		if(0)
-			if(istype(W, /obj/item/weapon/airalarm_electronics))
+			if(istype(W, /obj/item/weapon/electronics/airalarm))
 				if(user.unEquip(W))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					buildstage = 1
@@ -791,7 +790,7 @@
 			if(istype(W, /obj/item/weapon/wrench))
 				user << "<span class='notice'>You detach \the [src] from the wall.</span>"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				new /obj/item/alarm_frame( user.loc )
+				new /obj/item/wallframe/alarm( user.loc )
 				qdel(src)
 				return
 
@@ -810,7 +809,8 @@
 /obj/machinery/alarm/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
 
@@ -819,58 +819,20 @@
 AIR ALARM CIRCUIT
 Just a object used in constructing air alarms
 */
-/obj/item/weapon/airalarm_electronics
+/obj/item/weapon/electronics/airalarm
 	name = "air alarm electronics"
-	icon = 'icons/obj/module.dmi'
 	icon_state = "airalarm_electronics"
-	desc = "Looks like a circuit. Probably is."
-	w_class = 2.0
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
-
 
 /*
 AIR ALARM ITEM
 Handheld air alarm frame, for placing on walls
-Code shamelessly copied from apc_frame
 */
-/obj/item/alarm_frame
+/obj/item/wallframe/alarm
 	name = "air alarm frame"
 	desc = "Used for building Air Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
-	flags = CONDUCT
-
-/obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		qdel(src)
-		return
-	..()
-
-/obj/item/alarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-
-	var/ndir = get_dir(on_wall,usr)
-	if (!(ndir in cardinal))
-		return
-
-	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>Air Alarm cannot be placed on this spot!</span>"
-		return
-	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='warning'>Air Alarm cannot be placed in this area!</span>"
-		return
-
-	if(gotwallitem(loc, ndir))
-		usr << "<span class='warning'>There's already an item on this wall!</span>"
-		return
-
-	new /obj/machinery/alarm(loc, ndir, 1)
-
-	qdel(src)
+	result_path = /obj/machinery/alarm
 
 
 /*
@@ -894,7 +856,6 @@ FIRE ALARM
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
-
 	src.overlays = list()
 
 	var/area/A = src.loc
@@ -938,7 +899,8 @@ FIRE ALARM
 /obj/machinery/firealarm/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
-		user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its thermal sensors.</span>")
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 		return
 
@@ -1014,11 +976,11 @@ FIRE ALARM
 								user << "<span class='notice'>You remove the destroyed circuit.</span>"
 							else
 								user << "<span class='notice'>You pry out the circuit.</span>"
-								new /obj/item/weapon/firealarm_electronics(user.loc)
+								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
 			if(0)
-				if(istype(W, /obj/item/weapon/firealarm_electronics))
+				if(istype(W, /obj/item/weapon/electronics/firealarm))
 					user << "<span class='notice'>You insert the circuit.</span>"
 					qdel(W)
 					buildstage = 1
@@ -1027,7 +989,7 @@ FIRE ALARM
 				else if(istype(W, /obj/item/weapon/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
-					var/obj/item/firealarm_frame/frame = new /obj/item/firealarm_frame()
+					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 					qdel(src)
@@ -1151,14 +1113,11 @@ FIRE ALARM
 	//playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 	return
 
-/obj/machinery/firealarm/New(loc, dir, building)
+/obj/machinery/firealarm/New(loc, ndir, building)
 	..()
 
-	if(loc)
-		src.loc = loc
-
-	if(dir)
-		src.dir = dir
+	if(ndir)
+		src.dir = ndir
 
 	if(building)
 		buildstage = 0
@@ -1178,59 +1137,21 @@ FIRE ALARM
 FIRE ALARM CIRCUIT
 Just a object used in constructing fire alarms
 */
-/obj/item/weapon/firealarm_electronics
+/obj/item/weapon/electronics/firealarm
 	name = "fire alarm electronics"
-	icon = 'icons/obj/doors/door_assembly.dmi'
-	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = 2.0
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 
 /*
 FIRE ALARM ITEM
 Handheld fire alarm frame, for placing on walls
-Code shamelessly copied from apc_frame
 */
-/obj/item/firealarm_frame
+/obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building Fire Alarms"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
-	flags = CONDUCT
-
-
-/obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
-		qdel(src)
-		return
-	..()
-
-/obj/item/firealarm_frame/proc/try_build(turf/on_wall)
-	if (get_dist(on_wall,usr)>1)
-		return
-
-	var/ndir = get_dir(on_wall,usr)
-	if (!(ndir in cardinal))
-		return
-
-	var/turf/loc = get_turf(usr)
-	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
-		usr << "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>"
-		return
-	if (A.requires_power == 0 || A.name == "Space")
-		usr << "<span class='warning'>Fire Alarm cannot be placed in this area.</span>"
-		return
-
-	if(gotwallitem(loc, ndir))
-		usr << "<span class='warning'>There's already an item on this wall!</span>"
-		return
-
-	new /obj/machinery/firealarm(loc, ndir, 1)
-
-	qdel(src)
+	result_path = /obj/machinery/firealarm
 
 /*
  * Party button

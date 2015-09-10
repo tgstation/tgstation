@@ -21,7 +21,7 @@
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_icon()
-	feedback_add_details("assembly_made","[name]")
+	feedback_add_details("assembly_made","[A.name]-[A2.name]")
 
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/assembly/A, mob/user)
 	if(!A.remove_item_from_storage(src))
@@ -41,10 +41,17 @@
 		overlays += "[a_left.icon_state]_left"
 		for(var/O in a_left.attached_overlays)
 			overlays += "[O]_l"
+
 	if(a_right)
-		src.overlays += "[a_right.icon_state]_right"
+		var/list/images = list()
+		images += image(icon, icon_state = "[a_right.icon_state]_left")
 		for(var/O in a_right.attached_overlays)
-			overlays += "[O]_r"
+			images += image(icon, icon_state = "[O]_l")
+		var/matrix = matrix(-1, 0, 0, 0, 1, 0)
+		for(var/image/I in images)
+			I.transform = matrix
+			overlays += I
+
 	if(master)
 		master.update_icon()
 

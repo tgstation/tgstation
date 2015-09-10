@@ -9,7 +9,7 @@
 	action_button_name = "Toggle Firemode"
 
 /obj/item/weapon/gun/projectile/automatic/proto
-	name = "prototype SMG"
+	name = "\improper NanoTrasen Saber SMG"
 	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
@@ -80,7 +80,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/c20r
-	name = "syndicate SMG"
+	name = "\improper C-20r SMG"
 	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
 	item_state = "c20r"
@@ -110,7 +110,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "uzi"
+	name = "\improper 'Type U3' Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
 	icon_state = "mini-uzi"
 	origin_tech = "combat=5;materials=2;syndicate=8"
@@ -118,7 +118,7 @@
 	burst_size = 2
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "syndicate LMG"
+	name = "\improper L6 SAW LMG"
 	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
@@ -178,7 +178,7 @@
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/m90
-	name = "syndicate carbine"
+	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
 	item_state = "m90"
@@ -190,13 +190,22 @@
 	burst_size = 3
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
-/obj/item/weapon/gun/projectile/automatic/m90/unrestricted
-	pin = /obj/item/device/firing_pin
+
 /obj/item/weapon/gun/projectile/automatic/m90/New()
 	..()
 	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher(src)
 	update_icon()
 	return
+
+/obj/item/weapon/gun/projectile/automatic/m90/unrestricted
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/projectile/automatic/m90/unrestricted/New()
+	..()
+	underbarrel = new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/unrestricted(src)
+	update_icon()
+	return
+
 /obj/item/weapon/gun/projectile/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
@@ -243,7 +252,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
-	name = "thompson SMG"
+	name = "\improper Thompson SMG"
 	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
@@ -257,7 +266,7 @@
 	fire_delay = 1
 
 /obj/item/weapon/gun/projectile/automatic/ar
-	name = "ARG"
+	name = "\improper NT-ARG 'Boarder'"
 	desc = "A robust assault rile used by Nanotrasen fighting forces."
 	icon_state = "arg"
 	item_state = "arg"

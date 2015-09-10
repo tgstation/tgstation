@@ -212,7 +212,7 @@ var/hsboxspawn = 1
 			if("hsbrcd")
 				if(!hsboxspawn) return
 
-				new/obj/item/weapon/rcd{matter=30;canRwall=1}(usr.loc)
+				new/obj/item/weapon/rcd/combat(usr.loc)
 
 			//
 			// New sandbox airlock maker

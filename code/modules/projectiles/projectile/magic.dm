@@ -22,7 +22,6 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
-	flag = "magic"
 
 /obj/item/projectile/magic/fireball/Range()
 	var/mob/living/L = locate(/mob/living) in (range(src, 1) - firer)
@@ -45,7 +44,6 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
@@ -69,7 +67,6 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
@@ -93,7 +90,6 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
-	flag = "magic"
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
@@ -114,7 +110,6 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "magic"
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
@@ -205,9 +200,9 @@
 						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
 						switch(animal)
 							if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-							if("corgi")		new_mob = new /mob/living/simple_animal/pet/corgi(M.loc)
+							if("corgi")		new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
 							if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
-							if("pug")		new_mob = new /mob/living/simple_animal/pet/pug(M.loc)
+							if("pug")		new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
 							if("cat")		new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
 							if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
 							if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
@@ -248,7 +243,7 @@
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 
-			del(M)
+			qdel(M)
 			return new_mob
 
 /obj/item/projectile/magic/animate
@@ -257,7 +252,6 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "magic"
 
 /obj/item/projectile/magic/animate/Bump(atom/change)
 	..()

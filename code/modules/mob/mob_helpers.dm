@@ -46,7 +46,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/pet/corgi))
+	if(istype(A, /mob/living/simple_animal/pet/dog/corgi))
 		return 1
 	return 0
 
@@ -125,7 +125,12 @@
 		return 1
 	return 0
 
-/proc/isorgan(A)
+/proc/isswarmer(A)
+	if(istype(A, /mob/living/simple_animal/hostile/swarmer))
+		return 1
+	return 0
+
+/proc/islimb(A)
 	if(istype(A, /obj/item/organ/limb))
 		return 1
 	return 0

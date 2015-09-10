@@ -69,7 +69,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
-	..()
+	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
@@ -166,6 +166,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.ajourn=0
 	mind.current.key = key
 	return 1
+
+/mob/dead/observer/proc/notify_cloning(var/message, var/sound)
+	if(message)
+		src << "<span class='ghostalert'>[message]</span>"
+	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
+	if(sound)
+		src << sound(sound)
 
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
@@ -363,8 +370,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return ..()
 
 /mob/dead/observer/Topic(href, href_list)
-	if(href_list["follow"])
-		var/atom/movable/target = locate(href_list["follow"])
-		if((usr == src) && istype(target) && (target != src)) //for safety against href exploits
-			ManualFollow(target)
-
+	..()
+	if(usr == src)
+		if(href_list["follow"])
+			var/atom/movable/target = locate(href_list["follow"])
+			if(istype(target) && (target != src))
+				ManualFollow(target)
+		if(href_list["reenter"])
+			reenter_corpse()

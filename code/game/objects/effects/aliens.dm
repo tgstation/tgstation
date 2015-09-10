@@ -186,7 +186,7 @@
 	for (var/obj/structure/alien/weeds/W in range(1,T))
 		W.updateWeedOverlays()
 	linked_node = null
-	..()
+	return ..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
@@ -196,21 +196,15 @@
 		qdel(src)
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
-				continue
+	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
+		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
@@ -324,8 +318,11 @@
 		Grow()
 
 
-/obj/structure/alien/egg/attack_paw(mob/user)
-	if(isalien(user))
+/obj/structure/alien/egg/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/obj/structure/alien/egg/attack_hand(mob/living/user)
+	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -340,17 +337,12 @@
 				Burst(0)
 				return
 	else
-		return attack_hand(user)
-
-
-/obj/structure/alien/egg/attack_hand(mob/user)
-	user << "<span class='notice'>It feels slimy.</span>"
-	user.changeNext_move(CLICK_CD_MELEE)
+		user << "<span class='notice'>It feels slimy.</span>"
+		user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
 	return locate(/obj/item/clothing/mask/facehugger) in contents
-
 
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
@@ -421,7 +413,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.status_flags & XENO_HOST)
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
 			return
 
 		Burst(0)
@@ -475,6 +467,11 @@
 
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/T = target
+			T.dump_contents()
+			qdel(target)
 
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target

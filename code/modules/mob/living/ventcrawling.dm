@@ -12,6 +12,9 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(lying)
 		src << "You can't vent crawl while you're stunned!"
 		return
+	if(restrained())
+		src << "You can't vent crawl while you're restrained!"
+		return
 
 	var/obj/machinery/atmospherics/components/unary/vent_found
 
@@ -34,7 +37,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 
 	if(vent_found)
-		var/datum/pipeline/vent_found_parent = vent_found.parents[PARENT1]
+		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 
@@ -67,7 +70,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(!istype(starting_machine) || !starting_machine.returnPipenet())
 		return
 	var/list/totalMembers = list()
-	var/datum/pipeline/starting_machine_parent = starting_machine.parents[PARENT1]
+	var/datum/pipeline/starting_machine_parent = starting_machine.PARENT1
 	totalMembers += starting_machine_parent.members
 	totalMembers += starting_machine_parent.other_atmosmch
 

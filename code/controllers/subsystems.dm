@@ -42,13 +42,12 @@
 		testing(msg)
 		return
 	world << "<span class='boldannounce'>[msg]</span>"
-	world.log << msg
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
 	var/dwait = ""
 	if (dynamic_wait)
-		dwait = "DWait:[wait]ds "
+		dwait = "DWait:[round(wait,0.1)]ds "
 
 	stat(name, "[round(cost,0.001)]ds\t[dwait][msg]")
 

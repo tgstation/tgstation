@@ -10,7 +10,7 @@
 
 /obj/item/clothing/suit/hooded/Destroy()
 	qdel(hood)
-	..()
+	return ..()
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
@@ -90,7 +90,6 @@
 	user << "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
-
 /obj/item/clothing/suit/space/hardsuit/New()
 	MakeHelmet()
 	if(!jetpack)
@@ -98,14 +97,24 @@
 		verbs -= /obj/item/clothing/suit/space/hardsuit/verb/Jetpack_Rockets
 	..()
 /obj/item/clothing/suit/space/hardsuit/Destroy()
-	qdel(helmet)
-	..()
+	if(helmet)
+		helmet.suit = null
+		qdel(helmet)
+	qdel(jetpack)
+	return ..()
+
+/obj/item/clothing/head/helmet/space/hardsuit/Destroy()
+	if(suit)
+		suit.helmet = null
+		qdel(suit)
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
 	if(!helmettype)
 		return
 	if(!helmet)
 		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
+		W.suit = src
 		helmet = W
 
 /obj/item/clothing/suit/space/hardsuit/ui_action_click()
@@ -120,7 +129,7 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
-	if(!helmettype)
+	if(!helmet)
 		return
 	suittoggled = 0
 	if(ishuman(helmet.loc))

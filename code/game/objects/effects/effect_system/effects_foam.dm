@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = OBJ_LAYER + 0.05 //above table, below windoor/airlock/foamed metal.
+	layer = OBJ_LAYER - 0.5 //above table, below windoor/airlock/foamed metal.
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
@@ -29,7 +29,7 @@
 /obj/effect/effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	SSobj.processing.Add(src)
+	SSobj.processing |= src
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 /obj/effect/effect/foam/Destroy()
@@ -58,14 +58,14 @@
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
-		reagents.reaction(O, TOUCH, fraction)
+		reagents.reaction(O, VAPOR, fraction)
 	var/hit = 0
 	for(var/mob/living/L in range(0,src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
-	reagents.reaction(T, TOUCH, fraction)
+	reagents.reaction(T, VAPOR, fraction)
 
 	if(--amount < 0)
 		return
@@ -77,7 +77,7 @@
 	if(!istype(L))
 		return 0
 	var/fraction = 1/initial(lifetime)
-	reagents.reaction(L, TOUCH, fraction)
+	reagents.reaction(L, VAPOR, fraction)
 	lifetime--
 	return 1
 
@@ -91,14 +91,8 @@
 
 
 /obj/effect/effect/foam/proc/spread_foam()
-	for(var/direction in cardinal)
-		var/turf/T = get_step(src,direction)
-		if(!T)
-			continue
-
-		if(!T.Enter(src))
-			continue
-
+	var/turf/t_loc = get_turf(src)
+	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue
@@ -194,7 +188,7 @@
 /obj/structure/foamedmetal/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 
 /obj/structure/foamedmetal/Move()

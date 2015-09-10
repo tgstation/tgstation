@@ -65,6 +65,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/Destroy()
 	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	return ..()
 
 /obj/machinery/announcement_system/power_change()
 	..()
@@ -184,13 +185,11 @@ var/list/announcement_systems = list()
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")
 
 /obj/machinery/announcement_system/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN))
-		..(severity)
-		return
-	act_up()
+	if(!(stat & (NOPOWER|BROKEN)))
+		act_up()
 	..(severity)
 
 /obj/machinery/announcement_system/emag_act()
-	..()
-	emagged = 1
-	act_up()
+	if(!emagged)
+		emagged = 1
+		act_up()
