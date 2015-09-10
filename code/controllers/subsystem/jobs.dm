@@ -18,7 +18,6 @@ var/datum/subsystem/job/SSjob
 		return ..()
 	SetupOccupations()
 	if(config.load_jobs_from_txt)
-		world << "config on"
 		LoadJobs()
 	..()
 
@@ -396,10 +395,10 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/LoadJobs()
 	var/jobstext = return_file_text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
-		var/regex = "[J.title]=(\\S+)"
+		var/regex = "[J.title]=(\[\\d-\]+),(\[\\d-\]+)"
 		var/datum/regex/results = regex_find(jobstext, regex)
 		J.total_positions = results.str(2)
-		J.spawn_positions = results.str(2)
+		J.spawn_positions = results.str(3)
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
