@@ -43,6 +43,7 @@ var/datum/subsystem/timer/SStimer
 
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
+	return ..()
 
 /proc/addtimer(thingToCall, procToCall, wait, argList = list())
 	if (!SStimer) //can't run timers before the mc has been created

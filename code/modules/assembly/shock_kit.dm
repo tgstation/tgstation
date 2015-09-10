@@ -11,8 +11,7 @@
 /obj/item/assembly/shock_kit/Destroy()
 	qdel(part1)
 	qdel(part2)
-	..()
-	return
+	return ..()
 
 /obj/item/assembly/shock_kit/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))

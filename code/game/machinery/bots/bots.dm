@@ -70,17 +70,16 @@
 	#define BOT_MOVING			9	// for clean/floor/med bots, when moving.
 	#define BOT_HEALING			10	// healing people (medbots)
 	#define BOT_RESPONDING		11	// responding to a call from the AI
-	#define BOT_LOADING			12	// loading/unloading
-	#define BOT_DELIVER			13	// moving to deliver
-	#define BOT_GO_HOME			14	// returning to home
-	#define BOT_BLOCKED			15	// blocked
-	#define BOT_NAV				16	// computing navigation
-	#define BOT_WAIT_FOR_NAV	17	// waiting for nav computation
-	#define BOT_NO_ROUTE		18	// no destination beacon found (or no route)
+	#define BOT_DELIVER			12	// moving to deliver
+	#define BOT_GO_HOME			13	// returning to home
+	#define BOT_BLOCKED			14	// blocked
+	#define BOT_NAV				15	// computing navigation
+	#define BOT_WAIT_FOR_NAV	16	// waiting for nav computation
+	#define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
-	"Proceeding to AI waypoint", "Loading/Unloading", "Navigating to Delivery Location", "Navigating to Home", \
+	"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home", \
 	"Waiting for clear path", "Calculating navigation path", "Pinging beacon network", "Unable to reach destination")
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
 
@@ -114,7 +113,7 @@
 /obj/machinery/bot/Destroy()
 	qdel(Radio)
 	qdel(botcard)
-	..()
+	return ..()
 
 
 /obj/machinery/bot/proc/explode()

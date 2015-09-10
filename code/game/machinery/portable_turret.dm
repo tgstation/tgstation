@@ -144,7 +144,7 @@
 	//deletes its own cover with it
 	qdel(cover)
 	cover = null
-	..()
+	return ..()
 
 
 /obj/machinery/porta_turret/attack_ai(mob/user)
@@ -311,7 +311,7 @@
 /obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0)
+	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
 		return
 	if(!(stat & BROKEN))
 		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")

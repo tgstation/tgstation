@@ -45,8 +45,8 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
-	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
+	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
+	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return

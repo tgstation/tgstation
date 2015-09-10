@@ -35,7 +35,7 @@
 		destination.dna.unique_enzymes = unique_enzymes
 		destination.dna.uni_identity = uni_identity
 		destination.dna.blood_type = blood_type
-		hardset_dna(destination, null, null, null, null, species)
+		hardset_dna(destination, null, null, null, null, species.type)
 		destination.dna.features = features
 		destination.dna.real_name = real_name
 		destination.dna.mutations = mutations

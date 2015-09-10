@@ -159,28 +159,13 @@
 
 /turf/simulated/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
 	//check for wall mounted frames
-	if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/newscaster_frame))
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
-		AH.try_build(src)
-		return 1
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
-		AH.try_build(src)
+	if(istype(W,/obj/item/wallframe))
+		var/obj/item/wallframe/F = W
+		if(F.try_build(src))
+			F.attach(src)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 

@@ -255,4 +255,4 @@
 	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
 		A.loc = src.loc
-	..()
+	return ..()

@@ -17,7 +17,7 @@
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
-	var/obj/item/weapon/camera_assembly/assembly = null
+	var/obj/machinery/camera_assembly/assembly = null
 
 	//OTHER
 
@@ -32,8 +32,6 @@
 /obj/machinery/camera/New()
 	assembly = new(src)
 	assembly.state = 4
-	assembly.anchored = 1
-	assembly.update_icon()
 
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
@@ -58,7 +56,7 @@
 			bug.current = null
 		bug = null
 	cameranet.removeCamera(src) //Will handle removal from the camera network and the chunks, so we don't need to worry about that
-	..()
+	return ..()
 
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof())
@@ -151,7 +149,6 @@
 				assembly.loc = src.loc
 				assembly.state = 1
 				assembly.dir = src.dir
-				assembly.update_icon()
 				assembly = null
 				qdel(src)
 				return

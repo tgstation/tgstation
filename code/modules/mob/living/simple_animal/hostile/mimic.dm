@@ -26,6 +26,7 @@
 
 	faction = list("mimic")
 	move_to_delay = 9
+	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..(1)
@@ -109,6 +110,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/mimic/copy/New(loc, obj/copy, mob/living/creator, destroy_original = 0)
 	..(loc)

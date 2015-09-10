@@ -10,12 +10,14 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
 	blood_DNA = list()
+	blood_state = BLOOD_STATE_HUMAN
+	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	viruses = null
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/New()
 	..()
@@ -105,3 +107,55 @@
 	..()
 	spawn(1)
 		drips |= icon_state
+	bloodiness = rand(5,15)
+
+
+//BLOODY FOOTPRINTS
+/obj/effect/decal/cleanable/blood/footprints
+	icon = 'icons/effects/footprints.dmi'
+	icon_state = "nothingwhatsoever"
+	desc = "Follow the bloody brick road!"
+	gender = PLURAL
+	random_icon_states = null
+	var/entered_dirs = 0
+	var/exited_dirs = 0
+	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
+
+/obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
+	if(ishuman(O))
+		var/mob/living/carbon/human/H = O
+		if(H.shoes) //Don't need to check for blood, as the footprints will MAKE the shoes bloody
+			entered_dirs|= H.dir
+	update_icon()
+
+/obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
+	if(ishuman(O))
+		var/mob/living/carbon/human/H = O
+		if(H.shoes)
+			exited_dirs|= H.dir
+	update_icon()
+
+/obj/effect/decal/cleanable/blood/footprints/update_icon()
+	overlays.Cut()
+
+	for(var/Ddir in cardinal)
+		if(entered_dirs & Ddir)
+			var/image/I
+			if(bloody_footprints_cache["entered-[blood_state]-[Ddir]"])
+				I = bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			else
+				I =  image(icon,"[blood_state]1",dir = Ddir)
+				bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
+			if(I)
+				overlays += I
+		if(exited_dirs & Ddir)
+			var/image/I
+			if(bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
+				I = bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
+			else
+				I = image(icon,"[blood_state]2",dir = Ddir)
+				bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
+			if(I)
+				overlays += I
+
+	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness

@@ -318,7 +318,7 @@
 		if(SHUTTLE_ESCAPE)
 			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
 		if(SHUTTLE_CALL)
-			if(SSshuttle.emergency.timeLeft() < 0.5 * initial(SSshuttle.emergencyCallTime)) //Shuttle is past the point of no recall
+			if(!SSshuttle.canRecall())
 				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
 	var/available_job_count = 0

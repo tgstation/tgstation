@@ -33,7 +33,6 @@
 		return
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	src = null
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
 		randmuti(M)
 		if(prob(98))
@@ -66,12 +65,11 @@
 	return
 
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
-	src = null
-	if((!O) || (!reac_volume))	return 0
+	if((!O) || (!reac_volume))
+		return 0
 	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 
 /datum/reagent/toxin/plasma/reaction_turf(turf/simulated/T, reac_volume)
-	src = null
 	if(istype(T))
 		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 	return
@@ -189,7 +187,6 @@
 		SV.on_chem_effect(src)
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	src = null
 	if(method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -212,7 +209,6 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	src = null
 	if(method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -225,7 +221,7 @@
 	id = "spore"
 	description = "A toxic spore cloud which blocks vision when ingested."
 	color = "#9ACD32"
-	toxpwr = 0.5
+	toxpwr = 1
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
 	M.damageoverlaytemp = 60
@@ -639,11 +635,9 @@
 /datum/reagent/toxin/acid/reaction_turf(turf/T, reac_volume)
 	if (!istype(T))
 		return
-	var/datum/reagent/toxin/acid/self = src
-	src = null
 	reac_volume = round(reac_volume,0.1)
 	for(var/obj/O in T)
-		O.acid_act(self.acidpwr, reac_volume)
+		O.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"

@@ -12,6 +12,7 @@
 	invisibility = INVISIBILITY_OBSERVER
 	health = 25
 	maxHealth = 25
+	healable = 0
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	languages = ALL
 	response_help   = "passes through"
@@ -181,21 +182,10 @@
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
-		if(!src.giveSpells())
-			message_admins("Revenant was created but has no mind. Trying again in ten seconds.")
-			spawn(100)
-				if(!src.giveSpells())
-					message_admins("Revenant still has no mind. Deleting...")
-					qdel(src)
-
-/mob/living/simple_animal/revenant/proc/giveSpells()
-	if(src.mind)
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
-		src.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf
-		return 1
-	return 0
+		mob_spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
+		mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
+		mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
+		mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf
 
 /mob/living/simple_animal/revenant/death()
 	..(1)

@@ -165,9 +165,9 @@
 	..()
 	charge = 0
 
-/obj/item/weapon/stock_parts/cell/pulse //80 pulse shots
+/obj/item/weapon/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
-	maxcharge = 16000
+	maxcharge = 40000
 	rating = 3
 	chargerate = 1500
 

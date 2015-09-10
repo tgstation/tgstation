@@ -19,7 +19,7 @@
 	dir = NORTH
 
 	var/ini_dir
-	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/created_name = null
 
 	//Vars to help with the icon's name
@@ -35,7 +35,7 @@
 /obj/structure/windoor_assembly/Destroy()
 	density = 0
 	air_update_turf(1)
-	..()
+	return ..()
 
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc
@@ -189,7 +189,7 @@
 						name = "anchored windoor assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/airlock_electronics))
+			else if(istype(W, /obj/item/weapon/electronics/airlock))
 				if(!user.drop_item())
 					return
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -219,7 +219,7 @@
 						return
 					user << "<span class='notice'>You remove the airlock electronics.</span>"
 					name = "wired windoor assembly"
-					var/obj/item/weapon/airlock_electronics/ae
+					var/obj/item/weapon/electronics/airlock/ae
 					ae = electronics
 					electronics = null
 					ae.loc = loc

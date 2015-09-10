@@ -2,6 +2,7 @@
 	name = "blob node"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
+	desc = "A large, pulsating yellow mass."
 	health = 100
 	fire_resist = 2
 
@@ -25,7 +26,7 @@
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/blob/node/Life()
 	pulseLoop(5)

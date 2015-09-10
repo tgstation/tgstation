@@ -246,7 +246,7 @@
 
 /datum/chemical_reaction/slimestabilizer/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/weapon/slimestabilizer/P = new /obj/item/weapon/slimestabilizer
+	var/obj/item/slimepotion/stabilizer/P = new /obj/item/slimepotion/stabilizer
 	P.loc = get_turf(holder.my_atom)
 
 
@@ -363,7 +363,7 @@
 
 /datum/chemical_reaction/slimepsteroid/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/weapon/slimesteroid/P = new /obj/item/weapon/slimesteroid
+	var/obj/item/slimepotion/steroid/P = new /obj/item/slimepotion/steroid
 	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimejam
@@ -406,7 +406,7 @@
 
 /datum/chemical_reaction/slimemutator/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/weapon/slimemutator/P = new /obj/item/weapon/slimemutator
+	var/obj/item/slimepotion/mutator/P = new /obj/item/slimepotion/mutator
 	P.loc = get_turf(holder.my_atom)
 
 /datum/chemical_reaction/slimebloodlust
@@ -484,7 +484,7 @@
 
 /datum/chemical_reaction/slimepotion2/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/slimepotion2/P = new /obj/item/slimepotion2
+	var/obj/item/slimepotion/sentience/P = new /obj/item/slimepotion/sentience
 	P.loc = get_turf(holder.my_atom)
 
 //Adamantine
@@ -547,7 +547,7 @@
 
 /datum/chemical_reaction/slimepsteroid2/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/weapon/slimesteroid2/P = new /obj/item/weapon/slimesteroid2
+	var/obj/item/slimepotion/enhancer/P = new /obj/item/slimepotion/enhancer
 	P.loc = get_turf(holder.my_atom)
 
 //Sepia

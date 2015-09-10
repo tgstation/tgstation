@@ -186,7 +186,7 @@
 	for (var/obj/structure/alien/weeds/W in range(1,T))
 		W.updateWeedOverlays()
 	linked_node = null
-	..()
+	return ..()
 
 /obj/structure/alien/weeds/proc/Life()
 	set background = BACKGROUND_ENABLED
@@ -196,21 +196,15 @@
 		qdel(src)
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
-				continue
+	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
+		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
@@ -473,6 +467,11 @@
 
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
+
+		if(istype(target, /obj/structure/closet))
+			var/obj/structure/closet/T = target
+			T.dump_contents()
+			qdel(target)
 
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target

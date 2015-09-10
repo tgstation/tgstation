@@ -39,7 +39,7 @@
 	if(inserted_gps)
 		inserted_gps.loc = loc
 		inserted_gps = null
-	..()
+	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()

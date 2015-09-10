@@ -14,7 +14,7 @@
 
 /obj/structure/statue/Destroy()
 	density = 0
-	..()
+	return ..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
