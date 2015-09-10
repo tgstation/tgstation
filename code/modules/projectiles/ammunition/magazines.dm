@@ -134,6 +134,28 @@
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
+/obj/item/ammo_box/magazine/stun45
+	name = "mk58 stun magazine (.45)"
+	icon_state = "45S-10"
+	ammo_type = /obj/item/ammo_casing/w45S
+	caliber = ".45"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/stun45/update_icon()
+	..()
+	icon_state = "45S-[round(ammo_count(),1)]"
+
+/obj/item/ammo_box/magazine/stun45/lethal
+	name = "mk58 magazine (.45)"
+	icon_state = "45L-10"
+	ammo_type = /obj/item/ammo_casing/w45L
+	caliber = ".45"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/stun45/lethal/update_icon()
+	..()
+	icon_state = "45L-[round(ammo_count(),1)]"
+
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"

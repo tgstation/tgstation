@@ -11,6 +11,9 @@
 	damage = 5
 	stamina = 80
 
+/obj/item/projectile/bullet/stunbullet
+	damage = 0
+	stamina = 60
 
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15
@@ -19,6 +22,9 @@
 
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
+
+/obj/item/projectile/bullet/weakbullet4
+	damage = 25
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"

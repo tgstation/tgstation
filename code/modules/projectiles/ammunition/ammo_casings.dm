@@ -25,11 +25,21 @@
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
-
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/midbullet
+
+/obj/item/ammo_casing/w45S
+	desc = "A .45 stun bullet casing."
+	icon_state = "sS-casing"
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/stunbullet
+
+/obj/item/ammo_casing/w45L
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/weakbullet4
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
