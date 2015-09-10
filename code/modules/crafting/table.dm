@@ -57,10 +57,12 @@
 			possible_tools += I.type
 	possible_tools += table_contents
 	for(var/needed_tool in R.tools)
-		var/potential_tool = locate(needed_tool in possible_tools)
-		if(potential_tool)
-			possible_tools.Remove(potential_tool)
-	return possible_tools.len
+		var/index = possible_tools.Find(needed_tool)
+		if(index)
+			possible_tools.Cut(index, index+1)
+		else
+			return 0
+	return 1
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
