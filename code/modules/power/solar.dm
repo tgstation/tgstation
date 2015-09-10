@@ -1,5 +1,7 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
+#define DIRTRATE 2        //Probability that a solar panel will advance it's "dirt level"
+#define DIRTLIMIT 3       //Maximum Dirt level. Percentage is calculated as current_dirt/(DIRTLIMIT+1) so it's never 100% obscured
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -18,6 +20,7 @@
 	var/adir = SOUTH // actual dir
 	var/ndir = SOUTH // target dir
 	var/turn_angle = 0
+	var/current_dirt = 0 //current dirtyness of the panel
 	var/obj/machinery/power/solar_control/control = null
 
 /obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
@@ -67,6 +70,7 @@
 				S.give_glass()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
+			current_dirt = 0
 			qdel(src)
 		return
 	else if (W)
@@ -100,7 +104,10 @@
 	if(stat & BROKEN)
 		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
 	else
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
+		if(current_dirt < DIRTLIMIT /2)
+			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
+		else
+			overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-d", layer = FLY_LAYER)
 		src.dir = angle2dir(adir)
 	return
 
@@ -119,13 +126,20 @@
 
 	sunfrac = cos(p_angle) ** 2
 	//isn't the power recieved from the incoming light proportionnal to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
+	//The above isn't correct. This is because it's an area, not a single axis, so it's squared //Koriath
+
+	sunfrac = sunfrac * (current_dirt/(DIRTLIMIT+1))
+	//this will make it produce less when it's dirtier
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)
 		return
 	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
 		return
-
+	if(prob(DIRTRATE))
+		current_dirt += 1
+	if(current_dirt >= DIRTLIMIT)
+		stat |= BROKEN
 	if(powernet)
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
 			if(obscured) //get no light from the sun, so don't generate power
