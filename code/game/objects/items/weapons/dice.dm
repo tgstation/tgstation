@@ -94,10 +94,11 @@
 	overlays += "[src.icon_state][src.result]"
 
 /obj/item/weapon/dice/d20/e20/diceroll(mob/user as mob, thrown)
+	if(!istype(user)) return 0
 	if(triggered) return
 	..()
-	message_admins("[user] has [thrown? "used" : "thrown"] an explosive dice and rolled a [result]")
-	log_game("[user] has [thrown? "used" : "thrown"] an explosive dice and rolled a [result]")
+	message_admins("[key_name(user)] has [thrown? "used" : "thrown"] an explosive dice and rolled a [result]")
+	log_game("[key_name(user)] has [thrown? "used" : "thrown"] an explosive dice and rolled a [result]")
 	if(result == 1)
 		user << "<span class='danger'>Rocks fall, you die.</span>"
 		user.gib()
