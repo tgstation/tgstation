@@ -244,30 +244,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 20
 	containername ="forensics crate"
 
-/datum/supply_packs/security/mark58
-	name = "Mark 58 Pistol Crate"
-	contains = list(/obj/item/weapon/gun/projectile/automatic/pistol/mark58,
-					/obj/item/weapon/gun/projectile/automatic/pistol/mark58,
-					/obj/item/weapon/gun/projectile/automatic/pistol/mark58)
-	cost = 15
-	containername = "mark 58 crate"
-
-/datum/supply_packs/security/mark58ammo
-	name = "Mark 58 Pistol Ammo Crate"
-	contains = list(/obj/item/ammo_box/magazine/stun45,
-					/obj/item/ammo_box/magazine/stun45,
-					/obj/item/ammo_box/magazine/stun45,
-					/obj/item/ammo_box/magazine/stun45,
-					/obj/item/ammo_box/magazine/stun45,
-					/obj/item/ammo_box/magazine/stun45/lethal,
-					/obj/item/ammo_box/magazine/stun45/lethal,
-					/obj/item/ammo_box/magazine/stun45/lethal,
-					/obj/item/ammo_box/magazine/stun45/lethal,
-					/obj/item/ammo_box/magazine/stun45/lethal)
-	cost = 20
-	containername = "mark 58 ammo crate"
-
-
 ///// Armory stuff
 
 /datum/supply_packs/security/armory

@@ -72,8 +72,6 @@
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/ammo_box/magazine/z8m(src)
-	new /obj/item/weapon/gun/projectile/automatic/z8rifle(src)
 	new /obj/item/weapon/gun/energy/gun/hos(src)
 
 /obj/structure/closet/secure_closet/warden
@@ -98,7 +96,7 @@
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/ammo_box/magazine/wt550m9(src)
-	new  /obj/item/weapon/gun/projectile/automatic/wt550(src)
+	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"

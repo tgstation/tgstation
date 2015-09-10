@@ -46,7 +46,6 @@ Head of Security
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/classic_baton/telescopic(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol/mark58/officer(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
@@ -86,10 +85,9 @@ Warden
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sunglasses(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/device/assembly/flash/handheld(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol/mark58/officer(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun/advtaser(H), slot_in_backpack)
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/stun45(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
@@ -176,13 +174,11 @@ Security Officer
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/sec(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol/mark58(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun/advtaser(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/device/assembly/flash/handheld(H), slot_l_store)
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/baton/loaded(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/stun45(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/stun45(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
