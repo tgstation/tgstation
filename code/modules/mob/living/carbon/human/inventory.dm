@@ -360,6 +360,8 @@
 			head = I
 			if(head.flags & BLOCKHAIR)
 				update_hair(redraw_mob)	//rebuild hair
+			if(head.flags_inv & HIDEEARS)
+				update_body(redraw_mob)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
 			shoes = I
