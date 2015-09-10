@@ -20,6 +20,11 @@
 	var/integrity = 3
 	var/volume = 70
 
+/obj/item/weapon/tank/suicide_act(mob/user)
+  user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
+  playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+  return (OXYLOSS)
+
 /obj/item/weapon/tank/New()
 	..()
 

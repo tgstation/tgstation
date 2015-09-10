@@ -86,6 +86,11 @@
 	force = 0
 	on = 0
 
+/obj/item/weapon/melee/classic_baton/telescopic/suicide_act(mob/user)
+  user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to commit suicide.</span>")
+  playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+  return (BRUTELOSS)
+
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on
 	if(on)
