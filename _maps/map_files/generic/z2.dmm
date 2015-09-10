@@ -3782,9 +3782,8 @@
 /area/tdome/tdomeobserve)
 "lm" = (
 /obj/effect/forcefield,
-/obj/structure/door_assembly{
+/obj/structure/door_assembly/door_assembly_uranium{
 	anchored = 1;
-	 icon_state = "door_as_uranium1";
 	 name = "Bridge"
 	},
 /turf/simulated/floor/plasteel/cult,
@@ -4347,9 +4346,8 @@
 /turf/simulated/floor/plating,
 /area/syndicate_mothership)
 "mQ" = (
-/obj/structure/door_assembly{
+/obj/structure/door_assembly/door_assembly_uranium{
 	anchored = 1;
-	 icon_state = "door_as_uranium1";
 	 name = "Break Room"
 	},
 /turf/simulated/floor/plasteel/cult,
@@ -5032,9 +5030,8 @@
 	},
 /area/shuttle/syndicate)
 "oB" = (
-/obj/structure/door_assembly{
+/obj/structure/door_assembly/door_assembly_uranium{
 	anchored = 1;
-	 icon_state = "door_as_uranium1";
 	 name = "Corridor A"
 	},
 /turf/simulated/floor/plasteel/cult,
