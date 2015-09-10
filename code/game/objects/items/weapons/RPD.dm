@@ -160,6 +160,11 @@ var/global/list/RPD_recipes=list(
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+/obj/item/weapon/pipe_dispenser/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()
+
 /obj/item/weapon/pipe_dispenser/attack_self(mob/user)
 	show_menu(user)
 

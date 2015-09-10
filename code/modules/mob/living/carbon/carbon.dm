@@ -1,3 +1,7 @@
+/mob/living/carbon/New()
+	create_reagents(1000)
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -74,9 +78,9 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, override = 0)
 	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+	if(shock_damage<1 && !override)
 		return 0
 	take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
@@ -95,7 +99,10 @@
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		Stun(3)
 		Weaken(3)
-	return shock_damage
+	if(override)
+		return override
+	else
+		return shock_damage
 
 
 /mob/living/carbon/swap_hand()
@@ -572,4 +579,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		if(locate(/obj/item/device/assembly/health) in src)
+			stat(null, "Health: [health]")
+
 	add_abilities_to_panel()

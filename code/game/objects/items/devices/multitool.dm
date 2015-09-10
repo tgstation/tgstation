@@ -31,7 +31,7 @@
 
 /obj/item/device/multitool/ai_detect/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/device/multitool/ai_detect/process()
 	if(track_delay > world.time)

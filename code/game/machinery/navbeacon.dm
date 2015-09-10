@@ -36,7 +36,7 @@
 /obj/machinery/navbeacon/Destroy()
 	navbeacons &= src //Remove from beacon list, if in one.
 	deliverybeacons &= src
-	..()
+	return ..()
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()

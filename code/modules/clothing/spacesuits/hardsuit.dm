@@ -10,6 +10,7 @@
 	var/basestate = "hardsuit"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
+	var/obj/item/clothing/suit/space/hardsuit/suit
 	item_color = "engineering" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
 	action_button_name = "Toggle Helmet Light"
 	flags = BLOCKHAIR | STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP

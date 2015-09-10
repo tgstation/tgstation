@@ -30,7 +30,7 @@
 /obj/mecha/combat/marauder/Destroy()
 	qdel(smoke_system)
 	smoke_system = null
-	..()
+	return ..()
 
 /obj/mecha/combat/marauder/relaymove(mob/user,direction)
 	if(zoom)

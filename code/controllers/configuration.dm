@@ -165,6 +165,9 @@
 
 	var/autoconvert_notes = 0 //if all connecting player's notes should attempt to be converted to the database
 
+	var/announce_admin_logout = 0
+	var/announce_admin_login = 0
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -347,6 +350,10 @@
 						world.log = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
+				if("announce_admin_logout")
+					config.announce_admin_logout = 1
+				if("announce_admin_login")
+					config.announce_admin_login = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

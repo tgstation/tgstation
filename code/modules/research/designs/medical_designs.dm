@@ -2,6 +2,7 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
 	desc = "A device for analyzing chemicals in the blood."
@@ -70,7 +71,7 @@
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
 	construction_time = 100
 	reliability = 76
-	build_path = /obj/item/device/flash/handheld
+	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")
 
 /datum/design/bluespacebeaker

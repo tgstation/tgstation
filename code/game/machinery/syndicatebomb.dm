@@ -40,6 +40,10 @@
 	update_icon()
 	..()
 
+/obj/machinery/syndicatebomb/Destroy()
+	qdel(wires)
+	wires = null
+	return ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
@@ -72,9 +76,8 @@
 		update_icon()
 		user << "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>"
 
-	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
-		if(open_panel)
-			wires.Interact(user)
+	else if(wires.IsInteractionTool(I) && open_panel)
+		wires.Interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(open_panel && isWireCut(WIRE_BOOM) && isWireCut(WIRE_UNBOLT) && isWireCut(WIRE_DELAY) && isWireCut(WIRE_PROCEED) && isWireCut(WIRE_ACTIVATE))

@@ -23,6 +23,7 @@
 		return
 	if(!gibbed)
 		emote("deathgasp")
+	locked = 0 //unlock cover
 	stat = DEAD
 	update_canmove()
 	if(camera)

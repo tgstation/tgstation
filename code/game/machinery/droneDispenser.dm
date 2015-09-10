@@ -9,6 +9,7 @@
 	var/glass = 0
 	var/droneMadeRecently = 0
 	var/outputDirection = SOUTH
+	var/cooldownTime = 1800 //3 minutes
 
 /obj/machinery/droneDispenser/New()
 	..()
@@ -16,7 +17,7 @@
 
 /obj/machinery/droneDispenser/Destroy()
 	SSmachine.processing -= src
-	..()
+	return ..()
 
 /obj/machinery/droneDispenser/preloaded
 	metal = 5000
@@ -70,7 +71,7 @@
 			new /obj/item/drone_shell(T)
 		use_power(1000)
 		icon_state = "recharge"
-		spawn(1800) //3 minute cooldown between shells
+		spawn(cooldownTime)
 			icon_state = "[initial(icon_state)]"
 			droneMadeRecently = 0
 			playsound(src, 'sound/machines/ping.ogg', 50, 1)
