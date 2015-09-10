@@ -263,3 +263,11 @@ var/list/bloody_footprints_cache = list()
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+
+//alien weed stuff that needed to be separated for reasons
+#define WEED_NORTH_EDGING "[NORTH]"
+#define WEED_SOUTH_EDGING "[SOUTH]"
+#define WEED_EAST_EDGING "[EAST]"
+#define WEED_WEST_EDGING "[WEST]"
+
+#define NODERANGE 3
