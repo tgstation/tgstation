@@ -7,7 +7,7 @@
 	icon = 'icons/obj/frost.dmi'
 	icon_state = "frost"
 
-	var/super_coefficient = 1 //for making the frost better, may be used in the future
+	var/super_coefficient = 1 //for making the frost better, may be used in the future for more costly/powerful abilties or something
 
 	health = 20
 	max_temp_sustainable = T20C //any hotter than room temp and these'll start to melt
