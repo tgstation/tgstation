@@ -61,6 +61,8 @@
 	var/tonermax = 40
 	var/jetpackoverlay = 0
 
+	var/magpulse = 0
+
 /mob/living/silicon/robot/New(loc)
 
 	if(ismommi(src))
@@ -257,6 +259,15 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	robot_alerts()
+
+/mob/living/silicon/robot/verb/cmd_toggle_magpulse()
+	set category = "Robot Commands"
+	set name = "Toggle magnetic traction"
+	magpulse = !magpulse
+	if(magpulse)
+		src << "<span class='notice'>Switched on magnetic traction.</span>"
+	else
+		src << "<span class='notice'>Switched off magnetic traction.</span>"
 
 //for borg hotkeys, here module refers to borg inv slot, not core module
 /mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
