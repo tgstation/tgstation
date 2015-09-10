@@ -19,7 +19,7 @@
 	name = "energy axe"
 	desc = "An energised battle axe."
 	icon_state = "axe0"
-	force = 40.0
+	force = 40
 	force_on = 150
 	throwforce = 25
 	throwforce_on = 30
@@ -41,8 +41,8 @@
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
@@ -172,7 +172,7 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
-	w_class = 4.0//So you can't hide it in your pocket or some such.
+	w_class = 4//So you can't hide it in your pocket or some such.
 	flags = NOSHIELD
 	var/datum/effect/effect/system/spark_spread/spark_system
 

@@ -64,13 +64,13 @@ other types of metals and chemistry for reagents).
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = 1
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////

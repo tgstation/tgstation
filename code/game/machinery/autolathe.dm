@@ -8,8 +8,8 @@
 	icon_state = "autolathe"
 	density = 1
 
-	var/operating = 0.0
-	anchored = 1.0
+	var/operating = 0
+	anchored = 1
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = 0

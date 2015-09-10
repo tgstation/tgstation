@@ -93,16 +93,16 @@
 	..()
 
 	switch (severity)
-		if (1.0)
+		if (1)
 			gib()
 			return
 
-		if (2.0)
+		if (2)
 			adjustBruteLoss(60)
 			adjustFireLoss(60)
 			adjustEarDamage(30,120)
 
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(1)

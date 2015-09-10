@@ -10,12 +10,12 @@
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 	return
@@ -26,7 +26,7 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked \the [src] with \the [W]!</span>")
 
-	var/damage = W.force / 4.0
+	var/damage = W.force / 4
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
