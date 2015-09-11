@@ -213,7 +213,7 @@ var/const/PATCH = 4 //patches
 				return total_transfered
 */
 
-/datum/reagents/proc/metabolize(mob/M)
+/datum/reagents/proc/metabolize(mob/M, can_overdose = 0)
 	if(M)
 		chem_temp = M.bodytemperature
 		handle_reactions()
@@ -226,23 +226,24 @@ var/const/PATCH = 4 //patches
 			M = R.holder.my_atom
 		if(M && R)
 			if(M.reagent_check(R) != 1)
-				if(R.overdose_threshold)
-					if(R.volume >= R.overdose_threshold && !R.overdosed)
-						R.overdosed = 1
-						R.overdose_start(M)
-				if(R.addiction_threshold)
-					if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
-						var/datum/reagent/new_reagent = new R.type()
-						addiction_list.Add(new_reagent)
-				if(R.overdosed)
-					R.overdose_process(M)
-				if(is_type_in_list(R,addiction_list))
-					for(var/datum/reagent/addicted_reagent in addiction_list)
-						if(istype(R, addicted_reagent))
-							addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
+				if(can_overdose)
+					if(R.overdose_threshold)
+						if(R.volume >= R.overdose_threshold && !R.overdosed)
+							R.overdosed = 1
+							R.overdose_start(M)
+					if(R.addiction_threshold)
+						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, addiction_list))
+							var/datum/reagent/new_reagent = new R.type()
+							addiction_list.Add(new_reagent)
+					if(R.overdosed)
+						R.overdose_process(M)
+					if(is_type_in_list(R,addiction_list))
+						for(var/datum/reagent/addicted_reagent in addiction_list)
+							if(istype(R, addicted_reagent))
+								addicted_reagent.addiction_stage = -15 // you're satisfied for a good while.
 				R.on_mob_life(M)
 
-	if(addiction_tick == 6)
+	if(can_overdose && addiction_tick == 6)
 		addiction_tick = 1
 		for(var/A in addiction_list)
 			var/datum/reagent/R = A
