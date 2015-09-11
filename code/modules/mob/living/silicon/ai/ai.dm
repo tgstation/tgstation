@@ -31,12 +31,20 @@ var/list/ai_list = list()
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
-	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
+	var/radio_enabled = 1 //Determines if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/machinery/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+
+
+	//RESEARCH
+	var/researchrate = 1
+	var/researchtime
+	var/researching = 0
+	var/list/subsystems = list("doors"=1,"lights"=1,"comms"=1) //shows subsystems AI can use
+	var/list/researches = list("bot interface","civilian radio","command/security radio","vox")
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -236,6 +244,8 @@ var/list/ai_list = list()
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
 			stat(null, "Station Time: [worldtime2text()]")
+			if(researching)
+				stat(null,"Researching additional subsystem...")
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
 			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
@@ -462,6 +472,49 @@ var/list/ai_list = list()
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+			return
+	// for the AI subsystems research
+	if (href_list["upgrade"])
+		if(researching)
+			src << "You are already researching a subsystem!"
+			return
+		var/researchable = href_list["upgrade"]
+		if(researchable in src.subsystems)
+			src << "You have already researched this subsystem."
+			return
+		disablemodules(researchable)
+		upgrade_access()
+		return
+
+	if (href_list["togglesub"])
+		if(researching)
+			src << "You cannot activate or disable subsystems during subsystem research!"
+			return
+		var/toggledsystem = href_list["togglesub"]
+		if(subsystems[toggledsystem])
+			if(subsystems[toggledsystem] == 1)
+				handleresearchrate(1)
+				subsystems[toggledsystem] = 0
+				src << "Disabling subsystem [toggledsystem]"
+			else
+				handleresearchrate(0)
+				subsystems[toggledsystem] = 1
+				src << "Enabling subsytem [toggledsystem]"
+			return
+
+
+	if (href_list["beginresearch"])
+		if(researching)
+			src << "You are already researching a subsystem!"
+			return
+		var/researcheable = href_list["beginresearch"]
+		if(researcheable in subsystems)
+			src << "This subsystem is already active!"
+			return
+		upgrade(researcheable)
+
+
+
 
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
 	..(Proj)

@@ -126,5 +126,8 @@
 	centcom = 1
 	channels = list("Centcom" = 1)
 
-/obj/item/device/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
+/obj/item/device/encryptionkey/ai
+	channels = list("Science" = 1) //for new research system
+
+/obj/item/device/encryptionkey/ai/automaxed //ported from NT, this goes 'inside' the AI.
 	channels = list("Command" = 1, "Security" = 1, "Engineering" = 1, "Science" = 1, "Medical" = 1, "Supply" = 1, "Service" = 1, "AI Private" = 1)
