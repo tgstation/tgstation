@@ -395,7 +395,7 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/LoadJobs()
 	var/jobstext = return_file_text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
-		var/regex = "[J.title]=(\[\\d-\]+),(\[\\d-\]+)"
+		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
 		var/datum/regex/results = regex_find(jobstext, regex)
 		J.total_positions = results.str(2)
 		J.spawn_positions = results.str(3)
