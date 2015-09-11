@@ -12,6 +12,7 @@
 	name = "mineral floor"
 	icon_state = ""
 	var/list/icons = list()
+	desc = "A floor made of nothing. Contact your local coding and mapping hotline."
 
 
 
@@ -33,6 +34,7 @@
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
+	desc = "A floor made from plasma and OSHA violtions."
 
 /turf/simulated/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -62,6 +64,7 @@
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
 	icons = list("gold","gold_dam")
+	desc = "A floor made of gold. Shiny."
 
 //SILVER
 
@@ -70,6 +73,7 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+	desc = "A floor made of silver. Shiny."
 
 //BANANIUM
 
@@ -79,6 +83,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
+	desc = "A floor made of bananium. HONK."
 
 /turf/simulated/floor/mineral/bananium/Entered(var/mob/AM)
 	.=..()
@@ -127,6 +132,7 @@
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
 	icons = list("diamond","diamond_dam")
+	desc = "A floor made from diamonds, guaranteed unscratchable."
 
 //URANIUM
 
@@ -137,6 +143,7 @@
 	icons = list("uranium","uranium_dam")
 	var/last_event = 0
 	var/active = null
+	desc = "A floor made of uranium. I wonder where that lead lined suit went."
 
 /turf/simulated/floor/mineral/uranium/Entered(var/mob/AM)
 	.=..()

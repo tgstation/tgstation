@@ -8,6 +8,7 @@
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
+	desc = "A floor made of thin wooden planks held down with screws."
 
 /turf/simulated/floor/wood/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -26,6 +27,7 @@
 	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
+	desc = "Some soft grass."
 
 /turf/simulated/floor/grass/New()
 	..()
@@ -49,6 +51,7 @@
 	broken_states = list("damaged")
 	smooth = 1
 	canSmoothWith = null
+	desc = "A hideously patterned carpet. It smells faintly of blood."
 
 /turf/simulated/floor/carpet/New()
 	..()
@@ -77,10 +80,12 @@
 
 
 /turf/simulated/floor/fakespace
+	name = "space"
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
+	desc = "The stars never looked so close."
 
 /turf/simulated/floor/fakespace/New()
 	..()

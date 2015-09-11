@@ -14,6 +14,7 @@
 	intact = 0
 	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	burnt_states = list("panelscorched")
+	desc = "The floor under the floor."
 
 /turf/simulated/floor/plating/New()
 	..()
@@ -80,6 +81,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 	floor_tile = /obj/item/stack/rods
+	desc = "Fireproof flooring made of screwed down rods."
 
 /turf/simulated/floor/engine/break_tile()
 	return //unbreakable
@@ -161,6 +163,7 @@
 
 /turf/simulated/floor/plating/lava
 	icon_state = "lava"
+	desc = "THE FLOOR IS LAVA!"
 
 /turf/simulated/floor/plating/lava/airless
 	oxygen = 0
@@ -170,6 +173,7 @@
 /turf/simulated/floor/plating/abductor
 	name = "alien floor"
 	icon_state = "alienpod1"
+	desc = "This floor looks out of this world."
 
 /turf/simulated/floor/plating/abductor/New()
 	..()

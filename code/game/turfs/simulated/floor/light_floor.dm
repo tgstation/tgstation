@@ -2,6 +2,7 @@
 	name = "Light floor"
 	luminosity = 5
 	icon_state = "light_on"
+	desc = "Fancy light-up flooring. Has an inset button to cycle the color."
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
 	var/on = 1

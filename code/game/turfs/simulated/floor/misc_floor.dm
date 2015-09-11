@@ -28,6 +28,7 @@
 /turf/simulated/floor/plating/beach/sand
 	name = "Sand"
 	icon_state = "sand"
+	desc = "A sandy beach."
 
 /turf/simulated/floor/plating/beach/coastline
 	name = "Coastline"
@@ -37,6 +38,7 @@
 /turf/simulated/floor/plating/beach/water
 	name = "Water"
 	icon_state = "water"
+	desc = "A warm ocean."
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
@@ -47,6 +49,7 @@
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	desc = "Snow, must be cold."
 
 /turf/simulated/floor/plating/snow/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -63,6 +66,7 @@
 /turf/simulated/floor/noslip
 	name = "high-traction floor"
 	icon_state = "noslip"
+	desc = "Ultra high traction flooring."
 	floor_tile = /obj/item/stack/tile/noslip
 	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
