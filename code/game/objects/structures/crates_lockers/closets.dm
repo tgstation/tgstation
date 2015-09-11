@@ -26,6 +26,9 @@
 
 /obj/structure/closet/New()
 	..()
+	if(type == /obj/structure/closet && ticker && ticker.current_state == GAME_STATE_PREGAME && prob(20)) //only roundstart generic closets
+		new /obj/structure/closet/cardboard(src.loc)
+		qdel(src)
 	update_icon()
 
 /obj/structure/closet/initialize()
@@ -106,9 +109,7 @@
 			break
 
 /obj/structure/closet/proc/open()
-	if(opened)
-		return 0
-	if(!can_open())
+	if(opened || !can_open())
 		return 0
 	opened = 1
 	playsound(loc, open_sound, 15, 1, -3)
