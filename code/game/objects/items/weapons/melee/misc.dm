@@ -95,7 +95,7 @@
   sleep(3)
   if (B)
     H.internal_organs -= B
-  gibs(user.loc, H.viruses, H.dna)
+  gibs(H.loc, H.viruses, H.dna)
   return (BRUTELOSS)
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
