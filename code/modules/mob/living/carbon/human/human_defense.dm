@@ -68,42 +68,38 @@ emp_act
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
-	if(wear_suit && istype(wear_suit, /obj/item/))
-		var/obj/item/I = wear_suit
-		if(I.IsReflect(def_zone) == 1)
+	if(wear_suit)
+		if(wear_suit.IsReflect(def_zone) == 1)
 			return 1
-	if(l_hand && istype(l_hand, /obj/item/))
-		var/obj/item/I = l_hand
-		if(I.IsReflect(def_zone) == 1)
+	if(l_hand)
+		if(l_hand.IsReflect(def_zone) == 1)
 			return 1
-	if(r_hand && istype(r_hand, /obj/item/))
-		var/obj/item/I = r_hand
-		if(I.IsReflect(def_zone) == 1)
+	if(r_hand)
+		if(r_hand.IsReflect(def_zone) == 1)
 			return 1
 	return 0
 
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", obj/item/O)
-	if(O)
-		if(O.flags & NOSHIELD) //weapon ignores shields altogether
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0)
+	var/block_chance = 50 + 30*thrown_proj - round(damage / 3) //thrown things are easier to block
+	if(AM)
+		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
-	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
-		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='danger'>[src] blocks [attack_text] with [l_hand]!</span>", \
-							"<span class='userdanger'>[src] blocks [attack_text] with [l_hand]!</span>")
-			return 1
-	if(r_hand && istype(r_hand, /obj/item/weapon))
-		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
-			visible_message("<span class='danger'>[src] blocks [attack_text] with [r_hand]!</span>", \
-							"<span class='userdanger'>[src] blocks [attack_text] with [r_hand]!</span>")
-			return 1
-	if(wear_suit && istype(wear_suit, /obj/item/))
-		var/obj/item/I = wear_suit
-		if(I.IsShield() && (prob(50)))
+	var/blocker
+	if(l_hand)
+		if(l_hand.IsShield() && prob(block_chance))
+			blocker = l_hand
+	if(r_hand)
+		if(r_hand.IsShield() && prob(block_chance))
+			blocker = r_hand
+	if(blocker)
+		visible_message("<span class='danger'>[src] blocks [attack_text] with [blocker]!</span>", \
+						"<span class='userdanger'>[src] blocks [attack_text] with [blocker]!</span>")
+		return 1
+	if(wear_suit)
+		if(wear_suit.IsShield() && (prob(50)))
 			visible_message("<span class='danger'>The reactive teleport system flings [src] clear of [attack_text]!</span>", \
 							"<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = new/list()
@@ -456,11 +452,11 @@ emp_act
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
 	var/obj/item/I
-	var/throwpower = 10
+	var/throwpower = 30
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(check_shields(throwpower, "\the [AM.name]", I))
+	if(check_shields(throwpower, "\the [AM.name]", AM, 1))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
