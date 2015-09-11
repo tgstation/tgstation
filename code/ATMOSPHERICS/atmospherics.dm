@@ -277,4 +277,5 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/process_atmos()
 	if(pipenet_rebuild_requested)
+		pipenet_rebuild_requested = 0
 		build_network()
