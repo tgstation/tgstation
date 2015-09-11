@@ -34,7 +34,7 @@
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
-	desc = "A floor made from plasma and OHSA violtions."
+	desc = "A floor made from plasma and OSHA violtions."
 
 /turf/simulated/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
