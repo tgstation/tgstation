@@ -454,12 +454,18 @@ emp_act
 	else
 		..()
 
-/mob/living/carbon/human/hitby(atom/movable/AM)
-	var/hitpush = 1
-	var/skipcatch = 0
-	if(AM.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
-		if(istype(AM, /obj/item))
-			var/obj/item/I = AM
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+	var/obj/item/I
+	var/throwpower = 10
+	if(istype(AM, /obj/item))
+		I = AM
+		throwpower = I.throwforce
+	if(check_shields(throwpower, "\the [AM.name]", I))
+		hitpush = 0
+		skipcatch = 1
+		blocked = 1
+	else if(I)
+		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
 				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
 					throw_alert("embeddedobject")
@@ -471,4 +477,5 @@ emp_act
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
 					hitpush = 0
 					skipcatch = 1 //can't catch the now embedded item
-	return ..(AM, skipcatch, hitpush)
+
+	return ..()

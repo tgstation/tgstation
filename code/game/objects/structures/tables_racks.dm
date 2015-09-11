@@ -95,7 +95,7 @@
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	else
-		return 0
+		return !density
 
 /obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
 	if(ismob(O) && user == O && ishuman(user))
@@ -240,13 +240,15 @@
 	tableclimber = user
 	if(do_mob(user, user, climb_time))
 		if(src.loc) //Checking if table has been destroyed
-			user.pass_flags += PASSTABLE
-			step(user,get_dir(user,src.loc))
-			user.pass_flags -= PASSTABLE
-			user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+			density = 0
+			if(step(user,get_dir(user,src.loc)))
+				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
-			add_logs(user, src, "climbed onto")
-			user.Stun(2)
+				add_logs(user, src, "climbed onto")
+				user.Stun(2)
+			else
+				user << "<span class='warning'>You fail to climb onto [src].</span>"
+			density = 1
 			tableclimber = null
 			return 1
 	tableclimber = null
