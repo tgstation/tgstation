@@ -21,18 +21,17 @@
 	var/volume = 70
 
 /obj/item/weapon/tank/suicide_act(mob/user)
-  var/mob/living/carbon/human/H = user
-  var/obj/item/organ/internal/brain/B = H.getorgan(/obj/item/organ/internal/brain)
+	var/mob/living/carbon/human/H = user
+	var/obj/item/organ/internal/brain/B = H.getorgan(/obj/item/organ/internal/brain)
 
-  user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
-  playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
-  sleep(3)
-  if (B)
-    B.loc = get_turf(H)
-    H.internal_organs -= B
-  hgibs(H.loc, H.viruses, H.dna)
-  H.gib()
-  return (BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	sleep(3)
+	if (B)
+		B.loc = get_turf(H)
+		H.internal_organs -= B
+	H.gib()
+	return (BRUTELOSS)
 
 /obj/item/weapon/tank/New()
 	..()
