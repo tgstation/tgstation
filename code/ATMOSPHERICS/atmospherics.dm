@@ -27,6 +27,8 @@ Pipelines + Other Objects -> Pipe network
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes = list()
 
+	var/pipenet_rebuild_requested = 0
+
 /obj/machinery/atmospherics/New()
 	nodes.len = device_type
 	..()
@@ -272,3 +274,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return 1
+
+/obj/machinery/atmospherics/process_atmos()
+	if(pipenet_rebuild_requested)
+		build_network()
