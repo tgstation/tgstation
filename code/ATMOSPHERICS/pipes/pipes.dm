@@ -22,7 +22,7 @@
 	var/obj/machinery/atmospherics/oldN = NODE_I
 	..()
 	if(oldN)
-		oldN.build_network()
+		oldN.pipenet_rebuild_requested = 1
 
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
 	if(NODE1&&NODE2)
