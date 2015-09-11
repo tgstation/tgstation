@@ -1,6 +1,7 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
-#define DIRTRATE 2        //Probability that a solar panel will advance it's "dirt level"
+#define DIRTRATE_A 25
+#define DIRTRATE_B 2       //Probability that a solar panel will advance it's "dirt level", both values are multiplied.
 #define DIRTLIMIT 3       //Maximum Dirt level. Percentage is calculated as current_dirt/(DIRTLIMIT+1) so it's never 100% obscured
 
 /obj/machinery/power/solar
@@ -136,8 +137,9 @@
 		return
 	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
 		return
-	if(prob(DIRTRATE))
-		current_dirt += 1
+	if(prob(DIRTRATE_A))
+		if(prob(DIRTRATE_B))
+			current_dirt += 1
 	if(current_dirt >= DIRTLIMIT)
 		stat |= BROKEN
 	if(powernet)
