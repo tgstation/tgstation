@@ -59,7 +59,7 @@
 
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)	//M is target of attack action, user is the one initiating it
+/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, eat_override = 0)	//M is target of attack action, user is the one initiating it
 	if(!eatverb)
 		eatverb = pick("bite", "chew", "nibble", "gnaw", "gobble", "chomp")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\eatverb = pick()  called tick#: [world.time]")
@@ -81,7 +81,15 @@
 			if(wrapped)
 				target << "<span class='warning'>You can't eat wrapped food!</span>"
 				return 0
-			else if(fullness <= 50)
+			if (!eat_override && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species.chem_flags & NO_EAT)
+					user.drop_from_inventory(src)
+					src.forceMove(get_turf(H))
+					playsound(get_turf(H),'sound/items/eatfood.ogg', rand(10,50), 1)
+					H.visible_message("<span class='warning'>As [M] attempts to eat \the [src] it falls through and onto the ground as if untouched.</span>", "<span class='notice'>As you attempt to eat \the [src] it falls through your body and onto the ground as if untouched.</span>")
+					return 0
+			if(fullness <= 50)
 				target.visible_message("<span class='notice'>[target] hungrily [eatverb]s some of \the [src] and gobbles it down!</span>", \
 				"<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>")
 			else if(fullness > 50 && fullness < 150)
@@ -112,6 +120,13 @@
 
 				if(!do_mob(user, target))
 					return
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.chem_flags & NO_EAT)
+						user.drop_from_inventory(src)
+						src.forceMove(get_turf(H))
+						H.visible_message("<span class='warning'>As [user] attempts to feed [M] \the [src] it falls through and onto the ground as if untouched.</span>", "<span class='notice'>As [user] attempts to feed you \the [src] it falls through your body and onto the ground as if untouched.</span>")
+						return 0
 
 				add_logs(user, target, "fed", object="[reagentlist(src)]")
 				target.visible_message("<span class='danger'>[user] feeds [target] \the [src].</span>", \

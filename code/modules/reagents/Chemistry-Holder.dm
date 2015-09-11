@@ -543,6 +543,7 @@ datum
 
 				for (var/datum/reagent/R in reagent_list)
 					if (R.id == reagent)
+						if(!R.on_removal(amount)) return 0 //handled and reagent says fuck no
 						R.volume -= amount
 						update_total()
 						if(!safety)//So it does not handle reactions when it need not to

@@ -14,6 +14,9 @@
 	var/initial_amount = 1
 	//How much results you can spawn before this datum disappears
 
+	var/stored_in_organ
+	//Example value: "head" or "arm". When an organ with the same type is cut off, this object will be transferred to it.
+
 /datum/butchering_product/New()
 	..()
 
@@ -34,6 +37,8 @@
 	result = /obj/item/stack/teeth
 	verb_name = "harvest teeth"
 	verb_gerund = "removing teeth from"
+
+	stored_in_organ = "head" //Cutting a "head" off will transfer teeth to the head object
 
 /datum/butchering_product/teeth/desc_modifier(mob/parent, mob/user)
 	if(amount == initial_amount) return
@@ -67,18 +72,7 @@
 	if(amount <= 0) return
 
 	var/obj/item/stack/teeth/T = new(location)
-	if(parent)
-		if(isliving(parent))
-			var/mob/living/L = parent
-			var/mob/parent_species = L.species_type
-			var/parent_species_name = initial(parent_species.name)
-
-			if(ishuman(parent))
-				parent_species_name = "[parent]'s" //Like "Dick Johnson's"
-
-			T.name = "[parent_species_name] teeth"
-			T.singular_name = "[parent_species_name] tooth"
-			T.animal_type = parent_species
+	T.update_name(parent) //Change name of the teeth - from the default "teeth" to "corgi teeth", for example
 
 	if(drop_amount == ALL_TEETH) //Drop ALL teeth
 		T.amount = amount
@@ -192,14 +186,16 @@ var/global/list/animal_butchering_products = list(
 	/mob/living/simple_animal/hostile/alien				= list(/datum/butchering_product/xeno_claw, /datum/butchering_product/skin/xeno, TEETH_BUNCH), //Same as the player-controlled aliens
 	/mob/living/simple_animal/hostile/retaliate/cluwne	= list(TEETH_BUNCH), //honk
 	/mob/living/simple_animal/hostile/creature			= list(TEETH_LOTS),
-	/mob/living/carbon/monkey							= list(/datum/butchering_product/skin/monkey),
+	/mob/living/carbon/monkey							= list(/datum/butchering_product/skin/monkey, TEETH_FEW),
 
 	/mob/living/carbon/human							= list(TEETH_HUMAN),
 	/mob/living/carbon/human/skellington				= list(TEETH_HUMAN),
 	/mob/living/carbon/human/tajaran					= list(TEETH_HUMAN),
+	/mob/living/carbon/human/dummy						= list(TEETH_HUMAN),
 
 )
 
 #undef TEETH_FEW
 #undef TEETH_BUNCH
 #undef TEETH_LOTS
+#undef TEETH_HUMAN

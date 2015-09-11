@@ -1,12 +1,12 @@
 
 //**************************************************************
-// Map Datum -- Boxstation
+// Map Datum -- Ancientstation
 //**************************************************************
 
 /datum/map/active
 	nameShort = "box"
-	nameLong = "Box Station"
-	map_dir = "boxstation"
+	nameLong = "Ancient Station"
+	map_dir = "ancientstation"
 	tDomeX = 128
 	tDomeY = 69
 	tDomeZ = 2
@@ -26,5 +26,6 @@
 		)
 
 ////////////////////////////////////////////////////////////////
-#include "defficiency/pipes.dm" // Atmos layered pipes.
-#include "tgstation.dmm"
+#include "ancientstation/areas.dm" // Areas
+#include "ancientstation/turfs.dm" // Areas
+#include "ancientstation.dmm"

@@ -1,9 +1,7 @@
 /mob/living/carbon/human/movement_delay()
 	var/tally = 0
-
-	if(species && species.flags & IS_SLOW)
-		tally = 7
-
+	if(species && species.move_speed_mod)
+		tally += species.move_speed_mod
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	//(VG EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
@@ -15,11 +13,11 @@
 		if(dna.mutantrace == "slime")
 			tally *= 2
 		else
-			return -1
+			tally -= 10
 
-	if(reagents.has_reagent("nuka_cola")) return -1
+	if(reagents.has_reagent("nuka_cola")) tally -= 10
 
-	if((M_RUN in mutations)) return -1
+	if((M_RUN in mutations)) tally -= 10
 
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
@@ -72,9 +70,6 @@
 
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
-	if(M_RUN in mutations)
-		tally = 0
-
 	var/skate_bonus = 0
 	var/disease_slow = 0
 	for(var/obj/item/weapon/bomberman/dispenser in src)
@@ -82,7 +77,7 @@
 		skate_bonus = max(skate_bonus, dispenser.speed_bonus)//if the player is carrying multiple BBD for some reason, he'll benefit from the speed bonus of the most upgraded one
 	tally = tally - skate_bonus + (6 * disease_slow)
 
-	return (tally+config.human_delay)
+	return max((tally+config.human_delay), -1) //cap at -1 as the 'fastest'
 
 /mob/living/carbon/human/Process_Spacemove(var/check_drift = 0)
 	//Can we act

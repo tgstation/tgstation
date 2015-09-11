@@ -776,6 +776,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		W.visible_message("<span class='warning'>Invisible fingers crudely paint something in blood on [T]...</span>")
 
 
+// For filming shit.
+/mob/dead/observer/verb/hide_sprite()
+	set name = "Hide Sprite"
+	set category = "Ghost"
+
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/dead/observer/verb/become_mommi()  called tick#: [world.time]")
+
+	// Toggle alpha
+	if(alpha == 127)
+		alpha = 0
+		src << "<span class='warning'>Sprite hidden.</span>"
+	else
+		alpha = 127
+		src << "<span class='info'>Sprite shown.</span>"
+
 
 /mob/dead/observer/verb/become_mommi()
 	set name = "Become MoMMI"

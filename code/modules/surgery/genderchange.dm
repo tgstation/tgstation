@@ -13,6 +13,9 @@
 
 /datum/surgery_step/prepare_genitals/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
+	if(target.species.flags & NO_SKIN)
+		user << "<span class='warning'>[target] has no genitalia to prepare.</span>"
+		return 0
 	return target_zone == "groin" && hasorgans(target) && affected.open >= 2 && affected.stage == 0
 
 /datum/surgery_step/prepare_genitals/begin_step(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

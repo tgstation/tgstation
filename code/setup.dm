@@ -849,6 +849,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define IS_SYNTHETIC 16384 // from baystation
 
+#define NO_SKIN 32768
+
+//species chemical flags
+#define NO_DRINK 1
+#define NO_EAT 2
+#define NO_SPLASH 4
+#define NO_INJECT 8
+#define NO_CRYO 16
+
+
 
 // from bay station
 #define INFECTION_LEVEL_ONE 100
@@ -963,6 +973,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MULTITOOL_MENU	128 //if it has multitool menu functionality inherently
 #define PURCHASER		256 //it connects to the centcom database at roundstart
 #define WIREJACK		512 //can we wirejack it? if flagged, machine calls wirejack()
+#define SHUTTLEWRENCH	1024 //if this flag exists, the computer can be wrenched on shuttle floors
 
 #define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
 

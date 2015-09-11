@@ -1,5 +1,5 @@
 /obj/item/stack/teeth
-	name = "bunch of teeth"
+	name = "teeth"
 	singular_name = "tooth"
 	irregular_plural = "teeth"
 	icon = 'icons/obj/butchering_products.dmi'
@@ -12,7 +12,7 @@
 
 	var/animal_type
 
-/obj/item/stack/teeth/New()
+/obj/item/stack/teeth/New(loc, amount)
 	.=..()
 	pixel_x = rand(-24,24)
 	pixel_y = rand(-24,24)
@@ -54,3 +54,20 @@
 	if(istype(from, /obj/item/stack/teeth))
 		var/obj/item/stack/teeth/original_teeth = from
 		src.animal_type = original_teeth.animal_type
+		src.name = original_teeth.name
+		src.singular_name = original_teeth.name
+
+/obj/item/stack/teeth/proc/update_name(mob/parent)
+	if(!parent) return
+
+	if(isliving(parent))
+		var/mob/living/L = parent
+		var/mob/parent_species = L.species_type
+		var/parent_species_name = initial(parent_species.name)
+
+		if(ishuman(parent))
+			parent_species_name = "[parent]'s" //Like "Dick Johnson's"
+
+		name = "[parent_species_name] teeth"
+		singular_name = "[parent_species_name] tooth"
+		animal_type = parent_species

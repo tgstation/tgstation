@@ -108,6 +108,8 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_update() called tick#: [world.time]")
 	return
 
+/datum/reagent/proc/on_removal(var/data)
+	return 1
 /datum/reagent/muhhardcores
 	name = "Hardcores"
 	id = "bustanut"
@@ -221,6 +223,13 @@
 	if(volume >= 5 && !istype(T.loc, /area/chapel)) //blood desanctifies non-chapel tiles
 		T.holy = 0
 	return
+
+/datum/reagent/blood/on_removal(var/data)
+	if(holder && holder.my_atom)
+		var/mob/living/carbon/human/H = holder.my_atom
+		if(istype(H))
+			if(H.species && H.species.flags & NO_BLOOD) return 0
+	return 1
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -1664,7 +1673,7 @@
 	M.adjustToxLoss(3*REM)
 	..()
 	return
-
+/*
 /datum/reagent/plasma/reaction_obj(var/obj/O, var/volume)
 	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
@@ -1687,7 +1696,7 @@
 	fuel.moles = 5
 	napalm.trace_gases += fuel
 	T.assume_air(napalm)
-	return
+	return*/
 
 /datum/reagent/leporazine
 	name = "Leporazine"

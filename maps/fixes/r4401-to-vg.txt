@@ -1,0 +1,197 @@
+# TURFZ
+TYPE: /turf/station/command/floor > /turf/unsimulated/floor
+TYPE: /turf/station/command/floor/other > /turf/unsimulated/floor
+TYPE: /turf/station/command/wall > /turf/unsimulated/wall
+TYPE: /turf/station/command/wall/other > /turf/unsimulated/wall
+TYPE: /turf/station/engine/floor > /turf/simulated/floor/engine
+TYPE: /turf/station/floor > /turf/simulated/floor
+TYPE: /turf/station/floor/grid > /turf/simulated/floor/plating
+TYPE: /turf/station/r_wall > /turf/simulated/wall/r_wall
+TYPE: /turf/station/shuttle/floor > /turf/simulated/shuttle/floor
+TYPE: /turf/station/shuttle/wall > /turf/simulated/shuttle/wall
+TYPE: /turf/station/wall > /turf/simulated/wall
+
+# Mobs
+TYPE: /mob/monkey > /mob/living/carbon/monkey
+
+# Objects
+TYPE: /obj/bedsheetbin > /obj/structure/bedsheetbin
+TYPE: /obj/begin > /obj/effect/begin
+TYPE: /obj/closet > /obj/structure/closet
+TYPE: /obj/closet/emcloset > /obj/structure/closet/emcloset
+TYPE: /obj/closet/l3closet > /obj/structure/closet/l3closet
+TYPE: /obj/closet/wardrobe > /obj/structure/closet/wardrobe
+TYPE: /obj/closet/wardrobe/mixed > /obj/structure/closet/wardrobe/mixed
+TYPE: /obj/closet/wardrobe/orange > /obj/structure/closet/wardrobe/orange
+TYPE: /obj/closet/wardrobe/red > /obj/structure/closet/wardrobe/red
+TYPE: /obj/closet/wardrobe/white > /obj/structure/closet/wardrobe/white
+TYPE: /obj/closet/wardrobe/yellow > /obj/structure/closet/wardrobe/yellow
+TYPE: /obj/grille > /obj/structure/grille
+# IDK
+TYPE: /obj/item/weapon/a_gift > /obj/item/weapon/gift/small
+TYPE: /obj/item/weapon/ammo/a357 > /obj/item/ammo_storage/box/a357
+TYPE: /obj/item/weapon/analyzer > /obj/item/device/analyzer
+TYPE: /obj/item/weapon/bottle/antitoxins > /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
+TYPE: /obj/item/weapon/bottle/r_ch_cough > /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
+TYPE: /obj/item/weapon/bottle/r_epil > /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
+TYPE: /obj/item/weapon/bottle/rejuvenators > /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline
+TYPE: /obj/item/weapon/bottle/s_tox > /obj/item/weapon/reagent_containers/glass/bottle/stoxin
+TYPE: /obj/item/weapon/bottle/toxins > /obj/item/weapon/reagent_containers/glass/bottle/toxin
+TYPE: /obj/item/weapon/brutepack > /obj/item/stack/medical/bruise_pack
+TYPE: /obj/item/weapon/camera > /obj/item/device/camera
+TYPE: /obj/item/weapon/clothing/ears/earmuffs > /obj/item/clothing/ears/earmuffs
+TYPE: /obj/item/weapon/clothing/glasses/blindfold > /obj/item/clothing/glasses/sunglasses/blindfold
+TYPE: /obj/item/weapon/clothing/glasses/meson > /obj/item/clothing/glasses/meson
+TYPE: /obj/item/weapon/clothing/glasses/regular > /obj/item/clothing/glasses/regular
+TYPE: /obj/item/weapon/clothing/glasses/sunglasses > /obj/item/clothing/glasses/sunglasses
+TYPE: /obj/item/weapon/clothing/glasses/thermal > /obj/item/clothing/glasses/thermal
+TYPE: /obj/item/weapon/clothing/gloves/black > /obj/item/clothing/gloves/black
+TYPE: /obj/item/weapon/clothing/gloves/latex > /obj/item/clothing/gloves/latex
+TYPE: /obj/item/weapon/clothing/gloves/swat > /obj/item/clothing/gloves/swat
+TYPE: /obj/item/weapon/clothing/head/helmet > /obj/item/clothing/head/helmet
+TYPE: /obj/item/weapon/clothing/head/s_helmet > /obj/item/clothing/head/helmet/space
+TYPE: /obj/item/weapon/clothing/head/swat_hel > /obj/item/clothing/head/helmet/swat
+TYPE: /obj/item/weapon/clothing/mask/gasmask > /obj/item/clothing/mask/gas
+TYPE: /obj/item/weapon/clothing/mask/m_mask > /obj/item/clothing/mask/breath
+TYPE: /obj/item/weapon/clothing/mask/muzzle > /obj/item/clothing/mask/muzzle
+TYPE: /obj/item/weapon/clothing/mask/robot/swat > /obj/item/clothing/mask/gas/swat
+TYPE: /obj/item/weapon/clothing/mask/surgical > /obj/item/clothing/mask/surgical
+TYPE: /obj/item/weapon/clothing/shoes/black > /obj/item/clothing/shoes/black
+TYPE: /obj/item/weapon/clothing/shoes/orange > /obj/item/clothing/shoes/orange
+TYPE: /obj/item/weapon/clothing/shoes/swat > /obj/item/clothing/shoes/swat
+TYPE: /obj/item/weapon/clothing/shoes/white > /obj/item/clothing/shoes/white
+# ???
+TYPE: /obj/item/weapon/clothing/suit/armor > /obj/item/clothing/suit/armor
+TYPE: /obj/item/weapon/clothing/suit/firesuit > /obj/item/clothing/suit/fire/firefighter
+TYPE: /obj/item/weapon/clothing/suit/sp_suit > /obj/item/clothing/suit/space
+TYPE: /obj/item/weapon/clothing/suit/straight_jacket > /obj/item/clothing/suit/straight_jacket
+TYPE: /obj/item/weapon/clothing/suit/swat_suit > /obj/item/clothing/suit/armor/swat/officer
+TYPE: /obj/item/weapon/clothing/under/black > /obj/item/clothing/under/color/black
+TYPE: /obj/item/weapon/clothing/under/blue > /obj/item/clothing/under/color/blue
+TYPE: /obj/item/weapon/clothing/under/green > /obj/item/clothing/under/color/green
+TYPE: /obj/item/weapon/clothing/under/orange > /obj/item/clothing/under/color/orange
+TYPE: /obj/item/weapon/clothing/under/white > /obj/item/clothing/under/color/white
+TYPE: /obj/item/weapon/clothing/under/yellow > /obj/item/clothing/under/color/yellow
+TYPE: /obj/item/weapon/dropper > /obj/item/weapon/reagent_containers/dropper
+# Isn't this the handheld flash? Yes
+TYPE: /obj/item/weapon/flash > /obj/item/device/flash
+# ???
+TYPE: /obj/item/weapon/flasks/coolant > /obj/machinery/portable_atmospherics/canister/carbon_dioxide
+TYPE: /obj/item/weapon/flasks/oxygen > /obj/machinery/portable_atmospherics/canister/oxygen
+TYPE: /obj/item/weapon/flasks/plasma > /obj/machinery/portable_atmospherics/canister/plasma
+TYPE: /obj/item/weapon/game_kit >
+TYPE: /obj/item/weapon/gun/energy/taser_gun > /obj/item/weapon/gun/energy/taser
+TYPE: /obj/item/weapon/gun/revolver > /obj/item/weapon/gun/projectile/detective
+TYPE: /obj/item/weapon/healthanalyzer > /obj/item/device/healthanalyzer
+TYPE: /obj/item/weapon/igniter > /obj/machinery/igniter
+# These two, I have no idea.
+TYPE: /obj/item/weapon/infra > /obj/item/device/assembly/infra
+TYPE: /obj/item/weapon/infra_sensor > /obj/item/device/assembly/infra
+# Adminadrozine? Adminordrazine shut up
+TYPE: /obj/item/weapon/m_pill/superpill >
+TYPE: /obj/item/weapon/ointment > /obj/item/stack/medical/advanced/ointment
+TYPE: /obj/item/weapon/paper/Internal > /obj/item/weapon/paper/sop
+TYPE: /obj/item/weapon/paper/Map > /obj/item/weapon/paper/sop
+# These all appear to be handled by ryetaline now
+TYPE: /obj/item/weapon/pill_canister/Tourette >
+TYPE: /obj/item/weapon/pill_canister/antitoxin >
+TYPE: /obj/item/weapon/pill_canister/cough >
+TYPE: /obj/item/weapon/pill_canister/epilepsy >
+TYPE: /obj/item/weapon/prox_sensor > /obj/item/device/assembly/prox_sensor
+TYPE: /obj/item/weapon/radio > /obj/item/device/radio
+TYPE: /obj/item/weapon/radio/beacon > /obj/item/beacon/syndicate
+TYPE: /obj/item/weapon/radio/electropack > /obj/item/device/radio/electropack
+TYPE: /obj/item/weapon/radio/headset > /obj/item/device/radio/headset
+TYPE: /obj/item/weapon/radio/intercom > /obj/item/device/radio/intercom
+TYPE: /obj/item/weapon/radio/signaler > /obj/item/device/assembly/signaler
+TYPE: /obj/item/weapon/rods > /obj/item/stack/rods
+TYPE: /obj/item/weapon/sheet/glass > /obj/item/stack/sheet/glass
+TYPE: /obj/item/weapon/sheet/metal > /obj/item/stack/sheet/metal
+TYPE: /obj/item/weapon/sheet/r_metal > /obj/item/stack/sheet/plasteel
+TYPE: /obj/item/weapon/storage/disk_kit > /obj/item/weapon/storage/box/disks
+TYPE: /obj/item/weapon/storage/disk_kit/disks > /obj/item/weapon/storage/box/disks
+TYPE: /obj/item/weapon/storage/disk_kit/disks2 > /obj/item/weapon/storage/box/disks
+TYPE: /obj/item/weapon/storage/firstaid/syringes > /obj/item/weapon/storage/box/syringes
+TYPE: /obj/item/weapon/storage/flashbang_kit > /obj/item/weapon/storage/box/flashbangs
+TYPE: /obj/item/weapon/storage/gl_kit > /obj/item/weapon/storage/box/gloves
+TYPE: /obj/item/weapon/storage/handcuff_kit > /obj/item/weapon/storage/box/handcuffs
+TYPE: /obj/item/weapon/storage/id_kit > /obj/item/weapon/storage/box/ids
+# wat
+TYPE: /obj/item/weapon/storage/lglo_kit >
+TYPE: /obj/item/weapon/storage/stma_kit >
+
+TYPE: /obj/item/weapon/storage/trackimp_kit > /obj/item/weapon/storage/box/trackimp
+TYPE: /obj/item/weapon/syndicate_uplink > /obj/item/device/multitool/uplink
+TYPE: /obj/item/weapon/syringe > /obj/item/weapon/reagent_containers/syringe
+TYPE: /obj/item/weapon/tank/oxygentank > /obj/item/weapon/tank/oxygen
+TYPE: /obj/item/weapon/tile > /obj/item/stack/tile
+TYPE: /obj/item/weapon/timer > /obj/item/device/assembly/timer
+TYPE: /obj/landmark > /obj/effect/landmark
+TYPE: /obj/landmark/alterations >
+# Atmos shit has changed so much that I'm just going to delete it all and start fresh.
+TYPE: /obj/machinery/alarm/indicator >
+TYPE: /obj/machinery/at_indicator >
+TYPE: /obj/machinery/atmoalter/canister/anesthcanister > /obj/machinery/portable_atmospherics/canister/sleeping_agent
+TYPE: /obj/machinery/atmoalter/canister/n2canister > /obj/machinery/portable_atmospherics/canister/nitrogen
+TYPE: /obj/machinery/atmoalter/canister/oxygencanister > /obj/machinery/portable_atmospherics/canister/oxygen
+TYPE: /obj/machinery/atmoalter/canister/poisoncanister > /obj/machinery/portable_atmospherics/canister/plasma
+TYPE: /obj/machinery/atmoalter/heater > /obj/machinery/space_heater
+TYPE: /obj/machinery/atmoalter/siphs/fullairsiphon >
+TYPE: /obj/machinery/atmoalter/siphs/fullairsiphon/air_vent >
+TYPE: /obj/machinery/atmoalter/siphs/fullairsiphon/port >
+TYPE: /obj/machinery/atmoalter/siphs/scrubbers >
+TYPE: /obj/machinery/atmoalter/siphs/scrubbers/air_filter >
+TYPE: /obj/machinery/atmoalter/siphs/scrubbers/port >
+# RIP air tunnel
+TYPE: /obj/machinery/computer/airtunnel >
+TYPE: /obj/machinery/computer/atmosphere/siphonswitch >
+TYPE: /obj/machinery/computer/data/weapon/info >
+TYPE: /obj/machinery/computer/data/weapon/log >
+TYPE: /obj/machinery/computer/dna > /obj/machinery/computer/scan_consolenew
+TYPE: /obj/machinery/computer/engine > /obj/machinery/computer/turbine_computer
+TYPE: /obj/machinery/computer/sleep_console > /obj/machinery/sleep_console
+TYPE: /obj/machinery/connector >
+TYPE: /obj/machinery/cryo_cell > /obj/machinery/atmospherics/unary/cryo_cell
+TYPE: /obj/machinery/dispenser > /obj/machinery/chem_dispenser
+TYPE: /obj/machinery/dna_scanner > /obj/machinery/dna_scannernew
+TYPE: /obj/machinery/door/false_wall > /obj/structure/falsewall
+TYPE: /obj/machinery/freezer > /obj/machinery/atmospherics/unary/cold_sink/freezer
+TYPE: /obj/machinery/hologram_proj > /obj/machinery/hologram/holopad
+TYPE: /obj/machinery/injector > /obj/machinery/atmospherics/unary/outlet_injector
+TYPE: /obj/machinery/pipes/flexipipe >
+TYPE: /obj/machinery/pipes/high_capacity >
+TYPE: /obj/machinery/pod >
+TYPE: /obj/machinery/recon >
+TYPE: /obj/machinery/restruct > /obj/machinery/cloning/clonepod/full
+TYPE: /obj/machinery/scan_console > /obj/machinery/computer/cloning
+TYPE: /obj/machinery/sec_lock >
+TYPE: /obj/machinery/shuttle/engine/heater > /obj/structure/shuttle/engine/heater
+TYPE: /obj/machinery/shuttle/engine/platform > /obj/structure/shuttle/engine/platform
+TYPE: /obj/machinery/shuttle/engine/propulsion > /obj/structure/shuttle/engine/propulsion
+TYPE: /obj/machinery/shuttle/engine/propulsion/burst/left > /obj/structure/shuttle/engine/propulsion/burst/left
+TYPE: /obj/machinery/shuttle/engine/propulsion/burst/right > /obj/structure/shuttle/engine/propulsion/burst/right
+TYPE: /obj/machinery/shuttle/engine/router > /obj/structure/shuttle/engine/router
+TYPE: /obj/manifest >
+TYPE: /obj/morgue > /obj/structure/morgue
+TYPE: /obj/move/airtunnel/connector >
+TYPE: /obj/move/airtunnel/connector/wall >
+TYPE: /obj/move/floor > /turf/simulated/floor
+TYPE: /obj/move/wall > /turf/simulated/wall
+TYPE: /obj/rack > /obj/structure/rack
+TYPE: /obj/secloset/animal > /obj/structure/closet/secure_closet/animal
+TYPE: /obj/secloset/highsec > /obj/structure/closet/secure_closet/security
+TYPE: /obj/secloset/medical1 > /obj/structure/closet/secure_closet/medical1
+TYPE: /obj/secloset/medical2 > /obj/structure/closet/secure_closet/medical2
+TYPE: /obj/secloset/personal > /obj/structure/closet/secure_closet/personal
+TYPE: /obj/secloset/security1 > /obj/structure/closet/secure_closet/security
+TYPE: /obj/secloset/security2 > /obj/structure/closet/secure_closet/security
+TYPE: /obj/shuttle/door > /obj/machinery/door/unpowered/shuttle
+TYPE: /obj/sp_start >
+TYPE: /obj/start > /obj/effect/landmark/start
+TYPE: /obj/stool > /obj/item/weapon/stool
+TYPE: /obj/stool/bed > /obj/structure/bed
+TYPE: /obj/stool/chair > /obj/structure/bed/chair/e_chair
+TYPE: /obj/table > /obj/structure/table
+TYPE: /obj/watertank > /obj/structure/reagent_dispensers/watertank
+TYPE: /obj/weldfueltank > /obj/structure/reagent_dispensers/fueltank
+TYPE: /obj/window > /obj/structure/window

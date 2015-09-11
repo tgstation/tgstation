@@ -172,6 +172,12 @@
 					if(M == user) continue
 					//Syringe gun attack logging by Yvarov
 					var/R
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.species && (H.species.chem_flags & NO_INJECT))
+							H.visible_message("<span class='warning'>\The [D] bounces harmlessly off of [H].</span>", "<span class='notice'>\The [D] bounces off you harmlessly and breaks as it hits the ground.</span>")
+							qdel(D)
+							return
 					if(D.reagents)
 						for(var/datum/reagent/A in D.reagents.reagent_list)
 							R += A.id + " ("

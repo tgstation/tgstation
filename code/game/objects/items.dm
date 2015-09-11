@@ -777,11 +777,15 @@
 		return
 
 	//if we haven't made our blood_overlay already
-	if( !blood_overlay )
+	if(!blood_overlays[type])
 		generate_blood_overlay()
 
+	if(!blood_overlay)
+		blood_overlay = blood_overlays[type]
+	else
+		overlays -= blood_overlay
+
 	//apply the blood-splatter overlay if it isn't already in there, else it updates it.
-	overlays -= blood_overlay
 	blood_overlay.color = blood_color
 	overlays += blood_overlay
 
@@ -794,21 +798,17 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
+var/global/list/image/blood_overlays = list()
 /obj/item/proc/generate_blood_overlay()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/generate_blood_overlay() called tick#: [world.time]")
-	if(blood_overlay)
+	if(blood_overlays[type])
 		return
 
 	var/icon/I = new /icon(icon, icon_state)
 	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
 	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	blood_overlay = image(I)
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	blood_overlays[type] = image(I)
 
 
 /obj/item/proc/showoff(mob/user)
