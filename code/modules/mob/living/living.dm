@@ -925,11 +925,13 @@ Sorry Giacom. Please don't be mad :(
 		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
 		var/datum/gas_mixture/C_air_contents = C.airs[1]
 
-		if(C_air_contents.total_moles() < 10)
-			loc_temp = environment.temperature
+		if(!C_air_contents)
+			if(C_air_contents.total_moles() < 10)
+				loc_temp = environment.temperature
+			else
+				loc_temp = C_air_contents.temperature
 		else
-			loc_temp = C_air_contents.temperature
-
+			loc_temp = environment.temperature //small fix, C_air_contents was throwing errors when it's set to null, needs investigation.
 	else
 		loc_temp = environment.temperature
 
