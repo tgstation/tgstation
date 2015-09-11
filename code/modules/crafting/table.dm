@@ -56,16 +56,13 @@
 		else
 			possible_tools += I.type
 	possible_tools += table_contents
-	var/i = R.tools.len
-	var/I
-	for(var/A in R.tools)
-		I = possible_tools.Find(A)
-		if(I)
-			possible_tools.Cut(I, I+1)
-			i--
+	for(var/needed_tool in R.tools)
+		var/index = possible_tools.Find(needed_tool)
+		if(index)
+			possible_tools.Cut(index, index+1)
 		else
-			break
-	return !i
+			return 0
+	return 1
 
 /obj/structure/table/proc/construct_item(mob/user, datum/table_recipe/R)
 	check_table()
