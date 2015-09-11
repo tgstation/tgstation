@@ -145,6 +145,27 @@
 
 	var/eye_colour
 
+/obj/item/organ/eyes/tajaran
+	name = "tajaran eyeballs"
+	icon_state = "eyes-tajaran"
+	organ_type = /datum/organ/internal/eyes/tajaran
+
+/obj/item/organ/eyes/muton
+	name = "muton eyeballs"
+	icon_state = "eyes-muton"
+	organ_type = /datum/organ/internal/eyes/muton
+
+/obj/item/organ/eyes/grey
+	name = "grey eyeballs"
+	icon_state = "eyes-grey"
+	organ_type = /datum/organ/internal/eyes/grey
+
+/obj/item/organ/eyes/adv_1
+	name = "advanced prosthesis eyeballs"
+	robotic = 2
+	icon_state = "eyes-adv_1"
+	organ_type = /datum/organ/internal/eyes/adv_1
+
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"

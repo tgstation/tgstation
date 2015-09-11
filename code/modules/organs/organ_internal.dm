@@ -182,16 +182,6 @@
 	removed_type = /obj/item/organ/brain
 	vital = 1
 
-/datum/organ/internal/eyes
-	name = "eyes"
-	parent_organ = "head"
-	removed_type = /obj/item/organ/eyes
-
-	process() //Eye damage replaces the old eye_stat var.
-		if(is_bruised())
-			owner.eye_blurry = 20
-		if(is_broken())
-			owner.eye_blind = 20
 
 /datum/organ/internal/appendix
 	name = "appendix"

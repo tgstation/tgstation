@@ -145,6 +145,7 @@ var/global/list/whitelisted_species = list("Human")
 	if(H.internal_organs_by_name)
 		H.internal_organs_by_name.len=0
 
+
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/create_organs() called tick#: [world.time]")
@@ -318,6 +319,16 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/datum/speech_filter/filter = new
 
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/tajaran
+	)
+
 /datum/species/tajaran/New()
 	// Combining all the worst shit the world has ever offered.
 
@@ -374,6 +385,16 @@ var/global/list/whitelisted_species = list("Human")
 
 	has_mutant_race = 0
 
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/grey
+	)
+
 /datum/species/muton // /vg/
 	name = "Muton"
 	icobase = 'icons/mob/human_races/r_muton.dmi'
@@ -395,10 +416,20 @@ var/global/list/whitelisted_species = list("Human")
 
 	has_mutant_race = 0
 
-	equip(var/mob/living/carbon/human/H)
-		// Unequip existing suits and hats.
-		H.u_equip(H.wear_suit,1)
-		H.u_equip(H.head,1)
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes/muton
+	)
+
+/datum/species/muton/equip(var/mob/living/carbon/human/H)
+	// Unequip existing suits and hats.
+	H.u_equip(H.wear_suit,1)
+	H.u_equip(H.head,1)
 
 /datum/species/skrell
 	name = "Skrell"
