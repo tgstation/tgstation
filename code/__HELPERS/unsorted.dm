@@ -1448,3 +1448,40 @@ B --><-- A
 	if(orbiting)
 		loc = get_turf(orbiting)
 		orbiting = null
+
+
+//Center's an image.
+//Requires:
+//The Image
+//The x dimension of the icon file used in the image
+//The y dimension of the icon file used in the image
+// eg: center_image(I, 32,32)
+// eg2: center_image(I, 96,96)
+
+/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+	if(!I)
+		return
+
+	if(!x_dimension || !y_dimension)
+		return
+
+	//Get out of here, punk ass kids calling procs needlessly
+	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+		return I
+
+	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
+	//but still use them in game
+	var/x_offset = -((x_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+	var/y_offset = -((y_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+
+	//Correct values under world.icon_size
+	if(x_dimension < world.icon_size)
+		x_offset *= -1
+	if(y_dimension < world.icon_size)
+		y_offset *= -1
+
+	I.pixel_x = x_offset
+	I.pixel_y = y_offset
+
+	return I
