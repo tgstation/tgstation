@@ -1,3 +1,10 @@
+/obj/effect/proc_holder/spell/proc/check_frosty(/ob/living/carbon/human/H)
+	. = 0
+	if(!H||!istype(H))
+		return
+
+
+
 /obj/effect/proc_holder/spell/aoe_turf/spread_frost
 	name = "Spread Frost"
 	desc = "Forms a slowly-spreading layer of frost on the ground beneath your feet."
