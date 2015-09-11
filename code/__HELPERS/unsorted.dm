@@ -1426,8 +1426,8 @@ B --><-- A
 	if (orbiting)
 		stop_orbit()
 		sleep(1) //sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
-		if (orbiting)
-			return //mutiple calls to orbit can happen and create oddness
+		if (orbiting || !istype(A)) //post sleep re-check
+			return 
 	orbiting = A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
