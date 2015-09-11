@@ -11,3 +11,4 @@ changes:
   - tweak: "Alien slashing now deals constant 20 damage but has a chance to miss."
   - tweak: "Reduced alien disarm stun duration vs cyborgs, from 7 seconds to 2 seconds."
   - tweak: "Alien sentinels now move as fast as humans."
+  - tweak: "Facehuggers and alien eggs layers increased to be higher than resin walls."
