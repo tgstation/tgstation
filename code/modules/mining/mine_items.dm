@@ -65,7 +65,7 @@
 	throwforce = 10.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	materials = list(MAT_METAL=3750) //one sheet, but where can you make them?
+	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
@@ -194,9 +194,9 @@
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
 	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
-	
+
 	start_turf = get_turf(src.loc)
-	
+
 	//Fill it
 	cur_turf = locate(start_turf.x, start_turf.y-2, start_turf.z)
 	new /obj/machinery/door/airlock/glass(cur_turf)

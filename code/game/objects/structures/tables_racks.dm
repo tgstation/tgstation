@@ -481,7 +481,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
 	flags = CONDUCT
-	materials = list(MAT_METAL=3750)
+	materials = list(MAT_METAL=2000)
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	..()
