@@ -1,11 +1,11 @@
-/obj/effect/proc_holder/spell/proc/check_frosty(/ob/living/carbon/human/H)
+/obj/effect/proc_holder/spell/proc/check_frosty(/mob/living/carbon/human/H)
 	. = FALSE
 	if(!H||!istype(H))
 		return
-	if(H.dna.species.id == "frost_scion" && is_scion(H))
+	if(H.dna.species.id == "frost_scion_t" && is_scion(H))
 		return TRUE
 	if(is_scion(H))
-		usr << "<span class='warning'>This spell requires more powerful than available while disguised.</span>"
+		usr << "<span class='warning'>This spell requires more power than available to you while disguised.</span>"
 		return
 	usr << "<span class='warning'>This spell is beyond your limited knowledge of the Kingdom of Frost.</span>"
 
@@ -125,7 +125,18 @@
 		return 1
 
 /obj/effect/proc_holder/spell/targeted/scion_transform
+	name = "Transform"
+	desc = "Rids you of your human disguise and unleashes your true potential as a Scion of the Kingdom."
+	panel = "Scion Abilities"
+	charge_max = 3000
+	range = -1
+	include_user = 1
+	clothes_req = 0
+	icon_state = "frosty_transform"
+
+/obj/effect/proc_holder/spell/targeted/scion_transform/cast()
 	if(usr.stat || !ishuman(usr) || !usr || !is_scion(usr))
+		charge_counter = charge_max
 		return
 	var/mob/living/carbon/human/H = usr
 	//TODO: balance shit kinda like s-ling has
@@ -139,7 +150,7 @@
 	charge_max = 300
 	clothes_req = 0
 	range = 1
-	action_icon_state = "freeze"
+	action_icon_state = "frosty_freeze"
 	var/temperature_delta = 30 //degrees K
 
 /obj/effect/proc_holder/spell/aoe_turf/freeze_area/cast()
@@ -155,16 +166,23 @@
 	name = "Frostbite"
 	desc = "Purges cold-resistant mutations and chemicals from your target. Inflicts cold damage if the target is void of cold-resistant effects."
 	panel = "Scion Abilities"
-	charge_max = 600
+	charge_max = 300
 	clothes_req = 0
 	range = 1 //adjacent to user
 	var/base_dmg = 20
+	var/base_temp = -100
 
 /obj/effect/proc_holder/spell/targeted/frostbite/cast()
 	var/mob/living/carbon/human/H = target
-	var/affected = 0
+	var/mob/living/user = usr
+
+	if(!check_frosty(user))
+		return 0
 	if(!istype(H))
 		return 0
+	if(is_frosty(target))
+		return 0
+	var/affected = 0
 	if(H.dna.check_mutation(COLDRES))
 		H.dna.remove_mutation(COLDRES)
 		affected++
@@ -173,7 +191,48 @@
 		affected++
 	var/damageToAfflict = base_dmg - ((affected/2)*base_dmg) //does no damage if we removed two effects; half damage if we removed one effect; max damage if we removed none
 	H.dna.species.apply_damage(damageToAfflict, COLD, def_area = null, blocked = 0, user)
+
+	var/temperatureToAfflict = base_temp - ((affected/2)*base_dmg)
+	H.temperature = max(H.temperature - temperatureToAfflict, TCMB)
 	//TODO: feedback
 	return 1
 
+/obj/effect/proc_holder/spell/aoe_turf/extinguish
+	name = "Extinguish"
+	desc = "Quenches nearby fires."
+	panel = "Scion Abilities"
+	charge_max = 600
+	clothes_req = 0
+	range = 0
 
+/obj/effect/proc_holder/spell/aoe_turf/extinguish/cast()
+	for(var/turf/simulated/T in targets)
+		new /obj/effect/nanofrost_container/frosty(T)
+	//TODO: logging, feedback
+
+/obj/effect/nanofrost_container/frosty //nanofrost does everything we want for this ability, so why not just spawn one?
+	name = "Ball of ice" //TODO: decent fluff
+	desc = "blah blah blah magic blah blah cold"
+	residue_name = "frozen residue"
+	residue_desc = "residue of magic cold ball thing"
+
+/obj/effect/proc_holder/spell/targeted/re-freeze
+	name = "Re-Freeze"
+	desc = "Cools and heals an ally."
+	panel = "Scion Abilities"
+	charge_max = 30
+	clothes_req = 0
+	range = 1 //adjacent to user
+	var/base_dmg = 30 //because of coldmod, this heals our allies
+	var/temperature_delta = 15
+
+/obj/effect/proc_holder/spell/targeted/re-freeze/cast()
+	var/mob/living/H = target
+	var/mob/living/user = usr
+
+	if(!is_frosty(H.mind))
+		return 0
+
+	H.dna.species.apply_damage(base_dmg, COLD, def_area = null, blocked = 0, user)
+	H.temperature = max(H.temperature - temperature_delta, TCMB)
+	//TODO: logging, feedback

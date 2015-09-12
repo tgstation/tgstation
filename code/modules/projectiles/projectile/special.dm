@@ -46,7 +46,7 @@
 	name = "freeze beam"
 	icon_state = "ice_2"
 	damage = 0
-	damage_type = BURN
+	damage_type = COLD
 	nodamage = 1
 	flag = "energy"
 	var/temperature = 100
@@ -62,6 +62,7 @@
 /obj/item/projectile/temp/hot
 	name = "heat beam"
 	temperature = 400
+	damage_type = BURN
 
 /obj/item/projectile/meteor
 	name = "meteor"

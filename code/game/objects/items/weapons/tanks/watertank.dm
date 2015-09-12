@@ -309,6 +309,8 @@
 	icon_state = "frozen_smoke_capsule"
 	mouse_opacity = 0
 	pass_flags = PASSTABLE
+	var/residue_name = "nanofrost residue"
+	var/residue_desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
 
 /obj/effect/nanofrost_container/proc/Smoke()
 	var/datum/effect/effect/system/smoke_spread/freezing/S = new
@@ -316,13 +318,13 @@
 	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
 	F.color = "#B2FFFF"
-	F.name = "nanofrost residue"
-	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"
+	F.name = residue_name
+	F.desc = residue_desc
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
 
 /obj/effect/effect/smoke/freezing
-	name = "nanofrost smoke"
+	name = "freezing smoke"
 	opacity = 0
 	color = "#B2FFFF"
 
