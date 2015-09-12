@@ -576,7 +576,6 @@
 	set_ready_state(0)
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target))
 	P.target = target_turf
-	P.creator = null
 	P.icon = 'icons/obj/objects.dmi'
 	P.failchance = 0
 	P.icon_state = "anom"
@@ -584,8 +583,7 @@
 	do_after_cooldown()
 	src = null
 	spawn(rand(150,300))
-		del(P)
-	return
+		qdel(P)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult
 	name = "Gravitational Catapult"
