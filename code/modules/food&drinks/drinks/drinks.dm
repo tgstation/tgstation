@@ -107,6 +107,7 @@
 	force = 14
 	throwforce = 10
 	amount_per_transfer_from_this = 20
+	materials = list(MAT_GOLD=1000)
 	possible_transfer_amounts = null
 	volume = 150
 	flags = CONDUCT | OPENCONTAINER
@@ -202,12 +203,14 @@
 	name = "captain's flask"
 	desc = "A silver flask belonging to the captain."
 	icon_state = "flask"
+	materials = list(MAT_SILVER=500)
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/det
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
+	materials = list(MAT_METAL=250)
 	list_reagents = list("whiskey" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
