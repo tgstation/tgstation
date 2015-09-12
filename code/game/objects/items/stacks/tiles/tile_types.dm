@@ -122,7 +122,7 @@
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	force = 6.0
-	materials = list(MAT_METAL=937.5)
+	materials = list(MAT_METAL=500)
 	throwforce = 10.0
 	flags = CONDUCT
 	max_amount = 60
