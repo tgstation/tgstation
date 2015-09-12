@@ -878,7 +878,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/item/weapon/newspaper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] looks thoughtful, then triumphant, and holds the [src] aloft!</span>")
-	user.say(";JOURNALISM IS MY CALLING! EVERYONE APPRECIATES UNBIASED REPORTI-GLORF")
+	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(H.loc)
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)
