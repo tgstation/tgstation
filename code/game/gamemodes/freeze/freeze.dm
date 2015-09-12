@@ -85,5 +85,6 @@
 		return 0
 	if(!(pawn_mind in frost_pawns))
 		//add stuff blah balh
+		hardset_dna(pawn_mind.current, mrace = /datum/species/frosty/pawn)
 		pawn_mind.special_role = "FrostPawn"
 		return 1

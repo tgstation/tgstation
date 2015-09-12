@@ -1139,6 +1139,10 @@
 			H.damageoverlaytemp = 20
 			if(organ.take_damage(0, damage*burnmod))
 				H.update_damage_overlays(0)
+		if(COLD)
+			H.damageoverlaytemp = 20
+			if(organ.take_damage(0, damage*coldmod))
+				H.update_damage_overlays(0)
 		if(TOX)
 			H.adjustToxLoss(damage * blocked)
 		if(OXY)
@@ -1324,11 +1328,11 @@
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to 120)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, COLD, "head")
 				if(120 to 200)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, COLD, "head")
 				if(200 to 260)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, COLD, "head")
 
 		if(!(HEATRES in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
@@ -1384,13 +1388,13 @@
 			switch(H.bodytemperature)
 				if(200 to 260)
 					H.throw_alert("temp","cold",1)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, COLD)
 				if(120 to 200)
 					H.throw_alert("temp","cold",2)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, COLD)
 				if(-INFINITY to 120)
 					H.throw_alert("temp","cold",3)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, COLD)
 		else
 			H.clear_alert("temp")
 

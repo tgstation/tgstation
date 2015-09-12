@@ -60,15 +60,11 @@
 
 /obj/structure/alien/weeds/frost/node/process()
 	var/turf/simulated/T = loc
-	var/datum/gas_mixture/A = T.air
+	var/datum/gas_mixture/A = new
 
-	if(A.temperature >= T20C)
-		A.temperature -= temperature_delta
-	else
-		A.temperature = T20C - temperature_delta
-	A.temperature = max(0, A.temperature) //I have seen negative temperature and trust me you do not want to
-
+	A.temperature = Clamp(T20C - temperature_delta, TCMB, T.air.temperature - temperature_delta) //ensures that we don't get too cold from frost; standard lower bound is 5 C. Also prevents temperatures of 0 or less.
 	T.air.temperature_share(A, WINDOW_HEAT_TRANSFER_COEFFICIENT) //same value as h/e pipes. I dunno mang it works for them.
+	qdel(A)
 
 /obj/structure/alien/weeds/frost/node/infinity
 	super_coefficient = INFINITY //lmao

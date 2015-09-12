@@ -1,9 +1,13 @@
 /obj/effect/proc_holder/spell/proc/check_frosty(/ob/living/carbon/human/H)
-	. = 0
+	. = FALSE
 	if(!H||!istype(H))
 		return
-
-
+	if(H.dna.species.id == "frost_scion" && is_scion(H))
+		return TRUE
+	if(is_scion(H))
+		usr << "<span class='warning'>This spell requires more powerful than available while disguised.</span>"
+		return
+	usr << "<span class='warning'>This spell is beyond your limited knowledge of the Kingdom of Frost.</span>"
 
 /obj/effect/proc_holder/spell/aoe_turf/spread_frost
 	name = "Spread Frost"
@@ -26,7 +30,7 @@
 
 /obj/effect/proc_holder/spell/targeted/chilling_grasp
 	name = "Chilling Grasp"
-	desc = "Allows you to turn a conscious, non-braindead, non-catatonic human to a pawn of the legion. This takes some time to cast and requires that the target is not wearing a jumpsuit."
+	desc = "Allows you to turn a conscious, non-braindead, non-catatonic human to a pawn of the Kingdom. This takes some time to cast and requires that the target is not wearing a jumpsuit."
 	panel = "Scion Abilities"
 	charge_max = 0
 	clothes_req = 0
@@ -78,7 +82,7 @@
 		turning = 1
 		user << "<span class='danger'>This target is valid. You begin the turning.</span>"
 		target << "<span class='userdanger'>[user] places \his hand on your chest. You begin to feel cooler.</span>"
-		//TODO: rewrite text to match flavor
+
 		for(var/progress = 0, progress <= 3, progress++)
 			switch(progress)
 				if(1)
@@ -121,3 +125,55 @@
 		return 1
 
 /obj/effect/proc_holder/spell/targeted/scion_transform
+	if(usr.stat || !ishuman(usr) || !usr || !is_scion(usr))
+		return
+	var/mob/living/carbon/human/H = usr
+	//TODO: balance shit kinda like s-ling has
+	ticker.mode.transformScion(H)
+	hardset_dna(H, mrace = /datum/species/frosty/scion/transformed)
+
+/obj/effect/proc_holder/spell/aoe_turf/freeze_area
+	name = "Freeze Area"
+	desc = "Quickly lowers the temperature of the area around you."
+	panel = "Scion Abilities"
+	charge_max = 300
+	clothes_req = 0
+	range = 1
+	action_icon_state = "freeze"
+	var/temperature_delta = 30 //degrees K
+
+/obj/effect/proc_holder/spell/aoe_turf/freeze_area/cast()
+	var/datum/gas_mixture/A = new
+	for(var/turf/simulated/T in targets)
+		A.temperature = max(T.air.temperature - temperature_delta, TCMB) //TCMB is the same temperature value used by space tiles
+		T.air.temperature_share(A, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+	qdel(A)
+	//TODO: feedback
+	return 1
+
+/obj/effect/proc_holder/spell/targeted/frostbite
+	name = "Frostbite"
+	desc = "Purges cold-resistant mutations and chemicals from your target. Inflicts cold damage if the target is void of cold-resistant effects."
+	panel = "Scion Abilities"
+	charge_max = 600
+	clothes_req = 0
+	range = 1 //adjacent to user
+	var/base_dmg = 20
+
+/obj/effect/proc_holder/spell/targeted/frostbite/cast()
+	var/mob/living/carbon/human/H = target
+	var/affected = 0
+	if(!istype(H))
+		return 0
+	if(H.dna.check_mutation(COLDRES))
+		H.dna.remove_mutation(COLDRES)
+		affected++
+	if(H.reagents.has_reagent("inaprovaline"))
+		H.reagents.del_reagent("inaprovaline")
+		affected++
+	var/damageToAfflict = base_dmg - ((affected/2)*base_dmg) //does no damage if we removed two effects; half damage if we removed one effect; max damage if we removed none
+	H.dna.species.apply_damage(damageToAfflict, COLD, def_area = null, blocked = 0, user)
+	//TODO: feedback
+	return 1
+
+
