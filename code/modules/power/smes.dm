@@ -30,6 +30,7 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 
+	var/RCon_tag = "NO_TAG"		// RCON tag, change to show it on SMES Remote control console.
 
 /obj/machinery/power/smes/New()
 	..()
@@ -74,6 +75,14 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
 		return 0
+
+	// Multitool - change RCON tag
+	if(istype(I, /obj/item/device/multitool))
+		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+		if(newtag)
+			RCon_tag = newtag
+			user << "<span class='notice'>You changed the RCON tag to: [newtag]</span>"
+		return
 
 	//changing direction using wrench
 	if(default_change_direction_wrench(user, I))
@@ -280,9 +289,12 @@
 
 
 /obj/machinery/power/smes/attack_ai(mob/user)
-	if(stat & BROKEN) return
-	ui_interact(user)
-
+	if(RCon_tag != "NO_TAG")
+		if(stat & BROKEN) return
+		ui_interact(user)
+	else // RCON wire cut
+		usr << "<span class='warning'>Connection error: Destination Unreachable.</span>"
+		return
 
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)

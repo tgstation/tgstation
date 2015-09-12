@@ -799,6 +799,56 @@ Code:
 				if(answer)
 					menu += "<hr>[answer]<br/>"
 
+		if (59) // SMES Monitoring - Needs a working refresh
+			menu = "<h4><img src=pda_notes.png> RCON Monitoring</h4>"
+
+			// SMES DATA (simplified view)
+
+			var/list/smeslist[0]
+			for(var/obj/machinery/power/smes/SMES in machines)
+				if(SMES.RCon_tag && (SMES.RCon_tag != "NO_TAG"))
+					smeslist.Add(list(list(
+					"charge" = round(100.0*SMES.charge/SMES.capacity, 0.1),
+					"input_set" = SMES.input_attempt,
+					"input_val" = round(SMES.input_level/1000, 0.1),
+					"inputting" = SMES.inputting,
+					"output_set" = SMES.output_attempt,
+					"output_val" = round(SMES.output_level/1000, 0.1),
+					"output_load" = round(SMES.output_used/1000, 0.1),
+					"RCON_tag" = SMES.RCon_tag
+					)))
+
+			smeslist = sortByKey(smeslist, "RCON_tag")
+
+			for(var/i = 1; i <= smeslist.len; i++)
+				menu += "<h5>[smeslist[i]["RCON_tag"]] - [smeslist[i]["charge"]]%</h5>"
+				if (smeslist[i]["input_set"])
+					menu += "Input set to [smeslist[i]["input_val"]]kW "
+					if(smeslist[i]["inputting"])
+						menu += "and charging.<br>"
+					else
+						menu += "but not charging.<br>"
+				if(smeslist[i]["output_set"] && smeslist[i]["charge"])
+					menu += "[smeslist[i]["output_load"]]kW of [smeslist[i]["output_val"]]kW output used.<br>"
+
+			// BREAKER DATA (simplified view)
+			var/list/breakerlist[0]
+			for(var/obj/machinery/power/breakerbox/BR in machines)
+				if(BR.RCon_tag && (BR.RCon_tag != "NO_TAG"))
+					breakerlist.Add(list(list(
+					"RCON_tag" = BR.RCon_tag,
+					"enabled" = BR.on
+					)))
+
+			breakerlist = sortByKey(breakerlist, "RCON_tag")
+
+			for(var/i = 1; i <= breakerlist.len; i++)
+				menu += "<h5>[breakerlist[i]["RCON_tag"]] "
+				if(breakerlist[i]["enabled"])
+					menu += "Enabled</h5>"
+				else
+					menu += "Disabled</h5>"
+
 /obj/item/weapon/cartridge/robotics/generate_menu()
 	..()
 

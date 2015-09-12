@@ -1,0 +1,90 @@
+<!--
+Title: RCON Console
+Used In File(s): \code\game\machinery\computer\RCON_console.dm
+ -->
+
+<table>
+	{{if hide_smes}}
+		<tr><td>{{:~link('Show SMES readings', 'folder', { 'hide_smes' : 1})}}</td></tr>
+	{{else}}
+		<tr><td>{{:~link('Hide SMES readings', 'folder', { 'hide_smes' : 1})}}</td></tr>
+	{{/if}}
+<!--	{{if hide_smes_details}} Non-functional
+		<tr><td>{{:~link('Show SMES controls', 'folder', { 'hide_smes_details' : 1})}}</td></tr>
+	{{else}}
+		<tr><td>{{:~link('Hide SMES controls', 'folder', { 'hide_smes_details' : 1})}}</td></tr>
+	{{/if}} -->
+	{{if hide_breakers}}
+		<tr><td>{{:~link('Show Breaker readings', 'folder', { 'hide_breakers' : 1})}}</td></tr>
+	{{else}}
+		<tr><td>{{:~link('Hide Breaker readings', 'folder', { 'hide_breakers' : 1})}}</td></tr>
+	{{/if}}
+</table>
+{{if hide_smes}}
+	<b>SMES readings hidden.</b><br>
+{{else}}
+	<b>Detected SMES units with RCON support:</b><br>
+	{{for smes_info}}
+		<div class = "item">
+			<div class="itemLabel">				
+				{{:RCON_tag}}
+			</div>
+			<div class="itemContent">
+				<table>
+					<tr><td colspan=2>
+						{{if charge > 50}}
+							{{:~displayBar(charge, 0, 100, 'good')}}
+						{{else charge > 25}}
+							{{:~displayBar(charge, 0, 100, 'average')}}
+						{{else}}
+							{{:~displayBar(charge, 0, 100, 'bad')}}
+						{{/if}}
+						<div class="statusValue">
+							{{:charge}}%<br>
+						</div>
+					</td></tr>
+					{{if !hide_smes_details}}	<!--Not working for some reason-->
+						<tr>
+							<td>Input: {{:input_val}}W - {{:input_set ? "ON" : "OFF"}}</td>
+							<td>
+								{{:~link('', 'power', { 'smes_in_toggle' : RCON_tag})}}
+								{{:~link('', 'pencil', { 'smes_in_set' : RCON_tag})}}
+							</td>
+						</tr>
+						<tr>
+							<td>Output: {{:output_val}}W - {{:output_set ? "ONLINE" : "OFFLINE"}}</td>
+							<td>
+								{{:~link('', 'power', { 'smes_out_toggle' : RCON_tag})}}
+								{{:~link('', 'pencil', { 'smes_out_set' : RCON_tag})}}
+							</td>
+						</tr>
+						<tr>
+							<td>Output Load: </td>
+							<td>{{:output_load}}W</td>
+						</tr>
+					{{/if}}
+				</table>
+			</div>
+		</div>
+	{{/for}}
+{{/if}}
+{{if hide_breakers}}
+	<b>Breaker readings hidden.</b><br>
+{{else}}
+	<b>Detected Breaker Boxes with RCON support:</b><br>
+	{{for breaker_info}}
+		<div class = "item">
+			<div class="itemLabel">				
+				{{:RCON_tag}}
+			</div>
+			<div class="itemContent">
+				<table>
+					<tr>
+						<td>{{:enabled ? "[<span class='good'>ENABLED</span>]" : "[<span class='bad'>DISABLED</span>]"}}</td>
+						<td>{{:~link('', 'power', {'toggle_breaker' : RCON_tag})}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	{{/for}}
+{{/if}}

@@ -36,6 +36,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
+	var/breaker_box = 0
+
 /obj/structure/cable/yellow
 	cable_color = "yellow"
 	icon = 'icons/obj/power_cond/power_cond_yellow.dmi'
@@ -133,6 +135,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters))
+
+		if(breaker_box)
+			user << "\red This cable is connected to nearby breaker box. Use breaker box to interact with it."
+			return
+
 		if (shock(user, 50))
 			return
 		visible_message("<span class='warning'>[user] cuts the cable.</span>")

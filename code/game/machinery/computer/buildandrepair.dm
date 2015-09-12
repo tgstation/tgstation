@@ -247,6 +247,10 @@
 	build_path = /obj/machinery/computer/libraryconsole
 	origin_tech = "programming=1"
 
+/obj/item/weapon/circuitboard/rcon_console
+	name = "circuit board (RCON remote control console)"
+	build_path = /obj/machinery/computer/rcon
+	origin_tech = "programming=4;engineering=3;powerstorage=5"
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I,/obj/item/device/multitool))

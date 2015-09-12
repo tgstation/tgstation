@@ -345,3 +345,28 @@
 		if(D.vars.Find(varname))
 			if(D.vars[varname] == value)
 				return D
+
+
+// List of lists, sorts by element[key] - for things like crew monitoring computer sorting records by name.
+/proc/sortByKey(var/list/L, var/key)
+	if(L.len < 2)
+		return L
+	var/middle = L.len / 2 + 1
+	return mergeKeyedLists(sortByKey(L.Copy(0, middle), key), sortByKey(L.Copy(middle), key), key)
+
+/proc/mergeKeyedLists(var/list/L, var/list/R, var/key)
+	var/Li=1
+	var/Ri=1
+	var/list/result = new()
+	while(Li <= L.len && Ri <= R.len)
+		if(sorttext(L[Li][key], R[Ri][key]) < 1)
+			// Works around list += list2 merging lists; it's not pretty but it works
+			result += "temp item"
+			result[result.len] = R[Ri++]
+		else
+			result += "temp item"
+			result[result.len] = L[Li++]
+
+	if(Li <= L.len)
+		return (result + L.Copy(Li, 0))
+	return (result + R.Copy(Ri, 0))
