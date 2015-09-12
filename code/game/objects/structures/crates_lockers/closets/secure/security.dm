@@ -13,6 +13,7 @@
 	new /obj/item/clothing/cloak/cap(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
 	new /obj/item/clothing/suit/captunic(src)
+	new /obj/item/clothing/suit/capformal(src)
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/under/rank/captain(src)
