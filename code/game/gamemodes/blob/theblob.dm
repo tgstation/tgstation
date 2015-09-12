@@ -122,15 +122,14 @@
 
 	if(!T)	return 0
 	var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
-	if(istype(T, /turf/space))
-		B.health = 5
-		B.maxhealth = 10
-		B.update_icon()
+	if(istype(T, /turf/space) && prob(65))
+		B.health = 0
 	B.color = a_color
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
+		B.update_icon()
 	else
 		T.blob_act()//If we cant move in hit the turf
 		B.loc = null //So we don't play the splat sound, see Destroy()
