@@ -31,7 +31,6 @@
 	density = 0
 	flying = 1
 	anchored = 1
-	see_in_dark = 2
 
 	var/essence = 25 //The resource of revenants. Max health is equal to three times this amount
 	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
