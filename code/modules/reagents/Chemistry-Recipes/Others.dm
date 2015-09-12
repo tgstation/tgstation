@@ -12,14 +12,14 @@
 	result = "lube"
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 	result_amount = 4
-	
+
 /datum/chemical_reaction/spraytan
 	name = "Spray Tan"
 	id = "spraytan"
 	result = "spraytan"
 	required_reagents = list("orangejuice" = 1, "oil" = 1)
 	result_amount = 2
-	
+
 /datum/chemical_reaction/spraytan2
 	name = "Spray Tan"
 	id = "spraytan"
@@ -254,6 +254,12 @@
 	required_reagents = list("toxin" = 1, "ethanol" = 4)
 	result_amount = 5
 
+/datum/chemical_reaction/drying_agent
+	name = "Drying agent"
+	id = "drying_agent"
+	result = "drying_agent"
+	required_reagents = list("stable_plasma" = 2, "ethanol" = 1, "sodium" = 1)
+	result_amount = 3
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 
