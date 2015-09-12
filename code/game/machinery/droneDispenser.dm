@@ -44,7 +44,7 @@
 	SSmachine.processing |= src
 
 /obj/machinery/droneDispenser/Destroy()
-	SSmachine.processing -= src
+	SSmachine.processing &= src
 	..()
 
 /obj/machinery/droneDispenser/preloaded
@@ -93,8 +93,8 @@
 	cooldownTime = 300 //30 seconds
 	dispense_type = /obj/item/unactivated_swarmer
 	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
-	end_create_message = "materializes a strange shell and drops to the ground."
-	recharge_message = "It is slowly glowing brighter."
+	end_create_message = "materializes a strange shell, which drops to the ground."
+	recharging_text = "Its lights are slowly increasing in brightness."
 	work_sound = 'sound/effects/EMPulse.ogg'
 	create_sound = 'sound/effects/phasein.ogg'
 	break_sound = 'sound/effects/EMPulse.ogg'
@@ -154,7 +154,10 @@
 			visible_message("<span class='notice'>[src] [end_create_message]</span>")
 		icon_state = icon_recharging
 		spawn(cooldownTime)
-			icon_state = icon_on
+			if(stat != BROKEN)
+				icon_state = icon_on
+			else
+				icon_state = icon_off
 			droneMadeRecently = 0
 			if(recharge_sound)
 				playsound(src, recharge_sound, 50, 1)
@@ -212,8 +215,7 @@
 		user.visible_message("<span class='danger'>[user] hits [src] with [O]!</span>", \
 							 "<span class='warning'>You hit [src] with [O]!</span>")
 		playsound(src, O.hitsound, 50, 1)
-		health -= O.force
-		health = Clamp(health, 0, max_health)
+		health = Clamp(health - O.force, 0, max_health)
 		if(health <= 0)
 			if(break_message)
 				audible_message("<span class='warning'>[src] [break_message]</span>")
