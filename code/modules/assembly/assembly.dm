@@ -105,12 +105,6 @@
 			user << "<span class='notice'>\The [src] can now be attached!</span>"
 		return
 	..()
-	return
-
-
-/obj/item/device/assembly/process()
-	SSobj.processing.Remove(src)
-	return
 
 
 /obj/item/device/assembly/examine(mob/user)
