@@ -10,7 +10,7 @@
 	name = "Space Lube"
 	id = "lube"
 	result = "lube"
-	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1 "banana" = 1)
+	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1, "banana" = 1)
 	result_amount = 4
 
 /datum/chemical_reaction/spraytan
