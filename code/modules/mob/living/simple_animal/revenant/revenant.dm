@@ -3,17 +3,19 @@
 //Don't hear deadchat and are NOT normal ghosts
 //Admin-spawn or random event
 
+#define INVISIBILITY_REVENANT 30
+
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
 	incorporeal_move = 3
-	invisibility = INVISIBILITY_OBSERVER
+	invisibility = INVISIBILITY_REVENANT
 	health = 25
 	maxHealth = 25
 	healable = 0
-	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_invisible = INVISIBILITY_REVENANT
 	languages = ALL
 	response_help   = "passes through"
 	response_disarm = "swings at"
@@ -29,6 +31,7 @@
 	density = 0
 	flying = 1
 	anchored = 1
+	see_in_dark = 2
 
 	var/essence = 25 //The resource of revenants. Max health is equal to three times this amount
 	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -55,7 +58,10 @@
 		health = maxHealth //Heals to full when not revealed
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
-	return 1 //Immune to the effects of explosions.
+	return //Immune to the effects of explosions.
+
+/mob/living/simple_animal/revenant/singularity_act()
+	return
 
 /mob/living/simple_animal/revenant/blob_act()
 	return //blah blah blobs aren't in tune with the spirit world, or something.
@@ -200,7 +206,8 @@
 		sleep(0.1)
 		alpha = i
 	visible_message("<span class='danger'>[src]'s body breaks apart into blue dust.</span>")
-	new /obj/item/weapon/ectoplasm/revenant(get_turf(src))
+	var/obj/item/weapon/ectoplasm/revenant/R = new (get_turf(src))
+	R.client_to_revive = src.client //If the essence reforms, the old revenant is put back in the body
 	ghostize()
 	qdel(src)
 	return
@@ -263,7 +270,7 @@
 	src << "<span class='warning'>You have been revealed.</span>"
 	spawn(time)
 		revealed = 0
-		invisibility = INVISIBILITY_OBSERVER
+		invisibility = INVISIBILITY_REVENANT
 		src << "<span class='notice'>You are once more concealed.</span>"
 
 /mob/living/simple_animal/revenant/proc/stun(time)
@@ -324,6 +331,7 @@
 	w_class = 2
 	var/reforming = 0
 	var/reformed = 0
+	var/client/client_to_revive
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
@@ -364,20 +372,24 @@
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
 	if(!reforming || !src)
 		return
+	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and has reformed into a new revenant.")
 	loc = get_turf(src) //In case it's in a backpack or someone's hand
 	visible_message("<span class='boldannounce'>[src] suddenly rises into the air before fading away.</span>")
 	var/mob/living/simple_animal/revenant/R = new(get_turf(src))
-	qdel(src)
-	var/list/candidates = get_candidates(BE_REVENANT)
-	if(!candidates.len)
-		message_admins("No candidates were found for the new revenant. Oh well!")
-		return 0
-	var/client/C = pick(candidates)
-	var/key_of_revenant = C.key
-	if(!key_of_revenant)
-		message_admins("No ckey was found for the new revenant. Oh well!")
-		return 0
+	if(client_to_revive)
+		R.client = client_to_revive
+		key_of_revenant = client_to_revive.key
+	else
+		var/list/candidates = get_candidates(BE_REVENANT)
+		if(!candidates.len)
+			message_admins("No candidates were found for the new revenant. Oh well!")
+			return 0
+		var/client/C = pick(candidates)
+		key_of_revenant = C.key
+		if(!key_of_revenant)
+			message_admins("No ckey was found for the new revenant. Oh well!")
+			return 0
 	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
 	player_mind.active = 1
 	player_mind.transfer_to(R)
@@ -386,4 +398,5 @@
 	ticker.mode.traitors |= player_mind
 	message_admins("[key_of_revenant] has been made into a revenant by reforming ectoplasm.")
 	log_game("[key_of_revenant] was spawned as a revenant by reforming ectoplasm.")
+	qdel(src)
 	return 1

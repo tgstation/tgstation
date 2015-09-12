@@ -74,7 +74,7 @@
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
 	name = "Defile (35E)"
-	desc = "Twists and corrupts the nearby area. Also dispels holy auras on floors, but not salt lines."
+	desc = "Destroys windows and causes nearby humans to become tired. Also dispels holy auras on floors, but not salt lines."
 	panel = "Revenant Abilities (Locked)"
 	charge_max = 200
 	clothes_req = 0
@@ -102,10 +102,6 @@
 		spawn(0)
 			if(T.flags & NOJAUNT)
 				T.flags -= NOJAUNT
-			if(!istype(T, /turf/simulated/wall/cult) && istype(T, /turf/simulated/wall) && prob(40))
-				T.ChangeTurf(/turf/simulated/wall/cult)
-			if(!istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(40))
-				T.ChangeTurf(/turf/simulated/floor/engine/cult)
 			for(var/mob/living/carbon/human/human in T.contents)
 				human << "<span class='warning'>You suddenly feel tired.</span>"
 				human.adjustStaminaLoss(35)
@@ -138,7 +134,7 @@
 		name = "Malfunction (15E)"
 		panel = "Revenant Abilities"
 		locked = 0
-		range = 4
+		range = 1
 		charge_counter = charge_max
 		return
 	if(!user.castcheck(-15))
@@ -154,6 +150,7 @@
 			for(var/obj/machinery/mach in T.contents)
 				if(prob(10))
 					mach.emag_act(null)
-	empulse(user.loc, 3, 5)
+				else
+					mach.emp_act(1)
 	user.reveal(reveal)
 	user.stun(stun)
