@@ -238,6 +238,23 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 
+/datum/reagent/consumable/sodiumchloride/on_mob_life(mob/living/M)
+	..()
+	for(var/mob/living/simple_animal/revenant/R in M) //Drives out any revenants possessing the creature
+		R.loc = get_turf(M)
+		R.reveal(30)
+		R.stun(30)
+		R.visible_message("<span class='warning'>[R] suddenly manifests from [M]'s body!</span>", \
+						  "<span class='userdanger'>AAAAGH! SALT!</span>")
+		R.essence -= 5
+		R.possessed_human = null
+
+/datum/reagent/consumable/sodiumchloride/reaction_turf(turf/simulated/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume >= 1)
+		new /obj/effect/decal/cleanable/salt(T)
+
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
 	id = "blackpepper"
