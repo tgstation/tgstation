@@ -1,4 +1,4 @@
-/obj/machinery/droneDispenser
+/obj/machinery/droneDispenser //Most customizable machine 2015
 	name = "drone shell dispenser"
 	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a drone shell. Does not need to be manually operated."
 	icon = 'icons/obj/machines/droneDispenser.dmi'
@@ -16,13 +16,27 @@
 
 	var/metal = 0
 	var/glass = 0
-	var/use_materials = 1 //If this is set to 0, the dispenser will not require metal or glass to run
+	var/metal_cost = 1000
+	var/glass_cost = 1000
+	var/power_used = 1000
 
 	var/droneMadeRecently = 0
 	var/cooldownTime = 1800 //3 minutes
 	var/dispense_type = /obj/item/drone_shell //The item the dispenser will create
 
 	var/last_time //Used for hitting
+
+	var/work_sound = 'sound/items/rped.ogg'
+	var/create_sound = 'sound/items/Deconstruct.ogg'
+	var/recharge_sound = 'sound/machines/ping.ogg'
+
+	var/begin_create_message = "whirs to life!"
+	var/end_create_message = "dispenses a drone shell."
+	var/recharge_message = "pings."
+	var/recharging_text = "It is whirring and clicking. It seems to be recharging."
+
+	var/break_message = "lets out a tinny alarm before falling dark."
+	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
 /obj/machinery/droneDispenser/New()
 	..()
@@ -44,6 +58,7 @@
 	glass = 25000
 	dispense_type = /obj/item/drone_shell/syndrone
 	cooldownTime = 100 //If we're gonna be a jackass, go the full mile - 10 second recharge timer
+	end_create_message = "dispenses a suspicious drone shell."
 
 /obj/machinery/droneDispenser/hivebot //An example of a custom drone dispenser. This one requires no materials and creates basic hivebots
 	name = "hivebot fabricator"
@@ -54,18 +69,46 @@
 	icon_on = "hivebot_fab"
 	icon_recharging = "hivebot_fab"
 	icon_creating = "hivebot_fab_on"
-	use_materials = 0
+	metal_cost = 0
+	glass_cost = 0
+	power_used = 0
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/simple_animal/hostile/hivebot
+	begin_create_message = "closes and begins fabricating something within."
+	end_create_message = "slams open, revealing out a hivebot!"
+	recharge_sound = null
+	recharge_message = null
+
+/obj/machinery/droneDispenser/swarmer
+	name = "swarmer fabricator"
+	desc = "An alien machine of unknown origin. It whirs and hums with green-blue light, the air above it shimmering."
+	icon = 'icons/obj/machines/gateway.dmi'
+	icon_state = "toffcenter"
+	icon_off = "toffcenter"
+	icon_on = "toffcenter"
+	icon_recharging = "toffcenter"
+	icon_creating = "offcenter"
+	metal_cost = 0
+	glass_cost = 0
+	cooldownTime = 300 //30 seconds
+	dispense_type = /obj/item/unactivated_swarmer
+	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
+	end_create_message = "materializes a strange shell and drops to the ground."
+	recharge_message = "It is slowly glowing brighter."
+	work_sound = 'sound/effects/EMPulse.ogg'
+	create_sound = 'sound/effects/phasein.ogg'
+	break_sound = 'sound/effects/EMPulse.ogg'
+	break_message = "slowly falls dark, lights stuttering."
 
 /obj/machinery/droneDispenser/examine(mob/user)
 	..()
-	if(droneMadeRecently && !stat)
-		user << "<span class='warning'>It is gently whirring and clicking. It seems to be recharging.</span>"
+	if(droneMadeRecently && !stat && recharging_text)
+		user << "<span class='warning'>[recharging_text]</span>"
 	if(stat & BROKEN)
 		user << "<span class='warning'>[src] is smoking and steadily buzzing. It seems to be broken.</span>"
-	if(use_materials)
+	if(metal_cost)
 		user << "<span class='notice'>It has [metal] units of metal stored.</span>"
+	if(glass_cost)
 		user << "<span class='notice'>It has [glass] units of glass stored.</span>"
 
 /obj/machinery/droneDispenser/power_change()
@@ -83,38 +126,46 @@
 	..()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
-	if(use_materials && (metal < 1000 || glass < 1000))
+	if((metal_cost && glass_cost) && (metal < metal_cost || glass < glass_cost))
 		return
 	if(droneMadeRecently)
 		icon_state = icon_recharging
 		return
 	droneMadeRecently = 1
-	visible_message("<span class='notice'>[src] whirs to life!</span>")
-	playsound(src, 'sound/items/rped.ogg', 50, 1)
+	if(begin_create_message)
+		visible_message("<span class='notice'>[src] [begin_create_message]</span>")
+	if(work_sound)
+		playsound(src, work_sound, 50, 1)
 	icon_state = icon_creating
 	spawn(30)
 		icon_state = icon_on
-		if(use_materials)
-			metal -= 1000
-			glass -= 1000
-			if(metal < 0)
-				metal = 0
-			if(glass < 0)
-				glass = 0
-			use_power(1000)
+		metal -= metal_cost
+		glass -= glass_cost
+		if(metal < 0)
+			metal = 0
+		if(glass < 0)
+			glass = 0
+		if(power_used)
+			use_power(power_used)
 		new dispense_type(loc)
+		if(create_sound)
+			playsound(src, create_sound, 50, 1)
+		if(end_create_message)
+			visible_message("<span class='notice'>[src] [end_create_message]</span>")
 		icon_state = icon_recharging
 		spawn(cooldownTime)
 			icon_state = icon_on
 			droneMadeRecently = 0
-			playsound(src, 'sound/machines/ping.ogg', 50, 1)
-			audible_message("<span class='notice'>[src] pings.</span>")
+			if(recharge_sound)
+				playsound(src, recharge_sound, 50, 1)
+			if(recharge_message)
+				visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
 /obj/machinery/droneDispenser/attackby(obj/item/O, mob/living/user)
 	if(istype(O, /obj/item/stack))
 		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
 			return ..()
-		if(!use_materials)
+		if(!metal_cost && !glass_cost)
 			user << "<span class='warning'>There isn't a place to insert [O]!</span>"
 			return
 		var/stack = 1
@@ -139,7 +190,7 @@
 		if((O && O.loc == src) || !stack)
 			qdel(O)
 		return
-	if(istype(O, /obj/item/weapon/weldingtool) && stat & BROKEN)
+	if(istype(O, /obj/item/weapon/weldingtool) && (stat & BROKEN))
 		var/obj/item/weapon/weldingtool/WT = O
 		if(!WT.isOn())
 			return
@@ -164,8 +215,10 @@
 		health -= O.force
 		health = Clamp(health, 0, max_health)
 		if(health <= 0)
-			audible_message("<span class='warning'>[src] lets out a tinny alarm before clunking and falling dark.</span>")
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
+			if(break_message)
+				audible_message("<span class='warning'>[src] [break_message]</span>")
+			if(break_sound)
+				playsound(src, break_sound, 50, 1)
 			stat = BROKEN
 			icon_state = icon_off
 		return
