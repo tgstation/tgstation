@@ -131,7 +131,7 @@
 		"input_val" = round(SMES.input_level),
 		"output_set" = SMES.output_attempt,
 		"output_val" = round(SMES.output_level),
-		"output_load" = round(SMES.output_used),
+		"output_load" = round(SMES.output_shown),
 		"RCON_tag" = SMES.RCon_tag
 		)))
 

@@ -814,7 +814,7 @@ Code:
 					"inputting" = SMES.inputting,
 					"output_set" = SMES.output_attempt,
 					"output_val" = round(SMES.output_level/1000, 0.1),
-					"output_load" = round(SMES.output_used/1000, 0.1),
+					"output_load" = round(SMES.output_shown/1000, 0.1),
 					"RCON_tag" = SMES.RCon_tag
 					)))
 
