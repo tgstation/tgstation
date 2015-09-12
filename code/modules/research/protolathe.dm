@@ -104,10 +104,12 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 	if (stat)
 		return 1
-	if(istype(O,/obj/item/stack/sheet))
-		if(!materials.has_space( materials.get_item_material_amount(O) ))
-			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
-			return 1
+	if(!istype(O,/obj/item/stack/sheet))
+		return 1
+
+	if(!materials.has_space( materials.get_item_material_amount(O) ))
+		user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+		return 1
 
 	var/obj/item/stack/sheet/stack = O
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
@@ -115,7 +117,6 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 	var/amount_inserted = materials.insert_stack(O,amount)
 	if(!amount_inserted)
-		user << "<span class='warning'>You could not insert [O], it has no usable materials.</span>"
 		return 1
 	else
 		busy = 1
