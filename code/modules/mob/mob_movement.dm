@@ -200,8 +200,15 @@
 							M.animate_movement = 2
 							return
 
-		if(mob.confused && IsEven(world.time))
-			step(mob, pick(cardinal))
+		if(mob.confused)
+			if(mob.confused > 100)
+				step(mob, pick(cardinal))
+			else if(prob(mob.confused / 2))
+				step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
+			else if(prob(mob.confused * 2))
+				step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
+			else
+				step(mob, direct)
 		else
 			. = ..()
 
