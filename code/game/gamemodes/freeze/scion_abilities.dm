@@ -9,6 +9,10 @@
 		return
 	usr << "<span class='warning'>This spell is beyond your limited knowledge of the Kingdom of Frost.</span>"
 
+/obj/item/weapon/melee/touch_attack/frosty
+	catch_phrase = null
+	icon = 'icons/obj/frosty.dmi'
+
 /obj/effect/proc_holder/spell/aoe_turf/spread_frost
 	name = "Spread Frost"
 	desc = "Forms a slowly-spreading layer of frost on the ground beneath your feet."
@@ -151,49 +155,55 @@
 	clothes_req = 0
 	range = 1
 	action_icon_state = "frosty_freeze"
-	var/temperature_delta = 30 //degrees K
+	var/temperature_delta = 80 //degrees K
 
 /obj/effect/proc_holder/spell/aoe_turf/freeze_area/cast()
-	var/datum/gas_mixture/A = new
 	for(var/turf/simulated/T in targets)
-		A.temperature = max(T.air.temperature - temperature_delta, TCMB) //TCMB is the same temperature value used by space tiles
-		T.air.temperature_share(A, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+		T.air.temperature = max(T.air.temperature - temperature_delta, TCMB) //TCMB is the same temperature value used by space tiles
 	qdel(A)
 	//TODO: feedback
 	return 1
 
-/obj/effect/proc_holder/spell/targeted/frostbite
+/obj/effect/proc_holder/spell/targeted/touch/frostbite
 	name = "Frostbite"
 	desc = "Purges cold-resistant mutations and chemicals from your target. Inflicts cold damage if the target is void of cold-resistant effects."
+
+	hand_path = "obj/item/weapon/melee/touch_attack/frosty/frostbite"
+
 	panel = "Scion Abilities"
 	charge_max = 300
 	clothes_req = 0
-	range = 1 //adjacent to user
+	icon_state = "frostbite"
+
+/obj/item/weapon/melee/touch_attack/frosty/frostbite
+	name = "\improper freezing hand"
+	desc = "My hand is completely frozen."
+
+	icon_state = "frostbite"
+
 	var/base_dmg = 20
 	var/base_temp = -100
 
-/obj/effect/proc_holder/spell/targeted/frostbite/cast()
-	var/mob/living/carbon/human/H = target
-	var/mob/living/user = usr
 
-	if(!check_frosty(user))
+/obj/item/weapon/melee/touch_attack/frosty/frostbite/afterattack(mob/living/carbon/human/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !istype(target) || !istype(user) || user.lying || user.handcuffed)
 		return 0
-	if(!istype(H))
+	if(!check_frosty(user))
 		return 0
 	if(is_frosty(target))
 		return 0
 	var/affected = 0
-	if(H.dna.check_mutation(COLDRES))
-		H.dna.remove_mutation(COLDRES)
+	if(target.dna.check_mutation(COLDRES))
+		target.dna.remove_mutation(COLDRES)
 		affected++
-	if(H.reagents.has_reagent("inaprovaline"))
-		H.reagents.del_reagent("inaprovaline")
+	if(target.reagents.has_reagent("inaprovaline"))
+		target.reagents.del_reagent("inaprovaline")
 		affected++
 	var/damageToAfflict = base_dmg - ((affected/2)*base_dmg) //does no damage if we removed two effects; half damage if we removed one effect; max damage if we removed none
-	H.dna.species.apply_damage(damageToAfflict, COLD, def_area = null, blocked = 0, user)
+	target.dna.species.apply_damage(damageToAfflict, COLD, def_area = null, blocked = 0, user)
 
 	var/temperatureToAfflict = base_temp - ((affected/2)*base_dmg)
-	H.temperature = max(H.temperature - temperatureToAfflict, TCMB)
+	target.temperature = max(H.temperature - temperatureToAfflict, TCMB)
 	//TODO: feedback
 	return 1
 
@@ -216,20 +226,26 @@
 	residue_name = "frozen residue"
 	residue_desc = "residue of magic cold ball thing"
 
-/obj/effect/proc_holder/spell/targeted/re-freeze
+/obj/effect/proc_holder/spell/targeted/touch/re-freeze
 	name = "Re-Freeze"
 	desc = "Cools and heals an ally."
 	panel = "Scion Abilities"
-	charge_max = 30
+	charge_max = 100
 	clothes_req = 0
-	range = 1 //adjacent to user
+	hand_path = "/obj/item/weapon/melee/touch_attack/frosty/re-freeze"
+
+/obj/item/weapon/melee/touch_attack/frosty/re_freeze
+	name = "\improper re-freezing touch"
+	desc = "My hand is cool to the touch."
+
+	icon_state = "refreeze"
+
 	var/base_dmg = 30 //because of coldmod, this heals our allies
-	var/temperature_delta = 15
+	var/temperature_delta = 40
 
-/obj/effect/proc_holder/spell/targeted/re-freeze/cast()
-	var/mob/living/H = target
-	var/mob/living/user = usr
-
+/obj/item/weapon/melee/touch_attack/frosty/re-freeze/after_attack(mob/living/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !istype(target) || !iscarbon(user) || user.lying || user.handcuffed)
+		return 0
 	if(!is_frosty(H.mind))
 		return 0
 
