@@ -472,3 +472,17 @@
 			burn()
 
 	return shredded
+
+/mob/living/carbon/human/proc/equipOutfit(outfit)
+	var/datum/outfit/O = null
+	
+	if(ispath(outfit))
+		O = new outfit
+	else
+		O = outfit
+		if(!istype(O))
+			return 0
+	if(!O)
+		return 0
+	
+	return O.equip(src)
