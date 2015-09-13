@@ -669,7 +669,7 @@ var/list/sacrificed = list()
 	if (istype(W,/obj/item/weapon/paper/talisman))
 		rad = 4
 		go = 1
-	if (istype(W,/obj/item/weapon/nullrod))
+	if (istype(W,/obj/item/weapon/storage/book/bible))
 		rad = 1
 		go = 1
 	if(go)
@@ -678,7 +678,7 @@ var/list/sacrificed = list()
 				R.invisibility=0
 			S=1
 	if(S)
-		if(istype(W,/obj/item/weapon/nullrod))
+		if(istype(W,/obj/item/weapon/storage/book/bible))
 			usr << "<span class='danger'>Arcane markings suddenly glow from underneath a thin layer of dust!</span>"
 			return
 		if(istype(W,/obj/effect/rune))
