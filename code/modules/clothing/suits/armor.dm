@@ -75,7 +75,6 @@
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	item_state = "capspacesuit"
-	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
