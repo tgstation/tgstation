@@ -559,7 +559,7 @@
 				W.item_color = "schoolgirl"
 				if(istype(W.loc,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = W.loc
-					H.gender = "female"
+					H.gender = FEMALE
 					H.regenerate_icons()
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 			world << sound('sound/AI/animes.ogg')
