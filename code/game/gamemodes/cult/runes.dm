@@ -843,11 +843,12 @@ var/list/teleport_other_runes = list()
 	grammar = "ire veri balaq"
 
 /obj/effect/rune/construct_shell/invoke(mob/living/user)
-	for(var/obj/item/stack/sheet/S in src.loc)
+	var/turf/T = get_turf(src)
+	for(var/obj/item/stack/sheet/S in T)
 		if(istype(S, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/M = S
 			if(M.amount >= 5)
-				new /obj/structure/constructshell(src.loc)
+				new /obj/structure/constructshell(T)
 				M.visible_message("<span class='warning'>[M] bends and twists into a new form!</span>")
 				M.amount -= 5
 				if(M.amount <= 0)
@@ -930,7 +931,7 @@ var/list/teleport_other_runes = list()
 		if(iscultist(M))
 			M.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
 			M << "<span class='warning'>[src] saps your strength!</span>"
-	explosion(src.loc, -1, 0, 1, 5)
+	explosion(get_turf(src), -1, 0, 1, 5)
 	qdel(src)
 
 
@@ -944,7 +945,7 @@ var/list/teleport_other_runes = list()
 	grammar = "nahlizet karazet ire"
 
 /obj/effect/rune/manifest/invoke(mob/living/user)
-	if(!(user in src.loc))
+	if(!(user in get_turf(src)))
 		user << "<span class='warning'>You must be standing on [src]!</span>"
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
@@ -968,7 +969,7 @@ var/list/teleport_other_runes = list()
 	ticker.mode.add_cultist(new_human.mind)
 	new_human << "<span class='purple'><b><i>You are a servant of the Geometer. You have been made semi-corporeal by the cult, and you are to serve them at all costs.</i></b></span>"
 
-	while(user in src.loc)
+	while(user in get_turf(src))
 		if(user.stat)
 			break
 		user.apply_damage(1, BRUTE)
