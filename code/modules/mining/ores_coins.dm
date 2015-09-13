@@ -219,7 +219,7 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null

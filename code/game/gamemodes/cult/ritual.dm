@@ -330,7 +330,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	var/notedat = ""
 	var/tomedat = ""
 	var/list/words = list("ire" = "ire", "ego" = "ego", "nahlizet" = "nahlizet", "certum" = "certum", "veri" = "veri", "jatkaa" = "jatkaa", "balaq" = "balaq", "mgar" = "mgar", "karazet" = "karazet", "geeri" = "geeri")
@@ -670,7 +670,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		user << "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of."
 
 /obj/item/weapon/tome/imbued //admin tome, spawns working runes without waiting
-	w_class = 2.0
+	w_class = 2
 	var/cultistsonly = 1
 	attack_self(mob/user as mob)
 		if(src.cultistsonly && !iscultist(usr))

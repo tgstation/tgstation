@@ -6,7 +6,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	slot_flags = 0
-	w_class = 2.0
+	w_class = 2
 
 /obj/item/clothing/tie/blue
 	name = "blue tie"

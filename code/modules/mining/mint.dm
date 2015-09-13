@@ -6,7 +6,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/amt_silver = 0 //amount of silver
 	var/amt_gold = 0   //amount of gold
 	var/amt_diamond = 0

@@ -97,11 +97,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
-		if(2.0)
+		if(2)
 			adjustBruteLoss(140)
-		if(3.0)
+		if(3)
 			adjustBruteLoss(110)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
