@@ -1127,3 +1127,8 @@
 			sight_mode = 0
 			remove_med_sec_hud()
 			src << "Sensor augmentations disabled."
+
+/mob/living/silicon/robot/singularity_pull(S)
+	if(mob_negates_gravity())
+		return
+	..()

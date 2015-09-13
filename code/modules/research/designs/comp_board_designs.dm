@@ -379,3 +379,9 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	category = list("Computer Boards")
+
+datum/design/circuit/rcon_console
+	name = "RCON remote control console"
+	id = "rcon_console"
+	req_tech = list("programming" = 4, "engineering" = 3, "powerstorage" = 5)
+	build_path = /obj/item/weapon/circuitboard/rcon_console
