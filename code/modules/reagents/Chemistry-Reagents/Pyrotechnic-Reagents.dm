@@ -39,7 +39,7 @@
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
 	color = "#FF0000"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 4
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
