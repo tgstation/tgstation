@@ -201,11 +201,11 @@
 							return
 
 		if(mob.confused)
-			if(mob.confused > 100)
+			if(mob.confused > 40)
 				step(mob, pick(cardinal))
-			else if(prob(mob.confused / 2))
+			else if(prob(mob.confused * 1.5))
 				step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
-			else if(prob(mob.confused * 2))
+			else if(prob(mob.confused * 3))
 				step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
 			else
 				step(mob, direct)
