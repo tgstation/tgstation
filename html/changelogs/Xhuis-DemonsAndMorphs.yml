@@ -1,0 +1,13 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - tweak: "When a morph changes form, a message is shown to nearby people. This also happens upon undisguising."
+  - tweak: "Morphs now have an attack sound and message."
+  - tweak: "The Spawn Morph event now plays a sound to the chosen candidate."
+  - tweak: "Slaughter Demons (and other creatures with blood crawl) now take two seconds to emerge from blood pools. Entering is still instantaneous."
+  - tweak: "The demon heart's sprite has been updated."
+  - tweak: "Blood Crawl no longer has a 1-second cooldown, instead having none."
+  - tweak: "Creatures that can Blood Crawl now take two seconds to emerge from blood pools."
+  - tweak: "Slaughter demons now store devoured creatures, and will drop them upon death."
+  - tweak: "The Spawn Slaughter Demon event now plays a sound to the chosen candidate."

@@ -1,13 +1,14 @@
 /obj/effect/proc_holder/spell/bloodcrawl
-	name = "Blood crawl"
-	desc = "Use blood to travel."
-	charge_max = 10
+	name = "Blood Crawl"
+	desc = "Use pools of blood to phase out of existence."
+	charge_max = 0
 	clothes_req = 0
 	selection_type = "range"
 	range = 1
 	cooldown_min = 0
 	overlay = null
 	action_icon_state = "bloodcrawl"
+	action_background_icon_state = "bg_slaughter"
 	var/phased = 0
 
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
@@ -16,7 +17,7 @@
 			perform(target)
 			return
 	revert_cast()
-	user << "<span class='warning'>You need blood to blood crawl.</span>"
+	user << "<span class='warning'>There must be a nearby source of blood!</span>"
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
@@ -29,4 +30,4 @@
 		start_recharge()
 		return
 	revert_cast()
-	user << "<span class='warning'>You cannot blood crawl.</span>"
+	user << "<span class='warning'>You are unable to blood crawl!</span>"
