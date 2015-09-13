@@ -508,7 +508,7 @@
 	var/current_screen = "mainmenu"
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400

@@ -76,7 +76,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon_state = "server"
 	name = "Messaging Server"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -210,7 +210,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100

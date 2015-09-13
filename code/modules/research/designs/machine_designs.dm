@@ -172,7 +172,7 @@
 	build_path = /obj/item/weapon/circuitboard/chem_heater
 	category = list ("Medical Machinery")
 
-	/datum/design/clonecontrol
+/datum/design/clonecontrol
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 	id = "clonecontrol"

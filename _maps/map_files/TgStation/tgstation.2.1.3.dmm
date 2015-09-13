@@ -51393,16 +51393,16 @@
 /area/toxins/misc_lab)
 "bZV" = (
 /obj/structure/closet/crate,
+/obj/item/target/syndicate,
 /obj/item/target/alien,
-/obj/item/target/alien,
-/obj/item/target/alien,
+/obj/item/target/clown,
 /turf/simulated/floor/plasteel,
 /area/toxins/misc_lab)
 "bZW" = (
 /obj/structure/closet/crate,
 /obj/item/target/syndicate,
-/obj/item/target/syndicate,
-/obj/item/target/syndicate,
+/obj/item/target/alien,
+/obj/item/target/clown,
 /turf/simulated/floor/plasteel,
 /area/toxins/misc_lab)
 "bZX" = (

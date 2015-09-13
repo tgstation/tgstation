@@ -131,7 +131,8 @@ var/list/admin_verbs_debug = list(
 	/proc/machine_upgrade,
 	/client/proc/populate_world,
 	/client/proc/cmd_display_del_log,
-	/client/proc/reset_latejoin_spawns
+	/client/proc/reset_latejoin_spawns,
+	/client/proc/create_outfits
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
