@@ -93,6 +93,10 @@
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
 
+/mob/living/carbon/human/handle_chemicals_in_body()
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
+
 /mob/living/carbon/human/breathe()
 	if(!dna || !dna.species.breathe(src))
 		..()
