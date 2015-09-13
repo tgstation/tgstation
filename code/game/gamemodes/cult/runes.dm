@@ -345,7 +345,7 @@ var/list/teleport_other_runes = list()
 		if(!iscultist(M))
 			possible_targets.Add(M)
 	var/mob/offering
-	if(possible_targets.len < 1)
+	if(possible_targets.len > 1)
 		offering = input(user, "Choose an offering to sacrifice.", "Unholy Tribute") as null|anything in possible_targets
 	else
 		offering = possible_targets[possible_targets.len]
