@@ -62,6 +62,7 @@
 #define FILE_DIR "sound/violin"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/voice/complionator"
+#define FILE_DIR "sound/voice/meeseeks"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
 
@@ -663,6 +664,7 @@
 #include "code\game\objects\items\devices\laserpointer.dm"
 #include "code\game\objects\items\devices\lightreplacer.dm"
 #include "code\game\objects\items\devices\matsynth.dm"
+#include "code\game\objects\items\devices\meeseeksbox.dm"
 #include "code\game\objects\items\devices\megaphone.dm"
 #include "code\game\objects\items\devices\multitool.dm"
 #include "code\game\objects\items\devices\paicard.dm"

@@ -237,6 +237,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_path = /obj/item/device/gps
 	category = list("Bluespace Designs")
 
+/datum/design/meeseeks_box
+	name = "Mr. Meeseeks Box"
+	desc = "A blue box with a button on top. You hear a faint voice from inside desperate to help you."
+	id = "meeseeks_box"
+	req_tech = list("materials" = 3, "programming" = 2, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 2000, MAT_DIAMOND = 500)
+	build_path = /obj/item/device/meeseeks_box
+	category = list("Bluespace Designs")
+
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
