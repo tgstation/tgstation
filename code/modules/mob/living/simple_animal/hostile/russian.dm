@@ -44,11 +44,12 @@
 		casingtype = /obj/item/ammo_casing/a762
 	..()
 
-/mob/living/simple_animal/hostile/russian/Die()
-	..()
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon1)
-		new weapon1 (src.loc)
+/mob/living/simple_animal/hostile/russian/death(gibbed)
+	..(gibbed)
+	if(!gibbed)
+		if(corpse)
+			new corpse (src.loc)
+		if(weapon1)
+			new weapon1 (src.loc)
 	qdel(src)
 	return

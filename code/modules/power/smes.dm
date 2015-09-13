@@ -26,10 +26,12 @@
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	var/output_shown = 0 // Required because output_used updates at least twice a tick, and only once with the correct value
 	machine_flags = CROWDESTROY | SCREWTOGGLE | REPLACEPARTS
 
 	var/obj/machinery/power/terminal/terminal = null
 
+	var/RCon_tag = "NO_TAG"		// RCON tag, change to show it on SMES Remote control console.
 
 /obj/machinery/power/smes/New()
 	..()
@@ -74,6 +76,14 @@
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
 		return 0
+
+	// Multitool - change RCON tag
+	if(istype(I, /obj/item/device/multitool))
+		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+		if(newtag)
+			RCon_tag = newtag
+			user << "<span class='notice'>You changed the RCON tag to: [newtag]</span>"
+		return
 
 	//changing direction using wrench
 	if(default_change_direction_wrench(user, I))
@@ -232,11 +242,13 @@
 
 		if(output_used < 0.0001)			// either from no charge or set to 0
 			outputting = 0
+			output_shown = 0
 			investigate_log("lost power and turned <font color='red'>off</font>","singulo")
 	else if(output_attempt && charge > output_level && output_level > 0)
 		outputting = 1
 	else
 		output_used = 0
+		output_shown = 0
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
@@ -252,6 +264,7 @@
 
 	if(!outputting)
 		output_used = 0
+		output_shown = 0
 		return
 
 	var/excess = powernet.netexcess		// this was how much wasn't used on the network last ptick, minus any removed by other SMESes
@@ -268,6 +281,7 @@
 	powernet.netexcess -= excess		// remove the excess from the powernet, so later SMESes don't try to use it
 
 	output_used -= excess
+	output_shown = output_used
 
 	if(clev != chargedisplay() ) //if needed updates the icons overlay
 		update_icon()
@@ -280,9 +294,12 @@
 
 
 /obj/machinery/power/smes/attack_ai(mob/user)
-	if(stat & BROKEN) return
-	ui_interact(user)
-
+	if(RCon_tag != "NO_TAG")
+		if(stat & BROKEN) return
+		ui_interact(user)
+	else // RCON wire cut
+		usr << "<span class='warning'>Connection error: Destination Unreachable.</span>"
+		return
 
 /obj/machinery/power/smes/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -317,7 +334,7 @@
 		"outputting" = outputting,
 		"outputLevel" = output_level,
 		"outputLevelMax" = output_level_max,
-		"outputUsed" = output_used
+		"outputUsed" = output_shown
 	)
 
 	return data

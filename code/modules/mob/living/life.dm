@@ -38,8 +38,6 @@
 
 	update_gravity(mob_has_gravity())
 
-	handle_actions()
-
 	update_pulling()
 
 	for(var/obj/item/weapon/grab/G in src)
@@ -56,14 +54,13 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	return .
-
 
 
 /mob/living/proc/handle_breathing()
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()
+	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
 /mob/living/proc/handle_chemicals_in_body()
@@ -75,7 +72,7 @@
 /mob/living/proc/handle_random_events()
 	return
 
-/mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
+/mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
 /mob/living/proc/handle_stomach()
@@ -120,16 +117,10 @@
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
-	if(stat)
-		if(config && config.critfullblind)
-			eye_blind = max(eye_blind, 5)
-		eye_covered = max(eye_covered, 5)
-	if(disabilities & BLIND)	//blindness from disability or unconsciousness doesn't get better on its own
+	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
 		eye_blind = max(eye_blind, 1)
 	else if(eye_blind)			//blindness, heals slowly over time
 		eye_blind = max(eye_blind-1,0)
-	else if(eye_covered)			//partially blind eyes heal slowly
-		eye_covered = max(eye_covered-1, 0)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
 
@@ -141,23 +132,32 @@
 		if(ear_damage < 100)
 			adjustEarDamage(-0.05,-1)
 
-
 /mob/living/proc/handle_actions()
 	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
 	for(var/datum/action/A in actions)
 		if(A.CheckRemoval(src))
 			A.Remove(src)
 	for(var/obj/item/I in src)
-		if(I.action_button_name)
-			if(!I.action)
-				if(I.action_button_is_hands_free)
-					I.action = new/datum/action/item_action/hands_free
-				else
-					I.action = new/datum/action/item_action
-				I.action.name = I.action_button_name
-				I.action.target = I
-			I.action.Grant(src)
+		give_action_button(I, 1)
 	return
+
+/mob/living/proc/give_action_button(var/obj/item/I, recursive = 0)
+	if(I.action_button_name)
+		if(!I.action)
+			if(istype(I, /obj/item/organ/internal))
+				I.action = new/datum/action/organ_action
+			else if(I.action_button_is_hands_free)
+				I.action = new/datum/action/item_action/hands_free
+			else
+				I.action = new/datum/action/item_action
+			I.action.name = I.action_button_name
+			I.action.target = I
+		I.action.Grant(src)
+
+	if(recursive)
+		for(var/obj/item/T in I)
+			give_action_button(I, recursive - 1)
+
 
 //this handles hud updates. Calls update_vision() and handle_hud_icons()
 /mob/living/proc/handle_regular_hud_updates()
@@ -168,7 +168,6 @@
 	update_action_buttons()
 
 	return 1
-
 
 /mob/living/proc/handle_vision()
 
@@ -185,11 +184,12 @@
 				blind.layer = 0
 				clear_alert("blind")
 
-
 				if(eye_covered)
 					cover.layer = 18
+					throw_alert("blind")
 				else
 					cover.layer = 0
+					clear_alert("blind")
 
 
 				if (disabilities & NEARSIGHT)

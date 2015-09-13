@@ -258,6 +258,8 @@ Class Procs:
 		return
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return
 	if(no_dextery)
 		if(be_close && in_range(M, src))
 			return 1
@@ -296,7 +298,8 @@ Class Procs:
 	//stop AIs from leaving windows open and using then after they lose vision
 	//apc_override is needed here because AIs use their own APC when powerless
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
-	if(cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
+	//get_turf_pixel() is not returning the right turf, get_turf will work for now because we don't have maint APCs - Zaers 2015-08-15
+	if(cameranet && !cameranet.checkTurfVis(get_turf(M)) && !apc_override)
 		return
 	return 1
 

@@ -56,6 +56,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		qdel(main_part)
 	..()
 
+/obj/machinery/gravity_generator/shuttleRotate()
+	return
 //
 // Part generator which is mostly there for looks
 //

@@ -23,10 +23,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/attack_self(mob/user as mob)
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/attack(mob/M as mob, mob/user as mob, def_zone)
+/obj/item/weapon/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
-		user << "<span class='alert'>None of [src] left, oh no!</span>"
+		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
 
 	if(!canconsume(M, user))
@@ -34,32 +34,23 @@
 
 	if(M == user)
 		M << "<span class='notice'>You swallow a gulp of [src].</span>"
-		if(reagents.total_volume)
-			reagents.reaction(M, INGEST)
-			spawn(5)
-				reagents.trans_to(M, gulp_size)
 
-		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		return 1
-
-	user.visible_message("<span class='warning'>[user] attempts to feed [src] to [M].</span>", "<span class='notice'>You attempt to feed [src] to [M].</span>")
-	if(!do_mob(user, M)) return
-	if(!reagents.total_volume) return // The drink might be empty after the delay, such as by spam-feeding
-	user.visible_message("<span class='warning'>[user] feeds [src] to [M].</span>", "<span class='notice'>You feed [src] to [M].</span>")
-	add_logs(user, M, "fed", object="[reagentlist(src)]")
-	if(reagents.total_volume)
-		reagents.reaction(M, INGEST)
-		spawn(5)
-			reagents.trans_to(M, gulp_size)
-
+	else
+		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
+		if(!do_mob(user, M))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The drink might be empty after the delay, such as by spam-feeding
+		M.visible_message("<span class='danger'>[user] feeds the contents of [src] to [M].</span>", "<span class='userdanger'>[user] feeds the contents of [src] to [M].</span>")
+		add_logs(user, M, "fed", reagentlist(src))
+	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	reagents.reaction(M, INGEST, fraction)
+	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
-
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
-	if(!reagents)
-		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
@@ -83,7 +74,7 @@
 			return
 		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'> You transfer [trans] units of the solution to [target].</span>"
+		user << "<span class='notice'>You transfer [trans] units of the solution to [target].</span>"
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
@@ -287,3 +278,38 @@
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
+
+////////////////////////////////////////////////////////////////////////////////
+/// SLURPIES!!!!!!!!!!!!!.
+////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/drinks/cuckacola
+	name = "CuckaCola"
+	desc = "Share it with a friend!"
+	icon_state = "cuckacola"
+	list_reagents = list("cuckacola" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/firestation_red
+	name = "Firestation Red"
+	desc = "A discontinued SlurpSlurpy flavor consisting of all syrup with a chemically goodness that tastes like burn."
+	icon_state = "firestation_red"
+	list_reagents = list("firestation_red" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/fruity_filtered
+	name = "Fruity Filtered"
+	desc = "Tastes like REDACTED"
+	icon_state = "fruity_filtered"
+	list_reagents = list("fruity_filtered" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/lemeta_limeade
+	name = "LeMeta Limeade"
+	desc = "Somehow you know that it has a citrus flavor."
+	icon_state = "lemeta_limeade"
+	list_reagents = list("lemeta_limeade" = 30)
+
+/obj/item/weapon/reagent_containers/food/drinks/salty_strawberry
+	name = "Salty Strawberry"
+	desc = "All these flavors and you chose Salty Strawberry."
+	icon_state = "salty_strawberry"
+	list_reagents = list("salty_strawberry" = 30)
+

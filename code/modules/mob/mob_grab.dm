@@ -205,12 +205,14 @@
 
 	if(M == assailant && state >= GRAB_AGGRESSIVE)
 		if( (ishuman(user) && (user.disabilities & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+			if(affecting.buckled)
+				affecting.buckled.unbuckle_mob()
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/alien/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
+				if(!do_after(user, 30, target = affecting)) return
 			else
-				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
+				if(!do_after(user, 100, target = affecting)) return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			affecting.loc = user
 			attacker.stomach_contents.Add(affecting)

@@ -26,7 +26,6 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
 	var/last_warning
-	allow_spin = 0
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -404,9 +403,9 @@
 						H << "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>"
 						return
 
-		M.apply_effect(3, STUN)
-		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
-						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
+			M.apply_effect(3, STUN)
+			M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
+							"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
 	return
 
 

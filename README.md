@@ -1,12 +1,9 @@
 ##/tg/station v1.0.1
 
-[![Build Status](https://travis-ci.org/tgstation/-tg-station.png)](https://travis-ci.org/tgstation/-tg-station)
-
-
-**Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/-tg-station <BR>
+**Website:** http://8ch.net/nt/ <BR>
+**Code:** https://github.com/Zaers/-tg-station <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page<BR>
-**IRC:** irc://irc.rizon.net/coderbus <BR>
+**IRC:** irc://irc.rizon.net/hatestation <BR>
 
 ##DOWNLOADING
 
@@ -43,7 +40,7 @@ tgstation.dmb - 0 errors, 0 warnings
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
 download or the files extracted wrong. If problems persist, ask for assistance
-in irc://irc.rizon.net/coderbus
+in irc://irc.rizon.net/tgstation
 
 Once that's done, open up the config folder.  You'll want to edit config.txt to
 set the probabilities for different gamemodes in Secret and to set your server
@@ -71,17 +68,15 @@ compiled tgstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join.
 
-###HOSTING ON LINUX
-We use BYGEX for some of our text replacement related code. Unfortunately, we
-only have a windows dll included right now. If you're up to it, you can head
-over to https://code.google.com/p/byond-regex/ and compile it for linux.
+###HOSTING ON GNU/LINUX
 
-Otherwise, edit the file `code/_compile_options.dm`, and comment out:
-`#define USE_BYGEX`
-at the bottom, so that it looks like this:
-`//#define USE_BYGEX`
-Recompile the codebase afterwards.
+All the files in this repository have been formatted for use on any GNU/Linux setup, including BYGEX and the IRC Bot.
+Following the instructions provided for any component of this fork of -tg-station should be fine.
+If you want to run this on Windows, you will have to unix2dos all the relevant files.
 
+A compiled binary of the BYGEX library is included in the bin directory. To view the source, visit this repository:
+
+https://github.com/optimumtact/byond-regex
 
 ##UPDATING
 

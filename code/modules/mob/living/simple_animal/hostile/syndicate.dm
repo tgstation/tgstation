@@ -27,8 +27,8 @@
 	faction = list("syndicate")
 	status_flags = CANPUSH
 
-/mob/living/simple_animal/hostile/syndicate/Die()
-	..()
+/mob/living/simple_animal/hostile/syndicate/death(gibbed)
+	..(gibbed)
 	if(corpse)
 		new corpse (src.loc)
 	if(weapon1)
@@ -132,8 +132,8 @@
 	minbodytemp = 0
 	mob_size = MOB_SIZE_SMALL
 
-/mob/living/simple_animal/hostile/viscerator/Die()
-	..()
+/mob/living/simple_animal/hostile/viscerator/death(gibbed)
+	..(gibbed)
 	visible_message("<span class='danger'><b>[src]</b> is smashed into pieces!</span>")
 	qdel(src)
 	return

@@ -50,6 +50,7 @@
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
+
 /obj/item/weapon/shield/energy/IsShield()
 	return (active)
 

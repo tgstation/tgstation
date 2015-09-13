@@ -23,7 +23,7 @@ Borg Hypospray
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("dexalin", "doctorsdelight", "anti_toxin", "inaprovaline", "spaceacillin")
+	var/list/reagent_ids = list("dexalin", "doctorsdelight", "anti_toxin", "inaprovaline", "spaceacillin","alkysine")
 	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
@@ -92,7 +92,8 @@ Borg Hypospray
 	if (R.total_volume && M.can_inject(user, 1))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
-		R.reaction(M, INGEST)
+		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
+		R.reaction(M, INGEST, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
@@ -149,7 +150,8 @@ Borg Patch Applier
 	if (R.total_volume)
 		M << "<span class='warning'>Something got squirted on you!</span>"
 		user << "<span class='notice'>You patch [M] with the applier.</span>"
-		R.reaction(M, TOUCH)
+		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
+		R.reaction(M, PATCH, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s applied.  [R.total_volume] unit\s remaining.</span>"

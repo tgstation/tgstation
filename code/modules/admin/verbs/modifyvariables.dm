@@ -504,10 +504,10 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if(src.holder && src.holder.marked_datum)
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])","MAKE NULL")
 		else
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","MAKE NULL")
 
 		if(!class)
 			return
@@ -523,6 +523,9 @@ var/list/VVckey_edit = list("key", "ckey")
 		class = "marked datum"
 
 	switch(class)
+	
+		if("MAKE NULL")
+			O.vars[variable] = null
 
 		if("list")
 			mod_list(O.vars[variable], O, original_name, variable)

@@ -1255,7 +1255,7 @@
 	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The trees are spelled cacao.
 	icon_state = "seed-cocoapod"
 	species = "cocoapod"
-	plantname = "Cocao Tree"
+	plantname = "Cacao Tree" //Idem
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	lifespan = 20
 	endurance = 15

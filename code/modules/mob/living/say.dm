@@ -101,7 +101,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 		src << "<span class='warning'>You find yourself unable to speak!</span>"
 		return
 
-	message = treat_message(message)
+	if(message_mode != MODE_WHISPER) //Prevent double treating
+		message = treat_message(message)
 	var/spans = list()
 	spans += get_spans()
 
@@ -231,6 +232,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER)
 					if(!istype(M,/mob/new_player))
 						handle_render(M,themessage,src)
 				return 1
+	if(message_mode == MODE_ALIEN)
+		if(hivecheck())
+			alien_talk(message)
+			return 1
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(2)

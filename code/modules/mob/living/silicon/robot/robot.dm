@@ -61,6 +61,8 @@
 	var/tonermax = 40
 	var/jetpackoverlay = 0
 
+	var/magpulse = 0
+
 /mob/living/silicon/robot/New(loc)
 
 	if(ismommi(src))
@@ -107,7 +109,7 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new(src)
-		mmi.brain = new /obj/item/organ/brain(mmi)
+		mmi.brain = new /obj/item/organ/internal/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.locked = 1
 		mmi.icon_state = "mmi_full"
@@ -257,6 +259,15 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	robot_alerts()
+
+/mob/living/silicon/robot/verb/cmd_toggle_magpulse()
+	set category = "Robot Commands"
+	set name = "Toggle magnetic traction"
+	magpulse = !magpulse
+	if(magpulse)
+		src << "<span class='notice'>Switched on magnetic traction.</span>"
+	else
+		src << "<span class='notice'>Switched off magnetic traction.</span>"
 
 //for borg hotkeys, here module refers to borg inv slot, not core module
 /mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
@@ -1116,3 +1127,8 @@
 			sight_mode = 0
 			remove_med_sec_hud()
 			src << "Sensor augmentations disabled."
+
+/mob/living/silicon/robot/singularity_pull(S)
+	if(mob_negates_gravity())
+		return
+	..()

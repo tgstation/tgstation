@@ -127,8 +127,6 @@
 			if(!reagents.total_volume)
 				user << "<span class='notice'>[src] is empty.</span>"
 				return
-			if(istype(target, /obj/item/weapon/implantcase/chem))
-				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
 				user << "<span class='notice'>You cannot directly fill [target].</span>"
@@ -155,7 +153,8 @@
 				var/contained = english_list(rinject)
 				var/mob/M = target
 				add_logs(user, M, "injected", object="[src.name]", addition="which had [contained]")
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			if(ismob(target) && target == user)
 				//Attack log entries are produced here due to failure to produce elsewhere. Remove them here if you have doubles from normal syringes.
 				var/list/rinject = list()
@@ -166,7 +165,8 @@
 				log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>")
 
-				reagents.reaction(target, INGEST)
+				var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
+				reagents.reaction(target, INGEST, fraction)
 			spawn(5)
 				var/datum/reagent/blood/B
 				for(var/datum/reagent/blood/d in src.reagents.reagent_list)
@@ -177,7 +177,7 @@
 					C.inject_blood(src,5)
 				else
 					src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+				user << "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
 				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()

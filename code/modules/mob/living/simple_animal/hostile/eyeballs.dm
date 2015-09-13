@@ -26,6 +26,7 @@
 	faction = list("spooky")
 
 
-/mob/living/simple_animal/hostile/carp/eyeball/Die()
+/mob/living/simple_animal/hostile/carp/eyeball/death(gibbed)
+	..(gibbed)
 	qdel(src)
 	return

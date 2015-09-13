@@ -202,8 +202,6 @@ datum/hud/New(mob/owner)
 		blob_hud()
 
 
-	if(istype(mymob.loc,/obj/mecha))
-		show_hud(HUD_STYLE_REDUCED)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(var/version = 0)

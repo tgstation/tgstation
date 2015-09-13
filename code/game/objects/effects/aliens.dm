@@ -7,6 +7,11 @@
  *		effect/acid
  */
 
+#define WEED_NORTH_EDGING "north"
+#define WEED_SOUTH_EDGING "south"
+#define WEED_EAST_EDGING "east"
+#define WEED_WEST_EDGING "west"
+
 
 /obj/structure/alien
 	icon = 'icons/mob/alien.dmi'
@@ -16,6 +21,7 @@
  */
 /obj/structure/alien/resin
 	name = "resin"
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	desc = "Looks like some kind of thick resin."
 	icon_state = "resin"
 	density = 1
@@ -24,17 +30,12 @@
 	var/health = 200
 	var/resintype = null
 	canSmoothWith = list(/obj/structure/alien/resin)
+	smooth = 1
 /obj/structure/alien/resin/New(location)
-	relativewall_neighbours()
 	..()
 	air_update_turf(1)
 	return
 
-/obj/structure/alien/resin/Destroy()
-	var/turf/T = loc
-	loc = null
-	T.relativewall_neighbours()
-	..()
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -49,11 +50,10 @@
 	desc = "Thick resin solidified into a wall."
 	icon_state = "wall0"	//same as resin, but consistency ho!
 	resintype = "wall"
+	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
 /obj/structure/alien/resin/wall/New()
 	..()
-	relativewall_neighbours()
-
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
 
@@ -62,16 +62,18 @@
 	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
 	health = INFINITY
 
+
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
+	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "membrane0"
 	opacity = 0
 	health = 120
 	resintype = "membrane"
+	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
 /obj/structure/alien/resin/membrane/New()
-	relativewall_neighbours()
 	..()
 
 /obj/structure/alien/resin/proc/healthcheck()
@@ -167,6 +169,7 @@
 	layer = 2
 	var/health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
+	var/static/list/weedImageCache
 
 
 /obj/structure/alien/weeds/New(pos, node)
@@ -251,22 +254,31 @@
 /obj/structure/alien/weeds/proc/updateWeedOverlays()
 
 	overlays.Cut()
+
+	if(!weedImageCache || !weedImageCache.len)
+		weedImageCache = list()
+		weedImageCache.len = 4
+		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+
 	var/turf/N = get_step(src, NORTH)
 	var/turf/S = get_step(src, SOUTH)
 	var/turf/E = get_step(src, EAST)
 	var/turf/W = get_step(src, WEST)
 	if(!locate(/obj/structure/alien) in N.contents)
 		if(istype(N, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+			overlays += weedImageCache[WEED_SOUTH_EDGING]
 	if(!locate(/obj/structure/alien) in S.contents)
 		if(istype(S, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+			overlays += weedImageCache[WEED_NORTH_EDGING]
 	if(!locate(/obj/structure/alien) in E.contents)
 		if(istype(E, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+			overlays += weedImageCache[WEED_WEST_EDGING]
 	if(!locate(/obj/structure/alien) in W.contents)
 		if(istype(W, /turf/simulated/floor))
-			src.overlays += image('icons/mob/alien.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+			overlays += weedImageCache[WEED_EAST_EDGING]
 
 
 /obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
@@ -278,8 +290,15 @@
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
 	icon_state = "weednode"
-	light_range = 2
+	luminosity = 1
 	var/node_range = NODERANGE
+
+
+/obj/structure/alien/weeds/node/New()
+	..(loc, src)
+
+#undef NODERANGE
+
 
 
 /obj/structure/alien/weeds/node/New()
@@ -317,8 +336,11 @@
 		Grow()
 
 
-/obj/structure/alien/egg/attack_paw(mob/user)
-	if(isalien(user))
+/obj/structure/alien/egg/attack_paw(mob/living/user)
+	return attack_hand(user)
+
+/obj/structure/alien/egg/attack_hand(mob/living/user)
+	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -333,12 +355,8 @@
 				Burst(0)
 				return
 	else
-		return attack_hand(user)
-
-
-/obj/structure/alien/egg/attack_hand(mob/user)
-	user << "<span class='notice'>It feels slimy.</span>"
-	user.changeNext_move(CLICK_CD_MELEE)
+		user << "<span class='notice'>It feels slimy.</span>"
+		user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/GetFacehugger()
@@ -469,9 +487,13 @@
 	if(ticks >= target_strength)
 		target.visible_message("<span class='warning'>[target] collapses under its own weight into a puddle of goop and undigested debris!</span>")
 
-		if(istype(target, /turf/simulated/wall))
-			var/turf/simulated/wall/W = target
-			W.dismantle_wall(1)
+		if(istype(target, /turf))
+			var/turf/T = target
+			if(istype(target, /turf/simulated/wall))
+				var/turf/simulated/wall/W = target
+				W.dismantle_wall(1)
+			else
+				T.ChangeTurf(T.baseturf)
 		else
 			qdel(target)
 
@@ -492,6 +514,6 @@
 		if(80)
 			visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
 
-	spawn(1)
+	spawn(1)		//Doesn't use processing lists for some strange reason
 		if(src)
 			tick()

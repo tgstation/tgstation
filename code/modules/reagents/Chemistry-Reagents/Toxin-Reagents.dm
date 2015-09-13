@@ -28,13 +28,12 @@ datum/reagent/toxin/mutagen
 	color = "#13BC5E" // rgb: 19, 188, 94
 	toxpwr = 0
 
-datum/reagent/toxin/mutagen/reaction_mob(var/mob/living/carbon/M, var/method=TOUCH, var/volume)
+datum/reagent/toxin/mutagen/reaction_mob(var/mob/living/carbon/M, var/method=TOUCH, var/reac_volume)
 	if(!..())
 		return
 	if(!istype(M) || !M.dna)
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
-	src = null
-	if((method==TOUCH && prob(33)) || method==INGEST)
+	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
 		randmuti(M)
 		if(prob(98))
 			randmutb(M)
@@ -42,7 +41,7 @@ datum/reagent/toxin/mutagen/reaction_mob(var/mob/living/carbon/M, var/method=TOU
 			randmutg(M)
 		domutcheck(M, null)
 		updateappearance(M)
-	return
+	..()
 
 datum/reagent/toxin/mutagen/on_mob_life(var/mob/living/carbon/M)
 	if(istype(M))
@@ -60,29 +59,30 @@ datum/reagent/toxin/plasma
 datum/reagent/toxin/plasma/on_mob_life(var/mob/living/M as mob)
 	if(holder.has_reagent("inaprovaline"))
 		holder.remove_reagent("inaprovaline", 2*REM)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.adjustPlasma(20)
 	..()
 	return
 
-datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/volume)
-	src = null
+datum/reagent/toxin/plasma/reaction_obj(var/obj/O, var/reac_volume)
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/slime/egg = O
 		if (egg.grown)
 			egg.Hatch()*/
-	if((!O) || (!volume))	return 0
-	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
+	if((!O) || (!reac_volume))	return 0
+	O.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 
-datum/reagent/toxin/plasma/reaction_turf(var/turf/simulated/T, var/volume)
-	src = null
+datum/reagent/toxin/plasma/reaction_turf(var/turf/simulated/T, var/reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, volume)
+		T.atmos_spawn_air(SPAWN_TOXINS|SPAWN_20C, reac_volume)
 	return
 
-datum/reagent/toxin/plasma/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)//Splashing people with plasma is stronger than fuel!
+datum/reagent/toxin/plasma/reaction_mob(var/mob/living/M, var/method=TOUCH, var/reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH)
-		M.adjust_fire_stacks(volume / 5)
+	if(method == TOUCH || method == VAPOR)
+		M.adjust_fire_stacks(reac_volume / 5)
 		return
 
 datum/reagent/toxin/lexorin
@@ -127,7 +127,7 @@ datum/reagent/toxin/minttoxin
 	toxpwr = 0
 
 datum/reagent/toxin/minttoxin/on_mob_life(var/mob/living/M as mob)
-	if (FAT in M.mutations)
+	if (M.disabilities & FAT)
 		M.gib()
 	..()
 	return
@@ -179,7 +179,7 @@ datum/reagent/toxin/plantbgone
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
 
-datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/volume)
+datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/reac_volume)
 	if(istype(O,/obj/structure/alien/weeds/))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
@@ -190,12 +190,12 @@ datum/reagent/toxin/plantbgone/reaction_obj(var/obj/O, var/volume)
 		var/obj/effect/spacevine/SV = O
 		SV.on_chem_effect(src)
 
-datum/reagent/toxin/plantbgone/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	src = null
+datum/reagent/toxin/plantbgone/reaction_mob(var/mob/living/M, var/method=TOUCH, var/reac_volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+			var/damage = min(round(0.4*reac_volume, 0.1),10)
+			C.adjustToxLoss(damage)
 
 datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -211,12 +211,12 @@ datum/reagent/toxin/pestkiller
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
 
-datum/reagent/toxin/pestkiller/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	src = null
+datum/reagent/toxin/pestkiller/reaction_mob(var/mob/living/M, var/method=TOUCH, var/reac_volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason
+			var/damage = min(round(0.4*reac_volume, 0.1),10)
+			C.adjustToxLoss(damage)
 
 datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -453,9 +453,9 @@ datum/reagent/toxin/itching_powder
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-	if(method == TOUCH)
-		M.reagents.add_reagent("itching_powder", volume)
+/datum/reagent/toxin/itching_powder/reaction_mob(var/mob/living/M, var/method=TOUCH, var/reac_volume)
+	if(method != INGEST)
+		M.reagents.add_reagent("itching_powder", reac_volume)
 		return
 
 datum/reagent/toxin/itching_powder/on_mob_life(var/mob/living/M as mob)
@@ -602,25 +602,34 @@ datum/reagent/toxin/acid
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
-datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/volume)
+datum/reagent/toxin/acid/reaction_mob(var/mob/living/carbon/C, var/method=TOUCH, var/reac_volume)
 	if(!istype(C))
 		return
-	if(method != TOUCH)
-		C.take_organ_damage(min(6*toxpwr, volume * toxpwr))
+	reac_volume = round(reac_volume,0.1)
+	if(method == INGEST)
+		C.take_organ_damage(min(6*toxpwr, reac_volume * toxpwr))
 		return
 
-	C.acid_act(acidpwr, toxpwr, volume)
+	C.acid_act(acidpwr, toxpwr, reac_volume)
 
-datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/volume)
+datum/reagent/toxin/acid/reaction_obj(var/obj/O, var/reac_volume)
 	if(istype(O.loc, /mob)) //handled in human acid_act()
 		return
-	O.acid_act(acidpwr, toxpwr, volume)
+	reac_volume = round(reac_volume,0.1)
+	O.acid_act(acidpwr, toxpwr, reac_volume)
+
+datum/reagent/toxin/acid/reaction_turf(turf/T, reac_volume)
+	if (!istype(T))
+		return
+	reac_volume = round(reac_volume,0.1)
+	for(var/obj/O in T)
+		O.acid_act(acidpwr, toxpwr, reac_volume)
 
 //2acid
 //lmao 2acid
 datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
-	id = "pacid"
+	id = "facid"
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
@@ -668,5 +677,20 @@ datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
 		if(25 to INFINITY) //CAN'T WAKE UP
 			M.Paralyse(20)
 			M.drowsyness  = max(M.drowsyness, 30)
+	..()
+	return
+
+datum/reagent/viral_readaption
+	name = "Viral Readaption"
+	id = "viral_readaption"
+	description = "???"
+	color = "#13BC5E" // rgb: 207, 54, 0
+
+datum/reagent/viral_readaption/on_mob_life(var/mob/living/M as mob)
+	if(prob(1))
+		M.take_overall_damage(80,0)
+		M << "<span class='userdanger'>You feel like you are being torn apart from the inside!</span>"
+		if(!M.stat)
+			M.emote("scream")
 	..()
 	return

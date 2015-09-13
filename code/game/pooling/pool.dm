@@ -102,13 +102,17 @@ var/global/list/GlobalPool = list()
 	for(var/V in vars)
 		if(V in excluded)
 			continue
+		if(istype(V, /list))
+			V=null
+			continue
 
 		vars[V] = initial(vars[V])
 
 /atom/movable/ResetVars()
 	..()
 	loc = null
-	contents = initial(contents) //something is really wrong if this object still has stuff in it by this point
+	contents = null // initial(contents) no longer produces usable results.  Let's see if this bricks anything
+	//something is really wrong if this object still has stuff in it by this point
 
 /image/ResetVars()
 	..()

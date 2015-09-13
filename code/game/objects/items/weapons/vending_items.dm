@@ -62,3 +62,9 @@
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
 	charges = 20// of 62
+
+
+/obj/item/weapon/vending_refill/slurpslurpy_machine
+	machine_name = "SlurpSlurpy"
+	icon_state = "refill_joe"
+	charges = 40 //of 120

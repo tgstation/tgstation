@@ -212,3 +212,9 @@
 
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+
+/obj/item/weapon/gun/projectile/revolver/russian/polish
+	name = "Polish Revolver"
+	desc = "Elbth: A family loved spinoff of the classic Russian Roulette."
+	origin_tech = "combat=2;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357/polish

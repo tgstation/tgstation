@@ -13,6 +13,7 @@ MASS SPECTROMETER
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
+	var/invis_objects = list()
 	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
@@ -23,6 +24,8 @@ MASS SPECTROMETER
 
 	on = !on
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
+
+	invis_update()
 
 	if(on)
 		SSobj.processing |= src
@@ -44,24 +47,23 @@ MASS SPECTROMETER
 			continue
 
 		for(var/obj/O in T.contents)
-
 			if(O.level != 1)
 				continue
 
 			if(O.invisibility == 101)
 				O.invisibility = 0
-				spawn(10)
-					if(O)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = 101
+				invis_objects += O
+		spawn(5)
+			invis_update()
 
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
+
+/obj/item/device/t_scanner/proc/invis_update()
+	for(var/obj/O in invis_objects)
+		if(!on || !(O in range(2, get_turf(src))))
+			invis_objects -= O
+			var/turf/T = O.loc
+			if(T && T.intact)
+				O.invisibility = 101
 
 
 /obj/item/device/healthanalyzer
@@ -113,6 +115,9 @@ MASS SPECTROMETER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(var/mob/living/user, var/mob/living/M, var/mode = 1)
+
+	if(!ishuman(M) && !ismonkey(M)) //Must be human/monkey to properly get scanned
+		return
 
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -174,7 +179,7 @@ MASS SPECTROMETER
 		user.show_message("<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span>", 1)
 	if (M.has_brain_worms())
 		user.show_message("<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span>", 1)
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/internal/brain))
 		user.show_message("<span class='warning'>Subject brain function is non-existant.</span>", 1)
 	else if (M.getBrainLoss() >= 60)
 		user.show_message("<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>", 1)
@@ -198,22 +203,32 @@ MASS SPECTROMETER
 			else
 				user.show_message("<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span>")
 
+		var/implant_detect
+		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
+			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+		if(implant_detect)
+			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
+			user.show_message("<span class='notice'>[implant_detect]</span>")
+
+
 /proc/chemscan(var/mob/living/user, var/mob/living/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.reagents)
-			if(H.reagents.reagent_list.len)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.reagents)
+			if(C.reagents.reagent_list.len)
 				user.show_message("<span class='notice'>Subject contains the following reagents:</span>")
-				for(var/datum/reagent/R in H.reagents.reagent_list)
+				for(var/datum/reagent/R in C.reagents.reagent_list)
 					user.show_message("<span class='notice'>[R.volume]u of [R.name][R.overdosed == 1 ? "</span> - <span class = 'userdanger'>OVERDOSING</span>" : ".</span>"]")
 			else
 				user.show_message("<span class = 'notice'>Subject contains no reagents.</span>")
-			if(H.reagents.addiction_list.len)
-				user.show_message("<span class='userdanger'>Subject is addicted to the following reagents:</span>")
-				for(var/datum/reagent/R in H.reagents.addiction_list)
-					user.show_message("<span class='danger'>[R.name]</span>")
-			else
-				user.show_message("<span class='notice'>Subject is not addicted to any reagents.</span>")
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(H.reagents.addiction_list.len)
+					user.show_message("<span class='userdanger'>Subject is addicted to the following reagents:</span>")
+					for(var/datum/reagent/R in H.reagents.addiction_list)
+						user.show_message("<span class='danger'>[R.name]</span>")
+				else
+					user.show_message("<span class='notice'>Subject is not addicted to any reagents.</span>")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"

@@ -8,7 +8,7 @@
 	cure_chance = 15//higher chance to cure, since two reagents are required
 	agent = "Gravitokinetic Bipotential SADS+"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	permeability_mod = 1
 	severity = BIOHAZARD
 
@@ -35,7 +35,7 @@
 			affected_mob.updatehealth()
 		if(5)
 			affected_mob << "<span class='danger'>Your body feels as if it's trying to rip itself open...</span>"
-			if(prob(50))
+			if(prob(2))
 				affected_mob.gib()
 		else
 			return

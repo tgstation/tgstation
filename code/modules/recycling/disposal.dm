@@ -158,6 +158,8 @@
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", \
 								"<span class='userdanger'>[user] starts putting [target] into [src]!</span>")
+	if(target.buckled)
+		target.buckled.unbuckle_mob()
 	if(do_mob(user, target, 20))
 		if(!loc)
 			return
@@ -468,7 +470,7 @@
 		stored.loc = T
 		src.transfer_fingerprints_to(stored)
 		stored.anchored = 0
-		stored.density = 1
+		stored.density = 0
 		stored.update()
 	..()
 // virtual disposal object
@@ -595,11 +597,9 @@
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, 0, 0)
 
 // called to vent all gas in holder to a location
-/obj/structure/disposalholder/proc/vent_gas(var/atom/location)
-	if(location)
-		location.assume_air(gas)  // vent all gas to turf
-	air_update_turf()
-	return
+/obj/structure/disposalholder/proc/vent_gas(turf/T)
+	T.assume_air(gas)
+	T.air_update_turf()
 
 // Disposal pipes
 
@@ -1107,6 +1107,17 @@
 
 	update()
 	return
+
+/obj/structure/disposalpipe/trunk/Destroy()
+	if(linked)
+		if(istype(linked, /obj/structure/disposaloutlet))
+			var/obj/structure/disposaloutlet/D = linked
+			D.trunk = null
+		else if(istype(linked, /obj/machinery/disposal))
+			var/obj/machinery/disposal/D = linked
+			D.trunk = null
+	..()
+
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null

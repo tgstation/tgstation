@@ -36,6 +36,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
+	var/breaker_box = 0
+
 /obj/structure/cable/yellow
 	cable_color = "yellow"
 	icon = 'icons/obj/power_cond/power_cond_yellow.dmi'
@@ -133,6 +135,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters))
+
+		if(breaker_box)
+			user << "\red This cable is connected to nearby breaker box. Use breaker box to interact with it."
+			return
+
 		if (shock(user, 50))
 			return
 		visible_message("<span class='warning'>[user] cuts the cable.</span>")
@@ -515,7 +522,7 @@ obj/structure/cable/proc/avail()
 
 	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
 
-	if(user)
+	if(user && affecting.status == ORGAN_ROBOTIC)
 		if(H != user)
 			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [H].</span>", "<span class='green'>You fix some of the burnt wires on [H].</span>")
 		else
@@ -528,8 +535,6 @@ obj/structure/cable/proc/avail()
 			if(!do_mob(user, H, self_delay))
 				return
 			user.visible_message("<span class='green'>[user] fixes some of the burnt wires on [t_himself].</span>", "<span class='green'>You fixed some of the burnt wires on yourself.</span>")
-
-	if(affecting.status == ORGAN_ROBOTIC)
 		item_heal_robotic(H, user, 0, 30)
 		src.use(1)
 		return

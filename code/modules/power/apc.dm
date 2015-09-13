@@ -197,7 +197,7 @@
 		if(has_electronics && terminal)
 			user << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 		else
-			user << "It's [!terminal?" not":""]wired up."
+			user << "It's [!terminal?"not ":""]wired up."
 			user << "The electronics are[!has_electronics?"n't":""] installed."
 
 	else
@@ -945,7 +945,7 @@
 				cell.corrupt()
 				src.malfhack = 1
 				update_icon()
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
+				var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()

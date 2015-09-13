@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/emote(var/act)
+/mob/living/carbon/alien/humanoid/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -9,8 +9,6 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 	var/muzzled = is_muzzled()
-	var/m_type = 1
-	var/message
 
 	switch(act) //Alphabetical please
 		if ("deathgasp")
@@ -30,6 +28,10 @@
 		if ("moan")
 			message = "<span class='name'>[src]</span> moans!"
 			m_type = 2
+
+		if ("me")
+			..()
+			return
 
 		if ("roar")
 			if (!muzzled)

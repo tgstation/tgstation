@@ -257,7 +257,10 @@
 	var/mob/living/L = mob
 	switch(L.incorporeal_move)
 		if(1)
-			L.loc = get_step(L, direct)
+			var/T = get_step(L, direct)
+			if(!T)
+				return
+			L.loc = T
 			L.dir = direct
 		if(2)
 			if(prob(50))
@@ -299,7 +302,20 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.dir = direct
+		if(3) //Incorporeal move, but blocked by holy-watered tiles
+			var/turf/simulated/floor/stepTurf = get_step(L, direct)
+			if(!stepTurf)
+				return
+			if(stepTurf.flags & NOJAUNT)
+				L << "<span class='warning'>Holy energies block your path.</span>"
+				L.notransform = 1
+				spawn(2)
+					L.notransform = 0
+			else
+				L.loc = stepTurf
+				L.dir = direct
 	return 1
+
 
 
 ///Process_Spacemove

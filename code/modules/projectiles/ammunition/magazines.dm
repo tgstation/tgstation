@@ -23,6 +23,21 @@
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
 	stored_ammo += new ammo_type(src)
 
+/obj/item/ammo_box/magazine/internal/cylinder/rus357/polish
+	name = "russian revolver cylinder"
+	desc = "Oh god, this shouldn't be here"
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+	max_ammo = 6
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/rus357/polish/New()
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src)
+	stored_ammo += new ammo_type(src) //Do you feel lucky, punk?
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
 	desc = "Oh god, this shouldn't be here"
@@ -220,12 +235,12 @@
 	name = "shotgun magazine (12g dragon's breath)"
 	icon_state = "m12gf"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-
+/*
 /obj/item/ammo_box/magazine/m12g/bioterror
 	name = "shotgun magazine (12g bioterror)"
 	icon_state = "m12gt"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart/bioterror
-
+*/
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart

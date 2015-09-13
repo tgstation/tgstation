@@ -3,7 +3,7 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
+	density = 0
 	var/mob/living/carbon/human/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -107,7 +107,8 @@
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
-				beaker.reagents.reaction(attached, INGEST, 0,0) //make reagents reacts, but don't spam messages
+				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
+				beaker.reagents.reaction(attached, INGEST, fraction,0) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
@@ -138,6 +139,8 @@
 			var/datum/reagent/B = T.take_blood(beaker,amount)
 
 			if (B)
+				T.reagents.trans_to(beaker, 6, 1,1) // This will allow doctors to perform Dialysis on their patients. With blood
+				//With blood transfer at 4 and reagent at 6, a 50u beaker will fill with 20u of Blood and 30u of reagents.
 				beaker.reagents.reagent_list |= B
 				beaker.reagents.update_total()
 				beaker.on_reagent_change()

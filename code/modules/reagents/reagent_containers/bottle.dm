@@ -226,6 +226,12 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/advance/heal
 
+/obj/item/weapon/reagent_containers/glass/bottle/toxin_compensation_virion
+	name = "Toxin Compensation virion culture bottle"
+	desc = "A small bottle. Contains liver enhancement virion culture in synthblood medium."
+	icon_state = "bottle3"
+	spawned_disease = /datum/disease/advance/converter
+
 /obj/item/weapon/reagent_containers/glass/bottle/hullucigen_virion
 	name = "Hullucigen virion culture bottle"
 	desc = "A small bottle. Contains hullucigen virion culture in synthblood medium."

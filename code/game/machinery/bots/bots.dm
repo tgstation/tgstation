@@ -788,6 +788,7 @@ obj/machinery/bot/proc/bot_summon()
 
 
 /obj/machinery/bot/Bump(M as mob|obj) //Leave no door unopened!
+	. = ..()
 	if((istype(M, /obj/machinery/door/airlock) ||  istype(M, /obj/machinery/door/window)) && (!isnull(botcard)))
 		var/obj/machinery/door/D = M
 		if(D.check_access(botcard))

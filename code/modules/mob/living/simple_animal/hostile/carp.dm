@@ -46,7 +46,8 @@
 	icon_living = "holocarp"
 	maxbodytemp = INFINITY
 
-/mob/living/simple_animal/hostile/carp/holocarp/Die()
+/mob/living/simple_animal/hostile/carp/holocarp/death(gibbed)
+	..(gibbed)
 	qdel(src)
 	return
 

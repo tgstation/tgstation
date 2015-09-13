@@ -32,6 +32,8 @@
 
 	faction = list("hostile")
 
+	var/drop_type = /obj/item/stack/sheet/mineral/wood
+
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	..()
@@ -42,10 +44,11 @@
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
-/mob/living/simple_animal/hostile/tree/Die()
-	..()
-	visible_message("<span class='danger'><b>[src]</b> is hacked into pieces!</span>")
-	new /obj/item/stack/sheet/mineral/wood(loc)
+/mob/living/simple_animal/hostile/tree/death(gibbed)
+	..(1)
+	visible_message("<span class='danger'>[src] is hacked into pieces!</span>")
+	new drop_type(loc)
+	ghostize()
 	qdel(src)
 
 /mob/living/simple_animal/hostile/tree/festivus
@@ -55,9 +58,4 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
-
-/mob/living/simple_animal/hostile/tree/festivus/Die()
-	..()
-	visible_message("<span class='danger'><b>[src]</b> is hacked into pieces!</span>")
-	new /obj/item/stack/rods(loc)
-	qdel(src)
+	drop_type = /obj/item/stack/rods

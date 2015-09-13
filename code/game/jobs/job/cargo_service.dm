@@ -186,6 +186,8 @@ Botanist
 	selection_color = "#bbe291"
 
 	default_pda = /obj/item/device/pda/botanist
+	default_backpack = /obj/item/weapon/storage/backpack/botany
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_hyd
 	default_headset = /obj/item/device/radio/headset/headset_srv
 
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.

@@ -196,3 +196,6 @@
 	if(!..())
 		return
 	return 1
+
+/mob/living/simple_animal/hostile/guardian/canSuicide()
+	return 0 //stands can't sudoku

@@ -11,7 +11,7 @@ emp_act
 	var/organnum = 0
 
 	if(def_zone)
-		if(isorgan(def_zone))
+		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
 		return checkarmor(affecting, type)
@@ -230,9 +230,13 @@ emp_act
 					src.Stun(5)
 	..()
 
-/mob/living/carbon/human/acid_act(var/acidpwr, var/toxpwr, var/acid_volume)
+
+/mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
+	var/acidity = min(acidpwr*acid_volume/200, 5)
+	var/acid_volume_left = acid_volume
+	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for poly, 10 for sulphuric
 
 	//HEAD//
 	var/obj/item/clothing/head_clothes = null
@@ -244,12 +248,13 @@ emp_act
 		head_clothes = head
 	if(head_clothes)
 		if(!head_clothes.unacidable)
-			head_clothes.acid_act(acidpwr)
+			head_clothes.acid_act(acidpwr, toxpwr, acid_volume_left)
+			acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
 			update_inv_glasses()
 			update_inv_wear_mask()
 			update_inv_head()
 		else
-			src << "<span class='warning'>Your [head_clothes.name] protects your head and face from the acid!</span>"
+			src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
 	else
 		. = get_organ("head")
 		if(.)
@@ -265,11 +270,12 @@ emp_act
 		chest_clothes = wear_suit
 	if(chest_clothes)
 		if(!chest_clothes.unacidable)
-			chest_clothes.acid_act(acidpwr)
+			chest_clothes.acid_act(acidpwr, toxpwr, acid_volume_left)
+			acid_volume_left = max(acid_volume_left - acid_decay, 0)
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [chest_clothes.name] protects your body from the acid!</span>"
+			src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
 	else
 		. = get_organ("chest")
 		if(.)
@@ -294,12 +300,13 @@ emp_act
 		arm_clothes = wear_suit
 	if(arm_clothes)
 		if(!arm_clothes.unacidable)
-			arm_clothes.acid_act(acidpwr)
+			arm_clothes.acid_act(acidpwr, toxpwr, acid_volume_left)
+			acid_volume_left = max(acid_volume_left - acid_decay, 0)
 			update_inv_gloves()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
+			src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
 	else
 		. = get_organ("r_arm")
 		if(.)
@@ -319,12 +326,13 @@ emp_act
 		leg_clothes = wear_suit
 	if(leg_clothes)
 		if(!leg_clothes.unacidable)
-			leg_clothes.acid_act(acidpwr)
+			leg_clothes.acid_act(acidpwr, toxpwr, acid_volume_left)
+			acid_volume_left = max(acid_volume_left - acid_decay, 0)
 			update_inv_shoes()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='warning'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
+			src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
 	else
 		. = get_organ("r_leg")
 		if(.)
@@ -336,11 +344,11 @@ emp_act
 
 	//DAMAGE//
 	for(var/obj/item/organ/limb/affecting in damaged)
-		affecting.take_damage(2*toxpwr, toxpwr)
+		affecting.take_damage(acidity, 2*acidity)
 
 		if(affecting.name == "head")
-			affecting.take_damage(2*toxpwr, toxpwr)
-			if(prob(2*acidpwr)) //Applies disfigurement
+			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
+				affecting.take_damage(acidity, 2*acidity)
 				emote("scream")
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"
@@ -361,7 +369,8 @@ emp_act
 		inventory_items_to_kill += l_hand
 
 	for(var/obj/item/I in inventory_items_to_kill)
-		I.acid_act(acidpwr)
+		I.acid_act(acidpwr, toxpwr, acid_volume_left)
+		acid_volume_left = max(acid_volume_left - acid_decay, 0)
 
 /mob/living/carbon/human/grabbedby(mob/living/user)
 	if(w_uniform)

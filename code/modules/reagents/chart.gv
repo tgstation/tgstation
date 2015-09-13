@@ -1,3 +1,4 @@
+#to generate chart, use `fdp -Tpng chart.gv > chart.png`
 digraph chemistry{
     rankdir=LR
     splines=none;
@@ -61,6 +62,7 @@ digraph chemistry{
             doctordelight [label="Doctor's Delight | Heals all damage | OD: 55 | No addiction | {1: tricordrazine | 1: cream | 1: tomato juice | 1: lime juice | 1: orange juice}"]
             silver_sulf [label="Silver Sulfadiazine | Heals burn damage on touch| No overdose| No addiction| {1: ammonia|1: silver|1: sulfur|1: oxygen|1: chlorine}"]
             styptic [label="Styptic Powder | Heals brute damage on touch| No overdose | No addiction| {1: aluminium| 1: hydrogen| 1: oxygen |1: sacid}"] 
+            lipozine [label="Lipozine | Removes nutriment from patient| No overdose | No addiction| {1: sodiumchloride| 1: ethanol | 5: radium}"] 
              
             };
             
@@ -72,7 +74,7 @@ digraph chemistry{
             "space drugs" [label="Space Drugs| A generic drug| No overdose |No addiction | {1: lithium| 1: sugar| 1: mercury}"]
             nicotine [label="Nicotine| Reduces stun times| No overdose| AD: 30"]
             crank [label="Crank| Reduce stun times| OD: 20| AD: 10|{1: dipenhydramate| 1: ammonia | 1: lithium| 1: sacid| 1: fuel | TEMP: 390K}"]
-            krokodil [label="Krokodil| Makes user feel calm| OD: 20 | AD:10| {1: diphenhydramine| 1: morphine| 1: cleaner| 1: potassium | 1: phosphorus| 1: fuel| TEMP: 380K}"]
+            krokodil [label="Krokodil| Makes user feel calm| OD: 20 | AD:15| {1: diphenhydramine| 1: morphine| 1: cleaner| 1: potassium | 1: phosphorus| 1: fuel| TEMP: 380K}"]
             meth [label="Methanphetamine| Reduce stuns and speed user up| OD: 20| AD:10 |{1: ephedrine| 1: iodine| 1: phosphorus | 1:hydrogen| TEMP: 374K }"]
             "bath salts" [label="Bath Salts| Reduce stuns and stamina damage| OD: 20| AD: 10 |{ 1: ???? (bad food)| 1: saltpetre 1: nutriment| 1: cleaner| 1: enzyme| 1: tea |1: mercury| TEMP = 374K}"]
             aranesp [label="Aranesp| Makes user feel amped and take oxygen damage | No overdose | No addiction | {1: inaprovaline| 1: atropine| 1: morphine}"]
@@ -140,7 +142,7 @@ digraph chemistry{
             label="Toxins"
             bgcolor=mediumspringgreen
             node [fillcolor=white]
-            formaldehyde [label="Formaldehyde| Toxic chemical component, decays into histamine|{1: ethanol| 1: oxygen| 1: silver}"]
+            formaldehyde [label="Formaldehyde| Toxic chemical component, decays into histamine|{1: ethanol| 1: oxygen| 1: silver| TEMP:420}"]
             neurotoxin [label="Neurotoxin| Does brain and tox damage, possibly knocking the user out|{1:space drugs| TEMP:674}"]
             cyanide [label="Cyanide| Does oxygen and toxic damage| {1: oil| 1: ammonia| 1:oxygen| TEMP:380}"]
             itching_powder [label="Itching Powder| Does minor brute damage and annoyance and decays into histamine|{1: fuel| 1:ammonia| 1: dylovene}"]

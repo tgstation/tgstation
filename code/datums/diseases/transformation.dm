@@ -74,7 +74,7 @@
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
 	permeability_mod = 1
 	cure_chance = 1
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
 	longevity = 30
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = BIOHAZARD
@@ -92,7 +92,7 @@
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(var/mob/living/carbon/affected_mob)
 	if(!ismonkey(affected_mob))
-		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 		if(affected_mob)
 			ticker.mode.add_monkey(affected_mob.mind)
 

@@ -50,8 +50,21 @@
 			/mob/living/simple_animal/hostile/poison,
 			/mob/living/simple_animal/hostile/blob,
 			/mob/living/simple_animal/ascendant_shadowling,
-			/mob/living/simple_animal/slaughter
+			/mob/living/simple_animal/slaughter,
+			/mob/living/simple_animal/hostile/guardian,
+			/mob/living/simple_animal/hostile/guardian/fire,
+			/mob/living/simple_animal/hostile/guardian/punch,
+			/mob/living/simple_animal/hostile/guardian/fast,
+			/mob/living/simple_animal/hostile/guardian/healer,
+			/mob/living/simple_animal/hostile/guardian/ranged,
+			/mob/living/simple_animal/hostile/guardian/bluespace,
+			/mob/living/simple_animal/hostile/guardian/bomb,
+			/mob/living/simple_animal/hostile/guardian/shield,
+			/mob/living/simple_animal/hostile/morph,
+			/mob/living/simple_animal/revenant
 			)//exclusion list for things you don't want the reaction to create.
+			 //>not a whitelist
+			 //T-T-THANKS TG
 		var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
@@ -80,15 +93,28 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(var/turf/simulated/T, var/setting_type, var/range, var/pull_times)
+/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
-			continue  //stop pulling smoke and hotspots please
-		if(istype(X, /atom/movable))
-			if((X) && !X.anchored)
-				if(setting_type)
-					for(var/i = 0, i < pull_times, i++)
-						step_away(X,T)
+			continue
+		if(!X.anchored)
+			var/distance = get_dist(X, T)
+			var/moving_power = max(range - distance, 1)
+			spawn(0) //so everything moves at the same time.
+				if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+					if(setting_type)
+						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+						X.throw_at(throw_target, moving_power, 1)
+					else
+						X.throw_at(T, moving_power, 1)
 				else
-					for(var/i = 0, i < pull_times, i++)
-						step_towards(X,T)
+					if(setting_type)
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_away(X, T))
+								break
+					else
+						for(var/i = 0, i < moving_power, i++)
+							sleep(2)
+							if(!step_towards(X, T))
+								break

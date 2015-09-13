@@ -81,6 +81,9 @@
 	if(netexcess > 100 && nodes && nodes.len)		// if there was excess power last cycle
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
+	else
+		for(var/obj/machinery/power/smes/S in nodes)
+			S.output_shown = S.output_used			// If there's no excess restore() doesn't get called
 
 	//updates the viewed load (as seen on power computers)
 	viewload = 0.8*viewload + 0.2*load

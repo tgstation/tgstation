@@ -171,9 +171,9 @@ datum/reagent/consumable/frostoil/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/consumable/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
-	if(volume >= 5)
-		for(var/mob/living/simple_animal/slime/M in T)
+/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, reac_volume)
+	if(reac_volume >= 5)
+		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 		//if(istype(T))
 		//	T.atmos_spawn_air(SPAWN_COLD)
@@ -185,12 +185,12 @@ datum/reagent/consumable/condensedcapsaicin
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 
-datum/reagent/consumable/condensedcapsaicin/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+/datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
 		return
 
 	var/mob/living/carbon/victim = M
-	if(method == TOUCH)
+	if(method == TOUCH || method == VAPOR)
 		//check for protection
 		var/mouth_covered = 0
 		var/eyes_covered = 0
@@ -350,11 +350,10 @@ datum/reagent/consumable/cornoil
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T))
 		return
-	src = null
-	if(volume >= 3)
+	if(reac_volume >= 3)
 		T.MakeSlippery()
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
@@ -412,7 +411,6 @@ datum/reagent/consumable/flour
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
 datum/reagent/consumable/flour/reaction_turf(var/turf/T, var/volume)
-	src = null
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
 		reagentdecal.reagents.add_reagent("flour", volume)

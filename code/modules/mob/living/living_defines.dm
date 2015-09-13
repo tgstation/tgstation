@@ -37,13 +37,21 @@
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
 
+
+	var/bloodcrawl = 0 //0 No blood crawling, BLOODCRAWL for bloodcrawling, BLOODCRAWL_EAT for crawling+mob devour
+	var/holder = null //The holder for blood crawling
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/floating = 0
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
+
+	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
+
 
 	var/s_cooldown = 0 //Boolean, used for emotes that produce sound
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
 	var/list/image/staticOverlays = list()
 	var/list/datum/action/actions = list()
+
+	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)

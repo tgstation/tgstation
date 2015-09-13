@@ -261,6 +261,15 @@
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/microwave
 	category = list ("Misc. Machinery")
+/datum/design/deepfryer
+	name = "Machine Design (Deep Fryer Board)"
+	desc = "The circuit board for a deep fryer."
+	id = "deepfry"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/deepfryer
+	category = list ("Misc. Machinery")
 /datum/design/gibber
 	name = "Machine Design (Gibber Board)"
 	desc = "The circuit board for a gibber."

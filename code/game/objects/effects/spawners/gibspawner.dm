@@ -20,7 +20,7 @@
 	..()
 
 /obj/effect/gibspawner/xeno
-	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/up,/obj/effect/decal/cleanable/xenoblood/xgibs/down,/obj/effect/decal/cleanable/xenoblood/xgibs,/obj/effect/decal/cleanable/xenoblood/xgibs,/obj/effect/decal/cleanable/xenoblood/xgibs/body,/obj/effect/decal/cleanable/xenoblood/xgibs/limb,/obj/effect/decal/cleanable/xenoblood/xgibs/core)
+	gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/xgibs/up,/obj/effect/decal/cleanable/blood/gibs/xgibs/down,/obj/effect/decal/cleanable/blood/gibs/xgibs,/obj/effect/decal/cleanable/blood/gibs/xgibs,/obj/effect/decal/cleanable/blood/gibs/xgibs/body,/obj/effect/decal/cleanable/blood/gibs/xgibs/limb,/obj/effect/decal/cleanable/blood/gibs/xgibs/core)
 	gibamounts = list(1,1,1,1,1,1,1)
 
 /obj/effect/gibspawner/xeno/New()

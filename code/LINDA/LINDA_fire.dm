@@ -112,7 +112,7 @@
 		Kill()
 		return
 
-	if(!location.air || location.air.toxins < 0.5 || location.air.oxygen < 0.5)
+	if(!location.air || location.air.toxins < 0.7 || location.air.oxygen < 0.7)
 		Kill()
 		return
 

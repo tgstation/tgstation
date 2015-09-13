@@ -159,7 +159,7 @@
 			standing	+= img_facial_s
 
 	//Applies the debrained overlay if there is no brain
-	if(!H.getorgan(/obj/item/organ/brain))
+	if(!H.getorgan(/obj/item/organ/internal/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
 	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
@@ -1023,7 +1023,7 @@
 	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
-	if(isorgan(def_zone))
+	if(islimb(def_zone))
 		organ = def_zone
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
@@ -1065,7 +1065,7 @@
 
 /datum/species/proc/breathe(var/mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("lexorin")) return
-	if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell)) return
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
@@ -1103,13 +1103,13 @@
 
 				// Handle chem smoke effect  -- Doohl
 				if(!H.has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(H, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(H, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
+					for(var/obj/effect/effect/smoke/chem/S in range(1, H))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/initial(S.lifetime)
+							S.reagents.reaction(H,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
+							S.reagents.copy_to(H, amount)
+							S.lifetime--
 
 		else //Still give containing object the chance to interact
 			if(istype(H.loc, /obj/))
@@ -1366,7 +1366,7 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		var/colddamage = !istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell) //Damage from cold if not in a cryo cell
+		var/colddamage = !istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell) //Damage from cold if not in a cryo cell
 		switch(H.bodytemperature)
 			if(200 to 260)
 				H.throw_alert("temp","cold",1)
