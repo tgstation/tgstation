@@ -2,7 +2,7 @@
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
 	desc = "This is rubbish."
-	w_class = 1.0
+	w_class = 1
 	burn_state = 0 //Burnable
 
 /obj/item/trash/raisins

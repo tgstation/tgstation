@@ -16,7 +16,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 	var/obj/structure/tray/connected = null
 	var/locked = 0
@@ -206,7 +206,7 @@ var/global/list/crematoriums = new/list()
 	density = 1
 	layer = 2.9
 	var/obj/structure/bodycontainer/connected = null
-	anchored = 1.0
+	anchored = 1
 	pass_flags = LETPASSTHROW
 
 /obj/structure/tray/Destroy()

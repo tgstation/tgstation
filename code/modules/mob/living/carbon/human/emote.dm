@@ -18,7 +18,7 @@
 	if(mind)
 		miming=mind.miming
 
-	if(src.stat == 2.0 && (act != "deathgasp"))
+	if(src.stat == 2 && (act != "deathgasp"))
 		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.

@@ -88,7 +88,7 @@
 	projectile_type = /obj/item/projectile/bullet/pellet/random
 	materials = list(MAT_METAL=250)
 	pellets = 5
-	variance = 1.0
+	variance = 1
 
 /obj/item/ammo_casing/shotgun/improvised/overload/New()
 	..()
