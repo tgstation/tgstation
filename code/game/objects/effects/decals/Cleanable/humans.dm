@@ -134,7 +134,9 @@
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes) //Don't need to check for blood, as the footprints will MAKE the shoes bloody
+		var/obj/item/clothing/shoes/S = H.shoes
+		if(S && S.bloody_shoes[blood_state])
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			entered_dirs|= H.dir
 			shoe_types |= H.shoes.type
 	update_icon()
@@ -142,7 +144,9 @@
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes)
+		var/obj/item/clothing/shoes/S = H.shoes
+		if(S && S.bloody_shoes[blood_state])
+			S.bloody_shoes[blood_state] = max(S.bloody_shoes[blood_state] - BLOOD_LOSS_PER_STEP, 0)
 			exited_dirs|= H.dir
 			shoe_types |= H.shoes.type
 	update_icon()
