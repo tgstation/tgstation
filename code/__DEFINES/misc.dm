@@ -252,9 +252,9 @@
 var/list/bloody_footprints_cache = list()
 
 //Bloody shoes/footprints
-#define MAX_SHOE_BLOODINESS			100
-#define BLOODY_FOOTPRINT_BASE_ALPHA	100
-#define BLOOD_GAIN_PER_STEP			50
+#define MAX_SHOE_BLOODINESS			50
+#define BLOODY_FOOTPRINT_BASE_ALPHA	150
+#define BLOOD_GAIN_PER_STEP			25
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_FADEOUT_TIME			2
 
