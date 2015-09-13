@@ -1423,11 +1423,16 @@ B --><-- A
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
 	if(!istype(A))
 		return
+	if (orbiting)
+		stop_orbit()
+		sleep(1) //sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
+		if (orbiting || !istype(A)) //post sleep re-check
+			return 
 	orbiting = A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 	spawn
-		while(orbiting)
+		while(orbiting && orbiting.loc)
 			loc = orbiting.loc
 
 			angle += angle_increment
