@@ -804,7 +804,7 @@
 			H.bloody_hands = 0
 			H.bloody_hands_mob = null
 			H.update_inv_gloves()
-	update_icons()	//apply the now updated overlays to the mob
+	//update_icons()	//apply the now updated overlays to the mob
 
 
 
