@@ -600,7 +600,6 @@ var/list/teleport_other_runes = list()
 	qdel(src)
 
 
-<<<<<<< HEAD
 //Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
 /obj/effect/rune/astral
 	cultist_name = "Rite of Astral Communion"
@@ -622,91 +621,6 @@ var/list/teleport_other_runes = list()
 		user << "<span class='warning'>[src] cannot support more than one body!</span>"
 		fail_invoke()
 		log_game("Astral Communion rune failed - more than one user")
-=======
-///Reveal: Reverses the Veil rune's effect, revealing all hidden runes.
-
-
-/obj/effect/rune/proc/revealrunes(obj/W)
-	var/go=0
-	var/rad
-	var/S=0
-	if(istype(W,/obj/effect/rune))
-		rad = 6
-		go = 1
-	if (istype(W,/obj/item/weapon/paper/talisman))
-		rad = 4
-		go = 1
-	if (istype(W,/obj/item/weapon/storage/book/bible))
-		rad = 1
-		go = 1
-	if(go)
-		for(var/obj/effect/rune/R in orange(rad,src))
-			if(R!=src)
-				R.invisibility=0
-			S=1
-	if(S)
-		if(istype(W,/obj/item/weapon/storage/book/bible))
-			usr << "<span class='danger'>Arcane markings suddenly glow from underneath a thin layer of dust!</span>"
-			return
-		if(istype(W,/obj/effect/rune))
-			usr.say("Nikt[pick("'","`")]o barada kla'atu!")
-			for (var/mob/V in viewers(src))
-				V.show_message("<span class='danger'>The rune turns into red dust, reveaing the surrounding runes.</span>", 3)
-			qdel(src)
-			return
-		if(istype(W,/obj/item/weapon/paper/talisman))
-			usr.whisper("Nikt[pick("'","`")]o barada kla'atu!")
-			usr << "<span class='danger'>Your talisman turns into red dust, revealing the surrounding runes.</span>"
-			for (var/mob/V in orange(1,usr.loc))
-				if(V!=usr)
-					V.show_message("<span class='danger'>Red dust emanates from [usr]'s hands for a moment.</span>", 3)
-			return
->>>>>>> remotes/upstream/master
-		return
-	var/turf/T = get_turf(src)
-	if(!user in T.contents)
-		user << "<span class='warning'>You must be standing on top of [src]!</span>"
-		fail_invoke()
-		log_game("Astral Communion rune failed - user not standing on rune")
-		return
-	rune_in_use = 1
-	affecting = user
-	user.color = src.color
-	user.visible_message("<span class='warning'>[user] freezes statue-still, their eyes glowing blue.</span>", \
-						 "<span class='danger'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
-	user.ghostize(1)
-	while(user)
-		if(!(user in T.contents))
-			user.visible_message("<span class='warning'>A spectral tendril pulls [user] back!</span>")
-			src.Beam(user,icon_state="b_beam",icon='icons/effects/beam.dmi',time=1)
-			user.forceMove(get_turf(src)) //NO ESCAPE :^)
-		if(user.key)
-			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow in their eyes dimming.</span>", \
-								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
-			user.color = initial(user.color)
-			user.Weaken(3)
-			rune_in_use = 0
-			affecting = null
-			return
-		if(user.stat == UNCONSCIOUS)
-			if(prob(10))
-				var/mob/dead/observer/G = user.get_ghost()
-				if(G)
-					G << "<span class='warning'>You feel the link between you and your body weakening... you must hurry!</span>"
-		if(user.stat == DEAD)
-			user.color = initial(user.color)
-			rune_in_use = 0
-			affecting = null
-			var/mob/dead/observer/G = user.get_ghost()
-			if(G)
-				G << "<span class='warning'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
-			return
-		if(!user)
-			rune_in_use = 0
-			affecting = null
-		sleep(10) //Around 1.5 minutes before the player falls into crit, and just above 3 to death
-		var/mob/living/carbon/C = user
-		C.apply_damage(1, BRUTE, "head")
 
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
