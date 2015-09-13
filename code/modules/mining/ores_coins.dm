@@ -226,7 +226,7 @@
 	flags = CONDUCT
 	force = 1
 	throwforce = 2
-	w_class = 1.0
+	w_class = 1
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cmineral = null
@@ -245,36 +245,43 @@
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 160
+	materials = list(MAT_GOLD = 400)
 
 /obj/item/weapon/coin/silver
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 40
+	materials = list(MAT_SILVER = 400)
 
 /obj/item/weapon/coin/diamond
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 120
+	materials = list(MAT_DIAMOND = 400)
 
 /obj/item/weapon/coin/iron
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 20
+	materials = list(MAT_METAL = 400)
 
 /obj/item/weapon/coin/plasma
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 80
+	materials = list(MAT_PLASMA = 400)
 
 /obj/item/weapon/coin/uranium
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 160
+	materials = list(MAT_URANIUM = 400)
 
 /obj/item/weapon/coin/clown
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 600 //makes the clown cri
+	materials = list(MAT_BANANIUM = 400)
 
 /obj/item/weapon/coin/adamantine
 	cmineral = "adamantine"
