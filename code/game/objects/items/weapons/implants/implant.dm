@@ -85,7 +85,7 @@
 	desc = "Track with this."
 	activated = 0
 	origin_tech = "materials=2;magnets=2;programming=2;biotech=2"
-	var/id = 1.0
+	var/id = 1
 
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

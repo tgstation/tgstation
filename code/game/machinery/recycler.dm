@@ -119,7 +119,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-	var/material_amount = materials.can_insert(I)
+	var/material_amount = materials.get_item_material_amount(I)
 	if(!material_amount)
 		qdel(I)
 		return

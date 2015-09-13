@@ -91,7 +91,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2.0
+	w_class = 2
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/toy/crayon

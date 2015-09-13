@@ -347,14 +347,14 @@
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
 			return
-		if(2.0)
+		if(2)
 			if (stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
-		if(3.0)
+		if(3)
 			if (stat != 2)
 				adjustBruteLoss(30)
 	return
@@ -1058,7 +1058,7 @@
 		robot_suit.r_leg = null
 		new /obj/item/stack/cable_coil(T, robot_suit.chest.wires)
 		robot_suit.chest.loc = T
-		robot_suit.chest.wires = 0.0
+		robot_suit.chest.wires = 0
 		robot_suit.chest = null
 		robot_suit.l_arm.loc = T
 		robot_suit.l_arm = null

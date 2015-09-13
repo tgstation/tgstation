@@ -5,7 +5,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	burn_state = 0 //Burnable
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)

@@ -18,7 +18,7 @@
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = 2.8
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
@@ -363,20 +363,20 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	var/health = 5
 
 /obj/structure/rack/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if(prob(50))
 				rack_destroy()
 			else
 				qdel(src)
-		if(3.0)
+		if(3)
 			if(prob(25))
 				rack_destroy()
 
@@ -481,7 +481,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
 	flags = CONDUCT
-	materials = list(MAT_METAL=3750)
+	materials = list(MAT_METAL=2000)
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	..()

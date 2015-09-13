@@ -6,8 +6,8 @@
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
-	force = 1.0
-	w_class = 1.0
+	force = 1
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
@@ -476,10 +476,10 @@
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
 	icon_state = "tile-bluespace"
-	w_class = 3.0
-	force = 6.0
+	w_class = 3
+	force = 6
 	materials = list(MAT_METAL=937.5)
-	throwforce = 10.0
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
@@ -499,10 +499,10 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles"
 	icon_state = "tile-sepia"
-	w_class = 3.0
-	force = 6.0
+	w_class = 3
+	force = 6
 	materials = list(MAT_METAL=937.5)
-	throwforce = 10.0
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
