@@ -65,7 +65,7 @@
 	throwforce = 10
 	item_state = "pickaxe"
 	w_class = 4
-	materials = list(MAT_METAL=3750) //one sheet, but where can you make them?
+	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"

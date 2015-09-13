@@ -1,0 +1,7 @@
+
+author: Fox P McCloud
+
+delete-after: True
+
+changes: 
+  - bugfix: "Fixes an exploit and inconsistency issue with a few material amounts on a few items and designs."
