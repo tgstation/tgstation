@@ -226,7 +226,7 @@
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
-		//AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null)) //Temporarily removed because they can talk with deadchat now
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_throw_item(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_light(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile(null))
