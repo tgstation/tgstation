@@ -24,6 +24,7 @@
 	name = "desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
 	icon_state = "tomealtar"
+	luminosity = 1
 
 /obj/effect/gateway
 	name = "gateway"
