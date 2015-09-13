@@ -7,6 +7,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
+	//Dimensions of the lefthand_file and righthand_file vars
+	//eg: 32x32 sprite, 64x64 sprite, etc.
+	var/inhand_x_dimension = 32
+	var/inhand_y_dimension = 32
+
 	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
 	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
