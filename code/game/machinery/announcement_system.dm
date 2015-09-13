@@ -82,7 +82,8 @@ var/list/announcement_systems = list()
 			panel_open = 0
 		update_icon()
 		return
-
+	if(default_unfasten_wrench(user, P))
+		return
 	if(panel_open)
 		default_deconstruction_crowbar(P)
 		if(istype(P, /obj/item/device/multitool) && broken)
