@@ -128,7 +128,7 @@
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
 /obj/item/clothing/shoes/cult/alt
-	name = "nar-sian scholar boots"
+	name = "cultist boots"
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cyborg

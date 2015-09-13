@@ -257,6 +257,11 @@ It also contains rune words, which are soon to be removed.
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name) == entered_rune_name)
 			rune_to_scribe = R
+			if(initial(R.req_keyword))
+				var/the_keyword = stripped_input(usr, "Please enter a keyword for the rune.", "Enter Keyword", "")
+				if(!the_keyword)
+					return
+				chosen_keyword = the_keyword
 			break
 	if(!rune_to_scribe)
 		rune_to_scribe = /obj/effect/rune/malformed //If improper grammar is entered, the rune becomes malformed

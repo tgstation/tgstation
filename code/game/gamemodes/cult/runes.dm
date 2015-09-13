@@ -621,6 +621,47 @@ var/list/teleport_other_runes = list()
 		user << "<span class='warning'>[src] cannot support more than one body!</span>"
 		fail_invoke()
 		log_game("Astral Communion rune failed - more than one user")
+		return
+	var/turf/T = get_turf(src)
+	if(!user in T.contents)
+		user << "<span class='warning'>You must be standing on top of [src]!</span>"
+		fail_invoke()
+		log_game("Astral Communion rune failed - user not standing on rune")
+		return
+	rune_in_use = 1
+	affecting = user
+	user.color = src.color
+	user.visible_message("<span class='warning'>[user] freezes statue-still, their eyes glowing blue.</span>", \
+						 "<span class='danger'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
+	user.ghostize(1)
+	while(user)
+		sleep(10)
+		affecting.apply_damage(1, BRUTE)
+		if(!(user in T.contents))
+			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them away!</span>")
+			src.Beam(user,icon_state="b_beam",icon='icons/effects/beam.dmi',time=1)
+			user.forceMove(get_turf(src)) //NO ESCAPE :^)
+		if(user.key)
+			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow in their eyes dimming.</span>", \
+								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
+			user.color = initial(user.color)
+			user.Weaken(3)
+			rune_in_use = 0
+			affecting = null
+			return
+		if(user.stat == UNCONSCIOUS)
+			if(prob(10))
+				var/mob/dead/observer/G = user.get_ghost()
+				if(G)
+					G << "<span class='warning'>You feel the link between you and your body weakening... you must hurry!</span>"
+		if(user.stat == DEAD)
+			user.color = initial(user.color)
+			rune_in_use = 0
+			affecting = null
+			var/mob/dead/observer/G = user.get_ghost()
+			if(G)
+				G << "<span class='warning'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
+			return
 
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
