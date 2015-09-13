@@ -53,6 +53,8 @@
 		return 1
 	owner.dna.mutations.Add(src)
 	owner << text_gain_indication
+	if(visual_indicators.len)
+		owner.update_mutation_overlays()
 
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
@@ -75,6 +77,8 @@
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
 		owner << text_lose_indication
+		if(visual_indicators.len)
+			owner.update_mutation_overlays()
 		return 0
 	return 1
 
@@ -102,7 +106,6 @@
 	if(..())
 		return
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
-	owner.update_mutation_overlays()
 	owner.status_flags &= ~status
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -123,7 +126,6 @@
 	if(..())
 		return
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
-	owner.update_mutation_overlays()
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
@@ -145,16 +147,6 @@
 /datum/mutation/human/telekinesis/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
 
-/datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.update_mutation_overlays()
-
-/datum/mutation/human/telekinesis/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.update_mutation_overlays()
-
 /datum/mutation/human/telekinesis/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	target.attack_tk(owner)
 
@@ -172,16 +164,6 @@
 
 /datum/mutation/human/cold_resistance/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
-
-/datum/mutation/human/cold_resistance/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.update_mutation_overlays()
-
-/datum/mutation/human/cold_resistance/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.update_mutation_overlays()
 
 /datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
 	if(owner.getFireLoss())
