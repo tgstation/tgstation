@@ -24,8 +24,6 @@
 	var/cooldownTime = 1800 //3 minutes
 	var/dispense_type = /obj/item/drone_shell //The item the dispenser will create
 
-	var/last_time //Used for hitting
-
 	var/work_sound = 'sound/items/rped.ogg'
 	var/create_sound = 'sound/items/Deconstruct.ogg'
 	var/recharge_sound = 'sound/machines/ping.ogg'
@@ -44,8 +42,8 @@
 	SSmachine.processing |= src
 
 /obj/machinery/droneDispenser/Destroy()
-	SSmachine.processing &= src
-	..()
+	SSmachine.processing -= src
+	return ..()
 
 /obj/machinery/droneDispenser/preloaded
 	metal = 5000
