@@ -180,7 +180,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "syndicate=6;combat=5"
 	var/adminlog = null
 
@@ -296,7 +296,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = 1.0
+	w_class = 1
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
 	var/detonated =	0

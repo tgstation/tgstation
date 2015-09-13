@@ -138,15 +138,15 @@
 	..()
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (src.stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
-		if(2.0)
+		if(2)
 			if (src.stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
-		if(3.0)
+		if(3)
 			if (src.stat != 2)
 				adjustBruteLoss(30)
 

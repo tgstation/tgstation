@@ -5,7 +5,7 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 1
 	throw_range = 7
 	var/state

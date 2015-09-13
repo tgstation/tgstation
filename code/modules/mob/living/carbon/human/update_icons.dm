@@ -399,6 +399,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			if(hud_used.inventory_shown)				//if the inventory is open ...
 				H.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
 			client.screen += H						//Either way, add the item to the HUD
+
+	update_mutant_bodyparts()
 	apply_overlay(HEAD_LAYER)
 
 

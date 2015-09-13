@@ -193,7 +193,7 @@
 
 		else if(istype(I, /obj/item/device/radio))
 			var/obj/item/device/radio/R = I
-			R.traitor_frequency = 0.0
+			R.traitor_frequency = 0
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
 	remove_changeling()

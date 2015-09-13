@@ -5,7 +5,7 @@
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
-	w_class = 1.0
+	w_class = 1
 
 	var/damage_coeff  = 1
 	var/list/fields
