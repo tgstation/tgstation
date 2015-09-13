@@ -37,7 +37,7 @@
 						L.do_alert_animation(L)
 				alerted << sound('sound/machines/chime.ogg') //HQ HQ!
 				egg_cooldown = 1
-				spawn(600)
+				spawn(3000)
 					egg_cooldown = 0
 	..()
 
