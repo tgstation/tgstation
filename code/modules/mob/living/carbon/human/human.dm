@@ -29,8 +29,9 @@
 		I.Insert(src)
 
 	// for spawned humans; overwritten by other code
-	ready_dna(src)
+	create_dna(src)
 	randomize_human(src)
+	ready_dna(src)
 
 	make_blood()
 

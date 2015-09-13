@@ -17,7 +17,7 @@
 
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(check_dna_integrity(M) && !(NOCLONE in M.mutations))
+	if(check_dna_integrity(M) && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
 			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
 			return

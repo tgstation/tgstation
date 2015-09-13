@@ -453,9 +453,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 	return 0
 
-/mob/proc/has_mutation(mutation)
-	return mutation in src.mutations ? 1 : 0
-
 /proc/get_both_hands(mob/living/carbon/M)
 	var/list/hands = list(M.l_hand, M.r_hand)
 	return hands

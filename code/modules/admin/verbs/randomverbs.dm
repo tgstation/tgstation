@@ -300,7 +300,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.blood_type = record_found.fields["blood_type"]
+		new_character.dna.blood_type = record_found.fields["blood_type"]
 	else
 		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
