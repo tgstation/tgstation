@@ -1,7 +1,0 @@
-
-author: Fox P McCloud
-
-delete-after: True
-
-changes: 
-  - bugfix: "fixes stimulants not properly applying its speedbuff."
