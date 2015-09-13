@@ -1432,7 +1432,7 @@ B --><-- A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 	spawn
-		while(orbiting)
+		while(orbiting && orbiting.loc)
 			loc = orbiting.loc
 
 			angle += angle_increment
