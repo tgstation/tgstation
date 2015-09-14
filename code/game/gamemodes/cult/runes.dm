@@ -35,9 +35,10 @@ Word definitions:
 	unacidable = 1
 	layer = TURF_LAYER
 	color = rgb(255,0,0)
+	mouse_opacity = 2
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
-	var/grammar //This is used to scribe the rune by using a tome.
+	var/grammar //This is only framework at the moment, but may be required to draw runes in the future
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 
 	var/req_pylons = 0
@@ -50,7 +51,7 @@ Word definitions:
 
 /obj/effect/rune/examine(mob/user)
 	..()
-	if(iscultist(user))
+	if(iscultist(user) || user.stat == DEAD) //If they're a cultist or a ghost, tell them the effects
 		user << "<b>Name:</b> [cultist_name]"
 		user << "<b>Effects:</b> [cultist_desc]"
 		//user << "<b>Words:</b> [grammar]"
@@ -100,8 +101,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return 1
 	else
 		var/cultists_in_range = 0
-		for(var/mob/living/L in orange(1, src))
+		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
+				var/mob/living/carbon/human/H = L
+				if(!istype(H))
+					if(istype(L, /mob/living/simple_animal/construct))
+						if(invocation)
+							L.say(invocation)
+						cultists_in_range++
+					continue
+				if(L.stat || (H.disabilities & MUTE) || H.silent)
+					continue
 				if(invocation)
 					L.say(invocation)
 				cultists_in_range++
@@ -337,26 +347,32 @@ var/list/teleport_other_runes = list()
 	invocation = "Barhah hra zar'garis!"
 	color = rgb(255, 255, 255)
 	grammar = "veri nahlizet certum"
+	var/rune_in_use = 0
 
 /obj/effect/rune/sacrifice/invoke(mob/living/user)
+	if(rune_in_use)
+		return
+	rune_in_use = 1
 	var/turf/T = get_turf(src)
 	var/list/possible_targets = list()
 	for(var/mob/living/M in T.contents)
 		if(!iscultist(M))
 			possible_targets.Add(M)
 	var/mob/offering
-	if(possible_targets.len > 1)
+	if(possible_targets.len > 1) //If there's more than one target, allow choice
 		offering = input(user, "Choose an offering to sacrifice.", "Unholy Tribute") as null|anything in possible_targets
-	else
+	else if(possible_targets.len) //Otherwise, if there's a target at all, pick the only one
 		offering = possible_targets[possible_targets.len]
 	if(!offering)
+		rune_in_use = 0
 		return
 	if(offering.null_rod_check())
 		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
 		log_game("Sacrifice rune failed - target has null rod")
 		fail_invoke()
+		rune_in_use = 0
 		return
-	if(ishuman(offering) || isrobot(offering))
+	if(((ishuman(offering) || isrobot(offering)) && offering.stat != DEAD) || ticker.mode.sacrifice_target == offering) //Requires three people to sacrifice living targets or the round's target
 		var/cultists_nearby = 1
 		for(var/mob/living/M in orange(1,src))
 			if(iscultist(M) && M != user)
@@ -366,8 +382,12 @@ var/list/teleport_other_runes = list()
 			user << "<span class='warning'>You require three acolytes to sacrifice greater targets!</span>"
 			fail_invoke()
 			log_game("Sacrifice rune failed - not enough acolytes and target is living")
+			rune_in_use = 0
 			return
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
+	color = rgb(255, 0, 0)
+	spawn(5)
+		color = initial(color)
 	sac(offering)
 
 /obj/effect/rune/sacrifice/proc/sac(mob/living/T)
@@ -401,9 +421,7 @@ var/list/teleport_other_runes = list()
 						M << "<span class='cult'>\"I accept this sacrifice.\"</span>"
 					else
 						M << "<span class='cult'>\"I accept this meager sacrifice.\"</span>"
-				if(!non_revealed_runes.len)
-					M << "<span class='notice'>You feel enlightened. All the rites of the Geometer have been revealed to you or the other cultists.</span>"
-					return
+	rune_in_use = 0
 
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
@@ -836,7 +854,7 @@ var/list/teleport_other_runes = list()
 //Rite of Fabrication: Creates a construct shell out of 5 metal sheets.
 /obj/effect/rune/construct_shell
 	cultist_name = "Rite of Fabrication"
-	cultist_desc = "Turns five metal sheets into an empty construct shell, suitable for containing a soul shard."
+	cultist_desc = "Turns five plasteel sheets into an empty construct shell, suitable for containing a soul shard."
 	invocation = "Ethra p'ni dedol!"
 	icon_state = "5"
 	color = rgb(150, 150, 150)
@@ -854,11 +872,13 @@ var/list/teleport_other_runes = list()
 				if(M.amount <= 0)
 					qdel(M)
 				qdel(src)
+				return
 			else
 				user << "<span class='warning'>There must be at least five sheets of plasteel on [src]!</span>"
 				fail_invoke()
 				log_game("Construct Shell rune failed - not enough plasteel sheets")
 				return
+
 
 //Rite of Arming: Creates cult robes, a trophy rack, and a cult sword on the rune.
 /obj/effect/rune/armor

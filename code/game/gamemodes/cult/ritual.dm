@@ -264,7 +264,7 @@ It also contains rune words, which are soon to be removed.
 				chosen_keyword = the_keyword
 			break
 	if(!rune_to_scribe)
-		rune_to_scribe = /obj/effect/rune/malformed //If improper grammar is entered, the rune becomes malformed
+		return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='danger'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
 	if(iscarbon(user))
