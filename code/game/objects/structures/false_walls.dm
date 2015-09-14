@@ -22,7 +22,6 @@
 	smooth = 1
 	can_be_unanchored = 0
 
-
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
@@ -30,10 +29,11 @@
 	opening = 1
 	if(density)
 		do_the_flick()
-		sleep(4)
-		density = 0
-		SetOpacity(0)
-		update_icon()
+		sleep(5)
+		if(!qdeleted(src))
+			density = 0
+			SetOpacity(0)
+			update_icon()
 	else
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
@@ -41,18 +41,19 @@
 			return
 		do_the_flick()
 		density = 1
-		sleep(4)
-		SetOpacity(1)
-		update_icon()
+		sleep(5)
+		if(!qdeleted(src))
+			SetOpacity(1)
+			update_icon()
 	opening = 0
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
 		smooth = 0
 		clear_overlays(src)
-		flick("fwall_opening", src)
+		icon_state = "fwall_opening"
 	else
-		flick("fwall_closing", src)
+		icon_state = "fwall_closing"
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
