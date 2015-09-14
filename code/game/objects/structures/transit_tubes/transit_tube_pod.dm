@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/pipes/transit_tube_pod.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()

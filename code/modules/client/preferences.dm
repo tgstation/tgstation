@@ -363,24 +363,22 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if(jobban_isbanned(user, "Syndicate"))
 					dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 					src.be_special = 0
+				var/n = 0
+				for (var/i in special_roles)
+					if(jobban_isbanned(user, i))
+						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
+					else
+						var/days_remaining = null
+						if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
+							var/mode_path = special_roles[i]
+							var/datum/game_mode/temp_mode = new mode_path
+							days_remaining = temp_mode.get_remaining_days(user.client)
 
-				else
-					var/n = 0
-					for (var/i in special_roles)
-						if(jobban_isbanned(user, i))
-							dat += "<b>Be [i]:</b> <font color=red><b>\[BANNED]</b></font><br>"
+						if(days_remaining)
+							dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 						else
-							var/days_remaining = null
-							if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
-								var/mode_path = special_roles[i]
-								var/datum/game_mode/temp_mode = new mode_path
-								days_remaining = temp_mode.get_remaining_days(user.client)
-
-							if(days_remaining)
-								dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
-							else
-								dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'>[src.be_special&(1<<n) ? "Yes" : "No"]</a><br>"
-						n++
+							dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'>[src.be_special&(1<<n) ? "Yes" : "No"]</a><br>"
+					n++
 				dat += "</td></tr></table>"
 
 		dat += "<hr><center>"
@@ -436,7 +434,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			var/rank = job.title
 			lastJob = job
 			if(jobban_isbanned(user, rank))
-				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED\]</b></font></td></tr>"
+				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
 				var/available_in_days = job.available_in_days(user.client)
@@ -649,6 +647,28 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	proc/process_link(mob/user, list/href_list)
 		if(!istype(user, /mob/new_player))	return
+
+		if(href_list["jobbancheck"])
+			var/job = sanitizeSQL(href_list["jobbancheck"])
+			var/sql_ckey = sanitizeSQL(user.ckey)
+			var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND job = '[job]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+			if(!query_get_jobban.Execute())
+				var/err = query_get_jobban.ErrorMsg()
+				log_game("SQL ERROR obtaining reason from ban table. Error : \[[err]\]\n")
+				return
+			if(query_get_jobban.NextRow())
+				var/reason = query_get_jobban.item[1]
+				var/bantime = query_get_jobban.item[2]
+				var/duration = query_get_jobban.item[3]
+				var/expiration_time = query_get_jobban.item[4]
+				var/a_ckey = query_get_jobban.item[5]
+				var/text
+				text = "<span class='redtext'>You, or another user of this computer, ([user.ckey]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [a_ckey] on [bantime]"
+				if(text2num(duration) > 0)
+					text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
+				text += ".</span>"
+				user << text
+			return
 
 		if(href_list["preference"] == "job")
 			switch(href_list["task"])

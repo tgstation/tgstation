@@ -89,13 +89,13 @@ About the new airlock wires panel:
 // You can find code for the airlock wires in the wire datum folder.
 
 /obj/machinery/door/airlock/proc/bolt()
-	if(locked)
+	if(locked || operating)
 		return
 	locked = 1
 	update_icon()
 
 /obj/machinery/door/airlock/proc/unbolt()
-	if(!locked)
+	if(!locked || operating)
 		return
 	locked = 0
 	update_icon()
@@ -172,6 +172,8 @@ About the new airlock wires panel:
 			var/cont = 1
 			while (cont)
 				sleep(10)
+				if(qdeleted(src))
+					return
 				cont = 0
 				if(src.secondsMainPowerLost>0)
 					if((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
@@ -565,21 +567,22 @@ About the new airlock wires panel:
 					//disrupt main power
 					if(src.secondsMainPowerLost == 0)
 						src.loseMainPower()
+						update_icon()
 					else
 						usr << "Main power is already offline."
 				if(3)
 					//disrupt backup power
 					if(src.secondsBackupPowerLost == 0)
 						src.loseBackupPower()
+						update_icon()
 					else
 						usr << "Backup power is already offline."
 				if(4)
 					//drop door bolts
 					if(src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 						usr << "You can't drop the door bolts - The door bolt dropping wire has been cut."
-					else if(src.locked!=1)
-						src.locked = 1
-						update_icon()
+					else
+						bolt()
 				if(5)
 					//un-electrify door
 					if(src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
@@ -626,6 +629,7 @@ About the new airlock wires panel:
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (src.lights)
 						lights = 0
+						update_icon()
 					else
 						usr << text("Door bolt lights are already disabled!")
 
@@ -633,6 +637,7 @@ About the new airlock wires panel:
 					// Emergency access
 					if (src.emergency)
 						emergency = 0
+						update_icon()
 					else
 						usr << text("Emergency access is already disabled!")
 
@@ -656,8 +661,7 @@ About the new airlock wires panel:
 						usr << text("The door bolts are already up.<br>\n")
 					else
 						if(src.hasPower())
-							src.locked = 0
-							update_icon()
+							unbolt()
 						else
 							usr << text("Cannot raise door bolts due to power failure.<br>\n")
 
@@ -730,6 +734,7 @@ About the new airlock wires panel:
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (!src.lights)
 						lights = 1
+						update_icon()
 						src.updateUsrDialog()
 					else
 						usr << text("Door bolt lights are already enabled!")
@@ -738,11 +743,11 @@ About the new airlock wires panel:
 					// Emergency access
 					if (!src.emergency)
 						emergency = 1
+						update_icon()
 					else
 						usr << text("Emergency access is already enabled!")
 
 	add_fingerprint(usr)
-	update_icon()
 	if(!nowindow)
 		updateUsrDialog()
 	return
@@ -853,20 +858,24 @@ About the new airlock wires panel:
 				if(beingcrowbarred == 0) //being fireaxe'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn(0)	open(2)
+						spawn(0)
+							open(2)
 					else
 						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
 				else
-					spawn(0)	open(2)
+					spawn(0)
+						open(2)
 			else
 				if(beingcrowbarred == 0)
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
-						spawn(0)	close(2)
+						spawn(0)
+							close(2)
 					else
 						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
 				else
-					spawn(0)	close(2)
+					spawn(0)
+						close(2)
 
 	else if(istype(C, /obj/item/weapon/airlock_painter))
 		change_paintjob(C, user)
@@ -1021,7 +1030,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/proc/autoclose()
-	if(!density && !operating && !locked && !welded && autoclose)
+	if(!qdeleted(src) && !density && !operating && !locked && !welded && autoclose)
 		close()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
@@ -1107,6 +1116,8 @@ About the new airlock wires panel:
 	if(density && hasPower() && !emagged)
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
+		if(qdeleted(src))
+			return
 		open()
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"

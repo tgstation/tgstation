@@ -10,6 +10,10 @@
 	var/time = 5
 
 
+/obj/item/device/assembly/timer/New()
+	..()
+	SSobj.processing |= src
+
 /obj/item/device/assembly/timer/describe()
 	if(timing)
 		return "The timer is counting down from [time]!"
@@ -20,7 +24,7 @@
 	if(!..())	return 0//Cooldown check
 	timing = !timing
 	update_icon()
-	return 0
+	return 1
 
 
 /obj/item/device/assembly/timer/toggle_secure()
@@ -42,17 +46,16 @@
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
-	return
+	update_icon()
 
 
 /obj/item/device/assembly/timer/process()
-	if(timing && (time > 0))
+	if(timing)
 		time--
-	if(timing && time <= 0)
-		timing = 0
-		timer_end()
-		time = initial(time)
-	return
+		if(time <= 0)
+			timing = 0
+			timer_end()
+			time = initial(time)
 
 
 /obj/item/device/assembly/timer/update_icon()
@@ -63,7 +66,6 @@
 		attached_overlays += "timer_timing"
 	if(holder)
 		holder.update_icon()
-	return
 
 
 /obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
@@ -76,12 +78,11 @@
 		var/datum/browser/popup = new(user, "timer", name)
 		popup.set_content(dat)
 		popup.open()
-		return
 
 
 /obj/item/device/assembly/timer/Topic(href, href_list)
 	..()
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=timer")
 		onclose(usr, "timer")
 		return
@@ -107,4 +108,3 @@
 	if(usr)
 		attack_self(usr)
 
-	return

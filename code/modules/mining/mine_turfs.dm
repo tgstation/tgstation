@@ -28,13 +28,13 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
 	switch(severity)
-		if(3.0)
+		if(3)
 			if (prob(75))
 				src.gets_drilled(null, 1)
-		if(2.0)
+		if(2)
 			if (prob(90))
 				src.gets_drilled(null, 1)
-		if(1.0)
+		if(1)
 			src.gets_drilled(null, 1)
 	return
 
@@ -85,7 +85,7 @@ var/global/list/rockTurfEdgeCache
 	new src.type(T)
 
 /turf/simulated/mineral/random
-	name = "mineral deposit"
+	name = "rock"
 	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
@@ -533,12 +533,12 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
 	switch(severity)
-		if(3.0)
+		if(3)
 			return
-		if(2.0)
+		if(2)
 			if (prob(20))
 				src.gets_dug()
-		if(1.0)
+		if(1)
 			src.gets_dug()
 	return
 
@@ -602,16 +602,11 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "asteroid_dug"
 	return
 
+/turf/simulated/floor/plating/asteroid/singularity_act()
+	return
+
 /turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
-	if(current_size == STAGE_THREE)
-		if(prob(30))
-			gets_dug()
-	else if(current_size == STAGE_FOUR)
-		if(prob(50))
-			gets_dug()
-	else if(current_size >= STAGE_FIVE)
-		if(prob(90))
-			gets_dug()
+	return
 
 /turf/proc/updateMineralOverlays()
 	src.overlays.Cut()

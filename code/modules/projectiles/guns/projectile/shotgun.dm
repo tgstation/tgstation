@@ -3,7 +3,7 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
@@ -85,8 +85,8 @@
 ///////////////////////
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction
-	name = "bolt action rifle"
-	desc = "This piece of junk looks like something that could have been used 700 years ago."
+	name = "\improper Mosin Nagant rifle"
+	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
 	slot_flags = 0 //no SLOT_BACK sprite, alas
@@ -122,7 +122,7 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
@@ -175,7 +175,7 @@
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
-	w_class = 4.0
+	w_class = 4
 	force = 10
 	slot_flags = null
 	origin_tech = "combat=2;materials=2"
@@ -234,7 +234,7 @@
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
 		icon_state = "[icon_state]-sawn"
-		w_class = 3.0
+		w_class = 3
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
@@ -248,11 +248,11 @@
 // Bulldog shotgun //
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	name = "syndicate shotgun"
+	name = "\improper MLG-12 'Bulldog' Shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
-	w_class = 3.0
+	w_class = 3
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'

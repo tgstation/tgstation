@@ -15,7 +15,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -83,7 +83,7 @@
 	item_state = "bike_horn"
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
