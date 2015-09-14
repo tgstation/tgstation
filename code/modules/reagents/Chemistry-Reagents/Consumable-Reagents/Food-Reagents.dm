@@ -237,6 +237,19 @@
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
+	overdose_threshold = 10
+
+/datum/reagent/consumable/sodiumchloride/overdose_start(mob/living/M)
+	M << "<span class='userdanger'>You feel salty!</span>"
+
+/datum/reagent/consumable/sodiumchloride/overdose_process(mob/living/M)
+	if (!M.salty)
+		M.salty += 3
+	var/salt_message = pick("You feel like punching something.", "You feel fury at everything.", "You feel like raging at the gods.")
+	if(prob(5))
+		M << "<span class='notice'>[salt_message]</span>"
+	if(prob(3))
+		M.say(pick("REEEEEEEEEEEEEEE", "I DEAD PLEASE NERF", "FUCK YOU"))
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
