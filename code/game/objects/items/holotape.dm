@@ -11,6 +11,7 @@
 	var/tape_type = /obj/item/holotape
 	var/icon_base
 	var/charging = 0
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/holotape
 	icon = 'icons/obj/holotape.dmi'

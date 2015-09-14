@@ -12,6 +12,7 @@
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
+	origin_tech = "engineering=3"
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)

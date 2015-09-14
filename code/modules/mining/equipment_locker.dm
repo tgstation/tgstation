@@ -507,6 +507,7 @@
 	var/fieldsactive = 0
 	var/burst_time = 50
 	var/fieldlimit = 3
+	origin_tech = "magnets=2;combat=2"
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
 	var/turf/T = get_turf(target)
@@ -724,6 +725,7 @@
 	throw_range = 5
 	var/loaded = 1
 	var/malfunctioning = 0
+	origin_tech = "biotech=4"
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
@@ -778,6 +780,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
+	origin_tech = "engineering=1;magnets=1"
 
 /obj/item/device/mining_scanner/attack_self(mob/user)
 	if(!user.client)
@@ -809,6 +812,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
+	origin_tech = "engineering=3;magnets=3"
 
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
 	if(!cooldown)
