@@ -302,7 +302,7 @@
 		else
 			H << "<span class='danger'>[pick("KILL YOUR MASTER!","YOU CAN'T TAKE IT ANYMORE!","EVERYTHING IS PAIN!")]</span>"
 			H.say("KILL ME!!!!!")
-	if(H.health < 150)
+	if(H.health < -50)
 		H.adjustOxyLoss(-H.getOxyLoss())
 		H.adjustToxLoss(-H.getToxLoss())
 		H.adjustFireLoss(-H.getFireLoss())
