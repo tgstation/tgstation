@@ -81,6 +81,7 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/shoot_live_shot()
 	failcheck()
+	update_icon()
 	..()
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
@@ -93,7 +94,6 @@
 				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				update_icon()
 				M.irradiate(80)
 				crit_fail = 1
 				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"
