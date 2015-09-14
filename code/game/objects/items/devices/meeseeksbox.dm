@@ -14,6 +14,7 @@
 
 
 /obj/item/device/meeseeks_box/attack_self(mob/user)
+	var/time_passed = world.time
 	if(!meeseeks)
 
 		//var/list/candidates = get_candidates(BE_PAI)
@@ -21,7 +22,7 @@
 		var/mob/dead/observer/C = null
 
 		for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, "pAI") && !jobban_isbanned(G, "posibrain"))
+			if(!jobban_isbanned(G, "pAI") && !jobban_isbanned(G, "posibrain"))
 				spawn(0)
 					switch(alert(G, "Do you wish to become Mr. Meeseeks and fulfill a task?","Please answer in 30 seconds!","Yes","No"))
 						if("Yes")

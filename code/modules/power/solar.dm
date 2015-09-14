@@ -17,6 +17,7 @@
 	var/health = 10
 	var/obscured = 0
 	var/sunfrac = 0
+	var/sgen = 0 //power produced
 	var/adir = SOUTH // actual dir
 	var/ndir = SOUTH // target dir
 	var/turn_angle = 0
@@ -59,6 +60,11 @@
 
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
+
+	if(istype(W, /obj/item/device/multitool))
+		user << "<span class='notice'>The [W.name] detects that [sgen]W were recently produced.</span>"
+		user << "<span class='notice'>The panel is [current_dirt]% obstructed by dirt and debris.</span>"
+		return 1
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
@@ -146,7 +152,7 @@
 		if(powernet == control.powernet)//check if the panel is still connected to the computer
 			if(obscured) //get no light from the sun, so don't generate power
 				return
-			var/sgen = SOLARGENRATE * sunfrac
+			sgen = SOLARGENRATE * sunfrac
 			add_avail(sgen)
 			control.gen += sgen
 		else //if we're no longer on the same powernet, remove from control computer
