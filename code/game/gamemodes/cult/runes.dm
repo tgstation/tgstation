@@ -534,7 +534,7 @@ var/list/teleport_other_runes = list()
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into black mist. The mist lingers, and then flows into [mob_to_revive]!</span>")
 	mob_to_sacrifice.dust()
 	sleep(20)
-	if(mob_to_revive.stat != DEAD)
+	if(mob_to_revive.stat != DEAD || !mob_to_revive)
 		visible_message("<span class='warning'>The black mist rises and dissipates.</span>")
 	mob_to_revive << "<span class='cult'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
