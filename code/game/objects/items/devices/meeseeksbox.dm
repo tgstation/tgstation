@@ -15,30 +15,46 @@
 
 /obj/item/device/meeseeks_box/attack_self(mob/user)
 	if(!meeseeks)
-		var/list/candidates = get_candidates(BE_PAI)
-		var/client/C = null
+
+		//var/list/candidates = get_candidates(BE_PAI)
+		var/list/mob/dead/observer/candidates = list()
+		var/mob/dead/observer/C = null
+
+		for(var/mob/dead/observer/G in player_list)
+		if(!jobban_isbanned(G, "pAI") && !jobban_isbanned(G, "posibrain"))
+				spawn(0)
+					switch(alert(G, "Do you wish to become Mr. Meeseeks and fulfill a task?","Please answer in 30 seconds!","Yes","No"))
+						if("Yes")
+							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+								return
+							candidates += G
+						if("No")
+							return
+						else
+							return
+
 		if(candidates.len)
 			C = pick(candidates)
-			var/mob/living/carbon/human/G = new /mob/living/carbon/human
-			hardset_dna(G, null, null, null, null, /datum/species/golem/meeseeks)
-			G.set_cloned_appearance()
-			G.real_name = text("Mr. Meeseeks ([rand(1, 1000)])")
-			G.dna.species.auto_equip(G)
-			G.loc = user.loc
-			G.key = C.key
-			meeseeks = G //store the meeseeks, so we can delete it later
-			SM = G.dna.species
+			var/mob/living/carbon/human/M = new /mob/living/carbon/human
+			hardset_dna(M, null, null, null, null, /datum/species/golem/meeseeks)
+			M.set_cloned_appearance()
+			M.real_name = text("Mr. Meeseeks ([rand(1, 1000)])")
+			M.dna.species.auto_equip(M)
+			M.loc = user.loc
+			M.key = C.key
+			meeseeks = M //store the meeseeks, so we can delete it later
+			SM = M.dna.species
 			SM.master = user
 
 			playsound(loc, 'sound/voice/meeseeks/meeseeksspawn.ogg', 40, 0, 1)
 			request = input("How should Mr. Meeseeks help you today?")
 			playsound(loc, 'sound/voice/meeseeks/cando.ogg', 40, 0, 1)
 
-			G << "<span class='notice'>Your master, [user] has given you a command:"
-			G << "<span class='notice'><b> [request].</b>"
-			G << "<span class='notice'>Try to accomplish it as fast as possible!</span>"
-			G.mind.store_memory("Your master has given you this command:")
-			G.mind.store_memory("[request]")
+			M << "<span class='notice'>Your master, [user] has given you a command:"
+			M << "<span class='notice'><b> [request].</b>"
+			M << "<span class='notice'>Try to accomplish it as fast as possible!</span>"
+			M.mind.store_memory("Your master has given you this command:")
+			M.mind.store_memory("[request]")
 
 		else
 			usr << "<span class='notice'>The box is silent. Maybe you should try again in a few minutes.</span>"
