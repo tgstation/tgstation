@@ -1505,6 +1505,7 @@
 #include "code\modules\security levels\keycard authentication.dm"
 #include "code\modules\security levels\security levels.dm"
 #include "code\modules\shuttle\shuttle.dm"
+#include "code\modules\space transition\space_transition.dm"
 #include "code\modules\surgery\cavity_implant.dm"
 #include "code\modules\surgery\core_removal.dm"
 #include "code\modules\surgery\dethrall.dm"
