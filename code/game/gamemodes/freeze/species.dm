@@ -16,7 +16,7 @@
 /datum/species/frosty/pawn
 	id = "frost_pawn"
 
-/datum/species/frost/scion/transformed
+/datum/species/frosty/scion/transformed
 	name = "Scion"
 	id = "frost_scion_t"
 	burnmod = 1.7 //we REALLY don't like heat

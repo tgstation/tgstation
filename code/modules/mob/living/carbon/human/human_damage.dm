@@ -163,7 +163,7 @@
 	if(dna)	// if you have a species, it will run the apply_damage code there instead
 		dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
 	else
-		if((damagetype != BRUTE) && (damagetype != BURN))
+		if((damagetype != BRUTE) && (damagetype != BURN) && (damagetype != COLD))
 			..(damage, damagetype, def_zone, blocked)
 			return 1
 
@@ -186,7 +186,7 @@
 					damageoverlaytemp = 20
 					if(organ.take_damage(damage, 0))
 						update_damage_overlays(0)
-				if(BURN)
+				if(BURN, COLD)
 					damageoverlaytemp = 20
 					if(organ.take_damage(0, damage))
 						update_damage_overlays(0)

@@ -32,7 +32,7 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/scions = max(required_enemies, round((num_players()/10)*(required_enemies/2))) //graph of scaling: https://www.desmos.com/calculator/kh3e305nzf
+	var/scions = max(required_enemies, round((num_players()*0.1)*(required_enemies*0.5))) //graph of scaling: https://www.desmos.com/calculator/kh3e305nzf
 
 	while(scions)
 		var/datum/mind/scion = pick(antag_candidates)
@@ -88,3 +88,5 @@
 		hardset_dna(pawn_mind.current, mrace = /datum/species/frosty/pawn)
 		pawn_mind.special_role = "FrostPawn"
 		return 1
+
+/datum/game_mode/proc/transform_scion(datum/mind/scion)

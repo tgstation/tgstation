@@ -14,7 +14,7 @@
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
-		if(BURN)
+		if(BURN, COLD)
 			adjustFireLoss(damage * blocked)
 		if(TOX)
 			adjustToxLoss(damage * blocked)

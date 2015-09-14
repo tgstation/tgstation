@@ -40,8 +40,8 @@
 	node_range = NODERANGE
 	var/temperature_delta = 15 //this value is subtracted from T20C to get the temperature this node attempts to lowers its tile to
 
-/obj/structure/alien/weeds/frost/node/New(super_coefficient = src.super_coefficient)
-	..(loc, src, super_coefficient)
+/obj/structure/alien/weeds/frost/node/New()
+	..(loc, src)
 	SSobj.processing += src
 
 /obj/structure/alien/weeds/frost/node/Destroy()
