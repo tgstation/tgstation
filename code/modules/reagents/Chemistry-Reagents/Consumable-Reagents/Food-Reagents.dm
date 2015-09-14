@@ -249,7 +249,7 @@
 	if(prob(5))
 		M << "<span class='notice'>[salt_message]</span>"
 	if(prob(3))
-		M.say(pick("REEEEEEEEEEEEEEE", "I DEAD PLEASE NERF", "FUCK YOU"))
+		M.say(pick("FUCK YOU", "FUCK THE CAPTAIN", "FUCK THE AI", "GO SPACE YOURSELF ASSHOLE", "THIS IS BULLSHIT", "THE GODS WILL HEAR ABOUT THIS"))
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
