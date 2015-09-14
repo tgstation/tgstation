@@ -397,6 +397,8 @@ var/list/teleport_other_runes = list()
 			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
 			if(!stone.transfer_soul("FORCE", T, usr)) //If it cannot be added
 				qdel(stone)
+			if(!T)
+				return
 		if(istype(T, /mob/living/simple_animal/pet/dog/corgi))
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C))
