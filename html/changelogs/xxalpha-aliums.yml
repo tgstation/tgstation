@@ -1,0 +1,14 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - bugfix: "Fixed not being able to grab things from storage while inside aliens."
+  - bugfix: "Fixed two progress bars when devouring."
+  - rscadd: "Shields will now block alien hunter pounces."
+  - tweak: "Alien hunters health reduced to 125 from 150. Alien sentinels health increased to 150 from 125."
+  - tweak: "Alien hunters will no longer be transparent when stalking, this ability was given to alien sentinels."
+  - tweak: "Alien slashing now deals constant 20 damage but has a chance to miss."
+  - tweak: "Reduced alien disarm stun duration vs cyborgs, from 7 seconds to 2 seconds."
+  - tweak: "Alien sentinels now move as fast as humans."
+  - tweak: "Facehuggers and alien eggs layers increased to be higher than resin walls."
