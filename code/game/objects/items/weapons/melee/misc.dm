@@ -91,12 +91,18 @@
 	var/obj/item/organ/internal/brain/B = H.getorgan(/obj/item/organ/internal/brain)
 
 	user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to clear their mind.</span>")
-	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	if(!on)
+		src.attack_self(user)
+	else
+		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+		add_fingerprint(user)
 	sleep(3)
-	if (B)
-		H.internal_organs -= B
-	gibs(H.loc, H.viruses, H.dna)
-	return (BRUTELOSS)
+	if (H)
+		if (B)
+			H.internal_organs -= B
+		gibs(H.loc, H.viruses, H.dna)
+		return (BRUTELOSS)
+	return
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)
 	on = !on

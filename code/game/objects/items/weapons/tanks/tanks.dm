@@ -27,11 +27,12 @@
 	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	sleep(3)
-	if (B)
-		B.loc = get_turf(H)
-		H.internal_organs -= B
-	H.gib()
-	return (BRUTELOSS)
+	if (H)
+		if (B)
+			B.loc = get_turf(H)
+			H.internal_organs -= B
+		H.gib()
+	return
 
 /obj/item/weapon/tank/New()
 	..()
