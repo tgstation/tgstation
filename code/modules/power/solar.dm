@@ -1,8 +1,7 @@
 #define SOLAR_MAX_DIST 40
 #define SOLARGENRATE 1500
-#define DIRTRATE_A 25
-#define DIRTRATE_B 2       //Probability that a solar panel will advance it's "dirt level", both values are multiplied.
-#define DIRTLIMIT 3       //Maximum Dirt level. Percentage is calculated as current_dirt/(DIRTLIMIT+1) so it's never 100% obscured
+#define DIRTRATE 5      //Probability that a solar panel will advance it's "dirt level", both values are multiplied.
+#define DIRTLIMIT 99       //Maximum Dirt level. Percentage is calculated as 1-(current_dirt/(DIRTLIMIT+1)) so it's never 100% obscured
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -62,14 +61,14 @@
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(istype(W, /obj/item/weapon/crowbar))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
 		user.visible_message("<span class='notice'>[user] begins to take the glass off the solar panel.</span>")
 		if(do_after(user, 50, target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 20, 1)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
 			current_dirt = 0
 			qdel(src)
@@ -129,7 +128,7 @@
 	//isn't the power recieved from the incoming light proportionnal to cos(p_angle) (Lambert's cosine law) rather than cos(p_angle)^2 ?
 	//The above isn't correct. This is because it's an area, not a single axis, so it's squared //Koriath
 
-	sunfrac = sunfrac * (current_dirt/(DIRTLIMIT+1))
+	sunfrac = sunfrac * (1-(current_dirt/(DIRTLIMIT+1)))
 	//this will make it produce less when it's dirtier
 
 /obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
@@ -137,9 +136,10 @@
 		return
 	if(!control) //if there's no sun or the panel is not linked to a solar control computer, no need to proceed
 		return
-	if(prob(DIRTRATE_A))
-		if(prob(DIRTRATE_B))
-			current_dirt += 1
+	if(prob(DIRTRATE))
+		current_dirt += 1
+		if(current_dirt > DIRTLIMIT /2)
+			update_icon()
 	if(current_dirt >= DIRTLIMIT)
 		stat |= BROKEN
 	if(powernet)
