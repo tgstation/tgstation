@@ -94,3 +94,4 @@ bear1ake = Game Master
 CoreOverload = Game Master
 Jalleo = Game Master
 Anonus Tanir = Game Master
+FoxPMcCloud = Game Master
