@@ -623,7 +623,7 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.parents["p1"]
+	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.reconcile_air()
 
 	log_message("Connected to gas port.")
