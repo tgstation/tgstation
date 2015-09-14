@@ -35,7 +35,7 @@
 	icon_state = "rift"
 	density = 1
 	unacidable = 1
-	anchored = 1.0
+	anchored = 1
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
@@ -508,7 +508,7 @@ var/global/list/multiverse = list()
 	if(!target && possible.len)
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
-	
+
 	if(user.zone_sel.selecting == "chest")
 		if(link)
 			target = null
@@ -517,7 +517,7 @@ var/global/list/multiverse = list()
 			link = null
 			update_targets()
 			return
-	
+
 	if(target && cooldown < world.time)
 		switch(user.zone_sel.selecting)
 			if("mouth")

@@ -191,7 +191,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = 2
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"

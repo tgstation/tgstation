@@ -51393,16 +51393,16 @@
 /area/toxins/misc_lab)
 "bZV" = (
 /obj/structure/closet/crate,
+/obj/item/target/syndicate,
 /obj/item/target/alien,
-/obj/item/target/alien,
-/obj/item/target/alien,
+/obj/item/target/clown,
 /turf/simulated/floor/plasteel,
 /area/toxins/misc_lab)
 "bZW" = (
 /obj/structure/closet/crate,
 /obj/item/target/syndicate,
-/obj/item/target/syndicate,
-/obj/item/target/syndicate,
+/obj/item/target/alien,
+/obj/item/target/clown,
 /turf/simulated/floor/plasteel,
 /area/toxins/misc_lab)
 "bZX" = (
@@ -52144,7 +52144,7 @@
 "cby" = (
 /obj/structure/table,
 /obj/item/weapon/stamp,
-/obj/item/weapon/contraband/poster/legit,
+/obj/item/weapon/poster/legit,
 /turf/simulated/floor/plating,
 /area/maintenance/fpmaint2)
 "cbz" = (
@@ -62451,7 +62451,7 @@
 	 name = "2maintenance loot spawner"
 	},
 /obj/item/toy/minimeteor,
-/obj/item/weapon/contraband/poster,
+/obj/item/weapon/poster/contraband,
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "cvS" = (

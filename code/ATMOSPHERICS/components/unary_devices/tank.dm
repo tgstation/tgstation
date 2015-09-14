@@ -66,5 +66,5 @@
 /obj/machinery/atmospherics/components/unary/tank/air/New()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
-	air_contents.oxygen = AIR_CONTENTS
-	air_contents.nitrogen = AIR_CONTENTS
+	air_contents.oxygen = AIR_CONTENTS * 0.2
+	air_contents.nitrogen = AIR_CONTENTS * 0.8

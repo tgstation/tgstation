@@ -104,11 +104,11 @@ It is possible to destroy the net by the occupant or someone else.
 
 /obj/effect/energy_net/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			health-=50
-		if(2.0)
+		if(2)
 			health-=50
-		if(3.0)
+		if(3)
 			health-=prob(50)?50:25
 	healthcheck()
 	return

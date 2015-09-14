@@ -11,11 +11,11 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
-	w_class = 3.0
+	w_class = 3
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	force = 5.0
+	force = 5
 	origin_tech = "combat=1"
 	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")

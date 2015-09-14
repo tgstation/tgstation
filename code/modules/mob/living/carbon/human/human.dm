@@ -112,7 +112,7 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if (1)
 			b_loss += 500
 			if (prob(getarmor(null, "bomb")))
 				shred_clothing(1,150)
@@ -122,7 +122,7 @@
 				gib()
 				return
 
-		if (2.0)
+		if (2)
 			b_loss += 60
 
 			f_loss += 60
@@ -138,7 +138,7 @@
 			if (prob(70))
 				Paralyse(10)
 
-		if(3.0)
+		if(3)
 			b_loss += 30
 			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
@@ -269,7 +269,7 @@
 	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0, override = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0)
 	if(!safety)
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves

@@ -65,16 +65,16 @@
 		dismantle_wall(1,1)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			//SN src = null
 			src.ChangeTurf(src.baseturf)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				dismantle_wall(0,1)
 			else
 				dismantle_wall(1,1)
-		if(3.0)
+		if(3)
 			if (prob(hardness))
 				dismantle_wall(0,1)
 			else
@@ -165,7 +165,7 @@
 			F.attach(src)
 		return 1
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/contraband/poster))
+	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
 		return 1
 
