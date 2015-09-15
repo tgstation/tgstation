@@ -222,7 +222,6 @@
 			H = pick(candidates)
 			H.mind.make_Cultist()
 			candidates.Remove(H)
-			temp.grant_runeword(H)
 
 		return 1
 
