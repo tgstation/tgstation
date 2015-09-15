@@ -441,6 +441,24 @@
 	gib(src)
 
 
+/mob/proc/become_god(var/side)
+	if(client)
+		src << sound(null, repeat = 0, wait = 0, wolume = 85, channel = 1)
+
+	var/mob/camera/god/G = new(loc, side = side)
+	G.invisibility = 40
+	if(mind)
+		mind.transfer_to(G)
+	else
+		G.key = key
+
+	G.job = "Deity"
+	G.rename_self("deity", 0)
+
+	. = G
+	qdel(src)
+
+
 
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)

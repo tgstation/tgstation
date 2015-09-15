@@ -66,7 +66,7 @@
 		..()
 		return
 	if(ticker.mode.changelings.len <= (changelingcap - 2) || prob(100 / (config.changeling_scaling_coeff * 4)))
-		if(character.client.prefs.be_special & BE_CHANGELING)
+		if(BE_CHANGELING in character.client.prefs.be_special)
 			if(!jobban_isbanned(character.client, "changeling") && !jobban_isbanned(character.client, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))

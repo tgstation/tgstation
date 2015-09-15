@@ -124,3 +124,7 @@
 #define ui_head "WEST+1:8,SOUTH+3:11"
 
 
+//Hand of God, god
+#define ui_deityhealth "EAST-1:28,CENTER-2:13"
+#define ui_deitypower	"EAST-1:28,CENTER-1:15"
+#define ui_deityfollowers "EAST-1:28,CENTER:17"

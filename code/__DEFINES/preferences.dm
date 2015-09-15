@@ -28,20 +28,22 @@
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO)
 
-//Antag toggles
+//Antag preferences
 #define BE_TRAITOR		1
 #define BE_OPERATIVE	2
-#define BE_CHANGELING	4
-#define BE_WIZARD		8
-#define BE_MALF			16
-#define BE_REV			32
-#define BE_ALIEN		64
-#define BE_PAI			128
-#define BE_CULTIST		256
-#define BE_BLOB			512
-#define BE_NINJA		1024
-#define BE_MONKEY		2048
-#define BE_GANG			4096
-#define BE_SHADOWLING	8192
-#define BE_ABDUCTOR		16384
-#define BE_REVENANT		32768
+#define BE_CHANGELING	3
+#define BE_WIZARD		4
+#define BE_MALF			5
+#define BE_REV			6
+#define BE_ALIEN		7
+#define BE_PAI			8
+#define BE_CULTIST		9
+#define BE_BLOB			10
+#define BE_NINJA		11
+#define BE_MONKEY		12
+#define BE_GANG			13
+#define BE_SHADOWLING	14
+#define BE_ABDUCTOR		15
+#define BE_REVENANT		16
+#define BE_HOG_GOD		17
+#define BE_HOG_CULTIST	18

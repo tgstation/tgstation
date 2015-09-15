@@ -33,7 +33,7 @@
 	var/datum/job/ai/DummyAIjob = new
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
-			if(player.client.prefs.be_special & BE_MALF)
+			if(BE_MALF in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, "AI") && DummyAIjob.player_old_enough(player.client))
 					antag_candidates += player.mind
 	antag_candidates = shuffle(antag_candidates)
