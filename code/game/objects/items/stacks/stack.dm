@@ -111,7 +111,7 @@
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	if (href_list["make"])
-		if (src.get_amount() < 1) qdel(src) //Never should happen
+		if ( !is_cyborg && src.get_amount() < 1) qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
