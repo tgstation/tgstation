@@ -155,7 +155,7 @@
 /atom/movable/proc/throw_impact(atom/hit_atom)
 	return hit_atom.hitby(src)
 
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
