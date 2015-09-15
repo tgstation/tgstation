@@ -347,6 +347,7 @@
 #include "code\game\gamemodes\gang\gang_datum.dm"
 #include "code\game\gamemodes\gang\gang_pen.dm"
 #include "code\game\gamemodes\gang\recaller.dm"
+#include "code\game\gamemodes\hand_of_god\hand_of_god.dm"
 #include "code\game\gamemodes\malfunction\Malf_Modules.dm"
 #include "code\game\gamemodes\malfunction\malfunction.dm"
 #include "code\game\gamemodes\meteor\meteor.dm"
