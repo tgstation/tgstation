@@ -97,9 +97,10 @@
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
 	sleep(3)
-	if (H)
-		if (B)
+	if (H && !qdeleted(H))
+		if (B && !qdeleted(B))
 			H.internal_organs -= B
+			qdel(B)
 		gibs(H.loc, H.viruses, H.dna)
 		return (BRUTELOSS)
 	return
