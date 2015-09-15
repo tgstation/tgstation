@@ -278,6 +278,7 @@
 	var/stage_two = 200 //how many ticks to reach stage two
 	var/stage_three = 250 //how many ticks to reach stage three
 	var/max_brain_damage = 0 //controls the increase of brain damage
+	var/max_clone_damage = 0 //controls the increase of clone damage
 	var/master = null //if master dies, Meeseeks dies too.
 
 /datum/species/golem/meeseeks/handle_speech(message)
@@ -296,6 +297,13 @@
 
 /datum/species/golem/meeseeks/spec_life(mob/living/carbon/human/H)
 
+	//handle clone damage before all else
+	if(H.health < (100-max_clone_damage)/2) //if their health drops to 50% (not counting clone damage)
+		max_clone_damage = max(95,(100 + max_clone_damage - H.health)/2) //keeps them at 95 clone damage top.
+
+	if(H.getCloneLoss() < max_clone_damage)
+		H.adjustCloneLoss(1)
+
 	if(prob(5))
 		if(stage <3)
 			H.say("HI, I'M MR. MEESEEKS! LOOK AT ME!")
@@ -306,7 +314,6 @@
 		H.adjustOxyLoss(-H.getOxyLoss())
 		H.adjustToxLoss(-H.getToxLoss())
 		H.adjustFireLoss(-H.getFireLoss())
-		H.adjustCloneLoss(-H.getCloneLoss())
 		H.adjustBruteLoss(-H.getBruteLoss()) //this way, you can knock a Meeseeks into crit, but he gets back up after a while.
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
