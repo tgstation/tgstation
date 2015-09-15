@@ -106,9 +106,6 @@
 
 	var/radiation = 0//Carbon
 
-	var/list/mutations = list() //Carbon -- Doohl
-	//see: setup.dm for list of mutations
-
 	var/voice_name = "unidentifiable voice"
 
 	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
