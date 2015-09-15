@@ -130,6 +130,37 @@
 		return
 
 
+/obj/structure/displaycase_chassis
+	anchored = 1
+	density = 0
+	name = "display case chassis"
+	desc = "wooden base of display case"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "glassbox_chassis"
+
+/obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You start disassembling [src]...</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, 30, target = src))
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+			qdel(src)
+			return
+	if(istype(I, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/G = I
+		if(G.get_amount() < 10)
+			user << "<span class='warning'>You need ten glass sheets to do this!</span>"
+			return
+		user << "<span class='notice'>You start adding [G] to [src]...</span>"
+		if(do_after(user, 20, target = src))
+			G.use(10)
+			new /obj/structure/displaycase(src.loc)
+			qdel(src)
+		return
+	return
+
+
 /obj/structure/displaycase/captain
 	alert = 1
 
