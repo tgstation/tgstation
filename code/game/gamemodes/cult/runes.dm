@@ -398,6 +398,7 @@ var/list/teleport_other_runes = list()
 			if(!stone.transfer_soul("FORCE", T, usr)) //If it cannot be added
 				qdel(stone)
 			if(!T)
+				rune_in_use = 0
 				return
 		if(istype(T, /mob/living/simple_animal/pet/dog/corgi))
 			for(var/mob/living/carbon/C in orange(1,src))
@@ -656,7 +657,11 @@ var/list/teleport_other_runes = list()
 						 "<span class='danger'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
 	user.ghostize(1)
 	while(user)
-		sleep(10)
+		if(!affecting)
+			visible_message("<span class='warning'>[src] pulses gently before falling dark.</span>")
+			affecting = null //In case it's assigned to a number or something
+			rune_in_use = 0
+			return
 		affecting.apply_damage(1, BRUTE)
 		if(!(user in T.contents))
 			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them away!</span>")
@@ -683,6 +688,8 @@ var/list/teleport_other_runes = list()
 			if(G)
 				G << "<span class='warning'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>"
 			return
+		sleep(10)
+	rune_in_use = 0
 
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
