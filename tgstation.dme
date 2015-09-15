@@ -734,7 +734,6 @@
 #include "code\game\objects\structures\janicart.dm"
 #include "code\game\objects\structures\kitchen_spike.dm"
 #include "code\game\objects\structures\ladders.dm"
-#include "code\game\objects\structures\lamarr_cage.dm"
 #include "code\game\objects\structures\lattice.dm"
 #include "code\game\objects\structures\mineral_doors.dm"
 #include "code\game\objects\structures\mirror.dm"
