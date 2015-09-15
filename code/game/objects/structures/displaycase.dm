@@ -73,7 +73,13 @@
 	return
 
 /obj/structure/displaycase/update_icon()
-	var/icon/I = icon('icons/obj/stationobjs.dmi',"glassbox[destroyed || open?"b":""]0")
+	var/icon/I
+	if(open)
+		I = icon('icons/obj/stationobjs.dmi',"glassbox_open")
+	else
+		I = icon('icons/obj/stationobjs.dmi',"glassbox0")
+	if(destroyed)
+		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
 	if(showpiece)
 		var/icon/S = getFlatIcon(showpiece) //Guns got overlays
 		S.Scale(17,17)
