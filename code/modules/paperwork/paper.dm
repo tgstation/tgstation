@@ -289,6 +289,9 @@
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
 			return
+		if(istype(src, /obj/item/weapon/paper/talisman/))
+			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
+			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
