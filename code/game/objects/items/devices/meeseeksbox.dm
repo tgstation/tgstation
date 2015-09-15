@@ -14,28 +14,12 @@
 
 
 /obj/item/device/meeseeks_box/attack_self(mob/user)
-	var/time_passed = world.time
 	if(!meeseeks)
 
-		//var/list/candidates = get_candidates(BE_PAI)
-		var/list/mob/dead/observer/candidates = list()
-		var/mob/dead/observer/C = null
-
-		for(var/mob/dead/observer/G in player_list)
-			if(!jobban_isbanned(G, "pAI") && !jobban_isbanned(G, "posibrain"))
-				spawn(0)
-					switch(alert(G, "Do you wish to become Mr. Meeseeks and fulfill a task?","Please answer in 30 seconds!","Yes","No"))
-						if("Yes")
-							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-								return
-							candidates += G
-						if("No")
-							return
-						else
-							return
-
+		var/list/candidates = getCandidates("Do you wish to be a Mr. Meeseeks and fulfill a task?", "pAI", null)
+		shuffle(candidates)
 		if(candidates.len)
-			C = pick(candidates)
+			var/mob/dead/observer/C = pick(candidates)
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human
 			hardset_dna(M, null, null, null, null, /datum/species/golem/meeseeks)
 			M.set_cloned_appearance()
