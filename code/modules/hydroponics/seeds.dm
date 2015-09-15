@@ -59,7 +59,7 @@
 
 //the vegetable/fruit categories are made from a culinary standpoint. many of the "vegetables" in there are technically fruits. (tomatoes, pumpkins...)
 
-/obj/item/seeds/replicapod
+/obj/item/seeds/dionanode
 	seed_type = "diona"
 	vending_cat = "sentient"
 

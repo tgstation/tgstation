@@ -65,7 +65,7 @@
 			<I>This spell causes you to turn into a hulk and gain telekinesis for a short while.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>
 			<I>This spell creates your ethereal form, temporarily making you invisible and able to pass through walls.</I><BR>
-			<A href='byond://?src=\ref[src];spell_choice=timestop'>Time Stop</A> (60)<BR>
+			<A href='byond://?src=\ref[src];spell_choice=timestop'>Time Stop</A> (90)<BR>
 			<I>Stop the flow of time for all beings but yourself in a large radius.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>
 			<I>This spell opens nearby doors and does not require wizard garb.</I><BR>

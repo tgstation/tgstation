@@ -2,17 +2,22 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat
 	name = "meat"
-	desc = "A slab of meat"
+	desc = "A slab of meat."
 	icon_state = "meat"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/attack(mob/living/M, mob/user, def_zone, eat_override = 0)
+	..(M,user,def_zone, "eat_override" = 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal //This meat spawns when an animal is butchered, and its name is set to '[animal.species_name] meat' (like "cat meat")
 	var/animal_name = "animal"
+	desc = "A slab of animal meat."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
+	name = "monkey meat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
 	desc = "Tastes like the tears of the station. Gives off the faint aroma of a valid salad. Just like mom used to make. This revelation horrifies you greatly."
@@ -80,81 +85,3 @@
 		reagents.add_reagent("nutriment", 12)
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/mimic
-	name = "meat"
-	desc = "An ordinary slab of meat. Or is it?"
-	icon_state = "meat"
-	New()
-		..()
-		reagents.add_reagent("mimicinum", 3)
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg
-	name = "egg"
-	desc = "An egg!"
-	icon_state = "egg"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/New()
-		..()
-		reagents.add_reagent("nutriment", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("<span class='warning'>[src.name] has been squashed.</span>","<span class='warning'>You hear a smack.</span>")
-		del(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/blue
-	icon_state = "egg-blue"
-	_color = "blue"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/green
-	icon_state = "egg-green"
-	_color = "green"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/mime
-	icon_state = "egg-mime"
-	_color = "mime"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/orange
-	icon_state = "egg-orange"
-	_color = "orange"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/purple
-	icon_state = "egg-purple"
-	_color = "purple"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/rainbow
-	icon_state = "egg-rainbow"
-	_color = "rainbow"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/red
-	icon_state = "egg-red"
-	_color = "red"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/yellow
-	icon_state = "egg-yellow"
-	_color = "yellow"
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/reagent_containers))
-		if(W.reagents.amount_cache.len == 1 && W.reagents.has_reagent("flour", 5))
-			W.reagents.remove_reagent("flour",5)
-			new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-			user << "You make some dough."
-			qdel(src)
-			return 1
-	else if (istype(W, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/C = W
-		var/clr = C.colourName
-
-		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
-			user << "<span class='notice'>[src] refuses to take on this colour!</span>"
-			return
-
-		user << "<span class='notice'>You colour [src] [clr].</span>"
-		icon_state = "egg-[clr]"
-		_color = clr
-	else
-		..()

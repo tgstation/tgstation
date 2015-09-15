@@ -97,6 +97,9 @@
 		frustration = 0
 
 	proc/process()
+		if(timestopped)
+			sleep(1)
+			continue
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
 		//set background = 1
 		var/quick_move = 1

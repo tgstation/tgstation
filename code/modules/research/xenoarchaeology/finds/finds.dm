@@ -24,7 +24,7 @@
 
 //have all strange rocks be cleared away using welders for now
 /obj/item/weapon/strangerock
-	name = "Strange rock"
+	name = "\improper Strange rock"
 	desc = "Seems to have some unusal strata evident throughout it."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "strange"
@@ -34,11 +34,11 @@
 	origin_tech = "materials=5"
 
 /obj/item/weapon/strangerock/New(loc, var/inside_item_type = 0)
-	..(loc)
+	..()
 
 	//method = rand(0,2)
 	if(inside_item_type)
-		inside = new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
 		if(!inside)
 			inside = locate() in contents
 

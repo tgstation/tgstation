@@ -66,8 +66,8 @@
 					if(!inside_sheet)
 						var/obj/item/stack/sheet/created_sheet = new material_type(R.module)
 						R.module.modules += created_sheet
-						if((created_sheet.amount + amount) <= created_sheet.max_amount)
-							created_sheet.amount += (amount-1)
+						if(amount <= created_sheet.max_amount)
+							created_sheet.amount += (amount-created_sheet.amount)
 							R << "Added [amount] of [initial(material_type.name)] to the stack."
 						else
 							if(created_sheet.amount <= created_sheet.max_amount)

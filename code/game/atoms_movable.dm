@@ -46,7 +46,7 @@
 		src.tempoverlay = I
 
 	locked_atoms = list()
-		
+
 /atom/movable/Destroy()
 	if(flags & HEAR && !ismob(src))
 		for(var/mob/virtualhearer/VH in virtualhearers)
@@ -105,7 +105,10 @@
 	//ensure this is a step, not a jump
 
 	//. = ..(NewLoc,Dir,step_x,step_y)
-	var/move_delay = 5 * world.tick_lag
+	if(timestopped)
+		if(!pulledby || pulledby.timestopped) //being moved by our wizard maybe?
+			return 0
+	var/move_delay = max(5 * world.tick_lag, 1)
 	if(ismob(src))
 		var/mob/M = src
 		if(M.client)
@@ -117,7 +120,6 @@
 			can_pull_tether = 1
 		else
 			return 0
-
 	glide_size = Ceiling(32 / move_delay * world.tick_lag) - 1 //We always split up movements into cardinals for issues with diagonal movements.
 	var/atom/oldloc = loc
 	if((bound_height != 32 || bound_width != 32) && (loc == newLoc))
@@ -360,9 +362,17 @@
 		var/error = dist_x/2 - dist_y
 
 
-
+		var/tS = 0
 		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+			if(tS && dist_travelled)
+				timestopped = loc.timestopped
+				tS = 0
+			if(timestopped && !dist_travelled)
+				timestopped = 0
+				tS = 1
+			while((loc.timestopped || timestopped) && dist_travelled)
+				sleep(3)
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -392,6 +402,9 @@
 		var/error = dist_y/2 - dist_x
 		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+			if(timestopped)
+				sleep(1)
+				continue
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge

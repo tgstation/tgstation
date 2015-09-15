@@ -109,7 +109,9 @@
 
 /obj/item/projectile/spur/OnFired()
 	..()
-	var/obj/item/weapon/gun/energy/polarstar/quote = shot_from
+	var/obj/item/weapon/gun/energy/polarstar/spur/quote = shot_from
+	if(!quote || !istype(quote))
+		return
 	switch(quote.firelevel)
 		if(SPUR_FULL_POWER,SPUR_HIGH_POWER)
 			icon_state = "spur_high"
@@ -131,6 +133,8 @@
 /obj/item/projectile/spur/polarstar/OnFired()
 	..()
 	var/obj/item/weapon/gun/energy/polarstar/quote = shot_from
+	if(!quote || !istype(quote))
+		return
 	switch(quote.firelevel)
 		if(SPUR_FULL_POWER,SPUR_HIGH_POWER)
 			icon_state = "spur_high"
@@ -259,3 +263,10 @@
 			return 0
 	else
 		return 0
+
+/obj/item/projectile/bullet/a762x55
+	damage = 65
+	stun = 5
+	weaken = 5
+	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS
+	penetration = 10

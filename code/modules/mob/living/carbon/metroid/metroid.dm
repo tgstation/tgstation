@@ -19,6 +19,8 @@
 
 	hasmouth = 0
 
+	can_butcher = 0
+
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANPARALYSE|CANPUSH
@@ -595,6 +597,7 @@
 
 
 /mob/living/carbon/slime/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	return 0
 
 
@@ -1172,6 +1175,9 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	proc/Life()
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/Life() called tick#: [world.time]")
 		while(src)
+			if(timestopped)
+				while(timestopped)
+					sleep(2)
 			sleep(25)
 			Flush--
 			if(Flush <= 0)

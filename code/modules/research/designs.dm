@@ -161,5 +161,6 @@ proc/getScanDesign(var/obj/O)
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
+	..()
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)

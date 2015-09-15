@@ -37,7 +37,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	speed = 3
 	attack_sound = 'sound/weapons/spiderlunge.ogg'
 
-	species = /mob/living/simple_animal/hostile/giant_spider
+	species_type = /mob/living/simple_animal/hostile/giant_spider
 	wanted_objects = list(
 		/obj/machinery/bot,          // Beepsky and friends
 		/obj/machinery/light,        // Bust out lights
@@ -178,6 +178,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 				L.reagents.add_reagent(poison_type, poison_per_bite)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	if(!stat)
 		if(stance == HOSTILE_STANCE_IDLE)

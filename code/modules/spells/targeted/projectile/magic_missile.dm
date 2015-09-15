@@ -35,6 +35,9 @@
 	name = "magic missile"
 	icon_state = "magicm"
 
+	animate_movement = 2
+	linear_movement = 0
+
 	proj_trail = 1
 	proj_trail_lifespan = 5
 	proj_trail_icon_state = "magicmd"

@@ -1,4 +1,5 @@
 /mob/living/silicon/robot/emote(var/act,var/m_type=1,var/message = null)
+	if(timestopped) return //under effects of time magick
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)

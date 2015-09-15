@@ -156,6 +156,15 @@
 		construct_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
+	if(isliving(mymob))
+		var/obj/screen/using
+		using = getFromPool(/obj/screen)
+		using.dir = SOUTHWEST
+		using.icon = 'icons/mob/screen1.dmi'
+		using.icon_state = "block"
+		using.layer = 19
+		src.adding += using
+		mymob:schematics_background = using
 
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
@@ -285,3 +294,80 @@ var/datum/global_hud/global_hud = new()
 		O.icon_state = "black"
 		O.layer = 17
 		O.mouse_opacity = 0
+
+/datum/hud/proc/toggle_show_schematics_display(var/list/override = null,clear = 0, var/obj/item/device/rcd/R)
+	if(!isliving(mymob)) return
+
+	var/mob/living/L = mymob
+
+	L.shown_schematics_background = (!clear ? !L.shown_schematics_background : 0)
+	update_schematics_display(override, clear, R)
+
+/datum/hud/proc/update_schematics_display(var/list/override = null, clear,var/obj/item/device/rcd/R)
+	if(!isliving(mymob)) return
+
+	var/mob/living/L = mymob
+
+	if(L.shown_schematics_background && !clear)
+		if(!istype(R))
+			switch(L.hand)
+				if(1)
+					R = L.l_hand
+					if(!istype(R))
+						return
+				else
+					R = L.r_hand
+					if(!istype(R))
+						return
+		if((!R.schematics || !R.schematics.len) && !override)
+			usr << "<span class='danger'>This [R] has no schematics to choose from.</span>"
+			return
+
+		if(!L.schematics_background)
+			return
+		if(!override)
+			override = R.schematics
+		if(!R.closer)
+			R.closer = getFromPool(/obj/screen/close)
+			R.closer.icon_state = "x"
+			R.closer.master = R
+			R.closer.transform *= 0.8
+		var/display_rows = round((override.len) / 8) +1 //+1 because round() returns floor of number
+		L.schematics_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		L.client.screen += L.schematics_background
+
+		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/y = 1
+
+		for(var/datum/schematic in override)
+			var/datum/rcd_schematic/RS = schematic
+			if(!istype(RS))
+				if(!istype(RS, /datum/selection_schematic))
+					usr << "<span class='danger'>Unexpected type in schematics list. [RS][RS ? "/[RS.type]" : "null"]"
+					continue
+			if(!RS.ourobj)
+				RS.ourobj = getFromPool(/obj/screen/schematics, null, RS)
+			var/obj/screen/A = RS.ourobj
+			//Module is not currently active
+			L.client.screen += A
+			if(x < 0)
+				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+			else
+				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+			A.layer = 20
+
+			x++
+			if(x == 4)
+				x = -4
+				y++
+		R.closer.screen_loc = "CENTER[x < 0 ? "" : "+"][x]:16,SOUTH+[y]:7"
+		L.client.screen += R.closer
+
+	else
+		for(var/obj/screen/schematics/A in L.client.screen)
+			L.client.screen -= A
+		L.client.screen -= L.schematics_background
+		L.client.screen -= R.closer
+		if(clear && override && override.len)
+			L.shown_schematics_background = 1
+			.(override, 0, R)

@@ -17,7 +17,7 @@
 	see_in_dark = 6
 
 	can_breed = 1
-	species = /mob/living/simple_animal/cat
+	species_type = /mob/living/simple_animal/cat
 	childtype = /mob/living/simple_animal/cat/kitten
 
 	response_help  = "pets"
@@ -39,6 +39,8 @@
 	gender = FEMALE
 
 /mob/living/simple_animal/cat/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !locked_to)
@@ -110,7 +112,7 @@
 	emote_hear = list("hisses")
 	emote_see = list("slithers")
 
-	species = /mob/living/simple_animal/cat/snek
+	species_type = /mob/living/simple_animal/cat/snek
 	butchering_drops = null
 	childtype = null
 

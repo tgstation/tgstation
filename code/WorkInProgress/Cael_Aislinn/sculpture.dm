@@ -12,6 +12,7 @@
 	response_help  = "touches the"
 	response_disarm = "pushes the"
 	response_harm   = "hits the"
+	meat_type = null
 	var/response_snap = "snapped the neck of" //Past tense because it "happened before you could see it"
 	var/response_snap_target = "In the blink of an eye, something grabs you and snaps your neck!"
 	var/snap_sound = list('sound/scp/firstpersonsnap.ogg','sound/scp/firstpersonsnap2.ogg','sound/scp/firstpersonsnap3.ogg')
@@ -46,6 +47,7 @@
 		del(G)
 
 /mob/living/simple_animal/sculpture/Life()
+	if(timestopped) return 0 //under effects of time magick
 
 	//If we are hibernating, just don't do anything
 	if(hibernate)

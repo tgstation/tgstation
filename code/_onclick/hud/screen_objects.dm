@@ -26,6 +26,25 @@
 	maptext_height = 480
 	maptext_width = 480
 
+/obj/screen/schematics
+	var/datum/rcd_schematic/ourschematic
+
+/obj/screen/schematics/New(var/atom/loc, var/datum/rcd_schematic/ourschematic)
+	..()
+	src.ourschematic = ourschematic
+	icon = ourschematic.icon
+	icon_state = ourschematic.icon_state
+	name = ourschematic.name
+	transform = transform*0.8
+
+/obj/screen/schematics/Click()
+	if(ourschematic)
+		ourschematic.clicked(usr)
+
+/obj/screen/schematics/Destroy()
+	ourschematic = null
+	..()
+
 /obj/screen/proc/pool_on_reset() //This proc should be redefined to 0 for ANY obj/screen that is shared between more than 1 mob, ie storage screens
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/screen/proc/pool_on_reset() called tick#: [world.time]")
 	. = 1
@@ -46,6 +65,9 @@
 		else if(istype(master,/obj/item/clothing/suit/storage))
 			var/obj/item/clothing/suit/storage/S = master
 			S.close(usr)
+		else if(istype(master, /obj/item/device/rcd))
+			var/obj/item/device/rcd/rcd = master
+			rcd.show_default(usr)
 	return 1
 
 /obj/screen/close/pool_on_reset()

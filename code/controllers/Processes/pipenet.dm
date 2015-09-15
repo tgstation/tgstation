@@ -11,7 +11,7 @@ var/global/list/obj/machinery/atmospherics/atmos_machines = list()
 /datum/controller/process/pipenet/doWork()
 	for(var/obj/machinery/atmospherics/atmosmachinery in atmos_machines)
 		if(istype(atmosmachinery))
-			if(!atmosmachinery.disposed)
+			if(!atmosmachinery.disposed && !atmosmachinery.timestopped)
 				if(atmosmachinery.process())
 					scheck()
 			continue

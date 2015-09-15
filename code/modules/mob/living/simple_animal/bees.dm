@@ -6,7 +6,7 @@
 	icon_dead = "bees1"
 
 	size = SIZE_TINY
-	meat_type = null
+	can_butcher = 0
 
 	var/strength = 1
 	var/feral = 0
@@ -31,6 +31,8 @@
 	max_n2 = 0
 	minbodytemp = 0
 	maxbodytemp = 360
+
+	var/max_hive_dist=5
 
 /mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)
 	..()
@@ -72,7 +74,29 @@
 		B.feral = 15
 		B.target = damagesource
 
+/mob/living/simple_animal/bee/wander_move(var/turf/dest)
+	var/goodmove=0
+	if(!my_hydrotray || my_hydrotray.loc != src.loc || my_hydrotray.dead || !my_hydrotray.seed)
+		// Wander the wastes
+		goodmove=1
+	else
+		// Restrict bee to area within distance of tray
+		var/turf/hiveturf = get_turf(my_hydrotray)
+		var/current_dist = get_dist(src,hiveturf)
+		var/new_dist = get_dist(dest,hiveturf)
+		// If we're beyond hive max range and we're not feral, we can only move towards or parallel to the hive.
+		if(current_dist > max_hive_dist && !feral)
+			if(new_dist <= current_dist)
+				goodmove=1
+		else
+			// Otherwise, we can move anywhere we like.
+			goodmove=1
+	if(goodmove)
+		Move(dest)
+
 /mob/living/simple_animal/bee/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(stat != DEAD) //If we're alive, see if we can be calmed down.
 		//smoke, water and steam calms us down
@@ -192,10 +216,11 @@
 					break
 
 		if(target_turf)
-			if (!(DirBlocked(get_step(src, get_dir(src,target_turf)),get_dir(src,target_turf)))) // Check for windows and doors!
-				Move(get_step(src, get_dir(src,target_turf)))
-				if (prob(0.1))
-					src.visible_message("<span class='notice'>The bees swarm after [target]!</span>")
+			var/tdir=get_dir(src,target_turf) // This was called thrice.  Optimize.
+			var/turf/move_to=get_step(src, tdir) // Called twice.
+			walk_to(src,move_to)
+			if (prob(1))
+				src.visible_message("<span class='notice'>The bees swarm after [target]!</span>")
 			if(src.loc == target_turf)
 				target_turf = null
 				wander = 1

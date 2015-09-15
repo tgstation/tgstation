@@ -18,7 +18,7 @@
 
 /datum/surgery_step/glue_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return affected.open >= 2 && affected.stage == 0
+	return (affected.open >= 2 || (target.species.flags & NO_SKIN)) && affected.stage == 0
 
 /datum/surgery_step/glue_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -53,7 +53,7 @@
 
 /datum/surgery_step/set_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return affected.name != "head" && affected.open >= 2 && affected.stage == 1
+	return affected.name != "head" && (affected.open >= 2 || (target.species.flags & NO_SKIN)) && affected.stage == 1
 
 /datum/surgery_step/set_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -93,7 +93,7 @@
 
 /datum/surgery_step/mend_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return affected.name == "head" && affected.open >= 2 && affected.stage == 1
+	return affected.name == "head" && (affected.open >= 2 || (target.species.flags & NO_SKIN))&& affected.stage == 1
 
 /datum/surgery_step/mend_skull/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning piece together [target]'s skull with \the [tool]."  , \
@@ -131,7 +131,7 @@
 
 /datum/surgery_step/finish_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return affected.open >= 2 && affected.stage == 2
+	return (affected.open >= 2 || (target.species.flags & NO_SKIN)) && affected.stage == 2
 
 /datum/surgery_step/finish_bone/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)

@@ -1,6 +1,7 @@
 /mob/living/silicon/robot/mommi/Life()
 	set invisibility = 0
 	//set background = 1
+	if(timestopped) return 0 //under effects of time magick
 
 	if (src.monkeyizing)
 		return

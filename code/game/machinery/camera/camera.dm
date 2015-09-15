@@ -31,6 +31,8 @@ var/list/camera_names=list()
 	var/alarm_on = 0
 	var/busy = 0
 
+	var/hear_voice = 0
+
 /obj/machinery/camera/update_icon()
 	var/EMPd = stat & EMPED
 	var/deactivated = !status
@@ -44,6 +46,14 @@ var/list/camera_names=list()
 		icon_state = "[camtype]emp"
 	else
 		icon_state = "[camtype]"
+
+/obj/machinery/camera/proc/update_hear()//only cameras with voice analyzers can hear, to reduce the number of unecessary /mob/virtualhearer
+	if(!hear_voice && isHearing())
+		hear_voice = 1
+		addHear()
+	if(hear_voice && !isHearing())
+		hear_voice = 0
+		removeHear()
 
 /obj/machinery/camera/New()
 	wires = new(src)
@@ -64,6 +74,8 @@ var/list/camera_names=list()
 	..()
 	if(adv_camera && adv_camera.initialized && !(src in adv_camera.camerasbyzlevel["[z]"]))
 		adv_camera.update(z, 0, src, adding=1)
+
+	update_hear()
 
 /obj/machinery/camera/proc/name_camera()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/camera/proc/name_camera() called tick#: [world.time]")
@@ -193,6 +205,7 @@ var/list/camera_names=list()
 		assembly.upgrades += W
 		user.drop_item(W, src)
 		update_icon()
+		update_hear()
 		return
 
 	// Taking out upgrades
@@ -211,6 +224,7 @@ var/list/camera_names=list()
 				U.loc = get_turf(src)
 				assembly.upgrades -= U
 				update_icon()
+				update_hear()
 			return
 		else //Camera deconned, no upgrades
 			user << "The camera is firmly welded to the wall." //User might be trying to deconstruct the camera with a crowbar, let them know what's wrong
@@ -385,3 +399,68 @@ var/list/camera_names=list()
 		P.reset_view(src)
 		return 1
 	return 0
+
+/obj/machinery/camera/proc/tv_message(atom/movable/hearer, atom/movable/speaker, var/datum/language/speaking, raw_message)
+	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()] "
+	var/messagepart = "<span class='message'>[hearer.lang_treat(speaker, speaking, raw_message)]</span>"
+
+	return "<span class='game say'><span class='name'>[namepart]</span>[messagepart]</span>"
+
+/obj/machinery/camera/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+	if(isHearing())
+		for(var/obj/machinery/computer/security/S in tv_monitors)
+			if(S.current == src)
+				if(istype(S, /obj/machinery/computer/security/telescreen))
+					for(var/mob/M in viewers(world.view,S))
+						M << "<span style='color:grey'>\icon[S][tv_message(M, speaker,speaking,raw_message)]</span>"
+				else
+					for(var/mob/M in viewers(1,S))
+						M << "<span style='color:grey'>\icon[S][tv_message(M, speaker,speaking,raw_message)]</span>"
+
+/obj/machinery/camera/arena
+	name = "arena camera"
+	desc = "A camera anchored to the floor, designed to survive hits and explosions of any size. What's it made of anyway?"
+	icon_state = "camerarena"
+	use_power = 0
+	idle_power_usage = 0
+	active_power_usage = 0
+	layer = 2.1
+
+/obj/machinery/camera/arena/New()
+	..()
+	pixel_x = 0
+	pixel_y = 0
+	upgradeXRay()
+	upgradeHearing()
+
+/obj/machinery/camera/arena/attackby(W as obj, mob/living/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		user << "<span class='warning'>There aren't any visible screws to unscrew.</span>"
+	else
+		user.visible_message("<span class='warning'>\The [user] hits \the [src] with \the [W] but it doesn't seem to affect it in the least.</span>","<span class='warning'>You hit \the [src] with \the [W] but it doesn't seem to affect it in the least</span>")
+	return
+
+/obj/machinery/camera/arena/attack_paw(mob/living/carbon/alien/humanoid/user as mob)
+	user.visible_message("<span class='warning'>\The [user] slashes at \the [src], but that didn't affect it at all.</span>","<span class='warning'>You slash at \the [src], but that didn't affect it at all.</span>")
+	return
+
+/obj/machinery/camera/arena/update_icon()
+	return
+
+/obj/machinery/camera/arena/emp_act(severity)
+	return
+
+/obj/machinery/camera/arena/ex_act(severity)
+	return
+
+/obj/machinery/camera/arena/blob_act(severity)
+	return
+
+/obj/machinery/camera/arena/singularity_act(severity)//those are really good cameras
+	return
+
+/obj/structure/planner/arena/cultify()
+	return
+
+/obj/machinery/camera/arena/attack_pai(mob/user as mob)
+	return

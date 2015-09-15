@@ -285,6 +285,8 @@
 	return
 
 /mob/living/carbon/alien/larva/restrained()
+	if(timestopped) return 1 //under effects of time magick
+
 	return 0
 
 /mob/living/carbon/alien/larva/var/co2overloadtime = null

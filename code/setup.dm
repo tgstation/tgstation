@@ -380,20 +380,21 @@ var/MAX_EXPLOSION_RANGE = 14
 #define M_HUSK			7
 #define M_NOCLONE			8
 
-
 // Extra powers:
 #define M_LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-//#define HEAL			10 	// (Not implemented) healing people with hands
-//#define SHADOW		11 	// (Not implemented) shadow teleportation (create in/out portals anywhere) (25%)
-//#define SCREAM		12 	// (Not implemented) supersonic screaming (25%)
-//#define EXPLOSIVE		13 	// (Not implemented) exploding on-demand (15%)
-//#define REGENERATION	14 	// (Not implemented) superhuman regeneration (30%)
-//#define REPROCESSOR	15 	// (Not implemented) eat anything (50%)
-//#define SHAPESHIFTING	16 	// (Not implemented) take on the appearance of anything (40%)
-//#define PHASING		17 	// (Not implemented) ability to phase through walls (40%)
-//#define SHIELD		18 	// (Not implemented) shielding from all projectile attacks (30%)
-//#define SHOCKWAVE		19 	// (Not implemented) attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-//#define ELECTRICITY	20 	// (Not implemented) ability to shoot electric attacks (15%)
+#define M_CLAWS			10	// Deal extra damage with punches (but without gloves), can butcher animals without tools
+#define M_BEAK			11	// Can buther animals without tools
+//#define HEAL			12 	// (Not implemented) healing people with hands
+//#define SHADOW		13 	// (Not implemented) shadow teleportation (create in/out portals anywhere) (25%)
+//#define SCREAM		14 	// (Not implemented) supersonic screaming (25%)
+//#define EXPLOSIVE		15 	// (Not implemented) exploding on-demand (15%)
+//#define REGENERATION	16 	// (Not implemented) superhuman regeneration (30%)
+//#define REPROCESSOR	17 	// (Not implemented) eat anything (50%)
+//#define SHAPESHIFTING	18 	// (Not implemented) take on the appearance of anything (40%)
+//#define PHASING		19 	// (Not implemented) ability to phase through walls (40%)
+//#define SHIELD		20 	// (Not implemented) shielding from all projectile attacks (30%)
+//#define SHOCKWAVE		21 	// (Not implemented) attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+//#define ELECTRICITY	22 	// (Not implemented) ability to shoot electric attacks (15%)
 
 	//2spooky
 #define SKELETON 29
@@ -848,6 +849,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 
 #define IS_SYNTHETIC 16384 // from baystation
 
+#define NO_SKIN 32768
+
+//species chemical flags
+#define NO_DRINK 1
+#define NO_EAT 2
+#define NO_SPLASH 4
+#define NO_INJECT 8
+#define NO_CRYO 16
+
+
 
 // from bay station
 #define INFECTION_LEVEL_ONE 100
@@ -962,6 +973,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define MULTITOOL_MENU	128 //if it has multitool menu functionality inherently
 #define PURCHASER		256 //it connects to the centcom database at roundstart
 #define WIREJACK		512 //can we wirejack it? if flagged, machine calls wirejack()
+#define SHUTTLEWRENCH	1024 //if this flag exists, the computer can be wrenched on shuttle floors
 
 #define MAX_N_OF_ITEMS 999 // Used for certain storage machinery, BYOND infinite loop detector doesn't look things over 1000.
 
@@ -1251,6 +1263,12 @@ var/proccalls = 1
 //For mob/proc/show_message (code/modules/mob/mob.dm @ 248)
 #define MESSAGE_SEE		1 //Visible message
 #define MESSAGE_HEAR	2 //Hearable message
+
+//Food flags. code/modules/reagents/reagent_containers/food/snacks.dm
+#define FOOD_MEAT	1
+#define FOOD_ANIMAL	2
+#define FOOD_SWEET	4
+#define FOOD_LIQUID	8
 
 /*
  *

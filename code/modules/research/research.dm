@@ -310,6 +310,7 @@ datum/tech/robotics
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()
+	..()
 	src.pixel_x = rand(-5.0, 5)
 	src.pixel_y = rand(-5.0, 5)
 
@@ -322,4 +323,4 @@ datum/tech/robotics
 
 /obj/item/weapon/paper/tech_nanotrasen
 	name = "paper - 'Nanotrasen Experimental Technologies'"
-	info = "<B>Thank you for participating in this Nanotrasen-sponsored initiative!</B><BR><BR>This technology disk will open you the doors of Nanotrasen's most bleeding-edge experimental devices, and we look forward to you testing them for us! Also, note that you will still need to perform some research before these designs become available for you to print, but here's a guide to the tech levels that they will require.<br><ol><li><b>Hookshot</b>: Materials=2, Engineering=3, Electromagnetic=2</li><li><b>Ricochet Rifle</b>: Materials=3, Power=3, Combat=3</li><li><b>Gravity Well Gun</b>: Materials=7, Bluespace=5, Electromagnetic=5</li></ol><br>We look forward to the results of your experiments. Depending on their success we might grant you access to even more bleeding-edge technologies in the future! Make Science proud!<br><br><i>Central Command R&D Lab</i>"
+	info = "<B>Thank you for participating in this Nanotrasen-sponsored initiative!</B><BR><BR>This technology disk will open you the doors of Nanotrasen's most bleeding-edge experimental devices, and we look forward to you testing them for us! Also, note that you will still need to perform some research before these designs become available for you to print, but here's a guide to the tech levels that they will require.<br><ol><li><b>Hookshot</b>: Materials=2, Engineering=5, Electromagnetic=2</li><li><b>Ricochet Rifle</b>: Materials=3, Power=3, Combat=3</li><li><b>Gravity Well Gun</b>: Materials=7, Bluespace=5, Electromagnetic=5</li></ol><br>We look forward to the results of your experiments. Depending on their success we might grant you access to even more bleeding-edge technologies in the future! Make Science proud!<br><br><i>Central Command R&D Lab</i>"

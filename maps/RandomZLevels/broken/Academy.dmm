@@ -186,7 +186,7 @@
 "dD" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/awaymission/academy/classrooms)
 "dE" = (/obj/machinery/mech_bay_recharge_port,/obj/structure/cable,/turf/simulated/floor/plating,/area/awaymission/academy/classrooms)
 "dF" = (/obj/machinery/computer/mech_bay_power_console,/obj/structure/cable,/turf/simulated/floor/greengrid,/area/awaymission/academy/classrooms)
-"dG" = (/obj/machinery/portable_atmospherics/hydroponics,/obj/item/seeds/replicapod,/turf/simulated/floor,/area/awaymission/academy/classrooms)
+"dG" = (/obj/machinery/portable_atmospherics/hydroponics,/obj/item/seeds/dionanode,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dH" = (/obj/structure/table/woodentable,/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dI" = (/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor,/area/awaymission/academy/classrooms)
 "dJ" = (/obj/machinery/portable_atmospherics/hydroponics,/obj/item/seeds/bluespacetomatoseed,/turf/simulated/floor,/area/awaymission/academy/classrooms)

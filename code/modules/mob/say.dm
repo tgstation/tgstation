@@ -72,6 +72,7 @@
 	return
 
 /mob/proc/emote(var/act, var/type, var/message, var/auto)
+	if(timestopped) return //under effects of time magick
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/emote() called tick#: [world.time]")
 	if(act == "me")
 		return custom_emote(type, message)

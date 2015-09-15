@@ -9,6 +9,8 @@
 	var/caste = ""
 	update_icon = 1
 
+	species_type = /mob/living/carbon/alien/humanoid
+
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -321,6 +323,7 @@ In all, this is a lot like the monkey code. /N
 
 
 /mob/living/carbon/alien/humanoid/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	if (handcuffed)
 		return 1
 	return 0

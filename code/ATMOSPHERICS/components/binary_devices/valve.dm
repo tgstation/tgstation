@@ -1,22 +1,23 @@
 /obj/machinery/atmospherics/binary/valve
 	icon = 'icons/obj/atmospherics/valve.dmi'
-	icon_state = "valve0"
+	icon_state = "hvalve0"
 
 	name = "manual valve"
 	desc = "A pipe valve"
-
 	var/open = 0
 	var/openDuringInit = 0
 
 /obj/machinery/atmospherics/binary/valve/open
 	open = 1
-	icon_state = "valve1"
+	icon_state = "hvalve1"
 
-/obj/machinery/atmospherics/binary/valve/update_icon(animation)
+/obj/machinery/atmospherics/binary/valve/update_icon(var/adjacent_procd,var/animation)
 	if(animation)
-		flick("valve[src.open][!src.open]",src)
+		flick("hvalve[src.open][!src.open]",src)
 	else
-		icon_state = "valve[open]"
+		icon_state = "hvalve[open]"
+	..()
+
 
 /obj/machinery/atmospherics/binary/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	..()
@@ -90,7 +91,7 @@
 		user << "<span class='warning'>Nope.</span>"
 		return
 	src.add_fingerprint(usr)
-	update_icon(1)
+	update_icon(0,1)
 	sleep(10)
 	if (src.open)
 		src.close()
@@ -121,7 +122,7 @@
 	var/frequency = 0
 	var/id_tag = null
 	var/datum/radio_frequency/radio_connection
-	
+
 	machine_flags = MULTITOOL_MENU
 
 /obj/machinery/atmospherics/binary/valve/digital/attack_ai(mob/user as mob)

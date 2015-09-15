@@ -1497,6 +1497,11 @@ client/proc/delete_all_bomberman()
 	if(alert(usr, "Remove all Bomberman-related objects in the game world?", "Remove Bomberman", "Yes", "No") != "Yes")
 		return
 
+	for(var/datum/bomberman_arena/target in arenas)
+		target.close()
+		if(target in arenas)
+			arenas -= target
+
 	for(var/obj/structure/bomberflame/O in bombermangear)
 		qdel(O)
 
@@ -1579,41 +1584,36 @@ client/proc/control_bomberman_arena()
 			arena_status = "IN-GAME"
 		if(ARENA_ENDGAME)
 			arena_status = "END-GAME"
-	usr << "status: [arena_status]"
+	usr << "status: <b>[arena_status]</b>"
 	usr << "violence mode: [arena_target.violence ? "ON" : "OFF"]"
 	usr << "opacity mode: [arena_target.opacity ? "ON" : "OFF"]"
 	if(arena_status == "SETUP")
-		usr << "Arena Under Construction"
+		usr << "<span class='warning'>Arena Under Construction</span>"
 	if(arena_status == "AVAILABLE")
 		var/i = 0
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
 			if(S.availability)
 				i++
-		usr << "available spawn points: [i]"
+		usr << "Available spawn points: <b>[i]</b>"
 	if((arena_status == "IN-GAME") || (arena_status == "END-GAME"))
 		var/j = "players: "
 		for(var/datum/bomberman_spawn/S in arena_target.spawns)
-			if(S.player)
-				j += "[S.player.name], "
+			if(S.player_client)
+				j += "<b>[S.player_client.key]</b>, "
 		usr << "[j]"
 
 	var/list/choices = list(
 		"CANCEL",
 		"Close Arena(space)",
 		"Close Arena(floors)",
-		"Reset Arena (remove players)",
-		"Recruit Gladiators (among the observers)",
+		"Reset Arena",
 		"Toggle Violence",
 		"Toggle Opacity",
-		"Force Start",
+		"View Variables",
 		)
 
 	if(arena_status == "AVAILABLE")
-		choices += "Start a new game!"
-
-	if(arena_status == "IN-GAME")
-		choices += "Restart Game (with same players)"
-
+		choices += "Force Start"
 
 	var/datum/bomberman_arena/choice = input("Which action do you wish to take?", "Arena Control Panel") in choices
 	switch(choice)
@@ -1627,40 +1627,8 @@ client/proc/control_bomberman_arena()
 			arena_target.close(0)
 			if(arena_target in arenas)
 				arenas -= arena_target
-		if("Reset Arena (remove players)")
+		if("Reset Arena")
 			arena_target.reset()
-		if("Recruit Gladiators (among the observers)")
-			spawn()
-				for(var/mob/dead/observer/D in player_list)
-					if(!(D.mind in never_gladiators))
-						var/glad_choices = list(
-							"Sure!",
-							"No Thanks.",
-							"Never.",
-							)
-						var/glad = input(D,"Do you wish to fight for honour and glory in the Arena?", "Gladiator Recruitment") in glad_choices
-						switch(glad)
-							if("Sure!")
-								volunteer_gladiators += D.mind
-								log_admin("[D] volunteered to become a gladiator")
-								message_admins("[D] volunteered to become a gladiator")
-							if("No Thanks.")
-								log_admin("[D] declined to become a gladiator")
-								message_admins("[D] declined to become a gladiator")
-								return
-							if("Never.")
-								log_admin("[D] wishes to never become a gladiator")
-								message_admins("[D] wishes to never become a gladiator")
-								never_gladiators += D.mind
-		if("Restart Game (with same players)")
-			arena_target.reset(0)
-		if("Force Start")
-			var/list/new_challengers = list()
-			for(var/datum/bomberman_spawn/S in arena_target.spawns)
-				if(S.player_mind)
-					new_challengers += S.player_mind
-			if(new_challengers.len > 1)
-				arena_target.start(new_challengers)
 		if("Toggle Violence")
 			arena_target.violence = !arena_target.violence
 		if("Toggle Opacity")
@@ -1669,19 +1637,10 @@ client/proc/control_bomberman_arena()
 				L.opacity = arena_target.opacity
 			for(var/turf/unsimulated/wall/bomberman/L in arena_target.turfs)
 				L.opacity = arena_target.opacity
-		if("Start a new game!")
-			var/i = 0
-			for(var/datum/bomberman_spawn/S in arena_target.spawns)
-				i++
-			if(i > volunteer_gladiators.len)
-				usr << "There aren't enough volunteer gladiators to have a proper game..."
-			else
-				var/list/new_challengers = list()
-				while(new_challengers.len < i)
-					var/datum/mind/A = input("Pick the players you wish to choose", "Gladiator Recruitment") in volunteer_gladiators
-					volunteer_gladiators -= A
-					new_challengers += A
-				arena_target.start(new_challengers)
+		if("View Variables")
+			debug_variables(arena_target)
+		if("Force Start")
+			arena_target.start()
 
 
 

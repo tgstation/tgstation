@@ -1,8 +1,9 @@
 /datum/rcd_schematic/decon
 	name			= "Deconstruct"
+	icon			= 'icons/effects/condecon.dmi'
+	icon_state		= "decon"
 	category		= "Construction"
 	energy_cost		= 5
-
 	var/can_r_wall	= 0
 
 /datum/rcd_schematic/decon/attack(var/atom/A, var/mob/user)
@@ -48,6 +49,8 @@
 
 /datum/rcd_schematic/con_floors
 	name		= "Build floors"
+	icon		= 'icons/turf/floors.dmi'
+	icon_state	= "floor"
 	category	= "Construction"
 	energy_cost	= 1
 
@@ -66,6 +69,8 @@
 
 /datum/rcd_schematic/con_walls
 	name		= "Build walls"
+	icon		= 'icons/turf/walls.dmi'
+	icon_state	= "metal0"
 	category	= "Construction"
 	energy_cost	= 3
 
@@ -88,6 +93,8 @@
 
 /datum/rcd_schematic/con_airlock
 	name						= "Build airlock"
+	icon						= 'icons/obj/doors/door.dmi'
+	icon_state					= "door_closed"
 	category					= "Construction"
 	energy_cost					= 3
 
@@ -97,7 +104,17 @@
 	var/one_access				= 0
 
 	var/list/schematics			= list()
-	var/datum/airlock_schematic/selected
+	var/ready
+
+/datum/rcd_schematic/con_airlock/show(var/mob/living/user, close = 0)
+	if(!close)
+		user.shown_schematics_background = 1
+		user.hud_used.toggle_show_schematics_display(schematics,1, master)
+	else
+		user.shown_schematics_background = 1
+		user.hud_used.toggle_show_schematics_display(master.schematics["Construction"], 1, master)
+		master.selected = null
+	return 1
 
 /datum/rcd_schematic/con_airlock/no_access
 	allow_access				= 0
@@ -105,48 +122,40 @@
 /datum/rcd_schematic/con_airlock/New()
 	. = ..()
 
-	for(var/path in typesof(/datum/airlock_schematic))
-		schematics += new path
-
+	for(var/path in typesof(/datum/selection_schematic/airlock_schematic))
+		schematics += new path(src)
+	schematics += new /datum/selection_schematic/access_schematic(src)
 	selected = schematics[1]
 
+/datum/rcd_schematic/con_airlock/select(var/mob/user, var/datum/rcd_schematic/old_schematic)
+	..()
+	show(user)
 /datum/rcd_schematic/con_airlock/deselect()
 	. = ..()
 	selected = schematics[1]	//Reset the selection.
 
-/datum/rcd_schematic/con_airlock/register_assets()
-	for(var/datum/airlock_schematic/C in schematics)
+/*/datum/rcd_schematic/con_airlock/register_assets()
+	for(var/datum/selection_schematic/airlock_schematic/C in schematics)
 		C.register_icon()
 
 /datum/rcd_schematic/con_airlock/send_assets(var/client/client)
-	for(var/datum/airlock_schematic/C in schematics)
+	for(var/datum/selection_schematic/airlock_schematic/C in schematics)
 		C.send_icon(client)
+*/
 
-/datum/rcd_schematic/con_airlock/get_HTML()
+/datum/rcd_schematic/con_airlock/get_HTML(var/obj/machinery/door/airlock/D)
 	. = "<p>"
-	for(var/i = 1 to schematics.len)
-		var/datum/airlock_schematic/C = schematics[i]
-		var/selected_text = ""
-		if(selected == C)
-			selected_text = " class='selected'"
-
-		. += "<a href='?src=\ref[master.interface];set_selected=[i]' title='[sanitize(C.name)]'[selected_text]><img src='[C.img]'/></a>"
-
-		if(!(i % 5))
-			. += "<br/>"
-
 	. += {"
-		<!-- Name form -->
+		
 		<form action="?src=\ref[master.interface]" method="get">
-			<input type="hidden" name="src" value="\ref[master.interface]"/> <!-- Here so the SRC href gets passed down -->
-			<input type="text" name="new_name" value="[selected_name]"/>
+			<input type="hidden" name="src" value="\ref[master.interface]"/> 
+			[istype(D) ? "<input type=\"hidden\" name = \"target\" value=\"\ref[D]\"/>" : ""]
+			<input type="text" name="new_name" value="[istype(D) ? D.name : selected_name]"/>
 			<input type="submit" name="act" value="Save Name"/>
 		</form><br/>
-	"}
-
+		"}
 	if(allow_access)
 		. += {"
-		<!-- Access list visibility toggler -->
 		<script>
 		$("#accessListShowButton").click(
 			function toggleAccessList()
@@ -165,23 +174,24 @@
 		);
 		</script>
 
-		<a id="accessListShowButton">Show access controls</a><br/>
 
-		<!-- Access levels form. -->
-		<form action="?src=\ref[master.interface]" method="get" id="accessList" style="display: none;">
-			<input type="hidden" name="src" value="\ref[master.interface]"/> <!-- Here so the SRC href gets passed down -->
+
+		<form action="?src=\ref[master.interface]" method="get" id="accessList" style="display:inline-block;font-size:100%">
+			<input type="hidden" name="src" value="\ref[master.interface]"/> 
+			[istype(D) ? "<input type=\"hidden\" name = \"target\" value=\"\ref[D]\"/>" : ""]
 			<input type="submit" value="Save Access Settings"/><br/><br/>
 
-			<!-- One access radio buttons -->
+
 			Access requirement is set to: <br/>
+		<table style='width:100%'>
+		<tr>
 		"}
-		if(one_access)	//So we check the correct button by default
+		if((istype(D) && D.req_one_access && D.req_one_access.len) || (!istype(D) && one_access))	//So we check the correct button by default
 			. += {"
 			<input type="radio" name="oneAccess" value="0"/>ALL
 			<br/>
 			<input type="radio" name="oneAccess" value="1" checked/>ONE
 			"}
-
 		else
 			. += {"
 			<input type="radio" name="oneAccess" value="0" checked/>ALL
@@ -189,6 +199,34 @@
 			<input type="radio" name="oneAccess" value="1"/>ONE
 			"}
 
+		for(var/i = 1; i <= 7; i++)
+			. += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
+		. += "</tr><tr>"
+		for(var/i = 1; i <= 7; i++)
+			. += "<td style='width:14%' valign='top'>"
+			for(var/A in get_region_accesses(i))
+				var/access_name = get_access_desc(A)
+				if(!access_name) continue
+				var/checked = ""//((D && (D.req_access.Find(A)) || (D.req_one_access.Find(A)))) || (!D && (selected_access.Find(A))) ? " checked" : ""
+				if(istype(D))
+					if(D.req_access.Find(A) || D.req_one_access.Find(A))
+						checked = " checked"
+				else
+					if(selected_access.Find(A))
+						checked = " checked"
+				/*if((D && (A in D.req_access) || (A in D.req_one_access)) || (!D && (A in selected_access)))
+					. += {"<input type="checkbox" name="[A]" checked/> [access_name] <br/>"}
+				else
+					. += {"<input type="checkbox" name="[A]"/> [access_name] <br/>"}
+				*/
+				. += {"<input type="checkbox" name="[A]"[checked]/> [access_name] <br/>"}
+				//world << "[access_name]([A]) is [checked ? "in" : "not in"] selected access. [selected_access.Find(A) ? "find returned true" : "find returned false"]"
+				. += "<br>"
+			. += "</td>"
+		. += "</tr></table>"
+		. = "</form><tt>[.]</tt></p>"
+
+/*
 		. += {"<br/>
 		Access levels: <br/>
 		"}
@@ -201,20 +239,28 @@
 
 			var/checked		= ""
 
-			if(access in selected_access)
+			if(D)
+				if((access in D.req_access) || (access in D.req_one_access))
+					checked		= " checked"
+			else if((access in selected_access))
 				checked		= " checked"
 			. += {"
 				<input type="checkbox" name="[access]"[checked]/> [access_name] <br/>
 			"}
 
+
 		. += "</form>"
 
 	. += "</p>"
+*/
+/datum/rcd_schematic/con_airlock/build_ui()
+	master.interface.updateLayout("<div id='schematic_options'> </div>")
+	master.update_options_menu()
 
 /datum/rcd_schematic/con_airlock/Topic(var/href, var/href_list)
 	if(href_list["set_selected"])
 		var/idx = Clamp(text2num(href_list["set_selected"]), 1, schematics.len)
-		var/datum/airlock_schematic/C = schematics[idx]
+		var/datum/selection_schematic/airlock_schematic/C = schematics[idx]
 
 		selected = C
 		selected_name = C.name	//Reset the name.
@@ -223,16 +269,33 @@
 		return 1
 
 	if(href_list["new_name"])
+		var/obj/machinery/door/airlock/D
+		if(href_list["target"])
+			D = locate(href_list["target"])
+			if(!istype(D))
+				return
+			if(!D.Adjacent(usr))
+				return
+			D.name = copytext(sanitize(href_list["new_name"]), 1, MAX_NAME_LEN)
+			master.update_options_menu(list2params(list(D)))
+			return 1
 		selected_name = copytext(sanitize(href_list["new_name"]), 1, MAX_NAME_LEN)
 
 		master.update_options_menu()
 		return 1
 
-	if(href_list["oneAccess"] && allow_access)
-		one_access = text2num(href_list["oneAccess"])
-
+	if(!isnull(href_list["oneAccess"]) && allow_access)
+		var/OA = text2num(href_list["oneAccess"])
+		var/obj/machinery/door/airlock/D
+		if(href_list["target"])
+			D = locate(href_list["target"])
+			if(!istype(D))
+				return
+			if(!D.Adjacent(usr))
+				return
+		var/list/new_access = new
 		//Along with oneAccess, the hrefs for access levels get called, as such we process them here before we return 1
-		selected_access.Cut()
+		
 		var/list/access_levels = get_all_accesses()
 
 		for(var/href_key in href_list - list("oneAccess", "src"))	//This should loop through all the access levels that are on.
@@ -240,16 +303,35 @@
 			if(!(access in access_levels))	//Only check valid access levels.
 				continue
 
-			selected_access |= access
-
-		master.update_options_menu()
+			new_access |= access
+		if(!D)
+			selected_access.Cut()
+			selected_access = new_access.Copy()
+			one_access = OA
+		else
+			if(OA)
+				D.req_one_access = new_access.Copy()
+				D.req_access.Cut()
+			else
+				D.req_access = new_access.Copy()
+				D.req_one_access.Cut()
+		
+		master.update_options_menu(list2params(list(D)))
 		return 1
 
 /datum/rcd_schematic/con_airlock/attack(var/atom/A, var/mob/user)
+	if(istype(A, /obj/machinery/door/airlock))
+		if(!ready)
+			build_ui()
+			ready = 1
+		master.interface.show(user)
+		master.interface.updateContent("schematic_options", get_HTML(A))
+		return 1
+
 	if(!istype(A, /turf))
 		return 1
 
-	if(locate(/obj/machinery/door/airlock) in A)
+	for(var/obj/machinery/door/airlock/D in A)
 		return "there is already an airlock on this spot!"
 
 	user << "Building airlock..."
@@ -260,12 +342,12 @@
 	if(master.get_energy(user) < energy_cost)
 		return 1
 
-	if(locate(/obj/machinery/door/airlock) in A)
+	for(var/obj/machinery/door/airlock/D in A)
 		return "there is already an airlock on this spot!"
 
 	playsound(get_turf(master), 'sound/items/Deconstruct.ogg', 50, 1)
 
-	var/obj/machinery/door/airlock/D = new selected.airlock_type(A)
+	var/obj/machinery/door/airlock/D = new selected.build_type(A)
 	if(capitalize(selected_name) == selected_name)	//The name inputted is capitalized, so we add \improper.
 		D.name	= "\improper [selected_name]"
 	else
@@ -278,126 +360,148 @@
 			D.req_access = selected_access.Copy()
 
 	D.autoclose	= 1
+/datum/selection_schematic
+	var/name			= "Selection"
+	var/build_type
+	var/icon_state
+	var/icon
+	var/obj/screen/ourobj
+	var/datum/rcd_schematic/master
 
+/datum/selection_schematic/proc/clicked(var/mob/user)
+	return 0
+
+/datum/selection_schematic/New(var/master)
+	..()
+	src.master = master
+	ourobj = getFromPool(/obj/screen/schematics, null, src)
+
+/datum/selection_schematic/Destroy()
+	for(var/client/C in clients)
+		C.screen.Remove(ourobj)
+	returnToPool(ourobj)
+	ourobj = null
+	..()
+
+/datum/selection_schematic/access_schematic
+	name = "Set Accesses"
+	build_type = null
+	icon_state = "data"
+	icon = 'icons/obj/card.dmi'
+
+/datum/selection_schematic/access_schematic/clicked(var/mob/user)
+	if(!master:ready)
+		master.build_ui()
+		master:ready = 1
+	master.master.interface.show(user)
+	return
+
+/datum/selection_schematic/airlock_schematic/clicked(var/mob/user)
+	if(master:selected == src)
+		master:selected_name = copytext(sanitize(input(usr,"What would you like to name this airlock?","Input a name",name) as text|null),1,MAX_NAME_LEN)
+		if(capitalize(master:selected_name) == master:selected_name) master:selected_name = "\improper[master:selected_name]"
+	else master.selected = src
 // Schematics for schematics, I know, but it's OOP!
-/datum/airlock_schematic
-	var/name			= "airlock"						//Name of the airlock for the tooltip.
-	var/airlock_type	= /obj/machinery/door/airlock	//Type of the airlock.
-	var/img				= "rcd_airlock.png"				//Icon to send to the client AND to use for the preview.
-	var/icon			= 'icons/obj/doors/Doorint.dmi'	//Icon file to pull the icon from to send to the client.
+/datum/selection_schematic/airlock_schematic
+	name			= "airlock"						//Name of the airlock for the tooltip.
+	build_type		= /obj/machinery/door/airlock	//Type of the airlock.
+	icon_state		= "door_closed"
+	icon			= 'icons/obj/doors/Doorint.dmi'
 
-/datum/airlock_schematic/proc/register_icon()
-	register_asset(img, new /icon(icon, "door_closed"))
+/datum/selection_schematic/airlock_schematic/proc/register_icon()
+	//register_asset(img, new /icon(icon, "door_closed"))
 
-/datum/airlock_schematic/proc/send_icon(var/client/client)
-	send_asset(client, img)
+/datum/selection_schematic/airlock_schematic/proc/send_icon(var/client/client)
+	//send_asset(client, img)
 
 // ALL THE AIRLOCK TYPES.
-/datum/airlock_schematic/engie
+/datum/selection_schematic/airlock_schematic/engie
 	name			= "\improper Engineering Airlock"
-	airlock_type	= /obj/machinery/door/airlock/engineering
-	img				= "rcd_airlock_eng.png"
+	build_type	= /obj/machinery/door/airlock/engineering
 	icon			= 'icons/obj/doors/Dooreng.dmi'
 
-/datum/airlock_schematic/atmos
+/datum/selection_schematic/airlock_schematic/atmos
 	name			= "\improper Atmospherics Airlock"
-	airlock_type	= /obj/machinery/door/airlock/atmos
-	img				= "rcd_airlock_atmos.png"
+	build_type	= /obj/machinery/door/airlock/atmos
 	icon			= 'icons/obj/doors/Dooratmo.dmi'
 
-/datum/airlock_schematic/sec
+/datum/selection_schematic/airlock_schematic/sec
 	name			= "\improper Security Airlock"
-	airlock_type	= /obj/machinery/door/airlock/security
-	img				= "rcd_airlock_sec.png"
+	build_type	= /obj/machinery/door/airlock/security
 	icon			= 'icons/obj/doors/Doorsec.dmi'
 
-/datum/airlock_schematic/command
+/datum/selection_schematic/airlock_schematic/command
 	name			= "\improper Command Airlock"
-	airlock_type	= /obj/machinery/door/airlock/command
-	img				= "rcd_airlock_command.png"
+	build_type	= /obj/machinery/door/airlock/command
 	icon			= 'icons/obj/doors/Doorcom.dmi'
 
-/datum/airlock_schematic/med
+/datum/selection_schematic/airlock_schematic/med
 	name			= "\improper Medical Airlock"
-	airlock_type	= /obj/machinery/door/airlock/medical
-	img				= "rcd_airlock_med.png"
+	build_type	= /obj/machinery/door/airlock/medical
 	icon			= 'icons/obj/doors/Doormed.dmi'
 
-/datum/airlock_schematic/sci
+/datum/selection_schematic/airlock_schematic/sci
 	name			= "\improper Research Airlock"
-	airlock_type	= /obj/machinery/door/airlock/research
-	img				= "rcd_airlock_sci.png"
+	build_type	= /obj/machinery/door/airlock/research
 	icon			= 'icons/obj/doors/doorresearch.dmi'
 
-/datum/airlock_schematic/mining
+/datum/selection_schematic/airlock_schematic/mining
 	name			= "\improper Mining Airlock"
-	airlock_type	= /obj/machinery/door/airlock/mining
-	img				= "rcd_airlock_mining.png"
+	build_type	= /obj/machinery/door/airlock/mining
 	icon			= 'icons/obj/doors/Doormining.dmi'
 
-/datum/airlock_schematic/maint
+/datum/selection_schematic/airlock_schematic/maint
 	name			= "\improper Maintenance Access"
-	airlock_type	= /obj/machinery/door/airlock/maintenance
-	img				= "rcd_airlock_maint.png"
+	build_type	= /obj/machinery/door/airlock/maintenance
 	icon			= 'icons/obj/doors/Doormaint.dmi'
 
-/datum/airlock_schematic/ext
+/datum/selection_schematic/airlock_schematic/ext
 	name			= "\improper External Airlock"
-	airlock_type	= /obj/machinery/door/airlock/external
-	img				= "rcd_airlock_ext.png"
+	build_type	= /obj/machinery/door/airlock/external
 	icon			= 'icons/obj/doors/Doorext.dmi'
 
-/datum/airlock_schematic/high_sec
+/datum/selection_schematic/airlock_schematic/high_sec
 	name			= "\improper High-Tech Security Airlock"
-	airlock_type	= /obj/machinery/door/airlock/highsecurity
-	img				= "rcd_airlock_high-sec.png"
+	build_type	= /obj/machinery/door/airlock/highsecurity
 	icon			= 'icons/obj/doors/hightechsecurity.dmi'
 
 
-/datum/airlock_schematic/glass
+/datum/selection_schematic/airlock_schematic/glass
 	name			= "\improper Glass Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass
-	img				= "rcd_airlock_glass.png"
+	build_type	= /obj/machinery/door/airlock/glass
 	icon			= 'icons/obj/doors/Doorglass.dmi'
 
-/datum/airlock_schematic/glass_eng
+/datum/selection_schematic/airlock_schematic/glass_eng
 	name			= "\improper Glass Engineering Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_engineering
-	img				= "rcd_airlock_glass_eng.png"
+	build_type	= /obj/machinery/door/airlock/glass_engineering
 	icon			= 'icons/obj/doors/Doorengglass.dmi'
 
-/datum/airlock_schematic/glass_atmos
+/datum/selection_schematic/airlock_schematic/glass_atmos
 	name			= "\improper Glass Atmospherics Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_atmos
-	img				= "rcd_airlock_glass_atmos.png"
+	build_type	= /obj/machinery/door/airlock/glass_atmos
 	icon			= 'icons/obj/doors/Dooratmoglass.dmi'
 
-/datum/airlock_schematic/glass_sec
+/datum/selection_schematic/airlock_schematic/glass_sec
 	name			= "\improper Glass Security Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_security
-	img				= "rcd_airlock_glass_sec.png"
+	build_type	= /obj/machinery/door/airlock/glass_security
 	icon			= 'icons/obj/doors/Doorsecglass.dmi'
 
-/datum/airlock_schematic/glass_command
+/datum/selection_schematic/airlock_schematic/glass_command
 	name			= "\improper Glass Command Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_command
-	img				= "rcd_airlock_glass_com.png"
+	build_type	= /obj/machinery/door/airlock/glass_command
 	icon			= 'icons/obj/doors/Doorcomglass.dmi'
 
-/datum/airlock_schematic/glass_med
+/datum/selection_schematic/airlock_schematic/glass_med
 	name			= "\improper Glass Medical Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_medical
-	img				= "rcd_airlock_glass_med.png"
+	build_type	= /obj/machinery/door/airlock/glass_medical
 	icon			= 'icons/obj/doors/doormedglass.dmi'
 
-/datum/airlock_schematic/glass_sci
+/datum/selection_schematic/airlock_schematic/glass_sci
 	name			= "\improper Glass Research Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_research
-	img				= "rcd_airlock_glass_sci.png"
+	build_type	= /obj/machinery/door/airlock/glass_research
 	icon			= 'icons/obj/doors/doorresearchglass.dmi'
 
-/datum/airlock_schematic/glass_mining
+/datum/selection_schematic/airlock_schematic/glass_mining
 	name			= "\improper Glass Mining Airlock"
-	airlock_type	= /obj/machinery/door/airlock/glass_mining
-	img				= "rcd_airlock_glass_mining.png"
+	build_type	= /obj/machinery/door/airlock/glass_mining
 	icon			= 'icons/obj/doors/Doorminingglass.dmi'

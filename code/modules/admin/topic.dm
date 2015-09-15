@@ -1038,7 +1038,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				var/sticky = alert(usr,"Sticky Ban [M.ckey]? Use this only if you never intend to unban the player.","Sticky Icky","Yes", "No") == "Yes"
 				if(sticky)
-					world.SetConfig("APP/ban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&admin=[ckey(usr.key)]")
+					world.SetConfig("keyban",M.ckey,"type=sticky&reason=[reason]&message=[reason]&admin=[ckey(usr.key)]")
 					message_admins("[key_name_admin(usr)] has sticky banned [key_name(M)].")
 					log_admin("[key_name(usr)] has sticky banned [key_name(M)].")
 				M << "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
@@ -2080,16 +2080,16 @@
 									M.real_name = obj_name
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created a [english_list(paths)] at [formatJumpTo(get_turf(usr))]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]", 1)
+					message_admins("[key_name_admin(usr)] created a [english_list(paths)] at [formatJumpTo(get_turf(usr))]", 1)
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number]ea [english_list(paths)] at [formatJumpTo(get_turf(usr))]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]", 1)
+					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)] at [formatJumpTo(get_turf(usr))]", 1)
 					break
 		return
 
@@ -2884,6 +2884,24 @@
 				if(choice == "No, let's have perfectly circular explosions")
 					message_admins("[key_name_admin(usr)] has set explosions to completely pass through walls and obstacles.")
 					explosion_newmethod = 0
+			if("placeturret")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","TUR")
+				var/list/possible_guns = list()
+				for(var/path in typesof(/obj/item/weapon/gun/energy))
+					possible_guns += path
+				var/choice = input("What energy gun do you want inside the turret?") in possible_guns
+				if(!choice)
+					return
+				var/obj/item/weapon/gun/energy/gun = new choice()
+				var/obj/machinery/porta_turret/Turret = new(get_turf(usr))
+				Turret.installation = choice
+				Turret.gun_charge = gun.power_supply.charge
+				Turret.update_gun()
+				qdel(gun)
+				var/emag = input("Emag the turret?") in list("Yes", "No")
+				if(emag=="Yes")
+					Turret.emag(usr)
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if(ok)

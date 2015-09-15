@@ -374,6 +374,8 @@
 ////////////////HUD//////////////////////
 
 /mob/living/simple_animal/construct/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	. = ..()
 	if(.)
 		if(fire)
@@ -390,6 +392,8 @@
 		silence_spells(purge)
 
 /mob/living/simple_animal/construct/armoured/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(healths)
 		switch(health)
@@ -404,6 +408,8 @@
 
 
 /mob/living/simple_animal/construct/behemoth/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(healths)
 		switch(health)
@@ -417,6 +423,8 @@
 			else					healths.icon_state = "juggernaut_health7"
 
 /mob/living/simple_animal/construct/builder/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(healths)
 		switch(health)
@@ -432,6 +440,8 @@
 
 
 /mob/living/simple_animal/construct/wraith/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(healths)
 		switch(health)
@@ -446,6 +456,8 @@
 
 
 /mob/living/simple_animal/construct/harvester/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(healths)
 		switch(health)

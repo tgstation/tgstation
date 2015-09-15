@@ -122,6 +122,7 @@
 	return 0
 
 /mob/living/silicon/pai/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	return 0
 
 /mob/living/silicon/pai/emp_act(severity)

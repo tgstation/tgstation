@@ -70,7 +70,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
 	/client/proc/toggledebuglogs,
-	/datum/admins/proc/show_skills,
 	/client/proc/check_customitem_activity,
 	// /client/proc/man_up,
 	// /client/proc/global_man_up,
@@ -281,7 +280,6 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_mod_window,
 	/datum/admins/proc/show_player_info,
 	/client/proc/player_panel_new,
-	/datum/admins/proc/show_skills,
 	/client/proc/vv_marked_datum,
 	/datum/admins/proc/view_mob_attack_log /* Allow you to view attack logs since doing it in VV sucks */
 )
@@ -646,7 +644,7 @@ var/list/admin_verbs_mod = list(
 
 	var/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
 	if(!S) return
-	T.spell_list += new S
+	T.add_spell(new S)
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>", 1)
@@ -940,7 +938,7 @@ var/list/admin_verbs_mod = list(
 			verbs -= /client/proc/readmin
 			return
 		var/sql_ckey = sanitizeSQL(ckey(ckey))
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin WHERE ckey = [sql_ckey]")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin WHERE ckey = '[sql_ckey]'")
 		query.Execute()
 		while(query.NextRow())
 			var/dckey = query.item[1]

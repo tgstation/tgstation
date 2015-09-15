@@ -156,6 +156,9 @@
 
 	remove_from_mob(to_drop) //clean out any refs
 
+	if(!to_drop)
+		return 0
+
 	to_drop.forceMove(Target) //calls the Entered procs
 
 	to_drop.dropped(src)

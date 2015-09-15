@@ -508,7 +508,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		else if(W.damage_type == BURN)
 			burn_dam += W.damage
 
-		if(!(status & (ORGAN_ROBOT|ORGAN_PEG)) && W.bleeding())
+		if(!(status & (ORGAN_ROBOT|ORGAN_PEG)) && W.bleeding() && !(owner.species.flags & NO_BLOOD))
 			W.bleed_timer--
 			status |= ORGAN_BLEEDING
 
@@ -516,7 +516,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		number_wounds += W.amount
 
-	if (open && !clamped && !(status & (ORGAN_ROBOT|ORGAN_PEG)))	//things tend to bleed if they are CUT OPEN
+	if (open && !clamped && !(status & (ORGAN_ROBOT|ORGAN_PEG)) && !(owner.species.flags & NO_BLOOD))	//things tend to bleed if they are CUT OPEN
 		status |= ORGAN_BLEEDING
 
 
@@ -1120,7 +1120,14 @@ obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 	var/datum/organ/internal/organ_data
 	var/datum/dna/owner_dna
+
 	var/part = "organ"
+
+	//This variable stores "butchering products" - objects of type "/datum/butchering_product" (see  code/datums/helper_datums/butchering.dm)
+	//They are transferred from the mob from which the organ was removed.
+	//
+	//Currently the only "butchering drops" which are going to be stored here are teeth
+	var/list/butchering_drops = list()
 
 obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	..(loc)
@@ -1158,6 +1165,29 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	dir = SOUTH
 	src.transform = turn(src.transform, rand(70,130))
 
+	for(var/datum/butchering_product/B in H.butchering_drops) //Go through all butchering products (like teeth) in the parent
+		if(B.stored_in_organ == src.part) //If they're stored in our organ,
+
+			var/datum/butchering_product/new_bp = new B.type() //Create a new butchering_product datum to go into the head!
+			new_bp.amount = B.amount
+			B.amount = 0 //Transfer the found product's amount to the new datum
+
+			src.butchering_drops += new_bp
+
+			//The reason why B isn't just transferred from H.butchering_drops to src.butchering_drops is:
+			//on examine(), each butchering drop's "desc_modifier()" is added to the description. This adds stuff like "he HAS NO TEETH AT ALL!!!" to the resulting description.
+
+/obj/item/weapon/organ/examine(mob/user)
+	..()
+
+	//Add information about teeth and the such
+
+	var/butchery
+	if(butchering_drops.len)
+		for(var/datum/butchering_product/B in butchering_drops)
+			butchery = "[butchery][B.desc_modifier(src, user)]"
+	if(butchery)
+		user << "<span class='warning'>[butchery]</span>"
 
 /****************************************************
 			   EXTERNAL ORGAN ITEMS DEFINES
@@ -1200,8 +1230,14 @@ obj/item/weapon/organ/head
 	dir = NORTH
 	name = "head"
 	icon_state = "head_m"
+	part = "head"
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
+
+//obj/item/weapon/organ/head/with_teeth starts with 32 human teeth!
+/obj/item/weapon/organ/head/with_teeth/New()
+	.=..()
+	butchering_drops += new /datum/butchering_product/teeth/human()
 
 /obj/item/weapon/organ/head/posi
 	name = "robotic head"

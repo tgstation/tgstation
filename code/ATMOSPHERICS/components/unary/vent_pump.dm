@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/vent_pump
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
-	icon_state = "off"
+	icon_state = "hoff"
 
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it"
@@ -34,15 +34,15 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
-	icon_state = "out"
+	icon_state = "hout"
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon
 	pump_direction = 0
-	icon_state = "off"
+	icon_state = "hoff"
 
 /obj/machinery/atmospherics/unary/vent_pump/siphon/on
 	on = 1
-	icon_state = "in"
+	icon_state = "hin"
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
@@ -64,15 +64,20 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	if(welded)
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
+		icon_state = "hweld"
 		return
 	if(on && !(stat & (NOPOWER|BROKEN)))
 		if(pump_direction)
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
+			icon_state = "hout"
 		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
+			icon_state = "hin"
 	else
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+		icon_state = "hoff"
+	..()
+	if (istype(loc, /turf/simulated/floor) && node)
+		var/turf/simulated/floor/floor = loc
+		if(floor.floor_tile && node.alpha == 128)
+			underlays.Cut()
 	return
 
 /obj/machinery/atmospherics/unary/vent_pump/process()
@@ -273,17 +278,7 @@
 	return
 
 /obj/machinery/atmospherics/unary/vent_pump/hide(var/i) //to make the little pipe section invisible, the icon changes.
-	if(welded)
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
-		return
-	if(on&&node)
-		if(pump_direction)
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"
-		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-	else
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		on = 0
+	update_icon()
 	return
 
 /obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
@@ -368,3 +363,15 @@
 	name = replacetext(name,newarea,oldarea)
 	area_uid = areaMaster.uid
 	broadcast_status()
+
+/obj/machinery/atmospherics/unary/vent_pump/canClone(var/obj/O)
+	return istype(O, /obj/machinery/atmospherics/unary/vent_pump)
+
+/obj/machinery/atmospherics/unary/vent_pump/clone(var/obj/machinery/atmospherics/unary/vent_pump/O)
+	if(frequency == 1439) // Note: if the frequency stays at 1439 we'll be readded to the area in set_frequency().
+		areaMaster.air_vent_info -= id_tag
+		areaMaster.air_vent_names -= id_tag
+	id_tag = O.id_tag
+
+	set_frequency(O.frequency)
+	return 1

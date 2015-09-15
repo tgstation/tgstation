@@ -15,6 +15,10 @@
 	air_contents.temperature = T0C
 	air_contents.volume = starting_volume
 
+/obj/machinery/atmospherics/unary/update_icon(var/adjacent_procd,node_list)
+	node_list = list(node)
+	..(adjacent_procd,node_list)
+
 /obj/machinery/atmospherics/unary/buildFrom(var/mob/usr,var/obj/item/pipe/pipe)
 	dir = pipe.dir
 	initialize_directions = pipe.get_pipe_dir()
@@ -51,8 +55,9 @@
 	var/node_connect = dir
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 		if(target.initialize_directions & get_dir(target,src))
-			node = target
-			break
+			if(target.piping_layer == piping_layer || target.pipe_flags & ALL_LAYER)
+				node = target
+				break
 	update_icon()
 
 /obj/machinery/atmospherics/unary/build_network()

@@ -23,13 +23,17 @@
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon()
 	if(node)
 		if(on && !(stat & NOPOWER))
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
+			icon_state = "hon"
 		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+			icon_state = "hoff"
 	else
 		icon_state = "exposed"
 		on = 0
-
+	..()
+	if (istype(loc, /turf/simulated/floor) && node)
+		var/turf/simulated/floor/floor = loc
+		if(floor.floor_tile && node.alpha == 128)
+			underlays.Cut()
 	return
 
 /obj/machinery/atmospherics/unary/outlet_injector/power_change()
@@ -169,3 +173,11 @@
 		user << "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>"
 		return 1
 	return ..()
+
+/obj/machinery/atmospherics/unary/outlet_injector/canClone(var/obj/O)
+	return istype(O, /obj/machinery/atmospherics/unary/outlet_injector)
+
+/obj/machinery/atmospherics/unary/outlet_injector/clone(var/obj/machinery/atmospherics/unary/outlet_injector/O)
+	id_tag = O.id_tag
+	set_frequency(O.frequency)
+	return 1

@@ -14,15 +14,6 @@
 	var/current_temperature = T20C
 	var/current_heat_capacity = 50000 //totally random
 
-/obj/machinery/atmospherics/unary/heat_reservoir/update_icon()
-	if(node)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		icon_state = "exposed"
-
-		on = 0
-
-	return
 
 /obj/machinery/atmospherics/unary/heat_reservoir/process()
 	. = ..()

@@ -139,6 +139,11 @@
 		if (reagents.has_reagent("blood")) // TODO Current reagent system can't handle multiple blood sources properly
 			user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 			return
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			if(H.species && (H.species.chem_flags & NO_INJECT))
+				user.visible_message("<span class='warning'>[user] attempts to poke [H] with \the [src] but it won't go in!</span>", "<span class='notice'>You fail to pierce [H] with \the [src]</span>")
+				return
 
 		if (iscarbon(target))
 			var/mob/living/carbon/T = target

@@ -364,7 +364,7 @@
 		src.visible_message("<span class='warning'>[src] has thrown [item].</span>", \
 			drugged_message = "<span class='warning'>[item] escapes from [src]'s grasp and flies away!</span>")
 
-		if((istype(src.loc, /turf/space)) || (src.areaMaster.has_gravity == 0))
+		if((istype(src.loc, /turf/space)) || (src.areaMaster && (src.areaMaster.has_gravity == 0)))
 			var/mob/space_obj=src
 			// If we're being held, make the guy holding us move.
 			if(istype(loc,/obj/item/weapon/holder))
@@ -403,6 +403,7 @@
 	return 1
 
 /mob/living/carbon/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	if (handcuffed)
 		return 1
 	return

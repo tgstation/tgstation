@@ -167,6 +167,13 @@
 			M.LAssailant = user
 
 		if(reagents.total_volume)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.species.chem_flags & NO_DRINK)
+					reagents.reaction(get_turf(H), TOUCH)
+					H.visible_message("<span class='warning'>The contents in [src] fall through and splash onto the ground, what a mess!</span>")
+					return 0
+
 			reagents.reaction(M, INGEST)
 			spawn(5)
 				reagents.trans_to(M, gulp_size)
@@ -246,6 +253,13 @@
 		reagents.remove_any(gulp_size)
 		return 1
 	if(reagents.total_volume)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.species.chem_flags & NO_DRINK)
+				reagents.reaction(get_turf(H), TOUCH)
+				H.visible_message("<span class='warning'>The contents in [src] fall through and splash onto the ground, what a mess!</span>")
+				return 0
+
 		reagents.reaction(user, INGEST)
 		spawn(5)
 			reagents.trans_to(user, gulp_size)
@@ -659,7 +673,7 @@
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsably."
 	icon_state = "thirteen_loko"
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/coffee/thirteenloko/New()
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko/New()
 	..()
 	reagents.add_reagent("thirteenloko", 30)
 	src.pixel_x = rand(-10.0, 10)

@@ -25,7 +25,7 @@
 	environment_smash = 2
 	minimum_distance = 3
 	retreat_distance = 2
-	meat_type = null
+	can_butcher = 0
 
 	var/datum/effect/effect/system/trail/ion_trail
 	var/hostile_time = 0
@@ -68,6 +68,7 @@
 
 //self repair systems have a chance to bring the drone back to life
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Life()
+	if(timestopped) return 0 //under effects of time magick
 
 	//emps and lots of damage can temporarily shut us down
 	if(disabled > 0)

@@ -1233,8 +1233,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 
 /datum/supply_packs/exoticseeds
 	name = "Exotic seeds crate"
-	contains = list(/obj/item/seeds/replicapod,
-					/obj/item/seeds/replicapod,
+	contains = list(/obj/item/seeds/dionanode,
+					/obj/item/seeds/dionanode,
 					/obj/item/seeds/libertymycelium,
 					/obj/item/seeds/reishimycelium,
 					/obj/item/seeds/random,

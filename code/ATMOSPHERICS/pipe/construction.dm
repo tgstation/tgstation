@@ -34,6 +34,7 @@ Buildable meters
 #define PIPE_INSUL_MANIFOLD		27
 #define PIPE_INSUL_MANIFOLD4W	28
 #define PIPE_LAYER_MANIFOLD		29
+#define PIPE_LAYER_ADAPTER      30
 
 //Disposal piping numbers - do NOT hardcode these, use the defines
 #define DISP_PIPE_STRAIGHT		0
@@ -188,6 +189,8 @@ var/global/list/unstackable_pipes = list(PIPE_LAYER_MANIFOLD)
 			src.pipe_type = PIPE_DP_VENT
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent))
 			src.pipe_type = PIPE_PASV_VENT
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/layer_adapter))
+			src.pipe_type = PIPE_LAYER_ADAPTER
 		setPipingLayer(make_from.piping_layer)
 
 	else
@@ -200,7 +203,7 @@ var/global/list/unstackable_pipes = list(PIPE_LAYER_MANIFOLD)
 
 /obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
 	piping_layer = new_layer
-	if(pipe_type != PIPE_LAYER_MANIFOLD)
+	if(pipe_type != PIPE_LAYER_MANIFOLD && pipe_type != PIPE_LAYER_ADAPTER)
 		pixel_x = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
 		pixel_y = (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
 		layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
@@ -237,7 +240,8 @@ var/global/list/pipeID2State = list(
 	"dtvalve",
 	"insulated_manifold",
 	"insulated_manifold4w",
-	"manifoldlayer"
+	"manifoldlayer",
+	"layeradapter",
 )
 var/global/list/nlist = list( \
 	"pipe", \
@@ -269,15 +273,20 @@ var/global/list/nlist = list( \
 	"digital t-valve", \
 	"insulated manifold", \
 	"insulated 4-way manifold", \
-	"pipe alignment converter"
+	"pipe alignment converter", \
+	"pipe alignment adapter",
 )
 /obj/item/pipe/proc/update()
 
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/pipe/proc/update() called tick#: [world.time]")
 
 	name = nlist[pipe_type+1] + " fitting"
-	icon = 'icons/obj/pipe-item.dmi'
-	icon_state = pipeID2State[pipe_type + 1]
+	if(pipe_type == PIPE_LAYER_ADAPTER)
+		icon_state="adapter_[piping_layer]"
+		icon = 'icons/obj/atmospherics/pipe_adapter.dmi'
+	else
+		icon = 'icons/obj/pipe-item.dmi'
+		icon_state = pipeID2State[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
@@ -332,7 +341,8 @@ var/global/list/nlist = list( \
 			PIPE_MVALVE, \
 			PIPE_DVALVE, \
 			PIPE_DP_VENT, \
-			PIPE_LAYER_MANIFOLD
+			PIPE_LAYER_MANIFOLD, \
+			PIPE_LAYER_ADAPTER
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
@@ -490,6 +500,10 @@ var/global/list/nlist = list( \
 
 		if(PIPE_LAYER_MANIFOLD)
 			P =new /obj/machinery/atmospherics/pipe/layer_manifold(src.loc)
+
+		if(PIPE_LAYER_ADAPTER)
+			testing("src.loc = [src.loc]")
+			P =new /obj/machinery/atmospherics/pipe/layer_adapter(src.loc)
 
 	P.setPipingLayer(src.piping_layer)
 	if(P.buildFrom(usr,src))

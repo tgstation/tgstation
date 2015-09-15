@@ -91,6 +91,8 @@ var/global/list/borer_avail_unlocks = null
 				borer_avail_unlocks.Add(U)
 
 /mob/living/simple_animal/borer/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(host)
 		if(!stat && !host.stat)

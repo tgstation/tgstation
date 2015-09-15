@@ -58,6 +58,8 @@
 		new /obj/machinery/singularity (get_turf(src))
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
+		user << "<span class='danger'>FUCK</span>"
+		user.throw_at(get_turf(src), 10, 5)
 		del(src)
 		return
 	..()

@@ -160,8 +160,7 @@
 
 	spawn(rand(800,1200))
 		if(C.stat == DEAD)
-			dead_mob_list -= C
-			living_mob_list += C
+			resurrect()
 		C.stat = CONSCIOUS
 		C.tod = null
 		C.setToxLoss(0)

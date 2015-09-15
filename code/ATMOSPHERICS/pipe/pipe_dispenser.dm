@@ -52,6 +52,7 @@
 	<li><a href='?src=\ref[src];make=[PIPE_DTVALVE];dir=1'>Digital T-Valve</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_DTVALVE];dir=9'>Digital T-Valve \[M]</a></li>
 	<li><a href='?src=\ref[src];make=[PIPE_LAYER_MANIFOLD];dir=1'>Layer Manifold</a></li>
+	<li><a href='?src=\ref[src];make=[PIPE_LAYER_ADAPTER];dir=1'>Layer Adapter</a></li>
 </ul>
 <b>Devices:</b>
 <ul>

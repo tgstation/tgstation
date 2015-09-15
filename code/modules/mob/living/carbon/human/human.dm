@@ -5,6 +5,7 @@
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_m_s"
+	can_butcher = 0
 	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
@@ -125,6 +126,7 @@
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
+	init_butchering_list() // While animals only generate list of their teeth/skins on death, humans generate it when they're born.
 
 	// Set up DNA.
 	if(!delay_ready_dna)
@@ -289,6 +291,7 @@
 
 
 /mob/living/carbon/human/restrained()
+	if(timestopped) return 1 //under effects of time magick
 	if (handcuffed)
 		return 1
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -1648,7 +1651,7 @@
 		for(var/obj/item/hand in handlist)
 			if(prob(current_size*5) && hand.w_class >= ((11-current_size)/2) && u_equip(hand,1))
 				step_towards(hand, src)
-				src << "<span class = 'warning'>The [S] pulls \the [hand] from your grip!</span>"
+				src << "<span class = 'warning'>\The [S] pulls \the [hand] from your grip!</span>"
 	if(radiations)
 		apply_effect(current_size * radiations, IRRADIATE)
 	if(shoes)

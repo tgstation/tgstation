@@ -151,6 +151,7 @@ var/global/list/protected_objects = list(
 		time_to_die=world.time+duration
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	// Die after a specified time limit
 	if(time_to_die && world.time >= time_to_die)

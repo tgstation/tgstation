@@ -10,8 +10,14 @@
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_STEEL
 
-	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
+	//	Motion, EMP-Proof, X-Ray, Microphone
+	var/list/obj/item/possible_upgrades = list(
+		/obj/item/device/assembly/prox_sensor,
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot,
+		/obj/item/device/assembly/voice,
+		)
+
 	var/list/upgrades = list()
 	var/state = 0
 	var/busy = 0

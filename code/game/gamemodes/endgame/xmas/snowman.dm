@@ -23,7 +23,8 @@
 	projectilesound = 'sound/weapons/punchmiss.ogg'
 	projectiletype = /obj/item/projectile/snowball
 	environment_smash = 0
-	meat_type = null
+
+	can_butcher = 0
 
 	minbodytemp = 0
 	maxbodytemp = MELTPOINT_SNOW
@@ -34,6 +35,8 @@
 	var/obj/item/carrot = null
 
 /mob/living/simple_animal/hostile/retaliate/snowman/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if(!ckey && !stat)
 		if(isturf(src.loc) && !resting && !locked_to)		//This is so it only moves if it's not inside a closet, gentics machine, etc.

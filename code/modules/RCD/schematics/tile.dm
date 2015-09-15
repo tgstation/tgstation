@@ -15,7 +15,7 @@ s
 
 	flags				= RCD_GET_TURF
 
-	var/datum/paint_info/selected
+	var/datum/paint_info/selection
 	var/selected_dir	= 2
 
 /datum/rcd_schematic/tile/register_assets()
@@ -54,7 +54,7 @@ s
 	for(var/datum/paint_info/P in our_list)
 		for(var/dir in get_dir_list_by_dir_type(P.adirs))
 			var/selected = ""
-			if(selected == P && dir == selected_dir)
+			if(selection == P && dir == selected_dir)
 				selected = " class='selected'"
 
 			. += "<a href='?src=\ref[master.interface];select_paint=[our_list.Find(P)];set_dir=[dir]'[selected]><img src='[P.file_name][P.icon_state]_[dir].png'/></a>"
@@ -66,8 +66,8 @@ s
 		var/list/our_list = get_our_list()
 		var/idx = Clamp(round(text2num(href_list["select_paint"])), 1, our_list.len)
 
-		selected = our_list[idx]
-		if(!(selected_dir in get_dir_list_by_dir_type(selected.adirs)))
+		selection = our_list[idx]
+		if(!(selected_dir in get_dir_list_by_dir_type(selection.adirs)))
 			selected_dir = 2
 
 		master.update_options_menu()
@@ -75,21 +75,21 @@ s
 
 	if(href_list["set_dir"])
 		var/dir = text2num(href_list["set_dir"])
-		if(!(dir in get_dir_list_by_dir_type(selected.adirs)))
+		if(!(dir in get_dir_list_by_dir_type(selection.adirs)))
 			return 1
 
 		selected_dir = dir
 
 /datum/rcd_schematic/tile/attack(var/atom/A, var/mob/user)
-	if(!selected)
+	if(!selection)
 		return 1
 
-	if(!selected.validate(A))
+	if(!selection.validate(A))
 		return "maybe you're using it on the wrong floor type?"
 
 	var/nname = ""
 
-	switch(selected.ftype)
+	switch(selection.ftype)
 		if(PAINT_FLOOR)			nname = "floor"				//restoring the name of our new tile, usually if you place a floor tile on a plating it's still called "plating" for now
 		if(PAINT_REINFORCED)	nname = "reinforced floor"	//also getting rid of the plaque if it's there
 		if(PAINT_PLATING)   	nname = "plating"
@@ -101,7 +101,7 @@ s
 
 	playsound(get_turf(master), 'sound/effects/extinguish.ogg', 25, 1)
 
-	selected.apply(A, nname, dir = selected_dir)
+	selection.apply(A, nname, dir = selected_dir)
 
 //Gets the list of paint info datums.
 /datum/rcd_schematic/tile/proc/get_our_list()

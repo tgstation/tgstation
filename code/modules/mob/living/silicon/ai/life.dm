@@ -1,4 +1,6 @@
 /mob/living/silicon/ai/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	if (src.stat == 2)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
@@ -55,11 +57,12 @@
 		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
 					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
 			//stage = 4.5
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(client && client.eye == eyeobj) // We are viewing the world through our "eye" mob.
+				src.sight |= SEE_TURFS
+				src.sight |= SEE_MOBS
+				src.sight |= SEE_OBJS
+				src.see_in_dark = 8
+				src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 			var/area/home = get_area(src)
 			if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn

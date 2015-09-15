@@ -35,6 +35,7 @@
 	friends = list()
 
 /mob/living/simple_animal/hostile/Life()
+	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 	if(istype(loc, /obj/item/device/mobcapsule))
 		return 0
@@ -81,6 +82,10 @@
 		L += Objects
 	return L
 
+/mob/living/simple_animal/hostile/proc/IsInvalidTarget(atom/A)
+	if(isMoMMI(A))
+		return 1
+
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/hostile/proc/FindTarget() called tick#: [world.time]")
 	var/list/Targets = list()
@@ -92,11 +97,8 @@
 			Targets = FoundTarget
 			break
 		if(CanAttack(A))//Can we attack it?
-			if(isMoMMI(A))
-				continue
-			if(istype(src, /mob/living/simple_animal/hostile/scarybat))
-				if(A == src:owner)
-					continue
+			if(IsInvalidTarget(A)) continue
+
 			Targets += A
 			continue
 	Target = PickTarget(Targets)
@@ -124,11 +126,11 @@
 		return 0
 	if(isliving(the_target) && search_objects < 2)
 		var/mob/living/L = the_target
-		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
+		if(L.stat > stat_attack || (L.stat != stat_attack && stat_exclusive == 1))
 			return 0
 		if(L.flags & INVULNERABLE)
 			return 0
-		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
+		if((L.faction == src.faction && !attack_same) || (L.faction != src.faction && attack_same == 2) || (L.faction != attack_faction && attack_faction))
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0

@@ -26,3 +26,13 @@
 
 /obj/item/ammo_storage/speedloader/a357/empty
 	starting_ammo = 0
+
+/obj/item/ammo_storage/speedloader/a762x55
+	name = "clip (7.62x55mmR)"
+	icon_state = "c762x55"
+	ammo_type = "/obj/item/ammo_casing/a762x55"
+	max_ammo = 5
+	multiple_sprites = 1
+
+/obj/item/ammo_storage/speedloader/a762x55/empty
+	starting_ammo = 0

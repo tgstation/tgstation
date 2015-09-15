@@ -99,6 +99,8 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/reagent/proc/on_update() called tick#: [world.time]")
 	return
 
+/datum/reagent/proc/on_removal(var/data)
+	return 1
 /datum/reagent/muhhardcores
 	name = "Hardcores"
 	id = "bustanut"
@@ -212,6 +214,13 @@
 	if(volume >= 5 && !istype(T.loc, /area/chapel)) //blood desanctifies non-chapel tiles
 		T.holy = 0
 	return
+
+/datum/reagent/blood/on_removal(var/data)
+	if(holder && holder.my_atom)
+		var/mob/living/carbon/human/H = holder.my_atom
+		if(istype(H))
+			if(H.species && H.species.flags & NO_BLOOD) return 0
+	return 1
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -1655,7 +1664,7 @@
 	M.adjustToxLoss(3*REM)
 	..()
 	return
-
+/*
 /datum/reagent/plasma/reaction_obj(var/obj/O, var/volume)
 	src = null
 	/*if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg/slime))
@@ -1678,7 +1687,7 @@
 	fuel.moles = 5
 	napalm.trace_gases += fuel
 	T.assume_air(napalm)
-	return
+	return*/
 
 /datum/reagent/leporazine
 	name = "Leporazine"
@@ -2761,6 +2770,34 @@
 		//M.dna.SetSEState(HULKBLOCK,0)
 		H.update_mutations()		//update our mutation overlays
 		H.update_body()
+
+/datum/reagent/carp_pheromones
+	name = "carp pheromones"
+	id = "carppheromones"
+	description = "A disgusting liquid with a horrible smell, which is used by space carps to mark their territory and food."
+	reagent_state = LIQUID
+	color = "#6AAA96" // rgb: 106, 170, 150
+	custom_metabolism = 0.1
+
+/datum/reagent/carp_pheromones/on_mob_life(var/mob/living/M as mob)
+	if(!holder) return
+	if(!M) M = holder.my_atom
+	if(!data) data = 0
+	data++
+
+	var/stench_radius = Clamp(data * 0.1, 1, 6) //Stench starts out with 1 tile radius and grows after every 10 life ticks
+
+	if(prob(5)) // 5% chance of stinking per life()
+		for(var/mob/living/carbon/C in oview(stench_radius,M)) //All other carbons in 4 tile radius (excluding our mob)
+			if(C.stat) return
+			if(istype(C.wear_mask))
+				var/obj/item/clothing/mask/c_mask = C.wear_mask
+				if(c_mask.body_parts_covered & MOUTH) continue	//If the carbon's mouth is covered, let's assume they don't smell it
+
+			C << "<span class='warning'>You are engulfed by a [pick("tremendous","foul","disgusting","horrible")] stench emanating from [M]!</span>"
+
+	..()
+	return
 
 /datum/reagent/blackpepper
 	name = "Black Pepper"

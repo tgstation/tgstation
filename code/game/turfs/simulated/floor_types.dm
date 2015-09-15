@@ -165,6 +165,13 @@
 			trace_gas.moles = 9*4000
 			air.update_values()
 
+/turf/simulated/floor/engine/nitrogen
+	name = "nitrogen floor"
+	icon_state = "engine"
+	oxygen=0
+	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
+	temperature = TCMB
+
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"

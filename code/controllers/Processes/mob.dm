@@ -13,8 +13,9 @@
 
 /datum/controller/process/mob/doWork()
 	if (mob_list)
-		for(var/m in mob_list)
+		for(var/atom/m in mob_list)
 			if(m)
+				if(m.timestopped) continue
 				try
 					m:Life()
 				catch(var/exception/e)

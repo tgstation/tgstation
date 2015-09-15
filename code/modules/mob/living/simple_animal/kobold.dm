@@ -23,6 +23,7 @@
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 
 /mob/living/simple_animal/kobold/Life()
+	if(timestopped) return 0 //under effects of time magick
 	..()
 	if(prob(15) && turns_since_move && !stat)
 		flick("kobold_act",src)

@@ -14,6 +14,9 @@
 					MoMMI.static_overlays.Add(static_overlays["static"])
 					MoMMI.client.images.Add(static_overlays["static"])
 
+	if(!species_type)
+		species_type = src.type
+
 /mob/living/Destroy()
 	for(var/mob/living/silicon/robot/mommi/MoMMI in player_list)
 		for(var/image/I in static_overlays)
@@ -22,6 +25,12 @@
 			del(I)
 	if(static_overlays)
 		static_overlays = null
+
+	if(butchering_drops)
+		for(var/datum/butchering_product/B in butchering_drops)
+			butchering_drops -= B
+			del(B)
+
 	. = ..()
 
 /mob/living/examine(mob/user) //Show the mob's size and whether it's been butchered
@@ -46,12 +55,21 @@
 	else if(src.gender == PLURAL)
 		pronoun = "they are"
 
-	var/butchery = ""
-	if(src.meat_taken > 0)
-		butchery = " [capitalize(pronoun)] partially butchered."
-	..(user, " [capitalize(pronoun)] [size].[butchery]")
+	..(user, " [capitalize(pronoun)] [size].")
+	if(meat_taken > 0)
+		user << "<span class='info'>[capitalize(pronoun)] partially butchered.</span>"
+
+	var/butchery = "" //More information about butchering status, check out "code/datums/helper_datums/butchering.dm"
+
+	if(butchering_drops && butchering_drops.len)
+		for(var/datum/butchering_product/B in butchering_drops)
+			butchery = "[butchery][B.desc_modifier(src)]"
+	if(butchery)
+		user << "<span class='info'>[butchery]</span>"
 
 /mob/living/Life()
+	if(timestopped) return 0 //under effects of time magick
+
 	..()
 	if (flags & INVULNERABLE)
 		bodytemperature = initial(bodytemperature)
@@ -559,8 +577,7 @@ Thanks.
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	if(stat == DEAD)
-		dead_mob_list -= src
-		living_mob_list += src
+		resurrect()
 		tod = null
 
 	// restore us to conciousness
@@ -703,11 +720,11 @@ Thanks.
 		for(var/i = 1;i<hookshot.maxlength;i++)
 			var/obj/effect/overlay/hookchain/HC = hookshot.links["[i]"]
 			if(HC.loc != hookshot)
-				HC.forceMove(get_step(HC,direct),direct)
+				HC.Move(get_step(HC,direct),direct)
 
 		if(hookshot.hook)
 			var/obj/item/projectile/hookshot/hook = hookshot.hook
-			hook.forceMove(get_step(hook,direct),direct)
+			hook.Move(get_step(hook,direct),direct)
 			if(direct & NORTH)
 				hook.override_starting_Y++
 				hook.override_target_Y++
@@ -1199,11 +1216,120 @@ default behaviour is:
 
 	if(istype(A))
 		var/mob/living/simple_animal/source_animal = src
-		if(istype(source_animal) && source_animal.species)
-			var/mob/living/specimen = source_animal.species
+		if(istype(source_animal) && source_animal.species_type)
+			var/mob/living/specimen = source_animal.species_type
 			A.name = "[initial(specimen.name)] meat"
 			A.animal_name = initial(specimen.name)
 		else
 			A.name = "[initial(src.name)] meat"
 			A.animal_name = initial(src.name)
 	return M
+
+/mob/living/proc/butcher()
+	set category = "Object"
+	set name = "Butcher"
+	set src in oview(1)
+
+	var/mob/living/user = usr
+	if(!istype(user))
+		return
+
+	if(user.stat || user.restrained() || (usr.status_flags & FAKEDEATH))
+		return
+
+	if(being_butchered)
+		user << "<span class='notice'>[src] is already being butchered.</span>"
+		return
+
+	if(!can_butcher)
+		if(meat_taken)
+			user << "<span class='notice'>[src] has already been butchered.</span>"
+			return
+		else
+			user << "<span class='notice'>You can't butcher [src]!"
+			return
+		return
+
+	var/obj/item/tool = null	//The tool that is used for butchering
+	var/speed_mod = 1.0			//The higher it is, the faster you butcher
+	var/butchering_time = 20 * size //2 seconds for tiny animals, 4 for small ones, 6 for normal sized ones (+ humans), 8 for big guys and 10 for biggest guys
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+
+		tool = H.get_active_hand()
+		if(tool)
+			speed_mod = tool.is_sharp()
+			if(!speed_mod)
+				user << "<span class='notice'>You can't butcher \the [src] with this!</span>"
+				return
+		else
+			speed_mod = 0.0
+
+		if(M_CLAWS in H.mutations)
+			if(!istype(H.gloves))
+				speed_mod += 0.25
+		if(M_BEAK in H.mutations)
+			if(istype(H.wear_mask))
+				var/obj/item/clothing/mask/M = H.wear_mask
+				if(!(M.body_parts_covered & MOUTH)) //If our mask doesn't cover mouth, we can use our beak to help us while butchering
+					speed_mod += 0.25
+			else
+				speed_mod += 0.25
+	else
+		speed_mod = 0.5
+
+	if(src.butchering_drops && src.butchering_drops.len)
+		var/list/actions = list()
+		actions += "Butcher"
+		for(var/datum/butchering_product/B in src.butchering_drops)
+			if(B.amount <= 0) continue
+
+			actions |= capitalize(B.verb_name)
+			actions[capitalize(B.verb_name)] = B
+		actions += "Cancel"
+
+		var/choice = input(user,"What would you like to do with \the [src]?","Butchering") in actions
+		if(!Adjacent(user) || !(usr.get_active_hand() == tool)) return
+
+		if(choice == "Cancel")
+			return 0
+		else if(choice != "Butcher")
+			var/datum/butchering_product/our_product = actions[choice]
+			if(!istype(our_product)) return
+
+			user.visible_message("<span class='notice'>[user] starts [our_product.verb_gerund] \the [src][tool ? "with \the [tool]" : ""].</span>",\
+				"<span class='info'>You start [our_product.verb_gerund] \the [src].</span>")
+			src.being_butchered = 1
+			if(!do_after(user,src,butchering_time * speed_mod))
+				user << "<span class='warning'>Your attempt to [our_product.verb_name] \the [src] has been interrupted.</span>"
+				src.being_butchered = 0
+			else
+				user << "<span class='info'>You finish [our_product.verb_gerund] \the [src].</span>"
+				src.being_butchered = 0
+				src.update_icons()
+				our_product.spawn_result(get_turf(src), src)
+			return
+
+	user.visible_message("<span class='notice'>[user] starts butchering \the [src][tool ? "with \the [tool]" : ""].</span>",\
+		"<span class='info'>You start butchering \the [src].</span>")
+	src.being_butchered = 1
+
+	if(!do_after(user,src,butchering_time / speed_mod))
+		user << "<span class='warning'>Your attempt to butcher \the [src] was interrupted.</span>"
+		src.being_butchered = 0
+		return
+
+	src.drop_meat(get_turf(src))
+	src.meat_taken++
+	src.being_butchered = 0
+
+	if(src.meat_taken < src.size)
+		user << "<span class='info'>You cut a chunk of meat out of \the [src].</span>"
+		return
+
+	user << "<span class='info'>You butcher \the [src].</span>"
+	can_butcher = 0
+
+	if(istype(src, /mob/living/simple_animal)) //Animals can be butchered completely, humans - not so
+		gib(meat = 0) //"meat" argument only exists for mob/living/simple_animal/gib()

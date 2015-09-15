@@ -97,6 +97,14 @@
 	permeability_coefficient = 0.50
 	flags = FPRINT  | ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/beekeeper
+	desc = "It's a jumpsuit designed to protect against minor plant-related hazards. Hopefully bees will see you as one of them."
+	name = "beekeeper's jumpsuit"
+	icon_state = "beekeeper"
+	item_state = "g_suit"
+	_color = "beekeeper"
+	permeability_coefficient = 0.50
+	flags = FPRINT  | ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/internalaffairs
 	desc = "The plain, professional attire of an Internal Affairs Agent. The collar is <i>immaculately</i> starched."

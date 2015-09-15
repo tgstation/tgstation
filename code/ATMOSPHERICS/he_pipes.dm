@@ -16,10 +16,19 @@
 
 	burst_type = /obj/machinery/atmospherics/unary/vent/burstpipe/heat_exchanging
 
-	available_colors = null	//Overrides the available colors list from the parent.
+	can_be_coloured = 0
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/getNodeType(var/node_id)
 	return PIPE_TYPE_HE
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/update_icon(var/adjacent_procd)
+	var/node_list = list(node1,node2)
+	if(!node1 && !node2)
+		qdel(src)
+	if(!adjacent_procd)
+		for(var/obj/machinery/atmospherics/node in node_list)
+			if(node.update_icon_ready && !(istype(node,/obj/machinery/atmospherics/pipe/simple)))
+				node.update_icon(1)
 
 	// BubbleWrap
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()

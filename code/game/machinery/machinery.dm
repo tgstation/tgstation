@@ -420,7 +420,7 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user as mob, var/ignore_brain_damage = 0)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
 
@@ -438,7 +438,7 @@ Class Procs:
 	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
 		return 1
 */
-	if (ishuman(user))
+	if (ishuman(user) && !ignore_brain_damage)
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
@@ -515,8 +515,9 @@ Class Procs:
 
 	if(!anchored)
 		if(!istype(src.loc, /turf/simulated/floor)) //Prevent from anchoring shit to shuttles / space
-			user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
-			return
+			if( !(istype(src.loc, /turf/simulated/shuttle) && (machine_flags & SHUTTLEWRENCH)) ) //If NOT (on top of a shuttle AND can be secured to shuttles)
+				user << "<span class='notice'>You can't secure \the [src] to [istype(src.loc,/turf/space) ? "space" : "this"]!</span>"
+				return
 
 	user.visible_message(	"[user] begins to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts.",
 							"You begin to [anchored ? "undo" : "wrench"] \the [src]'s securing bolts...")

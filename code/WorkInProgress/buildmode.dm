@@ -215,27 +215,13 @@ obj/effect/bmode/buildholder/New()
 /obj/effect/bmode/buildmode/DblClick(object,location,control,params)
 	return Click(object,location,control,params)
 
-/client/verb/fillmouse_down()
-	//set instant = 1
-	set hidden = 1
-	set name = ".fillmouse_down"
-	if(src.buildmode == 2 && !src.filling)
-		filling = !filling
-		src.mouse_pointer_icon = 'icons/mouse/buildfill.dmi'
-
-/client/verb/fillmouse_released()
-	//set instant = 1
-	set hidden = 1
-	set name = ".fillmouse_released"
-	if(src.filling)
-		src.mouse_pointer_icon = initial(src.mouse_pointer_icon)
-
 /client/MouseWheel(object,delta_x,delta_y,location,control,params)
-	if(mob.stat == DEAD || buildmode) //DEAD FAGS CAN ZOOM OUT THIS WILL END POORLY
+	if(istype(mob,/mob/dead/observer) || buildmode) //DEAD FAGS CAN ZOOM OUT THIS WILL END POORLY
 		if(delta_y > 0)
 			view--
 		else
 			view++
+		view = max(view,1)
 		haszoomed = 1
 	..()
 

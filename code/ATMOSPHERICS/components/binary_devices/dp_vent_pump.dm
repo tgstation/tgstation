@@ -214,3 +214,11 @@
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/interact(var/mob/user)
 	update_multitool_menu(user)
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/canClone(var/obj/O)
+	return istype(O, /obj/machinery/atmospherics/binary/dp_vent_pump)
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/clone(var/obj/machinery/atmospherics/binary/dp_vent_pump/O)
+	id_tag = O.id_tag
+	set_frequency(O.frequency)
+	return 1

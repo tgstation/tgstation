@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-
+	default_colour = "#0000b7"
 	anchored = 1.0
 
 	current_heat_capacity = 1000
@@ -44,8 +44,7 @@
 			icon_state = "freezer"
 	else
 		icon_state = "freezer_0"
-	return
-
+	..()
 /obj/machinery/atmospherics/unary/cold_sink/freezer/attack_ai(mob/user as mob)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
@@ -168,9 +167,8 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-
 	anchored = 1.0
-
+	default_colour = "#b70000"
 	current_heat_capacity = 1000
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
@@ -209,6 +207,7 @@
 			icon_state = "heater"
 	else
 		icon_state = "heater_0"
+	..()
 	return
 
 /obj/machinery/atmospherics/unary/heat_reservoir/heater/attack_ai(mob/user as mob)

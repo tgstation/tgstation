@@ -140,3 +140,16 @@
 	//e_cost = 500
 	//fire_sound = 'sound/weapons/Gunshot4.ogg'
 	w_type = RECYK_METAL
+
+/obj/item/ammo_casing/a762x55
+	desc = "A 7.62x55mmR bullet casing."
+	caliber = "7.62x55"
+	projectile_type = "/obj/item/projectile/bullet/a762x55"
+	w_type = RECYK_METAL
+	icon_state = "762x55-casing-live"
+	starting_materials = list(MAT_IRON = 12500)
+
+	update_icon()
+		desc = "[initial(desc)][BB ? "" : " This one is spent"]"
+		if(!BB)
+			icon_state = "762x55-casing"

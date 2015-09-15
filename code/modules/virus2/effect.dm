@@ -365,12 +365,8 @@
 	name = "Biolobulin Effect"
 	stage = 4
 /datum/disease2/effect/orbweapon/activate(var/mob/living/carbon/mob,var/multiplier)
-	//
-
-	var/obj/item/toy/snappop/virus = new /obj/item/toy/snappop/virus
-	mob.equip_to_slot(virus, slot_l_hand)
-
-
+	var/obj/item/toy/snappop/virus/virus = new /obj/item/toy/snappop/virus
+	mob.equip_to_slot_or_drop(virus, slot_l_hand)
 
 /obj/item/clothing/mask/gas/virusclown_hat
 
@@ -478,7 +474,7 @@
 	if (prob(15))
 		mob.emote("me",1,"vomits up a chicken egg!")
 		playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
-		new /obj/item/weapon/reagent_containers/food/snacks/meat/egg(get_turf(mob))
+		new /obj/item/weapon/reagent_containers/food/snacks/egg(get_turf(mob))
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
