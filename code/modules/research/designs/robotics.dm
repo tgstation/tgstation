@@ -31,7 +31,7 @@
 	build_path = /obj/item/organ/lungs/filter
 	category = "Robotics"
 
-/datum/design/adv_lungs
+/datum/design/adv_eyes
 	name = "Advanced Eyes (L1)"
 	desc = "These eyes have built-in welding protection and enhance night-vision."
 	id = "adv_eyes_1"
