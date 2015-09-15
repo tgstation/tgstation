@@ -829,6 +829,10 @@ proc/process_adminbus_teleport_locs()
 	name = "Abandoned Diner"
 	icon_state = "dinerderelict"
 
+/area/derelictparts/incinerator
+	name = "Abandoned Incinerator"
+	icon_state = "incineratorderelict"
+
 //Hallway
 
 /area/hallway/primary/fore
