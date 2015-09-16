@@ -42,17 +42,6 @@
 
 /obj/item/weapon/capsule/attack_self(mob/M as mob)
 	var/capsule_prize = pick(
-		/obj/item/toy/prize/fireripley,
-		/obj/item/toy/prize/deathripley,
-		/obj/item/toy/prize/durand,
-		/obj/item/toy/prize/gygax,
-		/obj/item/toy/prize/honk,
-		/obj/item/toy/prize/marauder,
-		/obj/item/toy/prize/mauler,
-		/obj/item/toy/prize/odysseus,
-		/obj/item/toy/prize/phazon,
-		/obj/item/toy/prize/ripley,
-		/obj/item/toy/prize/seraph,
 		/obj/item/toy/gasha/greyshirt,
 		/obj/item/toy/gasha/greytide,
 		/obj/item/toy/gasha/corgitoy,
@@ -81,7 +70,6 @@
 		/obj/item/toy/gasha/mime,
 		/obj/item/toy/gasha/captain,
 		/obj/item/toy/gasha/comdom,
-		/obj/item/toy/gasha/maniac,
 		/obj/item/toy/gasha/doctor,
 		/obj/item/toy/gasha/defsquid,
 		/obj/item/toy/gasha/wizard,
