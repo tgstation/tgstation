@@ -402,3 +402,111 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 			H.heart_attack = 1 // don't do drugs kids
 	..()
 	return
+	s
+/datum/reagent/drug/happyhappy
+	name = "Happy Happy"
+	id = "2happy"
+	description = "A powerful psychotic that heals damage and temporarily shrivels your nerve endings preventing you from feeling pain, it has some NASTY side effects.."
+	reagent_state = LIQUID
+	color = "#D4EBF2" // rgb: 212, 235, 242
+	addiction_threshold = 1 //stupidly addictive, but powerful
+	overdose_threshold = 0
+
+	var/list/disturbing_dialogue = list(
+	"I'm going to CUT YOU!",
+	"What was that?",
+	"YOU SAY SOMETHING BITCH!?!!",
+	"37, 37, 38, 38?, 37, 37, 38!, 37",
+	"Kill...",
+	"Kill?",
+	"YES, THAT'S RIGHT MR NUBBINS!!",
+	"The rain in spain causes everybody around me great pain... GREAT PAIN!!!"
+	)
+	var/list/disturbing_emotes = list(
+	"giggle",
+	"cries",
+	"hug",
+	"moan",
+	"pale",
+	"aflap",
+	"collapse"
+	)
+
+
+/datum/reagent/drug/happyhappy/on_mob_life(mob/living/M)
+	//Heals a bunch of stuff, makes you shaky
+	M.adjustStaminaLoss(-20)
+	M.adjustToxLoss(-10)
+	M.adjustBruteLoss(-10)
+	M.adjustFireLoss(-10)
+	M.adjustCloneLoss(-10)
+	M.adjustOxyLoss(-10)
+	M.adjustBrainLoss(-5)
+	M.adjustWeakened(-5)
+	M.adjustStunned(-5)
+	M.adjustParalysis(-5)
+	M.radiation = max(0,M.radiation -= 3)
+	M.dizziness = max(0, M.dizziness -= 3)
+	M.drowsyness = max(0, M.drowsyness -= 3)
+	M.confused = max(0, M.confused -= 3)
+	M.sleeping = 0
+	M.Jitter(5)
+	//You don't "feel pain", you can't even see your health
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.hal_screwyhud = 5
+	..()
+
+/datum/reagent/medicine/happyhappy/on_mob_delete(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.hal_screwyhud = 0
+	..()
+
+//No overdose since if you don't have this drug in your system you get fucked up by addiction.
+/datum/reagent/drug/happyhappy/overdose_process(mob/living/M)
+	return
+
+/datum/reagent/drug/happyhappy/proc/disturbing_messages()
+	if(prob(0.3*addiction_stage)) //0.3*10 == 3, 3% chance at addiction stage 1
+		if(prob(66))
+			M.say(pick(disturbing_dialogue))
+		else
+			M.emote(pick(disturbing_emotes))
+
+//Plenty of addiction though!
+/datum/reagent/drug/happyhappy/addiction_act_stage1(mob/living/M)
+	disturbing_messages()
+	M.adjustBrainLoss(2*REM)
+	M.adjustToxLoss(2*REM)
+	M.adjustBruteLoss(2*REM)
+	..()
+
+/datum/reagent/drug/happyhappy/addiction_act_stage2(mob/living/M)
+	disturbing_messages()
+	M.adjustBrainLoss(3*REM)
+	M.adjustToxLoss(3*REM)
+	M.adjustBruteLoss(3*REM)
+	..()
+
+/datum/reagent/drug/happyhappy/addiction_act_stage3(mob/living/M)
+	disturbing_messages()
+	M.adjustBrainLoss(4*REM)
+	M.adjustToxLoss(4*REM)
+	M.adjustBruteLoss(4*REM)
+	..()
+
+/datum/reagent/drug/happyhappy/addiction_act_stage4(mob/living/M)
+	disturbing_messages()
+	M.adjustBrainLoss(5*REM)
+	M.adjustToxLoss(5*REM)
+	M.adjustBruteLoss(5*REM)
+
+	if(prob(22))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			randmutb(C)
+			if(prob(11))
+				randmutb(C)
+
+	..()
