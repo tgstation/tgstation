@@ -74,10 +74,11 @@
 	scion.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/spread_frost(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/chilling_grasp(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/scion_transform(null))
+	var/mob/living/carbon/human/S = scion.current
+	hardset_dna(S, mrace = /datum/species/human/frosty/scion)
 	spawn(0)
-		if(scion.assigned_role == "Clown")
-			var/mob/living/carbon/human/S = scion.current
-			S << "<span class='notice'>Your REALLY COLD, LIKE, YOU'RE LITERALLY ICE nature has allowed you to overcome your clownishness.</span>"
+		if(scion.assigned_role == "Clown" && S)
+			S << "<span class='notice'>Your icy nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/make_pawn(datum/mind/pawn_mind)
@@ -85,8 +86,18 @@
 		return 0
 	if(!(pawn_mind in frost_pawns))
 		//add stuff blah balh
-		hardset_dna(pawn_mind.current, mrace = /datum/species/frosty/pawn)
+		hardset_dna(pawn_mind.current, mrace = /datum/species/human/frosty/pawn)
 		pawn_mind.special_role = "FrostPawn"
 		return 1
 
 /datum/game_mode/proc/transform_scion(datum/mind/scion)
+	if(scion.special_role != "FrostScion")
+		finalize_scion(scion)
+	scion.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/freeze_area(null))
+	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/frostbite(null))
+	scion.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/extinguish(null))
+	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/refreeze(null))
+	scion.AddSpell(new /obj/effect/proc_holder/spell/scion_equipment/weapon/orb(null))
+	scion.AddSpell(new /obj/effect/proc_holder/spell/scion_equipment/weapon/sceptre(null))
+	var/mob/living/carbon/human/S = scion.current
+	hardset_dna(S, mrace = /datum/species/human/frosty/scion/transformed)

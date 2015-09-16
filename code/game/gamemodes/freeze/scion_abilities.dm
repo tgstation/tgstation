@@ -20,7 +20,8 @@
 	charge_max = 100
 	clothes_req = 0
 	range = 0
-	action_icon_state = "frost"
+	action_icon = 'icons/obj/frosty.dmi'
+	action_icon_state = "frostnode"
 
 /obj/effect/proc_holder/spell/aoe_turf/spread_frost/cast(list/targets)
 	var/mob/living/carbon/human/user = usr
@@ -39,6 +40,7 @@
 	charge_max = 0
 	clothes_req = 0
 	range = 1 //Adjacent to user
+	action_icon = 'icons/obj/frosty.dmi'
 	action_icon_state = "chill"
 	var/turning = 0
 
@@ -100,7 +102,7 @@
 					sleep(20)
 					if(isloyal(target))
 						user << "<span class='notice'>They are enslaved by Nanotrasen. You begin to freeze the nanobot implant - this will take some time.</span>"
-						user.visible_message("<span class='danger'>[user] halts for a moment, then begins passing its hand over [target]'s body.</span>")
+						user.visible_message("<span class='danger'>[user] halts for a moment, then begins passing its other hand over [target]'s body.</span>")
 						target << "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>"
 						sleep(150) //15 seconds - not spawn() so the turning takes longer
 						user << "<span class='notice'>The nanobots composing the loyalty implant have been frozen solid. Now to continue.</span>"
@@ -136,7 +138,8 @@
 	range = -1
 	include_user = 1
 	clothes_req = 0
-	icon_state = "frosty_transform"
+	action_icon = 'icons/obj/frosty.dmi'
+	action_icon_state = "frosty_transform"
 
 /obj/effect/proc_holder/spell/targeted/scion_transform/cast()
 	if(usr.stat || !ishuman(usr) || !usr || !is_scion(usr))
@@ -144,8 +147,7 @@
 		return
 	var/mob/living/carbon/human/H = usr
 	//TODO: balance shit kinda like s-ling has
-	ticker.mode.transform_scion(H)
-	hardset_dna(H, mrace = /datum/species/frosty/scion/transformed)
+	ticker.mode.transform_scion(H.mind)
 
 /obj/effect/proc_holder/spell/aoe_turf/freeze_area
 	name = "Freeze Area"
@@ -154,12 +156,13 @@
 	charge_max = 300
 	clothes_req = 0
 	range = 1
-	action_icon_state = "frosty_freeze"
+	action_icon = 'icons/obj/frosty.dmi'
+	action_icon_state = "freezearea"
 	var/temperature_delta = 80 //degrees K
 
 /obj/effect/proc_holder/spell/aoe_turf/freeze_area/cast(list/targets)
 	for(var/turf/simulated/T in targets)
-		T.air.temperature = max(T.air.temperature - temperature_delta, TCMB) //TCMB is the same temperature value used by space tiles
+		T.temperature = max(T.temperature - temperature_delta, TCMB) //TCMB is the same temperature value used by space tiles
 	//TODO: feedback
 	return 1
 
@@ -172,7 +175,8 @@
 	panel = "Scion Abilities"
 	charge_max = 300
 	clothes_req = 0
-	icon_state = "frostbite"
+	action_icon = 'icons/obj/frosty.dmi'
+	action_icon_state = "frostbite"
 
 /obj/effect/proc_holder/spell/targeted/touch/frostbite/cast()
 	if(!check_frosty(src))
@@ -215,10 +219,17 @@
 	charge_max = 600
 	clothes_req = 0
 	range = 0
+	action_icon = 'icons/obj/frosty.dmi'
+	action_icon_state = "extinguish"
 
 /obj/effect/proc_holder/spell/aoe_turf/extinguish/cast(list/targets)
 	for(var/turf/simulated/T in targets)
-		new /obj/effect/nanofrost_container/frosty(T)
+		var/obj/effect/nanofrost_container/frosty/N = new(T)
+		N.Smoke()
+		for(var/turf/simulated/T2 in view(1, T)) //spawn regular frost in a 3x3 area centered on the caster
+			if(locate(/obj/structure/alien/weeds/frost) in T2.contents)
+				continue
+			new /obj/structure/alien/weeds/frost(T2)
 	//TODO: logging, feedback
 
 /obj/effect/nanofrost_container/frosty //nanofrost does everything we want for this ability, so why not just spawn one?
@@ -234,6 +245,8 @@
 	charge_max = 100
 	clothes_req = 0
 	hand_path = "/obj/item/weapon/melee/touch_attack/frosty/re_freeze"
+	action_icon = 'icons/obj/frosty.dmi'
+	action_icon_state = "refreeze"
 
 /obj/effect/proc_holder/spell/targeted/touch/refreeze/cast()
 	if(!check_frosty(src))
@@ -259,3 +272,37 @@
 	target.bodytemperature = max(target.bodytemperature - temperature_delta, TCMB)
 
 	//TODO: logging, feedback
+
+/obj/effect/proc_holder/spell/scion_equipment/weapon
+	action_icon = 'icons/obj/frosty.dmi'
+	panel = "Scion Abilities"
+	clothes_req = 0
+
+	var/weapon_path
+
+/obj/effect/proc_holder/spell/scion_equipment/weapon/cast()
+	var/mob/living/carbon/human/user = usr
+	if(!check_frosty(user))
+		return 0
+
+	var/list/hands = get_both_hands(user)
+	var/obj/item/I = locate(weapon_path) in hands
+	if(I)
+		user.unEquip(weapon_path, force = 1)
+		user.visible_message("<span class='notice'>[user] un-forms \the [src] back into \his own body.</span>", "<span class='notice'>You un-form \the [src].</span>")
+		return 1
+	if(user.put_in_hands(new weapon_path))
+		user.visible_message("<span class='notice'>[user] forms \an [src] out of his own icy flesh!</span>", "<span class='notice'>You form \an [src].</span>")
+		return 1
+	user << "<span class='warning'>Your hands are full!</span>"
+	return 0
+
+/obj/effect/proc_holder/spell/scion_equipment/weapon/orb
+	name = "Frost Orb"
+	action_icon_state = "frost_orb"
+	weapon_path = /obj/item/weapon/shield/riot/frosty/orb
+
+/obj/effect/proc_holder/spell/scion_equipment/weapon/sceptre
+	name = "Ice Sceptre"
+	action_icon_state = "frost_sceptre"
+	weapon_path = /obj/item/weapon/melee/frosty/sceptre

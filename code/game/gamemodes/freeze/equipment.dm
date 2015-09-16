@@ -15,6 +15,10 @@
 	name = "frost orb"
 	desc = "An orb of powerful frost magic. Can protect its wielder from projectiles."
 	icon_state = "frost_orb"
+	flags = NODROP
+
+/obj/item/weapon/shield/riot/frosty/orb/dropped()
+	qdel(src)
 
 /obj/item/weapon/melee/frosty
 	icon = 'icons/obj/frosty.dmi'
@@ -43,3 +47,6 @@
 	w_class = 5
 
 	flags = NODROP
+
+/obj/item/weapon/melee/frosty/sceptre/dropped()
+	qdel(src)

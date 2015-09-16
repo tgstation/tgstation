@@ -27,9 +27,9 @@
 	return frostImageCache["[C]"]
 
 /obj/structure/alien/weeds/frost/Destroy()
-	. = ..()
-	var/turf/simulated/T = loc
+	var/turf/simulated/T = get_turf(src)
 	T.MakeSlippery()
+	return ..()
 
 /obj/structure/alien/weeds/frost/node
 	name = "thick frost"
@@ -49,8 +49,8 @@
 	return ..()
 
 /obj/structure/alien/weeds/frost/node/process()
-	var/turf/simulated/T = loc
-	T.air.temperature = Clamp(T20C - temperature_delta, TCMB, T.air.temperature - temperature_delta) //ensures that we don't get too cold from frost; standard lower bound is 5 C. Also prevents temperatures of 0 or less.
+	var/turf/simulated/T = get_turf(src)
+	T.temperature = Clamp(T20C - temperature_delta, TCMB, T.temperature - temperature_delta) //ensures that we don't get too cold from frost; standard lower bound is 5 C. Also prevents temperatures of 0 or less.
 
 /obj/structure/alien/weeds/frost/node/infinity
 	health = INFINITY //lmao
