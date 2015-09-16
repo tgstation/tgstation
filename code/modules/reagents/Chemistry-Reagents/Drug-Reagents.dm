@@ -510,4 +510,3 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 				randmutb(C)
 
 	..()
->>>>>>> origin/master
