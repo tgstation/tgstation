@@ -303,6 +303,10 @@ var/list/teleport_other_runes = list()
 		user << "<span class='warning'>Something is shielding [new_cultist]'s mind!</span>"
 		fail_invoke()
 		log_game("Convert rune failed - convertee could not be converted")
+		if(is_sacrifice_target(new_cultist.mind))
+			for(var/mob/living/M in orange(1,src))
+				if(iscultist(M))
+					M << "<span class='cult'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 		return
 	var/time = 300
 	for(var/mob/living/M in orange(1,src))
@@ -322,7 +326,7 @@ var/list/teleport_other_runes = list()
 			visible_message("<span class='warning'>[src] reluctantly falls dark.</span>")
 			new_cultist << "<span class='danger'>Your headache fades.</span>"
 			return
-	if(new_cultist == ticker.mode.sacrifice_target)
+	if(is_sacrifice_target(new_cultist.mind))
 		for(var/mob/living/M in orange(1,src))
 			if(iscultist(M))
 				M << "<span class='cult'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
@@ -372,7 +376,7 @@ var/list/teleport_other_runes = list()
 		fail_invoke()
 		rune_in_use = 0
 		return
-	if(((ishuman(offering) || isrobot(offering)) && offering.stat != DEAD) || ticker.mode.sacrifice_target == offering) //Requires three people to sacrifice living targets or the round's target
+	if(((ishuman(offering) || isrobot(offering)) && offering.stat != DEAD) || is_sacrifice_target(offering.mind)) //Requires three people to sacrifice living targets or the round's target
 		var/cultists_nearby = 1
 		for(var/mob/living/M in orange(1,src))
 			if(iscultist(M) && M != user)
@@ -406,8 +410,8 @@ var/list/teleport_other_runes = list()
 					C << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
 					if(C.reagents)
 						C.reagents.add_reagent("hell_water", 2)
-		sacrificed.Add(T)
-		if(T == ticker.mode.sacrifice_target)
+		sacrificed.Add(T.mind)
+		if(is_sacrifice_target(T.mind))
 			sacrifice_fulfilled = 1
 		if(isrobot(T))
 			playsound(T, 'sound/magic/Disable_Tech.ogg', 100, 1)
@@ -566,6 +570,10 @@ var/list/teleport_other_runes = list()
 		R.visible_message("<span class='danger'>[R] fades away.</span>")
 		R.invisibility = INVISIBILITY_OBSERVER
 		R.alpha = 100 //To help ghosts distinguish hidden runes
+	for(var/mob/dead/observer/O in orange(3,src))
+		if(!O.invisibility)
+			O << "<span class'deadsay'><i>You suddenly feel as if you've vanished...</i></span>"
+			O.invisibility = 0
 	qdel(src)
 
 
