@@ -332,7 +332,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "WT-550 Auto Rifle Crate"
 	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
 					/obj/item/weapon/gun/projectile/automatic/wt550)
-	cost = 30
+	cost = 40
 	containername = "auto rifle crate"
 
 /datum/supply_packs/security/armory/wt550ammo
@@ -342,7 +342,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9)
-	cost = 30
+	cost = 40
 	containername = "auto rifle ammo crate"
 
 /////// Implants & etc
