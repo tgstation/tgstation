@@ -133,7 +133,10 @@
 			var/mob/living/M = user
 			if (M.disabilities & CLUMSY && prob(40))
 				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
+				var/oldzone = user.zone_sel.selecting
+				user.zone_sel.selecting = pick("r_leg", "l_leg")
 				process_fire(user,user,0,params)
+				user.zone_sel.selecting = oldzone
 				M.drop_item()
 				return
 
