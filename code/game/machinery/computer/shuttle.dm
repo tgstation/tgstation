@@ -3,7 +3,7 @@
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
-	var/auth_need = 3.0
+	var/auth_need = 3
 	var/list/authorized = list()
 
 

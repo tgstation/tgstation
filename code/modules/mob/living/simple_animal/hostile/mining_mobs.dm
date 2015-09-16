@@ -97,11 +97,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
-		if(2.0)
+		if(2)
 			adjustBruteLoss(140)
-		if(3.0)
+		if(3)
 			adjustBruteLoss(110)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/death(gibbed)
@@ -425,10 +425,10 @@
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
+		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 		M.Stun(5)
 		M.adjustBruteLoss(rand(10,15))
 		latched = 1
-		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 	if(!latched)
 		qdel(src)
 	else

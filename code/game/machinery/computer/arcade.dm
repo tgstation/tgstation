@@ -454,7 +454,7 @@
 
 /obj/machinery/computer/arcade/orion_trail/Topic(href, href_list)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 	if(href_list["close"])
 		usr.unset_machine()
@@ -640,8 +640,8 @@
 	else if(href_list["sellcrew"]) //sell a crewmember
 		var/sold = remove_crewmember()
 		last_spaceport_action = "You sold your crewmember, [sold]!"
-		fuel += 15
-		food += 15
+		fuel += 7
+		food += 7
 		event()
 
 	else if(href_list["leave_spaceport"])

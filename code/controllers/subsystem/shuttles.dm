@@ -118,9 +118,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency.request(null, 0.5, signal_origin, emergency_reason, 1)
+		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
 	else
-		emergency.request(null, 1, signal_origin, emergency_reason, 0)
+		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
@@ -128,21 +128,23 @@ var/datum/subsystem/shuttle/SSshuttle
 	return
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
+	if(canRecall())
+		emergency.cancel(get_area(user))
+		log_game("[key_name(user)] has recalled the shuttle.")
+		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		return 1
+
+/datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
-
 	if(ticker.mode.name == "meteor")
 		return
-
-	if((seclevel2num(get_security_level()) == SEC_LEVEL_RED))
+	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return
-	else if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-		return
-
-	emergency.cancel(get_area(user))
-	log_game("[key_name(user)] has recalled the shuttle.")
-	message_admins("[key_name_admin(user)] has recalled the shuttle.")
+	else
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
@@ -198,19 +200,6 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(M.dock(getDock(dockId)))
 			return 2
 	return 0	//dock successful
-
-
-/*
-/proc/push_mob_back(var/mob/living/L, var/dir)
-	if(iscarbon(L) && isturf(L.loc))
-		if(prob(88))
-			var/turf/T = get_step(L, dir)
-			if(T)
-				for(var/obj/O in T) // For doors and such (kinda ugly but we can't have people opening doors)
-					if(!O.CanPass(L, L.loc, 1))
-						return
-				L.Move(get_step(L, dir), dir)
-*/
 
 /datum/supply_order
 	var/ordernum
@@ -333,11 +322,3 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return O
 
-/*
-/datum/subsystem/shuttle/proc/getShuttleFromArea(area/A)
-	if(!A)
-		return
-	for(var/obj/docking_port/mobile/M in SSshuttle.mobile)
-		if(M.areaInstance == A)
-			return M
-*/

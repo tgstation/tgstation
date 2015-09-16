@@ -21,13 +21,13 @@
 	if(istype(data))
 		SetViruses(src, data)
 
-/datum/reagent/blood/on_merge(list/data)
-	if(src.data && data)
-		src.data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
-		if(src.data["viruses"] || data["viruses"])
+/datum/reagent/blood/on_merge(list/mix_data)
+	if(data && mix_data)
+		data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
+		if(data["viruses"] || mix_data["viruses"])
 
 			var/list/mix1 = data["viruses"]
-			var/list/mix2 = data["viruses"]
+			var/list/mix2 = mix_data["viruses"]
 
 			// Stop issues with the list changing during mixing.
 			var/list/to_mix = list()
@@ -40,10 +40,10 @@
 			var/datum/disease/advance/AD = Advance_Mix(to_mix)
 			if(AD)
 				var/list/preserve = list(AD)
-				for(var/D in src.data["viruses"])
+				for(var/D in data["viruses"])
 					if(!istype(D, /datum/disease/advance))
 						preserve += D
-				src.data["viruses"] = preserve
+				data["viruses"] = preserve
 	return 1
 
 /datum/reagent/blood/reaction_turf(turf/simulated/T, reac_volume)//splash the blood all over the place
@@ -1009,3 +1009,19 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 
+/datum/reagent/drying_agent
+	name = "Drying agent"
+	id = "drying_agent"
+	description = "Can be used to dry things."
+	reagent_state = LIQUID
+	color = "#A70FFF"
+
+/datum/reagent/drying_agent/reaction_turf(turf/simulated/T, reac_volume)
+	if(istype(T) && T.wet)
+		T.MakeDry(TURF_WET_WATER)
+
+/datum/reagent/drying_agent/reaction_obj(obj/O, reac_volume)
+	if(O.type == /obj/item/clothing/shoes/galoshes)
+		var/t_loc = get_turf(O)
+		qdel(O)
+		new /obj/item/clothing/shoes/galoshes/dry(t_loc)

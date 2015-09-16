@@ -76,7 +76,7 @@
 	if(buckle_mob(M))
 		if(M == user)
 			M.visible_message(\
-				"[M] buckles themself to [src].",\
+				"<span class='notice'>[M] buckles themself to [src].</span>",\
 				"<span class='notice'>You buckle yourself to [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		else
@@ -90,7 +90,7 @@
 	if(M)
 		if(M != user)
 			M.visible_message(\
-				"<span class='notice'>[user] unbuckles you from [src].",\
+				"<span class='notice'>[user] unbuckles [M] from [src].</span>",\
 				"<span class='notice'>[user] unbuckles you from [src].</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
 		else
