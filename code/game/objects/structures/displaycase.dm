@@ -11,6 +11,7 @@
 	var/obj/item/showpiece = null
 	var/alert = 0
 	var/open = 0
+	var/obj/item/weapon/electronics/airlock/electronics
 
 /obj/structure/displaycase/ex_act(severity, target)
 	switch(severity)
@@ -72,6 +73,18 @@
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	return
 
+/obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
+	//Get flatIcon even if dir is mismatched for directionless icons
+	var/icon/test
+	try
+		test = getFlatIcon(A,defdir=4)
+	catch
+		var/old_dir = A.dir
+		A.dir = 2
+		test = getFlatIcon(A)
+		A.dir = old_dir
+	return test
+
 /obj/structure/displaycase/update_icon()
 	var/icon/I
 	if(open)
@@ -81,13 +94,18 @@
 	if(destroyed)
 		I = icon('icons/obj/stationobjs.dmi',"glassboxb0")
 	if(showpiece)
-		var/icon/S = getFlatIcon(showpiece) //Guns got overlays
+		var/icon/S = get_flat_icon_directional(showpiece)
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,8)
 	src.icon = I
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/card) && electronics && !destroyed && allowed(user))
+		user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
+		open = !open
+		update_icon()
+		return
 	if(!alert && istype(W,/obj/item/weapon/crowbar))
 		if(destroyed && !showpiece)
 			user << "<span class='notice'>You remove the destroyed case</span>"
@@ -95,8 +113,8 @@
 			return
 		user << "<span class='notice'>You start to [open ? "close":"open"] the [src]</span>"
 		if(do_after(user, 20, target = src))
+			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
 			open = !open
-			user <<  "<span class='notice'>You  [open ? "close":"open"] the [src]</span>"
 			update_icon()
 	else if(open)
 		if(user.unEquip(W))
@@ -137,6 +155,8 @@
 	desc = "wooden base of display case"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox_chassis"
+	var/obj/item/weapon/electronics/airlock/electronics
+
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -147,6 +167,14 @@
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			qdel(src)
 			return
+	if(istype(I, /obj/item/weapon/electronics/airlock))
+		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(user.unEquip(I) && do_after(user, 30, target = src)) 
+			I.loc = src
+			electronics = I
+			user << "<span class='notice'>You install the airlock electronics.</span>"
+			return
 	if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 10)
@@ -155,7 +183,14 @@
 		user << "<span class='notice'>You start adding [G] to [src]...</span>"
 		if(do_after(user, 20, target = src))
 			G.use(10)
-			new /obj/structure/displaycase(src.loc)
+			var/obj/structure/displaycase/display = new(src.loc)
+			if(electronics)
+				electronics.loc = display
+				display.electronics = electronics
+				if(electronics.use_one_access)
+					display.req_one_access = electronics.conf_access
+				else
+					display.req_access = electronics.conf_access
 			qdel(src)
 		return
 	return
