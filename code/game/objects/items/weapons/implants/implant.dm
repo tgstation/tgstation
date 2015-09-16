@@ -96,9 +96,6 @@
 	..()
 	tracking_implants -= src
 
-
-var/global/list/tracking_implants = list()
-
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
