@@ -17,8 +17,11 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
+			for(var/mob/M in dead_mob_list)
+				M << "<b>[usr] transmits to [M],</b> \"[msg]\""
 			usr << "<span class='info'><b>You transmit to [M]:</b> [msg]</span>"
-			M << "<span class='deadsay'><b>A strange voice resonates in your head...</b></span><i> [msg]</I>"
+			M << "<span class='deadsay'><b>An alien voice resonates from all around...</b></span><i> \"[msg]\"</I>"
+			add_logs(usr, M, "transmitted \"[msg]\" to")
 
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
