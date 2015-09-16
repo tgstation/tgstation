@@ -312,7 +312,7 @@ MASS SPECTROMETER
 		if(unknown_concentration > 0.01)
 			user.show_message("<span class='warning'> Unknown: [round(unknown_concentration*100,0.1)]% [round(unknown_moles,0.01)] mol</span>", 1)
 
-		user.show_message("<span class='info'> Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>", 1)
+		user.show_message("<span class='info'> Temperature: [round(environment.temperature,0.1)] K ([round(environment.temperature-T0C,0.1)]&deg;C)</span>", 1)
 
 	src.add_fingerprint(user)
 	return

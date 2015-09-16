@@ -1427,7 +1427,7 @@ var/list/WALLITEMS = list(
 		user << "<span class='notice'>Plasma: [round(plasma_concentration*100,0.1)]% [round(plasma_moles,0.01)] mol</span>"
 		if(unknown_concentration>0.01)
 			user << "<span class='danger'>Unknown: [round(unknown_concentration*100,0.1)]% [round(unknown_moles,0.01)] mol</span>"
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C,0.1)]&deg;C</span>"
+		user << "<span class='notice'>Temperature: [round(air_contents.temperature,0.1)] K ([round(air_contents.temperature-T0C,0.1)]&deg;C)</span>"
 	else
 		user << "<span class='notice'>[target] is empty!</span>"
 	return
