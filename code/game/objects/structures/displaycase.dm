@@ -73,17 +73,24 @@
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 	return
 
+/obj/structure/displaycase/proc/is_directional(atom/A)
+	try
+		getFlatIcon(A,defdir=4)
+	catch
+		return 0
+	return 1
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
-	var/icon/test
-	try
-		test = getFlatIcon(A,defdir=4)
-	catch
+	//SLOW
+	var/icon/I
+	if(is_directional(A))
+		I = getFlatIcon(A)
+	else
 		var/old_dir = A.dir
 		A.dir = 2
-		test = getFlatIcon(A)
+		I = getFlatIcon(A)
 		A.dir = old_dir
-	return test
+	return I
 
 /obj/structure/displaycase/update_icon()
 	var/icon/I
