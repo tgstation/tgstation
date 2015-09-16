@@ -6,7 +6,8 @@
 /obj/structure/window/full
 
 	name = "window"
-	icon_state = "window"
+	var/base_state = "window" //Base icon for update_icon
+	icon_state = "window0" //Specifically for the map
 	sheetamount = 2
 	mouse_opacity = 2 // Complete opacity //What in the name of everything is this variable ?
 	layer = 3.21 // Windows are at 3.2.
@@ -51,13 +52,14 @@
 				if(W.anchored && W.density) //Only counts anchored, not-destroyed full-tile windows.
 					if(abs(x-W.x)-abs(y-W.y)) 	//Doesn't count windows, placed diagonally to src
 						junction |= get_dir(src,W)
-		icon_state = "[initial(icon_state)][junction]"
+		icon_state = "[base_state][junction]"
 		return
 
 /obj/structure/window/full/reinforced
 	name = "reinforced window"
 	desc = "A window with a rod matrice. It looks more solid than the average window."
-	icon_state = "rwindow"
+	icon_state = "rwindow0"
+	base_state = "rwindow"
 	sheettype = /obj/item/stack/sheet/glass/rglass
 	health = 40
 	d_state = WINDOWSECURE
@@ -67,7 +69,8 @@
 
 	name = "plasma window"
 	desc = "A window made out of a plasma-silicate alloy. It looks insanely tough to break and burn through."
-	icon_state = "plasmawindow"
+	icon_state = "plasmawindow0"
+	base_state = "plasmawindow"
 	shardtype = /obj/item/weapon/shard/plasma
 	sheettype = /obj/item/stack/sheet/glass/plasmaglass
 	health = 120
@@ -78,7 +81,8 @@
 /obj/structure/window/full/reinforced/plasma
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
-	icon_state = "plasmarwindow"
+	icon_state = "plasmarwindow0"
+	base_state = "plasmarwindow"
 	shardtype = /obj/item/weapon/shard/plasma
 	sheettype = /obj/item/stack/sheet/glass/plasmarglass
 	health = 160
@@ -90,7 +94,8 @@
 
 	name = "tinted window"
 	desc = "A window with a rod matrice. Its surface is completely tinted, making it opaque. Why not a wall ?"
-	icon_state = "twindow"
+	icon_state = "twindow0"
+	base_state = "twindow"
 	opacity = 1
 	sheettype = /obj/item/stack/sheet/glass/rglass //A glass type for this window doesn't seem to exist, so here's to you
 
@@ -98,7 +103,8 @@
 
 	name = "frosted window"
 	desc = "A window with a rod matrice. Its surface is completely tinted, making it opaque, and it's frosty. Why not an ice wall ?"
-	icon_state = "fwindow"
+	icon_state = "fwindow0"
+	base_state = "fwindow"
 	health = 30
 	sheettype = /obj/item/stack/sheet/glass/rglass //Ditto above
 
