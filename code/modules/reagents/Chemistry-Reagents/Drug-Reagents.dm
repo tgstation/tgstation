@@ -406,7 +406,7 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/happyhappy
 	name = "Happy Happy"
 	id = "2happy"
-	description = "A powerful psychotic that heals damage and temporarily shrivels your nerve endings preventing you from feeling pain, it has some NASTY side effects.."
+	description = "A powerful psychoactive drug that heals damage and temporarily shrivels your nerve endings, preventing you from feeling pain. it has some NASTY side effects..."
 	reagent_state = LIQUID
 	color = "#D4EBF2" // rgb: 212, 235, 242
 	addiction_threshold = 1 //stupidly addictive, but powerful
