@@ -8,13 +8,20 @@
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
+/proc/is_sacrifice_target(datum/mind/mind)
+	if(ticker.mode.name == "cult")
+		var/datum/game_mode/cult/cult_mode = ticker.mode
+		if(mind == cult_mode.sacrifice_target)
+			return 1
+	return 0
+
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
 	if(isloyal(mind.current))
 		return 0
 	if (ticker.mode.name == "cult")		//redundent?
-		if(mind.current == ticker.mode.sacrifice_target)	return 0
+		if(is_sacrifice_target(mind))	return 0
 	return 1
 
 /proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
@@ -25,6 +32,8 @@
 	else
 		user.whisper("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
+	if(!user)
+		return
 	if(say)
 		user.say(message)
 	else
@@ -56,6 +65,8 @@
 
 	var/acolytes_needed = 10 //for the survive objective
 	var/acolytes_survived = 0
+
+	var/datum/mind/sacrifice_target = null//The target to be sacrificed
 
 
 /datum/game_mode/cult/announce()
