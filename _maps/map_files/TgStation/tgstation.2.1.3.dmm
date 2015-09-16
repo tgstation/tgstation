@@ -20917,7 +20917,8 @@
 	dir = 4
 	},
 /mob/living/carbon/monkey{
-	name = "Pun Pun"
+	name = "Pun Pun";
+	unique_name = 0
 	},
 /turf/simulated/floor/plasteel{
 	icon_state = "bar"
