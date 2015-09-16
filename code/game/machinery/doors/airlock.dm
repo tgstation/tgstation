@@ -324,7 +324,9 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
 	if(charge && !p_open && in_range(user, src))
-		user << "The maintenance panel is bulging slightly."
+		user << "<span class='warning'>The maintenance panel is slightly bulging.</span>"
+	if(charge && p_open)
+		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 	if(!src.canAIControl())
@@ -802,7 +804,7 @@ About the new airlock wires panel:
 		if(p_open && charge)
 			user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
 			playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
-			if(!do_after(user, 150))
+			if(!do_after(user, 150, target = src))
 				user << "<span class='warning'>You slip and [charge] detonates!</span>"
 				charge.ex_act(1)
 				user.Weaken(3)
@@ -810,9 +812,6 @@ About the new airlock wires panel:
 			user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 								 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
 			charge.loc = get_turf(user)
-			if(prob(25))
-				charge.ex_act(1)
-				return
 			charge = null
 			return
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!hasPower()) && !src.locked) )
@@ -920,6 +919,7 @@ About the new airlock wires panel:
 		p_open = 1
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
+		charge.loc = get_turf(src)
 		charge.ex_act(1)
 		detonated = 1
 		charge = null
@@ -927,6 +927,7 @@ About the new airlock wires panel:
 			H.Paralyse(8)
 			H.adjust_fire_stacks(1)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
+			H.apply_damage(20, BRUTE, "chest")
 		return
 	if(forced < 2)
 		if(emagged)

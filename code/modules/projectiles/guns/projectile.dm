@@ -89,7 +89,7 @@
 
 /obj/item/weapon/gun/projectile/attack_hand(mob/user)
 	if(loc == user)
-		if(suppressed)
+		if(suppressed && !istype(src, /obj/item/weapon/gun/syringe/syndicate)) //Dart pistols can't be unsuppressed
 			var/obj/item/weapon/suppressor/S = suppressed
 			if(user.l_hand != src && user.r_hand != src)
 				..()
