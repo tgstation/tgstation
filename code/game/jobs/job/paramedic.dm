@@ -21,7 +21,7 @@
 		if(H.backbag == 3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_med(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/medical/paramedic(H), slot_w_uniform)
 		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		H.equip_or_collect(new /obj/item/device/pda/medical(H), slot_belt)
+		//H.equip_or_collect(new /obj/item/device/pda/medical(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/mask/cigarette(H), slot_wear_mask)
 		H.equip_or_collect(new /obj/item/clothing/head/soft/paramedic(H), slot_head)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
