@@ -399,8 +399,8 @@ var/global/list/status_display_images = list(
 			overlays = list()
 
 		if(MODE_EMOTION)
-			if(emotion in ai_emotions)
-				set_picture(ai_emotions[emotion])
+			if(emotion in status_display_images)
+				set_picture(status_display_images[emotion])
 			else
 				set_picture("ai_bsod") //Can't find icon state for our emotion - throw a BSOD
 
