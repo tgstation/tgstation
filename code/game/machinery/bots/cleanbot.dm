@@ -4,8 +4,8 @@
 	name = "proxy bucket"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "bucket_proxy"
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3.
@@ -18,7 +18,7 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = 5.0
+	layer = 5
 	density = 0
 	anchored = 0
 	//weight = 1.0E7

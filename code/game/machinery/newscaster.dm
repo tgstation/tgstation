@@ -248,9 +248,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 
 /obj/machinery/newscaster/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			isbroken=1
 			if(prob(50))
 				qdel(src)

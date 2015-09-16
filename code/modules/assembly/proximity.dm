@@ -15,6 +15,11 @@
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
 
+
+/obj/item/device/assembly/prox_sensor/New()
+	..()
+	SSobj.processing |= src
+
 /obj/item/device/assembly/prox_sensor/describe()
 	if(timing)
 		return "<span class='notice'>The proximity sensor is arming.</span>"
@@ -24,7 +29,7 @@
 	if(!..())	return 0//Cooldown check
 	timing = !timing
 	update_icon()
-	return 0
+	return 1
 
 
 /obj/item/device/assembly/prox_sensor/toggle_secure()
@@ -55,13 +60,12 @@
 
 
 /obj/item/device/assembly/prox_sensor/process()
-	if(timing && (time >= 0))
+	if(timing)
 		time--
-	if(timing && time <= 0)
-		timing = 0
-		toggle_scan()
-		time = 10
-	return
+		if(time <= 0)
+			timing = 0
+			toggle_scan()
+			time = initial(time)
 
 
 /obj/item/device/assembly/prox_sensor/dropped()
@@ -113,7 +117,7 @@
 
 /obj/item/device/assembly/prox_sensor/Topic(href, href_list)
 	..()
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=prox")
 		onclose(usr, "prox")
 		return
@@ -137,5 +141,3 @@
 	if(usr)
 		attack_self(usr)
 
-
-	return

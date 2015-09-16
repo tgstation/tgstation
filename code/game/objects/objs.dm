@@ -139,7 +139,7 @@
 		Loc.on_log()
 
 /obj/singularity_act()
-	ex_act(1.0)
+	ex_act(1)
 	if(src && isnull(gc_destroyed))
 		qdel(src)
 	return 2

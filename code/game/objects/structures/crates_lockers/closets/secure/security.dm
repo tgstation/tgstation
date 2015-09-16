@@ -16,7 +16,7 @@
 	new /obj/item/clothing/under/captainparade(src)
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
+	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
 	new /obj/item/weapon/cartridge/captain(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/device/radio/headset/heads/captain/alt(src)
@@ -95,7 +95,8 @@
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/weapon/gun/energy/gun/advtaser(src)
+	new /obj/item/ammo_box/magazine/wt550m9(src)
+	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"

@@ -17,7 +17,8 @@ var/datum/subsystem/job/SSjob
 	if (zlevel)
 		return ..()
 	SetupOccupations()
-	LoadJobs("config/jobs.txt")
+	if(config.load_jobs_from_txt)
+		LoadJobs()
 	..()
 
 
@@ -391,40 +392,13 @@ var/datum/subsystem/job/SSjob
 			break
 
 
-/datum/subsystem/job/proc/LoadJobs(jobsfile) //ran during round setup, reads info from jobs.txt -- Urist
-	if(!config.load_jobs_from_txt)
-		return 0
-
-	var/list/jobEntries = file2list(jobsfile)
-
-	for(var/job in jobEntries)
-		if(!job)
-			continue
-
-		job = trim(job)
-		if (!length(job))
-			continue
-
-		var/pos = findtext(job, "=")
-		var/name = null
-		var/value = null
-
-		if(pos)
-			name = copytext(job, 1, pos)
-			value = copytext(job, pos + 1)
-		else
-			continue
-
-		if(name && value)
-			var/datum/job/J = GetJob(name)
-			if(!J)	continue
-			J.total_positions = text2num(value)
-			J.spawn_positions = text2num(value)
-			if(name == "AI" || name == "Cyborg")//I dont like this here but it will do for now
-				J.total_positions = 0
-
-	return 1
-
+/datum/subsystem/job/proc/LoadJobs()
+	var/jobstext = return_file_text("config/jobs.txt")
+	for(var/datum/job/J in occupations)
+		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
+		var/datum/regex/results = regex_find(jobstext, regex)
+		J.total_positions = results.str(2)
+		J.spawn_positions = results.str(3)
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)

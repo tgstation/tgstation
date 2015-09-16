@@ -253,8 +253,8 @@ var/list/bloody_footprints_cache = list()
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
-#define BLOODY_FOOTPRINT_BASE_ALPHA	100
-#define BLOOD_GAIN_PER_STEP			50
+#define BLOODY_FOOTPRINT_BASE_ALPHA	150
+#define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_FADEOUT_TIME			2
 
@@ -263,3 +263,7 @@ var/list/bloody_footprints_cache = list()
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+//Turf wet states
+#define TURF_DRY		0
+#define TURF_WET_WATER	1
+#define TURF_WET_LUBE	2
