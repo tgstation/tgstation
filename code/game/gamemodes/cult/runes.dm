@@ -573,7 +573,7 @@ var/list/teleport_other_runes = list()
 	for(var/mob/dead/observer/O in orange(3,src))
 		if(!O.invisibility)
 			O << "<span class'deadsay'><i>You suddenly feel as if you've vanished...</i></span>"
-			O.invisibility = 0
+			O.invisibility = INVISIBILITY_OBSERVER
 	qdel(src)
 
 
