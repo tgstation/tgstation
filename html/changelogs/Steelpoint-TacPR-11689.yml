@@ -33,6 +33,6 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Security has been issued WT-550 Automatic Rifles for use in emergency situations. The WT-550's are a older generation personal defence weapon but should server station security well against any high level threats"
-  - rscadd: "Station Research and Development has bee supplied with the basic WT-550 weapon plans, allowing them to work on upgrading the guns with a superior SMG named the SABR, now holding 42 rounds per magazine and firing in burst fire"
+  - rscadd: "Security has been issued WT-550 Automatic Rifles for use in emergency situations. The WT-550's are a older generation personal defence weapon but should server station security well against any high level threats."
+  - rscadd: "Station Research and Development has bee supplied with the basic WT-550 weapon plans, allowing them to work on upgrading the guns with a superior SMG named the SABR, now holding 42 rounds per magazine and firing in burst fire."
   - rscadd: "RnD can also produce new alternative ammo magazines for both the WT-550 and the SABR, these being Armour Piercing rounds, Uranium Tipped rounds and Incindiary rounds."	
