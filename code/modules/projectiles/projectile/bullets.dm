@@ -19,8 +19,16 @@
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
 
-/obj/item/projectile/bullet/weakbullet4
-	damage = 25
+/obj/item/projectile/bullet/toxinbullet
+	damage = 15
+	damage_type = TOX
+
+/obj/item/projectile/bullet/incendiary/firebullet
+	damage = 10
+
+/obj/item/projectile/bullet/armourpiercing
+	damage = 17
+	armour_penetration = 10
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"

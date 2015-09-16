@@ -13,22 +13,30 @@
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet2
 
-
 /obj/item/ammo_casing/c10mm
 	desc = "A 10mm bullet casing."
 	caliber = "10mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
-
 
 /obj/item/ammo_casing/c9mm
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
-/obj/item/ammo_casing/w9mm
+/obj/item/ammo_casing/c9mmap
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
-	projectile_type = /obj/item/projectile/bullet/weakbullet4
+	projectile_type =/obj/item/projectile/bullet/armourpiercing
+
+/obj/item/ammo_casing/c9mmtox
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/toxinbullet
+
+/obj/item/ammo_casing/c9mminc
+	desc = "A 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
