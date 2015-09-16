@@ -572,7 +572,7 @@ var/list/teleport_other_runes = list()
 		R.alpha = 100 //To help ghosts distinguish hidden runes
 	for(var/mob/dead/observer/O in orange(3,src))
 		if(!O.invisibility)
-			O << "<span class'deadsay'><i>You suddenly feel as if you've vanished...</i></span>"
+			O << "<span class='deadsay'><i>You suddenly feel as if you've vanished...</i></span>"
 			O.invisibility = INVISIBILITY_OBSERVER
 	qdel(src)
 
@@ -589,7 +589,7 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/true_sight/invoke()
 	visible_message("<span class='warning'>[src] explodes in a flash of blinding light!</span>")
 	for(var/mob/dead/observer/O in orange(3,src))
-		O << "<span class'deadsay'><i>You suddenly feel very obvious...</i></span>"
+		O << "<span class='deadsay'><i>You suddenly feel very obvious...</i></span>"
 		O.invisibility = 0
 	for(var/obj/effect/rune/R in orange(3,src))
 		R.invisibility = 0
