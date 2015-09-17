@@ -798,6 +798,38 @@
 	desc = "WE GOT THE VALIDS AI CALL THE SHUTTLE"
 	icon_state = "comdom"
 
+/obj/item/toy/gasha/maniac
+	name = "toy maniac"
+	desc = "NOW WITH REAL KUNG-FU SEIZURE ACTION!"
+	icon_state = "maniac"
+
+/obj/item/toy/gasha/doctor
+	name = "toy doctor"
+	desc = "PHD in Malpractice"
+	icon_state = "doctor"
+
+/obj/item/toy/gasha/defsquid
+	name = "toy death squaddie"
+	desc = "Wait what aren't these guys supposed to be top secret or something?"
+	icon_state = "defsquid"
+
+/obj/item/toy/gasha/wizard
+	name = "toy wizard"
+	desc = "This toy is not actually magical."
+	icon_state = "wiz"
+
+/*
+/obj/item/toy/gasha/bamshoot
+	name = "toy Bumshooter"
+	desc = "*fart"
+	icon_state = "bamshoot"
+*/ //No metaclub allowed ;_;
+
+/obj/item/toy/gasha/snowflake
+	name = "toy snowflake"
+	desc = "What a faggot"
+	icon_state = "fag"
+
 /obj/item/toy/gasha/shade
 	name = "toy shade"
 	desc = "Eternal torment in cute plastic form!"
@@ -822,6 +854,73 @@
 	name = "toy harvester"
 	desc = "Harvesters tend to have a bad habit of violently stabbing anyone they meet"
 	icon_state = "harvester"
+
+/obj/item/toy/gasha/narnar
+	name = "toy Nar-Sie"
+	desc = "The father figure to all of his faithful, the Geometer of Blood himself; NAR-SIE!"
+	icon_state = "narnar"
+
+/obj/item/toy/gasha/quote
+	name = "Robot"
+	desc = "It's a small robot toy"
+	icon_state = "quote"
+
+/obj/item/toy/gasha/quote/curly
+	icon_state = "curly"
+
+/obj/item/toy/gasha/quote/malco
+	icon_state = "malco"
+
+/obj/item/toy/gasha/quote/scout
+	icon_state = "scout"
+
+/obj/item/toy/gasha/mimiga/
+	name = "toy mimiga"
+	desc = "It looks like some sort of rabbit-thing"
+	icon_state = ""
+
+/obj/item/toy/gasha/mimiga/sue
+	desc = "It looks like some sort of rabbit-thing, for some reason you get the feeling that this one is the 'best girl.'"
+	icon_state = "sue"
+
+/obj/item/toy/gasha/mimiga/toroko
+	icon_state = "toroko"
+
+/obj/item/toy/gasha/mimiga/king
+	icon_state = "king"
+
+/obj/item/toy/gasha/mimiga/chaco
+	desc = "It looks like some sort of rabbit-thing, for some reason you get the feeling that this one is the 'worst girl.'"
+	icon_state = "chaco"
+
+/obj/item/toy/gasha/mario
+	name = "toy plumber"
+	desc = "It's a toy of a popular plumber character."
+	icon_state = "mario"
+
+/obj/item/toy/gasha/mario/luigi
+	icon_state = "luigi"
+
+/obj/item/toy/gasha/mario/star
+	icon_state = "star"
+
+/obj/item/toy/gasha/bomberman
+	name = "toy bomberman"
+	desc = "The explosive hero of the Bomberman series!"
+	icon_state = "bomberman"
+
+/obj/item/toy/gasha/bomberman/white
+	icon_state = "bomberman1"
+
+/obj/item/toy/gasha/bomberman/black
+	icon_state = "bomberman2"
+
+/obj/item/toy/gasha/bomberman/red
+	icon_state = "bomberman3"
+
+/obj/item/toy/gasha/bomberman/blue
+	icon_state = "bomberman4"
+
 
 /obj/item/toy/gasha/corgitoy
 	name = "plush corgi"

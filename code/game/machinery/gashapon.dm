@@ -42,17 +42,6 @@
 
 /obj/item/weapon/capsule/attack_self(mob/M as mob)
 	var/capsule_prize = pick(
-		/obj/item/toy/prize/fireripley,
-		/obj/item/toy/prize/deathripley,
-		/obj/item/toy/prize/durand,
-		/obj/item/toy/prize/gygax,
-		/obj/item/toy/prize/honk,
-		/obj/item/toy/prize/marauder,
-		/obj/item/toy/prize/mauler,
-		/obj/item/toy/prize/odysseus,
-		/obj/item/toy/prize/phazon,
-		/obj/item/toy/prize/ripley,
-		/obj/item/toy/prize/seraph,
 		/obj/item/toy/gasha/greyshirt,
 		/obj/item/toy/gasha/greytide,
 		/obj/item/toy/gasha/corgitoy,
@@ -81,6 +70,9 @@
 		/obj/item/toy/gasha/mime,
 		/obj/item/toy/gasha/captain,
 		/obj/item/toy/gasha/comdom,
+		/obj/item/toy/gasha/doctor,
+		/obj/item/toy/gasha/defsquid,
+		/obj/item/toy/gasha/wizard,
 		/obj/item/toy/gasha/shade,
 		/obj/item/toy/gasha/wraith,
 		/obj/item/toy/gasha/juggernaut,
@@ -93,7 +85,23 @@
 		/obj/item/toy/gasha/beartoy,
 		/obj/item/toy/gasha/carptoy,
 		/obj/item/toy/gasha/monkeytoy,
-		/obj/item/toy/gasha/huggertoy)
+		/obj/item/toy/gasha/huggertoy,
+		/obj/item/toy/gasha/narnar,
+		/obj/item/toy/gasha/quote,
+		/obj/item/toy/gasha/quote/curly,
+		/obj/item/toy/gasha/quote/malco,
+		/obj/item/toy/gasha/quote/scout,
+		/obj/item/toy/gasha/mimiga/sue,
+		/obj/item/toy/gasha/mimiga/toroko,
+		/obj/item/toy/gasha/mimiga/king,
+		/obj/item/toy/gasha/mimiga/chaco,
+		/obj/item/toy/gasha/mario,
+		/obj/item/toy/gasha/mario/luigi,
+		/obj/item/toy/gasha/mario/star,
+		/obj/item/toy/gasha/bomberman/white,
+		/obj/item/toy/gasha/bomberman/black,
+		/obj/item/toy/gasha/bomberman/red,
+		/obj/item/toy/gasha/bomberman/blue)
 
 	var/obj/item/I = new capsule_prize(M)
 	M.u_equip(src, 0)
