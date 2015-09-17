@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - experiment: Meteors no longer get deleted in explosions and can now pass through eachother. Expect much more intense Meteor waves, especially for major ones
