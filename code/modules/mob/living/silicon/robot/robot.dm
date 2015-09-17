@@ -1097,7 +1097,7 @@
 	scrambledcodes = 1
 	modtype = "Synd"
 	faction = list("syndicate")
-	designation = "Syndicate"
+	designation = "Syndicate Assault"
 	req_access = list(access_syndicate)
 
 /mob/living/silicon/robot/syndicate/New(loc)
@@ -1107,6 +1107,14 @@
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
+
+/mob/living/silicon/robot/syndicate/medical
+	icon_state = "syndi-medi"
+	designation = "Syndicate Medical"
+
+/mob/living/silicon/robot/syndicate/medical/New(loc)
+	..()
+	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)

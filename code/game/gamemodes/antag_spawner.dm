@@ -119,15 +119,20 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
 
 /obj/item/weapon/antag_spawner/borg_tele
-	name = "Syndicate Cyborg Teleporter"
-	desc = "A single-use teleporter used to deploy a Syndicate Cyborg on the field."
+	name = "syndicate cyborg teleporter"
+	desc = "A single-use teleporter used to deploy a Syndicate cyborg on the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/TC_cost = 0
+	var/borg_to_spawn
+	var/list/possible_types = list("assault", "medical")
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
 		user << "The teleporter is out of power."
+		return
+	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
+	if(!borg_to_spawn)
 		return
 	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
 	if(borg_candicates.len > 0)
@@ -138,10 +143,18 @@
 		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
+	if(!borg_to_spawn) //If there's no type at all, let it still be used but don't do anything
+		used = 0
+		return
 	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
-	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
+	var/mob/living/silicon/robot/R
+	switch(borg_to_spawn)
+		if("medical")
+			R = new /mob/living/silicon/robot/syndicate/medical(T)
+		else
+			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)

@@ -125,6 +125,15 @@ Borg Hypospray
 
 	if(empty)
 		usr << "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
+
+/obj/item/weapon/reagent_containers/borghypo/syndicate
+	name = "syndicate cyborg hypospray"
+	desc = "A modified hypospray that generates reagents more quickly and consumes less power."
+	icon_state = "borghypo_s"
+	charge_cost = 20
+	recharge_time = 2
+	reagent_ids = list("tricordrazine", "salbutamol", "mannitol", "mutadone", "antitoxin", "potass_iodide")
+
 /*
 Borg Shaker
 */

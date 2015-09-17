@@ -1172,7 +1172,8 @@ var/global/list/common_tools = list(
 	/obj/item/clothing/glasses/sunglasses/gar,\
 	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
 	/obj/item/clothing/glasses/meson/gar,\
-	/obj/item/weapon/twohanded/spear)
+	/obj/item/weapon/twohanded/spear,\
+	/obj/item/weapon/melee/energy/sword/cyborg/saw)
 
 	//Because is_sharp is used for food or something.
 	var/list/sharp_things_2 = list(\
@@ -1427,7 +1428,7 @@ B --><-- A
 		stop_orbit()
 		sleep(1) //sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
 		if (orbiting || !istype(A)) //post sleep re-check
-			return 
+			return
 	orbiting = A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
