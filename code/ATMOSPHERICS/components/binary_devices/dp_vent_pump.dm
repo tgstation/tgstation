@@ -34,8 +34,8 @@
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/New()
 	..()
 
-	air1.volume = 1000
-	air2.volume = 1000
+	air1.volume = 2500
+	air2.volume = 2500
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/update_icon()
 	if(on)
