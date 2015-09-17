@@ -1438,7 +1438,7 @@ B --><-- A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 	spawn
-		while(orbiting && orbiting.loc && orbitid = myid && (!lockinorbit || loc == lastloc))
+		while(orbiting && orbiting.loc && orbitid == myid && (!lockinorbit || loc == lastloc))
 			loc = get_turf(orbiting.loc)
 			lastloc = loc
 			angle += angle_increment
