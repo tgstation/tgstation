@@ -425,9 +425,9 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	M.AdjustStunned(-5)
 	M.AdjustParalysis(-5)
 	M.radiation = max(0,M.radiation -= 3)
-	M.dizziness = max(0, M.dizziness -= 3)
-	M.drowsyness = max(0, M.drowsyness -= 3)
-	M.confused = max(0, M.confused -= 3)
+	M.Dizzy = max(0, M.Dizzy -= 3)
+//	M.drowsyness = max(0, M.drowsyness -= 3)
+//	M.confused = max(0, M.confused -= 3)
 	M.sleeping = 0
 	M.Jitter(5)
 	//You don't "feel pain", you can't even see your health
@@ -446,16 +446,16 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/happyhappy/overdose_process(var/mob/living/M as mob)
 	return
 
-/datum/reagent/drug/happyhappy/proc/disturbing_messages()
+/datum/reagent/drug/happyhappy/proc/disturbing_messages(var/mob/living/M as mob)
 	if(prob(0.3*addiction_stage)) //0.3*10 == 3, 3% chance at addiction stage 1
 		if(prob(66))
 			M.say(pick("I'm going to CUT YOU!", "What was that?", "YOU SAY SOMETHING BITCH!?!!", "37, 37, 38, 38?, 37, 37, 38!, 37", "Kill...", "Kill?", "YES, THAT'S RIGHT MR NUBBINS!!", "The rain in spain causes everybody around me great pain... GREAT PAIN!!!"))
 		else
-			M.emote(pick("giggle", "cries", "hug", "moan", "pale", "aflap", "collapse"))
+			M.emote(pick("giggle", "cries", "moan"))
 
 //Plenty of addiction though!
 /datum/reagent/drug/happyhappy/addiction_act_stage1(var/mob/living/M as mob)
-	disturbing_messages()
+	disturbing_messages(M)
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
