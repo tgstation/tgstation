@@ -135,8 +135,6 @@
 			R.heal_organ_damage(repairs, repairs - 1)
 		if(R.cell)
 			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
-		for(var/obj/item/borg/upgrade/U in occupant)
-			U.recharge_action(occupant)
 
 /obj/machinery/recharge_station/proc/restock_modules()
 	if(occupant)

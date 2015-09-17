@@ -16,8 +16,6 @@
 		return 1
 	return 0
 
-/obj/item/borg/upgrade/proc/recharge_action(mob/living/silicon/robot/R)
-
 /obj/item/borg/upgrade/reset
 	name = "cyborg module reset board"
 	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the cyborg."
@@ -215,12 +213,15 @@
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
-	desc = "This module will repair the cyborg when it is in a cyborg recharger."
+	desc = "This module will repair the cyborg over time."
 	icon_state = "cyborg_upgrade5"
 	require_module = 1
 	var/repair_amount = -1
-	var/repair_cooldown = 0
+	var/repair_tick = 1
 	var/msg_cooldown = 0
+	var/on = 0
+	var/powercost = 10
+	var/mob/living/silicon/robot/cyborg
 
 /obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R)
 	if(..())
@@ -229,17 +230,65 @@
 	if(U)
 		usr << "<span class='warning'>This unit is already equipped with a self-repair module.</span>"
 		return 0
-	R << "<span class='notice'>Self-repair module detected. You will be repaired when inside an active recharge station.</span>"
+	cyborg = R
+	icon_state = "selfrepair_off"
+	action_button_name = "Toggle Self-Repair"
 	return 1
 
-/obj/item/borg/upgrade/selfrepair/recharge_action(mob/living/silicon/robot/R)
-	if(R.stat != DEAD)
-		if( (world.time - 10) > repair_cooldown )
-			if(R.health < R.maxHealth)
-				R.adjustBruteLoss(repair_amount)
-				R.adjustFireLoss(repair_amount)
-				R.updatehealth()
-			repair_cooldown = world.time
-		if( (world.time - 500) > msg_cooldown )
-			R << "<span class='notice'>You are being repaired.</span>"
+/obj/item/borg/upgrade/selfrepair/ui_action_click()
+	on = !on
+	if(on)
+		cyborg << "<span class='notice'>You activate the self-repair module.</span>"
+		SSobj.processing |= src
+	else
+		cyborg << "<span class='notice'>You deactivate the self-repair module.</span>"
+		SSobj.processing -= src
+	update_icon()
+
+/obj/item/borg/upgrade/selfrepair/update_icon()
+	if(cyborg)
+		icon_state = "selfrepair_[on ? "on" : "off"]"
+	else
+		icon_state = "cyborg_upgrade5"
+
+/obj/item/borg/upgrade/selfrepair/proc/deactivate()
+	SSobj.processing -= src
+	on = 0
+	update_icon()
+
+/obj/item/borg/upgrade/selfrepair/process()
+	if(!repair_tick)
+		repair_tick = 1
+		return
+
+	if( cyborg && (cyborg.stat != DEAD) && on)
+		if(cyborg.cell.charge < powercost*2)
+			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
+			deactivate()
+			return
+
+		if(cyborg.health < cyborg.maxHealth)
+			if(cyborg.health < 0)
+				repair_amount = -2.5
+				powercost = 30
+			else
+				repair_amount = -1
+				powercost = 10
+			cyborg.adjustBruteLoss(repair_amount)
+			cyborg.adjustFireLoss(repair_amount)
+			cyborg.updatehealth()
+			cyborg.cell.use(powercost)
+		else
+			cyborg.cell.use(5)
+		repair_tick = 0
+
+		if( (world.time - 2000) > msg_cooldown )
+			var/msgmode = "standby"
+			if(cyborg.health < 0)
+				msgmode = "critical"
+			else if(cyborg.health < cyborg.maxHealth)
+				msgmode = "normal"
+			cyborg << "<span class='notice'>Self-repair is active in <span class='boldnotice'>[msgmode]</span> mode.</span>"
 			msg_cooldown = world.time
+	else
+		deactivate()
