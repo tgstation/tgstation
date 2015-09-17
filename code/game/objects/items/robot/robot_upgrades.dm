@@ -16,6 +16,7 @@
 		return 1
 	return 0
 
+/obj/item/borg/upgrade/proc/recharge_action(mob/living/silicon/robot/R)
 
 /obj/item/borg/upgrade/reset
 	name = "cyborg module reset board"
@@ -197,7 +198,7 @@
 		R.module.rebuild()
 		return 1
 
-/obj/item/borg/upgrade/syndicate/
+/obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
 	icon_state = "cyborg_upgrade3"
@@ -211,3 +212,34 @@
 
 	R.SetEmagged(1)
 	return 1
+
+/obj/item/borg/upgrade/selfrepair
+	name = "self-repair module"
+	desc = "This module will repair the cyborg when it is in a cyborg recharger."
+	icon_state = "cyborg_upgrade5"
+	require_module = 1
+	var/repair_amount = -1
+	var/repair_cooldown = 0
+	var/msg_cooldown = 0
+
+/obj/item/borg/upgrade/selfrepair/action(mob/living/silicon/robot/R)
+	if(..())
+		return 0
+	var/obj/item/borg/upgrade/selfrepair/U = locate() in R
+	if(U)
+		usr << "<span class='warning'>This unit is already equipped with a self-repair module.</span>"
+		return 0
+	R << "<span class='notice'>Self-repair module detected. You will be repaired when inside an active recharge station.</span>"
+	return 1
+
+/obj/item/borg/upgrade/selfrepair/recharge_action(mob/living/silicon/robot/R)
+	if(R.stat != DEAD)
+		if( (world.time - 10) > repair_cooldown )
+			if(R.health < R.maxHealth)
+				R.adjustBruteLoss(repair_amount)
+				R.adjustFireLoss(repair_amount)
+				R.updatehealth()
+			repair_cooldown = world.time
+		if( (world.time - 500) > msg_cooldown )
+			R << "<span class='notice'>You are being repaired.</span>"
+			msg_cooldown = world.time
