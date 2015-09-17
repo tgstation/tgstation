@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - bugfix: Jukebox can be wrenched to shuttle floors now
-  - bugfix: Fixed behaviour of AI-controlled status displays

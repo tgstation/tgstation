@@ -1,4 +1,0 @@
-author: Cyadox
-delete-after: true
-changes:
-  - tweak: Supply Console request forms now show orderer's name and title in header. Shipping Manifest now show orderer's name in header.
