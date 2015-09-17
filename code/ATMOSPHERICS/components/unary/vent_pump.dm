@@ -32,6 +32,8 @@
 
 	machine_flags = MULTITOOL_MENU
 
+	starting_volume = 400 // Previously 200
+
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
 	icon_state = "hout"
