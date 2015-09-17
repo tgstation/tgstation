@@ -2325,7 +2325,7 @@
 "aSK" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/stool,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aSL" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/table/wood/poker,/obj/item/stack/spacecash/c100{amount = 5},/obj/item/stack/spacecash/c10{amount = 10},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aSM" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
-"aSN" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/mob/living/carbon/monkey{name = "Pun Pun"},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
+"aSN" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/mob/living/carbon/monkey{name = "Pun Pun"; unique_name = 0},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/bar)
 "aSO" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
 "aSP" = (/obj/machinery/door/airlock/glass{name = "Kitchen"; req_access_txt = "28"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plasteel{icon_state = "bar"},/area/crew_quarters/kitchen)
 "aSQ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/landmark/start{name = "Cook"},/turf/simulated/floor/plasteel{icon_state = "cafeteria"},/area/crew_quarters/kitchen)
