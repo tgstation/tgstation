@@ -138,83 +138,83 @@ It also contains rune words, which are soon to be removed.
 	<i>Rite of Knowledge:</i> \"karazet nahlizet ego\"<br>\
 	<br><br><br>"*/
 
-	text += "<font color='red'><b>Rite of Translocation</b></font><br>The Rite of Translocation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, the rune will \
+	text += "<font color='red'><b>Teleport</b></font><br>The Rite of Translocation is a unique rite in that it requires a keyword before the scribing can begin. When invoked, the rune will \
 	search for other Rites of Translocation with the same keyword. Assuming one is found, the user will be instantaneously transported to the location of the other rune. If more than two runes are scribed \
 	with the same keyword, it will choose randomly between all eligible runes and send the invoker to one of them.<br><br>"
 
-	text += "<font color='red'><b>Rite of Forced Translocation</b></font><br>The Rite of Forced Translocation, like the Rite of Translocation, works by teleporting the person on the rune to one of the \
+	text += "<font color='red'><b>Teleport Other</b></font><br>The Rite of Forced Translocation, like the Rite of Translocation, works by teleporting the person on the rune to one of the \
 	same keyword. However, this rune will only work on people other than the user, allowing the user to send any living creature somewhere else.<br><br>"
 
-	text += "<font color='red'><b>Rite of Knowledge</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
+	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
 	<br><br>"
 
-	text += "<font color='red'><b>Rite of Enlightenment</b></font><br>The Rite of Enlightment is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
+	text += "<font color='red'><b>Convert</b></font><br>The Rite of Enlightment is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
 	To do this, simply place the crew member upon the rune and invoke it. This may take some time, depending on the amount of cultists nearby. It takes twenty seconds, with each additional cultist shaving \
 	off ten seconds of the conversion. With three or more cultists, conversion is instantaneous. Once invoked, only the original user must remain. If the target is loyalty-implanted or has a null rod in \
 	their possession, this will not work.<br><br>"
 
-	text += "<font color='red'><b>Rite of Tribute</b></font><br>The Rite of Tribute is used to offer sacrifice to the Geometer. Simply place any living creature upon the rune and invoke it (this will not \
+	text += "<font color='red'><b>Sacrifice</b></font><br>The Rite of Tribute is used to offer sacrifice to the Geometer. Simply place any living creature upon the rune and invoke it (this will not \
 	target cultists!). If this creature has a mind, a soul shard will be created and the creature's soul transported to it. This rune is required if the cult's objectives include the sacrifice of a crew \
 	member.<br><br>"
 
-	text += "<font color='red'><b>Rite of Resurrection</b></font><br>The Rite of Resurrection is a delicate rite that requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
+	text += "<font color='red'><b>Raise Dead</b></font><br>The Rite of Resurrection is a delicate rite that requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
 	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to ashes, the life force flowing into the revival target. Assuming the target is not moved \
 	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
 
-	text += "<font color='red'><b>Rite of Obscurity</b></font><br>The Rite of Obscurity is a rite that will cause all nearby runes to become invisible. The runes will still be considered by other rites \
+	text += "<font color='red'><b>Veil Runes</b></font><br>The Rite of Obscurity is a rite that will cause all nearby runes to become invisible. The runes will still be considered by other rites \
 	(such as the Rite of Translocation) but is unusuable directly.<br><br>"
 
-	text += "<font color='red'><b>Rite of True Sight</b></font><br>The Rite of True Sight is the foil of the Rite of Obscurity. It will turn all invisible runes visible once more, in addition to causing \
+	text += "<font color='red'><b>Reveal Runes</b></font><br>The Rite of True Sight is the foil of the Rite of Obscurity. It will turn all invisible runes visible once more, in addition to causing \
 	all spirits nearby to become partially corporeal.<br><br>"
 
-	text += "<font color='red'><b>Rite of False Truths</b></font><br>Many crew men enjoy drawing runes in crayon that resemble spell circles in order to play pranks on their fellow crewmen. The Rite of \
+	text += "<font color='red'><b>Disguise Runes</b></font><br>Many crew men enjoy drawing runes in crayon that resemble spell circles in order to play pranks on their fellow crewmen. The Rite of \
 	False Truths takes advantage of this very joke. When invoked, all nearby runes will appear dull, precisely resembling those drawn in crayon. They still cannot be cleaned by conventional means, so \
 	anyone trying to clean up the rune may become suspicious as it does not respond.<br><br>"
 
-	text += "<font color='red'><b>Rite of Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. The Rite of Disruption may allow you to gain the upper \
+	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. The Rite of Disruption may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location.<br><br>"
 
-	text += "<font color='red'><b>Rite of Astral Communion</b></font><br>The Rite of Astral Communion is perhaps the most ingenious rune that is usable by a single person. Upon invoking the rune, the \
+	text += "<font color='red'><b>Astral Communion</b></font><br>The Rite of Astral Communion is perhaps the most ingenious rune that is usable by a single person. Upon invoking the rune, the \
 	user's spirit will be ripped from their body. In this state, the user's physical body will be locked in place to the rune itself - any attempts to move it will result in the rune pulling it back. \
 	The body will also take constant damage while in this form, and may even die. The user's spirit will contain their consciousness, and will allow them to freely wander the station as a ghost. This may \
 	also be used to commune with the dead.<br><br>"
 
-	text += "<font color='red'><b>Rite of the Corporeal Shield</b></font><br>While simple, the Rite of the Corporeal Shield serves an important purpose in defense and hindering passage. When invoked, the \
+	text += "<font color='red'><b>Form Shield</b></font><br>While simple, the Rite of the Corporeal Shield serves an important purpose in defense and hindering passage. When invoked, the \
 	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
 	undo this effect and allow passage again.<br><br>"
 
-	text += "<font color='red'><b>Rite of the Unheard Whisper</b></font><br>The Rite of the Unheard Whisper is simple. When invoked, it will cause all non-cultists within a radius of seven tiles to become \
+	text += "<font color='red'><b>Deafen</b></font><br>The Rite of the Unheard Whisper is simple. When invoked, it will cause all non-cultists within a radius of seven tiles to become \
 	completely deaf for a large amount of time.<br><br>"
 
-	text += "<font color='red'><b>Rite of the Unseen Glance</b></font><br>Much like the Rite of the Unheard Whisper, the Rite of the Unseen Glance serves a single purpose. Any non-cultists who can see \
+	text += "<font color='red'><b>Blind</b></font><br>Much like the Rite of the Unheard Whisper, the Rite of the Unseen Glance serves a single purpose. Any non-cultists who can see \
 	the rune will instantly be blinded for a substantial amount of time.<br><br>"
 
-	text += "<font color='red'><b>Rite of Disorientation</b></font><br>A somewhat empowered version of the Rite of the Unseen Glance, this rune will cause any non-cultists that can see the rune to become \
+	text += "<font color='red'><b>Stun</b></font><br>A somewhat empowered version of the Rite of the Unseen Glance, this rune will cause any non-cultists that can see the rune to become \
 	disoriented, disabling them for a short time.<br><br>"
 
-	text += "<font color='red'><b>Rite of Joined Souls</b></font><br>The Rite of Joined Souls requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
+	text += "<font color='red'><b>Summon Cultist</b></font><br>The Rite of Joined Souls requires two acolytes to use. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. This will deal a moderate amount of damage to all invokers.<br><br>"
 
-	text += "<font color='red'><b>Rite of Binding</b></font><br>The Rite of Binding is the only way to create talismans. A blank sheet of paper must be on top of the rune, with a valid rune nearby. After \
+	text += "<font color='red'><b>Imbue Talisman</b></font><br>The Rite of Binding is the only way to create talismans. A blank sheet of paper must be on top of the rune, with a valid rune nearby. After \
 	invoking it, the paper will be converted into a talisman, and the rune inlaid upon it.<br><br>"
 
-	text += "<font color='red'><b>Rite of Fabrication</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place five sheets of plasteel on top of the rune \
+	text += "<font color='red'><b>Fabricate Shell</b></font><br>The Rite of Fabrication is the main way of creating construct shells. To use it, one must place five sheets of plasteel on top of the rune \
 	and invoke it. The sheets will them be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
-	text += "<font color='red'><b>Rite of Arming</b></font><br>The Rite of Arming will equip the user with invoker's robes, a backpack, a Nar-Sian longsword, and a pair of boots. Any items that cannot \
+	text += "<font color='red'><b>Summon Arnaments</b></font><br>The Rite of Arming will equip the user with invoker's robes, a backpack, a Nar-Sian longsword, and a pair of boots. Any items that cannot \
 	be equipped will instead not be summoned regardless.<br><br>"
 
-	text += "<font color='red'><b>Rite of Leeching</b></font><br>The Rite of Leeching will drain the life of any non-cultist above the rune and heal the invoker for the same amount.<br><br>"
+	text += "<font color='red'><b>Drain Life</b></font><br>The Rite of Leeching will drain the life of any non-cultist above the rune and heal the invoker for the same amount.<br><br>"
 
-	text += "<font color='red'><b>Rite of Boiling Blood</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the Nar-Sian cult. When invoked, it will do a \
+	text += "<font color='red'><b>Boil Blood</b></font><br>The Rite of Boiling Blood may be considered one of the most dangerous rites composed by the Nar-Sian cult. When invoked, it will do a \
 	massive amount of damage to all non-cultist viewers, but it will also emit an explosion upon invocation. Use with caution<br><br>"
 
-	text += "<font color='red'><b>Rite of Spectral Manifestation</b></font><br>If you wish to bring a spirit back from the dead with a wish for vengeance and desire to serve, the Rite of Spectral \
+	text += "<font color='red'><b>Manifest Spirit</b></font><br>If you wish to bring a spirit back from the dead with a wish for vengeance and desire to serve, the Rite of Spectral \
 	Manifestation can do just that. When invoked, any spirits above the rune will be brought to life as a human wearing nothing that seeks only to serve you and the Geometer. However, the spirit's link \
 	to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, the spirits will dissipate, dropping their items to the ground. You may manifest \
 	multiple spirits with one rune, but you will rapidly take damage in doing so.<br><br>"
 
-	text += "<font color='red'><b><i>Ritual of Dimensional Rending</i></b></font><br>There is only one way to summon the avatar of Nar-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \
+	text += "<font color='red'><b><i>Call Forth The Geometer</i></b></font><br>There is only one way to summon the avatar of Nar-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \
 	comparison to other runes, is very large, requiring a 3x3 space of empty tiles to create. To invoke the rune, nine cultists must stand on the rune, so that all of them are within its circle. Then, \
 	simply invoke it. A brief tearing will be heard as the barrier between dimensions is torn open, and the avatar will come forth.<br><br><br>"
 
@@ -222,17 +222,17 @@ It also contains rune words, which are soon to be removed.
 	rune inlaid within it. The words of the rune can be whispered in order to invoke its effects, although usually to a lesser extent. To create a talisman, simply use a Rite of Binding as described above. \
 	Unless stated otherwise, talismans are invoked by activating them in your hand. A list of valid rites, as well as the effects of their talisman form, can be found below.<br><br><br>"
 
-	text += "<font color='red'><b>Talisman of Translocation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to a randomly chosen rune of the same keyword, then \
+	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Rite of Translocation will transport the invoker to a randomly chosen rune of the same keyword, then \
 	disappear.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Knowledge</b></font><br>This talisman functions identically to the rune. It can be used once, then disappears.<br><br>"
+	text += "<font color='red'><b>Talisman of Tome summoning</b></font><br>This talisman functions identically to the rune. It can be used once, then disappears.<br><br>"
 
-	text += "<font color='red'><b>Talismans of Obscurity, True Sight, and False Truths</b></font><br>These talismans all function identically to their rune counterparts, but with less range. In addition, \
+	text += "<font color='red'><b>Talismans of Veiling, Revealing, and Disguising</b></font><br>These talismans all function identically to their rune counterparts, but with less range. In addition, \
 	the Talisman of True Sight will not reveal spirits. They will disappear after one use.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Disruption</b></font><br>This talisman functions like the Rite of Disruption, but with halved range. It disappears after one use.<br><br>"
+	text += "<font color='red'><b>Talisman of Electromagnets</b></font><br>This talisman functions like the Rite of Disruption. It disappears after one use.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Disorientation</b></font><br>Without this talisman, the cult would have no way of easily acquiring targets to convert. Commonly called \"stunpapers\", this \
+	text += "<font color='red'><b>Talisman of Stunning</b></font><br>Without this talisman, the cult would have no way of easily acquiring targets to convert. Commonly called \"stunpapers\", this \
 	talisman functions differently from others. Rather than simply reading the words, the target must be attacked directly with the talisman. The talisman will then knock down the target for a long \
 	duration in addition to rendering them incapable of speech. Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead."
 
@@ -269,7 +269,7 @@ It also contains rune words, which are soon to be removed.
 						 "<span class='danger'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.apply_damage(1, BRUTE, pick("l_arm", "r_arm"))
+		C.apply_damage(0.1, BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, 50, target = get_turf(user)))
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \

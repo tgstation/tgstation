@@ -51,15 +51,20 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src))
-		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+	if(!istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
+		if(in_range(user, src))
+			if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
+				user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+				onclose(user, "[name]")
+			else
+				user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+				onclose(user, "[name]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << "<span class='notice'>It is too far away.</span>"
 	else
-		user << "<span class='notice'>It is too far away.</span>"
+		if(!iscultist(user))
+			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			return
 
 
 /obj/item/weapon/paper/verb/rename()
