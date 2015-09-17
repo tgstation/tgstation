@@ -191,21 +191,21 @@
 	name = "Submachine Gun Armour Piercing Magazine (9mmAP)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ap"
-	materials = list(MAT_METAL = 6000, MAG_SILVER = 200)
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 200)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
 
 /datum/design/mag_oldsmg/ic_mag
-	name = "Submachine Gun Incindiary Magazine (9mmIC)"
+	name = "Submachine Gun Incendiary Magazine (9mmIC)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ic"
-	materials = list(MAT_METAL = 6000, MAG_SILVER = 200, MAT_GLASS = 800)
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 200, MAT_GLASS = 800)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 
 /datum/design/mag_oldsmg/tx_mag
 	name = "Submachine Gun Urnaium Magazine (9mmTX)"
 	desc = "A 20 round urnaium tipped magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_tx"
-	materials = list(MAT_METAL = 6000, MAG_SILVER = 400, MAG_URNAIUM = 2000)
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 400, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
 
 //SABR Mags
@@ -222,23 +222,23 @@
 
 /datum/design/mag_smg/ap_mag
 	name = "Submachine Gun Armour Piercing Magazine (9mmAP)"
-	desc = "A 42-round armour piercing magazine for the prototype submachine gun. Deals slightly less damage by bypasses most armour"
+	desc = "A 42-round armour piercing magazine for the prototype submachine gun. Deals slightly less damage by bypassing most armour."
 	id = "mag_smg_ap"
-	materials = list(MAT_METAL = 3000, MAG_SILVER = 100)
+	materials = list(MAT_METAL = 3000, MAT_SILVER = 100)
 	build_path = /obj/item/ammo_box/magazine/smgm9mm/ap
 
 /datum/design/mag_smg/incin_mag
-	name = "Submachine Gun Incindiary Magazine (9mmIC)"
-	desc = "A 42-round incindiary round magazine for the prototype submachine gun. Deals significanlty less damage but sets the target on fire"
+	name = "Submachine Gun Incendiary Magazine (9mmIC)"
+	desc = "A 42-round incindiary round magazine for the prototype submachine gun. Deals significantly less damage, but sets the target on fire."
 	id = "mag_smg_ic"
-	materials = list(MAT_METAL = 3000, MAG_SILVER = 100, MAT_GLASS = 400)
+	materials = list(MAT_METAL = 3000, MAT_SILVER = 100, MAT_GLASS = 400)
 	build_path = /obj/item/ammo_box/magazine/smgm9mm/fire
 
 /datum/design/mag_smg/incin_tox
-	name = "Submachine Gun Urnaium Magazine (9mmIC)"
+	name = "Submachine Gun Urnaium Magazine (9mmTX)"
 	desc = "A 42-round urnaium tipped round magazine for the prototype submachine gun. Deals toxin damage, but less overall damage."
 	id = "mag_smg_tx"
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 200, MAG_URNAIUM = 1000)
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 200, MAT_URANIUM = 1000)
 	build_path = /obj/item/ammo_box/magazine/smgm9mm/toxin
 
 /datum/design/stunshell
