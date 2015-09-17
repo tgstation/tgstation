@@ -23,6 +23,9 @@
 #define SOUTH_WEST	128
 
 /proc/calculate_adjacencies(atom/A)
+	if(!A.loc)
+		return 0
+
 	var/adjacencies = 0
 
 	if(A.can_be_unanchored)
@@ -45,6 +48,8 @@
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
+	if(qdeleted(A))
+		return
 	spawn(0) //don't remove this, otherwise smoothing breaks
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
@@ -60,7 +65,6 @@
 			A.overlays += A.top_right_corner
 			A.overlays += A.bottom_right_corner
 			A.overlays += A.bottom_left_corner
-
 
 /proc/make_nw_corner(adjacencies)
 	var/sdir = "i"
