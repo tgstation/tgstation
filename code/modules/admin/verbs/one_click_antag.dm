@@ -232,7 +232,7 @@
 /datum/admins/proc/makeNukeTeam()
 
 	var/datum/game_mode/nuclear/temp = new
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a nuke team being sent in?", "operative", temp)
 	var/list/mob/dead/observer/chosen = list()
 	var/mob/dead/observer/theghost = null
 
@@ -306,7 +306,7 @@
 // DEATH SQUADS
 /datum/admins/proc/makeDeathsquad()
 	var/mission = input("Assign a mission to the deathsquad", "Assign Mission", "Leave no witnesses.")
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an elite Nanotrasen Strike Team?", "deathsquad", null)
 	var/squadSpawned = 0
 
 	if(candidates.len >= 2) //Minimum 2 to be considered a squad
@@ -412,7 +412,7 @@
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered to be a Centcom Official?", "pAI")
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered to be a Centcom Official?", "pAI")
 
 	if(candidates.len)
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
@@ -465,7 +465,7 @@
 			return makeOfficial()
 	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 
 	if(candidates.len > 0)
@@ -558,50 +558,11 @@
 
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null)
-
-	if(candidates.len >= 2)
-		//Oh god why we can't have static functions
-		var/number =  ticker.mode.abductor_teams + 1
-
-		var/datum/game_mode/abduction/temp
-		if(ticker.mode.config_tag == "abduction")
-			temp = ticker.mode
-		else
-			temp = new
-
-		var/agent_mind = pick(candidates)
-		candidates -= agent_mind
-		var/scientist_mind = pick(candidates)
-
-		var/mob/living/carbon/human/agent=makeBody(agent_mind)
-		var/mob/living/carbon/human/scientist=makeBody(scientist_mind)
-
-		agent_mind = agent.mind
-		scientist_mind = scientist.mind
-
-		temp.scientists.len = number
-		temp.agents.len = number
-		temp.abductors.len = 2*number
-		temp.team_objectives.len = number
-		temp.team_names.len = number
-		temp.scientists[number] = scientist_mind
-		temp.agents[number] = agent_mind
-		temp.abductors |= list(agent_mind,scientist_mind)
-		temp.make_abductor_team(number,preset_scientist=scientist_mind,preset_agent=agent_mind)
-		temp.post_setup_team(number)
-
-		ticker.mode.abductor_teams++
-
-		if(ticker.mode.config_tag != "abduction")
-			ticker.mode.abductors |= temp.abductors
-
-		return 1
-	else
-		return
+	new /datum/round_event/abductor
+	return 1
 
 /datum/admins/proc/makeRevenant()
-	var/list/mob/dead/observer/candidates = getCandidates("Do you wish to be considered for becoming a revenant?", "revenant", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for becoming a revenant?", "revenant", null)
 	if(candidates.len >= 1)
 		var/spook_op = pick(candidates)
 		var/mob/dead/observer/O = spook_op
@@ -643,54 +604,3 @@
 		candidates.Remove(H)
 		return 1
 	return 0
-
-/datum/admins/proc/getCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck)
-	var/list/mob/dead/observer/candidates = list()
-	var/time_passed = world.time
-	if (!Question)
-		Question = "Would you like to be a special role?"
-
-	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client)
-			continue
-		if (gametypeCheck)
-			if(!gametypeCheck.age_check(G.client))
-				continue
-		if (jobbanType)
-			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
-				continue
-		spawn(0)
-			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(alert(G,Question,"Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
-						G << 'sound/machines/buzz-sigh.ogg'
-						return
-					candidates += G
-				if("No")
-					G << "<span class='danger'>Choice registered: No.</span>"
-					return
-				else
-					return
-	sleep(300)
-
-	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key || !G.client)
-			candidates.Remove(G)
-
-	return candidates
-
-/datum/admins/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)	return
-
-	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
-
-	G_found.client.prefs.copy_to(new_character)
-	ready_dna(new_character)
-	new_character.key = G_found.key
-
-	return new_character
