@@ -411,28 +411,7 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	color = "#D4EBF2" // rgb: 212, 235, 242
 	addiction_threshold = 1 //stupidly addictive, but powerful
 	overdose_threshold = 0
-
-	var/list/disturbing_dialogue = list(
-	"I'm going to CUT YOU!",
-	"What was that?",
-	"YOU SAY SOMETHING BITCH!?!!",
-	"37, 37, 38, 38?, 37, 37, 38!, 37",
-	"Kill...",
-	"Kill?",
-	"YES, THAT'S RIGHT MR NUBBINS!!",
-	"The rain in spain causes everybody around me great pain... GREAT PAIN!!!"
-	)
-	var/list/disturbing_emotes = list(
-	"giggle",
-	"cries",
-	"hug",
-	"moan",
-	"pale",
-	"aflap",
-	"collapse"
-	)
-
-
+	
 /datum/reagent/drug/happyhappy/on_mob_life(var/mob/living/M as mob)
 	//Heals a bunch of stuff, makes you shaky
 	M.adjustStaminaLoss(-20)
@@ -470,9 +449,26 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/happyhappy/proc/disturbing_messages()
 	if(prob(0.3*addiction_stage)) //0.3*10 == 3, 3% chance at addiction stage 1
 		if(prob(66))
-			M.say(pick(disturbing_dialogue))
+			M.say(pick(list(
+	"I'm going to CUT YOU!",
+	"What was that?",
+	"YOU SAY SOMETHING BITCH!?!!",
+	"37, 37, 38, 38?, 37, 37, 38!, 37",
+	"Kill...",
+	"Kill?",
+	"YES, THAT'S RIGHT MR NUBBINS!!",
+	"The rain in spain causes everybody around me great pain... GREAT PAIN!!!"
+	)))
 		else
-			M.emote(pick(disturbing_emotes))
+			M.emote(pick(list(
+	"giggle",
+	"cries",
+	"hug",
+	"moan",
+	"pale",
+	"aflap",
+	"collapse"
+	)))
 
 //Plenty of addiction though!
 /datum/reagent/drug/happyhappy/addiction_act_stage1(var/mob/living/M as mob)
