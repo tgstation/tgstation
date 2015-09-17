@@ -60,11 +60,20 @@
 		qdel(reagents)
 	..()
 
+var/global/tracking_implants = list() //fuck me
+
 /obj/item/weapon/implant/tracking
 	name = "tracking"
 	desc = "Track with this."
 	var/id = 1.0
 
+/obj/item/weapon/implant/tracking/New()
+	..()
+	tracking_implants += src
+
+/obj/item/weapon/implant/tracking/Destroy()
+	..()
+	tracking_implants -= src
 
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -94,7 +103,7 @@ Implant Specifics:<BR>"}
 			if(prob(60))
 				meltdown()
 		if(2)
-			delay = rand(5*60*10,15*60*10)	//from 5 to 15 minutes of free time
+			delay = rand(5 MINUTES,15 MINUTES)
 
 	spawn(delay)
 		malfunction--
