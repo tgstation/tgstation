@@ -1431,9 +1431,11 @@ B --><-- A
 	orbiting = A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
+	var/lastloc = loc //so we can track atoms moving naturally and break the orbit
 	spawn
-		while(orbiting && orbiting.loc)
+		while(orbiting && orbiting.loc && loc == lastloc)
 			loc = orbiting.loc
+			lastloc = loc
 
 			angle += angle_increment
 
