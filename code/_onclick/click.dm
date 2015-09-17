@@ -92,38 +92,75 @@
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
-		// No adjacency needed
-		if(W)
-			var/resolved = A.attackby(W,src)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
-		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A)
+		// the above ensures adjacency
+		resolveAdjacentClick(src,A,W,params)
 		return
 
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
 		return
 
+	//This block handles attempting to attack a mob in the direction you clicked
+	//without ACTUALLY clicking the mob
+	//(Only handles mobs because it's too complicated to determine which atom to attack)
+	//restricted to harm intent to allow for intricate actions involving turfs adjacent to mobs, etc.
+	if(a_intent == "harm" && (!A.Adjacent(src)) || (!ismob(A) && !istype(A, /obj/item)))
+		var/turf/T = get_turf(A)
+		if(!A.Adjacent(src))
+			var/ddir = get_dir(src,A)
+			T = get_step(src,ddir)
+		if(T)
+			var/list/mobs_here = list()
+			for(var/mob/M in T)
+				if(M.stat == DEAD || M.invisibility || M == src)
+					continue
+				mobs_here += M
+			if(mobs_here.len)
+				var/mob/target = pick(mobs_here)
+				if(target)
+					if(target.Adjacent(src))
+						resolveAdjacentClick(target,W,params)
+						return
+					else //don't ask me how a mob in an adjacent turf can't be adjacent
+						resolveRangedClick(target,W,params)
+						return
+
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
-		if(A.Adjacent(src)) // see adjacent.dm
-			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
-			else
-				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
-				UnarmedAttack(A, 1)
+		if(A.Adjacent(src))
+			resolveAdjacentClick(A,W,params)
 			return
 		else // non-adjacent click
-			if(W)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
-			else
-				RangedAttack(A, params)
+			resolveRangedClick(A,W,params)
+			return
+
+
+//Branching path for Adjacent clicks with or without items
+//DOES NOT ACTUALLY KNOW IF YOU'RE ADJACENT, DO NOT CALL ON IT'S OWN
+/mob/proc/resolveAdjacentClick(atom/A,obj/item/W,params)
+	if(!A)
+		return
+	if(W)
+		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+		var/resolved = A.attackby(W,src,params)
+		if(!resolved && A && W)
+			W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+	else
+		if(ismob(A))
+			changeNext_move(CLICK_CD_MELEE)
+		UnarmedAttack(A,1)
+
+
+//Branching path for Ranged clicks with or without items
+//DOES NOT ACTUALLY KNOW IF YOU'RE RANGED, DO NoT CALL ON IT'S OWN
+/mob/proc/resolveRangedClick(atom/A,obj/item/W,params)
+	if(!A)
+		return
+	if(W)
+		W.afterattack(A,src,0,params) // 0: not Adjacent
+	else
+		RangedAttack(A, params)
+
+
 
 /mob/proc/changeNext_move(num)
 	next_move = world.time + num
@@ -289,9 +326,10 @@
 	else
 		src << "<span class='danger'>You're out of energy!  You need food!</span>"
 
-// Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
+// Simple helper to face another atom, much nicer than byond's dir = get_dir(src,A) which is biased in some ugly ways
+/atom/proc/face_atom(atom/A)
+	if(!A || !x || !y || !A.x || !A.y )
+		return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
@@ -307,6 +345,12 @@
 	else
 		if(dx > 0)	dir = EAST
 		else		dir = WEST
+
+
+/mob/face_atom(atom/A)
+	if( buckled || stat != CONSCIOUS)
+		return
+	..()
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_full.dmi'
