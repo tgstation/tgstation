@@ -1217,7 +1217,6 @@
 #include "code\modules\mob\living\silicon\ai\freelook\chunk.dm"
 #include "code\modules\mob\living\silicon\ai\freelook\eye.dm"
 #include "code\modules\mob\living\silicon\ai\freelook\read_me.dm"
-#include "code\modules\mob\living\silicon\ai\freelook\update_triggers.dm"
 #include "code\modules\mob\living\silicon\pai\death.dm"
 #include "code\modules\mob\living\silicon\pai\examine.dm"
 #include "code\modules\mob\living\silicon\pai\life.dm"
