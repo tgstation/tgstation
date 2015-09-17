@@ -1415,26 +1415,32 @@ B --><-- A
 */
 
 
-/atom/movable/var/atom/orbiting = null
 //This is just so you can stop an orbit.
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
+/atom/movable/var/atom/orbiting = null
+//we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
+/atom/movable/var/orbitid = 0 
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
 	if(!istype(A))
 		return
+	orbitid++
+	var/myid = orbitid
 	if (orbiting)
 		stop_orbit()
-		sleep(1) //sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
-		if (orbiting || !istype(A)) //post sleep re-check
-			return 
+		//sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
+		sleep(1)
+		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
+			return
 	orbiting = A
+	var/lastloc = loc
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 	spawn
-		while(orbiting && orbiting.loc)
-			loc = orbiting.loc
-
+		while(orbiting && orbiting.loc && orbitid = myid && (!lockinorbit || loc == lastloc))
+			loc = get_turf(orbiting.loc)
+			lastloc = loc
 			angle += angle_increment
 
 			var/matrix/shift = matrix(initial_transform)
