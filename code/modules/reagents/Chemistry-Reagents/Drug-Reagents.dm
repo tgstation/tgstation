@@ -449,26 +449,9 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/happyhappy/proc/disturbing_messages()
 	if(prob(0.3*addiction_stage)) //0.3*10 == 3, 3% chance at addiction stage 1
 		if(prob(66))
-			M.say(pick(
-	"I'm going to CUT YOU!",
-	"What was that?",
-	"YOU SAY SOMETHING BITCH!?!!",
-	"37, 37, 38, 38?, 37, 37, 38!, 37",
-	"Kill...",
-	"Kill?",
-	"YES, THAT'S RIGHT MR NUBBINS!!",
-	"The rain in spain causes everybody around me great pain... GREAT PAIN!!!"
-	))
+			M.say(pick("I'm going to CUT YOU!", "What was that?", "YOU SAY SOMETHING BITCH!?!!", "37, 37, 38, 38?, 37, 37, 38!, 37", "Kill...", "Kill?", "YES, THAT'S RIGHT MR NUBBINS!!", "The rain in spain causes everybody around me great pain... GREAT PAIN!!!"))
 		else
-			M.emote(pick(
-	"giggle",
-	"cries",
-	"hug",
-	"moan",
-	"pale",
-	"aflap",
-	"collapse"
-	))
+			M.emote(pick("giggle", "cries", "hug", "moan", "pale", "aflap", "collapse"))
 
 //Plenty of addiction though!
 /datum/reagent/drug/happyhappy/addiction_act_stage1(var/mob/living/M as mob)
