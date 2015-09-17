@@ -52,5 +52,5 @@
 	name = "2happy"
 	id = "2happy"
 	result = "2happy"
-	required_reagants =  list("lipozine" = 1, "morphine" = 1, "krokodil" = 1, "mutagen" = 1, "radium" = 1)
+	required_reagents =  list("lipozine" = 1, "morphine" = 1, "krokodil" = 1, "mutagen" = 1, "radium" = 1)
 	result_amount = 5
