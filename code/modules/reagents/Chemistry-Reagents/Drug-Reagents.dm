@@ -411,7 +411,7 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	color = "#D4EBF2" // rgb: 212, 235, 242
 	addiction_threshold = 1 //stupidly addictive, but powerful
 	overdose_threshold = 0
-	
+
 /datum/reagent/drug/happyhappy/on_mob_life(var/mob/living/M as mob)
 	//Heals a bunch of stuff, makes you shaky
 	M.adjustStaminaLoss(-20)
@@ -424,11 +424,10 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	M.AdjustWeakened(-5)
 	M.AdjustStunned(-5)
 	M.AdjustParalysis(-5)
-// 	Anything commented out needs to be fixed ASAP
-//	M.radiation = max(0,M.radiation -= 3)
-//	M.Dizzy = max(0, M.Dizzy -= 3)
-//	M.drowsyness = max(0, M.drowsyness -= 3)
-//	M.confused = max(0, M.confused -= 3)
+	M.radiation = max(0,M.radiation - 3)
+	M.dizziness = max(0, M.dizziness - 3) //Dizzy is a proc, not a var. You call Dizzy(ammount) to make someone Dizzy
+	M.drowsyness = max(0, M.drowsyness - 3)
+	M.confused = max(0, M.confused - 3)
 	M.sleeping = 0
 	M.Jitter(5)
 	//You don't "feel pain", you can't even see your health
