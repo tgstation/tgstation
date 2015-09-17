@@ -165,3 +165,9 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	..()
+
+/obj/effect/decal/cleanable/salt
+	name = "salt"
+	desc = "A pile of table salt."
+	icon_state = "salt"
+	icon = 'icons/effects/blood.dmi'

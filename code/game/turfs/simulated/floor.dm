@@ -140,6 +140,21 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		return 1
+	if(istype(C, /obj/item/weapon/reagent_containers/food/condiment/saltshaker))
+		var/obj/item/weapon/reagent_containers/food/condiment/saltshaker/S = C
+		var/lets_get_salty = 0
+		for(var/datum/reagent/R in S.reagents)
+			if(R.id == "sodiumchloride" && R.volume >= 1)
+				lets_get_salty = 1
+				break
+		if(!lets_get_salty)
+			user << "<span class='warning'>[S] is out of salt!</span>"
+			return 0
+		if(S.reagents.remove_reagent("sodiumchloride", 1))
+			user.visible_message("<span class='notice'>[user] shakes some salt onto the floor.</span>", \
+								 "<span class='notice'>You shake some salt onto the floor.</span>")
+			new /obj/effect/decal/cleanable/salt(src)
+			return 1
 	return 0
 
 /turf/simulated/floor/singularity_pull(S, current_size)

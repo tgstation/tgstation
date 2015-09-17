@@ -304,11 +304,20 @@
 			if(stepTurf.flags & NOJAUNT)
 				L << "<span class='warning'>Holy energies block your path.</span>"
 				L.notransform = 1
-				spawn(2)
+				spawn(0)
 					L.notransform = 0
-			else
-				L.loc = get_step(L, direct)
-				L.dir = direct
+				return
+			for(var/obj/effect/decal/cleanable/salt/C in stepTurf)
+				if(istype(C))
+					L << "<span class='userdanger'>SALT! YOUR MOST DREADFUL WEAKNESS!</span>"
+					L.invisibility = 0
+					L.notransform = 1
+					spawn(0)
+						L.invisibility = initial(L.invisibility)
+						L.notransform = 0
+				return
+			L.loc = get_step(L, direct)
+			L.dir = direct
 	return 1
 
 

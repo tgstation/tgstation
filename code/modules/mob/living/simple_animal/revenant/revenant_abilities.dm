@@ -7,6 +7,8 @@
 	clothes_req = 0
 	range = 7
 	include_user = 0
+	action_icon_state = "alien_whisper"
+	action_background_icon_state = "bg_revenant"
 
 /obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
@@ -15,8 +17,11 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
+			for(var/mob/M in dead_mob_list)
+				M << "<b>[usr] transmits to [M],</b> \"[msg]\""
 			usr << "<span class='info'><b>You transmit to [M]:</b> [msg]</span>"
-			M << "<span class='deadsay'><b>A strange voice resonates in your head...</b></span><i> [msg]</I>"
+			M << "<span class='deadsay'><b>An alien voice resonates from all around...</b></span><i> \"[msg]\"</I>"
+			add_logs(usr, M, "transmitted \"[msg]\" to")
 
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
@@ -27,6 +32,8 @@
 	charge_max = 200
 	clothes_req = 0
 	range = 1
+	action_icon_state = "knock"
+	action_background_icon_state = "bg_revenant"
 	var/reveal = 80
 	var/stun = 20
 	var/locked = 1
@@ -39,6 +46,7 @@
 		user << "<span class='info'>You have unlocked Overload Lights!</span>"
 		name = "Overload Lights (20E)"
 		panel = "Revenant Abilities"
+		action_icon_state = "emp"
 		locked = 0
 		range = 6
 		charge_counter = charge_max
@@ -74,11 +82,13 @@
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
 	name = "Defile (35E)"
-	desc = "Twists and corrupts the nearby area. Also dispels holy auras on floors, but not salt lines."
+	desc = "Destroys windows and causes nearby humans to become tired. Also dispels holy auras on floors, but not salt lines."
 	panel = "Revenant Abilities (Locked)"
 	charge_max = 200
 	clothes_req = 0
 	range = 1
+	action_icon_state = "knock"
+	action_background_icon_state = "bg_revenant"
 	var/reveal = 100
 	var/stun = 20
 	var/locked = 1
@@ -91,6 +101,7 @@
 		user << "<span class='info'>You have unlocked Defile!</span>"
 		name = "Defile (20E)"
 		panel = "Revenant Abilities"
+		action_icon_state = "statue"
 		locked = 0
 		range = 3
 		charge_counter = charge_max
@@ -102,10 +113,6 @@
 		spawn(0)
 			if(T.flags & NOJAUNT)
 				T.flags -= NOJAUNT
-			if(!istype(T, /turf/simulated/wall/cult) && istype(T, /turf/simulated/wall) && prob(40))
-				T.ChangeTurf(/turf/simulated/wall/cult)
-			if(!istype(T, /turf/simulated/floor/engine/cult) && istype(T, /turf/simulated/floor) && prob(40))
-				T.ChangeTurf(/turf/simulated/floor/engine/cult)
 			for(var/mob/living/carbon/human/human in T.contents)
 				human << "<span class='warning'>You suddenly feel tired.</span>"
 				human.adjustStaminaLoss(35)
@@ -125,6 +132,8 @@
 	charge_max = 150
 	clothes_req = 0
 	range = 1
+	action_icon_state = "knock"
+	action_background_icon_state = "bg_revenant"
 	var/reveal = 60
 	var/stun = 30
 	var/locked = 1
@@ -137,8 +146,9 @@
 		user << "<span class='info'>You have unlocked Malfunction!</span>"
 		name = "Malfunction (15E)"
 		panel = "Revenant Abilities"
+		action_icon_state = "emp"
 		locked = 0
-		range = 4
+		range = 1
 		charge_counter = charge_max
 		return
 	if(!user.castcheck(-15))
@@ -154,6 +164,81 @@
 			for(var/obj/machinery/mach in T.contents)
 				if(prob(10))
 					mach.emag_act(null)
-	empulse(user.loc, 3, 5)
+				else
+					mach.emp_act(1)
 	user.reveal(reveal)
 	user.stun(stun)
+
+
+//Fling Object: Finds the item nearby with the highest throwforce, then multiplies it and throws it at the target.
+/obj/effect/proc_holder/spell/targeted/revenant_throw_item
+	name = "Fling Object (5E)"
+	desc = "Finds the nearest item that hits the hardest when thrown, and throws it really hard."
+	panel = "Revenant Abilities" //Not locked by default
+	charge_max = 50
+	clothes_req = 0
+	action_icon_state = "summons"
+	action_background_icon_state = "bg_revenant"
+	var/stun = 30
+	//Also, no reveal
+
+/obj/effect/proc_holder/spell/targeted/revenant_throw_item/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(!user.castcheck(-5))
+		charge_counter = charge_max
+		return
+	for(var/mob/living/M in targets)
+		var/highest_throw_damage = 0
+		var/obj/object_to_throw = null
+		for(var/obj/O in range(3,user))
+			if(O.throwforce > highest_throw_damage)
+				highest_throw_damage = O.throwforce
+				object_to_throw = O
+		if(!object_to_throw)
+			charge_counter = charge_max
+			return
+		object_to_throw.visible_message("<span class='warning'>[object_to_throw] suddenly glows with an eldritch violet light and rises into the air!</span>")
+		object_to_throw.color = "#7039FF"
+		playsound(object_to_throw,'sound/effects/space_wind.ogg', 100, 1)
+		while(object_to_throw.pixel_y < 10) //A rising effect
+			object_to_throw.pixel_y++
+			sleep(0.3)
+		object_to_throw.visible_message("<span class='warning'><b>[object_to_throw] catapults toward [M]!</b></span>")
+		object_to_throw.throwforce *= 3
+		object_to_throw.throw_at(M, 10, 4, user)
+		object_to_throw.throwforce = initial(object_to_throw.throwforce)
+		object_to_throw.pixel_y = initial(object_to_throw.pixel_y)
+		object_to_throw.color = initial(object_to_throw.color)
+
+
+//Possess: Takes control of a living human with no mind, or slowly drains the essence of one with a mind
+/obj/effect/proc_holder/spell/targeted/revenant_possess
+	name = "Possess (50E)"
+	desc = "Enters a living human. If they have no mind, takes control of their corpse. Otherwise, slowly harvests their essence."
+	panel = "Revenant Abilities (Locked)"
+	charge_max = 600
+	clothes_req = 0
+	range = -1
+	include_user = 1
+	action_icon_state = "knock"
+	action_background_icon_state = "bg_revenant"
+	var/locked = 1
+
+/obj/effect/proc_holder/spell/targeted/revenant_possess/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(locked)
+		if(!user.castcheck(-50))
+			charge_counter = charge_max
+			return
+		user << "<span class='info'>You have unlocked Possess!</span>"
+		name = "Possess (50E)"
+		panel = "Revenant Abilities"
+		action_icon_state = "jaunt"
+		locked = 0
+		range = 1
+		include_user = 0
+		charge_counter = charge_max
+		return
+	if(!user.castcheck(-50))
+		charge_counter = charge_max
+		return
+	for(var/mob/living/carbon/human/M in targets)
+		user.possess(M)
