@@ -42,10 +42,6 @@
 	..()
 
 /mob/living/proc/do_alert_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying)
-	..(A, final_pixel_y)
-	floating = 0
-
 	var/image/I
 	I = image('icons/obj/closet.dmi', A, "cardboard_special", A.layer+1)
 	var/list/viewing = list()
