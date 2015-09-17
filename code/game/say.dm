@@ -39,46 +39,62 @@ var/list/freqtoname = list(
 		return
 	send_speech(message, world.view, speaking)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/Hear() called tick#: [world.time]")
+/atom/movable/proc/Hear(var/datum/speech/speech, var/rendered_speech)
 	return
 
 /atom/movable/proc/can_speak()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/can_speak() called tick#: [world.time]")
 	return 1
 
-/atom/movable/proc/send_speech(message, range, var/datum/language/speaking)
+/atom/movable/proc/send_speech(var/datum/speech/speech, var/range=7)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/send_speech() called tick#: [world.time]")
 	//say_testing(src, "send speech start, msg = [message]; message_range = [range]; language = [speaking ? speaking.name : "None"];")
-	if(isnull(range)) range = 7
-	var/rendered = compose_message(src, speaking, message)
+	if(isnull(range))
+		range = 7
+	var/rendered = render_speech(speech)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, speaking, message)
+		AM.Hear(speech, rendered)
 
-/atom/movable/proc/compose_message(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/compose_message() called tick#: [world.time]")
-	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
-	//Basic span
-	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
-	//Start name span.
-	var/spanpart2 = "<span class='name'>"
-	//Radio freq/name display
-	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
-	//Speaker name
-	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()]"
-	//End name span.
-	var/endspanpart = "</span>"
-	//Message
-	var/messagepart = "<span class='message'>[lang_treat(speaker, speaking, raw_message)]</span></span>"
-	var/trackingpart = compose_track_href(speaker, speaking, raw_message, radio_freq)
-	return "[spanpart1][spanpart2][trackingpart][namepart][trackingpart ? "</a>" : ""]\icon[speaker.GetRadio()][freqpart][compose_job(speaker, speaking, raw_message, radio_freq)][endspanpart][messagepart]"
+/atom/movable/proc/create_speech(var/message, var/frequency=0)
+	var/datum/speech/speech = new
+	speech.message=message
+	speech.frequency=frequency
+	speech.job = get_job(speech)
 
-/atom/movable/proc/compose_track_href(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/compose_track_href() called tick#: [world.time]")
+	speech.name = GetVoice()
+	speech.as_name = get_alt_name()
+
+/atom/movable/proc/render_speech_name(var/datum/speech/speech)
+	// old getVoice-based shit
+	//return "[speech.speaker.GetVoice()][speech.speaker.get_alt_name()]"
+	return "[speech.name][speech.render_as_name()]"
+
+/atom/movable/proc/render_speech(var/datum/speech/speech)
+	var/freqpart = speech.frequency ? "\[[get_radio_name(speech.frequency)]\]" : ""
+	return {"
+		<span class='[speech.render_freq_classes()]'>
+			<span class='name'>
+				[render_speaker_track_start(speech)][render_speech_name(speech)][render_speaker_track_end(speech)]
+				\icon[speech.radio][freqpart]
+				[render_job(speech)]
+			</span>
+			<span class='[speech.render_message_classes()]'>
+				[speech.message]
+			</span>
+		</span>"}
+
+/atom/movable/proc/render_speaker_track_start(var/datum/speech/speech)
 	return ""
 
-/atom/movable/proc/compose_job(atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/compose_job() called tick#: [world.time]")
+/atom/movable/proc/render_speaker_track_end(var/datum/speech/speech)
+	return ""
+
+/atom/movable/proc/get_job(var/datum/speech/speech)
+	return ""
+
+/atom/movable/proc/render_job(var/datum/speech/speech)
+	if(speech.job)
+		return "([speech.job])"
 	return ""
 
 /atom/movable/proc/say_quote(var/text)
@@ -93,29 +109,29 @@ var/list/freqtoname = list(
 
 	return "says, \"[text]\""
 var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost")
-/atom/movable/proc/lang_treat(atom/movable/speaker, var/datum/language/speaking, raw_message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/lang_treat() called tick#: [world.time]")
-	if(speaking)
-		var/overRadio = (istype(speaker, /obj/item/device/radio) || istype(speaker.GetSource(), /obj/item/device/radio))
-		var/atom/movable/AM = speaker.GetSource()
-		if(say_understands((istype(AM) ? AM : speaker),speaking))
+/atom/movable/proc/render_lang(var/datum/speech/speech)
+	var/raw_message=speech.message
+	if(speech.language)
+		var/overRadio = (istype(speech.speaker, /obj/item/device/radio) || istype(speech.speaker.GetSource(), /obj/item/device/radio))
+		var/atom/movable/AM = speech.speaker.GetSource()
+		if(say_understands((istype(AM) ? AM : speech.speaker),speech.language))
 			if(overRadio)
-				return speaking.format_message_radio(speaker, raw_message)
-			return speaking.format_message(speaker, raw_message)
+				return speech.language.format_message_radio(speech.speaker, raw_message)
+			return speech.language.format_message(speech.speaker, raw_message)
 		else
 			if(overRadio)
-				return speaking.format_message_radio(speaker, speaking.scramble(raw_message))
-			return speaking.format_message(speaker, speaking.scramble(raw_message))
+				return speech.language.format_message_radio(speech.speaker, speech.language.scramble(raw_message))
+			return speech.language.format_message(speech.speaker, speech.language.scramble(raw_message))
 
 	else
-		var/atom/movable/AM = speaker.GetSource()
+		var/atom/movable/AM = speech.speaker.GetSource()
 		var/rendered = raw_message
-		if(!say_understands(speaker))
+		if(!say_understands(speech.speaker))
 			rendered = stars(rendered)
 		if(AM)
 			return AM.say_quote(rendered)
 		else
-			return speaker.say_quote(rendered)
+			return speech.speaker.say_quote(rendered)
 	/*else if(message_langs & SPOOKY)
 		return "\icon[ghostimg] <span class='sinister'>Too spooky...</span> \icon[ghostimg]"
 	else if(message_langs & MONKEY)
@@ -149,6 +165,7 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
 
+/* NO YOU FOOL
 /proc/attach_spans(input, list/spans)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/attach_spans() called tick#: [world.time]")
 	return "[message_spans(spans)][input]</span>"
@@ -162,8 +179,12 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 
 	output = "[output]'>"
 	return output
+*/
 
 
+/**
+ * The "voice" of the thing that's speaking.  Shows up as name.
+ */
 /atom/movable/proc/GetVoice()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetVoice() called tick#: [world.time]")
 	return name
@@ -172,6 +193,9 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/IsVocal() called tick#: [world.time]")
 	return 1
 
+/**
+ * The "voice" of the thing that's speaking.  Shows up as name.
+ */
 /atom/movable/proc/get_alt_name()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/get_alt_name() called tick#: [world.time]")
 	return
@@ -181,16 +205,21 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetJob() called tick#: [world.time]")
 	return
 
+/**
+ * Probably used for getting tracking coordinates?
+ * TODO: verify
+ */
 /atom/movable/proc/GetTrack()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetTrack() called tick#: [world.time]")
 	return
 
+/**
+ * What is speaking for us?  Usually src.
+ */
 /atom/movable/proc/GetSource()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetSource() called tick#: [world.time]")
 	return src
 
-/atom/movable/proc/GetRadio()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/GetRadio() called tick#: [world.time]")
+// GetRadio() removed because which radio is used can be different per message. (such as when using :L :R :I macros)
+//  - N3X
 
 /atom/movable/virtualspeaker
 	var/job

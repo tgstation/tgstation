@@ -205,6 +205,7 @@
 #include "code\datums\helper_datums\teleport.dm"
 #include "code\datums\helper_datums\topic_input.dm"
 #include "code\datums\regex\Regex.dm"
+#include "code\datums\saycode\speech.dm"
 #include "code\datums\wires\airlock.dm"
 #include "code\datums\wires\alarm.dm"
 #include "code\datums\wires\apc.dm"

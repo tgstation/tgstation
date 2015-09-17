@@ -94,7 +94,7 @@
 		if(!istype(dongle)) return 0
 		if(dongle.translate_binary) return 1
 
-/mob/living/carbon/human/radio(message, message_mode, raw_message, var/datum/language/speaking)
+/mob/living/carbon/human/radio(var/datum/speech/speech, var/message_mode)
 	. = ..()
 	if(. != 0)
 		return .
@@ -103,32 +103,33 @@
 		if(MODE_HEADSET)
 			if (ears)
 				//say_testing(src, "Talking into our headset")
-				ears.talk_into(src, message, null, speaking)
+				ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if (ears)
 				//say_testing(src, "Talking into our headset")
-				ears.talk_into(src, message, 1, speaking)
+				ears.talk_into(speech, 1)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
 			if (ears)
 				//say_testing(src, "Talking into our dept headset")
-				ears.talk_into(src, message, message_mode, speaking)
+				ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
 			//say_testing(src, "Talking through a radio channel")
-			ears.talk_into(src, message, message_mode, speaking)
+			ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 	return 0
 
 /mob/living/carbon/human/get_alt_name()
 	if(name != GetVoice())
-		return " (as [get_id_name("Unknown")])"
+		return get_id_name("Unknown")
+	return null
 
 /mob/living/carbon/human/proc/forcesay(list/append)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/forcesay() called tick#: [world.time]")

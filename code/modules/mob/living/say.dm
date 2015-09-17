@@ -165,63 +165,70 @@ var/list/department_radio_keys = list(
 		//say_testing(src, "Message mode is [message_mode_name]")
 		message = copytext(message, 3)
 
-	var/datum/language/speaking
+	// SAYCODE 90.0!
+	// We construct our speech object here.
+	var/datum/speech/speech = new ()
+	speech.message=message
+
 	if(!speaking)
-		speaking = parse_language(message)
+		speech.language = parse_language(speech.message)
 		//say_testing(src, "Getting speaking language, [istype(speaking) ? "got [speaking.name]" : "got null"]")
-	if(istype(speaking))
+	if(istype(speech.language))
 		//var/oldmsg = message
-		message = copytext(message,2+length(speaking.key))
+		speech.message = copytext(speech.message,2+length(speaking.key))
 		//say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
-		if(!isnull(speaking))
+		if(!isnull(speech.language))
 			//var/oldmsg = message
-			var/n = speaking
+			var/n = speech.language
 			message = copytext(message,1+length(n))
 			//say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
-			speaking = null
-		speaking = get_default_language()
+			speech.language = null
+		speech.language = get_default_language()
 		//say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
-	message = trim_left(message)
-	if(handle_inherent_channels(message, message_mode, speaking))
+	speech.message = trim_left(speech.message)
+	if(handle_inherent_channels(speech.message, message_mode, speech.language))
 		//say_testing(src, "Handled by inherent channel")
 		return
-	if(!can_speak_vocal(message))
+	if(!can_speak_vocal(speech.message))
 		return
 
 	//parse the language code and consume it
 
 
 	var/message_range = 7
-	var/raw_message = message
-	message = treat_message(message)
-	var/radio_return = radio(message, message_mode, raw_message, speaking)
+	var/raw_message = speech.message
+	speech.message = treat_message(speech.message)
+	var/radio_return = radio(speech.message, message_mode, raw_message, speech.language)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
+
 	if(radio_return & ITALICS)
-		message = "<i>[message]</i>"
+		speech.flags |= SPEECH_ITALICS // Rendering done last.
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 	if(copytext(text, length(text)) == "!")
 		message_range++
 
 
-	send_speech(message, message_range, speaking, src, bubble_type)
+	send_speech(speech, message_range, src, bubble_type)
 	var/turf/T = get_turf(src)
 	log_say("[name]/[key] [T?"(@[T.x],[T.y],[T.z])":"(@[x],[y],[z])"] [speaking ? "As [speaking.name] ":""]: [message]")
 
 	return 1
 
 
-/mob/living/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+/mob/living/Hear(var/datum/speech/speech, var/rendered_message = null)
+	if(!rendered_message)
+		rendered_message = speech.message
 	if(!client)
 		return
 	var/deaf_message
 	var/deaf_type
 	var/type = 2
-	if(speaker != src)
-		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
-			deaf_message = "<span class='name'>[speaker]</span> talks but you cannot hear them."
+	if(speech.speaker != src)
+		if(!speech.frequency) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
+			deaf_message = "<span class='name'>[speech.speaker]</span> talks but you cannot hear them."
 			deaf_type = 1
 		else
 			if(hear_radio_only())
@@ -229,26 +236,27 @@ var/list/department_radio_keys = list(
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	var/atom/movable/AM = speaker.GetSource()
-	if(!say_understands((istype(AM) ? AM : speaker),speaking)|| force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = compose_message(speaker, speaking, raw_message, radio_freq)
+	var/atom/movable/AM = speech.speaker.GetSource()
+	if(!say_understands((istype(AM) ? AM : speech.speaker),speech.language)|| force_compose) //force_compose is so AIs don't end up without their hrefs.
+		message = render_speech(speech)
 	show_message(message, type, deaf_message, deaf_type)
 	return message
 
 /mob/living/proc/hear_radio_only()
 	return 0
 
-/mob/living/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
+/mob/living/send_speech(var/datum/speech/speech, var/message_range=7, var/obj/source = src, var/bubble_type) // what is bubble type?
 	//say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
 	if(isnull(message_range)) message_range = 7
+
 	var/list/listeners = get_hearers_in_view(message_range, source) | observers
 
-	var/rendered = compose_message(src, speaking, message)
+	var/rendered = render_speech(speech)
 
 	for (var/atom/movable/listener in listeners)
-		listener.Hear(rendered, src, speaking, message)
+		listener.Hear(rendered, speech)
 
-	send_speech_bubble(message, bubble_type, listeners)
+	send_speech_bubble(speech, bubble_type, listeners)
 
 /mob/living/proc/say_test(var/text)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/say_test() called tick#: [world.time]")
@@ -358,27 +366,27 @@ var/list/department_radio_keys = list(
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, raw_message, var/datum/language/speaking)
+/mob/living/proc/radio(var/datum/speech/speech)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/radio() called tick#: [world.time]")
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
-				r_hand.talk_into(src, message, null, speaking)
+				r_hand.talk_into(speech)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			if (l_hand)
-				l_hand.talk_into(src, message, null, speaking)
+				l_hand.talk_into(speech)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message, null, speaking)
+				I.talk_into(speech)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_BINARY)
 			if(binarycheck())
-				robot_talk(message)
+				robot_talk(speech.message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 		if(MODE_WHISPER)
-			whisper(raw_message, speaking)
+			whisper(speech.message, speech.speaking)
 			return NOPASS
 	return 0
 

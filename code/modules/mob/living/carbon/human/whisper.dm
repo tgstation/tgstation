@@ -62,7 +62,7 @@
 
 	var/watchers = hearers(5, src) - listeners - eavesdroppers
 
-	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
@@ -72,7 +72,7 @@
 
 	message = stars(message)
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
 
 	for (var/atom/movable/eavesdropper in eavesdroppers)
 		if (eavesdropper)
