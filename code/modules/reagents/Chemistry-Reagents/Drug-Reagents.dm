@@ -433,7 +433,7 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 	)
 
 
-/datum/reagent/drug/happyhappy/on_mob_life(mob/living/M)
+/datum/reagent/drug/happyhappy/on_mob_life(var/mob/living/M as mob)
 	//Heals a bunch of stuff, makes you shaky
 	M.adjustStaminaLoss(-20)
 	M.adjustToxLoss(-10)
@@ -457,14 +457,14 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 		C.hal_screwyhud = 5
 	..()
 
-/datum/reagent/medicine/happyhappy/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/happyhappy/on_mob_delete(var/mob/living/M as mob)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.hal_screwyhud = 0
 	..()
 
 //No overdose since if you don't have this drug in your system you get fucked up by addiction.
-/datum/reagent/drug/happyhappy/overdose_process(mob/living/M)
+/datum/reagent/drug/happyhappy/overdose_process(var/mob/living/M as mob)
 	return
 
 /datum/reagent/drug/happyhappy/proc/disturbing_messages()
@@ -475,28 +475,28 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 			M.emote(pick(disturbing_emotes))
 
 //Plenty of addiction though!
-/datum/reagent/drug/happyhappy/addiction_act_stage1(mob/living/M)
+/datum/reagent/drug/happyhappy/addiction_act_stage1(var/mob/living/M as mob)
 	disturbing_messages()
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	..()
 
-/datum/reagent/drug/happyhappy/addiction_act_stage2(mob/living/M)
+/datum/reagent/drug/happyhappy/addiction_act_stage2(var/mob/living/M as mob)
 	disturbing_messages()
 	M.adjustBrainLoss(3*REM)
 	M.adjustToxLoss(3*REM)
 	M.adjustBruteLoss(3*REM)
 	..()
 
-/datum/reagent/drug/happyhappy/addiction_act_stage3(mob/living/M)
+/datum/reagent/drug/happyhappy/addiction_act_stage3(var/mob/living/M as mob)
 	disturbing_messages()
 	M.adjustBrainLoss(4*REM)
 	M.adjustToxLoss(4*REM)
 	M.adjustBruteLoss(4*REM)
 	..()
 
-/datum/reagent/drug/happyhappy/addiction_act_stage4(mob/living/M)
+/datum/reagent/drug/happyhappy/addiction_act_stage4(var/mob/living/M as mob)
 	disturbing_messages()
 	M.adjustBrainLoss(5*REM)
 	M.adjustToxLoss(5*REM)
