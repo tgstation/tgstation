@@ -353,6 +353,10 @@ var/list/teleport_other_runes = list()
 	grammar = "veri nahlizet certum"
 	var/rune_in_use = 0
 
+/obj/effect/rune/sacrifice/New()
+	..()
+	icon_state = "[rand(1,6)]"
+
 /obj/effect/rune/sacrifice/invoke(mob/living/user)
 	if(rune_in_use)
 		return
@@ -492,7 +496,8 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Raise Dead"
 	cultist_desc = "Requires two corpses. The one placed upon the rune is brought to life, the other is turned to ash."
 	invocation = null //Depends on the name of the user - see below
-	color = rgb(150, 0, 0)
+	icon_state = "1"
+	color = rgb(255, 0, 0)
 	grammar = "nahlizet certum veri"
 
 /obj/effect/rune/raise_dead/invoke(mob/living/user)
@@ -558,10 +563,10 @@ var/list/teleport_other_runes = list()
 //Rite of Obscurity: Turns all runes within a 3-tile radius invisible.
 /obj/effect/rune/hide_runes
 	cultist_name = "Veil Runes"
-	cultist_desc = "Turns nearby runes invisible. They can be revealed by using the Rite of True Sight."
+	cultist_desc = "Turns nearby runes invisible. They can be revealed by using the Reveal Runes rune."
 	invocation = "Kla'atu barada nikt'o!"
-	icon_state = "3"
-	color = rgb(255,255,255)
+	icon_state = "1"
+	color = rgb(0,0,255)
 	grammar = "geeri karazet nahlizet"
 
 /obj/effect/rune/hide_runes/invoke(mob/living/user)
@@ -582,8 +587,8 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Reveal Runes"
 	cultist_desc = "Reveals all invisible objects nearby, from spirits to runes."
 	invocation = "Nikt'o barada kla'atu!"
-	icon_state = "6"
-	color = rgb(255, 162, 33)
+	icon_state = "4"
+	color = rgb(255, 255, 255)
 	grammar = "karazet geeri nahlizet"
 
 /obj/effect/rune/true_sight/invoke()
@@ -617,8 +622,8 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Electromagnetic Disruption"
 	cultist_desc = "Emits a large electromagnetic pulse, hindering electronics and disabling silicons."
 	invocation = "Ta'gh fara'qha fel d'amar det!"
-	icon_state = "1"
-	color = rgb(0, 0, 255)
+	icon_state = "5"
+	color = rgb(255, 0, 0)
 	grammar = "mgar karazet balaq"
 
 /obj/effect/rune/emp/invoke(mob/living/user)
@@ -635,8 +640,8 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Astral Communion"
 	cultist_desc = "Severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
-	icon_state = "1"
-	color = rgb(68, 47, 255)
+	icon_state = "6"
+	color = rgb(0, 0, 255)
 	var/rune_in_use = 0 //One at a time, please!
 	var/mob/living/affecting = null
 	grammar = "veri ire ego"
@@ -706,6 +711,7 @@ var/list/teleport_other_runes = list()
 	cultist_desc = "When invoked, makes the rune block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
+	color = rgb(255, 0, 0)
 	grammar = "mgar ire ego"
 
 /obj/effect/rune/wall/examine(mob/user)
@@ -728,6 +734,8 @@ var/list/teleport_other_runes = list()
 	cultist_desc = "Causes all non-followers nearby to lose their hearing."
 	invocation = "Sti kaliedir!"
 	grammar = "geeri jatkaa karazet"
+	color = rgb(0, 255, 0)
+	icon_state = "4"
 
 /obj/effect/rune/deafen/invoke(mob/living/user)
 	visible_message("<span class='warning'>[src] blurs for a moment before fading away.</span>")
@@ -743,8 +751,8 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Blind"
 	cultist_desc = "Causes all non-followers nearby to lose their sight."
 	invocation = "Sti kaliesin!"
-	icon_state = "1"
-	color = rgb(0, 255, 0)
+	icon_state = "4"
+	color = rgb(0, 0, 255)
 	grammar = "mgar jatkaa karazet"
 
 /obj/effect/rune/blind/invoke(mob/living/user)
@@ -764,7 +772,7 @@ var/list/teleport_other_runes = list()
 	cultist_desc = "Stuns all nearby non-followers for a brief time."
 	invocation = "Fuu ma'jin!"
 	icon_state = "2"
-	color = rgb(150, 0, 255)
+	color = rgb(100, 0, 100)
 	grammar = "certum geeri balaq"
 
 /obj/effect/rune/stun/invoke(mob/living/user)
@@ -821,7 +829,7 @@ var/list/teleport_other_runes = list()
 	cultist_desc = "Transforms papers and valid runes into talismans."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
-	color = rgb(150, 0, 255)
+	color = rgb(0, 0, 255)
 	grammar = "veri balaq certum"
 
 /obj/effect/rune/imbue/invoke(mob/living/user)
