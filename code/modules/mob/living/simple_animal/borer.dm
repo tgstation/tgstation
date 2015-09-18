@@ -192,7 +192,7 @@ var/global/list/borer_avail_unlocks = null
 		return emote(copytext(message, 2))
 
 	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
-		return borer_speak(message)
+		return borer_speak(copytext(message,2))
 
 	if(!host)
 		src << "You have no host to speak to."
@@ -238,8 +238,6 @@ var/global/list/borer_avail_unlocks = null
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/borer_speak() called tick#: [world.time]")
 	if(!message)
 		return
-
-	message = copytext(message,2)
 
 	var/turf/T = get_turf(src)
 	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) Borer Cortical Hivemind: [message]")
