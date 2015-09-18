@@ -959,6 +959,7 @@
 #include "code\modules\detectivework\footprints_and_rag.dm"
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\emoji\emoji_parse.dm"
+#include "code\modules\events\abductor.dm"
 #include "code\modules\events\alien_infestation.dm"
 #include "code\modules\events\anomaly.dm"
 #include "code\modules\events\anomaly_bluespace.dm"
