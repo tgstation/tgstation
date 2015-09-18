@@ -1,3 +1,4 @@
+/*
 var/global/list/borer_attached_verbs = list(
 	///client/proc/borer_bond_brain,
 	/client/proc/borer_borer_speak,
@@ -12,6 +13,7 @@ var/global/list/borer_detached_verbs = list(
 	/client/proc/borer_ventcrawl,
 	/client/proc/borer_hide,
 )
+*/
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock
@@ -52,6 +54,7 @@ var/global/list/borer_avail_unlocks = null
 	var/numChildren=0
 
 	var/datum/research_tree/borer/research
+	var/obj/item/verbs/borer/verb_holder
 
 	// Event handles
 	var/eh_emote
@@ -90,6 +93,10 @@ var/global/list/borer_avail_unlocks = null
 			if(U.id!="")
 				borer_avail_unlocks.Add(U)
 
+// Test variant.
+/mob/living/simple_animal/borer/test/New(var/loc)
+	..(loc,1)
+
 /mob/living/simple_animal/borer/Life()
 	if(timestopped) return 0 //under effects of time magick
 
@@ -106,12 +113,16 @@ var/global/list/borer_avail_unlocks = null
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/proc/update_verbs(var/attached)
+	if(verb_holder)
+		qdel(verb_holder)
 	if(attached)
-		verbs += borer_attached_verbs
-		verbs -= borer_detached_verbs
+		verb_holder=new /obj/item/verbs/borer/attached(src)
+		//verbs += borer_attached_verbs
+		//verbs -= borer_detached_verbs
 	else
-		verbs -= borer_attached_verbs
-		verbs += borer_detached_verbs
+		verb_holder=new /obj/item/verbs/borer/detached(src)
+		//verbs -= borer_attached_verbs
+		//verbs += borer_detached_verbs
 	//src << "<span class='warning'>At the moment, BYOND has a bug where you won't get sent the proper verbs.  If you find your verbs are broken/backwards, right-click on the titlebar and select Client > Reconnect.</span>"
 
 /mob/living/simple_animal/borer/player_panel_controls(var/mob/user)
@@ -220,15 +231,6 @@ var/global/list/borer_avail_unlocks = null
 		stat("Chemicals", chemicals)
 
 // VERBS!
-/client/proc/borer_borer_speak()
-	set category = "Alien"
-	set name = "Borer Speak"
-	set desc = "Communicate with your bretheren"
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.borer_speak()
-
 /mob/living/simple_animal/borer/proc/borer_speak(var/message)
 	set category = "Alien"
 	set name = "Borer Speak"
@@ -255,16 +257,6 @@ var/global/list/borer_avail_unlocks = null
 				controls += ") in [host]"
 
 			M << "<span class='cortical'>Cortical link, <b>[truename]</b>[controls]: [message]</span>"
-
-
-/client/proc/borer_bond_brain()
-	set category = "Alien"
-	set name = "Assume Control"
-	set desc = "Fully connect to the brain of your host."
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.bond_brain()
 
 /mob/living/simple_animal/borer/proc/bond_brain()
 	set category = "Alien"
@@ -311,18 +303,11 @@ var/global/list/borer_avail_unlocks = null
 	host.ckey = src.ckey
 	controlling = 1
 
+	/* Broken
 	host.verbs += /mob/living/carbon/proc/release_control
 	host.verbs += /mob/living/carbon/proc/punish_host
 	host.verbs += /mob/living/carbon/proc/spawn_larvae
-
-/client/proc/borer_kill_host()
-	set category = "Alien"
-	set name = "Kill Host"
-	set desc = "Give the host massive brain damage, killing them nearly instantly."
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.kill_host()
+	*/
 
 /**
  * Kill switch for shit hosts.
@@ -368,15 +353,6 @@ var/global/list/borer_avail_unlocks = null
 			message_admins("Borer [key_name_admin(src)] killed [key_name_admin(host)] for reason: [reason]")
 		detach()
 
-/client/proc/borer_damage_brain()
-	set category = "Alien"
-	set name = "Retard Host"
-	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.damage_brain()
-
 /mob/living/simple_animal/borer/proc/damage_brain()
 	set category = "Alien"
 	set name = "Retard Host"
@@ -404,16 +380,6 @@ var/global/list/borer_avail_unlocks = null
 
 	host.adjustBrainLoss(15)
 
-
-/client/proc/borer_evolve()
-	set category = "Alien"
-	set name = "Evolve"
-	set desc = "Upgrade yourself or your host."
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.evolve()
-
 /mob/living/simple_animal/borer/proc/evolve()
 	set category = "Alien"
 	set name = "Evolve"
@@ -440,16 +406,6 @@ var/global/list/borer_avail_unlocks = null
 		return
 
 	research.display(src)
-
-// HACK
-/client/proc/borer_secrete_chemicals()
-	set category = "Alien"
-	set name = "Secrete Chemicals"
-	set desc = "Push some chemicals into your host's bloodstream."
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.secrete_chemicals()
 
 /mob/living/simple_animal/borer/proc/secrete_chemicals()
 	set category = "Alien"
@@ -511,14 +467,6 @@ var/global/list/borer_avail_unlocks = null
 	host.reagents.add_reagent(chem.name, units)
 	chemicals -= chem.cost*units
 
-/client/proc/borer_abandon_host()
-	set category = "Alien"
-	set name = "Abandon Host"
-	set desc = "Slither out of your host."
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.abandon_host()
 /mob/living/simple_animal/borer/proc/abandon_host()
 	set category = "Alien"
 	set name = "Abandon Host"
@@ -699,15 +647,6 @@ mob/living/simple_animal/borer/proc/detach()
 	src.show_message(args["message"], args["m_type"])
 	host_brain.show_message(args["message"], args["m_type"])
 
-/client/proc/borer_ventcrawl()
-	set name = "Crawl through Vent"
-	set desc = "Enter an air vent and crawl through the pipe system."
-	set category = "Alien"
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.ventcrawl()
-
 /mob/living/simple_animal/borer/proc/ventcrawl()
 	set name = "Crawl through Vent"
 	set desc = "Enter an air vent and crawl through the pipe system."
@@ -728,15 +667,6 @@ mob/living/simple_animal/borer/proc/detach()
 		pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
 	if(B.canmove && pipe)
 		handle_ventcrawl(pipe)
-
-/client/proc/borer_hide()
-	set name = "Hide"
-	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
-
-	var/mob/living/simple_animal/borer/B=mob
-	if(!istype(B)) return
-	B.hide()
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/proc/hide()
