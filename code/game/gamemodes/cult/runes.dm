@@ -287,6 +287,7 @@ var/list/teleport_other_runes = list()
 	icon_state = "3"
 	color = rgb(255, 0, 0)
 	grammar = "certum nahlizet ego"
+	req_cultists = 2
 
 /obj/effect/rune/convert/invoke(mob/living/user)
 	var/list/convertees = list()
@@ -313,19 +314,6 @@ var/list/teleport_other_runes = list()
 		if(iscultist(M))
 			time -= 100
 	time = Clamp(time, 0, 300)
-	if(time)
-		visible_message("<span class='warning'>[src] begins to glow with a sinister light...</span>")
-		for(var/mob/living/M in orange(1,src))
-			if(iscultist(M))
-				if(M != user)
-					M << "<span class='warning'>You have aided [user] in invoking the [cultist_name]. You may now safely depart.</span>"
-				else
-					M << "<span class='warning'>You begin the enlightenment of [new_cultist]. This will take [time / 10] seconds and you must stand still.</span>"
-		new_cultist << "<span class='userdanger'>Your head begins to ache...</span>"
-		if(!do_mob(user, new_cultist, time))
-			visible_message("<span class='warning'>[src] reluctantly falls dark.</span>")
-			new_cultist << "<span class='danger'>Your headache fades.</span>"
-			return
 	if(is_sacrifice_target(new_cultist.mind))
 		for(var/mob/living/M in orange(1,src))
 			if(iscultist(M))
