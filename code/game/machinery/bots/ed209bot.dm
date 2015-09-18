@@ -63,10 +63,12 @@
 	var/idcheck = 1 //If true, arrest people with no IDs
 	var/weaponscheck = 1 //If true, arrest people for weapons if they don't have access
 	//List of weapons that secbots will not arrest for
-	var/safe_weapons = list(\
-	/obj/item/weapon/gun/energy/laser/bluetag,\
-	/obj/item/weapon/gun/energy/laser/redtag,\
-	/obj/item/weapon/gun/energy/laser/practice)
+	var/safe_weapons = list(
+		/obj/item/weapon/gun/energy/laser/bluetag,
+		/obj/item/weapon/gun/energy/laser/redtag,
+		/obj/item/weapon/gun/energy/laser/practice,
+		/obj/item/weapon/gun/hookshot,
+		)
 
 
 /obj/item/weapon/ed209_assembly
