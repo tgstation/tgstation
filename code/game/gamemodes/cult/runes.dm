@@ -309,18 +309,6 @@ var/list/teleport_other_runes = list()
 				if(iscultist(M))
 					M << "<span class='cult'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
 		return
-	var/time = 300
-	for(var/mob/living/M in orange(1,src))
-		if(iscultist(M))
-			time -= 100
-	time = Clamp(time, 0, 300)
-	if(is_sacrifice_target(new_cultist.mind))
-		for(var/mob/living/M in orange(1,src))
-			if(iscultist(M))
-				M << "<span class='cult'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
-				fail_invoke()
-				log_game("Convert rune failed - convertee is sacrifice target")
-				return
 	new_cultist.visible_message("<span class='warning'>[new_cultist] writhes in pain as the markings below them glow a bloody red!</span>", \
 					  			"<span class='userdanger'><i>AAAAAAAAAAAAAA-</i></span>")
 	ticker.mode.add_cultist(new_cultist.mind)
