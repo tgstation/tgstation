@@ -150,7 +150,7 @@
 			dissipate_strength = 1
 			overlays = 0
 			if(chained)
-				overlays = "chain_s1"
+				overlays += "chain_s1"
 			visible_message("<span class='notice'>\The [src] shrinks to a rather pitiful size.</span>")
 		if(STAGE_TWO) //1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them.
 			current_size = 3
@@ -165,7 +165,7 @@
 			dissipate_strength = 5
 			overlays = 0
 			if(chained)
-				overlays = "chain_s3"
+				overlays += "chain_s3"
 			if(growing)
 				visible_message("<span class='notice'>\The [src] noticeably grows in size.</span>")
 			else
@@ -184,7 +184,7 @@
 				dissipate_strength = 20
 				overlays = 0
 				if(chained)
-					overlays = "chain_s5"
+					overlays += "chain_s5"
 				if(growing)
 					visible_message("<span class='notice'>\The [src] expands to a reasonable size.</span>")
 				else
@@ -203,7 +203,7 @@
 				dissipate_strength = 10
 				overlays = 0
 				if(chained)
-					overlays = "chain_s7"
+					overlays += "chain_s7"
 				if(growing)
 					visible_message("<span class='warning'>\The [src] expands to a dangerous size.</span>")
 				else
@@ -219,7 +219,7 @@
 			dissipate = 0 //It cant go smaller due to energy loss.
 			overlays = 0
 			if(chained)
-				overlays = "chain_s9"
+				overlays += "chain_s9"
 			if(growing)
 				visible_message("<span class='danger'><font size='2'>\The [src] has grown out of control!</font></span>")
 			else
@@ -240,7 +240,7 @@
 			dissipate = 0 //It cant go smaller due to e loss
 			event_chance = 25 //Events will fire off more often.
 			if(chained)
-				overlays = "chain_s9"
+				overlays += "chain_s9"
 			visible_message("<span class='sinister'><font size='3'>You witness the creation of a destructive force that cannot possibly be stopped by human hands.</font></span>")
 
 	if(current_size == allowed_size)
@@ -281,13 +281,16 @@
 	// This is causing issues. Do not renable - N3X
 	// Specifically, eat() builds up in the background from taking too long and eventually crashes the singo.
 	//set background = BACKGROUND_ENABLED
-	var/ngrabbed=0
+	//var/ngrabbed=0
 	for(var/atom/X in orange(grav_pull, src))
+		if(X.type == /atom/movable/lighting_overlay)//since there's one on every turf
+			continue
 		// Caps grabbing shit at 100 items.
-		if(ngrabbed==100)
+		//if(ngrabbed==100)
 			//warning("Singularity eat() capped at [ngrabbed]")
-			return
-		ngrabbed++
+			//return
+		//if(!isturf(X))//a stage five singularity has a grav pull of 10, that means it covers 441 turfs (21x21) at every ticks.
+			//ngrabbed++
 		try
 			var/dist = get_dist(X, src)
 			var/obj/machinery/singularity/S = src
@@ -321,7 +324,7 @@
 
 /obj/machinery/singularity/proc/consume(const/atom/A)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/singularity/proc/consume() called tick#: [world.time]")
-	var/gain = A.singularity_act(current_size)
+	var/gain = A.singularity_act(current_size,src)
 	src.energy += gain
 	/*if(istype(A, /obj/))
 		if(isbot(A))
@@ -571,6 +574,10 @@
 		explosion(src.loc,(dist),(dist*2),(dist*4))
 		qdel(src)
 		return(gain)
+	return
+
+/obj/singularity_pull(S, current_size)
+	step_towards(src, S)
 	return
 
 /obj/machinery/singularity/shuttle_act() //Shuttles can't kill the singularity honk
