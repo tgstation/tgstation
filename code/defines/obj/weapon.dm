@@ -110,6 +110,11 @@
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
+	suicide_act(mob/user)
+		viewers(user) << "<span class='danger'>[user] places the [src.name] into \his mouth and honks the horn. </span>"
+		playsound(get_turf(user), 'sound/items/bikehorn.ogg', 100, 1)
+		user.gib()
+		return
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
