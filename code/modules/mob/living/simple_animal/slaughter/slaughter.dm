@@ -72,7 +72,7 @@
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
 	speed = 0
-	boost = world.time + 30
+	boost = world.time + 60
 
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
