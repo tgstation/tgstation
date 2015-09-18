@@ -309,12 +309,6 @@ var/global/datum/controller/gameticker/ticker
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_malf"
-				if("blob") //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
-					cinematic.icon_state = "summary_selfdes"
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -328,8 +322,10 @@ var/global/datum/controller/gameticker/ticker
 	//Otherwise if its a verb it will continue on afterwards.
 	sleep(300)
 
-	if(cinematic)	del(cinematic)		//end the cinematic
-	if(temp_buckle)	del(temp_buckle)	//release everybody
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
+	if(temp_buckle)
+		qdel(temp_buckle)	//release everybody
 	return
 
 
@@ -344,7 +340,7 @@ var/global/datum/controller/gameticker/ticker
 				continue
 			else
 				player.FuckUpGenes(player.create_character())
-				del(player)
+				qdel(player)
 
 
 /datum/controller/gameticker/proc/collect_minds()
