@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Singularities no longer try to pull lighting_overlays, and turfs no longer count toward the 100-items-pull-per-tick cap. AKA Fixed the "large singularities don't pull anything" bug.
-  - tweak: Sending bags of holding into singularities now creates EMPs instead of explosions. On top of that, it removes two thirds of the singularity's energy. If the Singularity is stage two or less (under 500 energy left) it will delete the singularity instead. In other words, Bags of Holding can now reliably destroy singularities, without blowing yourself up at the same time.
-  - tweak: Explosions themselves still affect singularities like they used to (increase their energy, with a small chance of deleting them instead)
