@@ -134,7 +134,7 @@
 			return 0
 		if((faction == "\ref[L]") && !attack_same)
 			return 0
-		if((istraitor(L) || isnukeop(L)) && (faction == "syndicate"))
+		if(isnukeop(L) && (faction == "syndicate"))
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0

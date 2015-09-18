@@ -303,15 +303,6 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
 	cost = 3
 
-/datum/uplink_item/dangerous/viscerator/on_item_spawned(var/obj/I, var/mob/user)
-	if(ticker.mode.name != "double agents")//if the round is double agents, the manhacks will attack anyone but their owner. otherwise, manhacks will attack any non-syndies.
-		return
-	if(istype(I,/obj/item/weapon/grenade/spawnergrenade))
-		var/obj/item/weapon/grenade/spawnergrenade/G = I
-		if(isliving(user))
-			G.owner = user
-	return
-
 /datum/uplink_item/dangerous/gatling
 	name = "Gatling Gun"
 	desc = "A huge minigun. Makes up for its lack of mobility and discretion with sheer firepower. Has 200 bullets."
