@@ -1,0 +1,5 @@
+author: Orzorn
+delete-after: True
+changes:
+  - tweak: Bike horns now play their honk sound when attacking
+  - tweak: Suiciding with a bike horn now gibs the player and honks
