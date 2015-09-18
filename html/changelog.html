@@ -84,6 +84,11 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Deity Link updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Foam, Sprays and the like can now move through tables, racks, computers, vending machines, and R&D machines.</li>
+				<li class="bugfix">Fixes ranged simple_animals' projectiles not moving (basilisks, ranged russians/pirates/hivebots/syndicate agents/xenomorphs).</li>
+				<li class="bugfix">Fixes xenomorph queen's neurotoxin projectiles not moving.</li>
+				<li class="tweak">Viscerators now ignore the player who threw the grenade. If the player is a nuke op, they ignore other nuke ops as well.</li>
+				<li class="tweak">Viscerators now have their sprite change its offset dynamically, just like bees.</li>
+				<li class="tweak">Viscerators now have 66% chance to avoid projectiles (they'll still be hit if you clicked right on their sprite when you fired)</li>
 			</ul>
 			<h3 class="author">Duny updated:</h3>
 			<ul class="changes bgimages16">
@@ -105,6 +110,24 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Intigracy updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="tweak">Firing small items out of a fire extinguisher now takes the object's speed into account, rather than a default value for everything.</li>
+			</ul>
+			<h3 class="author">N3X15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="wip">Borer Overhaul - Borers reworked to be beneficial symbiotes.</li>
+				<li class="wip">Borers have a new Evolve verb to unlock new chems and host abilities. Unlockables can have prerequisites.</li>
+				<li class="bugfix">Borers cannot suicide as host anymore.</li>
+				<li class="bugfix">Borers cannot kill their hosts anymore.</li>
+				<li class="bugfix">Captive brains can hear their host.</li>
+				<li class="bugfix">Borers can hear and see their host's emotes.</li>
+				<li class="bugfix">Ventcrawling as borer fixed.</li>
+				<li class="tweak">Borer thought-speak is more subtle.</li>
+				<li class="tweak">Borers can secrete more chemicals (some of which are unlockable).</li>
+				<li class="tweak">Borers now only have a survive objective.</li>
+				<li class="tweak">Borers are instructed to be helpful and non-dickish.</li>
+				<li class="rscdel">Forced-control on entering host is configurable. Add borer_takeover_immediately to gameconfig.txt to enable.  Default is off.</li>
+				<li class="rscdel">Removed borers' ability to multiply, for now. (Balancing)</li>
+				<li class="rscdel">Removed harmful chems and borer verbs.</li>
+				<li class="rscdel">Removed borer game-mode.  Borers now spawn in vermin events.</li>
 			</ul>
 
 			<h2 class="date">2015.09.17</h2>

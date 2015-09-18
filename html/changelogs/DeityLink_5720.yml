@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Fixes ranged simple_animals' projectiles not moving (basilisks, ranged russians/pirates/hivebots/syndicate agents/xenomorphs).
-  - bugfix: Fixes xenomorph queen's neurotoxin projectiles not moving.

@@ -1,6 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - tweak: Viscerators now ignore the player who threw the grenade. If the player is a nuke op, they ignore other nuke ops as well.
-  - tweak: Viscerators now have their sprite change its offset dynamically, just like bees.
-  - tweak: Viscerators now have 66% chance to avoid projectiles (they'll still be hit if you clicked right on their sprite when you fired)
