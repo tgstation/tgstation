@@ -304,9 +304,17 @@
 		del(A)
 		return
 	A.current = target
+
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(target)
+	A.original = target
+	A.target = U
+	A.current = T
+	A.starting = T
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
-	spawn( 0 )
+	spawn()
+		A.OnFired()
 		A.process()
 	return
 
