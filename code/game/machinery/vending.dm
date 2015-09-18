@@ -137,6 +137,11 @@
 		coinbox.loc = get_turf(src)
 	..()
 
+/obj/machinery/vending/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSMACHINE))
+		return 1
+	return ..()
+
 /obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return

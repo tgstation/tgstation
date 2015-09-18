@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Foam, Sprays and the like can now move through tables, racks, computers, vending machines, and R&D machines.
