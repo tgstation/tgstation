@@ -21,7 +21,7 @@
 		activate(user)
 		add_fingerprint(user)
 		spawn(5)
-			prime()
+			prime(user)
 		return 0
 	return 1
 
@@ -65,7 +65,7 @@
 	return
 
 
-/obj/item/weapon/grenade/proc/activate(mob/user as mob,var/mob/living/L = null)
+/obj/item/weapon/grenade/proc/activate(mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grenade/proc/activate() called tick#: [world.time]")
 	if(active)
 		return
@@ -80,7 +80,7 @@
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 
 	spawn(det_time)
-		prime(L)
+		prime(user)
 		return
 
 

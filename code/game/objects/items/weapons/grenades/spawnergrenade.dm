@@ -28,8 +28,7 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(x, pick(NORTH,SOUTH,EAST,WEST))
 			if(L && istype(L))
-				var/mob/living/spawned = x
-				spawned.faction = "\ref[L]"
+				handle_faction(x,L)
 			// Spawn some hostile critters
 
 	del(src)
