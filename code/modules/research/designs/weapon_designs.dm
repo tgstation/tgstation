@@ -215,7 +215,7 @@
 	name = "WT-550 Auto Gun Urnaium Magazine (9mmTX)"
 	desc = "A 20 round urnaium tipped magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_tx"
-	materials = list(MAT_METAL = 6000, MAT_SILVER = 400, MAT_URNAIUM = 2000)
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 400, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
 
 //SABR Mags
@@ -248,7 +248,7 @@
 	name = "SABR SMG Urnaium Magazine (9mmTX)"
 	desc = "A 30-round urnaium tipped round magazine for the prototype submachine gun. Deals toxin damage, but less overall damage."
 	id = "mag_smg_tx"
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 200, MAT_URNAIUM = 1000)
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 200, MAT_URANIUM = 1000)
 	build_path = /obj/item/ammo_box/magazine/smgm9mm/toxin
 
 /datum/design/stunshell
