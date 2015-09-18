@@ -87,7 +87,7 @@
 		if(VERM_BATS)
 			spawn_types = /mob/living/simple_animal/hostile/scarybat
 			vermstring = "bats"
-		if(VERM_BATS)
+		if(VERM_BORERS)
 			spawn_types = /mob/living/simple_animal/borer
 			vermstring = "borers"
 			max_number = 5
