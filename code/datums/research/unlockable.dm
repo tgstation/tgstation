@@ -3,8 +3,9 @@
 	var/name=""
 	var/desc=""
 	var/cost=0 // Cost to unlock
+	var/cost_units=""
 	var/time=0 // Time to unlock
-	var/unlocked=1
+	var/unlocked=0
 	//var/remove_on_detach=1
 
 	var/list/prerequisites=list()
@@ -15,9 +16,10 @@
 	tree = T
 
 /datum/unlockable/proc/check_prerequisites()
-	for(var/prereq in prerequisites)
-		if(!(prereq in tree.unlocked))
-			return 0
+	if(prerequisites.len>0)
+		for(var/prereq in prerequisites)
+			if(!(prereq in tree.unlocked))
+				return 0
 	return 1
 
 // INTERNAL: Begin unlocking process.
@@ -49,7 +51,21 @@
 
 
 /datum/unlockable/proc/toTableRow(var/datum/research_tree/tree, var/mob/user)
-	return "<tr><th><a href=\"?src=\ref[tree];user=\ref[user];unlock=[id]\">[name]</a></th><td>[desc]</td></tr>"
+	return {"
+	<tr>
+		<th>
+			<a href="?src=\ref[tree];user=\ref[user];unlock=[id]">[name]</a>
+		</th>
+		<th>
+			[cost][cost_units]
+		</th>
+		<th>
+			[altFormatTimeDuration(time)]
+		</th>
+	</tr>
+	<tr>
+		<td colspan="3">[desc]</td>
+	</tr>"}
 
 /**
  * additional checks to perform when unlocking things.

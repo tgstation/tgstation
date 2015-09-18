@@ -11,6 +11,7 @@
 	return borer_avail_unlocks
 
 /datum/unlockable/borer
+	cost_units = "C"
 	var/remove_on_detach=1
 	var/mob/living/simple_animal/borer/borer
 
@@ -52,7 +53,7 @@
 	id = "inaprovaline"
 	name = "Inaprovaline Secretion"
 	desc = "Learn how to synthesize inaprovaline."
-	cost = 20
+	cost = 100
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/inaprovaline
 
@@ -60,7 +61,7 @@
 	id = "space_drugs"
 	name = "Space Drug Secretion"
 	desc = "Learn how to synthesize space drugs."
-	cost = 10
+	cost = 50
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/space_drugs
 
@@ -68,7 +69,7 @@
 	id = "paracetamol"
 	name = "Paracetamol Secretion"
 	desc = "Learn how to synthesize painkillers."
-	cost = 20
+	cost = 100
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/paracetamol
 
@@ -77,7 +78,7 @@
 	id = "kelotane"
 	name = "Kelotane Secretion"
 	desc = "Learn how to synthesize kelotane."
-	cost = 20
+	cost = 100
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/kelotane
 
@@ -85,7 +86,7 @@
 	id = "dermaline"
 	name = "Dermaline Secretion"
 	desc = "Learn how to synthesize dermaline."
-	cost = 30
+	cost = 150
 	time = 20 SECONDS
 	chem_type = /datum/borer_chem/unlockable/dermaline
 	prerequisites=list("kelotane")
@@ -95,7 +96,7 @@
 	id = "dexalin"
 	name = "Dexalin Secretion"
 	desc = "Learn how to synthesize dexalin."
-	cost = 20
+	cost = 100
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/dexalin
 
@@ -103,7 +104,7 @@
 	id = "dexalinp"
 	name = "Dexalin+ Secretion"
 	desc = "Learn how to synthesize Dexalin+."
-	cost = 30
+	cost = 150
 	time = 20 SECONDS
 	chem_type = /datum/borer_chem/unlockable/dexalinp
 	prerequisites=list("dexalin")
@@ -150,7 +151,7 @@
 	id = "sober"
 	name = "Liver Function Boost"
 	desc = "Your host's liver is able to handle massive quantities of alcohol."
-	cost = 35
+	cost = 200
 	time = 30 SECONDS
 	gene_name = "SOBER"
 
@@ -158,7 +159,7 @@
 	id = "run"
 	name = "Enhanced Metabolism"
 	desc = "Modifies your host to run faster."
-	cost = 30
+	cost = 150
 	time = 20 SECONDS
 	gene_name = "INCREASERUN"
 	prerequisites=list("sober")
@@ -168,7 +169,7 @@
 	id = "farsight"
 	name = "Telephoto Vision"
 	desc = "Adjusts your host's eyes to see farther."
-	cost = 40
+	cost = 200
 	time = 1 MINUTES
 	gene_name = "FARSIGHT"
 
@@ -176,7 +177,7 @@
 	id = "run"
 	name = "High-Energy Vision"
 	desc = "Adjusts your host's eyes to see in the X-Ray spectrum."
-	cost = 40
+	cost = 200
 	time = 2 MINUTES
 	gene_name = "XRAYBLOCK"
 	prerequisites=list("farsight")
