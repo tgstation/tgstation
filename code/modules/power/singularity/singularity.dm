@@ -281,16 +281,16 @@
 	// This is causing issues. Do not renable - N3X
 	// Specifically, eat() builds up in the background from taking too long and eventually crashes the singo.
 	//set background = BACKGROUND_ENABLED
-	var/ngrabbed=0
+	//var/ngrabbed=0
 	for(var/atom/X in orange(grav_pull, src))
-		if(istype(X,/atom/movable/lighting_overlay))//god that's disgusting
+		if(X.type == /atom/movable/lighting_overlay)//since there's one on every turf
 			continue
 		// Caps grabbing shit at 100 items.
-		if(ngrabbed==100)
+		//if(ngrabbed==100)
 			//warning("Singularity eat() capped at [ngrabbed]")
-			return
-		if(!isturf(X))//a stage five singularity has a grav pull of 10, that means it covers 441 turfs (21x21) at every ticks.
-			ngrabbed++
+			//return
+		//if(!isturf(X))//a stage five singularity has a grav pull of 10, that means it covers 441 turfs (21x21) at every ticks.
+			//ngrabbed++
 		try
 			var/dist = get_dist(X, src)
 			var/obj/machinery/singularity/S = src
