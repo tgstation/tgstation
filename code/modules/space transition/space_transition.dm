@@ -83,12 +83,12 @@ var/list/z_levels_list = list()
 //MAP_NAME must be the same as the name of the [map].dm file
 
 /proc/setup_map_transitions()
-	var/configtext = return_file_text("_maps/[MAP_NAME].dm")
-	var/list/zlist
+	var/configtext = return_file_text("[config.relative_maps_path][MAP_NAME].dm")
+	var/list/zlist = list()
 	var/datum/space_level/D
 	var/datum/regex/initresults = regex_find(configtext, "zlevel amount:(\\d+)")
-	var/zlen = initresults.str(2)
-	for(var/i, i>zlen, i++)
+	var/zlen = text2num(initresults.str(2))
+	for(var/i = 1, i<=zlen, i++)
 		var/datum/regex/results = regex_find(configtext, "(\\w+)\\.dmm\"\\/\\/([i]) (unlinked|linked)")
 		D = new()
 		D.name = results.str(2)
