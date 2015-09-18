@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-  - tweak: Firing small items out of a fire extinguisher now takes the object's speed into account, rather than a default value for everything.

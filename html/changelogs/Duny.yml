@@ -1,16 +1,2 @@
 author: Duny
-changes: 
-  - wip: Added some scrubbers and vents and removed a few firelocks to avoid confusing situations for air alarms and make cleaning specific areas less annoying.
-  - bugfix: Fixed that one firelock in medbay facing the wrong direction.
-  - tweak: Expanded the mechanics workshop, added disposals and maintenance access.
-  - tweak: Mechanics now have access to the specific engineering airlocks required to access telecomms.
-  - tweak: Removed the security officer locker in arrivals checkpoint.
-  - bugfix: The EVA doors leading to the bridge and heads of staff meeting room now properly require head access.
-  - wip: Attempted to make the threatment area in medbay less busy by compressing genetics and moving cryo away from the beds and closer to the entrance. Removed phalanximine from the map.
-  - bugfix: The AI core no longer eats half of the abandoned boxing ring.
-  - tweak: The abandoned incinerator has been given its own (empty) APC and area, similar to the diner. The output pump leading into space has been moved inside.
-  - bugfix: Added a request console to the CE's office.
-  - tweak: Added ion rifles and shotguns along with some ammo to the armory.
-  - tweak: Added a defibrilator to both stations on the asteroid.
-  - tweak: Added a message monitor console in the server room. Moved the accounts database there.
-  - wip: Moved robotics down to make room for a proper entrance to science, sadly this means robotics and rnd are no longer next to each other though still close. The door will also open to those with upload access and allows access to the AI upload. The core itself is still accessible only through robotics (or an additional door hack).
+changes: []
