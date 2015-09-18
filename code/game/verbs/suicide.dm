@@ -16,6 +16,11 @@
 		src << "<span class='sinister'>BUT WHY? I'M SO HAPPY!</span>"
 		return
 
+	var/mob/living/simple_animal/borer/B=has_brain_worms()
+	if (B && B.controlling) // Borer
+		src << "You cannot suicide as your host, you dick."
+		return
+
 	var/permitted = 1
 	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
 	for(var/T in allowed)
@@ -130,6 +135,12 @@
 	if (suiciding)
 		src << "You're already committing suicide! Be patient!"
 		return
+
+	var/mob/living/simple_animal/borer/B=has_brain_worms()
+	if (B && B.controlling) // Borer
+		src << "You cannot suicide as your host, you dick."
+		return
+
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 

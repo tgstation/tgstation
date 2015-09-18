@@ -7,6 +7,29 @@
 /proc/worldtime2text(timestamp = world.time)
 	return "[(round(timestamp / 36000) + 12) % 24]:[(timestamp / 600 % 60) < 10 ? add_zero(timestamp / 600 % 60, 1) : timestamp / 600 % 60]"
 
+
+/proc/formatTimeDuration(var/deciseconds)
+	var/m = round(deciseconds / 600)
+	var/s = (deciseconds % 600)/10
+	var/h = round(m / 60)
+	m = m % 60
+	if(h>0)
+		. += "[h]:"
+	if(h>0 || m > 0)
+		. += "[(m<10)?"0":""][m]:"
+	. += "[(s<10)?"0":""][s]"
+
+/proc/altFormatTimeDuration(var/deciseconds)
+	var/m = round(deciseconds / 600)
+	var/s = (deciseconds % 600)/10
+	var/h = round(m / 60)
+	m = m % 60
+	if(h > 0)
+		. += "[h]h "
+	if(m > 0)
+		. += "[m]m "
+	. += "[s]s"
+
 /proc/time_stamp()
 	return time2text(world.timeofday, "hh:mm:ss")
 

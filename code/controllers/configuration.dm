@@ -70,6 +70,8 @@
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
 
+	var/borer_takeover_immediately = 0
+
 	var/disable_player_mice = 0
 	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
 
@@ -584,6 +586,8 @@
 					config.silent_ai = 1
 				if("silent_borg")
 					config.silent_borg = 1
+				if("borer_takeover_immediately")
+					config.borer_takeover_immediately = 1
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
