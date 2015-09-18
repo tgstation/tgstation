@@ -640,8 +640,8 @@
 	else if(href_list["sellcrew"]) //sell a crewmember
 		var/sold = remove_crewmember()
 		last_spaceport_action = "You sold your crewmember, [sold]!"
-		fuel += 15
-		food += 15
+		fuel += 7
+		food += 7
 		event()
 
 	else if(href_list["leave_spaceport"])
@@ -900,7 +900,7 @@
 
 				//Sell crew
 				if(settlers.len > 1)
-					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];sellcrew=1'>Sell crew for Fuel and Food (+15FU,+15FO)</a></P>"
+					eventdat += "<P ALIGN=Right><a href='byond://?src=\ref[src];sellcrew=1'>Sell crew for Fuel and Food (+7FU,+7FO)</a></P>"
 				else
 					eventdat += "<P ALIGN=Right>Cant afford to sell a Crewmember</P>"
 

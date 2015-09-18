@@ -5,11 +5,11 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	w_class = 3.0
+	w_class = 3
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	burn_state = 0 //Burnable
 	var/mopping = 0
@@ -47,9 +47,9 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(istype(turf))
 		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
 
-		if(do_after(user, mopspeed, target = src))
-			clean(turf)
+		if(do_after(user, src.mopspeed, target = turf))
 			user << "<span class='notice'>You finish mopping.</span>"
+			clean(turf)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)

@@ -30,7 +30,7 @@
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
-	var/wires = 0.0
+	var/wires = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
 /obj/item/robot_parts/head
@@ -321,7 +321,7 @@
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wires = 1.0
+			src.wires = 1
 			user << "<span class='notice'>You insert the wire.</span>"
 		else
 			user << "<span class='warning'>You need one length of coil to wire it!</span>"

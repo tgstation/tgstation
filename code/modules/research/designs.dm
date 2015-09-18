@@ -24,7 +24,7 @@ Design Guidlines
 reliability_mod (starts at 0, gets improved through experimentation). Example: PACMAN generator. 79 base reliablity + 6 tech
 (3 plasmatech, 3 powerstorage) + 0 (since it's completely new) = 85% reliability. Reliability is the chance it works CORRECTLY.
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
-- A single sheet of anything is 3750 units of material. Materials besides metal/glass require help from other jobs (mining for
+- A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
@@ -65,13 +65,13 @@ other types of metals and chemistry for reagents).
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = 1
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	src.pixel_x = rand(-5, 5)
+	src.pixel_y = rand(-5, 5)
 
 ///////////////////////////////////
 /////Non-Board Computer Stuff//////
@@ -142,7 +142,7 @@ other types of metals and chemistry for reagents).
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) //Yes, a whole diamond is needed.
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
 	category = list("Mining Designs")

@@ -70,8 +70,6 @@ Mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
-	l_pocket = /obj/item/weapon/bikehorn
-	r_pocket = /obj/item/toy/crayon/rainbow
 	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
 		/obj/item/toy/crayon/mime=1)
 

@@ -2,13 +2,18 @@
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
-	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
-	var/list/grantwords = list("travel", "see", "hell", "tech", "destroy", "other", "hide")
 	var/list/cult_objectives = list()
 
 
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+
+/proc/is_sacrifice_target(datum/mind/mind)
+	if(ticker.mode.name == "cult")
+		var/datum/game_mode/cult/cult_mode = ticker.mode
+		if(mind == cult_mode.sacrifice_target)
+			return 1
+	return 0
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
@@ -16,7 +21,7 @@
 	if(isloyal(mind.current))
 		return 0
 	if (ticker.mode.name == "cult")		//redundent?
-		if(mind.current == ticker.mode.sacrifice_target)	return 0
+		if(is_sacrifice_target(mind))	return 0
 	return 1
 
 /proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
@@ -27,6 +32,8 @@
 	else
 		user.whisper("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
+	if(!user)
+		return
 	if(say)
 		user.say(message)
 	else
@@ -54,13 +61,12 @@
 
 	var/finished = 0
 
-	var/list/startwords = list("blood","join","self","hell")
-	var/list/secondwords = list("travel", "see", "tech", "destroy", "other", "hide")
-
 	var/eldergod = 1 //for the summon god objective
 
 	var/acolytes_needed = 10 //for the survive objective
 	var/acolytes_survived = 0
+
+	var/datum/mind/sacrifice_target = null//The target to be sacrificed
 
 
 /datum/game_mode/cult/announce()
@@ -86,6 +92,7 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
+	acolytes_needed = max(2, round(num_players()/5)) //Scales the escape requirement with the amount of people in the round
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -120,10 +127,8 @@
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-//		grant_runeword(cult_mind.current)
-//		grant_secondword(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current << "<span class='notice'>You are a member of the cult!</span>"
+		cult_mind.current << "<span class='userdanger'>You are a member of the cult!</span>"
 		memorize_cult_objectives(cult_mind)
 	..()
 
@@ -136,24 +141,18 @@
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
 				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
+					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the Rite of Tribute and three acolytes to do so."
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+				explanation = "Summon Nar-Sie via the use of the Ritual of Dimensional Rending. It will only work if nine cultists stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-	cult_mind.current << "The Geometer of Blood grants you the knowledge to sacrifice non-believers. (Hell Blood Join)"
-	cult_mind.memory += "The Geometer of Blood grants you the knowledge to sacrifice non-believers. (Hell Blood Join)<BR>"
-	for(var/startingword in startwords)
-		grant_runeword(cult_mind.current,startingword)
-//	grant_runeword(cult_mind.current,"blood")
-//	grant_runeword(cult_mind.current,"hell")
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
 		return
-
+	mob.cult_add_comm()
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
 			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
@@ -169,68 +168,16 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
-	if (!where)
+	if(!where)
 		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
 	else
-		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others."
+		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well, and remember - you are not the only one."
 		mob.update_icons()
 		if(where == "backpack")
 			var/obj/item/weapon/storage/B = mob.back
 			B.orient2hud(mob)
 			B.show_to(mob)
 		return 1
-
-
-//datum/game_mode/cult/proc/grant_secondword(mob/living/carbon/human/cult_mob, var/word)
-//	if (!word)
-//		if(secondwords.len > 0)
-//			word=pick(secondwords)
-//			secondwords -= word
-//			grant_runeword(cult_mob,word)
-
-//datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-//	if (!word)
-//		if(startwords.len > 0)
-//			word=pick(startwords)
-//			startwords -= word
-//	return ..(cult_mob,word)
-
-/datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
-	if(!wordtravel)
-		runerandom()
-	if (!word)
-		word=pick(grantwords)
-	var/wordexp
-	switch(word)
-		if("travel")
-			wordexp = "[wordtravel] is travel..."
-		if("blood")
-			wordexp = "[wordblood] is blood..."
-		if("join")
-			wordexp = "[wordjoin] is join..."
-		if("hell")
-			wordexp = "[wordhell] is Hell..."
-		if("self")
-			wordexp = "[wordself] is self..."
-		if("see")
-			wordexp = "[wordsee] is see..."
-		if("tech")
-			wordexp = "[wordtech] is technology..."
-		if("destroy")
-			wordexp = "[worddestr] is destroy..."
-		if("other")
-			wordexp = "[wordother] is other..."
-//		if("hear")
-//			wordexp = "[wordhear] is hear..."
-//		if("free")
-//			wordexp = "[wordfree] is free..."
-		if("hide")
-			wordexp = "[wordhide] is hide..."
-	cult_mob << "<span class='danger'>[pick("You remember something from the dark teachings of your master","You hear a dark voice on the wind","Black blood oozes into your vision and forms into symbols","You catch a brief glimmer of the otherside")]... [wordexp]</span>"
-	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
-	cult_mob.mind.cult_words += word
-	if(cult_mob.mind.cult_words.len == allwords.len)
-		cult_mob << "\green You feel enlightened, as if you have gained all the secrets of the other side."
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
@@ -258,7 +205,6 @@
 		cult_mind.current.Paralyse(5)
 		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span>"
 		cult_mind.memory = ""
-		cult_mind.cult_words = initial(cult_mind.cult_words)
 		update_cult_icons_removed(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has renounced the cult!</span>"
 		if(show_message)

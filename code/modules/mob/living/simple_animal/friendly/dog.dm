@@ -55,12 +55,6 @@
 	..()
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/dog/corgi/sac_act(obj/effect/rune/R, victim) //Still the best thing in this game
-	usr << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
-	usr.reagents.add_reagent("hell_water", 2)
-	R.stone_or_gib(victim)
-
-
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
 	user.set_machine(src)
 	if(user.stat) return

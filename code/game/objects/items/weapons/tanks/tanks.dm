@@ -10,8 +10,8 @@
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 
-	force = 5.0
-	throwforce = 10.0
+	force = 5
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
 
@@ -19,6 +19,16 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+
+/obj/item/weapon/tank/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+
+	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	sleep(3)
+	if (H && !qdeleted(H))
+		H.gib()
+	return
 
 /obj/item/weapon/tank/New()
 	..()

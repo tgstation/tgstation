@@ -84,11 +84,11 @@
 
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			health -= 150
-		if(2.0)
+		if(2)
 			health -= 100
-		if(3.0)
+		if(3)
 			health -= 50
 	healthcheck()
 
@@ -218,7 +218,7 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
-	var/damage = I.force / 4.0
+	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))
@@ -309,6 +309,7 @@
 	anchored = 1
 	var/health = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	layer = MOB_LAYER
 
 
 /obj/structure/alien/egg/New()

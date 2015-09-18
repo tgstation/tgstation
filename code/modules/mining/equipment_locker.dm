@@ -7,7 +7,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_access = list(access_mineral_storeroom)
@@ -257,7 +257,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    50),
@@ -440,7 +440,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -719,7 +719,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -774,7 +774,7 @@
 	name = "mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
@@ -805,7 +805,7 @@
 	name = "advanced mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 0
