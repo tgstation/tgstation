@@ -76,6 +76,7 @@ var/list/uplink_items = list()
 		var/obj/I = spawn_item(get_turf(user), U, user)
 		if(!I)
 			return 0
+		on_item_spawned(I,user)
 		var/icon/tempimage = icon(I.icon, I.icon_state)
 		end_icons += tempimage
 		var/tempstate = end_icons.len
@@ -97,6 +98,9 @@ var/list/uplink_items = list()
 
 		return 1
 	return 0
+
+/datum/uplink_item/proc/on_item_spawned(var/obj/I, var/mob/user)
+	return
 
 /*
 //
@@ -298,6 +302,15 @@ var/list/uplink_items = list()
 	desc = "A single grenade containing a pair of incredibly destructive viscerators. Be aware that they will attack any nearby targets, including yourself. Emits a blinding flash upon detonation."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks/syndicate
 	cost = 3
+
+/datum/uplink_item/dangerous/viscerator/on_item_spawned(var/obj/I, var/mob/user)
+	if(ticker.mode.name != "double agents")//if the round is double agents, the manhacks will attack anyone but their owner. otherwise, manhacks will attack any non-syndies.
+		return
+	if(istype(I,/obj/item/weapon/grenade/spawnergrenade))
+		var/obj/item/weapon/grenade/spawnergrenade/G = I
+		if(isliving(user))
+			G.owner = user
+	return
 
 /datum/uplink_item/dangerous/gatling
 	name = "Gatling Gun"

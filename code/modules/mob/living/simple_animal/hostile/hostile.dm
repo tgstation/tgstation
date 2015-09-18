@@ -132,6 +132,10 @@
 			return 0
 		if((L.faction == src.faction && !attack_same) || (L.faction != src.faction && attack_same == 2) || (L.faction != attack_faction && attack_faction))
 			return 0
+		if((faction == "\ref[L]") && !attack_same)
+			return 0
+		if((istraitor(L) || isnukeop(L)) && (faction == "syndicate"))
+			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0
 		if(isslime(L) && (faction == "slimesummon"))
