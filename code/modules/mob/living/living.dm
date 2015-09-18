@@ -799,6 +799,8 @@ Sorry Giacom. Please don't be mad :(
 
 	// Scale the icon.
 	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARENCE_UI_IGNORE_ALPHA
 
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)
