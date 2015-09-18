@@ -1,0 +1,7 @@
+author: Deity Link
+delete-after: true
+changes:
+  - tweak: Viscerators now ignore syndicate agents by default (both traitors and nuke ops)
+  - tweak: Viscerators now have their sprite change its offset dynamically, just like bees.
+  - tweak: Viscerators now have 66% chance to avoid projectiles (they'll still be hit if you clicked right on their sprite when you fired)
+  - tweak: During Double Agents rounds, viscerators will only ignore the player who bought the grenade from the uplink, allowing them to be used against other agents (or by non-traitors if a regular player got a hold of the uplink).
