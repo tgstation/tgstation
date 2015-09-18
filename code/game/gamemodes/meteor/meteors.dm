@@ -119,11 +119,6 @@
 	explosion(src.loc, 2, 4, 6, 8, 0) //Medium meteor, medium boom
 	qdel(src)
 
-/obj/effect/meteor/small
-	name = "small meteor"
-	icon_state = "smallf"
-	pass_flags = PASSTABLE
-
 /obj/effect/meteor/Move()
 	..()
 	return
