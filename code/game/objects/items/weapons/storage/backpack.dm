@@ -72,13 +72,20 @@
 	else
 		user << "<span class = 'danger'>The Bluespace generator malfunctions!</span>"
 		for (var/obj/O in src.contents) //it broke, delete what was in it
-			del(O)
+			qdel(O)
 		crit_fail = 1
 		icon_state = "brokenpack"
 
-/obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
-	var/dist = max((current_size - 2), 1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
+/obj/item/weapon/storage/backpack/holding/singularity_act(var/current_size,var/obj/machinery/singularity/S)
+	var/dist = max(current_size, 1)
+	empulse(S.loc,(dist*2),(dist*4))
+	if(S.current_size <= 3)
+		investigation_log(I_SINGULO, "has been destroyed by a bag of holding.")
+		qdel(S)
+	else
+		investigation_log(I_SINGULO, "has been weakened by a bag of holding.")
+		S.energy -= (S.energy/3)*2
+	qdel(src)
 	return
 
 
