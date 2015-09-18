@@ -75,7 +75,7 @@
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
 		C.Deconstruct()
-	..()
+	return ..()
 
 /obj/structure/lattice/catwalk/Deconstruct()
 	var/turf/T = loc

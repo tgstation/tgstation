@@ -33,7 +33,7 @@
 
 /obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
-	..()
+	return ..()
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)

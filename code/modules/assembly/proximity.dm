@@ -119,7 +119,7 @@
 			oldloc = newloc
 
 /obj/item/device/assembly/prox_sensor/Move(newloc)
-	..()
+	. = ..()
 	handle_move(newloc)
 
 

@@ -69,7 +69,7 @@
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/alien/resin/CanAtmosPass()
@@ -320,7 +320,7 @@
 
 /obj/structure/alien/egg/Move()
 	remove_from_proximity_list(src, 1)
-	..()
+	return ..()
 
 /obj/structure/alien/egg/Break()
 	if(status != BURST && status != BURSTING)

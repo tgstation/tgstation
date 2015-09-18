@@ -13,69 +13,11 @@
 	return (!mover.density || !density || lying)
 
 
-
-/client/Northeast()
-	swap_hand()
-	return
-
-
-/client/Southeast()
-	attack_self()
-	return
-
-
-/client/Southwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
-	else
-		usr << "<span class='danger'>This mob type cannot throw items.</span>"
-	return
-
-
-/client/Northwest()
-	if(!usr.get_active_hand())
-		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
-		return
-	usr.drop_item()
-
-//This gets called when you press the delete button.
-/client/verb/delete_key_pressed()
-	set hidden = 1
-
-	if(!usr.pulling)
-		usr << "<span class='notice'>You are not pulling anything.</span>"
-		return
-	usr.stop_pulling()
-
-/client/verb/swap_hand()
-	set category = "IC"
-	set name = "Swap hands"
-
-	if(mob)
-		mob.swap_hand()
-
-/client/verb/attack_self()
-	set hidden = 1
-	if(mob)
-		mob.mode()
-	return
-
-
 /client/verb/drop_item()
 	set hidden = 1
 	if(!isrobot(mob))
 		mob.drop_item_v()
 	return
-
-
-/client/Center()
-	if(isobj(mob.loc))
-		var/obj/O = mob.loc
-		if(mob.canmove)
-			return O.relaymove(mob, 0)
-	return
-
 
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
@@ -92,12 +34,17 @@
 /client/Move(n, direct)
 	if(!mob || !mob.loc)
 		return 0
+	if(world.time < move_delay) //do not move anything ahead of this check please
+		return 0
+	else
+		next_move_dir_add = 0
+		next_move_dir_sub = 0
+	if(!n || !direct)
+		return 0
 	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
-	if(world.time < move_delay)
-		return 0
 	if(!isliving(mob))
 		return mob.Move(n,direct)
 	if(mob.stat == DEAD)
@@ -135,25 +82,31 @@
 
 	//We are now going to move
 	moving = 1
-	move_delay = mob.movement_delay() + world.time
+	move_delay = world.time
+	var/add_delay = mob.movement_delay()
+	var/oldloc = mob.loc
 
 	if(mob.confused)
+		var/newdir = 0
 		if(mob.confused > 40)
-			step(mob, pick(cardinal))
+			newdir = pick(alldirs)
 		else if(prob(mob.confused * 1.5))
-			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
+			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
 		else if(prob(mob.confused * 3))
-			step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
-		else
-			step(mob, direct)
-	else
-		. = ..()
+			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
+		if(newdir)
+			direct = newdir
+			n = get_step(mob, direct)
 
+	. = ..()
+
+	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+		add_delay *= 2
+	if(mob.loc != oldloc)
+		move_delay += add_delay
 	moving = 0
 	if(mob && .)
 		mob.throwing = 0
-
-	return .
 
 
 ///Process_Grab()

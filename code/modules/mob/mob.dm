@@ -21,6 +21,7 @@ var/next_mob_id = 0
 		dead_mob_list += src
 	else
 		living_mob_list += src
+	set_focus(src)
 	prepare_huds()
 	..()
 
