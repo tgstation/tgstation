@@ -408,8 +408,9 @@ var/global/datum/controller/occupations/job_master
 
 			switch(rank)
 				if("Cyborg")
-					H.Robotize()
-					return 1
+					spawn(20)//We need to be absolutely certain the borg is made after AI for law sync reasons.
+						H.Robotize()
+						return 1
 				if("Mobile MMI")
 					H.MoMMIfy(1)
 					return 1
