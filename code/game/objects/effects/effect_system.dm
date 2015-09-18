@@ -13,6 +13,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	unacidable = 1 // so effect are not targeted by alien acid.
 	flags = 0
 	w_type=NOT_RECYCLABLE
+	pass_flags = PASSTABLE|PASSGRILLE|PASSMACHINE
 
 /obj/effect/effect/water
 	name = "water"

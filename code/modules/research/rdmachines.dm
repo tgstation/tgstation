@@ -62,6 +62,11 @@ var/global/list/rnd_machines = list()
 	wires = null
 	..()
 
+/obj/machinery/r_n_d/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSMACHINE))
+		return 1
+	return ..()
+
 /obj/machinery/r_n_d/update_icon()
 	overlays.len = 0
 	if(linked_console)
