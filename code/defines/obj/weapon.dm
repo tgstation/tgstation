@@ -13,7 +13,7 @@
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
-/obj/item/weapon/phone/suicide_act(mob/user)
+	/obj/item/weapon/phone/suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
 
@@ -59,7 +59,7 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/weapon/bananapeel/suicide_act(mob/user)
+	/obj/item/weapon/bananapeel/suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>"
 		return(OXYLOSS)
 
@@ -110,11 +110,10 @@
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 
-/obj/item/weapon/bikehorn/suicide_act(mob/user)
+	/obj/item/weapon/bikehorn/suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] places the [src.name] into \his mouth and honks the horn. </span>"
 		playsound(get_turf(user), 'sound/items/bikehorn.ogg', 100, 1)
 		user.gib()
-		return
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -216,7 +215,7 @@
 	var/trip_prob = 60
 	var/thrown_from
 
-/obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
+	/obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
 		viewers(user) << "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
 		return(OXYLOSS)
 
@@ -415,7 +414,7 @@
 	var/armed = 0
 	var/obj/item/weapon/grenade/iedcasing/IED = null
 
-/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
 		return (BRUTELOSS)
 
@@ -745,7 +744,7 @@
 	melt_temperature=MELTPOINT_STEEL
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
-/obj/item/weapon/wire/suicide_act(mob/user)
+	/obj/item/weapon/wire/suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 		return (OXYLOSS)
 

@@ -99,13 +99,15 @@
 		src.add_fingerprint(user)
 		spawn(20)
 			spam_flag = 0
-	return
 
-/obj/item/weapon/bikehorn/afterattack(atom/target, mob/user as mob)
-	if (spam_flag == 0)
-		spam_flag = 1
+/obj/item/weapon/bikehorn/afterattack(atom/target, mob/user as mob, proximity_flag)
+	src.add_fingerprint(user)
+
+	if(proximity_flag && istype(target, /mob)) //for honking in the chest
 		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
-		src.add_fingerprint(user)
-		spawn(20)
-			spam_flag = 0
-	return
+		return
+	if(istype(target, /mob)) //for skilled honking at a range
+		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
+		target.visible_message(\
+			"<span class='notice'>[user] honks \his horn at \the [target].</span>",\
+			"[user] honks \his horn at you.")
