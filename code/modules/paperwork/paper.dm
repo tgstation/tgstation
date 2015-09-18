@@ -11,7 +11,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1
+	w_class = 1.0
 	throw_range = 1
 	throw_speed = 1
 	layer = 3
@@ -51,7 +51,7 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src) || isobserver(user))
+	if(in_range(user, src))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
@@ -289,9 +289,6 @@
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
 			return
-		if(istype(src, /obj/item/weapon/paper/talisman/))
-			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
-			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
@@ -385,6 +382,10 @@
 /obj/item/weapon/paper/mining
 	name = "paper- Smelting Operations Closed"
 	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
+
+/obj/item/weapon/paper/disposals
+	name = "paper- 'What the hell Gary'"
+	info = "What the hell Gary!\nLook, I know there has been a rush to finish things before the crew are due to come.That in no way excuses this abomonation of a disposals stystem we have here. There are SIXTEEN sort junctions here. SIXTEEN! What the actual fuck Gary./n There is no time left to reroute disposals but you better be working overtime after the first shift to fix this horrifying mess. Does it even work?\n If something breaks here corportate will know about it and it will be your ass on the line. You know how NT deals with this kind of shit.\n Regards,\n James Clark, Chief Engineer \n \n P.S. Has anyone gotten Greg's body from the top of the starboard arm yet? We really shouldn't leave his shit lying around."
 
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
