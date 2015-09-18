@@ -76,6 +76,7 @@ var/list/uplink_items = list()
 		var/obj/I = spawn_item(get_turf(user), U, user)
 		if(!I)
 			return 0
+		on_item_spawned(I,user)
 		var/icon/tempimage = icon(I.icon, I.icon_state)
 		end_icons += tempimage
 		var/tempstate = end_icons.len
@@ -97,6 +98,9 @@ var/list/uplink_items = list()
 
 		return 1
 	return 0
+
+/datum/uplink_item/proc/on_item_spawned(var/obj/I, var/mob/user)
+	return
 
 /*
 //
