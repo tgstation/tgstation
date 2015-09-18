@@ -85,6 +85,7 @@
 	else
 		investigation_log(I_SINGULO, "has been weakened by a bag of holding.")
 		S.energy -= (S.energy/3)*2
+		S.check_energy()
 	qdel(src)
 	return
 
