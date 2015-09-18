@@ -8,7 +8,7 @@
 	cooldown_min = 0
 	overlay = null
 	action_icon_state = "bloodcrawl"
-	action_background_icon_state = "bg_slaughter"
+	action_background_icon_state = "bg_demon"
 	var/phased = 0
 
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
@@ -25,8 +25,8 @@
 			if(user.phasein(target))
 				phased = 0
 		else
-			user.phaseout(target)
-			phased = 1
+			if(user.phaseout(target))
+				phased = 1
 		start_recharge()
 		return
 	revert_cast()

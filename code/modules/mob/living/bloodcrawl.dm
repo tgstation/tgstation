@@ -31,6 +31,18 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.l_hand || C.r_hand)
+			C << "<span class='warning'>You may not hold items while blood crawling!</span>"
+			return 0
+		var/obj/item/weapon/bloodcrawl/B1 = new(C)
+		var/obj/item/weapon/bloodcrawl/B2 = new(C)
+		B1.icon_state = "bloodhand_left"
+		B2.icon_state = "bloodhand_right"
+		C.put_in_hands(B1)
+		C.put_in_hands(B2)
+		C.regenerate_icons()
 	var/mob/living/kidnapped = null
 	var/turf/mobloc = get_turf(src.loc)
 	src.notransform = TRUE
@@ -76,6 +88,13 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 			else
 				src << "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>"
 		src.notransform = 0
+	return 1
+
+/obj/item/weapon/bloodcrawl
+	name = "blood crawl"
+	desc = "You are unable to hold anything while in this form."
+	icon = 'icons/effects/blood.dmi'
+	flags = NODROP
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
@@ -90,6 +109,19 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		for(var/obj/item/weapon/bloodcrawl/BC in C)
+			C.flags = null
+			C.unEquip(BC)
+			qdel(BC)
+	var/oldcolor = src.color
+	if(istype(B, /obj/effect/decal/cleanable/xenoblood)) //Makes the mob have the color of the blood pool it came out of for a few seconds
+		src.color = rgb(43, 186, 0)
+	else
+		src.color = rgb(149, 10, 10)
 	qdel(src.holder)
 	src.holder = null
+	spawn(30)
+		src.color = oldcolor
 	return 1
