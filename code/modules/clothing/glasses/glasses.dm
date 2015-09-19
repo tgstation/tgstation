@@ -93,6 +93,11 @@
 	flash_protect = 1
 	tint = 1
 
+/obj/item/clothing/glasses/sunglasses/noir
+	name = "noir sunglasses"
+	desc = "Somehow these seem even more out-of-date than normal sunglasses."
+	color_view = list(0.299,0.299,0.299, 0.587,0.587,0.587, 0.114,0.114,0.114) //greyscale
+
 /obj/item/clothing/glasses/sunglasses/garb
 	desc = "Go beyond impossible and kick reason to the curb!"
 	name = "black gar glasses"
@@ -247,7 +252,7 @@
 				name = "sunglasses"
 				icon_state = "sun"
 				item_state = "sunglasses"
-			if("Medical HUD")	
+			if("Medical HUD")
 				name = "Health Scanner HUD"
 				desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 				icon_state = "healthhud"
@@ -257,11 +262,11 @@
 				desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 				icon_state = "meson"
 				item_state = "meson"
-			if("Science Goggles")	
+			if("Science Goggles")
 				name = "Science Goggles"
 				desc = "A pair of snazzy goggles used to protect against chemical spills."
 				icon_state = "purple"
-				item_state = "glasses"	
+				item_state = "glasses"
 			if("Glasses")
 				name = "Prescription Glasses"
 				desc = "Made by Nerd. Co."
@@ -287,4 +292,4 @@
 				name = "gar glasses"
 				icon_state = "gar"
 				item_state = "gar"
-				
+

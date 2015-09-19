@@ -877,7 +877,7 @@
 "aqS" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/plating,/area/security/processing)
 "aqT" = (/obj/machinery/power/apc{dir = 8; name = "Labor Shuttle Dock APC"; pixel_x = -24},/obj/structure/cable,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating,/area/security/processing)
 "aqU" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/obj/structure/filingcabinet,/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/security/detectives_office)
-"aqV" = (/obj/structure/table/wood,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/clothing/glasses/sunglasses,/turf/simulated/floor/carpet,/area/security/detectives_office)
+"aqV" = (/obj/structure/table/wood,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/clothing/glasses/sunglasses/noir,/turf/simulated/floor/carpet,/area/security/detectives_office)
 "aqW" = (/turf/simulated/floor/carpet,/area/security/detectives_office)
 "aqX" = (/obj/structure/table/wood,/obj/item/device/flashlight/lamp/green{on = 0; pixel_x = -3; pixel_y = 8},/obj/item/weapon/book/manual/wiki/security_space_law,/obj/item/weapon/restraints/handcuffs,/turf/simulated/floor/plasteel{icon_state = "grimy"},/area/security/detectives_office)
 "aqY" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/weapon/pen,/turf/simulated/floor/carpet,/area/security/detectives_office)
