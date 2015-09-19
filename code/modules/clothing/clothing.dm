@@ -48,6 +48,7 @@
 	var/invis_view = SEE_INVISIBLE_LIVING
 	var/emagged = 0
 	var/list/icon/current = list() //the current hud icons
+	var/color_view//overrides client.color while worn
 	strip_delay = 20
 	put_on_delay = 25
 	burn_state = -1 //Not Burnable

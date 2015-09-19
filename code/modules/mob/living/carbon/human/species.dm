@@ -679,6 +679,11 @@
 				H.sight |= G.vision_flags
 				H.see_in_dark = G.darkness_view
 				H.see_invisible = min(G.invis_view, H.see_invisible)
+				if(G.color_view && H.client && !H.client.color)
+					animate(H.client, color = G.color_view, time = SSmob.wait)
+		else
+			if(H.client && H.client.color)
+				animate(H.client, color = null, time = SSmob.wait)
 		if(H.druggy)	//Override for druggy
 			H.see_invisible = see_temp
 
