@@ -85,7 +85,7 @@
 		user.visible_message("<span class='notice'>[user] honks at [src].</span>", \
 		"<span class='notice'>You honk at [src].</span>", \
 		"<span class='notice'>You hear honking.</span>")
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(get_turf(src), W.hitsound, 50, 1)
 		if(reagents.get_reagent_amount("banana") <= 5)
 			if(activated)
 				visible_message("<span class='warning'>[nick] lets out a last honk before running out of fuel and activating its ejection seat.</span>")

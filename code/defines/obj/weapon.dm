@@ -97,23 +97,6 @@
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
 
-/obj/item/weapon/bikehorn
-	name = "bike horn"
-	desc = "A horn off of a bicycle."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bike_horn"
-	item_state = "bike_horn"
-	throwforce = 3
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
-	attack_verb = list("HONKED")
-	var/spam_flag = 0
-
-/obj/item/weapon/bikehorn/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] places the [src.name] into \his mouth and honks the horn. </span>"
-	playsound(get_turf(user), 'sound/items/bikehorn.ogg', 100, 1)
-	user.gib()
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
