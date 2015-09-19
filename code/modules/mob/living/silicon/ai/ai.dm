@@ -833,6 +833,6 @@ var/list/ai_list = list()
 	return // no eyes, no flashing
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
+	if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
