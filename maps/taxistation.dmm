@@ -2849,7 +2849,7 @@
 "bcO" = (/obj/structure/closet/crate,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor,/area/hallway/secondary/construction{name = "\improper Mining Access Hallway"})
 "bcP" = (/obj/structure/closet/crate,/obj/machinery/light{dir = 4},/obj/machinery/power/apc{dir = 4; pixel_x = 24; pixel_y = 0},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor{dir = 4; icon_state = "brown"},/area/hallway/secondary/construction{name = "\improper Mining Access Hallway"})
 "bcQ" = (/obj/structure/table,/obj/item/stack/sheet/glass/glass{amount = 50; pixel_x = 3; pixel_y = 3},/obj/item/stack/sheet/metal{amount = 50},/obj/machinery/light_switch{pixel_x = 27},/obj/machinery/newscaster{dir = 1; pixel_x = 0; pixel_y = -28},/turf/simulated/floor/bluegrid,/area/science/lab)
-"bcR" = (/obj/machinery/mineral/equipment_locker,/turf/simulated/floor,/area/supply/miningdelivery)
+"bcR" = (/obj/machinery/vending/mining,/turf/simulated/floor,/area/supply/miningdelivery)
 "bcS" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_mining{name = "Mining Station EVA"; req_access_txt = "54"},/turf/simulated/floor,/area/supply/miningstorage)
 "bcT" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass_research{name = "Xenoarcheology Wing"; req_access_txt = "7"},/turf/simulated/floor,/area/research_outpost/gearstore)
 "bcU" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/obj/structure/disposalpipe/segment,/turf/simulated/wall,/area/janitor)

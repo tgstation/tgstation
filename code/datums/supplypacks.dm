@@ -1350,6 +1350,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Medical stack of packs"
 	group = "Vending Machine packs"
 
+/datum/supply_packs/miningmachines
+	name = "Mining stack of packs"
+	contains = list(/obj/structure/vendomatpack/mining,
+					/obj/structure/vendomatpack/mining)
+	cost = 10
+	containertype = /obj/structure/stackopacks
+	containername = "Mining stack of packs"
+	group = "Vending Machine packs"
+
 /datum/supply_packs/botanymachines
 	name = "Hydroponics stack of packs"
 	contains = list(/obj/structure/vendomatpack/hydronutrients,
