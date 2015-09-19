@@ -13,7 +13,14 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	unacidable = 1//So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
+/obj/effect/effect/New()
+	..()
+	if(ticker)
+		cameranet.updateVisibility(src)
+
 /obj/effect/effect/Destroy()
+	if(ticker)
+		cameranet.updateVisibility(src)
 	..()
 	return QDEL_HINT_PUTINPOOL
 /*
