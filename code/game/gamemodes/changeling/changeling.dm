@@ -346,6 +346,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return
 	if(has_dna(target.dna))
 		user << "<span class='warning'>We already have this DNA in storage!</span>"
+		return
 	if(!target.has_dna())
 		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
 		return
