@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed singularities, for good this time.
