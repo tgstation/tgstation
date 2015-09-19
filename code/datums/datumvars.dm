@@ -813,8 +813,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				hardset_dna(H, null, null, null, null, newtype)
-				H.regenerate_icons()
+				H.set_species(newtype)
 
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))	return
@@ -828,7 +827,7 @@ body
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(H.dna && H.dna.species.id == "human")
+			if(H.dna.species.id == "human")
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
 					H << "You suddenly feel valid."

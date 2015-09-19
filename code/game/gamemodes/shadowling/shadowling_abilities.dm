@@ -297,7 +297,7 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
 		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-		hardset_dna(user, null, null, null, null, /datum/species/shadow/ling)
+		user.set_species(/datum/species/shadow/ling)
 
 
 /obj/effect/proc_holder/spell/targeted/collective_mind //Lets a shadowling bring together their thralls' strength, granting new abilities and a headcount
@@ -568,7 +568,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				thrallToRevive.visible_message("<span class='warning'>[thrallToRevive] slowly rises, no longer recognizable as human.</span>", \
 											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
 											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
-				hardset_dna(thrallToRevive, null, null, null, null, /datum/species/shadow/ling/lesser)
+				thrallToRevive.set_species(/datum/species/shadow/ling/lesser)
 				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
 				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadow_walk)
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))

@@ -81,7 +81,7 @@
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !check_dna_integrity(target))
+	if((target.disabilities & HUSK) || !target.has_dna())
 		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	return 1
@@ -92,15 +92,17 @@
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	if(iscarbon(target) && (target.status_flags & CANWEAKEN))
+	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.do_jitter_animation(500)
-		C.take_organ_damage(20, 0) //The process is extremely painful
+		if(C.status_flags & CANWEAKEN)
+			C.do_jitter_animation(500)
+			C.take_organ_damage(20, 0) //The process is extremely painful
 
-	target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
-	spawn(10)
-		hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.features)
-		updateappearance(target)
+		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
+		spawn(10)
+			NewDNA.transfer_identity(C, transfer_SE=1)
+			C.updateappearance(mutcolor_update=1)
+			C.domutcheck()
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
@@ -125,7 +127,7 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !check_dna_integrity(target))
+	if((target.disabilities & HUSK) || !target.has_dna())
 		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	return 1

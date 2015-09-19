@@ -17,7 +17,7 @@
 
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(check_dna_integrity(M) && !(M.disabilities & NOCLONE))
+	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
 			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
 			return
@@ -38,7 +38,7 @@
 				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
-				updateappearance(M)
+				M.updateappearance()
 		log_attack(log_msg)
 	else
 		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"

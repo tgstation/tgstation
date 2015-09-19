@@ -16,6 +16,9 @@
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
+	var/above_body = 0 //wether the mutation appear above or below the body layer
+	var/list/species_allowed = list() //to restrict mutation to only certain species
+	var/health_req //minimum health required to acquire the mutation
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -33,7 +36,7 @@
 	return before + injection + after
 
 /datum/mutation/human/proc/set_block(mob/living/carbon/owner, on = 1)
-	if(owner && istype(owner) && owner.dna)
+	if(owner && owner.has_dna())
 		owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes, on)
 
 /datum/mutation/human/proc/check_block_string(se_string)
@@ -51,16 +54,18 @@
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner) || (src in owner.dna.mutations))
 		return 1
+	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
+		return 1
+	if(health_req && owner.health < health_req)
+		return 1
 	owner.dna.mutations.Add(src)
-	owner << text_gain_indication
+	if(text_gain_indication)
+		owner << text_gain_indication
 	if(visual_indicators.len)
-		owner.update_mutation_overlays()
+		owner.update_mutations_overlay()
 
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
-
-/datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
-	owner.overlays.Remove(visual_indicators)
 
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return
@@ -76,9 +81,10 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
-		owner << text_lose_indication
+		if(text_lose_indication)
+			owner << text_lose_indication
 		if(visual_indicators.len)
-			owner.update_mutation_overlays()
+			owner.update_mutations_overlay()
 		return 0
 	return 1
 
@@ -96,6 +102,8 @@
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human") //no skeleton/lizard hulk
+	health_req = 25
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -583,32 +591,47 @@
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
 
-
 /datum/mutation/human/laser_eyes
-
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
+	above_body = 1
+
+/datum/mutation/human/laser_eyes/New()
+	..()
+	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-FRONT_MUTATIONS_LAYER)
+
+/datum/mutation/human/laser_eyes/get_visual_indicator(mob/living/carbon/human/owner)
+	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")
 		owner.LaserEyes(target)
 
+/mob/living/carbon/proc/update_mutations_overlay()
+	return
 
-/mob/living/carbon/human/proc/update_mutation_overlays()
-	remove_overlay(MUTATIONS_LAYER)
-	var/image/standing
+/mob/living/carbon/human/update_mutations_overlay()
+	remove_overlay(MUTATIONS_LAYER) //MUTATIONS_LAYER is behind the body layer
+	remove_overlay(FRONT_MUTATIONS_LAYER) //FRONT_MUTATIONS_LAYER is above the body layer
+	var/list/standing = list()
+	var/list/frontstanding = list()
 
 	for(var/datum/mutation/human/CM in dna.mutations)
+		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
+			CM.force_lose(src)
+			continue
 		if(CM.visual_indicators.len)
 			var/image/V = CM.get_visual_indicator(src)
-			if(!standing)
-				standing = V
+			if(CM.above_body)
+				frontstanding += V
 			else
-				standing.overlays += V
+				standing += V
 
-	if(standing)
+	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER] = standing
+	if(frontstanding.len)
+		overlays_standing[FRONT_MUTATIONS_LAYER] = frontstanding
 	apply_overlay(MUTATIONS_LAYER)
-
+	apply_overlay(FRONT_MUTATIONS_LAYER)
