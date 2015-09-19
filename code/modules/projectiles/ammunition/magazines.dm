@@ -18,8 +18,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
 	var/boolets = 0
-	for (var/i = 1, i <= stored_ammo.len, i++)
-		var/obj/item/ammo_casing/bullet = stored_ammo[i]
+	for(var/obj/item/ammo_casing/bullet in stored_ammo)
 		if(bullet && (bullet.BB || countempties))
 			boolets++
 
@@ -40,7 +39,7 @@
 	stored_ammo.Insert(0, b)
 
 /obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
-	for(var/i = 1, i <= rand(0, max_ammo*2), i++)
+	for(var/i in 1 to rand(0, max_ammo*2))
 		rotate()
 
 
@@ -48,7 +47,7 @@
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0
 
-	for(var/i = 1, i <= stored_ammo.len, i++)
+	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
 		if(!bullet || !bullet.BB) // found a spent ammo
 			stored_ammo[i] = R
@@ -84,9 +83,8 @@
 /obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
 	if (!countempties)
 		var/boolets = 0
-		for (var/i = 1, i <= stored_ammo.len, i++)
-			var/obj/item/ammo_casing/bullet = stored_ammo[i]
-			if (bullet.BB)
+		for(var/obj/item/ammo_casing/bullet in stored_ammo)
+			if(bullet.BB)
 				boolets++
 		return boolets
 	else
