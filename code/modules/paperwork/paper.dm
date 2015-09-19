@@ -11,7 +11,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_range = 1
 	throw_speed = 1
 	layer = 3
@@ -51,7 +51,7 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src))
+	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
@@ -289,6 +289,10 @@
 		else
 			user << "<span class='notice'>You don't know how to read or write.</span>"
 			return
+-		if(istype(src, /obj/item/weapon/paper/talisman/))
+-			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
+-			return
+
 
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
