@@ -92,11 +92,54 @@
 /*
  * Bike Horns
  */
+/obj/item/weapon/bikehorn
+	name = "bike horn"
+	desc = "A horn off of a bicycle."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bike_horn"
+	item_state = "bike_horn"
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 3
+	throw_range = 15
+	attack_verb = list("HONKED")
+	hitsound = 'sound/items/bikehorn.ogg'
+	var/honk_delay = 20
+	var/last_honk_time = 0
+
+/obj/item/weapon/bikehorn/suicide_act(mob/user)
+	viewers(user) << "<span class='danger'>[user] places the [src.name] into \his mouth and honks the horn. </span>"
+	playsound(get_turf(user), hitsound, 100, 1)
+	user.gib()
+
 /obj/item/weapon/bikehorn/attack_self(mob/user as mob)
-	if (spam_flag == 0)
-		spam_flag = 1
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
-		src.add_fingerprint(user)
-		spawn(20)
-			spam_flag = 0
-	return
+	if(honk())
+		add_fingerprint(user)
+
+/obj/item/weapon/bikehorn/afterattack(atom/target, mob/user as mob, proximity_flag)
+	//hitsound takes care of that
+	//if(proximity_flag && istype(target, /mob)) //for honking in the chest
+		//honk()
+		//return
+
+	if(!proximity_flag && istype(target, /mob) && honk()) //for skilled honking at a range
+		target.visible_message(\
+			"<span class='notice'>[user] honks \the [src] at \the [target].</span>",\
+			"[user] honks \the [src] at you.")
+
+/obj/item/weapon/bikehorn/proc/honk()
+	if(world.time - last_honk_time >= honk_delay)
+		last_honk_time = world.time
+		playsound(get_turf(src), hitsound, 50, 1)
+		return 1
+	return 0
+
+/obj/item/weapon/bikehorn/rubberducky
+	name = "rubber ducky"
+	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "rubberducky"
+	item_state = "rubberducky"
+	attack_verb = list("quacked")
+	hitsound = 'sound/items/quack.ogg'
+	honk_delay = 10

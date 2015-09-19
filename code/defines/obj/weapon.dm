@@ -13,9 +13,9 @@
 	attack_verb = list("called", "rang")
 	hitsound = 'sound/weapons/ring.ogg'
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
-		return(OXYLOSS)
+/obj/item/weapon/phone/suicide_act(mob/user)
+	viewers(user) << "<span class='danger'>[user] wraps the cord of the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
+	return(OXYLOSS)
 
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
@@ -59,9 +59,9 @@
 	throw_speed = 4
 	throw_range = 20
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>"
-		return(OXYLOSS)
+/obj/item/weapon/bananapeel/suicide_act(mob/user)
+	viewers(user) << "<span class='danger'>[user] drops the [src.name] on the ground and steps on it causing \him to crash to the floor, bashing \his head wide open. </span>"
+	return(OXYLOSS)
 
 /obj/item/weapon/corncob
 	name = "corn cob"
@@ -96,19 +96,6 @@
 /obj/item/weapon/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
-
-/obj/item/weapon/bikehorn
-	name = "bike horn"
-	desc = "A horn off of a bicycle."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "bike_horn"
-	item_state = "bike_horn"
-	throwforce = 3
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
-	attack_verb = list("HONKED")
-	var/spam_flag = 0
 
 
 /obj/item/weapon/c_tube
@@ -212,8 +199,8 @@
 	var/thrown_from
 
 /obj/item/weapon/legcuffs/bolas/suicide_act(mob/living/user)
-		viewers(user) << "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
-		return(OXYLOSS)
+	viewers(user) << "<span class='danger'>[user] is wrapping the [src.name] around \his neck! It looks like \he's trying to commit suicide.</span>"
+	return(OXYLOSS)
 
 /obj/item/weapon/legcuffs/bolas/throw_at(var/atom/A, throw_range, throw_speed)
 	if(!throw_range) return //divide by zero, also you throw like a girl
@@ -410,9 +397,9 @@
 	var/armed = 0
 	var/obj/item/weapon/grenade/iedcasing/IED = null
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
-		return (BRUTELOSS)
+/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
+	viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
+	return (BRUTELOSS)
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
@@ -740,9 +727,9 @@
 	melt_temperature=MELTPOINT_STEEL
 	attack_verb = list("whipped", "lashed", "disciplined", "tickled")
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
-		return (OXYLOSS)
+/obj/item/weapon/wire/suicide_act(mob/user)
+	viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	return (OXYLOSS)
 
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
@@ -891,21 +878,21 @@
 		icon = midicon
 		icon_state = "1"
 
-	afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
-		var/angle = get_angle(A, user)
-		//world << angle
-		angle = round(angle) + 45
-		if(angle > 180)
-			angle -= 180
-		else
-			angle += 180
+/obj/item/weapon/lightning/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
+	var/angle = get_angle(A, user)
+	//world << angle
+	angle = round(angle) + 45
+	if(angle > 180)
+		angle -= 180
+	else
+		angle += 180
 
-		if(!angle)
-			angle = 1
-		//world << "adjusted [angle]"
-		icon_state = "[angle]"
-		//world << "[angle] [(get_dist(user, A) - 1)]"
-		user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
+	if(!angle)
+		angle = 1
+	//world << "adjusted [angle]"
+	icon_state = "[angle]"
+	//world << "[angle] [(get_dist(user, A) - 1)]"
+	user.Beam(A, "lightning", 'icons/obj/zap.dmi', 50, 15)
 /*Testing
 proc
     //  creates an /icon object with 360 states of rotation

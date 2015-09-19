@@ -333,7 +333,8 @@
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
 	throwing = 1
-	throw_speed = speed
+	if(!speed)
+		speed = throw_speed
 
 	var/mob/user
 	if(usr)
@@ -378,11 +379,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed, user)
+				hit_check(speed, user)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= throw_speed)
+				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -390,11 +391,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed, user)
+				hit_check(speed, user)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= throw_speed)
+				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
 			a = get_area(src.loc)
@@ -410,11 +411,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed, user)
+				hit_check(speed, user)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= throw_speed)
+				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
 			else
@@ -422,11 +423,11 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check(throw_speed, user)
+				hit_check(speed, user)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++
-				if(dist_since_sleep >= throw_speed)
+				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
 
@@ -434,7 +435,8 @@
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
-	if(isobj(src)) src.throw_impact(get_turf(src), throw_speed, user)
+	if(isobj(src))
+		src.throw_impact(get_turf(src), speed, user)
 
 /atom/movable/change_area(oldarea, newarea)
 	areaMaster = newarea

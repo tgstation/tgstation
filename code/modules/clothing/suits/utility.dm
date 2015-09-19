@@ -53,14 +53,14 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	body_parts_covered = FULL_HEAD
 	siemens_coefficient = 0
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
 	item_state = "bombsuit"
-	w_class = 4//bulky item
+	w_class = 4 //Bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = FPRINT
@@ -71,7 +71,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
-
+	species_fit = list("Vox")
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuitsec"

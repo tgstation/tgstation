@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/gravitywell
+/obj/item/weapon/gun/gravitywell	//-by Deity Link
 	name = "\improper Gravity Well Gun"
 	desc = "Whoever created that gun had a taste for organized chaos..."
 	icon = 'icons/obj/gun_experimental.dmi'

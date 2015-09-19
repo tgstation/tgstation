@@ -21,7 +21,7 @@
 		activate(user)
 		add_fingerprint(user)
 		spawn(5)
-			prime()
+			prime(user)
 		return 0
 	return 1
 
@@ -80,7 +80,7 @@
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 
 	spawn(det_time)
-		prime()
+		prime(user)
 		return
 
 

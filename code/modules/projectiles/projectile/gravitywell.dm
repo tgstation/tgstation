@@ -45,7 +45,9 @@
 /obj/item/projectile/gravitywell/cultify()
 	return
 
-/obj/item/projectile/gravitywell/singularity_act()
+/obj/item/projectile/gravitywell/singularity_act(var/current_size,var/obj/machinery/singularity/S)
+	src.loc = S.loc
+	spawnGravityWell()
 	return
 
 /obj/effect/overlay/gravitywell

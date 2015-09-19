@@ -756,6 +756,8 @@
 			if(M.stat == DEAD && M.client && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
 				M.show_message(message)
 
+		// Borers, other internal things.
+		INVOKE_EVENT(on_emote, list("mob"=src,"message"=message,"m_type"=m_type))
 
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))

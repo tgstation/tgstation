@@ -132,8 +132,8 @@ Doesn't work on other aliens/AI.*/
 		playsound(get_turf(src), 'sound/weapons/pierce.ogg', 30, 1)
 		visible_message("<span class='alien'>\The [src] spits neurotoxin at [target] !</span>", "<span class='alien'>You spit neurotoxin at [target] !</span>")
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
-		var/turf/T = loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+		var/turf/T = get_turf(src)
+		var/turf/U = get_turf(target)
 
 		if(!U || !T)
 			return
@@ -148,10 +148,15 @@ Doesn't work on other aliens/AI.*/
 			return
 
 		var/obj/item/projectile/energy/neurotoxin/A = new /obj/item/projectile/energy/neurotoxin(usr.loc)
-		A.current = U
+		A.original = target
+		A.target = U
+		A.current = T
+		A.starting = T
 		A.yo = U.y - T.y
 		A.xo = U.x - T.x
-		A.process()
+		spawn()
+			A.OnFired()
+			A.process()
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
