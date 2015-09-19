@@ -576,10 +576,6 @@
 		return(gain)
 	return
 
-/obj/singularity_pull(S, current_size)
-	step_towards(src, S)
-	return
-
 /obj/machinery/singularity/shuttle_act() //Shuttles can't kill the singularity honk
 	return
 
