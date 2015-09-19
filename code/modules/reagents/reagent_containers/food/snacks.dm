@@ -3799,10 +3799,11 @@
 	name = "Sweet"
 	desc = "Comes in many different and unique flavours!"
 	food_flags = FOOD_SWEET
+	icon = 'icons/obj/candymachine.dmi'
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/sweet/New()
 		..()
 		reagents.add_reagent("nutrient", 3)
 		reagents.add_reagent("sugar", 2)
-		icon = 'icons/obj/candymachine.dmi'
 		icon_state = "sweet[rand(1,12)]"
