@@ -37,6 +37,7 @@ var/list/ai_list = list()
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/machinery/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -81,6 +82,10 @@ var/list/ai_list = list()
 	loc = loc
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
+
+	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
 
 	if(L)
 		if (istype(L, /datum/ai_laws))
@@ -829,8 +834,5 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 		spark_system.start()
 	return ..()
