@@ -115,7 +115,6 @@
 /obj/item/weapon/bikehorn/attack_self(mob/user as mob)
 	if(honk())
 		add_fingerprint(user)
-	return
 
 /obj/item/weapon/bikehorn/afterattack(atom/target, mob/user as mob, proximity_flag)
 	//hitsound takes care of that
