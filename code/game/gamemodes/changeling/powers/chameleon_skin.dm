@@ -22,4 +22,9 @@
 	feedback_add_details("changeling_powers","CS")
 	return 1
 
-
+/obj/effect/proc_holder/changeling/chameleon_skin/on_refund(mob/user)
+	if(user.has_dna())
+		var/mob/living/carbon/C = user
+		var/datum/mutation/human/HM = mutations_list[CHAMELEON]
+		if(HM in C.dna.mutations)
+			HM.force_lose(C)
