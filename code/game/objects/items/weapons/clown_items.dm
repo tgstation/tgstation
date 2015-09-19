@@ -118,17 +118,15 @@
 	return
 
 /obj/item/weapon/bikehorn/afterattack(atom/target, mob/user as mob, proximity_flag)
-	src.add_fingerprint(user)
-
 	//hitsound takes care of that
 	//if(proximity_flag && istype(target, /mob)) //for honking in the chest
-	//	playsound(get_turf(src), hitsound, 50, 1)
-	//	return
+		//honk()
+		//return
 
-	if(istype(target, /mob) && honk()) //for skilled honking at a range
+	if(!proximity_flag && istype(target, /mob) && honk()) //for skilled honking at a range
 		target.visible_message(\
-			"<span class='notice'>[user] honks \his [src] at \the [target].</span>",\
-			"[user] honks \his [src] at you.")
+			"<span class='notice'>[user] honks \the [src] at \the [target].</span>",\
+			"[user] honks \the [src] at you.")
 
 /obj/item/weapon/bikehorn/proc/honk()
 	if(world.time - last_honk_time >= honk_delay)
