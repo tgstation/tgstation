@@ -12,7 +12,7 @@
 	if (goal_number)
 		goal = goal_number
 	bar = image('icons/effects/progessbar.dmi', target, "prog_bar_0")
-	bar.appearance_flags = APPEARENCE_UI_IGNORE_ALPHA
+	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	bar.pixel_y = 32
 	user = User
 	if(user)
