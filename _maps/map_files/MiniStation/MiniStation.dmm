@@ -227,7 +227,7 @@
 "es" = (/obj/structure/closet/crate/bin,/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "et" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/effect/spawner/structure/window/reinforced,/turf/simulated/floor/plating,/area/security/brig)
 "eu" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"; pixel_y = 0},/turf/simulated/wall,/area/space)
-"ev" = (/obj/structure/rack,/obj/item/clothing/suit/space/hardsuit/mining,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/hardsuit/mining,/turf/simulated/floor/plasteel{dir = 8; icon_state = "brown"},/area/quartermaster/storage)
+"ev" = (/obj/machinery/suit_storage_unit/mining,/turf/simulated/floor/plasteel{dir = 8; icon_state = "brown"},/area/quartermaster/storage)
 "ew" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/turf/simulated/floor/plasteel,/area/quartermaster/storage)
 "ex" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plasteel,/area/quartermaster/storage)
 "ey" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 6},/turf/simulated/floor/plasteel,/area/quartermaster/storage)
