@@ -138,6 +138,11 @@
 	var/i = 0
 	for(var/mob/living/L in locked_atoms)
 		L.pixel_x = 0
-		L.pixel_y = 3 * (i+6) //Stack people on top of each other!
+		L.pixel_y = 3 + (i*6) //Stack people on top of each other!
 
 		i++
+
+/obj/structure/bed/chair/vehicle/wheelchair/multi_people/manual_unbuckle(mob/user)
+	..()
+
+	update_mob() //Update the rest
