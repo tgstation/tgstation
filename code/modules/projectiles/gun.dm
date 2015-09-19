@@ -385,6 +385,8 @@
 	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
 		if(user == target && user)
 			user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
+		else if(user && target && target.Adjacent(user))
+			target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
 		semicd = 0
 		return
 
