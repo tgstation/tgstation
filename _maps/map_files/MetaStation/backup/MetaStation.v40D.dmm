@@ -4881,7 +4881,7 @@
 "bPS" = (/obj/structure/extinguisher_cabinet{pixel_x = -27; pixel_y = 0},/obj/structure/closet/secure_closet/freezer/meat,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "bPT" = (/obj/structure/sink/kitchen{desc = "A sink used for washing one's hands and face. It looks rusty and home-made"; name = "old sink"; pixel_y = 28},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "bPU" = (/obj/machinery/gibber,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
-"bPV" = (/obj/machinery/kitchenspike,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
+"bPV" = (/obj/structure/kitchenspike,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/crew_quarters/kitchen)
 "bPW" = (/obj/machinery/light/small{dir = 8},/obj/item/clothing/mask/pig,/obj/item/weapon/bikehorn,/obj/structure/table/wood,/obj/item/clothing/mask/horsehead,/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "bPX" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
 "bPY" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/effect/landmark/start{name = "Mime"},/turf/simulated/floor/wood,/area/crew_quarters/theatre)
