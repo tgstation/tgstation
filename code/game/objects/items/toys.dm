@@ -17,6 +17,7 @@
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
+ *      Kitty toys!
  */
 
 
@@ -1202,3 +1203,13 @@
 	else
 		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
 		return
+
+// TOY MOUSEYS :3 :3 :3
+
+/obj/item/toy/cattoy
+	name = "toy mouse"
+	desc = "A colorful toy mouse!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toy_mouse"
+	w_class = 2.0
+	var/cooldown = 0
