@@ -19,7 +19,7 @@
 		return 0
 	return 1
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
-	if(!S)
+	if(!S || qdeleted(S))
 		S = new spell_type()
 
 	//Check if we got the spell already

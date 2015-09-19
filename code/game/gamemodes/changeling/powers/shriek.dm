@@ -12,7 +12,7 @@
 		if(iscarbon(M))
 			if(!M.mind || !M.mind.changeling)
 				M.adjustEarDamage(0,30)
-				M.confused += 20
+				M.confused += 25
 				M.Jitter(50)
 			else
 				M << sound('sound/effects/screech.ogg')
