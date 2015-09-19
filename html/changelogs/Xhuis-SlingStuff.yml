@@ -1,0 +1,9 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Shadowlings are now able to sacrifice a thrall to extend the shuttle timer by 15 minutes. This will not stack."
+  - bugfix: "Additional abilities granted by Collective Mind will now properly have icons."
+  - bugfix: "Shadowlings now have their antagonism removed if turned into a silicon."
+  - tweak: "The order of abilities unlocked by Collective Mind has been changed. It now starts with Sonic Screech."
+  - tweak: "Veil now destroys glowshrooms in a much larger radius than before."
