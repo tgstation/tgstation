@@ -1,3 +1,5 @@
+var/obj/machinery/gateway/the_gateway = null
+
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
@@ -7,6 +9,18 @@
 	anchored = 1
 	unacidable = 1
 	var/active = 0
+
+
+/obj/machinery/gateway/New()
+	..()
+	if(!the_gateway)
+		the_gateway = src
+
+
+/obj/machinery/gateway/Destroy()
+	if(the_gateway == src)
+		the_gateway = null
+	..()
 
 
 /obj/machinery/gateway/initialize()

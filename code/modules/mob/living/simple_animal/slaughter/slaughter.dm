@@ -82,9 +82,8 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart"
 	origin_tech = "combat=5;biotech=8"
-	beating = 1 //What did you expect?
 
-/obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/user, obj/target)
+/obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
@@ -97,6 +96,20 @@
 			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
 						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl)
+	for(var/obj/item/organ/internal/O in user.internal_organs)
+		if(istype(O, /obj/item/organ/internal/heart))
+			O.Remove(user, 1)
+			O.loc = get_turf(user)
+			qdel(O)
 	user.drop_item()
-	qdel(src)
+	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
+
+/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(M.mind)
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
+
+/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.mind)
+		M.mind.remove_spell(/obj/effect/proc_holder/spell/bloodcrawl)
