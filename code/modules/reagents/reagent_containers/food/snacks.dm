@@ -3802,5 +3802,6 @@
 	New()
 		..()
 		reagents.add_reagent("nutrient", 3)
-		reagnets.add_reagent("sugar", 2)
-	return 1
+		reagents.add_reagent("sugar", 2)
+	icon = 'icons/obj/candymachine.dmi'
+	icon_state = "sweet[rand(1,12)]"
