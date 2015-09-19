@@ -37,6 +37,7 @@
 		if(unlock_check())
 			unlock_action()
 			end_unlock()
+			unlocked=1
 	tree.unlocking=0
 	return 1
 
