@@ -3794,3 +3794,13 @@
 		..()
 		reagents.add_reagent("hamserum", 1)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet
+	name = "Sweet"
+	desc = "Comes in many different and unique flavours!"
+	food_flags = FOOD_SWEET
+	New()
+		..()
+		reagents.add_reagent("nutrient", 3)
+		reagnets.add_reagent("sugar", 2)
+	return 1
