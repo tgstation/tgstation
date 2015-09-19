@@ -88,3 +88,4 @@
 	origin_tech = "combat=2;syndicate=2"
 	force = 2 //Also very weak because it's smaller
 	suppressed = 1 //Softer fire sound
+	can_unsuppress = 0 //Permanently silenced
