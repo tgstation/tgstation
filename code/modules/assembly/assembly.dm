@@ -52,11 +52,9 @@
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/device/assembly/proc/pulsed(radio = 0)
 	if(wires & WIRE_RECEIVE)
-		spawn(0)
-			activate()
+		activate()
 	if(radio && (wires & WIRE_RADIO_RECEIVE))
-		spawn(0)
-			activate()
+		activate()
 	return 1
 
 
