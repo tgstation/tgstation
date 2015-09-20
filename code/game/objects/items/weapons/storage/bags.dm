@@ -73,21 +73,18 @@
 /obj/item/weapon/storage/bag/plasticbag/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
 	//Forbid wearing bags with something inside!
 	.=..()
-	if(contents.len)
+	if(contents.len && (slot == SLOT_HEAD))
 		return 0
 
-/obj/item/weapon/storage/bag/plasticbag/equipped()
-	.=..()
-
-	max_combined_w_class = 0 //Can't put anything in once equipped!
-
-/obj/item/weapon/storage/bag/plasticbag/unequipped()
-	.=..()
-
-	max_combined_w_class = initial(max_combined_w_class) //Can put stuff in once unequipped
+/obj/item/weapon/storage/bag/plasticbag/can_be_inserted()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.head == src) //If worn
+			return 0
+	return ..()
 
 /obj/item/weapon/storage/bag/plasticbag/suicide_act(mob/user)
-	viewers(user) << "<span class='danger'>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</span>"
+	user.visible_message("<span class='danger'>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 // -----------------------------
