@@ -96,11 +96,11 @@
 			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
 						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
-	for(var/obj/item/organ/internal/O in user.internal_organs)
+	/*for(var/obj/item/organ/internal/O in user.internal_organs)
 		if(istype(O, /obj/item/organ/internal/heart))
 			O.Remove(user, 1)
 			O.loc = get_turf(user)
-			qdel(O)
+			qdel(O)*/
 	user.drop_item()
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
