@@ -67,7 +67,7 @@
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
 	slot_flags = SLOT_BELT | SLOT_HEAD
-	flags = FPRINT | BLOCK_BREATHING
+	flags = FPRINT | BLOCK_BREATHING | BLOCK_GAS_SMOKE_EFFECT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 
 /obj/item/weapon/storage/bag/plasticbag/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
