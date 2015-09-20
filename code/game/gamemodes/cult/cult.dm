@@ -53,9 +53,9 @@
 	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 20
-	required_enemies = 6
-	recommended_enemies = 6
+	required_players = 1
+	required_enemies = 1
+	recommended_enemies = 1
 	enemy_minimum_age = 14
 
 
@@ -260,7 +260,7 @@
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='redtext'>The cult wins! It has succeeded in serving its dark master!</span>"
+		world << "<span class='greentext'>The cult wins! It has succeeded in serving its dark master!</span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
