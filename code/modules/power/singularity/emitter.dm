@@ -2,7 +2,7 @@
 
 /obj/machinery/power/emitter
 	name = "Emitter"
-	desc = "A heavy duty industrial laser"
+	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	anchored = 0
@@ -57,8 +57,18 @@
 	if (src.anchored)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.dir = turn(src.dir, 270)
 	return 1
+
+/obj/machinery/power/emitter/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/machinery/power/emitter/initialize()
 	..()
