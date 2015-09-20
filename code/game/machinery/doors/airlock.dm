@@ -324,7 +324,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
 	if(charge && !p_open && in_range(user, src))
-		user << "<span class='warning'>The maintenance panel is slightly bulging.</span>"
+		user << "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>"
 	if(charge && p_open)
 		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 

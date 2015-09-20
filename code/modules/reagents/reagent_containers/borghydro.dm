@@ -132,7 +132,7 @@ Borg Hypospray
 	icon_state = "borghypo_s"
 	charge_cost = 20
 	recharge_time = 2
-	reagent_ids = list("tricordrazine", "salbutamol", "mannitol", "mutadone", "antitoxin", "potass_iodide")
+	reagent_ids = list("syndicate_nanites", "potass_iodide", "morphine")
 
 /*
 Borg Shaker
