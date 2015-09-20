@@ -2,7 +2,7 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
-	luminosity = 1
+	luminosity = 0
 
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
@@ -76,7 +76,9 @@
 			src.Entered(AM)
 			return
 	turfs |= src
-	return
+
+	if(!dynamic_lighting)
+		luminosity = 1
 
 /turf/DblClick()
 	if(istype(usr, /mob/living/silicon/ai))

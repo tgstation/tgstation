@@ -110,7 +110,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/on_gs = 0
 	var/static_power_used = 0
 	var/brightness_range = 8	// luminosity when on, also used in power calculation
-	var/brightness_power = 4
+	var/brightness_power = 1
 	var/brightness_color = null
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -147,7 +147,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 2
+	brightness_power = 1
 	brightness_color = LIGHT_COLOR_TUNGSTEN
 	cost = 4
 	desc = "A small lighting fixture."
@@ -159,7 +159,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	fitting = "large tube"
 	light_type = /obj/item/weapon/light/tube/large
 	brightness_range = 8
-	brightness_power = 3
+	brightness_power = 1
 	cost = 8
 
 /obj/machinery/light/built/New()
