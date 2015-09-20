@@ -33,4 +33,4 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "A new admin command, "Offer Control to Ghosts," can be found in the view variables menu. It will randomly select a willing candidate from among dead players, providing a fair method of replacing antagonists."
+  - rscadd: "A new admin command, Offer Control to Ghosts, can be found in the view variables menu. It will randomly select a willing candidate from among dead players, providing a fair method of replacing antagonists."
