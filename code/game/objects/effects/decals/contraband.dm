@@ -35,7 +35,6 @@ list(name = "- Donut Corp.", desc = " This poster is an unauthorized advertiseme
 list(name = "- EAT.", desc = " This poster promotes rank gluttony."),
 list(name = "- Tools", desc = " This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."),
 list(name = "- Power", desc = " A poster that positions the seat of power outside Nanotrasen."),
-list(name = "- Power to the People", desc = " Screw those EDF guys!"),
 list(name = "- Communist State", desc = " All hail the Communist party!"),
 list(name = "- Lamarr", desc = " This poster depicts Lamarr. Probably made by a traitorous Research Director."),
 list(name = "- Borg Fancy", desc = " Being fancy can be for any borg, just need a suit."),
