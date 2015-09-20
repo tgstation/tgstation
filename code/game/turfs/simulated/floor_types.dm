@@ -355,31 +355,32 @@
 	icon_state = "carpet"
 	floor_tile
 	var/has_siding=1
-	New()
-		if(floor_tile)
-			returnToPool(floor_tile)
-			floor_tile = null
-		floor_tile = getFromPool(/obj/item/stack/tile/carpet, null)
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
-		if(!icon_state)
-			icon_state = initial(icon_state)
-		..()
-		if(has_siding)
-			spawn(4)
-				if(src)
-					update_icon()
-					for(var/direction in alldirs)
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
-							FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/carpet/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/carpet, null)
+	floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
+	if(!icon_state)
+		icon_state = initial(icon_state)
+	..()
+	if(has_siding)
+		spawn(4)
+			if(src)
+				update_icon()
+				for(var/direction in alldirs)
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						FF.update_icon() //so siding get updated properly
+
 /turf/simulated/floor/carpet/cultify()
 	return
 
-/turf/simulated/floor/carpet/arcade
+/turf/simulated/floor/arcade
 	name = "Arcade Carpet"
 	icon_state = "arcadecarpet"
-	has_siding=0
-
+	floor_tile
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()
