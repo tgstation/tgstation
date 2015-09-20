@@ -81,7 +81,7 @@
 
 	max_combined_w_class = 0 //Can't put anything in once equipped!
 
-/obj/item/weapon/storage/bag/plasticbag/u_equip()
+/obj/item/weapon/storage/bag/plasticbag/unequipped()
 	.=..()
 
 	max_combined_w_class = initial(max_combined_w_class) //Can put stuff in once unequipped
