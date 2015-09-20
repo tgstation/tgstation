@@ -252,6 +252,7 @@
 		body += "<option value='?_src_=vars;direct_control=\ref[D]'>Assume Direct Control</option>"
 		body += "<option value='?_src_=vars;drop_everything=\ref[D]'>Drop Everything</option>"
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
+		body += "<option value='?_src_=vars;offer_control=\ref[D]'>Offer Control to Ghosts</option>"
 		if(iscarbon(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;editorgans=\ref[D]'>Modify organs</option>"
@@ -592,6 +593,49 @@ body
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
 
+		else if(href_list["offer_control"])
+			if(!check_rights(0))	return
+
+			var/mob/M = locate(href_list["offer_control"])
+			if(!istype(M))
+				usr << "This can only be used on instances of type /mob"
+				return
+			M << "Control of your mob has been offered to dead players."
+			log_admin("[key_name(usr)] has offered control of [M.real_name] to ghosts.")
+			message_admins("<span class='notice'>[key_name(usr)] has offered control of [M.real_name] to ghosts</span>")
+			var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+
+			shuffle(candidates)
+
+			var/time_passed = world.time
+			var/list/consenting_candidates = list()
+
+			for(var/candidate in candidates)
+
+				spawn(0)
+					switch(alert(candidate, "Would you like to play as [M.real_name]? Please choose quickly!","Confirmation","Yes","No"))
+						if("Yes")
+							if((world.time-time_passed)>=100 || !src)
+								return
+							consenting_candidates += candidate
+
+			sleep(100)
+
+			if(!M)
+				return
+
+			if(consenting_candidates.len)
+				var/client/C = null
+				C = pick(consenting_candidates)
+				M << "Your mob has been taken over by a ghost!"
+				usr << "[C.key] has taken over [M.real_name]."
+				message_admins("<span class='notice'>[key_name(C)] has taken control of [M.real_name]</span>")
+				M.ghostize()
+				M.key = C.key
+			else
+				M << "There were no ghosts willing to take control."
+				message_admins("<span class='notice'>No ghosts were willing to take control of [M.real_name]</span>")
+
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))	return
 
@@ -816,6 +860,37 @@ body
 				hardset_dna(H, null, null, null, null, newtype)
 				H.regenerate_icons()
 
+		else if(href_list["purrbation"])
+			if(!check_rights(R_SPAWN))	return
+
+			var/mob/living/carbon/human/H = locate(href_list["purrbation"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				return
+
+			if(!H)
+				usr << "Mob doesn't exist anymore"
+				return
+
+			if(H.dna && H.dna.species.id == "human")
+				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
+					usr << "Put [H] on purrbation."
+					H << "You suddenly feel valid."
+					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
+					H.dna.features["tail_human"] = "Cat"
+					H.dna.features["ears"] = "Cat"
+				else
+					usr << "Removed [H] from purrbation."
+					H << "You suddenly don't feel valid anymore."
+					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
+					H.dna.features["tail_human"] = "None"
+					H.dna.features["ears"] = "None"
+				H.regenerate_icons()
+				return
+
+			usr << "You can only put humans on purrbation."
 		else if(href_list["purrbation"])
 			if(!check_rights(R_SPAWN))	return
 
