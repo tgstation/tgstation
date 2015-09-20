@@ -1,4 +1,4 @@
-var/obj/machinery/gateway/the_gateway = null
+var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway
 	name = "gateway"
@@ -11,13 +11,13 @@ var/obj/machinery/gateway/the_gateway = null
 	var/active = 0
 
 
-/obj/machinery/gateway/New()
+/obj/machinery/gateway/centerstation/New()
 	..()
 	if(!the_gateway)
 		the_gateway = src
 
 
-/obj/machinery/gateway/Destroy()
+/obj/machinery/gateway/centerstation/Destroy()
 	if(the_gateway == src)
 		the_gateway = null
 	..()
