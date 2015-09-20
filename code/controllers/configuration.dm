@@ -168,6 +168,8 @@
 	var/announce_admin_logout = 0
 	var/announce_admin_login = 0
 
+	var/relative_maps_path = null //Relative path to maps folder from the .dmb's directory, used for space transitions setup
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -354,6 +356,8 @@
 					config.announce_admin_logout = 1
 				if("announce_admin_login")
 					config.announce_admin_login = 1
+				if("relative_maps_path")
+					config.relative_maps_path = value
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

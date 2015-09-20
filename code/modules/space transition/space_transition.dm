@@ -74,48 +74,47 @@ var/list/z_levels_list = list()
 		neigbours |= grid[x][y-1]
 
 
-//config/space_levels.txt is where you define your zlevel datum names, their connection to actual z levels and if you want them connected to one another or not
-//Grammar: Name;z value;linked/unlinked
+//zlevel datum names, their connection to actual z levels and if you want them connected to one another or not are defined in each _maps\[map].dm
+//Grammar: [Name].dmm"//[z value] [linked/unlinked]
 //Name is the name of the datum, just for the sake of it
 //z value is to what actual map z level this datum is pointing
 //linked/unlinked decide if you want the z level in the general map or not, for example centcomm is not reachable
-//Each entry must be separated with a single empty line, no spaces outside the name
-//No comments in the file allowed
+//Zlevel amount must be the same as the number of zlevels .dmms included or you'll get a bunch of runtimes
+//MAP_NAME must be the same as the name of the [map].dm file
 
-/proc/setup_map_transitions() //listamania
-	var/list/SLS = file2list("config/space_levels.txt", "\n\n")
+/proc/setup_map_transitions()
+	var/configtext = return_file_text("[config.relative_maps_path][MAP_NAME].dm")
+	var/list/zlist = list()
 	var/datum/space_level/D
-	var/list/config_settings[SLS.len][]
-	for(var/A in SLS)
-		config_settings[SLS.Find(A)] = text2list(A, ";")
-	var/conf_set_len = SLS.len
-	SLS.Cut()
-	for(var/A in config_settings)
+	var/datum/regex/initresults = regex_find(configtext, "zlevel amount:(\\d+)")
+	var/zlen = text2num(initresults.str(2))
+	for(var/i = 1, i<=zlen, i++)
+		var/datum/regex/results = regex_find(configtext, "(\\w+)\\.dmm\"\\/\\/([i]) (unlinked|linked)")
 		D = new()
-		D.name = A[1]
-		D.z_value = text2num(A[2])
-		if(A[3] != "linked")
+		D.name = results.str(2)
+		D.z_value = text2num(results.str(3))
+		if(results.str(4) != "linked")
 			D.linked = 0
 			z_levels_list["[D.z_value]"] = D
 		else
-			SLS.Add(D)
-	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
+			zlist.Add(D)
+	var/list/point_grid[zlen*2+1][zlen*2+1]
 	var/list/grid = list()
 	var/datum/point/P
-	for(var/i = 1, i<=conf_set_len*2+1, i++)
-		for(var/j = 1, j<=conf_set_len*2+1, j++)
+	for(var/i = 1, i<=zlen*2+1, i++)
+		for(var/j = 1, j<=zlen*2+1, j++)
 			P = new/datum/point(i,j, point_grid)
 			point_grid[i][j] = P
 			grid.Add(P)
 	for(var/datum/point/pnt in grid)
 		pnt.set_neigbours(point_grid)
-	P = point_grid[conf_set_len][conf_set_len]
+	P = point_grid[zlen][zlen]
 	var/list/possible_points = list()
 	var/list/used_points = list()
 	grid.Cut()
-	while(SLS.len)
-		D = pick(SLS)
-		SLS.Remove(D)
+	while(zlist.len)
+		D = pick(zlist)
+		zlist.Remove(D)
 		D.xi = P.x
 		D.yi = P.y
 		P.spl = D

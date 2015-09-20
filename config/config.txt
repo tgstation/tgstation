@@ -203,3 +203,6 @@ ANNOUNCE_ADMIN_LOGOUT
 
 ##Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
 #ANNOUNCE_ADMIN_LOGIN
+
+##Relative path to maps folder from the .dmb's directory, used for space transitions setup, only change if your server is run in a different directory to where it's compiled
+RELATIVE_MAPS_PATH _maps/
