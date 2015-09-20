@@ -38,12 +38,15 @@
 		user.Stun(5)
 		return
 
-	if(isvampire(M) && user.mind && (user.mind.assigned_role == "Chaplain")) //Fuck up vampires by smithing the shit out of them. Shock and Awe!
-		if(!(VAMP_MATURE in M.mind.vampire.powers))
-			M << "<span class='warning'>\The [src]'s power violently interferes with your own!</span>"
-			if(M.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
-				M.mind.vampire.nullified = max(5, M.mind.vampire.nullified + 2)
-			M.mind.vampire.smitecounter += 30 //Smithe the shit out of him. Four strikes and he's out
+	if(ishuman(M)) //Typecasting, only humans can be vampires
+		var/mob/living/carbon/human/H = M
+
+		if(isvampire(H) && user.mind && (user.mind.assigned_role == "Chaplain")) //Fuck up vampires by smithing the shit out of them. Shock and Awe!
+			if(!(VAMP_MATURE in H.mind.vampire.powers))
+				H << "<span class='warning'>\The [src]'s power violently interferes with your own!</span>"
+				if(H.mind.vampire.nullified < 5) //Don't actually reduce their debuff if it's over 5
+					H.mind.vampire.nullified = max(5, H.mind.vampire.nullified + 2)
+				H.mind.vampire.smitecounter += 30 //Smithe the shit out of him. Four strikes and he's out
 
 	//A 25% chance to de-cult per hit that bypasses all protections? Is this some kind of joke? The last thing cult needs right now is that kind of nerfs. Jesus dylan.
 	/*
@@ -55,6 +58,7 @@
 		else //We aren't deconverting him this time, give the Cultist a fair warning
 			M << "<span class='warning'>\The [src]'s intense field is overwhelming you. Your mind feverishly questions Nar'Sie's teachings!</span>"
 	*/
+
 	..() //Whack their shit regardless. It's an obsidian rod, it breaks skulls
 
 /obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob, prox_flag, params)
@@ -69,6 +73,8 @@
 	if(user.mind)
 		if(user.mind.assigned_role == "Chaplain")
 			user << "<span class='notice'>The obsidian rod is teeming with divine power. You feel like you could pulverize a horde of undead with this.</span>"
-		if(isvampire(user) && !(VAMP_UNDYING in user.mind.vampire.powers))
-			user.mind.vampire.smitecounter += 60
-			user << "<span class='danger'>You feel an unwanted presence as you pick up the rod. Your body feels like it is burning from the inside!</span>"
+		if(ishuman(user)) //Typecasting, only humans can be vampires
+			var/mob/living/carbon/human/H = user
+			if(isvampire(H) && !(VAMP_UNDYING in H.mind.vampire.powers))
+				H.mind.vampire.smitecounter += 60
+				H << "<span class='danger'>You feel an unwanted presence as you pick up the rod. Your body feels like it is burning from the inside!</span>"
