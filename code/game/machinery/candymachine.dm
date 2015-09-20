@@ -8,18 +8,35 @@
 	icon_state = "sweetmachine"
 	anchored = 1
 	density = 1
-	machine_flags = WRENCHMOVE | FIXED2WORK
+	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE
+	emag_cost = 0
+	emagged = 0
 
 /obj/machinery/sweet/attackby(var/obj/O as obj, var/mob/user as mob)
 	if (stat & (NOPOWER|BROKEN))
 		return ..()
 	if (istype(O, /obj/item/weapon/coin/))
-		user.drop_item(O, src)
-		user.visible_message("[user] puts a coin into [src] and turns the knob.", "You put a coin into [src] and turn the knob.")
-		src.visible_message("[src] clicks softly.")
-		sleep(rand(10,15))
-		src.visible_message("[src] dispenses a sweet!")
-		new /obj/item/weapon/reagent_containers/food/snacks/sweet(src.loc)
-		qdel(O)
+		if(emagged == 1)
+			user.drop_item(O, src)
+			user.visible_message("[user] puts a coin into [src] and turns the knob.", "You put a coin into [src] and turn the knob.")
+			src.visible_message("[src] rattles ominously!")
+			sleep(rand(10,15))
+			src.visible_message("[src] dispenses a strange sweet!")
+			new /obj/item/weapon/reagent_containers/food/snacks/sweet/strange(src.loc)
+			qdel(O)
+		else
+			user.drop_item(O, src)
+			user.visible_message("[user] puts a coin into [src] and turns the knob.", "You put a coin into [src] and turn the knob.")
+			src.visible_message("[src] clicks softly.")
+			sleep(rand(10,15))
+			src.visible_message("[src] dispenses a sweet!")
+			new /obj/item/weapon/reagent_containers/food/snacks/sweet(src.loc)
+			qdel(O)
 	else
 		return ..()
+
+/obj/machinery/sweet/emag(mob/user)
+	if(emagged == 0)
+		user.visible_message("<span class='warning'>[user.name] slides something across [src.name]'s interface.</span>","<span class='warning'>You short out the [src.name].</span>")
+		emagged = 1
+	return

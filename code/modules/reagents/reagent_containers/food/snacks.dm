@@ -3796,7 +3796,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sweet
-	name = "Sweet"
+	name = "\improper Sweet"
 	desc = "Comes in many different and unique flavours!"
 	food_flags = FOOD_SWEET
 	icon = 'icons/obj/candymachine.dmi'
@@ -3807,3 +3807,45 @@
 		reagents.add_reagent("nutrient", 3)
 		reagents.add_reagent("sugar", 2)
 		icon_state = "sweet[rand(1,12)]"
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet/strange
+	desc = "Something about this sweet doesn't seem right."
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet/strange/New()
+		..()
+		generatecontentssweet()
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet/strange/proc/generatecontentssweet()
+	switch(pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16))
+		if(1)
+			reagents.add_reagent("zombiepowder", 5)
+		if(2)
+			reagents.add_reagent("mindbreaker", 5)
+		if(3)
+			reagents.add_reagent("pacid", 5)
+		if(4)
+			reagents.add_reagent("hyperzine", 5)
+		if(5)
+			reagents.add_reagent("chloralhydrate", 5)
+		if(6)
+			reagents.add_reagent("tricordrazine", 5)
+		if(7)
+			reagents.add_reagent("doctorsdelight", 5)
+		if(8)
+			reagents.add_reagent("mutationtoxin", 5)
+		if(9)
+			reagents.add_reagent("mercury", 5)
+		if(10)
+			reagents.add_reagent("anti_toxin", 5)
+		if(11)
+			reagents.add_reagent("space_drugs", 5)
+		if(12)
+			reagents.add_reagent("holywater", 5)
+		if(13)
+			reagents.add_reagent("ryetalyn", 5)
+		if(14)
+			reagents.add_reagent("cryptobiolin", 5)
+		if(15)
+			reagents.add_reagent("dexalinp", 5)
+		if(16)
+			reagents.add_reagent("hamserum", 1)
