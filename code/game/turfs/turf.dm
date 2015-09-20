@@ -196,6 +196,10 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(src_object.contents.len)
+		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		if(!do_after(usr,20,target=src))
+			return 0
 	for(var/obj/item/I in src_object)
 		src_object.remove_from_storage(I, src) //No check needed, put everything inside
 	return 1
