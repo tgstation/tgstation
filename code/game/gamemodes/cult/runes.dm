@@ -324,7 +324,7 @@ var/list/teleport_other_runes = list()
 	cultist_name = "Sacrifice"
 	cultist_desc = "Sacrifices a crew member to the Geometer. May place them into a soul shard if their spirit remains in their body."
 	icon_state = "3"
-	invocation = "Ih wah'kd in teh'tin!"
+	invocation = "Barhah hra zar'garis!"
 	color = rgb(255, 255, 255)
 	grammar = "veri nahlizet certum"
 	var/rune_in_use = 0
@@ -377,19 +377,28 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/sacrifice/proc/sac(mob/living/T)
 	var/sacrifice_fulfilled
 	if(T)
+		if(T.mind)
+			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
+			if(!stone.transfer_soul("FORCE", T, usr)) //If it cannot be added
+				qdel(stone)
+			if(!T)
+				rune_in_use = 0
+				return
 		if(istype(T, /mob/living/simple_animal/pet/dog/corgi))
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C))
 					C << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
 					if(C.reagents)
 						C.reagents.add_reagent("hell_water", 2)
-		if(T.mind)
-			sacrificed.Add(T.mind)
-			if(is_sacrifice_target(T.mind))
-				sacrifice_fulfilled = 1
-			var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-			if(!stone.transfer_soul("FORCE", T, usr)) //If it cannot be added
-				qdel(stone)
+		sacrificed.Add(T.mind)
+		if(is_sacrifice_target(T.mind))
+			sacrifice_fulfilled = 1
+		if(isrobot(T))
+			playsound(T, 'sound/magic/Disable_Tech.ogg', 100, 1)
+			T.dust() //To prevent the MMI from remaining
+		else
+			playsound(T, 'sound/magic/Disintegrate.ogg', 100, 1)
+			T.gib()
 		for(var/mob/living/M in orange(1,src))
 			if(iscultist(M))
 				if(sacrifice_fulfilled)
@@ -399,12 +408,6 @@ var/list/teleport_other_runes = list()
 						M << "<span class='cult'>\"I accept this sacrifice.\"</span>"
 					else
 						M << "<span class='cult'>\"I accept this meager sacrifice.\"</span>"
-		if(isrobot(T))
-			playsound(T, 'sound/magic/Disable_Tech.ogg', 100, 1)
-			T.dust() //To prevent the MMI from remaining
-		else
-			playsound(T, 'sound/magic/Disintegrate.ogg', 100, 1)
-			T.gib()
 	rune_in_use = 0
 
 
