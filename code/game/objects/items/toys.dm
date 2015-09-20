@@ -17,6 +17,7 @@
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
+ *		Space cube
  */
 
 
@@ -1202,3 +1203,14 @@
 	else
 		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
 		return
+
+/*
+ * Space Cube
+ */
+
+/obj/item/toy/spacecube
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "spacecube"
+	name = "space cube"
+	desc = "An outdated model of the universe. This interpretation fell out of favor with scientists due to its controversial 'three axes of space' and 'extrauniversal orientation' claims."
+	w_class = 2
