@@ -151,13 +151,20 @@
 	attacktext = "sears"
 	damage_transfer = 0.7
 	range = 10
-	playstyle_string = "As a fire type, you have only light damage resistance, but will ignite any enemy you bump into."
+	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
 	environment_smash = 1
-	magic_fluff_string = "..And draw Atmosia, bringer of cleansing fires!"
-	tech_fluff_string = "Boot sequence complete. Incendiary combat modules loaded. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of igniting enemies on touch."
+	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
+	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Nanoswarm online."
+	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, ready to sow havoc at random."
 	pass_flags = PASSMOB
 
+
+/mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
+	..()
+	if(istype(target, /atom/movable))
+		var/atom/movable/M = target
+		if(!M.anchored && M != src.summoner)
+			do_teleport(M, M, 10)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	if(istype(AM, /mob/living/))
@@ -199,63 +206,106 @@
 		playsound(loc, src.attack_sound, 50, 1, 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
 
-
-
-
-//Fast Standard. Does less damage, has less resistance, but moves faster, has higher range
-
-/mob/living/simple_animal/hostile/guardian/fast
-	melee_damage_lower = 20
-	melee_damage_upper = 20
-	damage_transfer = 0.7
-	speed = -1
-	range = 15
-	attacktext = "slices"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	playstyle_string = "As a fast standard type, you have no special abilities and only light damage resistance, but deal high damage at high speed."
-	environment_smash = 1
-	magic_fluff_string = "..And draw the Shoes, bringer of great speed. The card is badly damaged, and barely legible."
-	tech_fluff_string = "Boot sequence complete. High speed combat modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of moving at blinding speed."
-
-//Defender. Does no damage, takes no damage, moves slowly.
-/mob/living/simple_animal/hostile/guardian/shield
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	speed = 1
-	range = 10
-	damage_transfer = 0
-	friendly = "stares down"
-	status_flags = CANPUSH
-	playstyle_string = "As a defensive type, you are incapable of attacking and move slowly, but completely nullify any attack that hits you."
-	magic_fluff_string = "..And draw the Juggernaut, an invincible, unstoppable force."
-	tech_fluff_string = "Boot sequence complete. Defensive modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, helpless, but invulnerable."
-
 //Healer
 
 /mob/living/simple_animal/hostile/guardian/healer
-	a_intent = "help"
+	a_intent = "harm"
 	friendly = "heals"
-	speed = 1
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	playstyle_string = "As a healer type, you are incapable of attacking, but can mend any wound simply by touching a target."
-	magic_fluff_string = "..And draw the CMO, a potent force of life and health."
-	tech_fluff_string = "Boot sequence complete. Medical modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of mending wounds."
+	speed = 0
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Shift-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
+	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
+	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Nanoswarm online."
+	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of mending wounds and travelling via bluespace."
+	var/turf/simulated/floor/beacon
+	var/beacon_cooldown = 0
+	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	..()
+	if(toggle == TRUE)
+		if(src.loc == summoner)
+			src << "<span class='danger'><B>You must be manifested to heal!</span></B>"
+			return
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.adjustBruteLoss(-5)
+			C.adjustFireLoss(-5)
+			C.adjustOxyLoss(-5)
+			C.adjustToxLoss(-5)
+
+/mob/living/simple_animal/hostile/guardian/healer/verb/ToggleMode()
+	set name = "Toggle Mode"
+	set category = "Guardian"
+	set desc = "Toggle between combat and scout modes."
 	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to heal!</span></B>"
+		if(toggle)
+			a_intent = "harm"
+			speed = 0
+			damage_transfer = 0.7
+			melee_damage_lower = 15
+			melee_damage_upper = 15
+			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
+			toggle = FALSE
+		else
+			a_intent = "help"
+			speed = 1
+			damage_transfer = 1
+			melee_damage_lower = 0
+			melee_damage_upper = 0
+			src << "<span class='danger'><B>You switch to healing mode.</span></B>"
+			toggle = TRUE
+	else
+		src << "<span class='danger'><B>You have to be recalled to toggle modes!.</span></B>"
+
+
+/mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
+	set name = "Place Bluespsace Beacon"
+	set category = "Guardian"
+	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work in unfavorable atmospheric conditions."
+	if(beacon_cooldown<world.time)
+		var/turf/beacon_loc = get_turf(src.loc)
+		if(istype(beacon_loc, /turf/simulated/floor))
+			var/turf/simulated/floor/F = beacon_loc
+			F.icon = 'icons/turf/floors.dmi'
+			F.name = "bluespace recieving pad"
+			F.desc = "A recieving zone for bluespace teleportations. Building a wall over it should disable it."
+			F.icon_state = "light_on-w"
+			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Shift+Click. </span></B>"
+			beacon = F
+	else
+		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
+
+/mob/living/simple_animal/hostile/guardian/healer/ShiftClickOn(atom/movable/A)
+	if(src.loc == summoner)
+		src << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
 		return
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.adjustBruteLoss(-5)
-		C.adjustFireLoss(-5)
-		C.adjustOxyLoss(-5)
-		C.adjustToxLoss(-5)
+	if(!beacon)
+		src << "<span class='danger'><B>You need a beacon placed to warp things!</span></B>"
+		return
+	if(!Adjacent(A))
+		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
+		return
+	src << "<span class='danger'><B>You begin to warp [A]</span></B>"
+	if(!do_mob(src, A, 50))
+		if(!A.anchored)
+			if(src.beacon) //Check that the beacon still exists and is in a safe place. No instant kills.
+				if(beacon.air)
+					var/datum/gas_mixture/Z = beacon.air
+					if(Z.oxygen >= 16 && !Z.toxins && Z.carbon_dioxide < 10 && !Z.trace_gases.len)
+						if((Z.temperature > 270) && (Z.temperature < 360))
+							var/pressure = Z.return_pressure()
+							if((pressure > 20) && (pressure < 550))
+								do_teleport(A, beacon, 0)
+						else
+							src << "<span class='danger'><B>The beacon isn't in a safe location!</span></B>"
+					else
+						src << "<span class='danger'><B>The beacon isn't in a safe location!</span></B>"
+			else
+				src << "<span class='danger'><B>You need a beacon to warp things!</span></B>"
+	else
+		src << "<span class='danger'><B>You need to hold still!</span></B>"
 
 
 ///////////////////Ranged
@@ -271,7 +321,7 @@
 	friendly = "quietly assesses"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_transfer = 1.2
+	damage_transfer = 1
 	projectiletype = /obj/item/projectile/guardian
 	ranged_cooldown_cap = 0
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
@@ -310,8 +360,6 @@
 	else
 		src << "<span class='danger'><B>You have to be recalled to toggle modes!.</span></B>"
 
-
-
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Trap"
 	set category = "Guardian"
@@ -348,33 +396,6 @@
 		var/turf/snare_loc = get_turf(src.loc)
 		if(spawner)
 			spawner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
-
-
-
-///Bluespace
-
-
-/mob/living/simple_animal/hostile/guardian/bluespace
-	ranged = 1
-	range = 15
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	speed = -1
-	attack_sound = 'sound/weapons/emitter.ogg'
-	projectiletype = /obj/item/projectile/magic/teleport
-	projectilesound = 'sound/weapons/emitter.ogg'
-	playstyle_string = "As a bluespace type, you have only light damage resistance, but are capable of shooting teleporation bolts as well as flinging enemies away with your standard attack."
-	magic_fluff_string = "..And draw the Wizard, master of teleportation."
-	tech_fluff_string = "Boot sequence complete. Experimental bluespace combat modules active. Nanoswarm online."
-	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, crackling with bluespace energy."
-
-/mob/living/simple_animal/hostile/guardian/bluespace/AttackingTarget()
-	..()
-	if(istype(target, /atom/movable))
-		var/atom/movable/M = target
-		if(!M.anchored && M != src.summoner)
-			do_teleport(M, M, 10)
-
 
 ////Bomb
 
@@ -443,15 +464,6 @@
 		user << "<span class='notice'>Looks odd!</span>"
 
 
-
-
-
-
-
-
-
-
-
 ////////Creation
 
 /obj/item/weapon/guardiancreator
@@ -465,7 +477,7 @@
 	var/use_message = "You shuffle the deck..."
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
-	var/list/possible_guardians = list("Fire", "Standard", "Shield", "Ranged", "Healer", "Fast", "Explosive")
+	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
@@ -514,26 +526,17 @@
 	var/picked_color = randomColor(0)
 	switch(gaurdiantype)
 
-		if("Fire")
+		if("Chaos")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
 
 		if("Standard")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
 
-		if("Shield")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/shield
-
 		if("Ranged")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/ranged
 
-		if("Healer")
+		if("Support")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/healer
-
-		if("Fast")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/fast
-
-		if("Bluespace")
-			pickedtype = /mob/living/simple_animal/hostile/guardian/bluespace
 
 		if("Explosive")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
@@ -560,8 +563,6 @@
 			user << "[G.bio_fluff_string]."
 			G.attacktext = "swarms"
 			G.speak_emote = list("chitters")
-
-
 
 /obj/item/weapon/guardiancreator/choose
 	random = FALSE
