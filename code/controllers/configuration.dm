@@ -568,6 +568,11 @@
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+		else
+			del(M)
+			continue
+//	if(runnable_modes.len <=0)
+
 	return runnable_modes
 
 
