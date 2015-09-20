@@ -40,7 +40,8 @@
 		"<span class='notice'>You put \a [W.name] on the \the [src].</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 20, 1)
 		qdel(W)
-		new/obj/structure/hanging_lantern {dir = src.dir} (get_turf(src)) // Obligatory "fuck dylan". See https://docs.google.com/document/pub?id=1HGkCp4eQU8Jp14Srh8Isuv_liehzV_XB6IcSUbVFFiY&embedded=true&revision=latest%22%22#h.wc62geg7mnp for explanation.
+		var/obj/structure/hanging_lantern/L = new/obj/structure/hanging_lantern(get_turf(src)) // Obligatory "fuck dylan".
+		L.dir = dir
 		qdel(src)
 
 /obj/structure/hanging_lantern
