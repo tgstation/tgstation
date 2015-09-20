@@ -22,8 +22,7 @@
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
-	user.visible_message("<span class='warning'>[user]'s skin begins to twist and shift around them!</span>", \
-						 "<span class='notice'>We begin to heal rapidly.</span>")
+	user << "<span class='notice'>We begin to heal rapidly.</span>"
 	if(recent_uses > 1)
 		user << "<span class='warning'>Our healing's effectiveness is reduced by quickly repeated use!</span>"
 	spawn(0)
