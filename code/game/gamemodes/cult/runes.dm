@@ -383,9 +383,10 @@ var/list/teleport_other_runes = list()
 					C << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
 					if(C.reagents)
 						C.reagents.add_reagent("hell_water", 2)
-		sacrificed.Add(T.mind)
-		if(is_sacrifice_target(T.mind))
-			sacrifice_fulfilled = 1
+		if(T.mind)
+			sacrificed.Add(T.mind)
+			if(is_sacrifice_target(T.mind))
+				sacrifice_fulfilled = 1
 		for(var/mob/living/M in orange(1,src))
 			if(iscultist(M))
 				if(sacrifice_fulfilled)
