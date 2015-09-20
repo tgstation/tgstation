@@ -14,7 +14,7 @@
 		getFromPool(/obj/effect/decal/cleanable/blood, src)
 		new girder_type(src)
 	else
-		if(prob(10)
+		if(prob(10))
 			getFromPool(/obj/effect/decal/cleanable/blood, src)
 		//	new /obj/effect/decal/remains/human(src) //Commented out until remains are cleanable
 
