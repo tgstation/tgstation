@@ -10,7 +10,7 @@
 	idle_power_usage = 1000
 	var/list/obj/item/commstone/allstones = list()
 	var/remaining = 6
-	machine_flags = WRENCHMOVE
+	machine_flags = WRENCHMOVE | FIXED2WORK
 
 /obj/machinery/communication/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/commstone))
