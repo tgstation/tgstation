@@ -8,8 +8,7 @@
 
 //Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
-
-	user << "<span class='notice'>We cleanse impurities from our form.</span>"
+	user << "<span class='notice'>We begin cleansing impurities from our form.</span>"
 	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("potass_iodide", 10)
 	user.reagents.add_reagent("charcoal", 20)
