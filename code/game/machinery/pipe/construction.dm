@@ -45,7 +45,7 @@ Buildable meters
 
 /obj/item/pipe/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click it to rotate clockwise.</span>"
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
