@@ -2141,7 +2141,6 @@
 	product_ads = "Hungry, thirsty or unequipped? We have your fix!"
 	vend_reply = "What a glorious time to mine!"
 	icon_state = "mining"
-	req_access = list(access_mining)
 	products = list(
 		/obj/item/weapon/reagent_containers/food/snacks/hotchili = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 10,
