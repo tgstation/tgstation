@@ -37,6 +37,6 @@
 
 /obj/machinery/sweet/emag(mob/user)
 	if(emagged == 0)
-		user.visible_message("<span class='warning'>[user.name] slides something across [src.name]'s interface.</span>","<span class='warning'>You short out the [src.name].</span>")
+		user.simple_message("<span class='warning'>You inexplicably short out the [src.name].</span>")
 		emagged = 1
 	return
