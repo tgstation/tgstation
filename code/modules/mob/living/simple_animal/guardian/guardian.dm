@@ -238,7 +238,7 @@
 /mob/living/simple_animal/hostile/guardian/healer/verb/ToggleMode()
 	set name = "Toggle Mode"
 	set category = "Guardian"
-	set desc = "Toggle between combat and scout modes."
+	set desc = "Toggle between combat and healing modes."
 	if(src.loc == summoner)
 		if(toggle)
 			a_intent = "harm"
