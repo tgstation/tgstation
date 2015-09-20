@@ -71,7 +71,9 @@
 		src.summoner.adjustBruteLoss(damage)
 		if(damage)
 			src.summoner << "<span class='danger'><B>Your [src.name] is under attack! You take damage!</span></B>"
-
+		if(src.summoner.stat == UNCONSCIOUS)
+			src.summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src.name] in this condition, it begins to fall apart!</span></B>"
+			src.summoner.adjustCloneLoss(damage/2)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
@@ -154,10 +156,15 @@
 	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
 	environment_smash = 1
 	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
-	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Nanoswarm online."
+	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, ready to sow havoc at random."
 	pass_flags = PASSMOB
 
+/mob/living/simple_animal/hostile/guardian/fire/Life() //Dies if the summoner dies
+	..()
+	if(summoner)
+		summoner.ExtinguishMob()
+		summoner.adjust_fire_stacks(-20)
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	..()
@@ -182,7 +189,7 @@
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
-	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Nanoswarm online."
+	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm stirs to life, ready to tear apart your enemies."
 	var/battlecry = "AT"
 
@@ -216,7 +223,7 @@
 	melee_damage_upper = 15
 	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Shift-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
 	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
-	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Nanoswarm online."
+	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of mending wounds and travelling via bluespace."
 	var/turf/simulated/floor/beacon
 	var/beacon_cooldown = 0
@@ -257,7 +264,7 @@
 			src << "<span class='danger'><B>You switch to healing mode.</span></B>"
 			toggle = TRUE
 	else
-		src << "<span class='danger'><B>You have to be recalled to toggle modes!.</span></B>"
+		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
 
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
@@ -273,7 +280,11 @@
 			F.desc = "A recieving zone for bluespace teleportations. Building a wall over it should disable it."
 			F.icon_state = "light_on-w"
 			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Shift+Click. </span></B>"
+			if(beacon)
+				beacon.ChangeTurf(/turf/simulated/floor/plating)
 			beacon = F
+			beacon_cooldown = world.time+3000
+
 	else
 		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
 
@@ -287,8 +298,11 @@
 	if(!Adjacent(A))
 		src << "<span class='danger'><B>You must be adjacent to your target!</span></B>"
 		return
+	if((A.anchored))
+		src << "<span class='danger'><B>Your target can not be anchored!</span></B>"
+		return
 	src << "<span class='danger'><B>You begin to warp [A]</span></B>"
-	if(!do_mob(src, A, 50))
+	if(do_mob(src, A, 50))
 		if(!A.anchored)
 			if(src.beacon) //Check that the beacon still exists and is in a safe place. No instant kills.
 				if(beacon.air)
@@ -313,7 +327,7 @@
 /obj/item/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
-	damage = 4
+	damage = 5
 	damage_type = BRUTE
 
 /mob/living/simple_animal/hostile/guardian/ranged
@@ -321,7 +335,7 @@
 	friendly = "quietly assesses"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_transfer = 1
+	damage_transfer = 0.9
 	projectiletype = /obj/item/projectile/guardian
 	ranged_cooldown_cap = 0
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
@@ -329,7 +343,7 @@
 	range = 13
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
-	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Nanoswarm online."
+	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spraying shards of crystal."
 	var/list/snares = list()
 	var/toggle = FALSE
@@ -358,7 +372,7 @@
 			src << "<span class='danger'><B>You switch to scout mode.</span></B>"
 			toggle = TRUE
 	else
-		src << "<span class='danger'><B>You have to be recalled to toggle modes!.</span></B>"
+		src << "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>"
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Trap"
@@ -396,6 +410,10 @@
 		var/turf/snare_loc = get_turf(src.loc)
 		if(spawner)
 			spawner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
+			if(istype(spawner, /mob/living/simple_animal/hostile/guardian))
+				var/mob/living/simple_animal/hostile/guardian/G = spawner
+				if(G.summoner)
+					G.summoner << "<span class='danger'><B>[AM] has crossed your surveillance trap at [get_area(snare_loc)].</span></B>"
 
 ////Bomb
 
@@ -406,7 +424,7 @@
 	range = 13
 	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via shift click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
-	tech_fluff_string = "Boot sequence complete. Explosive modules active. Nanoswarm online."
+	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of stealthily booby trapping items."
 	var/bomb_cooldown = 0
 
@@ -477,10 +495,14 @@
 	var/use_message = "You shuffle the deck..."
 	var/used_message = "All the cards seem to be blank now."
 	var/failure_message = "..And draw a card! It's...blank? Maybe you should try again later."
+	var/ling_failure = "The deck refuses to respond to a souless creature such as you."
 	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive")
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+	if(user.mind && user.mind.changeling)
+		user << "[ling_failure]"
+		return
 	if(used == TRUE)
 		user << "[used_message]"
 		return
@@ -557,7 +579,6 @@
 			user << "[G.magic_fluff_string]."
 		if("tech")
 			user << "[G.tech_fluff_string]."
-			G.attacktext = "swarms"
 			G.speak_emote = list("states")
 		if("bio")
 			user << "[G.bio_fluff_string]."
@@ -568,20 +589,19 @@
 	random = FALSE
 
 /obj/item/weapon/guardiancreator/tech
-	name = "parasitic nanomachine injector"
-	desc = "Though powerful in combat, these nanomachines require a living host as a source of fuel and home base."
+	name = "holoparasite injector"
+	desc = "It contains alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
-	mob_name = "Nanomachine Swarm"
+	mob_name = "Holoparasite"
 	use_message = "You start to power on the injector..."
 	used_message = "The injector has already been used."
 	failure_message = "<B>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</B>"
+	ling_failure = "The holoparasites recoil in horror. They want nothing to do with a creature like you."
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
-
-
 
 /obj/item/weapon/guardiancreator/biological
 	name = "scarab egg cluster"
@@ -596,3 +616,34 @@
 
 /obj/item/weapon/guardiancreator/biological/choose
 	random = FALSE
+
+
+/obj/item/weapon/paper/guardian
+	name = "Holoparasite Guide"
+	icon_state = "alienpaper_words"
+	info = {"<b>A list of Holoparasite Types</b><br>
+
+ <br>
+ <b>Chaos</b>: Ignites mobs on touch. teleports them at random on attack. Automatically extinguishes the user if they catch fire.<br>
+ <br>
+ <b>Standard</b>:Devestating close combat attacks and high damage resist. No special powers.<br>
+ <br>
+ <b>Ranged</b>: Has two modes. Ranged: Extremely weak, highly spammable projectile attack. Scout: Can not attack, but can move through walls. Can lay surveillance snares in either mode.<br>
+ <br>
+ <b>Support</b>:Has two modes. Combat: Medium power attacks and damage resist. Healer: Attacks heal damage, but low damage resist and slow movemen. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
+ <br>
+ <b>Explosive</b>: High damage resist and medium power attack. Can turn any object into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered.<br>
+"}
+
+/obj/item/weapon/paper/guardian/update_icon()
+	return
+
+
+/obj/item/weapon/storage/box/syndie_kit/guardian
+	name = "holoparasite injector kit"
+
+/obj/item/weapon/storage/box/syndie_kit/guardian/New()
+	..()
+	new /obj/item/weapon/guardiancreator/tech/choose(src)
+	new /obj/item/weapon/paper/guardian(src)
+	return
