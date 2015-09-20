@@ -179,7 +179,7 @@ datum/controller/game_controller/proc/cachedamageicons()
 	populate_asset_cache()
 	log_startup_progress("  Populated [asset_cache.len] assets in [stop_watch(watch)]s.")
 
-	watch = start_watch()	
+	watch = start_watch()
 	log_startup_progress("Initializing objects...")
 	//sleep(-1) // Why
 	//var/last_init_type = null
@@ -225,11 +225,12 @@ datum/controller/game_controller/proc/cachedamageicons()
 
 
 	watch = start_watch()
-	log_startup_progress("Generating in-game minimaps...")
-	generateMiniMaps()
-	log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
+	spawn(0)
+		log_startup_progress("Generating in-game minimaps...")
+		generateMiniMaps()
+		log_startup_progress("  Finished minimaps in [stop_watch(watch)]s.")
 
-	log_startup_progress("Finished initializations in [stop_watch(overwatch)]s.")
+		log_startup_progress("Finished initializations in [stop_watch(overwatch)]s.")
 
 
 
