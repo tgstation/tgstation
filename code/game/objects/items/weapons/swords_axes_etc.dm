@@ -117,21 +117,21 @@
 	playsound(get_turf(src), 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)
 
-	if(!blood_overlays[type+icon_state])
+	if(!blood_overlays["[type][icon_state]"])
 		generate_blood_overlay()
 	if(blood_overlay)
 		overlays -= blood_overlay
-	blood_overlay = blood_overlays[type+icon_state]
+	blood_overlay = blood_overlays["[type][icon_state]"]
 	blood_overlay.color = blood_color
 	overlays += blood_overlay
 
 /obj/item/weapon/melee/telebaton/generate_blood_overlay()
-	if(blood_overlays[type+icon_state]) //Unless someone makes a wicked typepath this will never cause a problem
+	if(blood_overlays["[type][icon_state]"]) //Unless someone makes a wicked typepath this will never cause a problem
 		return
 	var/icon/I = new /icon(icon, icon_state)
 	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
 	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-	blood_overlays[type+icon_state] = image(I)
+	blood_overlays["[type][icon_state]"] = image(I)
 
 /obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
 	if(on)
