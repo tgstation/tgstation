@@ -73,7 +73,7 @@
 /obj/item/weapon/storage/bag/plasticbag/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
 	//Forbid wearing bags with something inside!
 	.=..()
-	if(contents.len && (slot == SLOT_HEAD))
+	if(contents.len && (slot == slot_head))
 		return 0
 
 /obj/item/weapon/storage/bag/plasticbag/can_be_inserted()
