@@ -24,6 +24,7 @@
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
+	see_in_dark = 8
 	var/cooldown = 0
 	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
@@ -71,6 +72,7 @@
 		src.summoner.adjustBruteLoss(damage)
 		if(damage)
 			src.summoner << "<span class='danger'><B>Your [src.name] is under attack! You take damage!</span></B>"
+			src.summoner.visible_message("<span class='danger'>Blood sprays from [summoner] as [src] takes damage!</span>")
 		if(src.summoner.stat == UNCONSCIOUS)
 			src.summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src.name] in this condition, it begins to fall apart!</span></B>"
 			src.summoner.adjustCloneLoss(damage/2)
@@ -500,6 +502,10 @@
 	var/random = TRUE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+	for(var/mob/living/simple_animal/hostile/guardian/G in living_mob_list)
+		if (G.summoner == user)
+			user << "You already have a [mob_name]!"
+			return
 	if(user.mind && user.mind.changeling)
 		user << "[ling_failure]"
 		return
