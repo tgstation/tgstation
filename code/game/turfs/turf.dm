@@ -220,6 +220,9 @@
 /turf/proc/is_carpet_floor()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/is_carpet_floor() called tick#: [world.time]")
 	return 0
+/turf/proc/is_arcade_floor()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/is_arcade_floor() called tick#: [world.time]")
+	return 0
 /turf/proc/is_mineral_floor()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/is_mineral_floor() called tick#: [world.time]")
 	return 0
