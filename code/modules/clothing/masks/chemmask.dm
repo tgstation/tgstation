@@ -30,25 +30,28 @@
 	var/power = 0
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	var/tank_injection_rates = list(5,10,15,20,25,30,35,40,45,50)
 	var/tank_injection_rate = 10
 	var/tank_has_injected = 0
 	var/beaker_injection_methods = list("Time-based","Threshold-based")
 	var/beaker_injection_method = "Threshold-based"
 	var/injection_method_chosen = 0
-	var/beaker_time_intervals = list(1,5,10,15,20,25,30,40,50,60,70,80,90,97,100,120,180,240,300)
 	var/beaker_time_interval = 970
-	var/beaker_injection_rates = list(5,10,15,20,25,30,35,40,45,50)
 	var/beaker_injection_rate = 10
-	var/beaker_thresholds = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,40,50)
 	var/beaker_threshold = 10
-	var/beaker_threshold_reagents = list("creatine","blood","anti_toxin","bicaridine","kelotane","dermaline","dexalinp","iron","hyperzine","doctorsdelight","inaprovaline","space_drugs","tramadol","oxycodone","dexalin","leporazine","tricordrazine","hyronalin","alkysine","imidazoline","peridaxon","peptobismol")
 	var/beaker_threshold_reagent = "creatine"
-	var/empty = 0
-	var/beakerempty = 0
-	var/hasbeaker = 0
+	var/firstalert_tank = 0
+	var/firstalert_beaker = 0
 	var/beakeractive = 0
 	var/tankactive = 1
+	var/beaker_verbs_time = list(
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval,
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+		)
+	var/beaker_verbs_threshold = list(
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold,
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent,
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+		)
 	species_fit = list("Vox")
 	body_parts_covered = HEAD|MOUTH
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/chempack.dmi', "right_hand" = 'icons/mob/in-hand/right/chempack.dmi')
@@ -56,12 +59,32 @@
 
 /obj/item/clothing/mask/chemmask/New() //Doing this so that these verbs don't show up before there's actually a beaker in the pack.
 	..()
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_pack_injection
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+	update_verbs()
+
+/obj/item/clothing/mask/chemmask/proc/update_verbs()
+	if (power)
+		verbs += /obj/item/clothing/mask/chemmask/verb/set_pack_injection
+	else
+		verbs -= /obj/item/clothing/mask/chemmask/verb/set_pack_injection
+	if (has_beaker(usr))
+		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_usage
+		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
+		if (injection_method_chosen) //Don't want the user to have to select the beaker injection method more than once per item.
+			if (beaker_injection_method == "Threshold-based")
+				verbs += beaker_verbs_threshold
+				verbs -= beaker_verbs_time
+			else if (beaker_injection_method == "Time-based")
+				verbs += beaker_verbs_time
+				verbs -= beaker_verbs_threshold
+		else
+			verbs -= beaker_verbs_time
+			verbs -= beaker_verbs_threshold
+	else
+		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_usage
+		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
+		verbs -= beaker_verbs_time
+		verbs -= beaker_verbs_threshold
+
 
 /obj/item/clothing/mask/chemmask/examine(mob/user)
 	..()
@@ -85,15 +108,7 @@
 				icon_state = "chemmask1"
 				start_flow(usr)
 				usr.update_inv_wear_mask()
-				verbs += /obj/item/clothing/mask/chemmask/verb/set_pack_injection
-				if (injection_method_chosen) //Don't want the user to have to select the beaker injection method more than once per item.
-					if (beaker_injection_method == "Threshold-based")
-						verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
-						verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
-						verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
-					else if (beaker_injection_method == "Time-based")
-						verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
-						verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+				update_verbs()
 			else
 				usr << "<span class='warning'>You must disable \the [P]'s safeties before you can activate \the [src]!</span>"
 		else
@@ -107,7 +122,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/N = input("Set the number of units of each reagent in the chemical pack to be injected every 100 seconds. The injection rates of some chemicals will be altered to account for different rates of metabolism. Going over 10u may cause overdosing with some chemicals:","[src]") as null|anything in tank_injection_rates
+	var/N = input("Set the number of units of each reagent in the chemical pack to be injected every 100 seconds. The injection rates of some chemicals will be altered to account for different rates of metabolism. Going over 10u may cause overdosing with some chemicals:","[src]") as null|num
 	//It's actually 97 seconds, so that more chems are injected before the user completely runs out. But 100 seconds sounded better and the player won't know the difference.
 	if (N)
 		tank_injection_rate = N
@@ -143,25 +158,16 @@
 
 	var/N = input("Set the method by which \the [src] determines when to administer more chemicals from the auxiliary beaker:","[src]") as null|anything in beaker_injection_methods
 	if (N)
-		if (N == "Time-based")
-			verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
-			verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
-			verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
-			verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
-		else if (N == "Threshold-based")
-			verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
-			verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
-			verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
-			verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
 		beaker_injection_method = N
 		injection_method_chosen = 1
+		update_verbs()
 
 /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate()
 	set name = "Set auxiliary beaker injection rate"
 	set category = "Object"
 	set src in usr
 
-	var/N = input("Set the amount of chemicals administered from the auxiliary beaker when \the [src] administers more chemicals:","[src]") as null|anything in beaker_injection_rates
+	var/N = input("Set the amount of chemicals administered from the auxiliary beaker when \the [src] administers more chemicals:","[src]") as null|num
 	if (N)
 		beaker_injection_rate = N
 
@@ -170,7 +176,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/N = input("Set the time interval at which \the [src] will administer more chemicals from the auxiliary beaker. All values are in seconds:","[src]") as null|anything in beaker_time_intervals
+	var/N = input("Set the time interval at which \the [src] will administer more chemicals from the auxiliary beaker:","[src]") as null|num
 	if (N)
 		beaker_time_interval = N*10
 
@@ -179,9 +185,12 @@
 	set category = "Object"
 	set src in usr
 
+	var/obj/item/weapon/reagent_containers/chempack/P = usr.back
+	var/obj/item/weapon/reagent_containers/glass/B = P.beaker
+	var/beaker_threshold_reagents = B.get_reagent_names()
+
 	var/N = input("Set the reagent for which the minimum threshold must be reached to cause \the [src] to administer more chemicals from the auxiliary beaker:","[src]") as null|anything in beaker_threshold_reagents
 	if (N)
-//		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
 		beaker_threshold_reagent = N
 
 /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold()
@@ -189,7 +198,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/N = input("Set the minimum threshold of [beaker_threshold_reagent] in your body that must be reached to cause \the [src] to administer more chemicals:","[src]") as null|anything in beaker_thresholds
+	var/N = input("Set the minimum threshold of [beaker_threshold_reagent] in your body that must be reached to cause \the [src] to administer more chemicals:","[src]") as null|num
 	if (N)
 		beaker_threshold = N
 
@@ -213,46 +222,33 @@
 
 /obj/item/clothing/mask/chemmask/proc/tank_volume_check(mob/user) //Alerts the user when the tank runs out of reagents. Does not alert them more than once per emptying, it must be refilled and then run dry again to alert them again.
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
-	if (P.is_empty() && empty == 0 && tankactive)
-		empty = 1
+	if (P.is_empty() && firstalert_tank == 0 && tankactive)
+		firstalert_tank = 1
 		user << "<span class='warning'>The chemical pack is empty!</span>"
 	else if (!P.is_empty())
-		empty = 0
+		firstalert_tank = 0
 
-/obj/item/clothing/mask/chemmask/proc/beaker_check(mob/user) //Checks whether there is a beaker in the pack, in order to determine whether to show the beaker-specific verbs.
-	var/obj/item/weapon/reagent_containers/chempack/P = user.back
-	if (P.beaker)
-		hasbeaker = 1
-		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
-	else
-		hasbeaker = 0
-		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
-		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
-		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
-		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
-		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+/obj/item/clothing/mask/chemmask/proc/has_beaker(mob/user) //Checks whether there is a beaker in the pack, in order to determine whether to show the beaker-specific verbs.
+	if(user.back && istype(user.back, /obj/item/weapon/reagent_containers/chempack))
+		var/obj/item/weapon/reagent_containers/chempack/P = user.back
+		return !isnull(P.beaker)
 
 /obj/item/clothing/mask/chemmask/proc/beaker_volume_check(mob/user) //Alerts the user when the auxiliary beaker is empty. Unlike the tank alert, this alert plays a sound, since the auxiliary beaker will most likely have higher-priority chems in it.
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
 	var/obj/item/weapon/reagent_containers/glass/B = P.beaker
-	if (B.is_empty() && beakerempty == 0)
-		beakerempty = 1
+	if (B.is_empty() && firstalert_beaker == 0)
+		firstalert_beaker = 1
 		playsound(get_turf(src),'sound/mecha/internaldmgalarm.ogg', 100, 1)
 		user << "<span class='warning'>The auxiliary beaker is empty!</span>"
 	else if (!B.is_empty())
-		beakerempty = 0
+		firstalert_beaker = 0
 
 
 /obj/item/clothing/mask/chemmask/proc/mask_shutdown(mob/user) //Removes most verbs upon toggling the mask off, but not all. The user keeps access to the verbs to toggle connection to the tank and beaker.
 	power = 0
 	icon_state = "chemmask0"
 	user.update_inv_wear_mask()
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_pack_injection
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
-	verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+	update_verbs()
 
 /obj/item/clothing/mask/chemmask/proc/start_flow(mob/user)
 	spawn()
@@ -260,7 +256,7 @@
 			pack_check(user)
 			mask_check(user)
 			tank_volume_check(user)
-			beaker_check(user)
+			update_verbs()
 			sleep(1) //I tried these loops without the sleep(1), it caused the server to lock up when the loop was entered.
 	spawn()
 		spawn()
@@ -277,7 +273,7 @@
 					sleep(1)
 		spawn()
 			while(power)
-				if (hasbeaker)
+				if (has_beaker(user))
 					if (beakeractive)
 						beakerinject(user)
 						beaker_volume_check(user)
