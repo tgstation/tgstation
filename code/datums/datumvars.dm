@@ -603,35 +603,21 @@ body
 			M << "Control of your mob has been offered to dead players."
 			log_admin("[key_name(usr)] has offered control of [M.real_name] to ghosts.")
 			message_admins("<span class='notice'>[key_name(usr)] has offered control of [M.real_name] to ghosts</span>")
-			var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
+			var/mob/dead/observer/theghost = null
 
-			shuffle(candidates)
-
-			var/time_passed = world.time
-			var/list/consenting_candidates = list()
-
-			for(var/candidate in candidates)
-
-				spawn(0)
-					switch(alert(candidate, "Would you like to play as [M.real_name]? Please choose quickly!","Confirmation","Yes","No"))
-						if("Yes")
-							if((world.time-time_passed)>=100 || !src)
-								return
-							consenting_candidates += candidate
-
-			sleep(100)
-
-			if(!M)
-				return
-
-			if(consenting_candidates.len)
-				var/client/C = null
-				C = pick(consenting_candidates)
-				M << "Your mob has been taken over by a ghost!"
-				usr << "[C.key] has taken over [M.real_name]."
-				message_admins("<span class='notice'>[key_name(C)] has taken control of [M.real_name]</span>")
-				M.ghostize()
-				M.key = C.key
+			if(candidates.len)
+				for(var/mob/j in candidates)
+					if(!j || !j.client)
+						candidates.Remove(j)
+						continue
+					theghost = j
+					M << "Your mob has been taken over by a ghost!"
+					usr << "[theghost.key] has taken over [M.real_name]."
+					message_admins("<span class='notice'>[key_name(theghost)] has taken control of [M.real_name]</span>")
+					M.ghostize()
+					M.key = theghost.key
+					break
 			else
 				M << "There were no ghosts willing to take control."
 				message_admins("<span class='notice'>No ghosts were willing to take control of [M.real_name]</span>")
