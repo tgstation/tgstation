@@ -1,0 +1,8 @@
+author: Unid
+
+delete-after: True
+
+changes:
+  - bugfix: Wheelchairs no longer fit an infinite amount of people
+  - rscadd: A magic wheelchair with the capability to fit an infinite amount of people can be spawned by admins
+  - bugfix: The Guy's mind is too faint... message no longer shows up for mobs at centcomm

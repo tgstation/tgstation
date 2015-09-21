@@ -1130,7 +1130,9 @@
 		return 0
 	if((temp_turf.z != our_turf.z) || M.stat!=CONSCIOUS) //Not on the same zlevel as us or they're dead.
 		//world << "[(temp_turf.z != our_turf.z) ? "not on the same zlevel as [M]" : "[M] is not concious"]"
-		src << "The mind of [M] is too faint..."
+		if(temp_turf.z != 2)
+			src << "The mind of [M] is too faint..." //Prevent "The mind of Admin is too faint..."
+
 		return 0
 	if(M_PSY_RESIST in M.mutations)
 		//world << "[M] has psy resist"
