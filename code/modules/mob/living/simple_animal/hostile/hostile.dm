@@ -223,22 +223,21 @@
 	var/target = the_target
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [target]!</span>")
 
-	var/tturf = get_turf(target)
 	if(rapid)
 		spawn(1)
-			Shoot(tturf, src.loc, src)
+			Shoot(target, src.loc, src)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(4)
-			Shoot(tturf, src.loc, src)
+			Shoot(target, src.loc, src)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(6)
-			Shoot(tturf, src.loc, src)
+			Shoot(target, src.loc, src)
 			if(casingtype)
 				new casingtype(get_turf(src))
 	else
-		Shoot(tturf, src.loc, src)
+		Shoot(target, src.loc, src)
 		if(casingtype)
 			new casingtype
 	ranged_cooldown = ranged_cooldown_cap
@@ -248,17 +247,16 @@
 	if(target == start)
 		return
 
-	var/obj/item/projectile/A = new projectiletype(user:loc)
+	var/obj/item/projectile/A = new projectiletype(src.loc)
 	playsound(user, projectilesound, 100, 1)
 	if(!A)	return
-
-	if (!istype(target, /turf))
-		qdel(A)
-		return
 	A.current = target
 	A.firer = src
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
+	if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
+		newtonian_move(get_dir(target, user))
+	A.original = target
 	A.fire()
 	return
 

@@ -51,7 +51,11 @@
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src))
+	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
+		if(!iscultist(user) && !user.stat)
+			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			return
+	if(in_range(user, src) || isobserver(user))
 		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
