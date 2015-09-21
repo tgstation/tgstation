@@ -8,9 +8,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
 				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
 				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7", "carpet",
-				"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
+				"carpetcorner", "carpetside", "carpet", "arcade", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
-				"ironsand12", "ironsand13", "ironsand14", "ironsand15","arcadecarpet")
+				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 
 var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
 				"ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
@@ -161,6 +161,10 @@ turf/simulated/floor/proc/update_icon()
 
 			icon_state = "carpet[connectdir]-[diagonalconnect]"
 
+	else if(is_arcade_floor())
+		if(!broken && !burnt)
+			icon_state = "arcade"
+
 	else if(is_wood_floor())
 		if(!broken && !burnt)
 			if( !(icon_state in wood_icons) )
@@ -246,6 +250,11 @@ turf/simulated/floor/proc/update_icon()
 	else
 		return 0
 
+/turf/simulated/floor/is_arcade_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/arcade))
+		return 1
+	return 0
+
 /turf/simulated/floor/is_plating()
 	if(!floor_tile)
 		return 1
@@ -272,7 +281,7 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		broken = 1
-	else if(is_carpet_floor())
+	else if((is_carpet_floor()) || (is_arcade_floor()))
 		src.icon_state = "carpet-broken"
 		broken = 1
 	else if(is_grass_floor())
@@ -304,7 +313,7 @@ turf/simulated/floor/proc/update_icon()
 	else if(is_wood_floor())
 		src.icon_state = "wood-broken"
 		burnt = 1
-	else if(is_carpet_floor())
+	else if((is_carpet_floor()) || (is_arcade_floor()))
 		src.icon_state = "carpet-broken"
 		burnt = 1
 	else if(is_grass_floor())
