@@ -608,11 +608,11 @@ body
 
 			if(candidates.len)
 				theghost = pick(candidates)
-					M << "Your mob has been taken over by a ghost!"
-					usr << "[theghost.key] has taken over [M.real_name]."
-					message_admins("<span class='notice'>[key_name(theghost)] has taken control of [M.real_name]</span>")
-					M.ghostize()
-					M.key = theghost.key
+				M << "Your mob has been taken over by a ghost!"
+				usr << "[theghost.key] has taken over [M.real_name]."
+				message_admins("<span class='notice'>[key_name(theghost)] has taken control of [M.real_name]</span>")
+				M.ghostize()
+				M.key = theghost.key
 			else
 				M << "There were no ghosts willing to take control."
 				message_admins("<span class='notice'>No ghosts were willing to take control of [M.real_name]</span>")
