@@ -24,6 +24,8 @@
 
 	if(I == head)
 		head = null
+		if(I.flags & BLOCKHAIR)
+			update_hair()
 		update_inv_head()
 	else if(I == back)
 		back = null
