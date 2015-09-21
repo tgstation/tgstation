@@ -529,6 +529,7 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_w_uniform(var/update_icons=1)
 
 	overlays -= obj_overlays[UNIFORM_LAYER]
+	overlays -= dyn_obj_overlays[UNIFORM_LAYER]
 	if(w_uniform && istype(w_uniform, /obj/item/clothing/under) && !check_hidden_body_flags(HIDEJUMPSUIT))
 		w_uniform.screen_loc = ui_iclothing
 		var/obj/Overlays/O = obj_overlays[UNIFORM_LAYER]
@@ -573,6 +574,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[UNIFORM_LAYER] = O
+
+		if (w_uniform && w_uniform.dynamic_overlay[UNIFORM_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[UNIFORM_LAYER]
+			var/image/dyn_icon = w_uniform.dynamic_overlay[UNIFORM_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[UNIFORM_LAYER] = D
 		//overlays_standing[UNIFORM_LAYER]	= standing
 	else if (!check_hidden_body_flags(HIDEJUMPSUIT))
 		//overlays_standing[UNIFORM_LAYER]	= null
@@ -591,6 +600,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
 	overlays -= obj_overlays[ID_LAYER]
+	overlays -= dyn_obj_overlays[ID_LAYER]
 	if(wear_id)
 		wear_id.screen_loc = ui_id	//TODO
 		if(w_uniform && w_uniform:displays_id)
@@ -599,6 +609,14 @@ var/global/list/damage_icon_parts = list()
 			O.icon_state = "id"
 			overlays += O
 			obj_overlays[ID_LAYER] = O
+
+			if (wear_id && wear_id.dynamic_overlay[ID_LAYER])
+				var/obj/Overlays/D = dyn_obj_overlays[ID_LAYER]
+				var/image/dyn_icon = wear_id.dynamic_overlay[ID_LAYER]
+				D.icon = dyn_icon
+				D.icon_state = dyn_icon.icon_state
+				overlays += D
+				dyn_obj_overlays[ID_LAYER] = D
 			//overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
 		//else
 			//overlays_standing[ID_LAYER]	= null
@@ -612,6 +630,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
 	overlays -= obj_overlays[GLOVES_LAYER]
+	overlays -= dyn_obj_overlays[GLOVES_LAYER]
 	var/obj/Overlays/O = obj_overlays[GLOVES_LAYER]
 	O.overlays.len = 0
 	O.color = null
@@ -638,6 +657,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[GLOVES_LAYER] = O
+
+		if (gloves && gloves.dynamic_overlay[GLOVES_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[GLOVES_LAYER]
+			var/image/dyn_icon = gloves.dynamic_overlay[GLOVES_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[GLOVES_LAYER] = D
 		//overlays_standing[GLOVES_LAYER]	= standing
 	else
 		if(blood_DNA && blood_DNA.len)
@@ -657,6 +684,8 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
 	overlays -= obj_overlays[GLASSES_LAYER]
 	overlays -= obj_overlays[GLASSES_OVER_HAIR_LAYER]
+	overlays -= dyn_obj_overlays[GLASSES_LAYER]
+	overlays -= dyn_obj_overlays[GLASSES_OVER_HAIR_LAYER]
 	if(glasses && !check_hidden_head_flags(HIDEEYES))
 		var/image/standing = image("icon" = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'), "icon_state" = "[glasses.icon_state]")
 
@@ -671,6 +700,14 @@ var/global/list/damage_icon_parts = list()
 			O.icon_state = standing.icon_state
 			overlays += O
 			obj_overlays[GLASSES_OVER_HAIR_LAYER] = O
+
+			if (glasses && glasses.dynamic_overlay[GLASSES_OVER_HAIR_LAYER])
+				var/obj/Overlays/D = dyn_obj_overlays[GLASSES_OVER_HAIR_LAYER]
+				var/image/dyn_icon = glasses.dynamic_overlay[GLASSES_OVER_HAIR_LAYER]
+				D.icon = dyn_icon
+				D.icon_state = dyn_icon.icon_state
+				overlays += D
+				dyn_obj_overlays[GLASSES_OVER_HAIR_LAYER] = D
 			//overlays_standing[GLASSES_OVER_HAIR_LAYER]	= standing
 		else
 			var/obj/Overlays/O = obj_overlays[GLASSES_LAYER]
@@ -678,6 +715,14 @@ var/global/list/damage_icon_parts = list()
 			O.icon_state = standing.icon_state
 			overlays += O
 			obj_overlays[GLASSES_LAYER] = O
+
+			if (glasses && glasses.dynamic_overlay[GLASSES_LAYER])
+				var/obj/Overlays/D = dyn_obj_overlays[GLASSES_LAYER]
+				var/image/dyn_icon = glasses.dynamic_overlay[GLASSES_LAYER]
+				D.icon = dyn_icon
+				D.icon_state = dyn_icon.icon_state
+				overlays += D
+				dyn_obj_overlays[GLASSES_LAYER] = D
 			//overlays_standing[GLASSES_LAYER]	= standing
 
 
@@ -689,6 +734,7 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
 
 	overlays -= obj_overlays[EARS_LAYER]
+	overlays -= dyn_obj_overlays[EARS_LAYER]
 	if(ears && !check_hidden_head_flags(HIDEEARS))
 		var/image/standing = image("icon" = ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi'), "icon_state" = "[ears.icon_state]")
 
@@ -702,6 +748,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[EARS_LAYER] = O
+
+		if (ears && ears.dynamic_overlay[EARS_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[EARS_LAYER]
+			var/image/dyn_icon = ears.dynamic_overlay[EARS_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[EARS_LAYER] = D
 		//overlays_standing[EARS_LAYER] = standing
 	//else
 		//overlays_standing[EARS_LAYER] = null
@@ -709,6 +763,7 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 /mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
 	overlays -= obj_overlays[SHOES_LAYER]
+	overlays -= dyn_obj_overlays[SHOES_LAYER]
 	if(shoes && !check_hidden_body_flags(HIDESHOES))
 		var/obj/Overlays/O = obj_overlays[SHOES_LAYER]
 		O.icon = ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi')
@@ -720,6 +775,14 @@ var/global/list/damage_icon_parts = list()
 			if(species.shoes_icons)
 				O.icon = species.shoes_icons
 				//standing.icon = species.shoes_icons
+
+		if (shoes && shoes.dynamic_overlay[SHOES_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[SHOES_LAYER]
+			var/image/dyn_icon = shoes.dynamic_overlay[SHOES_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[SHOES_LAYER] = D
 
 		O.overlays.len = 0
 		if(shoes.blood_DNA && shoes.blood_DNA.len)
@@ -736,6 +799,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_s_store(var/update_icons=1)
 	overlays -= obj_overlays[SUIT_STORE_LAYER]
+	overlays -= dyn_obj_overlays[SUIT_STORE_LAYER]
 	if(s_store && !check_hidden_body_flags(HIDESUITSTORAGE))
 		var/t_state = s_store.item_state
 		if(!t_state)	t_state = s_store.icon_state
@@ -746,6 +810,14 @@ var/global/list/damage_icon_parts = list()
 		obj_overlays[SUIT_STORE_LAYER] = O
 		//overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]")
 		s_store.screen_loc = ui_sstore1		//TODO
+
+		if (s_store && s_store.dynamic_overlay[SUIT_STORE_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[SUIT_STORE_LAYER]
+			var/image/dyn_icon = s_store.dynamic_overlay[SUIT_STORE_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[SUIT_STORE_LAYER] = D
 	//else
 		//overlays_standing[SUIT_STORE_LAYER]	= null
 	if(update_icons)   update_icons()
@@ -753,6 +825,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_head(var/update_icons=1)
 	overlays -= obj_overlays[HEAD_LAYER]
+	overlays -= dyn_obj_overlays[HEAD_LAYER]
 	if(head)
 		var/obj/Overlays/O = obj_overlays[HEAD_LAYER]
 		O.overlays.len = 0
@@ -777,6 +850,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[HEAD_LAYER] = O
+
+		if (head && head.dynamic_overlay[HEAD_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[HEAD_LAYER]
+			var/image/dyn_icon = head.dynamic_overlay[HEAD_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[HEAD_LAYER] = D
 		//overlays_standing[HEAD_LAYER]	= standing
 	//else
 		//overlays_standing[HEAD_LAYER]	= null
@@ -785,6 +866,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_belt(var/update_icons=1)
 	overlays -= obj_overlays[BELT_LAYER]
+	overlays -= dyn_obj_overlays[BELT_LAYER]
 	if(belt)
 		belt.screen_loc = ui_belt	//TODO
 		var/t_state = belt.item_state
@@ -800,6 +882,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[BELT_LAYER] = O
+
+		if (belt && belt.dynamic_overlay[BELT_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[BELT_LAYER]
+			var/image/dyn_icon = belt.dynamic_overlay[BELT_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[BELT_LAYER] = D
 		//overlays_standing[BELT_LAYER]	= standing
 	//else
 		//overlays_standing[BELT_LAYER]	= null
@@ -808,6 +898,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_wear_suit(var/update_icons=1)
 	overlays -= obj_overlays[SUIT_LAYER]
+	overlays -= dyn_obj_overlays[SUIT_LAYER]
 	if( wear_suit && istype(wear_suit, /obj/item/clothing/suit) )	//TODO check this
 		wear_suit.screen_loc = ui_oclothing	//TODO
 		var/obj/Overlays/O = obj_overlays[SUIT_LAYER]
@@ -834,6 +925,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[SUIT_LAYER] = O
+
+		if (wear_suit && wear_suit.dynamic_overlay[SUIT_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[SUIT_LAYER]
+			var/image/dyn_icon = wear_suit.dynamic_overlay[SUIT_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[SUIT_LAYER] = D
 		//overlays_standing[SUIT_LAYER]	= standing
 		update_tail_showing(0)
 	else
@@ -851,6 +950,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
 	overlays -= obj_overlays[FACEMASK_LAYER]
+	overlays -= dyn_obj_overlays[FACEMASK_LAYER]
 	if( wear_mask && ( istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory) ) && !check_hidden_head_flags(HIDEMASK))
 		var/obj/Overlays/O = obj_overlays[FACEMASK_LAYER]
 		O.overlays.len = 0
@@ -872,6 +972,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[FACEMASK_LAYER] = O
+
+		if (wear_mask && wear_mask.dynamic_overlay[FACEMASK_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[FACEMASK_LAYER]
+			var/image/dyn_icon = wear_mask.dynamic_overlay[FACEMASK_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[FACEMASK_LAYER] = D
 		//overlays_standing[FACEMASK_LAYER]	= standing
 	//else
 		//overlays_standing[FACEMASK_LAYER]	= null
@@ -880,6 +988,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_back(var/update_icons=1)
 	overlays -= obj_overlays[BACK_LAYER]
+	overlays -= dyn_obj_overlays[BACK_LAYER]
 	if(back)
 		back.screen_loc = ui_back	//TODO
 		var/image/standing	= image("icon" = ((back.icon_override) ? back.icon_override : 'icons/mob/back.dmi'), "icon_state" = "[back.icon_state]")
@@ -894,6 +1003,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = standing.icon_state
 		overlays += O
 		obj_overlays[BACK_LAYER] = O
+
+		if (back && back.dynamic_overlay[BACK_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[BACK_LAYER]
+			var/image/dyn_icon = back.dynamic_overlay[BACK_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[BACK_LAYER] = D
 
 		//overlays_standing[BACK_LAYER]	= standing
 	//else
@@ -910,6 +1027,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)
 	overlays -= obj_overlays[HANDCUFF_LAYER]
+	overlays -= dyn_obj_overlays[HANDCUFF_LAYER]
 	if(handcuffed)
 		drop_hands()
 		stop_pulling()	//TODO: should be handled elsewhere
@@ -918,6 +1036,14 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = "handcuff1"
 		overlays += O
 		obj_overlays[HANDCUFF_LAYER] = O
+
+		if (handcuffed && handcuffed.dynamic_overlay[HANDCUFF_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[HANDCUFF_LAYER]
+			var/image/dyn_icon = handcuffed.dynamic_overlay[HANDCUFF_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[HANDCUFF_LAYER] = D
 		//overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1")
 	//else
 		//overlays_standing[HANDCUFF_LAYER]	= null
@@ -926,12 +1052,21 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_legcuffed(var/update_icons=1)
 	overlays -= obj_overlays[LEGCUFF_LAYER]
+	overlays -= dyn_obj_overlays[LEGCUFF_LAYER]
 	if(legcuffed)
 		var/obj/Overlays/O = obj_overlays[LEGCUFF_LAYER]
 		O.icon = 'icons/mob/mob.dmi'
 		O.icon_state = "legcuff1"
 		overlays += O
 		obj_overlays[LEGCUFF_LAYER] = O
+
+		if (legcuffed && legcuffed.dynamic_overlay[LEGCUFF_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[LEGCUFF_LAYER]
+			var/image/dyn_icon = legcuffed.dynamic_overlay[LEGCUFF_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[LEGCUFF_LAYER] = D
 		//overlays_standing[LEGCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "legcuff1")
 		if(src.m_intent != "walk")
 			src.m_intent = "walk"
@@ -945,6 +1080,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_r_hand(var/update_icons=1)
 	overlays -= obj_overlays[R_HAND_LAYER]
+	overlays -= dyn_obj_overlays[R_HAND_LAYER]
 	if(r_hand)
 		r_hand.screen_loc = ui_rhand	//TODO
 		var/t_state = r_hand.item_state
@@ -958,6 +1094,14 @@ var/global/list/damage_icon_parts = list()
 		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
 		overlays += O
 		obj_overlays[R_HAND_LAYER] = O
+
+		if (r_hand && r_hand.dynamic_overlay[R_HAND_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[R_HAND_LAYER]
+			var/image/dyn_icon = r_hand.dynamic_overlay[R_HAND_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[R_HAND_LAYER] = D
 		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
 		if (handcuffed)
 			drop_item(r_hand)
@@ -968,6 +1112,7 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_l_hand(var/update_icons=1)
 	overlays -= obj_overlays[L_HAND_LAYER]
+	overlays -= dyn_obj_overlays[L_HAND_LAYER]
 	if(l_hand)
 		l_hand.screen_loc = ui_lhand	//TODO
 		var/t_state = l_hand.item_state
@@ -981,6 +1126,14 @@ var/global/list/damage_icon_parts = list()
 		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
 		overlays += O
 		obj_overlays[L_HAND_LAYER] = O
+
+		if (l_hand && l_hand.dynamic_overlay[L_HAND_LAYER])
+			var/obj/Overlays/D = dyn_obj_overlays[L_HAND_LAYER]
+			var/image/dyn_icon = l_hand.dynamic_overlay[L_HAND_LAYER]
+			D.icon = dyn_icon
+			D.icon_state = dyn_icon.icon_state
+			overlays += D
+			dyn_obj_overlays[L_HAND_LAYER] = D
 		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
 		if (handcuffed)
 			drop_item(l_hand)

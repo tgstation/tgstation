@@ -1,68 +1,122 @@
 // Human Overlay objects for the new Overlays system.
 /obj/Overlays/fire_layer
-	layer = FLOAT_LAYER - 24
+	layer = FLOAT_LAYER - 42
 
 /obj/Overlays/mutantrace_layer
-	layer = FLOAT_LAYER - 23
+	layer = FLOAT_LAYER - 41
 
 /obj/Overlays/mutations_layer
-	layer = FLOAT_LAYER - 22
+	layer = FLOAT_LAYER - 40
 
 /obj/Overlays/damage_layer
-	layer = FLOAT_LAYER - 21
+	layer = FLOAT_LAYER - 39
 
 /obj/Overlays/uniform_layer
-	layer = FLOAT_LAYER - 20
+	layer = FLOAT_LAYER - 38
+
+/obj/Overlays/dyn_uniform_layer
+	layer = FLOAT_LAYER - 37
 
 /obj/Overlays/id_layer
-	layer = FLOAT_LAYER - 19
+	layer = FLOAT_LAYER - 36
+
+/obj/Overlays/dyn_id_layer
+	layer = FLOAT_LAYER - 35
 
 /obj/Overlays/shoes_layer
-	layer = FLOAT_LAYER - 18
+	layer = FLOAT_LAYER - 34
+
+/obj/Overlays/dyn_shoes_layer
+	layer = FLOAT_LAYER - 33
 
 /obj/Overlays/gloves_layer
-	layer = FLOAT_LAYER - 17
+	layer = FLOAT_LAYER - 32
+
+/obj/Overlays/dyn_gloves_layer
+	layer = FLOAT_LAYER - 31
 
 /obj/Overlays/ears_layer
-	layer = FLOAT_LAYER - 16
+	layer = FLOAT_LAYER - 30
+
+/obj/Overlays/dyn_ears_layer
+	layer = FLOAT_LAYER - 29
 
 /obj/Overlays/suit_layer
-	layer = FLOAT_LAYER - 15
+	layer = FLOAT_LAYER - 28
+
+/obj/Overlays/dyn_suit_layer
+	layer = FLOAT_LAYER - 27
 
 /obj/Overlays/glasses_layer
-	layer = FLOAT_LAYER - 14
+	layer = FLOAT_LAYER - 26
+
+/obj/Overlays/dyn_glasses_layer
+	layer = FLOAT_LAYER - 25
 
 /obj/Overlays/belt_layer
-	layer = FLOAT_LAYER - 13
+	layer = FLOAT_LAYER - 24
+
+/obj/Overlays/dyn_belt_layer
+	layer = FLOAT_LAYER - 23
 
 /obj/Overlays/suit_store_layer
-	layer = FLOAT_LAYER - 12
+	layer = FLOAT_LAYER - 22
+
+/obj/Overlays/dyn_suit_store_layer
+	layer = FLOAT_LAYER - 21
 
 /obj/Overlays/back_layer
-	layer = FLOAT_LAYER - 11
+	layer = FLOAT_LAYER - 20
+
+/obj/Overlays/dyn_back_layer
+	layer = FLOAT_LAYER - 19
 
 /obj/Overlays/hair_layer
-	layer = FLOAT_LAYER - 10
+	layer = FLOAT_LAYER - 18
+
+/obj/Overlays/dyn_hair_layer
+	layer = FLOAT_LAYER - 17
 
 /obj/Overlays/glasses_over_hair_layer
-	layer = FLOAT_LAYER - 9
+	layer = FLOAT_LAYER - 16
+
+/obj/Overlays/dyn_glasses_over_hair_layer
+	layer = FLOAT_LAYER - 15
 
 /obj/Overlays/facemask_layer
-	layer = FLOAT_LAYER - 8
+	layer = FLOAT_LAYER - 14
+
+/obj/Overlays/dyn_facemask_layer
+	layer = FLOAT_LAYER - 13
 
 /obj/Overlays/head_layer
-	layer = FLOAT_LAYER - 7
+	layer = FLOAT_LAYER - 12
+
+/obj/Overlays/dyn_head_layer
+	layer = FLOAT_LAYER - 11
 
 /obj/Overlays/handcuff_layer
-	layer = FLOAT_LAYER - 6
+	layer = FLOAT_LAYER - 10
+
+/obj/Overlays/dyn_handcuff_layer
+	layer = FLOAT_LAYER - 9
 
 /obj/Overlays/legcuff_layer
-	layer = FLOAT_LAYER - 5
+	layer = FLOAT_LAYER - 8
+
+/obj/Overlays/dyn_legcuff_layer
+	layer = FLOAT_LAYER - 7
 
 /obj/Overlays/l_hand_layer
-	layer = FLOAT_LAYER - 4
+	layer = FLOAT_LAYER - 6
+
+/obj/Overlays/dyn_l_hand_layer
+	layer = FLOAT_LAYER - 5
 
 /obj/Overlays/r_hand_layer
+	layer = FLOAT_LAYER - 4
+
+/obj/Overlays/dyn_r_hand_layer
 	layer = FLOAT_LAYER - 3
 
 /obj/Overlays/tail_layer
@@ -71,12 +125,11 @@
 /obj/Overlays/targeted_layer
 	layer = FLOAT_LAYER - 1
 
-
-
 //Human Overlays Object variables
 
 /mob/living/carbon/human
 	var/list/obj/Overlays/obj_overlays[25]
+	var/list/obj/Overlays/dyn_obj_overlays[22]
 	/*
 	var/obj/Overlays/fire_layer/fire_layer = new
 	var/obj/Overlays/mutantrace_layer/mutantrace_layer = new

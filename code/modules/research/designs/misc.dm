@@ -17,3 +17,13 @@
 	req_tech = list("engineering" = 1, "materials" = 1)
 	materials = list(MAT_IRON=10000)
 	category = "Misc"
+
+/datum/design/chempack
+	name = "Chemical Pack"
+	desc = "Useful for the storage and transport of large volumes of chemicals. Can be used in conjunction with a wide range of chemical-dispensing devices."
+	id = "chempack"
+	build_type = PROTOLATHE
+	build_path = /obj/item/weapon/reagent_containers/chempack
+	req_tech = list("engineering" = 5, "materials" = 3, "bluespace" = 3)
+	materials = list(MAT_GLASS = 8000, MAT_IRON=2000)
+	category = "Misc"

@@ -9,6 +9,7 @@
 	var/list/hud_list[9]
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
+//	var/dyn_obj_overlays
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -118,6 +119,28 @@
 	obj_overlays[R_HAND_LAYER] = new /obj/Overlays/r_hand_layer
 	obj_overlays[TAIL_LAYER] = new /obj/Overlays/tail_layer
 	obj_overlays[TARGETED_LAYER] = new /obj/Overlays/targeted_layer
+
+	//Dynamic object overlays layer, for objects that need to slightly change their on-mob sprite while being worn.
+	//These are designed to appear one layer above their equivalent layer. Useful for graphical changes involving colors
+	//or what-not that you want applied to only a portion of the object's final appearance.
+	dyn_obj_overlays[UNIFORM_LAYER] = new /obj/Overlays/dyn_uniform_layer
+	dyn_obj_overlays[ID_LAYER] = new /obj/Overlays/dyn_id_layer
+	dyn_obj_overlays[SHOES_LAYER] = new /obj/Overlays/dyn_shoes_layer
+	dyn_obj_overlays[GLOVES_LAYER] = new /obj/Overlays/dyn_gloves_layer
+	dyn_obj_overlays[EARS_LAYER] = new /obj/Overlays/dyn_ears_layer
+	dyn_obj_overlays[SUIT_LAYER] = new /obj/Overlays/dyn_suit_layer
+	dyn_obj_overlays[GLASSES_LAYER] = new /obj/Overlays/dyn_glasses_layer
+	dyn_obj_overlays[BELT_LAYER] = new /obj/Overlays/dyn_belt_layer
+	dyn_obj_overlays[SUIT_STORE_LAYER] = new /obj/Overlays/dyn_suit_store_layer
+	dyn_obj_overlays[BACK_LAYER] = new /obj/Overlays/dyn_back_layer
+	dyn_obj_overlays[HAIR_LAYER] = new /obj/Overlays/dyn_hair_layer
+	dyn_obj_overlays[GLASSES_OVER_HAIR_LAYER] = new /obj/Overlays/dyn_glasses_over_hair_layer
+	dyn_obj_overlays[FACEMASK_LAYER] = new /obj/Overlays/dyn_facemask_layer
+	dyn_obj_overlays[HEAD_LAYER] = new /obj/Overlays/dyn_head_layer
+	dyn_obj_overlays[HANDCUFF_LAYER] = new /obj/Overlays/dyn_handcuff_layer
+	dyn_obj_overlays[LEGCUFF_LAYER] = new /obj/Overlays/dyn_legcuff_layer
+	dyn_obj_overlays[L_HAND_LAYER] = new /obj/Overlays/dyn_l_hand_layer
+	dyn_obj_overlays[R_HAND_LAYER] = new /obj/Overlays/dyn_r_hand_layer
 
 	..()
 

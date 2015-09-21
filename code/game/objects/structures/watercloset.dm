@@ -417,10 +417,14 @@
 	if (istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.reagents.total_volume >= RG.reagents.maximum_volume)
-			user << "<span class='warning'>[RG] is full.</span>"
+			user << "<span class='warning'>\The [RG] is full.</span>"
 			return
-		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("<span class='notice'>[user] fills the [RG] using \the [src].</span>","<span class='notice'>You fill the [RG] using \the [src].</span>")
+		if (istype(RG, /obj/item/weapon/reagent_containers/chempack)) //Chempack can't use amount_per_transfer_from_this, so it needs its own if statement.
+			var/obj/item/weapon/reagent_containers/chempack/C = RG
+			C.reagents.add_reagent("water", C.fill_amount)
+		else
+			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill the [RG] using \the [src].</span>")
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
