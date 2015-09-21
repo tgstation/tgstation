@@ -2,6 +2,10 @@
 // SUIT STORAGE UNIT /////////////////
 //////////////////////////////////////
 
+#define REPAIR_NEEDS_WIRECUTTERS 1
+#define REPAIR_NEEDS_WIRES 2
+#define REPAIR_NEEDS_CROWBAR 3
+#define REPAIR_NEEDS_METAL 4
 
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
@@ -33,6 +37,24 @@
 	var/panelopen = 0
 	var/safetieson = 1
 	var/cycletime_left = 0
+	var/repair_stage = 0
+
+/obj/machinery/suit_storage_unit/examine(mob/user)
+	..()
+	if(isbroken && isopen)
+		if(!panelopen)
+			user << "<span class='warning'>A small LED above the maintenance panel is flashing red.</span>"
+			return
+		if(in_range(user, src))
+			switch(repair_stage)
+				if(REPAIR_NEEDS_WIRECUTTERS)
+					user << "<span class='warning'>The wires inside are charred and snapped.</span>"
+				if(REPAIR_NEEDS_WIRES)
+					user << "<span class='warning'>There are no wires inside.</span>"
+				if(REPAIR_NEEDS_CROWBAR)
+					user << "<span class='warning'>Some of the interior metal is burnt and broken.</span>"
+				if(REPAIR_NEEDS_METAL)
+					user << "<span class='warning'>It lacks interior plating.</span>"
 
 
 
@@ -376,6 +398,7 @@
 					src.isbroken = 1
 					src.isopen = 1
 					src.islocked = 0
+					repair_stage = REPAIR_NEEDS_WIRECUTTERS
 					src.eject_occupant(OCCUPANT)
 				src.isUV = 0 //Cycle ends
 		src.update_icon()
@@ -473,6 +496,12 @@
 		return
 	return
 
+/obj/machinery/suit_storage_unit/proc/fix()
+	audible_message("<span class='notice'>[src] beeps and comes back online!</span>")
+	playsound(src, 'sound/machines/defib_ready.ogg', 50, 1)
+	repair_stage = 0
+	isbroken = 0
+	update_icon()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(!src.ispowered)
@@ -484,10 +513,66 @@
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
 		src.panelopen = !src.panelopen
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.panelopen ? "open up" : "close") )
 		src.updateUsrDialog()
 		return
+	if(isbroken && panelopen)
+		if(istype(I, /obj/item/weapon/wirecutters) && repair_stage == REPAIR_NEEDS_WIRECUTTERS)
+			user.visible_message("<span class='notice'>[user] starts removing [src]'s damaged wires.</span>", \
+								 "<span class='notice'>You begin removing the damaged wires from [src]...</span>")
+			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+			if(!do_after(user, 30, target = src))
+				return
+			user.visible_message("<span class='notice'>[user] removes the damaged wires from [src].</span>", \
+								 "<spna class='notice'>You remove the damaged wiring from [src].</span>")
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			repair_stage = REPAIR_NEEDS_WIRES
+			return
+		if(istype(I, /obj/item/stack/cable_coil) && repair_stage == REPAIR_NEEDS_WIRES)
+			var/obj/item/stack/cable_coil/C = I
+			if(C.amount < 5)
+				user << "<span class='warning'>You need at least five cables to rewire [src]!</span>"
+				return
+			user.visible_message("<span class='notice'>[user] begins replacing [src] wires.</span>", \
+								 "<span class='notice'>You begin rewiring [src]...</span>")
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(!do_after(user, 30, target = src))
+				return
+			user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
+								 "<span class='notice'>You rewire [src].</span>")
+			C.amount -= 5
+			if(C.amount <= 0)
+				user.drop_item()
+				qdel(C)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			repair_stage = REPAIR_NEEDS_CROWBAR
+			return
+		if(istype(I, /obj/item/weapon/crowbar) && repair_stage == REPAIR_NEEDS_CROWBAR)
+			user.visible_message("<span class='notice'>[user] starts removing [src]'s broken interior plating.</span>", \
+								 "<span class='notice'>You begin removing the damaged interior plating from [src]...</span>")
+			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+			if(!do_after(user, 30, target = src))
+				return
+			user.visible_message("<span class='notice'>[user] removes the damaged interior plating from [src].</span>", \
+								 "<spna class='notice'>You remove the damaged interior plating from [src].</span>")
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			repair_stage = REPAIR_NEEDS_METAL
+			return
+		if(istype(I, /obj/item/stack/sheet/metal) && repair_stage == REPAIR_NEEDS_METAL)
+			var/obj/item/stack/sheet/metal/M = I
+			if(M.amount < 3)
+				user << "<span class='warning'>You need at least three sheets of metal to repair [src]!</span>"
+				return
+			user.visible_message("<span class='notice'>[user] starts adding interior plating to [src].</span>", \
+								 "<span class='notice'>You begin adding interior plating to [src]...</span>")
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(!do_after(user, 30, target = src))
+				return
+			user.visible_message("<span class='notice'>[user] adds interior plating to [src].</span>", \
+								 "<spna class='notice'>You add interior plating to [src].</span>")
+			fix()
+			return
 	if ( istype(I, /obj/item/weapon/grab) )
 		var/obj/item/weapon/grab/G = I
 		store_mob(G.affecting, user)
@@ -566,3 +651,7 @@
 	user << "<span class='warning'>The console controls are far too complicated for your tiny brain!</span>"
 	return
 
+#undef REPAIR_NEEDS_WIRECUTTERS
+#undef REPAIR_NEEDS_WIRES
+#undef REPAIR_NEEDS_CROWBAR
+#undef REPAIR_NEEDS_METAL

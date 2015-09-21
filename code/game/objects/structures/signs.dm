@@ -5,6 +5,11 @@
 	density = 0
 	layer = 3.5
 
+/obj/structure/sign/basic
+	name = "blank sign"
+	desc = "How can signs be real if our eyes aren't real?"
+	icon_state = "backing"
+
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
@@ -12,6 +17,38 @@
 	qdel(src)
 	return
 
+/obj/structure/sign/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/wrench))
+		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>")
+		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+		if(!do_after(user, 30, target = src))
+			return
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>")
+		new /obj/item/wallframe/sign_backing(get_turf(user))
+		qdel(src)
+	if(istype(O, /obj/item/weapon/pen))
+		var/list/sign_types = list()
+		for(var/S in typesof(/obj/structure/sign))
+			sign_types.Add(S)
+		sign_types.Remove(src.type)
+		var/sign_type
+		sign_type = input(user, "Select a sign type.", "Sign Customization") as null|anything in sign_types
+		if(!sign_type)
+			return
+		new sign_type(get_turf(src))
+		qdel(src)
+
+/obj/item/wallframe/sign_backing
+	name = "sign backing"
+	desc = "A blank sign with adhesive backing."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "backing"
+	w_class = 3
+	burn_state = 0 //Burnable, made of wood
+	result_path = /obj/structure/sign/basic
 
 /obj/structure/sign/map
 	name = "station map"
