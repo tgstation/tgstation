@@ -20,30 +20,31 @@
 		return
 	if(istype(user,/mob/living/silicon))
 		return
-	if((istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton)) && anchored)
-		if(charging)
-			return
-
-		//Checks to make sure he's not in space doing it, and that the area got proper power.
-		var/area/a = get_area(src)
-		if(!isarea(a) || a.power_equip == 0)
-			user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
-			return
-
-		if (istype(G, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/gun = G
-			if(!gun.can_charge)
-				user << "<span class='notice'>Your gun has no external power connector.</span>"
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
+		if(anchored)
+			if(charging)
 				return
-		if(!user.drop_item())
-			return
 
-		G.loc = src
-		charging = G
-		use_power = 2
-		update_icon()
-	else if(!anchored)
-		user << "<span class='notice'>[src] isn't connected to anything!</span>"
+			//Checks to make sure he's not in space doing it, and that the area got proper power.
+			var/area/a = get_area(src)
+			if(!isarea(a) || a.power_equip == 0)
+				user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
+				return
+
+			if (istype(G, /obj/item/weapon/gun/energy))
+				var/obj/item/weapon/gun/energy/gun = G
+				if(!gun.can_charge)
+					user << "<span class='notice'>Your gun has no external power connector.</span>"
+					return
+			if(!user.drop_item())
+				return
+
+			G.loc = src
+			charging = G
+			use_power = 2
+			update_icon()
+		else
+			user << "<span class='notice'>[src] isn't connected to anything!</span>"
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(issilicon(user))
