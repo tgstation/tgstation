@@ -816,6 +816,7 @@
 #include "code\game\objects\structures\vehicles\vehicle.dm"
 #include "code\game\objects\structures\vehicles\wheelchair.dm"
 #include "code\game\objects\structures\vehicles\wizmobile.dm"
+#include "code\game\shuttles\cargo.dm"
 #include "code\game\shuttles\emergency.dm"
 #include "code\game\shuttles\mining.dm"
 #include "code\game\shuttles\misc.dm"
