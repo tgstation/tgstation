@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Fixed twitch/tourettes pixel offset not resetting. Which caused players to permanently appear offset.
