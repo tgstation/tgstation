@@ -294,7 +294,7 @@
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 1
 	genetic_damage = 11
 	req_human = 1
 	max_genetic_damage = 20
