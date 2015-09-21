@@ -298,6 +298,7 @@
 	genetic_damage = 11
 	req_human = 1
 	max_genetic_damage = 20
+	recharge_slowdown = 0.25
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
