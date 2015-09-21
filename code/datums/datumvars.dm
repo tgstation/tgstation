@@ -601,16 +601,15 @@ body
 				usr << "This can only be used on instances of type /mob"
 				return
 			M << "Control of your mob has been offered to dead players."
-			log_admin("[key_name(usr)] has offered control of [M.real_name] to ghosts.")
-			message_admins("[key_name(usr)] has offered control of [M.real_name] to ghosts")
+			log_admin("[key_name_admin(usr)] has offered control of [M.real_name] to ghosts.")
+			message_admins("[key_name_admin(usr)] has offered control of [M.real_name] to ghosts")
 			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/theghost = null
 
 			if(candidates.len)
 				theghost = pick(candidates)
 				M << "Your mob has been taken over by a ghost!"
-				usr << "[theghost.key] has taken over [M.real_name]."
-				message_admins("[key_name(theghost)] has taken control of [M.real_name]")
+				message_admins("[key_name_admin(theghost)] has taken control of [M.real_name]")
 				M.ghostize()
 				M.key = theghost.key
 			else
