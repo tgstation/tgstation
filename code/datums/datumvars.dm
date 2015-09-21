@@ -602,7 +602,7 @@ body
 				return
 			M << "Control of your mob has been offered to dead players."
 			log_admin("[key_name(usr)] has offered control of [M.real_name] to ghosts.")
-			message_admins("<span class='notice'>[key_name(usr)] has offered control of [M.real_name] to ghosts</span>")
+			message_admins("[key_name(usr)] has offered control of [M.real_name] to ghosts")
 			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/theghost = null
 
@@ -610,12 +610,12 @@ body
 				theghost = pick(candidates)
 				M << "Your mob has been taken over by a ghost!"
 				usr << "[theghost.key] has taken over [M.real_name]."
-				message_admins("<span class='notice'>[key_name(theghost)] has taken control of [M.real_name]</span>")
+				message_admins("[key_name(theghost)] has taken control of [M.real_name]")
 				M.ghostize()
 				M.key = theghost.key
 			else
 				M << "There were no ghosts willing to take control."
-				message_admins("<span class='notice'>No ghosts were willing to take control of [M.real_name]</span>")
+				message_admins("No ghosts were willing to take control of [M.real_name]")
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))	return
