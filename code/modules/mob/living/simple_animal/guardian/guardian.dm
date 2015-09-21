@@ -605,7 +605,7 @@
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
-	mob_name = "Holoparasite"
+	mob_name = "Nanoswarm"
 	use_message = "You start to power on the injector..."
 	used_message = "The injector has already been used."
 	failure_message = "<B>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</B>"
