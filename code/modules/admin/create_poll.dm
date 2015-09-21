@@ -28,34 +28,20 @@
 		log_game("SQL ERROR validating endtime. Error : \[[err]\]\n")
 		return
 	if(query_validate_time.NextRow())
-		world << "valdiate nextrow"
 		endtime = query_validate_time.item[1]
-		world << "endtime is [endtime]"
 		if(!endtime)
-			world << "not endtime"
 			src << "Datetime entered is invalid."
 			return
-		else
-			world << "endtime is valid"
-	else
-		world << "failed validate nextrow"
 	var/DBQuery/query_time_later = dbcon.NewQuery("SELECT DATE('[endtime]') < NOW()")
 	if(!query_time_later.Execute())
 		var/err = query_time_later.ErrorMsg()
 		log_game("SQL ERROR comparing endtime to NOW(). Error : \[[err]\]\n")
 		return
 	if(query_time_later.NextRow())
-		world << "checklate nextrow"
 		var/checklate = text2num(query_time_later.item[1])
-		world << "checklate is [checklate]"
 		if(checklate)
-			world << "checklate is true"
 			src << "Datetime entered is not later than current server time."
 			return
-		else
-			world << "checklate false"
-	else
-		world << "checklate failed nextrow"
 	var/adminonly
 	switch(alert("Admin only poll?",,"Yes","No","Cancel"))
 		if("Yes")
