@@ -371,6 +371,6 @@
 /obj/item/clothing/head/cowboy
         name = "cowboy hat"
         desc = "Pefect for the closet botanist."
-        icon_state = "cowboy
+        icon_state = "cowboy"
         item_state = "cowboy"
 
