@@ -607,17 +607,12 @@ body
 			var/mob/dead/observer/theghost = null
 
 			if(candidates.len)
-				for(var/mob/j in candidates)
-					if(!j || !j.client)
-						candidates.Remove(j)
-						continue
-					theghost = j
+				theghost = pick(candidates)
 					M << "Your mob has been taken over by a ghost!"
 					usr << "[theghost.key] has taken over [M.real_name]."
 					message_admins("<span class='notice'>[key_name(theghost)] has taken control of [M.real_name]</span>")
 					M.ghostize()
 					M.key = theghost.key
-					break
 			else
 				M << "There were no ghosts willing to take control."
 				message_admins("<span class='notice'>No ghosts were willing to take control of [M.real_name]</span>")
