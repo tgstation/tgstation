@@ -127,38 +127,6 @@
 	icon_state = "wt550[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/wt550/afterattack()
-	..()
-	empty_alarm()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/wt550hacked
-	name = "hacked auto rifle"
-	desc = "A illegally hacked and modified WT-550 auto rifle, using a illegal burst fire moduel. Uses 9mm rounds."
-	icon_state = "wt550hax"
-	item_state = "arg"
-	mag_type = /obj/item/ammo_box/magazine/wt550m9
-	fire_delay = 2
-	can_suppress = 0
-	burst_size = 2
-	pin = null
-
-/obj/item/weapon/gun/projectile/automatic/wt550hacked/ui_action_click()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/wt550hacked/update_icon()
-	..()
-	icon_state = "wt550hax[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
-	return
-
-/obj/item/weapon/gun/projectile/automatic/wt550hacked/afterattack()
-	..()
-	empty_alarm()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/wt550hacked/unrestricted
-	pin = /obj/item/device/firing_pin
-
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "\improper 'Type U3' Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."

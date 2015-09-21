@@ -135,16 +135,6 @@
 	build_path = /obj/item/weapon/gun/projectile/automatic/proto
 	category = list("Weapons")
 
-/datum/design/illegalwt550
-	name = "Hacked WT-550"
-	desc = "A hacked varient of the WT-550. Has a illegally altered burst fire module attached."
-	id = "smg"
-	req_tech = list("combat" = 3, "materials" = 2, "syndicate" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_SILVER = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic/wt550hacked
-	category = list("Weapons")
-
 /datum/design/xray
 	name = "Xray Laser Gun"
 	desc = "Not quite as menacing as it sounds"
