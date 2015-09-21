@@ -169,10 +169,11 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	..()
-	if(istype(target, /atom/movable))
-		var/atom/movable/M = target
-		if(!M.anchored && M != src.summoner)
-			do_teleport(M, M, 10)
+	if(prob(30))
+		if(istype(target, /atom/movable))
+			var/atom/movable/M = target
+			if(!M.anchored && M != src.summoner)
+				do_teleport(M, M, 10)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	if(istype(AM, /mob/living/))
