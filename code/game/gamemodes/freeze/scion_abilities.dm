@@ -268,7 +268,7 @@
 	if(!is_frosty(target))
 		return 0
 
-	target.apply_damage(base_dmg/*, COLD*/)
+	target.adjustFireLoss(base_dmg * target.dna.species.coldmod)
 	target.bodytemperature = max(target.bodytemperature - temperature_delta, TCMB)
 
 	//TODO: logging, feedback

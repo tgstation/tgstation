@@ -131,6 +131,11 @@
 		spans |= M.get_spans()
 	return spans
 
+/proc/set_mrace_keep_values(mob/living/carbon/owner, datum/species/mrace)
+	//calls hardset_dna using the values the owner already has
+	//works to change any human mrace to another human mrace; other uses untested
+	hardset_dna(owner, owner.dna.uni_identity, owner.dna.struc_enzymes, owner.real_name, owner.dna.blood_type, mrace, owner.dna.features)
+
 /proc/hardset_dna(mob/living/carbon/owner, ui, se, real_name, blood_type, datum/species/mrace, features)
 	if(!ismonkey(owner) && !ishuman(owner))
 		return

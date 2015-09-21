@@ -72,7 +72,8 @@
 
 /obj/item/organ/internal/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
-	if(locate(/obj/structure/alien/weeds) in owner.loc)
+	var/obj/structure/alien/weeds/weed = locate() in get_turf(owner)
+	if(weed && weed.type_of_weed == initial(weed.type_of_weed)) //ensures that subtypes of weeds that aren't thematically weeds don't heal the alien
 		if(owner.health >= owner.maxHealth)
 			owner.adjustPlasma(plasma_rate)
 		else

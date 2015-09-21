@@ -75,7 +75,7 @@
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/chilling_grasp(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/scion_transform(null))
 	var/mob/living/carbon/human/S = scion.current
-	hardset_dna(S, mrace = /datum/species/human/frosty/scion)
+	set_mrace_keep_values(S, /datum/species/human/frosty/scion)
 	spawn(0)
 		if(scion.assigned_role == "Clown" && S)
 			S << "<span class='notice'>Your icy nature has allowed you to overcome your clownishness.</span>"
@@ -86,7 +86,7 @@
 		return 0
 	if(!(pawn_mind in frost_pawns))
 		//add stuff blah balh
-		hardset_dna(pawn_mind.current, mrace = /datum/species/human/frosty/pawn)
+		set_mrace_keep_values(pawn_mind.current, /datum/species/human/frosty/pawn)
 		pawn_mind.special_role = "FrostPawn"
 		return 1
 
@@ -99,5 +99,4 @@
 	scion.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/refreeze(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/scion_equipment/weapon/orb(null))
 	scion.AddSpell(new /obj/effect/proc_holder/spell/scion_equipment/weapon/sceptre(null))
-	var/mob/living/carbon/human/S = scion.current
-	hardset_dna(S, mrace = /datum/species/human/frosty/scion/transformed)
+	set_mrace_keep_values(scion.current, /datum/species/human/frosty/scion/transformed)
