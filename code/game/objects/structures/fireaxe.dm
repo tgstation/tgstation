@@ -130,7 +130,7 @@
 		locked = !locked
 		update_icon()
 
-/obj/structure/fireaxecabinet/verb/toggle_open() //nice name, huh? HUH?! -Erro //YEAH -Agouri
+/obj/structure/fireaxecabinet/verb/toggle_open()
 	set name = "Open/Close"
 	set category = "Object"
 	set src in oview(1)

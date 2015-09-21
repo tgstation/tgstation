@@ -100,7 +100,7 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
 	..()
-	reliability -= round(15/severity)
+	reliability = max(reliability - round(15/severity), 0) //Do not allow it to go negative!
 
 /obj/item/weapon/gun/energy/gun/nuclear/update_icon()
 	..()

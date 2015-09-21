@@ -111,7 +111,7 @@ Atmospheric Technician
 	l_pocket = /obj/item/device/pda/atmos
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
-	r_pocket = /obj/item/device/t_scanner
+	r_pocket = /obj/item/device/analyzer
 
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store

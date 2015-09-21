@@ -79,7 +79,7 @@
 					if(!check_dna_integrity(T))
 						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
-					if(NOCLONE in T.mutations)	//target done been eat, no more blood in him
+					if(T.disabilities & NOCLONE)	//target done been eat, no more blood in him
 						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)

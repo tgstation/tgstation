@@ -5,6 +5,7 @@
  *		Wood
  *		Cloth
  *		Cardboard
+ *		Runed Metal (cult)
  */
 
 /*
@@ -31,6 +32,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, time = 25, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("meatspike frame", /obj/structure/kitchenspike_frame, 5, time = 25, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2), \
@@ -153,3 +155,32 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()
+
+/*
+ * Runed Metal
+*/
+
+var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
+	new/datum/stack_recipe("pylon", /obj/structure/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("forge", /obj/structure/cult/forge, 6, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("archives", /obj/structure/cult/tome, 4, time = 40, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("altar", /obj/structure/cult/talisman, 10, time = 40, one_per_turf = 1, on_floor = 1), \
+	)
+
+/obj/item/stack/sheet/runed_metal
+	name = "runed metal"
+	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
+	singular_name = "runed metal"
+	icon_state = "sheet-runed"
+	icon = 'icons/obj/items.dmi'
+	sheettype = "runed"
+
+/obj/item/stack/sheet/runed_metal/New(var/loc, var/amount=null)
+	recipes = runed_metal_recipes
+	return ..()
+
+/obj/item/stack/sheet/runed_metal/attack_self(mob/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>You aren't able to think of anything [src] could build...</span>"
+		return
+	..()

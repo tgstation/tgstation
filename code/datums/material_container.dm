@@ -81,7 +81,8 @@
 	if(!I)
 		return 0
 	if(istype(I,/obj/item/stack))
-		return insert_stack(I)
+		var/obj/item/stack/S = I
+		return insert_stack(I, S.amount)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))

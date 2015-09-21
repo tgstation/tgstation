@@ -40,9 +40,6 @@ Research Director
 	l_pocket = /obj/item/device/laser_pointer
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
-	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel_med
-
 /datum/outfit/job/rd/post_equip(mob/living/carbon/human/H)
 	..()
 	announce_head(H, list("Science")) //tell underlings (science radio) they have a head

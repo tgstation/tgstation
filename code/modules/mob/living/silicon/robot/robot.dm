@@ -67,6 +67,8 @@
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
 	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
+	var/updating = 0 //portable camera camerachunk update
+
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -653,7 +655,7 @@
 		if(!(lying))
 			M.do_attack_animation(src)
 			if (prob(85))
-				Stun(7)
+				Stun(2)
 				step(src,get_dir(M,src))
 				spawn(5)
 					step(src,get_dir(M,src))
@@ -882,9 +884,18 @@
 /mob/living/silicon/robot/proc/radio_menu()
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
-
+#define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
+	var/oldLoc = src.loc
 	. = ..()
+	if(.)
+		if(src.camera)
+			if(!updating)
+				updating = 1
+				spawn(BORG_CAMERA_BUFFER)
+					if(oldLoc != src.loc)
+						cameranet.updatePortableCamera(src.camera)
+					updating = 0
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
@@ -924,6 +935,7 @@
 					loc.attackby(module_state_2,src)
 				else if(istype(module_state_3,/obj/item/weapon/storage/bag/ore))
 					loc.attackby(module_state_3,src)
+#undef BORG_CAMERA_BUFFER
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
