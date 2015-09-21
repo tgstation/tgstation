@@ -1415,21 +1415,32 @@ B --><-- A
 */
 
 
-/atom/movable/var/atom/orbiting = null
 //This is just so you can stop an orbit.
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
+/atom/movable/var/atom/orbiting = null
+//we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
+/atom/movable/var/orbitid = 0 
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
 	if(!istype(A))
 		return
+	orbitid++
+	var/myid = orbitid
+	if (orbiting)
+		stop_orbit()
+		//sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
+		sleep(1)
+		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
+			return
 	orbiting = A
+	var/lastloc = loc
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 	spawn
-		while(orbiting)
-			loc = orbiting.loc
-
+		while(orbiting && orbiting.loc && orbitid == myid && (!lockinorbit || loc == lastloc))
+			loc = get_turf(orbiting.loc)
+			lastloc = loc
 			angle += angle_increment
 
 			var/matrix/shift = matrix(initial_transform)
@@ -1448,3 +1459,40 @@ B --><-- A
 	if(orbiting)
 		loc = get_turf(orbiting)
 		orbiting = null
+
+
+//Center's an image.
+//Requires:
+//The Image
+//The x dimension of the icon file used in the image
+//The y dimension of the icon file used in the image
+// eg: center_image(I, 32,32)
+// eg2: center_image(I, 96,96)
+
+/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+	if(!I)
+		return
+
+	if(!x_dimension || !y_dimension)
+		return
+
+	//Get out of here, punk ass kids calling procs needlessly
+	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+		return I
+
+	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
+	//but still use them in game
+	var/x_offset = -((x_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+	var/y_offset = -((y_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+
+	//Correct values under world.icon_size
+	if(x_dimension < world.icon_size)
+		x_offset *= -1
+	if(y_dimension < world.icon_size)
+		y_offset *= -1
+
+	I.pixel_x = x_offset
+	I.pixel_y = y_offset
+
+	return I

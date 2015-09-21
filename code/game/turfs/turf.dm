@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	level = 1
 
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
@@ -26,11 +26,13 @@
 
 	flags = 0
 
+	var/image/obscured	//camerachunks
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
+
 /turf/Destroy()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -281,6 +283,9 @@
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
 
+/turf/proc/visibilityChanged()
+	if(ticker)
+		cameranet.updateVisibility(src)
 
 /turf/indestructible
 	name = "wall"

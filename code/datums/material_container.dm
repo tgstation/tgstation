@@ -60,9 +60,15 @@
 	return 0
 
 /datum/material_container/proc/insert_stack(obj/item/stack/S, amt = 0)
-	if(!amt)
+	if(amt <= 0)
+		return 0
+	if(amt > S.amount)
 		amt = S.amount
+
 	var/material_amt = get_item_material_amount(S)
+	if(!material_amt)
+		return 0
+
 	amt = min(amt, round(((max_amount - total_amount) / material_amt)))
 	if(!amt)
 		return 0
@@ -75,7 +81,8 @@
 	if(!I)
 		return 0
 	if(istype(I,/obj/item/stack))
-		return insert_stack(I)
+		var/obj/item/stack/S = I
+		return insert_stack(I, S.amount)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))

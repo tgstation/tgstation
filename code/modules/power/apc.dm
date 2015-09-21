@@ -173,7 +173,7 @@
 	if(cell_type)
 		src.cell = new/obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = cell_type	// cell_type is maximum charge (old default was 1000 or 2500 (values one and two respectively)
-		cell.charge = start_charge * cell.maxcharge / 100.0 		// (convert percentage to actual value)
+		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
 
 	var/area/A = src.loc.loc
 
@@ -560,7 +560,7 @@
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& W.force >= 5 \
-				&& W.w_class >= 3.0 \
+				&& W.w_class >= 3 \
 				&& prob(20) )
 			opened = 2
 			user.visible_message("<span class='warning'>[user.name] has knocked down the APC cover  with the [W.name].</span>", \

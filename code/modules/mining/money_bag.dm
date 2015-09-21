@@ -5,9 +5,9 @@
 	name = "Money bag"
 	icon_state = "moneybag"
 	flags = CONDUCT
-	force = 10.0
+	force = 10
 	throwforce = 0
-	w_class = 4.0
+	w_class = 4
 	burn_state = 0 //Burnable
 	burntime = 20
 

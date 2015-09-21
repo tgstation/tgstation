@@ -54,7 +54,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = 1
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
 

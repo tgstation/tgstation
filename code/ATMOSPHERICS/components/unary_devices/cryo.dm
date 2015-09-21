@@ -3,7 +3,7 @@
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cell-off"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = 4
 
 	var/on = 0

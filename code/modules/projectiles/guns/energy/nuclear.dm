@@ -53,10 +53,10 @@
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/fail_state = 0
 	var/charge_tick = 0
-	can_flashlight = 0
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
@@ -98,13 +98,14 @@
 			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
 			M.irradiate(300)
 		fail_state = 2 //break the gun so it stops recharging
+		crit_fail = 1 //So that it may be properly perfected in this state.
 		SSobj.processing.Remove(src)
 		update_icon()
 	return 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
 	..()
-	reliability -= round(15/severity)
+	reliability = max(reliability - round(15/severity), 0) //Do not allow it to go negative!
 
 /obj/item/weapon/gun/energy/gun/nuclear/update_icon()
 	..()

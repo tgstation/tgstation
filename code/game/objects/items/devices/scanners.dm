@@ -70,7 +70,7 @@ MASS SPECTROMETER
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
@@ -235,7 +235,7 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -301,7 +301,7 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -376,7 +376,7 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=1"
-	w_class = 2.0
+	w_class = 2
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

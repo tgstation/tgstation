@@ -67,7 +67,9 @@ Note: Must be placed west/left of and R&D console to function.
 	var/A = materials.amount(M)
 	if(!A)
 		A = reagents.get_reagent_amount(M)
-	A = A / max(1, (being_built.materials[M]/efficiency_coeff))
+		A = A / max(1, (being_built.reagents[M]/efficiency_coeff))
+	else
+		A = A / max(1, (being_built.materials[M]/efficiency_coeff))
 	return A
 
 /obj/machinery/r_n_d/protolathe/attackby(obj/item/O, mob/user, params)
@@ -104,10 +106,12 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 	if (stat)
 		return 1
-	if(istype(O,/obj/item/stack/sheet))
-		if(!materials.has_space( materials.get_item_material_amount(O) ))
-			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
-			return 1
+	if(!istype(O,/obj/item/stack/sheet))
+		return 1
+
+	if(!materials.has_space( materials.get_item_material_amount(O) ))
+		user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+		return 1
 
 	var/obj/item/stack/sheet/stack = O
 	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
@@ -115,14 +119,14 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 	var/amount_inserted = materials.insert_stack(O,amount)
 	if(!amount_inserted)
-		user << "<span class='warning'>You could not insert [O], it has no usable materials.</span>"
 		return 1
 	else
+		var/stack_name = stack.name
 		busy = 1
 		use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
 		user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
-		overlays += "protolathe_[stack.name]"
+		overlays += "protolathe_[stack_name]"
 		sleep(10)
-		overlays -= "protolathe_[stack.name]"
+		overlays -= "protolathe_[stack_name]"
 		busy = 0
 	updateUsrDialog()

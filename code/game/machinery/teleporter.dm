@@ -180,7 +180,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in tracking_implants)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -238,7 +238,7 @@
 	name = "teleport"
 	icon = 'icons/obj/stationobjs.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
