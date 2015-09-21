@@ -468,3 +468,57 @@
 		return ""
 	else
 		return ..()
+
+var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
+
+// Plasmamen
+/datum/species/plasmaman
+	name = "Plasbone"
+	id = "plasmaman"
+	say_mod = "rattles"
+	sexes = 0
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
+	specflags = list(NOBLOOD,RADIMMUNE)
+	safe_oxygen_min = 0 //We don't breath this
+	safe_oxygen_max = 0.005 //This kills the plasmaman
+	safe_toxins_min = 16 //We breath THIS!
+	safe_toxins_max = 0
+	dangerous_existence = 1 //So so much
+	var/skin = 0
+
+/datum/species/plasmaman/skin
+	name = "Skinbone"
+	skin = 1
+
+/datum/species/plasmaman/update_base_icon_state(mob/living/carbon/human/H)
+	var/base = ..()
+	if(base == id)
+		base = "[base][skin]"
+	return base
+
+/datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
+	var/datum/gas_mixture/environment = H.loc.return_air()
+
+	if(!(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/plasma) && istype(H.head, /obj/item/clothing/head/bio_hood/plasma)) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/atmos/plasmaman))
+		if(environment)
+			var/total_moles = environment.total_moles()
+			if(total_moles)
+				if((environment.oxygen /total_moles) >= 0.01)
+					if(!H.on_fire)
+						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
+					H.adjust_fire_stacks(0.5)
+					H.IgniteMob()
+	else
+		if(H.fire_stacks)
+			var/obj/item/clothing/suit/space/hardsuit/atmos/plasmaman/P = H.wear_suit
+			if(istype(P))
+				P.Extinguish(H)
+	H.update_fire()
+
+//Heal from plasma
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plasma")
+		H.adjustBruteLoss(-5)
+		H.adjustFireLoss(-5)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1

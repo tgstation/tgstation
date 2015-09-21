@@ -1151,8 +1151,12 @@
 
 	//-- OXY --//
 
-	//Too much oxygen! //Yes, some species may not like it.
-	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
+	//Too much oxygen! Yes, some species may not like it.
+	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags) && safe_toxins_min)	//For plasmamen
+		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+		H.apply_damage(Clamp(ratio,HEAT_GAS_DAMAGE_LEVEL_1,HEAT_GAS_DAMAGE_LEVEL_3), BURN, "head")
+		H.throw_alert("too_much_oxy")
+	else if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
 		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
 		H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 		H.throw_alert("too_much_oxy")
