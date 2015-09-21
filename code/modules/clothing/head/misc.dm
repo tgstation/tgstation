@@ -367,3 +367,10 @@
 	icon_state = "headband"
 	item_state = "headband"
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/metalgear.dmi', "right_hand" = 'icons/mob/in-hand/right/metalgear.dmi')
+
+/obj/item/clothing/head/cowboy
+        name = "cowboy hat"
+        desc = "Pefect for the closet botanist."
+        icon_state = "cowboy
+        item_state = "cowboy"
+
