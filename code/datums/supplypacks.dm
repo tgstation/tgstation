@@ -1351,7 +1351,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	group = "Vending Machine packs"
 
 /datum/supply_packs/miningmachines
-	name = "Mining stack of packs"
+	name = "Dwarven Mining Equipment stack of packs"
 	contains = list(/obj/structure/vendomatpack/mining,
 					/obj/structure/vendomatpack/mining)
 	cost = 10
