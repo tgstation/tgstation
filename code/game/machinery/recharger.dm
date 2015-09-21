@@ -10,9 +10,17 @@
 
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
+	if(istype(G, /obj/item/weapon/wrench))
+		if(charging)
+			user << "<span class='notice'>Remove the charging item first!</span>"
+			return
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
+		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		return
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
+	if((istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton)) && anchored)
 		if(charging)
 			return
 
@@ -34,14 +42,8 @@
 		charging = G
 		use_power = 2
 		update_icon()
-	else if(istype(G, /obj/item/weapon/wrench))
-		if(charging)
-			user << "<span class='notice'>Remove the charging item first!</span>"
-			return
-		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
-
+	else if(!anchored)
+		user << "<span class='notice'>[src] isn't connected to anything!</span>"
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	if(issilicon(user))
