@@ -44,6 +44,13 @@
 	siemens_coefficient = 0.5
 	eyeprot = 1
 
+/obj/item/clothing/head/helmet/swat/dredd
+	name = "Judge Helmet"
+	desc = "Judge, Jury, and Executioner."
+	icon_state = "dredd-helmet"
+	item_state = "dredd-helmet"
+	species_fite = list()
+
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
