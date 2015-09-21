@@ -1,0 +1,6 @@
+author: Jordie0608
+
+delete-after: True
+
+changes: 
+  - rscadd: "Added Special Verb 'Create Poll', an in-game interface to create server polls for admins with +permissions."
