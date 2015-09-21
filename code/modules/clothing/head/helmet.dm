@@ -49,7 +49,7 @@
 	desc = "Judge, Jury, and Executioner."
 	icon_state = "dredd-helmet"
 	item_state = "dredd-helmet"
-	species_fite = list()
+	species_fit = list()
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
