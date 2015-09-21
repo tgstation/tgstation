@@ -43,6 +43,7 @@ var/global/list/borer_avail_unlocks = null
 	friendly = "prods"
 	wander = 0
 	pass_flags = PASSTABLE
+	canEnterVentWith = "/mob/living/captive_brain=0&/obj/item/verbs/borer=0"
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
