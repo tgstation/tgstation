@@ -149,18 +149,17 @@
 
 /mob/living/simple_animal/hostile/guardian/fire
 	a_intent = "help"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attack_sound = 'sound/items/Welder.ogg'
 	attacktext = "sears"
-	damage_transfer = 0.7
+	damage_transfer = 0.8
 	range = 10
 	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
 	environment_smash = 1
 	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
 	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, ready to sow havoc at random."
-	pass_flags = PASSMOB
 
 /mob/living/simple_animal/hostile/guardian/fire/Life() //Dies if the summoner dies
 	..()
@@ -179,9 +178,15 @@
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
-			M.adjust_fire_stacks(10)
+			M.adjust_fire_stacks(7)
 			M.IgniteMob()
 
+/mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
+	if(istype(AM, /mob/living/))
+		var/mob/living/M = AM
+		if(AM != src.summoner)
+			M.adjust_fire_stacks(7)
+			M.IgniteMob()
 //Standard
 
 /mob/living/simple_animal/hostile/guardian/punch
