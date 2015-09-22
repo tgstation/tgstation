@@ -11,7 +11,7 @@
 	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | MULTITOOL_MENU | SHUTTLEWRENCH
 
 	use_auto_lights = 1
-	light_power_on = 2
+	light_power_on = 1
 	light_range_on = 3
 
 /obj/machinery/computer/cultify()
