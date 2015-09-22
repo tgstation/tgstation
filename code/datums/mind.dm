@@ -1059,16 +1059,14 @@
 		switch(href_list["shadowling"])
 			if("clear")
 				ticker.mode.update_shadow_icons_removed(src)
-				src.spell_list = null
+				src.spell_list = list()
 				if(src in ticker.mode.shadows)
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					src.spell_list = null
+					src.spell_list = list()
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
-					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hatch)
-					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_ascend)
 				else if(src in ticker.mode.thralls)
 					ticker.mode.remove_thrall(src,0)
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
