@@ -78,13 +78,14 @@
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	if(!isturf(target))
 		return ..()
-	if(!in_range(user,target))
+	if(!user.Adjacent(target))
 		return ..()
 	var/turf/T = target
 	if(!T || !istype(T))
 		return ..()
 	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 						 "<span class='notice'>You attach a blank sign to [T].</span>")
+	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
 	new /obj/structure/sign/basic(T)
 	user.drop_item()
 	qdel(src)
