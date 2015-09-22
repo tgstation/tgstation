@@ -194,13 +194,19 @@ var/list/mechtoys = list(
 
 	var/obj/structure/docking_port/destination
 
-	if(cargo_shuttle.current_port == cargo_shuttle.dock_centcom)
+	if(!at_station) //not at station
 		destination = cargo_shuttle.dock_station
+
+		at_station = 1
+
 		if(!destination)
 			message_admins("WARNING: Cargo shuttle unable to find the station!")
 			warning("Cargo shuttle can't find centcomm")
-	else
+	else //at station
 		destination = cargo_shuttle.dock_centcom
+
+		at_station = 0
+
 		if(!destination)
 			message_admins("WARNING: Cargo shuttle unable to find centcomm!")
 			warning("Cargo shuttle can't find centcomm")
