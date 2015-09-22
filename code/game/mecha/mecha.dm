@@ -680,6 +680,8 @@
 			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+		else if(user.buckled)
+			user << "<span class='warning'>You have been buckled and cannot move.</span>"
 		else
 			moved_inside(user)
 	else
