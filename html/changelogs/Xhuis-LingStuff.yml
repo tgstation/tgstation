@@ -2,7 +2,7 @@ author: Xhuis
 delete-after: True
 
 changes: 
-  - rscadd: "Changelings have a new ablity, Biodegrade. Costing 30 chemicals and having an unlock cost of 2, it allows them to dissolve handcuffs and straight jackets in 3 seconds, and escape from lockers in 7."
+  - rscadd: "Changelings have a new ablity, Biodegrade. Costing 30 chemicals and having an unlock cost of 1, it allows them to dissolve handcuffs and straight jackets in 3 seconds, and escape from lockers in 7."
   - tweak: "Fleshmend's effectiveness is now halved each time it is used in a short time span."
   - tweak: "Last Resort now blinds and confuses nearby humans and briefly disables silicons upon use."
   - tweak: "Headslugs now have 50 health, up from 20."
