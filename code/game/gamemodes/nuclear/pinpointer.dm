@@ -147,11 +147,11 @@
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
 						return
-					for(var/mob/living/carbon/M in mob_list)
-						if(!M.dna)
+					for(var/mob/living/carbon/C in mob_list)
+						if(!C.dna)
 							continue
-						if(M.dna.unique_enzymes == DNAstring)
-							target = M
+						if(C.dna.unique_enzymes == DNAstring)
+							target = C
 							break
 
 			return attack_self()

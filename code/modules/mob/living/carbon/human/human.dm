@@ -16,6 +16,12 @@
 /mob/living/carbon/human/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
+	//initialize dna. for spawned humans; overwritten by other code
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna()
+
 	//initialise organs
 	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
@@ -27,11 +33,6 @@
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
-
-	// for spawned humans; overwritten by other code
-	create_dna(src)
-	randomize_human(src)
-	ready_dna(src)
 
 	make_blood()
 
@@ -90,9 +91,8 @@
 				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
 				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
 				//Ninja status
-				if(dna)
-					stat("Fingerprints:", "[md5(dna.uni_identity)]")
-					stat("Unique Identity:", "[dna.unique_enzymes]")
+				stat("Fingerprints:", "[md5(dna.uni_identity)]")
+				stat("Unique Identity:", "[dna.unique_enzymes]")
 				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
 				stat("Nutrition Status:", "[nutrition]")
 				stat("Oxygen Loss:", "[getOxyLoss()]")
@@ -663,7 +663,8 @@
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	regenerate_icons()
+	update_body()
+	update_hair()
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
