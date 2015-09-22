@@ -15,6 +15,9 @@
 
 	for(var/datum/disease/D in user.viruses)
 		D.cure()
-
+	for(var/obj/item/organ/internal/I in user)
+		if(istype(I,/obj/item/organ/internal/body_egg/alien_embryo))
+			I.Remove(user)
+			I.loc = get_turf(user)
 	feedback_add_details("changeling_powers","AP")
 	return 1

@@ -807,7 +807,7 @@ var/global/list/possible_items_special = list()
 				var/turf/cloc = get_turf(changeling.current)
 				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
 					for(var/name in check_names) //Is he (disguised as) one of the staff?
-						if(H.dna && H.dna.real_name == name)
+						if(H.dna.real_name == name)
 							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
 							success++ //A living changeling staff member made it to centcomm
 							continue changelings

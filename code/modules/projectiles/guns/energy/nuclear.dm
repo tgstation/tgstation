@@ -98,13 +98,14 @@
 			M << "<span class='danger'>You feel a wave of heat wash over you.</span>"
 			M.irradiate(300)
 		fail_state = 2 //break the gun so it stops recharging
+		crit_fail = 1 //So that it may be properly perfected in this state.
 		SSobj.processing.Remove(src)
 		update_icon()
 	return 0
 
 /obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
 	..()
-	reliability -= round(15/severity)
+	reliability = max(reliability - round(15/severity), 0) //Do not allow it to go negative!
 
 /obj/item/weapon/gun/energy/gun/nuclear/update_icon()
 	..()

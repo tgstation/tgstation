@@ -120,9 +120,7 @@
 /obj/item/organ/internal/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
 	var/species = pick(list(/datum/species/lizard,/datum/species/slime,/datum/species/plant/pod,/datum/species/fly))
-	hardset_dna(owner, null, null, null, null, species)
-	owner.regenerate_icons()
-	return
+	owner.set_species(species)
 
 /obj/item/organ/internal/gland/ventcrawling
 	origin_tech = "materials=4;biotech=5;bluespace=3"
@@ -241,7 +239,7 @@
 
 /obj/effect/cocoon/abductor/proc/Copy(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/interactive/greytide/clone = new(src)
-	hardset_dna(clone,H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
+	clone.hardset_dna(H.dna.uni_identity,H.dna.struc_enzymes,H.real_name, H.dna.blood_type, H.dna.species.type, H.dna.features)
 
 	//There's no define for this / get all items ?
 	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,\
