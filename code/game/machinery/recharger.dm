@@ -15,6 +15,7 @@
 			user << "<span class='notice'>Remove the charging item first!</span>"
 			return
 		anchored = !anchored
+		power_change()
 		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
