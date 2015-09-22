@@ -133,3 +133,45 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 10
+
+/*
+ * Plasmaman Plasma Tank
+ */
+
+/obj/item/weapon/tank/internals/plasmaman
+	name = "internals plasma tank"
+	desc = "Caution: Nanotrasen does not endorse the usage of plasma for internals"
+	icon_state = "plasmaman_tank"
+	item_state = "plasmaman_tank"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+
+/obj/item/weapon/tank/internals/plasmaman/New()
+	..()
+
+	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+/obj/item/weapon/tank/internals/plasmaman/full/New()
+	..()
+
+	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return
+
+
+/obj/item/weapon/tank/internals/plasmaman/belt
+	name = "belt plasma tank"
+	desc = "Toxic flammable gas, now in a more compact package."
+	icon_state = "plasmaman_tank_belt"
+	item_state = "plasmaman_tank_belt"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 2.0
+	force = 4.0
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	volume = 10
+
+/obj/item/weapon/tank/internals/plasmaman/belt/full/New()
+	..()
+
+	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	return

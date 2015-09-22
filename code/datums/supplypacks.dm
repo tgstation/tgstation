@@ -129,6 +129,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "firefighting watertank crate"
 	access = access_atmospherics
 
+/datum/supply_packs/emergency/plasma
+	name = "Plasma Suit Crate"
+	contains = list(/obj/item/clothing/suit/space/hardsuit/atmos/plasmaman)
+	cost = 30
+	containertype = /obj/structure/closet/crate/secure
+	containername = "plasma suit crate"
+	access = access_atmospherics
+
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
 	contains = list(/obj/item/weapon/scythe,
@@ -762,6 +770,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containertype = /obj/structure/closet/crate/secure
 	containername = "transfer valve crate"
 	access = access_rd
+
+/datum/supply_packs/science/plasma
+	name = "Plasma Handling Crate"
+	contains = list(/obj/item/weapon/tank/internals/plasmaman/belt,
+					/obj/item/weapon/tank/internals/plasmaman,
+					/obj/item/clothing/head/bio_hood/plasma,
+					/obj/item/clothing/suit/bio_suit/plasma)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "plasma handling crate"
+	access = access_tox_storage
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
