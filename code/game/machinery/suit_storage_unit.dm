@@ -9,7 +9,7 @@
 
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
-	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
+	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "close"
 	anchored = 1
@@ -34,7 +34,6 @@
 	var/ispowered = 1
 	var/isbroken = 0
 	var/issuperUV = 0
-	var/panelopen = 0
 	var/safetieson = 1
 	var/cycletime_left = 0
 	var/repair_stage = 0
@@ -42,19 +41,18 @@
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	..()
 	if(isbroken && isopen)
-		if(!panelopen)
+		if(!panel_open)
 			user << "<span class='warning'>A small LED above the maintenance panel is flashing red.</span>"
 			return
-		if(in_range(user, src))
-			switch(repair_stage)
-				if(REPAIR_NEEDS_WIRECUTTERS)
-					user << "<span class='warning'>The wires inside are charred and snapped.</span>"
-				if(REPAIR_NEEDS_WIRES)
-					user << "<span class='warning'>There are no wires inside.</span>"
-				if(REPAIR_NEEDS_CROWBAR)
-					user << "<span class='warning'>Some of the interior metal is burnt and broken.</span>"
-				if(REPAIR_NEEDS_METAL)
-					user << "<span class='warning'>It lacks interior plating.</span>"
+		switch(repair_stage)
+			if(REPAIR_NEEDS_WIRECUTTERS)
+				user << "<span class='warning'>The wires inside are charred and snapped.</span>"
+			if(REPAIR_NEEDS_WIRES)
+				user << "<span class='warning'>There are no wires inside.</span>"
+			if(REPAIR_NEEDS_CROWBAR)
+				user << "<span class='warning'>Some of the interior metal is burnt and broken.</span>"
+			if(REPAIR_NEEDS_METAL)
+				user << "<span class='warning'>It lacks interior plating.</span>"
 
 
 
@@ -190,10 +188,10 @@
 		return
 	if(stat & NOPOWER)
 		return
-	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
+	if(src.panel_open) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<B>Maintenance panel controls</B><HR>"
-		dat+= "The panel is ridden with controls, button and meters, labeled in strange signs and symbols that <BR>you cannot understand. Probably the manufactoring world's language.<BR> Among other things, a few controls catch your eye.<BR><BR>"
+		dat+= "The panel is ridden with controls, button and meters, labeled in strange signs and symbols that you cannot understand; probably the manufacturing world's language. Among other things, a few controls catch your eye...<BR><BR>"
 		dat+= text("A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads [].<BR> <A href='?src=\ref[];toggleUV=1'>Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
 		dat+= text("A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.<BR><A href='?src=\ref[];togglesafeties=1'>Press button</a>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
 		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
@@ -278,7 +276,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/toggleUV(mob/user)
-	if(!src.panelopen)
+	if(!src.panel_open)
 		return
 
 	else
@@ -292,7 +290,7 @@
 
 
 /obj/machinery/suit_storage_unit/proc/togglesafeties(mob/user)
-	if(!src.panelopen) //Needed check due to bugs
+	if(!src.panel_open) //Needed check due to bugs
 		return
 	else
 		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
@@ -345,7 +343,7 @@
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
 	if(src.OCCUPANT && src.safetieson)
-		user << "<span class='warning'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
+		user << "<span class='warning'>The unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>"
 		return
 	if(src.isopen)
 		return
@@ -357,12 +355,12 @@
 	if(src.isUV || src.isopen) //I'm bored of all these sanity checks
 		return
 	if(src.OCCUPANT && src.safetieson)
-		user << "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</font>"
+		user << "<font color='red'><B>WARNING:</B> Biological entity detected in the confines of the unit's storage. Cannot initiate cycle.</font>"
 		return
 	if(!src.HELMET && !src.MASK && !src.SUIT && !src.STORAGE && !src.OCCUPANT )
 		user << "<font color='red'>Unit storage bays empty. Nothing to disinfect -- Aborting.</font>"
 		return
-	user << "<span class='notice'>You start the Unit's cauterisation cycle.</span>"
+	user << "<span class='notice'>You start the unit's cauterisation cycle.</span>"
 	src.cycletime_left = 20
 	src.isUV = 1
 	if(src.OCCUPANT && !src.islocked)
@@ -394,7 +392,7 @@
 					src.SUIT = null
 					src.MASK = null
 					qdel(STORAGE)
-					visible_message("<font color='red'>With a loud whining noise, the Suit Storage Unit's door grinds open. Puffs of ashen smoke come out of its chamber.</font>", 3)
+					visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A foul cloud of smoke emanates from the chamber.</span>")
 					src.isbroken = 1
 					src.isopen = 1
 					src.islocked = 0
@@ -420,9 +418,9 @@
 
 	if (src.OCCUPANT.client)
 		if(user != OCCUPANT)
-			OCCUPANT << "<font color='blue'>The machine kicks you out!</font>"
+			OCCUPANT << "<span class='warning'>The machine kicks you out!</span>"
 		if(user.loc != src.loc)
-			OCCUPANT << "<font color='blue'>You leave the not-so-cozy confines of the SSU.</font>"
+			OCCUPANT << "<span class='warning'>You leave the not-so-cozy confines of [src].</span>"
 
 		src.OCCUPANT.client.eye = src.OCCUPANT.client.mob
 		src.OCCUPANT.client.perspective = MOB_PERSPECTIVE
@@ -449,7 +447,7 @@
 			else
 				isopen = 1
 				islocked = 0
-				visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
+				visible_message("<span class='warning'>[user] kicks their way out of [src]!</span>")
 
 		else
 			return
@@ -478,9 +476,9 @@
 		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 	if(M == user)
-		visible_message("[user] starts squeezing into the suit storage unit!", 3)
+		visible_message("<span class='warning'>[user] squeezes into [src]!</span>", "<span class='notice'>You squeeze into [src].</span>")
 	else
-		visible_message("[user] starts putting [M.name] into the Suit Storage Unit!", 3)
+		M.visible_message("<span class='warning'>[user] starts putting [M] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 	if(do_mob(user, M, 10))
 		user.stop_pulling()
 		if(M.client)
@@ -508,16 +506,16 @@
 		if(istype(I, /obj/item/weapon/crowbar) && !isopen)
 			if(toggle_open(user))
 				dump_everything()
-				user << text("<span class='notice'>You pry \the [src] open.</span>")
+				user << text("<span class='notice'>You pry open [src]'s doors.</span>")
 				update_icon()
 		return
 	if(istype(I, /obj/item/weapon/screwdriver))
-		src.panelopen = !src.panelopen
+		src.panel_open = !src.panel_open
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.panelopen ? "open up" : "close") )
+		user << text("<span class='notice'>You [] the unit's maintenance panel.</span>",(src.panel_open ? "open up" : "close") )
 		src.updateUsrDialog()
 		return
-	if(isbroken && panelopen)
+	if(isbroken && panel_open)
 		if(istype(I, /obj/item/weapon/wirecutters) && repair_stage == REPAIR_NEEDS_WIRECUTTERS)
 			user.visible_message("<span class='notice'>[user] starts removing [src]'s damaged wires.</span>", \
 								 "<span class='notice'>You begin removing the damaged wires from [src]...</span>")
@@ -585,9 +583,9 @@
 			user << "<span class='notice'>The unit already contains a suit.</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>\The [S] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>[S] is stuck to your hand, you cannot put it in [src]!</span>"
 			return
-		user << "<span class='notice'>You load the [S.name] into the suit storage compartment.</span>"
+		user << "<span class='notice'>You load [S] into the suit storage compartment.</span>"
 		S.loc = src
 		src.SUIT = S
 		src.update_icon()
@@ -601,9 +599,9 @@
 			user << "<span class='warning'>The unit already contains a helmet!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>\The [H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>[H] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "<span class='notice'>You load the [H.name] into the helmet storage compartment.</span>"
+		user << "<span class='notice'>You load [H] into the helmet storage compartment.</span>"
 		H.loc = src
 		src.HELMET = H
 		src.update_icon()
@@ -617,9 +615,9 @@
 			user << "<span class='warning'>The unit already contains a mask!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>\The [M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>[M] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "<span class='notice'>You load the [M.name] into the mask storage compartment.</span>"
+		user << "<span class='notice'>You load [M] into the mask storage compartment.</span>"
 		M.loc = src
 		src.MASK = M
 		src.update_icon()
@@ -633,9 +631,9 @@
 			user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>\The [ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
+			user << "<span class='warning'>[ITEM] is stuck to your hand, you cannot put it in the Suit Storage Unit!</span>"
 			return
-		user << "<span class='notice'>You load the [ITEM.name] into the auxiliary storage compartment.</span>"
+		user << "<span class='notice'>You load [ITEM] into the auxiliary storage compartment.</span>"
 		ITEM.loc = src
 		src.STORAGE = ITEM
 	src.update_icon()
@@ -648,7 +646,7 @@
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
-	user << "<span class='warning'>The console controls are far too complicated for your tiny brain!</span>"
+	user << "<span class='warning'>You don't know how to work this!</span>"
 	return
 
 #undef REPAIR_NEEDS_WIRECUTTERS
