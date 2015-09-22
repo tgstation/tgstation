@@ -20,6 +20,7 @@ datum/reagent
 	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
 	var/can_synth = 1
+	var/synth_cost = 1 //the relative cost to synthesize every chem, 1 is normal, multiplies power used by this
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0

@@ -16,6 +16,7 @@ datum/reagent/medicine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/ethylredoxrazine	// FUCK YOU, ALCOHOL
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
+	synth_cost = 5
 	description = "A powerful oxidizer that reacts with ethanol."
 	reagent_state = SOLID
 	color = "#605048" // rgb: 96, 80, 72
@@ -32,6 +33,7 @@ datum/reagent/medicine/ethylredoxrazine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/lipozine
 	name = "Lipozine" // The anti-nutriment.
 	id = "lipozine"
+	synth_cost = 8
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	color = "#BBEDA4" // rgb: 187, 237, 164
 
@@ -45,6 +47,7 @@ datum/reagent/medicine/lipozine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/hyperzine
 	name = "Hyperzine"
 	id = "hyperzine"
+	synth_cost = 3
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -67,6 +70,7 @@ datum/reagent/medicine/hyperzine/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
 	id = "inaprovaline"
+	synth_cost = 3
 	description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -102,6 +106,7 @@ datum/reagent/medicine/inaprovaline/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/kelotane
 	name = "Kelotane"
 	id = "kelotane"
+	synth_cost = 2
 	description = "Kelotane is a drug used to treat burns."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
@@ -119,6 +124,7 @@ datum/reagent/medicine/kelotane/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/dermaline
 	name = "Dermaline"
 	id = "dermaline"
+	synth_cost = 4
 	description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
@@ -138,6 +144,7 @@ datum/reagent/medicine/dermaline/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/dexalin
 	name = "Dexalin"
 	id = "dexalin"
+	synth_cost = 3
 	description = "Dexalin is used in the treatment of oxygen deprivation."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
@@ -163,6 +170,7 @@ datum/reagent/medicine/dexalin/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/dexalinp
 	name = "Dexalin Plus"
 	id = "dexalinp"
+	synth_cost = 5
 	description = "Dexalin Plus is used in the treatment of oxygen deprivation. Its highly effective."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
@@ -188,6 +196,7 @@ datum/reagent/medicine/dexalinp/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
+	synth_cost = 6
 	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
@@ -214,6 +223,7 @@ datum/reagent/medicine/tricordrazine/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
 	id = "anti_toxin"
+	synth_cost = 3
 	description = "Dylovene is a broad-spectrum antitoxin."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -232,6 +242,7 @@ datum/reagent/medicine/anti_toxin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	id = "leporazine"
+	synth_cost = 3
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -245,6 +256,7 @@ datum/reagent/medicine/leporazine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	id = "adminordrazine"
+	synth_cost = 9001 //hue
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -285,11 +297,13 @@ datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob
 datum/reagent/medicine/adminordrazine/nanites
 	name = "Nanites"
 	id = "nanites"
+	synth_cost = 100
 	description = "Tiny machines capable of rapid cellular regeneration."
 
 datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
+	synth_cost = 3
 	description = "Synaptizine is used to treat various diseases."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -309,6 +323,7 @@ datum/reagent/medicine/synaptizine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/hyronalin
 	name = "Hyronalin"
 	id = "hyronalin"
+	synth_cost = 4
 	description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -320,6 +335,7 @@ datum/reagent/medicine/hyronalin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/arithrazine
 	name = "Arithrazine"
 	id = "arithrazine"
+	synth_cost = 5
 	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -335,6 +351,7 @@ datum/reagent/medicine/arithrazine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/alkysine
 	name = "Alkysine"
 	id = "alkysine"
+	synth_cost = 5
 	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -347,6 +364,7 @@ datum/reagent/medicine/alkysine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
+	synth_cost = 5
 	description = "Heals eye damage."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -362,6 +380,7 @@ datum/reagent/medicine/imidazoline/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
 	id = "inacusiate"
+	synth_cost = 5
 	description = "Heals ear damage."
 	color = "#6600FF" // rgb: 100, 165, 255
 
@@ -375,6 +394,7 @@ datum/reagent/medicine/inacusiate/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/bicaridine
 	name = "Bicaridine"
 	id = "bicaridine"
+	synth_cost = 4
 	description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
@@ -393,6 +413,7 @@ datum/reagent/medicine/bicaridine/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
+	synth_cost = 9
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -408,6 +429,7 @@ datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
+	synth_cost = 11
 	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -424,6 +446,7 @@ datum/reagent/medicine/clonexadone/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/rezadone
 	name = "Rezadone"
 	id = "rezadone"
+	synth_cost = 10
 	description = "A powder derived from fish toxin, this substance can effectively treat cellular damage in humanoids, though excessive consumption has side effects."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
@@ -448,6 +471,7 @@ datum/reagent/medicine/rezadone/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
 	id = "spaceacillin"
+	synth_cost = 6
 	description = "An all-purpose antiviral agent."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -463,6 +487,7 @@ datum/reagent/medicine/spaceacillin
 datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
+	synth_cost = 4
 	description = "On touch, quickly heals burn damage. Basic anti-burn healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -486,6 +511,7 @@ datum/reagent/medicine/silver_sulfadiazine
 datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
+	synth_cost = 8
 	description = "On touch, quickly heals brute damage. Basic anti-brute healing drug. On ingestion, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -508,6 +534,7 @@ datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, r
 datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
+	synth_cost = 5
 	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -556,6 +583,7 @@ datum/reagent/medicine/charcoal/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/omnizine  //I guess I'll keep this for the cruel OD
 	name = "Omnizine"
 	id = "omnizine"
+	synth_cost = 50
 	description = "Heals 1 of each damage type a cycle. If overdosed it will deal significant amounts of each damage type."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -581,6 +609,7 @@ datum/reagent/medicine/omnizine/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/calomel //
 	name = "Calomel"
 	id = "calomel"
+	synth_cost = 3
 	description = "Quickly purges the body of all chemicals. If your health is above 20, toxin damage is dealt. When you hit 20 health or lower, the damage will cease."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -598,6 +627,7 @@ datum/reagent/medicine/calomel/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/potass_iodide //
 	name = "Potassium Iodide"
 	id = "potass_iodide"
+	synth_cost = 2
 	description = "Reduces low radiation damage very effectively."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -614,6 +644,7 @@ datum/reagent/medicine/potass_iodide/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/pen_acid //
 	name = "Pentetic Acid"
 	id = "pen_acid"
+	synth_cost = 17
 	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body. Has a chance of dealing brute damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -689,6 +720,7 @@ datum/reagent/medicine/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/
 datum/reagent/medicine/ephedrine //
 	name = "Ephedrine"
 	id = "ephedrine"
+	synth_cost = 10
 	description = "Reduces stun times, increases run speed. If overdosed it will deal toxin and oxyloss damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -740,6 +772,7 @@ datum/reagent/medicine/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
 datum/reagent/medicine/diphenhydramine //
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
+	synth_cost = 15
 	description = "Purges body of lethal Histamine and reduces jitteriness while causing minor drowsiness."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -756,6 +789,7 @@ datum/reagent/medicine/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/morphine //
 	name = "Morphine"
 	id = "morphine"
+	synth_cost = 5
 	description = "Will allow you to ignore slowdown from equipment and damage. Will eventually knock you out if you take too much. If overdosed it will cause jitteriness, dizziness, force the victim to drop items in their hands and eventually deal toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -824,6 +858,7 @@ datum/reagent/medicine/morphine/addiction_act_stage4(var/mob/living/M as mob)
 datum/reagent/medicine/oculine
 	name = "Oculine"
 	id = "oculine"
+	synth_cost = 10
 	description = "Cures blindness and heals eye damage over time."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -845,6 +880,7 @@ datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/atropine //
 	name = "Atropine"
 	id = "atropine"
+	synth_cost = 17
 	description = "If patients health is below -25 it will heal 1.5 brute and burn damage per cycle, as well as stop any oxyloss. Good for stabilising critical patients."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -913,6 +949,7 @@ datum/reagent/medicine/epinephrine/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/strange_reagent //
 	name = "Strange Reagent"
 	id = "strange_reagent"
+	synth_cost = 15
 	description = "A miracle drug that can bring a dead body back to life! If the corpse has suffered too much damage, however, no change will occur to the body. If used on a living person it will deal Brute and Burn damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -950,6 +987,7 @@ datum/reagent/medicine/strange_reagent/on_mob_life(var/mob/living/M as mob)
 datum/reagent/medicine/ryetalyn //
 	name = "Ryetalyn"
 	id = "ryetalyn"
+	synth_cost = 6
 	description = "Ryetalyn can cure all genetic abnomalities."
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
@@ -966,6 +1004,7 @@ datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
 datum/reagent/medicine/antihol //
 	name = "Antihol"
 	id = "antihol"
+	synth_cost = 5
 	description = "Helps remove Alcohol from someone's body, as well as eliminating its side effects."
 	color = "#C8A5DC"
 
@@ -981,6 +1020,7 @@ datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 /datum/reagent/medicine/stimulants //
 	name = "Stimulants"
 	id = "stimulants"
+	synth_cost = 5
 	description = "Increases run speed and eliminates stuns, can heal minor damage. If overdosed it will deal toxin damage and stun."
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -1010,6 +1050,7 @@ datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)
 datum/reagent/medicine/insulin //
 	name = "Insulin"
 	id = "insulin"
+	synth_cost = 5
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
 	color = "#C8A5DC"

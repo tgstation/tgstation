@@ -8,6 +8,7 @@ datum/reagent/drug
 datum/reagent/drug/space_drugs
 	name = "Space drugs"
 	id = "space_drugs"
+	synth_cost = 3
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 //	overdose_threshold = 25
@@ -25,6 +26,7 @@ datum/reagent/drug/space_drugs/on_mob_life(var/mob/living/M as mob)
 datum/reagent/drug/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"
+	synth_cost = 5
 	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
 	color = "#202040" // rgb: 20, 20, 40
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -46,6 +48,7 @@ datum/reagent/drug/space_drugs/overdose_process(var/mob/living/M as mob)
 datum/reagent/drug/nicotine
 	name = "Nicotine"
 	id = "nicotine"
+	synth_cost = 2
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -62,6 +65,7 @@ datum/reagent/drug/nicotine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
+	synth_cost = 10
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -104,6 +108,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
 	id = "krokodil"
+	synth_cost = 15
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -155,6 +160,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
 	id = "methamphetamine"
+	synth_cost = 10
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -232,6 +238,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
+	synth_cost = 17
 	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -322,6 +329,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
 	id = "aranesp"
+	synth_cost = 10
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage.."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -342,6 +350,7 @@ datum/reagent/drug/crank/addiction_act_stage4(var/mob/living/M as mob)
 datum/reagent/drug/hotline //gotta get a grip
 	name = "Hotline"
 	id = "hotline"
+	synth_cost = 50
 	description = "It isn't just wrong. It's dead wrong."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
@@ -406,6 +415,7 @@ datum/reagent/drug/hotline/addiction_act_stage4(var/mob/living/M as mob)
 /datum/reagent/drug/happyhappy
 	name = "Happy Happy"
 	id = "2happy"
+	synth_cost = 50
 	description = "A powerful psychoactive drug that heals damage and temporarily shrivels your nerve endings, preventing you from feeling pain. it has some NASTY side effects..."
 	reagent_state = LIQUID
 	color = "#D4EBF2" // rgb: 212, 235, 242

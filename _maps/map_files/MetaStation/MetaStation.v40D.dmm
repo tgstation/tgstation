@@ -6074,7 +6074,7 @@
 "cmP" = (/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/chemistry)
 "cmQ" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 1; on = 1; scrub_Toxins = 0},/obj/structure/disposalpipe/segment,/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plasteel{icon_state = "white"},/area/medical/chemistry)
 "cmR" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "whiteyellow"; tag = "icon-whitehall (WEST)"},/area/medical/chemistry)
-"cmS" = (/turf/simulated/floor/plasteel{dir = 4; icon_state = "whiteyellowfull"; tag = "icon-whitehall (WEST)"},/area/medical/chemistry)
+"cmS" = (/obj/machinery/chem_dispenser/constructable/synth,/turf/simulated/floor/plasteel{dir = 4; icon_state = "whiteyellowfull"; tag = "icon-whitehall (WEST)"},/area/medical/chemistry)
 "cmT" = (/obj/machinery/r_n_d/destructive_analyzer,/obj/machinery/alarm{dir = 4; pixel_x = -23; pixel_y = 0},/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/toxins/lab)
 "cmU" = (/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/toxins/lab)
 "cmV" = (/obj/machinery/r_n_d/protolathe,/turf/simulated/floor/plasteel{dir = 1; icon_state = "warning"},/area/toxins/lab)

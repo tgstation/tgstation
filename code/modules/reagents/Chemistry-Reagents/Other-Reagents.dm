@@ -170,6 +170,7 @@ datum/reagent/water
 datum/reagent/water/holywater
 	name = "Holy Water"
 	id = "holywater"
+	synth_cost = 66
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 
@@ -208,6 +209,7 @@ datum/reagent/water/holywater/reaction_turf(turf/simulated/T, reac_volume)
 datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	id = "unholywater"
+	synth_cost = 66
 	description = "Something that shouldn't exist on this plane of existance."
 
 datum/reagent/fuel/unholywater/on_mob_life(var/mob/living/M as mob)
@@ -228,6 +230,7 @@ datum/reagent/fuel/unholywater/on_mob_life(var/mob/living/M as mob)
 datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
 	id = "hell_water"
+	synth_cost = 666
 	description = "YOUR FLESH! IT BURNS!"
 
 datum/reagent/hellwater/on_mob_life(var/mob/living/M as mob)
@@ -241,6 +244,7 @@ datum/reagent/hellwater/on_mob_life(var/mob/living/M as mob)
 datum/reagent/lube
 	name = "Space Lube"
 	id = "lube"
+	synth_cost = 3
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	color = "#009CA8" // rgb: 0, 156, 168
 
@@ -252,12 +256,14 @@ datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
 datum/reagent/slimetoxin
 	name = "Mutation Toxin"
 	id = "mutationtoxin"
+	synth_cost = 10
 	description = "A corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
 datum/reagent/unstableslimetoxin
 	name = "Unstable Mutation Toxin"
 	id = "unstablemutationtoxin"
+	synth_cost = 20
 	description = "An unstable and unpredictable corruptive toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
@@ -286,6 +292,7 @@ datum/reagent/unstableslimetoxin/on_mob_life(var/mob/living/carbon/human/H as mo
 datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
 	id = "amutationtoxin"
+	synth_cost = 30
 	description = "An advanced corruptive toxin produced by slimes."
 	color = "#13BC5E" // rgb: 19, 188, 94
 
@@ -295,6 +302,7 @@ datum/reagent/aslimetoxin
 datum/reagent/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"
+	synth_cost = 5
 	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
 	color = "#202040" // rgb: 20, 20, 40
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -505,6 +513,7 @@ datum/reagent/silver
 datum/reagent/uranium
 	name ="Uranium"
 	id = "uranium"
+	synth_cost = 5
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
@@ -556,6 +565,7 @@ datum/reagent/fuel/on_mob_life(var/mob/living/M as mob)
 datum/reagent/space_cleaner
 	name = "Space cleaner"
 	id = "cleaner"
+	synth_cost = 5
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
 
@@ -613,6 +623,7 @@ datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
 	id = "cryptobiolin"
+	synth_cost = 3
 	description = "Cryptobiolin causes confusion and dizzyness."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -629,6 +640,7 @@ datum/reagent/cryptobiolin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/nanites
 	name = "Nanomachines"
 	id = "nanomachines"
+	synth_cost = 25
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
 
@@ -639,6 +651,7 @@ datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume)
 datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
 	id = "xenomicrobes"
+	synth_cost = 50
 	description = "Microbes with an entirely alien cellular structure."
 	color = "#535E66" // rgb: 83, 94, 102
 
@@ -649,12 +662,14 @@ datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume)
 datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
+	synth_cost = 5
 	description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 	color = "#9E6B38" // rgb: 158, 107, 56
 
 datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 	name = "Foaming agent"
 	id = "foaming_agent"
+	synth_cost = 2
 	description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
@@ -662,6 +677,7 @@ datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add 
 datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"
+	synth_cost = 4
 	description = "A caustic substance commonly used in fertilizer or household cleaners."
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
@@ -669,6 +685,7 @@ datum/reagent/ammonia
 datum/reagent/diethylamine
 	name = "Diethylamine"
 	id = "diethylamine"
+	synth_cost = 5
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
 
@@ -783,6 +800,7 @@ datum/reagent/plantnutriment/robustharvestnutriment
 datum/reagent/oil
 	name = "Oil"
 	id = "oil"
+	synth_cost = 3
 	description = "Burns in a small smoky fire, mostly used to get Ash."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -818,6 +836,7 @@ datum/reagent/fluorine
 datum/reagent/carpet
 	name = "Carpet"
 	id = "carpet"
+	synth_cost = 2
 	description = "A slippery solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -832,6 +851,7 @@ datum/reagent/carpet
 datum/reagent/bromine
 	name = "Bromine"
 	id = "bromine"
+	synth_cost = 5
 	description = "A slippery solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -839,6 +859,7 @@ datum/reagent/bromine
 datum/reagent/phenol
 	name = "Phenol"
 	id = "phenol"
+	synth_cost = 6
 	description = "Used for certain medical recipes."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -846,6 +867,7 @@ datum/reagent/phenol
 datum/reagent/ash
 	name = "Ash"
 	id = "ash"
+	synth_cost = 2
 	description = "Basic ingredient in a couple of recipes."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -853,6 +875,7 @@ datum/reagent/ash
 datum/reagent/acetone
 	name = "Acetone"
 	id = "acetone"
+	synth_cost = 5
 	description = "Common ingredient in other recipes."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -860,6 +883,7 @@ datum/reagent/acetone
 datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	id = "colorful_reagent"
+	synth_cost = 15
 	description = "A solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -891,6 +915,7 @@ datum/reagent/colorful_reagent/reaction_turf(turf/T, reac_volume)
 datum/reagent/hair_dye
 	name = "Quantum Hair Dye"
 	id = "hair_dye"
+	synth_cost = 19
 	description = "A solution."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -908,6 +933,7 @@ datum/reagent/hair_dye/reaction_mob(mob/living/M, reac_volume)
 datum/reagent/barbers_aid
 	name = "Barber's Aid"
 	id = "barbers_aid"
+	synth_cost = 6
 	description = "A solution to hair loss across the world."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -926,6 +952,7 @@ datum/reagent/barbers_aid/reaction_mob(mob/living/M, reac_volume)
 datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
 	id = "concentrated_barbers_aid"
+	synth_cost = 9
 	description = "A concentrated solution to hair loss across the world."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -942,6 +969,7 @@ datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, reac_volume)
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	id = "saltpetre"
+	synth_cost = 5
 	description = "Volatile."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132

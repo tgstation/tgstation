@@ -4,6 +4,7 @@
 datum/reagent/toxin
 	name = "Toxin"
 	id = "toxin"
+	synth_cost = 5
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
 	var/toxpwr = 1.5
@@ -17,6 +18,7 @@ datum/reagent/toxin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
 	id = "amatoxin"
+	synth_cost = 10
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 1
@@ -24,6 +26,7 @@ datum/reagent/toxin/amatoxin
 datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
+	synth_cost = 3
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#13BC5E" // rgb: 19, 188, 94
 	toxpwr = 0
@@ -52,6 +55,7 @@ datum/reagent/toxin/mutagen/on_mob_life(var/mob/living/carbon/M)
 datum/reagent/toxin/plasma
 	name = "Plasma"
 	id = "plasma"
+	synth_cost = 10
 	description = "Plasma in its liquid form."
 	color = "#500064" // rgb: 80, 0, 100
 	toxpwr = 3
@@ -88,6 +92,7 @@ datum/reagent/toxin/plasma/reaction_mob(var/mob/living/M, var/method=TOUCH, var/
 datum/reagent/toxin/lexorin
 	name = "Lexorin"
 	id = "lexorin"
+	synth_cost = 3
 	description = "Lexorin temporarily stops respiration. Causes tissue damage."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	toxpwr = 0
@@ -106,6 +111,7 @@ datum/reagent/toxin/lexorin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	id = "slimejelly"
+	synth_cost = 5
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -122,6 +128,7 @@ datum/reagent/toxin/slimejelly/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
 	id = "minttoxin"
+	synth_cost = 5
 	description = "Useful for dealing with undesirable customers."
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
@@ -135,6 +142,7 @@ datum/reagent/toxin/minttoxin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
 	id = "carpotoxin"
+	synth_cost = 5
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
@@ -142,6 +150,7 @@ datum/reagent/toxin/carpotoxin
 datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
+	synth_cost = 5
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
@@ -163,6 +172,7 @@ datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
 datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
+	synth_cost = 5
 	description = "A powerful hallucinogen. Not a thing to be messed with."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
@@ -175,6 +185,7 @@ datum/reagent/toxin/mindbreaker/on_mob_life(var/mob/living/M)
 datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	id = "plantbgone"
+	synth_cost = 2
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
@@ -247,6 +258,7 @@ datum/reagent/toxin/spore_burning/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
+	synth_cost = 4
 	description = "A powerful sedative."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
@@ -302,6 +314,7 @@ datum/reagent/toxin/teapowder
 datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
 	id = "mutetoxin"
+	synth_cost = 5
 	description = "A toxin that temporarily paralyzes the vocal cords."
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
@@ -313,6 +326,7 @@ datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
 datum/reagent/toxin/staminatoxin
 	name = "Tirizene"
 	id = "tirizene"
+	synth_cost = 2
 	description = "A toxin that affects the stamina of a person when injected into the bloodstream."
 	color = "#6E2828"
 	data = 13
@@ -326,6 +340,7 @@ datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
 datum/reagent/toxin/polonium
 	name = "Polonium"
 	id = "polonium"
+	synth_cost = 10
 	description = "Cause significant Radiation damage over time."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -339,6 +354,7 @@ datum/reagent/toxin/polonium/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/histamine
 	name = "Histamine"
 	id = "histamine"
+	synth_cost = 3
 	description = "A dose-dependent toxin, ranges from annoying to incredibly lethal."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -371,6 +387,7 @@ datum/reagent/toxin/histamine/overdose_process(var/mob/living/M as mob)
 datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
 	id = "formaldehyde"
+	synth_cost = 3
 	description = "Deals a moderate amount of Toxin damage over time. 10% chance to decay into 10-15 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -386,6 +403,7 @@ datum/reagent/toxin/formaldehyde/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/venom
 	name = "Venom"
 	id = "venom"
+	synth_cost = 2
 	description = "Will deal scaling amounts of Toxin and Brute damage over time. 15% chance to decay into 5-10 histamine."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -403,6 +421,7 @@ datum/reagent/toxin/venom/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/neurotoxin2
 	name = "Neurotoxin"
 	id = "neurotoxin2"
+	synth_cost = 4
 	description = "Deals toxin and brain damage up to 60 before it slows down, causing confusion and a knockout after 18 elapsed cycles."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -420,6 +439,7 @@ datum/reagent/toxin/neurotoxin2/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/cyanide
 	name = "Cyanide"
 	id = "cyanide"
+	synth_cost = 4
 	description = "Deals toxin damage, alongside some oxygen loss. 8% chance of stun and some extra toxin damage."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -476,6 +496,7 @@ datum/reagent/toxin/itching_powder/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/initropidril
 	name = "Initropidril"
 	id = "initropidril"
+	synth_cost = 4
 	description = "Causes some toxin damage, 5% chances to cause stunning, suffocation, or immediate heart failure."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -506,6 +527,7 @@ datum/reagent/toxin/initropidril/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/pancuronium
 	name = "Pancuronium"
 	id = "pancuronium"
+	synth_cost = 5
 	description = "Knocks you out after 10 seconds, 7% chance to cause some oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -522,6 +544,7 @@ datum/reagent/toxin/pancuronium/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/sodium_thiopental
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
+	synth_cost = 5
 	description = "Puts you to sleep after 30 seconds, along with some major stamina loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -537,6 +560,7 @@ datum/reagent/toxin/sodium_thiopental/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/sulfonal
 	name = "Sulfonal"
 	id = "sulfonal"
+	synth_cost = 5
 	description = "Deals some toxin damage, and puts you to sleep after 66 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -551,6 +575,7 @@ datum/reagent/toxin/sulfonal/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/amanitin
 	name = "Amanitin"
 	id = "amanitin"
+	synth_cost = 5
 	description = "On the last second that it's in you, it hits you with a stack of toxin damage based on how long it's been in you. The more you use, the longer it takes before anything happens, but the harder it hits when it does."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -565,6 +590,7 @@ datum/reagent/toxin/amanitin/on_mob_delete(var/mob/living/M as mob)
 datum/reagent/toxin/coniine
 	name = "Coniine"
 	id = "coniine"
+	synth_cost = 5
 	description = "Does moderate toxin damage and oxygen loss."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -578,6 +604,7 @@ datum/reagent/toxin/coniine/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/curare
 	name = "Curare"
 	id = "curare"
+	synth_cost = 5
 	description = "Does some oxygen and toxin damage, weakens you after 11 seconds."
 	reagent_state = LIQUID
 	color = "#CF3600"
@@ -597,6 +624,7 @@ datum/reagent/toxin/curare/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/acid
 	name = "Sulphuric acid"
 	id = "sacid"
+	synth_cost = 3
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#DB5008" // rgb: 219, 80, 8
 	toxpwr = 1
@@ -630,6 +658,7 @@ datum/reagent/toxin/acid/reaction_turf(turf/T, reac_volume)
 datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
 	id = "facid"
+	synth_cost = 3
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
@@ -638,6 +667,7 @@ datum/reagent/toxin/acid/fluacid
 datum/reagent/toxin/acid/polyacid
 	name = "Polytrinic acid"
 	id = "pacid"
+	synth_cost = 3
 	description = "Polytrinic acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
@@ -647,6 +677,7 @@ datum/reagent/toxin/acid/polyacid
 datum/reagent/toxin/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
+	synth_cost = 3
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	toxpwr = 0
@@ -662,6 +693,7 @@ datum/reagent/impedrezene/on_mob_life(var/mob/living/M as mob)
 datum/reagent/toxin/stoxin
 	name = "Sleep Toxin"
 	id = "stoxin"
+	synth_cost = 4
 	description = "An effective hypnotic used to treat insomnia."
 	color = "#E895CC" // rgb: 232, 149, 204
 	toxpwr = 0
@@ -683,6 +715,7 @@ datum/reagent/toxin/stoxin/on_mob_life(var/mob/living/M as mob)
 datum/reagent/viral_readaption
 	name = "Viral Readaption"
 	id = "viral_readaption"
+	synth_cost = 10
 	description = "???"
 	color = "#13BC5E" // rgb: 207, 54, 0
 

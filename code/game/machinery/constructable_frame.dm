@@ -472,7 +472,12 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/chem_dispenser/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
-		switch( alert("Current mode is set to: [finish_type]","Circuitboard interface","Chemical dispenser", "Booze dispenser", "Soda dispenser", "Cancel") )
+		input("Current mode is set to: [finish_type]","Circuitboard interface")in list("Advanced Chem Synthesizer","Chemical dispenser", "Booze dispenser", "Soda dispenser", "Cancel")
+		switch( finish_type)
+			if("Advanced Chem Synthsizer")
+				name = "circuit board (Advanced Chem Synthsizer)"
+				build_path = /obj/machinery/chem_dispenser/constructable/synth
+				finish_type = "advanced chem synthesizer"
 			if("Chemical dispenser")
 				name = "circuit board (Portable Chem Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable

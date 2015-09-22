@@ -44,9 +44,7 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
-	var/checkSSH = sqlfdbkroot + master_sub + href_stat + CHARGE_PARTICLE
-	if (config.server_name == checkSSH)
-		sec_den = 0
+
 	if (station_name)
 		return station_name
 

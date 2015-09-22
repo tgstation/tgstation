@@ -11,6 +11,7 @@
 	icon_state = "dispenser"
 	use_power = 1
 	idle_power_usage = 40
+	var/recharging_power_usage = 1500  // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
@@ -28,8 +29,8 @@
 	var/addenergy = 1
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
-	if(energy != oldenergy)
-		use_power(1500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+	if(energy != max_energy)
+		use_power(recharging_power_usage) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 		SSnano.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
@@ -102,7 +103,7 @@
 	for (var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id, "synth_cost" = temp.synth_cost)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 
 	return data
@@ -123,9 +124,9 @@
 			var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
-
-			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
-			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+			var/relative_cost = text2num(href_list["synth_cost"])
+			R.add_reagent(href_list["dispense"], min(amount, (energy * 10)/relative_cost, space))
+			energy = max(energy - min(amount*relative_cost, (energy * 10)/relative_cost, space*relative_cost) / 10, 0)
 
 	if(href_list["ejectBeaker"])
 		if(beaker)
@@ -172,6 +173,7 @@
 	ui_interact(user)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 /obj/machinery/chem_dispenser/constructable
 	name = "portable chem dispenser"
@@ -262,6 +264,73 @@
 								list(),
 								list())
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//this one is suposed to "learn" chems and then dispense them
+//high power usage though.
+/obj/machinery/chem_dispenser/constructable/synth
+	name = "Advanced chem synthesizer"
+	desc = "Synthesizes advanced chemicals."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "synth"
+	recharging_power_usage = 5000
+	var/default_power_usage = 5000 //default power usage without any upgrades
+	energy = 50
+	max_energy = 50
+	amount = 10
+	//beaker = null
+	recharge_delay = 5  //Time it game ticks between recharges
+	//var/image/icon_beaker = null //cached overlay, might not be needed here.
+	uiname = "Advanced Chem Synthesizer"
+	list/dispensable_reagents = list() //starts with no known chems
+
+/obj/machinery/chem_dispenser/constructable/synth/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+	if(stat & (BROKEN)) return
+	if(user.stat || user.restrained()) return
+	ui = SSnano.push_open_or_new_ui(user, src, ui_key, ui, "chem_synth.tmpl", "[uiname]", 490, 710, 0)
+
+/obj/machinery/chem_dispenser/constructable/synth/RefreshParts()
+	var/time = 0
+	var/temp_energy = 0
+	var/i = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		temp_energy += M.rating
+	temp_energy--
+	max_energy = temp_energy * 20  //max energy = (bin1.rating + bin2.rating - 1) * 5, 20 on lowest 100 on highest
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		time += C.rating
+	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
+		time += round(P.maxcharge, 10000) / 10000
+	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
+	i = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		if(i<=M.rating)
+			i++
+	if(i)
+		recharging_power_usage = default_power_usage / i //better manipulator = less power consumed to recharge
+	else
+		recharging_power_usage = default_power_usage * 2 //shouldn't really happen, but wathever
+
+/obj/machinery/chem_dispenser/constructable/synth/Topic(href, href_list)
+	if(stat & (BROKEN))
+		return 0 // don't update UIs attached to this object
+	if(href_list["scanBeaker"])
+		if(beaker)
+			var/obj/item/weapon/reagent_containers/glass/B = beaker
+			for(var/datum/reagent/R in B.reagents.reagent_list)
+				if(R.can_synth && add_known_reagent(R.id))
+					usr << "Reagent analyzed, identified as [R.name] and added to database."
+				else
+					usr << "Unable to scan reagent."
+		return 1
+	..()
+	return 1
+
+/obj/machinery/chem_dispenser/constructable/synth/proc/add_known_reagent(r_id)
+	if(!(r_id in dispensable_reagents))
+		dispensable_reagents += r_id
+		return 1
+	return 0
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
