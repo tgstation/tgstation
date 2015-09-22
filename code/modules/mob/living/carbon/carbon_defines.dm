@@ -12,6 +12,7 @@
 	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
 	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
 	var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab
+	var/strd = "meeseeks_1" //remove after done testing with new gamemode
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
 //inventory slots

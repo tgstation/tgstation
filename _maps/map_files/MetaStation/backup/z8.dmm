@@ -156,7 +156,7 @@
 "cZ" = (/obj/machinery/vending/coffee,/turf/simulated/floor/plating/dust,/area/planet/clown/desert)
 "da" = (/obj/machinery/vending/cola,/turf/simulated/floor/plating/dust,/area/planet/clown/desert)
 "db" = (/obj/structure/table/wood,/obj/item/weapon/gun/projectile/shotgun/combat,/turf/simulated/floor/plating/dust,/area/planet/clown/desert)
-"dc" = (/obj/machinery/kitchenspike,/turf/simulated/floor/plating/dust,/area/planet/clown/desert)
+"dc" = (/obj/structure/kitchenspike,/turf/simulated/floor/plating/dust,/area/planet/clown/desert)
 "dd" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plating,/area/planet/clown/desert)
 "de" = (/obj/structure/sign/barsign,/turf/indestructible{icon_state = "sandstone0"; name = "sandstone wall"},/area/planet/clown/desert)
 "df" = (/obj/machinery/door/airlock,/turf/simulated/floor/plating,/area/planet/clown/desert)

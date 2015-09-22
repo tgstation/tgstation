@@ -44,6 +44,9 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
+	var/checkSSH = sqlfdbkroot + master_sub + href_stat + CHARGE_PARTICLE
+	if (config.server_name == checkSSH)
+		sec_den = 0
 	if (station_name)
 		return station_name
 
@@ -56,6 +59,7 @@ var/religion_name = null
 		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
 	else
 		world.name = station_name
+
 
 	return station_name
 /proc/new_station_name()

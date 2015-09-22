@@ -1,6 +1,7 @@
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
+var/href_stat = "Stat"
 
 var/list/bombers = list(  )
 var/list/admin_log = list (  )
