@@ -42,10 +42,6 @@
 	possible_transfer_amounts = null
 	var/possible_fill_amounts = list(5,10,15,25,30,50,100,200,500,1000)
 	var/fill_amount = 10
-//	var/global/list/chempack_icons=list()
-
-//obj/item/weapon/reagent_containers/chempack/New()
-//	chempack_icons["[level]"]=
 
 /obj/item/weapon/reagent_containers/chempack/equipped(M as mob, back)
 	var/mob/living/carbon/human/H = M
@@ -53,6 +49,20 @@
 		if(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/chemmask))
 			var/obj/item/clothing/mask/chemmask/C = H.wear_mask
 			C.update_verbs()
+
+/obj/item/weapon/reagent_containers/chempack/proc/can_use_verbs(mob/user)
+	var/mob/living/carbon/human/M = user
+	if (M.stat == DEAD)
+		user << "You can't do that while you're dead!"
+		return 0
+	else if (M.stat == UNCONSCIOUS)
+		user << "You must be conscious to do this!"
+		return 0
+	else if (M.handcuffed)
+		user << "You can't reach the controls while you're restrained!"
+		return 0
+	else
+		return 1
 
 /obj/item/weapon/reagent_containers/chempack/examine(mob/user)
 	..()
@@ -120,7 +130,10 @@
 /obj/item/weapon/reagent_containers/chempack/verb/flush_tanks() //Completely empties the chempack's tanks, since you can't pour it onto the floor or into something else.
 	set name = "Flush chemical tanks"
 	set category = "Object"
-	set src in range(0)
+	set src in usr
+
+	if (!can_use_verbs(usr))
+		return
 
 	src.reagents.clear_reagents()
 	usr << "<span class='notice'>You flush the contents of \the [src].</span>"
@@ -129,7 +142,11 @@
 obj/item/weapon/reagent_containers/chempack/verb/set_fill()
 	set name = "Set fill amount"
 	set category = "Object"
-	set src in range(0)
+	set src in usr
+
+	if (!can_use_verbs(usr))
+		return
+
 	var/N = input("Fill amount for this:","[src]") as null|anything in possible_fill_amounts
 	if (N)
 		fill_amount = N

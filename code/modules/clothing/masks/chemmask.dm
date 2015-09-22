@@ -41,18 +41,19 @@
 	var/beaker_injection_rate = 10
 	var/beaker_threshold = 10
 	var/beaker_threshold_reagent = "creatine"
+	var/beaker_has_injected_time = 0
 	var/firstalert_tank = 0
 	var/firstalert_beaker = 0
 	var/beakeractive = 0
 	var/tankactive = 1
+	var/time_at_last_tank_inject = 0 //This will ensure that the mask will always inject instantly the first time the user turns it on.
+	var/time_at_last_beaker_inject = 0 //It will prevent the chemmask from functioning for the first minute and 37 seconds of the world's existence, but I don't think that'll ever be a problem.
 	var/beaker_verbs_time = list(
-		/obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval,
-		/obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_time_interval
 		)
 	var/beaker_verbs_threshold = list(
 		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold,
-		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent,
-		/obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
+		/obj/item/clothing/mask/chemmask/verb/set_beaker_threshold_reagent
 		)
 	species_fit = list("Vox")
 	body_parts_covered = HEAD|MOUTH
@@ -84,19 +85,35 @@
 		if (injection_method_chosen) //Don't want the user to have to select the beaker injection method more than once per item.
 			if (beaker_injection_method == THRESHOLD)
 				verbs += beaker_verbs_threshold
+				verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
 				verbs -= beaker_verbs_time
 			else if (beaker_injection_method == TIME)
 				verbs += beaker_verbs_time
+				verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
 				verbs -= beaker_verbs_threshold
 		else
 			verbs -= beaker_verbs_time
 			verbs -= beaker_verbs_threshold
+			verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_rate
 	else
 		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_usage
 		verbs -= /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
 		verbs -= beaker_verbs_time
 		verbs -= beaker_verbs_threshold
 
+/obj/item/clothing/mask/chemmask/proc/can_use_verbs(mob/user)
+	var/mob/living/carbon/human/M = user
+	if (M.stat == DEAD)
+		user << "You can't do that while you're dead!"
+		return 0
+	else if (M.stat == UNCONSCIOUS)
+		user << "You must be conscious to do this!"
+		return 0
+	else if (M.handcuffed)
+		user << "You can't reach the controls while you're restrained!"
+		return 0
+	else
+		return 1
 
 /obj/item/clothing/mask/chemmask/examine(mob/user)
 	..()
@@ -128,6 +145,9 @@
 	set category = "Object"
 	set src in usr
 
+	if (!can_use_verbs(usr))
+		return
+
 	if (!power)
 		var/mob/living/M = usr
 		if (istype(M.back,/obj/item/weapon/reagent_containers/chempack))
@@ -152,6 +172,9 @@
 	set category = "Object"
 	set src in usr
 
+	if (!can_use_verbs(usr))
+		return
+
 	var/N = input("Set the number of units of each reagent in the chemical pack to be injected every 100 seconds. The injection rates of some chemicals will be altered to account for different rates of metabolism. Going over 10u may cause overdosing with some chemicals:","[src]") as null|num
 	//It's actually 97 seconds, so that more chems are injected before the user completely runs out. But 100 seconds sounded better and the player won't know the difference.
 	if (N)
@@ -161,6 +184,9 @@
 	set name = "Toggle auxiliary beaker usage"
 	set category = "Object"
 	set src in usr
+
+	if (!can_use_verbs(usr))
+		return
 
 	if (!beakeractive)
 		beakeractive = 1
@@ -174,6 +200,9 @@
 	set category = "Object"
 	set src in usr
 
+	if (!can_use_verbs(usr))
+		return
+
 	if (!tankactive)
 		tankactive = 1
 		usr << "<span class='notice'>You enable connection to the chemical pack's primary tank system.</span>"
@@ -186,6 +215,9 @@
 	set category = "Object"
 	set src in usr
 
+	if (!can_use_verbs(usr))
+		return
+
 	var/N = input("Set the method by which \the [src] determines when to administer more chemicals from the auxiliary beaker:","[src]") as null|anything in beaker_injection_methods
 	if (N)
 		beaker_injection_method = N
@@ -197,6 +229,9 @@
 	set category = "Object"
 	set src in usr
 
+	if (!can_use_verbs(usr))
+		return
+
 	var/N = input("Set the amount of chemicals administered from the auxiliary beaker when \the [src] administers more chemicals:","[src]") as null|num
 	if (N)
 		beaker_injection_rate = N
@@ -206,7 +241,10 @@
 	set category = "Object"
 	set src in usr
 
-	var/N = input("Set the time interval at which \the [src] will administer more chemicals from the auxiliary beaker:","[src]") as null|num
+	if (!can_use_verbs(usr))
+		return
+
+	var/N = input("Set the time interval in seconds at which \the [src] will administer more chemicals from the auxiliary beaker:","[src]") as null|num
 	if (N)
 		beaker_time_interval = N*10
 
@@ -214,6 +252,9 @@
 	set name = "Set auxiliary beaker injection threshold reagent"
 	set category = "Object"
 	set src in usr
+
+	if (!can_use_verbs(usr))
+		return
 
 	var/obj/item/weapon/reagent_containers/chempack/P = usr.back
 	var/obj/item/weapon/reagent_containers/glass/B = P.beaker
@@ -228,6 +269,9 @@
 	set category = "Object"
 	set src in usr
 
+	if (!can_use_verbs(usr))
+		return
+
 	var/N = input("Set the minimum threshold of [beaker_threshold_reagent] in your body that must be reached to cause \the [src] to administer more chemicals:","[src]") as null|num
 	if (N)
 		beaker_threshold = N
@@ -237,18 +281,22 @@
 	if (!(M && M.back && istype(M.back,/obj/item/weapon/reagent_containers/chempack)))
 		mask_shutdown(user)
 		user << "<span class='notice'>\The [src] shuts off!</span>"
-		return
+		return 0
+	else
+		return 1
 
 /obj/item/clothing/mask/chemmask/proc/mask_check(mob/user) //Shuts off mask if it is not being worn by someone.
 	var/mob/living/M = user
 	if (!(M && M.wear_mask && istype(M.wear_mask,/obj/item/clothing/mask/chemmask)))
 		mask_shutdown(user)
 		user << "<span class='notice'>\The [src] shuts off!</span>"
-		return
+		return 0
 	else if (!(M.wear_mask == src))
 		mask_shutdown(user)
 		user << "<span class='notice'>\The [src] shuts off!</span>"
-		return
+		return 0
+	else
+		return 1
 
 /obj/item/clothing/mask/chemmask/proc/tank_volume_check(mob/user) //Alerts the user when the tank runs out of reagents. Does not alert them more than once per emptying, it must be refilled and then run dry again to alert them again.
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
@@ -281,39 +329,32 @@
 	update_verbs()
 
 /obj/item/clothing/mask/chemmask/proc/start_flow(mob/user)
-	spawn()
-		while(power) //Check whether the user has all the parts to the gear, and whether they need to be notified of an empty container.
-			pack_check(user)
-			mask_check(user)
-			tank_volume_check(user)
-			update_verbs()
-			sleep(1) //I tried these loops without the sleep(1), it caused the server to lock up when the loop was entered.
-	spawn()
-		spawn()
-			while(power)
-				if (tankactive)
-					if (!tank_has_injected)
-						inject(user)
-						tank_has_injected = 1
-						sleep(970) //One minute thirty-seven seconds. Roughly the time it takes 10u of anti-toxin to be metabolized.
-						tank_has_injected = 0
-					else
-						sleep(1)
-				else
-					sleep(1)
-		spawn()
-			while(power)
-				if (has_beaker(user))
-					if (beakeractive)
-						beakerinject(user)
-						beaker_volume_check(user)
-						sleep(1)
-						if (beaker_injection_method == TIME)
-							sleep(beaker_time_interval)
-					else
-						sleep(1)
-				else
-					sleep(1)
+	while(power)
+		if (!pack_check(user))
+			return
+		if (!mask_check(user))
+			return
+		tank_volume_check(user)
+		update_verbs()
+		if ((world.time - time_at_last_tank_inject) >= 970) //One minute thirty-seven seconds. Roughly the time it takes 10u of anti-toxin to be metabolized.
+			tank_has_injected = 0
+		if (tankactive)
+			if (!tank_has_injected)
+				inject(user)
+				tank_has_injected = 1
+				time_at_last_tank_inject = world.time
+		if ((world.time - time_at_last_beaker_inject) >= beaker_time_interval)
+			beaker_has_injected_time = 0
+		if (has_beaker(user))
+			if (beakeractive)
+				if (beaker_injection_method == TIME && !beaker_has_injected_time)
+					beakerinject(user)
+					beaker_has_injected_time = 1
+					time_at_last_beaker_inject = world.time
+				else if (beaker_injection_method == THRESHOLD)
+					beakerinject(user)
+				beaker_volume_check(user)
+		sleep(1)
 
 /obj/item/clothing/mask/chemmask/proc/inject(mob/user)
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
