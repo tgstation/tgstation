@@ -333,6 +333,7 @@
 			if (client)
 				client.screen -= W
 			W.loc = loc
+			W.unequipped()
 			if(dropped) W.dropped(src)
 			if(W)
 				W.layer = initial(W.layer)
