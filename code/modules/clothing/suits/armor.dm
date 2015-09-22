@@ -54,6 +54,13 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.5
 
+/obj/item/clothing/suit/armor/xcomsquaddie/dredd
+	name = "Judge Armor"
+	desc = "A large suit of heavy armor, fit for a Judge."
+	icon_state = "dredd-suit"
+	item_state = "dredd-suit"
+
+
 /obj/item/clothing/suit/armor/xcomarmor
 	name = "Mysterious Armor"
 	desc = "A suit of armor with heavy plating to protect against melee attacks. Distributed to shadow organization squaddies."
