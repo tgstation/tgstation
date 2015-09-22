@@ -15,7 +15,7 @@
 
 
 /obj/item/device/meeseeks_box/attack_self(mob/user)
-	if(!meeseeks && (summon_time +)< world.time)
+	if(!meeseeks && (summon_time ) < world.time)
 		summon_time = world.time + 150
 		var/list/candidates = getCandidates("Do you wish to be a Mr. Meeseeks and fulfill a task?", "pAI", null)
 		shuffle(candidates)
