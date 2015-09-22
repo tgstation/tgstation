@@ -125,6 +125,10 @@
 //	if(istype(C, /obj/mob/carbon/monkey)
 //	else if(istype(C, /obj/mob/carbon/alien) && !istype(C, /mob/living/carbon/alien/larva/slime))
 //	else if(istype(C, /obj/livestock/spesscarp
+
+/obj/machinery/kitchenspike/attack_ai(mob/user)
+		return	//no more digital spikes
+
 /obj/machinery/kitchenspike/attack_hand(mob/user)
 	if(..())
 		return
