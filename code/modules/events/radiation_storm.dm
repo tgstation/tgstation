@@ -43,10 +43,9 @@
 			if(prob(25))
 				if(prob(75))
 					randmutb(H)
-					H.domutcheck()
 				else
 					randmutg(H)
-					H.domutcheck()
+				H.domutcheck()
 
 		else if(istype(C, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/M = C

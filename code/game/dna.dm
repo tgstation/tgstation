@@ -320,7 +320,7 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 			if(prob(probability))
 				M.dna.uni_identity = setblock(M.dna.uni_identity, i, random_string(DNA_BLOCK_SIZE, hex_characters))
-		M.updateappearance()
+		M.updateappearance(mutations_overlay_update=1)
 	return 1
 
 //value in range 1 to values. values must be greater than 0

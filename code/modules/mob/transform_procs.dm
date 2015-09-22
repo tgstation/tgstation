@@ -48,8 +48,8 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT] //we don't want to keep the race block inactive
-		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, R.dna_block, random_string(DNA_BLOCK_SIZE, list("8","9","a","b","c","d","e", "f")))
+		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -166,8 +166,8 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT] //we don't want to keep the race block active
-		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, R.dna_block, random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6")))
+		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
 		O.domutcheck()
 
 	if(suiciding)
@@ -208,6 +208,10 @@
 
 	if(mind)
 		mind.transfer_to(O)
+		if(O.mind.changeling)
+			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+				mind.changeling.purchasedpowers -= HF
+
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"

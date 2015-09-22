@@ -21,6 +21,7 @@
 		I.real_name = I.dna.real_name
 		I.name = I.dna.real_name
 		I.updateappearance(mutcolor_update=1)
+		I.domutcheck()
 		if(W.ears)		I.equip_to_slot_or_del(new W.ears.type, slot_ears)
 		if(W.w_uniform)	I.equip_to_slot_or_del(new W.w_uniform.type	, slot_w_uniform)
 		if(W.shoes)		I.equip_to_slot_or_del(new W.shoes.type, slot_shoes)

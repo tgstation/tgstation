@@ -16,7 +16,7 @@
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
-	var/above_body = 0 //wether the mutation appear above or below the body layer
+	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
 
@@ -62,7 +62,13 @@
 	if(text_gain_indication)
 		owner << text_gain_indication
 	if(visual_indicators.len)
-		owner.update_mutations_overlay()
+		var/list/mut_overlay = list(get_visual_indicator(owner))
+		if(owner.overlays_standing[layer_used])
+			mut_overlay = owner.overlays_standing[layer_used]
+			mut_overlay |= get_visual_indicator(owner)
+		owner.remove_overlay(layer_used)
+		owner.overlays_standing[layer_used] = mut_overlay
+		owner.apply_overlay(layer_used)
 
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
@@ -84,7 +90,13 @@
 		if(text_lose_indication)
 			owner << text_lose_indication
 		if(visual_indicators.len)
-			owner.update_mutations_overlay()
+			var/list/mut_overlay = list()
+			if(owner.overlays_standing[layer_used])
+				mut_overlay = owner.overlays_standing[layer_used]
+			owner.remove_overlay(layer_used)
+			mut_overlay.Remove(get_visual_indicator(owner))
+			owner.overlays_standing[layer_used] = mut_overlay
+			owner.apply_overlay(layer_used)
 		return 0
 	return 1
 
@@ -596,7 +608,7 @@
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
-	above_body = 1
+	layer_used = FRONT_MUTATIONS_LAYER
 
 /datum/mutation/human/laser_eyes/New()
 	..()
@@ -609,29 +621,24 @@
 	if(owner.a_intent == "harm")
 		owner.LaserEyes(target)
 
+
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
 
 /mob/living/carbon/human/update_mutations_overlay()
-	remove_overlay(MUTATIONS_LAYER) //MUTATIONS_LAYER is behind the body layer
-	remove_overlay(FRONT_MUTATIONS_LAYER) //FRONT_MUTATIONS_LAYER is above the body layer
-	var/list/standing = list()
-	var/list/frontstanding = list()
-
 	for(var/datum/mutation/human/CM in dna.mutations)
 		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
-			CM.force_lose(src)
+			CM.force_lose(src) //shouldn't have that mutation at all
 			continue
 		if(CM.visual_indicators.len)
+			var/list/mut_overlay = list()
+			if(overlays_standing[CM.layer_used])
+				mut_overlay = overlays_standing[CM.layer_used]
 			var/image/V = CM.get_visual_indicator(src)
-			if(CM.above_body)
-				frontstanding += V
-			else
-				standing += V
-
-	if(standing.len)
-		overlays_standing[MUTATIONS_LAYER] = standing
-	if(frontstanding.len)
-		overlays_standing[FRONT_MUTATIONS_LAYER] = frontstanding
-	apply_overlay(MUTATIONS_LAYER)
-	apply_overlay(FRONT_MUTATIONS_LAYER)
+			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
+				remove_overlay(CM.layer_used)
+				for(var/image/I in CM.visual_indicators)
+					mut_overlay.Remove(I)
+				mut_overlay |= V
+				overlays_standing[CM.layer_used] = mut_overlay
+				apply_overlay(CM.layer_used)
