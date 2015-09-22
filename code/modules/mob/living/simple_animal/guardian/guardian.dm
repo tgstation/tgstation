@@ -111,6 +111,7 @@
 	if(cooldown > world.time)
 		return
 	src.loc = summoner
+	buckled = null
 	cooldown = world.time + 30
 
 /mob/living/simple_animal/hostile/guardian/verb/Communicate()
