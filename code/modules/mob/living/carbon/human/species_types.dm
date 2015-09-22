@@ -262,7 +262,7 @@
 	sexes = 0
 	hair_alpha = 0
 	speedmod = 1
-	armor = 100
+	armor = 0
 	brutemod = 0
 	burnmod = 0
 	coldmod = 0
