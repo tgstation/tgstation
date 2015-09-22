@@ -22,6 +22,8 @@
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
+	if(dna)
+		qdel(dna)
 	return ..()
 
 /mob/living/carbon/Move(NewLoc, direct)

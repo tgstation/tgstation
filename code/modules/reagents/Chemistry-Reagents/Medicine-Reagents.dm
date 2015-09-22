@@ -724,7 +724,7 @@
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
-	if(istype(M) && M.dna)
+	if(M.has_dna())
 		M.dna.remove_all_mutations()
 	..()
 	return
