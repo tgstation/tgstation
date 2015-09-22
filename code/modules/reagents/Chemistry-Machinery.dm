@@ -27,10 +27,11 @@
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
 	var/addenergy = 1
-	var/oldenergy = energy
+
 	energy = min(energy + addenergy, max_energy)
+	active_power_usage = idle_power_usage
 	if(energy != max_energy)
-		use_power(recharging_power_usage) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
+		active_power_usage = idle_power_usage +recharging_power_usage // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 		SSnano.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
