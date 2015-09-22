@@ -5,25 +5,34 @@
 	..(message)
 
 
-/mob/living/silicon/ai/compose_track_href(var/datum/speech/speech)
+/mob/living/silicon/ai/render_speaker_track_start(var/datum/speech/speech)
 	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
 	var/mob/M = speech.speaker.GetSource()
 
 	var/atom/movable/virt_speaker = speech.radio
 	if(!virt_speaker || !istype(virt_speaker, /obj/item/device/radio))
 		virt_speaker = src
-	if(speaker != src && M != src)
+	if(speech.speaker != src && M != src)
 		if(M)
 			var/faketrack = "byond://?src=\ref[virt_speaker];track2=\ref[src];track=\ref[M]"
-			if(speaker.GetTrack())
+			if(speech.speaker.GetTrack())
 				faketrack = "byond://?src=\ref[virt_speaker];track2=\ref[src];faketrack=\ref[M]"
 
 			return "<a href='byond://?src=\ref[virt_speaker];open2=\ref[src];open=\ref[M]'>\[OPEN\]</a> <a href='[faketrack]'>"
 	return ""
 
-/mob/living/silicon/ai/render_job(var/datum/speech/speech)
-	//Also includes the </a> for AI hrefs, for convenience.
-	return " "+(speech.frequency ? "(" + speaker.GetJob() + ")" : "") + (speaker.GetSource() ? "</a>" : "")
+/mob/living/silicon/ai/render_speaker_track_end(var/datum/speech/speech)
+	//this proc assumes that the message originated from a radio. if the speaker is not a virtual speaker this will probably fuck up hard.
+	var/mob/M = speech.speaker.GetSource()
+
+	var/atom/movable/virt_speaker = speech.radio
+	if(!virt_speaker || !istype(virt_speaker, /obj/item/device/radio))
+		virt_speaker = src
+	if(speech.speaker != src && M != src)
+		if(M)
+			return "</a>"
+	return ""
+
 
 /mob/living/silicon/ai/say_quote(var/text)
 	var/ending = copytext(text, length(text))
@@ -72,15 +81,17 @@
 		src << "No holopad connected."
 	return
 
-/mob/living/silicon/ai/send_speech(message, message_range, var/datum/language/speaking, obj/source = src, bubble_type)
-	//say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
+/*
+ * This is effectly the exact same code as ..().
+ * The only difference is the source != current check, which also does the same thing.
+/mob/living/silicon/ai/send_speech(var/datum/speech/speech, var/message_range, var/bubble_type)
 	if(isnull(message_range)) message_range = 7
 	if(source != current)
 		return ..()
 
 	var/list/listeners = new/list()
 
-	for (var/mob/living/L in get_hearers_in_view(message_range, source))
+	for (var/mob/living/L in get_hearers_in_view(message_range, speech.speaker))
 		listeners.Add(L)
 
 	listeners.Add(observers)
@@ -92,6 +103,7 @@
 			listener.Hear(rendered, src, speaking, message)
 
 	send_speech_bubble(message, bubble_type, listeners)
+*/
 
 var/announcing_vox = 0 // Stores the time of the last announcement
 var/const/VOX_CHANNEL = 200

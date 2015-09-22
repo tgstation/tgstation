@@ -24,7 +24,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
-/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/broadcaster/receive_information(var/datum/signal/signal, var/obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
 	if(signal.data["reject"])
 		return
@@ -54,8 +54,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	   /** #### - Normal Broadcast - #### **/
 
 		if(signal.data["type"] == 0)
-			var/datum/speech/speech = new ()
-			speech.from_signal(signal.data)
+			var/datum/speech/speech = getFromDPool(/datum/speech)
+			speech.fromSignal(signal.data)
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], signal.data["level"])
 
@@ -77,8 +77,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
-			var/datum/speech/speech = new ()
-			speech.from_signal(signal.data)
+			var/datum/speech/speech = getFromDPool(/datum/speech)
+			speech.fromSignal(signal.data)
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 4, signal.data["compression"], signal.data["level"])
 
@@ -143,8 +143,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
-			var/datum/speech/speech = new ()
-			speech.from_signal(signal.data)
+			var/datum/speech/speech = getFromDPool(/datum/speech)
+			speech.fromSignal(signal.data)
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], list(0, z))
 	else
@@ -268,7 +268,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	radios = null
 
 	// TODO: Review this usage.
-	var/rendered = virt.compose_message(speech) // always call this on the virtualspeaker to advoid issues
+	var/rendered = virt.render_speech(speech) // always call this on the virtualspeaker to advoid issues
 	//var/listeners_sent = 0
 	for (var/atom/movable/listener in listeners)
 		if (listener)

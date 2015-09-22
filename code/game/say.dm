@@ -55,11 +55,14 @@ var/list/freqtoname = list(
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(speech, rendered)
 
-/atom/movable/proc/create_speech(var/message, var/frequency=0)
-	var/datum/speech/speech = new
-	speech.message=message
-	speech.frequency=frequency
+/atom/movable/proc/create_speech(var/message, var/frequency=0, var/atom/movable/transmitter=null)
+	if(!transmitter)
+		transmitter=GetDefaultRadio()
+	var/datum/speech/speech = getFromDPool(/datum/speech)
+	speech.message = message
+	speech.frequency = frequency
 	speech.job = get_job(speech)
+	speech.radio = transmitter
 
 	speech.name = GetVoice()
 	speech.as_name = get_alt_name()
@@ -72,7 +75,7 @@ var/list/freqtoname = list(
 /atom/movable/proc/render_speech(var/datum/speech/speech)
 	var/freqpart = speech.frequency ? "\[[get_radio_name(speech.frequency)]\]" : ""
 	return {"
-		<span class='[speech.render_freq_classes()]'>
+		<span class='[speech.render_wrapper_classes()]'>
 			<span class='name'>
 				[render_speaker_track_start(speech)][render_speech_name(speech)][render_speaker_track_end(speech)]
 				\icon[speech.radio][freqpart]
@@ -220,6 +223,8 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 
 // GetRadio() removed because which radio is used can be different per message. (such as when using :L :R :I macros)
 //  - N3X
+/atom/movable/proc/GetDefaultRadio()
+	return null
 
 /atom/movable/virtualspeaker
 	var/job
@@ -236,7 +241,7 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 /atom/movable/virtualspeaker/GetSource()
 	return source
 
-/atom/movable/virtualspeaker/GetRadio()
+/atom/movable/virtualspeaker/GetDefaultRadio()
 	return radio
 
 /atom/movable/virtualspeaker/resetVariables()

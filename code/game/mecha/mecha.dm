@@ -219,8 +219,8 @@
 	return
 
 /obj/mecha/Hear(var/datum/speech/speech, var/message)
-	if(speech.speaker == occupant && speech.radio.broadcasting)
-		speech.radio.talk_into(speech)
+	if(speech.speaker == occupant && radio.broadcasting)
+		radio.talk_into(speech)
  	return
 
 ////////////////////////////

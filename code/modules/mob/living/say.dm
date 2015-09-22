@@ -167,15 +167,14 @@ var/list/department_radio_keys = list(
 
 	// SAYCODE 90.0!
 	// We construct our speech object here.
-	var/datum/speech/speech = new ()
-	speech.message=message
+	var/datum/speech/speech = create_speech(message)
 
-	if(!speaking)
+	if(!speech.language)
 		speech.language = parse_language(speech.message)
 		//say_testing(src, "Getting speaking language, [istype(speaking) ? "got [speaking.name]" : "got null"]")
 	if(istype(speech.language))
 		//var/oldmsg = message
-		speech.message = copytext(speech.message,2+length(speaking.key))
+		speech.message = copytext(speech.message,2+length(speech.language.key))
 		//say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
 		if(!isnull(speech.language))
@@ -204,7 +203,7 @@ var/list/department_radio_keys = list(
 		return
 
 	if(radio_return & ITALICS)
-		speech.flags |= SPEECH_ITALICS // Rendering done last.
+		speech.message_classes.Add("italics")
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 	if(copytext(text, length(text)) == "!")
@@ -213,7 +212,7 @@ var/list/department_radio_keys = list(
 
 	send_speech(speech, message_range, src, bubble_type)
 	var/turf/T = get_turf(src)
-	log_say("[name]/[key] [T?"(@[T.x],[T.y],[T.z])":"(@[x],[y],[z])"] [speaking ? "As [speaking.name] ":""]: [message]")
+	log_say("[name]/[key] [T?"(@[T.x],[T.y],[T.z])":"(@[x],[y],[z])"] [speech.language ? "As [speech.language.name] ":""]: [message]")
 
 	return 1
 
@@ -238,18 +237,18 @@ var/list/department_radio_keys = list(
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 	var/atom/movable/AM = speech.speaker.GetSource()
 	if(!say_understands((istype(AM) ? AM : speech.speaker),speech.language)|| force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = render_speech(speech)
-	show_message(message, type, deaf_message, deaf_type)
-	return message
+		rendered_message = render_speech(speech)
+	show_message(rendered_message, type, deaf_message, deaf_type)
+	return rendered_message
 
 /mob/living/proc/hear_radio_only()
 	return 0
 
-/mob/living/send_speech(var/datum/speech/speech, var/message_range=7, var/obj/source = src, var/bubble_type) // what is bubble type?
+/mob/living/send_speech(var/datum/speech/speech, var/message_range=7, var/bubble_type) // what is bubble type?
 	//say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
 	if(isnull(message_range)) message_range = 7
 
-	var/list/listeners = get_hearers_in_view(message_range, source) | observers
+	var/list/listeners = get_hearers_in_view(message_range, speech.speaker) | observers
 
 	var/rendered = render_speech(speech)
 
@@ -366,8 +365,7 @@ var/list/department_radio_keys = list(
 
 	return message
 
-/mob/living/proc/radio(var/datum/speech/speech)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/radio() called tick#: [world.time]")
+/mob/living/proc/radio(var/datum/speech/speech, var/message_mode)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			if (r_hand)
@@ -386,7 +384,7 @@ var/list/department_radio_keys = list(
 				robot_talk(speech.message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 		if(MODE_WHISPER)
-			whisper(speech.message, speech.speaking)
+			whisper(speech.message, speech.language)
 			return NOPASS
 	return 0
 
