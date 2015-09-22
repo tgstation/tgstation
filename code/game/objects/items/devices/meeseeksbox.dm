@@ -7,6 +7,7 @@
 	var/meeseeks = null  //The Meeseeks spawned from this box
 	var/datum/species/golem/meeseeks/SM //the species of the meeseeks
 	var/request = "Nothing"     //The Law passed on to the Meeseeks
+	var/summon_time = 0 //to control the cooldown of summoning one.
 
 /obj/item/device/meeseeks_box/New()    //Doesn't do anything for now
 	return
@@ -14,8 +15,8 @@
 
 
 /obj/item/device/meeseeks_box/attack_self(mob/user)
-	if(!meeseeks)
-
+	if(!meeseeks && (summon_time +)< world.time)
+		summon_time = world.time + 150
 		var/list/candidates = getCandidates("Do you wish to be a Mr. Meeseeks and fulfill a task?", "pAI", null)
 		shuffle(candidates)
 		if(candidates.len)
