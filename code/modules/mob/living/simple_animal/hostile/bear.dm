@@ -61,7 +61,7 @@
 		maxHealth = 50
 		health = 50
 		melee_damage_lower=10
-		melee_damage_Upper=35
+		melee_damage_upper=35
 
 /mob/living/simple_animal/hostile/bear/Move()
 	..()
