@@ -47,7 +47,7 @@
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
 /turf/simulated/floor/carpet/New()

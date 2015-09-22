@@ -441,7 +441,7 @@
 	dir = 5
 	maxhealth = 50
 	fulltile = 1
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/reinforced/fulltile
@@ -450,7 +450,7 @@
 	dir = 5
 	maxhealth = 100
 	fulltile = 1
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/reinforced/tinted/fulltile
@@ -458,7 +458,7 @@
 	icon_state = "tinted_window"
 	dir = 5
 	fulltile = 1
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
 /obj/structure/window/shuttle
@@ -471,6 +471,6 @@
 	wtype = "shuttle"
 	fulltile = 1
 	reinf = 1
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 1

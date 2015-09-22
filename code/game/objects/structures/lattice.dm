@@ -8,18 +8,10 @@
 	layer = 2.3 //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = list(/obj/structure/lattice,
-	/obj/structure/lattice/catwalk,
-	/turf/simulated/floor/plating,
-	/turf/simulated/floor/plating/airless,
+	/turf/simulated/floor,
 	/turf/simulated/wall,
-	/turf/simulated/wall/r_wall,
-	/turf/simulated/floor/plasteel,
-	/turf/simulated/floor/plasteel/airless,
-	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced,
-	/turf/simulated/wall/rust,
-	/turf/simulated/wall/r_wall/rust)
-	smooth = 1
+	/obj/structure/falsewall)
+	smooth = SMOOTH_MORE
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
@@ -75,6 +67,7 @@
 	desc = "A catwalk for easier EVA manuevering and cable placement."
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
+	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
 /obj/structure/lattice/catwalk/Move()
