@@ -11,7 +11,7 @@
 	emote_hear = list("rawrs","grumbles","grawls")
 	emote_see = list("stares ferociously", "stomps")
 	var/default_icon_space = "bear"
-    var/default_icon_floor = "bearfloor"
+	var/default_icon_floor = "bearfloor"
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -50,18 +50,18 @@
 	response_harm   = "hits"
 
 /mob/living/simple_animal/hostile/bear/panda
-        name = "Space Panda"
-        desc = "Endangered even in space. A lack of bamboo has driven them somewhat mad."
-        icon_state = "panda"
-        icon_living = "panda"
-        icon_dead = "panda_dead"
-        icon_gib = "brownbear_gib"
-        default_icon_floor = "panda"
-        default_icon_space = "panda"
-        maxHealth = 50
-        health = 50
-        melee_damage_lower=10
-        melee_damage_Upper=35
+		name = "Space Panda"
+		desc = "Endangered even in space. A lack of bamboo has driven them somewhat mad."
+		icon_state = "panda"
+		icon_living = "panda"
+		icon_dead = "panda_dead"
+		icon_gib = "brownbear_gib"
+		default_icon_floor = "panda"
+		default_icon_space = "panda"
+		maxHealth = 50
+		health = 50
+		melee_damage_lower=10
+		melee_damage_Upper=35
 
 /mob/living/simple_animal/hostile/bear/Move()
 	..()
