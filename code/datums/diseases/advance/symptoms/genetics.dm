@@ -31,7 +31,8 @@ Bonus
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 5)) // 15% chance
 		var/mob/living/carbon/M = A.affected_mob
-		if(!check_dna_integrity(M))	return
+		if(!M.has_dna())
+			return
 		switch(A.stage)
 			if(4, 5)
 				M << "<span class='notice'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
@@ -44,7 +45,7 @@ Bonus
 	possible_mutations = (bad_mutations | not_good_mutations) - mutations_list[RACEMUT]
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
-		if(!check_dna_integrity(M))
+		if(!M.has_dna())
 			return
 		archived_dna = M.dna.struc_enzymes
 
@@ -52,10 +53,10 @@ Bonus
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	var/mob/living/carbon/M = A.affected_mob
 	if(M && archived_dna)
-		if(!check_dna_integrity(M))
+		if(!M.has_dna())
 			return
-		hardset_dna(M, se = archived_dna)
-		domutcheck(M)
+		M.dna.struc_enzymes = archived_dna
+		M.domutcheck()
 /*
 //////////////////////////////////////
 

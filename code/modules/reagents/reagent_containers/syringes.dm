@@ -66,20 +66,16 @@
 			if(ismob(target))	//Blood!
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					if(H.dna)
-						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
-							user << "<span class='warning'>You are unable to locate any blood!</span>"
-							return
+					if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
+						return
 				if(reagents.has_reagent("blood"))
 					user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 					return
 				if(istype(target, /mob/living/carbon))	//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
-					if(!check_dna_integrity(T))
-						user << "<span class='warning'>You are unable to locate any blood!</span>"
-						return
-					if(T.disabilities & NOCLONE)	//target done been eat, no more blood in him
+					if(!T.has_dna() || (T.disabilities & NOCLONE))	//target done been eat, no more blood in him
 						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)
@@ -95,7 +91,7 @@
 
 					if(!B && ishuman(target))
 						var/mob/living/carbon/human/H = target
-						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
+						if(H.dna.species.exotic_blood && H.reagents.total_volume)
 							target.reagents.trans_to(src, amount)
 						else
 							user << "<span class='warning'>You are unable to locate any blood!</span>"

@@ -375,7 +375,7 @@
 		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
-		if(!check_dna_integrity(M))
+		if(!M.has_dna())
 			P << "<b>No DNA detected</b>"
 			return
 		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"

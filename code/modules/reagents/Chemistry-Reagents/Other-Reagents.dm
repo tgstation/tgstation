@@ -356,8 +356,7 @@
 	var/datum/species/mutation = pick(possible_morphs)
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
-		hardset_dna(H, null, null, null, null, mutation)
-		H.regenerate_icons()
+		H.set_species(mutation)
 		if(mutation == /datum/species/slime)
 			H.faction |= "slime"
 		else
