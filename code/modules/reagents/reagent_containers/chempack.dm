@@ -42,6 +42,17 @@
 	possible_transfer_amounts = null
 	var/possible_fill_amounts = list(5,10,15,25,30,50,100,200,500,1000)
 	var/fill_amount = 10
+//	var/global/list/chempack_icons=list()
+
+//obj/item/weapon/reagent_containers/chempack/New()
+//	chempack_icons["[level]"]=
+
+/obj/item/weapon/reagent_containers/chempack/equipped(M as mob, back)
+	var/mob/living/carbon/human/H = M
+	if(H.back == src)
+		if(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/chemmask))
+			var/obj/item/clothing/mask/chemmask/C = H.wear_mask
+			C.update_verbs()
 
 /obj/item/weapon/reagent_containers/chempack/examine(mob/user)
 	..()
@@ -145,6 +156,9 @@ obj/item/weapon/reagent_containers/chempack/verb/set_fill()
 				src.beaker = W
 				user.drop_item(W, src)
 				user << "You add the beaker to \the [src]'s auxiliary chamber!"
+				if(user.wear_mask && istype(user.wear_mask, /obj/item/clothing/mask/chemmask))
+					var/obj/item/clothing/mask/chemmask/C = user.wear_mask
+					C.update_verbs()
 				return 1
 		else
 			return
@@ -184,6 +198,9 @@ obj/item/weapon/reagent_containers/chempack/verb/set_fill()
 						B.loc = loc
 					beaker = null
 					user << "You pry the beaker out of \the [src]."
+					if(user.wear_mask && istype(user.wear_mask, /obj/item/clothing/mask/chemmask))
+						var/obj/item/clothing/mask/chemmask/C = user.wear_mask
+						C.update_verbs()
 					return
 				else if (iscrowbar(W) && src.beaker && !auxiliary)
 					user << "<span class='warning'>The beaker is held tight by the bolts of the auxiliary chamber!</span>"

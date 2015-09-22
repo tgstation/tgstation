@@ -48,28 +48,7 @@
 
 
 	var/vending_cat = null// subcategory for vending machines.
-	var/dynamic_overlay[22] //For items which need to slightly alter their on-mob appearance while being worn.
-
-/obj/item/New()
-	..()
-	dynamic_overlay[UNIFORM_LAYER] = null
-	dynamic_overlay[ID_LAYER] = null
-	dynamic_overlay[SHOES_LAYER] = null
-	dynamic_overlay[GLOVES_LAYER] = null
-	dynamic_overlay[EARS_LAYER] = null
-	dynamic_overlay[SUIT_LAYER] = null
-	dynamic_overlay[GLASSES_LAYER] = null
-	dynamic_overlay[BELT_LAYER] = null
-	dynamic_overlay[SUIT_STORE_LAYER] = null
-	dynamic_overlay[BACK_LAYER] = null
-	dynamic_overlay[HAIR_LAYER] = null
-	dynamic_overlay[GLASSES_OVER_HAIR_LAYER] = null
-	dynamic_overlay[FACEMASK_LAYER] = null
-	dynamic_overlay[HEAD_LAYER] = null
-	dynamic_overlay[HANDCUFF_LAYER] = null
-	dynamic_overlay[LEGCUFF_LAYER] = null
-	dynamic_overlay[L_HAND_LAYER] = null
-	dynamic_overlay[R_HAND_LAYER] = null
+	var/list/dynamic_overlay[25] //For items which need to slightly alter their on-mob appearance while being worn.
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))

@@ -20,6 +20,8 @@
 //connections using verbs. When disconnected, the mask will not take any additional reagents from the primary tank and/or the
 //auxiliary beaker. Cycling these verbs will not force injections, the tank is still only capable of one injection per 97 seconds,
 //and the beaker has no need to be forced to inject since the user can alter its time interval directly.
+#define THRESHOLD "Threshold-based"
+#define TIME "Time-based"
 
 /obj/item/clothing/mask/chemmask
 	desc = "A rather sinister mask designed for connection to a chemical pack, providing the pack's safeties are disabled."
@@ -32,8 +34,8 @@
 	permeability_coefficient = 0.01
 	var/tank_injection_rate = 10
 	var/tank_has_injected = 0
-	var/beaker_injection_methods = list("Time-based","Threshold-based")
-	var/beaker_injection_method = "Threshold-based"
+	var/beaker_injection_methods = list(TIME,THRESHOLD)
+	var/beaker_injection_method = THRESHOLD
 	var/injection_method_chosen = 0
 	var/beaker_time_interval = 970
 	var/beaker_injection_rate = 10
@@ -61,19 +63,29 @@
 	..()
 	update_verbs()
 
+/obj/item/clothing/mask/chemmask/equipped(M as mob, wear_mask)
+	var/mob/living/carbon/human/H = M
+	if(H.wear_mask == src)
+		update_verbs()
+
 /obj/item/clothing/mask/chemmask/proc/update_verbs()
 	if (power)
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_pack_injection
 	else
 		verbs -= /obj/item/clothing/mask/chemmask/verb/set_pack_injection
+	var/mob/living/M = usr
+	if (istype(M.back,/obj/item/weapon/reagent_containers/chempack))
+		verbs += /obj/item/clothing/mask/chemmask/verb/set_tank_usage
+	else
+		verbs -= /obj/item/clothing/mask/chemmask/verb/set_tank_usage
 	if (has_beaker(usr))
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_usage
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
 		if (injection_method_chosen) //Don't want the user to have to select the beaker injection method more than once per item.
-			if (beaker_injection_method == "Threshold-based")
+			if (beaker_injection_method == THRESHOLD)
 				verbs += beaker_verbs_threshold
 				verbs -= beaker_verbs_time
-			else if (beaker_injection_method == "Time-based")
+			else if (beaker_injection_method == TIME)
 				verbs += beaker_verbs_time
 				verbs -= beaker_verbs_threshold
 		else
@@ -90,8 +102,26 @@
 	..()
 	if (power)
 		user << "The mask is active!"
+		if (tankactive)
+			user << "The mask is drawing from the main tank."
+		else
+			user << "The mask is not drawing from the main tank."
+		if (beakeractive && has_beaker(user))
+			user << "The mask is drawing from the auxiliary beaker."
+		else if (!beakeractive && has_beaker(user))
+			user << "The mask is not drawing from the auxiliary beaker."
 	else
-		user << "The mask is inactive."
+		var/mob/living/carbon/human/M = user
+		if(M.wear_mask == src)
+			user << "The mask is inactive."
+			if (tankactive)
+				user << "The mask is set to draw from the main tank."
+			else
+				user << "The mask is not set to draw from the main tank."
+			if (beakeractive && has_beaker(user))
+				user << "The mask is set to draw from the auxiliary beaker."
+			else if (!beakeractive && has_beaker(user))
+				user << "The mask is not set to draw from the auxiliary beaker."
 
 /obj/item/clothing/mask/chemmask/verb/toggle_power()
 	set name = "Toggle mask power"
@@ -187,7 +217,7 @@
 
 	var/obj/item/weapon/reagent_containers/chempack/P = usr.back
 	var/obj/item/weapon/reagent_containers/glass/B = P.beaker
-	var/beaker_threshold_reagents = B.get_reagent_names()
+	var/beaker_threshold_reagents = B.get_reagent_ids()
 
 	var/N = input("Set the reagent for which the minimum threshold must be reached to cause \the [src] to administer more chemicals from the auxiliary beaker:","[src]") as null|anything in beaker_threshold_reagents
 	if (N)
@@ -278,7 +308,7 @@
 						beakerinject(user)
 						beaker_volume_check(user)
 						sleep(1)
-						if (beaker_injection_method == "Time-based")
+						if (beaker_injection_method == TIME)
 							sleep(beaker_time_interval)
 					else
 						sleep(1)
@@ -296,9 +326,9 @@
 /obj/item/clothing/mask/chemmask/proc/beakerinject(mob/user)
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
 	var/obj/item/weapon/reagent_containers/glass/B = P.beaker
-	if (beaker_injection_method == "Time-based")
+	if (beaker_injection_method == TIME)
 		B.reagents.trans_to(user, beaker_injection_rate)
-	else if (beaker_injection_method == "Threshold-based")
+	else if (beaker_injection_method == THRESHOLD)
 		var/shouldinject = 0
 		var/datum/reagent/R1 = null
 		var/beakerhasreagent = 0
