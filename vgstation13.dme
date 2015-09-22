@@ -1131,6 +1131,7 @@
 #include "code\modules\mining\mine_items.dm"
 #include "code\modules\mining\mine_structures.dm"
 #include "code\modules\mining\mine_turfs.dm"
+#include "code\modules\mining\mine_vending.dm"
 #include "code\modules\mining\minerals.dm"
 #include "code\modules\mining\mint.dm"
 #include "code\modules\mining\money_bag.dm"

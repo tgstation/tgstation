@@ -155,11 +155,6 @@
 	targetvendomat = /obj/machinery/vending/nuka
 	icon_state = "nuka"
 
-/obj/structure/vendomatpack/mining
-	name = "Dwarven Mining Equipment recharge pack"
-	targetvendomat = /obj/machinery/vending/mining
-	icon_state = "mining"
-
 //////EMPTY PACKS//////
 
 /obj/item/emptyvendomatpack
