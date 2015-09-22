@@ -664,7 +664,7 @@
 		user << "<span class='warning'>Access denied.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	if(user)(mob_buckled)
+	if(user.buckled)
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
