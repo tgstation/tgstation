@@ -85,15 +85,18 @@
 		update_icon()
 		name = "Man-Machine Interface"
 
-/obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	if(check_dna_integrity(H))
-		brainmob.dna = H.dna
+	brainmob.name = L.real_name
+	brainmob.real_name = L.real_name
+	if(L.has_dna())
+		var/mob/living/carbon/C = L
+		brainmob.dna = C.dna
+		brainmob.dna.holder = brainmob
 	brainmob.container = src
 
-	if(istype(H))
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.loc = src
 		brain = newbrain

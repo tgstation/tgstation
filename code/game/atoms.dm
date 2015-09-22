@@ -280,11 +280,11 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
-	if(ishuman(M) && M.dna)
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
 			return 0
-	if(rejects_blood() || !istype(M) || !check_dna_integrity(M))
+	if(rejects_blood() || !M.has_dna())
 		return 0
 	return 1
 
@@ -358,7 +358,7 @@ var/list/blood_splatter_icons = list()
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
-		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
+		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)
 				blood_splatter(src,M,1)

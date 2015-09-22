@@ -346,7 +346,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return
 	if(has_dna(target.dna))
 		user << "<span class='warning'>We already have this DNA in storage!</span>"
-	if(!check_dna_integrity(target))
+		return
+	if(!target.has_dna())
 		user << "<span class='warning'>[target] is not compatible with our biology.</span>"
 		return
 	return 1
@@ -405,10 +406,9 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 /proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name
-	user.dna = chosen_dna
-	hardset_dna(user, null, null, null, null, chosen_dna.species.type, chosen_dna.features)
-	domutcheck(user)
-	updateappearance(user)
+	chosen_dna.transfer_identity(user, 1)
+	user.updateappearance(mutcolor_update=1)
+	user.domutcheck()
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in slots)
