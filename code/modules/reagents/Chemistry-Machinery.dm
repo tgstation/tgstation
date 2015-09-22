@@ -104,7 +104,7 @@
 	for (var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id, "synth_cost" = temp.synth_cost)))) // list in a list because Byond merges the first list...
+			chemicals.Add(list(list("title" = dd_limittext(temp.name,10), "id" = temp.id, "commands" = list("dispense" = temp.id, "synth_cost" = temp.synth_cost)))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 
 	return data
