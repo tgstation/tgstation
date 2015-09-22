@@ -286,7 +286,7 @@
 
 /obj/item/clothing/head/panzer
 	name = "Panzer Cap"
-	desc = "Ein Hut passen nur für die größten Tanks."
+	desc = "Ein Hut passen nur fÃ¼r die grÃ¶ÃŸten Tanks."
 	icon_state = "panzercap"
 	item_state = "panzercap"
 	flags = FPRINT
@@ -369,8 +369,8 @@
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/metalgear.dmi', "right_hand" = 'icons/mob/in-hand/right/metalgear.dmi')
 
 /obj/item/clothing/head/cowboy
-        name = "cowboy hat"
-        desc = "Pefect for the closet botanist."
-        icon_state = "cowboy"
-        item_state = "cowboy"
+	name = "cowboy hat"
+	desc = "Pefect for the closet botanist."
+	icon_state = "cowboy"
+	item_state = "cowboy"
 
