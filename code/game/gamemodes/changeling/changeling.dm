@@ -405,6 +405,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /proc/changeling_transform(var/mob/living/carbon/human/user, var/datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
+	user.real_name = chosen_prof.name
 	chosen_dna.transfer_identity(user, 1)
 	user.updateappearance(mutcolor_update=1)
 	user.domutcheck()
