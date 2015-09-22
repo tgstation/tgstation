@@ -38,6 +38,8 @@
 	desc = "A spike for collecting meat from animals"
 	density = 1
 	anchored = 1
+	buckle_lying = 0
+	can_buckle = 1
 	var/meat = 0
 	var/occupied = 0
 	var/meattype = null
@@ -112,15 +114,75 @@
 				user << "<span class='danger'>The spike already has something on it; finish collecting its meat first!</span>"
 			return
 		if(istype(G.affecting, /mob/living/carbon/human))
-			user.changeNext_move(CLICK_CD_MELEE)
-			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
-			var/mob/living/carbon/human/H = G.affecting
-			H.visible_message("<span class='danger'>[user] slams [G.affecting] into the meat spike!</span>", "<span class='userdanger'>[user] slams you into the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-			H.adjustBruteLoss(20)
-			return
+			if(!occupied)
+				if(do_mob(user, src, 50))
+					if(occupied) //to prevent spam/queing up attacks
+						return
+					if(G.affecting.buckled)
+						return
+					var/mob/living/carbon/human/H = G.affecting
+					playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+					H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+					H.loc = src.loc
+					H.emote("scream")
+					var/turf/pos = get_turf(H)
+					pos.add_blood_floor(H)
+					H.adjustBruteLoss(30)
+					var/matrix/m120 = matrix(transform)
+					m120.Turn(180)
+					animate(H, transform = m120, time = 3)
+					H.pixel_y = H.get_standard_pixel_y_offset(180)
+					occupied = TRUE
+					H.buckled = src
+					H.dir = 2
+					buckled_mob = H
+					return
 		user << "<span class='danger'>You can't use that on the spike!</span>"
 		return
 	..()
+
+/obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
+	return
+
+/obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
+	if(buckled_mob && buckled_mob.buckled == src)
+		var/mob/living/M = buckled_mob
+		if(M != user)
+			M.visible_message(\
+				"[user.name] tries to pull [M.name] free of the [src]!",\
+				"<span class='notice'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
+				"<span class='italics'>You hear a squishy wet noise.</span>")
+			M.adjustBruteLoss(20)
+			if(!do_after(M, 300, target = src))
+				if(M && M.buckled)
+					M.visible_message(\
+					"[user.name] fails to free [M.name]!",\
+					"<span class='notice'>[user.name] fails to pull you off of the [src].</span>")
+				return
+
+		else
+			M.visible_message(\
+			"<span class='warning'>[M.name] struggles to break free from the [src]!</span>",\
+			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
+			"<span class='italics'>You hear a wet squishing noise..</span>")
+			M.adjustBruteLoss(30)
+			if(!do_after(M, 1200, target = src))
+				if(M && M.buckled)
+					M << "<span class='warning'>You fail to free yourself!</span>"
+				return
+		if(!M.buckled)
+			return
+		var/mob/living/carbon/human/L = buckled_mob
+		var/matrix/m120 = matrix(transform)
+		m120.Turn(360)
+		animate(L, transform = m120, time = 3)
+		L.pixel_y = L.get_standard_pixel_y_offset(360)
+		M.adjustBruteLoss(20)
+		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
+		unbuckle_mob()
+		L.emote("scream")
+		L.AdjustWeakened(10)
+		occupied = 0
 
 ///obj/structure/kitchenspike/MouseDrop_T(var/atom/movable/C, mob/user)
 //	if(istype(C, /obj/mob/carbon/monkey)
