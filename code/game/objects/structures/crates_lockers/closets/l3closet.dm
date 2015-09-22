@@ -61,3 +61,13 @@
 	contents = list()
 	new /obj/item/clothing/suit/bio_suit/scientist( src )
 	new /obj/item/clothing/head/bio_hood/scientist( src )
+
+/obj/structure/closet/l3closet/toxins
+	name = "toxins firesuit closet"
+	desc = "It's a storage unit for level-3 biohazard gear."
+
+/obj/structure/closet/l3closet/toxins/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/suit/bio_suit/plasma( src )
+	new /obj/item/clothing/head/bio_hood/plasma( src )

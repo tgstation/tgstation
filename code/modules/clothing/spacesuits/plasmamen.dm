@@ -1,4 +1,4 @@
- //Suits for the pink and grey skeletons! There needs to be a way to make these once you can become one in-game
+ //Suits for the pink and grey skeletons!
 
 /obj/item/clothing/suit/space/hardsuit/atmos/plasmaman
 	name = "plasmaman suit"
@@ -11,6 +11,7 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/atmos/plasmaman
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/atmos/plasmaman/examine(mob/user)
 	..()
@@ -43,25 +44,25 @@
 	//Removed the HIDEFACE from /helmet/space/hardsuit
 //	basestate = "plasmaman_helmet"
 	body_parts_covered = EYES | MOUTH
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 //Ghetto plasmaman-suits. Someone add these to toxins
 
 /obj/item/clothing/head/bio_hood/plasma	//Todo: own sprite to seperate from the plasmaman hardsuit
-	name = "toxins firesuit"
-	desc = "A hood that protects the head and face from biological comtaminants and heat."
+	name = "toxins fire hood"
+	desc = "A hood that protects the head and face from biological contaminants and heat."
 	icon_state = "hardsuit0-plasma"
 	item_state = "plasmaman_helmet0"
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
-/obj/item/clothing/suit/bio_suit/plasma	//Todo: own sprite to seperate from the plasmaman hardsuit
+/obj/item/clothing/suit/bio_suit/plasma
 	name = "toxins firesuit"
 	desc = "A suit that protects against biological contamination and heat."
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	icon_state = "plasmaman_suit"
-	item_state = "plasmaman_suit"
+	icon_state = "plasmasuit"
+	item_state = "plasmasuit"

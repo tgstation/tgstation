@@ -478,10 +478,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBLOOD,RADIMMUNE)
+	specflags = list(RADIMMUNE, NOBLOOD)
+	exotic_blood = /datum/reagent/toxin/plasma
 	safe_oxygen_min = 0 //We don't breath this
 	safe_oxygen_max = 0.005 //This kills the plasmaman
-	safe_toxins_min = 16 //We breath THIS!
+	safe_toxins_min = 16 //We breath THIS! Might want to increase
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	var/skin = 0
@@ -516,9 +517,16 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	H.update_fire()
 
 //Heal from plasma
-/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)	//Pretty strong right now, between tricord and cryo
 	if(chem.id == "plasma")
-		H.adjustBruteLoss(-5)
-		H.adjustFireLoss(-5)
+		H.adjustBruteLoss(-2)
+		H.adjustFireLoss(-2)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
+
+/datum/species/plasmaman/spec_death(gibbed, mob/living/carbon/human/H)	//Resurrection isn't a given
+	if(H.reagents)
+		for(var/A in H.reagents.reagent_list)
+			var/datum/reagent/R = A
+			if(R.id == "plasma")
+				H.reagents.remove_reagent(R.id, R.volume)

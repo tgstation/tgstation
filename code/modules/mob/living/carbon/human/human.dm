@@ -4,6 +4,7 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
+	var/revivalnotification = 0
 
 
 

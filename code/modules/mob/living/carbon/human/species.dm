@@ -1261,6 +1261,9 @@
 		H.failed_last_breath = 0
 		if(safe_toxins_min)
 			H.adjustOxyLoss(-5)
+			var/ratio = (breath.toxins/safe_toxins_min) * 10
+			if(H.reagents)
+				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 		gas_breathed = breath.toxins/6
 		H.clear_alert("not_enough_tox")
 

@@ -139,8 +139,11 @@
  */
 
 /obj/item/weapon/tank/internals/plasmaman
+	name = "internals plasma tank"
+	desc = "Caution: Nanotrasen does not endorse the usage of plasma for internals"
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
@@ -156,9 +159,16 @@
 
 
 /obj/item/weapon/tank/internals/plasmaman/belt
+	name = "belt plasma tank"
+	desc = "Toxic flammable gas, now in a more compact package."
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	w_class = 2.0
+	force = 4.0
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	volume = 10
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
