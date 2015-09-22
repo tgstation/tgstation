@@ -128,7 +128,7 @@
 					var/turf/pos = get_turf(H)
 					pos.add_blood_floor(H)
 					H.adjustBruteLoss(30)
-					var/matrix/m120 = matrix(transform)
+					var/matrix/m120 = matrix()
 					m120.Turn(180)
 					animate(H, transform = m120, time = 3)
 					H.pixel_y = H.get_standard_pixel_y_offset(180)
@@ -173,7 +173,7 @@
 		if(!M.buckled)
 			return
 		var/mob/living/carbon/human/L = buckled_mob
-		var/matrix/m120 = matrix(transform)
+		var/matrix/m120 = matrix()
 		m120.Turn(360)
 		animate(L, transform = m120, time = 3)
 		L.pixel_y = L.get_standard_pixel_y_offset(360)
