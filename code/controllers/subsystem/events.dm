@@ -83,6 +83,8 @@ var/datum/subsystem/events/SSevent
 	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
+		if(ticker.mode.config_tag in E.gamemode_blacklist) continue
+		if(E.gamemode_whitelist && !(ticker.mode.config_tag in E.gamemode_whitelist)) continue
 		if(E.holidayID)
 			if(!holidays || !holidays[E.holidayID])			continue
 		sum_of_weights -= E.weight

@@ -119,6 +119,9 @@
 	can_suppress = 0
 	burst_size = 0
 
+/obj/item/weapon/gun/projectile/automatic/wt550/ui_action_click()
+	return
+
 /obj/item/weapon/gun/projectile/automatic/wt550/update_icon()
 	..()
 	icon_state = "wt550[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"

@@ -230,9 +230,9 @@
 	if (mutmod == 2)
 		if(prob(50))		//50%
 			mutate()
-		else if(prob(75))	//37.5%
+		else if(prob(50))	//25%
 			hardmutate()
-		else if(prob(10))	//1/80
+		else if(prob(50))	//12.5%
 			mutatespecie()
 		return
 	return
