@@ -291,7 +291,7 @@
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
-	owner.resize = 1.2
+	owner.resize = 1.25
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
 
 /datum/mutation/human/clumsy
