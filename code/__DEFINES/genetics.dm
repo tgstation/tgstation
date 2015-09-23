@@ -8,6 +8,7 @@
 #define EPILEPSY	"Epilepsy"
 #define MUTATE		"Unstable DNA"
 #define COUGH		"Cough"
+#define DWARFISM	"Dwarfism"
 #define CLOWNMUT	"Clumsiness"
 #define TOURETTES	"Tourettes Syndrome"
 #define DEAFMUT		"Deafness"
