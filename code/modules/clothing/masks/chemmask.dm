@@ -62,7 +62,12 @@
 
 /obj/item/clothing/mask/chemmask/New() //Doing this so that these verbs don't show up before there's actually a beaker in the pack.
 	..()
+	processing_objects.Add(src)
 	update_verbs()
+
+/obj/item/clothing/mask/chemmask/Destroy()
+	processing_objects.Remove(src)
+	..()
 
 /obj/item/clothing/mask/chemmask/equipped(M as mob, wear_mask)
 	var/mob/living/carbon/human/H = M
@@ -70,16 +75,20 @@
 		update_verbs()
 
 /obj/item/clothing/mask/chemmask/proc/update_verbs()
+	var/mob/living/carbon/human/H
 	if (power)
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_pack_injection
 	else
 		verbs -= /obj/item/clothing/mask/chemmask/verb/set_pack_injection
-	var/mob/living/M = usr
-	if (istype(M.back,/obj/item/weapon/reagent_containers/chempack))
+	if (istype(loc,/mob/living/carbon/human)) //It runtimes if it calls this on a turf, which it does when it first spawns.
+		H = loc
+	else
+		return
+	if (istype(H.back,/obj/item/weapon/reagent_containers/chempack))
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_tank_usage
 	else
 		verbs -= /obj/item/clothing/mask/chemmask/verb/set_tank_usage
-	if (has_beaker(usr))
+	if (has_beaker(H))
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_usage
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_beaker_injection_method
 		if (injection_method_chosen) //Don't want the user to have to select the beaker injection method more than once per item.
@@ -156,7 +165,7 @@
 				usr << "<span class='notice'>You activate \the [src].</span>"
 				power = 1
 				icon_state = "chemmask1"
-				start_flow(usr)
+//				start_flow(usr)
 				usr.update_inv_wear_mask()
 				update_verbs()
 			else
@@ -321,47 +330,48 @@
 	else if (!B.is_empty())
 		firstalert_beaker = 0
 
-
 /obj/item/clothing/mask/chemmask/proc/mask_shutdown(mob/user) //Removes most verbs upon toggling the mask off, but not all. The user keeps access to the verbs to toggle connection to the tank and beaker.
 	power = 0
 	icon_state = "chemmask0"
 	user.update_inv_wear_mask()
 	update_verbs()
 
-/obj/item/clothing/mask/chemmask/proc/start_flow(mob/user)
-	while(power)
-		if (!pack_check(user))
+/obj/item/clothing/mask/chemmask/process()
+	var/mob/living/carbon/human/H = loc
+	if(power)
+		if (!pack_check(H))
 			return
-		if (!mask_check(user))
+		if (!mask_check(H))
 			return
-		tank_volume_check(user)
+		tank_volume_check(H)
 		update_verbs()
 		if ((world.time - time_at_last_tank_inject) >= 970) //One minute thirty-seven seconds. Roughly the time it takes 10u of anti-toxin to be metabolized.
 			tank_has_injected = 0
 		if (tankactive)
 			if (!tank_has_injected)
-				inject(user)
+				inject(H)
 				tank_has_injected = 1
 				time_at_last_tank_inject = world.time
 		if ((world.time - time_at_last_beaker_inject) >= beaker_time_interval)
 			beaker_has_injected_time = 0
-		if (has_beaker(user))
+		if (has_beaker(H))
 			if (beakeractive)
 				if (beaker_injection_method == TIME && !beaker_has_injected_time)
-					beakerinject(user)
+					beakerinject(H)
 					beaker_has_injected_time = 1
 					time_at_last_beaker_inject = world.time
 				else if (beaker_injection_method == THRESHOLD)
-					beakerinject(user)
-				beaker_volume_check(user)
-		sleep(1)
+					beakerinject(H)
+				beaker_volume_check(H)
 
 /obj/item/clothing/mask/chemmask/proc/inject(mob/user)
 	var/obj/item/weapon/reagent_containers/chempack/P = user.back
 	for(var/datum/reagent/R in P.reagents.reagent_list)
 		var/custom_injection_rate = (tank_injection_rate/(REAGENTS_METABOLISM/R.custom_metabolism))
-		if (R.id == "hyperzine")
-			custom_injection_rate += 0.2 //This works well for different metabolisms, except hyperzine for some reason. It always seems to just barely run out before more gets injected, so I want to top it off with a little extra here.
+		if (R.custom_metabolism == 0.03)
+			custom_injection_rate += 0.1
+		if (R.custom_metabolism == 0.05)
+			custom_injection_rate += R.custom_metabolism
 		P.reagents.trans_id_to(user, R.id, custom_injection_rate)
 
 /obj/item/clothing/mask/chemmask/proc/beakerinject(mob/user)

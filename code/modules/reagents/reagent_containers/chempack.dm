@@ -80,6 +80,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/chempack/update_icon()
+	var/mob/living/carbon/human/H = loc
 	overlays.len = 0
 
 	if(reagents.total_volume)
@@ -117,15 +118,17 @@
 		dynamic_overlay[R_HAND_LAYER] = fillinghandr
 
 		overlays += filling
-		usr.update_inv_back()
-		usr.update_inv_r_hand()
-		usr.update_inv_l_hand()
+		if (istype(loc,/mob/living/carbon/human)) //Needs to always update its own overlay, but only update mob overlays if it's actually on a mob.
+			H.update_inv_back()
+			H.update_inv_r_hand()
+			H.update_inv_l_hand()
 
 	else
 		dynamic_overlay = null
-		usr.update_inv_back()
-		usr.update_inv_r_hand()
-		usr.update_inv_l_hand()
+		if (istype(loc,/mob/living/carbon/human))
+			H.update_inv_back()
+			H.update_inv_r_hand()
+			H.update_inv_l_hand()
 
 /obj/item/weapon/reagent_containers/chempack/verb/flush_tanks() //Completely empties the chempack's tanks, since you can't pour it onto the floor or into something else.
 	set name = "Flush chemical tanks"
@@ -295,7 +298,6 @@ obj/item/weapon/reagent_containers/chempack/verb/set_fill()
 /obj/item/weapon/reagent_containers/chempack/override/New()
 	..()
 	icon_state = "[initial(icon_state)]1"
-
 
 /obj/item/weapon/reagent_containers/chempack/override/fully_loaded
 
