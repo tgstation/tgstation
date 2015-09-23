@@ -75,6 +75,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
+		if(cig.lit)
+			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
 			cig.attackby(src, user)
 		else
@@ -248,6 +250,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
+		if(cig.lit)
+			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
 			cig.attackby(src, user)
 		else
