@@ -57,33 +57,3 @@ Bonus
 			return
 		M.dna.struc_enzymes = archived_dna
 		M.domutcheck()
-/*
-//////////////////////////////////////
-
-DNA Aide
-
-	Very very very very noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	Cleans the DNA of a person and then randomly gives them a power..
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/genetic_mutation/powers
-
-	name = "Deoxyribonucleic Acid Aide"
-	stealth = -7
-	resistance = -7
-	stage_speed = -7
-	transmittable = -7
-	level = 6
-	severity = 0
-
-/datum/symptom/genetic_mutation/powers/Start(datum/disease/advance/A)
-	..()
-	possible_mutations = good_mutations
