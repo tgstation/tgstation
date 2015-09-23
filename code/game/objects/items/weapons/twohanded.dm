@@ -37,7 +37,10 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(isrobot(user))
+		user << "<span class='notice'>You free up your module.</span>"
+	else
+		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
@@ -57,7 +60,10 @@
 	force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
-	user << "<span class='notice'>You grab the [name] with both hands.</span>"
+	if(isrobot(user))
+		user << "<span class='notice'>You dedicate your module to [name].</span>"
+	else
+		user << "<span class='notice'>You grab the [name] with both hands.</span>"
 	if (wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
