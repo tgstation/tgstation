@@ -265,7 +265,7 @@ var/record_id_num = 1001
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, nude = 0)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)
@@ -349,6 +349,10 @@ var/record_id_num = 1001
 
 	if(eyes_s)
 		photo.Blend(eyes_s, ICON_OVERLAY)
+
+	//This is currently solely for the human examine proc.
+	if(nude)
+		return photo
 
 	var/icon/clothes_s = null
 	switch(H.mind.assigned_role)
