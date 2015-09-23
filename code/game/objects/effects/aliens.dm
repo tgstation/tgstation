@@ -84,11 +84,11 @@
 
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			health -= 150
-		if(2.0)
+		if(2)
 			health -= 100
-		if(3.0)
+		if(3)
 			health -= 50
 	healthcheck()
 
@@ -196,21 +196,15 @@
 		qdel(src)
 		return
 
-	direction_loop:
-		for(var/dirn in cardinal)
-			var/turf/T = get_step(src, dirn)
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
-				continue
+	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-			if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-				return
+		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			continue
 
-			for(var/obj/O in T)
-				if(O.density)
-					continue direction_loop
-
-			new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
@@ -224,7 +218,7 @@
 	else
 		visible_message("<span class='danger'>[user] has attacked [src] with [I]!</span>")
 
-	var/damage = I.force / 4.0
+	var/damage = I.force / 4
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.remove_fuel(0, user))

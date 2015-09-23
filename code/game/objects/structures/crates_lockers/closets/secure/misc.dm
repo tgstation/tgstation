@@ -9,7 +9,7 @@
 	new /obj/item/weapon/storage/firstaid/regular(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/device/aicard(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 	if(prob(50))
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/ammo_box/magazine/m50(src)

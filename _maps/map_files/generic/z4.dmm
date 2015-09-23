@@ -856,7 +856,7 @@
 "qx" = (/obj/structure/rack,/obj/item/weapon/circuitboard/solar_control,/turf/simulated/floor/plasteel,/area/derelict/bridge/ai_upload)
 "qy" = (/obj/item/ammo_casing/a357{pixel_x = -5},/obj/item/ammo_casing/a357{pixel_x = 5; pixel_y = 6},/obj/item/ammo_casing/a357,/turf/simulated/floor/plasteel/airless,/area/derelict/hallway/primary)
 "qz" = (/obj/machinery/porta_turret_cover,/turf/simulated/floor/plasteel/airless,/area/derelict/bridge/ai_upload)
-"qA" = (/obj/structure/table,/obj/item/device/flash/handheld,/turf/simulated/floor/plasteel/airless,/area/derelict/bridge/access)
+"qA" = (/obj/structure/table,/obj/item/device/assembly/flash/handheld,/turf/simulated/floor/plasteel/airless,/area/derelict/bridge/access)
 "qB" = (/obj/structure/table,/obj/effect/spawner/lootdrop/maintenance{lootcount = 8; name = "8maintenance loot spawner"},/turf/simulated/floor/plating/airless,/area/derelict/atmospherics)
 "qC" = (/obj/item/weapon/storage/bag/ore,/turf/simulated/floor/mineral/bananium/airless,/area/space)
 "qD" = (/obj/item/weapon/shovel,/turf/simulated/floor/mineral/bananium/airless,/area/space)

@@ -244,3 +244,26 @@
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
 
+
+//Cache of bloody footprint images
+//Key:
+//"entered-[blood_state]-[dir_of_image]"
+//or: "exited-[blood_state]-[dir_of_image]"
+var/list/bloody_footprints_cache = list()
+
+//Bloody shoes/footprints
+#define MAX_SHOE_BLOODINESS			100
+#define BLOODY_FOOTPRINT_BASE_ALPHA	100
+#define BLOOD_GAIN_PER_STEP			50
+#define BLOOD_LOSS_PER_STEP			5
+#define BLOOD_FADEOUT_TIME			2
+
+//Bloody shoe blood states
+#define BLOOD_STATE_HUMAN			"blood"
+#define BLOOD_STATE_XENO			"xeno"
+#define BLOOD_STATE_OIL				"oil"
+#define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+//Turf wet states
+#define TURF_DRY		0
+#define TURF_WET_WATER	1
+#define TURF_WET_LUBE	2

@@ -62,6 +62,16 @@
 	put_on_delay = 50
 	burn_state = -1 //Won't burn in fires
 
+/obj/item/clothing/shoes/galoshes/dry
+	name = "absorbent galoshes"
+	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
+	icon_state = "galoshes_dry"
+
+/obj/item/clothing/shoes/galoshes/dry/step_action()
+	var/turf/simulated/t_loc = get_turf(src)
+	if(istype(t_loc) && t_loc.wet)
+		t_loc.MakeDry(TURF_WET_WATER)
+
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
 	name = "clown shoes"

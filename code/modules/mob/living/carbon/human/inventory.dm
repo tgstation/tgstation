@@ -360,6 +360,8 @@
 			head = I
 			if(head.flags & BLOCKHAIR)
 				update_hair(redraw_mob)	//rebuild hair
+			if(head.flags_inv & HIDEEARS)
+				update_body(redraw_mob)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
 			shoes = I
@@ -472,3 +474,17 @@
 			burn()
 
 	return shredded
+
+/mob/living/carbon/human/proc/equipOutfit(outfit)
+	var/datum/outfit/O = null
+	
+	if(ispath(outfit))
+		O = new outfit
+	else
+		O = outfit
+		if(!istype(O))
+			return 0
+	if(!O)
+		return 0
+	
+	return O.equip(src)

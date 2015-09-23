@@ -95,7 +95,7 @@
 /obj/item/weapon/twohanded/offhand
 	name = "offhand"
 	icon_state = "offhand"
-	w_class = 5.0
+	w_class = 5
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
@@ -115,7 +115,7 @@
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
-	w_class = 5.0
+	w_class = 5
 
 /obj/item/weapon/twohanded/required/attack_self()
 	return
@@ -150,7 +150,7 @@
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	throwforce = 15
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
@@ -160,6 +160,10 @@
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
 	return
+
+/obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] axes \himself from head to toe! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
@@ -184,10 +188,10 @@
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
 	force = 3
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -281,7 +285,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18

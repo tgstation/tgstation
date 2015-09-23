@@ -11,13 +11,13 @@ RCD
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = CONDUCT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
@@ -62,6 +62,10 @@ RCD
 	var/decongrilledelay = null //as rapid as wirecutters
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
+
+/obj/item/weapon/rcd/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"
@@ -508,7 +512,7 @@ RCD
 	matter = 160
 
 /obj/item/weapon/rcd/combat
-	name = "combat RCD"
+	name = "industrial RCD"
 	max_matter = 500
 	matter = 500
 	canRturf = 1
@@ -519,12 +523,11 @@ RCD
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
-	opacity = 0
-	density = 0
-	anchored = 0.0
-	origin_tech = "materials=2"
+	origin_tech = "materials=3"
 	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
 	var/ammoamt = 40
 
 /obj/item/weapon/rcd_ammo/large
+	origin_tech = "materials=4"
+	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	ammoamt = 160

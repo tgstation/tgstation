@@ -162,7 +162,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
-/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
+/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
@@ -466,11 +466,12 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil_red"
 	item_state = "coil_red"
+	max_amount = MAXCOIL
 	amount = MAXCOIL
 	item_color = "red"
 	desc = "A coil of power cable."
 	throwforce = 0
-	w_class = 2.0
+	w_class = 2
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
@@ -539,44 +540,16 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		icon_state = "coil_[item_color]"
 		name = "cable coil"
 
-
-// Items usable on a cable coil :
-//   - Cable coil : merge cables
-/obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/stack/cable_coil/cyborg))
-		var/obj/item/stack/cable_coil/cyborg/C = W
-		var/to_transfer = min(src.amount, round((C.source.max_energy - C.source.energy) / C.cost))
-		C.add(to_transfer)
-		src.use(to_transfer)
-	else if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
-		if(C.amount >= MAXCOIL)
-			user << "<span class='warning'>The coil is too long, you cannot add any more cable to it!</span>"
-			return
-
-		if( (C.amount + src.amount <= MAXCOIL) )
-			user << "<span class='notice'>You join the cable coils together.</span>"
-			C.give(src.amount) // give it cable
-			src.use(src.amount) // make sure this one cleans up right
-			return
-
-		else
-			var/amt = MAXCOIL - C.amount
-			user << "<span class='notice'>You transfer [amt] length\s of cable from one coil to the other.</span>"
-			C.give(amt)
-			src.use(amt)
-			return
-
-/obj/item/stack/cable_coil/use(used)
-	. = ..()
-	update_icon()
-	return
+/obj/item/stack/cable_coil/attack_hand(mob/user)
+	var/obj/item/stack/cable_coil/new_cable = ..()
+	if(istype(new_cable))
+		new_cable.item_color = item_color
+		new_cable.update_icon()
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(extra)
-	if(amount + extra > MAXCOIL)
-		amount = MAXCOIL
+	if(amount + extra > max_amount)
+		amount = max_amount
 	else
 		amount += extra
 	update_icon()

@@ -5,7 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/flash/handheld/bulb = null
+	var/obj/item/device/assembly/flash/handheld/bulb = null
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -24,12 +24,12 @@
 
 /obj/machinery/flasher/New()
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	bulb = new /obj/item/device/flash/handheld(src)
+	bulb = new /obj/item/device/assembly/flash/handheld(src)
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
 		stat &= ~NOPOWER
-		if(bulb.broken)
+		if(bulb.crit_fail)
 			icon_state = "[base_state]1-p"
 		else
 			icon_state = "[base_state]1"
@@ -49,7 +49,7 @@
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/device/flash/handheld))
+	else if (istype(W, /obj/item/device/assembly/flash/handheld))
 		if (!bulb)
 			if(!user.drop_item())
 				return
@@ -73,7 +73,7 @@
 	if (!powered() || !bulb)
 		return
 
-	if (bulb.broken || (last_flash && world.time < src.last_flash + 150))
+	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
 		return
 
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast

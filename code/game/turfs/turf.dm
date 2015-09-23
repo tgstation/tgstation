@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	level = 1
 
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
@@ -197,6 +197,9 @@
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				return
 		src_object.remove_from_storage(I, src) //No check needed, put everything inside
 	return 1
 

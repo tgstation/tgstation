@@ -1339,20 +1339,28 @@
 	if(parent)
 		mutations = parent.mutations
 
+/obj/item/seeds/kudzuseed/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like \he's trying to commit suicide..</span>")
+	plant(user)
+	return (BRUTELOSS)
+
 /obj/item/seeds/kudzuseed/harvest()
 	var/list/prod = ..()
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
 		K.mutations = mutations
 
-/obj/item/seeds/kudzuseed/attack_self(mob/user)
+/obj/item/seeds/kudzuseed/proc/plant(mob/user)
 	if(istype(user.loc,/turf/space))
 		return
 	var/turf/T = get_turf(src)
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 	message_admins("Kudzu planted by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a>)",0,1)
 	investigate_log("was planted by [key_name(user)] at ([T.x],[T.y],[T.z])","kudzu")
 	new /obj/effect/spacevine_controller(user.loc, mutations, potency, production)
 	qdel(src)
+
+/obj/item/seeds/kudzuseed/attack_self(mob/user)
+	plant(user)
+	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 
 /obj/item/seeds/kudzuseed/get_analyzer_text()
 	var/list/mut_text = list()

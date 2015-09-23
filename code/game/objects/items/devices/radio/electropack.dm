@@ -6,12 +6,16 @@
 	item_state = "electropack"
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
-	w_class = 5.0
+	w_class = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = 1
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
+
+/obj/item/device/electropack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] hooks \himself to the electropack and spams the trigger! It looks like \he's trying to commit suicide..</span>")
+	return (FIRELOSS)
 
 /obj/item/device/electropack/initialize()
 	if(radio_controller)

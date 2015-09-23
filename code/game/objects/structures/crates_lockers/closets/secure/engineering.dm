@@ -21,7 +21,7 @@
 	new /obj/item/tapeproj/engineering(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/multitool(src)
-	new /obj/item/device/flash/handheld(src)
+	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical

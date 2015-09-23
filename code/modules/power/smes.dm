@@ -334,7 +334,7 @@
 
 /obj/machinery/power/smes/get_ui_data()
 	var/list/data = list(
-		"capacityPercent" = round(100.0*charge/capacity, 0.1),
+		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,
 		"charge" = charge,
 
