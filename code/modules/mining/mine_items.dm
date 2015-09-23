@@ -486,6 +486,21 @@ proc/move_mining_shuttle()
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
+/**********************Mining drone cube**********************/
+
+/obj/item/weapon/mining_drone_cube
+	name = "mining drone cube"
+	desc = "Compressed mining drone, ready for deployment. Just unwrap the cube!"
+	icon = 'icons/obj/aibots.dmi'
+	icon_state = "minedronecube"
+
+/obj/item/weapon/mining_drone_cube/attack_self(mob/user)
+
+	user.visible_message("<span class='warning'>\The [src] suddenly expands into a fully functional mining drone!</span>", \
+	"<span class='warning'>You carefully unwrap \the [src] and it suddenly expands into a fully functional mining drone!</span>")
+	new /mob/living/simple_animal/hostile/mining_drone(get_turf(src))
+	qdel(src)
+
 /**********************Mining drone**********************/
 
 /mob/living/simple_animal/hostile/mining_drone
