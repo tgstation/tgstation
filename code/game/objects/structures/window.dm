@@ -21,6 +21,10 @@
 	var/image/crack_overlay
 	can_be_unanchored = 1
 
+/obj/structure/window/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/window/New(Loc,re=0)
 	..()
 	health = maxhealth
@@ -342,6 +346,15 @@
 	add_fingerprint(usr)
 	return
 
+/obj/structure/window/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		revrotate()
 
 /*
 /obj/structure/window/proc/updateSilicate() what do you call a syndicate silicon?
