@@ -26,7 +26,7 @@
 /datum/chemical_reaction/chocolate_bar/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped(location)
 	return
 
 
@@ -37,11 +37,35 @@
 	required_reagents = list("milk" = 2, "cocoa" = 2, "sugar" = 2)
 	result_amount = 1
 	mob_react = 1
+
 /datum/chemical_reaction/chocolate_bar2/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
-		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar(location)
+		new /obj/item/weapon/reagent_containers/food/snacks/chocolatebar/wrapped(location)
 	return
+
+/datum/chemical_reaction/butter_bar
+	name = "Butter Bar"
+	id = "butter_bar"
+	result = null
+	required_reagents = list("cream" = 1, "salt" = 1, "milk" = 2)
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/butter_bar/on_reaction(var/datum/reagents/holder, var/created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/reagent_containers/food/snacks/butterbar/wrapped(location)
+	return
+
+/datum/chemical_reaction/
+	name = "Concentrated Fat"
+	id = "con_fat"
+	result = "cfat"
+	required_reagents = list("fat" = 1, "lube" = 2, "oil" = 2)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 5
+	mob_react = 1
 
 /datum/chemical_reaction/hot_coco
 	name = "Hot Coco"
