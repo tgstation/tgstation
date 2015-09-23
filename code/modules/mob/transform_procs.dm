@@ -15,7 +15,7 @@
 	invisibility = 101
 
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "h2monkey", sleeptime = 15)
 	sleep(33)
 
@@ -59,7 +59,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
-		del(t)
+		qdel(t)
 
 	var/mob/living/simple_animal/hostile/retaliate/cluwne/new_mob = new (get_turf(src))
 	new_mob.setGender(gender)
@@ -75,7 +75,7 @@
 	new_mob << "<span class='sinister'>Your very soul is being torn apart. What was organs, blood, flesh, is now darkness. And inside the infernal void that was once a living being, something sinister takes root. As what you were goes away, you try to let out a frantic plea of 'Help me! Please god help me!' but your god has abandoned you, and all that leaves your horrible mouth is a strangled 'HONK!'.</span>"
 	new_mob.say("HONK!")
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return new_mob
 
 /mob/new_player/AIize()
@@ -86,7 +86,7 @@
 	if (monkeyizing)
 		return
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	return ..()
 
@@ -159,7 +159,7 @@
 
 	O.rename_self("ai",1)
 	. = O
-	del(src)
+	qdel(src)
 
 
 //human -> robot
@@ -169,7 +169,7 @@
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
-			del(W)
+			qdel(W)
 		else
 			drop_from_inventory(W)
 	regenerate_icons()
@@ -178,7 +178,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(src))
 	. = O
@@ -208,7 +208,7 @@
 	spawn() O.Namepick()
 
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 
 
 //human -> mommi
@@ -224,7 +224,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/silicon/robot/mommi/O = new /mob/living/silicon/robot/mommi(get_turf(src))
 	. = O
@@ -257,7 +257,7 @@
 
 
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -272,7 +272,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -289,7 +289,7 @@
 
 	new_xeno << "<B>You are now an alien.</B>"
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return new_xeno
 
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
@@ -304,7 +304,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/living/carbon/slime/new_slime
 	if(reproduce)
@@ -326,7 +326,7 @@
 
 	new_slime << "<B>You are now a slime. Skreee!</B>"
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return new_slime
 
 /mob/living/carbon/human/proc/corgize()
@@ -341,7 +341,7 @@
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
-		del(t)
+		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (get_turf(src))
 	new_corgi.a_intent = I_HURT
@@ -349,7 +349,7 @@
 
 	new_corgi << "<B>You are now a Corgi. Yap Yap!</B>"
 	spawn(0)//To prevent the proc from returning null.
-		del(src)
+		qdel(src)
 	return new_corgi
 
 /mob/living/carbon/human/Animalize()
@@ -373,7 +373,7 @@
 	invisibility = 101
 
 	for(var/t in organs)
-		del(t)
+		qdel(t)
 
 	var/mob/new_mob = new mobpath(get_turf(src))
 
@@ -383,7 +383,7 @@
 
 	new_mob << "You suddenly feel more... animalistic."
 	spawn()
-		del(src)
+		qdel(src)
 	return new_mob
 
 /mob/proc/Animalize()
@@ -404,7 +404,7 @@
 	new_mob << "You feel more... animalistic"
 
 	spawn()
-		del(src)
+		qdel(src)
 	return new_mob
 
 /* Certain mob types have problems and should not be allowed to be controlled by players.

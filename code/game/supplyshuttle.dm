@@ -1,8 +1,7 @@
 //Config stuff
 #define SUPPLY_DOCKZ 2          //Z-level of the Dock.
 #define SUPPLY_STATIONZ 1       //Z-level of the Station.
-#define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
-#define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
+
 #define SUPPLY_TAX 10 // Credits to charge per order.
 var/datum/controller/supply_shuttle/supply_shuttle = new
 
@@ -19,20 +18,6 @@ var/list/mechtoys = list(
 	/obj/item/toy/prize/odysseus,
 	/obj/item/toy/prize/phazon
 )
-//Lighting STILL disabled, even with the new bay engine, because lighting doesn't play nice with our shuttles, might just be our shuttle code, or the small changes in the lighting engine we have from bay.
-/area/supply/station
-	name = "supply shuttle"
-	icon_state = "shuttle3"
-	requires_power = 0
-	lighting_use_dynamic = 0
-
-
-/area/supply/dock
-	name = "supply shuttle"
-	icon_state = "shuttle3"
-	requires_power = 0
-	lighting_use_dynamic = 0
-
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
@@ -177,231 +162,216 @@ var/list/mechtoys = list(
 	var/eta_timeofday
 	var/eta
 	var/datum/materials/materials_list = new
-	New()
-		ordernum = rand(1,9000)
+
+/datum/controller/supply_shuttle/New()
+	ordernum = rand(1,9000)
 
 	//Supply shuttle ticker - handles supply point regenertion and shuttle travelling between centcomm and the station
-	proc/process()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
-		for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
-			var/datum/supply_packs/P = new typepath()
-			supply_packs[P.name] = P
+/datum/controller/supply_shuttle/proc/process()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process() called tick#: [world.time]")
+	for(var/typepath in (typesof(/datum/supply_packs) - /datum/supply_packs))
+		var/datum/supply_packs/P = new typepath()
+		supply_packs[P.name] = P
 
-		spawn(0)
-			//set background = 1
-			while(1)
-				if(processing)
-					iteration++
+	spawn(0)
+		//set background = 1
+		while(1)
+			if(processing)
+				iteration++
 
-					if(moving == 1)
-						var/ticksleft = (eta_timeofday - world.timeofday)
-						if(ticksleft > 0)
-							eta = round(ticksleft/600,1)
-						else
-							eta = 0
-							send()
+				if(moving == 1)
+					var/ticksleft = (eta_timeofday - world.timeofday)
+					if(ticksleft > 0)
+						eta = round(ticksleft/600,1)
+					else
+						eta = 0
+						send()
 
 
-				sleep(processing_interval)
+			sleep(processing_interval)
 
-	proc/send()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/send() called tick#: [world.time]")
-		var/area/from
-		var/area/dest
-		var/area/the_shuttles_way
-		switch(at_station)
-			if(1)
-				from = locate(SUPPLY_STATION_AREATYPE)
-				dest = locate(SUPPLY_DOCK_AREATYPE)
-				the_shuttles_way = from
-				at_station = 0
-			if(0)
-				from = locate(SUPPLY_DOCK_AREATYPE)
-				dest = locate(SUPPLY_STATION_AREATYPE)
-				the_shuttles_way = dest
-				at_station = 1
-		moving = 0
+/datum/controller/supply_shuttle/proc/send()
 
-		//Do I really need to explain this loop?
-		if(at_station)
-			for(var/atom/A in the_shuttles_way)
-				if(istype(A,/mob/living))
-					var/mob/living/unlucky_person = A
-					unlucky_person.gib()
-				// Weird things happen when this shit gets in the way.
-				if(istype(A,/obj/structure/lattice) \
-					|| istype(A, /obj/structure/window) \
-					|| istype(A, /obj/structure/grille))
-					del(A)
+	var/obj/structure/docking_port/destination
 
-		from.move_contents_to(dest)
+	if(!at_station) //not at station
+		destination = cargo_shuttle.dock_station
+
+		at_station = 1
+
+		if(!destination)
+			message_admins("WARNING: Cargo shuttle unable to find the station!")
+			warning("Cargo shuttle can't find centcomm")
+	else //at station
+		destination = cargo_shuttle.dock_centcom
+
+		at_station = 0
+
+		if(!destination)
+			message_admins("WARNING: Cargo shuttle unable to find centcomm!")
+			warning("Cargo shuttle can't find centcomm")
+
+	cargo_shuttle.move_to_dock(destination)
+	moving = 0
 
 	//Check whether the shuttle is allowed to move
-	proc/can_move()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/can_move() called tick#: [world.time]")
-		if(moving) return 0
+/datum/controller/supply_shuttle/proc/can_move()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/can_move() called tick#: [world.time]")
+	if(moving) return 0
 
-		var/area/shuttle = locate(/area/supply/station)
-		if(!shuttle) return 0
+	if(forbidden_atoms_check(cargo_shuttle.linked_area))
+		return 0
 
-		if(forbidden_atoms_check(shuttle))
-			return 0
+	return 1
 
-		return 1
+/datum/controller/supply_shuttle/proc/SellObjToOrders(var/atom/A,var/in_crate)
 
-	proc/SellObjToOrders(var/atom/A,var/in_crate)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SellObjToOrders() called tick#: [world.time]")
 
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/SellObjToOrders() called tick#: [world.time]")
-
-		// Per-unit orders run last so they don't steal shit.
-		var/list/deferred_order_checks=list()
-		var/order_idx=0
-		for(var/datum/centcomm_order/O in centcomm_orders)
-			order_idx++
-			if(istype(O,/datum/centcomm_order/per_unit))
-				deferred_order_checks += order_idx
-			if(O.CheckShuttleObject(A,in_crate))
-				return
-		for(var/oid in deferred_order_checks)
-			var/datum/centcomm_order/O = centcomm_orders[oid]
-			if(O.CheckShuttleObject(A,in_crate))
-				return
+	// Per-unit orders run last so they don't steal shit.
+	var/list/deferred_order_checks=list()
+	var/order_idx=0
+	for(var/datum/centcomm_order/O in centcomm_orders)
+		order_idx++
+		if(istype(O,/datum/centcomm_order/per_unit))
+			deferred_order_checks += order_idx
+		if(O.CheckShuttleObject(A,in_crate))
+			return
+	for(var/oid in deferred_order_checks)
+		var/datum/centcomm_order/O = centcomm_orders[oid]
+		if(O.CheckShuttleObject(A,in_crate))
+			return
 	//Sellin
-	proc/sell()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/sell() called tick#: [world.time]")
-		var/shuttle_at
-		if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
-		else			shuttle_at = SUPPLY_DOCK_AREATYPE
 
-		var/area/shuttle = locate(shuttle_at)
-		if(!shuttle)	return
+/datum/controller/supply_shuttle/proc/sell()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/sell() called tick#: [world.time]")
 
-		var/datum/money_account/cargo_acct = department_accounts["Cargo"]
+	var/area/shuttle = cargo_shuttle.linked_area
+	if(!shuttle)	return
 
-		for(var/atom/movable/MA in shuttle)
-			if(MA.anchored)	continue
+	var/datum/money_account/cargo_acct = department_accounts["Cargo"]
 
-			if(istype(MA, /obj/item/stack/sheet/mineral/plasma))
-				var/obj/item/stack/sheet/mineral/plasma/P = MA
-				if(P.redeemed) continue
-				var/datum/material/mat = materials_list.getMaterial(P.sheettype)
-				cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
+	for(var/atom/movable/MA in shuttle)
+		if(MA.anchored)	continue
 
-			// Must be in a crate!
-			else if(istype(MA,/obj/structure/closet/crate))
-				cargo_acct.money += credits_per_crate
-				var/find_slip = 1
+		if(istype(MA, /obj/item/stack/sheet/mineral/plasma))
+			var/obj/item/stack/sheet/mineral/plasma/P = MA
+			if(P.redeemed) continue
+			var/datum/material/mat = materials_list.getMaterial(P.sheettype)
+			cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
 
-				for(var/atom/A in MA)
-					if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-						var/obj/item/stack/sheet/mineral/plasma/P = A
-						if(P.redeemed) continue
-						var/datum/material/mat = materials_list.getMaterial(P.sheettype)
-						cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
-						continue
-					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
-						var/obj/item/weapon/paper/slip = A
-						if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-							cargo_acct.money += credits_per_slip
-							find_slip = 0
-						continue
+		// Must be in a crate!
+		else if(istype(MA,/obj/structure/closet/crate))
+			cargo_acct.money += credits_per_crate
+			var/find_slip = 1
 
-					SellObjToOrders(A,0)
+			for(var/atom/A in MA)
+				if(istype(A, /obj/item/stack/sheet/mineral/plasma))
+					var/obj/item/stack/sheet/mineral/plasma/P = A
+					if(P.redeemed) continue
+					var/datum/material/mat = materials_list.getMaterial(P.sheettype)
+					cargo_acct.money += (mat.value * 2) * P.amount // Central Command pays double for plasma they receive that hasn't been redeemed already.
+					continue
+				if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
+					var/obj/item/weapon/paper/slip = A
+					if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
+						cargo_acct.money += credits_per_slip
+						find_slip = 0
+					continue
 
-					// Delete it. (Fixes github #473)
-					if(A) qdel(A)
-			else
-				SellObjToOrders(MA,1)
+				SellObjToOrders(A,0)
 
-			// PAY UP BITCHES
-			for(var/datum/centcomm_order/O in centcomm_orders)
-				if(O.CheckFulfilled())
-					O.Pay()
-					centcomm_orders -= O
-			//world << "deleting [MA]/[MA.type] it was [!MA.anchored ? "not ": ""] anchored"
-			qdel(MA)
+				// Delete it. (Fixes github #473)
+				if(A) qdel(A)
+		else
+			SellObjToOrders(MA,1)
+
+		// PAY UP BITCHES
+		for(var/datum/centcomm_order/O in centcomm_orders)
+			if(O.CheckFulfilled())
+				O.Pay()
+				centcomm_orders -= O
+		//world << "deleting [MA]/[MA.type] it was [!MA.anchored ? "not ": ""] anchored"
+		qdel(MA)
 
 	//Buyin
-	proc/buy()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/buy() called tick#: [world.time]")
-		if(!shoppinglist.len) return
+/datum/controller/supply_shuttle/proc/buy()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/buy() called tick#: [world.time]")
+	if(!shoppinglist.len) return
 
-		var/shuttle_at
-		if(at_station)	shuttle_at = SUPPLY_STATION_AREATYPE
-		else			shuttle_at = SUPPLY_DOCK_AREATYPE
+	var/area/shuttle = cargo_shuttle.linked_area
+	if(!shuttle)	return
 
-		var/area/shuttle = locate(shuttle_at)
-		if(!shuttle)	return
+	var/list/clear_turfs = list()
 
-		var/list/clear_turfs = list()
-
-		for(var/turf/T in shuttle)
-			if(T.density)	continue
-			var/contcount
-			for(var/atom/A in T.contents)
-				if(islightingoverlay(A))
-					continue
-				contcount++
-			if(contcount)
+	for(var/turf/T in shuttle)
+		if(T.density)	continue
+		var/contcount
+		for(var/atom/A in T.contents)
+			if(islightingoverlay(A))
 				continue
-			clear_turfs += T
+			contcount++
+		if(contcount)
+			continue
+		clear_turfs += T
 
-		for(var/S in shoppinglist)
-			if(!clear_turfs.len)	break
-			var/i = rand(1,clear_turfs.len)
-			var/turf/pickedloc = clear_turfs[i]
-			clear_turfs.Cut(i,i+1)
+	for(var/S in shoppinglist)
+		if(!clear_turfs.len)	break
+		var/i = rand(1,clear_turfs.len)
+		var/turf/pickedloc = clear_turfs[i]
+		clear_turfs.Cut(i,i+1)
 
-			var/datum/supply_order/SO = S
-			var/datum/supply_packs/SP = SO.object
+		var/datum/supply_order/SO = S
+		var/datum/supply_packs/SP = SO.object
 
-			var/atom/A = new SP.containertype(pickedloc)
-			A.name = "[SP.containername] [SO.comment ? "([SO.comment])":"" ]"
+		var/atom/A = new SP.containertype(pickedloc)
+		A.name = "[SP.containername] [SO.comment ? "([SO.comment])":"" ]"
 
-			//supply manifest generation begin
+		//supply manifest generation begin
 
-			var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
+		var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest(A)
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:298: slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-			slip.info = {"<h3>[command_name()] Shipping Manifest</h3><hr><br>
-				Order #[SO.ordernum]<br>
-				Destination: [station_name]<br>
-				[supply_shuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>
-				CONTENTS:<br><ul>"}
-			// END AUTOFIX
-			//spawn the stuff, finish generating the manifest while you're at it
-			if(SP.access)
-				A:req_access = list()
-				A:req_access += text2num(SP.access)
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:298: slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
+		slip.name = "Shipping Manifest for [SO.orderedby]'s Order"
+		slip.info = {"<h3>[command_name()] Shipping Manifest for [SO.orderedby]'s Order</h3><hr><br>
+			Order #[SO.ordernum]<br>
+			Destination: [station_name]<br>
+			[supply_shuttle.shoppinglist.len] PACKAGES IN THIS SHIPMENT<br>
+			CONTENTS:<br><ul>"}
+		// END AUTOFIX
+		//spawn the stuff, finish generating the manifest while you're at it
+		if(SP.access)
+			A:req_access = list()
+			A:req_access += text2num(SP.access)
 
-			var/list/contains
-			if(istype(SP,/datum/supply_packs/randomised))
-				var/datum/supply_packs/randomised/SPR = SP
-				contains = list()
-				if(SPR.contains.len)
-					for(var/j=1,j<=SPR.num_contained,j++)
-						contains += pick(SPR.contains)
-			else
-				contains = SP.contains
+		var/list/contains
+		if(istype(SP,/datum/supply_packs/randomised))
+			var/datum/supply_packs/randomised/SPR = SP
+			contains = list()
+			if(SPR.contains.len)
+				for(var/j=1,j<=SPR.num_contained,j++)
+					contains += pick(SPR.contains)
+		else
+			contains = SP.contains
 
-			for(var/typepath in contains)
-				if(!typepath)	continue
-				var/atom/B2 = new typepath(A)
-				if(SP.amount && B2:amount) B2:amount = SP.amount
-				slip.info += "<li>[B2.name]</li>" //add the item to the manifest
+		for(var/typepath in contains)
+			if(!typepath)	continue
+			var/atom/B2 = new typepath(A)
+			if(SP.amount && B2:amount) B2:amount = SP.amount
+			slip.info += "<li>[B2.name]</li>" //add the item to the manifest
 
-			//manifest finalisation
+		//manifest finalisation
 
-			// AUTOFIXED BY fix_string_idiocy.py
-			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:326: slip.info += "</ul><br>"
-			slip.info += {"</ul><br>
-				CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"}
-			// END AUTOFIX
-			if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
+		// AUTOFIXED BY fix_string_idiocy.py
+		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:326: slip.info += "</ul><br>"
+		slip.info += {"</ul><br>
+			CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>"}
+		// END AUTOFIX
+		if (SP.contraband) slip.loc = null	//we are out of blanks for Form #44-D Ordering Illicit Drugs.
 
-		supply_shuttle.shoppinglist.len = 0
-		return
+	supply_shuttle.shoppinglist.len = 0
+	return
 
 /datum/controller/supply_shuttle/proc/forbidden_atoms_check(atom/A)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/controller/supply_shuttle/proc/forbidden_atoms_check() called tick#: [world.time]")
@@ -525,7 +495,7 @@ var/list/mechtoys = list(
 
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
+		reqform.name = "[P.name] Requisition Form - [idname], [idrank]"
 
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:425: reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
@@ -657,12 +627,10 @@ var/list/mechtoys = list(
 		return
 	if(..())
 		return 1
-
 	//Calling the shuttle
 	if(href_list["send"])
 		if(!supply_shuttle.can_move())
 			temp = "For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-
 		else if(supply_shuttle.at_station)
 			supply_shuttle.moving = -1
 			supply_shuttle.sell()
@@ -674,14 +642,12 @@ var/list/mechtoys = list(
 			supply_shuttle.eta_timeofday = (world.timeofday + supply_shuttle.movetime) % 864000
 			temp = "The supply shuttle has been called and will arrive in [round(supply_shuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			post_signal("supply")
-
 	else if (href_list["order"])
 		if(supply_shuttle.moving) return
 		if(href_list["order"] == "categories")
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:567: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
@@ -692,7 +658,6 @@ var/list/mechtoys = list(
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
-
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:574: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
 			temp = {"<b>Available credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
@@ -703,31 +668,25 @@ var/list/mechtoys = list(
 				var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
 				if((N.hidden && !hacked) || (N.contraband && !can_order_contraband) || N.group != last_viewed_group) continue								//Have to send the type instead of a reference to
 				temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"		//the obj because it would get caught by the garbage
-
 		/*temp = "Supply points: [supply_shuttle.points]<BR><HR><BR>Request what?<BR><BR>"
-
 		for(var/supply_name in supply_shuttle.supply_packs )
 			var/datum/supply_packs/N = supply_shuttle.supply_packs[supply_name]
 			if(N.hidden && !hacked) continue
 			if(N.contraband && !can_order_contraband) continue
 			temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [N.cost]<BR>"    //the obj because it would get caught by the garbage
 		temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"*/
-
 	else if (href_list["doorder"])
 		if(world.time < reqtime)
 			for(var/mob/V in hearers(src))
 				V.show_message("<b>[src]</b>'s monitor flashes, \"[world.time - reqtime] seconds remaining until another requisition form may be printed.\"")
 			return
-
 		//Find the correct supply_pack datum
 		var/datum/supply_packs/P = supply_shuttle.supply_packs[href_list["doorder"]]
 		if(!istype(P))	return
-
 		var/timeout = world.time + 600
 		var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","") as null|text),1,MAX_MESSAGE_LEN)
 		if(world.time > timeout)	return
 		if(!reason)	return
-
 		var/idname = "*None Provided*"
 		var/idrank = "*None Provided*"
 		var/datum/money_account/account
@@ -743,11 +702,9 @@ var/list/mechtoys = list(
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account
-
 		supply_shuttle.ordernum++
 		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(loc)
-		reqform.name = "Requisition Form - [P.name]"
-
+		reqform.name = "[P.name] Requisition Form - [idname], [idrank]"
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:618: reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 		reqform.info += {"<h3>[station_name] Supply Requisition Form</h3><hr>
@@ -760,7 +717,6 @@ var/list/mechtoys = list(
 			CONTENTS:<br>"}
 		// END AUTOFIX
 		reqform.info += P.manifest
-
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:627: reqform.info += "<hr>"
 		reqform.info += {"<hr>
@@ -768,7 +724,6 @@ var/list/mechtoys = list(
 		// END AUTOFIX
 		reqform.update_icon()	//Fix for appearing blank when printed.
 		reqtime = (world.time + 5) % 1e5
-
 		//make our supply_order datum
 		var/datum/supply_order/O = new /datum/supply_order()
 		O.ordernum = supply_shuttle.ordernum
@@ -776,8 +731,6 @@ var/list/mechtoys = list(
 		O.orderedby = idname
 		O.account = account
 		supply_shuttle.requestlist += O
-
-
 		// AUTOFIXED BY fix_string_idiocy.py
 		// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:640: temp = "Order request placed.<BR>"
 		temp = {"Order request placed.<BR>
@@ -802,21 +755,18 @@ var/list/mechtoys = list(
 					A.charge(P.cost,null,"Supply Order #[SO.ordernum]",dest_name = "CentComm")
 					A.charge(SUPPLY_TAX,cargo_acct,"Order Tax")
 					supply_shuttle.shoppinglist += O
-
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:658: temp = "Thanks for your order.<BR>"
 					temp = {"Thanks for your order.<BR>
 						<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"}
 					// END AUTOFIX
 				else
-
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:661: temp = "Not enough supply points.<BR>"
 					temp = {"Not enough credit.<BR>
 						<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"}
 					// END AUTOFIX
 				break
-
 	else if (href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"
 		for(var/S in supply_shuttle.shoppinglist)
@@ -829,7 +779,6 @@ var/list/mechtoys = list(
 		supply_shuttle_shoppinglist -= remove_supply
 		supply_shuttle_points += remove_supply.object.cost
 		temp += "Canceled: [remove_supply.object.name]<BR><BR><BR>"
-
 		for(var/S in supply_shuttle_shoppinglist)
 			var/datum/supply_order/SO = S
 			temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""] <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"

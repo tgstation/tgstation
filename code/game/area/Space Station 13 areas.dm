@@ -228,6 +228,11 @@ proc/process_adminbus_teleport_locs()
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
 
+/area/shuttle/supply
+	name = "supply shuttle"
+	icon_state = "shuttle3"
+	lighting_use_dynamic = 0 //Ain't nobody got time for that
+
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
 	music = "music/escape.ogg"
@@ -786,48 +791,6 @@ proc/process_adminbus_teleport_locs()
 /area/maintenance/ghettobar
 	name = "Ghetto Bar"
 	icon_state = "ghettobar"
-
-//Defficiency
-
-/area/maintenance/vault
-	name = "Vault Maintenance"
-	icon_state = "vaultmaint"
-
-/area/derelictparts/fsderelict
-	name = "Fore Starboard Derelict"
-	icon_state = "fsderelict"
-
-/area/derelictparts/asderelict
-	name = "Aft Starboard Derelict"
-	icon_state = "asderelict"
-
-/area/derelictparts/apderelict
-	name = "Aft Port Derelict"
-	icon_state = "apderelict"
-
-/area/derelictparts/fore
-	name = "Fore Derelict"
-	icon_state = "fderelict"
-
-/area/derelictparts/port
-	name = "Port Derelict"
-	icon_state = "pderelict"
-
-/area/derelictparts/aft
-	name = "Aft Derelict"
-	icon_state = "aderelict"
-
-/area/derelictparts/library
-	name = "Abandoned Library"
-	icon_state = "libraryderelict"
-
-/area/derelictparts/stripclub
-	name = "Abandoned Strip Club"
-	icon_state = "stripclubderelict"
-
-/area/derelictparts/diner
-	name = "Abandoned Diner"
-	icon_state = "dinerderelict"
 
 //Hallway
 

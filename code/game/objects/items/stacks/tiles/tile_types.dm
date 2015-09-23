@@ -74,10 +74,26 @@
  * Carpets
  */
 /obj/item/stack/tile/carpet
-	name = "carpet"
-	singular_name = "carpet"
+	name = "length of carpet"
+	singular_name = "length of carpet"
 	desc = "A piece of carpet. It is the same size as a floor tile"
 	icon_state = "tile-carpet"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 5
+	throw_range = 20
+	flags = FPRINT
+	siemens_coefficient = 1
+	max_amount = 60
+
+	material = "fabric"
+
+/obj/item/stack/tile/arcade
+	name = "length of arcade carpet"
+	singular_name = "length of arcade carpet"
+	desc = "A piece of arcade carpet. It has a snazzy space theme."
+	icon_state = "tile-arcade"
 	w_class = 3.0
 	force = 1.0
 	throwforce = 1.0

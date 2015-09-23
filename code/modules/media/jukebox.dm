@@ -192,7 +192,7 @@ var/global/list/loopModeNames=list(
 	var/pick_allowed = 1 //Allows you to pick songs
 	var/access_unlocked = 0 //Allows you to access settings
 
-	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE | MULTITOOL_MENU | SCREWTOGGLE
+	machine_flags = WRENCHMOVE | FIXED2WORK | EMAGGABLE | MULTITOOL_MENU | SCREWTOGGLE | SHUTTLEWRENCH
 	mech_flags = MECH_SCAN_FAIL
 	emag_cost = 0 // because fun/unlimited uses.
 

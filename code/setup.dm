@@ -235,6 +235,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define	NOREACT		16384 			//Reagents dont' react inside this container.
 
+#define BLOCK_BREATHING 32768		//When worn, prevents breathing!
+
 #define INVULNERABLE 128
 
 #define ALL ~0
@@ -245,6 +247,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define PASSGLASS	2
 #define PASSGRILLE	4
 #define PASSBLOB	8
+#define PASSMACHINE	16//computers, vending machines, rnd machines
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.

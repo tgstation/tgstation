@@ -36,6 +36,7 @@
 	var/obj/item/weapon/gun/energy/temperature/T = null
 
 /obj/item/projectile/temp/OnFired()
+	..()
 	T = shot_from
 	temperature = T.temperature
 	switch(temperature)

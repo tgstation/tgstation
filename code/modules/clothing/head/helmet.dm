@@ -44,6 +44,13 @@
 	siemens_coefficient = 0.5
 	eyeprot = 1
 
+/obj/item/clothing/head/helmet/swat/dredd
+	name = "Judge Helmet"
+	desc = "Judge, Jury, and Executioner."
+	icon_state = "dredd-helmet"
+	item_state = "dredd-helmet"
+	species_fit = list()
+
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
@@ -85,7 +92,7 @@
 	desc = "Papers, Please"
 	armor = list(melee = 25, bullet = 0, laser = 15, energy = 10, bomb = 5, bio = 0, rad = 0)
 	item_state = "hopcap"
-	icon_state = "hopcapInhand"
+	icon_state = "hopcap"
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/aviatorhelmet
