@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - experiment: Mining Equipment lockers refactored into regular Vending Machines. There should not be any outstanding functionality changes
