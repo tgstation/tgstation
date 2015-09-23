@@ -486,6 +486,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	var/skin = 0
+	default_body_temperature = T20C+200
+	heat_damage_limit = T20C+250
+	cold_damage_limit = T20C+150
 
 /datum/species/plasmaman/skin
 	name = "Skinbone"

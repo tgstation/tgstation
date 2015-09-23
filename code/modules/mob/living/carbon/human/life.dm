@@ -408,6 +408,7 @@
 	if(!get_ghost() && getorgan(/obj/item/organ/internal/brain))
 		revivalnotification = 0
 		hardset_dna(src, null, null, null, null, /datum/species/plasmaman)
+		bodytemperature = dna.species.default_body_temperature
 		setOxyLoss(0)
 		setToxLoss(0)
 		var/total_burn = getFireLoss()
