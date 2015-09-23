@@ -110,7 +110,7 @@
 		if(!M.buckled)
 			return
 		var/mob/living/L = buckled_mob
-		var/matrix/m120 = matrix(H.transform)
+		var/matrix/m120 = matrix(L.transform)
 		m120.Turn(360)
 		animate(L, transform = m120, time = 3)
 		L.pixel_y = L.get_standard_pixel_y_offset(360)
