@@ -98,7 +98,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
@@ -149,6 +149,10 @@ Sorry Giacom. Please don't be mad :(
 				for(var/obj/structure/window/win in get_step(W,t))
 					now_pushing = 0
 					return
+		if(pulling && ismob(AM))
+			var/mob/M = AM
+			if(pulling == M.buckled)
+				stop_pulling()
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)

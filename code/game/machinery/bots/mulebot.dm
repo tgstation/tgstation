@@ -88,25 +88,9 @@ obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
 
-
-obj/machinery/bot/mulebot/Move(atom/newloc, direct)
-	. = ..()
-	if(buckled_mob)
-		if(!buckled_mob.Move(loc, direct))
-			loc = buckled_mob.loc //we gotta go back
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			. = 0
-
 obj/machinery/bot/mulebot/Process_Spacemove(movement_dir = 0)
 	if(buckled_mob)
 		return buckled_mob.Process_Spacemove(movement_dir)
-	return ..()
-
-obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(mover == buckled_mob)
-		return 1
 	return ..()
 
 // attack by item
