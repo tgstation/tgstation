@@ -40,9 +40,9 @@
 		"<span class='userdanger'>[attack_message]</span>")
 
 	if((butcher_results) && (stat == DEAD))
-		user.changeNext_move(CLICK_CD_MELEE)
 		var/sharpness = is_sharp(I)
 		if(sharpness)
+			user.changeNext_move(CLICK_CD_MELEE)
 			user << "<span class='notice'>You begin to butcher [src]...</span>"
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80/sharpness))
