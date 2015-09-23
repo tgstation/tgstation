@@ -584,7 +584,6 @@
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
 	G.key = key
-	G.color = color2hex(picked_color)
 	G << "You are a [mob_name] bound to serve [user.real_name]."
 	G << "You are capable of manifesting or recalling to your master with verbs in the Guardian tab. You will also find a verb to communicate with them privately there."
 	G << "While personally invincible, you will die if [user.real_name] does, and any damage dealt to you will have a portion passed on to them as you feed upon them to sustain yourself."
@@ -593,6 +592,7 @@
 	switch (theme)
 		if("magic")
 			G.name = "[mob_name] [capitalize(picked_color)]"
+			G.color = color2hex(picked_color)
 			G.real_name = "[mob_name] [capitalize(picked_color)]"
 			user << "[G.magic_fluff_string]."
 		if("tech")
