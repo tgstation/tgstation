@@ -39,7 +39,7 @@ var/list/freqtoname = list(
 		return
 	send_speech(message, world.view, speaking)
 
-/atom/movable/proc/Hear(var/datum/speech/speech, var/rendered_speech)
+/atom/movable/proc/Hear(var/datum/speech/speech, var/rendered_speech="")
 	return
 
 /atom/movable/proc/can_speak()
@@ -48,7 +48,7 @@ var/list/freqtoname = list(
 
 /atom/movable/proc/send_speech(var/datum/speech/speech, var/range=7)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/send_speech() called tick#: [world.time]")
-	//say_testing(src, "send speech start, msg = [message]; message_range = [range]; language = [speaking ? speaking.name : "None"];")
+	say_testing(src, "/atom/movable/proc/send_speech() start, msg = [speech.message]; message_range = [range]; language = [speech.language ? speech.language.name : "None"];")
 	if(isnull(range))
 		range = 7
 	var/rendered = render_speech(speech)
@@ -63,9 +63,11 @@ var/list/freqtoname = list(
 	speech.frequency = frequency
 	speech.job = get_job(speech)
 	speech.radio = transmitter
+	speech.speaker = src
 
 	speech.name = GetVoice()
 	speech.as_name = get_alt_name()
+	return speech
 
 /atom/movable/proc/render_speech_name(var/datum/speech/speech)
 	// old getVoice-based shit
@@ -73,18 +75,22 @@ var/list/freqtoname = list(
 	return "[speech.name][speech.render_as_name()]"
 
 /atom/movable/proc/render_speech(var/datum/speech/speech)
+	say_testing(src, "render_speech()...")
 	var/freqpart = speech.frequency ? "\[[get_radio_name(speech.frequency)]\]" : ""
+	var/datum/speech/filtered_speech = (speech.language) ? speech.language.filter_speech(speech) : speech
+	// Below, but formatted nicely.
+	/*
 	return {"
-		<span class='[speech.render_wrapper_classes()]'>
+		<span class='[filtered_speech.render_wrapper_classes()]'>
 			<span class='name'>
-				[render_speaker_track_start(speech)][render_speech_name(speech)][render_speaker_track_end(speech)]
-				\icon[speech.radio][freqpart]
-				[render_job(speech)]
+				[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)]
+				\icon[filtered_speech.radio][freqpart]
+				[render_job(filtered_speech)]
 			</span>
-			<span class='[speech.render_message_classes()]'>
-				[speech.message]
-			</span>
+			[filtered_speech.render_message()]
 		</span>"}
+	*/
+	return "<span class='[filtered_speech.render_wrapper_classes()]'><span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)] \icon[filtered_speech.radio][freqpart] [render_job(filtered_speech)]</span> [filtered_speech.render_message()]</span>"
 
 /atom/movable/proc/render_speaker_track_start(var/datum/speech/speech)
 	return ""
@@ -115,16 +121,18 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 /atom/movable/proc/render_lang(var/datum/speech/speech)
 	var/raw_message=speech.message
 	if(speech.language)
-		var/overRadio = (istype(speech.speaker, /obj/item/device/radio) || istype(speech.speaker.GetSource(), /obj/item/device/radio))
+		//var/overRadio = (istype(speech.speaker, /obj/item/device/radio) || istype(speech.speaker.GetSource(), /obj/item/device/radio))
 		var/atom/movable/AM = speech.speaker.GetSource()
 		if(say_understands((istype(AM) ? AM : speech.speaker),speech.language))
-			if(overRadio)
-				return speech.language.format_message_radio(speech.speaker, raw_message)
-			return speech.language.format_message(speech.speaker, raw_message)
+			return render_speech(speech)
+			//if(overRadio)
+			//	return speech.language.format_message_radio(speech.speaker, raw_message)
+			//return speech.language.format_message(speech.speaker, raw_message)
 		else
-			if(overRadio)
-				return speech.language.format_message_radio(speech.speaker, speech.language.scramble(raw_message))
-			return speech.language.format_message(speech.speaker, speech.language.scramble(raw_message))
+			return render_speech(speech.scramble())
+			//if(overRadio)
+			//	return speech.language.format_message_radio(speech.speaker, speech.language.scramble(raw_message))
+			//return speech.language.format_message(speech.speaker, speech.language.scramble(raw_message))
 
 	else
 		var/atom/movable/AM = speech.speaker.GetSource()

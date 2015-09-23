@@ -126,11 +126,12 @@ var/list/department_radio_keys = list(
 
 // /vg/edit: Added forced_by for handling braindamage messages and meme stuff
 /mob/living/say(var/message, bubble_type)
+	say_testing(src, "/mob/living/say(\"[message]\", [bubble_type]")
 	if(timestopped) return //under the effects of time magick
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	message = capitalize(message)
 
-	//say_testing(src, "Say start, message=[message]")
+	say_testing(src, "Say start, message=[message]")
 	if(!message) return
 
 	if(silent)
@@ -143,26 +144,26 @@ var/list/department_radio_keys = list(
 	var/message_mode = get_message_mode(message)
 	//var/message_mode_name = message_mode_to_name(message_mode)
 	if (stat == DEAD) // Dead.
-		//say_testing(src, "ur ded kid")
+		say_testing(src, "ur ded kid")
 		say_dead(message)
 		return
 	if (stat) // Unconcious.
 		if(message_mode == MODE_WHISPER) //Lets us say our last words.
-			//say_testing(src, "message mode was whisper.")
+			say_testing(src, "message mode was whisper.")
 			whisper(copytext(message, 3))
 		return
 	if(check_emote(message))
-		//say_testing(src, "Emoted")
+		say_testing(src, "Emoted")
 		return
 	if(!can_speak_basic(message))
-		//say_testing(src, "we aren't able to talk")
+		say_testing(src, "we aren't able to talk")
 		return
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
-		//say_testing(src, "Message mode was [message_mode == MODE_HEADSET ? "headset" : "robot"]")
+		say_testing(src, "Message mode was [message_mode == MODE_HEADSET ? "headset" : "robot"]")
 		message = copytext(message, 2)
 	else if(message_mode)
-		//say_testing(src, "Message mode is [message_mode_name]")
+		say_testing(src, "Message mode is [message_mode]")
 		message = copytext(message, 3)
 
 	// SAYCODE 90.0!
@@ -171,23 +172,23 @@ var/list/department_radio_keys = list(
 
 	if(!speech.language)
 		speech.language = parse_language(speech.message)
-		//say_testing(src, "Getting speaking language, [istype(speaking) ? "got [speaking.name]" : "got null"]")
+		say_testing(src, "Getting speaking language, got [istype(speech.language) ? speech.language.name : "null"]")
 	if(istype(speech.language))
-		//var/oldmsg = message
+		var/oldmsg = message
 		speech.message = copytext(speech.message,2+length(speech.language.key))
-		//say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
+		say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
 		if(!isnull(speech.language))
-			//var/oldmsg = message
+			var/oldmsg = message
 			var/n = speech.language
 			message = copytext(message,1+length(n))
-			//say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
+			say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
 			speech.language = null
 		speech.language = get_default_language()
-		//say_testing(src, "Didnt have a language, get_default_language() gave us [speaking ? speaking.name : "null"]")
+		say_testing(src, "Didnt have a language, get_default_language() gave us [speech.language ? speech.language.name : "null"]")
 	speech.message = trim_left(speech.message)
 	if(handle_inherent_channels(speech.message, message_mode, speech.language))
-		//say_testing(src, "Handled by inherent channel")
+		say_testing(src, "Handled by inherent channel")
 		return
 	if(!can_speak_vocal(speech.message))
 		return
@@ -196,9 +197,8 @@ var/list/department_radio_keys = list(
 
 
 	var/message_range = 7
-	var/raw_message = speech.message
 	speech.message = treat_message(speech.message)
-	var/radio_return = radio(speech.message, message_mode, raw_message, speech.language)
+	var/radio_return = radio(speech, message_mode)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 
@@ -210,7 +210,7 @@ var/list/department_radio_keys = list(
 		message_range++
 
 
-	send_speech(speech, message_range, src, bubble_type)
+	send_speech(speech, message_range, bubble_type)
 	var/turf/T = get_turf(src)
 	log_say("[name]/[key] [T?"(@[T.x],[T.y],[T.z])":"(@[x],[y],[z])"] [speech.language ? "As [speech.language.name] ":""]: [message]")
 
@@ -245,7 +245,7 @@ var/list/department_radio_keys = list(
 	return 0
 
 /mob/living/send_speech(var/datum/speech/speech, var/message_range=7, var/bubble_type) // what is bubble type?
-	//say_testing(src, "send speech start, msg = [message]; message_range = [message_range]; language = [speaking ? speaking.name : "None"]; source = [source];")
+	say_testing(src, "/mob/living/send_speech() start, msg = [speech.message]; message_range = [message_range]; language = [speech.language ? speech.language.name : "None"]; speaker = [speech.speaker];")
 	if(isnull(message_range)) message_range = 7
 
 	var/list/listeners = get_hearers_in_view(message_range, speech.speaker) | observers
@@ -253,7 +253,7 @@ var/list/department_radio_keys = list(
 	var/rendered = render_speech(speech)
 
 	for (var/atom/movable/listener in listeners)
-		listener.Hear(rendered, speech)
+		listener.Hear(speech, rendered)
 
 	send_speech_bubble(speech, bubble_type, listeners)
 

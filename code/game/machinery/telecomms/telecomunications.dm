@@ -41,10 +41,10 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/relay_information() called tick#: [world.time]")
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
-	//var/mob/mob = signal.data["mob"]
-	//var/datum/language/language = signal.data["language"]
-	//var/langname = (language ? language.name : "No language")
-	//say_testing(mob, "[src] relay_information start, language [langname]")
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] relay_information start, language [langname]")
 	if(!on)
 		return
 	var/send_count = 0
@@ -282,17 +282,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
-	//var/mob/mob = signal.data["mob"]
-	//var/datum/language/language = signal.data["language"]
-	//var/langname = (language ? language.name : "No language")
-	//say_testing(mob, "[src] received radio signal from us, language [langname]")
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
 	if(!on) // has to be on to receive messages
 		return
 	if(!signal)
 		return
 	if(!check_receive_level(signal))
 		return
-	//say_testing(mob, "[src] is on, has signal, and receive is good")
+	say_testing(mob, "[src] is on, has signal, and receive is good")
 	if(signal.transmission_method == 2)
 
 		if(is_freq_listening(signal)) // detect subspace signals
@@ -304,9 +304,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
 		else
-			//say_testing(mob, "[src] is not listening")
+			say_testing(mob, "[src] is not listening")
 	else
-		//say_testing(mob, "bad transmission method")
+		say_testing(mob, "bad transmission method")
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
 

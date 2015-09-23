@@ -31,6 +31,20 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/say_misunderstood() called tick#: [world.time]")
 	return stars(message)
 
+// N3X15-saycode splits saycode into two phases: filtering and rendering.
+//  Therefore, filtering is in one proc while actual rendering is last.
+
+/datum/language/proc/filter_speech(var/datum/speech/speech)
+	//var/datum/speech/speech2 = speech.clone()
+	speech.message_classes.Add(colour)
+	speech.message=capitalize(speech.message)
+	return speech
+
+/datum/language/proc/render_speech(var/datum/speech/speech, var/html_message)
+	// html_message is the message itself + <span> tags. Do NOT filter it.
+	return "[get_spoken_verb(speech.message,issilicon(speech.speaker))], [html_message]"
+
+/* Obsolete, here for reference
 /datum/language/proc/format_message(mob/M, message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
@@ -42,6 +56,7 @@
 /datum/language/proc/format_message_radio(mob/M, message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message_radio() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+*/
 
 /datum/language/unathi
 	name = "Sinta'unathi"

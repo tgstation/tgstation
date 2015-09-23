@@ -118,10 +118,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
-	//var/mob/mob = signal.data["mob"]
-	//var/datum/language/language = signal.data["language"]
-	//var/langname = (language ? language.name : "No language")
-	//say_testing(mob, "[src] received radio signal from us, language [langname]")
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
 
 	if(!on) // has to be on to receive messages
 		return
@@ -148,7 +148,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], list(0, z))
 	else
-		//say_testing(mob, "[src] is not listening")
+		say_testing(mob, "[src] is not listening")
 /**
 
 	Here is the big, bad function that broadcasts a message given the appropriate
@@ -211,11 +211,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 */
 /proc/Broadcast_Message(
 		var/datum/speech/speech, // Most everything is now in here.
-		var/vmask,
-		var/data,
-		var/compression,
-		var/list/level)
-	//say_testing(AM, "broadcast_message start")
+		var/vmask,               // voice mask (bool)
+		var/data,                // ???
+		var/compression,         // Level of compression
+		var/list/level)          // z-levels that can hear us
+	say_testing(speech.speaker, "broadcast_message start")
 	// Cut down on the message sizes.
 	speech.message = copytext(speech.message, 1, MAX_BROADCAST_LEN)
 
@@ -308,7 +308,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
-	//say_testing(AM, "Broadcast_Message finished with [listeners_sent] listener\s getting our message, [message] lang = [speaking ? speaking.name : "none"]")
+	say_testing(speech.speaker, "Broadcast_Message finished with [listeners.len] listener\s getting our message, [speech.message] lang = [speech.language ? speech.language.name : "none"]")
 	spawn(50)
 		returnToPool(virt)
 

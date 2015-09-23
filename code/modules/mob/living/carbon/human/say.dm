@@ -102,25 +102,25 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				//say_testing(src, "Talking into our headset")
+				say_testing(src, "Talking into our headset")
 				ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if (ears)
-				//say_testing(src, "Talking into our headset")
+				say_testing(src, "Talking into our headset")
 				ears.talk_into(speech, 1)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)
 			if (ears)
-				//say_testing(src, "Talking into our dept headset")
+				say_testing(src, "Talking into our dept headset")
 				ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
-			//say_testing(src, "Talking through a radio channel")
+			say_testing(src, "Talking through a radio channel")
 			ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 

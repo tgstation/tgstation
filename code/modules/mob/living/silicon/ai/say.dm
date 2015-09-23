@@ -63,20 +63,20 @@
 		return 1
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(var/message,var/datum/language/speaking)
+/mob/living/silicon/ai/proc/holopad_talk(var/datum/speech/speech)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/ai/proc/holopad_talk() called tick#: [world.time]")
 	var/turf/turf = get_turf(src)
-	log_say("[key_name(src)] (@[turf.x],[turf.y],[turf.z]) Holopad: [message]")
+	log_say("[key_name(src)] (@[turf.x],[turf.y],[turf.z]) Holopad: [speech.message]")
 
-	message = trim(message)
+	speech.message = trim(speech.message)
 
-	if (!message)
+	if (!speech.message)
 		return
 
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
-		send_speech(message, 7, speaking, T, "R")
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[message]\"</span></span></i>"//The AI can "hear" its own message.
+		send_speech(speech, 7, "R")
+		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[speech.message]\"</span></span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
 	return

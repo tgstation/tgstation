@@ -99,13 +99,9 @@ var/specops_shuttle_timeleft = 0
 						var/data, var/compression, var/list/level, var/freq)
 */
 /proc/AliceAnnounce(var/atom/movable/announcer,var/message)
-	var/datum/speech/speech = new(announcer,
-		radio=announcer,
-		message=message,
-		name="A.L.I.C.E.",
-		job="Response Team",
-		real_name="A.L.I.C.E.",
-		frequency=radiochannels["Response Team"])
+	var/datum/speech/speech = announcer.create_speech(message=message, frequency=radiochannels["Response Team"], transmitter=announcer)
+	//speech.name="A.L.I.C.E."
+	speech.job="Response Team"
 	Broadcast_Message(speech,
 		data=0,
 		compression=0,
