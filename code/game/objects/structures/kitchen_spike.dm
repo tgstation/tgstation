@@ -53,7 +53,7 @@
 		var/obj/item/weapon/grab/G = I
 		if(istype(G.affecting, /mob/living/))
 			if(!buckled_mob)
-				if(do_mob(user, src, 50))
+				if(do_mob(user, src, 120))
 					if(buckled_mob) //to prevent spam/queing up attacks
 						return
 					if(G.affecting.buckled)
@@ -70,7 +70,7 @@
 					H.buckled = src
 					H.dir = 2
 					buckled_mob = H
-					var/matrix/m120 = matrix()
+					var/matrix/m120 = matrix(H.transform)
 					m120.Turn(180)
 					animate(H, transform = m120, time = 3)
 					H.pixel_y = H.get_standard_pixel_y_offset(180)
@@ -110,7 +110,7 @@
 		if(!M.buckled)
 			return
 		var/mob/living/L = buckled_mob
-		var/matrix/m120 = matrix()
+		var/matrix/m120 = matrix(H.transform)
 		m120.Turn(360)
 		animate(L, transform = m120, time = 3)
 		L.pixel_y = L.get_standard_pixel_y_offset(360)
