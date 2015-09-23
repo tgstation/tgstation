@@ -26,10 +26,10 @@
 
 		qdel(brainmob)
 
-		//Update the body's icon so it doesnt appear debrained anymore
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.update_hair(0)
+	//Update the body's icon so it doesnt appear debrained anymore
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_hair(0)
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -56,9 +56,10 @@
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	brainmob.timeofhostdeath = L.timeofdeath
-	if(iscarbon(L))
+	if(L.has_dna())
 		var/mob/living/carbon/C = L
 		brainmob.dna = C.dna
+		brainmob.dna.holder = brainmob
 	if(L.mind)
 		L.mind.transfer_to(brainmob)
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"

@@ -50,14 +50,12 @@
 		return 0
 
 	//Equip the rest of the gear
-	if(H.dna)
-		H.dna.species.before_equip_job(src, H)
+	H.dna.species.before_equip_job(src, H)
 
 	if(outfit)
 		H.equipOutfit(outfit)
 
-	if(H.dna)
-		H.dna.species.after_equip_job(src, H)
+	H.dna.species.after_equip_job(src, H)
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
