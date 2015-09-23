@@ -70,6 +70,7 @@ datum/reagent/consumable/sugar/overdose_process(var/mob/living/M as mob)
 datum/reagent/consumable/crack
 	name = "crack"
 	id = "crack"
+	synth_cost = 5
 	description = "An illegal chemical compound used as drug."
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	metabolization_rate = 1 * REAGENTS_METABOLISM
@@ -465,3 +466,35 @@ datum/reagent/consumable/corn_syrup/on_mob_life(var/mob/living/M as mob)
 	M.reagents.add_reagent("sugar", 3)
 	M.reagents.remove_reagent("corn_syrup", 1)
 	..()
+
+datum/reagent/consumable/fat
+	name = "Fat"
+	id = "fat"
+	description = "It's disgusting. But so tempting."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	color = "#C8A5DC"
+
+datum/reagent/consumable/fat/on_mob_life(var/mob/living/M as mob)
+		M.overeatduration += 20 //Eating more than 10u will make you fat, 10u will give 500 overeatduration
+
+datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
+	if (!istype(T)) return
+	if(reac_volume >= 1)
+		T.MakeSlippery(1)
+
+datum/reagent/consumable/fat/concentrated
+	name = "Concentrated Fat"
+	id = "cfat"
+	description = "You feel fat just from looking at it."
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	color = "#C8A5DC"
+
+datum/reagent/consumable/fat/concentrated/on_mob_life(var/mob/living/M as mob)
+		M.overeatduration += 40 //Eating 5u or more will make you fat, 4.8u will give 500 overeatduration
+
+datum/reagent/fat/concentrated/reaction_turf(turf/simulated/T, reac_volume)
+	if (!istype(T)) return
+	if(reac_volume >= 1)
+		T.MakeSlippery(2)
