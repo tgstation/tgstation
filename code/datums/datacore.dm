@@ -292,6 +292,61 @@ var/record_id_num = 1001
 		facial_s.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
 
+	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
+	for(var/layer in relevent_layers)
+		for(var/bodypart in H.dna.species.mutant_bodyparts)
+			switch(bodypart)
+				if("tail_lizard")
+					S = tails_list_lizard[H.dna.features["tail_lizard"]]
+				if("tail_human")
+					S = tails_list_human[H.dna.features["tail_human"]]
+				if("spines")
+					S = spines_list[H.dna.features["spines"]]
+				if("snout")
+					S = snouts_list[H.dna.features["snout"]]
+				if("frills")
+					S = frills_list[H.dna.features["frills"]]
+				if("horns")
+					S = horns_list[H.dna.features["horns"]]
+				if("ears")
+					S = ears_list[H.dna.features["ears"]]
+				if("body_markings")
+					S = body_markings_list[H.dna.features["body_markings"]]
+
+			if(!S || S.icon_state == "none")
+				continue
+
+			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
+			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+				bodypart = "tail"
+
+			if(S.hasinner)
+				photo.Blend(new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = "[H.dna.species.id]_m_[bodypart]inner_[S.icon_state]_[layer]"), ICON_OVERLAY)
+
+			var/icon_string
+
+			if(S.gender_specific)
+				icon_string = "[H.dna.species.id]_[g]_[bodypart]_[S.icon_state]_[layer]"
+			else
+				icon_string = "[H.dna.species.id]_m_[bodypart]_[S.icon_state]_[layer]"
+			var/icon/part = new/icon("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string)
+
+			switch(S.color_src)
+				if(MUTCOLORS)
+					part.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
+				if(HAIR)
+					if(H.hair_color == "mutcolor")
+						part.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
+					else
+						part.Blend("#[H.hair_color]", ICON_MULTIPLY)
+				if(FACEHAIR)
+					part.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
+				if(EYECOLOR)
+					part.Blend("#[H.eye_color]", ICON_MULTIPLY)
+
+			photo.Blend(part, ICON_OVERLAY)
+
 	if(eyes_s)
 		photo.Blend(eyes_s, ICON_OVERLAY)
 
