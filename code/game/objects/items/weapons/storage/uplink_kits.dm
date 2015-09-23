@@ -223,3 +223,19 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
+
+/obj/item/weapon/storage/box/cyber_implants
+	name = "boxed cybernetic implants"
+	desc = "A sleek, sturdy box."
+	icon_state = "cyber_implants"
+	var/list/boxed = list(/obj/item/organ/internal/cyberimp/eyes/xray,/obj/item/organ/internal/cyberimp/eyes/thermals,
+						/obj/item/organ/internal/cyberimp/brain/anti_stun, /obj/item/organ/internal/cyberimp/chest/reviver)
+	var/amount = 5
+
+/obj/item/weapon/storage/box/cyber_implants/New()
+	..()
+	var/i
+	var/implant
+	for(i = 0, i < amount, i++)
+		implant = pick(boxed)
+		new implant(src)
