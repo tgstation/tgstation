@@ -29,6 +29,7 @@ Mineral Sheets
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "materials=1"
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
@@ -251,7 +252,8 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	w_class = 3
 	throw_speed = 1
 	throw_range = 3
-	origin_tech = "materials=5"
+	origin_tech = "materials=6"
+	materials = list(MAT_URANIUM=3000)
 
 /*
  * Adamantine

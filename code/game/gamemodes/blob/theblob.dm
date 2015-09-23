@@ -4,13 +4,15 @@
 	icon = 'icons/mob/blob.dmi'
 	luminosity = 3
 	desc = "A thick wall of writhing tendrils."
-	density = 0
+	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
 	anchored = 1
 	explosion_block = 1
 	var/health = 30
+	var/maxhealth = 30
+	var/health_regen = 2
 	var/health_timestamp = 0
-	var/brute_resist = 4
+	var/brute_resist = 2
 	var/fire_resist = 1
 	var/mob/camera/blob/overmind
 
@@ -59,10 +61,9 @@
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
 		return 0
-	if(health < initial(health))
-		health++
-		update_icon()
-		health_timestamp = world.time + 10 // 1 seconds
+	health = min(maxhealth, health+health_regen)
+	update_icon()
+	health_timestamp = world.time + 10 // 1 seconds
 
 /obj/effect/blob/proc/pulseLoop(num)
 	var/a_color
@@ -110,7 +111,6 @@
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1, a_color)
 	if(prob && !prob(health))	return
-	if(istype(T, /turf/space) && prob(75)) 	return
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -121,12 +121,15 @@
 			else	T = null
 
 	if(!T)	return 0
-	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+	if(istype(T, /turf/space) && prob(65))
+		B.health = 0
 	B.color = a_color
 	B.density = 1
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
+		B.update_icon()
 	else
 		T.blob_act()//If we cant move in hit the turf
 		B.loc = null //So we don't play the splat sound, see Destroy()
@@ -208,7 +211,7 @@
 
 /obj/effect/blob/examine(mob/user)
 	..()
-	user << "It looks like it's of a [get_chem_name()] kind."
+	user << "It seems to be made of [get_chem_name()]."
 	return
 
 /obj/effect/blob/proc/get_chem_name()
@@ -221,14 +224,23 @@
 	icon_state = "blob"
 	luminosity = 0
 	health = 21
+	maxhealth = 25
+	health_regen = 1
+	brute_resist = 4
 
 /obj/effect/blob/normal/update_icon()
 	if(health <= 0)
 		qdel(src)
-	else if(health <= 15)
+	else if(health <= 10)
 		icon_state = "blob_damaged"
+		name = "fragile blob"
+		desc = "A thin lattice of slightly twitching tendrils."
+		brute_resist = 2
 	else
 		icon_state = "blob"
+		name = "blob"
+		desc = "A thick wall of writhing tendrils."
+		brute_resist = 4
 
 /* // Used to create the glow sprites. Remember to set the animate loop to 1, instead of infinite!
 

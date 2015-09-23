@@ -300,15 +300,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.blood_type = record_found.fields["blood_type"]
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
 	else
-		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
-		A.real_name = G_found.real_name
 		A.copy_to(new_character)
+		A.real_name = G_found.real_name
+		new_character.dna.update_dna_identity()
 
-	if(!new_character.real_name)
-		new_character.real_name = new_character.dna.species.random_name(new_character.gender,1)
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -316,13 +314,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
-	if(!new_character.mind.assigned_role)	new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
-
-	//DNA
-	if(record_found)//Pull up their name from database records if they did have a mind.
-		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
-	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
-		ready_dna(new_character)
+	if(!new_character.mind.assigned_role)
+		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
 	new_character.key = G_found.key
 
@@ -822,7 +815,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		id_select += "<option value=\"[path]\">[path]</option>"
 	id_select += "</select>"
 
-	var/dat = {" 
+	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
 	<form name="outfit" action="byond://?src=\ref[src]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">

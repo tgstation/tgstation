@@ -78,7 +78,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in world)
+				for (var/obj/item/weapon/implant/tracking/W in tracking_implants)
 					if (!W.implanted || !ismob(W.loc))
 						continue
 					else

@@ -130,7 +130,7 @@
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
-	if(!check_dna_integrity(target) || !ishuman(target))
+	if(!ishuman(target))
 		user << "<span class='warning'>[target] is not compatible with this ability.</span>"
 		return
 	return 1

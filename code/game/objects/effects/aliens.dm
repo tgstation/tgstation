@@ -309,6 +309,7 @@
 	anchored = 1
 	var/health = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	layer = MOB_LAYER
 
 
 /obj/structure/alien/egg/New()

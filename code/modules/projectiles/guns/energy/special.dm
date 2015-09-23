@@ -140,6 +140,7 @@
 	var/overheat_time = 16
 	var/recent_reload = 1
 	unique_rename = 1
+	origin_tech = "combat=2;powerstorage=1"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1

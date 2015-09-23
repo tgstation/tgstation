@@ -16,15 +16,23 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
+	gender = pick(MALE, FEMALE)
+	real_name = name
+	if(good_mutations.len) //genetic mutations have been set up.
+		initialize()
+
 	internal_organs += new /obj/item/organ/internal/appendix
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
-	gender = pick(MALE, FEMALE)
 
 	..()
+
+/mob/living/carbon/monkey/initialize()
+	create_dna(src)
+	dna.initialize_dna(random_blood_type())
 
 /mob/living/carbon/monkey/prepare_data_huds()
 	//Prepare our med HUD...
@@ -102,7 +110,7 @@
 				if (prob(25))
 					Paralyse(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					add_logs(M, src, "pushed", admin=0)
+					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 				else

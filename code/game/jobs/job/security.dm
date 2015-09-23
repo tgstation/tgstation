@@ -247,7 +247,8 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	H.sec_hud_set_implants()
 
 	var/obj/item/clothing/under/U = H.w_uniform
-	U.attachTie(new tie)
+	if(tie)
+		U.attachTie(new tie)
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access |= dep_access

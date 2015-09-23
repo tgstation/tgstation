@@ -682,7 +682,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(NOCLONE in M.mutations))
+		if(!M.suiciding && !(M.disabilities & NOCLONE))
 			if(!M)
 				return
 			if(M.notify_ghost_cloning())
@@ -724,7 +724,7 @@
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
-	if(istype(M) && M.dna)
+	if(M.has_dna())
 		M.dna.remove_all_mutations()
 	..()
 	return
