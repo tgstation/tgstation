@@ -235,6 +235,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define	NOREACT		16384 			//Reagents dont' react inside this container.
 
+#define BLOCK_BREATHING 32768		//When worn, prevents breathing!
+
 #define INVULNERABLE 128
 
 #define ALL ~0

@@ -238,7 +238,7 @@
 ///called when an item is stripped off by another person, called AFTER it is on the ground
 /obj/item/proc/stripped(mob/wearer as mob, mob/stripper as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/stripped() called tick#: [world.time]")
-	return
+	return unequipped(wearer)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -267,6 +267,10 @@
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/equipped() called tick#: [world.time]")
+	return
+
+// called after an item is unequipped or stripped
+/obj/item/proc/unequipped(mob/user)
 	return
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
