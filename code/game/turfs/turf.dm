@@ -317,8 +317,7 @@
 /turf/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = 1
-	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/indestructible/abductor
 	icon_state = "alien1"
