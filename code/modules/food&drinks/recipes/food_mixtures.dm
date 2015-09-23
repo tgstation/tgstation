@@ -58,7 +58,7 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/butterbar/wrapped(location)
 	return
 
-/datum/chemical_reaction/
+/datum/chemical_reaction/cfat
 	name = "Concentrated Fat"
 	id = "con_fat"
 	result = "cfat"
