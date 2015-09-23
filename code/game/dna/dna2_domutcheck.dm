@@ -6,11 +6,12 @@
 #define MUTCHK_FORCED        1
 /proc/domutcheck(var/mob/living/M, var/connected=null, var/flags=0)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/domutcheck() called tick#: [world.time]")
+	if(!M)
+		//testing("[gene.name] has No mob")
+		return
+
 	for(var/datum/dna/gene/gene in dna_genes)
 		//testing("Checking [gene.name]")
-		if(!M)
-			//testing("[gene.name] has No mob")
-			return
 		if(!gene.block)
 			//testing("[gene.name] has no block")
 			continue

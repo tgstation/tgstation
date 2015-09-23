@@ -374,16 +374,16 @@ var/global/list/damage_icon_parts = list()
 	if(gender == FEMALE)	g = "f"
 	// DNA2 - Drawing underlays.
 	var/hulk = 0
-	for(var/datum/dna/gene/gene in dna_genes)
+	for(var/gene_type in active_genes)
+		var/datum/dna/gene/gene = dna_genes[gene_type]
 		if(!gene.block)
 			continue
-		if(gene.is_active(src))
-			if(gene.name == "Hulk") hulk = 1
-			var/underlay=gene.OnDrawUnderlays(src,g,fat)
-			if(underlay)
-				//standing.underlays += underlay
-				O.underlays += underlay
-				add_image = 1
+		if(gene.name == "Hulk") hulk = 1
+		var/underlay=gene.OnDrawUnderlays(src,g,fat)
+		if(underlay)
+			//standing.underlays += underlay
+			O.underlays += underlay
+			add_image = 1
 	for(var/mut in mutations)
 		switch(mut)
 			if(M_HULK)
