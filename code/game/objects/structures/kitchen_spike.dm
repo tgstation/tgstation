@@ -152,7 +152,6 @@
 				"[user.name] tries to pull [M.name] free of the [src]!",\
 				"<span class='notice'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
 				"<span class='italics'>You hear a squishy wet noise.</span>")
-			M.adjustBruteLoss(20)
 			if(!do_after(M, 300, target = src))
 				if(M && M.buckled)
 					M.visible_message(\
@@ -177,7 +176,7 @@
 		m120.Turn(360)
 		animate(L, transform = m120, time = 3)
 		L.pixel_y = L.get_standard_pixel_y_offset(360)
-		M.adjustBruteLoss(20)
+		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob()
 		L.emote("scream")
