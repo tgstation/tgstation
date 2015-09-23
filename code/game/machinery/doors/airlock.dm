@@ -256,14 +256,30 @@ About the new airlock wires panel:
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+
 		if(AIRLOCK_DENY)
-			overlays += get_airlock_overlay("lights_denied", overlays_file)
-			sleep(4)
-			update_icon(AIRLOCK_CLOSED)
-			return
+			frame_overlay = get_airlock_overlay("closed", icon)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+
 		if(AIRLOCK_EMAG)
-			overlays += get_airlock_overlay("sparks", overlays_file)
-			return
+			frame_overlay = get_airlock_overlay("closed", icon)
+			sparks_overlay = get_airlock_overlay("sparks", overlays_file)
+			if(airlock_material)
+				filling_overlay = get_airlock_overlay("[airlock_material]_closed", overlays_file)
+			else
+				filling_overlay = get_airlock_overlay("fill_closed", icon)
+			if(p_open)
+				panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
+			if(welded)
+				weld_overlay = get_airlock_overlay("welded", overlays_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -319,6 +335,8 @@ About the new airlock wires panel:
 			update_icon(AIRLOCK_CLOSING)
 		if("deny")
 			update_icon(AIRLOCK_DENY)
+			sleep(6)
+			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
 
 /obj/machinery/door/airlock/examine(mob/user)
@@ -1118,7 +1136,8 @@ About the new airlock wires panel:
 		sleep(6)
 		if(qdeleted(src))
 			return
-		open()
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
 		emagged = 1
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0
