@@ -120,7 +120,7 @@
 		if(G.block)
 			if(G.block in blocks_assigned)
 				warning("DNA2: Gene [G.name] trying to use already-assigned block [G.block] (used by [english_list(blocks_assigned[G.block])])")
-			dna_genes.Add(G)
+			dna_genes[G.type] = G
 			var/list/assignedToBlock[0]
 			if(blocks_assigned[G.block])
 				assignedToBlock=blocks_assigned[G.block]
