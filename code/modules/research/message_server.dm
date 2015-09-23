@@ -296,6 +296,9 @@ var/obj/machinery/blackbox_recorder/blackbox
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/blackbox_recorder/proc/save_all_data_to_sql() called tick#: [world.time]")
 	if(!feedback) return
 
+	#warning Blackbox recording disabled.  Please remove warning once this has been determined to be the problem.
+	return
+
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
 	if(!dbcon.IsConnected()) return
