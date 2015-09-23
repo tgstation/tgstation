@@ -27,8 +27,10 @@
 	..()
 
 /obj/item/weapon/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
-	user.say(catchphrase)
-	playsound(get_turf(user), on_use_sound,50,1)
+	if(catchphrase)
+		user.say(catchphrase)
+	if(on_use_sound)
+		playsound(get_turf(user), on_use_sound,50,1)
 	attached_spell.attached_hand = null
 	qdel(src)
 
@@ -66,7 +68,7 @@
 	item_state = "fleshtostone"
 
 /obj/item/weapon/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
+	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad //you know there are much better ways you could have worded this comment
 		return
 	if(user.lying || user.handcuffed)
 		user << "<span class='warning'>You can't reach out!</span>"
@@ -75,3 +77,10 @@
 	M.Stun(2)
 	new /obj/structure/closet/statue(M.loc, M)
 	..()
+
+/datum/reagent/toxin/diseased_blood //Something may be done with this
+	name = "Diseased Blood"
+	id = "diseased_blood"
+	description = "Stagnant human blood full of crippling diseases."
+	color = rgb(55, 65, 55) //A nice 'n dark sickly green
+	toxpwr = 20

@@ -57,6 +57,8 @@
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/datum/gang/gang_datum //Which gang this mind belongs to, if any
 
+	var/datum/vampire/vampire //The vampire data stored in the mind
+
 /datum/mind/New(var/key)
 	src.key = key
 

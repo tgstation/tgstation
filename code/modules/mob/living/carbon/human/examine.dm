@@ -236,8 +236,14 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
-	if(pale)
+	if(pale && !is_vampire(src))
 		msg += "[t_He] [t_has] pale skin.\n"
+
+	if(is_vampire(src) && is_vampire(user))
+		msg += "You recognize Lilith's blessing. [t_He], like you, is a vampire.\n"
+
+	if(is_vampire(src) && src.mind && src.mind.vampire && src.mind.vampire.clean_blood <= 10) //If they're a vampire with less than 10 units of CLEAN blood, give a unique examine text
+		msg += "[t_He] [t_has] skin pigmented a deathly shade of white.\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"

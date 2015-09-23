@@ -53,6 +53,16 @@
 	if(dna)
 		dna.species.spec_life(src) // for mutantraces
 
+	if(is_vampire(src))
+		var/datum/vampire/V = get_vampire(src)
+		if(V && V.clean_blood) //Vampires regenerate damage very slowly with clean blood in them
+			adjustBruteLoss(-0.1)
+			adjustFireLoss(-0.05) //Slower than others
+			adjustToxLoss(-0.1)
+			adjustOxyLoss(-1)
+			adjustCloneLoss(-0.1)
+			adjustBrainLoss(-0.1)
+
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))

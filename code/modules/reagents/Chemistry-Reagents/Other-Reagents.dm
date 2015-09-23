@@ -179,6 +179,8 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
+		if(is_vampire(M))
+			M.adjustFireLoss(8) //Holy water kills vampires FAST.
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
@@ -188,6 +190,9 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+		if(is_vampire(M) && !M.fire_stacks) //And if they live that long, set 'em on fire for good measure!
+			M.adjust_fire_stacks(10)
+			M.IgniteMob()
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
