@@ -24,7 +24,7 @@
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
-	see_in_dark = 8
+	var/animated_manifest = FALSE
 	var/cooldown = 0
 	var/damage_transfer = 1 //how much damage from each attack we transfer to the owner
 	var/mob/living/summoner
@@ -103,6 +103,11 @@
 	if(src.loc == summoner)
 		src.loc = get_turf(summoner)
 		cooldown = world.time + 30
+		if(animated_manifest)
+			var/end_icon = icon_state
+			icon_state = "parasite_forming"
+			spawn(6)
+			icon_state = end_icon
 
 /mob/living/simple_animal/hostile/guardian/verb/Recall()
 	set name = "Recall"
@@ -579,8 +584,6 @@
 	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user)
 	G.summoner = user
 	G.key = key
-	G.name = "[mob_name] [capitalize(picked_color)]"
-	G.real_name = "[mob_name] [capitalize(picked_color)]"
 	G.color = color2hex(picked_color)
 	G << "You are a [mob_name] bound to serve [user.real_name]."
 	G << "You are capable of manifesting or recalling to your master with verbs in the Guardian tab. You will also find a verb to communicate with them privately there."
@@ -589,8 +592,16 @@
 	user.verbs += /mob/living/proc/guardian_comm
 	switch (theme)
 		if("magic")
+			G.name = "[mob_name] [capitalize(picked_color)]"
+			G.real_name = "[mob_name] [capitalize(picked_color)]"
 			user << "[G.magic_fluff_string]."
 		if("tech")
+			var/colour = pick("orange", "neon", "pink", "red", "blue", "green")
+			G.name = "[mob_name] [capitalize(colour)]"
+			G.real_name = "[mob_name] [capitalize(colour)]"
+			G.icon_living = "parasite[colour]"
+			G.icon_state = "parasite[colour]"
+			G.animated_manifest = TRUE
 			user << "[G.tech_fluff_string]."
 			G.speak_emote = list("states")
 		if("bio")
@@ -607,7 +618,7 @@
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
-	mob_name = "Nanoswarm"
+	mob_name = "Holoparasite"
 	use_message = "You start to power on the injector..."
 	used_message = "The injector has already been used."
 	failure_message = "<B>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</B>"
