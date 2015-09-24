@@ -122,8 +122,12 @@
 
 /obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(istype(target, /mob/) && target != user && !(target in user.contents)) //We make sure that it is a mob, it's not us or part of us.
-			if(user.a_intent == "harm") //Flogging action
+		if(istype(target, /mob/) && !(target in user.contents) && target != user && user.a_intent == "harm")
+			//We make sure that it is a mob, it's not us or part of us.
+			return //Flogging action
+		else if(ishuman(target) && ishuman(user))
+			if(user.zone_sel.selecting == "mouth")
+				handle_suicide(user, target, params)
 				return
 		else
 			return
@@ -134,8 +138,7 @@
 			var/mob/living/M = user
 			if (M.disabilities & CLUMSY && prob(40))
 				user << "<span class='userdanger'>You shoot yourself in the foot with \the [src]!</span>"
-				var/shot_leg = pick("l_leg", "r_leg")
-				process_fire(user,user,0,params, zone_override = shot_leg)
+				process_fire(user,user,0,params)
 				M.drop_item()
 				return
 
@@ -179,7 +182,7 @@
 	return 0
 
 
-/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params)
 	add_fingerprint(user)
 
 	if(semicd)
@@ -197,7 +200,7 @@
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
 			if(chambered)
-				if(!chambered.fire(target, user, params, , suppressed, zone_override))
+				if(!chambered.fire(target, user, params, , suppressed))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -213,7 +216,7 @@
 			sleep(fire_delay)
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override))
+			if(!chambered.fire(target, user, params, , suppressed))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -362,3 +365,40 @@
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return
+
+
+/obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
+	if(!ishuman(user) || !ishuman(target))
+		return
+
+	if(semicd)
+		return
+
+	if(user == target)
+		target.visible_message("<span class='warning'>[user] sticks [src] in their mouth, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
+	else
+		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
+
+	semicd = 1
+
+	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
+		if(user == target && user)
+			user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
+		else if(user && target && target.Adjacent(user))
+			target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+		semicd = 0
+		return
+
+	semicd = 0
+
+	if(!can_trigger_gun(user))
+		return
+
+	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
+
+	if(chambered && chambered.BB)
+		chambered.BB.damage *= 5
+
+	process_fire(target, user, 1, params)

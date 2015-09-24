@@ -81,6 +81,8 @@ It also contains rune words, which are soon to be removed.
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
 	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
 					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
+	flick("tome_attack", src)
+	user.do_attack_animation(M)
 	add_logs(user, M, "smacked", src)
 
 /obj/item/weapon/tome/attack_self(mob/user)
