@@ -130,12 +130,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	access = access_atmospherics
 
 /datum/supply_packs/emergency/plasma
-	name = "Plasma Suit Crate"
+	name = "Plasmaman Suit Crate"
 	contains = list(/obj/item/clothing/suit/space/hardsuit/atmos/plasmaman)
-	cost = 30
+	cost = 80
 	containertype = /obj/structure/closet/crate/secure
-	containername = "plasma suit crate"
-	access = access_atmospherics
+	containername = "plasmaman suit crate"
+	access = access_eva
 
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"

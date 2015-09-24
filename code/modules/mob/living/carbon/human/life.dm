@@ -379,13 +379,13 @@
 
 /mob/living/carbon/human/proc/plasma_revive()
 	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
-	if(breath && (disabilities & HUSK || dna.species.safe_toxins_min))	//Plasmaman re-revival
+	if(breath && (disabilities & HUSK || dna.species.safe_toxins_min) && reagents)	//Plasmaman re-revival
 		var/Toxins_pp = breath.get_breath_partial_pressure(breath.toxins)
-		if(Toxins_pp > 16 && reagents)
+		if(Toxins_pp > 10 && breath.temperature > T0C+150)	//Pressure quivalent to about 16.7 at 500K, temperature required is plasmaman cold damage limit
 			for(var/A in reagents.reagent_list)
 				var/datum/reagent/R = A
 				if(R.id == "plasma" && R.volume >= 20)
-					plasmaman_resurrection()
+					plasmaman_resurrection(breath.temperature)
 
 /*	else	Doesn't seem to be working. Test more later
 		if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
@@ -399,7 +399,7 @@
 				if(breath.get_breath_partial_pressure(breath.toxins) > 16)
 					plasmaman_resurrection()*/
 
-/mob/living/carbon/human/proc/plasmaman_resurrection()
+/mob/living/carbon/human/proc/plasmaman_resurrection(temperature)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost && !revivalnotification)
 		ghost << "<span class='ghostalert'>Your feel a fire burning in your body. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
@@ -408,7 +408,8 @@
 	if(!get_ghost() && getorgan(/obj/item/organ/internal/brain))
 		revivalnotification = 0
 		hardset_dna(src, null, null, null, null, /datum/species/plasmaman)
-		bodytemperature = dna.species.default_body_temperature
+		update_base_icon_state()
+		bodytemperature = temperature
 		setOxyLoss(0)
 		setToxLoss(0)
 		var/total_burn = getFireLoss()
@@ -421,7 +422,7 @@
 			adjustBruteLoss(brute_to_heal)
 		stat = UNCONSCIOUS
 		if(disabilities & HUSK)
-			disabilities |= HUSK
+			disabilities &= ~HUSK
 		dead_mob_list -= src
 		living_mob_list |= list(src)
 		emote("gasp")

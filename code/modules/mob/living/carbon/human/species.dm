@@ -85,9 +85,9 @@
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
+	var/cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 	var/default_body_temperature = 310.15
 	var/heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
-	var/cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
 	///////////
 	// PROCS //
@@ -1318,22 +1318,26 @@
 	if(abs(310.15 - breath.temperature) > 50)
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
-			switch(breath.temperature)
-				if(-INFINITY to 120)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
-				if(120 to 200)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
-				if(200 to 260)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+			if(breath.temperature <= cold_damage_limit-140)
+				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+				H << "<span class='warning'>Cold [COLD_GAS_DAMAGE_LEVEL_3]</span>"
+			else if(breath.temperature <= cold_damage_limit-60)
+				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+				H << "<span class='warning'>Cold [COLD_GAS_DAMAGE_LEVEL_2]</span>"
+			else if(breath.temperature <= cold_damage_limit)
+				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+				H << "<span class='warning'>Cold [COLD_GAS_DAMAGE_LEVEL_1]</span>"
 
 		if(!(HEATRES in specflags)) // HEAT DAMAGE
-			switch(breath.temperature)
-				if(heat_damage_limit to heat_damage_limit+40)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
-				if(heat_damage_limit+40 to heat_damage_limit+640)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
-				if(heat_damage_limit+640 to INFINITY)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+			if(breath.temperature >= heat_damage_limit+640)
+				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+				H << "<span class='warning'>Hot [HEAT_GAS_DAMAGE_LEVEL_3]</span>"
+			else if(breath.temperature >= heat_damage_limit+40)
+				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+				H << "<span class='warning'>Hot [HEAT_GAS_DAMAGE_LEVEL_2]</span>"
+			else if(breath.temperature >=  heat_damage_limit)
+				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+				H << "<span class='warning'>Hot [HEAT_GAS_DAMAGE_LEVEL_1]</span>"
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
@@ -1358,38 +1362,38 @@
 			if(thermal_protection < 1)
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
+	//switch(bodytemperature) seems to shit itself for some reason
+
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > heat_damage_limit && !(HEATRES in specflags))
 		//Body temperature is too hot.
-		switch(H.bodytemperature)
-			if(heat_damage_limit to heat_damage_limit+40)
-				H.throw_alert("temp","hot",1)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
-			if(heat_damage_limit+40 to heat_damage_limit+100)
-				H.throw_alert("temp","hot",2)
+		if(H.bodytemperature < heat_damage_limit+40)
+			H.throw_alert("temp","hot",1)
+			H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+		else if(H.bodytemperature < heat_damage_limit+100)
+			H.throw_alert("temp","hot",2)
+			H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+		else
+			H.throw_alert("temp","hot",3)
+			if(H.on_fire)
+				H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+			else
 				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-			if(heat_damage_limit+100 to INFINITY)
-				H.throw_alert("temp","hot",3)
-				if(H.on_fire)
-					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
-				else
-					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 
 	else if(H.bodytemperature < cold_damage_limit && !(mutations_list[COLDRES] in H.dna.mutations))
 		var/colddamage = !istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell) //Damage from cold if not in a cryo cell
-		switch(H.bodytemperature)
-			if(cold_damage_limit-60 to cold_damage_limit)
-				H.throw_alert("temp","cold",1)
-				if(colddamage)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-			if(cold_damage_limit-140 to cold_damage_limit-60)
-				H.throw_alert("temp","cold",2)
-				if(colddamage)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-			if(-INFINITY to cold_damage_limit-140)
-				H.throw_alert("temp","cold",3)
-				if(colddamage)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+		if(H.bodytemperature > cold_damage_limit-60)
+			H.throw_alert("temp","cold",1)
+			if(colddamage)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+		else if(H.bodytemperature > cold_damage_limit-140)
+			H.throw_alert("temp","cold",2)
+			if(colddamage)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+		else
+			H.throw_alert("temp","cold",3)
+			if(colddamage)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
 	else
 		H.clear_alert("temp")
 
