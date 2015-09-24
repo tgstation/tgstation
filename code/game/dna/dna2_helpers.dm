@@ -185,7 +185,8 @@
 /proc/query_genes(var/notflags = 0, var/flags = 0, var/genetype = -1)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/query_genes() called tick#: [world.time]")
 	. = list()
-	for(var/datum/dna/gene/gene in dna_genes)
+	for(var/gene_type in dna_genes)
+		var/datum/dna/gene/gene = dna_genes[gene_type]
 		if(!gene.block) continue
 		if(genetype>-1 && gene.genetype!=genetype) continue
 		if(flags!=0 && !(gene.flags & flags)) continue

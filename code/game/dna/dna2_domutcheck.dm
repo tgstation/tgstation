@@ -4,13 +4,15 @@
 // connected: Machine we're in, type unchecked so I doubt it's used beyond monkeying
 // flags: See below, bitfield.
 #define MUTCHK_FORCED        1
+
 /proc/domutcheck(var/mob/living/M, var/connected=null, var/flags=0)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/domutcheck() called tick#: [world.time]")
 	if(!M)
 		//testing("[gene.name] has No mob")
 		return
 
-	for(var/datum/dna/gene/gene in dna_genes)
+	for(var/gene_type in dna_genes)
+		var/datum/dna/gene/gene = dna_genes[gene_type]
 		//testing("Checking [gene.name]")
 		if(!gene.block)
 			//testing("[gene.name] has no block")
