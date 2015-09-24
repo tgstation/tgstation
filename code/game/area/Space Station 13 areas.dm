@@ -231,7 +231,6 @@ proc/process_adminbus_teleport_locs()
 /area/shuttle/supply
 	name = "supply shuttle"
 	icon_state = "shuttle3"
-	lighting_use_dynamic = 0 //Ain't nobody got time for that
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
