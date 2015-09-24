@@ -27,34 +27,22 @@
 /datum/martial_art/proc/basic_hit(mob/living/carbon/human/A,mob/living/carbon/human/D)
 
 	A.do_attack_animation(D)
-	var/damage = rand(0,9)
+	var/damage = rand(0,9) + A.dna.species.punchmod
 
-	var/atk_verb = "punch"
+	var/atk_verb = A.dna.species.attack_verb
 	if(D.lying)
 		atk_verb = "kick"
-	else if(A.dna)
-		atk_verb = A.dna.species.attack_verb
-
-	if(A.dna)
-		damage += A.dna.species.punchmod
 
 	if(!damage)
-		if(A.dna)
-			playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		else
-			playsound(D.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>")
-			add_logs(A, D, "attempted to [atk_verb]")
-			return 0
+		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
+		D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>")
+		add_logs(A, D, "attempted to [atk_verb]")
+		return 0
 
 	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
-	if(A.dna)
-		playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
-	else
-		playsound(D.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
-
+	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 								"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>")
 
@@ -104,24 +92,18 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(5,8)
-	if(A.dna)
-		damage += A.dna.species.punchmod
+	var/damage = rand(5,8) + A.dna.species.punchmod
 	if(!damage)
-		if(A.dna)
-			playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
-		else
-			playsound(D.loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-			D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
-			add_logs(A, D, "attempted to hit", atk_verb)
-			return 0
+		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
+		D.visible_message("<span class='warning'>[A] has attempted to hit [D] with a [atk_verb]!</span>")
+		add_logs(A, D, "attempted to hit", atk_verb)
+		return 0
 
 
 	var/obj/item/organ/limb/affecting = D.get_organ(ran_zone(A.zone_sel.selecting))
 	var/armor_block = D.run_armor_check(affecting, "melee")
 
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 25, 1, -1)
-
+	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 
 	D.visible_message("<span class='danger'>[A] has hit [D] with a [atk_verb]!</span>", \
 								"<span class='userdanger'>[A] has hit [D] with a [atk_verb]!</span>")

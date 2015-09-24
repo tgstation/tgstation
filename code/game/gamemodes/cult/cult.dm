@@ -8,13 +8,20 @@
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
+/proc/is_sacrifice_target(datum/mind/mind)
+	if(ticker.mode.name == "cult")
+		var/datum/game_mode/cult/cult_mode = ticker.mode
+		if(mind == cult_mode.sacrifice_target)
+			return 1
+	return 0
+
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
 	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
 	if(isloyal(mind.current))
 		return 0
 	if (ticker.mode.name == "cult")		//redundent?
-		if(mind.current == ticker.mode.sacrifice_target)	return 0
+		if(is_sacrifice_target(mind))	return 0
 	return 1
 
 /proc/cultist_commune(mob/living/user, clear = 0, say = 0, message)
@@ -25,6 +32,8 @@
 	else
 		user.whisper("O bidai nabora se[pick("'","`")]sma!")
 	sleep(10)
+	if(!user)
+		return
 	if(say)
 		user.say(message)
 	else
@@ -57,6 +66,8 @@
 	var/acolytes_needed = 10 //for the survive objective
 	var/acolytes_survived = 0
 
+	var/datum/mind/sacrifice_target = null//The target to be sacrificed
+
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
@@ -81,7 +92,8 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	acolytes_needed = max(2, round(num_players()/5)) //Scales the escape requirement with the amount of people in the round
+	acolytes_needed = round(num_players()/5,1) //Scales the escape requirement with the amount of people in the round; for every 5 players, one cultist added to the count, i.e. 25 players = 5 to escape
+	acolytes_needed = Clamp(acolytes_needed, 1, 15) //Max at 15 and minimum at 1 - before the update, people rarely got even 15
 
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
@@ -130,11 +142,11 @@
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
 				if(sacrifice_target)
-					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the Rite of Tribute and three acolytes to do so."
+					explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. You will need the Sacrifice rune and three acolytes to do so."
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the use of the Ritual of Dimensional Rending. It will only work if nine cultists stand on and around it."
+				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
@@ -160,7 +172,7 @@
 	if(!where)
 		mob << "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately."
 	else
-		mob << "You have a talisman in your [where], one that will help you start the cult on this station. Use it well, and remember - you are not the only one."
+		mob << "<span class='danger'>You have a talisman in your [where], one that will help you start the cult on this station. Use it well, and remember - you are not the only one.</span>"
 		mob.update_icons()
 		if(where == "backpack")
 			var/obj/item/weapon/storage/B = mob.back
@@ -192,13 +204,13 @@
 		cult -= cult_mind
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
 		cult_mind.current.Paralyse(5)
-		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span>"
+		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has renounced the cult!</span>"
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
-				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
+				M << "<span class='big'>[cult_mind.current] looks like they just reverted to their old faith!</span>"
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
 	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
@@ -248,7 +260,7 @@
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='redtext'>The cult wins! It has succeeded in serving its dark masters!</span>"
+		world << "<span class='greentext'>The cult wins! It has succeeded in serving its dark master!</span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)

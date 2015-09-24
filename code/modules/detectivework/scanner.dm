@@ -12,6 +12,7 @@
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
+	origin_tech = "engineering=3;biotech=2"
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -82,7 +83,7 @@
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
-			if (istype(H.dna, /datum/dna) && !H.gloves)
+			if(!H.gloves)
 				fingerprints += md5(H.dna.uni_identity)
 
 		else if(!ismob(A))

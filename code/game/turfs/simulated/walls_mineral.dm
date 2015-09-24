@@ -4,8 +4,8 @@
 	icon_state = ""
 	var/last_event = 0
 	var/active = null
-	smooth = 1
 	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/mineral/New()
 	sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineral]")

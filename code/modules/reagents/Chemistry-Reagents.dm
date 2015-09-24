@@ -49,8 +49,6 @@
 
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
-	if(!istype(M, /mob/living))
-		return //Noticed runtime errors from facid trying to damage ghosts, this should fix. --NEO
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 

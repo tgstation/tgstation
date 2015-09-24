@@ -38,8 +38,8 @@
 				if(prob(1))
 					src << "<span class='danger'>You mutate!</span>"
 					randmutb(src)
-					domutcheck(src,null)
 					emote("gasp")
+					domutcheck()
 		..()
 
 /mob/living/carbon/monkey/handle_chemicals_in_body()

@@ -385,9 +385,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough materials to complete prototype.\"</span>")
 						enough_materials = 0
 						g2g = 0
+					else
+						for(var/R in being_built.reagents)
+							if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]/coeff))
+								src.visible_message("<span class='notice'>The [src.name] beeps, \"Not enough reagents to complete prototype.\"</span>")
+								enough_materials = 0
+								g2g = 0
 
 					if(enough_materials)
 						linked_lathe.materials.use_amount(efficient_mats, amount)
+						for(var/R in being_built.reagents)
+							linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]/coeff)
 
 					var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 					var/R = being_built.reliability
@@ -821,6 +829,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						temp_material += "<span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
 						temp_material += " [D.materials[M]/coeff] [CallMaterialName(M)]"
+					c = min(c,t)
+
+				for(var/R in D.reagents)
+					t = linked_lathe.check_mat(D, R)
+					temp_material += " | "
+					if (t < 1)
+						temp_material += "<span class='bad'>[D.reagents[R]/coeff] [CallMaterialName(R)]</span>"
+					else
+						temp_material += " [D.reagents[R]/coeff] [CallMaterialName(R)]"
 					c = min(c,t)
 
 				if (c >= 1)

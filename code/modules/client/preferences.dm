@@ -1049,7 +1049,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
@@ -1081,19 +1081,19 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.undershirt = undershirt
 	character.socks = socks
 
-	character.features = features
-
 	character.backbag = backbag
 
-	if(character.dna)
-		var/datum/species/chosen_species
-
-		character.dna.real_name = character.real_name
-		if(pref_species != /datum/species/human && config.mutant_races)
-			chosen_species = pref_species.type
-		else
-			chosen_species = /datum/species/human
-		hardset_dna(character, null, null, null, blood_type, chosen_species, features)
+	character.dna.blood_type = blood_type
+	character.dna.features = features
+	character.dna.real_name = character.real_name
+	var/datum/species/chosen_species
+	if(pref_species != /datum/species/human && config.mutant_races)
+		chosen_species = pref_species.type
 	else
+		chosen_species = /datum/species/human
+	character.set_species(chosen_species, icon_update=0)
+
+	if(icon_updates)
 		character.update_body()
 		character.update_hair()
+		character.update_mutcolor()
