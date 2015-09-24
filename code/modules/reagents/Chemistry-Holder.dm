@@ -639,7 +639,9 @@ datum
 
 /datum/reagents/Destroy()
 	for(var/datum/reagent/reagent in reagent_list)
-		reagent.Destroy()
+		qdel(reagent)
+
+	reagent_list.Cut()
 
 	if(my_atom)
 		my_atom = null
