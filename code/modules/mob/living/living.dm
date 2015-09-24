@@ -149,10 +149,6 @@ Sorry Giacom. Please don't be mad :(
 				for(var/obj/structure/window/win in get_step(W,t))
 					now_pushing = 0
 					return
-		if(pulling && ismob(AM))
-			var/mob/M = AM
-			if(pulling == M.buckled)
-				stop_pulling()
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
@@ -509,7 +505,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
