@@ -303,6 +303,8 @@
 		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
 
 /mob/living/simple_animal/hostile/guardian/healer/ShiftClickOn(atom/movable/A)
+	if(!istype(A))
+		return
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
 		return
