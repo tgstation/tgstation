@@ -1108,41 +1108,6 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
-/proc/is_sharp(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	var/list/sharp_things_1 = list(\
-	/obj/item/weapon/circular_saw,\
-	/obj/item/weapon/shovel,\
-	/obj/item/weapon/shard,\
-	/obj/item/weapon/broken_bottle,\
-	/obj/item/weapon/twohanded/fireaxe,\
-	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/throwing_star,\
-	/obj/item/clothing/glasses/sunglasses/garb,\
-	/obj/item/clothing/glasses/sunglasses/gar,\
-	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
-	/obj/item/clothing/glasses/meson/gar,\
-	/obj/item/weapon/twohanded/spear,\
-	/obj/item/weapon/melee/energy/sword/cyborg/saw)
-
-	//Because is_sharp is used for food or something.
-	var/list/sharp_things_2 = list(\
-	/obj/item/weapon/kitchen/knife,\
-	/obj/item/weapon/scalpel)
-
-	if(is_type_in_list(W,sharp_things_1))
-		return 1
-
-	if(is_type_in_list(W,sharp_things_2))
-		return 2 //cutting food
-
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/E = W
-		if(E.active)
-			return 1
-		else
-			return 0
-
 /proc/is_pointed(obj/item/W)
 	if(istype(W, /obj/item/weapon/pen))
 		return 1
@@ -1158,7 +1123,7 @@ var/global/list/common_tools = list(
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
 /proc/can_embed(obj/item/W)
-	if(is_sharp(W))
+	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
