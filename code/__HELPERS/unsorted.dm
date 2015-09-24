@@ -707,6 +707,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar = image("icon" = 'icons/effects/doafter_icon.dmi', "loc" = target, "icon_state" = "prog_bar_0")
 		progbar.icon_state = "prog_bar_[round(((current_number / goal_number) * 100), 10)]"
 		progbar.pixel_y = 32
+		progbar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		return progbar
 
 /proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
@@ -1427,7 +1428,7 @@ B --><-- A
 		stop_orbit()
 		sleep(1) //sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
 		if (orbiting || !istype(A)) //post sleep re-check
-			return 
+			return
 	orbiting = A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
