@@ -48,7 +48,7 @@
 	name = "Butter Bar"
 	id = "butter_bar"
 	result = null
-	required_reagents = list("cream" = 1, "salt" = 1, "milk" = 2)
+	required_reagents = list("cream" = 1, "sodiumchloride" = 1, "milk" = 2)
 	result_amount = 1
 	mob_react = 1
 
