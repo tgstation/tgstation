@@ -33,7 +33,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -105,7 +105,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -130,7 +130,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
@@ -159,7 +159,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -179,7 +179,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -214,7 +214,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -234,7 +234,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -257,7 +257,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -274,7 +274,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
@@ -291,7 +291,7 @@
 		return
 
 	if(suiciding)
-		src << "<span class='warning'>You're already comitting suicide! Be patient!</span>"
+		src << "<span class='warning'>You're already committing suicide! Be patient!</span>"
 		return
 
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
