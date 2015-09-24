@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	action_button_name = "Toggle Mister"
@@ -66,8 +66,7 @@
 		remove_noz()
 		qdel(noz)
 		noz = null
-	..()
-	return
+	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
 	if(src.loc == user)
@@ -109,7 +108,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = 4.0
+	w_class = 4
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500

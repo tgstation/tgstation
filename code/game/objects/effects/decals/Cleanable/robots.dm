@@ -10,6 +10,8 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
+	blood_state = BLOOD_STATE_OIL
+	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	spawn (0)
@@ -50,6 +52,8 @@
 	icon_state = "floor1"
 	var/viruses = list()
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	blood_state = BLOOD_STATE_OIL
+	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/oil/New()
 	..()
@@ -59,7 +63,7 @@
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	viruses = null
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")

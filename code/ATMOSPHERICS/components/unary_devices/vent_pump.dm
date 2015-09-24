@@ -2,6 +2,9 @@
 #define INT_BOUND	2
 #define NO_BOUND	3
 
+#define SIPHONING	0
+#define RELEASING	1
+
 /obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map"
 
@@ -19,12 +22,12 @@
 	var/id_tag = null
 
 	var/on = 0
-	var/pump_direction = 1 //0 = siphoning, 1 = releasing
+	var/pump_direction = RELEASING
 
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	var/internal_pressure_bound = 0
 
-	var/pressure_checks = 1
+	var/pressure_checks = EXT_BOUND
 	//EXT_BOUND: Do not pass external_pressure_bound
 	//INT_BOUND: Do not pass internal_pressure_bound
 	//NO_BOUND: Do not pass either
@@ -40,7 +43,7 @@
 	icon_state = "vent_out"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
-	pump_direction = 0
+	pump_direction = SIPHONING
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
 	on = 1
@@ -59,7 +62,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	radio_connection = null
+	if(initial_loc)
+		initial_loc.air_vent_info -= id_tag
+		initial_loc.air_vent_names -= id_tag
+		initial_loc = null
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
@@ -67,7 +75,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -79,20 +87,20 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
+	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"
 		return
 
-	if(pump_direction)
+	if(pump_direction & RELEASING)
 		icon_state = "vent_out"
-	else
+	else //pump_direction == SIPHONING
 		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	..()
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!nodes[NODE1])
+	if (!NODE1)
 		on = 0
 	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
@@ -101,11 +109,11 @@
 	if(welded)
 		return 0
 
-	var/datum/gas_mixture/air_contents = airs[AIR1]
+	var/datum/gas_mixture/air_contents = AIR1
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	if(pump_direction) //internal -> external
+	if(pump_direction & RELEASING) //internal -> external
 		var/pressure_delta = 10000
 
 		if(pressure_checks&EXT_BOUND)
@@ -201,11 +209,11 @@
 
 	if("purge" in signal.data)
 		pressure_checks &= ~EXT_BOUND
-		pump_direction = 0
+		pump_direction = SIPHONING
 
 	if("stabalize" in signal.data)
 		pressure_checks |= EXT_BOUND
-		pump_direction = 1
+		pump_direction = RELEASING
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -310,3 +318,10 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded
+
+#undef INT_BOUND
+#undef EXT_BOUND
+#undef NO_BOUND
+
+#undef SIPHONING
+#undef RELEASING

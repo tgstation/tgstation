@@ -18,7 +18,7 @@
 		P.parent = null
 	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
 		C.nullifyPipenet(src)
-	..()
+	return ..()
 
 /datum/pipeline/process()
 	if(update)
@@ -185,6 +185,7 @@ var/pipenetwarnings = 10
 			air.temperature += self_temperature_delta
 
 			modeled_location.air.temperature += sharer_temperature_delta
+			modeled_location.air_update_turf()
 
 
 	else
@@ -208,8 +209,8 @@ var/pipenetwarnings = 10
 		GL += P.other_airs
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
-				PL |= V.parents["p1"]
-				PL |= V.parents["p2"]
+				PL |= V.PARENT1
+				PL |= V.PARENT2
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()

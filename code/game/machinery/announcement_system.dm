@@ -65,6 +65,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/Destroy()
 	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	return ..()
 
 /obj/machinery/announcement_system/power_change()
 	..()

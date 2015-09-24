@@ -28,6 +28,11 @@
 
 	var/law_change_counter = 0
 
+/mob/living/silicon/Destroy()
+	radio = null
+	aicamera = null
+	return ..()
+
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
@@ -361,7 +366,7 @@
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent
-		var/damage = rand(10, 20)
+		var/damage = 20
 		if (prob(90))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)

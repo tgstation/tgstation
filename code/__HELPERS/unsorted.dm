@@ -1227,17 +1227,29 @@ var/list/WALLITEMS = list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
-	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
+	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
 	)
-/proc/gotwallitem(loc, dir)
+
+var/list/WALLITEMS_EXTERNAL = list(
+	/obj/machinery/camera, /obj/machinery/camera_assembly,
+	/obj/machinery/light_construct, /obj/machinery/light)
+
+var/list/WALLITEMS_INVERSE = list(
+	/obj/machinery/light_construct, /obj/machinery/light)
+
+
+/proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_list(O, WALLITEMS))
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(O.dir == dir)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
+				if(O.dir == turn(dir, 180))
+					return 1
+			else if(O.dir == dir)
 				return 1
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
@@ -1245,9 +1257,16 @@ var/list/WALLITEMS = list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
+		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
+				if(O.dir == turn(dir, 180))
+					return 1
+			else if(O.dir == dir)
+				return 1
+
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_list(O, WALLITEMS))
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -1404,11 +1423,16 @@ B --><-- A
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15)
 	if(!istype(A))
 		return
+	if (orbiting)
+		stop_orbit()
+		sleep(1) //sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
+		if (orbiting || !istype(A)) //post sleep re-check
+			return 
 	orbiting = A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 	spawn
-		while(orbiting)
+		while(orbiting && orbiting.loc)
 			loc = orbiting.loc
 
 			angle += angle_increment
@@ -1429,3 +1453,40 @@ B --><-- A
 	if(orbiting)
 		loc = get_turf(orbiting)
 		orbiting = null
+
+
+//Center's an image.
+//Requires:
+//The Image
+//The x dimension of the icon file used in the image
+//The y dimension of the icon file used in the image
+// eg: center_image(I, 32,32)
+// eg2: center_image(I, 96,96)
+
+/proc/center_image(var/image/I, x_dimension = 0, y_dimension = 0)
+	if(!I)
+		return
+
+	if(!x_dimension || !y_dimension)
+		return
+
+	//Get out of here, punk ass kids calling procs needlessly
+	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+		return I
+
+	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
+	//but still use them in game
+	var/x_offset = -((x_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+	var/y_offset = -((y_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+
+	//Correct values under world.icon_size
+	if(x_dimension < world.icon_size)
+		x_offset *= -1
+	if(y_dimension < world.icon_size)
+		y_offset *= -1
+
+	I.pixel_x = x_offset
+	I.pixel_y = y_offset
+
+	return I

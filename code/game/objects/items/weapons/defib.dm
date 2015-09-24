@@ -193,9 +193,8 @@
 	if(on)
 		var/M = get(paddles, /mob)
 		remove_paddles(M)
-	..()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(bcell)
@@ -432,7 +431,7 @@
 
 						var/failed = null
 
-						if (H.suiciding || (NOCLONE in H.mutations))
+						if (H.suiciding || (H.disabilities & NOCLONE))
 							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 						else if ((tplus > tlimit) || !H.getorgan(/obj/item/organ/internal/heart))
 							failed = "<span class='warning'>[defib] buzzes: Resuscitation failed - Heart tissue damage beyond point of no return. Further attempts futile.</span>"

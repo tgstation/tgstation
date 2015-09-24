@@ -2,13 +2,19 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 100.0
+	w_class = 100
 	item_state = "electronic"
 	flags = CONDUCT
 
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/list/storages = list()
+
+/obj/item/weapon/robot_module/Destroy()
+	modules.Cut()
+	emag = null
+	storages.Cut()
+	return ..()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -34,7 +40,7 @@
 
 
 /obj/item/weapon/robot_module/New()
-	modules += new /obj/item/device/flash/cyborg(src)
+	modules += new /obj/item/device/assembly/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 	return

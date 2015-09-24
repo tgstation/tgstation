@@ -407,7 +407,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 1.0
+	w_class = 1
 	var/uses = 5
 	var/temp = null
 	var/op = 1

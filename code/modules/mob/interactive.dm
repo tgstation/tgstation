@@ -186,7 +186,7 @@
 	if(TRAITS & TRAIT_SMART)
 		smartness = 25
 	else if(TRAITS & TRAIT_DUMB)
-		mutations |= CLUMSY
+		disabilities |= CLUMSY
 		smartness = 75
 
 	if(TRAITS & TRAIT_MEAN)
@@ -293,7 +293,9 @@
 
 /mob/living/carbon/human/interactive/Life()
 	..()
-	if(isnotfunc()) return
+	if(isnotfunc())
+		walk(src,0)
+		return
 	if(a_intent != "disarm")
 		a_intent = "disarm"
 	//---------------------------

@@ -32,6 +32,16 @@
 	build_path = /obj/item/weapon/circuitboard/turbine_computer
 	category = list ("Engineering Machinery")
 
+/datum/design/emitter
+	name = "Machine Design (Emitter Board)"
+	desc = "The circuit board for an emitter."
+	id = "emitter"
+	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/emitter
+	category = list ("Engineering Machinery")
+
 /datum/design/power_compressor
 	name = "Machine Design (Power Compressor Board)"
 	desc = "The circuit board for a power compressor."
@@ -162,7 +172,7 @@
 	build_path = /obj/item/weapon/circuitboard/chem_heater
 	category = list ("Medical Machinery")
 
-	/datum/design/clonecontrol
+/datum/design/clonecontrol
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
 	id = "clonecontrol"

@@ -5,11 +5,11 @@
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
 	flags = CONDUCT
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
 	var/status = 0
@@ -28,7 +28,7 @@
 		qdel(igniter)
 	if(ptank)
 		qdel(ptank)
-	..()
+	return ..()
 
 
 /obj/item/weapon/flamethrower/process()

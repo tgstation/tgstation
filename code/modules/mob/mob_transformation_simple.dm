@@ -40,7 +40,7 @@
 		M.name = src.name
 		M.real_name = src.real_name
 
-	if(check_dna_integrity(src) && istype(M, /mob/living/carbon))
+	if(check_dna_integrity(src))
 		var/mob/living/carbon/C = src
 		var/mob/living/carbon/D = M
 		D.dna = C.dna

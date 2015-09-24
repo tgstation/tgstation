@@ -260,9 +260,9 @@
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	w_class = 1.0
-	force = 5.0
-	throwforce = 10.0
+	w_class = 1
+	force = 5
+	throwforce = 10
 	item_state = "shard-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
@@ -297,7 +297,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves)
+		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/organ/limb/affecting = H.get_organ(organ)

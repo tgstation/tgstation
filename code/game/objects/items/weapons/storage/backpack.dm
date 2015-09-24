@@ -109,7 +109,7 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4.0
+	w_class = 4
 	max_w_class = 3
 	max_combined_w_class = 60
 

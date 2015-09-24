@@ -98,6 +98,9 @@
 					if(W.reinf && W.fulltile)
 						cached_exp_block[T] += W.explosion_block
 
+				for(var/obj/effect/blob/B in T)
+					cached_exp_block[T] += B.explosion_block
+
 		for(var/turf/T in affected_turfs)
 
 			var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
@@ -214,6 +217,9 @@
 				for(var/obj/structure/window/W in TT)
 					if(W.explosion_block && W.fulltile)
 						dist += W.explosion_block
+
+				for(var/obj/effect/blob/B in T)
+					dist += B.explosion_block
 
 		if(dist < dev)
 			T.color = "red"

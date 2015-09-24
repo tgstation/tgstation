@@ -36,7 +36,7 @@
 
 /obj/effect/effect/smoke/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/effect/smoke/proc/kill_smoke()
 	SSobj.processing.Remove(src)
@@ -192,8 +192,7 @@
 
 /datum/effect/effect/system/smoke_spread/chem/Destroy()
 	chemholder = null
-	..()
-	return QDEL_HINT_PUTINPOOL
+	return ..()
 
 /datum/effect/effect/system/smoke_spread/chem/set_up(datum/reagents/carry = null, n = 5, c = 0, loca, direct, silent = 0)
 	if(n > 20)
