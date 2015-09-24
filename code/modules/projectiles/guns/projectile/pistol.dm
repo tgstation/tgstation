@@ -44,3 +44,14 @@
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
 	item_state = "deagleg"
+
+
+//Rechargable
+
+/obj/item/weapon/gun/projectile/automatic/pistol/m1911/energy
+	name = "\improper M1911 pistol"
+	desc = "A classic .45 handgun with a small magazine capacity."
+	icon_state = "m1911"
+	w_class = 3
+	mag_type = /obj/item/ammo_box/magazine/recharge
+	fire_sound = 'sound/weapons/Laser.ogg'

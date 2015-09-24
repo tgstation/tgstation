@@ -277,3 +277,10 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+
+/obj/item/ammo_casing/caseless/laser //Why does this still leave casings?
+	name = "laser casing"
+	desc = "You shouldn't be seeing this."
+	caliber = "laser"
+	icon_state = "s-casing-live"
+	projectile_type = /obj/item/projectile/beam

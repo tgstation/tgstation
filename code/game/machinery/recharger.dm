@@ -12,7 +12,7 @@
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/ammo_box/magazine/recharge))
 		if(charging)
 			return
 
@@ -91,6 +91,15 @@
 					icon_state = "recharger2"
 			else
 				icon_state = "recharger3"
+
+		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
+			var/obj/item/ammo_box/magazine/recharge/R = charging
+			if(R.stored_ammo.len<R.max_ammo)
+				R.stored_ammo += new R.ammo_type(R)
+				icon_state = "recharger1"
+				use_power(200)
+			else
+				icon_state = "recharger2"
 
 /obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
