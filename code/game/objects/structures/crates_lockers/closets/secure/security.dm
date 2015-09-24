@@ -120,7 +120,6 @@
 /obj/structure/closet/secure_closet/security/sec/New()
 	..()
 	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/gun/energy/gun/advtaser/New()
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -235,20 +234,44 @@
 	new /obj/item/weapon/shield/riot(src)
 
 /obj/structure/closet/secure_closet/armory2
-	name = "armory gun locker"
+	name = "armory ballistics locker"
 	req_access = list(access_armory)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory2/New()
 	..()
-	new /obj/item/weapon/storage/box/firingpins/New()
-	new /obj/item/weapon/storage/box/firingpins/New()
-	new /obj/item/weapon/gun/energy/ionrifle/New()
-	new /obj/item/weapon/gun/projectile/shotgun/New()
-	new /obj/item/weapon/gun/projectile/shotgun/New()
-	new /obj/item/weapon/gun/energy/gun/New()
-	new /obj/item/weapon/gun/energy/gun/New()
-	new /obj/item/weapon/gun/energy/gun/New()
-	new /obj/item/weapon/gun/energy/laser/New()
-	new /obj/item/weapon/gun/energy/laser/New()
-	new /obj/item/weapon/gun/energy/laser/New()
+	new /obj/item/weapon/storage/box/firingpins(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/gun/projectile/shotgun(src)
+	new /obj/item/weapon/gun/projectile/shotgun(src)
+
+/obj/structure/closet/secure_closet/armory3
+	name = "armory energy gun locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory2/New()
+	..()
+	new /obj/item/weapon/storage/box/firingpins(src)
+	new /obj/item/weapon/gun/energy/ionrifle(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+	new /obj/item/weapon/gun/energy/laser(src)
+
+/obj/structure/closet/secure_closet/tec
+	name = "armory TEC locker"
+	req_access = list(access_armory)
+	icon_state = "tec"
+
+/obj/structure/closet/secure_closet/tec/New()
+	..()
+	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
+	new /obj/item/ammo_box/magazine/wt550m9(src)
+	new /obj/item/ammo_box/magazine/wt550m9(src)
+	new /obj/item/clothing/head/helmet/alt(src)
+	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/suit/armor/bulletproof(src)
