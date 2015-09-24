@@ -361,3 +361,14 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/toy/m762/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
+
+
+/obj/item/ammo_box/magazine/recharge
+	name = "power pack"
+	icon_state = "45-8"
+	ammo_type = /obj/item/ammo_casing/caseless/laser
+	caliber = "laser"
+	max_ammo = 8
+
+/obj/item/ammo_box/magazine/recharge/attack_self() //No popping out the "bullets"
+	return
