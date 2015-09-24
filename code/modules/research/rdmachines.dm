@@ -2,24 +2,24 @@
 var/global/list/rnd_machines = list()
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 /obj/machinery/r_n_d
-	name = "R&D Device"
-	icon = 'icons/obj/machines/research.dmi'
-	density = 1
-	anchored = 1
-	use_power = 1
-	var/busy = 0
-	var/hacked = 0
-	var/disabled = 0
-	var/shocked = 0
+	name			= "R&D Device"
+	icon			= 'icons/obj/machines/research.dmi'
+	density			= 1
+	anchored		= 1
+	use_power		= 1
+	var/busy		= 0
+	var/hacked		= 0
+	var/disabled	= 0
+	var/shocked		= 0
 	var/obj/machinery/computer/rdconsole/linked_console
-	var/obj/output
-	var/stopped = 0
-	var/base_state = ""
-	var/build_time = 0
+	var/output_dir	= 0 // Direction used to output to (for things like fabs), set to 0 for loc.
+	var/stopped		= 0
+	var/base_state	= ""
+	var/build_time	= 0
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags	= SCREWTOGGLE | CROWDESTROY
 
-	var/nano_file = ""
+	var/nano_file	= ""
 
 	var/max_material_storage = 0
 	var/list/allowed_materials[0] //list of material IDs we take, if we whitelist
@@ -45,12 +45,10 @@ var/global/list/rnd_machines = list()
 // Define initial output.
 /obj/machinery/r_n_d/initialize()
 	..()
-	output = src // broke protolathes you dummy
 	if(research_flags &HASOUTPUT)
 		for(var/direction in cardinal)
-			var/O = locate(/obj/machinery/mineral/output, get_step(get_turf(src), direction))
-			if(O)
-				output=O
+			if(locate(/obj/machinery/mineral/output, get_step(get_turf(src), direction)))
+				output_dir = direction
 				break
 
 /obj/machinery/r_n_d/Destroy()
@@ -74,7 +72,7 @@ var/global/list/rnd_machines = list()
 
 /obj/machinery/r_n_d/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
@@ -152,23 +150,14 @@ var/global/list/rnd_machines = list()
 			var/result = input("Set your location as output?") in list("Yes","No","Machine Location")
 			switch(result)
 				if("Yes")
-					var/found=0
-					for(var/direction in cardinal)
-						if(locate(user) in get_step(src,direction))
-							found=1
-					if(!found)
-						user << "<span class='warning'>Cannot set this as the output location; You're too far away.</span>"
-						return
-					if(istype(output,/obj/machinery/mineral/output))
-						del(output)
-					output=new /obj/machinery/mineral/output(usr.loc)
+					if(!Adjacent(user))
+						user << "<span class='warning'>Cannot set this as the output location; You're not adjacent to it!</span>"
+						return 1
+
+					output_dir = get_dir(src, user)
 					user << "<span class='notice'>Output set.</span>"
-				if("No")
-					return
 				if("Machine Location")
-					if(istype(output,/obj/machinery/mineral/output))
-						del(output)
-					output=src
+					output_dir = 0
 					user << "<span class='notice'>Output set.</span>"
 			return 1
 		return
@@ -238,3 +227,13 @@ var/global/list/rnd_machines = list()
 	if(materials)
 		return materials.getVolume()
 	return 0
+
+// Returns the atom to output to.
+// Yes this can potentially return null, however that shouldn't be an issue for the code that uses it.
+/obj/machinery/r_n_d/proc/get_output()
+	if(!output_dir)
+		return get_turf(loc)
+
+	. = get_step(get_turf(src), output_dir)
+	if(!.)
+		return loc // Map edge I guess.

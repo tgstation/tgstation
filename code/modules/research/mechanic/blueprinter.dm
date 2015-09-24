@@ -92,10 +92,10 @@
 	sleep(30)
 	busy = 0
 	if(use_nano)
-		new/obj/item/research_blueprint/nano(output.loc, design)
+		new/obj/item/research_blueprint/nano(get_output(), design)
 		nano_loaded -= 1
 	else
-		new/obj/item/research_blueprint(output.loc, design)
+		new/obj/item/research_blueprint(get_output(), design)
 		paper_loaded -= 1
 	src.visible_message("\icon [src]<span class='notice'>\The [src] beeps: Successfully printed the [design.name] design.</span>")
 	spawn(20)
