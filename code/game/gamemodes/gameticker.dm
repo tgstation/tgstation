@@ -318,7 +318,7 @@ var/global/datum/controller/gameticker/ticker
 			for(var/mob/living/M in living_mob_list)
 				if(M)
 					var/turf/T = get_turf(M)
-					if(T.z == 1)
+					if(T && T.z == 1)
 						M.death()//No mercy
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
