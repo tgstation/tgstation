@@ -88,19 +88,19 @@
 		if(M != user)
 			M.visible_message(\
 				"[user.name] tries to pull [M.name] free of the [src]!",\
-				"<span class='notice'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
+				"<span class='notice'>[user.name] is trying to pull you off of [src], opening up fresh wounds!</span>",\
 				"<span class='italics'>You hear a squishy wet noise.</span>")
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
 					M.visible_message(\
 					"[user.name] fails to free [M.name]!",\
-					"<span class='notice'>[user.name] fails to pull you off of the [src].</span>")
+					"<span class='notice'>[user.name] fails to pull you off of [src].</span>")
 				return
 
 		else
 			M.visible_message(\
-			"<span class='warning'>[M.name] struggles to break free from the [src]!</span>",\
-			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
+			"<span class='warning'>[M.name] struggles to break free from [src]!</span>",\
+			"<span class='notice'>You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='italics'>You hear a wet squishing noise..</span>")
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
@@ -110,12 +110,12 @@
 		if(!M.buckled)
 			return
 		var/mob/living/L = buckled_mob
-		var/matrix/m120 = matrix(L.transform)
+		var/matrix/m120 = matrix()
 		m120.Turn(360)
 		animate(L, transform = m120, time = 3)
 		L.pixel_y = L.get_standard_pixel_y_offset(360)
 		M.adjustBruteLoss(30)
-		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
+		src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 		unbuckle_mob()
 		L.emote("scream")
 		L.AdjustWeakened(10)
