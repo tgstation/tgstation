@@ -54,6 +54,7 @@
 			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
 			return
 		if (istype(G, /obj/item/weapon/gun/energy/staff))
+			user << "<span class='notice'>The recharger rejects the magical apparatus.</span>"
 			return
 		appearance_backup = G.appearance
 		var/matrix/M = matrix()
@@ -103,7 +104,15 @@
 		return
 
 	if(!self_powered && (stat & (NOPOWER|BROKEN)))
-		icon_state = "recharger3"
+		if(charging)//Spit out anything being charged if it loses power or breaks
+			charging.appearance = appearance_backup
+			charging.update_icon()
+			charging.loc = loc
+			visible_message("<span class='notice'>[src] powers down and ejects \the [charging].</span>")
+			charging = null
+			use_power = 1
+			appearance_backup=null
+			update_icon()
 		return
 
 	if(charging)
