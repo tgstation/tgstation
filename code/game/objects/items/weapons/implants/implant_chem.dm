@@ -24,6 +24,14 @@
 /obj/item/weapon/implant/chem/New()
 	..()
 	create_reagents(50)
+	tracking_implants += src
+
+/obj/item/weapon/implant/chem/Destroy()
+	..()
+	tracking_implants -= src
+
+
+
 
 /obj/item/weapon/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")

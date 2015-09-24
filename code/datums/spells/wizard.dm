@@ -41,7 +41,6 @@
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
 	range = -1
 	include_user = 1
 	centcom_cancast = 0
@@ -248,7 +247,7 @@
 	sound="sound/magic/Blind.ogg"
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
-	disabilities = 1
+	disabilities = BLIND
 	duration = 300
 	sound="sound/magic/Blind.ogg"
 

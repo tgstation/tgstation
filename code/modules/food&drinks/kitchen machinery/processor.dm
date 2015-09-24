@@ -112,8 +112,8 @@
 	for(var/datum/disease/D in O.viruses)
 		if(!(D.spread_flags & SPECIAL))
 			B.data["viruses"] += D.Copy()
-	if(check_dna_integrity(O))
-		B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
+	if(O.has_dna())
+		B.data["blood_DNA"] = O.dna.unique_enzymes
 
 	if(O.resistances&&O.resistances.len)
 		B.data["resistances"] = O.resistances.Copy()

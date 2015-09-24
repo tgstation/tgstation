@@ -724,7 +724,7 @@
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
-	if(istype(M) && M.dna)
+	if(M.has_dna())
 		M.dna.remove_all_mutations()
 	..()
 	return
@@ -900,5 +900,22 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	M.adjustFireLoss(2*REM)
+	..()
+	return
+
+datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
+	name = "Restorative Nanites"
+	id = "syndicate_nanites"
+	description = "Miniature medical robots that swiftly restore bodily damage."
+	reagent_state = SOLID
+	color = "#555555"
+
+datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-2*REM)
+	M.adjustFireLoss(-2*REM)
+	M.adjustOxyLoss(-2*REM)
+	M.adjustToxLoss(-2*REM)
+	M.adjustBrainLoss(-5*REM)
+	M.adjustCloneLoss(-1*REM)
 	..()
 	return

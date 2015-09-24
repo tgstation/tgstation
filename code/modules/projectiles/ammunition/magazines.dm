@@ -1,100 +1,138 @@
 ////////////////INTERNAL MAGAZINES//////////////////////
 
+/obj/item/ammo_box/magazine/internal
+	desc = "Oh god, this shouldn't be here"
+
 //internals magazines are accessible, so replace spent ammo if full when trying to put a live one in
 /obj/item/ammo_box/magazine/internal/give_round(obj/item/ammo_casing/R)
 	return ..(R,1)
 
+
+
+// Revolver internal mags
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/internal/cylinder/ammo_count(countempties = 1)
-	if (!countempties)
-		var/boolets = 0
-		for (var/i = 1, i <= stored_ammo.len, i++)
-			var/obj/item/ammo_casing/bullet = stored_ammo[i]
-			if (bullet.BB)
-				boolets++
-		return boolets
-	else
-		return ..()
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/bullet in stored_ammo)
+		if(bullet && (bullet.BB || countempties))
+			boolets++
 
-/obj/item/ammo_box/magazine/internal/cylinder/rus357
-	name = "russian revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
-	ammo_type = /obj/item/ammo_casing/a357
-	caliber = "357"
-	max_ammo = 6
-	multiload = 0
+	return boolets
 
-/obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
-	stored_ammo += new ammo_type(src)
+/obj/item/ammo_box/magazine/internal/cylinder/get_round(keep = 0)
+	rotate()
+
+	var/b = stored_ammo[1]
+	if(!keep)
+		stored_ammo[1] = null
+
+	return b
+
+/obj/item/ammo_box/magazine/internal/cylinder/proc/rotate()
+	var/b = stored_ammo[1]
+	stored_ammo.Cut(1,2)
+	stored_ammo.Insert(0, b)
+
+/obj/item/ammo_box/magazine/internal/cylinder/proc/spin()
+	for(var/i in 1 to rand(0, max_ammo*2))
+		rotate()
+
+
+/obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
+	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
+		return 0
+
+	for(var/i in 1 to stored_ammo.len)
+		var/obj/item/ammo_casing/bullet = stored_ammo[i]
+		if(!bullet || !bullet.BB) // found a spent ammo
+			stored_ammo[i] = R
+			R.loc = src
+
+			if(bullet)
+				bullet.loc = get_turf(src.loc)
+			return 1
+
+	return 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
-	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
 	max_ammo = 6
 
+/obj/item/ammo_box/magazine/internal/cylinder/grenademulti
+	name = "grenade launcher internal magazine"
+	ammo_type = /obj/item/ammo_casing/a40mm
+	caliber = "40mm"
+	max_ammo = 6
+
+
+// Shotgun internal mags
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/shotcom
+/obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
+	if (!countempties)
+		var/boolets = 0
+		for(var/obj/item/ammo_casing/bullet in stored_ammo)
+			if(bullet.BB)
+				boolets++
+		return boolets
+	else
+		return ..()
+
+/obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	caliber = "shotgun"
 	max_ammo = 6
-	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/cylinder/dualshot
+/obj/item/ammo_box/magazine/internal/shot/dual
 	name = "double-barrel shotgun internal magazine"
-	desc = "This doesn't even exist"
-	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	caliber = "shotgun"
 	max_ammo = 2
-	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/cylinder/improvised
+/obj/item/ammo_box/magazine/internal/shot/improvised
 	name = "improvised shotgun internal magazine"
-	desc = "This doesn't even exist"
 	ammo_type = /obj/item/ammo_casing/shotgun/improvised
-	caliber = "shotgun"
 	max_ammo = 1
-	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/shotriot
+/obj/item/ammo_box/magazine/internal/shot/riot
 	name = "riot shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	caliber = "shotgun"
 	max_ammo = 6
-	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher
+
+
+
+/obj/item/ammo_box/magazine/internal/grenadelauncher
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
 	caliber = "40mm"
 	max_ammo = 1
 
-/obj/item/ammo_box/magazine/internal/cylinder/grenadelauncher/multi
-	ammo_type = /obj/item/ammo_casing/a40mm
-	max_ammo = 6
-
-/obj/item/ammo_box/magazine/internal/cylinder/speargun
+/obj/item/ammo_box/magazine/internal/speargun
 	name = "speargun internal magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/magspear
 	caliber = "speargun"
 	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/rus357
+	name = "russian revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+	max_ammo = 6
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/rus357/New()
+	stored_ammo += new ammo_type(src)
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"

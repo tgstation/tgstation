@@ -394,11 +394,10 @@
 		user << "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>"
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	if(prob(50))	G.gender = "female"
-	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
-
+	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
-	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
 	G.key = ghost.key
@@ -478,7 +477,7 @@
 	icon_state = "tile-bluespace"
 	w_class = 3
 	force = 6
-	materials = list(MAT_METAL=937.5)
+	materials = list(MAT_METAL=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -501,7 +500,7 @@
 	icon_state = "tile-sepia"
 	w_class = 3
 	force = 6
-	materials = list(MAT_METAL=937.5)
+	materials = list(MAT_METAL=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7

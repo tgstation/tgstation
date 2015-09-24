@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 	//Handle items on mob
@@ -16,8 +16,11 @@
 			int_organs += I
 			I.Remove(src, 1)
 
+	if(tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants-int_organs))
+			unEquip(W)
+
 	//Make mob invisible and spawn animation
-	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	stunned = 1
@@ -35,18 +38,18 @@
 	qdel(animation)
 
 	// hash the original name?
-	if	(tr_flags & TR_HASHNAME)
+	if(tr_flags & TR_HASHNAME)
 		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
 		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
-	if (newname) //if there's a name as an argument, always take that one over the current name
-		O.name = newname
-		O.real_name = newname
 
 	//handle DNA and other attributes
-	if(dna)
-		dna.transfer_identity(O)
-		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
+	dna.transfer_identity(O)
+	O.updateappearance(icon_update=0)
+
+	if(tr_flags & TR_KEEPSE)
+		O.dna.struc_enzymes = dna.struc_enzymes
+		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -70,9 +73,10 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	for(var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/I in implants)
+			I.loc = O
+			I.implanted = O
 
 	//re-add organs to new mob
 	if(tr_flags & TR_KEEPORGANS)
@@ -96,16 +100,14 @@
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
-	updateappearance(O)
 	. = O
-	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if monkeyize() is called inside another proc of src so that one does not crash
-		qdel(src)
 
+	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 	//Handle items on mob
@@ -125,7 +127,7 @@
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants))
+		for(var/obj/item/W in (src.contents-implants-int_organs))
 			unEquip(W)
 			if (client)
 				client.screen -= W
@@ -134,11 +136,7 @@
 				W.dropped(src)
 				W.layer = initial(W.layer)
 
-	//	for(var/obj/item/W in src)
-	//		unEquip(W)
-
 	//Make mob invisible and spawn animation
-	regenerate_icons()
 	notransform = 1
 	canmove = 0
 	stunned = 1
@@ -156,27 +154,21 @@
 		O.equip_to_appropriate_slot(C)
 	qdel(animation)
 
-	O.gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+	dna.transfer_identity(O)
+	O.updateappearance(mutcolor_update=1)
 
-	if(dna)
-		dna.transfer_identity(O)
-		O.update_icons()
-		if(tr_flags & TR_KEEPSE)
-			O.dna.struc_enzymes = dna.struc_enzymes
-			domutcheck(O)
-
-	if(!dna.species)
-		hardset_dna(O, null, null, null, null, /datum/species/human)
+	if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+		O.real_name = random_unique_name(O.gender)
+		O.dna.generate_unique_enzymes(O)
 	else
-		hardset_dna(O, null, null, null, null, dna.species.type)
-
-	if(newname) //if there's a name as an argument, always take that one over the current name
-		O.real_name = newname
-	else
-		if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
-			O.dna.real_name = random_unique_name(O.gender)
 		O.real_name = O.dna.real_name
-		O.name = O.real_name
+	O.name = O.real_name
+
+	if(tr_flags & TR_KEEPSE)
+		O.dna.struc_enzymes = dna.struc_enzymes
+		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
+		O.domutcheck()
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -201,10 +193,11 @@
 		O.radiation = radiation
 
 	//re-add implants to new mob
-	for(var/obj/item/weapon/implant/I in implants)
-		I.loc = O
-		I.implanted = O
-	O.sec_hud_set_implants()
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/I in implants)
+			I.loc = O
+			I.implanted = O
+		O.sec_hud_set_implants()
 
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/obj/item/organ/internal/I in O.internal_organs)
@@ -215,21 +208,23 @@
 
 	if(mind)
 		mind.transfer_to(O)
+		if(O.mind.changeling)
+			for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+				mind.changeling.purchasedpowers -= HF
+
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		O << "<B>You are now a human.</B>"
 
 	O.update_pipe_vision()
 
-	updateappearance(O)
 	. = O
 
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
-	if ( !(tr_flags & TR_KEEPSRC) ) //don't delete src yet if it's needed to finish calling proc
-		qdel(src)
+	qdel(src)
 
 
 /mob/new_player/AIize()
@@ -431,14 +426,10 @@
 /mob/living/carbon/human/proc/Blobize()
 	if (notransform)
 		return
-	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
-	if(!client)
-		for(var/mob/dead/observer/G in player_list)
-			if(ckey == "@[G.ckey]")
-				new_blob.create_overmind(G.client , 1)
-				break
+	if(!client) //TOO BAD
+		new /obj/effect/blob/core (loc)
 	else
-		new_blob.create_overmind(src.client , 1)
+		new /obj/effect/blob/core (loc,new_overmind = src.client)
 	gib(src)
 
 

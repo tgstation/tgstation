@@ -251,9 +251,8 @@
 
 					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
-						if(H.dna)
-							if(src.type in H.dna.species.ignored_by)
-								continue
+						if(src.type in H.dna.species.ignored_by)
+							continue
 
 					if(!L.canmove) // Only one slime can latch on at a time.
 						var/notarget = 0

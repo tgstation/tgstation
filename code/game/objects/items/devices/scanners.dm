@@ -162,8 +162,7 @@ MASS SPECTROMETER
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna)
-			user << "<span class='info'>Species: [H.dna.species.name]</span>"
+		user << "<span class='info'>Species: [H.dna.species.name]</span>"
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
