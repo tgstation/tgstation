@@ -1,5 +1,0 @@
-author: Clusterfack
-
-delete-after: True
-changes:
-- rscadd: You can now move a supermatter crate onto the same tile as a supermatter and close it inside if the supermatter is not damaged (delaminating)
