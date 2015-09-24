@@ -1320,24 +1320,18 @@
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			if(breath.temperature <= cold_damage_limit-140)
 				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
-				H << "<span class='warning'>Cold [COLD_GAS_DAMAGE_LEVEL_3]</span>"
 			else if(breath.temperature <= cold_damage_limit-60)
 				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
-				H << "<span class='warning'>Cold [COLD_GAS_DAMAGE_LEVEL_2]</span>"
 			else if(breath.temperature <= cold_damage_limit)
 				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
-				H << "<span class='warning'>Cold [COLD_GAS_DAMAGE_LEVEL_1]</span>"
 
 		if(!(HEATRES in specflags)) // HEAT DAMAGE
 			if(breath.temperature >= heat_damage_limit+640)
 				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
-				H << "<span class='warning'>Hot [HEAT_GAS_DAMAGE_LEVEL_3]</span>"
 			else if(breath.temperature >= heat_damage_limit+40)
 				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
-				H << "<span class='warning'>Hot [HEAT_GAS_DAMAGE_LEVEL_2]</span>"
 			else if(breath.temperature >=  heat_damage_limit)
 				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
-				H << "<span class='warning'>Hot [HEAT_GAS_DAMAGE_LEVEL_1]</span>"
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)

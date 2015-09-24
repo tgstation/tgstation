@@ -408,7 +408,6 @@
 	if(!get_ghost() && getorgan(/obj/item/organ/internal/brain))
 		revivalnotification = 0
 		hardset_dna(src, null, null, null, null, /datum/species/plasmaman)
-		update_base_icon_state()
 		bodytemperature = temperature
 		setOxyLoss(0)
 		setToxLoss(0)
@@ -423,6 +422,7 @@
 		stat = UNCONSCIOUS
 		if(disabilities & HUSK)
 			disabilities &= ~HUSK
+		update_base_icon_state()
 		dead_mob_list -= src
 		living_mob_list |= list(src)
 		emote("gasp")
