@@ -33,10 +33,10 @@
 
 /obj/machinery/media/transmitter/broadcast/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 	if(power_connection)
-		power_connection.Destroy()
+		qdel(power_connection)
 		power_connection = null
 	..()
 

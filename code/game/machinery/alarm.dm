@@ -150,7 +150,7 @@
 
 /obj/machinery/alarm/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 	for(var/obj/machinery/computer/atmoscontrol/AC in atmos_controllers)
 		if(AC.current == src)

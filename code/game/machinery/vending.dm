@@ -120,7 +120,7 @@
 
 /obj/machinery/vending/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	if(product_records.len&&cardboard) //Only spit out if we have slotted cardboard

@@ -207,7 +207,7 @@ var/global/list/loopModeNames=list(
 
 /obj/machinery/media/jukebox/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 	..()
 

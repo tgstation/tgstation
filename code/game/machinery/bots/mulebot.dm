@@ -100,7 +100,7 @@ var/global/mulebot_count = 0
 		radio_controller.remove_object(src, control_freq)
 		radio_controller.remove_object(src, beacon_freq)
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()

@@ -138,7 +138,7 @@ var/global/list/ghdel_profiling = list()
 
 /atom/Destroy()
 	if(reagents)
-		reagents.Destroy()
+		qdel(reagents)
 		reagents = null
 
 	if(materials)
