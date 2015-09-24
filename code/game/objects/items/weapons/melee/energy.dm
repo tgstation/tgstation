@@ -6,6 +6,7 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 2
 	var/w_class_on = 4
+	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
@@ -89,6 +90,9 @@
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
 	return
+
+/obj/item/weapon/melee/energy/is_hot()
+	return active * heat
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 50

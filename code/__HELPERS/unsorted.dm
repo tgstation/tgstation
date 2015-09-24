@@ -1108,56 +1108,6 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/is_hot(obj/item/W)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/O = W
-		if(O.isOn())
-			return 3800
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/O = W
-		if(O.lit)
-			return 1500
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/O = W
-		if(O.lit == 1)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/O = W
-		if(O.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/candle))
-		var/obj/item/candle/O = W
-		if(O.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/device/flashlight/flare))
-		var/obj/item/device/flashlight/flare/O = W
-		if(O.on)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
-		return 3800
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/O = W
-		if(O.active)
-			return 3500
-		else
-			return 0
-	if(istype(W, /obj/item/device/assembly/igniter))
-		return 1000
-	else
-		return 0
-
 //Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
 	var/list/sharp_things_1 = list(\
