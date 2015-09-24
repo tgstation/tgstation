@@ -1,5 +1,5 @@
 /obj/machinery/portable_atmospherics/pump
-	name = "Portable Air Pump"
+	name = "portable air pump"
 
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "psiphon:0"
@@ -43,7 +43,7 @@
 
 	..(severity)
 
-/obj/machinery/portable_atmospherics/pump/process()
+/obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
 	if(on)
 		var/datum/gas_mixture/environment
@@ -66,6 +66,7 @@
 					environment.merge(removed)
 				else
 					loc.assume_air(removed)
+					air_update_turf()
 		else
 			var/pressure_delta = target_pressure - air_contents.return_pressure()
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
@@ -80,23 +81,25 @@
 					removed = environment.remove(transfer_moles)
 				else
 					removed = loc.remove_air(transfer_moles)
+					air_update_turf()
 
 				air_contents.merge(removed)
 		//src.update_icon()
-
+/obj/machinery/portable_atmospherics/pump/process()
+	..()
 	src.updateDialog()
 	return
 
 /obj/machinery/portable_atmospherics/pump/return_air()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/pump/attack_paw(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/pump/attack_hand(mob/user)
 
 	user.set_machine(src)
 	var/holding_text

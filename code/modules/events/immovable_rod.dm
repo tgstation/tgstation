@@ -16,40 +16,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	announceWhen = 5
 
 /datum/round_event/immovable_rod/announce()
-	command_alert("What the fuck was that?!", "General Alert")
+	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/startx = 0
-	var/starty = 0
-	var/endy = 0
-	var/endx = 0
 	var/startside = pick(cardinal)
-
-	switch(startside)
-		if(NORTH)
-			starty = 187
-			startx = rand(41, 199)
-			endy = 38
-			endx = rand(41, 199)
-		if(EAST)
-			starty = rand(38, 187)
-			startx = 199
-			endy = rand(38, 187)
-			endx = 41
-		if(SOUTH)
-			starty = 38
-			startx = rand(41, 199)
-			endy = 187
-			endx = rand(41, 199)
-		else
-			starty = rand(38, 187)
-			startx = 41
-			endy = rand(38, 187)
-			endx = 199
-
-	//rod time!
-	new /obj/effect/immovablerod(locate(startx, starty, 1), locate(endx, endy, 1))
-
+	var/turf/startT = spaceDebrisStartLoc(startside, 1)
+	var/turf/endT = spaceDebrisFinishLoc(startside, 1)
+	new /obj/effect/immovablerod(startT, endT)
 
 /obj/effect/immovablerod
 	name = "Immovable Rod"
@@ -62,36 +35,39 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z_original = 0
 	var/destination
 
-	New(atom/start, atom/end)
-		loc = start
-		z_original = z
-		destination = end
-		if(end && end.z==z_original)
-			walk_towards(src, destination, 1)
+/obj/effect/immovablerod/New(atom/start, atom/end)
+	loc = start
+	z_original = z
+	destination = end
+	if(end && end.z==z_original)
+		walk_towards(src, destination, 1)
 
-	Move()
-		if(z != z_original || loc == destination)
-			spawn(0) del(src)
-		return ..()
+/obj/effect/immovablerod/Move()
+	if(z != z_original || loc == destination)
+		qdel(src)
+	return ..()
 
-	Bump(atom/clong)
-		if (istype(clong, /turf) && !istype(clong, /turf/unsimulated))
-			if(clong.density)
-				clong.ex_act(2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message("CLANG", 2)
+/obj/effect/immovablerod/ex_act(test)
+	return 0
 
-		else if (istype(clong, /obj))
-			if(clong.density)
-				clong.ex_act(2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message("CLANG", 2)
+/obj/effect/immovablerod/Bump(atom/clong)
+	if(prob(10))
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		audible_message("CLANG")
 
-		else if (istype(clong, /mob))
-			if(clong.density || prob(10))
-				clong.meteorhit(src)
-		else
-			del(src)
+	if(clong && prob(25))
+		x = clong.x
+		y = clong.y
 
-		if(clong && prob(25))
-			src.loc = clong.loc
+	if (istype(clong, /turf) || istype(clong, /obj))
+		if(clong.density)
+			clong.ex_act(2)
+
+	else if (istype(clong, /mob))
+		if(istype(clong, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = clong
+			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+			H.adjustBruteLoss(160)
+		if(clong.density || prob(10))
+			clong.ex_act(2)
+	return

@@ -1,7 +1,7 @@
 var/savefile/Banlistjob
 
 
-/proc/_jobban_isbanned(var/client/clientvar, var/rank)
+/proc/_jobban_isbanned(client/clientvar, rank)
 	if(!clientvar) return 1
 	ClearTempbansjob()
 	var/id = clientvar.computer_id
@@ -143,7 +143,7 @@ var/savefile/Banlistjob
 
 	Banlistjob.cd = "/base"
 	if ( Banlistjob.dir.Find("[ckey][computerid][rank]") )
-		usr << text("\red Banjob already exists.")
+		usr << text("<span class='danger'>Banjob already exists.</span>")
 		return 0
 	else
 		Banlistjob.dir.Add("[ckey][computerid][rank]")
@@ -175,9 +175,9 @@ var/savefile/Banlistjob
 		log_admin("Banjob Expired: [key]")
 		message_admins("Banjob Expired: [key]")
 	else
-		log_admin("[key_name_admin(usr)] unjobbanned [key] from [rank]")
+		log_admin("[key_name(usr)] unjobbanned [key] from [rank]")
 		message_admins("[key_name_admin(usr)] unjobbanned:[key] from [rank]")
-		ban_unban_log_save("[key_name_admin(usr)] unjobbanned [key] from [rank]")
+		ban_unban_log_save("[key_name(usr)] unjobbanned [key] from [rank]")
 		feedback_inc("ban_job_unban",1)
 		feedback_add_details("ban_job_unban","- [rank]")
 
@@ -221,7 +221,7 @@ var/savefile/Banlistjob
 
 /*/datum/admins/proc/permjobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 0, 0, job))
-		M << "\red<BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+		M << "\red<BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 		M << "\red This is a permanent ban."
 		if(config.banappeals)
 			M << "\red To try to resolve this matter head to [config.banappeals]"
@@ -231,7 +231,7 @@ var/savefile/Banlistjob
 		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
 /datum/admins/proc/timejobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 1, mins, job))
-		M << "\red<BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
+		M << "\red<BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason]</B></BIG>"
 		M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 		if(config.banappeals)
 			M << "\red To try to resolve this matter head to [config.banappeals]"

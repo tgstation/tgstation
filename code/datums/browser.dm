@@ -70,6 +70,7 @@
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<head>
 		[head_content]
 	</head>
@@ -78,7 +79,7 @@
 			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
 			<div class='uiContent'>
 	"}
-
+//" This is here because else the rest of the file looks like a string in notepad++.
 /datum/browser/proc/get_footer()
 	return {"
 			</div>
@@ -93,7 +94,7 @@
 	[get_footer()]
 	"}
 
-/datum/browser/proc/open(var/use_onclose = 1)
+/datum/browser/proc/open(use_onclose = 1)
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
@@ -136,7 +137,7 @@
 // to pass a "close=1" parameter to the atom's Topic() proc for special handling.
 // Otherwise, the user mob's machine var will be reset directly.
 //
-/proc/onclose(mob/user, windowid, var/atom/ref=null)
+/proc/onclose(mob/user, windowid, atom/ref=null)
 	if(!user.client) return
 	var/param = "null"
 	if(ref)
@@ -152,7 +153,7 @@
 // if a valid atom reference is supplied, call the atom's Topic() with "close=1"
 // otherwise, just reset the client mob's machine var.
 //
-/client/verb/windowclose(var/atomref as text)
+/client/verb/windowclose(atomref as text)
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 

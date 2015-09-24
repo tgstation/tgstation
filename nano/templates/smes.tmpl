@@ -1,0 +1,152 @@
+<div class='notice'>
+	Superconducting Magnetic Energy Storage
+</div>
+<center>
+<div class="item">
+	<div class="itemLabel">
+		Capacity
+	</div>
+	<div class="itemContent" style="text-align:right">
+		{{:~round(capacity)}} W
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">
+		Total Charge
+	</div>
+	<div class="itemContent" style="text-align:right">
+		{{:~round(charge)}} W
+	</div>
+</div>
+<div class="item" style="text-align:right">
+	<div class="itemLabel">
+		{{:~displayBar(capacityPercent, 0, 100, capacityPercent >= 50 ? 'good' : capacityPercent >= 15 ? 'average' : 'bad')}}
+	</div>
+	<div class="itemContent">
+		{{:~round(capacityPercent*10)/10}}%
+	</div>
+</div>
+</center>
+<div class="statusDisplay">
+	<div class = "line"><h3>
+		<div class="statusLabel">
+			Input:
+			{{:~link('On', 'power', {'input_attempt' : 1}, inputAttempt ? 'selected' : null)}}
+			{{:~link('Off', 'close', {'input_attempt' : 0}, inputAttempt == 0 ? 'selected' : null)}}
+		</div>
+		<div class = "statusValue">
+			{{if capacityPercent >= 99}}
+				<span class="good">Fully Charged</span>
+			{{else inputting}}
+				<span class="good">Charging</span>
+			{{else}}
+				<span class="bad">Not Charging</span>
+			{{/if}}
+		</div>
+	</div></h3>
+</div>
+<div style="text-align:center">
+	{{:~link('0', 'seek-start', {'set_input_level' : '0'}, inputLevel == 0 ? 'selected' : null)}}
+	{{:~link('', 'triangle-1-w', {'set_input_level' : 'minus'}, inputLevel == 0 ? 'disabled' : null)}}
+	{{:~link('Change', 'gear', {'set_input_level' : 'custom'}, null)}}
+	{{:~link('', 'triangle-1-e', {'set_input_level' : 'plus'}, inputLevel == inputLevelMax ? 'disabled' : null)}}
+	{{:~link('Maximize', 'seek-end', {'set_input_level' : 'max'}, inputLevel == inputLevelMax ? 'selected' : null)}}
+	<div class="item">
+		<div class="itemLabel">
+			Available
+		</div>
+		<div class = "itemContent" style="text-align:right">
+			{{if inputAvailable > inputLevel}}
+				<span class="good">
+			{{else}}
+				<span class="bad">
+			{{/if}}
+			{{:~round(inputAvailable)}}</span> W
+		</div>
+	</div>
+	<div class = "item">
+		<div class = "itemLabel">
+			Setting
+		</div>
+		<div class = "itemContent" style="text-align:right">
+			{{if inputLevel > outputLevel}}
+				<span class="good">
+			{{else inputLevel == outputLevel}}
+				<span class="average">
+			{{else}}
+				<span class = "bad">
+			{{/if}}
+			{{:~round(inputLevel)}}</span> W
+		</div>
+	</div>
+	<div class = "item">
+		<div class = "itemLabel">
+			Max
+		</div>
+		<div class = "itemContent" style="text-align:right">
+			<span class = "good">{{:~round(inputLevelMax)}}</span> W
+		</div>
+	</div>
+</div>
+<br>
+<div class="statusDisplay">
+	<div class = "line"><h3>
+		<div class="statusLabel">
+			Output:
+			{{:~link('On', 'power', {'output_attempt' : 1}, outputAttempt ? 'selected' : null)}}
+			{{:~link('Off', 'close', {'output_attempt' : 0}, outputAttempt == 0 ? 'selected' : null)}}
+		</div>
+		<div class = "statusValue" style="text-align:center">
+			{{if outputting}}
+				<span class="good">Sending Ouput</span>
+			{{else charge > 0}}
+				<span class="average">Not Sending Output</span>
+			{{else}}
+				<span class="bad">No Charge to Output</span>
+			{{/if}}
+		</div>
+	</div></h3>
+</div>
+<div style="text-align:center">
+	{{:~link('0', 'seek-start', {'set_output_level' : '0'}, outputLevel == 0 ? 'selected' : null)}}
+	{{:~link('', 'triangle-1-w', {'set_output_level' : 'minus'}, outputLevel == 0 ? 'disabled' : null)}}
+	{{:~link('Change', 'gear', {'set_output_level' : 'custom'}, null)}}
+	{{:~link('', 'triangle-1-e', {'set_output_level' : 'plus'}, outputLevel == outputLevelMax ? 'disabled' : null)}}
+	{{:~link('Maximize', 'seek-end', {'set_output_level' : 'max'}, outputLevel == outputLevelMax ? 'selected' : null)}}
+	<div class = "item">
+		<div class="itemLabel">
+			Used
+		</div>
+		<div class = "itemContent" style="text-align:right">
+			{{if outputUsed >= outputLevel}}
+				<span class="bad">
+			{{else}}
+				<span class="good">
+			{{/if}}
+			{{:~round(outputUsed)}}</span> W
+		</div>
+	</div>
+	<div class = "item">
+		<div class = "itemLabel">
+			Setting
+		</div>
+		<div class = "itemContent" style="text-align:right">
+			{{if inputLevel > outputLevel}}
+				<span class="good">
+			{{else inputLevel == outputLevel}}
+				<span class="average">
+			{{else}}
+				<span class = "bad">
+			{{/if}}
+			{{:~round(outputLevel)}}</span> W
+		</div>
+	</div>
+	<div class = "item">
+		<div class = "itemLabel">
+			Max
+		</div>
+		<div class = "itemContent" style="text-align:right">
+			<span class = "good">{{:~round(outputLevelMax)}}</span> W
+		</div>
+	</div>
+</div>

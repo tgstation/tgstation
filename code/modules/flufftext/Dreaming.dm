@@ -1,4 +1,4 @@
-mob/living/carbon/proc/dream()
+/mob/living/carbon/proc/dream()
 	dreaming = 1
 	var/list/dreams = list(
 		"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
@@ -12,7 +12,7 @@ mob/living/carbon/proc/dream()
 		for(var/i = rand(1,4),i > 0, i--)
 			var/dream_image = pick(dreams)
 			dreams -= dream_image
-			src << "\blue <i>... [dream_image] ...</i>"
+			src << "<span class='notice'><i>... [dream_image] ...</i></span>"
 			sleep(rand(40,70))
 			if(paralysis <= 0)
 				dreaming = 0
@@ -20,7 +20,7 @@ mob/living/carbon/proc/dream()
 		dreaming = 0
 		return 1
 
-mob/living/carbon/proc/handle_dreams()
+/mob/living/carbon/proc/handle_dreams()
 	if(prob(5) && !dreaming) dream()
 
-mob/living/carbon/var/dreaming = 0
+/mob/living/carbon/var/dreaming = 0

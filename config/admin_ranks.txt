@@ -1,15 +1,15 @@
-########################################################################################
-# ADMIN RANK DEFINES                                                                   #
-# The format of this is very simple. Rank name goes first.                             #
-# Rank is CASE-SENSITIVE, all punctuation will be stripped so spaces don't matter.     #
-# Each rank is then followed by keywords with the prefix "+".                          #
-# These keywords represent groups of verbs and abilities which are given to that rank. #
-# +@ (or +prev) is a special shorthand which adds all the rights of the rank above it. #
-# Ranks with no keywords will just be given the most basic verbs and abilities   ~Carn #
-########################################################################################
+##############################################################################################################
+# ADMIN RANK DEFINES                                                                                         #
+# The format of this is very simple. Rank name goes first.                                                   #
+# Rank is CASE-SENSITIVE, all punctuation save for '-', '_' and '@' will be stripped so spaces don't matter. #
+# You can then define permissions for each rank by adding a '=' followed by keywords                         #
+# These keywords represent groups of verbs and abilities.                                                    #
+# keywords are preceded by either a '+' or a '-', + adds permissions, - takes them away.                     #
+# +@ (or +prev) is a special shorthand which adds all the rights of the rank above it.                       #
+# You can also specify verbs like so +/client/proc/some_added_verb or -/client/proc/some_restricted_verb     #
+# Ranks with no keywords will just be given the most basic verbs and abilities                ~Carn          #
+##############################################################################################################
 # PLEASE NOTE: depending on config options, some abilities will be unavailable regardless if you have permission to use them!
-# ALSO NOTE: this is a WorkInProgress at the moment. Most of this is just arbitrarily thrown in whatever group because LoadsaWork2Do+LittleTime.
-#            I'll be doing more moving around as feedback comes in. So be sure to check the notes after updates.
 
 # KEYWORDS:
 # +ADMIN = general admin tools, verbs etc
@@ -28,13 +28,13 @@
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
 
 Admin Observer
-Moderator		+ADMIN
-Admin Candidate	+@
-Trial Admin		+@ +SPAWN +REJUV +VAREDIT +BAN
-Badmin			+@ +POSSESS +BUILDMODE +SERVER +FUN
-Game Admin		+@ +STEALTH +SOUNDS +DEBUG
-Game Master		+EVERYTHING
+Moderator		= +ADMIN
+Admin Candidate	= +@
+Trial Admin		= +@ +SPAWN +REJUV +VAREDIT +BAN
+Badmin			= +@ +POSSESS +BUILDMODE +SERVER +FUN
+Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
+Game Master		= +EVERYTHING
 
-Host			+EVERYTHING
+Host			= +EVERYTHING
 
-Coder			+DEBUG +VAREDIT +SERVER +SPAWN
+Coder			= +DEBUG +VAREDIT +SERVER +SPAWN

@@ -1,11 +1,25 @@
 var/global/list/obj/machinery/message_server/message_servers = list()
 
+/datum/data_chat_msg
+	var/sender = "Anon"
+	var/channel = "ss13"
+	var/message = "Blank"
+
+/datum/data_chat_msg/New(var/param_sen = "", var/param_chan = "", var/param_msg = "")
+	if(param_sen)
+		sender = param_sen
+	if(param_chan)
+		channel = param_chan
+	if(param_msg)
+		message = param_msg
+
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
 	var/message = "Blank" //transferred message
+	var/image/photo = null //Attached photo
 
-/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
+/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
 
 	if(param_rec)
 		recipient = param_rec
@@ -13,6 +27,19 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		sender = param_sender
 	if(param_message)
 		message = param_message
+	if(param_photo)
+		photo = param_photo
+
+/datum/data_pda_msg/Topic(href,href_list)
+	..()
+	if(href_list["photo"])
+		var/mob/M = usr
+		M << browse_rsc(photo, "pda_photo.png")
+		M << browse("<html><head><title>PDA Photo</title></head>" \
+		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
+		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "</body></html>", "window=book;size=192x192")
+		onclose(M, "PDA Photo")
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified" //name of the person
@@ -49,11 +76,12 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon_state = "server"
 	name = "Messaging Server"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
 
+	var/list/datum/data_chat_msg/chat_msgs = list()
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = 1
@@ -66,10 +94,9 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	..()
 	return
 
-/obj/machinery/message_server/Del()
+/obj/machinery/message_server/Destroy()
 	message_servers -= src
-	..()
-	return
+	return ..()
 
 /obj/machinery/message_server/proc/GenerateKey()
 	//Feel free to move to Helpers.
@@ -88,14 +115,18 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	update_icon()
 	return
 
-/obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
-	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
+/obj/machinery/message_server/proc/send_chat_message(sender = "", channel = "", message = "")
+	chat_msgs += new/datum/data_chat_msg(sender,channel,message)
 
-/obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
+/obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "",photo=null)
+	. = new/datum/data_pda_msg(recipient,sender,message,photo)
+	pda_msgs += .
+
+/obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
-/obj/machinery/message_server/attack_hand(user as mob)
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
+/obj/machinery/message_server/attack_hand(mob/user)
+//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few Centcom delays."
 	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
 	active = !active
 	update_icon()
@@ -122,43 +153,46 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	variable = param_variable
 	value = param_value
 
-/datum/feedback_variable/proc/inc(var/num = 1)
-	if(isnum(value))
+/datum/feedback_variable/proc/inc(num = 1)
+	if (isnum(value))
 		value += num
 	else
 		value = text2num(value)
-		if(isnum(value))
+		if (isnum(value))
 			value += num
 		else
 			value = num
 
-/datum/feedback_variable/proc/dec(var/num = 1)
-	if(isnum(value))
+/datum/feedback_variable/proc/dec(num = 1)
+	if (isnum(value))
 		value -= num
 	else
 		value = text2num(value)
-		if(isnum(value))
+		if (isnum(value))
 			value -= num
 		else
 			value = -num
 
-/datum/feedback_variable/proc/set_value(var/num)
-	if(isnum(num))
+/datum/feedback_variable/proc/set_value(num)
+	if (isnum(num))
 		value = num
 
 /datum/feedback_variable/proc/get_value()
+	if (!isnum(value))
+		return 0
 	return value
 
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-/datum/feedback_variable/proc/set_details(var/text)
-	if(istext(text))
+/datum/feedback_variable/proc/set_details(text)
+	if (istext(text))
 		details = text
 
-/datum/feedback_variable/proc/add_details(var/text)
-	if(istext(text))
-		if(!details)
+/datum/feedback_variable/proc/add_details(text)
+	if (istext(text))
+		text = replacetext(text, " ", "_")
+		if (!details)
 			details = text
 		else
 			details += " [text]"
@@ -176,7 +210,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -198,14 +232,14 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 	//Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
-	if(blackbox)
-		if(istype(blackbox,/obj/machinery/blackbox_recorder))
-			del(src)
+	if (blackbox)
+		if (istype(blackbox,/obj/machinery/blackbox_recorder))
+			qdel(src)
 	blackbox = src
 
-/obj/machinery/blackbox_recorder/Del()
+/obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)
-	if(T)
+	if (T)
 		blackbox = null
 		var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
 		BR.msg_common = msg_common
@@ -223,11 +257,11 @@ var/obj/machinery/blackbox_recorder/blackbox
 		BR.messages_admin = messages_admin
 		if(blackbox != BR)
 			blackbox = BR
-	..()
+	return ..()
 
-/obj/machinery/blackbox_recorder/proc/find_feedback_datum(var/variable)
-	for(var/datum/feedback_variable/FV in feedback)
-		if(FV.get_variable() == variable)
+/obj/machinery/blackbox_recorder/proc/find_feedback_datum(variable)
+	for (var/datum/feedback_variable/FV in feedback)
+		if (FV.get_variable() == variable)
 			return FV
 	var/datum/feedback_variable/FV = new(variable)
 	feedback += FV
@@ -238,13 +272,16 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 /obj/machinery/blackbox_recorder/proc/round_end_data_gathering()
 
+	var/chat_msg_amt = 0
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for(var/obj/machinery/message_server/MS in world)
-		if(MS.pda_msgs.len > pda_msg_amt)
+	for (var/obj/machinery/message_server/MS in world)
+		if (MS.chat_msgs.len > chat_msg_amt)
+			chat_msg_amt = MS.chat_msgs.len
+		if (MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
-		if(MS.rc_msgs.len > rc_msg_amt)
+		if (MS.rc_msgs.len > rc_msg_amt)
 			rc_msg_amt = MS.rc_msgs.len
 
 	feedback_set_details("radio_usage","")
@@ -260,6 +297,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","SRV-[msg_service.len]")
 	feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
 	feedback_add_details("radio_usage","OTH-[messages.len]")
+	feedback_add_details("radio_usage","CHA-[chat_msg_amt]")
 	feedback_add_details("radio_usage","PDA-[pda_msg_amt]")
 	feedback_add_details("radio_usage","RC-[rc_msg_amt]")
 
@@ -269,72 +307,67 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 //This proc is only to be called at round end.
 /obj/machinery/blackbox_recorder/proc/save_all_data_to_sql()
-	if(!feedback) return
+	if (!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
-	if(!dbcon.IsConnected()) return
+	if (!dbcon.IsConnected()) return
 	var/round_id
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
+	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
 	query.Execute()
-	while(query.NextRow())
+	while (query.NextRow())
 		round_id = query.item[1]
 
-	if(!isnum(round_id))
+	if (!isnum(round_id))
 		round_id = text2num(round_id)
 	round_id++
 
-	for(var/datum/feedback_variable/FV in feedback)
-		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
-		var/DBQuery/query_insert = dbcon.NewQuery(sql)
-		query_insert.Execute()
+	var/sqlrowlist = ""
 
-// Sanitize inputs to avoid SQL injection attacks
-proc/sql_sanitize_text(var/text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
 
-proc/feedback_set(var/variable,var/value)
-	if(!blackbox) return
+	for (var/datum/feedback_variable/FV in feedback)
+		if (sqlrowlist != "")
+			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 
-	variable = sql_sanitize_text(variable)
+		sqlrowlist += "(null, Now(), [round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
+
+	if (sqlrowlist == "")
+		return
+
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
+	query_insert.Execute()
+
+
+/proc/feedback_set(variable,value)
+	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if(!FV) return
+	if (!FV) return
 
 	FV.set_value(value)
 
-proc/feedback_inc(var/variable,var/value)
-	if(!blackbox) return
-
-	variable = sql_sanitize_text(variable)
+/proc/feedback_inc(variable,value)
+	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if(!FV) return
+	if (!FV) return
 
 	FV.inc(value)
 
-proc/feedback_dec(var/variable,var/value)
-	if(!blackbox) return
-
-	variable = sql_sanitize_text(variable)
+/proc/feedback_dec(variable,value)
+	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if(!FV) return
+	if (!FV) return
 
 	FV.dec(value)
 
-proc/feedback_set_details(var/variable,var/details)
-	if(!blackbox) return
-
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+/proc/feedback_set_details(variable,details)
+	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -342,14 +375,11 @@ proc/feedback_set_details(var/variable,var/details)
 
 	FV.set_details(details)
 
-proc/feedback_add_details(var/variable,var/details)
-	if(!blackbox) return
-
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+/proc/feedback_add_details(variable,details)
+	if (!blackbox) return
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if(!FV) return
+	if (!FV) return
 
 	FV.add_details(details)

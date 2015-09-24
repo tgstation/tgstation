@@ -1,48 +1,34 @@
-
 /datum/game_mode
 	var/list/datum/mind/wizards = list()
 
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	antag_flag = BE_WIZARD
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
-
-	uplink_welcome = "Wizardly Uplink Console:"
-	uplink_uses = 10
-
+	enemy_minimum_age = 14
+	round_ends_with_antag_death = 1
+	var/use_huds = 0
 	var/finished = 0
-
-	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>"
-
-
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
-	var/list/datum/mind/possible_wizards = get_players_for_role(BE_WIZARD)
-	if(possible_wizards.len==0)
-		return 0
-	var/datum/mind/wizard = pick(possible_wizards)
-	wizards += wizard
-	modePlayer += wizard
-	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
-	wizard.special_role = "Wizard"
-	if(wizardstart.len == 0)
-		wizard.current << "<B>\red A starting location for you could not be found, please report this bug!</B>"
-		return 0
-	return 1
-
+	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 
 /datum/game_mode/wizard/pre_setup()
-	for(var/datum/mind/wizard in wizards)
-		wizard.current.loc = pick(wizardstart)
+
+	var/datum/mind/wizard = pick(antag_candidates)
+	wizards += wizard
+	modePlayer += wizard
+	wizard.assigned_role = "Wizard"
+	wizard.special_role = "Wizard"
+	if(wizardstart.len == 0)
+		wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
+		return 0
+	for(var/datum/mind/wiz in wizards)
+		wiz.current.loc = pick(wizardstart)
 
 	return 1
 
@@ -50,19 +36,18 @@
 /datum/game_mode/wizard/post_setup()
 	for(var/datum/mind/wizard in wizards)
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
-		forge_wizard_objectives(wizard)
 		//learn_basic_spells(wizard.current)
 		equip_wizard(wizard.current)
+		forge_wizard_objectives(wizard)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
-
-	spawn (rand(waittime_l, waittime_h))
-		send_intercept()
+		if(use_huds)
+			update_wiz_icons_added(wizard)
 	..()
 	return
 
 
-/datum/game_mode/proc/forge_wizard_objectives(var/datum/mind/wizard)
+/datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	switch(rand(1,100))
 		if(1 to 30)
 
@@ -128,9 +113,9 @@
 	return
 
 
-/datum/game_mode/proc/greet_wizard(var/datum/mind/wizard, var/you_are=1)
+/datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
-		wizard.current << "<B>\red You are the Space Wizard!</B>"
+		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
 	var/obj_count = 1
@@ -155,26 +140,29 @@
 		return
 
 	//So zards properly get their items when they are admin-made.
-	del(wizard_mob.wear_suit)
-	del(wizard_mob.head)
-	del(wizard_mob.shoes)
-	del(wizard_mob.r_hand)
-	del(wizard_mob.r_store)
-	del(wizard_mob.l_store)
+	qdel(wizard_mob.wear_suit)
+	qdel(wizard_mob.head)
+	qdel(wizard_mob.shoes)
+	qdel(wizard_mob.r_hand)
+	qdel(wizard_mob.r_store)
+	qdel(wizard_mob.l_store)
 
 	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(wizard_mob), slot_w_uniform)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
-	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), slot_in_backpack)
+	if(wizard_mob.backbag == 1) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
+	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(wizard_mob), slot_back)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(wizard_mob), slot_in_backpack)
 //	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
+	var/obj/item/weapon/spellbook/spellbook = new /obj/item/weapon/spellbook(wizard_mob)
+	spellbook.owner = wizard_mob
+	wizard_mob.equip_to_slot_or_del(spellbook, slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
+	wizard_mob << "The spellbook is bound to you, and others cannot use it."
 	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	wizard_mob.update_icons()
@@ -183,47 +171,38 @@
 
 /datum/game_mode/wizard/check_finished()
 
-	if(config.continous_rounds)
-		return ..()
-
-	var/wizards_alive = 0
 	for(var/datum/mind/wizard in wizards)
-		if(!istype(wizard.current,/mob/living/carbon))
-			continue
-		if(wizard.current.stat==2)
-			continue
-		wizards_alive++
+		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+			return ..()
 
-	if (wizards_alive)
-		return ..()
-	else
-		finished = 1
-		return 1
+	if(SSevent.wizardmode) //If summon events was active, turn it off
+		SSevent.toggleWizardmode()
+		SSevent.resetFrequency()
 
-
+	return ..()
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "\red <FONT size = 3><B> The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>"
+		world << "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
 	if(wizards.len)
-		var/text = "<FONT size = 2><B>The wizards/witches were:</B></FONT>"
+		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
 
 		for(var/datum/mind/wizard in wizards)
 
-			text += "<br>[wizard.key] was [wizard.name] ("
+			text += "<br><b>[wizard.key]</b> was <b>[wizard.name]</b> ("
 			if(wizard.current)
 				if(wizard.current.stat == DEAD)
 					text += "died"
 				else
 					text += "survived"
 				if(wizard.current.real_name != wizard.name)
-					text += " as [wizard.current.real_name]"
+					text += " as <b>[wizard.current.real_name]</b>"
 			else
 				text += "body destroyed"
 			text += ")"
@@ -246,6 +225,15 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
+			if(wizard.spell_list.len>0)
+				text += "<br><B>[wizard.name] used the following spells: </B>"
+				var/i = 1
+				for(var/obj/effect/proc_holder/spell/S in wizard.spell_list)
+					text += "[S.name]"
+					if(wizard.spell_list.len > i)
+						text += ", "
+					i++
+			text += "<br>"
 
 		world << text
 	return 1
@@ -253,9 +241,19 @@
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(var/mob/M as mob)
-	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
-		del(spell_to_remove)
+/mob/proc/spellremove(mob/M)
+	if(!mind)
+		return
+	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.mind.spell_list)
+		qdel(spell_to_remove)
+		mind.spell_list -= spell_to_remove
+
+/datum/mind/proc/remove_spell(var/obj/effect/proc_holder/spell/spell) //To remove a specific spell from a mind - use AddSpell to add one
+	if(!spell) return
+	for(var/obj/effect/proc_holder/spell/S in spell_list)
+		if(istype(S, spell))
+			qdel(S)
+			spell_list -= S
 
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
@@ -272,3 +270,19 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		return 0
 	else
 		return 1
+
+
+/proc/iswizard(mob/living/M)
+	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.wizards)
+
+
+/datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)
+	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
+	wizhud.join_hud(wiz_mind.current)
+	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
+
+
+/datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
+	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
+	wizhud.leave_hud(wiz_mind.current)
+	set_antag_hud(wiz_mind.current, null)

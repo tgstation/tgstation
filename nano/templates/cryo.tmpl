@@ -1,0 +1,97 @@
+<!-- 
+Title: Cryo Cell Status UI 
+Used In File(s): \code\game\machinery\cryo.dm
+ -->
+<h3>Cryo Cell Status</h3>
+
+<div class="statusDisplay">
+	{{if !hasOccupant}}
+		<div class="line">Cell Unoccupied</div>
+	{{else}}
+		<div class="line">
+			{{:occupant.name}}&nbsp;=>&nbsp;
+			{{if occupant.stat == 0}}
+				<span class="good">Conscious</span>
+			{{else occupant.stat == 1}}
+				<span class="average">Unconscious</span>
+			{{else}}
+				<span class="bad">DEAD</span>
+			{{/if}}
+		</div>
+	
+		{{if occupant.stat < 2}}
+			<div class="line">
+				<div class="statusLabel">Health:</div>
+				{{if occupant.health >= 0}}
+					{{:~displayBar(occupant.health, 0, occupant.maxHealth, 'good')}}
+				{{else}}
+					{{:~displayBar(occupant.health, 0, occupant.minHealth, 'average alignRight')}}
+				{{/if}}
+				<div class="statusValue">{{:~round(occupant.health)}}</div>
+			</div>
+		
+			<div class="line">
+				<div class="statusLabel">=&gt; Brute Damage:</div>
+				{{:~displayBar(occupant.bruteLoss, 0, occupant.maxHealth, 'bad')}}
+				<div class="statusValue">{{:~round(occupant.bruteLoss)}}</div>
+			</div>
+		
+			<div class="line">
+				<div class="statusLabel">=&gt; Resp. Damage:</div>
+				{{:~displayBar(occupant.oxyLoss, 0, occupant.maxHealth, 'bad')}}
+				<div class="statusValue">{{:~round(occupant.oxyLoss)}}</div>
+			</div>
+		
+			<div class="line">
+				<div class="statusLabel">=&gt; Toxin Damage:</div>
+				{{:~displayBar(occupant.toxLoss, 0, occupant.maxHealth, 'bad')}}
+				<div class="statusValue">{{:~round(occupant.toxLoss)}}</div>
+			</div>
+		
+			<div class="line">
+				<div class="statusLabel">=&gt; Burn Severity:</div>
+				{{:~displayBar(occupant.fireLoss, 0, occupant.maxHealth, 'bad')}}
+				<div class="statusValue">{{:~round(occupant.fireLoss)}}</div>
+			</div>
+		{{/if}}
+	{{/if}}
+	<hr>
+	<div class="line"><div class="statusLabel">Cell Temperature:</div><div class="statusValue">
+		{{:~string('<span class="{0}">{1} K</span>', cellTemperatureStatus, cellTemperature)}}
+	</div></div>
+</div>
+<div class="itemContent" style="width: 40%;">
+		{^{:~link('Open', 'unlocked', {'open' : 1}, isOpen ? 'selected' : null)}}{^{:~link('Close', 'locked', {'close' : 1}, isOpen ? null : 'selected')}}
+	</div>
+
+
+<h3>Cryo Cell Operation</h3>
+<div class="item">
+	<div class="itemLabel">
+		Cryo Cell Status:
+	</div>
+	<div class="itemContent" style="width: 40%;">
+		{{:~link('On', 'power', {'switchOn' : 1}, isOperating ? 'selected' : null)}}{{:~link('Off', 'close', {'switchOff' : 1}, isOperating ? null : 'selected')}}
+	</div>
+
+</div>
+<div class="item">&nbsp;</div>
+<div class="item">
+	<div class="itemLabel">
+		Beaker:
+	</div>
+	<div class="itemContent" style="width: 40%;">
+		{{if isBeakerLoaded}}			
+			{{for beakerContents}}
+				<span class="highlight">{{:volume}} units of {{:name}}</span><br>
+			{{else}}
+				<span class="bad">Beaker is empty</span>
+			{{/for}}
+		{{else}}
+			<span class="average"><i>No beaker loaded</i></span>
+		{{/if}}
+	</div>
+	<div class="itemContent" style="width: 26%;">
+		{{:~link('Eject Beaker', 'eject', {'ejectBeaker' : 1}, isBeakerLoaded ? null : 'disabled')}}
+	</div>
+</div>

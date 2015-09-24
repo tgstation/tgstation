@@ -1,17 +1,28 @@
+#define SOUND_CHANNEL_ADMIN 777
+var/sound/admin_sound
+
 /client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))	return
 
-	var/sound/uploaded_sound = sound(S, repeat = 0, wait = 1, channel = 777)
-	uploaded_sound.priority = 250
+	admin_sound = sound(S, repeat = 0, wait = 1, channel = SOUND_CHANNEL_ADMIN)
+	admin_sound.priority = 250
+	admin_sound.status = SOUND_UPDATE|SOUND_STREAM
 
 	log_admin("[key_name(src)] played sound [S]")
-	message_admins("[key_name_admin(src)] played sound [S]", 1)
+	message_admins("[key_name_admin(src)] played sound [S]")
+
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+		admin_sound.frequency = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
+		src << "You feel the Honkmother messing with your song..."
+
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			M << uploaded_sound
+			M << admin_sound
 
+	admin_sound.frequency = 1 //Remove this line when the AFD stuff above is gone
+	admin_sound.wait = 0
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -21,56 +32,34 @@
 	if(!check_rights(R_SOUNDS))	return
 
 	log_admin("[key_name(src)] played a local sound [S]")
-	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
+	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf(src.mob), S, 50, 0, 0)
 	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/*
-/client/proc/cuban_pete()
+/client/proc/set_round_end_sound(S as sound)
 	set category = "Fun"
-	set name = "Cuban Pete Time"
+	set name = "Set Round End Sound"
+	if(!check_rights(R_SOUNDS))	return
 
-	message_admins("[key_name_admin(usr)] has declared Cuban Pete Time!", 1)
-	for(var/mob/M in world)
+	if(ticker)
+		ticker.round_end_sound = fcopy_rsc(S)
+	else
+		return
+
+	log_admin("[key_name(src)] set the round end sound to [S]")
+	message_admins("[key_name_admin(src)] set the round end sound to [S]")
+	feedback_add_details("admin_verb","SRES") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/stop_sounds()
+	set category = "Debug"
+	set name = "Stop Sounds"
+	if(!src.holder) return
+
+	log_admin("[key_name(src)] stopped all currently playing sounds.")
+	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
+	for(var/mob/M in player_list)
 		if(M.client)
-			if(M.client.midis)
-				M << 'cubanpetetime.ogg'
+			M << sound(null)
+	feedback_add_details("admin_verb","SS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	for(var/mob/living/carbon/human/CP in world)
-		if(CP.real_name=="Cuban Pete" && CP.key!="Rosham")
-			CP << "Your body can't contain the rhumba beat"
-			CP.gib()
-
-
-/client/proc/bananaphone()
-	set category = "Fun"
-	set name = "Banana Phone"
-
-	message_admins("[key_name_admin(usr)] has activated Banana Phone!", 1)
-	for(var/mob/M in world)
-		if(M.client)
-			if(M.client.midis)
-				M << 'bananaphone.ogg'
-
-
-client/proc/space_asshole()
-	set category = "Fun"
-	set name = "Space Asshole"
-
-	message_admins("[key_name_admin(usr)] has played the Space Asshole Hymn.", 1)
-	for(var/mob/M in world)
-		if(M.client)
-			if(M.client.midis)
-				M << 'space_asshole.ogg'
-
-
-client/proc/honk_theme()
-	set category = "Fun"
-	set name = "Honk"
-
-	message_admins("[key_name_admin(usr)] has creeped everyone out with Blackest Honks.", 1)
-	for(var/mob/M in world)
-		if(M.client)
-			if(M.client.midis)
-				M << 'honk_theme.ogg'*/
+#undef SOUND_CHANNEL_ADMIN

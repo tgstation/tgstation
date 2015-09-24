@@ -11,85 +11,45 @@
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
-	var/mob/living/buckled_mob
+	can_buckle = 1
+	buckle_lying = 1
+	burn_state = 0 //Burnable
+	burntime = 30
 
 /obj/structure/stool/bed/alien
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Del()
-	unbuckle()
-	..()
-	return
+/obj/structure/stool/bed/Move(atom/newloc, direct) //Some bed children move
+	. = ..()
+	if(buckled_mob)
+		if(!buckled_mob.Move(loc, direct))
+			loc = buckled_mob.loc //we gotta go back
+			last_move = buckled_mob.last_move
+			inertia_dir = last_move
+			buckled_mob.inertia_dir = last_move
+			. = 0
 
-/obj/structure/stool/bed/attack_paw(mob/user as mob)
+/obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
+	if(buckled_mob)
+		return buckled_mob.Process_Spacemove(movement_dir)
+	return ..()
+
+/obj/structure/stool/bed/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(mover == buckled_mob)
+		return 1
+	return ..()
+
+/obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/structure/stool/bed/attack_hand(mob/user as mob)
-	manual_unbuckle(user)
-	return
-
-/obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(!istype(M)) return
-	buckle_mob(M, user)
-	return
-
-/obj/structure/stool/bed/proc/unbuckle()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
-			buckled_mob.buckled = null
-			buckled_mob.anchored = initial(buckled_mob.anchored)
-			buckled_mob.update_canmove()
-			buckled_mob = null
-	return
-
-/obj/structure/stool/bed/proc/manual_unbuckle(mob/user as mob)
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			if(buckled_mob != user)
-				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] was unbuckled by [user.name]!",\
-					"You were unbuckled from [src] by [user.name].",\
-					"You hear metal clanking")
-			else
-				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] unbuckled \himself!",\
-					"You unbuckle yourself from [src].",\
-					"You hear metal clanking")
-			unbuckle()
-			src.add_fingerprint(user)
-	return
-
-/obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
-	if (!ticker)
-		user << "You can't buckle anyone in before the game starts."
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
+/obj/structure/stool/bed/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
+	if(M.environment_smash)
+		new /obj/item/stack/sheet/metal(src.loc)
+		qdel(src)
 		return
 
-	if (istype(M, /mob/living/carbon/slime))
-		user << "The [M] is too squishy to buckle in."
-		return
-
-	unbuckle()
-
-	if (M == usr)
-		M.visible_message(\
-			"\blue [M.name] buckles in!",\
-			"You buckle yourself to [src].",\
-			"You hear metal clanking")
-	else
-		M.visible_message(\
-			"\blue [M.name] is buckled in to [src] by [user.name]!",\
-			"You are buckled in to [src] by [user.name].",\
-			"You hear metal clanking")
-	M.buckled = src
-	M.loc = src.loc
-	M.dir = src.dir
-	M.update_canmove()
-	src.buckled_mob = M
-	src.add_fingerprint(user)
-	return
 
 /*
  * Roller beds
@@ -99,31 +59,94 @@
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = 0
+	burn_state = -1 //Not Burnable
 
-/obj/structure/stool/bed/roller/Move()
+/obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob)
+		density = 1
+		icon_state = "up"
+		M.pixel_y = initial(M.pixel_y)
+	else
+		density = 0
+		icon_state = "down"
+		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
+		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+
+
+/obj/item/roller
+	name = "roller bed"
+	desc = "A collapsed roller bed that can be carried around."
+	icon = 'icons/obj/rollerbed.dmi'
+	icon_state = "folded"
+	w_class = 4 // Can't be put in backpacks.
+
+
+/obj/item/roller/attack_self(mob/user)
+	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
+
+/obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)
-			buckled_mob.loc = src.loc
-
-/obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.lying || user.stat || M.buckled || istype(usr, /mob/living/silicon/pai) )
+	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
+		if(!ishuman(usr))
+			return
+		if(buckled_mob)
+			return 0
+		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
+		new/obj/item/roller(get_turf(src))
+		qdel(src)
 		return
-	M.pixel_y = 6
-	density = 1
-	icon_state = "up"
-	..()
-	return
 
-/obj/structure/stool/bed/roller/manual_unbuckle(mob/user as mob)
-	if(buckled_mob)
-		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
-			buckled_mob.pixel_y = 0
-			buckled_mob.anchored = initial(buckled_mob.anchored)
-			buckled_mob.buckled = null
-			buckled_mob.update_canmove()
-			buckled_mob = null
-	density = 0
-	icon_state = "down"
+/obj/item/roller/robo //ROLLER ROBO DA!
+	name = "roller bed dock"
+	var/loaded = null
+
+/obj/item/roller/robo/New()
+	loaded = new /obj/structure/stool/bed/roller(src)
+	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
 	..()
-	return
+
+/obj/item/roller/robo/examine(mob/user)
+	..()
+	user << "The dock is [loaded ? "loaded" : "empty"]"
+
+/obj/item/roller/robo/attack_self(mob/user)
+	if(loaded)
+		var/obj/structure/stool/bed/roller/R = loaded
+		R.loc = user.loc
+		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
+		loaded = null
+	else
+		user << "<span class='warning'>The dock is empty!</span>"
+
+/obj/item/roller/robo/afterattack(obj/target, mob/user , proximity)
+	if(istype(target,/obj/structure/stool/bed/roller))
+		if(!proximity)
+			return
+		if(loaded)
+			user << "<span class='warning'>You already have a roller bed docked!</span>"
+			return
+
+		var/obj/structure/stool/bed/roller/R = target
+		if(R.buckled_mob)
+			R.user_unbuckle_mob(user)
+
+		loaded = target
+		target.loc = src
+		user.visible_message("[user] collects [loaded].", "<span class='notice'>You collect [loaded].</span>")
+	..()
+
+/obj/structure/stool/bed/dogbed
+	name = "dog bed"
+	icon_state = "dogbed"
+	desc = "A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off."
+	anchored = 0
+
+/obj/structure/stool/bed/dogbed/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		new /obj/item/stack/sheet/mineral/wood(loc, 10)
+		qdel(src)
+
+

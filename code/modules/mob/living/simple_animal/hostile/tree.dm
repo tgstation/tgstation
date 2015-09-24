@@ -8,13 +8,13 @@
 	icon_gib = "pine_1"
 	speak_chance = 0
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"
-	speed = -1
+	speed = 1
 	maxHealth = 250
 	health = 250
+	mob_size = MOB_SIZE_LARGE
 
 	pixel_x = -16
 
@@ -23,35 +23,54 @@
 	melee_damage_upper = 12
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+	speak_emote = list("pines")
+	emote_taunt = list("growls")
+	taunt_chance = 20
 
-	//Space carp aren't affected by atmos.
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 5
 	minbodytemp = 0
+	maxbodytemp = 1200
 
-	faction = "carp"
+	faction = list("hostile")
+	var/drop_type = /obj/item/stack/sheet/mineral/wood
+	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/tree/FindTarget()
-	. = ..()
-	if(.)
-		emote("growls at [.]")
+/mob/living/simple_animal/hostile/tree/Life()
+	..()
+	if(istype(src.loc, /turf/simulated))
+		var/turf/simulated/T = src.loc
+		if(T.air)
+			var/co2 = T.air.carbon_dioxide
+			if(co2 > 0)
+				if(prob(25))
+					var/amt = min(co2, 9)
+					T.air.carbon_dioxide -= amt
+					T.atmos_spawn_air(SPAWN_OXYGEN, amt)
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(istype(L))
-		if(prob(15))
-			L.Weaken(3)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
-
-/mob/living/simple_animal/hostile/tree/Die()
 	..()
-	visible_message("\red <b>[src]</b> is hacked into pieces!")
-	new /obj/item/stack/sheet/wood(loc)
-	del(src)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(prob(15))
+			C.Weaken(3)
+			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+					"<span class='userdanger'>\The [src] knocks you down!</span>")
+
+/mob/living/simple_animal/hostile/tree/death(gibbed)
+	..(1)
+	visible_message("<span class='danger'>[src] is hacked into pieces!</span>")
+	new drop_type(loc)
+	ghostize()
+	qdel(src)
+
+/mob/living/simple_animal/hostile/tree/festivus
+	name = "festivus pole"
+	desc = "serenity now... SERENITY NOW!"
+	icon_state = "festivus_pole"
+	icon_living = "festivus_pole"
+	icon_dead = "festivus_pole"
+	icon_gib = "festivus_pole"
+	drop_type = /obj/item/stack/rods
+	speak_emote = list("polls")
+

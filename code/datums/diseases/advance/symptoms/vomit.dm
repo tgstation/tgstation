@@ -27,8 +27,9 @@ Bonus
 	stage_speed = 0
 	transmittable = 1
 	level = 3
+	severity = 4
 
-/datum/symptom/vomit/Activate(var/datum/disease/advance/A)
+/datum/symptom/vomit/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB / 2))
 		var/mob/living/M = A.affected_mob
@@ -40,9 +41,10 @@ Bonus
 
 	return
 
-/datum/symptom/vomit/proc/Vomit(var/mob/living/M)
+/datum/symptom/vomit/proc/Vomit(mob/living/M)
 
-	M.visible_message("<B>[M]</B> vomits on the floor!")
+	M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
+					"<span class='userdanger'>You throw up on the floor!</span>")
 
 	M.nutrition -= 20
 	M.adjustToxLoss(-3)
@@ -78,11 +80,13 @@ Bonus
 	stage_speed = -1
 	transmittable = 1
 	level = 4
+	severity = 5
 
-/datum/symptom/vomit/blood/Vomit(var/mob/living/M)
+/datum/symptom/vomit/blood/Vomit(mob/living/M)
 
 	M.Stun(1)
-	M.visible_message("<B>[M]</B> vomits on the floor!")
+	M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>")
 
 	// They lose blood and health.
 	var/brute_dam = M.getBruteLoss()

@@ -17,16 +17,16 @@
 /obj/machinery/r_n_d/server/New()
 	..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
-	component_parts += new /obj/item/weapon/cable_coil(src)
+	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
 	RefreshParts()
 	src.initialize(); //Agouri
 
-/obj/machinery/r_n_d/server/Del()
+/obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
-	..()
+	return ..()
 
 /obj/machinery/r_n_d/server/RefreshParts()
 	var/tot_rating = 0
@@ -74,17 +74,13 @@
 		produce_heat(heat_gen)
 		delay = initial(delay)
 
-/obj/machinery/r_n_d/server/meteorhit(var/obj/O as obj)
-	griefProtection()
-	..()
-
 
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
 	..()
 
 
-/obj/machinery/r_n_d/server/ex_act(severity)
+/obj/machinery/r_n_d/server/ex_act(severity, target)
 	griefProtection()
 	..()
 
@@ -95,7 +91,7 @@
 
 
 
-//Backup files to centcomm to help admins recover data after greifer attacks
+//Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in world)
 		for(var/datum/tech/T in files.known_tech)
@@ -123,48 +119,29 @@
 					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
 
 				env.merge(removed)
+				air_update_turf()
 
-/obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/r_n_d/server/attackby(obj/item/O, mob/user, params)
 	if (disabled)
 		return
 	if (shocked)
 		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "server_o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "server"
-			user << "You close the maintenance hatch of [src]."
+	if (default_deconstruction_screwdriver(user, "server_o", "server", O))
 		return
-	if (opened)
+	if(exchange_parts(user, O))
+		return
+	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			griefProtection()
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			del(src)
+			default_deconstruction_crowbar(O)
 			return 1
 
-/obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
+/obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)
 		return
 	if (shocked)
 		shock(user,50)
-	if(ishuman(user))
-		if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-			call(/obj/item/clothing/gloves/space_ninja/proc/drain)("RESEARCH",src,user:wear_suit)
 	return
-
-
-
 
 /obj/machinery/r_n_d/server/centcom
 	name = "Centcom Central R&D Database"
@@ -199,12 +176,15 @@
 
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
-	icon_state = "rdcomp"
+	desc = "Used to manage access to research and manufacturing databases."
+	icon_screen = "rdcomp"
+	icon_keyboard = "rd_key"
 	var/screen = 0
 	var/obj/machinery/r_n_d/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
+	circuit = /obj/item/weapon/circuitboard/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -213,7 +193,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
-		usr << "\red You do not have the required access level"
+		usr << "<span class='danger'>You do not have the required access level.</span>"
 		return
 
 	if(href_list["main"])
@@ -256,7 +236,7 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
-		var/choice = alert("Technology Data Rest", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			for(var/datum/tech/T in temp_server.files.known_tech)
 				if(T.id == href_list["reset_tech"])
@@ -269,7 +249,6 @@
 		if(choice == "Continue")
 			for(var/datum/design/D in temp_server.files.known_designs)
 				if(D.id == href_list["reset_design"])
-					D.reliability_mod = 0
 					temp_server.files.known_designs -= D
 					break
 		temp_server.files.RefreshResearch()
@@ -277,8 +256,8 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/computer/rdservercontrol/attack_hand(mob/user)
+	if(..())
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -291,7 +270,7 @@
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
 				dat += "[S.name] || "
-				dat += "<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | "
+				dat += "<A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A> | "
 				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
@@ -332,46 +311,22 @@
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += "Send Data to what server?<BR>"
 			for(var/obj/machinery/r_n_d/server/S in servers)
-				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
+				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'>(Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 	user << browse("<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
 	onclose(user, "server_control")
 	return
 
-/obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
-	if(istype(D, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "\blue You you disable the security protocols"
+/obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
+	..()
 	src.updateUsrDialog()
 	return
 
+/obj/machinery/computer/rdservercontrol/emag_act(mob/user)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'>You you disable the security protocols.</span>"
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

@@ -1,20 +1,24 @@
 /mob/living/silicon/ai/Life()
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
 		var/turf/T = get_turf(src)
 
-		if (src.stat!=0)
+		if (src.stat!= CONSCIOUS)
 			src.cameraFollow = null
 			src.reset_view(null)
 			src.unset_machine()
 
-		src.updatehealth()
+		updatehealth()
+
+		update_gravity(mob_has_gravity())
+
+		update_action_buttons()
 
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
-				src << "\red ERROR: APC access disabled, hack attempt canceled."
+				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
 				src.malfhacking = 0
 				src.malfhack = null
 
@@ -37,7 +41,7 @@
 
 		//stage = 1
 		//if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
-		var/blind = 0
+		var/blindness = 0
 		//stage = 2
 		var/area/loc = null
 		if (istype(T, /turf))
@@ -45,11 +49,11 @@
 			loc = T.loc
 			if (istype(loc, /area))
 				//stage = 4
-				if (!loc.master.power_equip && !istype(src.loc,/obj/item))
+				if (!loc.master.power_equip && !is_type_in_list(src.loc,list(/obj/item, /obj/mecha)))
 					//stage = 5
-					blind = 1
+					blindness = 1
 
-		if (!blind)
+		if (!blindness)
 			//stage = 4.5
 			if (src.blind.layer != 0)
 				src.blind.layer = 0
@@ -58,6 +62,8 @@
 			src.sight |= SEE_OBJS
 			src.see_in_dark = 8
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(see_override)
+				see_invisible = see_override
 
 			var/area/home = get_area(src)
 			if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
@@ -86,7 +92,7 @@
 			src.see_in_dark = 0
 			src.see_invisible = SEE_INVISIBLE_LIVING
 
-			if (((!loc.master.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
+			if (((!loc.master.power_equip) || istype(T, /turf/space)) && !is_type_in_list(src.loc,list(/obj/item, /obj/mecha)))
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 
@@ -154,7 +160,9 @@
 									src << "Receiving control information from APC."
 									sleep(2)
 									//bring up APC dialog
+									apc_override = 1
 									theAPC.attack_ai(src)
+									apc_override = 0
 									src:aiRestorePowerRoutine = 3
 									src << "Here are your current laws:"
 									src.show_laws()

@@ -2,7 +2,7 @@
 	Class: scope
 	A runtime instance of a block. Used internally by the interpreter.
 */
-scope
+/scope
 	var
 		scope/parent = null
 		node/BlockDefinition/block

@@ -11,4 +11,6 @@
 	melee_damage_upper = 50
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
-	faction = "creature"
+	faction = list("creature")
+	speak_emote = list("screams")
+	gold_core_spawnable = 1

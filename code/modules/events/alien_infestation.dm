@@ -22,18 +22,20 @@
 
 /datum/round_event/alien_infestation/announce()
 	if(successSpawn)
-		command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
-		world << sound('sound/AI/aliens.ogg')
+		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/AI/aliens.ogg')
 
 
 /datum/round_event/alien_infestation/start()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
-		if(temp_vent.loc.z == 1 && !temp_vent.welded && temp_vent.network)
-			if(temp_vent.network.normal_members.len > 50)	//Stops Aliens getting stuck in small networks. See: Security, Virology
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in world)
+		if(qdeleted(temp_vent))
+			continue
+		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			if(temp_vent_parent.other_atmosmch.len > 20)	//Stops Aliens getting stuck in small networks. See: Security, Virology
 				vents += temp_vent
 
-	var/list/candidates = get_candidates(BE_ALIEN)
+	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)

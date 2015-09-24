@@ -31,12 +31,7 @@
 	return 0
 
 /proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
-		return 1
-	return 0
-
-/proc/isslimeadult(A)
-	if(istype(A, /mob/living/carbon/slime/adult))
+	if(istype(A, /mob/living/simple_animal/slime))
 		return 1
 	return 0
 
@@ -51,7 +46,7 @@
 	return 0
 
 /proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
+	if(istype(A, /mob/living/simple_animal/pet/dog/corgi))
 		return 1
 	return 0
 
@@ -61,7 +56,7 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
+	if(istype(A, /mob/living/simple_animal/pet/cat))
 		return 1
 	return 0
 
@@ -110,19 +105,41 @@
 		return 1
 	return 0
 
-proc/isobserver(A)
+/proc/isobserver(A)
 	if(istype(A, /mob/dead/observer))
 		return 1
 	return 0
 
-proc/isorgan(A)
-	if(istype(A, /datum/limb))
+/proc/isnewplayer(A)
+	if(istype(A, /mob/new_player))
 		return 1
 	return 0
 
-/proc/hsl2rgb(h, s, l)
-	return
+/proc/isovermind(A)
+	if(istype(A, /mob/camera/blob))
+		return 1
+	return 0
 
+/proc/isdrone(A)
+	if(istype(A, /mob/living/simple_animal/drone))
+		return 1
+	return 0
+
+/proc/isswarmer(A)
+	if(istype(A, /mob/living/simple_animal/hostile/swarmer))
+		return 1
+	return 0
+
+/proc/islimb(A)
+	if(istype(A, /obj/item/organ/limb))
+		return 1
+	return 0
+
+/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/loyalty/L in A)
+		if(L && L.implanted)
+			return 1
+	return 0
 
 /proc/check_zone(zone)
 	if(!zone)	return "chest"
@@ -144,24 +161,33 @@ proc/isorgan(A)
 	return zone
 
 
-/proc/ran_zone(zone, probability)
+/proc/ran_zone(zone, probability = 80)
+
 	zone = check_zone(zone)
-	if(!probability)	probability = 90
-	if(probability == 100)	return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
-		var/t = rand(1, 9)
-		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+	if(prob(probability))
+		return zone
 
-	if(prob(probability * 0.75))	return zone
-	return "chest"
+	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
+	switch(t)
+		if(1)		 return "head"
+		if(2)		 return "chest"
+		if(3 to 6)	 return "l_arm"
+		if(7 to 10)	 return "r_arm"
+		if(11 to 14) return "l_leg"
+		if(15 to 18) return "r_leg"
 
+	return zone
+
+/proc/above_neck(zone)
+	var/list/zones = list("head", "mouth", "eyes")
+	if(zones.Find(zone))
+		return 1
+	else
+		return 0
 
 /proc/stars(n, pr)
+	n = html_encode(n)
 	if (pr == null)
 		pr = 25
 	if (pr <= 0)
@@ -180,8 +206,31 @@ proc/isorgan(A)
 		else
 			t = text("[]*", t)
 		p++
-	return t
+	return sanitize(t)
 
+/proc/slur(n)
+	var/phrase = html_decode(n)
+	var/leng = lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,3)==3)
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="u")	newletter="oo"
+			if(lowertext(newletter)=="c")	newletter="k"
+		if(rand(1,20)==20)
+			if(newletter==" ")	newletter="...huuuhhh..."
+			if(newletter==".")	newletter=" *BURP*."
+		switch(rand(1,20))
+			if(1)	newletter+="'"
+			if(10)	newletter+="[newletter]"
+			if(20)	newletter+="[newletter][newletter]"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -206,8 +255,25 @@ proc/isorgan(A)
 		p++//for each letter p is increased to find where the next letter will be.
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
+/proc/derpspeech(message, stuttering)
+	message = replacetext(message, " am ", " ")
+	message = replacetext(message, " is ", " ")
+	message = replacetext(message, " are ", " ")
+	message = replacetext(message, "you", "u")
+	message = replacetext(message, "help", "halp")
+	message = replacetext(message, "grief", "grife")
+	message = replacetext(message, "space", "spess")
+	message = replacetext(message, "carp", "crap")
+	message = replacetext(message, "reason", "raisin")
+	if(prob(50))
+		message = uppertext(message)
+		message += "[stutter(pick("!", "!!", "!!!"))]"
+	if(!stuttering && prob(15))
+		message = stutter(message)
+	return message
 
-proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+
+/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -225,7 +291,7 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 	return returntext
 
 
-/proc/ninjaspeak(n)
+/proc/ninjaspeak(n) //NINJACODE
 /*
 The difference with stutter is that this proc can stutter more than 1 letter
 The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
@@ -255,17 +321,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || M.shakecamera)
-		return
-	spawn(1)
+	spawn(0)
+		if(!M || !M.client || M.shakecamera)
+			return
 		var/oldeye=M.client.eye
 		var/x
 		M.shakecamera = 1
 		for(x=0; x<duration, x++)
-			M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
-			sleep(1)
-		M.shakecamera = 0
-		M.client.eye=oldeye
+			if(M && M.client)
+				M.client.eye = locate(dd_range(1,M.loc.x+rand(-strength,strength),world.maxx),dd_range(1,M.loc.y+rand(-strength,strength),world.maxy),M.loc.z)
+				sleep(1)
+		if(M)
+			M.shakecamera = 0
+			if(M.client)
+				M.client.eye=oldeye
 
 
 /proc/findname(msg)
@@ -278,61 +347,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.abstract || r_hand && !r_hand.abstract)
+	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
 		return 1
 	return 0
-
-
-//Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12()
-	set name = "F12"
-	set hidden = 1
-
-	if(hud_used)
-		if(ishuman(src))
-			if(!src.client) return
-
-			if(hud_used.hud_shown)
-				hud_used.hud_shown = 0
-				if(src.hud_used.adding)
-					src.client.screen -= src.hud_used.adding
-				if(src.hud_used.other)
-					src.client.screen -= src.hud_used.other
-				if(src.hud_used.hotkeybuttons)
-					src.client.screen -= src.hud_used.hotkeybuttons
-				if(src.hud_used.item_action_list)
-					src.client.screen -= src.hud_used.item_action_list
-
-				//Due to some poor coding some things need special treatment:
-				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
-				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-
-				//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-				src.client.screen -= src.zone_sel	//zone_sel is a mob variable for some reason.
-
-			else
-				hud_used.hud_shown = 1
-				if(src.hud_used.adding)
-					src.client.screen += src.hud_used.adding
-				if(src.hud_used.other && src.hud_used.inventory_shown)
-					src.client.screen += src.hud_used.other
-				if(src.hud_used.hotkeybuttons && !src.hud_used.hotkey_ui_hidden)
-					src.client.screen += src.hud_used.hotkeybuttons
-
-
-				src.hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-				src.client.screen += src.zone_sel				//This one is a special snowflake
-
-			hud_used.hidden_inventory_update()
-			hud_used.persistant_inventory_update()
-			update_action_buttons()
-		else
-			usr << "\red Inventory hiding is currently only supported for human mobs, sorry."
-	else
-		usr << "\red This mob type does not use a HUD."
 
 //converts intent-strings into numbers and back
 /proc/intent_numeric(argument)
@@ -381,14 +398,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			else
 				hud_used.action_intent.icon_state = "help"
 
-proc/is_blind(A)
-	if(istype(A, /mob/living/carbon))
-		var/mob/living/carbon/C = A
-		if(C.blinded != null)
-			return 1
+/proc/is_blind(A)
+	if(ismob(A))
+		var/mob/B = A
+		return	B.eye_blind
 	return 0
 
-proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
+/proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!ticker || !ticker.mode)
 		return 0
 	if(!istype(M))
@@ -429,7 +445,48 @@ proc/is_special_character(mob/M) // returns 1 for special characters and 2 for h
 				if(M.mind in ticker.mode.wizards)
 					return 2
 			if("monkey")
-				if(M.viruses && (locate(/datum/disease/jungle_fever) in M.viruses))
+				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
+					return 2
+			if("abductor")
+				if(M.mind in ticker.mode.abductors)
 					return 2
 		return 1
 	return 0
+
+/proc/get_both_hands(mob/living/carbon/M)
+	var/list/hands = list(M.l_hand, M.r_hand)
+	return hands
+
+/mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
+	return 1
+
+/proc/notify_ghosts(var/message, var/ghost_sound = null) //Easy notification of ghosts.
+	for(var/mob/dead/observer/O in player_list)
+		if(O.client)
+			O << "<span class='ghostalert'>[message]<span>"
+			if(ghost_sound)
+				O << sound(ghost_sound)
+
+/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
+	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+
+	var/dam //changes repair text based on how much brute/burn was supplied
+
+	if(brute > burn)
+		dam = 1
+	else
+		dam = 0
+
+	if(affecting.status == ORGAN_ROBOTIC)
+		if(brute > 0 && affecting.brute_dam > 0 || burn > 0 && affecting.burn_dam > 0)
+			affecting.heal_damage(brute,burn,1)
+			H.update_damage_overlays(0)
+			H.updatehealth()
+			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.getDisplayName()].</span>")
+			return
+		else
+			user << "<span class='warning'>[H]'s [affecting.getDisplayName()] is already in good condition!</span>"
+			return
+	else
+		return
+

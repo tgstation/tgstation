@@ -26,10 +26,8 @@
 		////////////
 		//SECURITY//
 		////////////
-	var/next_allowed_topic_time = 10
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
-
 
 		////////////////////////////////////
 		//things that require the database//
@@ -37,3 +35,11 @@
 	var/player_age = "Requires database"	//So admins know why it isn't working - Used to determine how old the account is - in days.
 	var/related_accounts_ip = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
+
+	preload_rsc = PRELOAD_RSC
+
+	var/global/obj/screen/click_catcher/void
+
+	// Used by html_interface module.
+	var/hi_last_pos
+

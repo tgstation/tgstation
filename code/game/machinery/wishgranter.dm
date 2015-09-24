@@ -1,5 +1,5 @@
 /obj/machinery/wish_granter
-	name = "Wish Granter"
+	name = "wish granter"
 	desc = "You're not so sure about this, anymore..."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
@@ -11,7 +11,8 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
+/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+	if(istype(user))	return
 	usr.set_machine(src)
 
 	if(charges <= 0)
@@ -36,35 +37,17 @@
 		charges--
 		insisting = 0
 
-		if (!(HULK in user.mutations))
-			user.mutations.Add(HULK)
-
-		if (!(LASER in user.mutations))
-			user.mutations.Add(LASER)
-
-		if (!(XRAY in user.mutations))
-			user.mutations.Add(XRAY)
-			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-			user.see_in_dark = 8
-			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
-		if (!(COLD_RESISTANCE in user.mutations))
-			user.mutations.Add(COLD_RESISTANCE)
-
-		if (!(TK in user.mutations))
-			user.mutations.Add(TK)
-
-		if(!(HEAL in user.mutations))
-			user.mutations.Add(HEAL)
-
-		user.update_mutations()
+		user.dna.add_mutation(HULK)
+		user.dna.add_mutation(XRAY)
+		user.dna.add_mutation(COLDRES)
+		user.dna.add_mutation(TK)
 
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
-		var/datum/objective/silence/silence = new
-		silence.owner = user.mind
-		user.mind.objectives += silence
+		var/datum/objective/hijack/hijack = new
+		hijack.owner = user.mind
+		user.mind.objectives += hijack
 
 		var/obj_count = 1
 		for(var/datum/objective/OBJ in user.mind.objectives)

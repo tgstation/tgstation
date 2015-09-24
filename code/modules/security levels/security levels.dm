@@ -6,7 +6,7 @@
 
 //config.alert_desc_blue_downto
 
-/proc/set_security_level(var/level)
+/proc/set_security_level(level)
 	switch(level)
 		if("green")
 			level = SEC_LEVEL_GREEN
@@ -21,32 +21,25 @@
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
 		switch(level)
 			if(SEC_LEVEL_GREEN)
-				world << "<font size=4 color='red'>Attention! Security level lowered to green</font>"
-				world << "<font color='red'>[config.alert_desc_green]</font>"
+				minor_announce(config.alert_desc_green, "Attention! Security level lowered to green:")
 				security_level = SEC_LEVEL_GREEN
-				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
-						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
+				for(var/obj/machinery/firealarm/FA in machines)
+					if(FA.z == ZLEVEL_STATION)
+						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
-					world << "<font size=4 color='red'>Attention! Security level elevated to blue</font>"
-					world << "<font color='red'>[config.alert_desc_blue_upto]</font>"
+					minor_announce(config.alert_desc_blue_upto, "Attention! Security level elevated to blue:",1)
 				else
-					world << "<font size=4 color='red'>Attention! Security level lowered to blue</font>"
-					world << "<font color='red'>[config.alert_desc_blue_downto]</font>"
+					minor_announce(config.alert_desc_blue_downto, "Attention! Security level lowered to blue:")
 				security_level = SEC_LEVEL_BLUE
-				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
-						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
+				for(var/obj/machinery/firealarm/FA in machines)
+					if(FA.z == ZLEVEL_STATION)
+						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
-					world << "<font size=4 color='red'>Attention! Code red!</font>"
-					world << "<font color='red'>[config.alert_desc_red_upto]</font>"
+					minor_announce(config.alert_desc_red_upto, "Attention! Code red!",1)
 				else
-					world << "<font size=4 color='red'>Attention! Code red!</font>"
-					world << "<font color='red'>[config.alert_desc_red_downto]</font>"
+					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
 				security_level = SEC_LEVEL_RED
 
 				/*	- At the time of commit, setting status displays didn't work properly
@@ -54,18 +47,19 @@
 				if(CC)
 					CC.post_status("alert", "redalert")*/
 
-				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
-						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
+				for(var/obj/machinery/firealarm/FA in machines)
+					if(FA.z == ZLEVEL_STATION)
+						FA.update_icon()
+				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
+					pod.admin_controlled = 0
 			if(SEC_LEVEL_DELTA)
-				world << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
-				world << "<font color='red'>[config.alert_desc_delta]</font>"
+				minor_announce(config.alert_desc_delta, "Attention! Delta security level reached!",1)
 				security_level = SEC_LEVEL_DELTA
-				for(var/obj/machinery/firealarm/FA in world)
-					if(FA.z == 1)
-						FA.overlays = list()
-						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
+				for(var/obj/machinery/firealarm/FA in machines)
+					if(FA.z == ZLEVEL_STATION)
+						FA.update_icon()
+				for(var/obj/machinery/computer/shuttle/pod/pod in machines)
+					pod.admin_controlled = 0
 	else
 		return
 
@@ -80,7 +74,7 @@
 		if(SEC_LEVEL_DELTA)
 			return "delta"
 
-/proc/num2seclevel(var/num)
+/proc/num2seclevel(num)
 	switch(num)
 		if(SEC_LEVEL_GREEN)
 			return "green"
@@ -91,7 +85,7 @@
 		if(SEC_LEVEL_DELTA)
 			return "delta"
 
-/proc/seclevel2num(var/seclevel)
+/proc/seclevel2num(seclevel)
 	switch( lowertext(seclevel) )
 		if("green")
 			return SEC_LEVEL_GREEN

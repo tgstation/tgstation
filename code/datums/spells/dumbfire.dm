@@ -31,7 +31,7 @@
 	perform(list(T))
 
 /obj/effect/proc_holder/spell/dumbfire/cast(list/targets, mob/user = usr)
-
+	playMagSound()
 	for(var/turf/target in targets)
 		spawn(0)
 			var/obj/effect/proc_holder/spell/targeted/projectile
@@ -64,7 +64,7 @@
 					break
 
 				var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - usr
-				if(L)
+				if(L && L.stat != DEAD)
 					projectile.cast(L.loc)
 					break
 
@@ -76,11 +76,11 @@
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
 							spawn(proj_trail_lifespan)
-								del(trail)
+								qdel(trail)
 
 				current_loc = projectile.loc
 
 				sleep(proj_step_delay)
 
 			if(projectile)
-				del(projectile)
+				qdel(projectile)

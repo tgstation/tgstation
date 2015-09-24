@@ -6,6 +6,7 @@
 	gen_amount = g
 
 */
+
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
@@ -14,33 +15,37 @@
 	density = 1
 	use_power = 0
 
-	var/obj/machinery/atmospherics/binary/circulator/circ1
-	var/obj/machinery/atmospherics/binary/circulator/circ2
+	var/obj/machinery/atmospherics/components/binary/circulator/circ1
+	var/obj/machinery/atmospherics/components/binary/circulator/circ2
 
 	var/lastgen = 0
 	var/lastgenlev = -1
+	var/lastcirc = "00"
 
 
-/obj/machinery/power/generator/New()
-	..()
+/obj/machinery/power/generator/initialize()
 
-	spawn(5)
-		circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
-		circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
+	circ1 = null
+	circ2 = null
 
-		if(circ1)
-			circ1.side = 1
-			circ1.update_icon()
-		if(circ2)
-			circ2.side = 2
-			circ2.update_icon()
+	circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
+	circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,EAST)
+	connect_to_network()
 
-		if(!circ1 || !circ2)
-			stat |= BROKEN
+	if(circ1)
+		circ1.side = 1
+		circ1.update_icon()
+	if(circ2)
+		circ2.side = 2
+		circ2.update_icon()
 
-		updateicon()
+	if(!circ1 || !circ2)
+		stat |= BROKEN
 
-/obj/machinery/power/generator/proc/updateicon()
+	update_icon()
+
+
+/obj/machinery/power/generator/update_icon()
 
 	if(stat & (NOPOWER|BROKEN))
 		overlays.Cut()
@@ -50,108 +55,128 @@
 		if(lastgenlev != 0)
 			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
 
+		overlays += image('icons/obj/power.dmi', "teg-oc[lastcirc]")
+
+
 #define GENRATE 800		// generator output coefficient from Q
 
 /obj/machinery/power/generator/process()
 
-	//world << "Generator process ran"
-
 	if(!circ1 || !circ2)
 		return
 
-	//world << "circ1 and circ2 pass"
-
-	var/datum/gas_mixture/cold_air = circ1.return_transfer_air()
-	var/datum/gas_mixture/hot_air = circ2.return_transfer_air()
-
 	lastgen = 0
 
-	//world << "hot_air = [hot_air]; cold_air = [cold_air];"
+	if(powernet)
+		//world << "circ1 and circ2 pass"
 
-	if(cold_air && hot_air)
+		var/datum/gas_mixture/cold_air = circ1.return_transfer_air()
+		var/datum/gas_mixture/hot_air = circ2.return_transfer_air()
 
-		//world << "hot_air = [hot_air] temperature = [hot_air.temperature]; cold_air = [cold_air] temperature = [hot_air.temperature];"
+		//world << "hot_air = [hot_air]; cold_air = [cold_air];"
 
-		//world << "coldair and hotair pass"
-		var/cold_air_heat_capacity = cold_air.heat_capacity()
-		var/hot_air_heat_capacity = hot_air.heat_capacity()
+		if(cold_air && hot_air)
 
-		var/delta_temperature = hot_air.temperature - cold_air.temperature
+			//world << "hot_air = [hot_air] temperature = [hot_air.temperature]; cold_air = [cold_air] temperature = [hot_air.temperature];"
 
-		//world << "delta_temperature = [delta_temperature]; cold_air_heat_capacity = [cold_air_heat_capacity]; hot_air_heat_capacity = [hot_air_heat_capacity]"
+			//world << "coldair and hotair pass"
+			var/cold_air_heat_capacity = cold_air.heat_capacity()
+			var/hot_air_heat_capacity = hot_air.heat_capacity()
 
-		if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
-			var/efficiency = 0.65
+			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
-			var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
+			//world << "delta_temperature = [delta_temperature]; cold_air_heat_capacity = [cold_air_heat_capacity]; hot_air_heat_capacity = [hot_air_heat_capacity]"
 
-			var/heat = energy_transfer*(1-efficiency)
-			lastgen = energy_transfer*efficiency
+			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
+				var/efficiency = 0.65
 
-			//world << "lastgen = [lastgen]; heat = [heat]; delta_temperature = [delta_temperature]; hot_air_heat_capacity = [hot_air_heat_capacity]; cold_air_heat_capacity = [cold_air_heat_capacity];"
+				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
-			hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
-			cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
+				var/heat = energy_transfer*(1-efficiency)
+				lastgen = energy_transfer*efficiency
 
-			world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
+				//world << "lastgen = [lastgen]; heat = [heat]; delta_temperature = [delta_temperature]; hot_air_heat_capacity = [hot_air_heat_capacity]; cold_air_heat_capacity = [cold_air_heat_capacity];"
 
-			add_avail(lastgen)
-	// update icon overlays only if displayed level has changed
+				hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
+				cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
 
-	if(hot_air)
-		circ2.air2.merge(hot_air)
+				//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
 
-	if(cold_air)
-		circ1.air2.merge(cold_air)
+				add_avail(lastgen)
+		// update icon overlays only if displayed level has changed
+
+		if(hot_air)
+			var/datum/gas_mixture/circ2_air1 = circ2.AIR1
+			circ2_air1.merge(hot_air)
+
+		if(cold_air)
+			var/datum/gas_mixture/circ1_air1 = circ1.AIR1
+			circ1_air1.merge(cold_air)
 
 	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
-	if(genlev != lastgenlev)
+	var/circ = "[circ1 && circ1.last_pressure_delta > 0 ? "1" : "0"][circ2 && circ2.last_pressure_delta > 0 ? "1" : "0"]"
+	if((genlev != lastgenlev) || (circ != lastcirc))
 		lastgenlev = genlev
-		updateicon()
+		lastcirc = circ
+		update_icon()
 
 	src.updateDialog()
 
-/obj/machinery/power/generator/attack_ai(mob/user)
-	if(stat & (BROKEN|NOPOWER)) return
-	interact(user)
-
-
 /obj/machinery/power/generator/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER)) return
-	interact(user)
-
-
-/obj/machinery/power/generator/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
-		user.unset_machine()
+	if(..())
 		user << browse(null, "window=teg")
 		return
+	interact(user)
+
+/obj/machinery/power/generator/proc/get_menu(include_link = 1)
+	var/t = ""
+	if(!powernet)
+		t += "<span class='bad'>Unable to connect to the power network!</span>"
+	else if(circ1 && circ2)
+		var/datum/gas_mixture/circ1_air1 = circ1.AIR1
+		var/datum/gas_mixture/circ1_air2 = circ1.AIR2
+		var/datum/gas_mixture/circ2_air1 = circ2.AIR1
+		var/datum/gas_mixture/circ2_air2 = circ2.AIR2
+
+		t += "<div class='statusDisplay'>"
+
+		t += "Output: [round(lastgen)] W"
+
+		t += "<BR>"
+
+		t += "<B><font color='blue'>Cold loop</font></B><BR>"
+		t += "Temperature Inlet: [round(circ1_air2.temperature, 0.1)] K / Outlet: [round(circ1_air1.temperature, 0.1)] K<BR>"
+		t += "Pressure Inlet: [round(circ1_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(circ1_air1.return_pressure(), 0.1)] kPa<BR>"
+
+		t += "<B><font color='red'>Hot loop</font></B><BR>"
+		t += "Temperature Inlet: [round(circ2_air2.temperature, 0.1)] K / Outlet: [round(circ2_air1.temperature, 0.1)] K<BR>"
+		t += "Pressure Inlet: [round(circ2_air2.return_pressure(), 0.1)] kPa / Outlet: [round(circ2_air1.return_pressure(), 0.1)] kPa<BR>"
+
+		t += "</div>"
+	else
+		t += "<span class='bad'>Unable to locate all parts!</span>"
+	if(include_link)
+		t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+
+	return t
+
+/obj/machinery/power/generator/interact(mob/user)
 
 	user.set_machine(src)
 
-	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
+	//user << browse(t, "window=teg;size=460x300")
+	//onclose(user, "teg")
 
-	t += "Output : [round(lastgen)] W<BR><BR>"
-
-	t += "<B>Cold loop</B><BR>"
-	t += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-	t += "Pressure Inlet: [round(circ1.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
-
-	t += "<B>Hot loop</B><BR>"
-	t += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-	t += "Pressure Inlet: [round(circ2.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
-
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
-
-	t += "</PRE>"
-	user << browse(t, "window=teg;size=460x300")
-	onclose(user, "teg")
+	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
+	popup.set_content(get_menu())
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 	return 1
 
 
 /obj/machinery/power/generator/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if( href_list["close"] )
 		usr << browse(null, "window=teg")
 		usr.unset_machine()
@@ -161,5 +186,4 @@
 
 /obj/machinery/power/generator/power_change()
 	..()
-	updateicon()
-
+	update_icon()

@@ -1,5 +1,5 @@
 /obj/machinery/robotic_fabricator
-	name = "Robotic Fabricator"
+	name = "robotic fabricator"
 	icon = 'icons/obj/robotics.dmi'
 	icon_state = "fab-idle"
 	density = 1
@@ -11,9 +11,9 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/stack/sheet/metal))
-		if (src.metal_amount < 150000.0)
+		if (src.metal_amount < 150000)
 			var/count = 0
 			src.overlays += "fab-load-metal"
 			spawn(15)
@@ -21,18 +21,18 @@
 					if(!O:amount)
 						return
 					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
+						src.metal_amount += O:materials[MAT_METAL] /*O:height * O:width * O:length * 100000*/
 						O:amount--
 						count++
 
 					if (O:amount < 1)
-						del(O)
+						qdel(O)
 
-					user << "You insert [count] metal sheet\s into the fabricator."
+					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
-			user << "The robot part maker is full. Please remove metal from the robot part maker in order to insert more."
+			user << "\The [src] is full."
 
 /obj/machinery/robotic_fabricator/power_change()
 	if (powered())
@@ -40,10 +40,10 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/attack_paw(user as mob)
+/obj/machinery/robotic_fabricator/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(mob/user)
 	var/dat
 	if (..())
 		return
@@ -90,37 +90,37 @@ Please wait until completion...</TT><BR>
 				if (1)
 					build_type = "/obj/item/robot_parts/l_arm"
 					build_time = 200
-					build_cost = 25000
+					build_cost = 10000
 
 				if (2)
 					build_type = "/obj/item/robot_parts/r_arm"
 					build_time = 200
-					build_cost = 25000
+					build_cost = 10000
 
 				if (3)
 					build_type = "/obj/item/robot_parts/l_leg"
 					build_time = 200
-					build_cost = 25000
+					build_cost = 10000
 
 				if (4)
 					build_type = "/obj/item/robot_parts/r_leg"
 					build_time = 200
-					build_cost = 25000
+					build_cost = 10000
 
 				if (5)
 					build_type = "/obj/item/robot_parts/chest"
 					build_time = 350
-					build_cost = 50000
+					build_cost = 40000
 
 				if (6)
 					build_type = "/obj/item/robot_parts/head"
 					build_time = 350
-					build_cost = 50000
+					build_cost = 5000
 
 				if (7)
 					build_type = "/obj/item/robot_parts/robot_suit"
 					build_time = 600
-					build_cost = 75000
+					build_cost = 15000
 
 			var/building = text2path(build_type)
 			if (!isnull(building))

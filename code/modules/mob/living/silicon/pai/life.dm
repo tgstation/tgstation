@@ -1,18 +1,12 @@
 /mob/living/silicon/pai/Life()
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		return
 	if(src.cable)
 		if(get_dist(src, src.cable) > 1)
 			var/turf/T = get_turf(src.loc)
-			for (var/mob/M in viewers(T))
-				M.show_message("\red [src.cable] rapidly retracts back into its spool.", 3, "\red You hear a click and the sound of wire spooling rapidly.", 2)
-			del(src.cable)
-
-	regular_hud_updates()
-	if(src.secHUD == 1)
-		src.securityHUD()
-	if(src.medHUD == 1)
-		src.medicalHUD()
+			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			qdel(src.cable)
+			cable = null
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null
@@ -24,9 +18,3 @@
 		stat = CONSCIOUS
 		return
 	health = maxHealth - getBruteLoss() - getFireLoss()
-
-/mob/living/silicon/pai/proc/follow_pai()
-	while(card)
-		loc = get_turf(card)
-		sleep(5)
-	del(src) //if there's no pAI we shouldn't exist

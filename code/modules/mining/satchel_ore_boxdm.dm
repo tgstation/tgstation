@@ -4,22 +4,25 @@
 /obj/structure/ore_box
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
-	name = "Ore Box"
-	desc = "It's heavy"
+	name = "ore box"
+	desc = "A heavy wooden box, which can be filled with a lot of ores."
 	density = 1
+	pressure_resistance = 5*ONE_ATMOSPHERE
 
-/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if (istype(W, /obj/item/weapon/ore))
-		src.contents += W;
+		if(!user.drop_item())
+			return
+		W.loc = src
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "\blue You empty the satchel into the box."
+		user << "<span class='notice'>You empty the satchel into the box.</span>"
 	return
 
-/obj/structure/ore_box/attack_hand(obj, mob/user as mob)
+/obj/structure/ore_box/attack_hand(mob/user)
 	var/amt_gold = 0
 	var/amt_silver = 0
 	var/amt_diamond = 0
@@ -44,7 +47,7 @@
 			amt_gold++;
 		if (istype(C,/obj/item/weapon/ore/uranium))
 			amt_uranium++;
-		if (istype(C,/obj/item/weapon/ore/clown))
+		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
 
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
@@ -78,6 +81,10 @@
 		for (var/obj/item/weapon/ore/O in contents)
 			contents -= O
 			O.loc = src.loc
-		usr << "\blue You empty the box"
+		usr << "<span class='notice'>You empty the box.</span>"
 	src.updateUsrDialog()
 	return
+
+obj/structure/ore_box/ex_act(severity, target)
+	if(prob(100 / severity) && severity < 3)
+		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them

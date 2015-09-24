@@ -1,5 +1,5 @@
 //like orange but only checks north/south/east/west for one step
-proc/cardinalrange(var/center)
+/proc/cardinalrange(var/center)
 	var/list/things = list()
 	for(var/direction in cardinal)
 		var/turf/T = get_step(center, direction)
@@ -33,15 +33,14 @@ proc/cardinalrange(var/center)
 	return
 
 
-/obj/machinery/am_shielding/proc/controllerscan(var/priorscan = 0)
+/obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
 	if(!istype(src.loc, /turf))
-		del(src)
+		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
 		if(AMS == src) continue
-		spawn(0)
-			del(src)
+		qdel(src)
 		return
 
 	//Search for shielding first
@@ -60,22 +59,20 @@ proc/cardinalrange(var/center)
 			spawn(20)
 				controllerscan(1)//Last chance
 			return
-		spawn(0)
-			del(src)
+		qdel(src)
 	return
 
 
-/obj/machinery/am_shielding/Del()
+/obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
-	visible_message("\red The [src.name] melts!")
+	visible_message("<span class='danger'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
-	..()
-	return
+	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
+	if(height==0)	return 1
 	return 0
 
 
@@ -97,26 +94,19 @@ proc/cardinalrange(var/center)
 			new /obj/effect/blob/node(src.loc,150)
 		else
 			new /obj/effect/blob(src.loc,60)
-		spawn(0)
-			del(src)
+		qdel(src)
 		return
 	check_stability()
 	return
 
 
-/obj/machinery/am_shielding/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			stability -= 80
-		if(2.0)
-			stability -= 40
-		if(3.0)
-			stability -= 20
+/obj/machinery/am_shielding/ex_act(severity, target)
+	stability -= (80 - (severity * 20))
 	check_stability()
 	return
 
 
-/obj/machinery/am_shielding/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
 	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
 	return 0
@@ -135,7 +125,7 @@ proc/cardinalrange(var/center)
 	else if(processing) shutdown_core()
 
 
-/obj/machinery/am_shielding/attackby(obj/item/W, mob/user)
+/obj/machinery/am_shielding/attackby(obj/item/W, mob/user, params)
 	if(!istype(W) || !user) return
 	if(W.force > 10)
 		stability -= W.force/2
@@ -146,7 +136,7 @@ proc/cardinalrange(var/center)
 
 
 //Call this to link a detected shilding unit to the controller
-/obj/machinery/am_shielding/proc/link_control(var/obj/machinery/power/am_control_unit/AMC)
+/obj/machinery/am_shielding/proc/link_control(obj/machinery/power/am_control_unit/AMC)
 	if(!istype(AMC))	return 0
 	if(control_unit && control_unit != AMC) return 0//Already have one
 	control_unit = AMC
@@ -165,7 +155,8 @@ proc/cardinalrange(var/center)
 
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
-	machines.Add(src)
+	machines |= src
+	SSmachine.processing |= src
 	if(!control_unit)	return
 	control_unit.linked_cores.Add(src)
 	control_unit.reported_core_efficiency += efficiency
@@ -180,16 +171,16 @@ proc/cardinalrange(var/center)
 	return
 
 
-/obj/machinery/am_shielding/proc/check_stability(var/injecting_fuel = 0)
+/obj/machinery/am_shielding/proc/check_stability(injecting_fuel = 0)
 	if(stability > 0) return
 	if(injecting_fuel && control_unit)
 		control_unit.exploding = 1
 	if(src)
-		del(src)
+		qdel(src)
 	return
 
 
-/obj/machinery/am_shielding/proc/recalc_efficiency(var/new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
+/obj/machinery/am_shielding/proc/recalc_efficiency(new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
 	if(!control_unit || !processing) return
 	if(stability < 50)
 		new_efficiency /= 2
@@ -205,18 +196,17 @@ proc/cardinalrange(var/center)
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 4
+	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 100
-	w_amt = 2000
+	materials = list(MAT_METAL=100)
 
-/obj/item/device/am_shielding_container/attackby(var/obj/item/I, var/mob/user)
+/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
 		new/obj/machinery/am_shielding(src.loc)
-		del(src)
+		qdel(src)
 		return
 	..()
 	return

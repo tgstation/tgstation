@@ -15,9 +15,9 @@ var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
 	..()
 	BUMP_TELEPORTERS += src
 
-/obj/effect/bump_teleporter/Del()
+/obj/effect/bump_teleporter/Destroy()
 	BUMP_TELEPORTERS -= src
-	..()
+	return ..()
 
 /obj/effect/bump_teleporter/Bumped(atom/user)
 	if(!ismob(user))

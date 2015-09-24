@@ -1,4 +1,4 @@
-/mob/living/carbon/monkey/emote(var/act)
+/mob/living/carbon/monkey/emote(act,m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -6,109 +6,75 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+	var/muzzled = is_muzzled()
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	var/m_type = 1
-	var/message
+	switch(act) //Ooh ooh ah ah keep this alphabetical ooh ooh ah ah!
+		if ("deathgasp","deathgasps")
+			message = "<b>[src]</b> lets out a faint chimper as it collapses and stops moving..."
+			m_type = 1
 
-	switch(act)
-		if("sign")
-			if (!src.restrained())
-				message = text("<B>The monkey</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
-				m_type = 1
-		if("scratch")
-			if (!src.restrained())
-				message = "<B>The [src.name]</B> scratches."
-				m_type = 1
-		if("whimper")
+		if ("gnarl","gnarls")
 			if (!muzzled)
-				message = "<B>The [src.name]</B> whimpers."
+				message = "<B>[src]</B> gnarls and shows its teeth.."
 				m_type = 2
-		if("roar")
-			if (!muzzled)
-				message = "<B>The [src.name]</B> roars."
-				m_type = 2
-		if("tail")
-			message = "<B>The [src.name]</B> waves his tail."
-			m_type = 1
-		if("gasp")
-			message = "<B>The [src.name]</B> gasps."
+
+		if ("me")
+			..()
+			return
+
+		if ("moan","moans")
+			message = "<B>[src]</B> moans!"
 			m_type = 2
-		if("shiver")
-			message = "<B>The [src.name]</B> shivers."
-			m_type = 2
-		if("drool")
-			message = "<B>The [src.name]</B> drools."
-			m_type = 1
-		if("paw")
+
+		if ("paw")
 			if (!src.restrained())
-				message = "<B>The [src.name]</B> flails his paw."
+				message = "<B>[src]</B> flails its paw."
 				m_type = 1
-		if("scretch")
+
+		if ("roar","roars")
 			if (!muzzled)
-				message = "<B>The [src.name]</B> scretches."
+				message = "<B>[src]</B> roars."
 				m_type = 2
-		if("choke")
-			message = "<B>The [src.name]</B> chokes."
-			m_type = 2
-		if("moan")
-			message = "<B>The [src.name]</B> moans!"
-			m_type = 2
-		if("nod")
-			message = "<B>The [src.name]</B> nods his head."
-			m_type = 1
-		if("sit")
-			message = "<B>The [src.name]</B> sits down."
-			m_type = 1
-		if("sway")
-			message = "<B>The [src.name]</B> sways around dizzily."
-			m_type = 1
-		if("sulk")
-			message = "<B>The [src.name]</B> sulks down sadly."
-			m_type = 1
-		if("twitch")
-			message = "<B>The [src.name]</B> twitches violently."
-			m_type = 1
-		if("dance")
+
+		if ("roll","rolls")
 			if (!src.restrained())
-				message = "<B>The [src.name]</B> dances around happily."
+				message = "<B>[src]</B> rolls."
 				m_type = 1
-		if("roll")
+
+		if ("scratch","scratches")
 			if (!src.restrained())
-				message = "<B>The [src.name]</B> rolls."
+				message = "<B>[src]</B> scratches."
 				m_type = 1
-		if("shake")
-			message = "<B>The [src.name]</B> shakes his head."
-			m_type = 1
-		if("gnarl")
+
+		if ("screech","screeches")
 			if (!muzzled)
-				message = "<B>The [src.name]</B> gnarls and shows his teeth.."
+				message = "<B>[src]</B> screeches."
 				m_type = 2
-		if("jump")
-			message = "<B>The [src.name]</B> jumps!"
-			m_type = 1
-		if("collapse")
-			Paralyse(2)
-			message = text("<B>[]</B> collapses!", src)
+
+		if ("shiver","shivers")
+			message = "<B>[src]</B> shivers."
 			m_type = 2
-		if("deathgasp")
-			message = "<b>The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
+
+		if ("sign","signs")
+			if (!src.restrained())
+				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
+				m_type = 1
+
+		if ("tail")
+			message = "<B>[src]</B> waves its tail."
 			m_type = 1
-		if("help")
-			src << "choke, collapse, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
+
+		if ("help") //Ooh ah ooh ooh this is an exception to alphabetical ooh ooh.
+			src << "Help for monkey emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, gnarl, giggle, glare-(none)/mob, grin, jump, laugh, look, me, moan, nod, paw, point-(atom), roar, roll, scream, scratch, screech, shake, shiver, sigh, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave whimper, wink, yawn"
+
 		else
-			src << text("Invalid Emote: []", act)
+			..()
+
 	if ((message && src.stat == 0))
 		if(src.client)
 			log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(703)
+			visible_message(message)
 		else
-			for(var/mob/O in hearers(src, null))
-				O.show_message(message, m_type)
-				//Foreach goto(746)
+			audible_message(message)
 	return

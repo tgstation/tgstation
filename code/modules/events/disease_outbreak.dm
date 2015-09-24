@@ -11,8 +11,7 @@
 
 
 /datum/round_event/disease_outbreak/announce()
-	command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak7.ogg')
 
 /datum/round_event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
@@ -36,7 +35,7 @@
 
 		var/datum/disease/D
 		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-			if(!H.dna || (H.sdisabilities & BLIND))	//A blindness disease would be the worst.
+			if(!H.dna || (H.disabilities & BLIND))	//A blindness disease would be the worst.
 				continue
 			D = new virus_type()
 			var/datum/disease/dnaspread/DS = D
@@ -46,7 +45,5 @@
 		else
 			D = new virus_type()
 		D.carrier = 1
-		D.holder = H
-		D.affected_mob = H
-		H.viruses += D
+		H.AddDisease(D)
 		break

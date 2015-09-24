@@ -1,40 +1,41 @@
 /obj/machinery/computer/security
-	name = "security cameras"
+	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
-	icon_state = "cameras"
-	circuit = "/obj/item/weapon/circuitboard/security"
+	icon_screen = "cameras"
+	icon_keyboard = "security_key"
+	circuit = /obj/item/weapon/circuitboard/security
 	var/obj/machinery/camera/current = null
-	var/last_pic = 1.0
+	var/last_pic = 1
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
-
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
-
-
-	attack_paw(var/mob/user as mob)
-		return attack_hand(user)
-
-
-	check_eye(var/mob/user as mob)
-		if ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
-			return null
-		user.reset_view(current)
-		return 1
+/obj/machinery/computer/security/check_eye(mob/user)
+	if ((get_dist(user, src) > 1 || user.eye_blind || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
+		return null
+	var/list/viewing = viewers(src)
+	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+		return null
+	user.reset_view(current)
+	return 1
 
 
-	attack_hand(var/mob/user as mob)
-		if (src.z > 6)
-			user << "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!"
+/obj/machinery/computer/security/attack_hand(mob/user)
+	if(!stat)
+
+		if (!network)
+			throw EXCEPTION("No camera network")
 			return
-		if(stat & (NOPOWER|BROKEN))	return
+		if (!(istype(network,/list)))
+			throw EXCEPTION("Camera network is not a list")
+			return
 
-		if(!isAI(user))
-			user.set_machine(src)
+		if(..())
+			return
 
 		var/list/L = list()
 		for (var/obj/machinery/camera/C in cameranet.cameras)
+			if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+				continue
 			L.Add(C)
 
 		camera_sort(L)
@@ -42,6 +43,14 @@
 		var/list/D = list()
 		D["Cancel"] = "Cancel"
 		for(var/obj/machinery/camera/C in L)
+			if(!C.network)
+				spawn(0)
+					throw EXCEPTION("Camera in a cameranet has no camera network")
+				continue
+			if(!(istype(C.network,/list)))
+				spawn(0)
+					throw EXCEPTION("Camera in a cameranet has a non-list camera network")
+				continue
 			var/list/tempnetwork = C.network&network
 			if(tempnetwork.len)
 				D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
@@ -58,7 +67,7 @@
 			return 0
 
 		if(C)
-			if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+			if ((get_dist(user, src) > 1 || user.machine != src || user.eye_blind || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
 				if(!C.can_use() && !isAI(user))
 					src.current = null
 				return 0
@@ -78,7 +87,7 @@
 
 
 /obj/machinery/computer/security/telescreen
-	name = "Telescreen"
+	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
@@ -94,23 +103,25 @@
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
-	desc = "Damn, they better have /tg/thechannel on these things."
+	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
 	network = list("thunder")
 	density = 0
 	circuit = null
 
-
 /obj/machinery/computer/security/wooden_tv
-	name = "Security Cameras"
+	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
-	icon_state = "security_det"
+	icon_state = "television"
+	icon_keyboard = null
+	icon_screen = "detective_tv"
 
 
 /obj/machinery/computer/security/mining
-	name = "Outpost Cameras"
+	name = "outpost camera console"
 	desc = "Used to access the various cameras on the outpost."
-	icon_state = "miningcameras"
+	icon_screen = "mining"
+	icon_keyboard = "mining_key"
 	network = list("MINE")
 	circuit = "/obj/item/weapon/circuitboard/mining"

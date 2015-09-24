@@ -2,102 +2,90 @@
  * Contains:
  *		Security
  *		Detective
- *		Head of Security
+ *		Navy uniforms
  */
 
 /*
  * Security
  */
-/obj/item/clothing/under/rank/warden
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
-	name = "warden's jumpsuit"
-	icon_state = "warden"
-	item_state = "r_suit"
-	color = "warden"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/security
-	name = "security officer's jumpsuit"
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
+	name = "security jumpsuit"
+	desc = "A tactical security jumpsuit for officers complete with nanotrasen belt buckle."
 	icon_state = "security"
 	item_state = "r_suit"
-	color = "secred"
+	item_color = "security"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	strip_delay = 50
+
+/obj/item/clothing/under/rank/warden
+	name = "warden's jumpsuit"
+	desc = "A tactical security jumpsuit for the warden with silver desginations and '/Warden/' stiched into the shoulders."
+	icon_state = "warden"
+	item_state = "r_suit"
+	item_color = "warden"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 50
 
 /*
  * Detective
  */
-/obj/item/clothing/under/det
+/obj/item/clothing/under/rank/det
 	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det"
-	color = "detective"
+	item_color = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	strip_delay = 50
 
-
-/obj/item/clothing/head/det_hat
-	name = "hat"
-	desc = "Someone who wears this will look very smart."
-	icon_state = "detective"
-	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
-	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
+/obj/item/clothing/under/rank/det/grey
+	name = "noir suit"
+	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
+	icon_state = "greydet"
+	item_state = "greydet"
+	item_color = "greydet"
 
 /*
  * Head of Security
  */
 /obj/item/clothing/under/rank/head_of_security
-	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's jumpsuit"
+	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "hos"
 	item_state = "r_suit"
-	color = "hosred"
+	item_color = "hos"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	strip_delay = 60
 
+/obj/item/clothing/under/rank/head_of_security/alt
+	name = "head of security's turtleneck"
+	desc = "A stylish alternative to the normal head of security jumpsuit, complete with tactical pants."
+	icon_state = "hosalt"
+	item_state = "bl_suit"
+	item_color = "hosalt"
 
-/obj/item/clothing/head/helmet/HoS
-	name = "Head of Security Hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoscap"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = 0
-	flags_inv = HIDEEARS
+/*
+ * Navy uniforms
+ */
 
+/obj/item/clothing/under/rank/security/navyblue
+	name = "security officer's formal uniform"
+	desc = "The latest in fashionable security outfits."
+	icon_state = "officerblueclothes"
+	item_state = "officerblueclothes"
+	item_color = "officerblueclothes"
 
-/obj/item/clothing/suit/armor/hos
-	name = "armored coat"
-	desc = "A greatcoat enchanced with a special alloy for some protection and style."
-	icon_state = "hos"
-	item_state = "hos"
-	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	heat_protection = CHEST|GROIN|LEGS|ARMS
+/obj/item/clothing/under/rank/head_of_security/navyblue
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
+	name = "head of security's formal uniform"
+	icon_state = "hosblueclothes"
+	item_state = "hosblueclothes"
+	item_color = "hosblueclothes"
 
-
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
-
-//Jensen cosplay gear
-/obj/item/clothing/under/rank/head_of_security/jensen
-	desc = "You never asked for anything that stylish."
-	name = "head of security's jumpsuit"
-	icon_state = "jensen"
-	item_state = "jensen"
-	color = "jensen"
-
-/obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchoat"
-	desc = "A trenchoat augmented with a special alloy for some protection and style"
-	icon_state = "jensencoat"
-	item_state = "jensencoat"
-	flags_inv = 0
+/obj/item/clothing/under/rank/warden/navyblue
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
+	name = "warden's formal uniform"
+	icon_state = "wardenblueclothes"
+	item_state = "wardenblueclothes"
+	item_color = "wardenblueclothes"

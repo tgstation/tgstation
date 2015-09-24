@@ -14,21 +14,21 @@
 	var/mob/event_confirmed_by
 	//1 = select event
 	//2 = authenticate
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
 
-/obj/machinery/keycard_auth/attack_ai(mob/user as mob)
+/obj/machinery/keycard_auth/attack_ai(mob/user)
 	user << "The station AI is not to interact with these devices."
 	return
 
-/obj/machinery/keycard_auth/attack_paw(mob/user as mob)
-	user << "You are too primitive to use this device."
+/obj/machinery/keycard_auth/attack_paw(mob/user)
+	user << "<span class='warning'>You are too primitive to use this device!</span>"
 	return
 
-/obj/machinery/keycard_auth/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & (NOPOWER|BROKEN))
 		user << "This device is not powered."
 		return
@@ -51,12 +51,12 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/keycard_auth/attack_hand(mob/user as mob)
+/obj/machinery/keycard_auth/attack_hand(mob/user)
 	if(user.stat || stat & (NOPOWER|BROKEN))
-		user << "This device is not powered."
+		user << "<span class='warning'>This device is not powered!</span>"
 		return
 	if(busy)
-		user << "This device is busy."
+		user << "<span class='warning'>This device is busy!</span>"
 		return
 
 	user.set_machine(src)
@@ -80,12 +80,10 @@
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if(busy)
 		usr << "This device is busy."
-		return
-	if(usr.stat || stat & (BROKEN|NOPOWER))
-		usr << "This device is without power."
 		return
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
@@ -94,7 +92,6 @@
 		reset()
 
 	updateUsrDialog()
-	add_fingerprint(usr)
 	return
 
 /obj/machinery/keycard_auth/proc/reset()
@@ -120,10 +117,10 @@
 		confirmed = 0
 		trigger_event(event)
 		log_game("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
-		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]", 1)
+		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
 	reset()
 
-/obj/machinery/keycard_auth/proc/receive_request(var/obj/machinery/keycard_auth/source)
+/obj/machinery/keycard_auth/proc/receive_request(obj/machinery/keycard_auth/source)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	event_source = source
@@ -147,10 +144,22 @@
 			make_maint_all_access()
 			feedback_inc("alert_keycard_auth_maint",1)
 
-/proc/make_maint_all_access()
-	for(var/obj/machinery/door/airlock/A in world)
-		if(A.z == 1)
-			A.req_access.Remove(access_maint_tunnels)
 
-	world << "<font size=4 color='red'>Attention!</font>"
-	world << "<font color='red'>The maintenance access requirement has been revoked on all airlocks. All crew members are now permitted access to emergency maintenance areas.</font>"
+
+/var/emergency_access = 0
+/proc/make_maint_all_access()
+	for(var/area/maintenance/A in world)
+		for(var/obj/machinery/door/airlock/D in A)
+			D.emergency = 1
+			D.update_icon(0)
+	minor_announce("Access restrictions on maintenance and external airlocks have been lifted.", "Attention! Station-wide emergency declared!",1)
+	emergency_access = 1
+
+/proc/revoke_maint_all_access()
+	for(var/area/maintenance/A in world)
+		for(var/obj/machinery/door/airlock/D in A)
+			D.emergency = 0
+			D.update_icon(0)
+	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
+	emergency_access = 0
+

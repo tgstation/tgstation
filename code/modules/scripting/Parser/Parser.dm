@@ -37,7 +37,7 @@
 	The token at <index> in <tokens>.
 */
 			curToken
-		stack
+		datum/stack
 			blocks=new
 		node/BlockDefinition
 			GlobalBlock/global_block=new
@@ -174,8 +174,9 @@
 			var/loops = 0
 			for()
 				loops++
-				if(loops>=6000)
-					CRASH("Something TERRIBLE has gone wrong in ParseFunctionStatement ;__;")
+				if(loops>=800)
+					errors +=new/scriptError("Cannot find ending params.")
+					return
 
 				if(!curToken)
 					errors+=new/scriptError/EndOfFile()
@@ -184,6 +185,6 @@
 					curBlock.statements+=stmt
 					NextToken() //Skip close parenthesis
 					return
-				var/node/expression/P=ParseParamExpression()
+				var/node/expression/P=ParseParamExpression(check_functions = 1)
 				stmt.parameters+=P
 				if(istype(curToken, /token/symbol) && curToken.value==",") NextToken()

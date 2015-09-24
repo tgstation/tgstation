@@ -3,9 +3,6 @@
 	config_tag = "sandbox"
 	required_players = 0
 
-	uplink_welcome = "Syndicate Uplink Console:"
-	uplink_uses = 10
-
 /datum/game_mode/sandbox/announce()
 	world << "<B>The current game mode is - Sandbox!</B>"
 	world << "<B>Build your own station with the sandbox-panel command!</B>"
@@ -17,5 +14,4 @@
 
 /datum/game_mode/sandbox/post_setup()
 	..()
-	if(emergency_shuttle)
-		emergency_shuttle.always_fake_recall = 1
+	SSshuttle.emergencyNoEscape = 1

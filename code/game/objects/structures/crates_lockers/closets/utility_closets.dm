@@ -16,8 +16,6 @@
 	name = "emergency closet"
 	desc = "It's a storage unit for emergency breath masks and O2 tanks."
 	icon_state = "emergency"
-	icon_closed = "emergency"
-	icon_opened = "emergencyopen"
 
 /obj/structure/closet/emcloset/New()
 	..()
@@ -27,18 +25,18 @@
 
 	switch (pickweight(list("small" = 40, "aid" = 25, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
 		if ("small")
-			new /obj/item/weapon/tank/emergency_oxygen(src)
-			new /obj/item/weapon/tank/emergency_oxygen(src)
+			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
+			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 
 		if ("aid")
-			new /obj/item/weapon/tank/emergency_oxygen(src)
+			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 
 		if ("tank")
-			new /obj/item/weapon/tank/air(src)
+			new /obj/item/weapon/tank/internals/air(src)
 
 		if ("both")
-			new /obj/item/weapon/tank/emergency_oxygen(src)
+			new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("nothing")
@@ -46,16 +44,12 @@
 
 		// teehee
 		if ("delete")
-			del(src)
+			qdel(src)
 
 		//If you want to re-add fire, just add "fire" = 15 to the pick list.
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)
-			del(src)*/
-
-/obj/structure/closet/emcloset/legacy/New()
-	new /obj/item/weapon/tank/oxygen(src)
-	new /obj/item/clothing/mask/gas(src)
+			qdel(src)*/
 
 /*
  * Fire Closet
@@ -63,37 +57,27 @@
 /obj/structure/closet/firecloset
 	name = "fire-safety closet"
 	desc = "It's a storage unit for fire-fighting supplies."
-	icon_state = "firecloset"
-	icon_closed = "firecloset"
-	icon_opened = "fireclosetopen"
+	icon_state = "fire"
 
 /obj/structure/closet/firecloset/New()
 	..()
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/weapon/tank/oxygen/red(src)
+	new /obj/item/weapon/tank/internals/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
 /obj/structure/closet/firecloset/full/New()
 	..()
-	sleep(4)
 	contents = list()
 
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/device/flashlight(src)
-	new /obj/item/weapon/tank/oxygen/red(src)
+	new /obj/item/weapon/tank/internals/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
-
-/obj/structure/closet/firecloset/update_icon()
-	if(!opened)
-		icon_state = icon_closed
-	else
-		icon_state = icon_opened
-
 
 /*
  * Tool Closet
@@ -101,11 +85,11 @@
 /obj/structure/closet/toolcloset
 	name = "tool closet"
 	desc = "It's a storage unit for tools."
-	icon_state = "toolcloset"
-	icon_closed = "toolcloset"
-	icon_opened = "toolclosetopen"
+	icon_state = "eng"
+	icon_door = "eng_tool"
 
 /obj/structure/closet/toolcloset/New()
+	..()
 	if(prob(40))
 		new /obj/item/clothing/suit/hazardvest(src)
 	if(prob(70))
@@ -125,15 +109,15 @@
 	if(prob(20))
 		new /obj/item/weapon/storage/belt/utility(src)
 	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/color/yellow(src)
 	if(prob(40))
 		new /obj/item/clothing/head/hardhat(src)
 
@@ -144,9 +128,8 @@
 /obj/structure/closet/radiation
 	name = "radiation suit closet"
 	desc = "It's a storage unit for rad-protective suits."
-	icon_state = "radsuitcloset"
-	icon_opened = "toolclosetopen"
-	icon_closed = "radsuitcloset"
+	icon_state = "eng"
+	icon_door = "eng_rad"
 
 /obj/structure/closet/radiation/New()
 	..()
@@ -159,62 +142,42 @@
 /obj/structure/closet/bombcloset
 	name = "\improper EOD closet"
 	desc = "It's a storage unit for explosion-protective suits."
-	icon_state = "bombsuit"
-	icon_closed = "bombsuit"
-	icon_opened = "bombsuitopen"
+	icon_state = "bomb"
 
 /obj/structure/closet/bombcloset/New()
 	..()
-	sleep(2)
 	new /obj/item/clothing/suit/bomb_suit( src )
 	new /obj/item/clothing/under/color/black( src )
-	new /obj/item/clothing/shoes/black( src )
+	new /obj/item/clothing/shoes/sneakers/black( src )
 	new /obj/item/clothing/head/bomb_hood( src )
 
 
 /obj/structure/closet/bombclosetsecurity
 	name = "\improper EOD closet"
 	desc = "It's a storage unit for explosion-protective suits."
-	icon_state = "bombsuitsec"
-	icon_closed = "bombsuitsec"
-	icon_opened = "bombsuitsecopen"
+	icon_state = "bomb"
 
 /obj/structure/closet/bombclosetsecurity/New()
 	..()
-	sleep(2)
+	contents = list()
 	new /obj/item/clothing/suit/bomb_suit/security( src )
 	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/brown( src )
+	new /obj/item/clothing/shoes/sneakers/brown( src )
 	new /obj/item/clothing/head/bomb_hood/security( src )
 
 /*
- * Hydrant
+ * Ammunition
  */
-/obj/structure/closet/hydrant //wall mounted fire closet
-	name = "fire-safety closet"
-	desc = "It's a storage unit for fire-fighting supplies."
-	icon_state = "hydrant"
-	icon_closed = "hydrant"
-	icon_opened = "hydrant_open"
-	anchored = 1
-	density = 0
-	wall_mounted = 1
+/obj/structure/closet/ammunitionlocker
+	name = "ammunition locker"
 
-/*
- * First Aid
- */
-/obj/structure/closet/medical_wall //wall mounted medical closet
-	name = "first-aid closet"
-	desc = "It's wall-mounted storage unit for first aid supplies."
-	icon_state = "medical_wall"
-	icon_closed = "medical_wall"
-	icon_opened = "medical_wall_open"
-	anchored = 1
-	density = 0
-	wall_mounted = 1
-
-/obj/structure/closet/medical_wall/update_icon()
-	if(!opened)
-		icon_state = icon_closed
-	else
-		icon_state = icon_opened
+/obj/structure/closet/ammunitionlocker/New()
+	..()
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)
+	new /obj/item/ammo_casing/shotgun/beanbag(src)

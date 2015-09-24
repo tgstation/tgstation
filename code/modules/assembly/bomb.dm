@@ -3,17 +3,17 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
-	w_class = 3.0
+	w_class = 3
 	throw_speed = 2
 	throw_range = 4
-	flags = FPRINT | TABLEPASS| CONDUCT //Copied this from old code, so this may or may not be necessary
+	flags = CONDUCT
 	var/status = 0   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
 
-/obj/item/device/onetankbomb/examine()
+/obj/item/device/onetankbomb/examine(mob/user)
 	..()
-	bombtank.examine()
+	user.examinate(bombtank)
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)
@@ -23,7 +23,7 @@
 		overlays += bombassembly.overlays
 		overlays += "bomb_assembly"
 
-/obj/item/device/onetankbomb/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/device/onetankbomb/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		bombtank.attackby(W, user)
 		return
@@ -39,7 +39,7 @@
 		bombtank.master = null
 		bombtank = null
 
-		del(src)
+		qdel(src)
 		return
 	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
 		if(!status)
@@ -54,7 +54,7 @@
 	add_fingerprint(user)
 	..()
 
-/obj/item/device/onetankbomb/attack_self(mob/user as mob) //pressing the bomb accesses its assembly
+/obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, 1)
 	add_fingerprint(user)
 	return
@@ -73,27 +73,27 @@
 	if(bombassembly)
 		bombassembly.HasProximity(AM)
 
-/obj/item/device/onetankbomb/HasEntered(atom/movable/AM as mob|obj) //for mousetraps
+/obj/item/device/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
 	if(bombassembly)
-		bombassembly.HasEntered(AM)
+		bombassembly.Crossed(AM)
 
-/obj/item/device/onetankbomb/on_found(mob/finder as mob) //for mousetraps
+/obj/item/device/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)
 		bombassembly.on_found(finder)
+
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
 /obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
 	var/obj/item/device/assembly_holder/S = W
 	var/mob/M = user
-	if(!S.secured)										//Check if the assembly is secured
-		return
 	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+		return
+	if(!M.drop_item())			//Remove the assembly from your hands
 		return
 
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.drop_item()			//Remove the assembly from your hands
 	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
 	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
@@ -151,9 +151,10 @@
 		ground_zero.assume_air(air_contents)
 		ground_zero.hotspot_expose(1000, 125)
 
+	air_update_turf()
 	if(master)
-		del(master)
-	del(src)
+		qdel(master)
+	qdel(src)
 
 /obj/item/weapon/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
@@ -161,3 +162,4 @@
 	if(!T)
 		return
 	T.assume_air(removed)
+	air_update_turf()

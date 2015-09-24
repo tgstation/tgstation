@@ -1,14 +1,13 @@
 /obj/item/device/radio/beacon
-	name = "Tracking Beacon"
+	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
 	item_state = "signaler"
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
-/obj/item/device/radio/beacon/hear_talk()
+/obj/item/device/radio/beacon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	return
-
 
 /obj/item/device/radio/beacon/send_hear()
 	return null
@@ -30,4 +29,4 @@
 /obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
 	proc/digest_delay()
 		spawn(600)
-			del(src)*/ //Bacon beacons are no more rip in peace
+			qdel(src)*/ //Bacon beacons are no more rip in peace

@@ -47,7 +47,7 @@
 	icon_state = "lightreplacer0"
 	item_state = "electronic"
 
-	flags = FPRINT | CONDUCT
+	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	origin_tech = "magnets=3;materials=2"
 
@@ -66,44 +66,41 @@
 	failmsg = "The [name]'s refill light blinks red."
 	..()
 
-/obj/item/device/lightreplacer/examine()
-	set src in view(2)
+/obj/item/device/lightreplacer/examine(mob/user)
 	..()
-	usr << "It has [uses] lights remaining."
+	user << "It has [uses] light\s remaining."
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
-		Emag()
-		return
+/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
-		if(G.amount - decrement >= 0 && uses < max_uses)
-			var/remaining = max(G.amount - decrement, 0)
-			if(!remaining && !(G.amount - decrement) == 0)
-				user << "There isn't enough glass."
-				return
-			G.amount = remaining
-			if(!G.amount)
-				user.drop_item()
-				del(G)
-			AddUses(increment)
-			user << "You insert a piece of glass into the [src.name]. You have [uses] lights remaining."
+		if(uses >= max_uses)
+			user << "<span class='warning'>[src.name] is full.</span>"
 			return
+		else if(G.use(decrement))
+			AddUses(increment)
+			user << "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] lights remaining.</span>"
+			return
+		else
+			user << "<span class='warning'>You need one sheet of glass to replace lights!</span>"
 
 	if(istype(W, /obj/item/weapon/light))
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
+				if(!user.unEquip(W))
+					return
 				AddUses(1)
-				user << "You insert the [L.name] into the [src.name]. You have [uses] lights remaining."
-				user.drop_item()
-				del(L)
+				user << "<span class='notice'>You insert the [L.name] into the [src.name]. You have [uses] lights remaining.</span>"
+				qdel(L)
 				return
 		else
-			user << "You need a working light."
+			user << "<span class='warning'>You need a working light!</span>"
 			return
 
+/obj/item/device/lightreplacer/emag_act()
+	if(!emagged)
+		Emag()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
 	/* // This would probably be a bit OP. If you want it though, uncomment the code.
@@ -120,14 +117,14 @@
 	icon_state = "lightreplacer[emagged]"
 
 
-/obj/item/device/lightreplacer/proc/Use(var/mob/user)
+/obj/item/device/lightreplacer/proc/Use(mob/user)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
+/obj/item/device/lightreplacer/proc/AddUses(amount = 1)
 	uses = min(max(uses + amount, 0), max_uses)
 
 /obj/item/device/lightreplacer/proc/Charge(var/mob/user)
@@ -136,12 +133,12 @@
 		AddUses(1)
 		charge = 1
 
-/obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
+/obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
 			if(!Use(U)) return
-			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
+			U << "<span class='notice'>You replace the [target.fitting] with \the [src].</span>"
 
 			if(target.status != LIGHT_EMPTY)
 
@@ -164,7 +161,7 @@
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
-			del(L2)
+			qdel(L2)
 
 			if(target.on && target.rigged)
 				target.explode()
@@ -174,27 +171,37 @@
 			U << failmsg
 			return
 	else
-		U << "There is a working [target.fitting] already inserted."
+		U << "<span class='warning'>There is a working [target.fitting] already inserted!</span>"
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()
 	emagged = !emagged
 	playsound(src.loc, "sparks", 100, 1)
 	if(emagged)
-		name = "Shortcircuited [initial(name)]"
+		name = "shortcircuited [initial(name)]"
 	else
 		name = initial(name)
 	update_icon()
 
 //Can you use it?
 
-/obj/item/device/lightreplacer/proc/CanUse(var/mob/living/user)
+/obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
 	src.add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1
 	else
 		return 0
+
+/obj/item/device/lightreplacer/cyborg
+
+/obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	J.put_in_cart(src, user)
+	J.myreplacer = src
+	J.update_icon()
+
+/obj/item/device/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	return
 
 #undef LIGHT_OK
 #undef LIGHT_EMPTY

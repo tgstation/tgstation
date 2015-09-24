@@ -1,8 +1,6 @@
 /obj/machinery/computer/pod
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
-	icon_state = "computer_generic"
-	circuit = "/obj/item/weapon/circuitboard/pod"
 	var/obj/machinery/mass_driver/connected = null
 	var/title = "Mass Driver Controls"
 	var/id = 1
@@ -15,6 +13,7 @@
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
+	..()
 
 
 /obj/machinery/computer/pod/proc/alarm()
@@ -39,15 +38,6 @@
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
 		if(M.id == id)
 			M.close()
-
-
-/obj/machinery/computer/pod/attack_ai(mob/user)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/pod/attack_paw(mob/user)
-	return attack_hand(user)
-
 
 /obj/machinery/computer/pod/attack_hand(mob/user)
 	if(..())
@@ -129,9 +119,11 @@
 
 
 /obj/machinery/computer/pod/old
-	icon_state = "old"
-	name = "\improper DoorMex Control Console"
+	name = "\improper DoorMex control console"
 	title = "Door Controls"
+	icon_state = "oldcomp"
+	icon_screen = "library"
+	icon_keyboard = null
 
 
 /obj/machinery/computer/pod/old/syndicate

@@ -7,6 +7,7 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
 	var/visible = 1
@@ -14,34 +15,37 @@
 	var/operating = 0
 	var/glass = 0
 	var/normalspeed = 1
-	var/heat_proof = 0 // For glass airlocks/opacity firedoors
+	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
+	var/emergency = 0 // Emergency access override
+	var/sub_door = 0 // 1 if it's meant to go under another door.
+	var/closingLayer = 3.1
 
 /obj/machinery/door/New()
 	..()
 	if(density)
 		layer = 3.1 //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
-		update_heat_protection(get_turf(src))
 	else
 		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
-	update_nearby_tiles(need_rebuild=1)
+	update_freelook_sight()
+	air_update_turf(1)
+	airlocks += src
 	return
 
 
-/obj/machinery/door/Del()
+/obj/machinery/door/Destroy()
 	density = 0
-	update_nearby_tiles()
-	..()
-	return
+	air_update_turf(1)
+	update_freelook_sight()
+	airlocks -= src
+	return ..()
 
 //process()
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
-	if(ismob(AM))
-		var/mob/M = AM
+	if(operating || emagged) return
+	if(isliving(AM))
+		var/mob/living/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
 		if(!M.restrained())
@@ -50,7 +54,7 @@
 
 	if(istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard))
+		if(src.check_access(bot.botcard) || emergency == 1)
 			if(density)
 				open()
 		return
@@ -58,76 +62,85 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
-				flick("door_deny", src)
+				do_animate("deny")
 		return
 	return
 
+/obj/machinery/door/Move()
+	var/turf/T = loc
+	..()
+	move_update_air(T)
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
 
+/obj/machinery/door/CanAtmosPass()
+	return !density
 
-/obj/machinery/door/proc/bumpopen(mob/user as mob)
-	if(operating)	return
+//used in the AStar algorithm to determinate if the turf the door is on is passable
+/obj/machinery/door/proc/CanAStarPass(var/obj/item/weapon/card/id/ID)
+	return !density
+
+/obj/machinery/door/proc/bumpopen(mob/user)
+	if(operating)
+		return
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
 
-	if(density)
-		if(allowed(user))	open()
-		else				flick("door_deny", src)
+	if(density && !emagged)
+		if(allowed(user) || src.emergency == 1)
+			open()
+		else
+			do_animate("deny")
 	return
 
-/obj/machinery/door/meteorhit(obj/M as obj)
-	src.open()
-	return
 
-
-/obj/machinery/door/attack_ai(mob/user as mob)
+/obj/machinery/door/attack_ai(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_paw(mob/user as mob)
+/obj/machinery/door/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/machinery/door/attack_hand(mob/user as mob)
+/obj/machinery/door/attack_hand(mob/user)
 	return src.attackby(user, user)
 
 
-/obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/door/attack_tk(mob/user)
+	if(requiresID() && !allowed(null))
+		return
+	..()
+
+/obj/machinery/door/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
 	src.add_fingerprint(user)
+	if(operating || emagged)	return
+	if(!Adjacent(user))
+		user = null
 	if(!src.requiresID())
 		user = null
-	if(src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
-		flick("door_spark", src)
-		sleep(6)
-		open()
-		operating = -1
-		return 1
-	if(src.allowed(user))
+	if(src.allowed(user) || src.emergency == 1)
 		if(src.density)
 			open()
 		else
 			close()
 		return
 	if(src.density)
-		flick("door_deny", src)
+		do_animate("deny")
 	return
-
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
-		del(src)
+		qdel(src)
 	return
 
 
@@ -142,20 +155,14 @@
 	..()
 
 
-/obj/machinery/door/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			del(src)
-		if(2.0)
-			if(prob(25))
-				del(src)
-		if(3.0)
-			if(prob(80))
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-				s.set_up(2, 1, src)
-				s.start()
-	return
-
+/obj/machinery/door/ex_act(severity, target)
+	if(severity == 3)
+		if(prob(80))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(2, 1, src)
+			s.start()
+		return
+	..()
 
 /obj/machinery/door/update_icon()
 	if(density)
@@ -165,7 +172,7 @@
 	return
 
 
-/obj/machinery/door/proc/animate(animation)
+/obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
 		if("opening")
 			if(p_open)
@@ -183,98 +190,86 @@
 
 
 /obj/machinery/door/proc/open()
-	if(!density)		return 1
-	if(operating > 0)	return
-	if(!ticker)			return 0
-	if(!operating)		operating = 1
+	if(!density)
+		return 1
+	if(operating)
+		return
+	if(!ticker)
+		return 0
+	operating = 1
 
-	animate("opening")
+	do_animate("opening")
 	icon_state = "door0"
 	src.SetOpacity(0)
-	sleep(10)
-	src.layer = 2.7
+	sleep(5)
 	src.density = 0
-	explosion_resistance = 0
+	sleep(5)
+	src.layer = 2.7
 	update_icon()
 	SetOpacity(0)
-	update_nearby_tiles()
-
-	if(operating)	operating = 0
-
+	operating = 0
+	air_update_turf(1)
+	update_freelook_sight()
 	return 1
 
 
 /obj/machinery/door/proc/close()
-	if(density)	return 1
-	if(operating)	return
+	if(density)
+		return 1
+	if(operating)
+		return
 	operating = 1
 
-	animate("closing")
+	do_animate("closing")
+	src.layer = closingLayer
+	sleep(5)
 	src.density = 1
-	explosion_resistance = initial(explosion_resistance)
-	src.layer = 3.1
-	sleep(10)
+	sleep(5)
 	update_icon()
 	if(visible && !glass)
-		SetOpacity(1)	//caaaaarn!
+		SetOpacity(1)
 	operating = 0
-	update_nearby_tiles()
+	air_update_turf(1)
+	update_freelook_sight()
 	return
+
+/obj/machinery/door/proc/crush()
+	for(var/mob/living/L in get_turf(src))
+		if(isalien(L))  //For xenos
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+			L.emote("roar")
+		else if(ishuman(L)) //For humans
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.emote("scream")
+			L.Weaken(5)
+		else if(ismonkey(L)) //For monkeys
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			L.Weaken(5)
+		else //for simple_animals & borgs
+			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+		var/turf/location = src.loc
+		if(istype(location, /turf/simulated)) //add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+			location.add_blood_floor(L)
+	for(var/obj/mecha/M in get_turf(src))
+		M.take_damage(DOOR_CRUSH_DAMAGE)
 
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(!air_master) return 0
+/obj/machinery/door/proc/hasPower()
+	return !(stat & NOPOWER)
 
-	var/turf/simulated/source = loc
-	var/turf/simulated/north = get_step(source,NORTH)
-	var/turf/simulated/south = get_step(source,SOUTH)
-	var/turf/simulated/east = get_step(source,EAST)
-	var/turf/simulated/west = get_step(source,WEST)
+/obj/machinery/door/proc/update_freelook_sight()
+	if(!glass && cameranet)
+		cameranet.updateVisibility(src, 0)
 
-	update_heat_protection(loc)
-
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(north))
-			if(north.parent)
-				air_master.groups_to_rebuild += north.parent
-			else
-				air_master.tiles_to_update += north
-		if(istype(south))
-			if(south.parent)
-				air_master.groups_to_rebuild += south.parent
-			else
-				air_master.tiles_to_update += south
-		if(istype(east))
-			if(east.parent)
-				air_master.groups_to_rebuild += east.parent
-			else
-				air_master.tiles_to_update += east
-		if(istype(west))
-			if(west.parent)
-				air_master.groups_to_rebuild += west.parent
-			else
-				air_master.tiles_to_update += west
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
-	return 1
-
-/obj/machinery/door/proc/update_heat_protection(var/turf/simulated/source)
-	if(istype(source))
-		if(src.density && (src.opacity || src.heat_proof))
-			source.thermal_conductivity = DOOR_HEAT_TRANSFER_COEFFICIENT
-		else
-			source.thermal_conductivity = initial(source.thermal_conductivity)
+/obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
+	if(opacity || heat_proof)
+		return 1
+	return 0
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+
+/obj/machinery/door/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	return 0

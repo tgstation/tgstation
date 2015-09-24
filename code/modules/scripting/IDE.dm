@@ -1,4 +1,4 @@
-client/verb/tcssave()
+/client/verb/tcssave()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -22,7 +22,7 @@ client/verb/tcssave()
 		src << output("<font color = red>Failed to save: Unable to locate machine. (Back up your code before exiting the window!)</font color>", "tcserror")
 
 
-client/verb/tcscompile()
+/client/verb/tcscompile()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -39,8 +39,6 @@ client/verb/tcscompile()
 					src << output(null, "tcserror")
 					src << output("<font color = black>Please wait, compiling...</font>", "tcserror")
 
-					if(Server.compiling)
-						return
 					var/list/compileerrors = Server.compile(mob) // then compile the code!
 					if(!telecomms_check(mob))
 						return
@@ -80,7 +78,7 @@ client/verb/tcscompile()
 		src << output(null, "tcserror")
 		src << output("<font color = red>Failed to compile: Unable to locate machine. (Back up your code before exiting the window!)</font color>", "tcserror")
 
-client/verb/tcsrun()
+/client/verb/tcsrun()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -116,7 +114,7 @@ client/verb/tcsrun()
 		src << output("<font color = red>Failed to run: Unable to locate machine. (Back up your code before exiting the window!)</font color>", "tcserror")
 
 
-client/verb/exittcs()
+/client/verb/exittcs()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -128,7 +126,7 @@ client/verb/exittcs()
 				if(mob in Machine.viewingcode)
 					Machine.viewingcode.Remove(mob)
 
-client/verb/tcsrevert()
+/client/verb/tcsrevert()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -157,7 +155,7 @@ client/verb/tcsrevert()
 		src << output("<font color = red>Failed to revert: Unable to locate machine.</font color>", "tcserror")
 
 
-client/verb/tcsclearmem()
+/client/verb/tcsclearmem()
 	set hidden = 1
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))

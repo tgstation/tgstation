@@ -20,7 +20,7 @@
 /obj/structure/artilleryplaceholder/decorative
 	density = 0
 
-/obj/machinery/artillerycontrol/attack_hand(mob/user as mob)
+/obj/machinery/artillerycontrol/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 	dat += "Locked on<BR>"
@@ -32,30 +32,28 @@
 	return
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
+	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		var/A
-		A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
-		var/area/thearea = teleportlocs[A]
-		if (usr.stat || usr.restrained()) return
-		if(src.reload < 180) return
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-			command_alert("Bluespace artillery fire detected. Brace for impact.")
-			message_admins("[key_name_admin(usr)] has launched an artillery strike.", 1)
-			var/list/L = list()
-			for(var/turf/T in get_area_turfs(thearea.type))
-				L+=T
-			var/loc = pick(L)
-			explosion(loc,2,5,11)
-			reload = 0
-
-/*mob/proc/openfire()
 	var/A
 	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
 	var/area/thearea = teleportlocs[A]
-	command_alert("Bluespace artillery fire detected. Brace for impact.")
+	if (usr.stat || usr.restrained()) return
+	if(src.reload < 180) return
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		priority_announce("Bluespace artillery fire detected. Brace for impact.")
+		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
+		var/list/L = list()
+		for(var/turf/T in get_area_turfs(thearea.type))
+			L+=T
+		var/loc = pick(L)
+		explosion(loc,2,5,11)
+		reload = 0
+
+/*/mob/proc/openfire()
+	var/A
+	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
+	var/area/thearea = teleportlocs[A]
+	priority_announce("Bluespace artillery fire detected. Brace for impact.")
 	spawn(30)
 	var/list/L = list()
 

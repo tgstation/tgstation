@@ -24,18 +24,18 @@ Bonus
 	transmittable = -4
 	level = 6
 
-/datum/symptom/heal/Activate(var/datum/disease/advance/A)
+/datum/symptom/heal/Activate(datum/disease/advance/A)
 	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
+	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
 				Heal(M, A)
 	return
 
-/datum/symptom/heal/proc/Heal(var/mob/living/M, var/datum/disease/advance/A)
+/datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
 
-	var/get_damage = rand(1, 2)
+	var/get_damage = rand(8, 14)
 	M.adjustToxLoss(-get_damage)
 	return 1
 
@@ -58,7 +58,7 @@ Bonus
 
 /datum/symptom/heal/metabolism
 
-	name = "Anti-Bodies Metabolism "
+	name = "Anti-Bodies Metabolism"
 	stealth = -1
 	resistance = -1
 	stage_speed = -1
@@ -66,7 +66,7 @@ Bonus
 	level = 3
 	var/list/cured_diseases = list()
 
-/datum/symptom/heal/metabolism/Heal(var/mob/living/M, var/datum/disease/advance/A)
+/datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
 	var/cured = 0
 	for(var/datum/disease/D in M.viruses)
 		if(D != A)
@@ -76,7 +76,7 @@ Bonus
 	if(cured)
 		M << "<span class='notice'>You feel much better.</span>"
 
-/datum/symptom/heal/metabolism/End(var/datum/disease/advance/A)
+/datum/symptom/heal/metabolism/End(datum/disease/advance/A)
 	// Remove all the diseases we cured.
 	var/mob/living/M = A.affected_mob
 	if(istype(M))
@@ -111,12 +111,12 @@ Bonus
 	stage_speed = 4
 	transmittable = 4
 	level = 3
-	var/longevity = 20
+	var/longevity = 30
 
-/datum/symptom/heal/longevity/Heal(var/mob/living/M, var/datum/disease/advance/A)
+/datum/symptom/heal/longevity/Heal(mob/living/M, datum/disease/advance/A)
 	longevity -= 1
 	if(!longevity)
 		A.cure()
 
-/datum/symptom/heal/longevity/Start(var/datum/disease/advance/A)
-	longevity = rand(15, 25)
+/datum/symptom/heal/longevity/Start(datum/disease/advance/A)
+	longevity = rand(initial(longevity) - 5, initial(longevity) + 5)

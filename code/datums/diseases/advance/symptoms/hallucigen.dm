@@ -23,8 +23,9 @@ Bonus
 	stage_speed = -3
 	transmittable = -1
 	level = 5
+	severity = 3
 
-/datum/symptom/hallucigen/Activate(var/datum/disease/advance/A)
+/datum/symptom/hallucigen/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/carbon/M = A.affected_mob

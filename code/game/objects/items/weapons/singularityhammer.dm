@@ -1,9 +1,8 @@
-
 /obj/item/weapon/twohanded/singularityhammer
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "mjollnir0"
-	flags = FPRINT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5
 	force_unwielded = 5
@@ -12,31 +11,31 @@
 	throw_range = 1
 	w_class = 5
 	var/charged = 5
-	origin_tech = "combat=5, bluespace=4"
+	origin_tech = "combat=5;bluespace=4"
 
 
 
-	New()
-		..()
-		processing_objects.Add(src)
+/obj/item/weapon/twohanded/singularityhammer/New()
+	..()
+	SSobj.processing |= src
 
 
-	Del()
-		processing_objects.Remove(src)
-		..()
+/obj/item/weapon/twohanded/singularityhammer/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
 
 
-	process()
-		if(charged < 5)
-			charged++
-		return
+/obj/item/weapon/twohanded/singularityhammer/process()
+	if(charged < 5)
+		charged++
+	return
 
 /obj/item/weapon/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
 	return
 
 
-/obj/item/weapon/twohanded/singularityhammer/proc/vortex(var/turf/pull as turf, mob/wielder as mob)
+/obj/item/weapon/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(istype(X, /atom/movable))
 			if(X == wielder) continue
@@ -58,8 +57,8 @@
 
 
 
-/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	..()
+/obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity) return
 	if(wielded)
 		if(charged == 5)
 			charged = 0
@@ -75,48 +74,31 @@
 	name = "Mjollnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
-	flags = FPRINT | TABLEPASS
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	force = 5
 	force_unwielded = 5
 	force_wielded = 20
 	throwforce = 30
-	throw_range = 10
+	throw_range = 7
 	w_class = 5
 	//var/charged = 5
-	origin_tech = "combat=5, power=5"
+	origin_tech = "combat=5;powerstorage=5"
 
-
-/*
-	New()
-		..()
-		processing_objects.Add(src)
-
-
-	Del()
-		processing_objects.Remove(src)
-		..()
-
-
-	process()
-		if(charged < 5)
-			charged++
-		return
-*/
-/obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target as mob)
+/obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
 	var/datum/effect/effect/system/lightning_spread/s = new /datum/effect/effect/system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
 	target.take_organ_damage(0,30)
-	target.visible_message("\red [target.name] was shocked by the [src.name]!", \
-		"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
-		"\red You hear a heavy electrical crack")
+	target.visible_message("<span class='danger'>[target.name] was shocked by the [src.name]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack!</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 	return
 
 
-/obj/item/weapon/twohanded/mjollnir/attack(mob/M as mob, mob/user as mob)
+/obj/item/weapon/twohanded/mjollnir/attack(mob/M, mob/user)
 	..()
 	spawn(0)
 	if(wielded)

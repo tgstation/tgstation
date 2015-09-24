@@ -13,30 +13,30 @@ var/const/WIRE_REMOTE_RX = 64		// remote recv functions
 var/const/WIRE_REMOTE_TX = 128	// remote trans status
 var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 
-/datum/wires/mulebot/CanUse(var/mob/living/L)
+/datum/wires/mulebot/CanUse(mob/living/L)
 	var/obj/machinery/bot/mulebot/M = holder
 	if(M.open)
 		return 1
 	return 0
 
 // So the wires do not open a new window, handle the interaction ourselves.
-/datum/wires/mulebot/Interact(var/mob/living/user)
+/datum/wires/mulebot/Interact(mob/living/user)
 	if(CanUse(user))
 		var/obj/machinery/bot/mulebot/M = holder
 		M.interact(user)
 
-/datum/wires/mulebot/UpdatePulsed(var/index)
+/datum/wires/mulebot/UpdatePulsed(index)
 	switch(index)
 		if(WIRE_POWER1, WIRE_POWER2)
-			holder.visible_message("\blue \icon[holder] The charge light flickers.")
+			holder.visible_message("<span class='notice'>\icon[holder] The charge light flickers.</span>")
 		if(WIRE_AVOIDANCE)
-			holder.visible_message("\blue \icon[holder] The external warning lights flash briefly.")
+			holder.visible_message("<span class='notice'>\icon[holder] The external warning lights flash briefly.</span>")
 		if(WIRE_LOADCHECK)
-			holder.visible_message("\blue \icon[holder] The load platform clunks.")
+			holder.visible_message("<span class='notice'>\icon[holder] The load platform clunks.</span>")
 		if(WIRE_MOTOR1, WIRE_MOTOR2)
-			holder.visible_message("\blue \icon[holder] The drive motor whines briefly.")
+			holder.visible_message("<span class='notice'>\icon[holder] The drive motor whines briefly.</span>")
 		else
-			holder.visible_message("\blue \icon[holder] You hear a radio crackle.")
+			holder.visible_message("<span class='notice'>\icon[holder] You hear a radio crackle.</span>")
 
 // HELPER PROCS
 

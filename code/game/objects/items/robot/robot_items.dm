@@ -5,29 +5,27 @@
 ***********************************************************************/
 //Might want to move this into several files later but for now it works here
 /obj/item/borg/stun
-	name = "Electrified Arm"
-	icon = 'icons/obj/decals.dmi'
-	icon_state = "shock"
+	name = "electrified arm"
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "elecarm"
 
-	attack(mob/M as mob, mob/living/silicon/robot/user as mob)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+/obj/item/borg/stun/attack(mob/M, mob/living/silicon/robot/user)
 
-		log_attack(" <font color='red'>[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey])</font>")
+	user.cell.charge -= 30
 
-		user.cell.charge -= 30
+	M.Weaken(5)
+	if (M.stuttering < 5)
+		M.stuttering = 5
+	M.Stun(5)
 
-		M.Weaken(5)
-		if (M.stuttering < 5)
-			M.stuttering = 5
-		M.Stun(5)
-
-		for(var/mob/O in viewers(M, null))
-			if (O.client)
-				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
+	for(var/mob/O in viewers(M, null))
+		if (O.client)
+			O.show_message("<span class='danger'>[user] has prodded [M] with an electrically-charged arm!</span>", 1,
+							 "<span class='italics'>You hear someone fall.</span>", 2)
+	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/overdrive
-	name = "Overdrive"
+	name = "overdrive"
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
 
@@ -41,40 +39,47 @@
 
 
 /obj/item/borg/sight/xray
-	name = "X-ray Vision"
+	name = "\proper x-ray Vision"
 	sight_mode = BORGXRAY
 
 
 /obj/item/borg/sight/thermal
-	name = "Thermal Vision"
+	name = "\proper thermal vision"
 	sight_mode = BORGTHERM
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "thermal"
 
 
 /obj/item/borg/sight/meson
-	name = "Meson Vision"
+	name = "\proper meson vision"
 	sight_mode = BORGMESON
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "meson"
 
 
 /obj/item/borg/sight/hud
-	name = "Hud"
+	name = "hud"
 	var/obj/item/clothing/glasses/hud/hud = null
 
 
 /obj/item/borg/sight/hud/med
-	name = "Medical Hud"
+	name = "medical hud"
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "healthhud"
 
 
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/health(src)
-		return
+/obj/item/borg/sight/hud/med/New()
+	..()
+	hud = new /obj/item/clothing/glasses/hud/health(src)
+	return
 
 
 /obj/item/borg/sight/hud/sec
-	name = "Security Hud"
+	name = "security hud"
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "securityhud"
 
-
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/security(src)
-		return
+/obj/item/borg/sight/hud/sec/New()
+	..()
+	hud = new /obj/item/clothing/glasses/hud/security(src)
+	return

@@ -1,0 +1,91 @@
+27 August 2015, by Jordie0608
+
+Modified table 'watch', removing 'id' column, making 'ckey' primary and adding the columns 'timestamp', 'adminckey', 'last_editor' and 'edits'.
+
+ALTER TABLE `feedback`.`watch` DROP COLUMN `id`, ADD COLUMN `timestamp` datetime NOT NULL AFTER `reason`, ADD COLUMN `adminckey` varchar(32) NOT NULL AFTER `timestamp`, ADD COLUMN `last_editor` varchar(32) NULL AFTER `adminckey`, ADD COLUMN `edits` text NULL AFTER `last_editor`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`)
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
+14 August 2015, by Jordie0608
+
+Added new table 'notes' to replace BYOND's .sav note system.
+
+To create this new table run the following command:
+
+CREATE TABLE `notes` ( `id` int(11) NOT NULL AUTO_INCREMENT, `ckey` varchar(32) NOT NULL, `notetext` text NOT NULL, `timestamp` datetime NOT NULL, `adminckey` varchar(32) NOT NULL, `last_editor` varchar(32), `edits` text, `server` varchar(50) NOT NULL, PRIMARY KEY (`id`))
+
+Remember to add prefix to the table name if you use them.
+
+----------------------------------------------------
+
+28 July 2015, by Jordie0608
+
+Modified table 'memo', removing 'id' column and making 'ckey' primary.
+
+ALTER TABLE `feedback`.`memo` DROP COLUMN `id`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`) 
+
+Remember to add prefix to the table name if you use them.
+
+----------------------------------------------------
+
+19 July 2015, by Jordie0608
+
+Added new table 'memo' for use with admin memos.
+
+To create this new table run the following command:
+
+CREATE TABLE `memo` (`id` int(11) NOT NULL AUTO_INCREMENT, `ckey` varchar(32) NOT NULL, `memotext` text NOT NULL, `timestamp` datetime NOT NULL, `last_editor` varchar(32), `edits` text, PRIMARY KEY (`id`))
+
+Remember to add prefix to the table name if you use them.
+
+----------------------------------------------------
+
+7 July 2015, by MrStonedOne
+
+Removed the privacy poll and related table. Existing codebases may safely delete the privacy table after updating:
+
+DROP TABLE `privacy`;
+
+--------------------------------------------------
+
+19 May 2015, by Jordie0608
+
+Added new table 'watch' for use in flagging ckeys. It shouldn't ever exist, but also added command to de-erroize this new table just in case someone does make it like that.
+
+To create this new table run the following command:
+
+CREATE TABLE `watch` (`id` int(11) NOT NULL AUTO_INCREMENT, `ckey` varchar(32) NOT NULL, `reason` text NOT NULL, PRIMARY KEY (`id`))
+
+Remember to add prefix to the table name if you use them.
+
+----------------------------------------------------
+
+19 September 2014, by MrStonedOne
+
+Removed erro_ from table names. dbconfig.txt has a option allowing you to change the prefix used in code, defaults to "erro_" if left out for legacy reasons.
+
+If you are creating a new database and want to change the prefix, simply find and replace SS13_ to what ever you want (including nothing) and set the prefix value
+
+Two schema files are now included, one with prefixes and one without.
+
+If you have an existing database, and you want to rid your database of erros, you will have to rename all of the tables. A bit sql is included to do just that in errofreedatabase.sql Feel free to find and replace the prefix to what ever you want (or nothing)
+
+----------------------------------------------------
+
+4 November 2013, by Errorage
+
+The column 'deleted' was added to the erro_library table. If set to anything other than null, the book is interpreted as deleted.
+
+To update your database, execute the following code in phpmyadmin, mysql workbench or whatever program you use:
+
+ALTER TABLE erro_library ADD COLUMN deleted TINYINT(1) NULL DEFAULT NULL  AFTER datetime;
+
+If you want to 'soft delete' a book (meaning it remains in the library, but isn't viewable by players), set the value in the 'deleted' column for the row to 1. To undelete, set it back to null. If you're making an admin tool to work with this, execute the following SQL statement to soft-delete the book with id someid:
+
+UPDATE erro_library SET deleted = 1 WHERE id = someid
+
+(Replace someid with the id of the book you want to soft delete.)
+
+----------------------------------------------------

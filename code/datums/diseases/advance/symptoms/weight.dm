@@ -23,8 +23,9 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 4
+	severity = 1
 
-/datum/symptom/weight_gain/Activate(var/datum/disease/advance/A)
+/datum/symptom/weight_gain/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
@@ -33,7 +34,7 @@ Bonus
 				M << "<span class='notice'>[pick("You feel blubbery.", "You feel full.")]</span>"
 			else
 				M.overeatduration = min(M.overeatduration + 100, 600)
-				M.nutrition = min(M.nutrition + 100, 500)
+				M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
 
 	return
 
@@ -64,8 +65,9 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 3
+	severity = 1
 
-/datum/symptom/weight_loss/Activate(var/datum/disease/advance/A)
+/datum/symptom/weight_loss/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
@@ -107,13 +109,13 @@ Bonus
 	transmittable = -2
 	level = 4
 
-/datum/symptom/weight_even/Activate(var/datum/disease/advance/A)
+/datum/symptom/weight_even/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(4, 5)
 				M.overeatduration = 0
-				M.nutrition = 400
+				M.nutrition = NUTRITION_LEVEL_WELL_FED + 50
 
 	return

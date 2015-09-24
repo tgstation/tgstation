@@ -6,45 +6,52 @@
 	icon_dead = "mouse_gray_dead"
 	speak = list("Squeek!","SQUEEK!","Squeek?")
 	speak_emote = list("squeeks")
-	emote_hear = list("squeeks")
-	emote_see = list("runs in a circle", "shakes")
+	emote_hear = list("squeeks.")
+	emote_see = list("runs in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 	density = 0
-	var/color //brown, gray and white, leave blank for random
+	ventcrawler = 2
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	var/body_color //brown, gray and white, leave blank for random
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/mouse/New()
 	..()
-	if(!color)
-		color = pick( list("brown","gray","white") )
-	icon_state = "mouse_[color]"
-	icon_living = "mouse_[color]"
-	icon_dead = "mouse_[color]_dead"
+	if(!body_color)
+		body_color = pick( list("brown","gray","white") )
+	icon_state = "mouse_[body_color]"
+	icon_living = "mouse_[body_color]"
+	icon_dead = "mouse_[body_color]_dead"
 
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
-	src.icon_dead = "mouse_[color]_splat"
-	Die()
+	src.icon_dead = "mouse_[body_color]_splat"
+	death()
 
-/mob/living/simple_animal/mouse/Die()
-	..()
-	var/obj/item/trash/deadmouse/M = new(src.loc)
-	M.icon_state = src.icon_dead
-	del (src)
+/mob/living/simple_animal/mouse/death(gibbed)
+	if(!ckey)
+		..(1)
+		var/obj/item/trash/deadmouse/M = new(src.loc)
+		M.icon_state = icon_dead
+		qdel(src)
+	else
+		..(gibbed)
 
-/mob/living/simple_animal/mouse/HasEntered(AM as mob|obj)
+/mob/living/simple_animal/mouse/Crossed(AM as mob|obj)
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "\blue \icon[src] Squeek!"
+			M << "<span class='notice'>\icon[src] Squeek!</span>"
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 
@@ -53,15 +60,15 @@
  */
 
 /mob/living/simple_animal/mouse/white
-	color = "white"
+	body_color = "white"
 	icon_state = "mouse_white"
 
 /mob/living/simple_animal/mouse/gray
-	color = "gray"
+	body_color = "gray"
 	icon_state = "mouse_gray"
 
 /mob/living/simple_animal/mouse/brown
-	color = "brown"
+	body_color = "brown"
 	icon_state = "mouse_brown"
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
@@ -71,6 +78,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+	gold_core_spawnable = 0
 
 /obj/item/trash/deadmouse
 	name = "dead mouse"

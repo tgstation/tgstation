@@ -1,156 +1,150 @@
+/obj/item/clothing/under/color
+	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
+
+/obj/item/clothing/under/color/random/New()
+	..()
+	var/list/excluded = list(/obj/item/clothing/under/color/random, /obj/item/clothing/under/color)
+	var/obj/item/clothing/under/color/C = pick(typesof(/obj/item/clothing/under/color) - excluded)
+	name = initial(C.name)
+	icon_state = initial(C.icon_state)
+	item_state = initial(C.item_state)
+	item_color = initial(C.item_color)
+	suit_color = initial(C.item_color)
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
-	color = "black"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "black"
+	burn_state = -1 //Won't burn in fires
 
-/obj/item/clothing/under/color/blackf
-	name = "feminine black jumpsuit"
-	desc = "It's very smart and in a ladies-size!"
-	icon_state = "black"
-	item_state = "bl_suit"
-	color = "blackf"
+/obj/item/clothing/under/color/grey
+	name = "grey jumpsuit"
+	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
+	icon_state = "grey"
+	item_state = "gy_suit"
+	item_color = "grey"
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
 	icon_state = "blue"
 	item_state = "b_suit"
-	color = "blue"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "blue"
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
 	icon_state = "green"
 	item_state = "g_suit"
-	color = "green"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
-
-/obj/item/clothing/under/color/grey
-	name = "grey jumpsuit"
-	icon_state = "grey"
-	item_state = "gy_suit"
-	color = "grey"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "green"
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "Don't wear this near paranoid security officers."
 	icon_state = "orange"
 	item_state = "o_suit"
-	color = "orange"
-	has_sensor = 2
-	sensor_mode = 3
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "orange"
 
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
+	desc = "Just looking at this makes you feel <i>fabulous</i>."
 	item_state = "p_suit"
-	color = "pink"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "pink"
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
 	icon_state = "red"
 	item_state = "r_suit"
-	color = "red"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "red"
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
 	icon_state = "white"
 	item_state = "w_suit"
-	color = "white"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "white"
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
 	icon_state = "yellow"
 	item_state = "y_suit"
-	color = "yellow"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_color = "yellow"
 
-/obj/item/clothing/under/psyche
-	name = "psychedelic"
-	desc = "Groovy!"
-	icon_state = "psyche"
-	color = "psyche"
-
-/obj/item/clothing/under/lightblue
-	name = "lightblue"
-	desc = "lightblue"
+/obj/item/clothing/under/color/lightblue
+	name = "lightblue jumpsuit"
 	icon_state = "lightblue"
-	color = "lightblue"
+	item_state = "b_suit"
+	item_color = "lightblue"
 
-/obj/item/clothing/under/aqua
-	name = "aqua"
-	desc = "aqua"
+/obj/item/clothing/under/color/aqua
+	name = "aqua jumpsuit"
 	icon_state = "aqua"
-	color = "aqua"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_state = "b_suit"
+	item_color = "aqua"
 
-/obj/item/clothing/under/purple
-	name = "purple"
-	desc = "purple"
+/obj/item/clothing/under/color/purple
+	name = "purple jumpsuit"
 	icon_state = "purple"
 	item_state = "p_suit"
-	color = "purple"
+	item_color = "purple"
 
-/obj/item/clothing/under/lightpurple
-	name = "lightpurple"
-	desc = "lightpurple"
+/obj/item/clothing/under/color/lightpurple
+	name = "lightpurple jumpsuit"
 	icon_state = "lightpurple"
-	color = "lightpurple"
+	item_state = "p_suit"
+	item_color = "lightpurple"
 
-/obj/item/clothing/under/lightgreen
-	name = "lightgreen"
-	desc = "lightgreen"
+/obj/item/clothing/under/color/lightgreen
+	name = "lightgreen jumpsuit"
 	icon_state = "lightgreen"
-	color = "lightgreen"
+	item_state = "g_suit"
+	item_color = "lightgreen"
 
-/obj/item/clothing/under/lightblue
-	name = "lightblue"
-	desc = "lightblue"
-	icon_state = "lightblue"
-	color = "lightblue"
-
-/obj/item/clothing/under/lightbrown
-	name = "lightbrown"
-	desc = "lightbrown"
+/obj/item/clothing/under/color/lightbrown
+	name = "lightbrown jumpsuit"
 	icon_state = "lightbrown"
-	color = "lightbrown"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_state = "lb_suit"
+	item_color = "lightbrown"
 
-/obj/item/clothing/under/brown
-	name = "brown"
-	desc = "brown"
+/obj/item/clothing/under/color/brown
+	name = "brown jumpsuit"
 	icon_state = "brown"
-	color = "brown"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_state = "lb_suit"
+	item_color = "brown"
 
-/obj/item/clothing/under/yellowgreen
-	name = "yellowgreen"
-	desc = "yellowgreen"
+/obj/item/clothing/under/color/yellowgreen
+	name = "yellowgreen jumpsuit"
 	icon_state = "yellowgreen"
-	color = "yellowgreen"
+	item_state = "y_suit"
+	item_color = "yellowgreen"
 
-/obj/item/clothing/under/darkblue
-	name = "darkblue"
-	desc = "darkblue"
+/obj/item/clothing/under/color/darkblue
+	name = "darkblue jumpsuit"
 	icon_state = "darkblue"
-	color = "darkblue"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_state = "b_suit"
+	item_color = "darkblue"
 
-/obj/item/clothing/under/lightred
-	name = "lightred"
-	desc = "lightred"
+/obj/item/clothing/under/color/lightred
+	name = "lightred jumpsuit"
 	icon_state = "lightred"
-	color = "lightred"
+	item_state = "r_suit"
+	item_color = "lightred"
 
-/obj/item/clothing/under/darkred
-	name = "darkred"
-	desc = "darkred"
+/obj/item/clothing/under/color/darkred
+	name = "darkred jumpsuit"
 	icon_state = "darkred"
-	color = "darkred"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	item_state = "r_suit"
+	item_color = "darkred"
+
+/obj/item/clothing/under/color/maroon
+	name = "maroon jumpsuit"
+	icon_state = "maroon"
+	item_state = "r_suit"
+	item_color = "maroon"
+
+/obj/item/clothing/under/color/rainbow
+	name = "rainbow jumpsuit"
+	desc = "A multi-colored jumpsuit!"
+	icon_state = "rainbow"
+	item_state = "rainbow"
+	item_color = "rainbow"
+	can_adjust = 0

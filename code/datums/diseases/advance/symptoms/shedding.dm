@@ -22,8 +22,9 @@ BONUS
 	stage_speed = -1
 	transmittable = 2
 	level = 4
+	severity = 1
 
-/datum/symptom/shedding/Activate(var/datum/disease/advance/A)
+/datum/symptom/shedding/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
@@ -32,16 +33,16 @@ BONUS
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(3, 4)
-					if(!(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
+					if(!(H.hair_style == "Bald") && !(H.hair_style == "Balding Hair"))
 						H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
-							H.h_style = "Balding Hair"
+							H.hair_style = "Balding Hair"
 							H.update_hair()
 				if(5)
-					if(!(H.f_style == "Shaved") || !(H.h_style == "Bald"))
+					if(!(H.facial_hair_style == "Shaved") || !(H.hair_style == "Bald"))
 						H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
-							H.f_style = "Shaved"
-							H.h_style = "Bald"
+							H.facial_hair_style = "Shaved"
+							H.hair_style = "Bald"
 							H.update_hair()
 	return

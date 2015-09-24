@@ -1,7 +1,31 @@
-/obj/machinery/compressor
+// TURBINE v2 AKA rev4407 Engine reborn!
+
+// How to use it? - Mappers
+//
+// This is a very good power generating mechanism. All you need is a blast furnace with soaring flames and output.
+// Not everything is included yet so the turbine can run out of fuel quiet quickly. The best thing about the turbine is that even
+// though something is on fire that passes through it, it won't be on fire as it passes out of it. So the exhaust fumes can still
+// containt unreacted fuel - plasma and oxygen that needs to be filtered out and re-routed back. This of course requires smart piping
+// For a computer to work with the turbine the compressor requires a comp_id matching with the turbine computer's id. This will be
+// subjected to a change in the near future mind you. Right now this method of generating power is a good backup but don't expect it
+// become a main power source unless some work is done. Have fun. At 50k RPM it generates 60k power. So more than one turbine is needed!
+//
+// - Numbers
+//
+// Example setup	 S - sparker
+//					 B - Blast doors into space for venting
+// *BBB****BBB*		 C - Compressor
+// S    CT    *		 T - Turbine
+// * ^ *  * V *		 D - Doors with firedoor
+// **|***D**|**      ^ - Fuel feed (Not vent, but a gas outlet)
+//   |      |        V - Suction vent (Like the ones in atmos
+//
+
+
+/obj/machinery/power/compressor
 	name = "compressor"
 	desc = "The compressor stage of a gas turbine generator."
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
@@ -13,65 +37,126 @@
 	var/rpmtarget = 0
 	var/capacity = 1e6
 	var/comp_id = 0
+	var/efficiency
+
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
 	desc = "A gas turbine used for backup power generation."
-	icon = 'icons/obj/pipes.dmi'
+	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
-	var/obj/machinery/compressor/compressor
-	directwired = 1
+	var/opened = 0
+	var/obj/machinery/power/compressor/compressor
 	var/turf/simulated/outturf
 	var/lastgen
+	var/productivity = 1
 
 /obj/machinery/computer/turbine_computer
-	name = "Gas Turbine Control Console"
+	name = "gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "airtunnel0e"
-	anchored = 1
-	density = 1
-	var/obj/machinery/compressor/compressor
-	var/list/obj/machinery/door/poddoor/doors
+	icon_screen = "turbinecomp"
+	icon_keyboard = "tech_key"
+	circuit = /obj/item/weapon/circuitboard/turbine_computer
+	var/obj/machinery/power/compressor/compressor
 	var/id = 0
-	var/door_status = 0
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/compressor/New()
+/obj/machinery/power/compressor/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 5)
+	RefreshParts()
+// The inlet of the compressor is the direction it faces
 
 	gas_contained = new
 	inturf = get_step(src, dir)
 
-	spawn(5)
-		turbine = locate() in get_step(src, get_dir(inturf, src))
-		if(!turbine)
-			stat |= BROKEN
+
+/obj/machinery/power/compressor/initialize()
+	..()
+	locate_machinery()
+	if(!turbine)
+		stat |= BROKEN
 
 
 #define COMPFRICTION 5e5
 #define COMPSTARTERLOAD 2800
 
-/obj/machinery/compressor/process()
+
+// Crucial to make things work!!!!
+// OLD FIX - explanation given down below.
+// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target, height=0)
+// 		return !density
+
+/obj/machinery/power/compressor/locate_machinery()
+	if(turbine)
+		return
+	turbine = locate() in get_step(src, get_dir(inturf, src))
+	if(turbine)
+		turbine.locate_machinery()
+
+/obj/machinery/power/compressor/RefreshParts()
+	var/E = 0
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		E += M.rating
+	efficiency = E / 6
+
+/obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
+		return
+
+	if(default_change_direction_wrench(user, I))
+		turbine = null
+		inturf = get_step(src, dir)
+		locate_machinery()
+		if(turbine)
+			user << "<span class='notice'>Turbine connected.</span>"
+			stat &= ~BROKEN
+		else
+			user << "<span class='alert'>Turbine not connected.</span>"
+			stat |= BROKEN
+		return
+
+	if(exchange_parts(user, I))
+		return
+
+	default_deconstruction_crowbar(I)
+
+/obj/machinery/power/compressor/CanAtmosPass(turf/T)
+	return !density
+
+/obj/machinery/power/compressor/process()
+	if(!turbine)
+		stat = BROKEN
+	if(stat & BROKEN || panel_open)
+		return
 	if(!starter)
 		return
 	overlays.Cut()
-	if(stat & BROKEN)
-		return
-	if(!turbine)
-		stat |= BROKEN
-		return
+
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
+
+	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
+
 	var/transfer_moles = environment.total_moles()/10
 	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 
-	rpm = max(0, rpm - (rpm*rpm)/COMPFRICTION)
+// RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
+
+	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
@@ -85,44 +170,83 @@
 
 
 	if(rpm>50000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o4", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER)
 	else if(rpm>10000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o3", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER)
 	else if(rpm>2000)
-		overlays += image('icons/obj/pipes.dmi', "comp-o2", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER)
 	else if(rpm>500)
-		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
+
+// These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
+// rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is.
+
+#define TURBPRES 9000000
+#define TURBGENQ 100000
+#define TURBGENG 0.5
 
 /obj/machinery/power/turbine/New()
 	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/stack/cable_coil(src, 5)
+	RefreshParts()
+// The outlet is pointed at the direction of the turbine component
 
 	outturf = get_step(src, dir)
 
-	spawn(5)
 
-		compressor = locate() in get_step(src, get_dir(outturf, src))
-		if(!compressor)
-			stat |= BROKEN
+/obj/machinery/power/turbine/initialize()
+	..()
+	locate_machinery()
+	if(!compressor)
+		stat |= BROKEN
 
+/obj/machinery/power/turbine/RefreshParts()
+	var/P = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		P += C.rating
+	productivity = P / 6
 
-#define TURBPRES 9000000
-#define TURBGENQ 20000
-#define TURBGENG 0.8
+/obj/machinery/power/turbine/locate_machinery()
+	if(compressor)
+		return
+	compressor = locate() in get_step(src, get_dir(outturf, src))
+	if(compressor)
+		compressor.locate_machinery()
+
+/obj/machinery/power/turbine/CanAtmosPass(turf/T)
+	return !density
 
 /obj/machinery/power/turbine/process()
+
+	if(!compressor)
+		stat = BROKEN
+
+	if((stat & BROKEN) || panel_open)
+		return
 	if(!compressor.starter)
 		return
 	overlays.Cut()
-	if(stat & BROKEN)
-		return
-	if(!compressor)
-		stat |= BROKEN
-		return
-	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) *TURBGENQ
+
+	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
+	// the TURBGENQ and TURBGENG values
+
+	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) * TURBGENQ * productivity
 
 	add_avail(lastgen)
+
+	// Weird function but it works. Should be something else...
+
 	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
+
 	newrpm = max(0, newrpm)
 
 	if(!compressor.starter || newrpm > 1000)
@@ -133,40 +257,47 @@
 		var/datum/gas_mixture/removed = compressor.gas_contained.remove(oamount)
 		outturf.assume_air(removed)
 
+// If it works, put an overlay that it works!
+
 	if(lastgen > 100)
-		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
+		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER)
 
-
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	AutoUpdateAI(src)
-
-
-/obj/machinery/power/turbine/attack_ai(mob/user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	interact(user)
+	updateDialog()
 
 /obj/machinery/power/turbine/attack_hand(mob/user)
 
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	interact(user)
 
-/obj/machinery/power/turbine/proc/interact(mob/user)
-
-	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
-		user.machine = null
-		user << browse(null, "window=turbine")
+/obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
 
-	user.machine = src
+	if(default_change_direction_wrench(user, I))
+		compressor = null
+		outturf = get_step(src, dir)
+		locate_machinery()
+		if(compressor)
+			user << "<span class='notice'>Compressor connected.</span>"
+			stat &= ~BROKEN
+		else
+			user << "<span class='alert'>Compressor not connected.</span>"
+			stat |= BROKEN
+		return
+
+	if(exchange_parts(user, I))
+		return
+
+	default_deconstruction_crowbar(I)
+
+/obj/machinery/power/turbine/interact(mob/user)
+
+	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
+		user.unset_machine(src)
+		user << browse(null, "window=turbine")
+		return
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
@@ -179,43 +310,26 @@
 	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	t += "</TT>"
-	user << browse(t, "window=turbine")
-	onclose(user, "turbine")
+	var/datum/browser/popup = new(user, "turbine", name)
+	popup.set_content(t)
+	popup.open()
 
 	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
-	..()
-	if(stat & BROKEN)
+	if(..())
 		return
-	if (usr.stat || usr.restrained() )
+
+	if( href_list["close"] )
+		usr << browse(null, "window=turbine")
+		usr.unset_machine(src)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
 
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-
-
-		if( href_list["close"] )
-			usr << browse(null, "window=turbine")
-			usr.machine = null
-			return
-
-		else if( href_list["str"] )
+	else if( href_list["str"] )
+		if(compressor)
 			compressor.starter = !compressor.starter
 
-		spawn(0)
-			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
-					src.interact(M)
-
-	else
-		usr << browse(null, "window=turbine")
-		usr.machine = null
-
-	return
+	updateDialog()
 
 
 
@@ -224,102 +338,64 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// COMPUTER NEEDS A SERIOUS REWRITE.
 
 
-/obj/machinery/computer/turbine_computer/New()
+
+/obj/machinery/computer/turbine_computer/initialize()
 	..()
-	spawn(5)
-		for(var/obj/machinery/compressor/C in world)
-			if(id == C.comp_id)
-				compressor = C
-		doors = new /list()
-		for(var/obj/machinery/door/poddoor/P in world)
-			if(P.id == id)
-				doors += P
+	spawn(10)
+		locate_machinery()
 
-/obj/machinery/computer/turbine_computer/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(do_after(user, 20))
-			if (src.stat & BROKEN)
-				user << "\blue The broken glass falls out."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/turbine_control/M = new /obj/item/weapon/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				del(src)
-			else
-				user << "\blue You disconnect the monitor."
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/turbine_control/M = new /obj/item/weapon/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				del(src)
-	else
-		src.attack_hand(user)
-	return
+/obj/machinery/computer/turbine_computer/locate_machinery()
+	compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	user.machine = src
+	if(..())
+		return
+
+	interact(user)
+
+/obj/machinery/computer/turbine_computer/interact(mob/user)
+
 	var/dat
-	if(src.compressor)
-		dat += {"<BR><B>Gas turbine remote control system</B><HR>
-		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
-		\n<BR>
-		\nTurbine speed: [src.compressor.rpm]rpm<BR>
-		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
-		\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-		\nVent doors: [ src.door_status ? "<A href='?src=\ref[src];doors=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];doors=1'>Open</A>"]
-		\n</PRE><HR><A href='?src=\ref[src];view=1'>View</A>
-		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
-		\n<BR>
-		\n"}
+	if(compressor && compressor.turbine)
+		dat += "<BR><B>Gas turbine remote control system</B><HR>"
+		if(compressor.stat || compressor.turbine.stat)
+			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
+		else
+			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+			\n<BR>
+			\nTurbine speed: [src.compressor.rpm]rpm<BR>
+			\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
+			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
+			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
+			\n<BR>
+			\n"}
 	else
-		dat += "\red<B>No compatible attached compressor found."
+		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " but no turbine" : ""]"].</B><BR>"
+		if(!compressor)
+			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
-	user << browse(dat, "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "turbinecomputer", name)
+	popup.set_content(dat)
+	popup.open()
 	return
-
-
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
-		usr.machine = src
 
-		if( href_list["view"] )
-			usr.client.eye = src.compressor
-		else if( href_list["str"] )
-			src.compressor.starter = !src.compressor.starter
-		else if (href_list["doors"])
-			for(var/obj/machinery/door/poddoor/D in src.doors)
-				if (door_status == 0)
-					spawn( 0 )
-						D.open()
-						door_status = 1
-				else
-					spawn( 0 )
-						D.close()
-						door_status = 0
-		else if( href_list["close"] )
-			usr << browse(null, "window=computer")
-			usr.machine = null
-			return
+	else if( href_list["str"] )
+		if(compressor && compressor.turbine)
+			compressor.starter = !compressor.starter
+	else if( href_list["close"] )
+		usr << browse(null, "window=turbinecomputer")
+		usr.unset_machine(src)
+		return
+	else if(href_list["search"])
+		locate_machinery()
 
-		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
 

@@ -20,7 +20,7 @@
 
 /datum/round_event/prison_break/announce()
 	if(prisonAreas && prisonAreas.len > 0)
-		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+		priority_announce("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
 	else
 		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 		kill()
@@ -40,7 +40,7 @@
 			else if(istype(O,/obj/structure/closet/secure_closet/brig))
 				var/obj/structure/closet/secure_closet/brig/temp = O
 				temp.locked = 0
-				temp.icon_state = temp.icon_closed
+				temp.update_icon()
 			else if(istype(O,/obj/machinery/door/airlock/security))
 				var/obj/machinery/door/airlock/security/temp = O
 				temp.prison_open()

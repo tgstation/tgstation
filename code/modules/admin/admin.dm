@@ -4,15 +4,14 @@ var/global/floorIsLava = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/msg)
+/proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	log_adminwarn(msg)
 	admins << msg
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
-/datum/admins/proc/show_player_panel(var/mob/M in mob_list)
+/datum/admins/proc/show_player_panel(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
@@ -28,7 +27,7 @@ var/global/floorIsLava = 0
 	body += "<body>Options panel for <b>[M]</b>"
 	if(M.client)
 		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
 	if(istype(M, /mob/new_player))
 		body += " <B>Hasn't Entered Game</B> "
@@ -40,19 +39,24 @@ var/global/floorIsLava = 0
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;subtlemessage=\ref[M]'>SM</a> - "
-	body += "<a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
+	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
-	body += "<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
 	body += "<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> | "
-	body += "<A href='?_src_=holder;notes=show;ckey=[M.ckey]'>Notes</A> "
-
+	body += "<A href='?_src_=holder;shownoteckey=[M.ckey]'>Notes</A> | "
 	if(M.client)
-		body += "| <A HREF='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		if(M.client.check_watchlist(M.client.ckey))
+			body += "<A href='?_src_=holder;watchremove=[M.ckey]'>Remove from Watchlist</A> | "
+			body += "<A href='?_src_=holder;watchedit=[M.ckey]'>Edit Watchlist reason</A> "
+		else
+			body += "<A href='?_src_=holder;watchadd=\ref[M.ckey]'>Add to Watchlist</A> "
+
+		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
+		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
@@ -78,6 +82,12 @@ var/global/floorIsLava = 0
 			body += "<b>Transformation:</b>"
 			body += "<br>"
 
+			//Human
+			if(ishuman(M))
+				body += "<B>Human</B> | "
+			else
+				body += "<A href='?_src_=holder;humanone=\ref[M]'>Humanize</A> | "
+
 			//Monkey
 			if(ismonkey(M))
 				body += "<B>Monkeyized</B> | "
@@ -97,8 +107,8 @@ var/global/floorIsLava = 0
 				body += "<A href='?_src_=holder;makeai=\ref[M]'>Make AI</A> | "
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
-				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob Fragment</A> | "
-				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> "
+				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> | "
+				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
 
 			//Simple Animals
 			if(isanimal(M))
@@ -127,7 +137,7 @@ var/global/floorIsLava = 0
 			body += "<A href='?_src_=holder;simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
 			//body += "<A href='?_src_=holder;simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
 			//body += "<A href='?_src_=holder;simplemake=polyparrot;mob=\ref[M]'>Poly</A> | "
-			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
+			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmored;mob=\ref[M]'>Armored</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
 			body += "<A href='?_src_=holder;simplemake=shade;mob=\ref[M]'>Shade</A>"
@@ -146,7 +156,7 @@ var/global/floorIsLava = 0
 	body += "<br>"
 	body += "</body></html>"
 
-	usr << browse(body, "window=adminplayeropts;size=550x515")
+	usr << browse(body, "window=adminplayeropts-\ref[M];size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -168,14 +178,14 @@ var/global/floorIsLava = 0
 			dat += "Welcome to the admin newscaster.<BR> Here you can add, edit and censor every newspiece on the network."
 			dat += "<BR>Feed channels and stories entered through here will be uneditable and handled as official news by the rest of the units."
 			dat += "<BR>Note that this panel allows full freedom over the news network, there are no constrictions except the few basic ones. Don't break things!</FONT>"
-			if(news_network.wanted_issue)
+			if(news_network.wanted_issue.active)
 				dat+= "<HR><A href='?src=\ref[src];ac_view_wanted=1'>Read Wanted Issue</A>"
 			dat+= "<HR><BR><A href='?src=\ref[src];ac_create_channel=1'>Create Feed Channel</A>"
 			dat+= "<BR><A href='?src=\ref[src];ac_view=1'>View Feed Channels</A>"
 			dat+= "<BR><A href='?src=\ref[src];ac_create_feed_story=1'>Submit new Feed story</A>"
 			dat+= "<BR><BR><A href='?src=\ref[usr];mach_close=newscaster_main'>Exit</A>"
 			var/wanted_already = 0
-			if(news_network.wanted_issue)
+			if(news_network.wanted_issue.active)
 				wanted_already = 1
 			dat+="<HR><B>Feed Security functions:</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_menu_wanted=1'>[(wanted_already) ? ("Manage") : ("Publish")] \"Wanted\" Issue</A>"
@@ -187,7 +197,7 @@ var/global/floorIsLava = 0
 			if( isemptylist(news_network.network_channels) )
 				dat+="<I>No active channels found...</I>"
 			else
-				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
 					if(CHANNEL.is_admin_channel)
 						dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen'><A href='?src=\ref[src];ac_show_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 					else
@@ -204,7 +214,7 @@ var/global/floorIsLava = 0
 			dat+="Creating new Feed Message..."
 			dat+="<HR><B><A href='?src=\ref[src];ac_set_channel_receiving=1'>Receiving Channel</A>:</B> [src.admincaster_feed_channel.channel_name]<BR>" //MARK
 			dat+="<B>Message Author:</B> <FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
-			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.body] <BR>"
+			dat+="<B><A href='?src=\ref[src];ac_set_new_message=1'>Message Body</A>:</B> [src.admincaster_feed_message.returnBody(-1)] <BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A><BR>"
 		if(4)
 			dat+="Feed story successfully submitted to [src.admincaster_feed_channel.channel_name].<BR><BR>"
@@ -215,24 +225,24 @@ var/global/floorIsLava = 0
 		if(6)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name=="")
-				dat+="<FONT COLOR='maroon'>•Invalid receiving channel name.</FONT><BR>"
-			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid message body.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>Â•Invalid receiving channel name.</FONT><BR>"
+			if(src.admincaster_feed_message.returnBody(-1) == "" || src.admincaster_feed_message.returnBody(-1) == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Â•Invalid message body.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[3]'>Return</A><BR>"
 		if(7)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed Channel to Network.</B></FONT><HR><BR>"
 			if(src.admincaster_feed_channel.channel_name =="" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid channel name.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>Â•Invalid channel name.</FONT><BR>"
 			var/check = 0
-			for(var/datum/feed_channel/FC in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/FC in news_network.network_channels)
 				if(FC.channel_name == src.admincaster_feed_channel.channel_name)
 					check = 1
 					break
 			if(check)
-				dat+="<FONT COLOR='maroon'>•Channel name already in use.</FONT><BR>"
+				dat+="<FONT COLOR='maroon'>Â•Channel name already in use.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[2]'>Return</A><BR>"
 		if(9)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT>\]</FONT><HR>"
+			dat+="<B>[admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[created by: <FONT COLOR='maroon'>[admincaster_feed_channel.returnAuthor(-1)]</FONT>\]</FONT><HR>"
 			if(src.admincaster_feed_channel.censored)
 				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 				dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
@@ -241,13 +251,17 @@ var/global/floorIsLava = 0
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					var/i = 0
-					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
 						i++
-						dat+="-[MESSAGE.body] <BR>"
+						dat+="-[MESSAGE.returnBody(-1)] <BR>"
 						if(MESSAGE.img)
 							usr << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 							dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
-						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
+						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+						dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]:<br>"
+						for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+							dat+="[comment.body]<br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
+						dat+="<br>"
 			dat+="<BR><HR><A href='?src=\ref[src];ac_refresh=1'>Refresh</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[1]'>Back</A>"
 		if(10)
@@ -258,7 +272,7 @@ var/global/floorIsLava = 0
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
 					dat+="<A href='?src=\ref[src];ac_pick_censor_channel=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(11)
@@ -269,23 +283,26 @@ var/global/floorIsLava = 0
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
 			else
-				for(var/datum/feed_channel/CHANNEL in news_network.network_channels)
+				for(var/datum/newscaster/feed_channel/CHANNEL in news_network.network_channels)
 					dat+="<A href='?src=\ref[src];ac_pick_d_notice=\ref[CHANNEL]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
 
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A>"
 		if(12)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
-			dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
+			dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_author=\ref[src.admincaster_feed_channel]'>[(src.admincaster_feed_channel.authorCensor) ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
 
 			if( isemptylist(src.admincaster_feed_channel.messages) )
 				dat+="<I>No feed messages found in channel...</I><BR>"
 			else
-				for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-					dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-					dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.body == "\[REDACTED\]") ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.author == "\[REDACTED\]") ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+				for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+					dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+					dat+="<FONT SIZE=2><A href='?src=\ref[src];ac_censor_channel_story_body=\ref[MESSAGE]'>[(MESSAGE.bodyCensor) ? ("Undo story censorship") : ("Censor story")]</A>  -  <A href='?src=\ref[src];ac_censor_channel_story_author=\ref[MESSAGE]'>[(MESSAGE.authorCensor) ? ("Undo Author Censorship") : ("Censor message Author")]</A></FONT><BR>"
+					dat+="[MESSAGE.comments.len] comment[MESSAGE.comments.len > 1 ? "s" : ""]: <a href='?src=\ref[src];ac_lock_comment=\ref[MESSAGE]'>[MESSAGE.locked ? "Unlock" : "Lock"]</a><br>"
+					for(var/datum/newscaster/feed_comment/comment in MESSAGE.comments)
+						dat+="[comment.body] <a href='?src=\ref[src];ac_del_comment=\ref[comment];ac_del_comment_msg=\ref[MESSAGE]'>X</a><br><font size=1>[comment.author] [comment.time_stamp]</font><br>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[10]'>Back</A>"
 		if(13)
-			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.author]</FONT> \]</FONT><BR>"
+			dat+="<B>[src.admincaster_feed_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[src.admincaster_feed_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
 			dat+="Channel messages listed below. If you deem them dangerous to the station, you can <A href='?src=\ref[src];ac_toggle_d_notice=\ref[src.admincaster_feed_channel]'>Bestow a D-Notice upon the channel</A>.<HR>"
 			if(src.admincaster_feed_channel.censored)
 				dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
@@ -294,46 +311,45 @@ var/global/floorIsLava = 0
 				if( isemptylist(src.admincaster_feed_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
-					for(var/datum/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-
+					for(var/datum/newscaster/feed_message/MESSAGE in src.admincaster_feed_channel.messages)
+						dat+="-[MESSAGE.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(-1)]</FONT>\]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[11]'>Back</A>"
 		if(14)
 			dat+="<B>Wanted Issue Handler:</B>"
 			var/wanted_already = 0
 			var/end_param = 1
-			if(news_network.wanted_issue)
+			if(news_network.wanted_issue.active)
 				wanted_already = 1
 				end_param = 2
 			if(wanted_already)
 				dat+="<FONT SIZE=2><BR><I>A wanted issue is already in Feed Circulation. You can edit or cancel it below.</FONT></I>"
 			dat+="<HR>"
-			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_feed_message.author] <BR>"
-			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_feed_message.body] <BR>"
+			dat+="<A href='?src=\ref[src];ac_set_wanted_name=1'>Criminal Name</A>: [src.admincaster_wanted_message.criminal] <BR>"
+			dat+="<A href='?src=\ref[src];ac_set_wanted_desc=1'>Description</A>: [src.admincaster_wanted_message.body] <BR>"
 			if(wanted_already)
-				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'> [news_network.wanted_issue.backup_author]</FONT><BR>"
+				dat+="<B>Wanted Issue created by:</B><FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT><BR>"
 			else
-				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'> [src.admincaster_signature]</FONT><BR>"
+				dat+="<B>Wanted Issue will be created under prosecutor:</B><FONT COLOR='green'>[src.admincaster_signature]</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_submit_wanted=[end_param]'>[(wanted_already) ? ("Edit Issue") : ("Submit")]</A>"
 			if(wanted_already)
 				dat+="<BR><A href='?src=\ref[src];ac_cancel_wanted=1'>Take down Issue</A>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Cancel</A>"
 		if(15)
-			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] is now in Network Circulation.</FONT><BR><BR>"
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] is now in Network Circulation.</FONT><BR><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(16)
 			dat+="<B><FONT COLOR='maroon'>ERROR: Wanted Issue rejected by Network.</B></FONT><HR><BR>"
-			if(src.admincaster_feed_message.author =="" || src.admincaster_feed_message.author == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid name for person wanted.</FONT><BR>"
-			if(src.admincaster_feed_message.body == "" || src.admincaster_feed_message.body == "\[REDACTED\]")
-				dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
+			if(src.admincaster_wanted_message.criminal =="" || src.admincaster_wanted_message.criminal == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Â•Invalid name for person wanted.</FONT><BR>"
+			if(src.admincaster_wanted_message.body == "" || src.admincaster_wanted_message.body == "\[REDACTED\]")
+				dat+="<FONT COLOR='maroon'>Â•Invalid description.</FONT><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(17)
 			dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		if(18)
-			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
-			dat+="<B>Criminal</B>: [news_network.wanted_issue.author]<BR>"
+			dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[news_network.wanted_issue.scannedUser]</FONT>\]</FONT><HR>"
+			dat+="<B>Criminal</B>: [news_network.wanted_issue.criminal]<BR>"
 			dat+="<B>Description</B>: [news_network.wanted_issue.body]<BR>"
 			dat+="<B>Photo:</B>: "
 			if(news_network.wanted_issue.img)
@@ -343,7 +359,7 @@ var/global/floorIsLava = 0
 				dat+="None"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Back</A><BR>"
 		if(19)
-			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_feed_message.author] successfully edited.</FONT><BR><BR>"
+			dat+="<FONT COLOR='green'>Wanted issue for [src.admincaster_wanted_message.criminal] successfully edited.</FONT><BR><BR>"
 			dat+="<BR><A href='?src=\ref[src];ac_setScreen=[0]'>Return</A><BR>"
 		else
 			dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
@@ -388,128 +404,37 @@ var/global/floorIsLava = 0
 	usr << browse(dat, "window=admin2;size=210x180")
 	return
 
-/datum/admins/proc/Secrets()
-	if(!check_rights(0))	return
-
-	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
-
-	if(check_rights(R_ADMIN,0))
-		dat += {"
-			<B>Admin Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
-			<A href='?src=\ref[src];secretsadmin=list_bombers'>Bombing List</A><BR>
-			<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
-			<A href='?src=\ref[src];secretsadmin=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-			<A href='?src=\ref[src];secretsadmin=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
-			<A href='?src=\ref[src];secretsadmin=showailaws'>Show AI Laws</A><BR>
-			<A href='?src=\ref[src];secretsadmin=showgm'>Show Game Mode</A><BR>
-			<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
-			<A href='?src=\ref[src];secretsadmin=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];secretsadmin=fingerprints'>List Fingerprints</A><BR><BR>
-			<BR>
-			"}
-
-	if(check_rights(R_FUN,0))
-		dat += {"
-			<B>'Random' Events</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsfun=gravity'>Trigger a gravity-failure event.</A><BR>
-			<A href='?src=\ref[src];secretsfun=wave'>Spawn a wave of meteors (aka lagocolyptic shower)</A><BR>
-			<A href='?src=\ref[src];secretsfun=gravanomalies'>Spawn a gravitational anomaly (aka lagitational anomolag)</A><BR>
-			<A href='?src=\ref[src];secretsfun=timeanomalies'>Spawn wormholes</A><BR>
-			<A href='?src=\ref[src];secretsfun=goblob'>Spawn blob</A><BR>
-			<A href='?src=\ref[src];secretsfun=aliens'>Trigger an Alien infestation</A><BR>
-			<A href='?src=\ref[src];secretsfun=alien_silent'>Spawn an Alien silently</A><BR>
-			<A href='?src=\ref[src];secretsfun=spiders'>Trigger a Spider infestation</A><BR>
-			<A href='?src=\ref[src];secretsfun=bluespaceanomaly'>Trigger a Bluespace Anomaly</A><BR>
-			<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a space ninja</A><BR>
-			<A href='?src=\ref[src];secretsfun=carp'>Trigger an Carp migration</A><BR>
-			<A href='?src=\ref[src];secretsfun=radiation'>Irradiate the station</A><BR>
-			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
-			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
-			<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
-			<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
-			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
-			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
-			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
-			<A href='?src=\ref[src];secretsfun=energeticflux'>Trigger a hyper-energetic flux</A><BR>
-			<BR>
-			<B>Shuttles</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
-			<BR>
-			<B>Fun Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>
-			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
-			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];secretsfun=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
-			<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
-			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
-			"}
-
-/* DEATH SQUADS
-<A href='?src=\ref[src];secretsfun=striketeam'>Send in a strike team</A><BR>
-*/
-	if(check_rights(R_SERVER,0))
-		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
-
-	dat += "<BR>"
-
-	if(check_rights(R_DEBUG,0))
-		dat += {"
-			<B>Security Level Elevated</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
-			<BR>
-			<B>Coder Secrets</B><BR>
-			<BR>
-			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-			<BR>
-			"}
-
-	usr << browse(dat, "window=secrets")
-	return
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge
 //i.e. buttons/verbs
 
 
 /datum/admins/proc/restart()
 	set category = "Server"
-	set name = "Restart"
-	set desc="Restarts the world"
+	set name = "Hard Restart"
+	set desc="Restarts the world immediately"
 	if (!usr.client.holder)
 		return
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		world << "\red <b>Restarting world!</b> \blue Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!"
-		log_admin("[key_name(usr)] initiated a reboot.")
-
-		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
+		ticker.delay_end = 0
 		feedback_add_details("admin_verb","R") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 
-		if(blackbox)
-			blackbox.save_all_data_to_sql()
+/datum/admins/proc/end_round()
+	set category = "Server"
+	set name = "End Round"
+	set desc = "Attempts to produce a round end report and then restart the server organically."
 
-		sleep(50)
-		world.Reboot()
+	if (!usr.client.holder)
+		return
+	var/confirm = alert("End the round and  restart the game world?", "End Round", "Yes", "Cancel")
+	if(confirm == "Cancel")
+		return
+	if(confirm == "Yes")
+		ticker.force_ending = 1
+		feedback_add_details("admin_verb","ER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/admins/proc/announce()
@@ -522,21 +447,39 @@ var/global/floorIsLava = 0
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		world << "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
+		world << "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/set_admin_notice()
+	set category = "Special Verbs"
+	set name = "Set Admin Notice"
+	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
+	if(!check_rights(0))	return
+
+	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
+	if(new_admin_notice == null)
+		return
+	if(new_admin_notice == admin_notice)
+		return
+	if(new_admin_notice == "")
+		message_admins("[key_name(usr)] removed the admin notice.")
+		log_admin("[key_name(usr)] removed the admin notice:\n[admin_notice]")
+	else
+		message_admins("[key_name(usr)] set the admin notice.")
+		log_admin("[key_name(usr)] set the admin notice:\n[new_admin_notice]")
+		world << "<span class ='adminnotice'><b>Admin Notice:</b>\n \t [new_admin_notice]</span>"
+	feedback_add_details("admin_verb","SAN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	admin_notice = new_admin_notice
+	return
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle OOC"
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		world << "<B>The OOC channel has been globally enabled!</B>"
-	else
-		world << "<B>The OOC channel has been globally disabled!</B>"
+	toggle_ooc()
 	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
+	message_admins("[key_name_admin(usr)] toggled OOC.")
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleoocdead()
@@ -546,34 +489,35 @@ var/global/floorIsLava = 0
 	dooc_allowed = !( dooc_allowed )
 
 	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.", 1)
+	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+/*
 /datum/admins/proc/toggletraitorscaling()
 	set category = "Server"
 	set desc="Toggle traitor scaling"
 	set name="Toggle Traitor Scaling"
 	traitor_scaling = !traitor_scaling
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
-	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
+	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].")
 	feedback_add_details("admin_verb","TTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 /datum/admins/proc/startnow()
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
-	if(!ticker)
-		alert("Unable to start the game as it is not set up.")
-		return
 	if(ticker.current_state == GAME_STATE_PREGAME)
-		ticker.current_state = GAME_STATE_SETTING_UP
+		ticker.can_fire = 1
+		ticker.timeLeft = 0
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
+	else if (ticker.current_state == GAME_STATE_STARTUP)
+		usr << "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>"
 	else
 		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
-		return 0
+		
+	return 0
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -585,7 +529,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>New players may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("\blue [key_name_admin(usr)] toggled new player game entering.", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -611,7 +555,7 @@ var/global/floorIsLava = 0
 		world << "<B>You may now respawn.</B>"
 	else
 		world << "<B>You may no longer respawn :(</B>"
-	message_admins("\blue [key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].</span>")
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
 	feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -619,70 +563,29 @@ var/global/floorIsLava = 0
 /datum/admins/proc/delay()
 	set category = "Server"
 	set desc="Delay the game start"
-	set name="Delay"
-	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!", null, null, null, null, null)
-	going = !( going )
-	if (!( going ))
-		world << "<b>The game start has been delayed.</b>"
-		log_admin("[key_name(usr)] delayed the game.")
-	else
-		world << "<b>The game will start soon.</b>"
-		log_admin("[key_name(usr)] removed the delay.")
-	feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	set name="Delay pre-game"
 
-/datum/admins/proc/adjump()
-	set category = "Server"
-	set desc="Toggle admin jumping"
-	set name="Toggle Jump"
-	config.allow_admin_jump = !(config.allow_admin_jump)
-	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
-	feedback_add_details("admin_verb","TJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(ticker.timeLeft/10)) as num|null
+	if(ticker.current_state > GAME_STATE_PREGAME)
+		return alert("Too late... The game has already started!")
+	if(newtime)
+		ticker.timeLeft = newtime * 10
+		if(newtime < 0)
+			world << "<b>The game start has been delayed.</b>"
+			log_admin("[key_name(usr)] delayed the round start.")
+		else
+			world << "<b>The game will start in [newtime] seconds.</b>"
+			world << 'sound/ai/attention.ogg'
+			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+		feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/adspawn()
-	set category = "Server"
-	set desc="Toggle admin spawning"
-	set name="Toggle Spawn"
-	config.allow_admin_spawning = !(config.allow_admin_spawning)
-	message_admins("\blue Toggled admin item spawning to [config.allow_admin_spawning].")
-	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/datum/admins/proc/adrev()
-	set category = "Server"
-	set desc="Toggle admin revives"
-	set name="Toggle Revive"
-	config.allow_admin_rev = !(config.allow_admin_rev)
-	message_admins("\blue Toggled reviving to [config.allow_admin_rev].")
-	feedback_add_details("admin_verb","TAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/datum/admins/proc/immreboot()
-	set category = "Server"
-	set desc="Reboots the server post haste"
-	set name="Immediate Reboot"
-	if(!usr.client.holder)	return
-	if( alert("Reboot server?",,"Yes","No") == "No")
-		return
-	world << "\red <b>Rebooting world!</b> \blue Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!"
-	log_admin("[key_name(usr)] initiated an immediate reboot.")
-
-	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]")
-	feedback_add_details("admin_verb","IR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
-
-	world.Reboot()
-
-/datum/admins/proc/unprison(var/mob/M in mob_list)
+/datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == 2)
-		if (config.allow_admin_jump)
-			M.loc = pick(latejoin)
-			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]", 1)
-			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
-		else
-			alert("Admin jumping disabled")
+	if (M.z == ZLEVEL_CENTCOM)
+		M.loc = pick(latejoin)
+		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
+		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		alert("[M.name] is not prisoned.")
 	feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -707,7 +610,7 @@ var/global/floorIsLava = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(var/object as text)
+/datum/admins/proc/spawn_atom(object as text)
 	set category = "Debug"
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
@@ -730,13 +633,17 @@ var/global/floorIsLava = 0
 			return
 	chosen = matches[chosen]
 
-	new chosen(usr.loc)
+	if(ispath(chosen,/turf))
+		var/turf/T = get_turf(usr.loc)
+		T.ChangeTurf(chosen)
+	else
+		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)
+/datum/admins/proc/show_traitor_panel(mob/M in mob_list)
 	set category = "Admin"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
@@ -762,7 +669,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>The tinted_weldhelh has been disabled!</B>"
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
-	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
+	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleguests()
@@ -775,7 +682,7 @@ var/global/floorIsLava = 0
 	else
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
-	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.</span>")
 	feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unjobban_panel()
@@ -807,6 +714,46 @@ var/global/floorIsLava = 0
 	if(!ai_number)
 		usr << "<b>No AIs located</b>" //Just so you know the thing is actually working and not just ignoring you.
 
+/datum/admins/proc/manage_free_slots()
+	if(!check_rights())
+		return
+	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
+	var/count = 0
+
+	if(ticker && !ticker.mode)
+		alert(usr, "You cannot manage jobs before the round starts!")
+		return
+
+	if(SSjob)
+		for(var/datum/job/job in SSjob.occupations)
+			count++
+			var/J_title = html_encode(job.title)
+			var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
+			var/J_totPos = html_encode(job.total_positions)
+			if(job.total_positions < 0)
+				dat += "[J_title]: [J_opPos]   (unlimited)"
+			else
+				dat += "[J_title]: [J_opPos]/[J_totPos]"
+
+			if(job.title == "AI" || job.title == "Cyborg")
+				dat += "   (Cannot Late Join)<br>"
+				continue
+			if(job.total_positions >= 0)
+				dat += "   <A href='?src=\ref[src];addjobslot=[job.title]'>Add</A>  |  "
+				if(job.total_positions > job.current_positions)
+					dat += "<A href='?src=\ref[src];removejobslot=[job.title]'>Remove</A>  |  "
+				else
+					dat += "Remove  |  "
+				dat += "<A href='?src=\ref[src];unlimitjobslot=[job.title]'>Unlimit</A>"
+			else
+				dat += "   <A href='?src=\ref[src];limitjobslot=[job.title]'>Limit</A>"
+			dat += "<br>"
+
+	dat += "</body>"
+	var/winheight = 100 + (count * 20)
+	winheight = min(winheight, 690)
+	usr << browse(dat, "window=players;size=375x[winheight]")
+
 //
 //
 //ALL DONE
@@ -815,22 +762,65 @@ var/global/floorIsLava = 0
 //
 //
 
+//RIP ferry snowflakes
 
-/**********************Centcom Ferry**************************/
+//Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
+//defaults to kicking everyone (afk + non afk clients in the lobby)
+//returns a list of ckeys of the kicked clients
+/proc/kick_clients_in_lobby(message, kick_only_afk = 0)
+	var/list/kicked_client_names = list()
+	for(var/client/C in clients)
+		if(istype(C.mob, /mob/new_player))
+			if(kick_only_afk && !C.is_afk())	//Ignore clients who are not afk
+				continue
+			if(message)
+				C << message
+			kicked_client_names.Add("[C.ckey]")
+			del(C)
+	return kicked_client_names
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
+//returns 1 to let the dragdrop code know we are trapping this event
+//returns 0 if we don't plan to trap the event
+/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
 
-proc/move_ferry()
-	var/area/fromArea
-	var/area/toArea
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-	fromArea.move_contents_to(toArea)
-	if (ferry_location)
-		ferry_location = 0
-	else
-		ferry_location = 1
+	//this is the exact two check rights checks required to edit a ckey with vv.
+	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
+		return 0
+
+	if (!frommob.ckey)
+		return 0
+
+	var/question = ""
+	if (tomob.ckey)
+		question = "This mob already has a user ([tomob.key]) in control of it! "
+	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
+
+	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	if (ask != "Yes")
+		return 1
+
+	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
+		return 1
+
+	tomob.ghostize(0)
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.ckey] in control of [tomob.name].</span>")
+	log_admin("[key_name(usr)] stuffed [frommob.ckey] into [tomob.name].")
+	feedback_add_details("admin_verb","CGD")
+
+	tomob.ckey = frommob.ckey
+	qdel(frommob)
+
+	return 1
+
+/client/proc/adminGreet(logout)
+	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/string
+		if(logout && config && config.announce_admin_logout)
+			string = pick(
+				"Admin logout: [key_name(src)]")
+		else if(!logout && config && config.announce_admin_login && (prefs.toggles & ANNOUNCE_LOGIN))
+			string = pick(
+				"Admin login: [key_name(src)]")
+		if(string)
+			message_admins("[string]")

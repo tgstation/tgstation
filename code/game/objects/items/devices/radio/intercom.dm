@@ -3,27 +3,31 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4.0
+	w_class = 4
 	canhear_range = 2
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
+	var/last_tick //used to delay the powercheck
 
 /obj/item/device/radio/intercom/New()
-	spawn(5)
-		checkpower()
 	..()
+	SSobj.processing += src
 
-/obj/item/device/radio/intercom/attack_ai(mob/user as mob)
+/obj/item/device/radio/intercom/Destroy()
+	SSobj.processing -= src
+	return ..()
+
+/obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
 
-/obj/item/device/radio/intercom/attack_paw(mob/user as mob)
+/obj/item/device/radio/intercom/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 
-/obj/item/device/radio/intercom/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	spawn (0)
 		attack_self(user)
@@ -46,21 +50,20 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/hear_talk(mob/M as mob, msg)
-	if(!src.anyai && !(M in src.ai))
+/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+	if(!anyai && !(speaker in ai))
 		return
 	..()
 
-/obj/item/device/radio/intercom/proc/checkpower()
-
-	// Simple loop, checks for power. Strictly for intercoms
-	while(src)
+/obj/item/device/radio/intercom/process()
+	if(((world.timeofday - last_tick) > 30) || ((world.timeofday - last_tick) < 0))
+		last_tick = world.timeofday
 
 		if(!src.loc)
 			on = 0
 		else
 			var/area/A = src.loc.loc
-			if(!A || !isarea(A) || !A.master)
+			if(!A || !isarea(A) || !A.master || emped)
 				on = 0
 			else
 				on = A.master.powered(EQUIP) // set "on" to the power status
@@ -70,4 +73,5 @@
 		else
 			icon_state = "intercom"
 
-		sleep(30)
+/obj/item/device/radio/intercom/rejects_blood()
+	return 1

@@ -7,17 +7,19 @@
 
 /obj/item/weapon/paper
 	name = "paper"
-	gender = PLURAL
+	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_range = 1
 	throw_speed = 1
-	layer = 4
-	pressure_resistance = 1
+	layer = 3
+	pressure_resistance = 0
 	slot_flags = SLOT_HEAD
 	body_parts_covered = HEAD
+	burn_state = 0 //Burnable
+	burntime = 5
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -26,10 +28,6 @@
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
-
-	var/const/deffont = "Verdana"
-	var/const/signfont = "Times New Roman"
-	var/const/crayonfont = "Comic Sans MS"
 
 
 /obj/item/weapon/paper/New()
@@ -42,26 +40,30 @@
 
 
 /obj/item/weapon/paper/update_icon()
+	if(burn_state == 1)
+		icon_state = "paper_onfire"
+		return
 	if(info)
 		icon_state = "paper_words"
 		return
 	icon_state = "paper"
 
 
-/obj/item/weapon/paper/examine()
-	set src in oview(1)
-
-	if(is_blind(usr))
-		return
-	if(in_range(usr, src))
-		if( !(ishuman(usr) || isobserver(usr) || issilicon(usr)) )
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+/obj/item/weapon/paper/examine(mob/user)
+	..()
+	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
+		if(!iscultist(user) && !user.stat)
+			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
+			return
+	if(in_range(user, src) || isobserver(user))
+		if( !(ishuman(user) || isobserver(user) || issilicon(user)) )
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			onclose(user, "[name]")
 		else
-			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(usr, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			onclose(user, "[name]")
 	else
-		usr << "<span class='notice'>It is too far away.</span>"
+		user << "<span class='notice'>It is too far away.</span>"
 
 
 /obj/item/weapon/paper/verb/rename()
@@ -69,19 +71,28 @@
 	set category = "Object"
 	set src in usr
 
-	if((CLUMSY in usr.mutations) && prob(25))
-		usr << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
-		usr.damageoverlaytemp = 9001
+	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
+
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/H = usr
+	if(H.disabilities & CLUMSY && prob(25))
+		H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
+		H.damageoverlaytemp = 9001
+		return
+	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 
+/obj/item/weapon/paper/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] scratches a grid on their wrist with the paper! It looks like \he's trying to commit sudoku..</span>")
+	return (BRUTELOSS)
 
 /obj/item/weapon/paper/attack_self(mob/user)
-	examine()
-	if(rigged && (events.holiday == "April Fool's Day"))
+	user.examinate(src)
+	if(rigged && (SSevent.holidays && SSevent.holidays[APRIL_FOOLS]))
 		if(spam_flag == 0)
 			spam_flag = 1
 			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
@@ -145,8 +156,8 @@
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -159,6 +170,9 @@
 
 
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
 //	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
 	t = replacetext(t, "\[center\]", "<center>")
@@ -172,7 +186,7 @@
 	t = replacetext(t, "\[/u\]", "</U>")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
+	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 
 	if(!iscrayon)
@@ -183,7 +197,7 @@
 		t = replacetext(t, "\[list\]", "<ul>")
 		t = replacetext(t, "\[/list\]", "</ul>")
 
-		t = "<font face=\"[deffont]\" color=[P.colour]>[t]</font>"
+		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
 		t = replacetext(t, "\[*\]", "")
 		t = replacetext(t, "\[hr\]", "")
@@ -192,7 +206,7 @@
 		t = replacetext(t, "\[list\]", "")
 		t = replacetext(t, "\[/list\]", "")
 
-		t = "<font face=\"[crayonfont]\" color=[P.colour]><b>[t]</b></font>"
+		t = "<font face=\"[CRAYON_FONT]\" color=[P.colour]><b>[t]</b></font>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
@@ -237,7 +251,9 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		var/t =  stripped_multiline_input("Enter what you want to write:", "Write")
+		if(!t)
+			return
 		var/obj/item/i = usr.get_active_hand()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
@@ -250,38 +266,40 @@
 
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
-		if(id!="end")
-			addtofield(text2num(id), t) // He wants to edit a field, let him.
-		else
-			info += t // Oh, he wants to edit to the end of the file, let him.
-			updateinfolinks()
+		if(t != null)	//No input from the user means nothing needs to be added
+			if(id!="end")
+				addtofield(text2num(id), t) // He wants to edit a field, let him.
+			else
+				info += t // Oh, he wants to edit to the end of the file, let him.
+				updateinfolinks()
 
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
-		update_icon()
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
+			update_icon()
 
 
-/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
+/obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/living/carbon/human/user, params)
 	..()
+
+	if(burn_state == 1)
+		return
 
 	if(is_blind(user))
 		return
 
-	var/clown = 0
-	if(user && (CLUMSY in user.mutations))
-		clown = 1
-
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
-		return
+		if(user.IsAdvancedToolUser())
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
+			return
+		else
+			user << "<span class='notice'>You don't know how to read or write.</span>"
+			return
+		if(istype(src, /obj/item/weapon/paper/talisman/))
+			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
+			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
 		if(!in_range(src, usr) && loc != user && !istype(loc, /obj/item/weapon/clipboard) && loc.loc != user && user.get_active_hand() != P)
 			return
-
-		if(istype(P, /obj/item/weapon/stamp/clown))
-			if(!clown)
-				user << "<span class='notice'>You are totally unable to use the stamp. HONK!</span>"
-				return
 
 		stamps += "<img src=large_[P.icon_state].png>"
 
@@ -298,8 +316,35 @@
 
 		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
+	if(is_hot(P))
+		if(user.disabilities & CLUMSY && prob(10))
+			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
+								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
+			user.unEquip(P)
+			user.adjust_fire_stacks(1)
+			user.IgniteMob()
+			return
+
+		if(!(in_range(user, src))) //to prevent issues as a result of telepathically lighting a paper
+			return
+
+		user.unEquip(src)
+		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
+		fire_act()
+
+
+
 	add_fingerprint(user)
 
+/obj/item/weapon/paper/fire_act()
+	..(0)
+	icon_state = "paper_onfire"
+	info = "[stars(info)]"
+
+
+/obj/item/weapon/paper/extinguish()
+	..()
+	update_icon()
 
 /*
  * Premade paper
@@ -311,7 +356,7 @@
 
 /obj/item/weapon/paper/Toxin
 	name = "paper- 'Chemical Information'"
-	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tSleep Toxin T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
+	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
 
 /obj/item/weapon/paper/courtroom
 	name = "paper- 'A Crash Course in Legal SOP on SS13'"
@@ -333,6 +378,17 @@
 	name = "paper- 'Standard Operating Procedure'"
 	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
 
+/obj/item/weapon/paper/centcom
+	name = "paper- 'Official Bulletin'"
+	info = "<BR>Centcom Security<BR>Port Division<BR>Official Bulletin<BR><BR>Inspector,<BR>There is an emergency shuttle arriving today.<BR><BR>Approval is restricted to Nanotrasen employees only. Deny all other entrants.<BR><BR>Centcom Port Commissioner"
+
+/obj/item/weapon/paper/range
+	name = "paper- Firing Range Instructions"
+	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
+
+/obj/item/weapon/paper/mining
+	name = "paper- Smelting Operations Closed"
+	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"

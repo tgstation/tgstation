@@ -1,69 +1,43 @@
-/mob/living/silicon/robot/gib()
-	//robots don't die when gibbed. instead they drop their MMI'd brain
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
+/mob/living/silicon/robot/gib(animation = 1)
+	..()
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("gibbed-r", animation)
+/mob/living/silicon/robot/spawn_gibs()
 	robogibs(loc, viruses)
 
-	living_mob_list -= src
-	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
+/mob/living/silicon/robot/gib_animation(animate)
+	..(animate, "gibbed-r")
 
-/mob/living/silicon/robot/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
+/mob/living/silicon/robot/dust(animation = 1)
+	if(mmi)
+		qdel(mmi)
+	..()
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-r", animation)
+/mob/living/silicon/robot/spawn_dust()
 	new /obj/effect/decal/remains/robot(loc)
-	if(mmi)		del(mmi)	//Delete the MMI first so that it won't go popping out.
 
-	dead_mob_list -= src
-	spawn(15)
-		if(animation)	del(animation)
-		if(src)			del(src)
-
+/mob/living/silicon/robot/dust_animation(animate)
+	..(animate, "dust-r")
 
 /mob/living/silicon/robot/death(gibbed)
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
 	if(!gibbed)
 		emote("deathgasp")
+	locked = 0 //unlock cover
 	stat = DEAD
 	update_canmove()
 	if(camera)
 		camera.status = 0
+	update_headlamp(1) //So borg lights are disabled when killed.
 
 	uneq_all() // particularly to ensure sight modes are cleared
 
-	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
-		var/obj/machinery/recharge_station/RC = loc
-		RC.go_out()
-
-	if(blind)	blind.layer = 0
+	if(blind)
+		blind.layer = 0
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	updateicon()
-
+	update_icons()
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 

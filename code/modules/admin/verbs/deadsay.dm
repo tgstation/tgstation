@@ -8,7 +8,7 @@
 	if(!src.mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		src << "\red You cannot send DSAY messages (muted)."
+		src << "<span class='danger'>You cannot send DSAY messages (muted).</span>"
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
@@ -19,13 +19,14 @@
 
 	if (!msg)
 		return
+	var/nicknames = file2list("config/admin_nicknames.txt")
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick("BADMIN", "Fun Police", "Conspiracy", "ERP BLOCKER", "Button Masher", "MissPhaeron", "Turdicide", "hornigranny", "TLC", "scaredofshowers", "SXSI", "HerpEs", "Nerdrak", "Dickarrus", "Wario90900", "Deurpyn", "Fatbeaver", "Arrowage", "Intigaycy", "Hosin Hitter", "Cheridumb", "Petethegoatse", "HotelHabboLover", "Giacunt", "Muskrats", "FickleInspector", "Tankbutt", "Ulisex", "Scrotemis", "Sillnazi", "Stillachair", "cbdsm", "Un_Professional", "Doopenis", "Calasrear", "Quackink ",  "ANyan:3", "Slieve", "Pali-en269", "Teamcreep", "Agoatsie", "Zoomerdik", "LewdMechanic", "NemoPanFried", "LameMontgommery", "EndGameOver", "LocalDingus", "ThoughtlessNaps", "Sewage", "hbgay6969", "Cockdtbent", "Iranclanos", "Liarwhine", "Vagyina", "Nohrape", "Dumboner69", "Gaymarr", "Jesusfraud") : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
 	for (var/mob/M in player_list)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+		if (M.stat == DEAD || istype(M, /mob/living/simple_animal/revenant) || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 			M.show_message(rendered, 2)
 
 	feedback_add_details("admin_verb","D") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

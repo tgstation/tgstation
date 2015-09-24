@@ -1,7 +1,6 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	4		//4 ticks is about 3/10ths of a second
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 #define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
 									//I would just like the code ready should it ever need to be used.
@@ -24,13 +23,11 @@
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
-	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
-
 	//Admin PM
 	if(href_list["priv_msg"])
+		if (href_list["ahelp_reply"])
+			cmd_ahelp_reply(href_list["priv_msg"])
+			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
@@ -46,15 +43,21 @@
 
 	..()	//redirect to hsrc.Topic()
 
-/client/proc/handle_spam_prevention(var/message, var/mute_type)
+/client/proc/is_content_unlocked()
+	if(!prefs.unlock_content)
+		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+		return 0
+	return 1
+
+/client/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "\red You have exceeded the spam filter limit for identical messages. An auto-mute was applied."
+			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
 			cmd_admin_mute(src, mute_type, 1)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "\red You are nearing the spam filter limit for identical messages."
+			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
 			return 0
 	else
 		last_message = message
@@ -79,13 +82,26 @@
 	///////////
 	//CONNECT//
 	///////////
+#if (PRELOAD_RSC == 0)
+var/list/external_rsc_urls
+var/next_external_rsc = 0
+#endif
+
+
 /client/New(TopicData)
+
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
+
+#if (PRELOAD_RSC == 0)
+	if(external_rsc_urls && external_rsc_urls.len)
+		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
+		preload_rsc = external_rsc_urls[next_external_rsc]
+#endif
 
 	clients += src
 	directory[ckey] = src
@@ -112,21 +128,63 @@
 
 	if(holder)
 		add_admin_verbs()
-		admin_memo_show()
+		admin_memo_output("Show")
+		adminGreet()
+		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
+			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
 
-	log_client_to_db()
+	add_verbs_from_config()
+	set_client_age_from_db()
+
+	if (isnum(player_age) && player_age == -1) //first connection
+		if (config.panic_bunker && !holder && !(ckey in deadmins))
+			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
+			src << "Sorry but the server is currently not accepting connections from never before seen players."
+			del(src)
+			return 0
+
+		if (config.notify_new_player_age >= 0)
+			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
+			if (config.irc_first_connection_alert)
+				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
+
+		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
+
+	else if (isnum(player_age) && player_age < config.notify_new_player_age)
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
+
+
+	if (!ticker || ticker.current_state == GAME_STATE_PREGAME)
+		spawn (rand(10,150))
+			if (src)
+				sync_client_with_db()
+	else
+		sync_client_with_db()
 
 	send_resources()
 
-	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-		winset(src, "rpane.changelog", "background-color=#eaeaea;font-style=bold")
+	if(!void)
+		void = new()
 
+	screen += void
+
+	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+		src << "<span class='info'>You have unread updates in the changelog.</span>"
+		if(config.aggressive_changelog)
+			src.changes()
+		else
+			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
+
+	if (config && config.autoconvert_notes)
+		convert_notes_sql(ckey)
 
 	//////////////
 	//DISCONNECT//
 	//////////////
 /client/Del()
 	if(holder)
+		adminGreet(1)
 		holder.owner = null
 		admins -= src
 	directory -= ckey
@@ -134,69 +192,75 @@
 	return ..()
 
 
-
-/client/proc/log_client_to_db()
-
-	if ( IsGuestKey(src.key) )
+/client/proc/set_client_age_from_db()
+	if (IsGuestKey(src.key))
 		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sql_sanitize_text(src.ckey)
+	var/sql_ckey = sanitizeSQL(src.ckey)
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM erro_player WHERE ckey = '[sql_ckey]'")
-	query.Execute()
-	var/sql_id = 0
-	while(query.NextRow())
-		sql_id = query.item[1]
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	if (!query.Execute())
+		return
+
+	while (query.NextRow())
 		player_age = text2num(query.item[2])
-		break
+		return
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	//no match mark it as a first connection for use in client/New()
+	player_age = -1
+
+
+/client/proc/sync_client_with_db()
+	if (IsGuestKey(src.key))
+		return
+
+	establish_db_connection()
+	if (!dbcon.IsConnected())
+		return
+
+	var/sql_ckey = sanitizeSQL(src.ckey)
+
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
 		related_accounts_ip += "[query_ip.item[1]], "
-		break
 
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
-	while(query_cid.NextRow())
+	while (query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
-		break
 
-	//Just the standard check to see if it's actually a number
-	if(sql_id)
-		if(istext(sql_id))
-			sql_id = text2num(sql_id)
-		if(!isnum(sql_id))
-			return
+	var/watchreason = check_watchlist(sql_ckey)
+	if(watchreason)
+		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
+		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
 	var/admin_rank = "Player"
-	if(src.holder)
-		admin_rank = src.holder.rank
+	if (src.holder && src.holder.rank)
+		admin_rank = src.holder.rank.name
 
-	var/sql_ip = sql_sanitize_text(src.address)
-	var/sql_computerid = sql_sanitize_text(src.computer_id)
-	var/sql_admin_rank = sql_sanitize_text(admin_rank)
+	var/sql_ip = sanitizeSQL(src.address)
+	var/sql_computerid = sanitizeSQL(src.computer_id)
+	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	if(sql_id)
-		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
-		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
-		query_update.Execute()
-	else
-		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
-		query_insert.Execute()
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	query_insert.Execute()
 
 	//Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
+/client/proc/add_verbs_from_config()
+	if(config.see_own_notes)
+		verbs += /client/proc/self_notes
 
 
 #undef TOPIC_SPAM_DELAY
@@ -211,19 +275,37 @@
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
+
+	spawn
+		// Preload the HTML interface. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+		var/datum/html_interface/hi
+		for (var/type in typesof(/datum/html_interface))
+			hi = new type(null)
+			hi.sendResources(src)
+
+	// Preload the crew monitor. This needs to be done due to BYOND bug http://www.byond.com/forum/?post=1487244
+	spawn
+		if (crewmonitor && crewmonitor.initialized)
+			crewmonitor.sendResources(src)
+
+	//Send nanoui files to client
+	SSnano.send_resources(src)
 	getFiles(
 		'html/search.js',
 		'html/panels.css',
 		'html/browser/common.css',
-		'html/browser/cryo.css',
 		'html/browser/scannernew.css',
-		'html/browser/sleeper.css',
+		'html/browser/playeroptions.css',
 		'icons/pda_icons/pda_atmos.png',
 		'icons/pda_icons/pda_back.png',
 		'icons/pda_icons/pda_bell.png',
 		'icons/pda_icons/pda_blank.png',
 		'icons/pda_icons/pda_boom.png',
 		'icons/pda_icons/pda_bucket.png',
+		'icons/pda_icons/pda_chatroom.png',
+		'icons/pda_icons/pda_medbot.png',
+		'icons/pda_icons/pda_floorbot.png',
+		'icons/pda_icons/pda_cleanbot.png',
 		'icons/pda_icons/pda_crate.png',
 		'icons/pda_icons/pda_cuffs.png',
 		'icons/pda_icons/pda_eject.png',
@@ -242,20 +324,6 @@
 		'icons/pda_icons/pda_scanner.png',
 		'icons/pda_icons/pda_signaler.png',
 		'icons/pda_icons/pda_status.png',
-		'icons/spideros_icons/sos_1.png',
-		'icons/spideros_icons/sos_2.png',
-		'icons/spideros_icons/sos_3.png',
-		'icons/spideros_icons/sos_4.png',
-		'icons/spideros_icons/sos_5.png',
-		'icons/spideros_icons/sos_6.png',
-		'icons/spideros_icons/sos_7.png',
-		'icons/spideros_icons/sos_8.png',
-		'icons/spideros_icons/sos_9.png',
-		'icons/spideros_icons/sos_10.png',
-		'icons/spideros_icons/sos_11.png',
-		'icons/spideros_icons/sos_12.png',
-		'icons/spideros_icons/sos_13.png',
-		'icons/spideros_icons/sos_14.png',
 		'icons/stamp_icons/large_stamp-clown.png',
 		'icons/stamp_icons/large_stamp-deny.png',
 		'icons/stamp_icons/large_stamp-ok.png',

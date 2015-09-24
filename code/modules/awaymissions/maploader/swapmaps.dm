@@ -156,7 +156,7 @@ swapmap
 			if(z2>swapmaps_compiled_maxz ||\
 			   y2>swapmaps_compiled_maxy ||\
 			   x2>swapmaps_compiled_maxx)
-				del(src)
+				qdel(src)
 			return
 		x2=x?(x):world.maxx
 		y2=y?(y):world.maxy
@@ -174,17 +174,17 @@ swapmap
 			   x2>swapmaps_compiled_maxx)
 				var/list/areas=new
 				for(var/atom/A in block(locate(x1,y1,z1),locate(x2,y2,z2)))
-					for(var/obj/O in A) del(O)
+					for(var/obj/O in A) qdel(O)
 					for(var/mob/M in A)
-						if(!M.key) del(M)
+						if(!M.key) qdel(M)
 						else M.loc=null
 					areas[A.loc]=null
-					del(A)
+					qdel(A)
 				// delete areas that belong only to this map
 				for(var/area/a in areas)
-					if(a && !a.contents.len) del(a)
+					if(a && !a.contents.len) qdel(a)
 				if(x2>=world.maxx || y2>=world.maxy || z2>=world.maxz) CutXYZ()
-				del(areas)
+				qdel(areas)
 		..()
 
 	/*
@@ -241,7 +241,7 @@ swapmap
 			sleep()
 			S.cd=oldcd
 		locked=0
-		del(areas)
+		qdel(areas)
 
 	Read(savefile/S,_id,turf/locorner)
 		var/x
@@ -286,9 +286,9 @@ swapmap
 						A.contents+=T
 					else defarea.contents+=T
 					// clear the turf
-					for(var/obj/O in T) del(O)
+					for(var/obj/O in T) qdel(O)
 					for(var/mob/M in T)
-						if(!M.key) del(M)
+						if(!M.key) qdel(M)
 						else M.loc=null
 					// finish the read
 					T.Read(S)
@@ -297,7 +297,7 @@ swapmap
 			sleep()
 			S.cd=oldcd
 		locked=0
-		del(areas)
+		qdel(areas)
 
 	/*
 		Find an empty block on the world map in which to load this map.
@@ -321,7 +321,7 @@ swapmap
 				x1=l[1]
 				y1=l[2]
 				z1=l[3]
-				del(l)
+				qdel(l)
 		x2+=x1-1
 		y2+=y1-1
 		z2+=z1-1
@@ -377,7 +377,7 @@ swapmap
 	// save and delete
 	proc/Unload()
 		Save()
-		del(src)
+		qdel(src)
 
 	proc/Save()
 		if(id==src) return 0
@@ -472,7 +472,7 @@ atom
 				l=l.Copy()
 				for(M in src) if(M.key) l-=M
 			if(l.len) S["contents"]<<l
-			if(l!=contents) del(l)
+			if(l!=contents) qdel(l)
 	Read(savefile/S)
 		var/list/l
 		if(contents.len) l=contents
@@ -485,7 +485,7 @@ atom
 			if(istext(ic)) icon=swapmaps_iconcache[ic]
 		if(l && contents!=l)
 			contents+=l
-			del(l)
+			qdel(l)
 
 
 // set this up (at runtime) as follows:
@@ -625,7 +625,7 @@ proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	S.cd="//.0"
 	M.Read(S,M,locorner)
 	while(M.locked) sleep(1)
-	del(M)
+	qdel(M)
 	return 1
 
 proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
@@ -646,7 +646,7 @@ proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
 	M.mode=swapmaps_mode
 	M.Save()
 	while(M.locked) sleep(1)
-	del(M)
+	qdel(M)
 	return 1
 
 proc/SwapMaps_GetSize(id)

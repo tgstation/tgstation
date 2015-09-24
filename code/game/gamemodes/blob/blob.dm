@@ -9,124 +9,195 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob
 	name = "blob"
 	config_tag = "blob"
-	required_players = 0
+	antag_flag = BE_BLOB
 
-	var/const/waittime_l = 1800 //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/waittime_h = 3600 //upper bound on time before intercept arrives (in tenths of seconds)
+	required_players = 30
+	required_enemies = 1
+	recommended_enemies = 1
+
+	round_ends_with_antag_death = 1
+	restricted_jobs = list("Cyborg", "AI")
 
 	var/declared = 0
-	var/stage = 0
+	var/burst = 0
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 16
+	var/players_per_core = 30
+	var/blob_point_rate = 3
 
-		//Controls expansion via game controller
-	var/autoexpand = 0
-	var/expanding = 0
+	var/blobwincount = 350
 
-	var/blob_count = 0
-	var/blobnukecount = 300//Might be a bit low
-	var/blobwincount = 700//Still needs testing
+	var/list/infected_crew = list()
 
+/datum/game_mode/blob/pre_setup()
+	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
-	announce()
-		world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
-		world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
-		world << "You must kill it all while minimizing the damage to the station."
+	blobwincount = initial(blobwincount) * cores_to_spawn
 
+	for(var/j = 0, j < cores_to_spawn, j++)
+		if (!antag_candidates.len)
+			break
+		var/datum/mind/blob = pick(antag_candidates)
+		infected_crew += blob
+		blob.special_role = "Blob"
+		blob.restricted_roles = restricted_jobs
+		log_game("[blob.key] (ckey) has been selected as a Blob")
+		antag_candidates -= blob
 
-	post_setup()
-		spawn(10)
-			start_state = new /datum/station_state()
-			start_state.count()
+	if(!infected_crew.len)
+		return 0
 
-		spawn(rand(waittime_l, waittime_h))//3-5 minutes currently
-			message_admins("Blob spawned and expanding, report created")
-			if(!kill_air)
-				kill_air = 1
-				message_admins("Kill air has been set to true by Blob, testing to see how laggy it is without the extra processing from hullbreaches. Note: the blob is fireproof so plasma does not help anyways")
-
-			if(ticker && ticker.minds && ticker.minds.len)
-				var/player_based_cores = round(ticker.minds.len/players_per_core, 1)
-				if(player_based_cores > cores_to_spawn)
-					cores_to_spawn = player_based_cores
-
-			blobs = list()
-			for(var/i = 0 to cores_to_spawn)
-				var/turf/location = pick(blobstart)
-				if(location && !locate(/obj/effect/blob in location))
-					blobstart -= location
-					new/obj/effect/blob/core(location)
-
-			spawn(40)
-				autoexpand = 1
-				declared = 1
-		..()
+	return 1
 
 
-	process()
-		if(!declared)	return
-		stage()
-//		if(!autoexpand)	return
-//		spawn(0)
-//			expandBlob()
-		return
+/datum/game_mode/blob/proc/get_blob_candidates()
+	var/list/candidates = list()
+	for(var/mob/living/carbon/human/player in player_list)
+		if(!player.stat && player.mind && !player.mind.special_role && !jobban_isbanned(player, "Syndicate") && (player.client.prefs.be_special & BE_BLOB))
+			if(age_check(player.client))
+				candidates += player
+	return candidates
 
 
-	proc/expandBlob()//Currently disabled
-		if(expanding)	return
-		if(!blobs.len)	return
-		expanding = 1
+/datum/game_mode/blob/proc/blobize(mob/living/carbon/human/blob)
+	var/datum/mind/blobmind = blob.mind
+	if(!istype(blobmind))
+		return 0
+	infected_crew += blobmind
+	blobmind.special_role = "Blob"
+	log_game("[blob.key] (ckey) has been selected as a Blob")
+	greet_blob(blobmind)
+	blob << "<span class='userdanger'>You feel very tired and bloated!  You don't have long before you burst!</span>"
+	spawn(600)
+		burst_blob(blobmind)
+	return 1
 
-		for(var/i = 1 to 2)
-			sleep(-1)
-			if(!blobs.len)	break
-			var/obj/effect/blob/B = pick(blobs)
-			if(B.z != 1)
-				continue
-			B.Life()
+/datum/game_mode/blob/proc/make_blobs(count)
+	var/list/candidates = get_blob_candidates()
+	var/mob/living/carbon/human/blob = null
+	count=min(count, candidates.len)
+	for(var/i = 0, i < count, i++)
+		blob = pick(candidates)
+		candidates -= blob
+		blobize(blob)
+	return count
 
-		expanding = 0
-		return
 
 
-	proc/stage()
-		switch(stage)
-			if (0)
-				send_intercept(1)
-				for (var/mob/living/silicon/ai/aiPlayer in living_mob_list)
-					if (aiPlayer.client)
-						var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. NanoTrasen will not send an emergency shuttle under any circumstances."
-						//var/law = "The station is under quarantine. The biohazard must be destroyed at all costs and must not be allowed to spread. Anyone using a space suit for any reason other than to destroy the biohazard is to be terminated. NanoTrasen will not send an emergency shuttle under any circumstances."
-						aiPlayer.set_zeroth_law(law)
-						aiPlayer << "Laws Updated: [law]"
+/datum/game_mode/blob/announce()
+	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
+	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
+	world << "You must kill it all while minimizing the damage to the station."
 
-				stage = -1
-				// next stage 1 minute later
-				spawn(600)
-					stage = 1
-				return
 
-			if (1)
-				command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-				for(var/mob/M in player_list)
-					if(!istype(M,/mob/new_player))
-						M << sound('sound/AI/outbreak5.ogg')
-				autoexpand = 0//No more extra pulses
-				stage = -1
-				//next stage in 4-5 minutes
-				spawn(600*rand(4,5))
-					stage = 2
-				return
+/datum/game_mode/blob/proc/greet_blob(datum/mind/blob)
+	blob.current << "<span class='userdanger'>You are infected by the Blob!</span>"
+	blob.current << "<b>Your body is ready to give spawn to a new blob core which will eat this station.</b>"
+	blob.current << "<b>Find a good location to spawn the core and then take control and overwhelm the station!</b>"
+	blob.current << "<b>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</b>"
+	blob.current << "<b>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</b>"
+	return
 
-			if (2)
-				if((blobs.len > blobnukecount) && (declared == 1))
-					command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()].  Any living Heads of Staff are ordered to enact directive 7-12 at any cost, a print out with detailed instructions has been sent to your communications computers.", "Biohazard Alert")
-					send_intercept(2)
-					declared = 2
-					spawn(20)
-						set_security_level("delta")
-				if(blobs.len > blobwincount)
-					stage = 3
-		return
+/datum/game_mode/blob/proc/show_message(message)
+	for(var/datum/mind/blob in infected_crew)
+		blob.current << message
+
+/datum/game_mode/blob/proc/burst_blobs()
+	for(var/datum/mind/blob in infected_crew)
+		burst_blob(blob)
+
+/datum/game_mode/blob/proc/burst_blob(datum/mind/blob, warned=0)
+	var/client/blob_client = null
+	var/turf/location = null
+
+	if(iscarbon(blob.current))
+		var/mob/living/carbon/C = blob.current
+		if(directory[ckey(blob.key)])
+			blob_client = directory[ckey(blob.key)]
+			location = get_turf(C)
+			if(location.z != ZLEVEL_STATION || istype(location, /turf/space))
+				if(!warned)
+					C << "<span class='userdanger'>You feel ready to burst, but this isn't an appropriate place!  You must return to the station!</span>"
+					message_admins("[key_name(C)] was in space when the blobs burst, and will die if he doesn't return to the station.")
+					spawn(300)
+						burst_blob(blob, 1)
+				else
+					burst ++
+					log_admin("[key_name(C)] was in space when attempting to burst as a blob.")
+					message_admins("[key_name(C)] was in space when attempting to burst as a blob.")
+					C.gib()
+					make_blobs(1)
+					check_finished() //Still needed in case we can't make any blobs
+
+			else if(blob_client && location)
+				burst ++
+				C.gib()
+				var/obj/effect/blob/core/core = new(location, 200, blob_client, blob_point_rate)
+				if(core.overmind && core.overmind.mind)
+					core.overmind.mind.name = blob.name
+					infected_crew -= blob
+					infected_crew += core.overmind.mind
+					core.overmind.mind.special_role = "Blob Overmind"
+
+/datum/game_mode/blob/post_setup()
+
+	for(var/datum/mind/blob in infected_crew)
+		greet_blob(blob)
+
+	SSshuttle.emergencyNoEscape = 1
+
+	// Disable the blob event for this round.
+	var/datum/round_event_control/blob/B = locate() in SSevent.control
+	if(B)
+		B.max_occurrences = 0 // disable the event
+
+	spawn(0)
+
+		var/wait_time = rand(waittime_l, waittime_h)
+
+		sleep(wait_time)
+
+		send_intercept(0)
+
+		sleep(100)
+
+		show_message("<span class='userdanger'>You feel tired and bloated.</span>")
+
+		sleep(wait_time)
+
+		show_message("<span class='userdanger'>You feel like you are about to burst.</span>")
+
+		sleep(wait_time / 2)
+
+		burst_blobs()
+
+		// Stage 0
+		sleep(wait_time)
+		stage(0)
+
+		// Stage 1
+		sleep(wait_time)
+		stage(1)
+
+		// Stage 2
+		sleep(30000)
+		if(!round_converted)
+			stage(2)
+
+	return ..(0)
+
+/datum/game_mode/blob/proc/stage(stage)
+
+	switch(stage)
+		if (0)
+			send_intercept(1)
+			declared = 1
+
+		if (1)
+			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
+
+		if (2)
+			send_intercept(2)
+
+	return
 
