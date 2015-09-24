@@ -67,9 +67,9 @@
 /obj/item/device/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	if(flag)	//we're placing the object on a table or in backpack
 		return
-	laser_act(target, user)
+	laser_act(target, user, params)
 
-/obj/item/device/laser_pointer/proc/laser_act(atom/target, mob/living/user)
+/obj/item/device/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
 	if( !(user in (viewers(7,target))) )
 		return
 	if (!diode)
@@ -144,8 +144,9 @@
 		if(M.client)
 			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
-	I.pixel_x = target.pixel_x + rand(-5,5)
-	I.pixel_y = target.pixel_y + rand(-5,5)
+	var/list/click_params = params2list(params)
+	I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+	I.pixel_y = (text2num(click_params["icon-y"]) - 16)
 
 	if(outmsg)
 		user << outmsg
