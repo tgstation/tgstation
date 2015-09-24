@@ -664,6 +664,10 @@
 		user << "<span class='warning'>Access denied.</span>"
 		log_append_to_last("Permission denied.")
 		return
+	if(user.buckled)
+		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
+		log_append_to_last("Permission denied.")
+		return
 	for(var/mob/living/simple_animal/slime/S in range(1,user))
 		if(S.Victim == user)
 			user << "<span class='warning'>You're too busy getting your life sucked out of you!</span>"
@@ -676,6 +680,8 @@
 			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+		else if(user.buckled)
+			user << "<span class='warning'>You have been buckled and cannot move.</span>"
 		else
 			moved_inside(user)
 	else

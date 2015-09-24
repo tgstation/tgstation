@@ -106,5 +106,7 @@
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+		if(qdeleted(src))
+			return
 
 	reagents.clear_reagents()

@@ -91,8 +91,9 @@
 	brainmob.real_name = L.real_name
 	if(L.has_dna())
 		var/mob/living/carbon/C = L
-		brainmob.dna = C.dna
-		brainmob.dna.holder = brainmob
+		if(!brainmob.dna)
+			brainmob.dna = new /datum/dna(brainmob)
+		C.dna.copy_dna(brainmob.dna)
 	brainmob.container = src
 
 	if(ishuman(L))

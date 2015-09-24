@@ -29,7 +29,7 @@
 	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
-	smooth = 1
+	smooth = SMOOTH_TRUE
 
 
 /obj/structure/alien/resin/New(location)

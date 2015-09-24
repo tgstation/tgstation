@@ -316,12 +316,12 @@
 	genetic_damage = 11
 	req_human = 1
 	max_genetic_damage = 20
+	recharge_slowdown = 0.25
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
 	suit_name_simple = "armor"
 	helmet_name_simple = "helmet"
-	recharge_slowdown = 0.25
 
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"
@@ -329,7 +329,7 @@
 	icon_state = "lingarmor"
 	flags = NODROP
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 70, bullet = 50, laser = 70, energy = 50, bomb = 10, bio = 4, rad = 0)
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -347,7 +347,7 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	flags = BLOCKHAIR | NODROP
-	armor = list(melee = 60, bullet = 30, laser = 60, energy = 30, bomb = 10, bio = 4, rad = 0)
+	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEEARS
 	flags_cover = HEADCOVERSEYES
 

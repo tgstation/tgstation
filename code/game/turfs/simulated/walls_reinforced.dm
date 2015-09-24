@@ -215,10 +215,10 @@
 /turf/simulated/wall/r_wall/proc/update_icon()
 	if(d_state)
 		icon_state = "r_wall-[d_state]"
-		smooth = 0
-		clear_overlays(src)
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
 	else
-		smooth = 1
+		smooth = SMOOTH_TRUE
 		icon_state = ""
 
 /turf/simulated/wall/r_wall/singularity_pull(S, current_size)
