@@ -4,7 +4,7 @@
 	maxHealth = 250
 	health = 250
 	icon_state = "alienq_s"
-	status_flags = CANPARALYSE
+	status_flags = 0
 	ventcrawler = 0 //pull over that ass too fat
 	unique_name = 0
 
