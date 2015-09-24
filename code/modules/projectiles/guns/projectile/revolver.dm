@@ -3,6 +3,7 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	laser_icon = null
 
 /obj/item/weapon/gun/projectile/revolver/New()
 	..()

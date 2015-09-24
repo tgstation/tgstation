@@ -20,6 +20,8 @@
 	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")
 
+	var/laser_icon = "gun_laser"
+
 	var/fire_sound = "gunshot"
 	var/suppressed = 0					//whether or not a message is displayed when fired
 	var/can_suppress = 0
@@ -212,6 +214,7 @@
 				shoot_with_empty_chamber(user)
 				break
 			process_chamber()
+			process_laser(target, user, params)
 			update_icon()
 			sleep(fire_delay)
 	else
@@ -228,6 +231,7 @@
 			shoot_with_empty_chamber(user)
 			return
 		process_chamber()
+		process_laser(target, user, params)
 		update_icon()
 		semicd = 1
 		spawn(fire_delay)
@@ -238,6 +242,25 @@
 	else
 		user.update_inv_r_hand()
 	feedback_add_details("gun_fired","[src.type]")
+
+/obj/item/weapon/gun/proc/process_laser(atom/target, mob/living/user, params)
+	if(!laser_icon)
+		return
+
+	var/turf/targloc = get_turf(target)
+
+	//laser pointer image
+	var/list/showto = list()
+	for(var/mob/M in range(7,targloc))
+		if(M.client)
+			showto.Add(M.client)
+	var/image/I = image('icons/obj/projectiles.dmi',targloc,laser_icon,4)
+	var/list/click_params = params2list(params)
+	I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+	I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+
+	flick_overlay(I, showto, 4)
+
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == "harm") //Flogging
