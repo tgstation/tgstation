@@ -481,6 +481,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareMedicalRecord() called tick#: [world.time]")
 	var/dat = ""
 	if(src.subscreen == 0)
+		dat += "<a href='byond://?src=\ref[src];software=medicalsupplement;sub=2'>Host Bioscan</a><br>"
 		dat += "<h3>Medical Records</h3><HR>"
 		if(!isnull(data_core.general))
 			for(var/datum/data/record/R in sortRecord(data_core.general))
@@ -498,6 +499,35 @@
 		else
 			dat += "<pre>Requested medical record not found.</pre><BR>"
 		dat += text("<BR>\n<A href='?src=\ref[];software=medicalsupplement;sub=0'>Back</A><BR>", src)
+	if(src.subscreen == 2)
+		dat += {"<h3>Medical Analysis Suite</h3><br>
+				 <h4>Host Bioscan</h4><br>
+				"}
+		var/mob/living/M = src.loc
+		if(!istype(M, /mob/living))
+			while (!istype(M, /mob/living))
+				M = M.loc
+				if(istype(M, /turf))
+					src.temp = "Error: No biological host found. <br>"
+					src.subscreen = 0
+					return dat
+		dat += {"Bioscan Results for [M]: <br>
+		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
+		Scan Breakdown: <br>
+		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
+		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
+		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
+		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
+		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
+		"}
+		for(var/datum/disease/D in M.viruses)
+			dat += {"<h4>Infection Detected.</h4><br>
+					 Name: [D.name]<br>
+					 Type: [D.spread]<br>
+					 Stage: [D.stage]/[D.max_stages]<br>
+					 Possible Cure: [D.cure]<br>
+					"}
+		dat += "<a href='byond://?src=\ref[src];software=medicalsupplement;sub=0'>Return to Records</a><br>"
 	return dat
 
 // Security Records
@@ -540,50 +570,6 @@
 				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
 				"}
-	return dat
-
-// Medical HUD
-/mob/living/silicon/pai/proc/medicalAnalysis()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/medicalAnalysis() called tick#: [world.time]")
-	var/dat = ""
-	if(src.subscreen == 0)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Visual Status Overlay</h4><br>
-					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
-					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
-					<br>
-					<a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Host Bioscan</a><br>
-					"}
-	if(src.subscreen == 1)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Host Bioscan</h4><br>
-				"}
-		var/mob/living/M = src.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
-				M = M.loc
-				if(istype(M, /turf))
-					src.temp = "Error: No biological host found. <br>"
-					src.subscreen = 0
-					return dat
-		dat += {"Bioscan Results for [M]: <br>"
-		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
-		Scan Breakdown: <br>
-		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
-		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
-		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
-		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
-		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
-		"}
-		for(var/datum/disease/D in M.viruses)
-			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
-					"}
-		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
 
 // Atmospheric Scanner
