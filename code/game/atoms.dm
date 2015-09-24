@@ -17,7 +17,6 @@
 
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
-	var/heat = 0
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
@@ -426,6 +425,3 @@ var/list/blood_splatter_icons = list()
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
-
-/atom/proc/is_hot()
-	return heat

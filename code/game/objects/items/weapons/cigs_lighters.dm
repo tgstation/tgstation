@@ -144,7 +144,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user << "<span class='notice'>[src] is full.</span>"
 
-/obj/item/clothing/mask/cigarette/proc/is_lighter(obj/O, mob/user)
+/obj/item/clothing/mask/cigarette/proc/is_lighter(obj/item/O, mob/user)
 	var/lighting_text = null
 	if(istype(O, /obj/item/weapon/weldingtool))
 		lighting_text = "<span class='notice'>[user] casually lights the [name] with [O], what a badass.</span>"
