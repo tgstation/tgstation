@@ -362,7 +362,7 @@
 				qdel(B)
 		qdel(src)
 
-	else if(is_sharp(W))
+	else if(W.is_sharp())
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))

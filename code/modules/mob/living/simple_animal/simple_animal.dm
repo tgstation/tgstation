@@ -366,7 +366,7 @@
 
 	if((butcher_results) && (stat == DEAD))
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/sharpness = is_sharp(O)
+		var/sharpness = O.is_sharp()
 		if(sharpness)
 			user << "<span class='notice'>You begin to butcher [src]...</span>"
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)

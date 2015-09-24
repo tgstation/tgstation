@@ -15,6 +15,9 @@
 /obj/item/weapon/melee/energy/rejects_blood()
 	return 1
 
+/obj/item/weapon/melee/energy/is_sharp()
+	return active * sharpness
+
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
 	desc = "An energised battle axe."
@@ -117,6 +120,7 @@
 	hitcost = 75 //Costs more because it's not intended to be a murderbone weapon
 	item_color = null
 	w_class = 3
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
 	..()
