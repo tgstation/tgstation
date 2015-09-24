@@ -1248,17 +1248,25 @@
 	if(!M) M = holder.my_atom
 
 	var/needs_update = M.mutations.len > 0
-	if(ishuman(M))
-		M:hulk_time = 0
-	for(var/datum/dna/gene/G in dna_genes)
-		if(G.is_active(M))
-			if(G.name == "Hulk" && ishuman(M))
-				G.OnMobLife(M)
+
+	var/mob/living/carbon/human/H = M
+	if(istype(H))
+		H.hulk_time = 0
+		for(var/gene_type in H.active_genes)
+			var/datum/dna/gene/gene = dna_genes[gene_type]
 			var/tempflag = 0
-			if(ishuman(M) && M:species && (G.block in M:species:default_blocks))
+			if(H.species && (gene.block in H.species.default_blocks))
 				tempflag |= GENE_NATURAL
-			if(G.can_deactivate(M, tempflag))
-				G.deactivate(M,0, tempflag)
+			if(gene.name == "Hulk")
+				gene.OnMobLife(H)
+			if(gene.can_deactivate(H, tempflag))
+				gene.deactivate(H, 0, tempflag)
+	else
+		for(var/gene_type in M.active_genes)
+			var/datum/dna/gene/gene = dna_genes[gene_type]
+			if(gene.can_deactivate(M, 0))
+				gene.deactivate(M, 0, 0)
+
 	M.alpha = 255
 	//M.mutations = list()
 	//M.active_genes = list()
@@ -1270,8 +1278,7 @@
 	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
-	if(needs_update && ishuman(M))
-		var/mob/living/carbon/human/H = M
+	if(needs_update && istype(H))
 		H.update_mutations()
 
 	..()

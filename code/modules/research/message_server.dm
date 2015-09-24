@@ -296,13 +296,21 @@ var/obj/machinery/blackbox_recorder/blackbox
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/blackbox_recorder/proc/save_all_data_to_sql() called tick#: [world.time]")
 	if(!feedback) return
 
+	//#warning Blackbox recording disabled.  Please remove warning once this has been determined to be the problem.
+	//return
+
+	var/watch = start_watch()
+	log_startup_progress("Storing Black Box data...")
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
 	if(!dbcon.IsConnected()) return
 	var/round_id
 
+	var/nqueries = 0
+
 	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
 	query.Execute()
+	nqueries++
 	while(query.NextRow())
 		round_id = query.item[1]
 
@@ -314,6 +322,9 @@ var/obj/machinery/blackbox_recorder/blackbox
 		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
+		nqueries++
+		sleep(1) // Let other shit do things
+	log_startup_progress("  Wrote Black Box data with [nqueries] queries in [stop_watch(watch)]s.")
 
 // Sanitize inputs to avoid SQL injection attacks
 proc/sql_sanitize_text(var/text)
