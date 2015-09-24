@@ -14,14 +14,14 @@
 	var/egg_cooldown = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
-	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc)/*|| Kawanishi-Noseguchi || Kinunobebashi || Takiyama || Uguisunomori || Tsuzumigataki || Tada || Hirano || Ichinotorii || Uneno || Yamashita || Sasabe || Kofudai || Tokiwadai || Myokenguchi*/)
+	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
 		return
 	step(src, direction)
 	move_delay = 1
-	spawn(config.walk_speed) //Kept you waiting, huh?
+	spawn(config.walk_speed)
 		move_delay = 0
 
-/obj/structure/closet/cardboard/open() //!
+/obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
 		return 0
 	if(!egg_cooldown)
@@ -35,7 +35,7 @@
 				for(var/mob/living/L in alerted)
 					if(!L.stat)
 						L.do_alert_animation(L)
-				alerted << sound('sound/machines/chime.ogg') //HQ HQ!
+				alerted << sound('sound/machines/chime.ogg')
 				egg_cooldown = 1
 				spawn(3000)
 					egg_cooldown = 0
@@ -51,5 +51,3 @@
 	flick_overlay(I,viewing,8)
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
-
-//Don't worry, it's a game! It's a game just like usual.
