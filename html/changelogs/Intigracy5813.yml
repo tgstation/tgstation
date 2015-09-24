@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-  - tweak: "Rechargers now eject what they're charging when they lose power. Fixes #5677"
