@@ -1,6 +1,0 @@
-author: Jordie0608
-
-delete-after: True
-
-changes: 
-  - tweak: "Advanced energy guns now only critically fail after successive minor failures. Cease firing after multiple recent minor failures to avoid critical ones."
