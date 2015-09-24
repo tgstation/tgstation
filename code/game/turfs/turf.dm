@@ -77,7 +77,8 @@
 			return
 	turfs |= src
 
-	if(!dynamic_lighting)
+	var/area/A = loc
+	if(!dynamic_lighting || !A.lighting_use_dynamic)
 		luminosity = 1
 
 /turf/DblClick()
