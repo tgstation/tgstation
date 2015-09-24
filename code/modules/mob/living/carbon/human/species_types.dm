@@ -482,10 +482,13 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	exotic_blood = /datum/reagent/toxin/plasma
 	safe_oxygen_min = 0 //We don't breath this
 	safe_oxygen_max = 0.005 //This kills the plasmaman
-	safe_toxins_min = 16 //We breath THIS! Might want to increase
+	safe_toxins_min = 10 //We breath THIS! Equivalent to about 16.7 kPa at body temperature
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
 	var/skin = 0
+	default_body_temperature = T0C+200
+	heat_damage_limit = T0C+250
+	cold_damage_limit = T0C+150
 
 /datum/species/plasmaman/skin
 	name = "Skinbone"
