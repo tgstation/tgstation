@@ -1,4 +1,0 @@
-author: Intigracy
-delete-after: True
-changes: 
-  - tweak: "Supply shuttles are now lit. Fixes #5809"
