@@ -120,6 +120,7 @@
 /obj/structure/closet/secure_closet/security/sec/New()
 	..()
 	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/gun/energy/gun/advtaser/New()
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -214,3 +215,40 @@
 	new /obj/item/clothing/suit/judgerobe (src)
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/weapon/storage/briefcase(src)
+
+/obj/structure/closet/secure_closet/armory1
+	name = "armory armor locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory/New()
+	..()
+	new /obj/item/clothing/suit/armor/laserproof(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/clothing/head/helmet/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+	new /obj/item/weapon/shield/riot(src)
+
+/obj/structure/closet/secure_closet/armory2
+	name = "armory gun locker"
+	req_access = list(access_armory)
+	icon_state = "armory"
+
+/obj/structure/closet/secure_closet/armory2/New()
+	..()
+	new /obj/item/weapon/storage/box/firingpins/New()
+	new /obj/item/weapon/storage/box/firingpins/New()
+	new /obj/item/weapon/gun/energy/ionrifle/New()
+	new /obj/item/weapon/gun/projectile/shotgun/New()
+	new /obj/item/weapon/gun/projectile/shotgun/New()
+	new /obj/item/weapon/gun/energy/gun/New()
+	new /obj/item/weapon/gun/energy/gun/New()
+	new /obj/item/weapon/gun/energy/gun/New()
+	new /obj/item/weapon/gun/energy/laser/New()
+	new /obj/item/weapon/gun/energy/laser/New()
+	new /obj/item/weapon/gun/energy/laser/New()
