@@ -20,7 +20,7 @@
 	needs_permit = 1
 	attack_verb = list("struck", "hit", "bashed")
 
-	var/laser_icon = "gun_laser"
+	var/pointer_icon = null
 
 	var/fire_sound = "gunshot"
 	var/suppressed = 0					//whether or not a message is displayed when fired
@@ -244,7 +244,7 @@
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/proc/process_laser(atom/target, mob/living/user, params)
-	if(!laser_icon)
+	if(!pointer_icon)
 		return
 
 	var/turf/targloc = get_turf(target)
@@ -254,7 +254,7 @@
 	for(var/mob/M in range(7,targloc))
 		if(M.client)
 			showto.Add(M.client)
-	var/image/I = image('icons/obj/projectiles.dmi',targloc,laser_icon,4)
+	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon,4)
 	var/list/click_params = params2list(params)
 	I.pixel_x = (text2num(click_params["icon-x"]) - 16)
 	I.pixel_y = (text2num(click_params["icon-y"]) - 16)
