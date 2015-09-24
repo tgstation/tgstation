@@ -788,7 +788,7 @@
 	if(!blood_overlay)
 		blood_overlay = blood_overlays[type]
 	else
-		overlays -= blood_overlay
+		overlays.Remove(blood_overlay)
 
 	//apply the blood-splatter overlay if it isn't already in there, else it updates it.
 	blood_overlay.color = blood_color
