@@ -82,7 +82,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/buildstage = 1 // 1 = complete, 0 = unscrewed
 
 	// Allow ghosts to send Topic()s.
-	ghost_write=1
+	ghost_write = 1
 	custom_aghost_alerts=1 // We handle our own logging.
 
 	//var/isbroken = 0  //1 if someone banged it with something heavy
@@ -223,8 +223,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return src.attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if((stat & NOPOWER) || (stat & BROKEN) || buildstage != 1)
+
+	if(buildstage != 1)
 		return
+
+	. = ..()
+
+	if (.)
+		return
+
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) || isobserver(user))
 		var/mob/M = user
 		var/dat
