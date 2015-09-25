@@ -148,13 +148,14 @@
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
 
-	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T0C+200)
+	src.air_contents.temperature = T0C+200	//Ready for plasmaman use
 	return
 
 /obj/item/weapon/tank/internals/plasmaman/full/New()
 	..()
 
-	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T0C+200)
 	return
 
 
@@ -173,5 +174,6 @@
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
 
-	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	src.air_contents.toxins = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T0C+200)
+	src.air_contents.temperature = T0C+200
 	return
