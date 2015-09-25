@@ -87,19 +87,15 @@
 	density = 0
 	anchored = 1
 	layer = 2
-	var/basecolor="#FFFF99"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
-	var/amount = 2
+
+	basecolor="#FFFF99"
+	amount = 2
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
-	var/list/viruses = list()
+	transfers_dna = 1
 
-	Destroy()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-			D.holder = null
-		..()
-
+/*
 /obj/effect/decal/cleanable/vomit/Crossed(mob/living/carbon/human/perp)
 	if (!istype(perp))
 		return
@@ -129,6 +125,7 @@
 		perp.feet_blood_color=basecolor
 
 	amount--
+*/
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

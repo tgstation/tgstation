@@ -7,6 +7,7 @@ var/list/potential_theft_objectives=list(
 	"salvage" = typesof(/datum/theft_objective/number/salvage) - /datum/theft_objective/number/salvage
 )
 
+
 datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
@@ -14,6 +15,7 @@ datum/objective
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 	var/blocked = 0                     // Universe fucked, you lost.
+	var/list/bad_targets = list("AI","Cyborg","MoMMi")//For roundstart cases where they are still human at the time of objective assignment
 
 	New(var/text)
 		if(text)
@@ -27,16 +29,16 @@ datum/objective
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/find_target() called tick#: [world.time]")
 		var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2))
+			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.z != map.zCentcomm) && (possible_target.current.stat != DEAD) && !(possible_target.assigned_role in list(bad_targets)))
 				possible_targets += possible_target
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
 
 
-	proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
+	proc/find_target_by_role(role, role_type = 0)//Option sets either to check assigned role or special role. Default to assigned.
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/find_target_by_role() called tick#: [world.time]")
 		for(var/datum/mind/possible_target in ticker.minds)
-			if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
+			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.current.z != map.zCentcomm) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role))
 				target = possible_target
 				break
 

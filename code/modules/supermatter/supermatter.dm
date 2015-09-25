@@ -94,7 +94,8 @@
 
 
 /obj/machinery/power/supermatter/Destroy()
-	del(radio)
+	qdel(radio)
+	radio = null
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
@@ -102,11 +103,11 @@
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		new /turf/unsimulated/wall/supermatter(get_turf(src))
 		SetUniversalState(/datum/universal_state/supermatter_cascade)
-		del(src)
+		qdel(src)
 
 /obj/machinery/power/supermatter/shard/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		del src
+		qdel(src)
 		return
 
 /obj/machinery/power/supermatter/ex_act(severity)

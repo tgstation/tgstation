@@ -48,6 +48,20 @@
 	item_state = "foam_extinguisher"
 	sprite_name = "foam_extinguisher"
 
+/proc/pack_check(mob/user, var/obj/item/weapon/extinguisher/E) //Checks the user for a nonempty chempack.
+	var/mob/living/M = user
+	if (M && M.back && istype(M.back,/obj/item/weapon/reagent_containers/chempack))
+		var/obj/item/weapon/reagent_containers/chempack/P = M.back
+		if (!P.safety)
+			if (!P.is_empty())
+				transfer_sub(P, E, 5, user)
+				return 2
+			else
+				user << "<span class='notice'>\The [P] is empty!</span>"
+				return 1
+		else
+			return 0
+
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(!is_open_container())
@@ -126,8 +140,12 @@
 			return
 	if (!safety && !is_open_container())
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='warning'>\The [src] is empty.</span>"
-			return
+			var/pack = pack_check(user, src)
+			if (!pack) //Only display the "extinguisher empty" warning if the user is not wearing a chempack, since chempacks are designed to be used with empty items.
+				user << "<span class='warning'>\The [src] is empty!</span>"
+				return
+			else if (pack == 1)
+				return
 
 		if (world.time < src.last_use + 20)
 			return
@@ -234,8 +252,12 @@
 
 	if (!safety && !is_open_container())
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='warning'>\The [src] is empty.</span>"
-			return
+			var/pack = pack_check(user, src)
+			if (!pack)
+				user << "<span class='warning'>\The [src] is empty!</span>"
+				return
+			else if (pack == 1)
+				return
 
 		if (world.time < src.last_use + 20)
 			return

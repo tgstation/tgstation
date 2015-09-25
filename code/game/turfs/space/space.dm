@@ -9,6 +9,7 @@
 	heat_capacity = 700000
 	intact = 0 //No seriously, that's not a joke. Allows cable to be laid properLY on catwalks
 	dynamic_lighting = 0
+	luminosity = 1
 
 /turf/space/New()
 	turfs |= src

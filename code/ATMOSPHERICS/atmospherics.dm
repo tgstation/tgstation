@@ -51,8 +51,9 @@ Pipelines + Other Objects -> Pipe network
 		M.remove_ventcrawl()
 		M.forceMove(src.loc)
 	if(pipe_image)
-		for(var/mob/M in player_list)
+		for(var/mob/living/M in player_list)
 			M.client.images -= pipe_image
+			M.pipes_shown -= pipe_image
 		pipe_image = null
 	atmos_machines -= src
 	centre_overlay = null

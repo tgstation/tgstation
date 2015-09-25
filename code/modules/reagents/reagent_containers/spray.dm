@@ -33,9 +33,22 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 		transfer(A, user, can_send = FALSE, can_receive = TRUE)
 		return
 
-	if (!can_transfer_an_APTFT())
-		user << "<span class='notice'>\The [src] is empty!</span>"
-		return
+	if (is_empty()) //If empty, checks for a nonempty chempack on the user.
+		var/mob/living/M = user
+		if (M && M.back && istype(M.back,/obj/item/weapon/reagent_containers/chempack))
+			var/obj/item/weapon/reagent_containers/chempack/P = M.back
+			if (!P.safety)
+				if (!P.is_empty())
+					if (istype(src,/obj/item/weapon/reagent_containers/spray/chemsprayer)) //The chemsprayer uses three times its amount_per_transfer_from_this per spray.
+						transfer_sub(P, src, amount_per_transfer_from_this*3, user)
+					else
+						transfer_sub(P, src, amount_per_transfer_from_this, user)
+				else
+					user << "<span class='notice'>\The [P] is empty!</span>"
+					return
+			else
+				user << "<span class='notice'>\The [src] is empty!</span>"
+				return
 
 	// Log reagents
 	var/list/log_reagent_list = list()
@@ -57,9 +70,12 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 /obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/spray/proc/make_puff() called tick#: [world.time]")
 	// Create the chemical puff
+	var/transfer_amount = amount_per_transfer_from_this
+	if (!can_transfer_an_APTFT() && !is_empty()) //If it doesn't contain enough reagents to fulfill its amount_per_transfer_from_this, but also isn't empty, it'll spray whatever it has left.
+		transfer_amount = reagents.total_volume
 	var/mix_color = mix_color_from_reagents(reagents.reagent_list)
 	var/obj/effect/decal/chemical_puff/D = getFromPool(/obj/effect/decal/chemical_puff, get_turf(src), mix_color, amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/3)
+	reagents.trans_to(D, transfer_amount, 1/3)
 
 	// Move the puff toward the target
 	spawn(0)

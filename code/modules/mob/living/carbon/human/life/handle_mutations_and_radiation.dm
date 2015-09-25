@@ -8,11 +8,11 @@
 		if((M_RESIST_HEAT in mutations))
 			heal_organ_damage(0,1)
 
-	for(var/datum/dna/gene/gene in dna_genes)
+	for(var/gene_type in active_genes)
+		var/datum/dna/gene/gene = dna_genes[gene_type]
 		if(!gene.block)
 			continue
-		if(gene.is_active(src))
-			gene.OnMobLife(src)
+		gene.OnMobLife(src)
 
 	if(radiation)
 

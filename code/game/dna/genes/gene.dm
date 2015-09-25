@@ -28,10 +28,6 @@
 /**
 * Is the gene active in this mob's DNA?
 */
-/datum/dna/gene/proc/is_active(var/mob/M)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/dna/gene/proc/is_active() called tick#: [world.time]")
-	return M.active_genes && (type in M.active_genes)
-
 // Return 1 if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
 /datum/dna/gene/proc/can_activate(var/mob/M, var/flags)
