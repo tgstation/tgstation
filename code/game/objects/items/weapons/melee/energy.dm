@@ -6,6 +6,7 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = 2
 	var/w_class_on = 4
+	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
@@ -14,6 +15,9 @@
 
 /obj/item/weapon/melee/energy/rejects_blood()
 	return 1
+
+/obj/item/weapon/melee/energy/is_sharp()
+	return active * sharpness
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -90,6 +94,9 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/melee/energy/is_hot()
+	return active * heat
+
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 50
 
@@ -117,6 +124,7 @@
 	hitcost = 75 //Costs more because it's not intended to be a murderbone weapon
 	item_color = null
 	w_class = 3
+	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
 	..()
