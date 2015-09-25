@@ -48,7 +48,7 @@
 
 
 	var/vending_cat = null// subcategory for vending machines.
-	var/list/dynamic_overlay[25] //For items which need to slightly alter their on-mob appearance while being worn.
+	var/list/dynamic_overlay[0] //For items which need to slightly alter their on-mob appearance while being worn.
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
