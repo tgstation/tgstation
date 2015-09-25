@@ -43,10 +43,14 @@
 /obj/structure/alien/weeds/frost/node/New()
 	..(loc, src)
 	SSobj.processing += src
+	ventclog()
 
 /obj/structure/alien/weeds/frost/node/Destroy()
 	SSobj.processing -= src
 	return ..()
+
+/obj/structure/alien/weeds/frost/node/proc/ventclog()
+
 
 /obj/structure/alien/weeds/frost/node/process()
 	var/turf/simulated/T = get_turf(src)
