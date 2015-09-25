@@ -134,6 +134,8 @@ var/list/impact_master = list()
 	..("permutated")
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
+	if (!A)	//This was runtiming if by chance A was null.
+		return 0
 	if((A == firer) && !reflected)
 		loc = A.loc
 		return 0 //cannot shoot yourself, unless an ablative armor sent back the projectile
@@ -255,12 +257,13 @@ var/list/impact_master = list()
 		impact.pixel_y = PixelY
 
 		var/turf/T = src.loc
-		T.overlays += impact
+		if(T) //Trying to fix a runtime that happens when a flare hits a window, T somehow becomes null.
+			T.overlays += impact
 
-		spawn(3)
-			T.overlays -= impact
+			spawn(3)
+				T.overlays -= impact
 
-		playsound(T, impact_sound, 30, 1)
+			playsound(T, impact_sound, 30, 1)
 
 	if(istype(A,/turf))
 		for(var/obj/O in A)

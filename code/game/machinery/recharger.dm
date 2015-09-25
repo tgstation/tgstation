@@ -37,7 +37,7 @@
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/energy_magazine))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/energy_magazine) || istype(G, /obj/item/ammo_storage/magazine/lawgiver))
 		if(charging)
 			user << "<span class='warning'>There's \a [charging] already charging inside!</span>"
 			return
@@ -139,6 +139,27 @@
 				update_icon()
 			else
 				M.bullets = M.max_bullets
+				update_icon()
+				icon_state = "recharger2"
+			return
+		else if(istype(charging, /obj/item/ammo_storage/magazine/lawgiver))
+			var/obj/item/ammo_storage/magazine/lawgiver/L = charging
+			if(!L.isFull())
+				if(L.stuncharge != 100)
+					L.stuncharge += 20
+				else if(L.lasercharge != 100)
+					L.lasercharge += 20
+				else if(L.rapid_ammo_count != 5)
+					L.rapid_ammo_count++
+				else if(L.flare_ammo_count != 5)
+					L.flare_ammo_count++
+				else if(L.hi_ex_ammo_count != 5)
+					L.hi_ex_ammo_count++
+				icon_state = "recharger1"
+				if(!self_powered)
+					use_power(200)
+				update_icon()
+			else
 				update_icon()
 				icon_state = "recharger2"
 			return

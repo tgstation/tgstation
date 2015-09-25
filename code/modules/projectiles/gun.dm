@@ -269,5 +269,7 @@
 		else if(target && M in target)
 			src.Fire(M,user,0,0,1) ///Otherwise, shoot!
 			return
+		else
+			return ..() //Allows a player to choose to melee instead of shoot, by being on help intent.
 	else
 		return ..() //Pistolwhippin'
