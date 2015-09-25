@@ -1,6 +1,5 @@
 /obj/item/organ/internal/alien
 	origin_tech = "biotech=5"
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
@@ -30,6 +29,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel
 	name = "plasma vessel"
+	icon_state = "plasma"
 	origin_tech = "biotech=5;plasma=2"
 	w_class = 3
 	zone = "chest"
@@ -48,6 +48,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/large
 	name = "large plasma vessel"
+	icon_state = "plasma_large"
 	w_class = 4
 	storedPlasma = 200
 	max_plasma = 500
@@ -59,6 +60,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/small
 	name = "small plasma vessel"
+	icon_state = "plasma_small"
 	w_class = 2
 	storedPlasma = 100
 	max_plasma = 150
@@ -66,6 +68,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
+	icon_state = "plasma_tiny"
 	w_class = 1
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
@@ -100,6 +103,7 @@
 
 /obj/item/organ/internal/alien/hivenode
 	name = "hive node"
+	icon_state = "hivenode"
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
@@ -117,6 +121,7 @@
 
 /obj/item/organ/internal/alien/resinspinner
 	name = "resin spinner"
+	icon_state = "stomach-x"
 	zone = "mouth"
 	slot = "resinspinner"
 	origin_tech = "biotech=5;materials=4"
@@ -125,6 +130,7 @@
 
 /obj/item/organ/internal/alien/acid
 	name = "acid gland"
+	icon_state = "acid"
 	zone = "mouth"
 	slot = "acidgland"
 	origin_tech = "biotech=5;materials=2;combat=2"
@@ -133,6 +139,7 @@
 
 /obj/item/organ/internal/alien/neurotoxin
 	name = "neurotoxin gland"
+	icon_state = "neurotox"
 	zone = "mouth"
 	slot = "neurotoxingland"
 	origin_tech = "biotech=5;combat=5"
@@ -141,6 +148,7 @@
 
 /obj/item/organ/internal/alien/eggsac
 	name = "egg sac"
+	icon_state = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
 	w_class = 4
