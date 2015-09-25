@@ -359,6 +359,9 @@
 	if(slurring)
 		slurring = max(slurring-1,0)
 
+	if(salty)
+		salty = max(salty-1,0)
+
 	if(silent)
 		silent = max(silent-1, 0)
 

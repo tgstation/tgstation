@@ -48,6 +48,7 @@
 	var/ear_damage = 0		//Carbon
 	var/stuttering = null	//Carbon
 	var/slurring = 0		//Carbon
+	var/salty = 0
 	var/real_name = null
 	var/bhunger = 0			//Carbon
 	var/ajourn = 0
