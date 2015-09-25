@@ -17,8 +17,7 @@
 
 /obj/effect/proc_holder/changeling/fleshmend/process()
 	if(recent_uses > 1)
-		spawn(20) //Around 3 seconds between each use decrease
-			recent_uses--
+		recent_uses--
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
@@ -26,6 +25,7 @@
 	if(recent_uses > 1)
 		user << "<span class='warning'>Our healing's effectiveness is reduced by quickly repeated use!</span>"
 	spawn(0)
+		recent_uses++
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.restore_blood()
