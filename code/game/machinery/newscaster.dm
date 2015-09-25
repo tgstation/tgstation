@@ -82,7 +82,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/buildstage = 1 // 1 = complete, 0 = unscrewed
 
 	// Allow ghosts to send Topic()s.
-	ghost_read = 1
 	ghost_write = 1
 	custom_aghost_alerts=1 // We handle our own logging.
 
