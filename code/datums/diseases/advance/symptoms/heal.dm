@@ -133,7 +133,7 @@ Bonus
 	Very high level.
 
 Bonus
-	Heals celluar damage, treats radiation, cleans SE of non-power mutations.
+	Heals brain damage, treats radiation, cleans SE of non-power mutations.
 
 //////////////////////////////////////
 */
@@ -150,7 +150,7 @@ Bonus
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
 
 	var/amt_healed = rand(5, 10)
-	M.adjustCloneLoss(-amt_healed)
+	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)
