@@ -193,7 +193,7 @@
 	..()
 	src.collision_ignite(AM)
 
-/mob/living/simple_animal/hostile/guardian/fire/collision_ignite(AM as mob|obj)
+/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
