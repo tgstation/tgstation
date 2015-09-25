@@ -26,6 +26,8 @@
 	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
 	internal_organs += new /obj/item/organ/internal/alien/eggsac
 
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src)
+
 	..()
 
 /mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()
