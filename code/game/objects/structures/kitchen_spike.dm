@@ -109,13 +109,12 @@
 				return
 		if(!M.buckled)
 			return
-		var/mob/living/L = buckled_mob
-		var/matrix/m120 = matrix()
-		m120.Turn(360)
-		animate(L, transform = m120, time = 3)
-		L.pixel_y = L.get_standard_pixel_y_offset(360)
+		var/matrix/m120 = matrix(M.transform)
+		m120.Turn(180)
+		animate(M, transform = m120, time = 3)
+		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
-		src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
+		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob()
-		L.emote("scream")
-		L.AdjustWeakened(10)
+		M.emote("scream")
+		M.AdjustWeakened(10)
