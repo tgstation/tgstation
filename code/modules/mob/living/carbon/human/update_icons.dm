@@ -535,9 +535,10 @@ var/global/list/damage_icon_parts = list()
 		if(w_uniform.icon_override)
 			standing.icon	= w_uniform.icon_override
 
-		if(w_uniform.dynamic_overlay[UNIFORM_LAYER])
-			var/image/dyn_overlay = w_uniform.dynamic_overlay[UNIFORM_LAYER]
-			O.overlays += dyn_overlay
+		if(w_uniform.dynamic_overlay)
+			if(w_uniform.dynamic_overlay["[UNIFORM_LAYER]"])
+				var/image/dyn_overlay = w_uniform.dynamic_overlay["[UNIFORM_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(w_uniform.blood_DNA && w_uniform.blood_DNA.len)
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood")
@@ -582,9 +583,10 @@ var/global/list/damage_icon_parts = list()
 			O.icon = 'icons/mob/mob.dmi'
 			O.icon_state = "id"
 			O.overlays.len = 0
-			if(wear_id.dynamic_overlay[ID_LAYER])
-				var/image/dyn_overlay = wear_id.dynamic_overlay[ID_LAYER]
-				O.overlays += dyn_overlay
+			if(wear_id.dynamic_overlay)
+				if(wear_id.dynamic_overlay["[ID_LAYER]"])
+					var/image/dyn_overlay = wear_id.dynamic_overlay["[ID_LAYER]"]
+					O.overlays += dyn_overlay
 			overlays += O
 			obj_overlays[ID_LAYER] = O
 			//overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
@@ -614,10 +616,10 @@ var/global/list/damage_icon_parts = list()
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
 			if(species.gloves_icons)
 				standing.icon = species.gloves_icons
-
-		if(gloves.dynamic_overlay[GLOVES_LAYER])
-			var/image/dyn_overlay = gloves.dynamic_overlay[GLOVES_LAYER]
-			O.overlays += dyn_overlay
+		if(gloves.dynamic_overlay)
+			if(gloves.dynamic_overlay["[GLOVES_LAYER]"])
+				var/image/dyn_overlay = gloves.dynamic_overlay["[GLOVES_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(gloves.blood_DNA && gloves.blood_DNA.len)
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
@@ -662,9 +664,10 @@ var/global/list/damage_icon_parts = list()
 			O.icon = standing
 			O.icon_state = standing.icon_state
 			O.overlays.len = 0
-			if(glasses.dynamic_overlay[GLASSES_OVER_HAIR_LAYER])
-				var/image/dyn_overlay = glasses.dynamic_overlay[GLASSES_OVER_HAIR_LAYER]
-				O.overlays += dyn_overlay
+			if(glasses.dynamic_overlay)
+				if(glasses.dynamic_overlay["[GLASSES_OVER_HAIR_LAYER]"])
+					var/image/dyn_overlay = glasses.dynamic_overlay["[GLASSES_OVER_HAIR_LAYER]"]
+					O.overlays += dyn_overlay
 			overlays += O
 			obj_overlays[GLASSES_OVER_HAIR_LAYER] = O
 			//overlays_standing[GLASSES_OVER_HAIR_LAYER]	= standing
@@ -673,9 +676,10 @@ var/global/list/damage_icon_parts = list()
 			O.icon = standing
 			O.icon_state = standing.icon_state
 			O.overlays.len = 0
-			if(glasses.dynamic_overlay[GLASSES_LAYER])
-				var/image/dyn_overlay = glasses.dynamic_overlay[GLASSES_LAYER]
-				O.overlays += dyn_overlay
+			if(glasses.dynamic_overlay)
+				if(glasses.dynamic_overlay["[GLASSES_LAYER]"])
+					var/image/dyn_overlay = glasses.dynamic_overlay["[GLASSES_LAYER]"]
+					O.overlays += dyn_overlay
 			overlays += O
 			obj_overlays[GLASSES_LAYER] = O
 			//overlays_standing[GLASSES_LAYER]	= standing
@@ -701,9 +705,10 @@ var/global/list/damage_icon_parts = list()
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		O.overlays.len = 0
-		if(ears.dynamic_overlay[EARS_LAYER])
-			var/image/dyn_overlay = ears.dynamic_overlay[EARS_LAYER]
-			O.overlays += dyn_overlay
+		if(ears.dynamic_overlay)
+			if(ears.dynamic_overlay["[EARS_LAYER]"])
+				var/image/dyn_overlay = ears.dynamic_overlay["[EARS_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[EARS_LAYER] = O
 		//overlays_standing[EARS_LAYER] = standing
@@ -726,9 +731,10 @@ var/global/list/damage_icon_parts = list()
 				//standing.icon = species.shoes_icons
 
 		O.overlays.len = 0
-		if(shoes.dynamic_overlay[SHOES_LAYER])
-			var/image/dyn_overlay = shoes.dynamic_overlay[SHOES_LAYER]
-			O.overlays += dyn_overlay
+		if(shoes.dynamic_overlay)
+			if(shoes.dynamic_overlay["[SHOES_LAYER]"])
+				var/image/dyn_overlay = shoes.dynamic_overlay["[SHOES_LAYER]"]
+				O.overlays += dyn_overlay
 		if(shoes.blood_DNA && shoes.blood_DNA.len)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood")
 			bloodsies.color = shoes.blood_color
@@ -750,9 +756,10 @@ var/global/list/damage_icon_parts = list()
 		O.icon = 'icons/mob/belt_mirror.dmi'
 		O.icon_state = t_state
 		O.overlays.len = 0
-		if(s_store.dynamic_overlay[SUIT_STORE_LAYER])
-			var/image/dyn_overlay = s_store.dynamic_overlay[SUIT_STORE_LAYER]
-			O.overlays += dyn_overlay
+		if(s_store.dynamic_overlay)
+			if(s_store.dynamic_overlay["[SUIT_STORE_LAYER]"])
+				var/image/dyn_overlay = s_store.dynamic_overlay["[SUIT_STORE_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[SUIT_STORE_LAYER] = O
 		//overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]")
@@ -779,9 +786,10 @@ var/global/list/damage_icon_parts = list()
 			if(species.head_icons)
 				standing.icon = species.head_icons
 
-		if(head.dynamic_overlay[HEAD_LAYER])
-			var/image/dyn_overlay = head.dynamic_overlay[HEAD_LAYER]
-			O.overlays += dyn_overlay
+		if(head.dynamic_overlay)
+			if(head.dynamic_overlay["[HEAD_LAYER]"])
+				var/image/dyn_overlay = head.dynamic_overlay["[HEAD_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(head.blood_DNA && head.blood_DNA.len)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
@@ -814,9 +822,10 @@ var/global/list/damage_icon_parts = list()
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		O.overlays.len = 0
-		if(belt.dynamic_overlay[BELT_LAYER])
-			var/image/dyn_overlay = belt.dynamic_overlay[BELT_LAYER]
-			O.overlays += dyn_overlay
+		if(belt.dynamic_overlay)
+			if(belt.dynamic_overlay["[BELT_LAYER]"])
+				var/image/dyn_overlay = belt.dynamic_overlay["[BELT_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[BELT_LAYER] = O
 		//overlays_standing[BELT_LAYER]	= standing
@@ -842,9 +851,10 @@ var/global/list/damage_icon_parts = list()
 			if(species.wear_suit_icons)
 				standing.icon = species.wear_suit_icons
 
-		if(wear_suit.dynamic_overlay[SUIT_LAYER])
-			var/image/dyn_overlay = wear_suit.dynamic_overlay[SUIT_LAYER]
-			O.overlays += dyn_overlay
+		if(wear_suit.dynamic_overlay)
+			if(wear_suit.dynamic_overlay["[SUIT_LAYER]"])
+				var/image/dyn_overlay = wear_suit.dynamic_overlay["[SUIT_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(wear_suit.blood_DNA && wear_suit.blood_DNA.len)
 			var/obj/item/clothing/suit/S = wear_suit
@@ -885,9 +895,10 @@ var/global/list/damage_icon_parts = list()
 			if(species.wear_mask_icons)   //This REQUIRES the species to be listed in species_fit and also to have an appropriate dmi allocated in their species datum
 				standing.icon = species.wear_mask_icons
 
-		if(wear_mask.dynamic_overlay[FACEMASK_LAYER])
-			var/image/dyn_overlay = wear_mask.dynamic_overlay[FACEMASK_LAYER]
-			O.overlays += dyn_overlay
+		if(wear_mask.dynamic_overlay)
+			if(wear_mask.dynamic_overlay["[FACEMASK_LAYER]"])
+				var/image/dyn_overlay = wear_mask.dynamic_overlay["[FACEMASK_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA && wear_mask.blood_DNA.len )
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
@@ -920,9 +931,10 @@ var/global/list/damage_icon_parts = list()
 		O.icon = standing
 		O.icon_state = standing.icon_state
 		O.overlays.len = 0
-		if(back.dynamic_overlay[BACK_LAYER])
-			var/image/dyn_overlay = back.dynamic_overlay[BACK_LAYER]
-			O.overlays += dyn_overlay
+		if(back.dynamic_overlay)
+			if(back.dynamic_overlay["[BACK_LAYER]"])
+				var/image/dyn_overlay = back.dynamic_overlay["[BACK_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[BACK_LAYER] = O
 
@@ -988,9 +1000,10 @@ var/global/list/damage_icon_parts = list()
 		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
 		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
 		O.overlays.len = 0
-		if(r_hand.dynamic_overlay[R_HAND_LAYER])
-			var/image/dyn_overlay = r_hand.dynamic_overlay[R_HAND_LAYER]
-			O.overlays += dyn_overlay
+		if(r_hand.dynamic_overlay)
+			if(r_hand.dynamic_overlay["[R_HAND_LAYER]"])
+				var/image/dyn_overlay = r_hand.dynamic_overlay["[R_HAND_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[R_HAND_LAYER] = O
 		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
@@ -1015,9 +1028,10 @@ var/global/list/damage_icon_parts = list()
 		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
 		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
 		O.overlays.len = 0
-		if(l_hand.dynamic_overlay[L_HAND_LAYER])
-			var/image/dyn_overlay = l_hand.dynamic_overlay[L_HAND_LAYER]
-			O.overlays += dyn_overlay
+		if(l_hand.dynamic_overlay)
+			if(l_hand.dynamic_overlay["[L_HAND_LAYER]"])
+				var/image/dyn_overlay = l_hand.dynamic_overlay["[L_HAND_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[L_HAND_LAYER] = O
 		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
