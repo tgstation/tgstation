@@ -32,6 +32,7 @@
 	var/backup_body =""
 	var/backup_author =""
 	var/is_admin_message = 0
+	var/ghost_read = 1 //The newscaster handles observers properly enough
 	var/icon/img = null
 	var/icon/backup_img
 
@@ -227,14 +228,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(buildstage != 1)
 		return
 
-	if(isobserver(user))
-		continue
+	. = ..()
 
-	else
-		. = ..()
-
-		if (.)
-			return
+	if (.)
+		return
 
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) || isobserver(user))
 		var/mob/M = user
