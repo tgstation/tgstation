@@ -29,8 +29,9 @@
 		for(var/obj/item/organ/internal/I in organs)
 			I.loc = crab
 		crab.origin = M
-		if(M)
-			M.transfer_to(crab)
+		if(crab.origin)
+			crab.origin.active = 1
+			crab.origin.transfer_to(crab)
 			crab << "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>"
 	user.gib()
 	feedback_add_details("changeling_powers","LR")

@@ -370,9 +370,10 @@ var/list/sting_paths
 				mind.changeling.purchasedpowers+=S
 			S.on_purchase(src)
 
-	var/mob/living/carbon/C = src		//only carbons have dna now, so we have to typecaste
-	var/datum/changelingprofile/prof = mind.changeling.add_profile(C) //not really a point in typecasting here but somebody will probably get mad at me if i dont
-	mind.changeling.first_prof = prof
+	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
+	if(ishuman(C))
+		var/datum/changelingprofile/prof = mind.changeling.add_profile(C)
+		mind.changeling.first_prof = prof
 	return 1
 
 /datum/changeling/proc/reset()
