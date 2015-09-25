@@ -60,6 +60,6 @@ var/sound/admin_sound
 	for(var/mob/M in player_list)
 		if(M.client)
 			M << sound(null)
-	feedback_add_details("admin_verb","SAPS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","SS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #undef SOUND_CHANNEL_ADMIN
