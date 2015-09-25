@@ -479,7 +479,7 @@ var/global/list/multiverse = list()
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(is_hot(I))
+		if(I.is_hot())
 			target << "<span class='userdanger'>You suddenly feel very hot</span>"
 			target.bodytemperature += 50
 			GiveHint(target)

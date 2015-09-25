@@ -33,7 +33,7 @@
 		dat += "<H3>Prisoner Implant Management</H3>"
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/Tr = null
-		for(var/obj/item/weapon/implant/chem/C in tracking_implants)
+		for(var/obj/item/weapon/implant/chem/C in tracked_implants)
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))	continue//Out of range
 			if(!C.implanted) continue
@@ -43,7 +43,7 @@
 			dat += "<A href='?src=\ref[src];inject10=\ref[C]'>(<font class='bad'>(10)</font>)</A><BR>"
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
-		for(var/obj/item/weapon/implant/tracking/T in tracking_implants)
+		for(var/obj/item/weapon/implant/tracking/T in tracked_implants)
 			if(!iscarbon(T.imp_in))
 				continue
 			if(!T.implanted)

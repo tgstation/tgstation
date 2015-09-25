@@ -569,7 +569,7 @@
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
 	else
-		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
+		if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
 			spark_system.start()
 		return ..()
 

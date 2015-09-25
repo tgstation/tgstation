@@ -268,3 +268,8 @@ var/list/bloody_footprints_cache = list()
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
 #define TURF_WET_LUBE	2
+
+//Object/Item sharpness
+#define IS_BLUNT			0
+#define IS_SHARP			1
+#define IS_SHARP_ACCURATE	2

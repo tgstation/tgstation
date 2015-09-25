@@ -40,7 +40,7 @@
 		"<span class='userdanger'>[attack_message]</span>")
 
 	if((butcher_results) && (stat == DEAD))
-		var/sharpness = is_sharp(I)
+		var/sharpness = I.is_sharp()
 		if(sharpness)
 			user.changeNext_move(CLICK_CD_MELEE)
 			user << "<span class='notice'>You begin to butcher [src]...</span>"
