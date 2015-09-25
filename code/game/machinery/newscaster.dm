@@ -223,8 +223,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	return src.attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user as mob)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if((stat & NOPOWER) || (stat & BROKEN) || buildstage != 1)
+
+	. = ..()
+
+	if (.)
 		return
+
+	if(buildstage != 1)
+		return
+
 	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) || isobserver(user))
 		var/mob/M = user
 		var/dat
