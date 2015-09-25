@@ -75,7 +75,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
-	if(lit && cig)
+	if(lit && cig && user.a_intent == "help")
+		if(cig.lit)
+			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
 			cig.attackby(src, user)
 		else
@@ -86,7 +88,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/proc/help_light_cig(mob/living/carbon/M, mob/living/carbon/user)
 	if(!iscarbon(M))
 		return
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth")
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		return cig
 
@@ -252,7 +254,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(M))
 		return ..()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
-	if(lit && cig)
+	if(lit && cig && user.a_intent == "help")
+		if(cig.lit)
+			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
 			cig.attackby(src, user)
 		else
@@ -362,6 +366,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 100
 	var/packeditem = 0
 
+/obj/item/clothing/mask/cigarette/pipe/New()
+	..()
+	name = "empty [initial(name)]"
+
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
 	smoketime--
@@ -440,10 +448,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cobpipeoff"
 	smoketime = 0
 
-/obj/item/clothing/mask/cigarette/pipe/cobpipe/New()
-	..()
-	name = "empty [initial(name)]"
-
 
 /////////
 //ZIPPO//
@@ -516,7 +520,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit)
 		M.IgniteMob()
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
-	if(lit && cig)
+	if(lit && cig && user.a_intent == "help")
+		if(cig.lit)
+			user << "<span class='notice'>The [cig.name] is already lit.</span>"
 		if(M == user)
 			cig.attackby(src, user)
 		else
