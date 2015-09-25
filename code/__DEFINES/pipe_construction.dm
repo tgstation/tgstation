@@ -9,6 +9,8 @@ Construction breaks otherwise
 #define PIPE_MANIFOLD			/obj/machinery/atmospherics/pipe/manifold
 #define PIPE_4WAYMANIFOLD       /obj/machinery/atmospherics/pipe/manifold4w
 #define PIPE_HE					/obj/machinery/atmospherics/pipe/heat_exchanging/simple
+#define PIPE_HE_MANIFOLD		/obj/machinery/atmospherics/pipe/heat_exchanging/manifold
+#define PIPE_HE_4WAYMANIFOLD	/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 #define PIPE_JUNCTION			/obj/machinery/atmospherics/pipe/heat_exchanging/junction
 //Unary
 #define PIPE_CONNECTOR			/obj/machinery/atmospherics/components/unary/portables_connector
