@@ -326,13 +326,13 @@
 			//Spawn and equip the commando
 			var/mob/living/carbon/human/Commando = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(Commando)
-			ready_dna(Commando)
 			if(numagents == 1) //If Squad Leader
 				Commando.real_name = "Officer [pick(commando_names)]"
 				Commando.equipOutfit(/datum/outfit/death_commando/officer)
 			else
 				Commando.real_name = "Trooper [pick(commando_names)]"
 				Commando.equipOutfit(/datum/outfit/death_commando)
+			Commando.dna.update_dna_identity()
 			Commando.key = chosen_candidate.key
 			Commando.mind.assigned_role = "Death Commando"
 			for(var/obj/machinery/door/poddoor/ert/door in airlocks)
@@ -420,8 +420,8 @@
 		//Create the official
 		var/mob/living/carbon/human/newmob = new (pick(emergencyresponseteamspawn))
 		chosen_candidate.client.prefs.copy_to(newmob)
-		ready_dna(newmob)
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
+		newmob.dna.update_dna_identity()
 		newmob.key = chosen_candidate.key
 		newmob.mind.assigned_role = "Centcom Official"
 		newmob.equipOutfit(/datum/outfit/centcom_official)
@@ -490,7 +490,6 @@
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
 			var/list/lastname = last_names
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
-			ready_dna(ERTOperative)
 			var/ertname = pick(lastname)
 			switch(numagents)
 				if(1)
@@ -514,6 +513,7 @@
 				if(7)
 					ERTOperative.real_name = "Engineer [ertname]"
 					ERTOperative.equipOutfit(redalert ? /datum/outfit/ert/engineer/alert : /datum/outfit/ert/engineer)
+			ERTOperative.dna.update_dna_identity()
 			ERTOperative.key = chosen_candidate.key
 			ERTOperative.mind.assigned_role = "ERT"
 

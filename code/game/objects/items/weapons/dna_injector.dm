@@ -17,7 +17,7 @@
 
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(check_dna_integrity(M) && !(M.disabilities & NOCLONE))
+	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
 			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
 			return
@@ -38,7 +38,7 @@
 				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
-				updateappearance(M)
+				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
 	else
 		user << "<span class='notice'>It appears that [M] does not have compatible DNA.</span>"
@@ -138,6 +138,20 @@
 	New()
 		..()
 		add_mutations.Add(mutations_list[COUGH])
+
+/obj/item/weapon/dnainjector/antidwarf
+	name = "\improper DNA injector (Anti-Dwarfism)"
+	desc = "Helps you grow big and strong."
+	New()
+		..()
+		remove_mutations.Add(mutations_list[DWARFISM])
+
+/obj/item/weapon/dnainjector/dwarf
+	name = "\improper DNA injector (Dwarfism)"
+	desc = "Its a small world after all."
+	New()
+		..()
+		add_mutations.Add(mutations_list[DWARFISM])
 
 /obj/item/weapon/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"

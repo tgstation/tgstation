@@ -198,6 +198,10 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(src_object.contents.len)
+		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		if(!do_after(usr,20,target=src_object))
+			return 0
 	for(var/obj/item/I in src_object)
 		if(user.s_active != src_object)
 			if(I.on_found(user))
@@ -313,8 +317,7 @@
 /turf/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = 1
-	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/indestructible/abductor
 	icon_state = "alien1"

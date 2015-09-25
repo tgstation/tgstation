@@ -19,7 +19,7 @@
 	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
 	/turf/simulated/wall/rust,
 	/turf/simulated/wall/r_wall/rust)
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 
 /obj/structure/falsewall/attack_hand(mob/user)
@@ -49,15 +49,15 @@
 
 /obj/structure/falsewall/proc/do_the_flick()
 	if(density)
-		smooth = 0
-		clear_overlays(src)
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
 		icon_state = "fwall_opening"
 	else
 		icon_state = "fwall_closing"
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(density)
-		smooth = 1
+		smooth = SMOOTH_TRUE
 		smooth_icon(src)
 		icon_state = ""
 	else
@@ -218,7 +218,7 @@
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/simulated/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_hot(W) > 300)
+	if(W.is_hot() > 300)
 		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
 		burnbabyburn()

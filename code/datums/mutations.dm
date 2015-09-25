@@ -16,6 +16,9 @@
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
+	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
+	var/list/species_allowed = list() //to restrict mutation to only certain species
+	var/health_req //minimum health required to acquire the mutation
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -33,7 +36,7 @@
 	return before + injection + after
 
 /datum/mutation/human/proc/set_block(mob/living/carbon/owner, on = 1)
-	if(owner && istype(owner) && owner.dna)
+	if(owner && owner.has_dna())
 		owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes, on)
 
 /datum/mutation/human/proc/check_block_string(se_string)
@@ -51,16 +54,24 @@
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner) || (src in owner.dna.mutations))
 		return 1
+	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
+		return 1
+	if(health_req && owner.health < health_req)
+		return 1
 	owner.dna.mutations.Add(src)
-	owner << text_gain_indication
+	if(text_gain_indication)
+		owner << text_gain_indication
 	if(visual_indicators.len)
-		owner.update_mutation_overlays()
+		var/list/mut_overlay = list(get_visual_indicator(owner))
+		if(owner.overlays_standing[layer_used])
+			mut_overlay = owner.overlays_standing[layer_used]
+			mut_overlay |= get_visual_indicator(owner)
+		owner.remove_overlay(layer_used)
+		owner.overlays_standing[layer_used] = mut_overlay
+		owner.apply_overlay(layer_used)
 
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
-
-/datum/mutation/human/proc/lose_indication(mob/living/carbon/human/owner)
-	owner.overlays.Remove(visual_indicators)
 
 /datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return
@@ -76,9 +87,16 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
-		owner << text_lose_indication
+		if(text_lose_indication)
+			owner << text_lose_indication
 		if(visual_indicators.len)
-			owner.update_mutation_overlays()
+			var/list/mut_overlay = list()
+			if(owner.overlays_standing[layer_used])
+				mut_overlay = owner.overlays_standing[layer_used]
+			owner.remove_overlay(layer_used)
+			mut_overlay.Remove(get_visual_indicator(owner))
+			owner.overlays_standing[layer_used] = mut_overlay
+			owner.apply_overlay(layer_used)
 		return 0
 	return 1
 
@@ -96,6 +114,8 @@
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human") //no skeleton/lizard hulk
+	health_req = 25
 
 /datum/mutation/human/hulk/New()
 	..()
@@ -256,6 +276,23 @@
 	if((prob(5) && owner.paralysis <= 1))
 		owner.drop_item()
 		owner.emote("cough")
+
+/datum/mutation/human/dwarfism
+
+	name = "Dwarfism"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
+	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
+
+/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 0.8
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+
+/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 1.25
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
 
 /datum/mutation/human/clumsy
 
@@ -583,32 +620,42 @@
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
 
-
 /datum/mutation/human/laser_eyes
-
 	name = "Laser Eyes"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
+	layer_used = FRONT_MUTATIONS_LAYER
+
+/datum/mutation/human/laser_eyes/New()
+	..()
+	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-FRONT_MUTATIONS_LAYER)
+
+/datum/mutation/human/laser_eyes/get_visual_indicator(mob/living/carbon/human/owner)
+	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
 	if(owner.a_intent == "harm")
 		owner.LaserEyes(target)
 
 
-/mob/living/carbon/human/proc/update_mutation_overlays()
-	remove_overlay(MUTATIONS_LAYER)
-	var/image/standing
+/mob/living/carbon/proc/update_mutations_overlay()
+	return
 
+/mob/living/carbon/human/update_mutations_overlay()
 	for(var/datum/mutation/human/CM in dna.mutations)
+		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
+			CM.force_lose(src) //shouldn't have that mutation at all
+			continue
 		if(CM.visual_indicators.len)
+			var/list/mut_overlay = list()
+			if(overlays_standing[CM.layer_used])
+				mut_overlay = overlays_standing[CM.layer_used]
 			var/image/V = CM.get_visual_indicator(src)
-			if(!standing)
-				standing = V
-			else
-				standing.overlays += V
-
-	if(standing)
-		overlays_standing[MUTATIONS_LAYER] = standing
-	apply_overlay(MUTATIONS_LAYER)
-
+			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
+				remove_overlay(CM.layer_used)
+				for(var/image/I in CM.visual_indicators)
+					mut_overlay.Remove(I)
+				mut_overlay |= V
+				overlays_standing[CM.layer_used] = mut_overlay
+				apply_overlay(CM.layer_used)

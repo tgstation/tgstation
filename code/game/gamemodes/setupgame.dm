@@ -1,4 +1,4 @@
-/datum/subsystem/ticker/proc/setupGenetics()
+/datum/subsystem/objects/proc/setupGenetics()
 	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 		avnums[i] = i

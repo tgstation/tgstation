@@ -55,7 +55,7 @@
 
 			lich.real_name = user.mind.name
 			user.mind.transfer_to(lich)
-			hardset_dna(lich,null,null,lich.real_name,null,/datum/species/skeleton)
+			lich.hardset_dna(null,null,lich.real_name,null,/datum/species/skeleton)
 			lich << "<span class='warning'>Your bones clatter and shutter as they're pulled back into this world!</span>"
 			charge_max += 600
 			var/mob/old_body = current_body
@@ -98,7 +98,7 @@
 				marked_item.desc = "A terrible aura surrounds this item, its very existence is offensive to life itself..."
 				marked_item.color = "#003300"
 				user << "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>"
-				hardset_dna(user, null, null, null, null, /datum/species/skeleton)
+				user.set_species(/datum/species/skeleton)
 				current_body = user.mind.current
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user

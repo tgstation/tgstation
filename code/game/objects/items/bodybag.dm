@@ -39,6 +39,7 @@
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 	density = 0
 	mob_storage_capacity = 2
+	open_sound = 'sound/items/zip.ogg'
 
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
