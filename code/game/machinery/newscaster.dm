@@ -32,7 +32,6 @@
 	var/backup_body =""
 	var/backup_author =""
 	var/is_admin_message = 0
-	var/ghost_read = 1 //The newscaster handles observers properly enough
 	var/icon/img = null
 	var/icon/backup_img
 
@@ -83,7 +82,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/buildstage = 1 // 1 = complete, 0 = unscrewed
 
 	// Allow ghosts to send Topic()s.
-	ghost_write=1
+	ghost_read = 1
+	ghost_write = 1
 	custom_aghost_alerts=1 // We handle our own logging.
 
 	//var/isbroken = 0  //1 if someone banged it with something heavy
