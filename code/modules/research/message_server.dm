@@ -318,12 +318,26 @@ var/obj/machinery/blackbox_recorder/blackbox
 		round_id = text2num(round_id)
 	round_id++
 
+	/*
 	for(var/datum/feedback_variable/FV in feedback)
 		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
 		nqueries++
 		sleep(1) // Let other shit do things
+	*/
+	// MySQL and MariaDB support compound inserts and this insert is slow as fuck.
+	var/sql = "INSERT INTO erro_feedback VALUES "
+	var/ninserts=0
+	for(var/datum/feedback_variable/FV in feedback)
+		if(ninserts>0)
+			sql += ","
+		ninserts++
+		sql += "(null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+	var/DBQuery/query_insert = dbcon.NewQuery(sql)
+	query_insert.Execute()
+	nqueries++
+
 	log_startup_progress("  Wrote Black Box data with [nqueries] queries in [stop_watch(watch)]s.")
 
 // Sanitize inputs to avoid SQL injection attacks
