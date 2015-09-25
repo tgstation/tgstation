@@ -274,8 +274,6 @@
 
 /obj/item/organ/internal/hivelord_core/on_life()
 	..()
-	if(inert)
-		return
 
 	owner.adjustBruteLoss(-1)
 	owner.adjustFireLoss(-1)
