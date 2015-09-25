@@ -4280,7 +4280,7 @@
 "bEp" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid,/obj/structure/window/reinforced{dir = 1},/turf/simulated/shuttle/floor/vox{icon_state = "floor4"},/area/shuttle/vox/station)
 "bEq" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "bEr" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
-"bEs" = (/obj/machinery/door/window/brigdoor{dir = 4},/turf/simulated/shuttle/floor/vox{icon_state = "floor4"},/area/shuttle/vox/station)
+"bEs" = (/obj/machinery/door/window/brigdoor{req_access = null},/turf/simulated/shuttle/floor/vox{icon_state = "floor4"},/area/shuttle/vox/station)
 "bEt" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/fire,/turf/simulated/shuttle/floor/vox{icon_state = "floor4"},/area/shuttle/vox/station)
 "bEu" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
 "bEv" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/shuttle/plating/vox,/area/shuttle/vox/station)
