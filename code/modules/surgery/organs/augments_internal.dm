@@ -6,6 +6,7 @@
 	status = ORGAN_ROBOTIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
+	var/interfaceID = "CYBERIMP"
 
 /obj/item/organ/internal/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
@@ -16,7 +17,19 @@
 		overlays |= overlay
 	return ..()
 
+/obj/item/organ/internal/cyberimp/proc/talk_to_owner(var/msg)
+	if(owner && owner.stat == CONSCIOUS)
+		if(owner.getorganslot("eye_hud"))
+			owner << "<span class='shell'>\[[interfaceID]]~$ [msg]</span>"
 
+/obj/item/organ/internal/cyberimp/Insert(mob/living/carbon/M, special = 0)
+	if(!M.getorganslot("eye_hud"))
+		organ_action_name = null
+	. = ..()
+	if(.)
+		talk_to_owner("Implantation successful.")
+	else
+		organ_action_name = initial(organ_action_name)
 
 //[[[[BRAIN]]]]
 
@@ -48,6 +61,7 @@
 	slot = "brain_antidrop"
 	origin_tech = "materials=5;programming=4;biotech=4"
 	organ_action_name = "Toggle Anti-Drop"
+	interfaceID = "ANTI_DROP"
 
 /obj/item/organ/internal/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
@@ -125,23 +139,33 @@
 	implant_color = "#FFFF00"
 	slot = "brain_antistun"
 	origin_tech = "materials=6;programming=4;biotech=5"
+	interfaceID = "CNS_REBOOT"
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_life()
 	..()
 	if(crit_fail)
 		return
 
+	var/reboot = 0
 	if(owner.stunned > STUN_SET_AMOUNT)
 		owner.stunned = STUN_SET_AMOUNT
+		reboot = 1
 	if(owner.weakened > STUN_SET_AMOUNT)
 		owner.weakened = STUN_SET_AMOUNT
+		reboot = 1
+	if(reboot)
+		talk_to_owner("Rebooting central nervous system.")
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
+	..()
 	if(crit_fail)
 		return
-	crit_fail = 1
+	crit_fail += 1
+	talk_to_owner("Critical failure, reloading...")
 	spawn(90 / severity)
-		crit_fail = 0
+		crit_fail -= 1
+		if(!crit_fail)
+			talk_to_owner("Recovered from overload. Normal operation resumed.")
 
 
 //[[[[CHEST]]]]
@@ -163,6 +187,7 @@
 	var/poison_amount = 5
 	slot = "stomach"
 	origin_tech = "materials=5;programming=3;biotech=4"
+	interfaceID = "NUTRI"
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/on_life()
 	if(synthesizing)
@@ -170,17 +195,17 @@
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = 1
-		owner << "<span class='notice'>You feel less hungry...</span>"
 		owner.nutrition += 50
+		talk_to_owner("Nutriment administered.")
 		spawn(50)
+			talk_to_owner("Synthesized a new dose of nutriment.")
 			synthesizing = 0
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
 		return
 	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
-	owner << "<span class='warning'>You feel like your insides are burning.</span>"
-
+	talk_to_owner("?]/\[(!/<(Toxins administered-\\~<%#>")
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/plus
 	name = "Nutriment pump implant PLUS"
@@ -190,8 +215,7 @@
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
 	origin_tech = "materials=5;programming=3;biotech=5"
-
-
+	interfaceID = "NUTRI+"
 
 /obj/item/organ/internal/cyberimp/chest/reviver
 	name = "Reviver implant"
@@ -203,23 +227,24 @@
 	var/revive_cost = 0
 	var/reviving = 0
 	var/cooldown = 0
+	interfaceID = "REVIVER"
+	organ_action_name = "Reviver status"
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_life()
 	if(reviving)
 		if(owner.stat == UNCONSCIOUS)
-			spawn(30)
-				if(prob(90) && owner.getOxyLoss())
-					owner.adjustOxyLoss(-3)
-					revive_cost += 5
-				if(prob(75) && owner.getBruteLoss())
-					owner.adjustBruteLoss(-1)
-					revive_cost += 20
-				if(prob(75) && owner.getFireLoss())
-					owner.adjustFireLoss(-1)
-					revive_cost += 20
-				if(prob(40) && owner.getToxLoss())
-					owner.adjustToxLoss(-1)
-					revive_cost += 50
+			if(owner.getOxyLoss())
+				owner.adjustOxyLoss(-10)
+				revive_cost += 10
+			if(owner.getBruteLoss())
+				owner.adjustBruteLoss(-5)
+				revive_cost += 80
+			if(owner.getFireLoss())
+				owner.adjustFireLoss(-5)
+				revive_cost += 80
+			if(owner.getToxLoss())
+				owner.adjustToxLoss(-5)
+				revive_cost += 160
 		else
 			cooldown = revive_cost + world.time
 			reviving = 0
@@ -235,6 +260,16 @@
 	revive_cost = 0
 	reviving = 1
 
+/obj/item/organ/internal/cyberimp/chest/reviver/ui_action_click()
+	var/timetoready = max( ((cooldown - world.time) / 10), 0)
+	if(timetoready)
+		talk_to_owner("Ready to revive in [(cooldown - world.time)/10] seconds.")
+	else
+		talk_to_owner("Ready to revive.")
+	var/mob/living/carbon/human/H = owner
+	if(H.heart_attack)
+		talk_to_owner("WARNING: Acute myocardial infarction detected. Unable to treat")
+
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
 	if(!owner)
 		return
@@ -248,26 +283,8 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.heart_attack = 1
+			talk_to_owner("WARNING: Overload detected. Acute myocardial infarction detected. Unable to treat.")
 			spawn(600 / severity)
 				H.heart_attack = 0
 				if(H.stat == CONSCIOUS)
-					H << "<span class='notice'>You feel your heart beating again!</span>"
-
-
-//BOX O' IMPLANTS
-
-/obj/item/weapon/storage/box/cyber_implants
-	name = "boxed cybernetic implants"
-	desc = "A sleek, sturdy box."
-	icon_state = "cyber_implants"
-	var/list/boxed = list(/obj/item/organ/internal/cyberimp/eyes/xray,/obj/item/organ/internal/cyberimp/eyes/thermals,
-						/obj/item/organ/internal/cyberimp/brain/anti_stun, /obj/item/organ/internal/cyberimp/chest/reviver)
-	var/amount = 5
-
-/obj/item/weapon/storage/box/cyber_implants/New()
-	..()
-	var/i
-	var/implant
-	for(i = 0, i < amount, i++)
-		implant = pick(boxed)
-		new implant(src)
+					H << "<span class='notice'>The pain in your chest stopped.</span>"

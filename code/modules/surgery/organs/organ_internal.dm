@@ -10,7 +10,7 @@
 
 /obj/item/organ/internal/proc/Insert(mob/living/carbon/M, special = 0)
 	if(!iscarbon(M) || owner == M)
-		return
+		return 0
 
 	var/obj/item/organ/internal/replaced = M.getorganslot(slot)
 	if(replaced)
@@ -21,6 +21,7 @@
 	loc = null
 	if(organ_action_name)
 		action_button_name = organ_action_name
+	return 1
 
 
 /obj/item/organ/internal/proc/Remove(mob/living/carbon/M, special = 0)

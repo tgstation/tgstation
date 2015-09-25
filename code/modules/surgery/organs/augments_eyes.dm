@@ -61,6 +61,7 @@
 	implant_color = "#000000"
 	origin_tech = "materials=6;programming=4;biotech=6;magnets=5"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+	interfaceID = "XRAY"
 
 /obj/item/organ/internal/cyberimp/eyes/thermals
 	name = "Thermals implant"
@@ -69,8 +70,9 @@
 	implant_color = "#FFCC00"
 	sight_flags = SEE_MOBS
 	flash_protect = -1
-	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;syndicate=4"
+	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;syndicate=3"
 	aug_message = "You see prey everywhere you look..."
+	interfaceID = "THERMALS"
 
 
 // HUD implants
@@ -94,6 +96,27 @@
 		H.remove_hud_from(M)
 	..()
 
+/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/M, special = 0)
+	. = ..()
+	if(.)
+		for(var/obj/item/organ/internal/cyberimp/CI in M.internal_organs)
+			organ_action_name = initial(organ_action_name)
+			if(organ_action_name)
+				action_button_name = organ_action_name
+
+/obj/item/organ/internal/cyberimp/eyes/hud/interface
+	name = "Cyber-Implant Interface implant"
+	desc = "These cybernetic eye implants provide an interface for all your cybernetic modifications. Simple design and robust contruction make this implant immune to EM pulses."
+	slot = "eye_hud"
+	eye_color = "d0f"
+	implant_color = "#DD00FF"
+	origin_tech = "materials=4;programming=1;biotech=2"
+	aug_message = "A prompt appears in the corner of your vision. It blinks endlessly."
+	interfaceID = "INTERFACE"
+
+/obj/item/organ/internal/cyberimp/eyes/hud/interface/emp_act(var/severity)
+	return
+
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
@@ -102,6 +125,7 @@
 	origin_tech = "materials=4;programming=3;biotech=4"
 	aug_message = "You suddenly see health bars floating above people's heads..."
 	HUD_type = DATA_HUD_MEDICAL_ADVANCED
+	interfaceID = "HUD_MED"
 
 /obj/item/organ/internal/cyberimp/eyes/hud/security
 	name = "Security HUD implant"
@@ -111,6 +135,7 @@
 	origin_tech = "materials=4;programming=4;biotech=3;combat=1"
 	aug_message = "Job indicator icons pop up in your vision. That is not a certified surgeon..."
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
+	interfaceID = "HUD_SEC"
 
 
 // Welding shield implant
@@ -119,10 +144,11 @@
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	slot = "eye_shield"
 	origin_tech = "materials=4;biotech=3"
-	implant_color = "#101010"
+	implant_color = "#545ba6"
 	flash_protect = 2
 	aug_message = null
-	eye_color = "fff"
+	eye_color = "55a"
+	interfaceID = "EYE_SHIELD"
 
 /obj/item/organ/internal/cyberimp/eyes/shield/emp_act(severity)
 	return

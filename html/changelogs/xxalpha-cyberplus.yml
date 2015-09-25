@@ -1,0 +1,10 @@
+author: xxalpha
+
+delete-after: True
+
+changes:
+  - rscadd: "Added user-implant interface for all HUD implants."
+  - rscadd: "Added user-implant interface implant (EMP immune)."
+  - tweak: "Buffed Reviver implant healing speed and shortened cooldown slightly."
+  - tweak: "Reduced Thermal implant and Reviver implant tech requirements."
+  - tweak: "Changed all cyber-implants material costs."

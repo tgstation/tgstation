@@ -67,6 +67,7 @@ h1.alert, h2.alert		{color: #000000;}
 .shadowling				{color: #3b2769;}
 .cult					{color: #960000; font-weight: bold; font-size: 3;}
 .purple					{color: #5e2d79;}
+.shell					{font-family: "Courier New", cursive, sans-serif; color: #4a6b8c;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
