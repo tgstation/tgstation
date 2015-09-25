@@ -406,6 +406,15 @@
 /datum/mutation/human/wacky/get_spans()
 	return list(SPAN_SANS)
 
+/datum/mutation/human/sore_throat
+	name = "Sore Throat"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='papyrus'>Your throat feels strangely sore.</span>"
+	text_lose_indication = "<span class='notice'>Your throat feels normal again.</span>"
+
+/datum/mutation/human/sore_throat/get_spans()
+	return list(SPAN_PAPYRUS)
+
 /datum/mutation/human/mute
 	name = "Mute"
 	quality = NEGATIVE

@@ -408,6 +408,13 @@
 	brutemod = 2
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,COLDRES,NOBLOOD,RADIMMUNE)
+	var/voice_init = 0 //to control wether the voice mutation has been activated or not
+
+/datum/species/skeleton/spec_life(mob/living/carbon/human/H)
+	if(!voice_init)
+		var/datum/mutation/human/ST = new /datum/mutation/human/sore_throat
+		ST.force_give(H)
+		voice_init = 1
 /*
  ZOMBIES
 */
