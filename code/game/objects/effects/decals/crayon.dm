@@ -28,3 +28,11 @@
 	overlays += shadeOverlay
 
 	add_hiddenprint(usr)
+
+//This decal is a big green "fuck you" intended to be hidden behind doors built on walls
+
+/obj/effect/decal/cleanable/crayon/fuckyou
+	icon_state = "fuckyou"
+
+/obj/effect/decal/cleanable/crayon/fuckyou/New(location, main = "#007F0E", shade = "#02560B", type = "fuckyou")
+	..()
