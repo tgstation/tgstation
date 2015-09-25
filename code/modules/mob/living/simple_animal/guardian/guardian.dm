@@ -130,6 +130,7 @@
 		if(M == src.summoner || (M in dead_mob_list))
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+	log_say("[user.real_name]/[user.key] : [text]")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -146,6 +147,7 @@
 		else if (M in dead_mob_list)
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
+	log_say("[user.real_name]/[user.key] : [text]")
 
 
 //////////////////////////TYPES OF GUARDIANS
