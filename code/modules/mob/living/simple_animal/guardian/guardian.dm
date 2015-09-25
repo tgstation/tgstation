@@ -183,14 +183,17 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
-	if(istype(AM, /mob/living/))
-		var/mob/living/M = AM
-		if(AM != src.summoner)
-			M.adjust_fire_stacks(7)
-			M.IgniteMob()
+	src.collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
 	..()
+	src.collision_ignite(AM)
+
+/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+	..()
+	src.collision_ignite(AM)
+
+/mob/living/simple_animal/hostile/guardian/fire/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
@@ -199,11 +202,7 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
 	..()
-	if(istype(AM, /mob/living/))
-		var/mob/living/M = AM
-		if(AM != src.summoner)
-			M.adjust_fire_stacks(7)
-			M.IgniteMob()
+	src.collision_ignite(AM)
 //Standard
 
 /mob/living/simple_animal/hostile/guardian/punch
