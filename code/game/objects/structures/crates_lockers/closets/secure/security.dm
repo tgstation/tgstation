@@ -264,12 +264,12 @@
 	new /obj/item/weapon/gun/energy/laser(src)
 	new /obj/item/weapon/gun/energy/laser(src)
 
-/obj/structure/closet/secure_closet/tec
-	name = "armory TEC locker"
+/obj/structure/closet/secure_closet/tac
+	name = "armory tac locker"
 	req_access = list(access_armory)
-	icon_state = "tec"
+	icon_state = "tac"
 
-/obj/structure/closet/secure_closet/tec/New()
+/obj/structure/closet/secure_closet/tac/New()
 	..()
 	new /obj/item/weapon/gun/projectile/automatic/wt550(src)
 	new /obj/item/ammo_box/magazine/wt550m9(src)
