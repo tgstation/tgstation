@@ -3196,7 +3196,7 @@
 "bjx" = (/obj/machinery/power/apc{dir = 8; name = "Port Emergency Storage APC"; pixel_x = -28; pixel_y = 0},/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/obj/item/weapon/storage/box/lights/mixed,/turf/simulated/floor/plating,/area/storage/emergency2)
 "bjy" = (/obj/effect/landmark{name = "blobstart"},/obj/machinery/light/small{dir = 4},/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/storage/emergency2)
 "bjz" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating,/area/maintenance/fpmaint2{name = "Port Maintenance"})
-"bjA" = (/obj/machinery/door/airlock/maintenance{name = "Mailroom Maintenance"; req_access_txt = "50"},/turf/simulated/floor/plating,/area/maintenance/fpmaint2{name = "Port Maintenance"})
+"bjA" = (/obj/machinery/door/airlock/maintenance{name = "Mailroom Maintenance"; req_access_txt = 0; req_one_access_txt = "50;26"},/turf/simulated/floor/plating,/area/maintenance/fpmaint2{name = "Port Maintenance"})
 "bjB" = (/turf/simulated/floor{dir = 1; icon_state = "floor"},/area/supply/office{name = "\improper Cargo Office"})
 "bjC" = (/obj/effect/landmark{name = "blobstart"},/turf/simulated/floor{dir = 1; icon_state = "floor"},/area/supply/office{name = "\improper Cargo Office"})
 "bjD" = (/turf/simulated/floor,/area/supply/office{name = "\improper Cargo Office"})
