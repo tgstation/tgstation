@@ -139,6 +139,20 @@
 		..()
 		add_mutations.Add(mutations_list[COUGH])
 
+/obj/item/weapon/dnainjector/antidwarf
+	name = "\improper DNA injector (Anti-Dwarfism)"
+	desc = "Helps you grow big and strong."
+	New()
+		..()
+		remove_mutations.Add(mutations_list[DWARFISM])
+
+/obj/item/weapon/dnainjector/dwarf
+	name = "\improper DNA injector (Dwarfism)"
+	desc = "Its a small world after all."
+	New()
+		..()
+		add_mutations.Add(mutations_list[DWARFISM])
+
 /obj/item/weapon/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"
 	desc = "Makes clown minions."
