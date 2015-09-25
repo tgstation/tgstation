@@ -243,6 +243,8 @@
 	new /obj/item/weapon/storage/box/firingpins(src)
 	new /obj/item/weapon/storage/box/rubbershot(src)
 	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/storage/box/rubbershot(src)
+	new /obj/item/weapon/gun/projectile/shotgun(src)
 	new /obj/item/weapon/gun/projectile/shotgun(src)
 	new /obj/item/weapon/gun/projectile/shotgun(src)
 
