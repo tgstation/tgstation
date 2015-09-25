@@ -35,10 +35,11 @@
 				for(var/mob/living/L in alerted)
 					if(!L.stat)
 						L.do_alert_animation(L)
+						egg_cooldown = 1
 				alerted << sound('sound/machines/chime.ogg')
-				egg_cooldown = 1
-				spawn(3000)
-					egg_cooldown = 0
+				if(egg_cooldown)
+					spawn(3000)
+						egg_cooldown = 0
 	..()
 
 /mob/living/proc/do_alert_animation(atom/A)
