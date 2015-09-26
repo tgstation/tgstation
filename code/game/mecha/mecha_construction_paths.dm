@@ -914,7 +914,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Super capacitor is installed."),
 					 //8
-					 list("key"=/obj/item/weapon/stock_parts/capacitor/super,
+					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Phasic scanner module is secured."),
 					 //9
@@ -922,7 +922,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Phasic scanner module is installed."),
 					 //10
-					 list("key"=/obj/item/weapon/stock_parts/scanning_module/phasic,
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Weapon control module is secured."),
 					 //11
@@ -1064,7 +1064,7 @@
 				holder.icon_state = "durand12"
 			else
 				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the phasic scanner module from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/scanning_module/phasic(get_turf(holder))
+				new /obj/item/weapon/stock_parts/scanning_module/adv(get_turf(holder))
 				holder.icon_state = "durand10"
 		if(8)
 			if(diff==FORWARD)
@@ -1080,7 +1080,7 @@
 				holder.icon_state = "durand14"
 			else
 				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the super capacitor from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/capacitor/super(get_turf(holder))
+				new /obj/item/weapon/stock_parts/capacitor/adv(get_turf(holder))
 				holder.icon_state = "durand12"
 		if(6)
 			if(diff==FORWARD)
@@ -1213,7 +1213,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Super capacitor is installed."),
 					 //12
-					 list("key"=/obj/item/weapon/stock_parts/capacitor/super,
+					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Phasic scanner module is secured."),
 					 //13
@@ -1221,7 +1221,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="Phasic scanner module is installed."),
 					 //14
-					 list("key"=/obj/item/weapon/stock_parts/scanning_module/phasic,
+					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Weapon control module is secured."),
 					 //15
@@ -1363,7 +1363,7 @@
 				holder.icon_state = "phazon12"
 			else
 				user.visible_message("[user] removes the phasic scanner module from the [holder].", "<span class='notice'>You remove the phasic scanner module from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/scanning_module/phasic(get_turf(holder))
+				new /obj/item/weapon/stock_parts/scanning_module/adv(get_turf(holder))
 				holder.icon_state = "phazon10"
 		if(12)
 			if(diff==FORWARD)
@@ -1379,7 +1379,7 @@
 				holder.icon_state = "phazon14"
 			else
 				user.visible_message("[user] removes the super capacitor from the [holder].", "<span class='notice'>You remove the super capacitor from the [holder].</span>")
-				new /obj/item/weapon/stock_parts/capacitor/super(get_turf(holder))
+				new /obj/item/weapon/stock_parts/capacitor/adv(get_turf(holder))
 				holder.icon_state = "phazon12"
 		if(10)
 			if(diff==FORWARD)
