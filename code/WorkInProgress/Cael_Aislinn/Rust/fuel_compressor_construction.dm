@@ -115,13 +115,13 @@
 		if(do_after(user, src, 50))
 			new /obj/item/stack/cable_coil(loc,10)
 			user.visible_message(\
-				"<span class='warning'>[user.name] cut the cabling inside the compressor.</span>",\
+				"<span class='warning'>[user.name] cuts the cabling inside the compressor.</span>",\
 				"You cut the cabling inside the port.")
 			has_electronics &= ~2
 		return
 
 	else if (istype(W, /obj/item/weapon/module/rust_fuel_compressor) && opened && !(has_electronics & 1))
-		user << "You trying to insert the circuitboard into the frame..."
+		user << "You try to insert the circuitboard into the frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, src, 10))
 			has_electronics &= 1
