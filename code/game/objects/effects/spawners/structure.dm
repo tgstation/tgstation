@@ -32,12 +32,12 @@ again.
 						/obj/structure/window/reinforced/fulltile
 						)
 
-/obj/effect/spawner/structure/closet_or_box //75% closet / 25% box, intended for maintenance
+/obj/effect/spawner/structure/closet_or_box //80% closet / 20% box, intended for maintenance
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "closet_or_box_spawner"
 
 /obj/effect/spawner/structure/closet_or_box/New()
-	if(prob(25))
+	if(prob(20))
 		new /obj/structure/closet/cardboard(src.loc)
 	else
 		new /obj/structure/closet(src.loc)
