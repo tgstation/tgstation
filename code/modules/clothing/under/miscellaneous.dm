@@ -472,3 +472,11 @@
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+
+/obj/item/clothing/under/sneaking_suit
+	name = "sneaking suit"
+	desc = "Keeping a low profile while wearing this is probably for the best, it doesn't leave much to the imagination."
+	icon_state = "sneaksuit"
+	item_state = "sneaksuit"
+	item_color = "sneaksuit"
+	can_adjust = 0

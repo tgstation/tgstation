@@ -13,6 +13,12 @@
 	var/move_delay = 0
 	var/egg_cooldown = 0
 
+/obj/structure/closet/cardboard/initialize()
+	if(prob(10))
+		var/summon_path = pick(/obj/item/clothing/head/collectable/bandana, /obj/item/clothing/under/sneaking_suit, /obj/item/clothing/mask/cigarette/cigar, /obj/item/robot_parts/l_arm)
+		new summon_path(src)
+	..()
+
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.stunned || user.weakened || user.paralysis || !isturf(loc) || !has_gravity(loc))
 		return

@@ -119,3 +119,9 @@
 	icon_state = "swat"
 	item_state = "swat"
 	burn_state = -1 //Won't burn in fires
+
+/obj/item/clothing/head/collectable/bandana
+	name = "collectable bandana"
+	desc = "A worn out bandana. There's something printed on the front but it's too faded to read..."
+	icon_state = "i_bandana"
+	item_state = "i_bandana"
