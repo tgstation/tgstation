@@ -143,7 +143,7 @@
 			dat += "C4 Explosive<br>"
 
 		dat += "(10 Influence) "
-		if(points >= 10)
+		if(points >= 30)
 			dat += "<a href='?src=\ref[src];purchase=implant'>Implant Breaker</a><br>"
 		else
 			dat += "Implant Breaker<br>"
@@ -252,10 +252,10 @@
 					else
 						pointcost = 50
 			if("implant")
-				if(gang.points >= 10)
+				if(gang.points >= 30)
 					item_type = /obj/item/weapon/implanter/gang
 					usr << "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
-					pointcost = 10
+					pointcost = 30
 			if("gangtool")
 				if(gang.points >= 10)
 					if(usr.mind == gang.bosses[1])
