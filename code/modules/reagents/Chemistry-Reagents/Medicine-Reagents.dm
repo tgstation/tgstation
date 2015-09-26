@@ -587,15 +587,23 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	if(M.eye_blind > 0 && current_cycle > 20)
-		if(prob(30))
+	if(current_cycle > 15)
+		if(M.disabilities & BLIND)
+			if(prob(20))
+				M.disabilities &= ~BLIND
+				M.disabilities &= NEARSIGHT
+				M.eye_blurry = 35
+
+		else if(M.disabilities & NEARSIGHT)
+			M.disabilities &= ~NEARSIGHT
+			M.eye_blurry = 10
+
+		else if(M.eye_blind || M.eye_blurry)
 			M.eye_blind = 0
-		else if(prob(80))
-			M.eye_blind = 0
-			M.eye_blurry = 1
-		if(M.eye_blurry > 0)
-			if(prob(80))
-				M.eye_blurry = 0
+			M.eye_blurry = 0
+		else if(M.eye_stat > 0)
+			M.eye_stat -= 1
+
 	..()
 	return
 

@@ -8,8 +8,6 @@
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 
-	volume = 105
-
 	dir = SOUTH
 	initialize_directions = EAST|NORTH|WEST
 
