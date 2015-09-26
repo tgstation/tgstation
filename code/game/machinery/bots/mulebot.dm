@@ -84,14 +84,9 @@ var/global/mulebot_count = 0
 	wires = null
 	return ..()
 
-obj/machinery/bot/mulebot/bot_reset()
+/obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
-
-obj/machinery/bot/mulebot/Process_Spacemove(movement_dir = 0)
-	if(buckled_mob)
-		return buckled_mob.Process_Spacemove(movement_dir)
-	return ..()
 
 // attack by item
 // emag : lock/unlock,
