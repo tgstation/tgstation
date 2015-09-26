@@ -383,6 +383,16 @@ other types of metals and chemistry for reagents).
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
 
+/datum/design/advmop
+	name = "Advanced Mop"
+	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	id = "advmop"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	build_path = /obj/item/weapon/mop/advanced
+	category = list("Equipment")
+
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"
 	desc = "A floor buffer that can be attached to vehicular janicarts."
