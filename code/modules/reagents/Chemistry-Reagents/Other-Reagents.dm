@@ -499,6 +499,7 @@ datum/reagent/iron
 datum/reagent/gold
 	name = "Gold"
 	id = "gold"
+	synth_cost = 5
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48

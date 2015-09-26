@@ -28,7 +28,7 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	roundstart = 0
+	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail", "snout")
 	attack_verb = "slash"
@@ -99,6 +99,7 @@
 	// Creatures made of leaves and plant matter.
 	name = "Plant"
 	id = "plant"
+	roundstart = 1
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slice"
@@ -174,6 +175,7 @@
 	id = "shadow"
 	darksight = 8
 	sexes = 0
+	roundstart = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
@@ -243,6 +245,7 @@
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "Xenobiological Jelly Entity"
 	id = "jelly"
+	roundstart = 1
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
@@ -431,6 +434,7 @@
 	// Humans turned into fly-like abominations in teleporter accidents.
 	name = "Human?"
 	id = "fly"
+	roundstart = 1
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
@@ -453,6 +457,7 @@
 	id = "skeleton"
 	say_mod = "rattles"
 	sexes = 0
+	roundstart = 1
 	brutemod = 2
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,COLDRES,NOBLOOD,RADIMMUNE)
@@ -473,6 +478,7 @@
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
+	roundstart = 1
 	burnmod = 2
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	specflags = list(NOBREATH,COLDRES,NOBLOOD,RADIMMUNE)
@@ -499,6 +505,7 @@
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
+	roundstart = 1
 	invis_sight = SEE_INVISIBLE_LEVEL_ONE
 	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
 	var/scientist = 0 // vars to not pollute spieces list with castes
