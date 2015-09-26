@@ -91,7 +91,7 @@
 "bM" = (/obj/structure/stool/bed/chair/comfy/brown,/turf/simulated/floor/plasteel{icon_state = "bar"; dir = 2},/area/awaymission/centcomAway/cafe)
 "bN" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/plasteel{tag = "icon-greenfull (NORTH)"; icon_state = "greenfull"; dir = 1},/area/awaymission/centcomAway/cafe)
 "bO" = (/obj/structure/table,/turf/simulated/floor/plasteel{tag = "icon-greenfull (NORTH)"; icon_state = "greenfull"; dir = 1},/area/awaymission/centcomAway/cafe)
-"bP" = (/obj/structure/kitchenspike,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"; dir = 2},/area/awaymission/centcomAway/cafe)
+"bP" = (/obj/machinery/kitchenspike,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"; dir = 2},/area/awaymission/centcomAway/cafe)
 "bQ" = (/obj/machinery/gibber,/turf/simulated/floor/plasteel{icon_state = "freezerfloor"; dir = 2},/area/awaymission/centcomAway/cafe)
 "bR" = (/obj/structure/disposalpipe/segment,/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor/plating,/area/awaymission/centcomAway/cafe)
 "bS" = (/turf/simulated/floor/plasteel{dir = 2; icon_state = "green"},/area/awaymission/centcomAway/cafe)

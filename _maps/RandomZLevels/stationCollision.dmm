@@ -323,7 +323,7 @@
 "gk" = (/turf/simulated/floor/plasteel,/area/awaymission/midblock)
 "gl" = (/obj/structure/closet/wardrobe/pjs,/obj/structure/window/reinforced/tinted{dir = 8; icon_state = "twindow"; tag = ""},/obj/structure/window/reinforced/tinted{dir = 4; icon_state = "twindow"; tag = ""},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel,/area/awaymission/midblock)
 "gm" = (/obj/structure/closet/wardrobe/pink,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
-"gn" = (/obj/structure/kitchenspike,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
+"gn" = (/obj/machinery/kitchenspike,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
 "go" = (/obj/structure/closet/crate,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
 "gp" = (/obj/machinery/gibber,/turf/simulated/floor/plasteel,/area/awaymission/midblock)
 "gq" = (/obj/machinery/vending/boozeomat,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plasteel,/area/awaymission/midblock)
