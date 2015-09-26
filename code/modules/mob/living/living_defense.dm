@@ -293,7 +293,4 @@
 	if(stat || paralysis || stunned || weakened || restrained())
 		return 1
 
-/mob/living/proc/irradiate(amount)
-	if(amount)
-		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
-		apply_effect(amount, IRRADIATE, blocked)
+//Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
