@@ -126,8 +126,8 @@
 			var/datum/reagents/R = B.reagents
 			var/space = R.maximum_volume - R.total_volume
 			var/relative_cost = text2num(href_list["synth_cost"])
-			var/energy_consumption = min(amount*relative_cost, energy * 10, space*relative_cost) / 10
-			R.add_reagent(href_list["dispense"], energy_consumption/relative_cost)
+			var/energy_consumption = 0.1 * min(amount*relative_cost, energy * 10, space*relative_cost)
+			R.add_reagent(href_list["dispense"], 10 * energy_consumption / relative_cost)
 			energy = max(energy - energy_consumption, 0)
 
 	if(href_list["ejectBeaker"])
