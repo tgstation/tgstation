@@ -138,8 +138,6 @@
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//laser pointer image
-	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-		return
 	icon_state = "pointer_[pointer_icon_state]"
 	var/list/showto = list()
 	for(var/mob/M in range(7,targloc))
@@ -147,6 +145,8 @@
 			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
 	var/list/click_params = params2list(params)
+	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+		return
 	I.pixel_x = (text2num(click_params["icon-x"]) - 16)
 	I.pixel_y = (text2num(click_params["icon-y"]) - 16)
 
