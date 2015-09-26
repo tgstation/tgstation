@@ -71,3 +71,14 @@
 	contents = list()
 	new /obj/item/clothing/suit/bio_suit/plasma( src )
 	new /obj/item/clothing/head/bio_hood/plasma( src )
+
+/obj/structure/closet/l3closet/anomaly
+	name = "anomaly suit closet"
+	desc = "It's a storage unit for anomaly suits."
+
+/obj/structure/closet/l3closet/anomaly/New()
+	..()
+	contents = list()
+	new /obj/item/clothing/suit/bio_suit/anomaly( src )
+	new /obj/item/clothing/head/bio_hood/anomaly( src )
+	new /obj/item/clothing/gloves/color/latex( src )
