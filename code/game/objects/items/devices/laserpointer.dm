@@ -145,10 +145,14 @@
 			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
 	var/list/click_params = params2list(params)
-	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-		return
-	I.pixel_x = (text2num(click_params["icon-x"]) - 16)
-	I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+	if(click_params)
+		if(click_params["icon-x"])
+			I.pixel_x = text2num(click_params["icon-x"])
+		if(click_params["icon-y"])
+			I.pixel_x = text2num(click_params["icon-y"])
+	else
+		I.pixel_x = target.pixel_x + rand(-5,5)
+		I.pixel_y = target.pixel_y + rand(-5,5)
 
 	if(outmsg)
 		user << outmsg
