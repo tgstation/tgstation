@@ -477,6 +477,7 @@ datum/reagent/consumable/fat
 
 datum/reagent/consumable/fat/on_mob_life(var/mob/living/M as mob)
 		M.overeatduration += 20 //Eating more than 10u will make you fat, 10u will give 500 overeatduration
+		..()
 
 datum/reagent/lube/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
@@ -493,6 +494,7 @@ datum/reagent/consumable/fat/concentrated
 
 datum/reagent/consumable/fat/concentrated/on_mob_life(var/mob/living/M as mob)
 		M.overeatduration += 40 //Eating 5u or more will make you fat, 4.8u will give 500 overeatduration
+		..()
 
 datum/reagent/fat/concentrated/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T)) return
