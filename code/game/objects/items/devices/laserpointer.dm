@@ -138,6 +138,8 @@
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//laser pointer image
+	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+		return
 	icon_state = "pointer_[pointer_icon_state]"
 	var/list/showto = list()
 	for(var/mob/M in range(7,targloc))
