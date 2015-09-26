@@ -1134,7 +1134,7 @@
 						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 
-/mob/living/silicon/robot/syndicate/New(loc)
+/mob/living/silicon/robot/syndicate/medical/New(loc)
 	..()
 	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
 	spawn(5)
