@@ -36,6 +36,26 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 
+	warmblooded = 0			//Can't stabilize their temperature
+
+	//Hibernation vars
+	var/hibernating = 0
+	var/hiberncounter = 0	//Incremented when in cold
+	var/hibernsleep = 20		//When will you fall unconscious?
+	var/hibernmax = 40		//How deep do you hibernate?
+
+	coldmod = 1
+	heatmod = 1
+
+	//Might be too prohibitive, needs testing. Room temperature is roughly T20C. Might want to increase base speed just a bit too.
+	heat_damage_limit = T0C+60
+	cold_damage_limit = T0C-20
+	//May be too prohibitive
+	cold_slow = T0C+25
+	hot_slow = T0C+35
+
+	base_hunger_rate = HUNGER_FACTOR/2
+
 /datum/species/lizard/handle_speech(message)
 	// jesus christ why
 	if(copytext(message, 1, 2) != "*")
@@ -43,6 +63,34 @@
 
 	return message
 
+/datum/species/lizard/spec_life(mob/living/carbon/human/H)
+	if(H.bodytemperature < T0C+5)
+		hiberncounter++
+		hiberncounter += max(round((cold_slow-10 - H.bodytemperature)/10),3)	//each 10 degrees below 15 increments by one
+	else
+		hiberncounter += max(round((cold_slow-20 - H.bodytemperature)/10),-3)	//each 10 degrees above 5 decrements by one
+	hiberncounter = min(max(hiberncounter, 0), hibernmax)
+
+	if(hiberncounter && !hibernating)
+		H.eye_blurry = max(round(hiberncounter/4), H.eye_blurry)
+
+	if(hiberncounter >= hibernsleep)
+		if(!H.sleeping)
+			H.sleeping += 1
+		H.sleeping += 1
+		if(H.sleeping)
+			hibernating = 1
+
+			//Good temperature resistance when hibernating
+			coldmod = 0.5
+			heatmod = 0.5
+
+	if(hiberncounter < hibernsleep && hibernating)
+		H.sleeping -= 1
+		if(!H.sleeping)
+			hibernating = 0
+			coldmod = 1
+			heatmod = 1
 /*
  PLANTPEOPLE
 */
@@ -514,7 +562,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)
-				if((environment.oxygen /total_moles) >= 0.01)
+				if((environment.oxygen /total_moles) >= 0.01 && (environment.toxins / environment.oxygen) <= PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO)	//At less than 3% oxygen in air you won't combust
 					if(!H.on_fire)
 						H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
 					H.adjust_fire_stacks(0.5)

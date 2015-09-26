@@ -89,6 +89,13 @@
 	var/default_body_temperature = 310.15
 	var/heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
 
+	var/warmblooded = 1		//Do they stabilize body temperature?
+	//Temperatures that affect their speed
+	var/cold_slow = 283.222
+	var/hot_slow = 0
+
+	var/base_hunger_rate = HUNGER_FACTOR
+
 	///////////
 	// PROCS //
 	///////////
@@ -489,14 +496,14 @@
 
 	// nutrition decrease and satiety
 	if (H.nutrition > 0 && H.stat != 2)
-		var/hunger_rate = HUNGER_FACTOR
+		var/hunger_rate = base_hunger_rate
 		if(H.satiety > 0)
 			H.satiety--
 		if(H.satiety < 0)
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
-			hunger_rate = 3 * HUNGER_FACTOR
+			hunger_rate = 3 * base_hunger_rate
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 
@@ -723,8 +730,11 @@
 
 	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
-		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+
+	if(cold_slow && H.bodytemperature < cold_slow)
+		mspeed += (cold_slow - H.bodytemperature) / 10 * (grav+0.5)
+	if(hot_slow && H.bodytemperature > hot_slow)
+		mspeed += (H.bodytemperature - hot_slow) / 10 * (grav+0.5)
 
 	mspeed += speedmod
 
@@ -1155,7 +1165,7 @@
 	//-- OXY --//
 
 	//Too much oxygen! Yes, some species may not like it.
-	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags) && safe_toxins_min)	//For plasmamen
+	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags) && safe_toxins_min && (Toxins_pp / O2_pp) <= PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO)	//For plasmamen
 		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
 		H.apply_damage(Clamp(ratio,HEAT_GAS_DAMAGE_LEVEL_1,HEAT_GAS_DAMAGE_LEVEL_3), BURN, "head")
 		H.throw_alert("too_much_oxy")
@@ -1340,7 +1350,7 @@
 	var/loc_temp = H.get_temperature(environment)
 
 	//Body temperature is adjusted in two steps. First, your body tries to stabilize itself a bit.
-	if(H.stat != DEAD)
+	if(H.stat != DEAD && warmblooded)
 		H.natural_bodytemperature_stabilization(cold_damage_limit, default_body_temperature, heat_damage_limit)
 
 	//Then, it reacts to the surrounding atmosphere based on your thermal protection
