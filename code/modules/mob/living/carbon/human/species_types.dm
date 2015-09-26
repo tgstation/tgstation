@@ -465,8 +465,12 @@
 
 /datum/species/skeleton/spec_life(mob/living/carbon/human/H)
 	if(!voice_init)
-		var/datum/mutation/human/ST = new /datum/mutation/human/sore_throat
-		ST.force_give(H)
+		if(prob(50))
+			var/datum/mutation/human/ST = new /datum/mutation/human/sore_throat
+			ST.force_give(H)
+		else
+			var/datum/mutation/human/W = new /datum/mutation/human/wacky
+			W.force_give(H)
 		voice_init = 1
 /*
  ZOMBIES
