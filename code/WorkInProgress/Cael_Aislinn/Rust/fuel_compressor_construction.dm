@@ -126,7 +126,7 @@
 		if(do_after(user, src, 10))
 			has_electronics &= 1
 			user << "You place the circuitboard inside the frame."
-			del(W)
+			qdel(W)
 		return
 
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && !has_electronics)
@@ -143,7 +143,7 @@
 				"<span class='warning'>[src] has been cut away from the wall by [user.name].</span>",\
 				"You detached the compressor frame.",\
 				"<span class='warning'>You hear welding.</span>")
-			del(src)
+			qdel(src)
 		return
 
 	..()
