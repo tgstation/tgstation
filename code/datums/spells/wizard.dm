@@ -348,6 +348,8 @@
 	cooldown_min = 150
 	invocation_type = "none"
 	animation = "tailsweep"
+	action_icon_state = "tailsweep"
+	action_background_icon_state = "bg_alien"
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
 	if(istype(usr, /mob/living/carbon))
