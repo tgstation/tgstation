@@ -1,6 +1,6 @@
 /obj/item/device/assembly/timer
 	name = "timer"
-	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
+	desc = "Used to time things. Works well with contraptions which have to count down. Tick tock."
 	icon_state = "timer"
 	starting_materials = list(MAT_IRON = 500, MAT_GLASS = 50)
 	w_type = RECYK_ELECTRONIC

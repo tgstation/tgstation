@@ -125,8 +125,15 @@
 		if("deathgasp")
 			message = "<b>\The [src.name]</b> lets out a faint chimper as it collapses and stops moving..."
 			m_type = VISIBLE
+
+		if ("cough")
+			if (!muzzled)
+				message = "<B>[src]</B> coughs!"
+			else
+				message = "<B>[src]</B> makes a strong noise."
+			m_type = HEARABLE
 		if("help")
-			src << "choke, collapse, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
+			src << "choke, collapse, cough, dance, deathgasp, drool, gasp, shiver, gnarl, jump, paw, moan, nod, roar, roll, scratch,\nscretch, shake, sign-#, sit, sulk, sway, tail, twitch, whimper"
 		else
 			custom_emote(VISIBLE, act) //src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
