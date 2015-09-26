@@ -244,9 +244,9 @@
 	new /obj/item/weapon/storage/box/rubbershot(src)
 	new /obj/item/weapon/storage/box/rubbershot(src)
 	new /obj/item/weapon/storage/box/rubbershot(src)
-	new /obj/item/weapon/gun/projectile/shotgun(src)
-	new /obj/item/weapon/gun/projectile/shotgun(src)
-	new /obj/item/weapon/gun/projectile/shotgun(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
+	new /obj/item/weapon/gun/projectile/shotgun/riot(src)
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"

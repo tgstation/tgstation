@@ -1,0 +1,17 @@
+ author: N3X15
+
+delete-after: True
+
+changes: 
+  - rscadd: "All guns in the armory moved to two lockers. 1 extra shotgun has been added, bringing the total up to 3."
+  - rscadd: "All armor in the armory is moved to a locker"
+  - rscadd: "Tac equipment is now in lockers"
+  - rscadd: "An IV drip and blood bag are now in the execution room for lethal injections"
+  - rscadd: "Atropine medipens have been added to code and put into the armory"
+  - rscadd: "As an added touch to medipens, morphine pens also got a unique sprite"
+  - rscadd: "Security lockers now contain security gas masks"
+  - rscadd: "A locked contraband closet has been added to the security office"
+  - rscadd: "Auxiliary storage has replaced evidence storage, with the detective's evidence closet being a single locker more than capable of taking its place"
+  - rscadd: "Detective now has a single evidence closet with an evidence bag in it"
+  - rscadd: "Ammo box for beanbags added and in the armory"
+  - rscdel: "The warden's table with 8 gas masks is now a rack of 3 hybrid tasers"
