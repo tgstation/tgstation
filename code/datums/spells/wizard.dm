@@ -297,11 +297,9 @@
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
-	var/xenomorph = 0
+	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
-	var/damage = 5
-	var/weaken_close = 5
-	var/weaken_far = 2
+	var/animation = "shieldsparkles"
 
 	action_icon_state = "repulse"
 
@@ -310,64 +308,49 @@
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
-	if(xenomorph)
-		playsound(user, 'sound/voice/hiss5.ogg', 80, 1, 1)
-	else
-		playsound(user, "sound/magic/Repulse.ogg", 50, 1, -1)
+	playMagSound()
 	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
 		for(var/atom/movable/AM in T)
 			thrownatoms += AM
 
 	for(var/atom/movable/AM in thrownatoms)
 		if(AM == user || AM.anchored) continue
+
 		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
-		if(xenomorph)
-			spawn(0)
-				user.dir = 2
-				sleep(1)
-				user.dir = 4
-				sleep(1)
-				user.dir = 8
-				sleep(1)
-				user.dir = 1
-				sleep(1)
-				user.dir = 2
-		else
-			AM.overlays += targeteffect
+		targeteffect.icon_state = animation
+		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		spawn(10)
-			if(!xenomorph)
-				AM.overlays -= targeteffect
-				qdel(targeteffect)
+			AM.overlays -= targeteffect
+			qdel(targeteffect)
 		if(distfromcaster == 0)
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
-				M.Weaken(weaken_close)
-				M.adjustBruteLoss(damage)
-				if(xenomorph)
-					M << "<span class='userdanger'>You're slammed into the floor by [src]'s tail!</span>"
-				else
-					M << "<span class='userdanger'>You're slammed into the floor by a mystical force!</span>"
+				M.Weaken(5)
+				M.adjustBruteLoss(5)
+				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
-				M.Weaken(weaken_far)
-				if(xenomorph)
-					M << "<span class='userdanger'>You're thrown back by [src]'s tail!</span>"
-				else
-					M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
+				M.Weaken(2)
+				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
 			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
+	sound = 'sound/voice/hiss5.ogg'
 	charge_max = 150
 	clothes_req = 0
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	selection_type = "view"
-	xenomorph = 1
-	damage = 20
+	animation = "tailsweep"
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/C = usr
+		C.spin(6,1)
+	..()
