@@ -97,12 +97,8 @@
 				icon_state = "recharger3"
 
 /obj/machinery/recharger/power_change()
-	if(powered(power_channel))
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
+	..()
 	update_icon()
-	return
 
 /obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
