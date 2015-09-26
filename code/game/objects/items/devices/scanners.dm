@@ -192,7 +192,8 @@ MASS SPECTROMETER
 
 		var/implant_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
-			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+			if(CI.status == ORGAN_ROBOTIC)
+				implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
 			user.show_message("<span class='notice'>[implant_detect]</span>")
