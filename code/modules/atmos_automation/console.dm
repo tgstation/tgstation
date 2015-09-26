@@ -52,7 +52,7 @@
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/send_signal(var/list/data, filter = RADIO_ATMOSIA)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/send_signal() called tick#: [world.time]")
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 	signal.data=data

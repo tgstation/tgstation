@@ -284,7 +284,7 @@
 	src.overlays -= "[base_state]_ani"
 	if(being_built)
 		if(!being_built.materials)
-			being_built.materials = getFromDPool(/datum/materials, being_built)
+			being_built.materials = getFromPool(/datum/materials, being_built)
 		for(var/matID in part.materials)
 			if(copytext(matID, 1, 2) != "$") //it's not a material, let's ignore it
 				continue

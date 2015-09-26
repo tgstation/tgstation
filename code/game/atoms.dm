@@ -142,7 +142,7 @@ var/global/list/ghdel_profiling = list()
 		reagents = null
 
 	if(materials)
-		returnToDPool(materials)
+		returnToPool(materials)
 
 	// Idea by ChuckTheSheep to make the object even more unreferencable.
 	invisibility = 101
@@ -164,7 +164,7 @@ var/global/list/ghdel_profiling = list()
 	on_moved = new("owner"=src)
 	. = ..()
 	if(starting_materials)
-		materials = getFromDPool(/datum/materials, src)
+		materials = getFromPool(/datum/materials, src)
 		for(var/matID in starting_materials)
 			materials.addAmount(matID, starting_materials[matID])
 	AddToProfiler()

@@ -75,7 +75,7 @@ Powernet procs :
 	cables -= C
 	C.powernet = null
 	if(is_empty())
-		returnToDPool(src)
+		returnToPool(src)
 
 // helper proc for removing a power machine from the current powernet
 // warning : this proc doesn't check if the machine exists, but don't worry a runtime should tell you if it doesn't
@@ -84,7 +84,7 @@ Powernet procs :
 	nodes -= M
 	M.powernet = null
 	if(is_empty())
-		returnToDPool(src)
+		returnToPool(src)
 
 // helper proc for removing a power machine from the current powernet
 // warning : this proc doesn't check if the machine exists, but don't worry a runtime should tell you if it doesn't
@@ -93,7 +93,7 @@ Powernet procs :
 	components -= C
 	C.powernet = null
 	if(is_empty())
-		returnToDPool(src)
+		returnToPool(src)
 
 // add a cable to the current powernet
 /datum/powernet/proc/add_cable(obj/structure/cable/C)
@@ -175,7 +175,7 @@ Powernet procs :
 		P.build_status = 1
 	for(var/datum/power_connection/C in components)
 		C.build_status = 1
-	returnToDPool(src)
+	returnToPool(src)
 
 //Hopefully this will never ever have to be used
 var/global/powernets_broke = 0
@@ -184,7 +184,7 @@ var/global/powernets_broke = 0
 /obj/structure/cable/proc/rebuild_from()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/cable/proc/rebuild_from() called tick#: [world.time]")
 	if(!powernet)
-		var/datum/powernet/NewPN = getFromDPool(/datum/powernet)
+		var/datum/powernet/NewPN = getFromPool(/datum/powernet)
 		NewPN.add_cable(src)
 		propagate_network(src, src.powernet)
 		NewPN.load = oldload

@@ -64,10 +64,10 @@
 
 	if(network1)
 		if(network1)
-			returnToDPool(network1)
+			returnToPool(network1)
 	if(network2)
 		if(network1)
-			returnToDPool(network2)
+			returnToPool(network2)
 
 	build_network()
 
