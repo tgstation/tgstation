@@ -393,6 +393,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/mop/advanced
 	category = list("Equipment")
 
+/datum/design/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trashabg with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list("materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PLASMA = 1500)
+	build_path = /obj/item/weapon/storage/bag/trash/bluespace
+	category = list("Equipment")
+
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"
 	desc = "A floor buffer that can be attached to vehicular janicarts."
