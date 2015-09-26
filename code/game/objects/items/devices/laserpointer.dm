@@ -140,7 +140,7 @@
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"
 	var/list/showto = list()
-	for(var/mob/M in range(7,targloc))
+	for(var/mob/M in viewers(7,targloc))
 		if(M.client)
 			showto.Add(M.client)
 	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
