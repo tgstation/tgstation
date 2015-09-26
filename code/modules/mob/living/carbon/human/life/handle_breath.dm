@@ -37,7 +37,11 @@
 
 		//No breath from internal atmosphere so get breath from location
 		if(!breath)
-			if(isobj(loc))
+			if(head && (head.flags & BLOCK_BREATHING)) //Worn items which block breathing are handled first
+				//
+			else if(wear_mask && (wear_mask.flags & BLOCK_BREATHING))
+				//
+			else if(isobj(loc))
 				var/obj/location_as_object = loc
 				breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
 			else if(isturf(loc))

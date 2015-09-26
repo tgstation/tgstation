@@ -69,13 +69,13 @@
 
 	if(istype(T)) //Incase we're not on a turf, pool ourselves, something happened.
 		if(color != "#000000")
-			T.luminosity = 1
+			luminosity = 1
 		else  //No light, set the turf's luminosity to 0 to remove it from view()
 			#if LIGHTING_TRANSITIONS == 1
 			spawn(LIGHTING_TRANSITION_SPEED)
-				T.luminosity = 0
+				luminosity = 0
 			#else
-			T.luminosity = 0
+			luminosity = 0
 			#endif
 
 		universe.OnTurfTick(T)
@@ -122,4 +122,4 @@
 //Override here to prevent things accidentally moving around overlays.
 /atom/movable/lighting_overlay/forceMove(atom/destination, var/harderforce = 0)
 	if(harderforce)
-		.= ..()
+		. = ..()

@@ -216,6 +216,13 @@ var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
 
 	return reagent_names
 
+/obj/item/weapon/reagent_containers/proc/get_reagent_ids()
+	var/list/reagent_ids = list()
+	for (var/datum/reagent/R in reagents.reagent_list)
+		reagent_ids += R.id
+
+	return reagent_ids
+
 /obj/item/weapon/reagent_containers/proc/reagentlist(var/obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/proc/reagentlist() called tick#: [world.time]")
 	var/data

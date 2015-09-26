@@ -8,7 +8,7 @@ Committing
 This will make sure in the new version of your map, no paths are needlessly changed, thus instead of 8000 lines changed you'll get 50 lines changed. This not only reduces size of your commit, it also makes it possible to get an overview of your map changes on the "files changed" page in your pull request.
 
 Merging
-The easiest way to do merging is to install the merge driver. For this, open `Baystation12/.git/config` in a text editor, and paste the following lines to the end of it:
+The easiest way to do merging is to install the merge driver. For this, open `vgstation13/.git/config` in a text editor, and paste the following lines to the end of it:
 
 [merge "merge-dmm"]
 	name = mapmerge driver

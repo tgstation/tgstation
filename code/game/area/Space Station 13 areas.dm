@@ -228,6 +228,10 @@ proc/process_adminbus_teleport_locs()
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
 
+/area/shuttle/supply
+	name = "supply shuttle"
+	icon_state = "shuttle3"
+
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
 	music = "music/escape.ogg"

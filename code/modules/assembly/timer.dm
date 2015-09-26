@@ -92,6 +92,7 @@
 
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
+		message_admins("[key_name_admin(usr)] [timing ? "started" : "stopped"] a timer at [formatJumpTo(src)]")
 		update_icon()
 
 	if(href_list["tp"])

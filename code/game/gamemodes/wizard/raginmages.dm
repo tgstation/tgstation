@@ -41,12 +41,12 @@
 			continue
 		if(istype(wizard.current,/mob/living/carbon/brain))
 			continue
-		if(wizard.current.stat==2)
+		if(wizard.current.stat == DEAD)
 			continue
-		if(wizard.current.stat==1)
+		if(wizard.current.stat == UNCONSCIOUS)
 			if(wizard.current.health < 0)
 				wizard.current << "<span class='warning'><font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font></span>"
-				wizard.current.stat = 2
+				wizard.current.stat = DEAD
 				continue
 		wizards_alive++
 
@@ -61,7 +61,7 @@
 			return 1
 		else
 			make_more_mages()
-	return 0
+	return ..() // Check for shuttle and nuke.
 
 /datum/game_mode/wizard/raginmages/proc/make_more_mages()
 

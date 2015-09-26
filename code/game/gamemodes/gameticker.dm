@@ -316,8 +316,10 @@ var/global/datum/controller/gameticker/ticker
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
 			for(var/mob/living/M in living_mob_list)
-				if(M.loc.z == 1)
-					M.death()//No mercy
+				if(M)
+					var/turf/T = get_turf(M)
+					if(T && T.z == 1)
+						M.death()//No mercy
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
 	sleep(300)
@@ -418,7 +420,7 @@ var/global/datum/controller/gameticker/ticker
 					blackbox.save_all_data_to_sql()
 
 			if (watchdog.waiting)
-				world << "<span class='notice'><B>Server will shut down for an automatic update [config.map_voting ? "[(restart_timeout/10)] seconds." : "in a few seconds."]</B></span>"
+				world << "<span class='notice'><B>Server will shut down for an automatic update in [config.map_voting ? "[(restart_timeout/10)] seconds." : "a few seconds."]</B></span>"
 				if(config.map_voting)
 					sleep(restart_timeout) //waiting for a mapvote to end
 				if(!delay_end)
