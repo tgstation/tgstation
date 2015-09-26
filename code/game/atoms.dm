@@ -294,7 +294,7 @@ var/list/blood_splatter_icons = list()
 	return add_blood_list(M)
 
 /obj/item/add_blood(mob/living/carbon/M)
-	var/blood_count = blood_DNA ? 0 : blood_DNA.len
+	var/blood_count = !blood_DNA ? 0 : blood_DNA.len
 	if(!..())
 		return 0
 	//apply the blood-splatter overlay if it isn't already in there
