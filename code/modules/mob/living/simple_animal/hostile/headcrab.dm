@@ -80,8 +80,12 @@
 
 	if(origin)
 		origin.transfer_to(M)
-		if(origin.changeling)
-			origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		if(!origin.changeling)
+			M.make_changeling()
+		if(origin.changeling.can_absorb_dna(M, owner))
+			origin.changeling.add_profile(owner, M)
+
+		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key
 	owner.gib()
 
