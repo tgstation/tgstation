@@ -205,4 +205,5 @@
 		canmove = 0
 	else
 		canmove = 1
+	update_transform()
 	return canmove
