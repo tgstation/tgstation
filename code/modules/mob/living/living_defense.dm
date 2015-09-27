@@ -109,7 +109,10 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
+		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+						"<span class='userdanger'>You're set on fire!</span>")
 		src.AddLuminosity(3)
+		throw_alert("fire")
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -117,6 +120,7 @@
 		on_fire = 0
 		fire_stacks = 0
 		src.AddLuminosity(-3)
+		clear_alert("fire")
 		update_fire()
 
 /mob/living/proc/update_fire()
@@ -154,17 +158,10 @@
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
-	var/L_old_on_fire = L.on_fire
 
 	if(on_fire) //Only spread fire stacks if we're on fire
-		fire_stacks /= 2
-		L.fire_stacks += fire_stacks
+		L.fire_stacks = fire_stacks
 		L.IgniteMob()
-
-	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
-		L.fire_stacks /= 2
-		fire_stacks += L.fire_stacks
-		IgniteMob()
 
 //Mobs on Fire end
 

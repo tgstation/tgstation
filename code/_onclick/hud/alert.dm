@@ -185,6 +185,10 @@ wall or lattice strucure, to push yourself off of if you want to move. A jetpack
 magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extuingisher, \
 or shoot a gun to move around via Newton's 3rd Law of motion."
 
+/obj/screen/alert/fire
+	name = "On Fire"
+	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
+
 //ALIENS
 
 /obj/screen/alert/alien_tox
@@ -288,6 +292,9 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	if(master)
 		return usr.client.Click(master, location, control, params)
+	else if(isliving(usr))
+		var/mob/living/L = usr
+		return L.resist()
 
 /obj/screen/alert/Destroy()
 	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!
