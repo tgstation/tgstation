@@ -304,18 +304,6 @@
 		..()
 		add_mutations.Add(mutations_list[MUT_MUTE])
 
-/obj/item/weapon/dnainjector/antismile
-	name = "\improper DNA injector (Anti-Smile)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[SMILE])
-
-/obj/item/weapon/dnainjector/smilemut
-	name = "\improper DNA injector (Smile)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[SMILE])
-
 /obj/item/weapon/dnainjector/unintelligablemut
 	name = "\improper DNA injector (Unintelligable)"
 	New()
@@ -328,38 +316,3 @@
 		..()
 		remove_mutations.Add(mutations_list[UNINTELLIGABLE])
 
-/obj/item/weapon/dnainjector/swedishmut
-	name = "\improper DNA injector (Swedish)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[SWEDISH])
-
-/obj/item/weapon/dnainjector/antiswedish
-	name = "\improper DNA injector (Anti-Swedish)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[SWEDISH])
-
-/obj/item/weapon/dnainjector/chavmut
-	name = "\improper DNA injector (Chav)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[CHAV])
-
-/obj/item/weapon/dnainjector/antichav
-	name = "\improper DNA injector (Anti-Chav)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[CHAV])
-
-/obj/item/weapon/dnainjector/elvismut
-	name = "\improper DNA injector (Elvis)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[ELVIS])
-
-/obj/item/weapon/dnainjector/antielvis
-	name = "\improper DNA injector (Anti-Elvis)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[ELVIS])
