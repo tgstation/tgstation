@@ -411,6 +411,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
 	dangerous_existence = 1 //So so much
+	roundstart = 1
 	var/skin = 0
 
 /datum/species/plasmaman/skin
