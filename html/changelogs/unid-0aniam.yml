@@ -1,0 +1,6 @@
+author: Unid
+
+changes: 
+  - rscadd: Humans can pick up animals which are smaller than them. Tiny animals can be held with one hand, bigger ones must be held with two hands.
+  - tweak: Alien larvae are now tiny, instead of human-sized.
+  - tweak: Animals can be put into kitchen machines.

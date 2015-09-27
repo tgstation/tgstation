@@ -2,44 +2,7 @@
   Tiny babby plant critter plus procs.
 */
 
-//Helper object for picking dionaea (and other creatures) up.
-/obj/item/weapon/holder
-	name = "holder"
-	desc = "You shouldn't ever see this."
-
-/obj/item/weapon/holder/diona
-
-	name = "diona nymph"
-	desc = "It's a tiny plant critter."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "nymph"
-	slot_flags = SLOT_HEAD
-	origin_tech = "magnets=3;biotech=5"
-
-/obj/item/weapon/holder/New()
-	..()
-	processing_objects.Add(src)
-
-/obj/item/weapon/holder/Destroy()
-	//Hopefully this will stop the icon from remaining on human mobs.
-	if(istype(loc,/mob/living))
-		var/mob/living/A = src.loc
-		src.loc = null
-		A.update_icons()
-	processing_objects.Remove(src)
-	..()
-
-/obj/item/weapon/holder/process()
-	if(!loc) del(src)
-
-	if(istype(loc,/turf) || !(contents.len))
-		for(var/mob/M in contents)
-			M.loc = get_turf(src)
-		del(src)
-
-/obj/item/weapon/holder/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	for(var/mob/M in src.contents)
-		M.attackby(W,user)
+//Holders have been moved to code/modules/mob/living/holders.dm
 
 //Mob defines.
 /mob/living/carbon/monkey/diona
@@ -48,6 +11,7 @@
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
 	species_type = /mob/living/carbon/monkey/diona
+	holder_type = /obj/item/weapon/holder/diona
 	var/list/donors = list()
 	var/ready_evolve = 0
 	canWearHats = 0
@@ -57,14 +21,8 @@
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M as mob)
 
 	//Let people pick the little buggers up.
-	if(M.a_intent == I_HELP)
-		var/obj/item/weapon/holder/diona/D = new(loc)
-		src.loc = D
-		D.name = loc.name
-		D.attack_hand(M)
-		M << "You scoop up [src]."
-		src << "[M] scoops you up."
-		return
+	if((M.a_intent == I_HELP) && (isturf(src.loc)) && (M.get_active_hand() == null)) //Unless their location isn't a turf!
+		scoop_up(M)
 
 	..()
 

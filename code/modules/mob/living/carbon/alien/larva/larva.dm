@@ -8,6 +8,7 @@
 	health = 25
 	storedPlasma = 50
 	max_plasma = 50
+	size = SIZE_TINY
 
 	var/amount_grown = 0
 	var/max_grown = 200

@@ -160,7 +160,7 @@ var/global/ingredientLimit = 10
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/validateIngredient() called tick#: [world.time]")
 	if(istype(I,/obj/item/weapon/grab) || istype(I,/obj/item/tk_grab)) . = "It won't fit."
 	else if(istype(I,/obj/item/weapon/disk/nuclear)) . = "It's the fucking nuke disk!"
-	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || deepFriedEverything) . = "valid"
+	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks) || istype(I,/obj/item/weapon/holder) || deepFriedEverything) . = "valid"
 	else if(istype(I,/obj/item/weapon/reagent_containers)) . = "transto"
 	else if(istype(I,/obj/item/organ))
 		var/obj/item/organ/organ = I
@@ -224,11 +224,23 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/proc/makeFood(var/foodType)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/cooking/proc/makeFood() called tick#: [world.time]")
+	if(istype(src.ingredient, /obj/item/weapon/holder))
+		var/obj/item/weapon/holder/H = src.ingredient
+		if(H.stored_mob)
+			H.stored_mob.ghostize()
+			H.stored_mob.death()
+			H.contents -= H.stored_mob
+			qdel(H.stored_mob)
+			H.stored_mob = null
+
 	var/obj/item/I = src.ingredient
 	var/obj/item/weapon/reagent_containers/food/new_food = new foodType(src.loc,I)
 	if(cooks_in_reagents)
 		transfer_reagents_to_food(new_food)
-	I.reagents.trans_to(new_food,I.reagents.total_volume)
+
+	if(I.reagents)
+		I.reagents.trans_to(new_food,I.reagents.total_volume)
+
 	if (istype(new_food, /obj/item/weapon/reagent_containers/food/snacks/customizable))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/F = new_food
 		F.ingredients += I
@@ -304,7 +316,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/cerealmaker/makeFood()
 	var/obj/item/weapon/reagent_containers/food/snacks/cereal/C = new(src.loc)
-	if(istype(src.ingredient,/obj/item/weapon/reagent_containers))
+	if(src.ingredient.reagents)
 		src.ingredient.reagents.trans_to(C,src.ingredient.reagents.total_volume)
 	if(cooks_in_reagents)
 		src.transfer_reagents_to_food(C) //add the stuff from the machine
@@ -312,8 +324,16 @@ var/global/ingredientLimit = 10
 	var/image/I = image(getFlatIcon(src.ingredient, src.ingredient.dir, 0))
 	I.transform *= 0.7
 	C.overlays += I
+
+	if(istype(src.ingredient, /obj/item/weapon/holder))
+		var/obj/item/weapon/holder/H = src.ingredient
+		if(H.stored_mob)
+			H.stored_mob.ghostize()
+			H.stored_mob.death()
+
 	qdel(src.ingredient)
 	src.ingredient = null
+
 	return
 
 // Deep Fryer //////////////////////////////////////////////////
@@ -383,7 +403,15 @@ var/global/ingredientLimit = 10
 		D.icon = src.ingredient.icon
 		D.icon_state = src.ingredient.icon_state
 		D.overlays = src.ingredient.overlays
-		qdel(src.ingredient)
+
+		if(istype(src.ingredient, /obj/item/weapon/holder))
+			var/obj/item/weapon/holder/H = src.ingredient
+			if(H.stored_mob)
+				H.stored_mob.ghostize()
+				H.stored_mob.death()
+
+			qdel(src.ingredient)
+
 	src.ingredient = null
 	empty_icon() //see if the icon needs updating from the loss of oil
 	return
@@ -434,5 +462,12 @@ var/global/ingredientLimit = 10
 	src.ingredient.mouse_opacity = 1
 	src.ingredient.name = "grilled [src.ingredient.name]"
 	src.ingredient.loc = src.loc
+
+	if(istype(src.ingredient, /obj/item/weapon/holder))
+		var/obj/item/weapon/holder/H = src.ingredient
+		if(H.stored_mob)
+			H.stored_mob.ghostize()
+			H.stored_mob.death()
+
 	src.ingredient = null
 	return
