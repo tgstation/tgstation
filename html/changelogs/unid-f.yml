@@ -7,3 +7,4 @@ changes:
   - bugfix: Using the dissolve power no longer makes you lose your antag status
   - bugfix: Fixed beams not disappearing when shooting turrets
   - bugfix: Buttbot's revenge, flesh to stone, shoe snatch, subjugate and the horsemask curse now allow you to select a target from a list!
+  - tweak: Firelocks that share a turf with airlocks no longer take air information from the airlock's turf
