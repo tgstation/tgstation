@@ -270,20 +270,6 @@
 	item_color = "redskirt"
 	item_state = "r_suit"
 
-/obj/item/clothing/under/blueskirt/greenskirt
-	name = "green skirt"
-	desc = "A green, casual skirt."
-	icon_state = "greenskirt"
-	item_color = "greenskirt"
-	item_state = "g_suit"
-
-/obj/item/clothing/under/blueskirt/yellowskirt
-	name = "yellow skirt"
-	desc = "A yellow, casual skirt."
-	icon_state = "yellowskirt"
-	item_color = "yellowskirt"
-	item_state = "y_suit"
-
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"
