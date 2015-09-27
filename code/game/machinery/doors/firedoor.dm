@@ -25,9 +25,13 @@ var/global/list/alert_overlays_global = list()
 				direction = 3
 			if(WEST)
 				direction = 4
+
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
-		if(dir == turn(source.dir, 180) && source.flags & ON_BORDER)
-			T = get_turf(source)
+
+		if(dir == turn(source.dir, 180) && source.flags & ON_BORDER) //[   ][  |][   ] imagine the | is the source (with dir EAST -> facing right), and the brackets are floors. When we try to get the turf to the left's air info, use the middle's turf instead
+			if(!(locate(/obj/machinery/door/airlock) in get_turf(source))) //If we're on a door, however, DON'T DO THIS -> doors are airtight, so the result will be innacurate! This is a bad snowflake, but as long as it makes the feature freeze go away...
+				T = get_turf(source)
+
 		var/list/rstats = new /list(stats.len)
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
