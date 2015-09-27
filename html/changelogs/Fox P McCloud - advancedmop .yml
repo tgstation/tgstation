@@ -4,5 +4,7 @@ author: Fox P McCloud
 delete-after: True
 
 changes: 
+  - tweak: "Adds a bar of soap to the janitor's locker."
   - rscadd: "Re-adds the advanced mop as a researchable R&D item."
-  - rscadd: "Adds a bluespace trashbag as a researchable R&D item; can hold large quantities of garbage."
+  - rscadd: "Adds a bluespace trashbag as a researchable R&D item; can hold large quantities
+ of garbage."
