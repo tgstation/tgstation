@@ -185,7 +185,7 @@
 			return
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if(thermite)
+	if(thermite && can_thermite)
 		if(W.is_hot()) //HEY CAN THIS SET THE THERMITE ON FIRE ?
 			user.visible_message("<span class='warning'>[user] applies \the [W] to the thermite coating \the [src] and waits</span>", \
 			"<span class='warning'>You apply \the [W] to the thermite coating \the [src] and wait</span>")

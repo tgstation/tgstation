@@ -1307,7 +1307,7 @@
 /datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 5)
-		if(istype(T, /turf/simulated/wall))
+		if(istype(T, /turf/simulated/wall) && T:can_thermite)
 			T:thermite = 1
 			T.overlays.len = 0
 			T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")

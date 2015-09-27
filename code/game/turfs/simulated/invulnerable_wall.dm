@@ -5,9 +5,10 @@
 	icon_state = "riveted"
 	opacity = 1
 	density = 1
+	can_thermite = 0
 
 	walltype = "rwall"
-	hardness = 100
+	hardness = 100 // Hulk can't do dick.
 
 	explosion_block = 2
 	girder_type = /obj/structure/girder/reinforced

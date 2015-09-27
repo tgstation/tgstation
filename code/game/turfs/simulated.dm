@@ -4,6 +4,7 @@
 	var/image/wet_overlay = null
 
 	var/thermite = 0
+	var/can_thermite = 1
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
