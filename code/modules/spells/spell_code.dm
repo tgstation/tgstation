@@ -20,6 +20,22 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/spell_flags = NEEDSCLOTHES
+	//Possible spell flags:
+	//GHOSTCAST to make ghosts be able to cast this
+	//NEEDSCLOTHES to forbit guys without wizard garb from casting this
+	//NEEDSHUMAN to forbid non-humans to cast this
+	//Z2NOCAST to forbit casting this on z-level 2 (centcomm, and wizard spawn)
+	//STATALLOWED to allow dead/unconscious guys (and ghosts) to cast this
+	//IGNOREPREV to make each new target not overlap with the previous one
+	//CONSTRUCT_CHECK used by construct spells - checks for nullrods
+	//NO_BUTTON to prevent spell from showing up in the HUD
+
+	//For targeted spells:
+		//INCLUDEUSER to include user in the target selection
+		//SELECTABLE to allow selecting a target for the spell
+	//For AOE spells:
+		//IGNOREDENSE to ignore dense turfs in selection
+		//IGNORESPACE to ignore space turfs in selection
 	var/invocation = "HURP DURP"	//what is uttered when the wizard casts the spell
 	var/invocation_type = SpI_NONE	//can be none, whisper, shout, and emote
 	var/range = 7					//the range of the spell; outer radius for aoe spells

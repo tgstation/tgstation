@@ -5,7 +5,6 @@
 	charge_type = Sp_RECHARGE
 	charge_max = 150
 	charge_counter = 0
-	spell_flags = 0
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
 	invocation_type = SpI_SHOUT
 	range = 7
@@ -24,7 +23,7 @@
 /spell/targeted/equip_item/horsemask/cast(list/targets, mob/user = usr)
 	..()
 	for(var/mob/living/target in targets)
-		target.visible_message(	"<span class='danger'>[target]'s face  lights up in fire, and after the event a horse's head takes its place!</span>", \
+		target.visible_message(	"<span class='danger'>[target]'s face lights up in fire, and after the event a horse's head takes its place!</span>", \
 								"<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a horse!</span>")
 		flick("e_flash", target.flash)
 

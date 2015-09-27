@@ -5,7 +5,6 @@
 	school = "evocation"
 	charge_type = Sp_RECHARGE
 	charge_max = 150
-	spell_flags = 0
 	invocation = "H'NK!"
 	invocation_type = SpI_SHOUT
 	range = 7
