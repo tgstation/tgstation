@@ -86,7 +86,7 @@
 			heatmod = 0.5
 
 	if(hiberncounter < hibernsleep && hibernating)
-		H.sleeping -= 1
+		H.sleeping = max( H.sleeping - 1, 0)
 		if(!H.sleeping)
 			hibernating = 0
 			coldmod = 1
