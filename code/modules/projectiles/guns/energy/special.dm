@@ -140,6 +140,7 @@
 	var/overheat_time = 16
 	var/recent_reload = 1
 	unique_rename = 1
+	origin_tech = "combat=2;powerstorage=1"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	overheat = 1
@@ -205,6 +206,7 @@
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	can_charge = 0
+	heat = 3800
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()

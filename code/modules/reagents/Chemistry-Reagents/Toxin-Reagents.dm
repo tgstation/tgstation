@@ -31,7 +31,7 @@
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!istype(M) || !M.dna)
+	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method == PATCH)
 		randmuti(M)
@@ -39,8 +39,8 @@
 			randmutb(M)
 		else
 			randmutg(M)
-		domutcheck(M, null)
-		updateappearance(M)
+		M.updateappearance()
+		M.domutcheck()
 	..()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
@@ -123,7 +123,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if (FAT in M.mutations)
+	if (M.disabilities & FAT)
 		M.gib()
 	..()
 	return

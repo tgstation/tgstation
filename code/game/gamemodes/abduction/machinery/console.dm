@@ -4,8 +4,6 @@
 	var/team = 0
 
 /obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	if(!H.dna)
-		return 0
 	return H.dna.species.id == "abductor"
 
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)

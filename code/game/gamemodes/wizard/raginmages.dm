@@ -130,7 +130,7 @@
 	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
 
 	G_found.client.prefs.copy_to(new_character)
-	ready_dna(new_character)
+	new_character.dna.update_dna_identity()
 	new_character.key = G_found.key
 
 	return new_character

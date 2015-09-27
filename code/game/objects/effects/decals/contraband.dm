@@ -1,7 +1,7 @@
 
 //########################## POSTERS ##################################
 
-#define NUM_OF_POSTER_DESIGNS 35 // contraband posters
+#define NUM_OF_POSTER_DESIGNS 36 // contraband posters
 
 #define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
@@ -35,7 +35,7 @@ list(name = "- Donut Corp.", desc = " This poster is an unauthorized advertiseme
 list(name = "- EAT.", desc = " This poster promotes rank gluttony."),
 list(name = "- Tools", desc = " This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."),
 list(name = "- Power", desc = " A poster that positions the seat of power outside Nanotrasen."),
-list(name = "- Power to the People", desc = " Screw those EDF guys!"),
+list(name = "- Space Cube", desc = " Ignorant of Nature's Harmonic 6 Side Space Cube Creation, the Spacemen are Dumb, Educated Singularity Stupid and Evil."),
 list(name = "- Communist State", desc = " All hail the Communist party!"),
 list(name = "- Lamarr", desc = " This poster depicts Lamarr. Probably made by a traitorous Research Director."),
 list(name = "- Borg Fancy", desc = " Being fancy can be for any borg, just need a suit."),
@@ -53,7 +53,8 @@ list(name = "- CC 64K Ad", desc = " The latest portable computer from Comrade Co
 list(name = "- Punch Shit", desc = " Fight things for no reason, like a man!"),
 list(name = "- The Griffin", desc = " The Griffin commands you to be the worst you can be. Will you?"),
 list(name = "- Lizard", desc = " This lewd poster depicts a lizard preparing to mate."),
-list(name = "- Free Drone", desc = " This poster commemorates the bravery of the rogue drone banned by CentComm.") )
+list(name = "- Free Drone", desc = " This poster commemorates the bravery of the rogue drone banned by CentComm."),
+list(name = "- Busty Backdoor Xeno Babes 6", desc = " Get a load, or give, of these all natural Xenos!") )
 
 // LEGIT
 

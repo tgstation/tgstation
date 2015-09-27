@@ -380,3 +380,56 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300)
+	var/list/mob/dead/observer/candidates = list()
+	var/time_passed = world.time
+	if (!Question)
+		Question = "Would you like to be a special role?"
+
+	for(var/mob/dead/observer/G in player_list)
+		if(!G.key || !G.client)
+			continue
+		if(be_special_flag)
+			if(!(G.client.prefs.be_special & be_special_flag))
+				continue
+		if (gametypeCheck)
+			if(!gametypeCheck.age_check(G.client))
+				continue
+		if (jobbanType)
+			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
+				continue
+		spawn(0)
+			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+			switch(alert(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No"))
+				if("Yes")
+					G << "<span class='notice'>Choice registered: Yes.</span>"
+					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
+						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+						G << 'sound/machines/buzz-sigh.ogg'
+						return
+					candidates += G
+				if("No")
+					G << "<span class='danger'>Choice registered: No.</span>"
+					return
+				else
+					return
+	sleep(poll_time)
+
+	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
+	for(var/mob/dead/observer/G in candidates)
+		if(!G.key || !G.client)
+			candidates.Remove(G)
+
+	return candidates
+
+/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+	if(!G_found || !G_found.key)	return
+
+	//First we spawn a dude.
+	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
+
+	G_found.client.prefs.copy_to(new_character)
+	new_character.dna.update_dna_identity()
+	new_character.key = G_found.key
+
+	return new_character

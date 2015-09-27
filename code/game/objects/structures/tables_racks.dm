@@ -28,7 +28,7 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/mob/tableclimber
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
 /obj/structure/table/New()

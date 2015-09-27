@@ -1060,10 +1060,10 @@
 					usr << "<span class='danger'>Resetting DNA failed!</span>"
 				else
 					var/mob/living/carbon/C = current
-					C.dna = changeling.first_prof.dna
+					changeling.first_prof.dna.transfer_identity(C, transfer_SE=1)
 					C.real_name = changeling.first_prof.name
-					updateappearance(C)
-					domutcheck(C)
+					C.updateappearance(mutcolor_update=1)
+					C.domutcheck()
 
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])
@@ -1493,7 +1493,7 @@
 
 	var/mob/living/carbon/human/H = current
 
-	hardset_dna(H,null,null,null,null,/datum/species/abductor,null)
+	H.set_species(/datum/species/abductor)
 	var/datum/species/abductor/S = H.dna.species
 
 	switch(role)
