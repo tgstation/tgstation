@@ -292,18 +292,6 @@
 		..()
 		add_mutations.Add(mutations_list[WACKY])
 
-/obj/item/weapon/dnainjector/antimute
-	name = "\improper DNA injector (Anti-Mute)"
-	New()
-		..()
-		remove_mutations.Add(mutations_list[MUT_MUTE])
-
-/obj/item/weapon/dnainjector/mutemut
-	name = "\improper DNA injector (Mute)"
-	New()
-		..()
-		add_mutations.Add(mutations_list[MUT_MUTE])
-
 /obj/item/weapon/dnainjector/unintelligablemut
 	name = "\improper DNA injector (Unintelligable)"
 	New()
