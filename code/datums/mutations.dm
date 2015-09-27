@@ -277,6 +277,23 @@
 		owner.drop_item()
 		owner.emote("cough")
 
+/datum/mutation/human/dwarfism
+
+	name = "Dwarfism"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
+	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
+
+/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 0.8
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+
+/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 1.25
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
+
 /datum/mutation/human/clumsy
 
 	name = "Clumsiness"

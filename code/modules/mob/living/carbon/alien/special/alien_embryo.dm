@@ -57,6 +57,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			RefreshInfectionImage()
 
 	if(stage == 5 && prob(50))
+		for(var/datum/surgery/S in owner.surgeries)
+			if(S.location == "chest" && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
+				AttemptGrow(0)
+				return
 		AttemptGrow()
 
 
@@ -79,10 +83,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		stage = 4 // Let's try again later.
 		return
 
-	if(owner.lying)
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
-	else
-		owner.overlays += image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_stand")
+	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
+	owner.overlays += overlay
 	spawn(6)
 		var/atom/xeno_loc = owner
 		if(!gib_on_success)
@@ -94,6 +96,9 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(gib_on_success)
 			owner.stomach_contents += new_xeno
 			owner.gib()
+		else
+			owner.adjustBruteLoss(40)
+			owner.overlays -= overlay
 		qdel(src)
 
 
