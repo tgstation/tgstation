@@ -6,7 +6,7 @@
 	item_state = "implantcase"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 1.0
+	w_class = 1
 	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
 	var/obj/item/weapon/implant/imp = null
@@ -82,4 +82,12 @@
 
 /obj/item/weapon/implantcase/weapons_auth/New()
 	imp = new /obj/item/weapon/implant/weapons_auth(src)
+	..()
+
+/obj/item/weapon/implantcase/adrenaline
+	name = "implant case - 'Adrenaline'"
+	desc = "A glass case containing an adrenaline implant."
+
+/obj/item/weapon/implantcase/adrenaline/New()
+	imp = new /obj/item/weapon/implant/adrenalin(src)
 	..()

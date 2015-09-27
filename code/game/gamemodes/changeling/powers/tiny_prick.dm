@@ -65,7 +65,7 @@
 	chemical_cost = 40
 	dna_cost = 3
 	genetic_damage = 100
-	var/datum/dna/selected_dna = null
+	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
@@ -81,26 +81,29 @@
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !check_dna_integrity(target))
+	if((target.disabilities & HUSK) || !target.has_dna())
 		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.real_name]")
-	var/datum/dna/NewDNA = selected_dna
+	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
+	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	if(iscarbon(target) && (target.status_flags & CANWEAKEN))
+	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.do_jitter_animation(500)
-		C.take_organ_damage(20, 0) //The process is extremely painful
+		if(C.status_flags & CANWEAKEN)
+			C.do_jitter_animation(500)
+			C.take_organ_damage(20, 0) //The process is extremely painful
 
-	target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
-	spawn(10)
-		hardset_dna(target, NewDNA.uni_identity, NewDNA.struc_enzymes, NewDNA.real_name, NewDNA.blood_type, NewDNA.species.type, NewDNA.features)
-		updateappearance(target)
+		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
+		spawn(10)
+			user.real_name = NewDNA.real_name
+			NewDNA.transfer_identity(C, transfer_SE=1)
+			C.updateappearance(mutcolor_update=1)
+			C.domutcheck()
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
@@ -125,7 +128,7 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !check_dna_integrity(target))
+	if((target.disabilities & HUSK) || !target.has_dna())
 		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	return 1
@@ -171,7 +174,7 @@
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.absorb_dna(target, user)
+		user.mind.changeling.add_profile(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 

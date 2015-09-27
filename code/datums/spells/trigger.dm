@@ -17,7 +17,7 @@
 		qdel(spell)
 	linked_spells = null
 	starting_spells = null
-	..()
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/trigger/cast(list/targets)
 	playMagSound()

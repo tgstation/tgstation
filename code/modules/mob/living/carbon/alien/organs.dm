@@ -1,6 +1,5 @@
 /obj/item/organ/internal/alien
 	origin_tech = "biotech=5"
-	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
@@ -30,6 +29,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel
 	name = "plasma vessel"
+	icon_state = "plasma"
 	origin_tech = "biotech=5;plasma=2"
 	w_class = 3
 	zone = "chest"
@@ -48,6 +48,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/large
 	name = "large plasma vessel"
+	icon_state = "plasma_large"
 	w_class = 4
 	storedPlasma = 200
 	max_plasma = 500
@@ -59,6 +60,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/small
 	name = "small plasma vessel"
+	icon_state = "plasma_small"
 	w_class = 2
 	storedPlasma = 100
 	max_plasma = 150
@@ -66,6 +68,7 @@
 
 /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
+	icon_state = "plasma_tiny"
 	w_class = 1
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
@@ -73,15 +76,17 @@
 /obj/item/organ/internal/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
-		if(owner.health >= owner.maxHealth - owner.getCloneLoss())
+		if(owner.health >= owner.maxHealth)
 			owner.adjustPlasma(plasma_rate)
 		else
-			var/mod = 1
+			var/heal_amt = heal_rate
 			if(!isalien(owner))
-				mod = 0.2
-			owner.adjustBruteLoss(-heal_rate*mod)
-			owner.adjustFireLoss(-heal_rate*mod)
-			owner.adjustOxyLoss(-heal_rate*mod)
+				heal_amt *= 0.2
+			owner.adjustPlasma(plasma_rate*0.5)
+			owner.adjustBruteLoss(-heal_amt)
+			owner.adjustFireLoss(-heal_amt)
+			owner.adjustOxyLoss(-heal_amt)
+			owner.adjustCloneLoss(-heal_amt)
 
 /obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -98,6 +103,7 @@
 
 /obj/item/organ/internal/alien/hivenode
 	name = "hive node"
+	icon_state = "hivenode"
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
@@ -115,6 +121,7 @@
 
 /obj/item/organ/internal/alien/resinspinner
 	name = "resin spinner"
+	icon_state = "stomach-x"
 	zone = "mouth"
 	slot = "resinspinner"
 	origin_tech = "biotech=5;materials=4"
@@ -123,6 +130,7 @@
 
 /obj/item/organ/internal/alien/acid
 	name = "acid gland"
+	icon_state = "acid"
 	zone = "mouth"
 	slot = "acidgland"
 	origin_tech = "biotech=5;materials=2;combat=2"
@@ -131,6 +139,7 @@
 
 /obj/item/organ/internal/alien/neurotoxin
 	name = "neurotoxin gland"
+	icon_state = "neurotox"
 	zone = "mouth"
 	slot = "neurotoxingland"
 	origin_tech = "biotech=5;combat=5"
@@ -139,6 +148,7 @@
 
 /obj/item/organ/internal/alien/eggsac
 	name = "egg sac"
+	icon_state = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
 	w_class = 4

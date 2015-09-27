@@ -59,7 +59,7 @@
 	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
-	del(giver)
+	qdel(giver)
 	return null
 
 /atom/proc/remove_air(amount)
@@ -258,7 +258,7 @@ its easier to just keep the beam vertical.
 /atom/proc/fire_act()
 	return
 
-/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush)
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav.
 		spawn(2)
 			step(AM,  turn(AM.dir, 180))
@@ -280,16 +280,12 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
-	if(ishuman(M) && M.dna)
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
 			return 0
-	if(rejects_blood())
+	if(rejects_blood() || !M.has_dna())
 		return 0
-	if(!istype(M))
-		return 0
-	if(!check_dna_integrity(M))		//check dna is valid and create/setup if necessary
-		return 0					//no dna!
 	return 1
 
 /obj/add_blood(mob/living/carbon/M)
@@ -362,7 +358,7 @@ var/list/blood_splatter_icons = list()
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M)
 	if(istype(src, /turf/simulated))
-		if(check_dna_integrity(M))	//mobs with dna = (monkeys + humans at time of writing)
+		if(M.has_dna())	//mobs with dna = (monkeys + humans at time of writing)
 			var/obj/effect/decal/cleanable/blood/B = locate() in contents
 			if(!B)
 				blood_splatter(src,M,1)

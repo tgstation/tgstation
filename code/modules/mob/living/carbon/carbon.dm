@@ -1,3 +1,7 @@
+/mob/living/carbon/New()
+	create_reagents(1000)
+	..()
+
 /mob/living/carbon/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -18,6 +22,8 @@
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
+	if(dna)
+		qdel(dna)
 	return ..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -74,9 +80,9 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0)
 	shock_damage *= siemens_coeff
-	if (shock_damage<1)
+	if(shock_damage<1 && !override)
 		return 0
 	take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
@@ -95,7 +101,10 @@
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		Stun(3)
 		Weaken(3)
-	return shock_damage
+	if(override)
+		return override
+	else
+		return shock_damage
 
 
 /mob/living/carbon/swap_hand()
@@ -335,11 +344,10 @@
 	return "trails_2"
 
 var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/STEP = 2
-var/const/SLIDE = 4
-var/const/GALOSHES_DONT_HELP = 8
+var/const/SLIDE = 2
+var/const/GALOSHES_DONT_HELP = 4
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
-	loc.handle_slip(src, s_amount, w_amount, O, lube)
+	return loc.handle_slip(src, s_amount, w_amount, O, lube)
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -505,7 +513,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		return 1
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.flags & NODROP))
+	if(!I || (I.flags & (NODROP|ABSTRACT)))
 		return
 
 	unEquip(I)
@@ -573,4 +581,7 @@ var/const/GALOSHES_DONT_HELP = 8
 		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		if(locate(/obj/item/device/assembly/health) in src)
+			stat(null, "Health: [health]")
+
 	add_abilities_to_panel()

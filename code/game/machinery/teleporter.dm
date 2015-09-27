@@ -25,6 +25,7 @@
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
+	return ..()
 
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
@@ -179,7 +180,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in tracked_implants)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -237,7 +238,7 @@
 	name = "teleport"
 	icon = 'icons/obj/stationobjs.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -268,6 +269,7 @@
 	if (power_station)
 		power_station.teleporter_hub = null
 		power_station = null
+	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
@@ -313,8 +315,8 @@
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
 						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-						hardset_dna(human, null, null, null, null, /datum/species/fly)
-						human.regenerate_icons()
+						human.set_species(/datum/species/fly)
+
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return
@@ -389,7 +391,7 @@
 	if (teleporter_console)
 		teleporter_console.power_station = null
 		teleporter_console = null
-	..()
+	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool) && !panel_open)

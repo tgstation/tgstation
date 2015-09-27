@@ -125,6 +125,11 @@
 		return 1
 	return 0
 
+/proc/isswarmer(A)
+	if(istype(A, /mob/living/simple_animal/hostile/swarmer))
+		return 1
+	return 0
+
 /proc/islimb(A)
 	if(istype(A, /obj/item/organ/limb))
 		return 1
@@ -447,9 +452,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					return 2
 		return 1
 	return 0
-
-/mob/proc/has_mutation(mutation)
-	return mutation in src.mutations ? 1 : 0
 
 /proc/get_both_hands(mob/living/carbon/M)
 	var/list/hands = list(M.l_hand, M.r_hand)

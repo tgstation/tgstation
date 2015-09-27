@@ -28,13 +28,13 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/ex_act(severity, target)
 	..()
 	switch(severity)
-		if(3.0)
+		if(3)
 			if (prob(75))
 				src.gets_drilled(null, 1)
-		if(2.0)
+		if(2)
 			if (prob(90))
 				src.gets_drilled(null, 1)
-		if(1.0)
+		if(1)
 			src.gets_drilled(null, 1)
 	return
 
@@ -85,7 +85,7 @@ var/global/list/rockTurfEdgeCache
 	new src.type(T)
 
 /turf/simulated/mineral/random
-	name = "mineral deposit"
+	name = "rock"
 	icon_state = "rock"
 	var/mineralSpawnChanceList = list(
 		"Uranium" = 5, "Diamond" = 1, "Gold" = 10,
@@ -432,10 +432,10 @@ var/global/list/rockTurfEdgeCache
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
-			if(istype(src, /turf/simulated/mineral)) 
+			if(istype(src, /turf/simulated/mineral))
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
-				feedback_add_details("pick_used_mining","[P.name]")
+				feedback_add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 	return
@@ -509,7 +509,6 @@ var/global/list/rockTurfEdgeCache
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
-	ignoredirt = 1
 
 /turf/simulated/floor/plating/asteroid/airless
 	oxygen = 0.01
@@ -534,12 +533,12 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/floor/plating/asteroid/ex_act(severity, target)
 	contents_explosion(severity, target)
 	switch(severity)
-		if(3.0)
+		if(3)
 			return
-		if(2.0)
+		if(2)
 			if (prob(20))
 				src.gets_dug()
-		if(1.0)
+		if(1)
 			src.gets_dug()
 	return
 
@@ -565,13 +564,13 @@ var/global/list/rockTurfEdgeCache
 
 		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1) //FUCK YO RUSTLE I GOT'S THE DIGS SOUND HERE
-		
+
 		if(do_after(user, digging_speed, target = src))
-			if(istype(src, /turf/simulated/floor/plating/asteroid)) 
+			if(istype(src, /turf/simulated/floor/plating/asteroid))
 				user << "<span class='notice'>You dig a hole.</span>"
 				gets_dug()
-				feedback_add_details("pick_used_mining","[W.name]")
-		
+				feedback_add_details("pick_used_mining","[W.type]")
+
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
@@ -601,6 +600,12 @@ var/global/list/rockTurfEdgeCache
 	dug = 1
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
+	return
+
+/turf/simulated/floor/plating/asteroid/singularity_act()
+	return
+
+/turf/simulated/floor/plating/asteroid/singularity_pull(S, current_size)
 	return
 
 /turf/proc/updateMineralOverlays()

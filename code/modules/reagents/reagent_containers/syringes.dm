@@ -66,20 +66,16 @@
 			if(ismob(target))	//Blood!
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					if(H.dna)
-						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
-							user << "<span class='warning'>You are unable to locate any blood!</span>"
-							return
+					if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
+						return
 				if(reagents.has_reagent("blood"))
 					user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 					return
 				if(istype(target, /mob/living/carbon))	//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
-					if(!check_dna_integrity(T))
-						user << "<span class='warning'>You are unable to locate any blood!</span>"
-						return
-					if(NOCLONE in T.mutations)	//target done been eat, no more blood in him
+					if(!T.has_dna() || (T.disabilities & NOCLONE))	//target done been eat, no more blood in him
 						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)
@@ -95,7 +91,7 @@
 
 					if(!B && ishuman(target))
 						var/mob/living/carbon/human/H = target
-						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
+						if(H.dna.species.exotic_blood && H.reagents.total_volume)
 							target.reagents.trans_to(src, amount)
 						else
 							user << "<span class='warning'>You are unable to locate any blood!</span>"
@@ -126,8 +122,6 @@
 		if(SYRINGE_INJECT)
 			if(!reagents.total_volume)
 				user << "<span class='notice'>[src] is empty.</span>"
-				return
-			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
@@ -180,7 +174,7 @@
 					C.inject_blood(src,5)
 				else
 					src.reagents.trans_to(target, amount_per_transfer_from_this)
-				user << "<span class='notice'>You inject 5 units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
+				user << "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>"
 				if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 					mode = SYRINGE_DRAW
 					update_icon()
@@ -220,6 +214,11 @@
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
 	list_reagents = list("spaceacillin" = 15)
+
+/obj/item/weapon/reagent_containers/syringe/bioterror
+	name = "bioterror syringe"
+	desc = "Contains several paralyzing reagents."
+	list_reagents = list("neurotoxin" = 5, "mutetoxin" = 5, "sodium_thiopental" = 5)
 
 /obj/item/weapon/reagent_containers/syringe/stimulants
 	name = "Stimpack"

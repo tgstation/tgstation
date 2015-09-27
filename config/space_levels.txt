@@ -1,0 +1,13 @@
+Main Station;1;linked
+
+Central Command;2;unlinked
+
+Abandoned Satellite;3;linked
+
+Derelicted Station;4;linked
+
+Mining Asteroid;5;linked
+
+Empty Area;6;linked
+
+Empty Area;7;linked

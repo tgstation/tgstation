@@ -1,9 +1,9 @@
-/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet)
+/obj/item/ammo_casing/proc/fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, params, distro, quiet, zone_override = "")
 	distro += variance
 	for (var/i = max(1, pellets), i > 0, i--)
 		var/curloc = user.loc
 		var/targloc = get_turf(target)
-		ready_proj(target, user, quiet)
+		ready_proj(target, user, quiet, zone_override)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
 		if(!throw_proj(targloc, user, params))
@@ -15,12 +15,15 @@
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, quiet)
+/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, quiet, zone_override = "")
 	if (!BB)
 		return
 	BB.original = target
 	BB.firer = user
-	BB.def_zone = user.zone_sel.selecting
+	if (zone_override)
+		BB.def_zone = zone_override
+	else
+		BB.def_zone = user.zone_sel.selecting
 	BB.suppressed = quiet
 
 	if(reagents && BB.reagents)
@@ -33,8 +36,8 @@
 		return 0
 	if(targloc == curloc)
 		if(BB.original == user) //if we target ourselves we go straight to bullet_act()
-			user.bullet_act(BB)
-		del(BB)
+			user.bullet_act(BB, BB.def_zone)
+		qdel(BB)
 		return 1
 	BB.loc = get_turf(user)
 	BB.starting = get_turf(user)

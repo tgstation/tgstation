@@ -14,7 +14,7 @@
 
 /obj/item/clothing/head/helmet/space/chronos/Destroy()
 	dropped()
-	..()
+	return ..()
 
 
 /obj/item/clothing/suit/space/chronos
@@ -55,7 +55,7 @@
 
 /obj/item/clothing/suit/space/chronos/Destroy()
 	dropped()
-	..()
+	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
 	var/mob/living/carbon/human/user = src.loc
@@ -216,5 +216,5 @@
 			holder.remote_control = null
 		if(holder.client && (holder.client.eye == src))
 			holder.client.eye = holder
-	..()
+	return ..()
 

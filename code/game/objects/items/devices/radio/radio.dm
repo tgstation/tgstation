@@ -93,7 +93,9 @@
 	qdel(wires)
 	wires = null
 	remove_radio_all(src) //Just to be sure
-	..()
+	patch_link = null
+	keyslot = null
+	return ..()
 
 /obj/item/device/radio/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr

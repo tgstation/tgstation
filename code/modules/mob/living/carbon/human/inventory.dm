@@ -1,158 +1,5 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
-	if(dna)
-		return dna.species.can_equip(I, slot, disable_warning, src)
-	else
-		switch(slot)
-			if(slot_l_hand)
-				if(l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(r_hand)
-					return 0
-				return 1
-			if(slot_wear_mask)
-				if(wear_mask)
-					return 0
-				if( !(I.slot_flags & SLOT_MASK) )
-					return 0
-				return 1
-			if(slot_back)
-				if(back)
-					return 0
-				if( !(I.slot_flags & SLOT_BACK) )
-					return 0
-				return 1
-			if(slot_wear_suit)
-				if(wear_suit)
-					return 0
-				if( !(I.slot_flags & SLOT_OCLOTHING) )
-					return 0
-				return 1
-			if(slot_gloves)
-				if(gloves)
-					return 0
-				if( !(I.slot_flags & SLOT_GLOVES) )
-					return 0
-				return 1
-			if(slot_shoes)
-				if(shoes)
-					return 0
-				if( !(I.slot_flags & SLOT_FEET) )
-					return 0
-				return 1
-			if(slot_belt)
-				if(belt)
-					return 0
-				if(!w_uniform)
-					if(!disable_warning)
-						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
-					return 0
-				if( !(I.slot_flags & SLOT_BELT) )
-					return
-				return 1
-			if(slot_glasses)
-				if(glasses)
-					return 0
-				if( !(I.slot_flags & SLOT_EYES) )
-					return 0
-				return 1
-			if(slot_head)
-				if(head)
-					return 0
-				if( !(I.slot_flags & SLOT_HEAD) )
-					return 0
-				return 1
-			if(slot_ears)
-				if(ears)
-					return 0
-				if( !(I.slot_flags & SLOT_EARS) )
-					return 0
-				return 1
-			if(slot_w_uniform)
-				if(w_uniform)
-					return 0
-				if( !(I.slot_flags & SLOT_ICLOTHING) )
-					return 0
-				return 1
-			if(slot_wear_id)
-				if(wear_id)
-					return 0
-				if(!w_uniform)
-					if(!disable_warning)
-						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
-					return 0
-				if( !(I.slot_flags & SLOT_ID) )
-					return 0
-				return 1
-			if(slot_l_store)
-				if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
-					return 0
-				if(l_store)
-					return 0
-				if(!w_uniform)
-					if(!disable_warning)
-						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
-					return 0
-				if(I.slot_flags & SLOT_DENYPOCKET)
-					return
-				if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
-					return 1
-			if(slot_r_store)
-				if(I.flags & NODROP)
-					return 0
-				if(r_store)
-					return 0
-				if(!w_uniform)
-					if(!disable_warning)
-						src << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
-					return 0
-				if(I.slot_flags & SLOT_DENYPOCKET)
-					return 0
-				if( I.w_class <= 2 || (I.slot_flags & SLOT_POCKET) )
-					return 1
-				return 0
-			if(slot_s_store)
-				if(I.flags & NODROP) //Suit storage NODROP items drop if you take a suit off, this is to prevent people exploiting this.
-					return 0
-				if(s_store)
-					return 0
-				if(!wear_suit)
-					if(!disable_warning)
-						src << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
-					return 0
-				if(!wear_suit.allowed)
-					if(!disable_warning)
-						usr << "<span class='warning'>You somehow have a suit with no defined allowed items for suit storage, stop that!</span>"  //should be src?
-					return 0
-				if(I.w_class > 4)
-					if(!disable_warning)
-						usr << "<span class='warning'>The [I.name] is too big to attach!</span>"  //should be src?
-					return 0
-				if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, wear_suit.allowed) )  //ugly and un-polymorphic.
-					return 1
-				return 0
-			if(slot_handcuffed)
-				if(handcuffed)
-					return 0
-				if(!istype(I, /obj/item/weapon/restraints/handcuffs))
-					return 0
-				return 1
-			if(slot_legcuffed)
-				if(legcuffed)
-					return 0
-				if(!istype(I, /obj/item/weapon/restraints/legcuffs))
-					return 0
-				return 1
-			if(slot_in_backpack)
-				if (back && istype(back, /obj/item/weapon/storage/backpack))
-					var/obj/item/weapon/storage/backpack/B = back
-					if(B.contents.len < B.storage_slots && I.w_class <= B.max_w_class)
-						return 1
-				return 0
-		return 0 //Unsupported slot
-
-
+	return dna.species.can_equip(I, slot, disable_warning, src)
 
 /mob/living/carbon/human/verb/quick_equip()
 	set name = "quick-equip"
@@ -360,6 +207,8 @@
 			head = I
 			if(head.flags & BLOCKHAIR)
 				update_hair(redraw_mob)	//rebuild hair
+			if(head.flags_inv & HIDEEARS)
+				update_body(redraw_mob)
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
 			shoes = I
@@ -472,3 +321,17 @@
 			burn()
 
 	return shredded
+
+/mob/living/carbon/human/proc/equipOutfit(outfit)
+	var/datum/outfit/O = null
+
+	if(ispath(outfit))
+		O = new outfit
+	else
+		O = outfit
+		if(!istype(O))
+			return 0
+	if(!O)
+		return 0
+
+	return O.equip(src)

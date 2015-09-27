@@ -28,6 +28,11 @@
 
 	var/law_change_counter = 0
 
+/mob/living/silicon/Destroy()
+	radio = null
+	aicamera = null
+	return ..()
+
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
@@ -361,7 +366,7 @@
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent
-		var/damage = rand(10, 20)
+		var/damage = 20
 		if (prob(90))
 			add_logs(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
@@ -381,7 +386,19 @@
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
+		switch(M.melee_damage_type)
+			if(BRUTE)
+				adjustBruteLoss(damage)
+			if(BURN)
+				adjustFireLoss(damage)
+			if(TOX)
+				adjustToxLoss(damage)
+			if(OXY)
+				adjustOxyLoss(damage)
+			if(CLONE)
+				adjustCloneLoss(damage)
+			if(STAMINA)
+				adjustStaminaLoss(damage)
 		updatehealth()
 
 /mob/living/silicon/attack_paw(mob/living/user)

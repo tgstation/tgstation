@@ -65,6 +65,7 @@
 						if(I.status == ORGAN_ORGANIC) // FLESH IS WEAK
 							I.Remove(target, special = 1)
 							qdel(I)
+					H.organs += new /obj/item/organ/limb/robot/chest(src)
 			user.drop_item()
 			qdel(tool)
 			H.update_damage_overlays(0)

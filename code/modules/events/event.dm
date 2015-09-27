@@ -20,6 +20,9 @@
 	var/alertadmins = 1			//should we let the admins know this event is firing
 								//should be disabled on events that fire a lot
 
+	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
+	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
+
 /datum/round_event_control/wizard
 	wizardevent = 1
 

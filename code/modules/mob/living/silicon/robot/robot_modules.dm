@@ -2,13 +2,19 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 100.0
+	w_class = 100
 	item_state = "electronic"
 	flags = CONDUCT
 
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/list/storages = list()
+
+/obj/item/weapon/robot_module/Destroy()
+	modules.Cut()
+	emag = null
+	storages.Cut()
+	return ..()
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -34,7 +40,7 @@
 
 
 /obj/item/weapon/robot_module/New()
-	modules += new /obj/item/device/flash/cyborg(src)
+	modules += new /obj/item/device/assembly/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 	return
@@ -242,7 +248,7 @@
 
 
 /obj/item/weapon/robot_module/syndicate
-	name = "syndicate robot module"
+	name = "syndicate assault robot module"
 
 /obj/item/weapon/robot_module/syndicate/New()
 	..()
@@ -254,6 +260,37 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
+	fix_modules()
+
+/obj/item/weapon/robot_module/syndicate_medical
+	name = "syndicate medical robot module"
+
+/obj/item/weapon/robot_module/syndicate_medical/New()
+	..()
+	modules += new /obj/item/weapon/reagent_containers/borghypo/syndicate(src)
+	modules += new /obj/item/weapon/twohanded/shockpaddles/syndicate(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/surgical_drapes(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
+	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/pinpointer/operative(src)
+	emag = null
+
+	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
+
+	var/obj/item/stack/medical/gauze/cyborg/G = new /obj/item/stack/medical/gauze/cyborg(src)
+	G.source = gauzestore
+	modules += G
+
+	storages += gauzestore
+
 	fix_modules()
 
 /datum/robot_energy_storage

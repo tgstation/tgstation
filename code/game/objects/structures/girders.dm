@@ -229,22 +229,18 @@
 
 /obj/structure/girder/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-			return
-		if(2.0)
+		if(2)
 			if (prob(70))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
-			return
-		if(3.0)
-			if (prob(15))
+		if(3)
+			if (prob(40))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
-			return
-	return
 
 /obj/structure/girder/displaced
 	name = "displaced girder"
@@ -262,22 +258,18 @@
 
 /obj/structure/girder/reinforced/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-			return
-		if(2.0)
+		if(2)
 			if (prob(30))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
-			return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
 				new remains(loc)
 				qdel(src)
-			return
-	return
 
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
@@ -328,18 +320,13 @@
 
 /obj/structure/cultgirder/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-			return
-		if(2.0)
-			if (prob(30))
+		if(2)
+			if(prob(30))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
-			return
-		if(3.0)
-			if (prob(5))
+		if(3)
+			if(prob(5))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
-			return
-		else
-	return

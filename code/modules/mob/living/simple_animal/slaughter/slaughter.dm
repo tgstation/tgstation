@@ -1,9 +1,9 @@
 //////////////////The Monster
 
 /mob/living/simple_animal/slaughter
-	name = "Slaughter Demon"
-	real_name = "Slaughter Demon"
-	desc = "You should run."
+	name = "slaughter demon"
+	real_name = "slaughter demon"
+	desc = "A large, menacing creature covered in armored black scales."
 	speak_emote = list("gurgles")
 	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
@@ -23,6 +23,7 @@
 	attacktext = "wildly tears into"
 	maxHealth = 200
 	health = 200
+	healable = 0
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -30,10 +31,18 @@
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
-	var/playstyle_string = "<B>You are the Slaughter Demon, a terible creature from another existence. You have a single desire: To kill.  \
-						You may Ctrl+Click on blood pools to travel through them, appearing and dissaapearing from the station at will. \
-						Pulling a dead or critical mob while you enter a pool will pull them in with you, allowing you to feast. \
-						You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
+	var/list/consumed_mobs = list()
+	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
+							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and dissaapearing from the station at will. \
+							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
+							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
+
+/mob/living/simple_animal/slaughter/New()
+	..()
+	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
+	AddSpell(bloodspell)
+	if(istype(loc, /obj/effect/dummy/slaughter))
+		bloodspell.phased = 1
 
 /mob/living/simple_animal/slaughter/Life()
 	..()
@@ -44,33 +53,63 @@
 
 /mob/living/simple_animal/slaughter/death()
 	..(1)
-	new /obj/effect/decal/cleanable/blood (src.loc)
-	new /obj/item/weapon/demonheart (src.loc)
+	new /obj/effect/decal/cleanable/blood (get_turf(src))
+	var/obj/effect/decal/cleanable/blood/innards = new (get_turf(src))
+	innards.icon = 'icons/obj/surgery.dmi'
+	innards.icon_state = "innards"
+	innards.name = "pile of viscera"
+	innards.desc = "A repulsive pile of guts and gore."
+	new /obj/item/organ/internal/heart/demon (src.loc)
 	playsound(get_turf(src),'sound/magic/demon_dies.ogg', 200, 1)
-	visible_message("<span class='danger'>The [src] screams in anger as its form collapes into a pool of viscera.</span>")
+	visible_message("<span class='danger'>[src] screams in anger as it collapses into a puddle of viscera, its most recent meals spilling out of it.</span>")
+	for(var/mob/living/M in consumed_mobs)
+		M.loc = get_turf(src)
 	ghostize()
 	qdel(src)
 	return
 
 
 /mob/living/simple_animal/slaughter/phasein()
-	..()
+	. = ..()
 	speed = 0
-	boost = world.time + 30
+	boost = world.time + 60
 
 
-//////////The Loot
-
-/obj/item/weapon/demonheart
-	name = "demon's heart"
-	desc = "It's still faintly beating with rage"
+//The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
+/obj/item/organ/internal/heart/demon
+	name = "demon heart"
+	desc = "Still it beats furiously, emanating an aura of utter hate."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "heart-on"
+	icon_state = "demon_heart"
 	origin_tech = "combat=5;biotech=8"
 
-/obj/item/weapon/demonheart/attack_self(mob/living/user)
-	visible_message("[user] feasts upon the [src].")
-	user << "You absorb some of the demon's power!"
-	user.bloodcrawl = BLOODCRAWL
-	qdel(src)
+/obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
+	if(M != user)
+		return ..()
+	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
+						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
+	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
+		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
+			user <<"<span class='warning'>...and you don't feel any different.</span>"
+			qdel(src)
+			return
+	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
+						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
+	/*for(var/obj/item/organ/internal/O in user.internal_organs)
+		if(istype(O, /obj/item/organ/internal/heart))
+			O.Remove(user, 1)
+			O.loc = get_turf(user)
+			qdel(O)*/
+	user.drop_item()
+	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
+/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(M.mind)
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
+
+/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
+	..()
+	if(M.mind)
+		M.mind.remove_spell(/obj/effect/proc_holder/spell/bloodcrawl)

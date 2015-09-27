@@ -121,7 +121,7 @@
 	name = "Frost Oil"
 	id = "frostoil"
 	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#8BA6E9" // rgb: 139, 166, 233
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
 	switch(current_cycle)
@@ -150,8 +150,8 @@
 	..()
 	return
 
-/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
-	if(volume >= 5)
+/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, reac_volume)
+	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 		//if(istype(T))
@@ -163,12 +163,12 @@
 	description = "A chemical agent used for self-defense and in police work."
 	color = "#B31008" // rgb: 179, 16, 8
 
-/datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
+/datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
 		return
 
 	var/mob/living/carbon/victim = M
-	if(method == TOUCH)
+	if(method == TOUCH || method == VAPOR)
 		//check for protection
 		var/mouth_covered = 0
 		var/eyes_covered = 0
@@ -321,11 +321,10 @@
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 
-/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, volume)
+/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, reac_volume)
 	if (!istype(T))
 		return
-	src = null
-	if(volume >= 3)
+	if(reac_volume >= 3)
 		T.MakeSlippery()
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
@@ -380,11 +379,10 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 
-/datum/reagent/consumable/flour/reaction_turf(turf/T, volume)
-	src = null
+/datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
-		reagentdecal.reagents.add_reagent("flour", volume)
+		reagentdecal.reagents.add_reagent("flour", reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"

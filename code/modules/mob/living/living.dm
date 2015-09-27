@@ -186,7 +186,7 @@ Sorry Giacom. Please don't be mad :(
 		death()
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95.0 && stat == UNCONSCIOUS)
+	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
 
 /mob/living/ex_act(severity, target)
 	..()
@@ -385,7 +385,7 @@ Sorry Giacom. Please don't be mad :(
 	return 0
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
@@ -605,8 +605,8 @@ Sorry Giacom. Please don't be mad :(
 			if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				H.existing_dirs += newdir
 				H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-				if(check_dna_integrity(M)) //blood DNA
-					var/mob/living/carbon/DNA_helper = pulling
+				if(M.has_dna()) //blood DNA
+					var/mob/living/carbon/DNA_helper = M
 					H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
@@ -839,12 +839,12 @@ Sorry Giacom. Please don't be mad :(
 
 	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/C_air_contents = C.airs[1]
+		var/datum/gas_mixture/G = C.AIR1
 
-		if(C_air_contents.total_moles() < 10)
+		if(G.total_moles() < 10)
 			loc_temp = environment.temperature
 		else
-			loc_temp = C_air_contents.temperature
+			loc_temp = G.temperature
 
 	else
 		loc_temp = environment.temperature
@@ -883,7 +883,7 @@ Sorry Giacom. Please don't be mad :(
 		return 0
 	if(invisibility || alpha == 0)//cloaked
 		return 0
-	if(digitalcamo)
+	if(digitalcamo || digitalinvis)
 		return 0
 
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
@@ -895,3 +895,14 @@ Sorry Giacom. Please don't be mad :(
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection()
 	return 0
+
+/mob/living/proc/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1; i <= butcher_results[path];i++)
+				new path(src.loc)
+			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	gib()
