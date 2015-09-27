@@ -4,7 +4,6 @@
 
 	school = "evocation"
 	charge_max = 300
-	spell_flags = 0
 	invocation = "L' C'MMEDIA E F'NITA!"
 	invocation_type = SpI_SHOUT
 	range = 1

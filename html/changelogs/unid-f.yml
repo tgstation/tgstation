@@ -1,0 +1,8 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: It's now possible to build chairs while in a wheelchair
+  - bugfix: Using the dissolve power no longer makes you lose your antag status
+  - bugfix: Buttbot's revenge, flesh to stone, shoe snatch, subjugate as well as clown, french and horse curses now allow you to select a target from a list!
