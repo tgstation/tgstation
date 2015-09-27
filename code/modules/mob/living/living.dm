@@ -1311,7 +1311,7 @@ default behaviour is:
 				our_product.spawn_result(get_turf(src), src)
 			return
 
-	user.visible_message("<span class='notice'>[user] starts butchering \the [src][tool ? "with \the [tool]" : ""].</span>",\
+	user.visible_message("<span class='notice'>[user] starts butchering \the [src][tool ? " with \the [tool]" : ""].</span>",\
 		"<span class='info'>You start butchering \the [src].</span>")
 	src.being_butchered = 1
 
