@@ -39,6 +39,9 @@
 		if("JoinLate")
 			latejoin += loc
 			del(src)
+		if("AssetJoinLate")
+			assistant_latejoin += loc
+			del(src)
 
 		//prisoners
 		if("prisonwarp")
