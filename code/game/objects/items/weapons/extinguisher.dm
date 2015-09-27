@@ -204,14 +204,15 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
-				var/turf/my_target = pick(the_targets)
 				var/datum/reagents/R = new/datum/reagents(5)
+				R.my_atom = src
+				reagents.trans_to_holder(R,1)
+				var/obj/effect/effect/water/spray/W = new /obj/effect/effect/water/spray/( get_turf(src) , R)
+				var/turf/my_target = pick(the_targets)
 				if(!W) return
 				W.reagents = R
 				R.my_atom = W
 				if(!W || !src) return
-				src.reagents.trans_to(W,1)
 				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
