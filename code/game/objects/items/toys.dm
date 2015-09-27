@@ -554,6 +554,7 @@
 	icon_state = "ripleytoy"
 	var/cooldown = 0
 	var/quiet = 0
+	var/activate_sound = 'sound/mecha/mechstep.ogg'
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
@@ -562,7 +563,7 @@
 		cooldown = 1
 		spawn(30) cooldown = 0
 		if (!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
+			playsound(user, activate_sound, 20, 1)
 		return
 	..()
 
@@ -636,6 +637,24 @@
 	desc = "Mini-Mecha action figure! Collect them all! 12/12."
 	icon_state = "reticenceprize"
 	quiet = 1
+
+/obj/item/toy/prize/cenatoy
+	name = "wrestler action figure"
+	desc = "A small figure of a wrestler, but you can't seem to recall his name."
+	icon_state = "cenatoy"
+
+/obj/item/toy/prize/cenatoy/attack_self(mob/user)
+	if(!cooldown)
+		var/message = pick("You can't see me!", "Body slammin' time!", "My name is JOHN CENA!")
+		user << "<span class='notice'>You press the button on the [src].</span>"
+		playsound(user, 'sound/items/cenatoy.ogg', 20, 1)
+		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
+		cooldown = 1
+		spawn(300) cooldown = 0
+		return
+	 ..()
+
+
 
 /*
  * AI core prizes
