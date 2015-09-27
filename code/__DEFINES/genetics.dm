@@ -20,11 +20,8 @@
 #define CHAMELEON	"Chameleon"
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
-#define SMILE		"Smile"
 #define UNINTELLIGABLE		"Unintelligable"
-#define SWEDISH		"Swedish"
-#define CHAV		"Chav"
-#define ELVIS		"Elvis"
+
 
 #define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
 
