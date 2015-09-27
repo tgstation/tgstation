@@ -269,17 +269,9 @@
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/instrument/violin(src)
 	modules += new /obj/item/device/instrument/guitar(src)
-
-	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
-	M.matter = 30
-	modules += M
-
+	modules += new /obj/item/weapon/rsf{matter = 30}(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper(src)
-
-	var/obj/item/weapon/lighter/L = new /obj/item/weapon/lighter(src)
-	L.lit = 1
-	modules += L
-
+	modules += new /obj/item/weapon/lighter{lit = 1}(src)
 	modules += new /obj/item/weapon/storage/bag/tray(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/borgshaker(src)
 	emag = new /obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked(src)
@@ -345,13 +337,8 @@
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	emag = null
 
-	var/datum/robot_energy_storage/gauze/gauzestore = new /datum/robot_energy_storage/gauze(src)
 
-	var/obj/item/stack/medical/gauze/cyborg/G = new /obj/item/stack/medical/gauze/cyborg(src)
-	G.source = gauzestore
-	modules += G
-
-	storages += gauzestore
+	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
 	fix_modules()
 
