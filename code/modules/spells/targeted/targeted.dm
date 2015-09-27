@@ -154,6 +154,9 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 	target.stuttering += amt_stuttering
 
 /spell/targeted/proc/tinfoil_check(mob/living/carbon/human/user)
+	if(!istype(user)) return 0
+
 	if(user.head && istype(user.head,/obj/item/clothing/head/tinfoil))
 		return 1
+
 	return 0

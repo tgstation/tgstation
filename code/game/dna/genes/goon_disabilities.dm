@@ -437,6 +437,9 @@
 			nH.real_name = H.real_name
 			nH.ckey = H.ckey
 			nH.name = "[H.name]'s skeleton"
+
+			if(H.mind)
+				H.mind.transfer_to(nH) //Transfer mind to the new body - to regain vampire/changeling/antag status!
 			//H.decomp_stage = 4
 			H.gib(1)
 		else
