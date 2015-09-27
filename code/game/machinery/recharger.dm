@@ -96,6 +96,10 @@
 			else
 				icon_state = "recharger3"
 
+/obj/machinery/recharger/power_change()
+	..()
+	update_icon()
+
 /obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		..(severity)
@@ -114,7 +118,9 @@
 
 
 /obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
-	if(charging)
+	if(stat & (NOPOWER|BROKEN) || !anchored)
+		icon_state = "rechargeroff"
+	else if(charging)
 		icon_state = "recharger1"
 	else
 		icon_state = "recharger0"
