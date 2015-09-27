@@ -4,7 +4,6 @@
 
 	school = "transmutation"
 	charge_max = 300
-	spell_flags = 0
 	invocation = "DII ODA BAJI"
 	invocation_type = SpI_WHISPER
 	message = "<span class='danger'>You suddenly feel completely overwhelmed!<span>"

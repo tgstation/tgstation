@@ -5,6 +5,8 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 
 
 /spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
+	spell_flags = SELECTABLE
+
 	var/max_targets = 1 //leave 0 for unlimited targets in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
 	var/target_ignore_prev = 1 //only important if max_targets > 1, affects if the spell can be cast multiple times at one person from one cast
 
@@ -154,6 +156,9 @@ Targeted spells have two useful flags: INCLUDEUSER and SELECTABLE. These are exp
 	target.stuttering += amt_stuttering
 
 /spell/targeted/proc/tinfoil_check(mob/living/carbon/human/user)
+	if(!istype(user)) return 0
+
 	if(user.head && istype(user.head,/obj/item/clothing/head/tinfoil))
 		return 1
+
 	return 0

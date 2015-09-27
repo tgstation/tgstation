@@ -214,11 +214,15 @@ var/list/impact_master = list()
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 	if(forcedodge == -1) // the bullet passes through a dense object!
 		bumped = 0 // reset bumped variable!
+
 		if(istype(A, /turf))
 			loc = A
 		else
 			loc = A.loc
-		permutated.Add(A)
+
+		if(permutated)
+			permutated.Add(A)
+
 		return 0
 	else if(!custom_impact)
 		var/impact_icon = null
