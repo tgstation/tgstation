@@ -175,9 +175,15 @@ var/next_external_rsc = 0
 		else
 			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
-	//////////////
-	//DISCONNECT//
-	//////////////
+	if (ckey in clientmessages)
+		for (var/message in clientmessages[ckey])
+			src << message
+		clientmessages.Remove(ckey)
+
+
+//////////////
+//DISCONNECT//
+//////////////
 /client/Del()
 	if(holder)
 		holder.owner = null
