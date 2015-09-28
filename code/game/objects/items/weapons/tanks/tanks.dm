@@ -27,6 +27,9 @@
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	sleep(3)
 	if (H && !qdeleted(H))
+		H.drop_l_hand()
+		H.drop_r_hand()
+		H.shred_clothing(1,150)
 		H.gib()
 	return
 
