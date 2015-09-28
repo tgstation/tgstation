@@ -212,6 +212,8 @@ Made by Xhuis
 	burnmod = 2 //2x burn damage lel
 	heatmod = 2
 
+	roundstart = 0	//Used to inherit from shadows
+
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	//H.shadowling_status = 1 //If they are affected more strongly by flashes and stuff
 	var/light_amount = 0

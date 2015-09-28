@@ -171,7 +171,7 @@
 
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
-	name = "???"
+	name = "Shadow"	//Used to be ???
 	id = "shadow"
 	darksight = 8
 	sexes = 0
@@ -432,7 +432,7 @@
 
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
-	name = "Human?"
+	name = "Flyperson"	//Used to be Human?
 	id = "fly"
 	roundstart = 1
 	say_mod = "buzzes"
