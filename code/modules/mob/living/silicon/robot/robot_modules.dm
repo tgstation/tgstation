@@ -270,7 +270,6 @@
 	modules += new /obj/item/weapon/reagent_containers/borghypo/syndicate(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/syndicate(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/surgical_drapes(src)
 	modules += new /obj/item/weapon/retractor(src)
 	modules += new /obj/item/weapon/hemostat(src)

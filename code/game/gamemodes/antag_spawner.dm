@@ -130,9 +130,9 @@
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
-		user << "<span class='warning'>The teleporter's power has been expended.</span>".
+		user << "<span class='warning'>[src] is out of power!</span>"
 		return
-	if(!user.mind in ticker.mode.syndicates)
+	if(!(user.mind in ticker.mode.syndicates))
 		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
 		return 0
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
