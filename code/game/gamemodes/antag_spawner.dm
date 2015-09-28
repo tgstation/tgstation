@@ -130,7 +130,7 @@
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
-		user << "<span class='warning'>The teleporter's power has been expended.</span>"."
+		user << "<span class='warning'>The teleporter's power has been expended.</span>".
 		return
 	if(!user.mind in ticker.mode.syndicates)
 		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
