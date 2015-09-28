@@ -1330,6 +1330,10 @@ proc/process_adminbus_teleport_locs()
 	name = "\improper Brig Recording Room"
 	icon_state = "rec"
 
+/area/security/evidence
+	name = "\improper Evidence Storage"
+	icon_state = "interrog"
+
 /area/security/interrogation
 	name = "\improper Interrogation Room"
 	icon_state = "interrog"
