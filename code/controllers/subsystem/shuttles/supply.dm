@@ -218,6 +218,7 @@
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub
+		/obj/machinery/telepad
 	)
 	if(A)
 		if(is_type_in_list(A, blacklist))
