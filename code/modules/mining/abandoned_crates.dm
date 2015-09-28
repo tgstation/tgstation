@@ -210,3 +210,6 @@
 				user << "<span class='notice'>Last code attempt had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>"
 		else ..()
 	else ..()
+
+/obj/structure/closet/crate/secure/loot/ex_act() //Overriding ex_act so people dont just drill the crates open to get the goodies inside
+	qdel(src)
