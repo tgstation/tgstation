@@ -278,6 +278,7 @@
 	modules += new /obj/item/weapon/scalpel(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
 	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
