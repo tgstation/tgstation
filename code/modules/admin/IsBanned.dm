@@ -31,7 +31,7 @@
 			if (admin)
 				log_admin("The admin [key] has been allowed to bypass a matching ban on [.["key"]]")
 				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [.["key"]]</span>")
-				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [.["key"]]")
+				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [.["key"]]</span>")
 			else
 				log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 				return .
@@ -79,7 +79,7 @@
 				else
 					log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey]")
 					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey]</span>")
-					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey]")
+					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey]</span>")
 					continue
 			var/expires = ""
 			if(text2num(duration) > 0)
@@ -104,7 +104,7 @@
 		if (admin)
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban")
 			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban</span>")
-			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban")
+			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban</span>")
 			return null
 		else
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["message"]]")
