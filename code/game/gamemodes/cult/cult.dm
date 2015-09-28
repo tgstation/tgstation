@@ -44,6 +44,7 @@
 				M << "<span class='boldannounce'><i>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</i> [message]</span>"
 			else //Emergency comms
 				M << "<span class='ghostalert'><i>Acolyte ???:</i> [message]</span>"
+	log_say("[user.real_name]/[user.key] : [message]")
 
 
 
