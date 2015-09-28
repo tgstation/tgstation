@@ -34,7 +34,7 @@
 	icon_state			= "on"
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on/burn_chamber
-	name				= "\improper Burn Chamber Scrubber" 
+	name				= "\improper Burn Chamber Scrubber"
 
 	frequency			= 1449
 	id_tag				= "inc_out"
@@ -94,7 +94,7 @@
 	if(!radio_connection)
 		return 0
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 	signal.data = list(

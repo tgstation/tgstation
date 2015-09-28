@@ -58,12 +58,15 @@
 /obj/item/device/rcd/Destroy()
 	for(var/cat in schematics)
 		for(var/datum/rcd_schematic/C in schematics[cat])
-			C.Destroy()
+			qdel(C)
 
-	schematics = null
+	schematics		= null
 
-	del(interface)
-	del(spark_system)
+	qdel(interface)
+	qdel(spark_system)
+
+	interface		= null
+	spark_system	= null
 
 	. = ..()
 

@@ -33,7 +33,7 @@
 		toggle_power()
 
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()

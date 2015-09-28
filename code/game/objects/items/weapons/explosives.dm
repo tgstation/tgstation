@@ -21,7 +21,7 @@
 
 /obj/item/weapon/plastique/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()

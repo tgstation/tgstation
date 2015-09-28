@@ -120,7 +120,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/signaler/proc/signal() called tick#: [world.time]")
 	if(!radio_connection) return
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.source = src
 	signal.encryption = code
 	signal.data["message"] = "ACTIVATE"

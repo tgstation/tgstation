@@ -384,7 +384,7 @@
 /obj/machinery/conveyor_switch/proc/send_command(var/command)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/conveyor_switch/proc/send_command() called tick#: [world.time]")
 	if(radio_connection)
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.source=src
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = id_tag

@@ -61,7 +61,7 @@
 
 /obj/machinery/door/airlock/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()

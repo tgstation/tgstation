@@ -18,7 +18,7 @@
 
 /obj/item/weapon/reagent_containers/borghypo/New(loc)
 	..(loc)
-	reagents.Destroy()
+	qdel(reagents)
 	reagents = null
 
 	for(var/reagent in reagent_ids)
@@ -31,8 +31,9 @@
 
 /obj/item/weapon/reagent_containers/borghypo/Destroy()
 	for(var/datum/reagents/reagents in reagent_list)
-		reagents.Destroy()
-		reagents = null
+		qdel(reagents)
+
+	reagent_list = null
 
 	processing_objects -= src
 	..()

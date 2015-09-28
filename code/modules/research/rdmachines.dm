@@ -38,7 +38,7 @@ var/global/list/rnd_machines = list()
 	icon_state_open = "[base_state]_t"
 
 	if(research_flags & TAKESMATIN && !materials)
-		materials = getFromDPool(/datum/materials, src)
+		materials = getFromPool(/datum/materials, src)
 
 	if(ticker) initialize()
 

@@ -326,7 +326,7 @@
 
 	if(subspace_transmission)
 		// First, we want to generate a new radio signal
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 2 // 2 would be a subspace transmission.
 									   // transmission_method could probably be enumerated through #define. Would be neater.
 
@@ -380,7 +380,7 @@
 		filter_type = 1
 
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 2
 
 

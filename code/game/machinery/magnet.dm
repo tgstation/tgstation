@@ -290,7 +290,7 @@
 		if(href_list["radio-op"])
 
 			// Prepare signal beforehand, because this is a radio operation
-			var/datum/signal/signal = getFromDPool(/datum/signal)
+			var/datum/signal/signal = getFromPool(/datum/signal)
 			signal.transmission_method = 1 // radio transmission
 			signal.source = src
 			signal.frequency = frequency
@@ -357,7 +357,7 @@
 			looping = 1
 
 			// Prepare the radio signal
-			var/datum/signal/signal = getFromDPool(/datum/signal)
+			var/datum/signal/signal = getFromPool(/datum/signal)
 			signal.transmission_method = 1 // radio transmission
 			signal.source = src
 			signal.frequency = frequency
