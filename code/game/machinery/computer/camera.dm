@@ -32,7 +32,8 @@ var/global/list/tv_monitors = list()
 
 
 /obj/machinery/computer/security/check_eye(var/mob/user as mob)
-	if ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
+	//To explain ( user.canmove || isvehicle(user.locked_to) ): when you're in a vehicle, your canmove variable is 0. This is to allow using this computer from wheelchairs/vehicles
+	if ((get_dist(user, src) > 1 || ( user.canmove || isvehicle(user.locked_to) ) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 		return null
 	user.reset_view(current)
 	return 1
