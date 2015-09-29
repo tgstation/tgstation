@@ -14,7 +14,7 @@
 	name = "revolution"
 	config_tag = "revolution"
 	antag_flag = BE_REV
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg", "MoMMI", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg", "MoMMI", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Mr. Meeseeks")
 	required_players = 10
 	required_enemies = 1
 	recommended_enemies = 2
