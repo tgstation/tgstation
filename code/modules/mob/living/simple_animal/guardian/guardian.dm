@@ -184,18 +184,27 @@
 				do_teleport(M, M, 10)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
+	..()
+	src.collision_ignite(AM)
+
+/mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
+	..()
+	src.collision_ignite(AM)
+
+/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+	..()
+	src.collision_ignite(AM)
+
+/mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
 		if(AM != src.summoner)
 			M.adjust_fire_stacks(7)
 			M.IgniteMob()
 
-/mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
-	if(istype(AM, /mob/living/))
-		var/mob/living/M = AM
-		if(AM != src.summoner)
-			M.adjust_fire_stacks(7)
-			M.IgniteMob()
+/mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
+	..()
+	src.collision_ignite(AM)
 //Standard
 
 /mob/living/simple_animal/hostile/guardian/punch
@@ -237,7 +246,7 @@
 	speed = 0
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Shift-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
+	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
 	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
 	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of mending wounds and travelling via bluespace."
@@ -295,7 +304,7 @@
 			F.name = "bluespace recieving pad"
 			F.desc = "A recieving zone for bluespace teleportations. Building a wall over it should disable it."
 			F.icon_state = "light_on-w"
-			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Shift+Click. </span></B>"
+			src << "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Alt+Click. </span></B>"
 			if(beacon)
 				beacon.ChangeTurf(/turf/simulated/floor/plating)
 			beacon = F
@@ -304,7 +313,9 @@
 	else
 		src << "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>"
 
-/mob/living/simple_animal/hostile/guardian/healer/ShiftClickOn(atom/movable/A)
+/mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
+	if(!istype(A))
+		return
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to warp a target!</span></B>"
 		return
@@ -438,13 +449,15 @@
 	melee_damage_upper = 15
 	damage_transfer = 0.6
 	range = 13
-	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via shift click."
+	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
 	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holoparasite swarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of stealthily booby trapping items."
 	var/bomb_cooldown = 0
 
-/mob/living/simple_animal/hostile/guardian/bomb/ShiftClickOn(atom/movable/A)
+/mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
+	if(!istype(A))
+		return
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
 		return
@@ -528,31 +541,12 @@
 		return
 	used = TRUE
 	user << "[use_message]"
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the [mob_name] of [user.real_name]?", "pAI", null, FALSE, 100)
+	var/mob/dead/observer/theghost = null
 
-	shuffle(candidates)
-
-	var/time_passed = world.time
-	var/list/consenting_candidates = list()
-
-	for(var/candidate in candidates)
-
-		spawn(0)
-			switch(alert(candidate, "Would you like to play as the [mob_name] of [user.real_name]? Please choose quickly!","Confirmation","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>=50 || !src)
-						return
-					consenting_candidates += candidate
-
-	sleep(50)
-
-	if(!src)
-		return
-
-	if(consenting_candidates.len)
-		var/client/C = null
-		C = pick(consenting_candidates)
-		spawn_guardian(user, C.key)
+	if(candidates.len)
+		theghost = pick(candidates)
+		spawn_guardian(user, theghost.key)
 	else
 		user << "[failure_message]"
 		used = FALSE
