@@ -74,7 +74,7 @@ var/global/list/tv_monitors = list()
 	var/obj/machinery/camera/C = D[t]
 
 	if(C)
-		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
+		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded ||  (!user.canmove && !isvehicle(user.locked_to)) || !( C.can_use() )) && (!istype(user, /mob/living/silicon/ai)))
 			if(!C.can_use() && !isAI(user))
 				src.current = null
 			user.cancel_camera()
