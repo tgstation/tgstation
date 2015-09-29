@@ -26,9 +26,6 @@
 
 /obj/structure/closet/New()
 	..()
-	if(type == /obj/structure/closet && ticker && ticker.current_state == GAME_STATE_PREGAME && prob(20)) //only roundstart generic closets
-		new /obj/structure/closet/cardboard(src.loc)
-		qdel(src)
 	update_icon()
 
 /obj/structure/closet/initialize()
