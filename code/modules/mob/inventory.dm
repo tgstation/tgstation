@@ -175,6 +175,9 @@
 
 	return items
 
+/mob/proc/drop_everything()
+	for(var/obj/item/W in src)
+		unEquip(W)
 
 /mob/proc/get_multitool(var/if_active=0)
 	return null

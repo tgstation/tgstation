@@ -356,7 +356,7 @@
 	if(H.getCloneLoss() < max_clone_damage)
 		H.adjustCloneLoss(1)
 
-	if(prob(5))
+	if(prob(5) && !H.stat)
 		if(stage <3)
 			H.say("HI, I'M MR. MEESEEKS! LOOK AT ME!")
 		else
@@ -418,15 +418,12 @@
 		stage_counter = 1 //to stop the spam of "I CAN'T TAKE IT"
 	var/mob/living/carbon/human/MST = master
 
-	if(MST)
-		if(MST.stat == DEAD)
-			for(var/mob/M in viewers(7, H.loc))
-				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
-			qdel(H)
-	else
+	if((MST && MST.stat == DEAD) || !MST)
 		for(var/mob/M in viewers(7, H.loc))
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
+		H.drop_everything()
 		qdel(H)
+
 /*
  FLIES
 */

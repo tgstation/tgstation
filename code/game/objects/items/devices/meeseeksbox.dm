@@ -25,6 +25,7 @@
 			hardset_dna(M, null, null, null, null, /datum/species/golem/meeseeks)
 			M.set_cloned_appearance()
 			M.real_name = text("Mr. Meeseeks ([rand(1, 1000)])")
+			M.job = "Mr. Meeseeks"
 			M.dna.species.auto_equip(M)
 			M.loc = user.loc
 			M.key = C.key
@@ -32,9 +33,15 @@
 			SM = M.dna.species
 			SM.master = user
 
+			if(M.mind)
+				M.mind.assigned_role = "Mr. Meeseeks" //Should prevent getting picked for antag as a meeseeks
+
 			playsound(loc, 'sound/voice/meeseeks/meeseeksspawn.ogg', 40, 0, 1)
-			request = input("How should Mr. Meeseeks help you today?")
+			request = stripped_input(user, "How should Mr. Meeseeks help you today?")
 			playsound(loc, 'sound/voice/meeseeks/cando.ogg', 40, 0, 1)
+
+			message_admins("[key_name_admin(user)] has summoned a Mr. Meeseeks([key_name_admin(M)]) with the request: [request]")
+			log_game("[key_name(user)] has summoned a Mr. Meeseeks([key_name(M)]) with the request: [request]")
 
 			M << "<span class='notice'>Your master, [user] has given you a command:"
 			M << "<span class='notice'><b> [request].</b>"
@@ -51,6 +58,7 @@
 		switch(alert(user, "Do you wish to send Mr.Meeseeks away?","Mr. Meeseeks dismissal.","Yes","No"))
 			if("Yes")
 				if(SM.stage<3)
+					//Dismissal not being logged right now because that's not in the spec
 					SM.master = null
 					meeseeks = null
 					request = "Nothing"
