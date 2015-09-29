@@ -91,6 +91,9 @@
 		for(var/obj/item/weapon/implant/I in target)
 			if(I != src)
 				qdel(I)
+		if(target.stat != DEAD)		
+-			if(target.mind in ticker.mode.get_gangsters())		
+-				ticker.mode.remove_gangster(target.mind)
 		qdel(src)
 		return -1
 
