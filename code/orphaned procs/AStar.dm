@@ -23,28 +23,28 @@ Mintargetdist: Minimum distance to the target before path returns, could be used
 near a target, but not right to it - for an AI mob with a gun, for example.
 Minnodedist: Minimum number of nodes to return in the path, could be used to give a path a minimum
 length to avoid portals or something i guess?? Not that they're counted right now but w/e.
+
+
+   Modified to provide ID argument - supplied to 'adjacent' proc, defaults to null
+   Used for checking if route exists through a door which can be opened
+
+   Also added 'exclude' turf to avoid travelling over; defaults to null
+
+  Currently, there's four main ways to call AStar
+
+   1) adjacent = "/turf/proc/AdjacentTurfsWithAccess" and distance = "/turf/proc/Distance"
+	Seeks a path moving in all directions (including diagonal) and checking for the correct id to get through doors
+
+   2) adjacent = "/turf/proc/CardinalTurfsWithAccess" and distance = "/turf/proc/Distance_cardinal"
+    Seeks a path moving only in cardinal directions and checking if for the correct id to get through doors
+    Used by most bots, including Beepsky
+
+   3) adjacent = "/turf/proc/AdjacentTurfs" and distance = "/turf/proc/Distance"
+    Same as 1), but don't check for ID. Can get only get through open doors
+
+   4) adjacent = "/turf/proc/AdjacentTurfsSpace" and distance = "/turf/proc/Distance"
+    Same as 1), but check all turf, including unsimulated
 */
-
-// Modified to provide ID argument - supplied to 'adjacent' proc, defaults to null
-// Used for checking if route exists through a door which can be opened
-
-// Also added 'exclude' turf to avoid travelling over; defaults to null
-
-//Currently, there's four main ways to call AStar
-//
-// 1) adjacent = "/turf/proc/AdjacentTurfsWithAccess" and distance = "/turf/proc/Distance"
-//	Seeks a path moving in all directions (including diagonal) and checking for the correct id to get through doors
-//
-// 2) adjacent = "/turf/proc/CardinalTurfsWithAccess" and distance = "/turf/proc/Distance_cardinal"
-//  Seeks a path moving only in cardinal directions and checking if for the correct id to get through doors
-//  Used by most bots, including Beepsky
-//
-// 3) adjacent = "/turf/proc/AdjacentTurfs" and distance = "/turf/proc/Distance"
-//  Same as 1), but don't check for ID. Can get only get through open doors
-//
-// 4) adjacent = "/turf/proc/AdjacentTurfsSpace" and distance = "/turf/proc/Distance"
-//  Same as 1), but check all turf, including unsimulated
-
 
 //////////////////////
 //PathNode object
@@ -79,6 +79,10 @@ length to avoid portals or something i guess?? Not that they're counted right no
 /proc/PathWeightCompare(PathNode/a, PathNode/b)
 	return a.f - b.f
 
+//reversed so that the Heap is a MinHeap rather than a MaxHeap
+/proc/HeapPathWeightCompare(PathNode/a, PathNode/b)
+	return b.f - a.f
+
 //search if there's a PathNode that points to turf T in the Priority Queue
 /proc/SeekTurf(var/PriorityQueue/Queue, turf/T)
 	var/i = 1
@@ -99,7 +103,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 //the actual algorithm
 /proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, turf/exclude=null)
-	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
+	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any
 	var/PathNode/cur //current processed turf
@@ -110,13 +114,13 @@ length to avoid portals or something i guess?? Not that they're counted right no
 		return 0
 
 	//initialization
-	open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end),0))
+	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
 
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 	{
 		//get the lower f node on the open list
-		cur = open.Dequeue() //get the lower f turf in the open list
+		cur = open.Pop() //get the lower f turf in the open list
 		closed.Add(cur.source) //and tell we've processed it
 
 		//if we only want to get near the target, check if we're close enough
@@ -135,6 +139,7 @@ length to avoid portals or something i guess?? Not that they're counted right no
 			while(cur.prevNode)
 				cur = cur.prevNode
 				path.Add(cur.source)
+
 			break
 
 		//IMPLEMENTATION TO FINISH
@@ -148,17 +153,18 @@ length to avoid portals or something i guess?? Not that they're counted right no
 		//var/list/L = call(cur.source,adjacent)(id,closed)
 		var/list/L = cur.source.reachableAdjacentTurfs(atom, id)
 		for(var/turf/T in L)
-			if(T == exclude)
+			if(T == exclude || T in closed)
 				continue
 
 			var/newg = cur.g + call(cur.source,dist)(T)
 			if(!T.PNode) //is not already in open list, so add it
-				open.Enqueue(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
+				open.Insert(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
 			else //is already in open list, check if it's a better way from the current turf
 				if(newg < T.PNode.g)
 					T.PNode.prevNode = cur
 					T.PNode.g = newg
 					T.PNode.calc_f()
+					T.PNode.nt = cur.nt + 1
 					open.ReSort(T.PNode)//reorder the changed element in the list
 
 	}
