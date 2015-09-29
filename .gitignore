@@ -10,3 +10,8 @@
 *.int
 *.backup
 *.db
+
+#Ignore emacs autosaves
+\#*\#
+*~
+.#*
