@@ -280,7 +280,7 @@
 						usr << "<span class='warning'>There's not enough room here!</span>"
 						return
 
-				if(usrarea.type in gang.territory | gang.territory_new)
+				if(usrarea.type in gang.territory|gang.territory_new)
 					if(gang.points >= 30)
 						item_type = /obj/machinery/dominator
 						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
