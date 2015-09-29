@@ -33,17 +33,6 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	spawn(70)
 		qdel(src)
 
-/obj/effect/effect/water/spray/New(loc, datum/reagents/R)
-	reagents = R
-	reagents.my_atom = src
-	var/ccolor = mix_color_from_reagents(reagents.reagent_list)
-	if(ccolor)
-		icon += ccolor
-	. = ..()
-
-	spawn(70)
-		qdel(src)
-
 /obj/effect/effect/water/Destroy()
 	//var/turf/T = src.loc
 	//if (istype(T, /turf))

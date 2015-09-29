@@ -207,7 +207,10 @@
 				var/datum/reagents/R = new/datum/reagents(5)
 				R.my_atom = src
 				reagents.trans_to_holder(R,1)
-				var/obj/effect/effect/water/spray/W = new /obj/effect/effect/water/spray/( get_turf(src) , R)
+				var/obj/effect/effect/water/spray/W = new /obj/effect/effect/water/spray/( get_turf(src))
+				var/ccolor = mix_color_from_reagents(R.reagent_list)
+				if(ccolor)
+					W.color = ccolor
 				var/turf/my_target = pick(the_targets)
 				if(!W) return
 				W.reagents = R
