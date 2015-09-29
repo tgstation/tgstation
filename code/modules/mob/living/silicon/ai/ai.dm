@@ -74,6 +74,7 @@ var/list/ai_list = list()
 	var/obj/machinery/camera/portable/builtInCamera
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+	..()
 	rename_self("ai", 1)
 	name = real_name
 	anchored = 1
@@ -144,8 +145,7 @@ var/list/ai_list = list()
 
 	builtInCamera = new /obj/machinery/camera/portable(src)
 	builtInCamera.network = list("SS13")
-	..()
-	return
+
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src

@@ -2,7 +2,7 @@
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
-	health = 10 //At the end of the day it's still just a box
+	health = 10
 	mob_storage_capacity = 1
 	burntime = 20
 	can_weld_shut = 0
