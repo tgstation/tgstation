@@ -430,11 +430,8 @@
 
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
-<<<<<<< HEAD
-	name = "Fly-Man"
-=======
+
 	name = "Flyperson"	//Used to be Human?
->>>>>>> bceda18949675ca9d0b25794fae7b912cd3acee5
 	id = "fly"
 	roundstart = 1
 	say_mod = "buzzes"
