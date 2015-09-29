@@ -30,6 +30,9 @@
 	var/datum/rcd_schematic/ourschematic
 
 /obj/screen/schematics/New(var/atom/loc, var/datum/rcd_schematic/ourschematic)
+	if(!ourschematic)
+		qdel(src)
+		return
 	..()
 	src.ourschematic = ourschematic
 	icon = ourschematic.icon
