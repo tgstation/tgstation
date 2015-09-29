@@ -107,7 +107,7 @@
 	if(amount < 1)
 		return
 	if(perp.shoes)
-		var/obj/item/weapon/clothing/shoes/S = perp.shoes
+		var/obj/item/clothing/shoes/S = perp.shoes
 		S.track_blood = Clamp(amount, 0, S.track_blood)                //Adding blood to shoes
 
 		if(!blood_overlays[S.type]) //If there isn't a precreated blood overlay make one
