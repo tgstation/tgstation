@@ -25,8 +25,9 @@
 
 #ifdef USE_BYGEX
 
+
 #ifndef LIBREGEX_LIBRARY
-	#define LIBREGEX_LIBRARY "libbygex.so"
+	#define LIBREGEX_LIBRARY "bin/bygex"
 #endif
 
 proc

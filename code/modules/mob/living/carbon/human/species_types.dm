@@ -86,7 +86,7 @@
 			heatmod = 0.5
 
 	if(hiberncounter < hibernsleep && hibernating)
-		H.sleeping -= 1
+		H.sleeping = max( H.sleeping - 1, 0)
 		if(!H.sleeping)
 			hibernating = 0
 			coldmod = 1
@@ -99,7 +99,7 @@
 	// Creatures made of leaves and plant matter.
 	name = "Plant"
 	id = "plant"
-	roundstart = 1
+//	roundstart = 1	Redundant with podpeople right now
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slice"
@@ -145,6 +145,7 @@
 	name = "Podperson"
 	id = "pod"
 	specflags = list(MUTCOLORS,EYECOLOR)
+	roundstart = 1
 
 /datum/species/plant/pod/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -171,7 +172,7 @@
 
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
-	name = "Shadow People"
+	name = "Shadow"	//Used to be ???
 	id = "shadow"
 	darksight = 8
 	sexes = 0
@@ -355,7 +356,7 @@
 	if(H.getCloneLoss() < max_clone_damage)
 		H.adjustCloneLoss(1)
 
-	if(prob(5))
+	if(prob(5) && !H.stat)
 		if(stage <3)
 			H.say("HI, I'M MR. MEESEEKS! LOOK AT ME!")
 		else
@@ -417,22 +418,23 @@
 		stage_counter = 1 //to stop the spam of "I CAN'T TAKE IT"
 	var/mob/living/carbon/human/MST = master
 
-	if(MST)
-		if(MST.stat == DEAD)
-			for(var/mob/M in viewers(7, H.loc))
-				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
-			qdel(H)
-	else
+	if((MST && MST.stat == DEAD) || !MST)
 		for(var/mob/M in viewers(7, H.loc))
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
+		H.drop_everything()
 		qdel(H)
+
 /*
  FLIES
 */
 
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
+<<<<<<< HEAD
 	name = "Fly-Man"
+=======
+	name = "Flyperson"	//Used to be Human?
+>>>>>>> bceda18949675ca9d0b25794fae7b912cd3acee5
 	id = "fly"
 	roundstart = 1
 	say_mod = "buzzes"

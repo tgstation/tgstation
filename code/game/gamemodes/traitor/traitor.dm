@@ -10,7 +10,7 @@
 	name = "traitor"
 	config_tag = "traitor"
 	antag_flag = BE_TRAITOR
-	restricted_jobs = list("Cyborg", "MoMMI")//They are part of the AI if he is traitor so are they, they use to get double chances
+	restricted_jobs = list("Cyborg", "MoMMI", "Mr. Meeseeks")//Borgs are considered part of the AI and protected here so they don't get double chances at antag
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 0
 	required_enemies = 1

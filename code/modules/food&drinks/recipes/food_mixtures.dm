@@ -62,7 +62,7 @@
 	name = "Concentrated Fat"
 	id = "con_fat"
 	result = "cfat"
-	required_reagents = list("fat" = 1, "fuel" = 2, "salt" = 2)
+	required_reagents = list("fat" = 1, "fuel" = 2, "sodiumchloride" = 2)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 5
 	mob_react = 1
