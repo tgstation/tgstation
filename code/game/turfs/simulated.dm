@@ -76,7 +76,8 @@
 						H.Stun(4)
 						H.Weaken(5)
 
-		if(M.flying)	return ..()
+		if(M.flying)
+			return ..()
 
 		switch (src.wet)
 			if(1)

@@ -47,7 +47,7 @@
 	amount = 0
 
 /obj/effect/decal/cleanable/Crossed(mob/living/carbon/human/perp)
-	if(amount)
+	if(amount > 0)
 		add_blood_to(perp, amount)
 
 /obj/effect/decal/cleanable/attack_hand(mob/living/carbon/human/user)
@@ -107,28 +107,29 @@
 	if(amount < 1)
 		return
 	if(perp.shoes)
-		perp.shoes:track_blood = max(amount,perp.shoes:track_blood)                //Adding blood to shoes
+		var/obj/item/weapon/clothing/shoes/S = perp.shoes
+		S.track_blood = Clamp(amount, 0, S.track_blood)                //Adding blood to shoes
 
-		if(!blood_overlays[perp.shoes.type]) //If there isn't a precreated blood overlay make one
-			perp.shoes.generate_blood_overlay()
+		if(!blood_overlays[S.type]) //If there isn't a precreated blood overlay make one
+			S.generate_blood_overlay()
 
-		if(perp.shoes.blood_overlay != null) // Just if(blood_overlay) doesn't work.  Have to use isnull here.
-			perp.shoes.overlays.Remove(perp.shoes.blood_overlay)
+		if(S.blood_overlay != null) // Just if(blood_overlay) doesn't work.  Have to use isnull here.
+			S.overlays.Remove(S.blood_overlay)
 		else
-			perp.shoes.blood_overlay = blood_overlays[perp.shoes.type]
+			S.blood_overlay = blood_overlays[S.type]
 
-		perp.shoes.blood_overlay.color = basecolor
-		perp.shoes.overlays += perp.shoes.blood_overlay
-		perp.shoes.blood_color=basecolor
+		S.blood_overlay.color = basecolor
+		S.overlays += S.blood_overlay
+		S.blood_color=basecolor
 
-		if(!perp.shoes.blood_DNA)
-			perp.shoes.blood_DNA = list()
+		if(!S.blood_DNA)
+			S.blood_DNA = list()
 		if(blood_DNA)
-			perp.shoes.blood_DNA |= blood_DNA.Copy()
+			S.blood_DNA |= blood_DNA.Copy()
 		perp.update_inv_shoes(1)
 	else
 
-		perp.track_blood = max(amount,perp.track_blood)                                //Or feet
+		perp.track_blood = Clamp(amount, 0, perp.track_blood)                                //Or feet
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
 		if(!istype(blood_DNA, /list))
