@@ -45,7 +45,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall1"
 	walltype = "shuttle"
-	smooth = 0
+	smooth = SMOOTH_FALSE
 
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move

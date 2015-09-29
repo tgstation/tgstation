@@ -83,7 +83,7 @@
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
-			if (istype(H.dna, /datum/dna) && !H.gloves)
+			if(!H.gloves)
 				fingerprints += md5(H.dna.uni_identity)
 
 		else if(!ismob(A))

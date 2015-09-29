@@ -350,7 +350,7 @@
 	return
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject)
-	if (!check_dna_integrity(subject) || !istype(subject))
+	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
 	if (!subject.getorgan(/obj/item/organ/internal/brain))

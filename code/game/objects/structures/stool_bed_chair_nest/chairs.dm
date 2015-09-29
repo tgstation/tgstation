@@ -1,6 +1,6 @@
 /obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"
-	desc = "You sit in this. Either by will or force."
+	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = -1 //Not Burnable
@@ -72,6 +72,15 @@
 			return
 		spin()
 
+/obj/structure/stool/bed/chair/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 // Chair types
 /obj/structure/stool/bed/chair/wood
@@ -98,7 +107,7 @@
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
-	desc = "It looks comfy."
+	desc = "It looks comfy.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "comfychair"
 	color = rgb(255,255,255)
 	burn_state = 0 //Burnable
