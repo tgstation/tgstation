@@ -208,11 +208,12 @@
 			usr << "<font color='red'>Error: create_xeno(): no suitable candidates.</font>"
 	if(!istext(ckey))	return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
-		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(spawn_here)
+		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(spawn_here)
+		if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(spawn_here)
 		if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
 		if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
 		if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
@@ -262,7 +263,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
 					if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
 					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
-					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(T)
+					if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
+					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(T)
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
