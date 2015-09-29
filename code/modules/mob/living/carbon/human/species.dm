@@ -551,7 +551,7 @@
 			H.sight |= SEE_MOBS
 			H.sight |= SEE_OBJS
 
-		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
+		H.see_in_dark = darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
 

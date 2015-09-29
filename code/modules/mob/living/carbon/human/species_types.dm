@@ -174,7 +174,8 @@
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "Shadow"	//Used to be ???
 	id = "shadow"
-	darksight = 8
+	darksight = 4
+	invis_sight = 2
 	sexes = 0
 	roundstart = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
