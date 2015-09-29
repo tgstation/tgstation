@@ -45,6 +45,10 @@
 	if(!O || !istype(O))
 		O = new type(arglist(B))
 	else
+		if(istype(O, /atom/movable))
+			var/atom/movable/AM = O
+			AM.loc = B[1]
+
 		if(B && B.len)
 			O.New(arglist(B))
 		else
