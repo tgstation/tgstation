@@ -229,6 +229,7 @@
 	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(src.heal_level + 50 + rand(10, 30)) // The rand(10, 30) will come out as extra brain damage
 	H.Paralyse(4)
+	H.silent += 10 //Can't talk for a while
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()

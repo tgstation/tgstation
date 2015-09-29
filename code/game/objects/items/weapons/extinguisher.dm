@@ -98,7 +98,7 @@
 				flags &= ~OPENCONTAINER
 		return
 
-	if (istype(W, /obj/item) && !is_open_container() && !istype(src, /obj/item/weapon/extinguisher/foam) && !istype(src, /obj/item/weapon/evidencebag))
+	if (istype(W, /obj/item) && !is_open_container() && !istype(src, /obj/item/weapon/extinguisher/foam) && !istype(W, /obj/item/weapon/evidencebag))
 		if(W.is_open_container()) return //We're probably trying to fill it
 		if(W.w_class>1)
 			user << "\The [W] won't fit into the nozzle!"
