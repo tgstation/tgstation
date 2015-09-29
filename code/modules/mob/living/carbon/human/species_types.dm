@@ -99,7 +99,7 @@
 	// Creatures made of leaves and plant matter.
 	name = "Plant"
 	id = "plant"
-	roundstart = 1
+//	roundstart = 1	Redundant with podpeople right now
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slice"
@@ -145,6 +145,7 @@
 	name = "Podperson"
 	id = "pod"
 	specflags = list(MUTCOLORS,EYECOLOR)
+	roundstart = 1
 
 /datum/species/plant/pod/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
