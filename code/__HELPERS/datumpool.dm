@@ -45,7 +45,7 @@
 	if(!O || !istype(O))
 		O = new type(arglist(B))
 	else
-		if(istype(O, /atom/movable))
+		if(istype(O, /atom/movable) && B.len) // B.len check so we don't OoB.
 			var/atom/movable/AM = O
 			AM.loc = B[1]
 
