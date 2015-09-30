@@ -396,13 +396,13 @@
 	color = "#FF8CFF" // rgb: 255, 140, 255
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-2)
-	M.adjustFireLoss(-2)
-	M.adjustToxLoss(-2)
-	M.adjustOxyLoss(-2)
-	if(M.nutrition && (M.nutrition - 2 > 0))
+	M.adjustBruteLoss(-0.5)
+	M.adjustFireLoss(-0.5)
+	M.adjustToxLoss(-0.5)
+	M.adjustOxyLoss(-0.5)
+	if(M.nutrition && (M.nutrition - 1 > 0))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 2
+			M.nutrition -= 1
 	..()
 
 /datum/reagent/consumable/chocolatepudding
