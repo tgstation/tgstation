@@ -400,9 +400,9 @@
 	M.adjustFireLoss(-0.5)
 	M.adjustToxLoss(-0.5)
 	M.adjustOxyLoss(-0.5)
-	if(M.nutrition && (M.nutrition - 1 > 0))
+	if(M.nutrition && (M.nutrition - 2 > 0))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 1
+			M.nutrition -= 2
 	..()
 
 /datum/reagent/consumable/chocolatepudding
