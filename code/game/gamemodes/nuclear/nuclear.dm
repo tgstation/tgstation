@@ -301,6 +301,8 @@
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
 
+	var/tc = 20
+
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(SYND_FREQ)
@@ -308,7 +310,7 @@
 
 	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
 	U.hidden_uplink.uplink_owner="[H.key]"
-	U.hidden_uplink.uses = 20
+	U.hidden_uplink.uses = tc
 	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
 	H.equip_to_slot_or_del(U, slot_in_backpack)
 	
@@ -332,6 +334,8 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
 		/obj/item/weapon/pinpointer/nukeop=1)
+
+	tc = 30
 
 /datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
 	..()

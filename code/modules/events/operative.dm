@@ -45,8 +45,12 @@
 
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in machines
 	if(nuke)
-		var/nuke_code = "[rand(10000, 99999)]"
-		nuke.r_code = nuke_code
+		var/nuke_code 
+		if(!nuke.r_code || nuke.r_code == "ADMIN")
+			nuke_code = "[rand(10000, 99999)]"
+			nuke.r_code = nuke_code
+		else
+			nuke_code = nuke.r_code
 
 		Mind.store_memory("<B>Station Self-Destruct Device Code</B>: [nuke_code]", 0, 0)
 		Mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
