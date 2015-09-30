@@ -31,7 +31,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
-	name = "\improper Gyrojet rocket pistol"
+	name = "gyrojet pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'

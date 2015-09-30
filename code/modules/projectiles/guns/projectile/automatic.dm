@@ -136,7 +136,7 @@
 	burst_size = 2
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
-	name = "\improper L6 SAW LMG"
+	name = "\improper L6 SAW"
 	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
