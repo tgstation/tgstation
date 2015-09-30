@@ -32,7 +32,7 @@ var/global/list/tv_monitors = list()
 
 
 /obj/machinery/computer/security/check_eye(var/mob/user as mob)
-	//To explain ( user.canmove || isvehicle(user.locked_to) ): when you're in a vehicle, your canmove variable is 0. This is to allow using this computer from wheelchairs/vehicles
+	//To explain ( !user.canmove && !ischair(user.locked_to) ): when you're buckled, your canmove variable is 0. This is to allow using this computer from chairs and vehicles
 	if ((get_dist(user, src) > 1 || (!user.canmove && !ischair(user.locked_to)) || user.blinded || !( current ) || !( current.status )) && (!istype(user, /mob/living/silicon)))
 		return null
 	user.reset_view(current)
