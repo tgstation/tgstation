@@ -146,7 +146,7 @@
 	for(var/obj/structure/docking_port/D in linked_area)
 		docking_ports_aboard |= D
 
-	return 1
+	return
 
 /datum/shuttle/Destroy()
 	shuttles -= src

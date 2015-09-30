@@ -1,0 +1,8 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - tweak: Security camera computers may now be used while sitting (in a chair or in a wheelchair)
+  - bugfix: Fixed interaction between evidence bags and fire extinguishers
+  - bugfix: Clones grown in clone pods can no longer talk right after being created
