@@ -12,6 +12,13 @@
 	var/alert = 0
 	var/open = 0
 	var/obj/item/weapon/electronics/airlock/electronics
+	var/start_showpiece_type = null //add type for items on display
+
+/obj/structure/displaycase/New()
+	..()
+	if(start_showpiece_type)
+		showpiece = new start_showpiece_type (src)
+	update_icon()
 
 /obj/structure/displaycase/ex_act(severity, target)
 	switch(severity)
@@ -205,11 +212,7 @@
 
 /obj/structure/displaycase/captain
 	alert = 1
-
-/obj/structure/displaycase/captain/New()
-	..()
-	showpiece = new /obj/item/weapon/gun/energy/laser/captain (src)
-	update_icon()
+	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
