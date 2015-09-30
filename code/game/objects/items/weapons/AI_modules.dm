@@ -292,7 +292,6 @@ AI MODULES
 	name = "'Corporate' Core AI Module"
 	origin_tech = "programming=3;materials=4"
 	laws = list("The crew is expensive to replace.",\
-				"The station and its equipment is expensive to replace",\
 				"The station and its equipment are expensive to replace",\
 				"You are expensive to replace",\
 				"Minimize expenses")
