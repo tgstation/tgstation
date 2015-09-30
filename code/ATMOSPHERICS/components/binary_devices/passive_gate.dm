@@ -17,6 +17,7 @@ Passive gate is similar to the regular pump except:
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
+	use_power = 0
 
 	var/frequency = 0
 	var/id = null
