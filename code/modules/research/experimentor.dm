@@ -62,25 +62,22 @@
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 		if(ispath(I,/obj/item/weapon/stock_parts) || ispath(I,/obj/item/weapon/grenade/chem_grenade) || ispath(I,/obj/item/weapon/kitchen))
-			var/obj/item/tempCheck = new I()
-			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+			var/obj/item/tempCheck = I
+			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items += 15
 				valid_items += I
 				probWeight++
-			qdel(tempCheck)
 
 		if(ispath(I,/obj/item/weapon/reagent_containers/food))
-			var/obj/item/tempCheck = new I()
-			if(tempCheck.icon_state != null) //check it's an actual usable item, in a hacky way
+			var/obj/item/tempCheck = I
+			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items += rand(1,max(2,35-probWeight))
 				valid_items += I
-			qdel(tempCheck)
 
 		if(ispath(I,/obj/item/weapon/rcd) || ispath(I,/obj/item/weapon/grenade) || ispath(I,/obj/item/device/aicard) || ispath(I,/obj/item/weapon/storage/backpack/holding) || ispath(I,/obj/item/slime_extract) || ispath(I,/obj/item/device/onetankbomb) || ispath(I,/obj/item/device/transfer_valve))
-			var/obj/item/tempCheck = new I()
-			if(tempCheck.icon_state != null)
+			var/obj/item/tempCheck = I
+			if(initial(tempCheck.icon_state) != null)
 				critical_items += I
-			qdel(tempCheck)
 
 
 /obj/machinery/r_n_d/experimentor/New()
@@ -289,9 +286,7 @@
 			ejectItem()
 		if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
-			for(var/mob/living/m in oview(1, src))
-				m.irradiate(25)
-				investigate_log("Experimentor has irradiated [m]", "experimentor") //One entry per person so we know what was irradiated.
+			radiation_pulse(get_turf(src), 1, 1, 25, 1)
 			ejectItem(TRUE)
 		if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='warning'>[src] malfunctions, spewing toxic waste!</span>")

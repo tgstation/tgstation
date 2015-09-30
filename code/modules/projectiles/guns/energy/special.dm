@@ -206,6 +206,7 @@
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	can_charge = 0
+	heat = 3800
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()

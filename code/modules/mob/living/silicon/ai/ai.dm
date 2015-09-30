@@ -37,6 +37,7 @@ var/list/ai_list = list()
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/machinery/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -73,6 +74,7 @@ var/list/ai_list = list()
 	var/obj/machinery/camera/portable/builtInCamera
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+	..()
 	rename_self("ai", 1)
 	name = real_name
 	anchored = 1
@@ -81,6 +83,10 @@ var/list/ai_list = list()
 	loc = loc
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
+
+	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
 
 	if(L)
 		if (istype(L, /datum/ai_laws))
@@ -139,8 +145,7 @@ var/list/ai_list = list()
 
 	builtInCamera = new /obj/machinery/camera/portable(src)
 	builtInCamera.network = list("SS13")
-	..()
-	return
+
 
 /mob/living/silicon/ai/Destroy()
 	ai_list -= src
@@ -829,3 +834,8 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
+
+/mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
+		spark_system.start()
+	return ..()

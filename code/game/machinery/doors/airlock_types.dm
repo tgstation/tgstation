@@ -146,8 +146,7 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	for(var/mob/living/L in range (3,src))
-		L.irradiate(15)
+	radiation_pulse(get_turf(src), 3, 3, 15, 0)
 	return
 
 /obj/machinery/door/airlock/plasma
