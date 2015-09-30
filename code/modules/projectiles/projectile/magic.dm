@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = 1
+	flags = NOSHIELD
 	flag = "magic"
 
 /obj/item/projectile/magic/death
