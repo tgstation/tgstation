@@ -4,7 +4,7 @@
 	icon_state = "freezer"
 	density = 1
 	var/min_temperature = 0
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	current_heat_capacity = 1000
 
@@ -128,7 +128,7 @@
 	icon_state = "heater"
 	density = 1
 	var/max_temperature = 0
-	anchored = 1.0
+	anchored = 1
 
 	current_heat_capacity = 1000
 

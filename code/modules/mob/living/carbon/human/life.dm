@@ -38,9 +38,8 @@
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				HM.on_life(src)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_life(src)
 
 		//heart attack stuff
 		handle_heart()
@@ -50,8 +49,7 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	if(dna)
-		dna.species.spec_life(src) // for mutantraces
+	dna.species.spec_life(src) // for mutantraces
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -93,17 +91,20 @@
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
 
+/mob/living/carbon/human/handle_chemicals_in_body()
+	if(reagents)
+		reagents.metabolize(src, can_overdose=1)
+
 /mob/living/carbon/human/breathe()
-	if(!dna || !dna.species.breathe(src))
+	if(!dna.species.breathe(src))
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	if(!dna || !dna.species.check_breath(breath, src))
+	if(!dna.species.check_breath(breath, src))
 		..()
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	if(dna)
-		dna.species.handle_environment(environment, src)
+	dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
@@ -164,7 +165,7 @@
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
 
-	var/thermal_protection = 0.0
+	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -229,7 +230,7 @@
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
 
-	var/thermal_protection = 0.0
+	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -259,10 +260,7 @@
 
 /mob/living/carbon/human/handle_chemicals_in_body()
 	..()
-	if(dna)
-		dna.species.handle_chemicals_in_body(src)
-
-	return //TODO: DEFERRED
+	dna.species.handle_chemicals_in_body(src)
 
 /mob/living/carbon/human/handle_vision()
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
@@ -271,12 +269,10 @@
 	else
 		if(!client.adminobs)			reset_view(null)
 
-	if(dna)
-		dna.species.handle_vision(src)
+	dna.species.handle_vision(src)
 
 /mob/living/carbon/human/handle_hud_icons()
-	if(dna)
-		dna.species.handle_hud_icons(src)
+	dna.species.handle_hud_icons(src)
 
 /mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high

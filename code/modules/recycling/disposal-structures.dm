@@ -342,14 +342,14 @@
 		H.contents_explosion(severity, target)
 
 	switch(severity)
-		if(1.0)
+		if(1)
 			broken(0)
 			return
-		if(2.0)
+		if(2)
 			health -= rand(5,15)
 			healthcheck()
 			return
-		if(3.0)
+		if(3)
 			health -= rand(0,15)
 			healthcheck()
 			return

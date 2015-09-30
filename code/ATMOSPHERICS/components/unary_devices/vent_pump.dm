@@ -93,7 +93,7 @@
 
 	if(pump_direction & RELEASING)
 		icon_state = "vent_out"
-	if(pump_direction & SIPHONING)
+	else //pump_direction == SIPHONING
 		icon_state = "vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
@@ -130,7 +130,7 @@
 				loc.assume_air(removed)
 				air_update_turf()
 
-	if(pump_direction & SIPHONING) //external -> internal
+	else //external -> internal
 		var/pressure_delta = 10000
 		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))

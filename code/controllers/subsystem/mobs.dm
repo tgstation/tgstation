@@ -19,5 +19,4 @@ var/datum/subsystem/mobs/SSmob
 		if(thing)
 			thing:Life(seconds)
 			continue
-		WARNING("Found a null in the mob list. Removing.")
 		mob_list.Remove(thing)

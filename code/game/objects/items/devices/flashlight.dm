@@ -191,7 +191,7 @@ obj/item/device/flashlight/lamp/bananalamp
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = 2
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
@@ -199,6 +199,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	heat = 1000
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -248,6 +249,9 @@ obj/item/device/flashlight/lamp/bananalamp
 		force = on_damage
 		damtype = "fire"
 		SSobj.processing += src
+
+/obj/item/device/flashlight/flare/is_hot()
+	return on * heat
 
 /obj/item/device/flashlight/flare/torch
 	name = "torch"

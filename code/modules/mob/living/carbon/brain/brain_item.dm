@@ -26,10 +26,10 @@
 
 		qdel(brainmob)
 
-		//Update the body's icon so it doesnt appear debrained anymore
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.update_hair(0)
+	//Update the body's icon so it doesnt appear debrained anymore
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_hair(0)
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -56,9 +56,11 @@
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	brainmob.timeofhostdeath = L.timeofdeath
-	if(iscarbon(L))
+	if(L.has_dna())
 		var/mob/living/carbon/C = L
-		brainmob.dna = C.dna
+		if(!brainmob.dna)
+			brainmob.dna = new /datum/dna(brainmob)
+		C.dna.copy_dna(brainmob.dna)
 	if(L.mind)
 		L.mind.transfer_to(brainmob)
 	brainmob << "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>"
@@ -117,5 +119,5 @@
 /obj/item/organ/internal/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
-	icon_state = "brain-alien"
+	icon_state = "brain-x"
 	origin_tech = "biotech=7"

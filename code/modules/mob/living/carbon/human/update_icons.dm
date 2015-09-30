@@ -53,29 +53,9 @@ Please contact me on #coderbus IRC. ~Carnie x
 */
 
 /mob/living/carbon/human/proc/update_base_icon_state()
-	if(dna)
-		base_icon_state = dna.species.update_base_icon_state(src)
-	else
-		if(disabilities & HUSK)
-			base_icon_state = "husk"
-		else
-			base_icon_state = "[skin_tone]_[(gender == FEMALE) ? "f" : "m"]"
-
+	base_icon_state = dna.species.update_base_icon_state(src)
 	icon_state = "[base_icon_state]_s"
 
-
-//UPDATES OVERLAYS FROM OVERLAYS_STANDING
-//TODO: Remove all instances where this proc is called. It used to be the fastest way to swap between standing/lying.
-/mob/living/carbon/human/update_icons()
-	update_hud()		//TODO: remove the need for this
-
-	if(overlays.len != overlays_standing.len)
-		overlays.Cut()
-
-		for(var/thing in overlays_standing)
-			if(thing)	overlays += thing
-
-	update_transform()
 
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
@@ -105,25 +85,21 @@ Please contact me on #coderbus IRC. ~Carnie x
 	if((wear_suit) && (wear_suit.hooded) && (wear_suit.suittoggled == 1))
 		return
 
-	if(dna)
-		dna.species.handle_hair(src)
+	dna.species.handle_hair(src)
 
 /mob/living/carbon/human/proc/update_mutcolor()
-	if(dna && !(disabilities & HUSK))
+	if(!(disabilities & HUSK))
 		dna.species.update_color(src)
 
+//used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
-	if(dna)
-		dna.species.handle_mutant_bodyparts(src)
+	dna.species.handle_mutant_bodyparts(src)
 
 
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
-
 	update_base_icon_state()
-
-	if(dna)
-		dna.species.handle_body(src)
+	dna.species.handle_body(src)
 
 /mob/living/carbon/human/update_fire()
 	..("Standing")
@@ -181,6 +157,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 		update_hud()
 		// Mutantrace colors
 		update_mutcolor()
+		//mutations
+		update_mutations_overlay()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
@@ -362,7 +340,15 @@ Please contact me on #coderbus IRC. ~Carnie x
 			standing = image("icon"='icons/mob/feet.dmi', "icon_state"="[shoes.icon_state]", "layer"=-layer2use)
 		overlays_standing[SHOES_LAYER]	= standing
 
+		//Bloody shoes
+		var/obj/item/clothing/shoes/S = shoes
+		var/bloody = 0
 		if(shoes.blood_DNA)
+			bloody = 1
+		else
+			bloody = S.bloody_shoes[BLOOD_STATE_HUMAN]
+
+		if(bloody)
 			standing.overlays	+= image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 
 	apply_overlay(SHOES_LAYER)
@@ -391,6 +377,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 			if(hud_used.inventory_shown)				//if the inventory is open ...
 				H.screen_loc = ui_head		//TODO	//...draw the item in the inventory screen
 			client.screen += H						//Either way, add the item to the HUD
+
+	update_mutant_bodyparts()
 	apply_overlay(HEAD_LAYER)
 
 

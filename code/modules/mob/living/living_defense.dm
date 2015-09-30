@@ -44,7 +44,7 @@
 		else
 				return 0
 
-/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1)
+/mob/living/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
@@ -66,13 +66,13 @@
 			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
 		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
 			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
-
-		visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-						"<span class='userdanger'>[src] has been hit by [I].</span>")
-		var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-		apply_damage(I.throwforce, dtype, zone, armor, I)
-		if(I.thrownby)
-			add_logs(I.thrownby, src, "hit", I)
+		if(!blocked)
+			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
+							"<span class='userdanger'>[src] has been hit by [I].</span>")
+			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
+			apply_damage(I.throwforce, dtype, zone, armor, I)
+			if(I.thrownby)
+				add_logs(I.thrownby, src, "hit", I)
 	else
 		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	..()
@@ -293,7 +293,4 @@
 	if(stat || paralysis || stunned || weakened || restrained())
 		return 1
 
-/mob/living/proc/irradiate(amount)
-	if(amount)
-		var/blocked = run_armor_check(null, "rad", "Your clothes feel warm", "Your clothes feel warm")
-		apply_effect(amount, IRRADIATE, blocked)
+//Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.

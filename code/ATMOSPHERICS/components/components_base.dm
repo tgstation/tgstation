@@ -11,9 +11,9 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/list/datum/gas_mixture/airs = list()
 
 /obj/machinery/atmospherics/components/New()
-	..()
 	parents.len = device_type
 	airs.len = device_type
+	..()
 
 	for(DEVICE_TYPE_LOOP)
 		var/datum/gas_mixture/A = new
@@ -67,9 +67,10 @@ Pipenet stuff; housekeeping
 
 /obj/machinery/atmospherics/components/nullifyNode(I)
 	..()
-	nullifyPipenet(PARENT_I)
-	qdel(AIR_I)
-	AIR_I = null
+	if(NODE_I)
+		nullifyPipenet(PARENT_I)
+		qdel(AIR_I)
+		AIR_I = null
 
 /obj/machinery/atmospherics/components/construction()
 	..()

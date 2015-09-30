@@ -6,26 +6,21 @@
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
-	force = 1.0
-	w_class = 1.0
+	force = 1
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
 	var/Uses = 1 // uses before it goes inert
-	var/enhanced = 0 //has it been enhanced before?
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/slimepotion/steroid))
-		if(enhanced == 1)
-			user << "<span class='warning'>This extract has already been enhanced!</span>"
+	if(istype(O, /obj/item/slimepotion/enhancer))
+		if(Uses >= 5)
+			user << "<span class='warning'>You cannot enhance this extract further!</span>"
 			return ..()
-		if(Uses == 0)
-			user << "<span class='warning'>You can't enhance a used extract!</span>"
-			return ..()
-		user <<"<span class='notice'>You apply the enhancer. It now has triple the amount of uses.</span>"
-		Uses = 3
-		enhanced = 1
+		user <<"<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>"
+		Uses++
 		qdel(O)
 
 /obj/item/slime_extract/New()
@@ -226,7 +221,7 @@
 
 /obj/item/slimepotion/steroid
 	name = "slime steroid"
-	desc = "A potent chemical mix that will cause a slime to generate more extract."
+	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 
@@ -240,33 +235,19 @@
 	if(M.stat)
 		user << "<span class='warning'>The slime is dead!</span>"
 		return..()
-	if(M.cores == 3)
+	if(M.cores >= 5)
 		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
 		return..()
 
-	user <<"<span class='notice'>You feed the slime the steroid. It now has triple the amount of extract.</span>"
-	M.cores = 3
+	user <<"<span class='notice'>You feed the slime the steroid. It will now produce one more extract.</span>"
+	M.cores++
 	qdel(src)
 
 /obj/item/slimepotion/enhancer
 	name = "extract enhancer"
-	desc = "A potent chemical mix that will give a slime extract three uses."
+	desc = "A potent chemical mix that will give a slime extract an additional use."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-
-	/*afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/item/slime_extract))
-			if(target.enhanced == 1)
-				user << "<span class='warning'>This extract has already been enhanced!</span>"
-				return ..()
-			if(target.Uses == 0)
-				user << "<span class='warning'>You can't enhance a used extract!</span>"
-				return ..()
-			user <<"You apply the enhancer. It now has triple the amount of uses."
-			target.Uses = 3
-			target.enahnced = 1
-			qdel(src)*/
-
 
 /obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
@@ -413,11 +394,10 @@
 		user << "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>"
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	if(prob(50))	G.gender = "female"
-	hardset_dna(G, null, null, null, null, /datum/species/golem/adamantine)
-
+	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
-	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
+	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
 	G.key = ghost.key
@@ -495,10 +475,10 @@
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds"
 	icon_state = "tile-bluespace"
-	w_class = 3.0
-	force = 6.0
-	materials = list(MAT_METAL=937.5)
-	throwforce = 10.0
+	w_class = 3
+	force = 6
+	materials = list(MAT_METAL=500)
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
@@ -518,10 +498,10 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles"
 	icon_state = "tile-sepia"
-	w_class = 3.0
-	force = 6.0
-	materials = list(MAT_METAL=937.5)
-	throwforce = 10.0
+	w_class = 3
+	force = 6
+	materials = list(MAT_METAL=500)
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT

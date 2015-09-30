@@ -5,7 +5,7 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = 2
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 	origin_tech = "engineering=1"
