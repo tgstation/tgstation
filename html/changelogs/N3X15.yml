@@ -1,3 +1,4 @@
 author: N3X15
 changes:
   - bugfix: Ventcrawling works properly across piping layer adapters.
+  - bugfix: Ventcrawling in zero-G works now.

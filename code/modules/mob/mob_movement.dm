@@ -255,8 +255,18 @@
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
 
-	if((istype(mob.loc, /turf/space)) || ((mob.areaMaster && mob.areaMaster.has_gravity == 0) && (!istype(mob.loc, /obj/spacepod))))  // last section of if statement prevents spacepods being unable to move when the gravity goes down
-		if(!mob.Process_Spacemove(0))
+	// If we're in space or our area has no gravity...
+	if(istype(mob.loc, /turf/space) || (mob.areaMaster && mob.areaMaster.has_gravity == 0))
+		var/can_move_without_gravity = 0
+
+		// Here, we check to see if the object we're in doesn't need gravity to send relaymove().
+		if(istype(mob.loc, /atom/movable))
+			var/atom/movable/AM = mob.loc
+			if(AM.internal_gravity) // Best name I could come up with, sorry. - N3X
+				can_move_without_gravity=1
+
+		// Block relaymove() if needed.
+		if(!can_move_without_gravity && !mob.Process_Spacemove(0))
 			return 0
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
