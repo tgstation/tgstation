@@ -357,7 +357,21 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[preferred_map ? preferred_map : "Default[config.defaultmap ? " ([config.defaultmap.friendlyname])":""]"]</a>"
+				var/p_map = preferred_map
+				if (!p_map)
+					p_map = "Default"
+					if (config.defaultmap)
+						p_map += " ([config.defaultmap.friendlyname])"
+				else
+					if (p_map in config.maplist)
+						var/datum/votablemap/VM = config.maplist[p_map]
+						if (!VM)
+							p_map += " (No longer exists)"
+						else
+							p_map = VM.friendlyname
+					else
+						p_map += " (No longer exists)"
+				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 

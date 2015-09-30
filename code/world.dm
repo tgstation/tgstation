@@ -192,7 +192,7 @@
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
 	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation)
+	if (config.maprotation && SERVERTOOLS)
 		config.loadmaplist("config/maps.txt")
 
 	// apply some settings from config..

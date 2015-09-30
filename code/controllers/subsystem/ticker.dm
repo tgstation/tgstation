@@ -464,17 +464,17 @@ var/datum/subsystem/ticker/ticker
 			queue_delay = 0
 
 /datum/subsystem/ticker/proc/check_maprotate(var/force = 0)
-	if (!config.maprotation && !force)
+	if (!config.maprotation || !SERVERTOOLS)
 		return
-	if ((SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall()) && !force)
+	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
-	if (maprotatechecked && !force)
+	if (maprotatechecked)
 		return
 
 	maprotatechecked = 1
 
 	//map rotate chance is length of the round (in minutes) divided by 2
-	if (!prob((world.time/600)/2) && !force)
+	if (!prob((world.time/600)/2))
 		return
 
 	var/players = clients.len
@@ -523,13 +523,13 @@ var/datum/subsystem/ticker/ticker
 		if (0)
 			var/datum/votablemap/VM = config.maplist[pickedmap]
 			world << "<span class='boldannounce'>Map rotation has choosen [VM.friendlyname] for next round!</span>"
-		if (1)
+		if (11)
 			message_admins("Failed to rotate map: Map rotator script couldn't find file listing new map")
 			log_game("Failed to rotate map: Map rotator script couldn't find file listing new map")
-		if (2)
+		if (12)
 			message_admins("Failed to rotate map: Map rotator script couldn't find tgstation-tools framework")
 			log_game("Failed to rotate map: Map rotator script couldn't find tgstation-tools framework")
-		if (3)
+		if (13)
 			message_admins("Failed to rotate map: Could not compile new map:[pickedmap]")
 			log_game("Failed to rotate map: Could not compile new map:[pickedmap]")
 		else
