@@ -46,6 +46,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/obj/screen/cinematic = null			//used for station explosion cinematic
 
+	var/maprotatechecked = 0
+
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -100,6 +102,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 			check_queue()
+			check_maprotate()
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -459,3 +462,78 @@ var/datum/subsystem/ticker/ticker
 			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
 			queued_players -= next_in_line
 			queue_delay = 0
+
+/datum/subsystem/ticker/proc/check_maprotate(var/force = 0)
+	if (!config.maprotation && !force)
+		return
+	if ((SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall()) && !force)
+		return
+	if (maprotatechecked && !force)
+		return
+
+	maprotatechecked = 1
+
+	//map rotate chance is length of the round (in minutes) divided by 2
+	if (!prob((world.time/600)/2) && !force)
+		return
+
+	var/players = clients.len
+	var/list/mapvotes = list()
+	//count votes
+	for (var/client/c in clients)
+		var/vote = c.prefs.preferred_map
+		mapvotes[vote] += 1
+	//filter votes
+	for (var/map in mapvotes)
+		if (!map)
+			if (!config.defaultmap)
+				mapvotes.Remove(map)
+				continue
+			mapvotes[config.defaultmap.name] += mapvotes[map]
+		if (!(map in config.maplist))
+			mapvotes.Remove(map)
+			continue
+		var/datum/votablemap/VM = config.maplist[map]
+		if (!VM)
+			mapvotes.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			mapvotes.Remove(map)
+			continue
+		if (VM.minusers > 0 && players < VM.minusers)
+			mapvotes.Remove(map)
+			continue
+		if (VM.maxusers > 0 && players < VM.maxusers)
+			mapvotes.Remove(map)
+			continue
+
+		mapvotes[map] = mapvotes[map]*VM.voteweight
+
+	var/pickedmap = pickweight(mapvotes)
+	if (!pickedmap)
+		return
+
+	var/file = file("setnewmap.bat")
+	file << "\nset MAPROTATE=[pickedmap]\n"
+	var/exitcode = shell("..\\bin\\maprotate.bat")
+	switch (exitcode)
+		if (null)
+			message_admins("Failed to rotate map: Could not run map rotator")
+			log_game("Failed to rotate map: Could not run map rotator")
+		if (0)
+			var/datum/votablemap/VM = config.maplist[pickedmap]
+			world << "<span class='boldannounce'>Map rotation has choosen [VM.friendlyname] for next round!</span>"
+		if (1)
+			message_admins("Failed to rotate map: Map rotator script couldn't find file listing new map")
+			log_game("Failed to rotate map: Map rotator script couldn't find file listing new map")
+		if (2)
+			message_admins("Failed to rotate map: Map rotator script couldn't find tgstation-tools framework")
+			log_game("Failed to rotate map: Map rotator script couldn't find tgstation-tools framework")
+		if (3)
+			message_admins("Failed to rotate map: Could not compile new map:[pickedmap]")
+			log_game("Failed to rotate map: Could not compile new map:[pickedmap]")
+		else
+			message_admins("Failed to rotate map: Unknown error")
+			log_game("Failed to rotate map: Unknown error")
+
+
