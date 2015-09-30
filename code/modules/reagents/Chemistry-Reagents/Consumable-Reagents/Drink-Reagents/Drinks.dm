@@ -392,8 +392,15 @@
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
 	id = "doctorsdelight"
-	description = "A gulp a day keeps the MediBot away. That's probably for the best."
+	description = "A gulp a day keeps the Medibot away! A mixture of juices that heals most damage types fairly quickly."
 	color = "#FF8CFF" // rgb: 255, 140, 255
+
+/datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-2)
+	M.adjustFireLoss(-2)
+	M.adjustToxLoss(-2)
+	M.adjustOxyLoss(-2)
+	..()
 
 /datum/reagent/consumable/chocolatepudding
 	name = "Chocolate Pudding"
