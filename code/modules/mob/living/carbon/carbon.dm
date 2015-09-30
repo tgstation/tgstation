@@ -22,6 +22,8 @@
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
+	if(dna)
+		qdel(dna)
 	return ..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -78,7 +80,7 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, override = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0)
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0

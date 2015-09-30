@@ -1,6 +1,6 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	level = 1
 
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/intact = 1
@@ -26,11 +26,13 @@
 
 	flags = 0
 
+	var/image/obscured	//camerachunks
+
 /turf/New()
 	..()
 	for(var/atom/movable/AM in src)
 		Entered(AM)
-	return
+
 /turf/Destroy()
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -196,6 +198,10 @@
 	flags |= NOJAUNT
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
+	if(src_object.contents.len)
+		usr << "<span class='notice'>You start dumping out the contents...</span>"
+		if(!do_after(usr,20,target=src_object))
+			return 0
 	for(var/obj/item/I in src_object)
 		if(user.s_active != src_object)
 			if(I.on_found(user))
@@ -281,6 +287,9 @@
 /turf/proc/can_lay_cable()
 	return can_have_cabling() & !intact
 
+/turf/proc/visibilityChanged()
+	if(ticker)
+		cameranet.updateVisibility(src)
 
 /turf/indestructible
 	name = "wall"
@@ -308,8 +317,7 @@
 /turf/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
-	smooth = 1
-	canSmoothWith = null
+	smooth = SMOOTH_TRUE
 
 /turf/indestructible/abductor
 	icon_state = "alien1"

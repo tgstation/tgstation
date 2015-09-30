@@ -16,12 +16,14 @@
 
 /obj/machinery/atmospherics/pipe/New()
 	color = pipe_color
+	volume = 35 * device_type
 	..()
 
 /obj/machinery/atmospherics/pipe/nullifyNode(I)
 	var/obj/machinery/atmospherics/oldN = NODE_I
 	..()
-	oldN.build_network()
+	if(oldN)
+		oldN.build_network()
 
 /obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
 	if(NODE1&&NODE2)

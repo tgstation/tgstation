@@ -426,8 +426,8 @@
 			O.show_message(text("<span class='danger'>The [slime] is driven into a frenzy!</span>"), 1)
 
 //Pink
-/datum/chemical_reaction/slimeppotion
-	name = "Slime Potion"
+/datum/chemical_reaction/docility
+	name = "Docility Potion"
 	id = "m_potion"
 	result = null
 	required_reagents = list("plasma" = 1)
@@ -435,9 +435,9 @@
 	required_container = /obj/item/slime_extract/pink
 	required_other = 1
 
-/datum/chemical_reaction/slimeppotion/on_reaction(datum/reagents/holder)
+/datum/chemical_reaction/docility/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-	var/obj/item/slimepotion/P = new /obj/item/slimepotion
+	var/obj/item/slimepotion/docility/P = new /obj/item/slimepotion/docility
 	P.loc = get_turf(holder.my_atom)
 
 

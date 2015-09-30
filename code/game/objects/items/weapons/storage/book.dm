@@ -5,7 +5,7 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = 3
 	burn_state = 0 //Burnable
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)
@@ -196,7 +196,8 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 	if (istype(A, /turf/simulated/floor))
 		user << "<span class='notice'>You hit the floor with the bible.</span>"
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
-			call(/obj/effect/rune/proc/revealrunes)(src)
+			for(var/obj/effect/rune/R in orange(2,user))
+				R.invisibility = 0
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
 			user << "<span class='notice'>You bless [A].</span>"

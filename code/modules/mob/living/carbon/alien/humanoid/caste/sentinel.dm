@@ -1,8 +1,8 @@
 /mob/living/carbon/alien/humanoid/sentinel
 	name = "alien sentinel"
 	caste = "s"
-	maxHealth = 125
-	health = 125
+	maxHealth = 150
+	health = 150
 	icon_state = "aliens_s"
 
 
@@ -35,4 +35,3 @@
 
 /mob/living/carbon/alien/humanoid/sentinel/movement_delay()
 	. = ..()
-	. += 1

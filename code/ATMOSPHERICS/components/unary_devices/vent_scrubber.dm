@@ -76,7 +76,7 @@
 			amount += idle_power_usage
 		if (scrub_N2O)
 			amount += idle_power_usage
-	if(scrubbing & SIPHONING)
+	else //scrubbing == SIPHONING
 		amount = active_power_usage
 
 	if (widenet)
@@ -99,7 +99,7 @@
 
 	if(scrubbing & SCRUBBING)
 		icon_state = "scrub_on"
-	if(scrubbing & SIPHONING)
+	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
@@ -203,7 +203,7 @@
 			tile.assume_air(removed)
 			tile.air_update_turf()
 
-	if(scrubbing & SIPHONING) //Just siphoning all air
+	else //Just siphoning all air
 		if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 			return
 

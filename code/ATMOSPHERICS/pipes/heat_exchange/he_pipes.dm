@@ -49,13 +49,11 @@
 		pipe_air.temperature = avg_temp
 		buckled_mob.bodytemperature = avg_temp
 
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/process()
 	var/datum/gas_mixture/pipe_air = return_air()
-	//Burn any mobs buckled to ourselves based on our temperature
-	if(buckled_mob)
-		var/heat_limit = 1000
-		if(pipe_air.temperature > heat_limit + 1)
-			buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")
+	if(!pipe_air)
+		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
 	//Heat causes pipe to glow
 	if(pipe_air.temperature && (icon_temperature > 500 || pipe_air.temperature > 500)) //glow starts at 500K
@@ -73,3 +71,9 @@
 				h_b = 64 + (h_b - 64) * scale
 
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
+
+	//burn any mobs buckled based on temperature
+	if(buckled_mob)
+		var/heat_limit = 1000
+		if(pipe_air.temperature > heat_limit + 1)
+			buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")

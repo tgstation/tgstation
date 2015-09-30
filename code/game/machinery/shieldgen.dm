@@ -66,13 +66,13 @@
 
 /obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (prob(75))
 				qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 	return
@@ -182,15 +182,15 @@
 
 /obj/machinery/shieldgen/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 75
 			src.checkhp()
-		if(2.0)
+		if(2)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			src.checkhp()
-		if(3.0)
+		if(3)
 			src.health -= 10
 			src.checkhp()
 	return
@@ -570,21 +570,21 @@
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		switch(severity)
-			if(1.0) //big boom
+			if(1) //big boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 200
 
-			if(2.0) //medium boom
+			if(2) //medium boom
 				if(prob(50))
 					G = gen_primary
 				else
 					G = gen_secondary
 				G.storedpower -= 50
 
-			if(3.0) //lil boom
+			if(3) //lil boom
 				if(prob(50))
 					G = gen_primary
 				else

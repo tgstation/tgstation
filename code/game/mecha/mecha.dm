@@ -34,7 +34,7 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
-	var/dna	//dna-locking the mech
+	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -557,7 +557,7 @@
 			else if(AI.stat || !AI.client)
 				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
 				return
-			else if(occupant || dna) //Normal AIs cannot steal mechs!
+			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
 				return
 			AI.control_disabled = 0
@@ -623,7 +623,7 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.parents["p1"]
+	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.reconcile_air()
 
 	log_message("Connected to gas port.")
@@ -653,15 +653,19 @@
 		log_append_to_last("Permission denied.")
 		return
 	var/passed
-	if(dna)
-		if(check_dna_integrity(user))
+	if(dna_lock)
+		if(user.has_dna())
 			var/mob/living/carbon/C = user
-			if(C.dna.unique_enzymes==src.dna)
+			if(C.dna.unique_enzymes==dna_lock)
 				passed = 1
 	else if(operation_allowed(user))
 		passed = 1
 	if(!passed)
 		user << "<span class='warning'>Access denied.</span>"
+		log_append_to_last("Permission denied.")
+		return
+	if(user.buckled)
+		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
 	for(var/mob/living/simple_animal/slime/S in range(1,user))
@@ -676,6 +680,8 @@
 			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+		else if(user.buckled)
+			user << "<span class='warning'>You have been buckled and cannot move.</span>"
 		else
 			moved_inside(user)
 	else
@@ -711,8 +717,8 @@
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
-	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
-		user << "<span class='warning'>Stop it!</span>"
+	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")

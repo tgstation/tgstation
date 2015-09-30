@@ -49,7 +49,7 @@
 		dat = text("Confirm Identity: <A href='?src=\ref[];choice=Confirm Identity'>[]</A><HR>", src, (scan ? text("[]", scan.name) : "----------"))
 		if(authenticated)
 			switch(screen)
-				if(1.0)
+				if(1)
 
 					//body tag start + onload and onkeypress (onkeyup) javascript event calls
 					dat += "<body onload='selectTextField(); updateSearch();' onkeyup='updateSearch();'>"
@@ -156,10 +156,10 @@
 						<hr width='75%' />"}
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
-				if(2.0)
+				if(2)
 					dat += "<B>Records Maintenance</B><HR>"
 					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
-				if(3.0)
+				if(3)
 					dat += "<font size='4'><b>Security Record</b></font><br>"
 					if(istype(active1, /datum/data/record) && data_core.general.Find(active1))
 						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))

@@ -33,6 +33,8 @@
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];make=[PIPE_HE];dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=[PIPE_HE];dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=[PIPE_HE_MANIFOLD];dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=[PIPE_HE_4WAYMANIFOLD];dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=[PIPE_JUNCTION];dir=1'>Junction</A><BR>
 <A href='?src=\ref[src];make=[PIPE_HEAT_EXCHANGE];dir=1'>Heat Exchanger</A><BR>
 "}
@@ -110,7 +112,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -186,7 +188,7 @@ Nah
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
 	if(..())

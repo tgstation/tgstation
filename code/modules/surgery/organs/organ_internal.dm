@@ -40,16 +40,23 @@
 	return
 
 /obj/item/organ/internal/proc/prepare_eat()
-	var/obj/item/weapon/reagent_containers/food/snacks/S = new
+	var/obj/item/weapon/reagent_containers/food/snacks/organ/S = new
 	S.name = name
 	S.desc = desc
 	S.icon = icon
 	S.icon_state = icon_state
 	S.origin_tech = origin_tech
 	S.w_class = w_class
-	S.reagents.add_reagent("nutriment", 5)
 
 	return S
+
+/obj/item/weapon/reagent_containers/food/snacks/organ
+	name = "appendix"
+	icon_state = "appendix"
+	icon = 'icons/obj/surgery.dmi'
+
+	list_reagents = list("nutriment" = 5)
+
 
 /obj/item/organ/internal/Destroy()
 	if(owner)
