@@ -46,10 +46,9 @@
 					stop_automated_movement = 0
 					break
 			for(var/obj/item/toy/cattoy/T in view(1,src))
-				if (!T.cooldown)
+				if (T.cooldown < (world.time - 400))
 					emote("me", 1, "bats \the [T] around with its paw!")
-					T.cooldown = 1
-					spawn(100) T.cooldown = 0
+					T.cooldown = world.time
 
 	..()
 
