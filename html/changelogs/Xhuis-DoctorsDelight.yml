@@ -1,0 +1,7 @@
+author: Xhuis
+delete-after: True
+
+changes:
+  - tweak: "Doctor's Delight now requires cryoxadone in its recipe instead of omnizine."
+  - tweak: "Doctor's Delight now restores two brute, burn, toxin, and oxygen damage per tick."
+  - tweak: "Doctor's Delight now drains nutrition while it's in your system (that is, unless you're a doctor)."
