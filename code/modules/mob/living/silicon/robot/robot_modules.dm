@@ -324,7 +324,6 @@
 	modules += new /obj/item/weapon/reagent_containers/borghypo/syndicate(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/syndicate(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/surgical_drapes(src)
 	modules += new /obj/item/weapon/retractor(src)
 	modules += new /obj/item/weapon/hemostat(src)
@@ -332,6 +331,7 @@
 	modules += new /obj/item/weapon/scalpel(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
 	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
