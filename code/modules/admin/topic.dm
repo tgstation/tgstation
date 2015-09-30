@@ -1863,9 +1863,7 @@
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
-										I.loc = R.module
-										R.module.rebuild()
+										R.module.add_module(I)
 										R.activate_module(I)
 
 

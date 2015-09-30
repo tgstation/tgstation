@@ -290,6 +290,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
+	can_charge = 0
 	var/charge_tick = 0
 	var/recharge_time = 5
 
