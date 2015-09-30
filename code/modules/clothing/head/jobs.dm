@@ -60,9 +60,9 @@
 /obj/item/clothing/head/det_hat/AltClick()
 	..()
 	if(ismob(loc))
+		var/mob/M = loc
 		if(candy_cooldown+120 < world.time)
 			var/obj/item/weapon/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src)
-			var/mob/M = loc
 			M.put_in_hands(CC)
 			M << "You slip a candy corn from your hat."
 			candy_cooldown = world.time
