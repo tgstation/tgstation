@@ -220,7 +220,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/emag(mob/user)
 	playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
 	emagged = 1
-	user << "<span class='notice'>You you disable the security protocols</span>"
+	user << "<span class='notice'>You disable the security protocols</span>"
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
