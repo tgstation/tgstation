@@ -1250,16 +1250,8 @@
 	return
 
 /obj/machinery/atmospherics/pipe/layer_adapter/relaymove(mob/living/user, direction)
-	if(!(direction & initialize_directions)) //can't go in a way we aren't connecting to
-		var/on_offset_layer = user.ventcrawl_layer == layer_node.piping_layer
-
-		on_offset_layer = !on_offset_layer
-
-		if(on_offset_layer)
-			user.ventcrawl_layer = layer_node.piping_layer
-		else
-			user.ventcrawl_layer = mid_node.piping_layer
-		user << "You align yourself with the [user.ventcrawl_layer]\th layer." // ????
-		return 1
-	else
+	// Autoset layer
+	if(direction & initialize_directions)
+		user.ventcrawl_layer = (direction == dir) ? PIPING_LAYER_DEFAULT : piping_layer
+		user << "You are redirected into the [user.ventcrawl_layer]\th piping layer."
 		return ..()

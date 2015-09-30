@@ -1,2 +1,3 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: Ventcrawling works properly across piping layer adapters.
