@@ -174,8 +174,7 @@
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "Shadow"	//Used to be ???
 	id = "shadow"
-	darksight = 4
-	invis_sight = 2
+	darksight = 8
 	sexes = 0
 	roundstart = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
@@ -446,6 +445,16 @@
 
 /datum/species/fly/handle_speech(message)
 	return replacetext(message, "z", stutter("zz"))
+
+/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(istype(chem,/datum/reagent/consumable))
+		var/turf/pos = get_turf(H)
+		var/vomit_pile = pos.add_vomit_floor(H)
+		H.reagents.trans_to(vomit_pile, H.reagents.total_volume) //might need nerfing later since it allows fly people to purge all poisons too.
+		playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+		H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
+					"<span class='userdanger'>You throw up on the floor!</span>")
+	..()
 
 /*
  SKELETONS
