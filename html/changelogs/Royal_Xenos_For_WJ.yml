@@ -1,0 +1,13 @@
+
+
+author: Gun Hog, for WJohnston
+
+
+delete-after: True
+
+
+changes: 
+  - rscadd: "Add new Xenomorph caste: The Praetorian. Drones may become this on their way to growing into a full queen, and a queen may promote one if there is not one already."
+  - tweak: "Xenomorph queens are now GIGANTIC, along with the new Praetorian. Together, they are considered royals."
+  - tweak: "Queens are now significantly tougher to make up for their huge size."
+  - bugfix: "All forms of dead xenomorph may now be grabbed and placed on a surgery table for organ harvesting!"
