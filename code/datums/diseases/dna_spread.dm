@@ -10,7 +10,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/datum/dna/original_dna = null
 	var/transformed = 0
-	desc = "This disease transplants the genetic code of the intial vector into new hosts."
+	desc = "This disease transplants the genetic code of the initial vector into new hosts."
 	severity = MEDIUM
 
 

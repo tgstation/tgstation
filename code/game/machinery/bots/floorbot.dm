@@ -260,9 +260,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(loc, TL, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
+				path = get_path_to(loc, TL, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = 0)
 			else
-				path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
+				path = get_path_to(loc, target, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = 0)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
