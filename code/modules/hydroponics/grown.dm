@@ -719,7 +719,7 @@
 	user.unEquip(src)
 	qdel(src)
 
-obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	seed = /obj/item/seeds/eggyseed
 	name = "Egg-plant"
 	desc = "There MUST be a chicken inside."
@@ -727,7 +727,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	inside_type = /obj/item/weapon/reagent_containers/food/snacks/egg
 	filling_color = "#F8F8FF"
 
-obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 	..()
 	reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)

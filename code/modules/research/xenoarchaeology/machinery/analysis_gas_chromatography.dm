@@ -1,10 +1,10 @@
 
 // This machine shows the materials that are present
 
-obj/machinery/anomaly/gas_chromatography
+/obj/machinery/anomaly/gas_chromatography
 	name = "Gas Chromatography spectrometer"
 
-obj/machinery/anomaly/gas_chromatography/ScanResults()
+/obj/machinery/anomaly/gas_chromatography/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

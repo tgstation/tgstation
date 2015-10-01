@@ -1,14 +1,14 @@
 #define AIRLOCK_CONTROL_RANGE 5
 
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
-obj/machinery/door/airlock
+/obj/machinery/door/airlock
 	var/id_tag
 	var/frequency
 	var/shockedby = list()
 	var/datum/radio_frequency/radio_connection
 
 
-obj/machinery/door/airlock/receive_signal(datum/signal/signal)
+/obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
 	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
@@ -49,7 +49,7 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	send_status()
 
 
-obj/machinery/door/airlock/proc/send_status()
+/obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
@@ -62,42 +62,42 @@ obj/machinery/door/airlock/proc/send_status()
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 
 
-obj/machinery/door/airlock/open(surpress_send)
+/obj/machinery/door/airlock/open(surpress_send)
 	. = ..()
 	if(!surpress_send) send_status()
 
 
-obj/machinery/door/airlock/close(surpress_send)
+/obj/machinery/door/airlock/close(surpress_send)
 	. = ..()
 	if(!surpress_send) send_status()
 
 
-obj/machinery/door/airlock/proc/set_frequency(new_frequency)
+/obj/machinery/door/airlock/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	if(new_frequency)
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 
-obj/machinery/door/airlock/initialize()
+/obj/machinery/door/airlock/initialize()
 	if(frequency)
 		set_frequency(frequency)
 
 	update_icon()
 
 
-obj/machinery/door/airlock/New()
+/obj/machinery/door/airlock/New()
 	..()
 
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/door/airlock/Destroy()
+/obj/machinery/door/airlock/Destroy()
 	if(frequency && radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()
 
-obj/machinery/airlock_sensor
+/obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
 	name = "airlock sensor"
@@ -115,7 +115,7 @@ obj/machinery/airlock_sensor
 	var/alert = 0
 
 
-obj/machinery/airlock_sensor/update_icon()
+/obj/machinery/airlock_sensor/update_icon()
 	if(on)
 		if(alert)
 			icon_state = "airlock_sensor_alert"
@@ -124,7 +124,7 @@ obj/machinery/airlock_sensor/update_icon()
 	else
 		icon_state = "airlock_sensor_off"
 
-obj/machinery/airlock_sensor/attack_hand(mob/user)
+/obj/machinery/airlock_sensor/attack_hand(mob/user)
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
@@ -133,7 +133,7 @@ obj/machinery/airlock_sensor/attack_hand(mob/user)
 	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
 
-obj/machinery/airlock_sensor/process()
+/obj/machinery/airlock_sensor/process()
 	if(on)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
@@ -151,21 +151,21 @@ obj/machinery/airlock_sensor/process()
 
 	update_icon()
 
-obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
+/obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
-obj/machinery/airlock_sensor/initialize()
+/obj/machinery/airlock_sensor/initialize()
 	set_frequency(frequency)
 
-obj/machinery/airlock_sensor/New()
+/obj/machinery/airlock_sensor/New()
 	..()
 
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/airlock_sensor/Destroy()
+/obj/machinery/airlock_sensor/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	..()

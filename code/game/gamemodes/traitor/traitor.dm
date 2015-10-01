@@ -21,7 +21,7 @@
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
-datum/game_mode/traitor/announce()
+/datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
 	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
 

@@ -1,8 +1,8 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
-atom/var/list/suit_fibers
+/atom/var/list/suit_fibers
 
-atom/proc/add_fibers(mob/living/carbon/human/M)
+/atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects

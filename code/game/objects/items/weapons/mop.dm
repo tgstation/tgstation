@@ -18,7 +18,7 @@
 	create_reagents(mopcap)
 
 
-obj/item/weapon/mop/proc/clean(turf/simulated/A)
+/obj/item/weapon/mop/proc/clean(turf/simulated/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1))
 		A.clean_blood()
 		var/turf/simulated/floor/F = A

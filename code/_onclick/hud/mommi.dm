@@ -21,7 +21,7 @@
 		var/mob/living/silicon/robot/mommi/M = usr
 		M.toggle_module(INV_SLOT_TOOL)
 
-obj/screen/robot/mommi/hat
+/obj/screen/robot/mommi/hat
 	name = "hat"
 	icon = 'icons/mob/screen_plasmafire.dmi'
 	icon_state = "head"

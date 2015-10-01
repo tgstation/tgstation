@@ -84,6 +84,6 @@
 	src.updateUsrDialog()
 	return
 
-obj/structure/ore_box/ex_act(severity, target)
+/obj/structure/ore_box/ex_act(severity, target)
 	if(prob(100 / severity) && severity < 3)
 		qdel(src) //nothing but ores can get inside unless its a bug and ores just return nothing on ex_act, not point in calling it on them

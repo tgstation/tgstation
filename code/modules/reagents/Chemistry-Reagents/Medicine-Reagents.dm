@@ -5,15 +5,15 @@
 
 // where all the reagents related to medicine go.
 
-datum/reagent/medicine
+/datum/reagent/medicine
 	name = "Medicine"
 	id = "medicine"
 
-datum/reagent/medicine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/on_mob_life(var/mob/living/M as mob)
 	current_cycle++
 	holder.remove_reagent(src.id, metabolization_rate / M.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
 
-datum/reagent/medicine/ethylredoxrazine	// FUCK YOU, ALCOHOL
+/datum/reagent/medicine/ethylredoxrazine	// FUCK YOU, ALCOHOL
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
 	synth_cost = 5
@@ -21,7 +21,7 @@ datum/reagent/medicine/ethylredoxrazine	// FUCK YOU, ALCOHOL
 	reagent_state = SOLID
 	color = "#605048" // rgb: 96, 80, 72
 
-datum/reagent/medicine/ethylredoxrazine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/ethylredoxrazine/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.slurring = 0
@@ -30,21 +30,21 @@ datum/reagent/medicine/ethylredoxrazine/on_mob_life(var/mob/living/M as mob)
 	M.adjustToxLoss(-0.2*REM)
 	..()
 
-datum/reagent/medicine/lipozine
+/datum/reagent/medicine/lipozine
 	name = "Lipozine" // The anti-nutriment.
 	id = "lipozine"
 	synth_cost = 8
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	color = "#BBEDA4" // rgb: 187, 237, 164
 
-datum/reagent/medicine/lipozine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/lipozine/on_mob_life(var/mob/living/M as mob)
 	M.nutrition -= 10 * REAGENTS_METABOLISM
 	M.overeatduration = 0
 	if(M.nutrition < 0)//Prevent from going into negatives.
 		M.nutrition = 0
 	..()
 
-datum/reagent/medicine/hyperzine
+/datum/reagent/medicine/hyperzine
 	name = "Hyperzine"
 	id = "hyperzine"
 	synth_cost = 3
@@ -53,21 +53,21 @@ datum/reagent/medicine/hyperzine
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
-datum/reagent/medicine/hyperzine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/hyperzine/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		if(prob(5))
 			M.emote(pick("twitch","blink_r","shiver"))
 		M.status_flags |= GOTTAGOFAST
 	..()
 
-datum/reagent/medicine/hyperzine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/hyperzine/overdose_process(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustToxLoss(0.5*REM)
 		M.losebreath++
 	..()
 	return
 
-datum/reagent/medicine/inaprovaline
+/datum/reagent/medicine/inaprovaline
 	name = "Inaprovaline"
 	id = "inaprovaline"
 	synth_cost = 3
@@ -76,7 +76,7 @@ datum/reagent/medicine/inaprovaline
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-datum/reagent/medicine/inaprovaline/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/inaprovaline/on_mob_life(var/mob/living/M as mob)
 	if(M.health < -10 && M.health > -65)
 		M.adjustToxLoss(-0.5*REM)
 		M.adjustBruteLoss(-0.5*REM)
@@ -95,7 +95,7 @@ datum/reagent/medicine/inaprovaline/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/inaprovaline/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/inaprovaline/overdose_process(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustStaminaLoss(2.5*REM)
 		M.adjustToxLoss(1*REM)
@@ -103,7 +103,7 @@ datum/reagent/medicine/inaprovaline/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/kelotane
+/datum/reagent/medicine/kelotane
 	name = "Kelotane"
 	id = "kelotane"
 	synth_cost = 2
@@ -111,17 +111,17 @@ datum/reagent/medicine/kelotane
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
 
-datum/reagent/medicine/kelotane/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/kelotane/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		M.heal_organ_damage(0,2*REM)
 	..()
 
-datum/reagent/medicine/kelotane/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/kelotane/overdose_process(var/mob/living/M as mob)
 	M.adjustToxLoss(3*REM)
 	..()
 	return
 
-datum/reagent/medicine/dermaline
+/datum/reagent/medicine/dermaline
 	name = "Dermaline"
 	id = "dermaline"
 	synth_cost = 4
@@ -129,19 +129,19 @@ datum/reagent/medicine/dermaline
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
 
-datum/reagent/medicine/dermaline/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/dermaline/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
 		M.heal_organ_damage(0,3*REM)
 	..()
 
-datum/reagent/medicine/dermaline/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/dermaline/overdose_process(var/mob/living/M as mob)
 	M.adjustBruteLoss(3*REM)
 	M.adjustToxLoss(3*REM)
 	..()
 	return
 
 
-datum/reagent/medicine/dexalin
+/datum/reagent/medicine/dexalin
 	name = "Dexalin"
 	id = "dexalin"
 	synth_cost = 3
@@ -149,7 +149,7 @@ datum/reagent/medicine/dexalin
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
 
-datum/reagent/medicine/dexalin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/dexalin/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		M.adjustOxyLoss(-3*REM)
 		if(M.losebreath >= 4)
@@ -158,7 +158,7 @@ datum/reagent/medicine/dexalin/on_mob_life(var/mob/living/M as mob)
 		holder.remove_reagent("lexorin", 2*REM)
 	..()
 
-datum/reagent/medicine/dexalin/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/dexalin/overdose_process(var/mob/living/M as mob)
 	if(prob(50))
 		M.adjustStaminaLoss(2.5*REM)
 		M.adjustToxLoss(1*REM)
@@ -167,7 +167,7 @@ datum/reagent/medicine/dexalin/overdose_process(var/mob/living/M as mob)
 	return
 
 
-datum/reagent/medicine/dexalinp
+/datum/reagent/medicine/dexalinp
 	name = "Dexalin Plus"
 	id = "dexalinp"
 	synth_cost = 5
@@ -175,7 +175,7 @@ datum/reagent/medicine/dexalinp
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
 
-datum/reagent/medicine/dexalinp/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/dexalinp/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		M.adjustOxyLoss(-12)
 		if(M.losebreath > 0)
@@ -186,14 +186,14 @@ datum/reagent/medicine/dexalinp/on_mob_life(var/mob/living/M as mob)
 		holder.remove_reagent("lexorin", 2*REM)
 	..()
 
-datum/reagent/medicine/dexalinp/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/dexalinp/overdose_process(var/mob/living/M as mob)
 	M.adjustStaminaLoss(2.5*REM)
 	M.adjustToxLoss(2.5*REM)
 	M.losebreath++
 	..()
 	return
 
-datum/reagent/medicine/tricordrazine
+/datum/reagent/medicine/tricordrazine
 	name = "Tricordrazine"
 	id = "tricordrazine"
 	synth_cost = 6
@@ -201,7 +201,7 @@ datum/reagent/medicine/tricordrazine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
 
-datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		if(M.getOxyLoss() && prob(80))
 			M.adjustOxyLoss(-1*REM)
@@ -214,20 +214,20 @@ datum/reagent/medicine/tricordrazine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/tricordrazine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/tricordrazine/overdose_process(var/mob/living/M as mob)
 	M.adjustToxLoss(1.5*REM)
 	M.adjustOxyLoss(1.5*REM)
 	M.adjustBruteLoss(1.5*REM)
 	M.adjustFireLoss(1.5*REM)
 	..()
-datum/reagent/medicine/anti_toxin
+/datum/reagent/medicine/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
 	id = "anti_toxin"
 	synth_cost = 3
 	description = "Dylovene is a broad-spectrum antitoxin."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/anti_toxin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/anti_toxin/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		for(var/datum/reagent/R in M.reagents.reagent_list)
 			if(R != src)
@@ -239,28 +239,28 @@ datum/reagent/medicine/anti_toxin/on_mob_life(var/mob/living/M as mob)
 	return
 
 
-datum/reagent/medicine/leporazine
+/datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	id = "leporazine"
 	synth_cost = 3
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/leporazine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/leporazine/on_mob_life(var/mob/living/M as mob)
 	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	else if(M.bodytemperature < 311)
 		M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
 
-datum/reagent/medicine/adminordrazine //An OP chemical for admins
+/datum/reagent/medicine/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	id = "adminordrazine"
 	synth_cost = 9001 //hue
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob)
+/datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 	M.setCloneLoss(0)
 	M.setOxyLoss(0)
@@ -294,20 +294,20 @@ datum/reagent/medicine/adminordrazine/on_mob_life(var/mob/living/carbon/M as mob
 	..()
 	return
 
-datum/reagent/medicine/adminordrazine/nanites
+/datum/reagent/medicine/adminordrazine/nanites
 	name = "Nanites"
 	id = "nanites"
 	synth_cost = 100
 	description = "Tiny machines capable of rapid cellular regeneration."
 
-datum/reagent/medicine/synaptizine
+/datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
 	synth_cost = 3
 	description = "Synaptizine is used to treat various diseases."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/synaptizine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/synaptizine/on_mob_life(var/mob/living/M as mob)
 	M.drowsyness = max(M.drowsyness-5, 0)
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
@@ -320,26 +320,26 @@ datum/reagent/medicine/synaptizine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/hyronalin
+/datum/reagent/medicine/hyronalin
 	name = "Hyronalin"
 	id = "hyronalin"
 	synth_cost = 4
 	description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/hyronalin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/hyronalin/on_mob_life(var/mob/living/M as mob)
 	M.radiation = max(M.radiation-3*REM,0)
 	..()
 	return
 
-datum/reagent/medicine/arithrazine
+/datum/reagent/medicine/arithrazine
 	name = "Arithrazine"
 	id = "arithrazine"
 	synth_cost = 5
 	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/arithrazine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/arithrazine/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		M.radiation = max(M.radiation-7*REM,0)
 		M.adjustToxLoss(-1*REM)
@@ -348,27 +348,27 @@ datum/reagent/medicine/arithrazine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/alkysine
+/datum/reagent/medicine/alkysine
 	name = "Alkysine"
 	id = "alkysine"
 	synth_cost = 5
 	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/alkysine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/alkysine/on_mob_life(var/mob/living/M as mob)
 	if(M != DEAD)
 		M.adjustBrainLoss(-3*REM)
 	..()
 	return
 
-datum/reagent/medicine/imidazoline
+/datum/reagent/medicine/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
 	synth_cost = 5
 	description = "Heals eye damage."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/imidazoline/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/imidazoline/on_mob_life(var/mob/living/M as mob)
 	M.eye_blurry = max(M.eye_blurry-5 , 0)
 	M.eye_blind = max(M.eye_blind-5 , 0)
 	M.eye_covered = max(M.eye_covered-5 , 0)
@@ -377,21 +377,21 @@ datum/reagent/medicine/imidazoline/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/inacusiate
+/datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
 	id = "inacusiate"
 	synth_cost = 5
 	description = "Heals ear damage."
 	color = "#6600FF" // rgb: 100, 165, 255
 
-datum/reagent/medicine/inacusiate/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/inacusiate/on_mob_life(var/mob/living/M as mob)
 	M.setEarDamage(0,0)
 	if(M.disabilities & DEAF)
 		M.disabilities &= ~DEAF
 	..()
 	return
 
-datum/reagent/medicine/bicaridine
+/datum/reagent/medicine/bicaridine
 	name = "Bicaridine"
 	id = "bicaridine"
 	synth_cost = 4
@@ -399,25 +399,25 @@ datum/reagent/medicine/bicaridine
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 60
 
-datum/reagent/medicine/bicaridine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/bicaridine/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD)
 		M.heal_organ_damage(2*REM,0)
 	..()
 	return
-datum/reagent/medicine/bicaridine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/bicaridine/overdose_process(var/mob/living/M as mob)
 	M.adjustToxLoss(3*REM)
 	M.adjustOxyLoss(1.5*REM)
 	..()
 	return
 
-datum/reagent/medicine/cryoxadone
+/datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	synth_cost = 9
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD && M.bodytemperature < 170)
 		M.adjustCloneLoss(-2)
 		M.adjustOxyLoss(-3)
@@ -426,14 +426,14 @@ datum/reagent/medicine/cryoxadone/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/clonexadone
+/datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
 	id = "clonexadone"
 	synth_cost = 11
 	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' clones that get ejected early when used in conjunction with a cryo tube."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/clonexadone/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/clonexadone/on_mob_life(var/mob/living/M as mob)
 	if(M.stat != DEAD && M.bodytemperature < 170)
 		M.adjustCloneLoss(-4)
 		M.adjustOxyLoss(-3)
@@ -443,7 +443,7 @@ datum/reagent/medicine/clonexadone/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/rezadone
+/datum/reagent/medicine/rezadone
 	name = "Rezadone"
 	id = "rezadone"
 	synth_cost = 10
@@ -451,7 +451,7 @@ datum/reagent/medicine/rezadone
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 
-datum/reagent/medicine/rezadone/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/rezadone/on_mob_life(var/mob/living/M as mob)
 	switch(current_cycle)
 		if(1 to 15)
 			M.adjustCloneLoss(-1)
@@ -468,7 +468,7 @@ datum/reagent/medicine/rezadone/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/spaceacillin
+/datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
 	id = "spaceacillin"
 	synth_cost = 6
@@ -484,7 +484,7 @@ datum/reagent/medicine/spaceacillin
 //------------------------------------------------------------------------------------------------------
 
 
-datum/reagent/medicine/silver_sulfadiazine
+/datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
 	synth_cost = 4
@@ -508,7 +508,7 @@ datum/reagent/medicine/silver_sulfadiazine
 	return
 
 
-datum/reagent/medicine/styptic_powder
+/datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
 	synth_cost = 8
@@ -516,7 +516,7 @@ datum/reagent/medicine/styptic_powder
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+/datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M))
 		if((method == VAPOR || method == TOUCH || method == PATCH) && M.stat != DEAD)
 			M.adjustBruteLoss(-reac_volume)
@@ -531,7 +531,7 @@ datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, r
 	..()
 	return
 
-datum/reagent/medicine/salglu_solution
+/datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
 	synth_cost = 5
@@ -540,21 +540,21 @@ datum/reagent/medicine/salglu_solution
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/salglu_solution/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/salglu_solution/on_mob_life(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM)
 		M.adjustFireLoss(-0.5*REM)
 	..()
 	return
 /*
-datum/reagent/medicine/synthflesh
+/datum/reagent/medicine/synthflesh
 	name = "Synthflesh"
 	id = "synthflesh"
 	description = "Has a 100% chance of instantly healing brute and burn damage. One unit of the chemical will heal one point of damage. Touch application only."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
-datum/reagent/medicine/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
+/datum/reagent/medicine/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume,var/show_message = 1)
 	if(iscarbon(M))
 		if(method == TOUCH)
 			M.adjustBruteLoss(-1.5*volume)
@@ -564,7 +564,7 @@ datum/reagent/medicine/synthflesh/reaction_mob(var/mob/living/M, var/method=TOUC
 	..()
 	return
 
-datum/reagent/medicine/charcoal
+/datum/reagent/medicine/charcoal
 	name = "Charcoal"
 	id = "charcoal"
 	description = "Heals toxin damage, and will also slowly remove any other chemicals."
@@ -572,7 +572,7 @@ datum/reagent/medicine/charcoal
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/charcoal/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/charcoal/on_mob_life(var/mob/living/M as mob)
 	M.adjustToxLoss(-2*REM)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -580,7 +580,7 @@ datum/reagent/medicine/charcoal/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 */
-datum/reagent/medicine/omnizine  //I guess I'll keep this for the cruel OD
+/datum/reagent/medicine/omnizine  //I guess I'll keep this for the cruel OD
 	name = "Omnizine"
 	id = "omnizine"
 	synth_cost = 50
@@ -590,7 +590,7 @@ datum/reagent/medicine/omnizine  //I guess I'll keep this for the cruel OD
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-datum/reagent/medicine/omnizine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/omnizine/on_mob_life(var/mob/living/M as mob)
 	M.adjustToxLoss(-0.5*REM)
 	M.adjustOxyLoss(-0.5*REM)
 	M.adjustBruteLoss(-0.5*REM)
@@ -598,7 +598,7 @@ datum/reagent/medicine/omnizine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/omnizine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/omnizine/overdose_process(var/mob/living/M as mob)
 	M.adjustToxLoss(1.5*REM)
 	M.adjustOxyLoss(1.5*REM)
 	M.adjustBruteLoss(1.5*REM)
@@ -606,7 +606,7 @@ datum/reagent/medicine/omnizine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/calomel //
+/datum/reagent/medicine/calomel //
 	name = "Calomel"
 	id = "calomel"
 	synth_cost = 3
@@ -615,7 +615,7 @@ datum/reagent/medicine/calomel //
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/calomel/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/calomel/on_mob_life(var/mob/living/M as mob)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2.5)
@@ -624,7 +624,7 @@ datum/reagent/medicine/calomel/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/potass_iodide //
+/datum/reagent/medicine/potass_iodide //
 	name = "Potassium Iodide"
 	id = "potass_iodide"
 	synth_cost = 2
@@ -633,7 +633,7 @@ datum/reagent/medicine/potass_iodide //
 	color = "#C8A5DC"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/potass_iodide/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	if(M.radiation > 0)
 		M.radiation--
 	if(M.radiation < 0)
@@ -641,7 +641,7 @@ datum/reagent/medicine/potass_iodide/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/pen_acid //
+/datum/reagent/medicine/pen_acid //
 	name = "Pentetic Acid"
 	id = "pen_acid"
 	synth_cost = 17
@@ -650,7 +650,7 @@ datum/reagent/medicine/pen_acid //
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/pen_acid/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/pen_acid/on_mob_life(var/mob/living/M as mob)
 	if(M.radiation > 0)
 		M.radiation -= 4
 	M.adjustToxLoss(-2*REM)
@@ -664,7 +664,7 @@ datum/reagent/medicine/pen_acid/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 /*
-datum/reagent/medicine/sal_acid
+/datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
 	description = "If you have less than 50 brute damage, it heals 0.25 unit. If overdosed it will deal 0.5 brute damage if the patient has less than 50 brute damage already."
@@ -673,19 +673,19 @@ datum/reagent/medicine/sal_acid
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
-datum/reagent/medicine/sal_acid/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/sal_acid/on_mob_life(var/mob/living/M as mob)
 	if(M.getBruteLoss() < 50)
 		M.adjustBruteLoss(-0.25*REM)
 	..()
 	return
 
-datum/reagent/medicine/sal_acid/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/sal_acid/overdose_process(var/mob/living/M as mob)
 	if(M.getBruteLoss() < 50)
 		M.adjustBruteLoss(0.5*REM)
 	..()
 	return
 
-datum/reagent/medicine/salbutamol
+/datum/reagent/medicine/salbutamol
 	name = "Salbutamol"
 	id = "salbutamol"
 	description = "Quickly heals oxygen damage while slowing down suffocation. Great for stabilizing critical patients!"
@@ -693,14 +693,14 @@ datum/reagent/medicine/salbutamol
 	color = "#C8A5DC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/salbutamol/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/salbutamol/on_mob_life(var/mob/living/M as mob)
 	M.adjustOxyLoss(-3*REM)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	..()
 	return
 
-datum/reagent/medicine/perfluorodecalin
+/datum/reagent/medicine/perfluorodecalin
 	name = "Perfluorodecalin"
 	id = "perfluorodecalin"
 	description = "Heals suffocation damage so quickly that you could have a spacewalk, but it mutes your voice. Has a 33% chance of healing brute and burn damage per cycle as well."
@@ -708,7 +708,7 @@ datum/reagent/medicine/perfluorodecalin
 	color = "#C8A5DC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
+/datum/reagent/medicine/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/M as mob)
 	M.adjustOxyLoss(-12*REM)
 	M.silent = max(M.silent, 5)
 	if(prob(33))
@@ -717,7 +717,7 @@ datum/reagent/medicine/perfluorodecalin/on_mob_life(var/mob/living/carbon/human/
 	..()
 	return
 */
-datum/reagent/medicine/ephedrine //
+/datum/reagent/medicine/ephedrine //
 	name = "Ephedrine"
 	id = "ephedrine"
 	synth_cost = 10
@@ -728,7 +728,7 @@ datum/reagent/medicine/ephedrine //
 	overdose_threshold = 45
 	addiction_threshold = 30
 
-datum/reagent/medicine/ephedrine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/ephedrine/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= GOTTAGOFAST
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
@@ -737,39 +737,39 @@ datum/reagent/medicine/ephedrine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/ephedrine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/ephedrine/overdose_process(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustToxLoss(0.5*REM)
 		M.losebreath++
 	..()
 	return
 
-datum/reagent/medicine/ephedrine/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/medicine/ephedrine/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustToxLoss(2*REM)
 		M.losebreath += 2
 	..()
 	return
-datum/reagent/medicine/ephedrine/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/medicine/ephedrine/addiction_act_stage2(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustToxLoss(3*REM)
 		M.losebreath += 3
 	..()
 	return
-datum/reagent/medicine/ephedrine/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/medicine/ephedrine/addiction_act_stage3(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustToxLoss(4*REM)
 		M.losebreath += 4
 	..()
 	return
-datum/reagent/medicine/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
+/datum/reagent/medicine/ephedrine/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustToxLoss(5*REM)
 		M.losebreath += 5
 	..()
 	return
 
-datum/reagent/medicine/diphenhydramine //
+/datum/reagent/medicine/diphenhydramine //
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
 	synth_cost = 15
@@ -778,7 +778,7 @@ datum/reagent/medicine/diphenhydramine //
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/diphenhydramine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	if(prob(50))
 		M.drowsyness += 1
 	M.jitteriness -= 1
@@ -786,7 +786,7 @@ datum/reagent/medicine/diphenhydramine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/morphine //
+/datum/reagent/medicine/morphine //
 	name = "Morphine"
 	id = "morphine"
 	synth_cost = 5
@@ -798,14 +798,14 @@ datum/reagent/medicine/morphine //
 	addiction_threshold = 25
 
 
-datum/reagent/medicine/morphine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/morphine/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= IGNORESLOWDOWN
 	if(current_cycle >= 12) //CAN'T WAKE UP
 		M.sleeping += 1
 	..()
 	return
 
-datum/reagent/medicine/morphine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/morphine/overdose_process(var/mob/living/M as mob)
 	if(prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
@@ -815,7 +815,7 @@ datum/reagent/medicine/morphine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/morphine/addiction_act_stage1(var/mob/living/M as mob)
+/datum/reagent/medicine/morphine/addiction_act_stage1(var/mob/living/M as mob)
 	if(prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
@@ -824,7 +824,7 @@ datum/reagent/medicine/morphine/addiction_act_stage1(var/mob/living/M as mob)
 		M.Jitter(2)
 	..()
 	return
-datum/reagent/medicine/morphine/addiction_act_stage2(var/mob/living/M as mob)
+/datum/reagent/medicine/morphine/addiction_act_stage2(var/mob/living/M as mob)
 	if(prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
@@ -834,7 +834,7 @@ datum/reagent/medicine/morphine/addiction_act_stage2(var/mob/living/M as mob)
 		M.Jitter(3)
 	..()
 	return
-datum/reagent/medicine/morphine/addiction_act_stage3(var/mob/living/M as mob)
+/datum/reagent/medicine/morphine/addiction_act_stage3(var/mob/living/M as mob)
 	if(prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
@@ -844,7 +844,7 @@ datum/reagent/medicine/morphine/addiction_act_stage3(var/mob/living/M as mob)
 		M.Jitter(4)
 	..()
 	return
-datum/reagent/medicine/morphine/addiction_act_stage4(var/mob/living/M as mob)
+/datum/reagent/medicine/morphine/addiction_act_stage4(var/mob/living/M as mob)
 	if(prob(33))
 		var/obj/item/I = M.get_active_hand()
 		if(I)
@@ -855,7 +855,7 @@ datum/reagent/medicine/morphine/addiction_act_stage4(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/oculine
+/datum/reagent/medicine/oculine
 	name = "Oculine"
 	id = "oculine"
 	synth_cost = 10
@@ -864,7 +864,7 @@ datum/reagent/medicine/oculine
 	color = "#C8A5DC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
 	if(M.eye_blind > 0 && current_cycle > 20)
 		if(prob(30))
 			M.eye_blind = 0
@@ -877,7 +877,7 @@ datum/reagent/medicine/oculine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/atropine //
+/datum/reagent/medicine/atropine //
 	name = "Atropine"
 	id = "atropine"
 	synth_cost = 17
@@ -887,7 +887,7 @@ datum/reagent/medicine/atropine //
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 
-datum/reagent/medicine/atropine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/atropine/on_mob_life(var/mob/living/M as mob)
 	if(M.health > -60)
 		M.adjustToxLoss(0.5*REM)
 	if(M.health < -25)
@@ -903,14 +903,14 @@ datum/reagent/medicine/atropine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/atropine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/atropine/overdose_process(var/mob/living/M as mob)
 	M.adjustToxLoss(0.5*REM)
 	M.Dizzy(1)
 	M.Jitter(1)
 	..()
 	return
 /*
-datum/reagent/medicine/epinephrine
+/datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
 	description = "Reduces most of the knockout/stun effects, minor stamina regeneration buff. Attempts to stop you taking too much oxygen damage. If the patient is in low to severe crit, heals toxins, brute, and burn very effectively. Will not heal patients who are almost dead. If overdosed will stun and deal toxin damage"
@@ -919,7 +919,7 @@ datum/reagent/medicine/epinephrine
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-datum/reagent/medicine/epinephrine/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/epinephrine/on_mob_life(var/mob/living/M as mob)
 	if(M.health < -10 && M.health > -65)
 		M.adjustToxLoss(-0.5*REM)
 		M.adjustBruteLoss(-0.5*REM)
@@ -938,7 +938,7 @@ datum/reagent/medicine/epinephrine/on_mob_life(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/epinephrine/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/epinephrine/overdose_process(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustStaminaLoss(2.5*REM)
 		M.adjustToxLoss(1*REM)
@@ -946,7 +946,7 @@ datum/reagent/medicine/epinephrine/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 */
-datum/reagent/medicine/strange_reagent //
+/datum/reagent/medicine/strange_reagent //
 	name = "Strange Reagent"
 	id = "strange_reagent"
 	synth_cost = 15
@@ -977,14 +977,14 @@ datum/reagent/medicine/strange_reagent //
 	..()
 	return
 
-datum/reagent/medicine/strange_reagent/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/strange_reagent/on_mob_life(var/mob/living/M as mob)
 	M.adjustBruteLoss(0.5*REM)
 	M.adjustFireLoss(0.5*REM)
 	..()
 	return
 
 
-datum/reagent/medicine/ryetalyn //
+/datum/reagent/medicine/ryetalyn //
 	name = "Ryetalyn"
 	id = "ryetalyn"
 	synth_cost = 6
@@ -992,7 +992,7 @@ datum/reagent/medicine/ryetalyn //
 	reagent_state = SOLID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
+/datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
@@ -1001,14 +1001,14 @@ datum/reagent/medicine/ryetalyn/on_mob_life(mob/living/carbon/human/M)
 	..()
 	return
 
-datum/reagent/medicine/antihol //
+/datum/reagent/medicine/antihol //
 	name = "Antihol"
 	id = "antihol"
 	synth_cost = 5
 	description = "Helps remove Alcohol from someone's body, as well as eliminating its side effects."
 	color = "#C8A5DC"
 
-datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.slurring = 0
@@ -1026,7 +1026,7 @@ datum/reagent/medicine/antihol/on_mob_life(var/mob/living/M as mob)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
-datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
 	M.status_flags |= GOTTAGOFAST
 	if(prob(33))
 		M.adjustOxyLoss(-1*REM)
@@ -1039,7 +1039,7 @@ datum/reagent/medicine/stimulants/on_mob_life(var/mob/living/M as mob)
 	M.adjustStaminaLoss(-2.5*REM)
 	..()
 
-datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)
+/datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)
 	if(prob(33))
 		M.adjustStaminaLoss(2.5*REM)
 		M.adjustToxLoss(1*REM)
@@ -1047,7 +1047,7 @@ datum/reagent/medicine/stimulants/overdose_process(var/mob/living/M as mob)
 	..()
 	return
 
-datum/reagent/medicine/insulin //
+/datum/reagent/medicine/insulin //
 	name = "Insulin"
 	id = "insulin"
 	synth_cost = 5
@@ -1056,7 +1056,7 @@ datum/reagent/medicine/insulin //
 	color = "#C8A5DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/medicine/insulin/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/medicine/insulin/on_mob_life(var/mob/living/M as mob)
 	if(M.sleeping)
 		M.sleeping--
 	M.reagents.remove_reagent("sugar", 3)

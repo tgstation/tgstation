@@ -1,4 +1,4 @@
-obj/structure/door_assembly
+/obj/structure/door_assembly
 	icon = 'icons/obj/doors/door_assembly.dmi'
 
 	name = "airlock assembly"
@@ -16,7 +16,7 @@ obj/structure/door_assembly
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/created_name = null
 
-obj/structure/door_assembly/New()
+/obj/structure/door_assembly/New()
 	base_icon_state = copytext(icon_state,1,lentext(icon_state))
 
 /obj/structure/door_assembly/door_assembly_0

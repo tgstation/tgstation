@@ -903,7 +903,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	..()
 	world << "derp"*/
 
-obj/item/weapon/newspaper/attack_self(mob/user as mob)
+/obj/item/weapon/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
@@ -983,7 +983,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 		user << "The paper is full of intelligible symbols!"
 
 
-obj/item/weapon/newspaper/Topic(href, href_list)
+/obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
@@ -1015,7 +1015,7 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 			src.attack_self(src.loc)
 
 
-obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+/obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/pen))
 		if(src.scribble_page == src.curr_page)
 			user << "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>"
