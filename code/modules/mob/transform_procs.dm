@@ -3,15 +3,29 @@
 		return
 	//Handle items on mob
 
-	//first implants
+	//first implants & organs
 	var/list/implants = list()
+	var/list/int_organs = list()
+
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
 
-	if(tr_flags & TR_KEEPITEMS)
+	if (tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in internal_organs)
+			int_organs += I
+			I.Remove(src, 1)
+
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants))
 			unEquip(W)
+			if (client)
+				client.screen -= W
+			if (W)
+				W.loc = loc
+				W.dropped(src)
+				W.layer = initial(W.layer)
 
 	//Make mob invisible and spawn animation
 	regenerate_icons()
@@ -70,6 +84,14 @@
 		I.loc = O
 		I.implanted = O
 
+	//re-add organs to new mob
+	if(tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in O.internal_organs)
+			qdel(I)
+
+		for(var/obj/item/organ/internal/I in int_organs)
+			I.Insert(O, 1)
+
 	//transfer mind and delete old mob
 	transfer_borer(O)
 	if(mind)
@@ -97,11 +119,18 @@
 		return
 	//Handle items on mob
 
-	//first implants
+	//first implants & organs
 	var/list/implants = list()
+	var/list/int_organs = list()
+
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/obj/item/weapon/implant/W in src)
 			implants += W
+
+	if (tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in internal_organs)
+			int_organs += I
+			I.Remove(src, 1)
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -185,6 +214,13 @@
 		I.loc = O
 		I.implanted = O
 	O.sec_hud_set_implants()
+
+	if(tr_flags & TR_KEEPORGANS)
+		for(var/obj/item/organ/internal/I in O.internal_organs)
+			qdel(I)
+
+		for(var/obj/item/organ/internal/I in int_organs)
+			I.Insert(O, 1)
 
 	transfer_borer(O)
 

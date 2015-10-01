@@ -34,6 +34,15 @@
 			powernet = attached.get_powernet()
 	return
 
+/obj/machinery/computer/monitor/proc/forceupdate() //Fucking powernets, how do they work?
+	var/obj/structure/cable/attached = null
+	var/turf/T = loc
+	if(isturf(T))
+		attached = locate() in T
+	if(attached)
+		powernet = attached.get_powernet()
+	return
+
 /obj/machinery/computer/monitor/attack_hand(mob/user)
 	if(..())
 		return
@@ -95,5 +104,6 @@
 		usr.unset_machine()
 		return
 	if( href_list["update"] )
+		src.forceupdate()
 		src.updateDialog()
 		return

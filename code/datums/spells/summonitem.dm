@@ -44,7 +44,7 @@
 			name = "Instant Summons"
 			marked_item = 		null
 
-		else if(marked_item && !marked_item.loc) //the item was destroyed at some point
+		else if(marked_item && marked_item.gc_destroyed) //the item was destroyed at some point
 			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
 			name = "Instant Summons"
 			marked_item = 		null
@@ -53,44 +53,46 @@
 			var/obj/item_to_retrive = marked_item
 			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
 
-			while(!isturf(item_to_retrive.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
-				if(ismob(item_to_retrive.loc)) //If its on someone, properly drop it
-					var/mob/M = item_to_retrive.loc
+			if(!item_to_retrive.loc)
+				if(isorgan(item_to_retrive)) // Organs are usually stored in nullspace
+					var/obj/item/organ/internal/organ = item_to_retrive
+					if(organ.owner)
+						// If this code ever runs I will be happy
+						add_logs(user, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(user.a_intent)]")
+						organ.Remove(organ.owner)
+			else
+				while(!isturf(item_to_retrive.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
+					if(ismob(item_to_retrive.loc)) //If its on someone, properly drop it
+						var/mob/M = item_to_retrive.loc
 
-					if(issilicon(M)) //Items in silicons warp the whole silicon
-						M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
-						M.loc = user.loc
-						M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
-						item_to_retrive = null
-						break
+						if(issilicon(M)) //Items in silicons warp the whole silicon
+							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
+							M.loc = user.loc
+							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
+							item_to_retrive = null
+							break
+						M.unEquip(item_to_retrive)
 
-					M.unEquip(item_to_retrive)
+						if(iscarbon(M)) //Edge case housekeeping
+							var/mob/living/carbon/C = M
+							if(C.stomach_contents && item_to_retrive in C.stomach_contents)
+								C.stomach_contents -= item_to_retrive
 
-					if(iscarbon(M)) //Edge case housekeeping
-						var/mob/living/carbon/C = M
-						if(C.internal_organs && item_to_retrive in C.internal_organs) //KALIMA!
-							C.internal_organs -= item_to_retrive
-							if(istype(marked_item,/obj/item/organ/brain)) //If this code ever runs I will be happy
-								var/obj/item/organ/brain/B
-								B.transfer_identity(C)
-								add_logs(user, C, "magically debrained", addition="INTENT: [uppertext(user.a_intent)]")
-						if(C.stomach_contents && item_to_retrive in C.stomach_contents)
-							C.stomach_contents -= item_to_retrive
+					else
+						if(istype(item_to_retrive.loc,/obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
+							var/obj/machinery/portable_atmospherics/P = item_to_retrive.loc
+							P.disconnect()
+							P.update_icon()
 
-				else
-					if(istype(item_to_retrive.loc,/obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
-						var/obj/machinery/portable_atmospherics/P = item_to_retrive.loc
-						P.disconnect()
-						P.update_icon()
+						item_to_retrive = item_to_retrive.loc
 
-					item_to_retrive = item_to_retrive.loc
-
-				infinite_recursion += 1
+					infinite_recursion += 1
 
 			if(!item_to_retrive)
 				return
 
-			item_to_retrive.loc.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
+			if(item_to_retrive.loc)
+				item_to_retrive.loc.visible_message("<span class='warning'>The [item_to_retrive.name] suddenly disappears!</span>")
 
 
 			if(user.hand) //left active hand

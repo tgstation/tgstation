@@ -30,6 +30,9 @@
 	return QDEL_HINT_LETMELIVE
 
 
+/obj/docking_port/shuttleRotate()
+	return //we don't rotate with shuttles via this code.
+
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
 	if(!_dir)
@@ -276,6 +279,28 @@
 	else
 		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
+
+
+//default shuttleRotate
+/atom/proc/shuttleRotate(rotation)
+	//rotate our direction
+	dir = angle2dir(rotation+dir2angle(dir))
+
+	//resmooth if need be.
+	if(smooth)
+		smooth_icon(src)
+
+	//rotate the pixel offsets too.
+	if (pixel_x || pixel_y)
+		if (rotation < 0)
+			rotation += 360
+		for (var/turntimes=rotation/90;turntimes>0;turntimes--)
+			var/oldPX = pixel_x
+			var/oldPY = pixel_y
+			pixel_x = oldPY
+			pixel_y = (oldPX*(-1))
+
+
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
@@ -303,6 +328,12 @@
 			area_type = S0.area_type
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+
+	var/rotation = dir2angle(S1.dir)-dir2angle(dir)
+	if ((rotation % 90) != 0)
+		rotation += (rotation % 90) //diagonal rotations not allowed, round up
+	rotation = SimplifyDegrees(rotation)
+
 
 	//remove area surrounding docking port
 	if(areaInstance.contents.len)
@@ -336,37 +367,43 @@
 		dir = S1.dir
 
 		//move all objects
-		for(var/obj/O in T0)
-		//	areaInstance.contents += O
-			if(O.invisibility >= 101)
-				continue
-		//	if(O == T0.lighting_object)
-		//		continue
-			O.loc = T1
-			O.update_all_lights()
+		for(var/atom/movable/AM in T0)
+			if (rotation)
+				AM.shuttleRotate(rotation)
 
-			//close open doors
-			if(istype(O, /obj/machinery/door))
-				var/obj/machinery/door/Door = O
-				spawn(-1)
-					if(Door)
-						Door.close()
+			if (istype(AM,/obj))
+				var/obj/O = AM
+			//	areaInstance.contents += O
+				if(O.invisibility >= 101)
+					continue
+//				if(O == T0.lighting_object)
+//					continue
+				O.loc = T1
+				O.update_all_lights()
 
-		for(var/mob/M in T0)
-			if(!M.move_on_shuttle)
-				continue
-			M.loc = T1
+				//close open doors
+				if(istype(O, /obj/machinery/door))
+					var/obj/machinery/door/Door = O
+					spawn(-1)
+						if(Door)
+							Door.close()
 
-			//docking turbulence
-			if(M.client)
-				spawn(0)
-					if(M.buckled)
-						shake_camera(M, 2, 1) // turn it down a bit come on
-					else
-						shake_camera(M, 7, 1)
-			if(istype(M, /mob/living/carbon))
-				if(!M.buckled)
-					M.Weaken(3)
+			else if (istype(AM,/mob))
+				var/mob/M = AM
+				if(!M.move_on_shuttle)
+					continue
+				M.loc = T1
+
+				//docking turbulence
+				if(M.client)
+					spawn(0)
+						if(M.buckled)
+							shake_camera(M, 2, 1) // turn it down a bit come on
+						else
+							shake_camera(M, 7, 1)
+				if(istype(M, /mob/living/carbon))
+					if(!M.buckled)
+						M.Weaken(3)
 
 		T0.ChangeTurf(turf_type)
 
@@ -392,10 +429,10 @@
 		for(var/turf/T in L1)
 			if(!T)
 				continue
-//			if(!T.lighting_overlay)
-//				T.lighting_build_overlays()
 			T.update_overlay()
 			T.reconsider_lights()
+			if(!T.lighting_overlay)
+				T.lighting_fix_overlays()
 
 
 /*

@@ -44,7 +44,7 @@
 	else
 		heal_overall_damage(0, -amount)
 
-mob/living/carbon/human/proc/hat_fall_prob()
+/mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head
 	var/loose = 40
@@ -169,7 +169,7 @@ mob/living/carbon/human/proc/hat_fall_prob()
 			if(blocked <= 0)	return 0
 
 			var/obj/item/organ/limb/organ = null
-			if(isorgan(def_zone))
+			if(islimb(def_zone))
 				organ = def_zone
 			else
 				if(!def_zone)	def_zone = ran_zone(def_zone)

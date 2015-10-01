@@ -46,7 +46,7 @@
 	scan()
 
 /obj/item/clothing/glasses/meson/engine/proc/scan()
-	for(var/turf/T in range(1, loc))
+	for(var/turf/T in range(2, loc))
 
 		if(!T.intact)
 			continue

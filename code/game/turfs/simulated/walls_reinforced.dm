@@ -1,6 +1,7 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
@@ -53,8 +54,8 @@
 				return 1
 			MS.use(1)
 			src.d_state = 0
-			src.icon_state = "r_wall"
-			relativewall_neighbours()	//call smoothwall stuff
+			update_icon()
+			smooth_icon_neighbors(src)	//call smoothwall stuff
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0
@@ -66,7 +67,7 @@
 			if (istype(W, /obj/item/weapon/wirecutters))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 				src.d_state = 1
-				src.icon_state = "r_wall-1"
+				update_icon()
 				new /obj/item/stack/rods( src )
 				user << "<span class='notice'>You cut the outer grille.</span>"
 				return 1
@@ -82,7 +83,7 @@
 
 					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 2
-						src.icon_state = "r_wall-2"
+						update_icon()
 						user << "<span class='notice'>You remove the support lines.</span>"
 				return 1
 
@@ -91,8 +92,8 @@
 				var/obj/item/stack/rods/O = W
 				if (O.use(1))
 					src.d_state = 0
-					src.icon_state = "r_wall"
-					relativewall_neighbours()	//call smoothwall stuff
+					update_icon()
+					smooth_icon_neighbors(src)	//call smoothwall stuff
 					user << "<span class='notice'>You replace the outer grille.</span>"
 				else
 					user << "<span class='warning'>You need one rod to repair the wall.</span>"
@@ -113,7 +114,7 @@
 
 						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 3
-							src.icon_state = "r_wall-3"
+							update_icon()
 							user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
@@ -128,7 +129,7 @@
 
 					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 3
-						src.icon_state = "r_wall-3"
+						update_icon()
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
 				return 1
 
@@ -144,7 +145,7 @@
 
 					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 4
-						src.icon_state = "r_wall-4"
+						update_icon()
 						user << "<span class='notice'>You pry off the cover.</span>"
 				return 1
 
@@ -160,7 +161,7 @@
 
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 5
-						src.icon_state = "r_wall-5"
+						update_icon()
 						user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
 				return 1
 
@@ -178,7 +179,7 @@
 
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 							src.d_state = 6
-							src.icon_state = "r_wall-6"
+							update_icon()
 							new /obj/item/stack/rods( src )
 							user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
 				return 1
@@ -194,7 +195,7 @@
 
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 						src.d_state = 6
-						src.icon_state = "r_wall-6"
+						update_icon()
 						new /obj/item/stack/rods( src )
 						user << "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>"
 				return 1
@@ -219,3 +220,12 @@
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/r_wall/proc/update_icon()
+	if(d_state)
+		icon_state = "r_wall-[d_state]"
+		smooth = 0
+		clear_overlays(src)
+	else
+		smooth = 1
+		icon_state = ""

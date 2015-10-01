@@ -1105,7 +1105,7 @@
 					var/DBQuery/query_reason = dbcon.NewQuery("SELECT ckey, reason FROM [format_table_name("watch")] WHERE (ckey = '[sql_ckey]')")
 					query_reason.Execute()
 					if(query_reason.NextRow())
-						var/watch_reason = query_reason.item[3]
+						var/watch_reason = query_reason.item[2]
 						var/new_reason = input("Insert new reason", "New Reason", "[watch_reason]", null) as null|text
 						new_reason = sanitizeSQL(new_reason)
 						if(!new_reason)
@@ -2016,6 +2016,8 @@
 						MAX_EX_LIGHT_RANGE = 14
 						MAX_EX_HEAVY_RANGE = 7
 						MAX_EX_DEVESTATION_RANGE = 3
+					else // In case MAX_EX_LIGHT_RANGE is anything else
+						MAX_EX_LIGHT_RANGE = 14
 				message_admins("<span class='userdanger'>[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</span>")
 				log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 

@@ -114,6 +114,11 @@
 			else
 				message = "<B>[src]</B> makes a noise."
 
+		if ("me")
+			if(!silent)
+				..()
+			return
+
 		if ("nod")
 			message = "<B>[src]</B> nods."
 			m_type = 1

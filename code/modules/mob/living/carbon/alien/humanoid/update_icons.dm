@@ -105,6 +105,32 @@
 	else
 		overlays_standing[X_FIRE_LAYER] = null
 
+
+/mob/living/carbon/alien/humanoid/queen/large/update_icons()
+	update_hud()		//TODO: remove the need for this to be here
+	overlays.Cut()
+	if(stat == DEAD)
+		icon_state = "queen_dead"
+	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
+		icon_state = "queen_l"
+	else if(sleeping || lying || resting)
+		icon_state = "queen_sleep"
+	else
+		icon_state = "queen_s"
+	for(var/image/I in overlays_standing)
+		overlays += I
+
+/mob/living/carbon/alien/humanoid/queen/large/update_inv_l_hand()
+	overlays_standing[X_L_HAND_LAYER]	= null
+	if(handcuffed)
+		drop_l_hand()
+
+/mob/living/carbon/alien/humanoid/queen/large/update_inv_r_hand()
+	overlays_standing[X_R_HAND_LAYER]	= null
+	if(handcuffed)
+		drop_r_hand()
+
+
 //Xeno Overlays Indexes//////////
 #undef X_L_HAND_LAYER
 #undef X_R_HAND_LAYER

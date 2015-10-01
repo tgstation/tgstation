@@ -6,56 +6,14 @@
 		return
 	if(!loc)
 		return
-	var/datum/gas_mixture/environment = loc.return_air()
 
-	if(stat != DEAD)
-
-		//Breathing, if applicable
-		handle_breathing()
-
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
-
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-		//Blud
-		handle_blood()
-
-		//Random events (vomiting etc)
-		handle_random_events()
-
-		handle_actions()
-
-		update_action_buttons()
-
+	if(..())
 		. = 1
+		for(var/obj/item/organ/internal/O in internal_organs)
+			O.on_life()
 
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)
-
-	handle_fire()
-
-	//stuff in the stomach
-	handle_stomach()
-
-	update_canmove()
-
-	update_gravity(mob_has_gravity())
-
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
-
-	handle_regular_status_updates() // Status updates, death etc.
-
-	if(client)
-		handle_regular_hud_updates()
-	handle_heart()
-
-	return .
+	//Updates the number of stored chemicals for powers
+	handle_changeling()
 
 
 
@@ -74,9 +32,9 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
-	if(reagents.has_reagent("lexorin"))
+	if(reagents && reagents.has_reagent("lexorin"))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
 	var/datum/gas_mixture/environment
@@ -115,13 +73,13 @@
 
 				//Harmful gasses
 				if(!has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1,src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src,INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10)
-							break
+					for(var/obj/effect/effect/smoke/chem/S in range(1, src))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/initial(S.lifetime)
+							S.reagents.reaction(src,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
+							S.reagents.copy_to(src, amount)
+							S.lifetime--
 
 		else //Breathe from loc as obj again
 			if(istype(loc, /obj/))
@@ -334,7 +292,7 @@
 		silent = 0
 	else
 		updatehealth()
-		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
+		if(health <= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
 			death()
 			eye_blind = max(eye_blind, 1)
 			silent = 0
@@ -605,17 +563,23 @@
 			see_invisible = see_override
 
 
-/mob/living/carbon/proc/natural_bodytemperature_stabilization()
-	var/body_temperature_difference = 310.15 - bodytemperature
-	switch(bodytemperature)
-		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-				nutrition -= 2
-			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		if(260.15 to 310.15)
-			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(310.15 to 360.15)
-			bodytemperature += min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
-			//We totally need a sweat system cause it totally makes sense...~
-			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+/mob/living/carbon/proc/natural_bodytemperature_stabilization(temperature_cold = BODYTEMP_COLD_DAMAGE_LIMIT, temperature_default = 310.15, temperature_hot = BODYTEMP_HEAT_DAMAGE_LIMIT)
+	var/body_temperature_difference = temperature_default - bodytemperature
+	//For some reason switch(bodytemperature) doesn't seem to work
+	if(bodytemperature <= temperature_cold) //260.15 is temperature_default - 50, the temperature where you start to feel effects.
+		if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
+			nutrition -= 2
+		bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+	else if(bodytemperature <= temperature_default)
+		bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
+	else if(bodytemperature < temperature_hot)
+		bodytemperature += min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
+	else //360.15 is temperature_default + 50, the temperature where you start to feel effects.
+		//We totally need a sweat system cause it totally makes sense...~
+		bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+
+/mob/living/carbon/handle_actions()
+	..()
+	for(var/obj/item/I in internal_organs)
+		give_action_button(I, 1)

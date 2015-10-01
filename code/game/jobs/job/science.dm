@@ -16,6 +16,8 @@ Research Director
 
 	default_id = /obj/item/weapon/card/id/silver
 	default_pda = /obj/item/device/pda/heads/rd
+	default_backpack = /obj/item/weapon/storage/backpack/science
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_tox
 	default_headset = /obj/item/device/radio/headset/heads/rd
 
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
@@ -51,6 +53,8 @@ Scientist
 	selection_color = "#ffeeff"
 
 	default_pda = /obj/item/device/pda/toxins
+	default_backpack = /obj/item/weapon/storage/backpack/science
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_tox
 	default_headset = /obj/item/device/radio/headset/headset_sci
 
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage, access_genetics)
@@ -75,6 +79,7 @@ Roboticist
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 
+	//No special backpacks for them
 	default_pda = /obj/item/device/pda/roboticist
 	default_headset = /obj/item/device/radio/headset/headset_sci
 	default_pda_slot = slot_l_store

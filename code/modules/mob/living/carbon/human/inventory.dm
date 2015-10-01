@@ -272,6 +272,8 @@
 		head = null
 		if(I.flags & BLOCKHAIR)
 			update_hair(0)	//rebuild hair
+		sec_hud_set_ID()
+		sec_hud_set_security_status()
 		update_inv_head(0)
 	else if(I == ears)
 		ears = null
@@ -291,10 +293,12 @@
 				internals.icon_state = "internal0"
 			internal = null
 		sec_hud_set_ID()
+		sec_hud_set_security_status()
 		update_inv_wear_mask(0)
 	else if(I == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
+		sec_hud_set_security_status()
 		update_inv_wear_id(0)
 	else if(I == r_store)
 		r_store = null
@@ -333,6 +337,7 @@
 			if(wear_mask.flags & BLOCKHAIR)
 				update_hair(redraw_mob)	//rebuild hair
 			sec_hud_set_ID()
+			sec_hud_set_security_status()
 			update_inv_wear_mask(redraw_mob)
 		if(slot_handcuffed)
 			handcuffed = I
@@ -352,6 +357,7 @@
 		if(slot_wear_id)
 			wear_id = I
 			sec_hud_set_ID()
+			sec_hud_set_security_status()
 			update_inv_wear_id(redraw_mob)
 		if(slot_ears)
 			ears = I
@@ -366,6 +372,8 @@
 			head = I
 			if(head.flags & BLOCKHAIR)
 				update_hair(redraw_mob)	//rebuild hair
+			sec_hud_set_ID()
+			sec_hud_set_security_status()
 			update_inv_head(redraw_mob)
 		if(slot_shoes)
 			shoes = I

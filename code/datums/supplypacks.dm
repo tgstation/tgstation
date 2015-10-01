@@ -129,6 +129,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "firefighting watertank crate"
 	access = access_atmospherics
 
+/datum/supply_packs/emergency/plasma
+	name = "Plasmaman Suit Crate"
+	contains = list(/obj/item/clothing/suit/space/hardsuit/atmos/plasmaman)
+	cost = 80
+	containertype = /obj/structure/closet/crate/secure
+	containername = "plasmaman suit crate"
+	access = access_eva
+
 /datum/supply_packs/emergency/weedcontrol
 	name = "Weed Control Crate"
 	contains = list(/obj/item/weapon/scythe,
@@ -376,7 +384,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 30
 	containername = "security clothing crate"
 
-
+/datum/supply_packs/security/forensics
+	name = "Forensics Crate"
+	contains = list(/obj/item/device/detective_scanner,
+					/obj/item/weapon/evidencebag,
+					/obj/item/weapon/evidencebag,
+					/obj/item/weapon/evidencebag,
+					/obj/item/clothing/gloves/color/latex/nitrile,
+					/obj/item/device/camera,
+					/obj/item/device/taperecorder)
+	cost = 20
+	containername = "forensics crate"
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -753,6 +771,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "transfer valve crate"
 	access = access_rd
 
+/datum/supply_packs/science/plasma
+	name = "Plasma Handling Crate"
+	contains = list(/obj/item/weapon/tank/internals/plasmaman/belt,
+					/obj/item/weapon/tank/internals/plasmaman,
+					/obj/item/clothing/head/bio_hood/plasma,
+					/obj/item/clothing/suit/bio_suit/plasma)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "plasma handling crate"
+	access = access_tox_storage
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -942,6 +971,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "softdrinks supply crate"
 
+/datum/supply_packs/organic/vending/slurpee
+	name = "Slurpee Supply Crate"
+	contains = list(/obj/item/weapon/vending_refill/slurpslurpy_machine,
+					/obj/item/weapon/vending_refill/slurpslurpy_machine,
+					/obj/item/weapon/vending_refill/slurpslurpy_machine)
+	cost = 30
+	containername = "softdrinks supply crate"
+
 /datum/supply_packs/organic/vending/cigarette
 	name = "Cigarette Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/cigarette,
@@ -1030,6 +1067,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 15
 	containername = "conveyor assembly crate"
 
+/datum/supply_packs/misc/water_pool
+	name = "9 Water Pool Tiles"
+	contains = list(/obj/item/stack/tile/pool)
+	amount = 9
+	cost = 25
+	containername = "water pool tiles crate"
+
 /datum/supply_packs/misc/watertank
 	name = "Water Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
@@ -1077,6 +1121,16 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 8
 	containername = "Corporate Posters Crate"
 
+/datum/supply_packs/misc/flags
+	name = "Flag Crate"
+	contains = list(/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit,
+					/obj/item/weapon/patriotism/flag/legit)
+	cost = 16
+	containername = "Flag Crate"
+
 
 ///////////// Paper Work
 
@@ -1091,6 +1145,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/pen,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
+					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/folder/blue,
 					/obj/item/weapon/folder/red,
 					/obj/item/weapon/folder/yellow,
@@ -1228,6 +1283,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/misc/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/contraband/poster,
+					/obj/item/weapon/patriotism/flag,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband Crate"

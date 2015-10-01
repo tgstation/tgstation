@@ -105,6 +105,26 @@
 	level_min = 4
 	level_max = 6
 
+/datum/chemical_reaction/mix_virus/combine_virus
+
+	name = "Combine Virus"
+	id = "combinevirus"
+	required_reagents = list("viral_readaption" = 1)
+	required_catalysts = list("blood" = 1)
+
+/datum/chemical_reaction/mix_virus/combine_virus/on_reaction(var/datum/reagents/holder, var/created_volume)
+
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	if(B && B.data)
+		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+		var/damage_converter = locate(/datum/symptom/damage_converter) in D.symptoms
+		var/healer = locate(/datum/symptom/heal) in D.symptoms
+		if(damage_converter && healer)
+			D.RemoveSymptom(damage_converter)
+			D.RemoveSymptom(healer)
+			D.AddSymptom(new /datum/symptom/regen())
+			D.Refresh(1) //It needs to actually change the disease name for reasons
+
 /datum/chemical_reaction/mix_virus/rem_virus
 
 	name = "Devolve Virus"
@@ -228,14 +248,14 @@
 	required_reagents = list("toxin" = 1, "water" = 4)
 	result_amount = 5
 
-datum/chemical_reaction/weedkiller
+/datum/chemical_reaction/weedkiller
 	name = "Weed Killer"
 	id = "weedkiller"
 	result = "weedkiller"
 	required_reagents = list("toxin" = 1, "ammonia" = 4)
 	result_amount = 5
 
-datum/chemical_reaction/pestkiller
+/datum/chemical_reaction/pestkiller
 	name = "Pest Killer"
 	id = "pestkiller"
 	result = "pestkiller"

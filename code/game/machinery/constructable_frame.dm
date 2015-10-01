@@ -218,7 +218,8 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/autodrobe = "AutoDrobe")
+							/obj/machinery/vending/autodrobe = "AutoDrobe",
+							/obj/machinery/vending/slurpslurpy_machine = "SlurpSlurpy Machine")
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -320,7 +321,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
-	build_path = /obj/machinery/atmospherics/unary/cryo_cell
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	board_type = "machine"
 	origin_tech = "programming=4;biotech=3;engineering=4"
 	req_components = list(
@@ -331,7 +332,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/thermomachine
 	name = "circuit board (Freezer)"
 	desc = "Use screwdriver to switch between heating and cooling modes."
-	build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+	build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
 	board_type = "machine"
 	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
@@ -342,12 +343,12 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(build_path == /obj/machinery/atmospherics/unary/cold_sink/freezer)
-			build_path = /obj/machinery/atmospherics/unary/heat_reservoir/heater
+		if(build_path == /obj/machinery/atmospherics/components/unary/cold_sink/freezer)
+			build_path = /obj/machinery/atmospherics/components/unary/heat_reservoir/heater
 			name = "circuit board (Heater)"
 			user << "<span class='notice'>You set the board to heating.</span>"
 		else
-			build_path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+			build_path = /obj/machinery/atmospherics/components/unary/cold_sink/freezer
 			name = "circuit board (Freezer)"
 			user << "<span class='notice'>You set the board to cooling.</span>"
 
@@ -471,26 +472,32 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/chem_dispenser/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
-		switch( alert("Current mode is set to: [finish_type]","Circuitboard interface","Chemical dispenser", "Booze dispenser", "Soda dispenser", "Cancel") )
-			if("Chemical dispenser")
+		var/board_choice = input("Current mode is set to: [finish_type]","Circuitboard interface") in list("Advanced Chem Synthesizer","Chemical Dispenser", "Booze Dispenser", "Soda Dispenser", "Cancel")
+		switch( board_choice )
+			if("Advanced Chem Synthesizer")
+				name = "circuit board (Advanced Chem Synthesizer)"
+				build_path = /obj/machinery/chem_dispenser/constructable/synth
+				finish_type = "advanced chem synthesizer"
+				return
+			if("Chemical Dispenser")
 				name = "circuit board (Portable Chem Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable
 				finish_type = "chemical dispenser"
-
-			if("Booze dispenser")
+				return
+			if("Booze Dispenser")
 				name = "circuit board (Portable Booze Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable/booze
 				finish_type = "booze dispenser"
-
-			if("Soda dispenser")
+				return
+			if("Soda Dispenser")
 				name = "circuit board (Portable Soda Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable/drinks
 				finish_type = "soda dispenser"
-
+				return
 			if("Cancel")
 				return
 			else
-				user << "Invalid input, try again"
+				user << "[board_choice]: Invalid input, try again"
 	return
 
 
@@ -610,7 +617,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
-obj/item/weapon/circuitboard/rdserver
+/obj/item/weapon/circuitboard/rdserver
 	name = "circuit board (R&D Server)"
 	build_path = /obj/machinery/r_n_d/server
 	board_type = "machine"

@@ -83,7 +83,7 @@
 	throw_range = 7
 	max_amount = 60
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/fancy/grass
+	turf_type = /turf/simulated/floor/grass
 
 /*
  * Wood
@@ -116,7 +116,20 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	turf_type = /turf/simulated/floor/fancy/carpet
+	turf_type = /turf/simulated/floor/carpet
+
+
+
+/obj/item/stack/tile/fakespace
+	name = "astral carpet"
+	singular_name = "astral carpet"
+	desc = "A piece of carpet with a convincing star pattern."
+	icon_state = "tile_space"
+	turf_type = /turf/simulated/floor/fakespace
+
+/obj/item/stack/tile/fakespace/loaded
+	amount = 30
+
 
 /*
  * High-traction
@@ -134,3 +147,19 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor/noslip
 	origin_tech = "material=3"
+
+/*
+ * Carpets
+ */
+/obj/item/stack/tile/pool
+	name = "pool"
+	singular_name = "pool"
+	desc = "A pool tile. The water comes included."
+	icon_state = "tile_pool"
+	w_class = 3.0
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 7
+	max_amount = 9
+	turf_type = /turf/simulated/floor/pool

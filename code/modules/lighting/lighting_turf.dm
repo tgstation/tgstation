@@ -55,14 +55,14 @@
 
 /turf/proc/lighting_fix_overlays()	 //Purge all overlays and rebuild them
 	lighting_clear_overlays()
-	for(var/atom/movable/lighting_overlay/L in src.contents)
+	for(var/atom/movable/lighting_overlay/L in src)
 		qdel(L)
 	lighting_build_overlays()
 	return
 
-turf/proc/lighting_test_overlays()
+/turf/proc/lighting_test_overlays()
 	var/count
-	for(var/atom/movable/lighting_overlay/L in src.contents)
+	for(var/atom/movable/lighting_overlay/L in src)
 		count++
 	if (count > 1)
 		return 1

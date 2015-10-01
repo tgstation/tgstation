@@ -133,6 +133,8 @@
 
 	handle_vision()
 
+	update_action_buttons()
+
 	handle_hud_icons_health()
 
 	return 1

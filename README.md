@@ -1,7 +1,7 @@
 ##/tg/station v1.0.1
 
 **Website:** http://8ch.net/nt/ <BR>
-**Code:** https://github.com/Koriath/-tg-station <BR>
+**Code:** https://github.com/Zaers/-tg-station <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page<BR>
 **IRC:** irc://irc.rizon.net/hatestation <BR>
 

@@ -8,6 +8,9 @@
 	flag = "laser"
 	eyeblur = 2
 
+/obj/item/projectile/beam/experience_pressure_difference(pressure_difference, direction)
+	return	//Spacewind can't push beams
+
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
@@ -59,12 +62,12 @@
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
-	damage = 50
+	damage = 30
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
 
-obj/item/projectile/beam/emitter/Destroy()
+/obj/item/projectile/beam/emitter/Destroy()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/item/projectile/lasertag

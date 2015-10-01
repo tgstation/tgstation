@@ -324,14 +324,14 @@
 	if(..())	return
 	owner.disabilities &= ~BLIND
 
-/datum/mutation/human/race
+/datum/mutation/human/race //muffugen bix nood
 
 	name = "Monkified"
 	quality = NEGATIVE
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/gain_indication(mob/living/carbon/human/owner)
 	return
@@ -341,7 +341,7 @@
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(..())	return
-	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/laser_eyes
 
@@ -405,6 +405,15 @@
 
 /datum/mutation/human/wacky/get_spans()
 	return list(SPAN_SANS)
+
+/datum/mutation/human/sore_throat
+	name = "Sore Throat"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='papyrus'>Your throat feels strangely sore.</span>"
+	text_lose_indication = "<span class='notice'>Your throat feels normal again.</span>"
+
+/datum/mutation/human/sore_throat/get_spans()
+	return list(SPAN_PAPYRUS)
 
 /datum/mutation/human/mute
 	name = "Mute"

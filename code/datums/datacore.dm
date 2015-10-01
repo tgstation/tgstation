@@ -268,9 +268,16 @@ var/record_id_num = 1001
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 	if(!config.mutant_races || H.dna.species.use_skintones)
 		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]_s")
-	else
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
-		photo.Blend("#[H.dna.mutant_color]", ICON_MULTIPLY)
+	else	//What's object oriented programming?
+		var/base_icon_state
+		if(H.dna.species.sexes)
+			base_icon_state = "[H.dna.species.id]_[g]"
+		else
+			base_icon_state = "[H.dna.species.id]"
+
+		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[base_icon_state]_s") //icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
+		if(H.dna.mutant_color != "FFF" && H.dna.mutant_color != "#FFF")
+			photo.Blend("#[H.dna.mutant_color]", ICON_MULTIPLY)
 
 	var/icon/eyes_s
 	if(EYECOLOR in H.dna.species.specflags)

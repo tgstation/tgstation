@@ -85,6 +85,16 @@
 	var/tox_breath_dam_min = MIN_PLASMA_DAMAGE
 	var/tox_breath_dam_max = MAX_PLASMA_DAMAGE
 
+	var/cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
+	var/default_body_temperature = 310.15
+	var/heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
+
+	var/warmblooded = 1		//Do they stabilize body temperature?
+	//Temperatures that affect their speed
+	var/cold_slow = 283.222
+	var/hot_slow = 0
+
+	var/base_hunger_rate = HUNGER_FACTOR
 
 	///////////
 	// PROCS //
@@ -159,7 +169,7 @@
 			standing	+= img_facial_s
 
 	//Applies the debrained overlay if there is no brain
-	if(!H.getorgan(/obj/item/organ/brain))
+	if(!H.getorgan(/obj/item/organ/internal/brain))
 		standing	+= image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained_s", "layer" = -HAIR_LAYER)
 
 	if((H.wear_suit) && (H.wear_suit.hooded) && (H.wear_suit.suittoggled == 1))
@@ -486,14 +496,14 @@
 
 	// nutrition decrease and satiety
 	if (H.nutrition > 0 && H.stat != 2)
-		var/hunger_rate = HUNGER_FACTOR
+		var/hunger_rate = base_hunger_rate
 		if(H.satiety > 0)
 			H.satiety--
 		if(H.satiety < 0)
 			H.satiety++
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
-			hunger_rate = 3 * HUNGER_FACTOR
+			hunger_rate = 3 * base_hunger_rate
 		H.nutrition = max (0, H.nutrition - hunger_rate)
 
 
@@ -541,7 +551,7 @@
 			H.sight |= SEE_MOBS
 			H.sight |= SEE_OBJS
 
-		H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
+		H.see_in_dark = darksight
 		var/see_temp = H.see_invisible
 		H.see_invisible = invis_sight
 
@@ -720,8 +730,11 @@
 
 	if((H.disabilities & FAT) && grav)
 		mspeed += 1.5
-	if(H.bodytemperature < 283.222)
-		mspeed += (283.222 - H.bodytemperature) / 10 * (grav+0.5)
+
+	if(cold_slow && H.bodytemperature < cold_slow)
+		mspeed += (cold_slow - H.bodytemperature) / 10 * (grav+0.5)
+	if(hot_slow && H.bodytemperature > hot_slow)
+		mspeed += (H.bodytemperature - hot_slow) / 10 * (grav+0.5)
 
 	mspeed += speedmod
 
@@ -1023,7 +1036,7 @@
 	if(blocked <= 0)	return 0
 
 	var/obj/item/organ/limb/organ = null
-	if(isorgan(def_zone))
+	if(islimb(def_zone))
 		organ = def_zone
 	else
 		if(!def_zone)	def_zone = ran_zone(def_zone)
@@ -1065,7 +1078,7 @@
 
 /datum/species/proc/breathe(var/mob/living/carbon/human/H)
 	if(H.reagents.has_reagent("lexorin")) return
-	if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell)) return
 
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/datum/gas_mixture/breath
@@ -1103,13 +1116,13 @@
 
 				// Handle chem smoke effect  -- Doohl
 				if(!H.has_smoke_protection())
-					for(var/obj/effect/effect/chem_smoke/smoke in view(1, H))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(H, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(H, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
+					for(var/obj/effect/effect/smoke/chem/S in range(1, H))
+						if(S.reagents.total_volume && S.lifetime)
+							var/fraction = 1/initial(S.lifetime)
+							S.reagents.reaction(H,INGEST, fraction)
+							var/amount = round(S.reagents.total_volume*fraction,0.1)
+							S.reagents.copy_to(H, amount)
+							S.lifetime--
 
 		else //Still give containing object the chance to interact
 			if(istype(H.loc, /obj/))
@@ -1151,8 +1164,12 @@
 
 	//-- OXY --//
 
-	//Too much oxygen! //Yes, some species may not like it.
-	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
+	//Too much oxygen! Yes, some species may not like it.
+	if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags) && safe_toxins_min && (Toxins_pp / O2_pp) <= PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO)	//For plasmamen
+		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
+		H.apply_damage(Clamp(ratio,HEAT_GAS_DAMAGE_LEVEL_1,HEAT_GAS_DAMAGE_LEVEL_3), BURN, "head")
+		H.throw_alert("too_much_oxy")
+	else if(safe_oxygen_max && O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
 		var/ratio = (breath.oxygen/safe_oxygen_max) * 10
 		H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
 		H.throw_alert("too_much_oxy")
@@ -1257,6 +1274,9 @@
 		H.failed_last_breath = 0
 		if(safe_toxins_min)
 			H.adjustOxyLoss(-5)
+			var/ratio = (breath.toxins/safe_toxins_min) * 10
+			if(H.reagents)
+				H.reagents.add_reagent("plasma", Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max))
 		gas_breathed = breath.toxins/6
 		H.clear_alert("not_enough_tox")
 
@@ -1308,22 +1328,20 @@
 	if(abs(310.15 - breath.temperature) > 50)
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
-			switch(breath.temperature)
-				if(-INFINITY to 120)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
-				if(120 to 200)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
-				if(200 to 260)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+			if(breath.temperature <= cold_damage_limit-140)
+				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+			else if(breath.temperature <= cold_damage_limit-60)
+				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+			else if(breath.temperature <= cold_damage_limit)
+				H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
 		if(!(HEATRES in specflags)) // HEAT DAMAGE
-			switch(breath.temperature)
-				if(360 to 400)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
-				if(400 to 1000)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
-				if(1000 to INFINITY)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+			if(breath.temperature >= heat_damage_limit+640)
+				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+			else if(breath.temperature >= heat_damage_limit+40)
+				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+			else if(breath.temperature >=  heat_damage_limit)
+				H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, var/mob/living/carbon/human/H)
 	if(!environment)
@@ -1332,8 +1350,8 @@
 	var/loc_temp = H.get_temperature(environment)
 
 	//Body temperature is adjusted in two steps. First, your body tries to stabilize itself a bit.
-	if(H.stat != DEAD)
-		H.natural_bodytemperature_stabilization()
+	if(H.stat != DEAD && warmblooded)
+		H.natural_bodytemperature_stabilization(cold_damage_limit, default_body_temperature, heat_damage_limit)
 
 	//Then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
@@ -1348,38 +1366,38 @@
 			if(thermal_protection < 1)
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(HEATRES in specflags))
-		//Body temperature is too hot.
-		switch(H.bodytemperature)
-			if(360 to 400)
-				H.throw_alert("temp","hot",1)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
-			if(400 to 460)
-				H.throw_alert("temp","hot",2)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-			if(460 to INFINITY)
-				H.throw_alert("temp","hot",3)
-				if(H.on_fire)
-					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
-				else
-					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+	//switch(bodytemperature) seems to shit itself for some reason
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		var/colddamage = !istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell) //Damage from cold if not in a cryo cell
-		switch(H.bodytemperature)
-			if(200 to 260)
-				H.throw_alert("temp","cold",1)
-				if(colddamage)
-					H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-			if(120 to 200)
-				H.throw_alert("temp","cold",2)
-				if(colddamage)
-					H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-			if(-INFINITY to 120)
-				H.throw_alert("temp","cold",3)
-				if(colddamage)
-					H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
+	if(H.bodytemperature > heat_damage_limit && !(HEATRES in specflags))
+		//Body temperature is too hot.
+		if(H.bodytemperature < heat_damage_limit+40)
+			H.throw_alert("temp","hot",1)
+			H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+		else if(H.bodytemperature < heat_damage_limit+100)
+			H.throw_alert("temp","hot",2)
+			H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+		else
+			H.throw_alert("temp","hot",3)
+			if(H.on_fire)
+				H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+			else
+				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+
+	else if(H.bodytemperature < cold_damage_limit && !(mutations_list[COLDRES] in H.dna.mutations))
+		var/colddamage = !istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell) //Damage from cold if not in a cryo cell
+		if(H.bodytemperature > cold_damage_limit-60)
+			H.throw_alert("temp","cold",1)
+			if(colddamage)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+		else if(H.bodytemperature > cold_damage_limit-140)
+			H.throw_alert("temp","cold",2)
+			if(colddamage)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+		else
+			H.throw_alert("temp","cold",3)
+			if(colddamage)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
 	else
 		H.clear_alert("temp")
 

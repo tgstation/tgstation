@@ -46,6 +46,7 @@
 	turfs.Remove(src)
 	set_opacity(0)
 	reconsider_lights()
+	lighting_overlay = null
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
@@ -165,7 +166,6 @@
 	#endif
 	if(!istype(W, /turf/space))
 		W.lighting_build_overlays()
-		W.update_overlay()
 	else
 		W.lighting_clear_overlays()
 
@@ -187,6 +187,8 @@
 
 	W.levelupdate()
 	W.CalculateAdjacentTurfs()
+	spawn(2)
+		W.update_overlay()
 
 	universe.OnTurfChange(W)
 	return W
@@ -338,6 +340,17 @@
 
 /turf/indestructible/riveted
 	icon_state = "riveted"
+
+/turf/indestructible/riveted/New()
+	..()
+	if(smooth)
+		smooth_icon(src)
+		icon_state = ""
+/turf/indestructible/riveted/uranium
+	icon = 'icons/turf/walls/uranium_wall.dmi'
+	icon_state = "uranium"
+	smooth = 1
+	canSmoothWith = null
 
 /turf/indestructible/abductor
 	icon_state = "alien1"

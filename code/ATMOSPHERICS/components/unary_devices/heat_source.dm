@@ -1,9 +1,7 @@
-/obj/machinery/atmospherics/unary/heat_reservoir
-//currently the same code as cold_sink but anticipating process_atmos() changes
+/obj/machinery/atmospherics/components/unary/heat_reservoir
+//currently the same code as cold_sink but anticipating process() changes
 
-	icon = 'icons/obj/atmospherics/cold_sink.dmi'
-	icon_state = "intact_off"
-	density = 1
+	icon_state = "cold_map"
 	use_power = 1
 
 	name = "heat reservoir"
@@ -14,22 +12,25 @@
 	var/current_temperature = T20C
 	var/current_heat_capacity = 50000 //totally random
 
-/obj/machinery/atmospherics/unary/heat_reservoir/update_icon()
-	if(node)
-		icon_state = "intact_[on?("on"):("off")]"
+/obj/machinery/atmospherics/components/unary/heat_reservoir/update_icon_nopipes()
+	overlays.Cut()
+	if(showpipe)
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions) //scrub_cap works for now
+
+	if(!nodes[NODE1] || !on || stat & (NOPOWER|BROKEN))
+		icon_state = "cold_off"
+		return
+
 	else
-		icon_state = "exposed"
+		icon_state = "cold_on"
 
-		on = 0
-
-	return
-
-/obj/machinery/atmospherics/unary/heat_reservoir/process_atmos()
+/obj/machinery/atmospherics/components/unary/heat_reservoir/process_atmos()
 	..()
 	if(!on)
 		return 0
-	if(!parent)
-		return
+
+	var/datum/gas_mixture/air_contents = airs[AIR1]
+
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
 	var/old_temperature = air_contents.temperature
@@ -41,5 +42,5 @@
 	//todo: have current temperature affected. require power to bring up current temperature again
 
 	if(abs(old_temperature-air_contents.temperature) > 1)
-		parent.update = 1
+		update_parents()
 	return 1

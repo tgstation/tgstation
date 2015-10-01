@@ -19,7 +19,7 @@
 		/obj/structure/closet,
 		/obj/structure/sink,
 		/obj/item/weapon/storage,
-		/obj/machinery/atmospherics/unary/cryo_cell,
+		/obj/machinery/atmospherics/components/unary/cryo_cell,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
 		/obj/machinery/computer/pandemic,
@@ -72,12 +72,6 @@
 			user << "<span class='notice'>[target] is full.</span>"
 			return
 
-		if(istype(target, /obj/item/weapon/reagent_containers))
-			var/obj/item/weapon/reagent_containers/RC = target
-			for(var/bad_reg in RC.banned_reagents)
-				if(reagents.has_reagent(bad_reg, 1)) //Message is a bit "Game-y" but I can't think up a better one.
-					user << "<span class='warning'>A chemical in [src] is far too dangerous to transfer to [RC]!</span>"
-					return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"

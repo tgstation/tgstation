@@ -589,6 +589,7 @@
 /**********************Facehugger toy**********************/
 
 /obj/item/clothing/mask/facehugger/toy
+	item_state = "facehugger_inactive"
 	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
 	throwforce = 0
 	real = 0
@@ -653,7 +654,7 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/mining_drone/Die()
+/mob/living/simple_animal/hostile/mining_drone/death()
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)

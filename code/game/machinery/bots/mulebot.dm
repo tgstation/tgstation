@@ -78,7 +78,7 @@ var/global/mulebot_count = 0
 			suffix = "#[mulebot_count]"
 		name = "\improper Mulebot ([suffix])"
 
-obj/machinery/bot/mulebot/bot_reset()
+/obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
 
@@ -422,6 +422,10 @@ obj/machinery/bot/mulebot/bot_reset()
 	if(istype(crate))
 		crate.close()
 
+	var/obj/O = C
+	if(istype(O) && O.buckled_mob)
+		O.unbuckle_mob()
+
 	C.loc = loc
 	sleep(2)
 	if(C.loc != loc) //To prevent you from going onto more thano ne bot.
@@ -436,6 +440,8 @@ obj/machinery/bot/mulebot/bot_reset()
 
 	if(ismob(C))
 		var/mob/M = C
+		if(M.buckled)
+			M.buckled.unbuckle_mob()
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
 			M.client.eye = src
@@ -740,7 +746,7 @@ obj/machinery/bot/mulebot/bot_reset()
 				M.stop_pulling()
 				M.Stun(8)
 				M.Weaken(5)
-	..()
+	return ..()
 
 /obj/machinery/bot/mulebot/alter_health()
 	return get_turf(src)

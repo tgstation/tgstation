@@ -58,6 +58,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
+	var/splattertype = /obj/effect/decal/cleanable/blood/splatter
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -84,7 +85,7 @@
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+				var/obj/effect/decal/cleanable/blood/b = new splattertype(src.loc)
 				for(var/datum/disease/D in src.viruses)
 					var/datum/disease/ND = D.Copy(1)
 					b.viruses += ND

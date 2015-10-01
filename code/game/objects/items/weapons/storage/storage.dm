@@ -23,6 +23,7 @@
 	var/allow_quick_gather	//Set this variable to allow the object to have the 'toggle mode' verb, which quickly collects all items from a tile.
 	var/collection_mode = 1;  //0 = pick one at a time, 1 = pick all on tile, 2 = pick all of a type
 	var/preposition = "in" // You put things 'in' a bag, but trays need 'on'.
+	var/silent = 0 //If it makes a sound or not
 
 
 /obj/item/weapon/storage/MouseDrop(atom/over_object)
@@ -49,8 +50,8 @@
 
 			if(!(loc == usr) || (loc && loc.loc == usr))
 				return
-
-			playsound(loc, "rustle", 50, 1, -5)
+			if(!silent)
+				playsound(loc, "rustle", 50, 1, -5)
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
@@ -65,7 +66,8 @@
 /obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user) && dest_object.Adjacent(user))
 		if(dest_object.storage_contents_dump_act(src, user))
-			playsound(loc, "rustle", 50, 1, -5)
+			if(!silent)
+				playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
 
@@ -383,7 +385,8 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	playsound(loc, "rustle", 50, 1, -5)
+	if(!silent)
+		playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

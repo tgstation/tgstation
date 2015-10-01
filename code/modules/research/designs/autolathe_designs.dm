@@ -404,11 +404,11 @@
 	category = list("hacked", "Security")
 
 /datum/design/firing_pin
-	name = "Electronic firing pin"
+	name = "Loyalty firing pin"
 	id = "firing_pin"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10000)
-	build_path = /obj/item/device/firing_pin
+	build_path = /obj/item/device/firing_pin/implant/loyalty
 	category = list("hacked", "Security")
 
 /datum/design/rcd

@@ -7,7 +7,6 @@
 	var/fingerprintslast = null
 	var/list/blood_DNA
 	var/last_bumped = 0
-	var/throwpass = 0
 	var/explosion_block = 0
 	var/allow_spin = 1
 
@@ -392,7 +391,7 @@ var/list/blood_splatter_icons = list()
 				B = locate(/obj/effect/decal/cleanable/blood) in contents
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.blood_type
 		else if(istype(M, /mob/living/carbon/alien))
-			var/obj/effect/decal/cleanable/xenoblood/B = locate() in contents
+			var/obj/effect/decal/cleanable/blood/xeno/B = locate() in contents
 			if(!B)	B = new(src)
 			B.blood_DNA["UNKNOWN BLOOD"] = "X*"
 		else if(istype(M, /mob/living/silicon/robot))

@@ -1,6 +1,7 @@
 var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
+var/href_stat = "Stat"
 
 var/list/bombers = list(  )
 var/list/admin_log = list (  )
@@ -11,3 +12,5 @@ var/list/combatlog = list()
 var/list/IClog = list()
 var/list/OOClog = list()
 var/list/adminlog = list()
+
+var/list/active_turfs_startlist = list()

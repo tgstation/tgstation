@@ -213,7 +213,7 @@
 /datum/game_mode/malfunction/proc/ai_win()
 	set category = "Malfunction"
 	set name = "Explode"
-	set desc = "Activates the self-destruct device on [world.name]."
+	set desc = "Activates the self-destruct device on the station."
 	if (!ticker.mode:to_nuke_or_not_to_nuke)
 		return
 	ticker.mode:to_nuke_or_not_to_nuke = 0

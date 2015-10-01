@@ -46,3 +46,11 @@
 	result = "aranesp"
 	required_reagents = list("inaprovaline" = 1, "atropine" = 1, "morphine" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/happyhappy
+
+	name = "2happy"
+	id = "2happy"
+	result = "2happy"
+	required_reagents =  list("lipozine" = 1, "morphine" = 1, "krokodil" = 1, "mutagen" = 1, "radium" = 1)
+	result_amount = 5

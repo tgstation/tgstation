@@ -71,20 +71,28 @@
 	var/wait_step = max(round(9/range),2)
 	spawn(0)
 		for(var/i=0, i<range, i++)
-			step_towards(D,A)
+			var/turf/target_tile
+			if(!step_towards(D,A)) //If it can't reach the next tile, apply the reagents on whatever is blocking it, otherwise apply reagents on the turf of the puff
+				target_tile = get_turf(get_step_towards(D, A))
+				if(!target_tile.density)
+					target_tile = get_turf(D)
+			else
+				target_tile = get_turf(D)
+
+
 			sleep(wait_step)
 
-			for(var/atom/T in get_turf(D))
+			for(var/atom/T in target_tile)
 				if(T == D || T.invisibility) //we ignore the puff itself and stuff below the floor
 					continue
 				if(puff_reagent_left <= 0)
 					break
-				D.reagents.reaction(T)
+				D.reagents.reaction(T, VAPOR)
 				if(ismob(T)) //mobs are obstacles that consume part of the puff, shortening its range.
 					puff_reagent_left -= 1
 
 			if(puff_reagent_left > 0)
-				D.reagents.reaction(get_turf(D))
+				D.reagents.reaction(target_tile, VAPOR)
 				puff_reagent_left -= 1
 
 			if(puff_reagent_left <= 0) // we used all the puff so we delete it.

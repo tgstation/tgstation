@@ -2,6 +2,7 @@ var/datum/configuration/config = null
 
 var/host = null
 var/join_motd = null
+var/sec_den = 1
 var/station_name = null
 var/game_version = "/tg/ Station 13"
 var/changelog_hash = ""
@@ -48,6 +49,6 @@ var/list/be_special_flags = list(
 	"Monkey" = BE_MONKEY,
 	"Gang" = BE_GANG,
 	"Abductor" = BE_ABDUCTOR,
-	"Shadowling" = BE_SHADOWLING //space niggers
-//	"Revenant" = BE_REVENANT ;^)
+	"Shadowling" = BE_SHADOWLING, //space niggers
+	"Revenant" = BE_REVENANT
 	)

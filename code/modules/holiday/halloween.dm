@@ -106,7 +106,7 @@
 		trapped = 0
 		spawn(90)
 			if(trapped_mob && trapped_mob.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new()
+				var/datum/effect/effect/system/smoke_spread/smoke = new()
 				smoke.set_up(1, 0, trapped_mob.loc, 0)
 				smoke.start()
 				qdel(trapped_mob)
@@ -135,7 +135,7 @@
 		trapped = 0
 		spawn(120)
 			if(F && F.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
+				var/datum/effect/effect/system/smoke_spread/smoke = new
 				smoke.set_up(1,0, F.loc, 0)
 				smoke.start()
 				qdel(F)

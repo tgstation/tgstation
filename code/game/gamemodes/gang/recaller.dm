@@ -151,7 +151,7 @@
 			dat += "[gangtooltext]<br>"
 
 		dat += "(30 Influence) "
-		if(points >= 30)
+		if(points >= 30 && (ticker && istype(ticker.mode, /datum/game_mode/gang)))
 			dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 		else
 			dat += "<b>Station Dominator</b><br>"

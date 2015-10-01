@@ -4,21 +4,15 @@
 	maxHealth = 100
 	health = 100
 	icon_state = "aliend_s"
-	plasma_rate = 15
 
 
 /mob/living/carbon/alien/humanoid/drone/New()
-	create_reagents(100)
-	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
-	src.real_name = src.name
+	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	internal_organs += new /obj/item/organ/internal/alien/resinspinner
+	internal_organs += new /obj/item/organ/internal/alien/acid
 
-	AddAbility(new/obj/effect/proc_holder/alien/resin(null))
-	AddAbility(new/obj/effect/proc_holder/alien/acid(null))
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
-
 	..()
-//Drones use the same base as generic humanoids.
 
 /mob/living/carbon/alien/humanoid/drone/movement_delay()
 	. = ..()
@@ -31,17 +25,16 @@
 
 	action_icon_state = "alien_evolve_drone"
 
-/obj/effect/proc_holder/alien/evolve/fire(var/mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
 	var/no_queen = 1
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		if(!Q.key || !Q.getorgan(/obj/item/organ/brain))
+		if(!Q.key || !Q.getorgan(/obj/item/organ/internal/brain))
 			continue
 		no_queen = 0
 	if(no_queen)
 		user << "<span class='noticealien'>You begin to evolve!</span>"
 		user.visible_message("<span class='alertalien'>[user] begins to twist and contort!</span>")
 		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (user.loc)
-		user.transfer_borer(new_xeno)
 		user.mind.transfer_to(new_xeno)
 		qdel(user)
 		return 1

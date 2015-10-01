@@ -223,7 +223,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(user.stat || user.restrained() || user.paralysis || user.stunned || user.weakened)
+		if(user.incapacitated())
 			return 0
 		if(loc == user)
 			return 1
@@ -300,6 +300,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=59'><img src=pda_power.png> RCON Monitoring</a></li>"
 						if(istype(cartridge.radio, /obj/item/radio/integrated/floorbot))
 							dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_floorbot.png> Floorbot Access</a></li>"
 						dat += "</ul>"

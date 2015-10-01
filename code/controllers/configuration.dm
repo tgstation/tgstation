@@ -106,7 +106,7 @@
 	var/midround_antag_life_check = 0.7 // A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
-	var/mutant_races = 0				//players can choose their mutant race before joining the game
+	var/mutant_races = 1				//players can choose their mutant race before joining the game
 	var/mutant_colors = 0
 
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -568,6 +568,11 @@
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+		else
+			del(M)
+			continue
+//	if(runnable_modes.len <=0)
+
 	return runnable_modes
 
 

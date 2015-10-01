@@ -265,7 +265,7 @@ BLIND     // can't see anything
 	if(hastie)
 		user << "\A [hastie] is attached to it."
 
-atom/proc/generate_female_clothing(index,t_color,icon,type)
+/atom/proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"="[t_color]_s")
 	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
@@ -391,6 +391,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			up = !up
 			flags |= (visor_flags)
 			flags_inv |= (visor_flags_inv)
+			body_parts_covered |= (visor_coverage)
 			icon_state = initial(icon_state)
 			usr << "You pull \the [src] down."
 			flash_protect = initial(flash_protect)
@@ -399,6 +400,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 			up = !up
 			flags &= ~(visor_flags)
 			flags_inv &= ~(visor_flags_inv)
+			body_parts_covered &= ~(visor_coverage)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push \the [src] up."
 			flash_protect = 0

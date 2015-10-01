@@ -3,6 +3,7 @@
 	icon_state = "alien_s"
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
+	pass_flags = PASSTABLE
 	var/caste = ""
 	var/leap_on_click = 0
 	var/pounce_cooldown = 0
@@ -13,17 +14,9 @@
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	create_reagents(1000)
-	if(name == "alien")
-		name = text("alien ([rand(1, 1000)])")
-	real_name = name
-
-	AddAbility(new/obj/effect/proc_holder/alien/plant(null))
-	AddAbility(new/obj/effect/proc_holder/alien/whisper(null))
-	AddAbility(new/obj/effect/proc_holder/alien/transfer(null))
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
-
-
 	..()
+
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
@@ -159,3 +152,6 @@
 
 /mob/living/carbon/alien/humanoid/check_ear_prot()
 	return 1
+
+/mob/living/carbon/alien/humanoid/get_permeability_protection()
+	return 0.8

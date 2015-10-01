@@ -1,5 +1,8 @@
 /datum/game_mode
+	var/abductor_teams = 0
 	var/list/datum/mind/abductors = list()
+	var/list/datum/mind/abductees = list()
+
 
 /datum/game_mode/abduction
 	name = "Abduction"
@@ -256,10 +259,7 @@
 	scientist.equip_to_slot_or_del(G, slot_in_backpack)
 
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
-	beamplant.imp_in = scientist
-	beamplant.implanted = 1
-	beamplant.implanted(scientist)
-	beamplant.home = console.pad
+	beamplant.implant(scientist)
 
 
 /datum/game_mode/abduction/check_finished()
@@ -283,7 +283,7 @@
 		var/datum/mind/smind = scientists[team_number]
 		var/mob/living/carbon/human/agent = amind.current
 		var/mob/living/carbon/human/scientist = smind.current
-		if (console.experiment.points > objective.target_amount)
+		if (objective.check_completion())
 			world << "<font size = 3 color='green'><b>[team_name] team fullfilled its mission! </b></font>"
 			world << "<b>Team Members : [agent.name]([agent.ckey]),[scientist.name]([scientist.ckey])</b>"
 		else

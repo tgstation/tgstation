@@ -12,6 +12,7 @@ var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
 
 
+
 var/map_ready = 0
 /*
 	basically, this will be used to avoid initialize() being called twice for objects

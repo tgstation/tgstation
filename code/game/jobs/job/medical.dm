@@ -78,6 +78,8 @@ Chemist
 	selection_color = "#ffeef0"
 
 	default_pda = /obj/item/device/pda/chemist
+	default_backpack = /obj/item/weapon/storage/backpack/chemistry
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_chem
 	default_headset = /obj/item/device/radio/headset/headset_med
 
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
@@ -103,6 +105,8 @@ Geneticist
 	selection_color = "#ffeef0"
 
 	default_pda = /obj/item/device/pda/geneticist
+	default_backpack = /obj/item/weapon/storage/backpack/genetics
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_gen
 	default_headset = /obj/item/device/radio/headset/headset_medsci
 
 	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
@@ -130,8 +134,8 @@ Virologist
 
 	default_pda = /obj/item/device/pda/viro
 	default_headset = /obj/item/device/radio/headset/headset_med
-	default_backpack = /obj/item/weapon/storage/backpack/medic
-	default_satchel = /obj/item/weapon/storage/backpack/satchel_med
+	default_backpack = /obj/item/weapon/storage/backpack/virology
+	default_satchel = /obj/item/weapon/storage/backpack/satchel_vir
 
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
 	minimal_access = list(access_medical, access_virology, access_mineral_storeroom)

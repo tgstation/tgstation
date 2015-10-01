@@ -61,7 +61,7 @@ var/global/list/narsie_list = list()
 			user << "Your soul is too far away."
 			return
 		makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
-		new /obj/effect/effect/sleep_smoke(user.loc)
+		new /obj/effect/effect/smoke/sleeping(user.loc)
 
 
 /obj/singularity/narsie/process()

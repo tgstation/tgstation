@@ -29,7 +29,7 @@ other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
 
-datum/design						//Datum for object designs, used in construction
+/datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
 	var/desc = "Desc"					//Description of the created object.
 	var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
@@ -44,7 +44,7 @@ datum/design						//Datum for object designs, used in construction
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
 //Input: A list of /datum/tech; Output: The new reliabilty.
-datum/design/proc/CalcReliability(var/list/temp_techs)
+/datum/design/proc/CalcReliability(var/list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
 		if(T.id in req_tech)
@@ -235,6 +235,16 @@ datum/design/proc/CalcReliability(var/list/temp_techs)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
 	build_path = /obj/item/device/gps
+	category = list("Bluespace Designs")
+
+/datum/design/meeseeks_box
+	name = "Mr. Meeseeks Box"
+	desc = "A blue box with a button on top. You hear a faint voice from inside desperate to help you."
+	id = "meeseeks_box"
+	req_tech = list("materials" = 3, "programming" = 2, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 2000, MAT_DIAMOND = 500)
+	build_path = /obj/item/device/meeseeks_box
 	category = list("Bluespace Designs")
 
 /datum/design/miningsatchel_holding

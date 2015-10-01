@@ -31,9 +31,8 @@
 	move_to_delay = 9
 
 
-/mob/living/simple_animal/hostile/mimic/Die()
-	..()
-	visible_message("<span class='danger'><b>[src]</b> stops moving!</span>")
+/mob/living/simple_animal/hostile/mimic/death(gibbed)
+	..(gibbed)
 	qdel(src)
 
 
@@ -94,13 +93,14 @@
 	icon_state = initial(icon_state)
 
 
-/mob/living/simple_animal/hostile/mimic/crate/Die()
+/mob/living/simple_animal/hostile/mimic/crate/death(gibbed)
+
 
 	var/obj/structure/closet/crate/C = new(get_turf(src))
 	// Put loot in crate
 	for(var/obj/O in src)
 		O.loc = C
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/mimic/crate/AttackingTarget()
 	. =..()
@@ -134,13 +134,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
-		Die()
+		death()
 
-/mob/living/simple_animal/hostile/mimic/copy/Die()
+/mob/living/simple_animal/hostile/mimic/copy/death(gibbed)
 
 	for(var/atom/movable/M in src)
 		M.loc = get_turf(src)
-	..()
+	..(gibbed)
 
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
 	// Return a list of targets that isn't the creator

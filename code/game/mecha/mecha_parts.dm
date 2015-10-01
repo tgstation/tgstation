@@ -15,7 +15,7 @@
 	icon_state = "backbone"
 	var/datum/construction/construct
 
-/obj/item/mecha_parts/chassis/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/mecha_parts/chassis/attackby(obj/item/W, mob/user, params)
 	if(!construct || !construct.action(W, user))
 		..()
 	return
@@ -175,27 +175,7 @@
 /obj/item/mecha_parts/chassis/firefighter/New()
 	..()
 	construct = new /datum/construction/mecha/firefighter_chassis(src)
-/*
-/obj/item/mecha_parts/part/firefighter_torso
-	name="Ripley-on-Fire Torso"
-	icon_state = "ripley_harness"
 
-/obj/item/mecha_parts/part/firefighter_left_arm
-	name="Ripley-on-Fire Left Arm"
-	icon_state = "ripley_l_arm"
-
-/obj/item/mecha_parts/part/firefighter_right_arm
-	name="Ripley-on-Fire Right Arm"
-	icon_state = "ripley_r_arm"
-
-/obj/item/mecha_parts/part/firefighter_left_leg
-	name="Ripley-on-Fire Left Leg"
-	icon_state = "ripley_l_leg"
-
-/obj/item/mecha_parts/part/firefighter_right_leg
-	name="Ripley-on-Fire Right Leg"
-	icon_state = "ripley_r_leg"
-*/
 
 ////////// HONK
 
@@ -333,13 +313,6 @@
 	desc = "A Odysseus right leg. Contains complex servodrives and balance maintaining systems to maintain stability for critical patients."
 	icon_state = "odysseus_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
-
-/*/obj/item/mecha_parts/part/odysseus_armor
-	name="Odysseus Carapace"
-	icon_state = "odysseus_armor"
-	origin_tech = "materials=3;engineering=3"
-	construction_time = 200
-	construction_cost = list("metal"=15000)*/
 
 
 ///////// Circuitboards

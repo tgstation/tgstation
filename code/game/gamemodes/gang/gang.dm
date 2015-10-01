@@ -13,7 +13,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	name = "gang war"
 	config_tag = "gang"
 	antag_flag = BE_GANG
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "MoMMI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "MoMMI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Mr. Meeseeks")
 	required_players = 15
 	required_enemies = 2
 	recommended_enemies = 2
@@ -173,6 +173,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //Deals with players reverting to neutral (Not a gangster anymore)//
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, var/beingborged, var/silent, var/remove_bosses=0)
+	if(!gangster_mind)
+		return 0
 	var/datum/gang/gang = gangster_mind.gang_datum
 	if(!gang)
 		return 0

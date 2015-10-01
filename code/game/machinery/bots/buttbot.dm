@@ -19,6 +19,8 @@ Here it is: Buttbot.
 	//weight = 1.0E7
 	health = 25
 	maxhealth = 25
+	verb_yell = "yells"
+	var/cooldown = 0  //stop spam 2k15, 1 unit is 20ds
 	var/buttchance = 80 //Like an 80% chance of it working. It's just a butt with an arm in it.
 	var/sincelastfart = 0
 	var/mob/living/carbon/victim = null
@@ -64,13 +66,13 @@ Here it is: Buttbot.
 	. = ..()
 	if (.)
 		return
-	if(sincelastfart + 5 < world.timeofday)
-		speak("butt")
+	if(sincelastfart + 10 < world.timeofday)
+		say("butt")
 		playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 		sincelastfart = world.timeofday
 
 /obj/machinery/bot/buttbot/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(prob(buttchance) && !findtext(message,"butt"))
+	if(prob(buttchance) && !findtext(message,"butt") && (sincelastfart + 10 < world.timeofday))
 		message = strip_html(html_decode(raw_message))
 
 		var/list/split_phrase = text2list(message," ") //Split it up into words.
@@ -87,7 +89,8 @@ Here it is: Buttbot.
 
 			split_phrase[index] = pick("slurp","meta","cuck","filtered","proprietary","white wash","cancer")
 
-		say(sanitize(list2text(split_phrase," ")))
+		say(list2text(split_phrase," ")) //say() already sanitizes
+		sincelastfart = world.timeofday
 	return
 
 
@@ -98,8 +101,7 @@ Here it is: Buttbot.
 	playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 	var/turf/Tsec = get_turf(src)
 	new /obj/item/clothing/head/butt(Tsec)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<b>[src]</b> yells: FUCKING FILTERED, YOU METAGAMING CUCK! SLURP SLURP SLURP!")
+	say("FUCKING FILTERED, YOU METAGAMING CUCK! SLURP SLURP SLURP!")
 
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
