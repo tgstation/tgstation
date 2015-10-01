@@ -199,19 +199,19 @@ mob/living/proc/Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
 
 		//Processing the aiming. Should be probably in separate object with process() but lasy.
 		while(targeted_by && T.client)
-			if(last_move_intent > I.lock_time + 10 && !T.client.target_can_move) //If target moved when not allowed to
+			if((last_move_intent > I.lock_time + 10) && !T.client.target_can_move) //If target moved when not allowed to
 				I.TargetActed(src)
 				if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
 					I.lock_time = world.time + 5
 				I.lock_time = world.time + 5
 				I.last_moved_mob = src
-			else if(last_move_intent > I.lock_time + 10 && !T.client.target_can_run && m_intent == "run") //If the target ran while targeted
+			else if((last_move_intent > I.lock_time + 10) && !T.client.target_can_run && m_intent == "run") //If the target ran while targeted
 				I.TargetActed(src)
 				if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
 					I.lock_time = world.time + 5
 				I.lock_time = world.time + 5
 				I.last_moved_mob = src
-			if(last_target_click > I.lock_time + 10 && !T.client.target_can_click) //If the target clicked the map to pick something up/shoot/etc
+			if((last_target_click > I.lock_time + 10) && !T.client.target_can_click) //If the target clicked the map to pick something up/shoot/etc
 				I.TargetActed(src)
 				if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
 					I.lock_time = world.time + 5
@@ -272,7 +272,7 @@ client/proc/remove_gun_icons()
 		return
 	if(usr.gun_move_icon)
 		returnToPool(usr.gun_move_icon)
-		screen -= usr.gun_run_icon
+		screen -= usr.gun_move_icon
 		usr.gun_move_icon = null
 	if(usr.item_use_icon)
 		returnToPool(usr.item_use_icon)
