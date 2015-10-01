@@ -463,7 +463,7 @@ var/datum/subsystem/ticker/ticker
 			queued_players -= next_in_line
 			queue_delay = 0
 
-/datum/subsystem/ticker/proc/check_maprotate(var/force = 0)
+/datum/subsystem/ticker/proc/check_maprotate()
 	if (!config.maprotation || !SERVERTOOLS)
 		return
 	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
