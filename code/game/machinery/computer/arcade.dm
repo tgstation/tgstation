@@ -28,7 +28,7 @@
 							/obj/item/clothing/suit/syndicatefake			= 2,
 							/obj/item/weapon/storage/fancy/crayons			= 2,
 							/obj/item/toy/spinningtoy						= 2,
-							/obj/item/toy/minimeteor					= 2,
+							/obj/item/toy/minimeteor						= 2,
 							/obj/item/device/whisperphone					= 2,
 							/obj/item/toy/prize/ripley						= 1,
 							/obj/item/toy/prize/fireripley					= 1,
@@ -270,3 +270,9 @@
 		new empprize(src.loc)
 
 	..(severity)
+
+/obj/machinery/computer/arcade/togglePanelOpen(var/obj/toggleitem, mob/user)
+	if(emagged)
+		usr << "<span class='warning'>[src] does not allow cheaters!</span>"
+		usr.gib()
+	..()
