@@ -328,20 +328,20 @@
 					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
 		if(cell)
-			stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
+			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
 		else
 			stat(null, text("No Cell Inserted!"))
 
-		stat(null, "Station Time: [worldtime2text()]")
+		stat("Station Time:", worldtime2text())
 		if(module)
 			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(internal)
-				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.return_pressure())
-			for (var/datum/robot_energy_storage/st in module.storages)
-				stat("[st.name]: [st.energy]/[st.max_energy]")
+				stat("Internal Atmosphere Info:", internal.name)
+				stat("Tank Pressure:", internal.air_contents.return_pressure())
+			for(var/datum/robot_energy_storage/st in module.storages)
+				stat("[st.name]:", "[st.energy]/[st.max_energy]")
 		if(connected_ai)
-			stat(null, text("Master AI: [connected_ai.name]"))
+			stat("Master AI:", connected_ai.name)
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -418,20 +418,22 @@
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	if (istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (src == user)
-			user << "<span class='warning'>You lack the reach to be able to repair yourself!</span>"
-			return
-		if (src.health >= src.maxHealth)
+		if (!getBruteLoss())
 			user << "<span class='warning'>[src] is already in good condition!</span>"
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+			if(src == user)
+				user << "<span class='notice'>You start fixing youself...</span>"
+				if(!do_after(user, 50, target = src))
+					return
+
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			visible_message("[user] has fixed some of the dents on [src].")
+			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
 			return
 		else
 			user << "<span class='warning'>The welder must be on for this task!</span>"
@@ -439,7 +441,11 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
-		if (fireloss > 0)
+		if (getFireLoss() > 0)
+			if(src == user)
+				user << "<span class='notice'>You start fixing youself...</span>"
+				if(!do_after(user, 50, target = src))
+					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
 				updatehealth()
@@ -753,7 +759,6 @@
 	return update_icons()
 
 /mob/living/silicon/robot/update_icons()
-
 	overlays.Cut()
 	if(stat != DEAD && !(paralysis || stunned || weakened)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
@@ -1123,6 +1128,9 @@
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
+	spawn(5)
+		if(playstyle_string)
+			src << playstyle_string
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
@@ -1137,9 +1145,6 @@
 /mob/living/silicon/robot/syndicate/medical/New(loc)
 	..()
 	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
-	spawn(5)
-		if(playstyle_string)
-			src << playstyle_string
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)

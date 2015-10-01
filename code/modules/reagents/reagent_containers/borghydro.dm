@@ -55,7 +55,7 @@ Borg Hypospray
 	//update_icon()
 	return 1
 
-// Purely for testing purposes I swear~
+// Purely for testing purposes I swear~ //don't lie to me
 /*
 /obj/item/weapon/reagent_containers/borghypo/verb/add_cyanide()
 	set src in world
@@ -128,7 +128,7 @@ Borg Hypospray
 
 /obj/item/weapon/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
-	desc = "A modified hypospray that generates reagents more quickly and consumes less power."
+	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."
 	icon_state = "borghypo_s"
 	charge_cost = 20
 	recharge_time = 2
@@ -149,7 +149,7 @@ Borg Shaker
 	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
-	return //Can't inject stuff with a shaker, can we?
+	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/regenerate_reagents()
 	if(isrobot(src.loc))
