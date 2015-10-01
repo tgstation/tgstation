@@ -7,6 +7,7 @@
 	var/making_mage = 0
 	var/mages_made = 1
 	var/time_checked = 0
+	var/bullshit_mode = 0 // requested by hornygranny
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
@@ -15,7 +16,7 @@
 /datum/game_mode/wizard/raginmages/post_setup()
 	..()
 	var/playercount = 0
-	if(!max_mages)
+	if(!max_mages && !bullshit_mode)
 		for(var/mob/living/player in mob_list)
 			if(player.client && player.stat != 2)
 				playercount += 1
@@ -24,6 +25,8 @@
 				max_mages = 20
 			if(max_mages < 1)
 				max_mages = 1
+	if(bullshit_mode)
+		max_mages = INFINITY
 /datum/game_mode/wizard/raginmages/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
 		wizard.current << "<B>You are the Space Wizard!</B>"
@@ -51,12 +54,19 @@
 				wizard.current.stat = 2
 			continue
 		wizards_alive++
-
+	if(!time_checked) 
+		time_checked = world.time
+	if(bullshit_mode)
+		if(world.time > time_checked + 600)
+			max_mages = INFINITY
+			time_checked = world.time
+			make_more_mages()	
+			return ..()
 	if (wizards_alive)
-		if(!time_checked) time_checked = world.time
 		if(world.time > time_checked + 1500 && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
+		
 	else
 		if(mages_made >= max_mages)
 			finished = 1
@@ -134,3 +144,10 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/datum/game_mode/wizard/raginmages/bullshit
+	name = "very ragin' bullshit mages"
+	config_tag = "veryraginbullshitmages"
+	required_players = 20
+	use_huds = 1
+	bullshit_mode = 1
