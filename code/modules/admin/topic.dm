@@ -23,8 +23,6 @@
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help")
 
-	else if(href_list["stickyban"])
-		stickyban(href_list["stickyban"],href_list)
 
 	else if(href_list["makeAntag"])
 		if (!ticker.mode)
@@ -1863,7 +1861,9 @@
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.add_module(I)
+										R.module.modules += I
+										I.loc = R.module
+										R.module.rebuild()
 										R.activate_module(I)
 
 

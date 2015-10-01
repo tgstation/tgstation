@@ -500,6 +500,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
+		for(var/mob/living/carbon/M in view(chassis))
+			if(istype(M,/mob/living/carbon/human))
+				M.irradiate(rad_per_cycle*3)
+			else
+				M.irradiate(rad_per_cycle)
 
 

@@ -18,7 +18,7 @@
 	if(!reagents.total_volume)
 		user << "<span class='warning'>[src] is empty!</span>"
 		return
-	if(!iscarbon(M))
+	if(!istype(M))
 		return
 
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1))) // Ignore flag should be checked first or there will be an error message.
@@ -69,23 +69,19 @@
 	flags = null
 	list_reagents = list("epinephrine" = 10)
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
-	if(!reagents.total_volume)
-		user << "<span class='warning'>[src] is empty!</span>"
-		return
+/obj/item/weapon/reagent_containers/hypospray/medipen/New()
 	..()
 	update_icon()
-	spawn(80)
-		if(isrobot(user) && !reagents.total_volume)
-			var/mob/living/silicon/robot/R = user
-			if(R.cell.use(100))
-				reagents.add_reagent_list(list_reagents)
-				update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/attack(mob/M, mob/user)
+	..()
+	update_icon()
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = initial(icon_state)
+		icon_state = "[initial(icon_state)]1"
 	else
 		icon_state = "[initial(icon_state)]0"
 
@@ -104,11 +100,14 @@
 	amount_per_transfer_from_this = 20
 	list_reagents = list("ephedrine" = 10, "coffee" = 10)
 
-/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack/traitor
-	desc = "A modified stimulants autoinjector for use in combat situations. Has a mild healing effect."
-	list_reagents = list("stimulants" = 10, "omnizine" = 10)
-
 /obj/item/weapon/reagent_containers/hypospray/medipen/morphine
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
+	icon_state = "morppen"
 	list_reagents = list("morphine" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/atropine
+	name = "atropine medipen"
+	desc = "A rapid way to revive a dying patient! Printed on the side reads 'PROPERTY OF NT SECURITY'."
+	icon_state = "atropen"
+	list_reagents = list("atropine" = 10)

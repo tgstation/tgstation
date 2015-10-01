@@ -23,7 +23,8 @@
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick("plutonium_core_pulse", src)
-		radiation_pulse(get_turf(src), 1, 4, 40, 1)
+		for(var/mob/living/L in range(4,get_turf(src)))
+			L.irradiate(40)
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container

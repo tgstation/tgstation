@@ -672,8 +672,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0, progress = 1)
-	//This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0) //This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -684,7 +683,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/timefraction = round(time/numticks)
 	var/image/progbar
 	for(var/i = 1 to numticks)
-		if(user.client && progress)
+		if(user.client)
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
@@ -710,7 +709,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar.pixel_y = 32
 		return progbar
 
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null, progress = 1)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
 	if(!user)
 		return 0
 
@@ -729,7 +728,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		holdingnull = 0 //User is holding a tool of some kind
 	var/image/progbar
 	for (var/i = 1 to numticks)
-		if(user.client && progress)
+		if(user.client)
 			progbar = make_progress_bar(i, numticks, target)
 			if(progbar)
 				user.client.images |= progbar

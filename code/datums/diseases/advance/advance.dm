@@ -11,7 +11,7 @@ var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
 var/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
+									"nutriment", "sugar", "orangejuice",
 									"spaceacillin", "salglu_solution", "ethanol",
 									"leporazine", "synaptizine", "lipolicide",
 									"silver", "gold"
