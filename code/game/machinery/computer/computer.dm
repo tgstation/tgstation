@@ -95,16 +95,18 @@
 	stat |= BROKEN
 	update_icon()
 
-/obj/machinery/computer/togglePanelOpen(var/obj/toggleitem, mob/user)
+/obj/machinery/computer/togglePanelOpen(var/obj/toggleitem, mob/user, var/obj/item/weapon/circuitboard/CC = null)
 	if(!circuit) //we can't disassemble with no circuit, so add some fucking circuits if you want disassembly
 		return
 	playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 	user.visible_message(	"[user] begins to unscrew \the [src]'s monitor.",
 							"You begin to unscrew the monitor...")
-	if (do_after(user, src, 20) && circuit)
+	if (do_after(user, src, 20) && (circuit || CC))
 		var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-		var/obj/item/weapon/circuitboard/M = new circuit( A )
-		A.circuit = M
+		if(!CC) CC = new circuit( A )
+		else
+			CC.loc = A
+		A.circuit = CC
 		A.anchored = 1
 		for (var/obj/C in src)
 			C.loc = src.loc

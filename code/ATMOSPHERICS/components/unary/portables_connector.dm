@@ -45,7 +45,7 @@
 	if(node)
 		node.disconnect(src)
 		if(network)
-			returnToDPool(network)
+			returnToPool(network)
 
 	node = null
 

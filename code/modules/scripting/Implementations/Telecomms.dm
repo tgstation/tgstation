@@ -276,7 +276,7 @@ datum/signal
 			code = round(code)
 			code = Clamp(code, 0, 100)
 
-			var/datum/signal/signal = getFromDPool(/datum/signal)
+			var/datum/signal/signal = getFromPool(/datum/signal)
 			signal.source = S
 			signal.encryption = code
 			signal.data["message"] = "ACTIVATE"
@@ -291,7 +291,7 @@ datum/signal
 
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/tcombroadcast() called tick#: [world.time]")
 
-		var/datum/signal/newsign = getFromDPool(/datum/signal)
+		var/datum/signal/newsign = getFromPool(/datum/signal)
 		var/obj/machinery/telecomms/server/S = data["server"]
 		var/obj/item/device/radio/hradio = S.server_radio
 

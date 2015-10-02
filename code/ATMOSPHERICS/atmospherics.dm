@@ -40,6 +40,8 @@ Pipelines + Other Objects -> Pipe network
 
 	var/piping_layer = PIPING_LAYER_DEFAULT //used in multi-pipe-on-tile - pipes only connect if they're on the same pipe layer
 
+	internal_gravity = 1 // Ventcrawlers can move in pipes without gravity since they have traction.
+
 
 /obj/machinery/atmospherics/New()
 	..()
@@ -51,8 +53,9 @@ Pipelines + Other Objects -> Pipe network
 		M.remove_ventcrawl()
 		M.forceMove(src.loc)
 	if(pipe_image)
-		for(var/mob/M in player_list)
+		for(var/mob/living/M in player_list)
 			M.client.images -= pipe_image
+			M.pipes_shown -= pipe_image
 		pipe_image = null
 	atmos_machines -= src
 	centre_overlay = null

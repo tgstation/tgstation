@@ -367,7 +367,7 @@
 			if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				adjustOxyLoss(8)
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			spawn(0) emote("cough")
+			emote("cough")
 
 	else
 		co2overloadtime = 0

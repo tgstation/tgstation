@@ -126,7 +126,10 @@
 	var/C = chassis.loc
 	var/T = target.loc	//why were these backwards? we may never know -Pete & Bauds, years apart
 
-	if(istype(target, /turf/simulated/wall))
+	if(istype(target, /turf/simulated/wall/invulnerable))
+		occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
+
+	else if(istype(target, /turf/simulated/wall))
 		if(dig_walls)
 			var/delay = istype(target, /turf/simulated/wall/r_wall) ? 10 : 2
 			if(do_after_cooldown(target, delay) && C == chassis.loc && src == chassis.selected)

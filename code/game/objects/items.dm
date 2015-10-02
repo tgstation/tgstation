@@ -48,7 +48,7 @@
 
 
 	var/vending_cat = null// subcategory for vending machines.
-	var/list/dynamic_overlay[25] //For items which need to slightly alter their on-mob appearance while being worn.
+	var/list/dynamic_overlay[0] //For items which need to slightly alter their on-mob appearance while being worn.
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
@@ -788,7 +788,7 @@
 	if(!blood_overlay)
 		blood_overlay = blood_overlays[type]
 	else
-		overlays -= blood_overlay
+		overlays.Remove(blood_overlay)
 
 	//apply the blood-splatter overlay if it isn't already in there, else it updates it.
 	blood_overlay.color = blood_color

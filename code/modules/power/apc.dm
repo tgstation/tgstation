@@ -1283,7 +1283,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 		terminal = null
 
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()

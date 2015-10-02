@@ -71,7 +71,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			if(long_range_link == 0 && machine.long_range_link == 0)
 				continue
 		// If we're sending a copy, be sure to create the copy for EACH machine and paste the data
-		var/datum/signal/copy = getFromDPool(/datum/signal)
+		var/datum/signal/copy = getFromPool(/datum/signal)
 		if(copysig)
 
 			copy.transmission_method = 2

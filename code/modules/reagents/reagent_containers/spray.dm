@@ -49,6 +49,9 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 			else
 				user << "<span class='notice'>\The [src] is empty!</span>"
 				return
+		else
+			user << "<span class='notice'>\The [src] is empty!</span>"
+			return
 
 	// Log reagents
 	var/list/log_reagent_list = list()

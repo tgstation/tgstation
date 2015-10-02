@@ -117,6 +117,7 @@ var/list/impact_master = list()
 		return 0
 	var/obj/item/projectile/test/in_chamber = getFromPool(/obj/item/projectile/test, get_step_to(user, target)) //Making the test....
 	in_chamber.target = target
+	in_chamber.ttarget = target //what the fuck
 	in_chamber.flags = flags //Set the flags...
 	in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
 	in_chamber.firer = user
@@ -214,11 +215,15 @@ var/list/impact_master = list()
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 	if(forcedodge == -1) // the bullet passes through a dense object!
 		bumped = 0 // reset bumped variable!
+
 		if(istype(A, /turf))
 			loc = A
 		else
 			loc = A.loc
-		permutated.Add(A)
+
+		if(permutated)
+			permutated.Add(A)
+
 		return 0
 	else if(!custom_impact)
 		var/impact_icon = null

@@ -89,6 +89,7 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/play_sound
 	)
 var/list/admin_verbs_fun = list(
+	/datum/admins/proc/media_stop_all,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
@@ -1031,3 +1032,16 @@ var/list/admin_verbs_mod = list(
 		return
 
 	holder.shuttle_magic()
+
+
+/datum/admins/proc/media_stop_all()
+	set name = "Stop All Media"
+	set desc = "Stops all music and video."
+	set category = "Fun"
+
+	if(!check_rights(R_FUN))
+		return
+
+	message_admins("[key_name_admin(usr)] has stopped all media.", 1)
+
+	stop_all_media()

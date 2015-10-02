@@ -10,7 +10,7 @@
 
 	use_auto_lights = 1
 	light_range_on = 3
-	light_power_on = 2
+	light_power_on = 1
 	light_color = LIGHT_COLOR_YELLOW
 
 	//computer stuff
@@ -99,6 +99,9 @@
 /obj/machinery/power/monitor/Destroy()
 	..()
 	html_machines -= src
+
+	qdel(interface)
+	interface = null
 
 /obj/machinery/power/monitor/attack_hand(mob/user)
 	. = ..()

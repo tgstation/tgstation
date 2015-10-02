@@ -136,14 +136,18 @@
 				usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
 			return
 		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-			usr << "<span class='warning'>There is another [R.title] here!</span>"
-			return
+			for(var/atom/movable/AM in usr.loc)
+				if(istype(AM, /obj/structure/bed/chair/vehicle)) //Bandaid to allow people in vehicles (and wheelchairs) build chairs
+					continue
+				else if(istype(AM, R.result_type))
+					usr << "<span class='warning'>There is another [R.title] here!</span>"
+					return
 		if (R.on_floor && !istype(usr.loc, /turf/simulated/floor))
 			usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
 			return
 		if (R.time)
 			usr << "<span class='notice'>Building [R.title] ...</span>"
-			if (!do_after(usr, src, R.time))
+			if (!do_after(usr, get_turf(src), R.time))
 				return
 		if (src.amount < R.req_amount*multiplier)
 			return

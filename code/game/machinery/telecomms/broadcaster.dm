@@ -554,7 +554,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/proc/telecomms_process() called tick#: [world.time]")
 
 	// First, we want to generate a new radio signal
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 2 // 2 would be a subspace transmission.
 	var/turf/pos = get_turf(src)
 
