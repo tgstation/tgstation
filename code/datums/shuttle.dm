@@ -546,7 +546,7 @@
 				add_underlay = 1
 				if(old_turf.underlays.len) //this list is in code/game/area/areas.dm
 					var/image/I = locate(/image) in old_turf.underlays //bandaid
-					if(I.icon == 'icons/turf/shuttle.dmi') //Don't change corners that are over the shuttle floors
+					if((I.icon == 'icons/turf/shuttle.dmi') || (I.icon == 'icons/turf/floors.dmi' && I.icon_state = "plating")) //This really needs better code!
 						add_underlay = 0
 
 		if(!new_turf)
