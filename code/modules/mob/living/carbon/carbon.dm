@@ -555,7 +555,6 @@
 
 	verbs -= /mob/living/carbon/proc/release_control
 	verbs -= /mob/living/carbon/proc/punish_host
-	verbs -= /mob/living/carbon/proc/spawn_larvae
 
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
@@ -583,41 +582,6 @@
 			return I
 
 	return 0
-
-/mob/living/carbon/proc/spawn_larvae()
-	set category = "Alien"
-	set name = "Reproduce"
-	set desc = "Spawn several young."
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/proc/spawn_larvae() called tick#: [world.time]")
-
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
-	if(!B)
-		return
-
-	if(B.chemicals >= 100)
-		src << "<span class='warning'>You strain, trying to push out your young...</span>"
-		var/mob/dead/observer/O = B.request_player()
-		if(!O)
-			// No spaceghoasts.
-			src << "<span class='warning'>Your young are not ready yet.</span>"
-		else
-			src << "<span class='danger'>Your host twitches and quivers as you rapidly excrete several larvae from your sluglike body.</span>"
-			visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>", \
-				drugged_message = "<span class='notice'>[src] starts vomiting a rainbow! Suddenly, a pot of gold appears.</span>")
-			B.chemicals -= 100
-
-			B.numChildren++
-
-			new /obj/effect/decal/cleanable/vomit(get_turf(src))
-			playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-			var/mob/living/simple_animal/borer/nB = new (get_turf(src),by_gamemode=1) // We've already chosen.
-			nB.transfer_personality(O.client)
-
-	else
-		src << "You do not have enough chemicals stored to reproduce."
-		return
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

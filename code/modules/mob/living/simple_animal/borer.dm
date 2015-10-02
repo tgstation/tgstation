@@ -60,7 +60,7 @@ var/global/list/borer_avail_unlocks = null
 	// Event handles
 	var/eh_emote
 
-/mob/living/simple_animal/borer/New(var/loc,var/by_gamemode=0)
+/mob/living/simple_animal/borer/New(var/loc)
 	..(loc)
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
@@ -68,14 +68,6 @@ var/global/list/borer_avail_unlocks = null
 	if(name == initial(name)) // Easier reporting of griff.
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-
-	// Admin spawn.  Request a player.
-	if(!by_gamemode)
-		var/mob/dead/observer/O = request_player()
-		if(!O)
-			message_admins("[src.name] self-deleting due to lack of appropriate ghosts.")
-			del(src)
-		transfer_personality(O.client)
 
 	update_verbs(0)
 
@@ -118,13 +110,8 @@ var/global/list/borer_avail_unlocks = null
 		qdel(verb_holder)
 	if(attached)
 		verb_holder=new /obj/item/verbs/borer/attached(src)
-		//verbs += borer_attached_verbs
-		//verbs -= borer_detached_verbs
 	else
 		verb_holder=new /obj/item/verbs/borer/detached(src)
-		//verbs -= borer_attached_verbs
-		//verbs += borer_detached_verbs
-	//src << "<span class='warning'>At the moment, BYOND has a bug where you won't get sent the proper verbs.  If you find your verbs are broken/backwards, right-click on the titlebar and select Client > Reconnect.</span>"
 
 /mob/living/simple_animal/borer/player_panel_controls(var/mob/user)
 	var/html="<h2>[src] Controls</h2>"
@@ -522,7 +509,6 @@ mob/living/simple_animal/borer/proc/detach()
 
 		host.verbs -= /mob/living/carbon/proc/release_control
 		host.verbs -= /mob/living/carbon/proc/punish_host
-		host.verbs -= /mob/living/carbon/proc/spawn_larvae
 
 		// Remove any unlocks that affect the host.
 		for(var/uid in research.unlocked.Copy())
@@ -680,6 +666,33 @@ mob/living/simple_animal/borer/proc/detach()
 	else
 		layer = MOB_LAYER
 		src << text("<span class='notice'>You have stopped hiding.</span>")
+
+
+
+/mob/living/simple_animal/borer/proc/reproduce()
+	set name = "Reproduce"
+	set desc = "Spawn offspring in the form of an egg."
+	set category = "Alien"
+
+	if(chemicals >= 100)
+		src << "<span class='warning'>You strain, trying to push out your young...</span>"
+		var/turf/T = get_turf(src)
+		if(do_after(src, T, 5 SECONDS))
+			src << "<span class='danger'>You twitch and quiver as you rapidly excrete an egg from your sluglike body.</span>"
+			visible_message("<span class='danger'>\The [src] heaves violently, expelling a small, gelatinous egg!</span>", \
+				drugged_message = "<span class='notice'>\The [src] starts farting a rainbow! Suddenly, a pot of gold appears.</span>")
+			chemicals -= 100
+
+			numChildren++
+
+			playsound(T, 'sound/effects/splat.ogg', 50, 1)
+			if(istype(T, /turf/simulated))
+				T.add_vomit_floor(null, 1)
+			new /obj/item/weapon/reagent_containers/food/snacks/egg/borer(T)
+
+	else
+		src << "You do not have enough chemicals stored to reproduce."
+		return()
 
 //Procs for grabbing players.
 /mob/living/simple_animal/borer/proc/request_player()
