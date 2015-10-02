@@ -297,3 +297,77 @@ var/failed_db_connections = 0
 		return 1
 
 #undef FAILED_DB_CONNECTION_CUTOFF
+
+
+/proc/maprotate()
+	if (!SERVERTOOLS)
+		return
+	var/players = clients.len
+	var/list/mapvotes = list()
+	//count votes
+	for (var/client/c in clients)
+		var/vote = c.prefs.preferred_map
+		if (!vote)
+			if (config.defaultmap)
+				mapvotes[config.defaultmap.name] += 1
+			continue
+		mapvotes[vote] += 1
+
+	//filter votes
+	for (var/map in mapvotes)
+		if (!map)
+			mapvotes.Remove(map)
+		if (!(map in config.maplist))
+			mapvotes.Remove(map)
+			continue
+		var/datum/votablemap/VM = config.maplist[map]
+		if (!VM)
+			mapvotes.Remove(map)
+			continue
+		if (VM.voteweight <= 0)
+			mapvotes.Remove(map)
+			continue
+		if (VM.minusers > 0 && players < VM.minusers)
+			mapvotes.Remove(map)
+			continue
+		if (VM.maxusers > 0 && players < VM.maxusers)
+			mapvotes.Remove(map)
+			continue
+
+		mapvotes[map] = mapvotes[map]*VM.voteweight
+
+	var/pickedmap = pickweight(mapvotes)
+	if (!pickedmap)
+		return
+	var/datum/votablemap/VM = config.maplist[pickedmap]
+	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
+	. = changemap(VM)
+	if (. == 0)
+		world << "<span class='boldannounce'>Map rotation has choosen [VM.friendlyname] for next round!</span>"
+
+/proc/changemap(var/datum/votablemap/VM)
+	if (!SERVERTOOLS)
+		return
+	if (!istype(VM))
+		return
+	var/file = file("setnewmap.bat")
+	file << "\nset MAPROTATE=[VM.name]\n"
+	. = shell("..\\bin\\maprotate.bat")
+	switch (.)
+		if (null)
+			message_admins("Failed to change map: Could not run map rotator")
+			log_game("Failed to change map: Could not run map rotator")
+		if (0)
+			log_game("Changed to map [VM.friendlyname]")
+		if (11)
+			message_admins("Failed to change map: Map rotator script couldn't find file listing new map")
+			log_game("Failed to change map: Map rotator script couldn't find file listing new map")
+		if (12)
+			message_admins("Failed to change map: Map rotator script couldn't find tgstation-server framework")
+			log_game("Failed to change map: Map rotator script couldn't find tgstation-server framework")
+		if (13)
+			message_admins("Failed to change map: Could not compile new map:[VM.name]")
+			log_game("Failed to change map: Could not compile new map:[VM.name]")
+		else
+			message_admins("Failed to change map: Unknown error")
+			log_game("Failed to change map: Unknown error")

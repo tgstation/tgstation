@@ -171,6 +171,7 @@
 	var/list/datum/votablemap/maplist = list()
 	var/datum/votablemap/defaultmap = null
 	var/maprotation = 1
+	var/maprotatechancedelta = 0.75
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -360,6 +361,8 @@
 					config.announce_admin_login = 1
 				if("maprotation")
 					config.maprotation = 1
+				if("maprotationchancedelta")
+					config.maprotatechancedelta = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
