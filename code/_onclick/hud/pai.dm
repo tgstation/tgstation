@@ -113,7 +113,7 @@
 			return "health1"
 		if(-49 to 0)
 			return "health0"
-		if(-99 to 50)
+		if(-99 to -50)
 			return "health-50"
 		else
 			return "health-100"
