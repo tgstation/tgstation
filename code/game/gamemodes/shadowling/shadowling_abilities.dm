@@ -90,7 +90,7 @@
 		for(var/obj/machinery/computer/C in T.contents)
 			C.SetLuminosity(0)
 			C.visible_message("<span class='warning'>[C] grows dim, its screen barely readable.</span>")
-		for(var/obj/effect/glowshroom/G in orange(2, usr)) //Very small radius
+		for(var/obj/effect/glowshroom/G in orange(7, usr)) //High radius because glowshroom spam wrecks shadowlings
 			G.visible_message("<span class='warning'>[G] withers away!</span>")
 			qdel(G)
 		for(var/mob/living/H in T.contents)
@@ -297,7 +297,7 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
 		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-		hardset_dna(user, null, null, null, null, /datum/species/shadow/ling)
+		user.set_species(/datum/species/shadow/ling)
 
 
 /obj/effect/proc_holder/spell/targeted/collective_mind //Lets a shadowling bring together their thralls' strength, granting new abilities and a headcount
@@ -334,27 +334,28 @@
 			user << "<span class='warning'>Your concentration has been broken. The mental hooks you have sent out now retract into your mind.</span>"
 			return
 
-		if(thralls >= 3 && !blind_smoke_acquired)
+		if(thralls >= 3 && !screech_acquired)
+			screech_acquired = 1
+			user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>"
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech(null))
+
+		if(thralls >= 5 && !blind_smoke_acquired)
 			blind_smoke_acquired = 1
 			user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
 			</i></span>"
-			user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/blindness_smoke
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke(null))
 
-		if(thralls >= 5 && !drainLifeAcquired)
+		if(thralls >= 7 && !drainLifeAcquired)
 			drainLifeAcquired = 1
 			user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Drain Life</b> ability. You can now drain the health of nearby humans to heal yourself.</i></span>"
-			user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/drain_life
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/drain_life(null))
 
-		if(thralls >= 7 && !screech_acquired)
-			screech_acquired = 1
-			user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</span>"
-			user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
 
 		if(thralls >= 9 && !reviveThrallAcquired)
 			reviveThrallAcquired = 1
 			user << "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
 			with no bodily defects.</i></span>"
-			user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/revive_thrall
+			user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/revive_thrall(null))
 
 		if(thralls < victory_threshold)
 			user << "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>"
@@ -492,7 +493,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	nearbyTargets = list()
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/M in T.contents)
-			if(M == src) continue
+			if(M == usr) continue
 			targetsDrained++
 			nearbyTargets.Add(M)
 	if(!targetsDrained)
@@ -568,7 +569,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				thrallToRevive.visible_message("<span class='warning'>[thrallToRevive] slowly rises, no longer recognizable as human.</span>", \
 											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
 											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
-				hardset_dna(thrallToRevive, null, null, null, null, /datum/species/shadow/ling/lesser)
+				thrallToRevive.set_species(/datum/species/shadow/ling/lesser)
 				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
 				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadow_walk)
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
@@ -606,10 +607,56 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				return
 
 
+/obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle
+	name = "Destroy Engines"
+	desc = "Extends the time of the emergency shuttle's arrival by ten to fifteen minutes."
+	panel = "Shadowling Abilities"
+	range = 1
+	clothes_req = 0
+	charge_max = 600
+	action_icon_state = "extend_shuttle"
+
+/obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle/cast(list/targets, mob/living/carbon/human/U = usr)
+	if(!shadowling_check(usr))
+		charge_counter = charge_max
+		return
+	for(var/mob/living/carbon/human/target in targets)
+		if(target.stat)
+			charge_counter = charge_max
+			return
+		if(!is_thrall(target))
+			usr << "<span class='warning'>[target] must be a thrall.</span>"
+			charge_counter = charge_max
+			return
+		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
+			usr << "<span class='warning'>The shuttle must be inbound only to the station.</span>"
+			charge_counter = charge_max
+			return
+		var/mob/living/carbon/human/M = target
+		U.visible_message("<span class='warning'>[U]'s eyes flash a bright red!</span>", \
+						  "<span class='notice'>You begin to draw [M]'s life force.</span>")
+		M.visible_message("<span class='warning'>[M]'s face falls slack, their jaw slightly distending.</span>", \
+						  "<span class='boldannounce'>You are suddenly transported... far, far away...</span>")
+		if(!do_after(U, 50, target = M))
+			M << "<span class='warning'>You are snapped back to reality, your haze dissipating!</span>"
+			U << "<span class='warning'>You have been interrupted. The draw has failed.</span>"
+			return
+		U << "<span class='notice'>You project [M]'s life force toward the approaching shuttle, extending its arrival duration!</span>"
+		M.visible_message("<span class='warning'>[M]'s eyes suddenly flare red. They proceed to collapse on the floor, not breathing.</span>", \
+						  "<span class='warning'><b>...speeding by... ...pretty blue glow... ...touch it... ...no glow now... ...no light... ...nothing at all...</span>")
+		M.death()
+		if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+			var/more_minutes = 9000
+			var/timer = SSshuttle.emergency.timeLeft()
+			timer += more_minutes
+			priority_announce("Major system failure aboard the emergency shuttle. This will extend its arrival time by approximately 15 minutes..", "System Failure", 'sound/misc/notice1.ogg')
+			SSshuttle.emergency.setTimer(timer)
+
+
 // THRALL ABILITIES BEYOND THIS POINT //
 
 
-/obj/effect/proc_holder/spell/targeted/lesser_glare //Thrall version of Glare - same effects but for 3 seconds
+/obj/effect/proc_holder/spell/targeted/lesser_glare //Thrall version of Glare - same effects but for 5 seconds
 	name = "Lesser Glare"
 	desc = "Stuns and mutes a target for a short duration."
 	panel = "Thrall Abilities"
@@ -636,8 +683,8 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 			target << "<span class='userdanger'>Your gaze is forcibly drawn into [usr]'s eyes, and you are starstruck by the heavenly lights...</span>"
 		else //Only alludes to the shadowling if the target is close by
 			target << "<span class='userdanger'>Red lights suddenly dance in your vision, and you are starstruck by their heavenly beauty...</span>"
-		target.Stun(3) //Roughly 30% as long as the normal one
-		M.silent += 3
+		target.Stun(5) //Roughly 50% as long as the normal one
+		M.silent += 5
 
 
 /obj/effect/proc_holder/spell/targeted/lesser_shadow_walk //Thrall version of Shadow Walk, only works in darkness, doesn't grant phasing, but gives near-invisibility
@@ -707,6 +754,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Thrall\]</b><i> [usr.real_name]</i>: [text]</span>"
+		log_say("[user.real_name]/[user.key] : [text]")
 
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
@@ -730,11 +778,11 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		return
 
 	for(var/mob/living/boom in targets)
-		if(is_shadow_or_thrall(boom))
+		if(is_shadow(boom)) //Used to not work on thralls. Now it does so you can PUNISH THEM LIKE THE WRATHFUL GOD YOU ARE.
 			usr << "<span class='warning'>Making an ally explode seems unwise.<span>"
 			charge_counter = charge_max
 			return
-		usr.visible_message("<span class='danger'>[usr]'s markings flare as they gesture at [boom]!</span>", \
+		usr.visible_message("<span class='warning'>[usr]'s markings flare as they gesture at [boom]!</span>", \
 							"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
 		playMagSound()
 		sleep(4)
@@ -835,8 +883,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
 			if(is_shadow_or_thrall(target))
-				if(target == usr) //No message for the user, of course
-					continue
+				continue
 			target << "<span class='userdanger'>You are struck by a bolt of lightning!</span>"
 			playsound(target, 'sound/magic/LightningShock.ogg', 50, 1)
 			target.Weaken(8)
@@ -863,6 +910,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Ascendant\]<i> [usr.real_name]</i>: [text]</b></span>" //Bigger text for ascendants.
+		log_say("[user.real_name]/[user.key] : [text]")
 
 
 /obj/effect/proc_holder/spell/targeted/ascendant_transmit //Sends a message to the entire world. If this gets abused too much it can be removed safely

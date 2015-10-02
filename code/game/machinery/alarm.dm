@@ -81,9 +81,9 @@
 	// breathable air according to human/Life()
 	var/list/TLV = list(
 		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), /* kpa */
 		"temperature"    = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
 	)
@@ -91,25 +91,25 @@
 /*
 	// breathable air according to wikipedia
 		"oxygen"         = new/datum/tlv(   9,  12, 158, 296), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0,-1.0, 0.5,   1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1,-1, 0.5,   1), // Partial pressure, kpa
 */
 /obj/machinery/alarm/server
 	//req_access = list(access_rd) //no, let departaments to work together
 	TLV = list(
-		"oxygen"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), /* kpa */
-		"temperature"    = new/datum/tlv(-1.0, -1.0,-1.0,-1.0), // K
+		"oxygen"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1,-1,-1), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(-1, -1,-1,-1), /* kpa */
+		"temperature"    = new/datum/tlv(-1, -1,-1,-1), // K
 	)
 
 /obj/machinery/alarm/kitchen_cold_room
 	TLV = list(
 		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
-		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
-		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
-		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1, -1,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1, -1, 0.5, 1), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
 		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
 	)
@@ -295,7 +295,7 @@
 		environment_data += list(list("name" = "Toxins", "value" = environment.toxins / total * 100, "unit" = "%", "danger_level" = plasma_danger))
 
 		cur_tlv = TLV["other"]
-		var/other_moles = 0.0
+		var/other_moles = 0
 		for(var/datum/gas/G in environment.trace_gases)
 			other_moles+=G.moles
 		var/other_danger = cur_tlv.get_danger_level(other_moles*partial_pressure)
@@ -454,7 +454,7 @@
 				if (isnull(newval) || ..() || (locked && !(usr.has_unlimited_silicon_privilege)))
 					return
 				if (newval<0)
-					tlv.vars[varname] = -1.0
+					tlv.vars[varname] = -1
 				else if (env=="temperature" && newval>5000)
 					tlv.vars[varname] = 5000
 				else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
@@ -654,7 +654,7 @@
 	var/plasma_dangerlevel = cur_tlv.get_danger_level(environment.toxins*GET_PP)
 
 	cur_tlv = TLV["other"]
-	var/other_moles = 0.0
+	var/other_moles = 0
 	for(var/datum/gas/G in environment.trace_gases)
 		other_moles+=G.moles
 	var/other_dangerlevel = cur_tlv.get_danger_level(other_moles*GET_PP)
@@ -843,11 +843,11 @@ FIRE ALARM
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
-	var/detecting = 1.0
-	var/time = 10.0
-	var/timing = 0.0
+	var/detecting = 1
+	var/time = 10
+	var/timing = 0
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6

@@ -220,8 +220,8 @@
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
-				if(H.dna && H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.blood_type]</td></tr>"
+				if(H.ckey)
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=DNA;size=440x410")
 		if("fingerprints")
@@ -231,12 +231,7 @@
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
 				if(H.ckey)
-					if(H.dna && H.dna.uni_identity)
-						dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
-					else if(H.dna && !H.dna.uni_identity)
-						dat += "<tr><td>[H]</td><td>H.dna.uni_identity = null</td></tr>"
-					else if(!H.dna)
-						dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=fingerprints;size=440x410")
 
@@ -259,8 +254,7 @@
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = species_list[result]
 				for(var/mob/living/carbon/human/H in mob_list)
-					hardset_dna(H, null, null, null, null, newtype)
-					H.regenerate_icons()
+					H.set_species(newtype)
 
 		if("corgi")
 			if(!check_rights(R_FUN))

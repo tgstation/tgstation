@@ -37,7 +37,10 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(isrobot(user))
+		user << "<span class='notice'>You free up your module.</span>"
+	else
+		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
@@ -57,7 +60,10 @@
 	force = force_wielded
 	name = "[name] (Wielded)"
 	update_icon()
-	user << "<span class='notice'>You grab the [name] with both hands.</span>"
+	if(isrobot(user))
+		user << "<span class='notice'>You dedicate your module to [name].</span>"
+	else
+		user << "<span class='notice'>You grab the [name] with both hands.</span>"
 	if (wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
@@ -95,7 +101,7 @@
 /obj/item/weapon/twohanded/offhand
 	name = "offhand"
 	icon_state = "offhand"
-	w_class = 5.0
+	w_class = 5
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
@@ -115,7 +121,7 @@
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
-	w_class = 5.0
+	w_class = 5
 
 /obj/item/weapon/twohanded/required/attack_self()
 	return
@@ -150,12 +156,13 @@
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	throwforce = 15
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -188,10 +195,10 @@
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
 	force = 3
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 2.0
+	w_class = 2
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -244,7 +251,7 @@
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
-	if(istype(M))
+	if(M.has_dna())
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
@@ -285,7 +292,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4.0
+	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
@@ -295,6 +302,7 @@
 	flags = NOSHIELD
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"

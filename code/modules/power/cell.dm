@@ -5,8 +5,8 @@
 	icon_state = "cell"
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = 2
@@ -33,7 +33,7 @@
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
-	return 100.0*charge/maxcharge
+	return 100*charge/maxcharge
 
 // use power from a cell
 /obj/item/weapon/stock_parts/cell/proc/use(amount)

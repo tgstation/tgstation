@@ -4,8 +4,8 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
-	visible = 0.0
+	var/health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	visible = 0
 	flags = ON_BORDER
 	opacity = 0
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -167,14 +167,14 @@
 
 /obj/machinery/door/window/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if(prob(25))
 				qdel(src)
 			else
 				take_damage(120)
-		if(3.0)
+		if(3)
 			take_damage(60)
 
 
@@ -378,7 +378,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	health = 300 //Stronger doors for prison (regular window door health is 200)
 	reinf = 1
 	explosion_block = 1
 

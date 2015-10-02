@@ -48,10 +48,10 @@
 	if(amt > 0 && has_space(amt))
 		var/total_amount_saved = total_amount
 		if(material_type)
-			for(var/datum/material/M in materials)
-				if(M.material_type == material_type)
-					M.amount += amt
-					total_amount += amt
+			var/datum/material/M = materials[material_type]
+			if(M)
+				M.amount += amt
+				total_amount += amt
 		else
 			for(var/datum/material/M in materials)
 				M.amount += amt
@@ -60,9 +60,15 @@
 	return 0
 
 /datum/material_container/proc/insert_stack(obj/item/stack/S, amt = 0)
-	if(!amt)
+	if(amt <= 0)
+		return 0
+	if(amt > S.amount)
 		amt = S.amount
+
 	var/material_amt = get_item_material_amount(S)
+	if(!material_amt)
+		return 0
+
 	amt = min(amt, round(((max_amount - total_amount) / material_amt)))
 	if(!amt)
 		return 0
@@ -75,7 +81,8 @@
 	if(!I)
 		return 0
 	if(istype(I,/obj/item/stack))
-		return insert_stack(I)
+		var/obj/item/stack/S = I
+		return insert_stack(I, S.amount)
 
 	var/material_amount = get_item_material_amount(I)
 	if(!material_amount || !has_space(material_amount))
@@ -93,21 +100,21 @@
 
 //For consuming material
 //mats is a list of types of material to use and the corresponding amounts, example: list(MAT_METAL=100, MAT_GLASS=200)
-/datum/material_container/proc/use_amount(list/mats)
+/datum/material_container/proc/use_amount(list/mats, multiplier=1)
 	if(!mats || !mats.len)
 		return 0
 
 	var/datum/material/M
 	for(var/MAT in materials)
 		M = materials[MAT]
-		if(M.amount < mats[MAT])
+		if(M.amount < (mats[MAT] * multiplier))
 			return 0
 
 	var/total_amount_save = total_amount
 	for(var/MAT in materials)
 		M = materials[MAT]
-		M.amount -= mats[MAT]
-		total_amount -= mats[MAT]
+		M.amount -= mats[MAT] * multiplier
+		total_amount -= mats[MAT] * multiplier
 
 	return total_amount_save - total_amount
 
@@ -124,7 +131,9 @@
 
 //For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
-	if(sheet_amt > 0 && M.amount >= (sheet_amt * MINERAL_MATERIAL_AMOUNT))
+	if(sheet_amt > 0)
+		if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
+			sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
 		var/count = 0
 
 		while(sheet_amt > MAX_STACK_SIZE)
@@ -159,6 +168,17 @@
 /datum/material_container/proc/has_space(amt = 0)
 	return (total_amount + amt) <= max_amount
 
+/datum/material_container/proc/has_materials(list/mats, multiplier=1)
+	if(!mats || !mats.len)
+		return 0
+
+	var/datum/material/M
+	for(var/MAT in mats)
+		M = materials[MAT]
+		if(M.amount < (mats[MAT] * multiplier))
+			return 0
+	return 1
+
 /datum/material_container/proc/amount2sheet(amt)
 	if(amt >= MINERAL_MATERIAL_AMOUNT)
 		return round(amt / MINERAL_MATERIAL_AMOUNT)
@@ -172,9 +192,6 @@
 /datum/material_container/proc/amount(material_type)
 	var/datum/material/M = materials[material_type]
 	return M ? M.amount : 0
-
-/datum/material_container/proc/can_insert(obj/item/I)
-	return get_item_material_amount(I)
 
 //returns the amount of material relevant to this container;
 //if this container does not support glass, any glass in 'I' will not be taken into account
