@@ -121,7 +121,7 @@
 
 /obj/item/weapon/antag_spawner/borg_tele
 	name = "syndicate cyborg teleporter"
-	desc = "A single-use teleporter used to deploy a Syndicate cyborg on the field."
+	desc = "A single-use teleporter designed to deploy a single Syndicate cyborg onto the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/TC_cost = 0
@@ -130,8 +130,11 @@
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
-		user << "The teleporter is out of power."
+		user << "<span class='warning'>[src] is out of power!</span>"
 		return
+	if(!(user.mind in ticker.mode.syndicates))
+		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
+		return 0
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
@@ -141,7 +144,7 @@
 		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
-		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
 	if(!borg_to_spawn) //If there's no type at all, let it still be used but don't do anything
