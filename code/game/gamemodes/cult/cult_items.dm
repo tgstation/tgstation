@@ -1,13 +1,13 @@
 /obj/item/weapon/melee/cultblade
-	name = "eldritch longsword"
-	desc = "A sword humming with unholy energy. It glows with a dim red light."
+	name = "bone blade"
+	desc = "A sword made of glowing black bone. It's pretty spooky."
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	flags = CONDUCT
 	w_class = 4
 	force = 30
 	throwforce = 10
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/doot.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 
@@ -33,7 +33,7 @@
 
 
 /obj/item/clothing/head/culthood
-	name = "ancient cultist hood"
+	name = "ancient skull hood"
 	icon_state = "culthood"
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE
@@ -45,7 +45,7 @@
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/cultrobes
-	name = "ancient cultist robes"
+	name = "ancient skull robes"
 	desc = "A ragged, dusty set of robes. Strange letters line the inside."
 	icon_state = "cultrobes"
 	item_state = "cultrobes"
@@ -60,14 +60,14 @@
 
 
 /obj/item/clothing/head/culthood/alt
-	name = "cultist hood"
-	desc = "An armored hood worn by the followers of Nar-Sie."
+	name = "skull hood"
+	desc = "A bone-woven hood worn by the followers of Spook-Sie."
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/suit/cultrobes/alt
-	name = "cultist hood"
-	desc = "An armored set of robes worn by the followers of Nar-Sie."
+	name = "skull hood"
+	desc = "A bone-woven set of robes worn by the followers of Spook-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
 
@@ -76,7 +76,7 @@
 	name = "magus helm"
 	icon_state = "magus"
 	item_state = "magus"
-	desc = "A helm worn by the followers of Nar-Sie."
+	desc = "A helm worn by the followers of Spook-Sie."
 	flags_inv = HIDEFACE
 	flags = BLOCKHAIR
 	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0)
@@ -84,7 +84,7 @@
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie"
+	desc = "A set of armored robes worn by the followers of Spook-Sie"
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -95,7 +95,7 @@
 
 /obj/item/clothing/head/helmet/space/cult
 	name = "nar-sian bruiser's helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
+	desc = "A heavily-armored helmet worn by warriors of the Spook-Sian cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
@@ -104,7 +104,7 @@
 	name = "nar-sian bruiser's armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sian cult. It can withstand hard vacuum."
+	desc = "A heavily-armored exosuit worn by warriors of the Spook-Sian cult. It can withstand hard vacuum."
 	w_class = 3
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
 	slowdown = 1

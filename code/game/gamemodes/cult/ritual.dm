@@ -46,8 +46,8 @@ It also contains rune words, which are soon to be removed.
 
 
 /obj/item/weapon/tome
-	name = "arcane tome"
-	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
+	name = "spooky tome"
+	desc = "An old, dusty tome with frayed edges and a spooky-looking cover."
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
@@ -56,7 +56,7 @@ It also contains rune words, which are soon to be removed.
 /obj/item/weapon/tome/examine(mob/user)
 	..()
 	if(iscultist(user))
-		user << "The scriptures of the Geometer. Allows the scribing of runes and access of knowledge archives."
+		user << "The scriptures of the Trumpeted One. Allows the scribing of runes and access of knowledge archives."
 
 /obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
 	if(istype(M,/mob/dead/observer))
@@ -78,8 +78,8 @@ It also contains rune words, which are soon to be removed.
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
 	M.take_organ_damage(0, 15) //Used to be a random between 5 and 20
-	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
-	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
+	playsound(M, 'sound/items/doot.ogg', 50, 1)
+	M.visible_message("<span class='danger'>[user] strikes [M] with the spooky tome!</span>", \
 					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
 	flick("tome_attack", src)
 	user.do_attack_animation(M)
@@ -111,12 +111,12 @@ It also contains rune words, which are soon to be removed.
 
 /obj/item/weapon/tome/proc/read_tome(mob/user)
 	var/text = ""
-	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
-	text += "As a member of the cult, your goals are almost or entirely impossible to complete without special aid from the Geometer's plane. The primary method of doing this are <b>runes</b>. These \
-	scribings, drawn in blood, are concentrated nodes of the magic within Nar-Sie's realm and will allow the performance of many tasks to aid you and the rest of the cult in your objectives. Runes \
-	have many different names, and almost all of them are known as Rites. The only rune that is not a Rite is the Ritual of Dimensional Rending, which can only be performed with nine cultists and calls \
-	forth the avatar of the Geometer itself (so long as it consents). A small description of each rune can be found below.<br><br>Do note that sometimes runes can be drawn incorrectly. Runes such as these \
-	will be colorful and written in gibberish. They are malformed, and invoking them serves only to ignite the Geometer's wrath. Be cautious in your scribings.<br><br>A rune's name and effects can be \
+	text += "<center><font color='red' size=3><b><i>Archives of the Trumpeted One</i></b></font></center><br><br><br>"
+	text += "As a member of the cult, your goals are almost or entirely impossible to complete without special aid from the Trumpeted One's plane. The primary method of doing this are <b>runes</b>. These \
+	scribings, drawn in blood, are concentrated nodes of the magic within Spook-Sie's realm and will allow the performance of many tasks to aid you and the rest of the cult in your objectives. Runes \
+	have many different names, and almost all of them are known as runes. The only rune that is not a Rite is the Ritual of Dimensional Rending, which can only be performed with nine cultists and calls \
+	forth the avatar of the Trumepted One itself (so long as it consents). A small description of each rune can be found below.<br><br>Do note that sometimes runes can be drawn incorrectly. Runes such as these \
+	will be colorful and written in gibberish. They are malformed, and invoking them serves only to ignite the Trumpeted One's wrath. Be cautious in your scribings.<br><br>A rune's name and effects can be \
 	revealed by examining the rune.<br><br><br>"/*In order to write a rune, you must know the combination of words required for the rune. These words are in the tongue of the Geometer and must be written as such. \
 	A rune will always have a specific combination, and the combination for runes may be revealed by perfomring actions such as conversion or sacrifice. Once a rune has been written, any cultists can \
 	examine it to find out its \"grammar\", or the words required to scribe it. To scribe the rune, the words must be entered in lowercase and separated by exactly one space. For instance, to draw a \
@@ -147,7 +147,7 @@ It also contains rune words, which are soon to be removed.
 	text += "<font color='red'><b>Teleport Other</b></font><br>The Rite of Forced Translocation, like the Rite of Translocation, works by teleporting the person on the rune to one of the \
 	same keyword. However, this rune will only work on people other than the user, allowing the user to send any living creature somewhere else.<br><br>"
 
-	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single arcane tome to the rune's location before vanishing. \
+	text += "<font color='red'><b>Summon Tome</b></font><br>The Rite of Knowledge is a simplistic rune. When invoked, it will summon a single spooky tome to the rune's location before vanishing. \
 	<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>The Rite of Enlightment is paramount to the success of the cult. It will allow you to convert normal crew members into cultists. \
@@ -215,7 +215,7 @@ It also contains rune words, which are soon to be removed.
 	to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, the spirits will dissipate, dropping their items to the ground. You may manifest \
 	multiple spirits with one rune, but you will rapidly take damage in doing so.<br><br>"
 
-	text += "<font color='red'><b><i>Call Forth The Geometer</i></b></font><br>There is only one way to summon the avatar of Nar-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \
+	text += "<font color='red'><b><i>Call Forth The Trumpeted One</i></b></font><br>There is only one way to summon the avatar of Spook-Sie, and that is the Ritual of Dimensional Rending. This ritual, in \
 	comparison to other runes, is very large, requiring a 3x3 space of empty tiles to create. To invoke the rune, nine cultists must stand on the rune, so that all of them are within its circle. Then, \
 	simply invoke it. A brief tearing will be heard as the barrier between dimensions is torn open, and the avatar will come forth.<br><br><br>"
 
@@ -267,14 +267,14 @@ It also contains rune words, which are soon to be removed.
 	if(!rune_to_scribe)
 		return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
-						 "<span class='danger'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
+						 "<span class='danger'>You slice open your arm and begin drawing a sigil of the Trumpeted One.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(0.1, BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, 50, target = get_turf(user)))
 		return
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
-						 "<span class='danger'>You finish drawing the arcane markings of the Geometer.</span>")
+						 "<span class='danger'>You finish drawing the arcane markings of the Trumpeted One.</span>")
 	var/obj/effect/rune/R = new rune_to_scribe(get_turf(user))
 	if(chosen_keyword)
 		R.keyword = chosen_keyword

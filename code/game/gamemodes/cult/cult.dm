@@ -28,9 +28,9 @@
 	if(!message)
 		return
 	if(say)
-		user.say("O bidai nabora se[pick("'","`")]sma!")
+		user.say("LET'S GET SPOOKY")
 	else
-		user.whisper("O bidai nabora se[pick("'","`")]sma!")
+		user.whisper("LET'S GET SPOOKY")
 	sleep(10)
 	if(!user)
 		return
@@ -54,9 +54,9 @@
 	antag_flag = BE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 20
-	required_enemies = 6
-	recommended_enemies = 6
+	required_players = 1
+	required_enemies = 1
+	recommended_enemies = 1
 	enemy_minimum_age = 14
 
 
@@ -147,7 +147,7 @@
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie via the rune 'Call Forth The Geometer'. It will only work if nine acolytes stand on and around it."
+				explanation = "Summon Spook-Sie via the rune 'Call Forth The Skull'. It will only work if nine acolytes stand on and around it."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 
@@ -205,7 +205,7 @@
 		cult -= cult_mind
 		cult_mind.current.verbs -= /mob/living/proc/cult_innate_comm
 		cult_mind.current.Paralyse(5)
-		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
+		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Trumpeted One and all your memories as its servant.</span>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has renounced the cult!</span>"
@@ -261,7 +261,7 @@
 	if(!check_cult_victory())
 		feedback_set_details("round_end_result","win - cult win")
 		feedback_set("round_end_result",acolytes_survived)
-		world << "<span class='greentext'>The cult wins! It has succeeded in serving its dark master!</span>"
+		world << "<span class='greentext'>The cult wins! It has succeeded in serving its spooky master!</span>"
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the cult")
 		feedback_set("round_end_result",acolytes_survived)
@@ -294,10 +294,10 @@
 							feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 				if("eldergod")
 					if(!eldergod)
-						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
+						explanation = "Summon Spook-Sie. <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 					else
-						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
+						explanation = "Summon Spook-Sie. <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 

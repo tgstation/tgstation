@@ -12,8 +12,9 @@
 	consume_range = 6 //How many tiles out do we eat
 
 /obj/singularity/narsie/large
-	name = "Nar-Sie"
-	icon = 'icons/obj/narsie.dmi'
+	name = "Spook-Sie"
+	desc = "This is pretty fucking spoopy."
+	icon = 'icons/obj/magic_terror.dmi'
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
 	pixel_y = -256
@@ -24,8 +25,8 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	world << 'sound/effects/narsie.ogg'
+	world << "<font size='15' color='red'><b>SPOOK-SIE HAS RISEN</b></font>"
+	world << 'sound/effects/spooksie.ogg'
 
 	var/area/A = get_area(src)
 	if(A)
@@ -124,12 +125,12 @@
 
 
 /obj/singularity/narsie/proc/acquire(mob/food)
-	target << "<span class='notice'>NAR-SIE HAS LOST INTEREST IN YOU</span>"
+	target << "<span class='notice'>SPOOK-SIE HAS LOST INTEREST IN YOU</span>"
 	target = food
 	if(ishuman(target))
-		target << "<span class ='userdanger'>NAR-SIE HUNGERS FOR YOUR SOUL</span>"
+		target << "<span class ='userdanger'>SPOOK-SIE HUNGERS FOR YOUR SOUL</span>"
 	else
-		target << "<span class ='userdanger'>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
+		target << "<span class ='userdanger'>SPOOK-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</span>"
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
@@ -148,11 +149,11 @@
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
-	icon = 'icons/obj/narsie_spawn_anim.dmi'
+	/*icon = 'icons/obj/narsie_spawn_anim.dmi'
 	dir = SOUTH
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)
 	move_self = 1
-	icon = initial(icon)
+	icon = initial(icon)*/
 
