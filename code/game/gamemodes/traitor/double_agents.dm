@@ -2,7 +2,7 @@
 	name = "double agents"
 	config_tag = "double_agents"
 	restricted_jobs = list("Cyborg", "AI", "Captain", "Head of Personnel", "Chief Medical Officer", "Research Director", "Chief Engineer", "Head of Security", "MoMMI", "Mr. Meeseeks") // Human / Minor roles only.
-	required_players = 25
+	required_players = 15
 	required_enemies = 5
 	recommended_enemies = 8
 	reroll_friendly = 0
