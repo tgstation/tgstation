@@ -70,6 +70,13 @@ Actual Adjacent procs :
 
 //the actual algorithm
 /proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+
+	if(maxnodes)
+		//if start turf is farther than maxnodes from end turf, no need to do anything
+		if(call(start, dist)(end) > maxnodes)
+			return 0
+		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
+
 	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any
@@ -134,10 +141,6 @@ Actual Adjacent procs :
 		PN.source.PNode = null
 	for(var/turf/T in closed)
 		T.PNode = null
-
-	//if the path is longer than maxnodes, then don't return it
-	if(path && maxnodes && path.len > (maxnodes + 1))
-		return 0
 
 	//reverse the path to get it from start to finish
 	if(path)

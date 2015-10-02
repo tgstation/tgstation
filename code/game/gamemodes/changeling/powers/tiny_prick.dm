@@ -39,7 +39,7 @@
 	if(!isturf(user.loc))
 		return
 	if(!AStar(user.loc, target.loc, null, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = 0))
-		return //hope this ancient magic still works
+		return
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)
 		take_chemical_cost(user.mind.changeling)
