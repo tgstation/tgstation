@@ -84,6 +84,8 @@ Works together with spawning an observer, noted above.
 			var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
 			ghost.can_reenter_corpse = can_reenter_corpse
 			ghost.key = key
+			if(!can_reenter_corpse)
+				key = null
 			return ghost
 
 /*
@@ -101,6 +103,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
 		if(response != "Ghost")	return	//didn't want to ghost after-all
+		message_admins("[src] ([src.key]) has relinquished their body")
+		log_game("[src] ([src.key]) ghosted from their body")
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 	return
 
