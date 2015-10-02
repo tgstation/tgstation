@@ -5,13 +5,13 @@
 
 /obj/structure/cult/talisman
 	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie"
+	desc = "A bloodstained altar dedicated to Spook-Sie."
 	icon_state = "talismanaltar"
 
 
 /obj/structure/cult/forge
 	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
+	desc = "A forge used in crafting the unholy weapons used by the armies of Spook-Sie."
 	icon_state = "forge"
 
 /obj/structure/cult/pylon

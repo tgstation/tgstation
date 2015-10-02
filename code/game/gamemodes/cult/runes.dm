@@ -27,7 +27,7 @@ Word definitions:
 /obj/effect/rune
 	name = "rune"
 	var/cultist_name = "basic rune"
-	desc = "An odd collection of symbols drawn in what seems to be blood."
+	desc = "An odd collection of symbols drawn in what seems to be bone powder."
 	var/cultist_desc = "A basic rune with no function." //This is shown to cultists who examine the rune in order to determine its true purpose.
 	anchored = 1
 	icon = 'icons/obj/rune.dmi'
@@ -158,7 +158,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
 /obj/effect/rune/malformed/invoke(mob/living/user)
-	user << "<span class='warning'><b>You feel your life force draining. The Geometer is displeased.</b></span>"
+	user << "<span class='warning'><b>You feel your life force draining. The Trumpeted One is displeased.</b></span>"
 	user.apply_damage(30, BRUTE)
 	qdel(src)
 
@@ -267,7 +267,7 @@ var/list/teleport_other_runes = list()
 //Rite of Knowledge: Creates an arcane tome at the rune's location and destroys the rune.
 /obj/effect/rune/summon_tome
 	cultist_name = "Summon Tome"
-	cultist_desc = "Pulls an arcane tome from the archives of the Geometer."
+	cultist_desc = "Pulls an arcane tome from the archives of the Trumpted One."
 	invocation = "N'ath reth sh'yro eth d'raggathnor!"
 	icon_state = "5"
 	color = rgb(0, 0, 255)
@@ -314,15 +314,15 @@ var/list/teleport_other_runes = list()
 	ticker.mode.add_cultist(new_cultist.mind)
 	new_cultist.mind.special_role = "Cultist"
 	new_cultist << "<span class='purple'><b><i>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</i></b></span>"
-	new_cultist << "<span class='purple'><b><i>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
+	and something skeletal takes root.</i></b></span>"
+	new_cultist << "<span class='purple'><b><i>Assist your new compatriots in their spooky dealings. Your goal is theirs, and theirs is yours. You serve the Trumpeted One above all else. Bring it back.\
 	</i></b></span>"
 
 
 //Rite of Tribute: Sacrifices a crew member to Nar-Sie. Places them into a soul shard if they're in their body.
 /obj/effect/rune/sacrifice
 	cultist_name = "Sacrifice"
-	cultist_desc = "Sacrifices a crew member to the Geometer. May place them into a soul shard if their spirit remains in their body."
+	cultist_desc = "Sacrifices a crew member to the Trumpeted One. May place them into a soul shard if their spirit remains in their body."
 	icon_state = "3"
 	invocation = "Ih wah'kd in teh'tin!"
 	color = rgb(255, 255, 255)
@@ -351,7 +351,7 @@ var/list/teleport_other_runes = list()
 		rune_in_use = 0
 		return
 	if(offering.null_rod_check())
-		user << "<span class='warning'>Something is blocking the Geometer's magic!</span>"
+		user << "<span class='warning'>Something is blocking the Trumpeted One's magic!</span>"
 		log_game("Sacrifice rune failed - target has null rod")
 		fail_invoke()
 		rune_in_use = 0
@@ -380,7 +380,7 @@ var/list/teleport_other_runes = list()
 		if(istype(T, /mob/living/simple_animal/pet/dog/corgi))
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C))
-					C << "<span class='warning'>Even dark gods from another plane have standards, sicko.</span>"
+					C << "<span class='warning'>Even spoooky gods from another plane have standards, sicko.</span>"
 					if(C.reagents)
 						C.reagents.add_reagent("hell_water", 2)
 		if(T.mind)
@@ -414,8 +414,8 @@ var/list/teleport_other_runes = list()
 
 //Ritual of Dimensional Rending: Calls forth the avatar of Nar-Sie upon the station.
 /obj/effect/rune/narsie
-	cultist_name = "Call Forth The Geometer"
-	cultist_desc = "Tears apart dimensional barriers, calling forth the avatar of the Geometer."
+	cultist_name = "Call Forth The Trumpeted One"
+	cultist_desc = "Tears apart dimensional barriers, calling forth the avatar of the Trumpeted One."
 	invocation = "Tok-lyr rqa'nap g'olt-ulotf!"
 	req_cultists = 9
 	icon = 'icons/effects/96x96.dmi'
@@ -428,10 +428,10 @@ var/list/teleport_other_runes = list()
 /obj/effect/rune/narsie/invoke(mob/living/user)
 	if(used)
 		return
-	if(ticker.mode.name == "cult")
+	/*if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult_mode = ticker.mode
 		if(!("eldergod" in cult_mode.cult_objectives))
-			message_admins("[usr.real_name]([user.ckey]) tried to summon Nar-Sie when the objective was wrong")
+			message_admins("[usr.real_name]([user.ckey]) tried to summon Spook-Sie when the objective was wrong")
 			for(var/mob/living/M in orange(1,src))
 				if(iscultist(M))
 					M << "<span class='cult'><i>\"YOUR SOUL BURNS WITH YOUR ARROGANCE!!!\"</i></span>"
@@ -452,20 +452,21 @@ var/list/teleport_other_runes = list()
 		if(!cult_mode.eldergod)
 			for(var/mob/living/M in orange(1,src))
 				if(iscultist(M))
-					M << "<span class='warning'>The avatar of Nar-Sie is already on this plane!</span>"
+					M << "<span class='warning'>The avatar of Spook-Sie is already on this plane!</span>"
 				log_game("Summon Nar-Sie rune failed - already summoned")
 				return
 		//BEGIN THE SUMMONING
-		used = 1
-		world << 'sound/effects/dimensional_rend.ogg'
-		world << "<b><i>Rip... <span class='big'>Rrrip...</span> <span class='reallybig'>RRRRRRRRRR--</span></i></b>"
-		sleep(40)
-		new /obj/singularity/narsie/large(get_turf(user)) //Causes Nar-Sie to spawn even if the rune has been removed
-		cult_mode.eldergod = 0
-	else
+	*/
+	used = 1
+	world << 'sound/effects/spooky_rend.ogg'
+	world << "<b><i>doot... <span class='big'>Doot...</span> <span class='reallybig'>DOOOOOOOOO--</span></i></b>"
+	sleep(40)
+	new /obj/singularity/narsie/large(get_turf(user)) //Causes Nar-Sie to spawn even if the rune has been removed
+	//cult_mode.eldergod = 0
+	/*else
 		fail_invoke()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
-		return
+		return*/
 
 
 //Rite of Resurrection: Requires two corpses. Revives one and gibs the other.
@@ -777,14 +778,14 @@ var/list/teleport_other_runes = list()
 	var/list/cultists = list()
 	for(var/datum/mind/M in ticker.mode.cult)
 		cultists.Add(M.current)
-	var/mob/living/cultist_to_summon = input("Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+	var/mob/living/cultist_to_summon = input("Who do you wish to call to [src]?", "Followers of the Trumpeted One") as null|anything in (cultists - user)
 	if(!cultist_to_summon)
 		user << "<span class='warning'>You require a summoning target!</span>"
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
 		return
 	if(!iscultist(cultist_to_summon))
-		user << "<span class='warning'>[cultist_to_summon] is not a follower of the Geometer!</span>"
+		user << "<span class='warning'>[cultist_to_summon] is not a follower of the Trumpeted One!</span>"
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
 		return
@@ -956,7 +957,7 @@ var/list/teleport_other_runes = list()
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Manifest Spirit"
-	cultist_desc = "Manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
+	cultist_desc = "Manifests a spirit as a servant of the Trumpeted One. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	color = rgb(255, 0, 0)
@@ -985,7 +986,7 @@ var/list/teleport_other_runes = list()
 	user << "<span class='warning'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>"
 	new_human.key = ghost_to_spawn.key
 	ticker.mode.add_cultist(new_human.mind)
-	new_human << "<span class='purple'><b><i>You are a servant of the Geometer. You have been made semi-corporeal by the cult, and you are to serve them at all costs.</i></b></span>"
+	new_human << "<span class='purple'><b><i>You are a servant of the Trumpted One. You have been made semi-corporeal by the cult, and you are to serve them at all costs.</i></b></span>"
 
 	while(user in get_turf(src))
 		if(user.stat)
