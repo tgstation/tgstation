@@ -15,6 +15,7 @@
 
 /obj/machinery/driver_button/New(turf/loc, var/w_dir=null)
 	..()
+	machine_flags |= MULTITOOL_MENU
 	switch(w_dir)
 		if(NORTH)
 			pixel_y = 25
