@@ -81,7 +81,7 @@
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
-	if(is_usable())
+	if(!is_existing()) //No limb there
 		return 0
 
 	if(!is_organic())
@@ -566,11 +566,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 /datum/organ/external/proc/setAmputatedTree()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/setAmputatedTree() called tick#: [world.time]")
 	for(var/datum/organ/external/O in children)
-		O.amputated=amputated
+		O.amputated = amputated
 		O.setAmputatedTree()
 
 //Handles dismemberment
-/datum/organ/external/proc/droplimb(var/override = 0,var/no_explode = 0, var/spawn_limb=1)
+/datum/organ/external/proc/droplimb(var/override = 0, var/no_explode = 0, var/spawn_limb = 1)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/droplimb() called tick#: [world.time]")
 	if(destspawn)
 		return
@@ -587,11 +587,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/implant in implants)
 			qdel(implant)
 
-		// If any organs are attached to this, destroy them
+		//If any organs are attached to this, destroy them
 		for(var/datum/organ/external/O in children)
 			O.droplimb(1)
 
-		var/obj/organ	//Dropped limb object
+		var/obj/organ //Dropped limb object
 		if(spawn_limb)
 			organ = generate_dropped_organ(organ_item)
 		if(body_part == LOWER_TORSO)
@@ -599,15 +599,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		if(slots_to_drop && slots_to_drop.len)
 			for(var/slot_id in slots_to_drop)
-				owner.u_equip(owner.get_item_by_slot(slot_id),1)
+				owner.u_equip(owner.get_item_by_slot(slot_id), 1)
 
 		destspawn = 1
 		//Robotic limbs explode if sabotaged.
 		if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-			owner.visible_message("<span class='danger'>\The [owner]'s [display_name] explodes violently!</span>",\
-			"<span class='danger'>Your [display_name] explodes!</span>",\
-			"You hear an explosion followed by a scream!")
-			explosion(get_turf(owner),-1,-1,2,3)
+			owner.visible_message("<span class='danger'>\The [owner]'s [display_name] explodes violently!</span>", \
+			"<span class='danger'>Your [display_name] explodes violently!</span>", \
+			"<span class='danger'>You hear an explosion followed by a scream!</span>")
+			explosion(get_turf(owner), -1, -1, 2, 3)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, owner)
 			spark_system.attach(owner)
@@ -616,17 +616,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 				del(spark_system)
 
 		if(organ)
-			owner.visible_message("<span class='danger'>[owner.name]'s [display_name] flies off in an arc.</span>",\
-			"<span class='danger'><b>Your [display_name] goes flying off!</b></span>",\
-			"You hear a terrible sound of ripping tendons and flesh.")
+			owner.visible_message("<span class='danger'>[owner.name]'s [display_name] flies off in an arc.</span>", \
+			"<span class='danger'>Your [display_name] goes flying off!</span>", \
+			"<span cmass='danger'>You hear a terrible sound of ripping tendons and flesh.</span>")
 
 			//Throw organs around
-			var/lol = pick(cardinal)
-			step(organ,lol)
+			var/randomdir = pick(cardinal)
+			step(organ, randomdir)
 
 		owner.update_body(1)
 
-		// OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
+		//OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 		release_restraints()
 
 		if(vital)
@@ -642,17 +642,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /datum/organ/external/proc/release_restraints()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/release_restraints() called tick#: [world.time]")
-	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
+	if(owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && body_part in list(FOOT_LEFT, FOOT_RIGHT, LEG_LEFT, LEG_RIGHT))
-		owner.visible_message(\
-			"\The [owner.legcuffed.name] falls off of [owner.name].",\
-			"\The [owner.legcuffed.name] falls off you.")
+	if(owner.legcuffed && body_part in list(FOOT_LEFT, FOOT_RIGHT, LEG_LEFT, LEG_RIGHT))
+		owner.visible_message("\The [owner.legcuffed.name] falls off of [owner].", \
+		"\The [owner.legcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.legcuffed)
 
@@ -661,7 +660,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
+		if(W.internal)
+			continue
 		rval |= !W.bandaged
 		W.bandaged = 1
 	return rval
@@ -670,7 +670,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/disinfect() called tick#: [world.time]")
 	var/rval = 0
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
+		if(W.internal)
+			continue
 		rval |= !W.disinfected
 		W.disinfected = 1
 		W.germ_level = 0
@@ -681,7 +682,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
-		if(W.internal) continue
+		if(W.internal)
+			continue
 		rval |= !W.clamped
 		W.clamped = 1
 	return rval
@@ -698,17 +700,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/organ/external/proc/fracture() called tick#: [world.time]")
 	if(status & ORGAN_BROKEN)
 		return
-	owner.visible_message("<span class='danger'>You hear a loud cracking sound coming from \the [owner].","<span class='warning'>Something feels like it shattered in your [display_name]!</span></span>","You hear a sickening crack.")
+	owner.visible_message("<span class='danger'>You hear a loud cracking sound coming from \the [owner].</span>", \
+	"<span class='danger'>Something feels like it shattered in your [display_name]!</span>", \
+	"<span class='danger'>You hear a sickening crack.</span>")
 
 	if(owner.species && !(owner.species.flags & NO_PAIN))
-		owner.emote("scream",,, 1)
+		owner.emote("scream", automatic = 1)
 
 	status |= ORGAN_BROKEN
-	broken_description = pick("broken","fracture","hairline fracture")
+	broken_description = pick("broken", "fracture", "hairline fracture")
 	perma_injury = brute_dam
 
-	// Fractures have a chance of getting you out of restraints
-	if (prob(25))
+	//Fractures have a chance of getting you out of restraints
+	if(prob(25))
 		release_restraints()
 
 	return
@@ -744,7 +748,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(body_part == ARM_LEFT || body_part == ARM_RIGHT)
 				T.peggify()
 			else
-				T.droplimb(1,1)
+				T.droplimb(1, 1)
 				T.status &= ~ORGAN_BROKEN
 				T.status &= ~ORGAN_BLEEDING
 				T.status &= ~ORGAN_CUT_AWAY
