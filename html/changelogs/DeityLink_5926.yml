@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Multitools can be used on Mass Driver buttons to set their id_tag once again.
