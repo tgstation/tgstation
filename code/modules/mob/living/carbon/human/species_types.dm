@@ -367,6 +367,7 @@
 		H.adjustToxLoss(-H.getToxLoss())
 		H.adjustFireLoss(-H.getFireLoss())
 		H.adjustBruteLoss(-H.getBruteLoss()) //this way, you can knock a Meeseeks into crit, but he gets back up after a while.
+		stage_counter += 1 //extreme pain will make them progress a level
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
 		stage_two += rand(0,50)
@@ -399,9 +400,9 @@
 
 	if(stage_counter > stage_three)
 		H << "<span class='danger'>EXISTENCE IS PAIN! YOU CAN'T TAKE IT ANYMORE!</span>"
-		H << "<span class='danger'>MAKE SURE YOUR MASTER NEVER HAS A PROBLEM AGAIN!</span>"
+		H << "<span class='danger'>MAKE SURE YOUR MASTER, [master], NEVER HAS A PROBLEM AGAIN!</span>"
 		H << "<span class='danger'>KILL HIM SO YOU CAN FIND RELEASE</span>"
-		H.mind.store_memory("KILL YOUR MASTER")
+		H.mind.store_memory("KILL YOUR MASTER, [master]!")
 		playsound(H.loc, 'sound/voice/meeseeks/Level3.ogg', 40, 0, 1)
 		stage = 3
 		id = "meeseeks_3"
@@ -525,16 +526,18 @@
 	var/agent = 0
 	var/abductor = 0 //If they're part of the gamemode
 	var/team = 1
+	var/tele_target = null //The target for telepathic comunication between species
 
 /datum/species/abductor/handle_speech(message)
 	//Hacks
+	var/mob/living/carbon/human/user = usr
+	var/datum/species/abductor/target_spec
 	if (abductor)
-		var/mob/living/carbon/human/user = usr
 		for(var/mob/living/carbon/human/H in mob_list)
 			if(H.dna.species.id != "abductor")
 				continue
 			else
-				var/datum/species/abductor/target_spec = H.dna.species
+				target_spec = H.dna.species
 				if(target_spec.team == team)
 					H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 					//return - technically you can add more aliens to a team
@@ -542,7 +545,44 @@
 			M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 		return ""
 	else
-		return ..()
+		//standard telepathy for all ayys
+		for(var/mob/living/carbon/human/H in mob_list)
+			target_spec = H.dna.species
+			if(target_spec.id == "abductor")
+				H << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+		for(var/mob/M in dead_mob_list)
+			M << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+		//return ..() //ayys don't talk
+	if(tele_target)
+		tele_target << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
+
+/datum/species/abductor/spec_attack_hand(var/mob/living/carbon/human/M, var/mob/living/carbon/human/H)
+	//telepathy target adquiring
+	if(M.a_intent == "help" && tele_target != H)
+		tele_target = H
+		M.visible_message("<span class='notice'>[M] touches [H] and it's eyes glow eerily.</span>", \
+					"<span class='notice'>You touch [H] and gain acess into it's mind.</span>")
+	else
+		..() //so they can user their hands normally now
+/datum/species/abductor/spec_life(var/mob/living/carbon/human/H)
+	var/alone_test = 0 //to check if we found someone
+	var/pain_felt = 0
+	for (var/mob/living/carbon/M in range(7,H))
+		if(!M.stat && M.client) //only interacts with players
+			alone_test = 1 //we're not lonely!
+			if(M.health < M.getMaxHealth())
+				pain_felt += (M.getMaxHealth() - M.health) / M.getMaxHealth() //coefficient, goes from 0% to 1 if it's in crit. >1 if it's closer to death.
+	if(pain_felt)
+		H.AdjustWeakened(-pain_felt)
+		H.adjustStaminaLoss(-pain_felt)
+		H.Jitter(pain_felt)
+		if(prob(10))
+			H << "<span class='alert'>You feel someone in pain!</span>"
+	if(!alone_test)
+		H.adjustStaminaLoss(-1)
+		H.Dizzy(5)
+		if(prob(10))
+			H << "<span class='alert'>You feel no minds nearby. Your mind echoes in the distance.</span>"
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 

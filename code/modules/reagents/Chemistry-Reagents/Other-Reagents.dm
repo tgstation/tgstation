@@ -166,6 +166,11 @@
 		if(M.fire_stacks <= 0)
 			M.ExtinguishMob()
 		return
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/datum/species/S = H.dna.species
+		if(S.id == "abductor")
+			M.adjustBruteLoss(reac_volume) //abductors don't like water
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
