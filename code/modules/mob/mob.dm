@@ -691,6 +691,7 @@ var/list/slot_equipment_priority = list( \
 	..()
 
 	if(statpanel("Status"))
+		stat(null, "Map: [MAP_NAME]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		var/ETA
 		switch(SSshuttle.emergency.mode)
