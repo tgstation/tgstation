@@ -1803,5 +1803,8 @@ mob/proc/walking()
 
 	src << "<b>[pre_msg] <em>[msg]</em></b>"
 
+/mob/attack_pai(mob/user as mob)
+	ShiftClick(user)
+
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING
