@@ -579,9 +579,7 @@ var/list/impact_master = list()
 	while(loc) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( ttarget ) || loc == ttarget))
-			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
-		step_towards(src, ttarget)
+
 		var/mob/living/M = locate() in get_turf(src)
 		if(istype(M)) //If there is someting living...
 			return 1 //Return 1
@@ -589,3 +587,7 @@ var/list/impact_master = list()
 			M = locate() in get_step(src,ttarget)
 			if(istype(M))
 				return 1
+
+		if((!( ttarget ) || loc == ttarget))
+			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		step_towards(src, ttarget)
