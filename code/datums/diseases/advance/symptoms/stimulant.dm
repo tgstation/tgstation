@@ -34,7 +34,7 @@ Bonus
 					M.reagents.add_reagent("ephedrine", 7)
 				if (M.reagents.get_reagent_amount("coffee") < 20)
 					M.reagents.add_reagent("coffee", 20)
-				if (M.reagents.get_reagent_amount("Hyperzine" < 15)
+				if (M.reagents.get_reagent_amount("Hyperzine") < 15)
 					M.reagents.add_reagent("Hyperzine", 7)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
