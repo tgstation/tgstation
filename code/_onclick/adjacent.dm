@@ -96,7 +96,7 @@
 /obj/machinery/door/Adjacent(var/atom/neighbor)
 	var/list/disable_throwpass = list()
 
-	for(var/obj/machinery/door/D in loc)
+	for(var/obj/machinery/door/D in (loc.contents - src))
 		if(D.flags & ON_BORDER)
 			D.throwpass = 1
 			disable_throwpass += D

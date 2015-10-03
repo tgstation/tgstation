@@ -276,7 +276,10 @@ obj/machinery/gibber/New()
 
 	src.occupant.death(1)
 	src.occupant.ghostize()
+
 	qdel(src.occupant)
+	src.occupant = null
+
 	spawn(src.gibtime)
 		operating = 0
 		for (var/i=1 to totalslabs)
