@@ -188,7 +188,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, va
 	if (M.has_brain_worms())
 		user.show_message("<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span>")
 	else if (M.getBrainLoss() >= 100 || !M.has_brain())
-		user.show_message("<span class='warning'>Subject is brain dead.</span>")
+		user.show_message("<span class='warning'>Subject is brain-dead.</span>")
 	else if (M.getBrainLoss() >= 60)
 		user.show_message("<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>")
 	else if (M.getBrainLoss() >= 10)
