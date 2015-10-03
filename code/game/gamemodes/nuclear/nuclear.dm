@@ -264,7 +264,7 @@
 	else if (!disk_rescued &&  crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - detonation averted")
 		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
-		world << "<B>[syndicate_name()] operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
+		world << "<B>[syndicate_name()] operatives recovered the abandonned authentication disk but detonation of [station_name()] was averted.</B> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !crew_evacuated)
 		feedback_set_details("round_end_result","halfwin - interrupted")

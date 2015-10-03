@@ -455,7 +455,7 @@
 						continue //Disconnected client
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
-						continue //Dead mob, ghost abandoned
+						continue //Dead mob, ghost abandonned
 				else
 					if(D.can_reenter_corpse)
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>This shouldn't appear.</span>)\n"

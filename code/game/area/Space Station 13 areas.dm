@@ -142,7 +142,7 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "\improper Syndicate Infiltrator"
 
-/area/shuttle/abandoned
+/area/shuttle/abandonned
 	name = "\improper Abandoned Ship"
 
 /area/start

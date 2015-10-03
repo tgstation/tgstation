@@ -1,7 +1,7 @@
 //Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
 
 /obj/structure/closet/crate/secure/loot
-	name = "abandoned crate"
+	name = "abandonned crate"
 	desc = "What could be inside?"
 	icon_crate = "securecrate"
 	icon_state = "securecrate"
