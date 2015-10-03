@@ -8,7 +8,7 @@
 	borer=B
 
 /datum/research_tree/borer/get_avail_unlocks()
-	return borer_avail_unlocks
+	return borer.borer_avail_unlocks
 
 /datum/unlockable/borer
 	cost_units = "C"
@@ -211,8 +211,8 @@
 	id="taste_blood"
 	name = "Taste Blood"
 	desc = "Gain the ability to check your host's blood for chemicals."
-	cost=100
-	time=1 MINUTES
+	cost=50
+	time=5 SECONDS
 	verb_type = /obj/item/verbs/borer/attached/taste_blood
 	give_when_attached=1
 

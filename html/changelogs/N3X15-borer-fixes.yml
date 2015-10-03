@@ -1,0 +1,4 @@
+author: N3X15
+changes:
+  - bugfix: Unlockables are now part of the borer itself, rather than being a global list.
+  - tweak: "Borers: Taste Blood is now 50C and only takes 5s to unlock."

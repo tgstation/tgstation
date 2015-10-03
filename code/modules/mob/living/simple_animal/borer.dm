@@ -17,7 +17,6 @@ var/global/list/borer_detached_verbs = list(
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock - /datum/unlockable/borer/verb_unlock
-var/global/list/borer_avail_unlocks = null
 
 /mob/living/simple_animal/borer
 	name = "cortical borer"
@@ -59,6 +58,7 @@ var/global/list/borer_avail_unlocks = null
 
 	var/datum/research_tree/borer/research
 	var/list/verb_holders = list()
+	var/list/borer_avail_unlocks = list()
 
 	// Event handles
 	var/eh_emote
@@ -82,12 +82,10 @@ var/global/list/borer_avail_unlocks = null
 
 	research = new (src)
 
-	if(!borer_avail_unlocks)
-		borer_avail_unlocks = list()
-		for(var/ultype in borer_unlock_types)
-			var/datum/unlockable/borer/U = new ultype()
-			if(U.id!="")
-				borer_avail_unlocks.Add(U)
+	for(var/ultype in borer_unlock_types)
+		var/datum/unlockable/borer/U = new ultype()
+		if(U.id!="")
+			borer_avail_unlocks.Add(U)
 
 // Test variant.
 /mob/living/simple_animal/borer/test/New(var/loc)
