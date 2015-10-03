@@ -23,22 +23,23 @@
 	name = "charcoal"
 	cost = 2
 
-/datum/borer_chem/rezadone
-	name = "rezadone"
-	cost = 2
-
 /datum/borer_chem/lipozine
 	name = "Lipozine" // SIC
 
 /datum/borer_chem/anti_toxin
 	name = "anti_toxin"
 
-/datum/borer_chem/peridaxon
-	name = "peridaxon"
-	cost = 2
-
 /datum/borer_chem/leporazine
 	name = "leporazine"
+
+/datum/borer_chem/inaprovaline
+	name = "inaprovaline"
+	cost = 2
+
+/datum/borer_chem/kelotane
+	name = "kelotane"
+	cost = 2
+
 
 ////////////////////////////
 // UNLOCKABLES
@@ -46,21 +47,12 @@
 
 /datum/borer_chem/unlockable
 	unlockable=1
-
-/datum/borer_chem/unlockable/inaprovaline
-	name = "inaprovaline"
-	cost = 2
-
 /datum/borer_chem/unlockable/space_drugs
 	name = "space_drugs"
 	cost = 2
 
 /datum/borer_chem/unlockable/paracetamol
 	name = "paracetamol"
-	cost = 2
-
-/datum/borer_chem/unlockable/kelotane
-	name = "kelotane"
 	cost = 2
 
 /datum/borer_chem/unlockable/dermaline
@@ -73,4 +65,12 @@
 
 /datum/borer_chem/unlockable/dexalinp
 	name = "dexalinp"
+	cost = 2
+
+/datum/borer_chem/unlockable/peridaxon
+	name = "peridaxon"
+	cost = 2
+
+/datum/borer_chem/unlockable/rezadone
+	name = "rezadone"
 	cost = 2
