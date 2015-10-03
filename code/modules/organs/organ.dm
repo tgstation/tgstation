@@ -157,7 +157,7 @@
 	//We risk falling because stuff is broken bad
 	if(stand_broken && !paralysis && !(lying || resting) && prob(5))
 		if(species && species.flags & NO_PAIN)
-			emote("scream", automatic = 1)
+			emote("scream", , , 1)
 		emote("collapse")
 		Paralyse(10)
 
@@ -198,7 +198,7 @@
 	if(!E.is_usable())
 		hasarm_r = 0
 
-	//Can stand if have at least one full leg (with leg and foot parts present, or an entire pegleg)
+	//Can stand if we have both of our legs (with leg and foot parts present, or an entire pegleg)
 	//Has limbs to move around if at least one arm or leg is at least partially there
-	can_stand = canstand_l || canstand_r
+	can_stand = (canstand_l && canstand_r)
 	has_limbs = hasleg_l || hasleg_r || hasarm_l || hasarm_r
