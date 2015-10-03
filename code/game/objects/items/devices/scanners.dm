@@ -101,21 +101,23 @@ REAGENT SCANNER
 			user << "<span class='notice'>[src] glows [pick("red","green","blue","pink")]! You wonder what would that mean.</span>"
 	src.add_fingerprint(user)
 
-proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0)
-	//writepanic("[__FILE__].[__LINE__] \\/proc/healthanalyze() called tick#: [world.time]")
-	if (( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user << text("<span class='warning'>You try to analyze the floor's vitals!</span>")
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='warning'>[user] has analyzed the floor's vitals!</span>"), 1)
-		user.show_message(text("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy</span>"), 1)
-		user.show_message(text("<span class='notice'>\t Damage Specifics: [0]-[0]-[0]-[0]</span>"), 1)
-		user.show_message("<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span>", 1)
-		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
-		return
-	if (!usr.dexterity_check())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return
-	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
+proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, var/skip_checks=0, var/silent=0)
+	if(!skip_checks)
+		//writepanic("[__FILE__].[__LINE__] \\/proc/healthanalyze() called tick#: [world.time]")
+		if (( (M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+			user << text("<span class='warning'>You try to analyze the floor's vitals!</span>")
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("<span class='warning'>[user] has analyzed the floor's vitals!</span>"), 1)
+			user.show_message(text("<span class='notice'>Analyzing Results for The floor:\n\t Overall Status: Healthy</span>"), 1)
+			user.show_message(text("<span class='notice'>\t Damage Specifics: [0]-[0]-[0]-[0]</span>"), 1)
+			user.show_message("<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span>", 1)
+			user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
+			return
+		if (!usr.dexterity_check())
+			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+			return
+	if(!silent)
+		user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
 	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()

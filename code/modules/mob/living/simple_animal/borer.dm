@@ -58,7 +58,7 @@ var/global/list/borer_avail_unlocks = null
 	var/numChildren=0
 
 	var/datum/research_tree/borer/research
-	var/list/obj/item/verbs/borer/verb_holders
+	var/list/verb_holders = list()
 
 	// Event handles
 	var/eh_emote
@@ -799,7 +799,7 @@ mob/living/simple_animal/borer/proc/detach()
 
 	src << "<span class='info'>You listen to the song of your host's nervous system, hunting for dischordant notes...</span>"
 	spawn(5 SECONDS)
-		healthanalyze(host, src, 1) // I am not rewriting this shit with more immersive strings.  Deal with it. - N3X
+		healthanalyze(host, src, mode=1, silent=1, skip_checks=1) // I am not rewriting this shit with more immersive strings.  Deal with it. - N3X
 
 /mob/living/simple_animal/borer/proc/taste_blood()
 	set name = "Taste Blood"
