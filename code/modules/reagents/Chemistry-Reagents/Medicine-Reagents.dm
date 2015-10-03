@@ -914,16 +914,16 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
 	id = "syndicate_nanites"
-	description = "Miniature medical robots that swiftly restore bodily damage."
+	description = "Miniature medical robots that swiftly restore bodily damage. May begin to attack their host's cells in high amounts."
 	reagent_state = SOLID
 	color = "#555555"
 
 datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-2*REM)
-	M.adjustFireLoss(-2*REM)
-	M.adjustOxyLoss(-2*REM)
-	M.adjustToxLoss(-2*REM)
-	M.adjustBrainLoss(-5*REM)
-	M.adjustCloneLoss(-1*REM)
+	M.adjustBruteLoss(-5*REM) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REM)
+	M.adjustOxyLoss(-15*REM)
+	M.adjustToxLoss(-5*REM)
+	M.adjustBrainLoss(-15*REM)
+	M.adjustCloneLoss(-3*REM)
 	..()
 	return

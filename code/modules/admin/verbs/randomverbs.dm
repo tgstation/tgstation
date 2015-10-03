@@ -685,27 +685,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/reset_all_tcs()
-	set category = "Admin"
-	set name = "Reset Telecomms Scripts"
-	set desc = "Blanks all telecomms scripts from all telecomms servers"
-	if(!holder)
-		usr << "Admin only."
-		return
-
-	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
-
-	for(var/obj/machinery/telecomms/server/S in telecomms_list)
-		var/datum/TCS_Compiler/C = S.Compiler
-		S.rawcode = ""
-		C.Compile("")
-	for(var/obj/machinery/computer/telecomms/traffic/T in machines)
-		T.storedcode = ""
-	log_admin("[key_name(usr)] blanked all telecomms scripts.")
-	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
-	feedback_add_details("admin_verb","RAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/admin_change_sec_level()
 	set category = "Special Verbs"
 	set name = "Set Security Level"
