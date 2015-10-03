@@ -1,9 +1,0 @@
-author: N3X15
-changes:
-  - bugfix: Borers now use the same-ish recruiting code as Dionae.
-  - bugfix: pAI jobbans apply to borers.
-  - rscadd: Borers can now Analyze Health of their host.
-  - rscadd: Borers can spawn a single egg with Reproduce. Sprites by Deity_Link. Eggs require plasma in the air and a ghost in order to hatch.
-  - rscadd: Borers can research Taste Blood, which analyzes their host's blood chemistry.
-  - rscadd: Xenobiology on Box starts with a single borer egg.
-delete-after: yes
