@@ -618,7 +618,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(organ)
 			owner.visible_message("<span class='danger'>[owner.name]'s [display_name] flies off in an arc.</span>", \
 			"<span class='danger'>Your [display_name] goes flying off!</span>", \
-			"<span cmass='danger'>You hear a terrible sound of ripping tendons and flesh.</span>")
+			"<span class='danger'>You hear a terrible sound of ripping tendons and flesh.</span>")
 
 			//Throw organs around
 			var/randomdir = pick(cardinal)
