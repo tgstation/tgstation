@@ -401,12 +401,21 @@
 	viewers(user) << "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>"
 	return (BRUTELOSS)
 
+/obj/item/weapon/legcuffs/beartrap/update_icon()
+	icon_state = "beartrap[armed]"
+
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user as mob)
 	..()
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
-		icon_state = "beartrap[armed]"
+
+		update_icon()
+
 		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
+
+		if(armed && IED)
+			message_admins("[key_name(usr)] has armed a beartrap rigged with an IED at [formatJumpTo(get_turf(src))]!")
+			log_game("[key_name(usr)] has armed a beartrap rigged with an IED at [formatJumpTo(get_turf(src))]!")
 
 /obj/item/weapon/legcuffs/beartrap/attackby(var/obj/item/I, mob/user as mob) //Let's get explosive.
 	if(istype(I, /obj/item/weapon/grenade/iedcasing))
@@ -441,39 +450,47 @@
 	..()
 
 /obj/item/weapon/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed)
-		if(IED && isturf(src.loc))
-			IED.active = 1
-			IED.overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
-			IED.icon_state = initial(icon_state) + "_active"
-			IED.assembled = 3
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
-			var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[AM]'>?</A> has triggered an IED-rigged [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
-			message_admins(log_str)
-			log_game(log_str)
-			spawn(IED.det_time)
-				IED.prime()
-		if(ishuman(AM))
-			if(isturf(src.loc))
+	if(armed && isliving(AM) && isturf(src.loc))
+		var/mob/living/L = AM
+
+		if(L.walking()) //Flying mobs can't get caught in beartraps! Note that this also prevents lying mobs from triggering traps
+			if(IED && isturf(src.loc))
+				IED.active = 1
+				IED.overlays -= image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
+				IED.icon_state = initial(icon_state) + "_active"
+				IED.assembled = 3
+				var/turf/bombturf = get_turf(src)
+				var/area/A = get_area(bombturf)
+				var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[AM]'>?</A> has triggered an IED-rigged [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>."
+				message_admins(log_str)
+				log_game(log_str)
+				spawn(IED.det_time)
+					IED.prime()
+
+					src.desc = initial(src.desc)
+
+			if(ishuman(L))
 				var/mob/living/carbon/H = AM
 				if(H.m_intent == "run")
 					armed = 0
 					H.legcuffed = src
 					src.loc = H
 					H.update_inv_legcuffed()
-					H << "<span class='danger'>You step on \the [src]!</span>"
-					if(IED && IED.active)
-						H << "<span class='danger'>The [src]'s IED has been activated!</span>"
+
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-					for(var/mob/O in viewers(H, null))
-						if(O == H)
-							continue
-						O.show_message("<span class='danger'>[H] steps on \the [src].</span>", 1)
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
+
+					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>",\
+						"<span class='danger'>You step on \the [src]![(IED && IED.active) ? " The explosive device attached to it activates." : ""]</span>",\
+						"<span class='notice'>You hear a sudden snapping sound!",\
+						//Hallucination messages
+						"<span class='danger'>A terrifying crocodile snaps at [H]!</span>",\
+						"<span class='danger'>A [(IED && IED.active) ? "crocodile" : "horrifying fiery dragon"] attempts to bite your leg off!</span>")
+			else if(isanimal(AM))
+				armed = 0
+				var/mob/living/simple_animal/SA = AM
+				SA.health -= 20
+
+			update_icon()
 	..()
 
 /obj/item/weapon/batteringram

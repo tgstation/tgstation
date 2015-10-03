@@ -27,6 +27,7 @@
 	faction = "cult"
 	status_flags = CANPUSH
 	supernatural = 1
+	flying = 1
 
 
 /mob/living/simple_animal/shade/cultify()

@@ -83,19 +83,19 @@
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()
-	explosion(src.loc,-1,0,2)
+	explosion(get_turf(src.loc),-1,0,2)
+
 	if(istype(loc, /obj/item/weapon/legcuffs/beartrap))
 		var/obj/item/weapon/legcuffs/beartrap/boomtrap = loc
 		if(istype(boomtrap.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc.loc
-			if(H.legcuffed)
-				var/datum/organ/external/l = H.get_organ("l_leg")
-				var/datum/organ/external/r = H.get_organ("r_leg")
-				if(l && !(l.status & ORGAN_DESTROYED))
-					l.status |= ORGAN_DESTROYED
-				if(r && !(r.status & ORGAN_DESTROYED))
-					r.status |= ORGAN_DESTROYED
+			if(H.legcuffed == boomtrap)
+				var/datum/organ/external/leg = H.get_organ("[pick("l","r")]_leg") //Either left or right leg
+				if(leg && !(leg.status & ORGAN_DESTROYED))
+					leg.droplimb(1,0)
+
 				qdel(H.legcuffed)
+				H.legcuffed = null
 	del(src)
 
 /obj/item/weapon/grenade/iedcasing/examine(mob/user)
