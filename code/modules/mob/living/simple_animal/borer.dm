@@ -16,7 +16,7 @@ var/global/list/borer_detached_verbs = list(
 */
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
-var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock
+var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock - /datum/unlockable/borer/verb_unlock
 var/global/list/borer_avail_unlocks = null
 
 /mob/living/simple_animal/borer
@@ -44,6 +44,7 @@ var/global/list/borer_avail_unlocks = null
 	wander = 0
 	pass_flags = PASSTABLE
 	canEnterVentWith = "/mob/living/captive_brain=0&/obj/item/verbs/borer=0"
+	universal_understand=1
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
@@ -52,10 +53,12 @@ var/global/list/borer_avail_unlocks = null
 	var/controlling                         // Used in human death check.
 	var/list/avail_chems=list()
 	var/list/avail_abilities=list()         // Unlocked powers.
+	var/list/attached_verbs=list(/obj/item/verbs/borer/attached)
+	var/list/detached_verbs=list(/obj/item/verbs/borer/detached)
 	var/numChildren=0
 
 	var/datum/research_tree/borer/research
-	var/obj/item/verbs/borer/verb_holder
+	var/list/obj/item/verbs/borer/verb_holders
 
 	// Event handles
 	var/eh_emote
@@ -106,12 +109,17 @@ var/global/list/borer_avail_unlocks = null
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/proc/update_verbs(var/attached)
-	if(verb_holder)
-		qdel(verb_holder)
+	if(verb_holders.len>0)
+		for(var/VH in verb_holders)
+			qdel(VH)
+	verb_holders=list()
+	var/list/verbtypes = list()
 	if(attached)
-		verb_holder=new /obj/item/verbs/borer/attached(src)
+		verbtypes=attached_verbs
 	else
-		verb_holder=new /obj/item/verbs/borer/detached(src)
+		verbtypes=detached_verbs
+	for(var/verbtype in verbtypes)
+		verb_holders+=new verbtype(src)
 
 /mob/living/simple_animal/borer/player_panel_controls(var/mob/user)
 	var/html="<h2>[src] Controls</h2>"
@@ -637,6 +645,14 @@ mob/living/simple_animal/borer/proc/detach()
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Alien"
 
+	if(stat)
+		src << "You cannot ventcrawl your current state."
+		return
+
+	if(research.unlocking)
+		src << "<span class='warning'>You are busy evolving.</span>"
+		return
+
 
 	var/mob/living/simple_animal/borer/B = src
 	var/atom/pipe
@@ -673,6 +689,14 @@ mob/living/simple_animal/borer/proc/detach()
 	set name = "Reproduce"
 	set desc = "Spawn offspring in the form of an egg."
 	set category = "Alien"
+
+	if(stat)
+		src << "You cannot reproduce in your current state."
+		return
+
+	if(research.unlocking)
+		src << "<span class='warning'>You are busy evolving.</span>"
+		return
 
 	if(chemicals >= 100)
 		src << "<span class='warning'>You strain, trying to push out your young...</span>"
@@ -766,3 +790,40 @@ mob/living/simple_animal/borer/proc/detach()
 	mind.objectives += multiply_objective
 	*/
 
+
+
+/mob/living/simple_animal/borer/proc/analyze_host()
+	set name = "Analyze Health"
+	set desc = "Check the health of your host."
+	set category = "Alien"
+
+	src << "<span class='info'>You listen to the song of your host's nervous system, hunting for dischordant notes...</span>"
+	spawn(5 SECONDS)
+		healthanalyze(host, src, 1) // I am not rewriting this shit with more immersive strings.  Deal with it. - N3X
+
+/mob/living/simple_animal/borer/proc/taste_blood()
+	set name = "Taste Blood"
+	set desc = "See if there's anything within the blood of your host."
+	set category = "Alien"
+
+	if(stat)
+		src << "You cannot taste blood in your current state."
+		return
+
+	if(research.unlocking)
+		src << "<span class='warning'>You are busy evolving.</span>"
+		return
+
+	src << "<span class='info'>You taste the blood of your host, and process it for abnormalities.</span>"
+	if(!isnull(host.reagents))
+		var/dat = ""
+		if(host.reagents.reagent_list.len > 0)
+			for (var/datum/reagent/R in host.reagents.reagent_list)
+				if(R.id == "blood") continue // Like we need to know that blood contains blood.
+				dat += "\n \t <span class='notice'>[R] ([R.volume] units)</span>"
+		if(dat)
+			src << "<span class='notice'>Chemicals found: [dat]</span>"
+		else
+			src << "<span class='notice'>No active chemical agents found in [host]'s blood.</span>"
+	else
+		src << "<span class='notice'>No significant chemical agents found in [host]'s blood.</span>"

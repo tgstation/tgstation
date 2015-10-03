@@ -181,3 +181,47 @@
 	time = 2 MINUTES
 	gene_name = "XRAYBLOCK"
 	prerequisites=list("farsight")
+
+
+//////////////////////////
+// VERBS
+/datum/unlockable/borer/verb_unlock
+	var/verb_type = null // USE VERB HOLDERS OR SHIT *WILL* BREAK.
+	var/give_when_attached = 0
+	var/give_when_detached = 0
+	remove_on_detach = 0 // Borer-side, so we don't lose it.
+
+/datum/unlockable/borer/verb_unlock/unlock_action()
+	if(give_when_attached)
+		borer.attached_verbs|=verb_type
+	if(give_when_detached)
+		borer.detached_verbs|=verb_type
+	borer << "<span class='info'>You learned [name]!</span>"
+	borer.update_verbs(borer.host != null)
+
+/datum/unlockable/borer/verb_unlock/remove_action()
+	if(give_when_attached)
+		borer.attached_verbs-=verb_type
+	if(give_when_detached)
+		borer.detached_verbs-=verb_type
+	borer << "<span class='warning'>You forgot [name]!</span>"
+	//borer.update_verbs(borer.attached)
+
+/datum/unlockable/borer/verb_unlock/taste_blood
+	id="taste_blood"
+	name = "Taste Blood"
+	desc = "Gain the ability to check your host's blood for chemicals."
+	cost=100
+	time=1 MINUTES
+	verb_type = /obj/item/verbs/borer/attached/taste_blood
+	give_when_attached=1
+
+
+/obj/item/verbs/borer/attached/taste_blood/verb/taste_blood()
+	set name = "Taste Blood"
+	set desc = "See if there's anything within the blood of your host."
+	set category = "Alien"
+
+	var/mob/living/simple_animal/borer/B=loc
+	if(!istype(B)) return
+	B.taste_blood()
