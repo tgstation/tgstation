@@ -105,7 +105,6 @@
 		D.throwpass = 0
 	return
 
-/obj/machinery/door/Adjacent
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
 	This is defined as any dense ON_BORDER object, or any dense object without throwpass.
