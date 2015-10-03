@@ -332,7 +332,7 @@
 	else
 		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
 
-obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/siliconcam/targetloc)
 	var/list/nametemp = list()
 	var/find
 	if(targetloc.aipictures.len == 0)
@@ -345,7 +345,7 @@ obj/item/device/camera/siliconcam/proc/selectpicture(var/obj/item/device/camera/
 		if(q.fields["name"] == find)
 			return q
 
-obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
+/obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/siliconcam/targetloc)
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	var/datum/picture/selection = selectpicture(targetloc)
 	if(selection)
@@ -358,7 +358,7 @@ obj/item/device/camera/siliconcam/proc/viewpichelper(var/obj/item/device/camera/
 		qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 	return
 
-obj/item/device/camera/siliconcam/proc/viewpictures(user)
+/obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	if(isrobot(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
@@ -400,7 +400,7 @@ obj/item/device/camera/siliconcam/proc/viewpictures(user)
 	src.in_camera_mode = 1
 	usr << "<B>Camera Mode activated</B>"
 
-obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
+/obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
 	var/list/nametemp = list()
 	var/find
 	var/datum/picture/selection

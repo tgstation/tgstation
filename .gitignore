@@ -11,7 +11,8 @@
 *.backup
 *.db
 
-#Ignore emacs autosaves
+#Ignore text editor autosaves
 \#*\#
 *~
 .#*
+*.swp

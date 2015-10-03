@@ -121,7 +121,7 @@ Get Flat Icon DEMO by DarkCampainger
 
 This is a test for the get flat icon proc, modified approprietly for icons and their states.
 Probably not a good idea to run this unless you want to see how the proc works in detail.
-mob
+/mob
 	icon = 'old_or_unused.dmi'
 	icon_state = "green"
 
@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/effect/overlayTest
+/obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24

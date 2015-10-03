@@ -50,6 +50,8 @@
 
 	if(experiment != null)
 		var/points = experiment.points
+		var/abductions = (experiment.abductee_minds ? experiment.abductee_minds.len : 0)
+		dat += "Abductions Performed: [abductions] <br>"
 		dat += "Collected Samples : [points] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"

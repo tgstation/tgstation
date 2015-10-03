@@ -114,7 +114,7 @@ var/datum/global_hud/global_hud = new()
 	var/action_buttons_hidden = 0
 
 
-datum/hud/New(mob/owner)
+/datum/hud/New(mob/owner)
 	mymob = owner
 	instantiate()
 	..()

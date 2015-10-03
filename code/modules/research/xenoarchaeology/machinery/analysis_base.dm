@@ -134,7 +134,7 @@
 	user << browse(dat, "window=anomaly;size=450x500")
 	onclose(user, "anomaly")
 
-obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+/obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		//var/obj/item/weapon/reagent_containers/glass/G = W
 		if(held_container)
@@ -161,11 +161,11 @@ obj/machinery/anomaly/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	else
 		return ..()
 
-obj/machinery/anomaly/proc/ScanResults()
+/obj/machinery/anomaly/proc/ScanResults()
 	//instantiate in children to produce unique scan behaviour
 	return "<span class='warning'>Error initialising scanning components.</span>"
 
-obj/machinery/anomaly/proc/FinishScan()
+/obj/machinery/anomaly/proc/FinishScan()
 	scan_process = 0
 	updateDialog()
 
@@ -180,7 +180,7 @@ obj/machinery/anomaly/proc/FinishScan()
 	else
 		src.visible_message("<span class='notice'>\icon[src] makes a low buzzing noise.</span>", 2)
 
-obj/machinery/anomaly/Topic(href, href_list)
+/obj/machinery/anomaly/Topic(href, href_list)
 	if(..()) return
 	usr.set_machine(src)
 	if(href_list["close"])
@@ -204,7 +204,7 @@ obj/machinery/anomaly/Topic(href, href_list)
 
 //whether the carrier sample matches the possible finds
 //results greater than a threshold of 0.6 means a positive result
-obj/machinery/anomaly/proc/GetResultSpecifity(var/datum/geosample/scanned_sample, var/carrier_name)
+/obj/machinery/anomaly/proc/GetResultSpecifity(var/datum/geosample/scanned_sample, var/carrier_name)
 	var/specifity = 0
 	if(scanned_sample && carrier_name)
 

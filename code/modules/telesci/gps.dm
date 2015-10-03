@@ -71,8 +71,7 @@ var/list/SPS_list = list()
 /obj/item/device/gps/Topic(href, href_list)
 	..()
 	if(href_list["tag"] )
-		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = uppertext(copytext(sanitize(a), 1, 5))
+		var/a = uppertext(copytext(sanitize(input("Please enter desired tag.", name, gpstag) as text), 1, 5))
 		if(src.loc == usr)
 			gpstag = a
 			name = "global positioning system ([gpstag])"

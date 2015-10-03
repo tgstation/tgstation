@@ -72,7 +72,7 @@
 
 //############################## THE ACTUAL DECALS ###########################
 
-obj/structure/sign/flag
+/obj/structure/sign/flag
 	name = "flag"
 	desc = "A large piece of space-resistant printed cloth."
 	icon = 'icons/obj/patriotism.dmi'
@@ -81,7 +81,7 @@ obj/structure/sign/flag
 	var/ruined = 0
 	var/subtype = 0
 
-obj/structure/sign/flag/New(serial,subtype)
+/obj/structure/sign/flag/New(serial,subtype)
 	serial_number = serial
 
 	if(serial_number == loc)
@@ -152,7 +152,7 @@ obj/structure/sign/flag/New(serial,subtype)
 				desc += " This is a bug, please report the circumstances under which you encountered this flag using the Report Issue button."
 	..()
 
-obj/structure/sign/flag/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/flag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)

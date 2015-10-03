@@ -49,7 +49,9 @@
 		"Yoko")
 
 		icon_state = "daki_[body_choice]"	//Wew
-		custom_name = input("What's her name?") as text
+		custom_name = stripped_input(user, "What's her name?")
+		if(!custom_name)
+			return
 		name = custom_name + " " + name
 		desc = "A large pillow depicting [custom_name] in a compromising position. Featuring as many dimensions as you."
 	else

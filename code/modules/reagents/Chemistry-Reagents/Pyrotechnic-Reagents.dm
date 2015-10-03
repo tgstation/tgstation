@@ -164,7 +164,7 @@
 	if((method == TOUCH || method == VAPOR || method == PATCH) && isliving(M))
 		M.adjust_fire_stacks(min(reac_volume/4, 20))
 
-datum/reagent/cryostylane
+/datum/reagent/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
 	synth_cost = 3
@@ -173,13 +173,13 @@ datum/reagent/cryostylane
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 
-datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
+/datum/reagent/cryostylane/on_mob_life(var/mob/living/M as mob) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature -= 15
 	..()
 
-datum/reagent/cryostylane/on_tick()
+/datum/reagent/cryostylane/on_tick()
 	if(istype(holder.my_atom,/obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/G = holder.my_atom
 		if(G.flags & NOREACT)
@@ -190,12 +190,12 @@ datum/reagent/cryostylane/on_tick()
 		holder.handle_reactions()
 	..()
 
-datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/cryostylane/reaction_turf(var/turf/simulated/T, var/volume)
 	if(volume >= 5)
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 
-datum/reagent/pyrosium
+/datum/reagent/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
 	synth_cost = 3
@@ -203,13 +203,13 @@ datum/reagent/pyrosium
 	color = "#B20000" // rgb: 139, 166, 233
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/pyrosium/on_mob_life(var/mob/living/M as mob)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.bodytemperature += 15
 	..()
 
-datum/reagent/pyrosium/on_tick()
+/datum/reagent/pyrosium/on_tick()
 	if(istype(holder.my_atom,/obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/G = holder.my_atom
 		if(G.flags & NOREACT)

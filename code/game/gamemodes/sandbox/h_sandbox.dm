@@ -2,21 +2,21 @@
 
 var/hsboxspawn = 1
 
-mob
+/mob
 	var/datum/hSB/sandbox = null
-mob/proc/CanBuild()
+/mob/proc/CanBuild()
 	if(master_mode == "sandbox")
 		sandbox = new/datum/hSB
 		sandbox.owner = src.ckey
 		if(src.client.holder)
 			sandbox.admin = 1
 		verbs += new/mob/proc/sandbox_panel
-mob/proc/sandbox_panel()
+/mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)
 		sandbox.update()
 
-datum/hSB
+/datum/hSB
 	var/owner = null
 	var/admin = 0
 
@@ -32,7 +32,7 @@ datum/hSB
 		/obj/item/device/uplink/hidden, /obj/item/smallDelivery, /obj/item/missile,/obj/item/projectile,
 		/obj/item/borg/sight,/obj/item/borg/overdrive,/obj/item/borg/stun,/obj/item/weapon/robot_module)
 
-datum/hSB/proc/update()
+/datum/hSB/proc/update()
 	var/global/list/hrefs = list(
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
@@ -101,7 +101,7 @@ datum/hSB/proc/update()
 
 	usr << browse(hsbinfo, "window=hsbpanel")
 
-datum/hSB/Topic(href, href_list)
+/datum/hSB/Topic(href, href_list)
 	if(!usr || !src || !(src.owner == usr.ckey))
 		if(usr)
 			usr << browse(null,"window=sandbox")

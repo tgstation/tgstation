@@ -119,7 +119,7 @@
 	flag = "bomb"
 	range = 3
 
-obj/item/projectile/kinetic/New()
+/obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return

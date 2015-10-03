@@ -32,13 +32,13 @@
 	if(!R)
 		return 1
 
-atom/movable/proc/CanAtmosPass()
+/atom/movable/proc/CanAtmosPass()
 	return 1
 
-atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return (!density || !height)
 
-turf/CanPass(atom/movable/mover, turf/target, height=1.5)
+/turf/CanPass(atom/movable/mover, turf/target, height=1.5)
 	if(!target) return 0
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks

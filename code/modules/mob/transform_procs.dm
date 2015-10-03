@@ -69,6 +69,7 @@
 		O.viruses = viruses
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
+			D.holder = O
 			D.affected_mob = O
 
 	//keep damage?
@@ -198,6 +199,7 @@
 		O.viruses = viruses
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
+			D.holder = O
 			D.affected_mob = O
 		O.med_hud_set_status()
 

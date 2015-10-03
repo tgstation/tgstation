@@ -137,7 +137,7 @@
 			squeak = 0
 	return result
 
-obj/mecha/combat/honker/Topic(href, href_list)
+/obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])

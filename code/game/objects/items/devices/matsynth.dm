@@ -153,7 +153,7 @@
 
 //mommis matter synth lacks the capability to scan new materials.
 
-obj/item/device/material_synth/cyborg/afterattack(var/obj/target, mob/user)
+/obj/item/device/material_synth/cyborg/afterattack(var/obj/target, mob/user)
 	user << "<span class='notice'>Your [src.name] does not contain this functionality.</span>"
 	return 0
 

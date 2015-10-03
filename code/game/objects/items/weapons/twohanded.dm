@@ -138,7 +138,7 @@
 	wielded = 1
 
 
-obj/item/weapon/twohanded/
+/obj/item/weapon/twohanded/
 
 /*
  * Fireaxe

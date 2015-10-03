@@ -11,7 +11,7 @@
 	config_tag = "traitor"
 	antag_flag = BE_TRAITOR
 	restricted_jobs = list("Cyborg", "MoMMI", "Mr. Meeseeks")//Borgs are considered part of the AI and protected here so they don't get double chances at antag
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")//AI", Currently out of the list as malf does not work for shit
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -21,7 +21,7 @@
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
 
-datum/game_mode/traitor/announce()
+/datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
 	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
 
