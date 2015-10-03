@@ -404,6 +404,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/pillamount = 10
 	//var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
+
 	var/client/has_sprites = list()
 	var/chem_board = /obj/item/weapon/circuitboard/chemmaster3000
 
@@ -608,13 +609,20 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				count = 20	//Pevent people from creating huge stacks of pills easily. Maybe move the number to defines?
 			if(!count)
 				return
+
 			var/amount_per_pill = reagents.total_volume/count
 			if(amount_per_pill > 50)
 				amount_per_pill = 50
+			if(href_list["createempty"])
+				amount_per_pill = 0 //If "createempty" is 1, pills are empty and no reagents are used.
+
 			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)") as null|text)
 			if(!name)
 				return
 			while(count--)
+				if((amount_per_pill == 0 || reagents.total_volume == 0) && !href_list["createempty"]) //Don't create empty pills unless "createempty" is 1!
+					break
+
 				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 				if(!name)
 					name = "[reagents.get_master_reagent_name()] ([amount_per_pill] units)"
@@ -626,7 +634,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if(src.loaded_pill_bottle)
 					if(loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
 						P.loc = loaded_pill_bottle
-						src.updateUsrDialog()
+
+			src.updateUsrDialog()
 			return 1
 
 		else if (href_list["createbottle"] || href_list["createbottle_multiple"])
@@ -800,8 +809,11 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			// C:\Users\Rob\\documents\\\projects\vgstation13\code\\modules\reagents\Chemistry-Machinery.dm:539: dat += "<HR><BR><A href='?src=\ref[src];createpill=1'>Create pill (50 units max)</A><a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"
 			//dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></a><BR>"}
 			dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"}
-			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create single pill (50 units max)</A><BR><A href='?src=\ref[src];createpill_multiple=1'>Create multiple pills (50 units max each; 20 max)</A><BR>
-				<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A><BR><A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles (30 units max each; 4 max)</A><BR>"}
+			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create single pill (50 units max)</A><BR>
+					<A href='?src=\ref[src];createpill_multiple=1'>Create multiple pills (50 units max each; 20 max)</A><BR>
+					<A href='?src=\ref[src];createpill_multiple=1;createempty=1'>Create empty pills</A><BR>
+					<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A><BR>
+					<A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles (30 units max each; 4 max)</A><BR>"}
 			// END AUTOFIX
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"

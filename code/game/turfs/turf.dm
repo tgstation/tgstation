@@ -58,6 +58,10 @@
 
 	var/dynamic_lighting = 1
 
+	//For shuttles - if 1, the turf's underlay will never be changed when moved
+	//See code/datums/shuttle.dm @ 544
+	var/preserve_underlay = 0
+
 	forceinvertredraw = 1
 
 /turf/examine(mob/user)

@@ -587,7 +587,7 @@
 		if("fart")
 			if(src.op_stage.butt != 4)
 				if(world.time-lastFart >= 400)
-					for(var/mob/M in view(0))
+					for(var/mob/living/M in view(0))
 						if(M != src && M.loc == src.loc)
 							if(!miming)
 								visible_message("<span class = 'warning'><b>[src]</b> farts in <b>[M]</b>'s face!</span>")
@@ -657,7 +657,7 @@
 								reagents.add_reagent("space_drugs", rand(10,50))
 						else
 							// Was /turf/, now /mob/
-							for(var/mob/M in view(location,aoe_range))
+							for(var/mob/living/M in view(location,aoe_range))
 								if (M.internal != null && M.wear_mask && (M.wear_mask.flags & MASKINTERNALS))
 									continue
 								if(!airborne_can_reach(location,get_turf(M),aoe_range))
@@ -711,7 +711,7 @@
 							if(istype(src.head, /obj/item/clothing/head/fedora))
 								src << "<span class='notice'>You feel incredibly enlightened after farting on [B]!</span>"
 								var/obj/item/clothing/head/fedora/F = src.head
-								if(F) F.tip_fedora()
+								F.tip_fedora()
 							else
 								src << "<span class='danger'>You feel incredibly guilty for farting on [B]!</span>"
 							if(prob(80)) //20% chance to escape God's justice
