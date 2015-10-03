@@ -38,7 +38,7 @@
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
 
-/area/mine/abandoned
+/area/mine/abandonned
 	name = "Abandoned Mining Station"
 
 /area/mine/living_quarters
