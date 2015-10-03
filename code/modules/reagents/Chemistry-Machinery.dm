@@ -609,14 +609,18 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				count = 20	//Pevent people from creating huge stacks of pills easily. Maybe move the number to defines?
 			if(!count)
 				return
+
 			var/amount_per_pill = reagents.total_volume/count
 			if(amount_per_pill > 50)
 				amount_per_pill = 50
+			if(href_list["createempty"])
+				amount_per_pill = 0 //If "createempty" is 1, pills are empty and no reagents are used.
+
 			var/name = reject_bad_text(input(usr,"Name:","Name your pill!","[reagents.get_master_reagent_name()] ([amount_per_pill] units)") as null|text)
 			if(!name)
 				return
 			while(count--)
-				if((amount_per_pill == 0 || reagents.total_volume == 0) && !href_list["createempty"])
+				if((amount_per_pill == 0 || reagents.total_volume == 0) && !href_list["createempty"]) //Don't create empty pills unless "createempty" is 1!
 					break
 
 				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)

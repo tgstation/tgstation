@@ -1,0 +1,7 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - rscadd: Added a "create empty pill" button to chemmasters
+  - tweak: Chemmasters no longer create empty pills unless the "create empty pill" button is used
