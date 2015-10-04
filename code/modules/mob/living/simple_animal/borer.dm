@@ -425,7 +425,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
-	var/chemID = input("Select a chemical to secrete.", "Chemicals") in avail_chems|null
+	var/chemID = input("Select a chemical to secrete.", "Chemicals") as null|anything in avail_chems
 	if(!chemID)
 		return
 
