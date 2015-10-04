@@ -585,3 +585,27 @@ var/const/GALOSHES_DONT_HELP = 4
 			stat(null, "Health: [health]")
 
 	add_abilities_to_panel()
+
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood)
+	if(src.is_muzzled())
+		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		return 0
+	Stun(4)
+	if(nutrition < 100 && !blood)
+		visible_message("<span class='warning'>[src] dry heaves!</span>", \
+						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+	else
+		visible_message("<span class='danger'>[src] throws up!</span>", \
+						"<span class='userdanger'>You throw up!</span>")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		if(blood)
+			if(T)
+				T.add_blood_floor(src)
+			adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src)
+			nutrition -= lost_nutrition
+			adjustToxLoss(-3)
+	return 1
