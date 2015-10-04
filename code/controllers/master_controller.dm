@@ -26,6 +26,10 @@ var/global/datum/controller/game_controller/master_controller = new()
 		master_controller = src
 	calculateGCD()
 
+/datum/controller/game_controller/Destroy()
+	..()
+	return QDEL_HINT_HARDDEL_NOW
+
 
 /*
 calculate the longest number of ticks the MC can wait between each cycle without causing subsystems to not fire on schedule
