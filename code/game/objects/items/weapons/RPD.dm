@@ -103,6 +103,8 @@ var/global/list/RPD_recipes=list(
 	"Heat Exchange" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
 		//"Bent Pipe"      = new /datum/pipe_info(PIPE_HE,				5, PIPE_BENT),
+		"Manifold"       = new /datum/pipe_info(PIPE_HE_MANIFOLD, 		1, PIPE_TRINARY),
+		"4-Way Manifold" = new /datum/pipe_info(PIPE_HE_4WAYMANIFOLD,	1, PIPE_QUAD),
 		"Junction"       = new /datum/pipe_info(PIPE_JUNCTION,			1, PIPE_UNARY),
 		"Heat Exchanger" = new /datum/pipe_info(PIPE_HEAT_EXCHANGE,		1, PIPE_UNARY),
 	),
@@ -167,6 +169,12 @@ var/global/list/RPD_recipes=list(
 
 /obj/item/weapon/pipe_dispenser/attack_self(mob/user)
 	show_menu(user)
+
+/obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] points the end of the RPD down \his throat and presses a button! It looks like \he's trying to commit suicide...</span>")
+	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
+	return(BRUTELOSS)
 
 /obj/item/weapon/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
 	var/selected=" class=\"imglink\""

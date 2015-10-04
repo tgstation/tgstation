@@ -39,6 +39,16 @@
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
 
+	if((butcher_results) && (stat == DEAD))
+		var/sharpness = I.is_sharp()
+		if(sharpness)
+			user.changeNext_move(CLICK_CD_MELEE)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
+			return
+
 /mob/living/simple_animal/attacked_by(var/obj/item/I, var/mob/living/user)
 	if(!I.force)
 		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\

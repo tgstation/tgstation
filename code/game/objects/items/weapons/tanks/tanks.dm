@@ -20,6 +20,19 @@
 	var/integrity = 3
 	var/volume = 70
 
+/obj/item/weapon/tank/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+
+	user.visible_message("<span class='suicide'>[user] is putting the [src]'s valve to their lips! I don't think they're gonna stop!</span>")
+	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	sleep(3)
+	if (H && !qdeleted(H))
+		H.drop_l_hand()
+		H.drop_r_hand()
+		H.shred_clothing(1,150)
+		H.gib()
+	return
+
 /obj/item/weapon/tank/New()
 	..()
 

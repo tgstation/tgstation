@@ -40,7 +40,7 @@ other types of metals and chemistry for reagents).
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = ""					//The file path of the object that gets created
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
-	var/reagents
+	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
 
 
 //A proc to calculate the reliability of a design based on tech levels and innate modifiers.
@@ -382,6 +382,26 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
+
+/datum/design/advmop
+	name = "Advanced Mop"
+	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	id = "advmop"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	build_path = /obj/item/weapon/mop/advanced
+	category = list("Equipment")
+
+/datum/design/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trashabg with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list("materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PLASMA = 1500)
+	build_path = /obj/item/weapon/storage/bag/trash/bluespace
+	category = list("Equipment")
 
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"

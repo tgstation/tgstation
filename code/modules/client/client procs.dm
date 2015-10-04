@@ -176,12 +176,18 @@ var/next_external_rsc = 0
 		else
 			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
+	if (ckey in clientmessages)
+		for (var/message in clientmessages[ckey])
+			src << message
+		clientmessages.Remove(ckey)
+
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
 
-	//////////////
-	//DISCONNECT//
-	//////////////
+//////////////
+//DISCONNECT//
+//////////////
+
 /client/Del()
 	if(holder)
 		adminGreet(1)

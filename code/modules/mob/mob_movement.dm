@@ -5,9 +5,13 @@
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB))
 		return 1
+	if(buckled == mover)
+		return 1
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
+			return 1
+		if (mover == buckled_mob)
 			return 1
 	return (!mover.density || !density || lying)
 
@@ -200,8 +204,15 @@
 							M.animate_movement = 2
 							return
 
-		if(mob.confused && IsEven(world.time))
-			step(mob, pick(cardinal))
+		if(mob.confused)
+			if(mob.confused > 40)
+				step(mob, pick(cardinal))
+			else if(prob(mob.confused * 1.5))
+				step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
+			else if(prob(mob.confused * 3))
+				step(mob, angle2dir(dir2angle(direct) + pick(45, -45)))
+			else
+				step(mob, direct)
 		else
 			. = ..()
 
