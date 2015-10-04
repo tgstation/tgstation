@@ -84,7 +84,7 @@ Bonus
 			for(var/res in M.resistances)
 				if(res in cured_diseases)
 					M.resistances -= res
-		M << "<span class='notice'>You feel weaker.</span>"
+		M << "<span class='warning'>You feel weaker.</span>"
 
 /*
 //////////////////////////////////////
