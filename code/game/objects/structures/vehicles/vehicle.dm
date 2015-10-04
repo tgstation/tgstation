@@ -214,7 +214,7 @@
 
 	//Check to see if we slipped
 	if(prob(5))
-		src << "<span class='boldnotice'>You slipped!</span>"
+		src << "<span class='bnotice'>You slipped!</span>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0
