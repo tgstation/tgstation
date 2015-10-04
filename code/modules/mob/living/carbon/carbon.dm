@@ -594,6 +594,7 @@ var/const/GALOSHES_DONT_HELP = 4
 	if(nutrition < 100 && !blood)
 		visible_message("<span class='warning'>[src] dry heaves!</span>", \
 						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		Weaken(10)
 	else
 		visible_message("<span class='danger'>[src] throws up!</span>", \
 						"<span class='userdanger'>You throw up!</span>")
