@@ -537,7 +537,6 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/ex_act(severity)
 	if(flags & INVULNERABLE)
 		return
-
 	..()
 	switch (severity)
 		if (1.0)

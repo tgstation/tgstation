@@ -25,6 +25,11 @@
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
+obj/item/device/mmi/Destroy()
+	if(brainmob)
+		brainmob.ghostize()
+	..()
+
 	// Return true if handled
 /obj/item/device/mmi/proc/try_handling_mommi_construction(var/obj/item/O as obj, var/mob/user as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/mmi/proc/try_handling_mommi_construction() called tick#: [world.time]")

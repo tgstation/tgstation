@@ -102,6 +102,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
+	var/candrop = 1
 	var/lastpuke = 0
 	var/unacidable = 0
 
@@ -258,7 +259,7 @@
 
 	// /vg/ - Prevent mobs from being moved by a client.
 	var/deny_client_move = 0
-	var/incorporeal_move = 0
+	var/incorporeal_move = INCORPOREAL_DEACTIVATE
 
 	//Keeps track of where the mob was spawned. Mostly for teleportation purposes. and no, using initial() doesn't work.
 	var/origin_x = 0
