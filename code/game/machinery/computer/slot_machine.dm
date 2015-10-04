@@ -291,15 +291,13 @@
 		return
 	if(spinning)
 		return
-	if(!can_play())
-		return
 
 	if(href_list["reclaim"])
 		dispense_cash(stored_money, get_turf(src))
 		stored_money = 0
 
 	else if(href_list["spin"])
-		if(stored_money >= spin_cost)
+		if((stored_money >= spin_cost) && can_play())
 			spin(usr)
 
 	src.updateUsrDialog()
