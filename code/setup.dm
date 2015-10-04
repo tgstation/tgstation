@@ -1243,6 +1243,12 @@ var/proccalls = 1
 
 #define SOUND_AMBIANCE			485	//Literally arbitrary.
 
+//incorporeal_move values
+#define INCORPOREAL_DEACTIVATE	0
+#define INCORPOREAL_GHOST		1
+#define INCORPOREAL_NINJA		2
+#define INCORPOREAL_ETHEREAL	3
+
 
 //MALFUNCTION FLAGS
 #define COREFIRERESIST 1
