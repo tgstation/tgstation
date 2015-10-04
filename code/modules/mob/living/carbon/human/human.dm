@@ -110,8 +110,6 @@
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
-	if(is_in_gang(src, "Blasto")) //The Blasto gang doesn't take damage from explosions. Too much...?
-		return 0
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
@@ -178,8 +176,8 @@
 	return
 
 /mob/living/carbon/human/bullet_act()
-	if(martial_art && martial_art.name == "The Sleeping Carp") //People with the Sleeping Carp learned can deflect projecitles!
-		if(!src.lying)
+	if(martial_art && martial_art.name == "The Sleeping Carp") //People with the Sleeping Carp learned can deflect projectiles!
+		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 			return 0
 	..()
