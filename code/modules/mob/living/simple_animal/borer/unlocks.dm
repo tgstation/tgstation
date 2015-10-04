@@ -8,7 +8,7 @@
 	borer=B
 
 /datum/research_tree/borer/get_avail_unlocks()
-	return borer_avail_unlocks
+	return borer.borer_avail_unlocks
 
 /datum/unlockable/borer
 	cost_units = "C"
@@ -49,13 +49,13 @@
 	borer.avail_chems[C.name]=C
 	borer << "<span class='info'>You learned how to secrete [C.name]!</span>"
 
-/datum/unlockable/borer/chem_unlock/inaprovaline
-	id = "inaprovaline"
-	name = "Inaprovaline Secretion"
-	desc = "Learn how to synthesize inaprovaline."
-	cost = 100
-	time = 10 SECONDS
-	chem_type = /datum/borer_chem/unlockable/inaprovaline
+/datum/unlockable/borer/chem_unlock/peridaxon
+	id = "peridaxon"
+	name = "Peridaxon Secretion"
+	desc = "Learn how to synthesize peridaxon."
+	cost = 200
+	time = 2 MINUTES
+	chem_type = /datum/borer_chem/unlockable/peridaxon
 
 /datum/unlockable/borer/chem_unlock/space_drugs
 	id = "space_drugs"
@@ -65,22 +65,15 @@
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/space_drugs
 
-/datum/unlockable/borer/chem_unlock/paracetamol
-	id = "paracetamol"
-	name = "Paracetamol Secretion"
-	desc = "Learn how to synthesize painkillers."
-	cost = 100
-	time = 10 SECONDS
-	chem_type = /datum/borer_chem/unlockable/paracetamol
+/datum/unlockable/borer/chem_unlock/rezadone
+	id = "rezadone"
+	name = "Rezadone Secretion"
+	desc = "Learn how to synthesize rezadone."
+	cost = 200
+	time = 2 MINUTES
+	chem_type = /datum/borer_chem/unlockable/rezadone
 
 // Burn treatment research tree.
-/datum/unlockable/borer/chem_unlock/kelotane
-	id = "kelotane"
-	name = "Kelotane Secretion"
-	desc = "Learn how to synthesize kelotane."
-	cost = 100
-	time = 10 SECONDS
-	chem_type = /datum/borer_chem/unlockable/kelotane
 
 /datum/unlockable/borer/chem_unlock/dermaline
 	id = "dermaline"
@@ -89,7 +82,6 @@
 	cost = 150
 	time = 20 SECONDS
 	chem_type = /datum/borer_chem/unlockable/dermaline
-	prerequisites=list("kelotane")
 
 // Oxygen research tree
 /datum/unlockable/borer/chem_unlock/dexalin
@@ -211,8 +203,8 @@
 	id="taste_blood"
 	name = "Taste Blood"
 	desc = "Gain the ability to check your host's blood for chemicals."
-	cost=100
-	time=1 MINUTES
+	cost=50
+	time=5 SECONDS
 	verb_type = /obj/item/verbs/borer/attached/taste_blood
 	give_when_attached=1
 

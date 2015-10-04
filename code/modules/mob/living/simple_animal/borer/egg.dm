@@ -14,8 +14,6 @@
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/New()
-
 /obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/Grow()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow() called tick#: [world.time]")
 	grown = 1
@@ -65,6 +63,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/borer/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
+	//testing("[type]/PROCESS() - plasma: [environment.toxins]")
 	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
 		src.Hatch()
 
