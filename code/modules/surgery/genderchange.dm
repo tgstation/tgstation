@@ -78,7 +78,7 @@
 	//H.gender_ambiguous = 1
 	user.visible_message("<span class='warning'>[user] mutilates [target]'s genitals beyond recognition!</span>")
 	target.apply_damage(50, BRUTE, "groin", 1)
-	target.emote("scream", automatic = 1)
+	target.emote("scream", , , 1)
 	target.setGender(pick(MALE, FEMALE))
 	target.regenerate_icons()
 	return 1
