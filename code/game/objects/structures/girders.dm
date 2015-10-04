@@ -295,7 +295,7 @@
 					qdel(src)
 			return
 		if(3.0)
-			if((state == 0) && prob(15))
+			if((state == 0) && prob(5))
 				getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
 				qdel(src)
 			else if(prob(15))
