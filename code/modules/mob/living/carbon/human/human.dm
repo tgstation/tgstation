@@ -110,6 +110,8 @@
 
 
 /mob/living/carbon/human/ex_act(severity, ex_target)
+	if(is_in_gang(src, "Blasto")) //The Blasto gang doesn't take damage from explosions. Too much...?
+		return 0
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
@@ -174,6 +176,13 @@
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
+
+/mob/living/carbon/human/bullet_act()
+	if(martial_art && martial_art.name == "The Sleeping Carp") //People with the Sleeping Carp learned can deflect projecitles!
+		if(!src.lying)
+			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			return 0
+	..()
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
