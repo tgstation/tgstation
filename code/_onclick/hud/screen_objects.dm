@@ -79,10 +79,23 @@
 
 /obj/screen/item_action
 	var/obj/item/owner
+	var/image/overlay
+
+/obj/screen/item_action/New(var/atom/loc, var/obj/item/I)
+	..()
+	owner = I
+	name = I.action_button_name
+	overlay = image(loc = src)
+	overlay.appearance = I.appearance
+	overlay.name = I.action_button_name
+	overlay.dir = SOUTH
 
 /obj/screen/item_action/Destroy()
 	..()
 	owner = null
+	if(overlay != null)
+		overlay.loc = null
+		overlay = null
 
 /obj/screen/item_action/Click()
 	if(!usr || !owner)
