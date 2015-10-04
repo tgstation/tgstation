@@ -416,6 +416,9 @@ var/global/list/organ_damage_overlays = list(
 #ifdef PROFILE_LIFE
 	debug_life("Handle HUD", "Successfully handled hud update")
 #endif
+
+
+
 #ifdef PROFILE_LIFE
 	profile_life_start()
 #endif
@@ -426,6 +429,10 @@ var/global/list/organ_damage_overlays = list(
 #ifdef PROFILE_LIFE
 	debug_life("Handle pulse", "Successfully handled pulse")
 #endif
+
+
+
+
 #ifdef PROFILE_LIFE
 	//Grabbing
 	profile_life_start()
@@ -448,6 +455,16 @@ var/global/list/organ_damage_overlays = list(
 #endif
 #ifdef PROFILE_LIFE
 	debug_life("Handle vampire", "Successfully handled vampire")
+#endif
+#ifdef PROFILE_LIFE
+	profile_life_start()
+#endif
+	handle_alpha()
+#ifdef PROFILE_LIFE
+	profile_life_end("handle_alpha")
+#endif
+#ifdef PROFILE_LIFE
+	debug_life("Handle alpha", "Successfully handled alpha")
 #endif
 	if(update_overlays)
 		update_overlays = 0
