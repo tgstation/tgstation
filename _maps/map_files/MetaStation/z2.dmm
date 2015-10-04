@@ -610,7 +610,7 @@
 "lL" = (/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/escape)
 "lM" = (/obj/machinery/suit_storage_unit/standard_unit,/obj/machinery/status_display{pixel_y = 31},/turf/simulated/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
 "lN" = (/obj/machinery/suit_storage_unit/standard_unit,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = 27},/turf/simulated/floor/plating{icon_state = "floorgrime"},/area/shuttle/escape)
-"lO" = (/obj/structure/showcase{desc = "A strange machine supposedly from another world. The Wizard Federation has been meddling with it for years."; icon_state = "processor"; name = "byond random number generator"},/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage7"},/area/wizard_station)
+"lO" = (/obj/structure/showcase{desc = "A strange machine supposedly from another world. The Wizard Federation has been meddling with it for years."; icon = 'icons/obj/machines/telecomms.dmi'; icon_state = "processor"; name = "byond random number generator"},/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage7"},/area/wizard_station)
 "lP" = (/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage"},/area/wizard_station)
 "lQ" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "lR" = (/obj/structure/showcase{desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney."; icon = 'icons/mob/mob.dmi'; icon_state = "nim"; name = "wizard of yendor showcase"},/turf/simulated/floor/plasteel/cult{icon_state = "cultdamage4"},/area/wizard_station)
@@ -867,7 +867,7 @@
 "qI" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/wizard_station)
 "qJ" = (/turf/indestructible/riveted,/area/centcom/holding)
 "qK" = (/obj/structure/table/wood,/turf/simulated/floor/plasteel/cult,/area/wizard_station)
-"qL" = (/obj/structure/table/wood,/obj/item/weapon/gun/magic/wand{desc = "Used in emergency's to reignite magma engines. This one appears spent."; name = "wand of emergency engine ignition"},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
+"qL" = (/obj/structure/table/wood,/obj/item/weapon/gun/magic/wand{desc = "Used in emergencies to reignite magma engines."; max_charges = 0; name = "wand of emergency engine ignition"},/turf/simulated/floor/plasteel/cult,/area/wizard_station)
 "qM" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/space,/area/wizard_station)
 "qN" = (/obj/structure/table,/turf/simulated/floor/plasteel/freezer{dir = 2},/area/centcom/holding)
 "qO" = (/turf/simulated/floor/plasteel/freezer{dir = 2},/area/centcom/holding)
@@ -1225,3 +1225,4 @@ abababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 "}
+

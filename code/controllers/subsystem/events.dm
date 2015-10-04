@@ -64,6 +64,8 @@ var/datum/subsystem/events/SSevent
 	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
+		if(E.gamemode_blacklist.len && (ticker.mode.config_tag in E.gamemode_blacklist)) continue
+		if(E.gamemode_whitelist.len && !(ticker.mode.config_tag in E.gamemode_whitelist)) continue
 		if(E.holidayID)
 			if(!holidays || !holidays[E.holidayID])			continue
 		if(E.weight < 0)						//for round-start events etc.
@@ -81,6 +83,8 @@ var/datum/subsystem/events/SSevent
 	for(var/datum/round_event_control/E in control)
 		if(E.occurrences >= E.max_occurrences)	continue
 		if(E.earliest_start >= world.time)		continue
+		if(E.gamemode_blacklist.len && (ticker.mode.config_tag in E.gamemode_blacklist)) continue
+		if(E.gamemode_whitelist.len && !(ticker.mode.config_tag in E.gamemode_whitelist)) continue
 		if(E.holidayID)
 			if(!holidays || !holidays[E.holidayID])			continue
 		sum_of_weights -= E.weight
@@ -93,7 +97,6 @@ var/datum/subsystem/events/SSevent
 				message_admins("Random Event triggering: [E.name] ([E.typepath])")
 			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
-
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
 	var/list/safe_areas = list(

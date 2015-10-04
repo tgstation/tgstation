@@ -55,18 +55,20 @@
 
 /turf/simulated/New()
 	..()
-
+	levelupdate()
+	if(smooth)
+		smooth_icon(src)
+	visibilityChanged()
 	if(!blocks_air)
 		air = new
-
 		air.oxygen = oxygen
 		air.carbon_dioxide = carbon_dioxide
 		air.nitrogen = nitrogen
 		air.toxins = toxins
-
 		air.temperature = temperature
 
 /turf/simulated/Del()
+	visibilityChanged()
 	if(active_hotspot)
 		active_hotspot.Kill()
 	..()

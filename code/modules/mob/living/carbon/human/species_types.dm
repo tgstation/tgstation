@@ -38,8 +38,7 @@
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		hardset_dna(H, null, null, null, null, /datum/species/slime)
-		H.regenerate_icons()
+		H.set_species(/datum/species/slime)
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
 		return 1
@@ -123,15 +122,14 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	switch(proj_type)
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
-				H.irradiate(rand(30,80))
+				H.rad_act(rand(30,80))
 				H.Weaken(5)
 				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					randmutb(H)
-					domutcheck(H,null)
 				else
 					randmutg(H)
-					domutcheck(H,null)
+				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")

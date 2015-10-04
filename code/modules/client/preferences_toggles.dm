@@ -156,6 +156,13 @@
 			admin_sound.status ^= SOUND_PAUSED
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/stop_client_sounds()
+	set name = "Stop Sounds"
+	set category = "Preferences"
+	set desc = "Kills all currently playing sounds, use if admin taste in midis a shite"
+	src << sound(null)
+	feedback_add_details("admin_verb","SAPS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"
 	set category = "Preferences"

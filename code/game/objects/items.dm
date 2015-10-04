@@ -89,6 +89,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	)
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
+	var/heat = 0
+	var/sharpness = IS_BLUNT
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -494,3 +496,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		S.remove_from_storage(src,newLoc)
 		return 1
 	return 0
+
+/obj/item/proc/is_hot()
+	return heat
+
+/obj/item/proc/is_sharp()
+	return sharpness

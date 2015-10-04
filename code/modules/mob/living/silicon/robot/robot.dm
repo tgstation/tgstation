@@ -67,6 +67,8 @@
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
 	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
+	var/updating = 0 //portable camera camerachunk update
+
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -326,20 +328,20 @@
 					stat(null, "Time left: [max(malf.AI_win_timeleft/malf.apcs, 0)]")
 
 		if(cell)
-			stat(null, text("Charge Left: [cell.charge]/[cell.maxcharge]"))
+			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
 		else
 			stat(null, text("No Cell Inserted!"))
 
-		stat(null, "Station Time: [worldtime2text()]")
+		stat("Station Time:", worldtime2text())
 		if(module)
 			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(internal)
-				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.return_pressure())
-			for (var/datum/robot_energy_storage/st in module.storages)
-				stat("[st.name]: [st.energy]/[st.max_energy]")
+				stat("Internal Atmosphere Info:", internal.name)
+				stat("Tank Pressure:", internal.air_contents.return_pressure())
+			for(var/datum/robot_energy_storage/st in module.storages)
+				stat("[st.name]:", "[st.energy]/[st.max_energy]")
 		if(connected_ai)
-			stat(null, text("Master AI: [connected_ai.name]"))
+			stat("Master AI:", connected_ai.name)
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -416,20 +418,22 @@
 	if (istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+	if (istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
-		if (src == user)
-			user << "<span class='warning'>You lack the reach to be able to repair yourself!</span>"
-			return
-		if (src.health >= src.maxHealth)
+		if (!getBruteLoss())
 			user << "<span class='warning'>[src] is already in good condition!</span>"
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+			if(src == user)
+				user << "<span class='notice'>You start fixing youself...</span>"
+				if(!do_after(user, 50, target = src))
+					return
+
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)
-			visible_message("[user] has fixed some of the dents on [src].")
+			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
 			return
 		else
 			user << "<span class='warning'>The welder must be on for this task!</span>"
@@ -437,7 +441,11 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		var/obj/item/stack/cable_coil/coil = W
-		if (fireloss > 0)
+		if (getFireLoss() > 0)
+			if(src == user)
+				user << "<span class='notice'>You start fixing youself...</span>"
+				if(!do_after(user, 50, target = src))
+					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
 				updatehealth()
@@ -567,7 +575,7 @@
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
 
 	else
-		if(W.force && W.damtype != STAMINA) //only sparks if real damage is dealt.
+		if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
 			spark_system.start()
 		return ..()
 
@@ -751,7 +759,6 @@
 	return update_icons()
 
 /mob/living/silicon/robot/update_icons()
-
 	overlays.Cut()
 	if(stat != DEAD && !(paralysis || stunned || weakened)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
@@ -882,9 +889,18 @@
 /mob/living/silicon/robot/proc/radio_menu()
 	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
 
-
+#define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
+	var/oldLoc = src.loc
 	. = ..()
+	if(.)
+		if(src.camera)
+			if(!updating)
+				updating = 1
+				spawn(BORG_CAMERA_BUFFER)
+					if(oldLoc != src.loc)
+						cameranet.updatePortableCamera(src.camera)
+					updating = 0
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
@@ -924,6 +940,7 @@
 					loc.attackby(module_state_2,src)
 				else if(istype(module_state_3,/obj/item/weapon/storage/bag/ore))
 					loc.attackby(module_state_3,src)
+#undef BORG_CAMERA_BUFFER
 
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
@@ -1097,8 +1114,12 @@
 	scrambledcodes = 1
 	modtype = "Synd"
 	faction = list("syndicate")
-	designation = "Syndicate"
+	designation = "Syndicate Assault"
 	req_access = list(access_syndicate)
+	var/playstyle_string = "<span class='userdanger'>You are a Syndicate assault cyborg!</span><br>\
+							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
+							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
+							<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/syndicate/New(loc)
 	..()
@@ -1107,6 +1128,23 @@
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
+	spawn(5)
+		if(playstyle_string)
+			src << playstyle_string
+
+/mob/living/silicon/robot/syndicate/medical
+	icon_state = "syndi-medi"
+	designation = "Syndicate Medical"
+	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
+						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
+						Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
+						Your defibrillator paddles can revive operatives through their hardsuits, or can be used on harm intent to shock enemies! \
+						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
+						<i>Help the operatives secure the disk at all costs!</i></b>"
+
+/mob/living/silicon/robot/syndicate/medical/New(loc)
+	..()
+	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)

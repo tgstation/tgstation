@@ -162,8 +162,7 @@ MASS SPECTROMETER
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna)
-			user << "<span class='info'>Species: [H.dna.species.name]</span>"
+		user << "<span class='info'>Species: [H.dna.species.name]</span>"
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
@@ -193,7 +192,8 @@ MASS SPECTROMETER
 
 		var/implant_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
-			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+			if(CI.status == ORGAN_ROBOTIC)
+				implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
 			user.show_message("<span class='notice'>[implant_detect]</span>")

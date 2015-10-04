@@ -15,23 +15,42 @@
 /PriorityQueue/proc/IsEmpty()
 	return !L.len
 
+//return the index the element should be in the priority queue using dichotomic search
+/PriorityQueue/proc/FindElementIndex(atom/A)
+	var/i = 1
+	var/j = L.len
+	var/mid
+
+	while(i < j)
+		mid = round((i+j)/2)
+
+		if(call(cmp)(L[mid],A) < 0)
+			i = mid + 1
+		else
+			j = mid
+
+	if(i == 1 || i ==  L.len) //edge cases
+		return (call(cmp)(L[i],A) > 0) ? i : i+1
+	else
+		return i
+
+
 //add an element in the list,
-//immediatly ordering it to its position using Insertion sort
+//immediatly ordering it to its position using dichotomic search
 /PriorityQueue/proc/Enqueue(atom/A)
-	var/i
-	L.Add(A)
-	i = L.len -1
-	while(i > 0 &&  call(cmp)(L[i],A) >= 0) //place the element at it's right position using the compare proc
-		L.Swap(i,i+1) 						//last inserted element being first in case of ties (optimization)
-		i--
+	if(!L.len)
+		L.Add(A)
+		return
+
+	L.Insert(FindElementIndex(A),A)
 
 //removes and returns the first element in the queue
 /PriorityQueue/proc/Dequeue()
 	if(!L.len)
 		return 0
 	. = L[1]
+
 	Remove(.)
-	return .
 
 //removes an element
 /PriorityQueue/proc/Remove(atom/A)
@@ -39,12 +58,11 @@
 
 //returns a copy of the elements list
 /PriorityQueue/proc/List()
-	var/list/ret = L.Copy()
-	return ret
+	. = L.Copy()
 
 //return the position of an element or 0 if not found
 /PriorityQueue/proc/Seek(atom/A)
-	return L.Find(A)
+	. = L.Find(A)
 
 //return the element at the i_th position
 /PriorityQueue/proc/Get(i)
