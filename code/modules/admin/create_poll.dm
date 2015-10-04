@@ -16,7 +16,7 @@
 			polltype = "NUMVAL"
 		if("Multiple Choice")
 			polltype = "MULTICHOICE"
-			choice_amount = input("How many choices should be allowed?","Select choice amount") as num
+			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
 	var/starttime = SQLtime()
 	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
 	if(!endtime)
@@ -32,7 +32,7 @@
 		if(!endtime)
 			src << "Datetime entered is invalid."
 			return
-	var/DBQuery/query_time_later = dbcon.NewQuery("SELECT DATE('[endtime]') < NOW()")
+	var/DBQuery/query_time_later = dbcon.NewQuery("SELECT TIMESTAMP('[endtime]') < NOW()")
 	if(!query_time_later.Execute())
 		var/err = query_time_later.ErrorMsg()
 		log_game("SQL ERROR comparing endtime to NOW(). Error : \[[err]\]\n")
@@ -51,7 +51,7 @@
 		else
 			return
 	var/sql_ckey = sanitizeSQL(ckey)
-	var/question = input("Write your question","Question") as message
+	var/question = input("Write your question","Question") as message|null
 	if(!question)
 		return
 	question = sanitizeSQL(question)
@@ -72,7 +72,7 @@
 		return
 	var/add_option = 1
 	while(add_option)
-		var/option = input("Write your option","Option") as message
+		var/option = input("Write your option","Option") as message|null
 		if(!option)
 			return
 		option = sanitizeSQL(option)
@@ -90,22 +90,22 @@
 		var/descmid = ""
 		var/descmax = ""
 		if(polltype == "NUMVAL")
-			minval = input("Set minimum rating value.","Minimum rating") as num
+			minval = input("Set minimum rating value.","Minimum rating") as num|null
 			if(!minval)
 				return
-			maxval = input("Set maximum rating value.","Maximum rating") as num
+			maxval = input("Set maximum rating value.","Maximum rating") as num|null
 			if(!maxval)
 				return
 			if(minval >= maxval)
 				src << "Minimum rating value can't be more than maximum rating value"
 				return
-			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message
+			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
 			if(descmin)
 				descmin = sanitizeSQL(descmin)
-			descmid = input("Optional: Set description for median rating","Median rating description") as message
+			descmid = input("Optional: Set description for median rating","Median rating description") as message|null
 			if(descmid)
 				descmid = sanitizeSQL(descmid)
-			descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message
+			descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
 			if(descmax)
 				descmax = sanitizeSQL(descmax)
 		var/DBQuery/query_polladd_option = dbcon.NewQuery("INSERT INTO [format_table_name("poll_option")] (pollid, text, percentagecalc, minval, maxval, descmin, descmid, descmax) VALUES ('[pollid]', '[option]', '[percentagecalc]', '[minval]', '[maxval]', '[descmin]', '[descmid]', '[descmax]')")
