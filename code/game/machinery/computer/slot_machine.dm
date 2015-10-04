@@ -238,7 +238,6 @@
 				win_value = 4 * spin_cost //60$ by default
 
 		if(win_value)
-			playsound(get_turf(src), 'sound/misc/TestLoop1.ogg')
 			win_value = min(win_value, our_money_account.money)
 
 			spawn(10)
