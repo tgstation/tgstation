@@ -55,11 +55,11 @@ client/verb/JoinResponseTeam()
 		if(response_team_members.len > 5) usr << "The emergency response team is already full!"
 
 
-		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
+		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "ERT")
 			L.name = null//Reserving the place.
 			var/new_name = input(usr, "Pick a name","Name") as null|text
 			if(!new_name)//Somebody changed his mind, place is available again.
-				L.name = "Commando"
+				L.name = "ERT"
 				return
 			var/leader_selected = isemptylist(response_team_members)
 			var/mob/living/carbon/human/new_commando = create_response_team(L.loc, leader_selected, new_name)
