@@ -161,12 +161,17 @@
 	C.registered_name = H.real_name
 	C.assignment = H.job
 	C.update_label()
-	H.sec_hud_set_ID()
 
 	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
 	PDA.owner = H.real_name
 	PDA.ownjob = H.job
 	PDA.update_label()
+
+	H.unEquip(C)
+	C.loc = PDA
+	PDA.id = C
+	H.equip_to_slot_or_del(PDA, slot_wear_id)
+	H.sec_hud_set_ID()
 
 /datum/outfit/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
