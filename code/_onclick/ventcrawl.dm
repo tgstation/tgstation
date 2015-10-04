@@ -142,6 +142,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/add_ventcrawl() called tick#: [world.time]")
 	is_ventcrawling = 1
+	candrop = 0
 	var/datum/pipe_network/network = starting_machine.return_network(starting_machine)
 	if(!network)
 		return
@@ -155,6 +156,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/proc/remove_ventcrawl()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/remove_ventcrawl() called tick#: [world.time]")
 	is_ventcrawling = 0
+	candrop = 1
 	if(client)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image

@@ -141,7 +141,7 @@
 	var/obj/item/TS
 	if(isnull(module_active))
 		return
-	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag))
+	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag) && candrop)
 		TS = tool_state
 		drop_item(TS)
 	if(sight_state == module_active)
