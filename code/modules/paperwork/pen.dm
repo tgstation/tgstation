@@ -23,7 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black"
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
