@@ -34,6 +34,9 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 	size = SIZE_SMALL
 
+	min_tox = 0
+	max_tox = 0
+
 	density = 0
 	a_intent = I_HURT
 	stop_automated_movement = 1
