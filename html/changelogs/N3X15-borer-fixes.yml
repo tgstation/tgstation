@@ -1,6 +1,0 @@
-author: N3X15
-delete-after: yes
-changes:
-  - bugfix: Unlockables are now part of the borer itself, rather than being a global list.
-  - tweak: "Borers: Taste Blood is now 50C and only takes 5s to unlock."
-  - tweak: "Borers: Peridaxon and Rezadone are unlockables, whereas inaprovaline and kelotane are available by default."
