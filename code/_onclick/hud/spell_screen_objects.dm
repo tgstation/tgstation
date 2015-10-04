@@ -22,6 +22,9 @@
 	spell_objects = null
 	if(spell_holder)
 		spell_holder.spell_masters -= src
+		if(spell_holder.client && spell_holder.client.screen)
+			spell_holder.client.screen -= src
+		spell_holder = null
 
 /obj/screen/movable/spell_master/resetVariables()
 	..("spell_objects", args)
@@ -162,6 +165,8 @@
 	last_charged_icon = null
 	if(spellmaster)
 		spellmaster.spell_objects -= src
+		if(spellmaster.spell_holder && spellmaster.spell_holder.client)
+			spellmaster.spell_holder.client.screen -= src
 	if(spellmaster && !spellmaster.spell_objects.len)
 		returnToPool(spellmaster)
 	spellmaster = null
