@@ -19,7 +19,7 @@ var/global/datum/controller/game_controller/master_controller = new()
 	if(master_controller != src)
 		if(istype(master_controller))
 			Recover()
-			master_controller.Del()
+			qdel(master_controller)
 		else
 			init_subtypes(/datum/subsystem, subsystems)
 
