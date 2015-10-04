@@ -113,18 +113,18 @@ var/global/ingredientLimit = 10
 	if(isobserver(user))	user << "Your ghostly hand goes straight through."
 	else if(issilicon(user)) user << "This is old analog equipment. You can't interface with it."
 	else if(src.active)
-		if(alert(user,"Remove the [src.ingredient.name]?",,"Yes","No") == "Yes")
+		if(alert(user,"Remove \the [src.ingredient.name]?",,"Yes","No") == "Yes")
 			if(src.ingredient && (get_turf(src.ingredient)==get_turf(src)))
 				if(Adjacent(user))
 					src.active = 0
 					src.icon_state = initial(src.icon_state)
 					src.ingredient.mouse_opacity = 1
 					user.put_in_hands(src.ingredient)
-					user << "<span class='notice'>You remove the [src.ingredient.name] from the [src.name].</span>"
+					user << "<span class='notice'>You remove \the [src.ingredient.name] from \the [src.name].</span>"
 					src.ingredient = null
 				else user << "You are too far away from [src.name]."
 			else src.active = 0
-		else user << "You leave the [src.name] alone."
+		else user << "You leave \the [src.name] alone."
 	else . = ..()
 	return
 
@@ -181,9 +181,9 @@ var/global/ingredientLimit = 10
 		user.drop_item(I, src)
 		src.ingredient = I
 		spawn() src.cook(.)
-		user << "<span class='notice'>You add the [I.name] to the [src.name].</span>"
+		user << "<span class='notice'>You add \the [I.name] to \the [src.name].</span>"
 		return 1
-	else user << "<span class='warning'>You can't put that in the [src.name]. \n[.]</span>"
+	else user << "<span class='warning'>You can't put that in \the [src.name]. \n[.]</span>"
 	return 0
 
 /obj/machinery/cooking/proc/transfer_reagents_to_food(var/obj/item/I)
@@ -409,8 +409,9 @@ var/global/ingredientLimit = 10
 			if(H.stored_mob)
 				H.stored_mob.ghostize()
 				H.stored_mob.death()
+				qdel(H.stored_mob)
 
-			qdel(src.ingredient)
+		qdel(src.ingredient)
 
 	src.ingredient = null
 	empty_icon() //see if the icon needs updating from the loss of oil
