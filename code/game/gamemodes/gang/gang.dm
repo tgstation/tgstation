@@ -11,11 +11,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
 
-/proc/is_in_gang(var/mob/living/M, var/gang_type = "")
+/proc/is_in_gang(var/mob/living/M, var/gang_type)
 	if(!is_gangster(M) || !(gang_type in gang_name_pool))
 		return 0
 	var/datum/gang/G = M.mind.gang_datum
-	world << G.name
 	if(G.name == gang_type)
 		return 1
 	return 0
