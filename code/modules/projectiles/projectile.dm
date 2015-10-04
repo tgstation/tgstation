@@ -60,6 +60,10 @@
 	if(!isliving(target))
 		return 0
 	var/mob/living/L = target
+	if(is_in_gang(L, "Sleeping Carp")) //Sleeping Carp gang can block projectiles!
+		if(!L.lying) //But only if they aren't lying down
+			L.visible_message("<span class='warning'>[L] deflects [src]!</span>", "<span class='userdanger'>You deflect [src]!</span>")
+			return 1
 	if(blocked != 100) // not completely blocked
 		var/organ_hit_text = ""
 		if(L.has_limbs)

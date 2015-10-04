@@ -168,6 +168,11 @@
 			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
 				return 0
+
+	if(is_in_gang(user, "Sleeping Carp")) //great dishonor to famiry
+		user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+		return 0
+
 	return 1
 
 
