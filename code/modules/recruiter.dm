@@ -51,7 +51,7 @@
 		//O << "<span class='recruit'>Someone is harvesting [display_name]. (<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Sign up</a>)</span>"
 
 	spawn(recruitment_timeout)
-		if(!currently_querying || !currently_querying.len)
+		if(!currently_querying || currently_querying.len==0)
 			INVOKE_EVENT(recruited, list("player"=null))
 
 		var/mob/dead/observer/O
