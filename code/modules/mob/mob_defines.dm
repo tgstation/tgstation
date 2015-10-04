@@ -274,6 +274,8 @@
 	var/event/on_uattack
 	forceinvertredraw = 1
 
+	var/list/alphas = list()
+
 /mob/resetVariables()
 	..("callOnFace", "pinned", "embedded", "abilities", "grabbed_by", "requests", "mapobjs", "mutations", "spell_list", "viruses", "resistances", "radar_blips", "active_genes", "attack_log", "speak_emote", args)
 	callOnFace = list()
