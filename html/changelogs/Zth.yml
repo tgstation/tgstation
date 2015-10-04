@@ -1,0 +1,6 @@
+author: Zth
+
+delete-after: True
+
+changes: 
+  - rscadd: External airlocks now start with their timers lowered.
