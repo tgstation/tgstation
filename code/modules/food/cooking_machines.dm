@@ -331,6 +331,8 @@ var/global/ingredientLimit = 10
 			H.stored_mob.ghostize()
 			H.stored_mob.death()
 
+			qdel(H.stored_mob)
+
 	qdel(src.ingredient)
 	src.ingredient = null
 
@@ -469,6 +471,7 @@ var/global/ingredientLimit = 10
 		if(H.stored_mob)
 			H.stored_mob.ghostize()
 			H.stored_mob.death()
+			qdel(H.stored_mob)
 
 	src.ingredient = null
 	return
