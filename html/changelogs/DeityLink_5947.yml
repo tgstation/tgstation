@@ -1,8 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: you can no longer drop items while ethereal
-  - bugfix: turrets no longer track/attack you while you are ethereal
-  - bugfix: projectiles move through you while you are ethereal
-  - bugfix: added missing sounds to portable turrets
-  - bugfix: when destroyed, MMI cause the brain inside them to automatically ghost, so they don't get sent to nullspace.
