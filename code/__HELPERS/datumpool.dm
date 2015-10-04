@@ -28,7 +28,7 @@
 
 		//so the GC knows we're pooling this type.
 		if(isnull(masterdatumPool[type]))
-			masterdatumPool[type] = list(new type)
+			masterdatumPool[type] = list()
 
 		if(B && B.len)
 			return new type(arglist(B))
