@@ -143,6 +143,13 @@
 	else
 		mode() // Activate held item
 
+/mob/living/carbon/bullet_act()
+	if(is_in_gang(src, "Sleeping Carp")) //Sleeping Carp gang can block projectiles!
+		if(!src.lying) //But only if they aren't lying down
+			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			return 0
+	..()
+
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(health >= 0)
 
