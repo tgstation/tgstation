@@ -3,4 +3,3 @@ delete-after: True
 changes: 
   - rscadd: Added the lawgiver.
   - tweak: Gyrojet projectiles now explode when they bump into anything.
-  - tweak: Light explosion damage is now slightly more likely to destroy girders.
