@@ -602,6 +602,7 @@ var/list/DEFAULT_TAGGER_LOCATIONS = list(
 
 	// Set up types. BYOND is the dumb and won't let me do this in the var def.
 	types[RECYK_BIOLOGICAL] = "Biological"
+	types[RECYK_WOOD]		= "Wooden"
 	types[RECYK_ELECTRONIC] = "Electronics"
 	types[RECYK_GLASS]      = "Glasses"
 	types[RECYK_METAL]      = "Metals/Minerals"

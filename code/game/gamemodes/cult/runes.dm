@@ -743,7 +743,9 @@
 		qdel(newtalisman)
 		invocation("rune_imbue")
 	else
-		return fizzle()
+		usr.say("H'drak v[pick("'","`")]loso, mir'kanas verbot!")
+		usr.show_message("\<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
+		usr << "<span class='notice'> You remembered the words correctly, but the rune isn't working properly. Maybe you're missing something in the ritual.</span>"
 
 /////////////////////////////////////////THIRTEENTH RUNE
 

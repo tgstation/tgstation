@@ -138,6 +138,20 @@
 		icon_state = "foodbag0"
 	else icon_state = "foodbag1"
 
+/obj/item/weapon/storage/bag/food/menu1/New()
+	..()
+	new/obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)//6 nutriments
+	new/obj/item/weapon/reagent_containers/food/snacks/fries(src)//4 nutriments
+	new/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola(src)//-3 drowsy
+	update_icon()
+
+/obj/item/weapon/storage/bag/food/menu2/New()
+	..()
+	new/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger(src)//14 nutriments
+	new/obj/item/weapon/reagent_containers/food/snacks/cheesyfries(src)//6 nutriments
+	new/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind(src)//-7 drowsy, -1 sleepy
+	update_icon()
+
 // -----------------------------
 //          Borg Food bag
 // -----------------------------

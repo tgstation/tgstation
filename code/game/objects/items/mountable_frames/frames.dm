@@ -5,13 +5,14 @@
 	w_type=RECYK_METAL
 	var/sheets_refunded = 2
 	var/list/mount_reqs = list() //can contain simfloor, nospace. Used in try_build to see if conditions are needed, then met
+	var/frame_material = /obj/item/stack/sheet/metal
 
 /obj/item/mounted/frame/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/wrench) && sheets_refunded)
 		//new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-		var/obj/item/stack/sheet/metal/M = getFromPool(/obj/item/stack/sheet/metal, get_turf(src))
-		M.amount = sheets_refunded
+		var/obj/item/stack/sheet/S = getFromPool(frame_material, get_turf(src))
+		S.amount = sheets_refunded
 		qdel(src)
 
 /obj/item/mounted/frame/try_build(turf/on_wall, mob/user)

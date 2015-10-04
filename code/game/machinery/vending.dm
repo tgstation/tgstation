@@ -410,7 +410,7 @@
 					var/datum/transaction/T = new()
 					T.target_name = "[linked_account.owner_name] (via [src.name])"
 					T.purpose = "Purchase of [currently_vending.product_name]"
-					T.amount = "[transaction_amount]"
+					T.amount = "-[transaction_amount]"
 					T.source_terminal = src.name
 					T.date = current_date_string
 					T.time = worldtime2text()
