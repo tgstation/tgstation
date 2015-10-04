@@ -926,6 +926,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define RECYK_BIOLOGICAL 3
 #define RECYK_METAL      4
 #define RECYK_ELECTRONIC 5
+#define RECYK_WOOD		 6
 
 ////////////////
 // job.info_flags

@@ -188,6 +188,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0), \
 	new/datum/stack_recipe("bowl", /obj/item/trash/bowl, 1), \
 	new/datum/stack_recipe("notice board", /obj/structure/noticeboard, 2, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("blank canvas", /obj/item/mounted/frame/painting/blank, 2, time = 15), \
 	)
 
 /obj/item/stack/sheet/wood
@@ -198,6 +199,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	origin_tech = "materials=1;biotech=1"
 	autoignition_temperature=AUTOIGNITION_WOOD
 	sheettype = "wood"
+	w_type = RECYK_WOOD
 
 /obj/item/stack/sheet/wood/cultify()
 	return
