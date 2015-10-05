@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "A new wizard spell has been added: Cauterize. When used, this will instantly heal all conventional damage on the wizard. However, after a short time, the damage will slowly be applied to the wizard again, in the form of burn damage."
