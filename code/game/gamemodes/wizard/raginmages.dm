@@ -8,6 +8,9 @@
 	var/mages_made = 1
 	var/time_checked = 0
 	var/bullshit_mode = 0 // requested by hornygranny
+	var/time_check = 1500
+	var/spawn_delay_min = 500
+	var/spawn_delay_max = 700
 
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Ragin' Mages!</B>"
@@ -57,13 +60,13 @@
 	if(!time_checked) 
 		time_checked = world.time
 	if(bullshit_mode)
-		if(world.time > time_checked + 600)
+		if(world.time > time_checked + time_check)
 			max_mages = INFINITY
 			time_checked = world.time
 			make_more_mages()	
 			return ..()
 	if (wizards_alive)
-		if(world.time > time_checked + 1500 && (mages_made < max_mages))
+		if(world.time > time_checked + time_check && (mages_made < max_mages))
 			time_checked = world.time
 			make_more_mages()
 		
@@ -85,7 +88,7 @@
 	mages_made++
 	var/list/mob/dead/observer/candidates = list()
 	var/mob/dead/observer/theghost = null
-	spawn(rand(500, 700))
+	spawn(rand(spawn_delay_min, spawn_delay_max))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client && !G.client.holder && !G.client.is_afk() && G.client.prefs.be_special & BE_WIZARD)
@@ -151,3 +154,4 @@
 	required_players = 20
 	use_huds = 1
 	bullshit_mode = 1
+	time_check = 600
