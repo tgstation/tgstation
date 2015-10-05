@@ -1,8 +1,7 @@
 obj/machinery/atmospherics/trinary/filter
 	icon = 'icons/obj/atmospherics/filter.dmi'
 	icon_state = "hintact_off"
-	var/base_state = "hintact_"
-	name = "\improper Gas filter"
+	name = "Gas filter"
 	default_colour = "#b70000"
 	mirror = /obj/machinery/atmospherics/trinary/filter/mirrored
 
@@ -39,11 +38,11 @@ obj/machinery/atmospherics/trinary/filter/New()
 
 obj/machinery/atmospherics/trinary/filter/update_icon()
 	if(stat & NOPOWER)
-		icon_state = "[base_state]off"
+		icon_state = "hintact_off"
 	else if(node2 && node3 && node1)
-		icon_state = base_state + on?("on") : ("off")
+		icon_state = "hintact_[on?("on"):("off")]"
 	else
-		icon_state = "[base_state]off"
+		icon_state = "hintact_off"
 		on = 0
 	..()
 
@@ -214,5 +213,12 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 
 /obj/machinery/atmospherics/trinary/filter/mirrored
 	icon_state = "hintactm_off"
-	base_state = "hintactm_"
 	pipe_flags = IS_MIRROR
+
+/obj/machinery/atmospherics/trinary/filter/mirrored/update_icon(var/adjacent_procd)
+	..(adjacent_procd)
+	if(stat & NOPOWER)
+		icon_state = "hintactm_off"
+	else if(!(node2 && node3 && node1))
+		on = 0
+	icon_state = "hintactm_[on?("on"):("off")]"
