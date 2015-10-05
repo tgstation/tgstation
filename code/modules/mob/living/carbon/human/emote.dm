@@ -308,14 +308,14 @@
 				m_type = 2
 
 		if("wag","wags")
-			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None")))
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts)))
 				message = "<B>[src]</B> wags \his tail."
 				startTailWag()
 			else
 				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if("stopwag")
-			if(dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
+			if(dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts)))
 				message = "<B>[src]</B> stops wagging \his tail."
 				endTailWag()
 			else
@@ -361,9 +361,6 @@
 		dna.species.mutant_bodyparts -= "spines"
 		dna.species.mutant_bodyparts |= "waggingtail_lizard"
 		dna.species.mutant_bodyparts |= "waggingspines"
-	if("tail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_human"
-		dna.species.mutant_bodyparts |= "waggingtail_human"
 	update_body()
 
 
@@ -375,7 +372,4 @@
 		dna.species.mutant_bodyparts -= "waggingspines"
 		dna.species.mutant_bodyparts |= "tail_lizard"
 		dna.species.mutant_bodyparts |= "spines"
-	if("waggingtail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_human"
-		dna.species.mutant_bodyparts |= "tail_human"
 	update_body()

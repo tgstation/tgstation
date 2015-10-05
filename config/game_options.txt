@@ -250,10 +250,10 @@ DEFAULT_LAWS 1
 SILICON_MAX_LAW_AMOUNT 12
 
 ## Uncomment to give players the choice of their species before they join the game
-#JOIN_WITH_MUTANT_RACE
+JOIN_WITH_MUTANT_RACE
 
-## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
-#JOIN_WITH_MUTANT_HUMANS
+## Comment to disable player accessories such as tattoos, piercings, scars, etc.
+ALLOW_PLAYER_ACCESSORIES
 
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1

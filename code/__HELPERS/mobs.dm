@@ -37,16 +37,16 @@
 		else		return pick(socks_list)
 
 /proc/random_features()
-	if(!tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
+	if(!tattoos_chest_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tattoos/chest, tattoos_chest_list)
+	if(!tattoos_legs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tattoos/legs, tattoos_legs_list)
 	if(!tails_list_lizard.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
 	if(!snouts_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
 	if(!horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
-	if(!ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, horns_list)
 	if(!frills_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	if(!spines_list.len)
@@ -55,7 +55,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tattoo_chest" = pick(tattoos_chest_list), "snout" = pick(snouts_list), "horns" = pick(horns_list), "tattoo_legs" = pick(tattoos_legs_list), "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)

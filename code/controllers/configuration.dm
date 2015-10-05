@@ -106,7 +106,7 @@
 	var/shuttle_refuel_delay = 12000
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
-	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
+	var/mutant_humans = 0				//players can choose tattoos before joining the game
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
@@ -490,7 +490,7 @@
 					config.default_laws				= text2num(value)
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
-				if("join_with_mutant_race")
+				if("allow_player_accessories")
 					config.mutant_races				= 1
 				if("join_with_mutant_humans")
 					config.mutant_humans			= 1
