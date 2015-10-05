@@ -500,6 +500,13 @@
 				return R.sensor_mode == 2 || istype(R.module_state_1, /obj/item/borg/sight/hud/med) || istype(R.module_state_2, /obj/item/borg/sight/hud/med) || istype(R.module_state_3, /obj/item/borg/sight/hud/med)
 			else
 				return 0
+	else if(istype(M, /mob/living/silicon/pai))
+		var/mob/living/silicon/pai/P = M
+		switch(hudtype)
+			if("security")
+				return P.secHUD
+			if("medical")
+				return P.medHUD
 	else
 		return 0
 

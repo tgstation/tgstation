@@ -102,6 +102,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
+	var/candrop = 1
 	var/lastpuke = 0
 	var/unacidable = 0
 
@@ -258,7 +259,7 @@
 
 	// /vg/ - Prevent mobs from being moved by a client.
 	var/deny_client_move = 0
-	var/incorporeal_move = 0
+	var/incorporeal_move = INCORPOREAL_DEACTIVATE
 
 	//Keeps track of where the mob was spawned. Mostly for teleportation purposes. and no, using initial() doesn't work.
 	var/origin_x = 0
@@ -273,6 +274,8 @@
 	var/stat_fucked = 1
 	var/event/on_uattack
 	forceinvertredraw = 1
+
+	var/list/alphas = list()
 
 /mob/resetVariables()
 	..("callOnFace", "pinned", "embedded", "abilities", "grabbed_by", "requests", "mapobjs", "mutations", "spell_list", "viruses", "resistances", "radar_blips", "active_genes", "attack_log", "speak_emote", args)

@@ -105,14 +105,16 @@
 			return "health60"
 		if(30 to 50)
 			return "health40"
-		if(20 to 30)
+		if(18 to 30)
 			return "health25"
-		if(5 to 15)
+		if(5 to 18)
 			return "health10"
 		if(1 to 5)
 			return "health1"
-		if(-99 to 0)
+		if(-49 to 0)
 			return "health0"
+		if(-99 to -50)
+			return "health-50"
 		else
 			return "health-100"
 	return "0"

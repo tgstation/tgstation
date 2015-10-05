@@ -8,7 +8,7 @@
 	borer=B
 
 /datum/research_tree/borer/get_avail_unlocks()
-	return borer_avail_unlocks
+	return borer.borer_avail_unlocks
 
 /datum/unlockable/borer
 	cost_units = "C"
@@ -49,13 +49,13 @@
 	borer.avail_chems[C.name]=C
 	borer << "<span class='info'>You learned how to secrete [C.name]!</span>"
 
-/datum/unlockable/borer/chem_unlock/inaprovaline
-	id = "inaprovaline"
-	name = "Inaprovaline Secretion"
-	desc = "Learn how to synthesize inaprovaline."
-	cost = 100
-	time = 10 SECONDS
-	chem_type = /datum/borer_chem/unlockable/inaprovaline
+/datum/unlockable/borer/chem_unlock/peridaxon
+	id = "peridaxon"
+	name = "Peridaxon Secretion"
+	desc = "Learn how to synthesize peridaxon."
+	cost = 200
+	time = 2 MINUTES
+	chem_type = /datum/borer_chem/unlockable/peridaxon
 
 /datum/unlockable/borer/chem_unlock/space_drugs
 	id = "space_drugs"
@@ -65,22 +65,15 @@
 	time = 10 SECONDS
 	chem_type = /datum/borer_chem/unlockable/space_drugs
 
-/datum/unlockable/borer/chem_unlock/paracetamol
-	id = "paracetamol"
-	name = "Paracetamol Secretion"
-	desc = "Learn how to synthesize painkillers."
-	cost = 100
-	time = 10 SECONDS
-	chem_type = /datum/borer_chem/unlockable/paracetamol
+/datum/unlockable/borer/chem_unlock/rezadone
+	id = "rezadone"
+	name = "Rezadone Secretion"
+	desc = "Learn how to synthesize rezadone."
+	cost = 200
+	time = 2 MINUTES
+	chem_type = /datum/borer_chem/unlockable/rezadone
 
 // Burn treatment research tree.
-/datum/unlockable/borer/chem_unlock/kelotane
-	id = "kelotane"
-	name = "Kelotane Secretion"
-	desc = "Learn how to synthesize kelotane."
-	cost = 100
-	time = 10 SECONDS
-	chem_type = /datum/borer_chem/unlockable/kelotane
 
 /datum/unlockable/borer/chem_unlock/dermaline
 	id = "dermaline"
@@ -89,7 +82,6 @@
 	cost = 150
 	time = 20 SECONDS
 	chem_type = /datum/borer_chem/unlockable/dermaline
-	prerequisites=list("kelotane")
 
 // Oxygen research tree
 /datum/unlockable/borer/chem_unlock/dexalin
@@ -181,3 +173,47 @@
 	time = 2 MINUTES
 	gene_name = "XRAYBLOCK"
 	prerequisites=list("farsight")
+
+
+//////////////////////////
+// VERBS
+/datum/unlockable/borer/verb_unlock
+	var/verb_type = null // USE VERB HOLDERS OR SHIT *WILL* BREAK.
+	var/give_when_attached = 0
+	var/give_when_detached = 0
+	remove_on_detach = 0 // Borer-side, so we don't lose it.
+
+/datum/unlockable/borer/verb_unlock/unlock_action()
+	if(give_when_attached)
+		borer.attached_verbs|=verb_type
+	if(give_when_detached)
+		borer.detached_verbs|=verb_type
+	borer << "<span class='info'>You learned [name]!</span>"
+	borer.update_verbs(borer.host != null)
+
+/datum/unlockable/borer/verb_unlock/remove_action()
+	if(give_when_attached)
+		borer.attached_verbs-=verb_type
+	if(give_when_detached)
+		borer.detached_verbs-=verb_type
+	borer << "<span class='warning'>You forgot [name]!</span>"
+	//borer.update_verbs(borer.attached)
+
+/datum/unlockable/borer/verb_unlock/taste_blood
+	id="taste_blood"
+	name = "Taste Blood"
+	desc = "Gain the ability to check your host's blood for chemicals."
+	cost=50
+	time=5 SECONDS
+	verb_type = /obj/item/verbs/borer/attached/taste_blood
+	give_when_attached=1
+
+
+/obj/item/verbs/borer/attached/taste_blood/verb/taste_blood()
+	set name = "Taste Blood"
+	set desc = "See if there's anything within the blood of your host."
+	set category = "Alien"
+
+	var/mob/living/simple_animal/borer/B=loc
+	if(!istype(B)) return
+	B.taste_blood()

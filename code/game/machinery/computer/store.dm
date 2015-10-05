@@ -3,8 +3,87 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "store"
 	circuit = "/obj/item/weapon/circuitboard/merch"
+	var/datum/html_interface/interface
+	var/tmp/next_process = 0
 
 	light_color = LIGHT_COLOR_ORANGE
+
+	var/categories = list(
+		"Food" = list(
+			/datum/storeitem/menu1,
+			/datum/storeitem/menu2,
+			),
+		"Tools" = list(
+			/datum/storeitem/pen,
+			/datum/storeitem/wrapping_paper,
+			),
+		"Electronics" = list(
+			/datum/storeitem/boombox,
+			),
+		"Toys" = list(
+			/datum/storeitem/beachball,
+			/datum/storeitem/snap_pops,
+			/datum/storeitem/crayons,
+			),
+		"Clothing" = list(
+			/datum/storeitem/robotnik_labcoat,
+			/datum/storeitem/robotnik_jumpsuit,
+			),
+		"Luxury" = list(
+			/datum/storeitem/photo_album,
+			/datum/storeitem/painting,
+			),
+		)
+
+/obj/machinery/computer/merch/New()
+	..()
+
+	var/head = {"
+		<style type="text/css">
+			span.area
+			{
+				display: block;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				width: auto;
+			}
+		</style>
+	"}
+
+	src.interface = new/datum/html_interface/nanotrasen(src, src.name, 800, 700, head)
+	html_machines += src
+
+	init_ui()
+
+/obj/machinery/computer/merch/proc/init_ui()
+
+	var/dat = {"<tbody id="StoreTable">"}
+
+	for(var/category_name in categories)
+		var/list/category_items = categories[category_name]
+		dat += {"
+			<table>
+			<th><h2>[category_name]</h2></th>
+			"}
+		for(var/store_item in category_items)
+			var/datum/storeitem/SI = new store_item()
+			dat += {"
+				<tr><td><A href='?src=\ref[src];choice=buy;chosen_item=[store_item]'>[get_display_name(SI)]</A></td></tr>
+				<tr><td><i>[SI.desc]</i></td></tr>
+				"}
+
+		dat += "</table>"
+
+	dat += "</tbody>"
+
+	interface.updateLayout(dat)
+
+/obj/machinery/computer/merch/Destroy()
+	..()
+	html_machines -= src
+	qdel(interface)
+	interface = null
 
 /obj/item/weapon/circuitboard/merch
 	name = "\improper Merchandise Computer Circuitboard"
@@ -20,134 +99,39 @@
 	src.add_hiddenprint(user)
 	return attack_hand(user)
 
-/obj/machinery/computer/merch/attack_hand(mob/user as mob)
-	user.set_machine(src)
-	add_fingerprint(user)
+/obj/machinery/computer/merch/proc/get_display_name(var/datum/storeitem/storeitem)
+	return "[storeitem.name] ([!(storeitem.cost) ? "free" : "[storeitem.cost]$"])"
 
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/computer/merch/attack_hand(var/mob/user)
+	. = ..()
+	if(.)
+		interface.hide(user)
 		return
 
-	var/obj/item/weapon/card/id/card = user.get_id_card()
+	interact(user)
 
-	var/balance=0
+/obj/machinery/computer/merch/interact(mob/user)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(user.stat || user.restrained() || !allowed(user))
+		return
 
-	if(card)
-		balance = card.GetBalance()
-
-	var/dat = {"
-<html>
-	<head>
-		<title>[command_name()] Merchandise</title>
-		<style type="text/css">
-* {
-	font-family:sans-serif;
-	font-size:x-small;
-}
-html {
-	background:#333;
-	color:#999;
-}
-
-a {
-	color:#cfcfcf;
-	text-decoration:none;
-	font-weight:bold;
-}
-
-a:hover {
-	color:#ffffff;
-}
-tr {
-	background:#303030;
-	border-radius:6px;
-	margin-bottom:0.5em;
-	border-bottom:1px solid black;
-}
-tr:nth-child(even) {
-	background:#3f3f3f;
-}
-
-td.cost {
-	font-size:20pt;
-	font-weight:bold;
-}
-
-td.cost.affordable {
-	background:green;
-}
-
-td.cost.toomuch {
-	background:maroon;
-}
-
-
-		</style>
-	</head>
-	<body>
-	<p style="float:right"><a href='byond://?src=\ref[src];refresh=1'>Refresh</a> | <b>Balance:</b> $[balance]</p>
-	<h1>[command_name()] Merchandise</h1>
-	<p>
-		<b>Doing your job and not getting any recognition at work?</b>  Well, welcome to the
-		merch shop!  Here, you can buy cool things in exchange for money you earn when you've
-		completed your Job Objectives.
-	</p>
-	<p>Work hard. Get cash. Acquire bragging rights.</p>
-	<h2>In Stock:</h2>
-	<table cellspacing="0" cellpadding="0">
-		<thead>
-			<th>#</th>
-			<th>Name/Description</th>
-			<th>Price</th>
-		</thead>
-		<tbody>
-	"}
-	for(var/datum/storeitem/item in centcomm_store.items)
-		var/cost_class="affordable"
-		if(item.cost>balance)
-			cost_class="toomuch"
-		var/itemID=centcomm_store.items.Find(item)
-		dat += {"
-			<tr>
-				<th>
-					[itemID]
-				</th>
-				<td>
-					<p><b>[item.name]</b></p>
-					<p>[item.desc]</p>
-				</td>
-				<td class="cost [cost_class]">
-					<a href="byond://?src=\ref[src];buy=[itemID]">$[item.cost]</a>
-				</td>
-			</tr>
-		"}
-	dat += {"
-		</tbody>
-	</table>
-	</body>
-</html>"}
-	user << browse(dat, "window=merch")
-	onclose(user, "merch")
-	return
+	interface.show(user)
 
 /obj/machinery/computer/merch/Topic(href, href_list)
 	if(..())
 		return
 
-	//testing(href)
-
 	src.add_fingerprint(usr)
 
-	if (href_list["buy"])
-		var/itemID = text2num(href_list["buy"])
-		var/datum/storeitem/item = centcomm_store.items[itemID]
-		var/sure = alert(usr,"Are you sure you wish to purchase [item.name] for $[item.cost]?","You sure?","Yes","No") in list("Yes","No")
-		if(sure=="No")
-			updateUsrDialog()
-			return
-		if(!centcomm_store.PlaceOrder(usr,itemID))
-			usr << "<span class='warning'>Unable to charge your account.</span>"
-		else
-			usr << "<span class='notice'>You've successfully purchased the item.  It should be in your hands or on the floor.</span>"
+	switch(href_list["choice"])
+		if ("buy")
+			var/itemID = href_list["chosen_item"]
+			if(!centcomm_store.PlaceOrder(usr,itemID,src))
+				usr << "\icon[src]<span class='warning'>Unable to charge your account.</span>"
+			else
+				usr << "\icon[src]<span class='notice'>Transaction complete! Enjoy your product.</span>"
+
 	src.updateUsrDialog()
 	return
 

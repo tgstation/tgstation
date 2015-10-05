@@ -134,6 +134,8 @@ var/list/impact_master = list()
 	..("permutated")
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
+	if (!A)	//This was runtiming if by chance A was null.
+		return 0
 	if((A == firer) && !reflected)
 		loc = A.loc
 		return 0 //cannot shoot yourself, unless an ablative armor sent back the projectile
@@ -255,12 +257,13 @@ var/list/impact_master = list()
 		impact.pixel_y = PixelY
 
 		var/turf/T = src.loc
-		T.overlays += impact
+		if(T) //Trying to fix a runtime that happens when a flare hits a window, T somehow becomes null.
+			T.overlays += impact
 
-		spawn(3)
-			T.overlays -= impact
+			spawn(3)
+				T.overlays -= impact
 
-		playsound(T, impact_sound, 30, 1)
+			playsound(T, impact_sound, 30, 1)
 
 	if(istype(A,/turf))
 		for(var/obj/O in A)
@@ -579,9 +582,7 @@ var/list/impact_master = list()
 	while(loc) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( ttarget ) || loc == ttarget))
-			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
-		step_towards(src, ttarget)
+
 		var/mob/living/M = locate() in get_turf(src)
 		if(istype(M)) //If there is someting living...
 			return 1 //Return 1
@@ -589,3 +590,7 @@ var/list/impact_master = list()
 			M = locate() in get_step(src,ttarget)
 			if(istype(M))
 				return 1
+
+		if((!( ttarget ) || loc == ttarget))
+			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		step_towards(src, ttarget)

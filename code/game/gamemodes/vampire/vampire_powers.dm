@@ -348,27 +348,27 @@
 /mob/proc/handle_vampire_cloak()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/handle_vampire_cloak() called tick#: [world.time]")
 	if(!mind || !mind.vampire || !ishuman(src))
-		alpha = 255
+		alphas["vampire_cloak"] = 255
 		color = "#FFFFFF"
 		return
 
 	var/turf/T = get_turf(src)
 
 	if(!mind.vampire.iscloaking)
-		alpha = 255
+		alphas["vampire_cloak"] = 255
 		color = "#FFFFFF"
 		return 0
 
 	if((T.get_lumcount() * 10) <= 2)
-		alpha = round((255 * 0.15))
+		alphas["vampire_cloak"] = round((255 * 0.15))
 		if(VAMP_SHADOW in mind.vampire.powers)
 			color = "#000000"
 		return 1
 	else
 		if(VAMP_SHADOW in mind.vampire.powers)
-			alpha = round((255 * 0.15))
+			alphas["vampire_cloak"] = round((255 * 0.15))
 		else
-			alpha = round((255 * 0.80))
+			alphas["vampire_cloak"] = round((255 * 0.80))
 
 /mob/proc/can_enthrall(mob/living/carbon/C)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/can_enthrall() called tick#: [world.time]")

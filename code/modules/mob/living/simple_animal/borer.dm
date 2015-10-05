@@ -1,23 +1,6 @@
-/*
-var/global/list/borer_attached_verbs = list(
-	///client/proc/borer_bond_brain,
-	/client/proc/borer_borer_speak,
-	// /client/proc/borer_kill_host,
-	// /client/proc/borer_damage_brain,
-	/client/proc/borer_secrete_chemicals,
-	/client/proc/borer_abandon_host,
-	/client/proc/borer_evolve
-)
-var/global/list/borer_detached_verbs = list(
-	/client/proc/borer_infest,
-	/client/proc/borer_ventcrawl,
-	/client/proc/borer_hide,
-)
-*/
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
-var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock
-var/global/list/borer_avail_unlocks = null
+var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock - /datum/unlockable/borer/verb_unlock
 
 /mob/living/simple_animal/borer
 	name = "cortical borer"
@@ -35,6 +18,9 @@ var/global/list/borer_avail_unlocks = null
 
 	size = SIZE_SMALL
 
+	min_tox = 0
+	max_tox = 0
+
 	density = 0
 	a_intent = I_HURT
 	stop_automated_movement = 1
@@ -44,6 +30,7 @@ var/global/list/borer_avail_unlocks = null
 	wander = 0
 	pass_flags = PASSTABLE
 	canEnterVentWith = "/mob/living/captive_brain=0&/obj/item/verbs/borer=0"
+	universal_understand=1
 
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
@@ -52,15 +39,18 @@ var/global/list/borer_avail_unlocks = null
 	var/controlling                         // Used in human death check.
 	var/list/avail_chems=list()
 	var/list/avail_abilities=list()         // Unlocked powers.
+	var/list/attached_verbs=list(/obj/item/verbs/borer/attached)
+	var/list/detached_verbs=list(/obj/item/verbs/borer/detached)
 	var/numChildren=0
 
 	var/datum/research_tree/borer/research
-	var/obj/item/verbs/borer/verb_holder
+	var/list/verb_holders = list()
+	var/list/borer_avail_unlocks = list()
 
 	// Event handles
 	var/eh_emote
 
-/mob/living/simple_animal/borer/New(var/loc,var/by_gamemode=0)
+/mob/living/simple_animal/borer/New(var/loc)
 	..(loc)
 	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
 	host_brain = new/mob/living/captive_brain(src)
@@ -68,14 +58,6 @@ var/global/list/borer_avail_unlocks = null
 	if(name == initial(name)) // Easier reporting of griff.
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-
-	// Admin spawn.  Request a player.
-	if(!by_gamemode)
-		var/mob/dead/observer/O = request_player()
-		if(!O)
-			message_admins("[src.name] self-deleting due to lack of appropriate ghosts.")
-			del(src)
-		transfer_personality(O.client)
 
 	update_verbs(0)
 
@@ -87,16 +69,10 @@ var/global/list/borer_avail_unlocks = null
 
 	research = new (src)
 
-	if(!borer_avail_unlocks)
-		borer_avail_unlocks = list()
-		for(var/ultype in borer_unlock_types)
-			var/datum/unlockable/borer/U = new ultype()
-			if(U.id!="")
-				borer_avail_unlocks.Add(U)
-
-// Test variant.
-/mob/living/simple_animal/borer/test/New(var/loc)
-	..(loc,1)
+	for(var/ultype in borer_unlock_types)
+		var/datum/unlockable/borer/U = new ultype()
+		if(U.id!="")
+			borer_avail_unlocks.Add(U)
 
 /mob/living/simple_animal/borer/Life()
 	if(timestopped) return 0 //under effects of time magick
@@ -114,17 +90,17 @@ var/global/list/borer_avail_unlocks = null
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/proc/update_verbs(var/attached)
-	if(verb_holder)
-		qdel(verb_holder)
+	if(verb_holders.len>0)
+		for(var/VH in verb_holders)
+			qdel(VH)
+	verb_holders=list()
+	var/list/verbtypes = list()
 	if(attached)
-		verb_holder=new /obj/item/verbs/borer/attached(src)
-		//verbs += borer_attached_verbs
-		//verbs -= borer_detached_verbs
+		verbtypes=attached_verbs
 	else
-		verb_holder=new /obj/item/verbs/borer/detached(src)
-		//verbs -= borer_attached_verbs
-		//verbs += borer_detached_verbs
-	//src << "<span class='warning'>At the moment, BYOND has a bug where you won't get sent the proper verbs.  If you find your verbs are broken/backwards, right-click on the titlebar and select Client > Reconnect.</span>"
+		verbtypes=detached_verbs
+	for(var/verbtype in verbtypes)
+		verb_holders+=new verbtype(src)
 
 /mob/living/simple_animal/borer/player_panel_controls(var/mob/user)
 	var/html="<h2>[src] Controls</h2>"
@@ -432,7 +408,7 @@ var/global/list/borer_avail_unlocks = null
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
-	var/chemID = input("Select a chemical to secrete.", "Chemicals") in avail_chems|null
+	var/chemID = input("Select a chemical to secrete.", "Chemicals") as null|anything in avail_chems
 	if(!chemID)
 		return
 
@@ -522,7 +498,6 @@ mob/living/simple_animal/borer/proc/detach()
 
 		host.verbs -= /mob/living/carbon/proc/release_control
 		host.verbs -= /mob/living/carbon/proc/punish_host
-		host.verbs -= /mob/living/carbon/proc/spawn_larvae
 
 		// Remove any unlocks that affect the host.
 		for(var/uid in research.unlocked.Copy())
@@ -651,6 +626,14 @@ mob/living/simple_animal/borer/proc/detach()
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Alien"
 
+	if(stat)
+		src << "You cannot ventcrawl your current state."
+		return
+
+	if(research.unlocking)
+		src << "<span class='warning'>You are busy evolving.</span>"
+		return
+
 
 	var/mob/living/simple_animal/borer/B = src
 	var/atom/pipe
@@ -680,6 +663,41 @@ mob/living/simple_animal/borer/proc/detach()
 	else
 		layer = MOB_LAYER
 		src << text("<span class='notice'>You have stopped hiding.</span>")
+
+
+
+/mob/living/simple_animal/borer/proc/reproduce()
+	set name = "Reproduce"
+	set desc = "Spawn offspring in the form of an egg."
+	set category = "Alien"
+
+	if(stat)
+		src << "You cannot reproduce in your current state."
+		return
+
+	if(research.unlocking)
+		src << "<span class='warning'>You are busy evolving.</span>"
+		return
+
+	if(chemicals >= 100)
+		src << "<span class='warning'>You strain, trying to push out your young...</span>"
+		var/turf/T = get_turf(src)
+		if(do_after(src, T, 5 SECONDS))
+			src << "<span class='danger'>You twitch and quiver as you rapidly excrete an egg from your sluglike body.</span>"
+			visible_message("<span class='danger'>\The [src] heaves violently, expelling a small, gelatinous egg!</span>", \
+				drugged_message = "<span class='notice'>\The [src] starts farting a rainbow! Suddenly, a pot of gold appears.</span>")
+			chemicals -= 100
+
+			numChildren++
+
+			playsound(T, 'sound/effects/splat.ogg', 50, 1)
+			if(istype(T, /turf/simulated))
+				T.add_vomit_floor(null, 1)
+			new /obj/item/weapon/reagent_containers/food/snacks/egg/borer(T)
+
+	else
+		src << "You do not have enough chemicals stored to reproduce."
+		return()
 
 //Procs for grabbing players.
 /mob/living/simple_animal/borer/proc/request_player()
@@ -726,7 +744,7 @@ mob/living/simple_animal/borer/proc/detach()
 		src.mind.assigned_role = "Cortical Borer"
 
 		// Assign objectives
-		forge_objectives()
+		//forge_objectives()
 
 		// tl;dr
 		src << "<span class='danger'>You are a Cortical Borer!</span>"
@@ -736,10 +754,10 @@ mob/living/simple_animal/borer/proc/detach()
 		if(config.borer_takeover_immediately)
 			src << "<span class='info'><b>Important:</b> While you receive full control at the start, <em>it is asked that you release control at some point so your host has a chance to play.</em>  If they misbehave, you are permitted to kill them.</span>"
 
-		var/obj_count = 1
-		for(var/datum/objective/objective in mind.objectives)
-			src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		//var/obj_count = 1
+		//for(var/datum/objective/objective in mind.objectives)
+		//	src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		//	obj_count++
 
 /mob/living/simple_animal/borer/proc/forge_objectives()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/forge_objectives() called tick#: [world.time]")
@@ -753,3 +771,40 @@ mob/living/simple_animal/borer/proc/detach()
 	mind.objectives += multiply_objective
 	*/
 
+
+
+/mob/living/simple_animal/borer/proc/analyze_host()
+	set name = "Analyze Health"
+	set desc = "Check the health of your host."
+	set category = "Alien"
+
+	src << "<span class='info'>You listen to the song of your host's nervous system, hunting for dischordant notes...</span>"
+	spawn(5 SECONDS)
+		healthanalyze(host, src, mode=1, silent=1, skip_checks=1) // I am not rewriting this shit with more immersive strings.  Deal with it. - N3X
+
+/mob/living/simple_animal/borer/proc/taste_blood()
+	set name = "Taste Blood"
+	set desc = "See if there's anything within the blood of your host."
+	set category = "Alien"
+
+	if(stat)
+		src << "You cannot taste blood in your current state."
+		return
+
+	if(research.unlocking)
+		src << "<span class='warning'>You are busy evolving.</span>"
+		return
+
+	src << "<span class='info'>You taste the blood of your host, and process it for abnormalities.</span>"
+	if(!isnull(host.reagents))
+		var/dat = ""
+		if(host.reagents.reagent_list.len > 0)
+			for (var/datum/reagent/R in host.reagents.reagent_list)
+				if(R.id == "blood") continue // Like we need to know that blood contains blood.
+				dat += "\n \t <span class='notice'>[R] ([R.volume] units)</span>"
+		if(dat)
+			src << "<span class='notice'>Chemicals found: [dat]</span>"
+		else
+			src << "<span class='notice'>No active chemical agents found in [host]'s blood.</span>"
+	else
+		src << "<span class='notice'>No significant chemical agents found in [host]'s blood.</span>"

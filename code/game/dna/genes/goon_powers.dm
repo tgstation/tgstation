@@ -37,7 +37,8 @@
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		if(..(M,connected,flags))
-			M.alpha=255
+			M.alphas -= "chameleon_stealth"
+			M.handle_alpha()
 
 // WAS: /datum/bioEffect/darkcloak
 /*/datum/dna/gene/basic/stealth/darkcloak
@@ -70,9 +71,9 @@
 
 	OnMobLife(var/mob/M)
 		if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
-			M.alpha -= 25
+			M.alphas["chameleon_stealth"] = max(M.alphas["chameleon_stealth"] - 25, 0)
 		else
-			M.alpha = round(255 * 0.80)
+			M.alphas["chameleon_stealth"] = round(255 * 0.80)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

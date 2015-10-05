@@ -100,7 +100,8 @@
 
 /obj/item/ammo_storage/examine(mob/user) //never change descriptions, always use examine
 	..()
-	user << "<span class='info'>There are [stored_ammo.len] shell\s left!</span>"
+	if(max_ammo > 0)
+		user << "<span class='info'>There are [stored_ammo.len] shell\s left!</span>"
 
 /obj/item/ammo_storage/attack_self(mob/user) //allows you to remove individual bullets
 	if(stored_ammo.len)

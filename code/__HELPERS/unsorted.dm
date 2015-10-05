@@ -1179,7 +1179,7 @@ var/list/WALLITEMS = list(
 	"/obj/machinery/newscaster", "/obj/machinery/firealarm", "/obj/structure/noticeboard", "/obj/machinery/door_control",
 	"/obj/machinery/computer/security/telescreen", "/obj/machinery/embedded_controller/radio/simple_vent_controller",
 	"/obj/item/weapon/storage/secure/safe", "/obj/machinery/door_timer", "/obj/machinery/flasher", "/obj/machinery/keycard_auth",
-	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "obj/structure/sign"
+	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "obj/structure/sign", "obj/structure/painting"
 	)
 /proc/gotwallitem(loc, dir)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/gotwallitem() called tick#: [world.time]")
@@ -1299,6 +1299,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	density = 0
 	see_in_dark = 1e6
 	anchored = 1
+	flags = INVULNERABLE
 
 //Gets the Z level datum for this atom's Z level
 /proc/get_z_level(var/atom/A)
@@ -1365,6 +1366,13 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 /proc/print_runtime(exception/e)
 	world.log << "[time_stamp()] Runtime detected\n[e] at [e.file]:[e.line]\n [e.desc]"
+
+/proc/transfer_fingerprints(atom/A,atom/B)//synchronizes the fingerprints between two atoms. Useful when you have two different atoms actually being different states of a same object.
+	if(!A || !B)
+		return
+	B.fingerprints = A.fingerprints
+	B.fingerprintshidden = A.fingerprintshidden
+	B.fingerprintslast = A.fingerprintslast
 
 /world/Error(exception/e)
 	print_runtime(e)

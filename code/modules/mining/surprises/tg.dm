@@ -49,6 +49,7 @@
 	)
 	fluffitems = list(
 		/obj/effect/gateway=1,
+		/obj/item/mounted/frame/painting/narsie=1,
 		/obj/effect/gibspawner=1,
 		/obj/structure/cult/talisman=1,
 		/obj/item/toy/crayon/red=2,

@@ -448,11 +448,11 @@
 	if(gravitystate)
 		for(var/mob/living/carbon/human/H in A)
 			if(istype(get_turf(H), /turf/space)) //You can't fall on space
-				return
+				continue
 			if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP))
-				return
+				continue
 			if(H.locked_to) //Locked to something, anything
-				return
+				continue
 
 			H.AdjustStunned(5)
 			H << "<span class='warning'>Gravity!</span>"

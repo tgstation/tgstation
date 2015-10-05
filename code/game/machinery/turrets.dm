@@ -134,6 +134,10 @@
 		if( !area_T || (area_T.type != protected_area.type) )
 			protected_area.Exited(T)
 			return 0 //If the guy is somehow not in the turret's area (teleportation), get them out the damn list. --NEO
+		if( ismob(T) )
+			var/mob/M = T
+			if(M.flags & INVULNERABLE)
+				return 0
 		if( iscarbon(T) )
 			var/mob/living/carbon/MC = T
 			if( !MC.stat )
@@ -160,7 +164,7 @@
 	var/list/new_targets = new
 	var/new_target
 	for(var/mob/living/carbon/M in protected_area.turretTargets)
-		if(!M.stat)
+		if(!M.stat && !(M.flags & INVULNERABLE))
 			if(!M.lying || lasers)
 				new_targets += M
 	for(var/obj/mecha/M in protected_area.turretTargets)
@@ -173,7 +177,7 @@
 			new_targets += V
 
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
-		if(!M.stat)
+		if(!M.stat && !(M.flags & INVULNERABLE))
 			new_targets += M
 	if(new_targets.len)
 		new_target = pick(new_targets)

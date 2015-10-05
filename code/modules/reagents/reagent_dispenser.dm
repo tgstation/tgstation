@@ -28,6 +28,10 @@
 	else
 		user << "<span class='info'>Nothing.</span>"
 
+/obj/structure/reagent_dispensers/cultify()
+	new /obj/structure/reagent_dispensers/bloodkeg(get_turf(src))
+	..()
+
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"
@@ -256,6 +260,20 @@
 /obj/structure/reagent_dispensers/beerkeg/New()
 	. = ..()
 	reagents.add_reagent("beer", 1000)
+
+/obj/structure/reagent_dispensers/bloodkeg
+	name = "old keg"
+	desc = "A very old-looking keg. Some red liquid periodically drips from it."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bloodkeg"
+	amount_per_transfer_from_this = 10
+
+/obj/structure/reagent_dispensers/bloodkeg/New()
+	. = ..()
+	reagents.add_reagent("blood", 1000)
+
+/obj/structure/reagent_dispensers/bloodkeg/cultify()
+	return
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
 	explosion(src.loc,0,3,5,7,10)
