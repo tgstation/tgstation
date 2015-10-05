@@ -5,6 +5,7 @@
 	var/current_target = null
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
+	var/deflection_chance = 0 //Chance to deflect projectiles
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -263,6 +264,7 @@
 #define ELBOW_DROP_COMBO "HDHDH"
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
+	deflection_chance = 100
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
