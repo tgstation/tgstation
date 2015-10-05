@@ -60,7 +60,6 @@ var/global/list/GlobalPool = list()
 
 	var/datum/pooled = pop(GlobalPool[get_type])
 	if(pooled)
-		pooled.ResetVars()
 		var/atom/movable/AM
 		if(istype(pooled, /atom/movable))
 			AM = pooled
