@@ -9,6 +9,8 @@
 	layer = 6
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 
+	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
+
 /mob/living/carbon/alien/humanoid/royal/queen
 	name = "alien queen"
 	caste = "q"
