@@ -1299,6 +1299,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 	density = 0
 	see_in_dark = 1e6
 	anchored = 1
+	flags = INVULNERABLE
 
 //Gets the Z level datum for this atom's Z level
 /proc/get_z_level(var/atom/A)
