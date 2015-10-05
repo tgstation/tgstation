@@ -136,6 +136,17 @@
 			showpiece = W
 			user << "<span class='notice'>You put [W] on display</span>"
 			update_icon()
+	else if(istype(W, /obj/item/stack/sheet/glass) && destroyed)
+		var/obj/item/stack/sheet/glass/G = W
+		if(G.get_amount() < 2)
+			user << "<span class='warning'>You need two glass sheets to fix the case!</span>"
+			return
+		user << "<span class='notice'>You start fixing the [src]...</span>"
+		if(do_after(user, 20, target = src))
+			G.use(2)
+			destroyed = 0
+			health = initial(health)
+			update_icon()
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
 		src.health -= W.force
