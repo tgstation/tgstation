@@ -767,6 +767,13 @@
 
 	switch(M.a_intent)
 		if("help")
+			if(M.dna && M.dna.species.id == "abductor") //Abductor telepathy shit, here so it works with all species
+				var/datum/species/abductor/A = M.dna.species
+				if(M != H && A.tele_target != H)
+					A.tele_target = H
+					M.visible_message("<span class='notice'>[M] touches [H] and its eyes glow eerily.</span>", \
+						"<span class='notice'>You touch [H] and gain acess into its mind.</span>")
+					return 1
 			if(H.health >= 0)
 				H.help_shake_act(M)
 				if(H != M)
