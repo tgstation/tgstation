@@ -302,7 +302,14 @@ var/global/obj/screen/fuckstat/FUCK = new
 // blind_drugged_message (optional) is shown to blind hallucinating people
 
 /mob/visible_message(var/message, var/self_message, var/blind_message, var/drugged_message, var/self_drugged_message, var/blind_drugged_message)
-	for(var/mob/M in viewers(src))
+	var/list/L //Go through mobs in this list and show them the message. Unless the mob is picked up (and is in a "holder" item), this equals to viewers(src).
+
+	if(istype(loc, /obj/item/weapon/holder))
+		L = viewers(get_turf(src))
+	else
+		L = viewers(src)
+
+	for(var/mob/M in L)
 		if(M.see_invisible < invisibility)
 			continue
 		var/hallucination = M.hallucinating()

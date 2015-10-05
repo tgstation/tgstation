@@ -1333,3 +1333,17 @@ default behaviour is:
 
 	if(istype(src, /mob/living/simple_animal)) //Animals can be butchered completely, humans - not so
 		gib(meat = 0) //"meat" argument only exists for mob/living/simple_animal/gib()
+
+/mob/living/proc/scoop_up(mob/M) //M = mob who scoops us up!
+	if(!holder_type) return
+
+	var/obj/item/weapon/holder/D = getFromPool(holder_type, loc, src)
+
+	if(M.put_in_active_hand(D))
+		M << "You scoop up [src]."
+		src << "[M] scoops you up."
+		src.loc = D //Only move the mob into the holder after we're sure he has been picked up!
+	else
+		returnToPool(D)
+
+	return
