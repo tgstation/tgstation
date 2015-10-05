@@ -37,13 +37,13 @@
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")
-			polltype = "OPTION"
+			polltype = POLLTYPE_OPTION
 		if("Text Reply")
-			polltype = "TEXT"
+			polltype = POLLTYPE_TEXT
 		if("Rating")
-			polltype = "NUMVAL"
+			polltype = POLLTYPE_RATING
 		if("Multiple Choice")
-			polltype = "MULTICHOICE"
+			polltype = POLLTYPE_MULTI
 			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
 			if(!choice_amount)
 				return
@@ -90,7 +90,7 @@
 		var/err = query_polladd_question.ErrorMsg()
 		log_game("SQL ERROR adding new poll question to table. Error : \[[err]\]\n")
 		return
-	if(polltype == "TEXT")
+	if(polltype == POLLTYPE_TEXT)
 		log_admin("[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]")
 		message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
 		return
@@ -121,7 +121,7 @@
 		var/descmin = ""
 		var/descmid = ""
 		var/descmax = ""
-		if(polltype == "NUMVAL")
+		if(polltype == POLLTYPE_RATING)
 			minval = input("Set minimum rating value.","Minimum rating") as num|null
 			if(!minval)
 				return pollid
