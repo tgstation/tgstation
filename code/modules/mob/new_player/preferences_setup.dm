@@ -80,8 +80,10 @@
 			switch(bodypart)
 				if("tail_lizard")
 					S = tails_list_lizard[features["tail_lizard"]]
-				if("tail_human")
-					S = tails_list_human[features["tail_human"]]
+				if("tattoo_chest")
+					S = tattoos_chest_list[features["tattoo_chest"]]
+				if("tattoo_legs")
+					S = tattoos_legs_list[features["tattoo_legs"]]
 				if("spines")
 					S = spines_list[features["spines"]]
 				if("snout")
@@ -90,8 +92,6 @@
 					S = frills_list[features["frills"]]
 				if("horns")
 					S = horns_list[features["horns"]]
-				if("ears")
-					S = ears_list[features["ears"]]
 				if("body_markings")
 					S = body_markings_list[features["body_markings"]]
 
@@ -99,7 +99,7 @@
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard")
 				bodypart = "tail"
 
 			if(S.hasinner)

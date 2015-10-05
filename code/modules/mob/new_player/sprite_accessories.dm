@@ -1210,24 +1210,6 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/tails/human/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/tails_animated/human/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/tails/human/cat
-	name = "Cat"
-	icon_state = "cat"
-	color_src = HAIR
-
-/datum/sprite_accessory/tails_animated/human/cat
-	name = "Cat"
-	icon_state = "cat"
-	color_src = HAIR
-
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
@@ -1273,16 +1255,6 @@
 /datum/sprite_accessory/horns/angler
 	name = "Angeler"
 	icon_state = "angler"
-
-/datum/sprite_accessory/ears/none
-	name = "None"
-	icon_state = "none"
-
-/datum/sprite_accessory/ears/cat
-	name = "Cat"
-	icon_state = "cat"
-	hasinner = 1
-	color_src = HAIR
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1356,3 +1328,27 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/tattoos/chest/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tattoos/chest/zigzag
+	name = "Zigzag"
+	icon_state = "none"
+
+/datum/sprite_accessory/tattoos/chest/momheart
+	name = "Heart"
+	icon_state = "none"
+
+/datum/sprite_accessory/tattoos/legs/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/tattoos/legs/zigzag
+	name = "Zigzag"
+	icon_state = "none"
+
+/datum/sprite_accessory/tattoos/legs/zigzagdouble
+	name = "Double Zigzag"
+	icon_state = "none"

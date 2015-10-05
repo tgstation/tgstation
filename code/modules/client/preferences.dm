@@ -61,7 +61,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tattoo_chest" = "None", "snout" = "Round", "horns" = "None", "tattoo_chest" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 
@@ -304,25 +304,23 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					dat += "</td>"
 
-			if(config.mutant_humans)
+			if("tattoo_chest" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("tail_human" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Tail</h3>"
 
-					dat += "<h3>Tail</h3>"
+				dat += "<a href='?_src_=prefs;preference=tattoo_chest;task=input'>[features["tattoo_chest"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("tattoo_legs" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Ears</h3>"
 
-					dat += "<h3>Ears</h3>"
+				dat += "<a href='?_src_=prefs;preference=tattoo_legs;task=input'>[features["tattoo_legs"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
-
-					dat += "</td>"
+				dat += "</td>"
 
 			dat += "</tr></table>"
 
@@ -841,7 +839,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's alien skin/tattoo color:", "Character Preference") as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -857,12 +855,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if(new_tail)
 						features["tail_lizard"] = new_tail
 
-				if("tail_human")
-					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
-					if(new_tail)
-						features["tail_human"] = new_tail
-
 				if("snout")
 					var/new_snout
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
@@ -875,11 +867,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if(new_horns)
 						features["horns"] = new_horns
 
-				if("ears")
-					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in ears_list
-					if(new_ears)
-						features["ears"] = new_ears
+				if("tattoo_chest")
+					var/new_tattoo_chest
+					new_tattoo_chest = input(user, "Choose your character's chest tattoos:", "Character Preference") as null|anything in tattoos_chest_list
+					if(new_tattoo_chest)
+						features["tattoo_chest"] = new_tattoo_chest
+
+				if("tattoo_legs")
+					var/new_tattoo_legs
+					new_tattoo_legs = input(user, "Choose your character's leg tattoos:", "Character Preference") as null|anything in tattoos_legs_list
+					if(new_tattoo_legs)
+						features["tattoo_legs"] = new_tattoo_legs
 
 				if("frills")
 					var/new_frills

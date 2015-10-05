@@ -286,10 +286,13 @@
 		else if ("tail_lizard" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_lizard"
 
-	if("tail_human" in mutant_bodyparts)
+	if("tattoo_chest" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "tail_human"
+			bodyparts_to_add -= "tattoo_chest"
 
+	if("tattoo_legs" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tattoo_legs"
 
 	if("waggingtail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -319,10 +322,6 @@
 		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
 			bodyparts_to_add -= "horns"
 
-	if("ears" in mutant_bodyparts)
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags & BLOCKHAIR) || (H.wear_mask && (H.wear_mask.flags & BLOCKHAIR)))
-			bodyparts_to_add -= "ears"
-
 	if(!bodyparts_to_add)
 		return
 
@@ -338,8 +337,10 @@
 					S = tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("waggingtail_lizard")
 					S.= animated_tails_list_lizard[H.dna.features["tail_lizard"]]
-				if("tail_human")
-					S = tails_list_human[H.dna.features["tail_human"]]
+				if("tattoo_chest")
+					S = tattoos_chest_list[H.dna.features["tattoo_chest"]]
+				if("tattoo_legs")
+					S = tattoos_legs_list[H.dna.features["tattoo_legs"]]
 				if("waggingtail_human")
 					S.= animated_tails_list_human[H.dna.features["tail_human"]]
 				if("spines")
@@ -352,8 +353,6 @@
 					S = frills_list[H.dna.features["frills"]]
 				if("horns")
 					S = horns_list[H.dna.features["horns"]]
-				if("ears")
-					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
 
@@ -361,9 +360,9 @@
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard")
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
+			else if(bodypart == "waggingtail_lizard")
 				bodypart = "waggingtail"
 
 
