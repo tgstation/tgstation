@@ -261,3 +261,12 @@
 	mineral = "wood"
 	walltype = "wood"
 	canSmoothWith = list(/obj/structure/falsewall/wood, /turf/simulated/wall/mineral/wood)
+
+/obj/structure/falsewall/iron
+	name = "rough metal wall"
+	desc = "A wall with rough metal plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = ""
+	mineral = "metal"
+	walltype = "iron"
+	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/simulated/wall/mineral/iron)
