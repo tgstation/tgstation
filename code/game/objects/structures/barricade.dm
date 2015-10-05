@@ -94,6 +94,16 @@
 	else
 		..() //Weapon checks for weapons without brute or burn damage type and grab check
 
+/obj/structure/window/barricade/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+
+	if(air_group || !height) //The mover is an airgroup
+		return 1 //We aren't airtight, only exception to PASSGLASS
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+	if(get_dir(loc, target) == dir)
+		return !density
+	return 1
+
 /obj/structure/window/barricade/Destroy()
 
 	density = 0 //Sanity while we do the rest
@@ -134,6 +144,8 @@
 
 /obj/structure/window/barricade/full/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 
+	if(air_group || !height) //The mover is an airgroup
+		return 1 //We aren't airtight, only exception to PASSGLASS
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	return 0

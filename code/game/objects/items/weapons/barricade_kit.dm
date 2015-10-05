@@ -109,3 +109,7 @@
 						qdel(src) //Get rid of it
 				break //If grilles somehow end up stacked, please don't multiply the problem
 		return 0 //Don't fire attack, please
+
+/obj/item/weapon/barricade_kit/attack(var/atom/A, mob/user as mob)
+
+	return //Don't attack with it
