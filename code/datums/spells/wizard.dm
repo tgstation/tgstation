@@ -336,7 +336,7 @@
 
 /obj/effect/proc_holder/spell/targeted/cauterize
 	name = "Cauterize"
-	desc = "This spell will instantly heal all damage to your body. However, after a short time, it will all be dealt back to you in the form of fire damage."
+	desc = "This spell will instantly heal all damage to your body. However, after a short time, half of it will dealt back to you in the form of fire damage."
 	school = "transmutation"
 	charge_max = 300
 	cooldown_min = 200 //25 deciseconds reduction per rank
@@ -371,7 +371,7 @@
 	user.ExtinguishMob() //This also has the effect of putting out wizards that are on fire in general
 	sleep(50) //Starts dealing damage 5 seconds after the original heal
 	user << "<span class='warning'>You begin to feel the agony of the cauterization...</span>"
-	var/burn_damage = total_damage / 10
+	var/burn_damage = total_damage / 20
 	for(var/i = 0, i < 10, i++)
 		sleep(10)
 		user.apply_damage(burn_damage, BURN)
