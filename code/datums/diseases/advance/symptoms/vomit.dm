@@ -35,7 +35,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>"
+				M << "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>"
 			else
 				Vomit(M)
 
@@ -43,7 +43,7 @@ Bonus
 
 /datum/symptom/vomit/proc/Vomit(mob/living/M)
 
-	M.visible_message("<span class='danger'>[M] vomits on the floor!</span>", \
+	M.visible_message("<span class='warning'>[M] vomits on the floor!</span>", \
 					"<span class='userdanger'>You throw up on the floor!</span>")
 
 	M.nutrition -= 20

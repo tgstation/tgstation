@@ -30,9 +30,12 @@ Bonus
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/carbon/M = A.affected_mob
 		switch(A.stage)
-			if(1, 2, 3, 4)
-				M << "<span class='notice'>[pick("You notice someone in the corner of your eye.", "Is that footsteps?.")]</span>"
+			if(1, 2)
+				M << "<span class='warning'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whispher with no source.", "Your head aches.")]</span>"
+			if(3, 4)
+				M << "<span class='warning'><b>[pick("Something is following you.", "You are being watched.", "You hear a whisper in your ear.", "Thumping footsteps slam toward you from nowhere.")]</b></span>"
 			else
+				M << "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>"
 				M.hallucination += 5
 
 	return
