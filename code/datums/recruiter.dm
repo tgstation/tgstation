@@ -15,13 +15,12 @@
 	//  player = /mob/dead/observer
 	//  controls = /string
 	var/event/player_volunteering = new()
+
 	// Same, but only called when player has disabled the role.
 	var/event/player_not_volunteering = new()
 
 	// Args: player = /mob/dead/observer or null
 	var/event/recruited = new()
-
-//poll="Someone is harvesting [display_name]. Would you like to play as one?"
 
 /datum/recruiter/proc/recruiting_player(var/mob/dead/observer/O)
 	INVOKE_EVENT(player_volunteering, list("player"=O, "controls"="<a href='?src=\ref[O];jump=\ref[host]'>Teleport</a> | <a href='?src=\ref[src];signup=\ref[O]'>Retract</a>"))

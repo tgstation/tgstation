@@ -1,19 +1,3 @@
-/*
-var/global/list/borer_attached_verbs = list(
-	///client/proc/borer_bond_brain,
-	/client/proc/borer_borer_speak,
-	// /client/proc/borer_kill_host,
-	// /client/proc/borer_damage_brain,
-	/client/proc/borer_secrete_chemicals,
-	/client/proc/borer_abandon_host,
-	/client/proc/borer_evolve
-)
-var/global/list/borer_detached_verbs = list(
-	/client/proc/borer_infest,
-	/client/proc/borer_ventcrawl,
-	/client/proc/borer_hide,
-)
-*/
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock - /datum/unlockable/borer/verb_unlock
@@ -89,10 +73,6 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		var/datum/unlockable/borer/U = new ultype()
 		if(U.id!="")
 			borer_avail_unlocks.Add(U)
-
-// Test variant.
-/mob/living/simple_animal/borer/test/New(var/loc)
-	..(loc,1)
 
 /mob/living/simple_animal/borer/Life()
 	if(timestopped) return 0 //under effects of time magick
@@ -764,7 +744,7 @@ mob/living/simple_animal/borer/proc/detach()
 		src.mind.assigned_role = "Cortical Borer"
 
 		// Assign objectives
-		forge_objectives()
+		//forge_objectives()
 
 		// tl;dr
 		src << "<span class='danger'>You are a Cortical Borer!</span>"
@@ -774,10 +754,10 @@ mob/living/simple_animal/borer/proc/detach()
 		if(config.borer_takeover_immediately)
 			src << "<span class='info'><b>Important:</b> While you receive full control at the start, <em>it is asked that you release control at some point so your host has a chance to play.</em>  If they misbehave, you are permitted to kill them.</span>"
 
-		var/obj_count = 1
-		for(var/datum/objective/objective in mind.objectives)
-			src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		//var/obj_count = 1
+		//for(var/datum/objective/objective in mind.objectives)
+		//	src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		//	obj_count++
 
 /mob/living/simple_animal/borer/proc/forge_objectives()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/living/simple_animal/borer/proc/forge_objectives() called tick#: [world.time]")
