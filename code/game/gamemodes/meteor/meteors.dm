@@ -147,7 +147,7 @@
 
 /obj/effect/meteor/Bump(atom/A)
 
-	explosion(src.loc, 2, 4, 6, 8, 0) //Medium meteor, medium boom
+	explosion(get_turf(src), 2, 4, 6, 8, 0, 0, 0) //Medium meteor, medium boom
 	qdel(src)
 
 /obj/effect/meteor/Move()
@@ -161,7 +161,7 @@
 
 /obj/effect/meteor/small/Bump(atom/A)
 
-	explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
+	explosion(get_turf(src), -1, 1, 3, 4, 0, 0, 0) //Tiny meteor doesn't cause too much damage
 	qdel(src)
 
 /obj/effect/meteor/big
@@ -170,7 +170,7 @@
 
 /obj/effect/meteor/big/Bump(atom/A)
 
-	explosion(src.loc, 4, 6, 8, 8, 0) //You have been visited by the nuclear meteor
+	explosion(get_turf(src), 4, 6, 8, 8, 0, 0, 1) //You have been visited by the nuclear meteor
 	qdel(src)
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
