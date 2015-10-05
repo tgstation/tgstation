@@ -1379,7 +1379,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 
 //Checks if any of the atoms in the turf are dense
 //Returns 1 is anything is dense, 0 otherwise
-/turf/proc/content_density()
+/turf/proc/has_dense_content()
 	for(var/atom/turf_contents in contents)
 		if(turf_contents.density)
 			return 1
