@@ -245,8 +245,8 @@ var/list/uplink_items = list()
 		T.TC_cost = cost
 
 /datum/uplink_item/dangerous/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
+	name = "Hard-Light Hologram Projector"
+	desc = "An experimental hologram projector, implanted into the host via injection. The projector has an on-board AI capable of near-sorcerous feats using hard-light projection and nanomachines, but requires a <i>living</i> host to function - if the host dies, the projector will break."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	cost = 12
