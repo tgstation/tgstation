@@ -1357,8 +1357,11 @@ B --><-- A
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
 
-	while(orbiting && orbiting.loc && orbitid == myid && (lockinorbit || loc == lastloc))
-		loc = get_turf(orbiting.loc)
+	while(orbiting && orbiting.loc && orbitid == myid)
+		var/targetloc = get_turf(orbiting)
+		if (!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		loc = targetloc
 		lastloc = loc
 		angle += angle_increment
 
@@ -1368,9 +1371,9 @@ B --><-- A
 			shift.Turn(angle)
 		else
 			shift.Turn(-angle)
-		animate(src,transform = shift,2)
+		animate(src, transform = shift, 2)
 		sleep(0.6) //the effect breaks above 0.6 delay
-	animate(src,transform = initial_transform,2)
+	animate(src, transform = initial_transform, 2)
 
 
 /atom/movable/proc/stop_orbit()
