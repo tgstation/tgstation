@@ -333,3 +333,45 @@
 				M.Weaken(2)
 				M << "<span class='userdanger'>You're thrown back by a mystical force!</span>"
 			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+
+/obj/effect/proc_holder/spell/targeted/cauterize
+	name = "Cauterize"
+	desc = "This spell will instantly heal all damage to your body. However, after a short time, it will all be dealt back to you in the form of fire damage."
+	school = "transmutation"
+	charge_max = 300
+	cooldown_min = 200 //25 deciseconds reduction per rank
+	clothes_req = 1
+	human_req = 1
+	invocation = "VICTUS IGNIS"
+	invocation_type = "shout"
+	range = -1
+	include_user = 1
+	centcom_cancast = 1
+
+	action_icon_state = "cauterize"
+	sound = "sound/magic/Fireball.ogg"
+
+/obj/effect/proc_holder/spell/targeted/cauterize/cast(list/targets)
+	var/mob/living/carbon/human/user = usr
+	var/total_damage = user.getBruteLoss() + user.getFireLoss() + user.getToxLoss() + user.getOxyLoss() + user.getCloneLoss()
+	if(!total_damage)
+		user << "<span class='warning'>You are not damaged!</span>"
+		charge_counter = charge_max
+		return 0
+	playMagSound()
+	user.visible_message("<span class='warning'>A wreath of flames passes over [user]!</span>", "<span class='userdanger'>You banish your wounds with purifying flame!</span>")
+	user.adjust_fire_stacks(1)
+	user.IgniteMob()
+	user.adjustBruteLoss(-user.getBruteLoss())
+	user.adjustFireLoss(-user.getFireLoss())
+	user.adjustToxLoss(-user.getToxLoss())
+	user.adjustOxyLoss(-user.getOxyLoss())
+	user.adjustCloneLoss(-user.getCloneLoss()) //Too powerful?
+	sleep(5)
+	user.ExtinguishMob() //This also has the effect of putting out wizards that are on fire in general
+	sleep(50) //Starts dealing damage 5 seconds after the original heal
+	user << "<span class='warning'>You begin to feel the agony of the cauterization...</span>"
+	var/burn_damage = total_damage / 10
+	for(var/i = 0, i < 10, i++)
+		sleep(10)
+		user.apply_damage(burn_damage, BURN)

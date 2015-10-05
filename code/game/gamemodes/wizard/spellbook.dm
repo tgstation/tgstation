@@ -203,6 +203,12 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
+/datum/spellbook_entry/cauterize
+	name = "Cauterize"
+	spell_type = /obj/effect/proc_holder/spell/targeted/cauterize
+	log_name = "CA"
+	category = "Utility Spells"
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	category = "Artifacts"
