@@ -112,12 +112,15 @@
 
 //Will create a large forcefield if given enough power
 /obj/structure/closet/crate/secure/large/meteor_shieldwallgen
-	name = "\improper Space Weather Inc. area shield generator"
+	name = "\improper Space Weather Inc. wall shield generator"
 	desc = "Ensure a proper power source is available for sustained operation."
 
 /obj/structure/closet/crate/secure/large/meteor_shieldwallgen/New()
 
 	..()
+	new /obj/machinery/shieldwallgen(src)
+	new /obj/machinery/shieldwallgen(src)
+	new /obj/machinery/shieldwallgen(src)
 	new /obj/machinery/shieldwallgen(src)
 
 //Can protect window bays locally by putting forcefields in front of them, limited usefulness
