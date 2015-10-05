@@ -7,8 +7,8 @@
 	var/message      = "" // Message to send. DO NOT INCLUDE HTML OR I WILL STAB YOU IN THE NECK.
 	var/frequency    = "" // Displayed radio frequency
 	var/job          = ""
-	var/lquote       = "&ldquo;" // Left quote character
-	var/rquote       = "&rdquo;" // Right quote character
+	var/lquote       = "\"" // Left quote character
+	var/rquote       = "\"" // Right quote character
 	var/datum/language/language
 	var/atom/movable/radio = null
 	var/atom/movable/speaker = null // Shouldn't really be used.
@@ -50,7 +50,17 @@
 	return list2text(wrapper_classes, " ")
 
 /datum/speech/proc/render_message()
-	return language.render_speech(src, "<span class='[list2text(message_classes, " ")]'>[lquote][message][rquote]</span>")
+#ifdef SAY_DEBUG
+	speaker << "[type]/render_message(): message_classes = {[list2text(message_classes, ", ")]}"
+#endif
+	var/rendered=message
+	rendered="<span class='[list2text(message_classes, " ")]'>[lquote][rendered][rquote]</span>"
+	if(language)
+		rendered=language.render_speech(src, rendered)
+#ifdef SAY_DEBUG
+	speaker << "[type]/render_message(): message = \"[html_encode(rendered)]\""
+#endif
+	return rendered
 
 /datum/speech/proc/render_as_name()
 	if(as_name)
@@ -62,6 +72,8 @@
 	signal.data["message"] = message
 	signal.data["name"] = name
 	signal.data["job"] = job
+	signal.data["left_quote"] = lquote
+	signal.data["right_quote"] = rquote
 	return signal
 
 /datum/speech/proc/fromSignal(var/datum/signal/signal)
@@ -70,3 +82,5 @@
 	message = signal.data["message"]
 	name = signal.data["name"]
 	job = signal.data["job"]
+	lquote = signal.data["left_quote"]
+	rquote = signal.data["right_quote"]

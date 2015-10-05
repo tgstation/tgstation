@@ -55,7 +55,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if(signal.data["type"] == 0)
 			var/datum/speech/speech = getFromDPool(/datum/speech)
-			speech.fromSignal(signal.data)
+			speech.fromSignal(signal)
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], signal.data["level"])
 
@@ -78,7 +78,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
 			var/datum/speech/speech = getFromDPool(/datum/speech)
-			speech.fromSignal(signal.data)
+			speech.fromSignal(signal)
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 4, signal.data["compression"], signal.data["level"])
 
@@ -144,7 +144,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
 			var/datum/speech/speech = getFromDPool(/datum/speech)
-			speech.fromSignal(signal.data)
+			speech.fromSignal(signal)
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], list(0, z))
 	else
