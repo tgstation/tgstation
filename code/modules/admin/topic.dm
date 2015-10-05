@@ -988,7 +988,7 @@
 			if(!check_if_greater_rights_than(M.client))
 				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
 				return
-			M << "<span class='danger'>You have been kicked from the server.</span>"
+			M << "<span class='danger'>You have been kicked from the server by [usr.client.ckey].</span>"
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
 			//M.client = null
