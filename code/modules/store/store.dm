@@ -54,7 +54,7 @@ var/global/datum/store/centcomm_store=new
 	user << "\icon[merchcomp]<span class='notice'>Remaining balance: [D.money]$</span>"
 
 	var/datum/transaction/T = new()
-	T.target_name = "[command_name()] Merchandising"
+	T.target_name = D.owner_name
 	T.purpose = "Purchase of [item.name]"
 	T.amount = -amount
 	T.date = current_date_string
