@@ -339,7 +339,7 @@
 	desc = "This spell will instantly heal all damage to your body. However, after a short time, half of it will dealt back to you in the form of fire damage."
 	school = "transmutation"
 	charge_max = 300
-	cooldown_min = 200 //25 deciseconds reduction per rank
+	cooldown_min = 100 //50 deciseconds reduction per rank
 	clothes_req = 1
 	human_req = 1
 	invocation = "VICTUS IGNIS"

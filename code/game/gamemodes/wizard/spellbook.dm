@@ -203,7 +203,7 @@
 	name = "Lightning Bolt"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
 	log_name = "LB"
-	cost = 1
+	cost = 2
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -244,7 +244,6 @@
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/staff/change
 	log_name = "ST"
-	cost = 3 //Staff of change is extremely powerful
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -390,7 +389,7 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
-	cost = 1
+	cost = 2
 	log_name = "SE"
 	var/times = 0
 
