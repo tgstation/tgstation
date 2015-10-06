@@ -190,7 +190,7 @@ var/list/blob_nodes = list()
 
 	switch(stage)
 		if (0)
-			send_intercept(1)
+			//send_intercept(1)  Keeping this here for possible re-addition in the future. Re-add when classified reports are added to other round types so people stop metagaming.
 			declared = 1
 
 		if (1)
