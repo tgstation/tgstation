@@ -323,6 +323,7 @@
 #include "code\game\gamemodes\malfunction\Malf_Modules.dm"
 #include "code\game\gamemodes\malfunction\malfunction.dm"
 #include "code\game\gamemodes\meteor\meteor.dm"
+#include "code\game\gamemodes\meteor\meteor_supply.dm"
 #include "code\game\gamemodes\meteor\meteors.dm"
 #include "code\game\gamemodes\mixed\mixed.dm"
 #include "code\game\gamemodes\nuclear\nuclear.dm"

@@ -5,30 +5,30 @@
 
 //Meteor storms are much heavier
 /datum/event/meteor_wave
-	startWhen		= 10
+	startWhen		= 0 //Note : Meteor waves have a delay before striking now
 	endWhen			= 30
 
 /datum/event/meteor_wave/setup()
-	endWhen = rand(45, 90) + 10 //More drawn out than the shower, but not too powerful. Supposed to be a devastating event
+	endWhen = rand(45, 90) //More drawn out than the shower, but not too powerful. Supposed to be a devastating event
 
 /datum/event/meteor_wave/announce()
 	command_alert("A meteor storm has been detected on collision course with the station. Seek shelter within the core of the station immediately.", "Meteor Alert")
 	world << sound('sound/AI/meteors.ogg')
 
-//Two to four waves. So 10 to 60. Note that it used to be (20, 50) per wave with two to three waves
+//One to three waves. So 10 to 60. Note that it used to be (20, 50) per wave with two to three waves
 /datum/event/meteor_wave/tick()
 	meteor_wave(rand(10, 15), max_size = 2) //Large waves, panic is mandatory
 
 /datum/event/meteor_wave/end()
 	command_alert("The station has cleared the meteor storm.", "Meteor Alert")
 
-//
+//One to two vawes
 /datum/event/meteor_shower
-	startWhen		= 10
+	startWhen		= 0
 	endWhen 		= 30
 
 /datum/event/meteor_shower/setup()
-	endWhen	= rand(30, 60) + 10 //From 30 seconds to one minute
+	endWhen	= rand(30, 60) //From thirty seconds to one minute
 
 /datum/event/meteor_shower/announce()
 	command_alert("The station is about to be hit by a small-intensity meteor storm. Seek shelter within the core of the station immediately", "Meteor Alert")

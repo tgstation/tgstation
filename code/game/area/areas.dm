@@ -518,10 +518,7 @@
 			AM.change_area(old_area,src)
 
 var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group","contents","air","light","areaMaster","underlays","lighting_overlay")
-var/list/moved_landmarks = list(latejoin, wizardstart, meteor_materialkit,\
-	meteor_bombkit, meteor_bombkitextra, meteor_tankkit, meteor_canisterkit,\
-	meteor_buildkit, meteor_pizzakit, meteor_panickit, meteor_shieldkit,\
-	meteor_genkit, meteor_breachkit) //Landmarks that are moved by move_area_to and move_contents_to
+var/list/moved_landmarks = list(latejoin, wizardstart) //Landmarks that are moved by move_area_to and move_contents_to
 var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f9","swall_f10") //icon_states for which to prepare an underlay
 
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)
