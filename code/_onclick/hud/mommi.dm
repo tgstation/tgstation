@@ -35,7 +35,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "sight"
-	using.screen_loc = ui_borg_sight
+	using.screen_loc = ui_mommi_sight
 	using.layer = 20
 	src.adding += using
 	M.sensor = using
@@ -46,7 +46,7 @@
 	inv_box.name = "head"
 	inv_box.dir = NORTH
 	inv_box.icon_state = "hair"
-	inv_box.screen_loc = ui_monkey_mask
+	inv_box.screen_loc = ui_mommi_hats
 	inv_box.slot_id = slot_head
 	inv_box.layer = 19
 	src.adding += inv_box

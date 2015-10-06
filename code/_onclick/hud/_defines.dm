@@ -42,14 +42,16 @@
 #define ui_alien_head "WEST+3:12,SOUTH:5"	//aliens
 #define ui_alien_oclothing "WEST+4:14,SOUTH:5"	//aliens
 
+#define ui_borg_sight "CENTER-3:16,SOUTH:5"	//borgs
 #define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
 #define ui_inv2 "CENTER-1:16,SOUTH:5"			//borgs
 #define ui_inv3 "CENTER:16,SOUTH:5"			//borgs
 #define ui_borg_module "CENTER+1:16,SOUTH:5" //borgs
-#define ui_mommi_module "CENTER:16,SOUTH:5"
-#define ui_mommi_panel "CENTER+1:16,SOUTH:5"
 #define ui_borg_store "CENTER+2:16,SOUTH:5"	//borgs
-#define ui_borg_sight "CENTER-3:16,SOUTH:5"	//borgs
+#define ui_mommi_panel "CENTER+1:16,SOUTH:5"
+#define ui_mommi_module "CENTER:16,SOUTH:5"
+#define ui_mommi_sight "CENTER-2:16,SOUTH:5"
+#define ui_mommi_hats "CENTER-3:16,SOUTH:5"
 
 #define ui_monkey_uniform "WEST+2:14,SOUTH:5"//monkey
 #define ui_monkey_hat "WEST+3:14,SOUTH:5"	//monkey
