@@ -190,7 +190,7 @@ var/list/blob_nodes = list()
 	switch(stage)
 		if (0)
 			//send_intercept(1)  Keeping this here for possible re-addition in the future. Re-add when classified reports are added to other round types so people stop metagaming.
-
+			return
 		if (1)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
