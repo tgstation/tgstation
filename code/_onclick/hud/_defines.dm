@@ -30,23 +30,24 @@
 #define ui_sstore1 "WEST+2:10,SOUTH:5"
 #define ui_id "WEST+3:12,SOUTH:5"
 #define ui_belt "WEST+4:14,SOUTH:5"
-#define ui_back "CENTER-1:14,SOUTH:5"
-#define ui_rhand "CENTER:16,SOUTH:5"
-#define ui_lhand "CENTER+1:16,SOUTH:5"
-#define ui_equip "CENTER:16,SOUTH+1:5"
-#define ui_swaphand1 "CENTER:16,SOUTH+1:5"
-#define ui_swaphand2 "CENTER+1:16,SOUTH+1:5"
-#define ui_storage1 "CENTER+2:18,SOUTH:5"
-#define ui_storage2 "CENTER+3:20,SOUTH:5"
+#define ui_back "CENTER-2:14,SOUTH:5"
+#define ui_rhand "CENTER-1:16,SOUTH:5"
+#define ui_lhand "CENTER:16,SOUTH:5"
+#define ui_equip "CENTER-1:16,SOUTH+1:5"
+#define ui_swaphand1 "CENTER-1:16,SOUTH+1:5"
+#define ui_swaphand2 "CENTER:16,SOUTH+1:5"
+#define ui_storage1 "CENTER+1:18,SOUTH:5"
+#define ui_storage2 "CENTER+2:20,SOUTH:5"
 
 #define ui_alien_head "WEST+3:12,SOUTH:5"	//aliens
 #define ui_alien_oclothing "WEST+4:14,SOUTH:5"	//aliens
 
-#define ui_inv1 "CENTER-1:16,SOUTH:5"			//borgs
-#define ui_inv2 "CENTER:16,SOUTH:5"			//borgs
-#define ui_inv3 "CENTER+1:16,SOUTH:5"			//borgs
+#define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
+#define ui_inv2 "CENTER-1:16,SOUTH:5"			//borgs
+#define ui_inv3 "CENTER:16,SOUTH:5"			//borgs
 #define ui_borg_module "CENTER+1:16,SOUTH:5" //borgs
 #define ui_borg_store "CENTER+2:16,SOUTH:5"	//borgs
+#define ui_borg_sight "CENTER-3:16, SOUTH:5"	//borgs
 
 #define ui_monkey_uniform "WEST+2:14,SOUTH:5"//monkey
 #define ui_monkey_hat "WEST+3:14,SOUTH:5"	//monkey
@@ -97,8 +98,8 @@
 #define ui_construct_fire "EAST-1:16,CENTER+1:13" //above health, slightly to the left
 #define ui_construct_pull "EAST-1:28,SOUTH+1:10" //above the zone_sel icon
 
-#define ui_spell_master "EAST-1:16,NORTH-1:16"
-#define ui_genetic_master "EAST-1:16,NORTH-3:16"
+#define ui_spell_master "14:16,14:16"
+#define ui_genetic_master "14:16,12:16"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

@@ -20,6 +20,16 @@
 
 //Module select
 
+	using = getFromPool(/obj/screen/sight)
+	using.name = INV_SLOT_SIGHT
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "sight"
+	using.screen_loc = ui_borg_sight
+	using.layer = 20
+	src.adding += using
+	mymob:sensor = using
+
 	using = getFromPool(/obj/screen)
 	using.name = "module1"
 	using.dir = SOUTHWEST
