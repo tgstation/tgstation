@@ -338,10 +338,10 @@ void sortHardDels() //copypasting and I don't care~
 
 	for (int i = 0; i <= maxStorage; i++)
 	{
-		//Get the largest occurance of a single runtime
-		if (highestCount < numRuntime[i])
+		//Get the largest occurance of a single hard deletion
+		if (highestCount < numHardDel[i])
 		{
-			highestCount = numRuntime[i];
+			highestCount = numHardDel[i];
 		}
 
 		tempHardDel[i] = storedHardDel[i];	storedHardDel[i] = "Blank";
@@ -350,9 +350,9 @@ void sortHardDels() //copypasting and I don't care~
 
 	while (highestCount > 0)
 	{
-		for (int i = 0; i <= maxStorage; i++) //For every runtime
+		for (int i = 0; i <= maxStorage; i++) //For every hard deletion
 		{
-			if (tempNumHardDel[i] == highestCount) //If the number of occurances of that runtime is equal to our current highest
+			if (tempNumHardDel[i] == highestCount) //If the number of occurances of that hard deletion is equal to our current highest
 			{
 				for (int j = 0; j <= maxStorage; j++) //Find the next available slot and store the info
 				{
