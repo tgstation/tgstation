@@ -30,7 +30,7 @@
 	src.adding += using			// Place using in our adding list
 	M.inv_tool = using			// Save this using as our MoMMI's inv_sight
 
-	using = getFromPool(/obj/screen/sight)
+	using = getFromPool(/obj/screen)
 	using.name = INV_SLOT_SIGHT
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -39,6 +39,7 @@
 	using.layer = 20
 	src.adding += using
 	M.sensor = using
+	// End of module select
 
 	// Head
 	inv_box = getFromPool(/obj/screen/inventory)
@@ -48,7 +49,7 @@
 	inv_box.screen_loc = ui_monkey_mask
 	inv_box.slot_id = slot_head
 	inv_box.layer = 19
-	src.adding += ui_inv1
+	src.adding += inv_box
 
 
 	// Intent
@@ -162,5 +163,3 @@
 	// Add everything to their screen
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
-
-	return

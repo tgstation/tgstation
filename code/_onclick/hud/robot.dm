@@ -20,7 +20,7 @@
 
 //Module select
 
-	using = getFromPool(/obj/screen/sight)
+	using = getFromPool(/obj/screen)
 	using.name = INV_SLOT_SIGHT
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'

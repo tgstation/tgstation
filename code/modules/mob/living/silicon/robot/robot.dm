@@ -18,7 +18,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
-	var/obj/screen/sight/sensor = null
+	var/obj/screen/sensor = null
 
 	var/shown_robot_modules = 0
 	var/obj/screen/robot_modules_background

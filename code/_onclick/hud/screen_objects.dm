@@ -445,8 +445,13 @@
 				usr:toggle_module(INV_SLOT_TOOL)
 
 		if(INV_SLOT_SIGHT)
-			if(istype(usr, /mob/living/silicon/robot/mommi))
-				usr:toggle_module(INV_SLOT_SIGHT)
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/person = usr
+				person.sensor_mode()
+				if(person.sensor_mode == 0)
+					icon_state = "sight"
+				else
+					icon_state = "sight+a"
 
 		if("module1")
 			if(istype(usr, /mob/living/silicon/robot))
@@ -783,17 +788,6 @@
 				usr.update_inv_r_hand(0)
 				usr.delayNextAttack(6)
 	return 1
-
-/obj/screen/sight
-	name = "sight"
-
-/obj/screen/sight/Click()
-	var/mob/living/silicon/robot/person = usr
-	person.sensor_mode()
-	if(person.sensor_mode == 0)
-		icon_state = "sight"
-	else
-		icon_state = "sight+a"
 
 client/proc/reset_screen()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\client/proc/reset_screen() called tick#: [world.time]")
