@@ -32,6 +32,8 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	canEnterVentWith = "/mob/living/captive_brain=0&/obj/item/verbs/borer=0"
 	universal_understand=1
 
+	var/busy = 0 // So we aren't trying to lay many eggs at once.
+
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.
 	var/mob/living/carbon/human/host        // Human host for the brain worm.
 	var/truename                            // Name used for brainworm-speak.
@@ -566,6 +568,7 @@ mob/living/simple_animal/borer/proc/detach()
 			return
 
 	src << "You slither up [M] and begin probing at their ear canal..."
+	M << "<span class='sinister'>You feel something slithering up your leg...</span>"
 
 	if(!do_after(src,M,50))
 		src << "As [M] moves away, you are dislodged and fall to the ground."
@@ -679,8 +682,15 @@ mob/living/simple_animal/borer/proc/detach()
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
+	if(busy)
+		src << "<span class='warning'>You are already doing something.</span>"
+		return
+
 	if(chemicals >= 100)
+		busy=1
 		src << "<span class='warning'>You strain, trying to push out your young...</span>"
+		visible_message("<span class='warning'>\The [src] begins to struggle and strain!</span>", \
+			drugged_message = "<span class='notice'>\The [src] starts dancing.</span>")
 		var/turf/T = get_turf(src)
 		if(do_after(src, T, 5 SECONDS))
 			src << "<span class='danger'>You twitch and quiver as you rapidly excrete an egg from your sluglike body.</span>"
@@ -694,6 +704,7 @@ mob/living/simple_animal/borer/proc/detach()
 			if(istype(T, /turf/simulated))
 				T.add_vomit_floor(null, 1)
 			new /obj/item/weapon/reagent_containers/food/snacks/egg/borer(T)
+			busy=0
 
 	else
 		src << "You do not have enough chemicals stored to reproduce."
