@@ -127,13 +127,13 @@
 	mymob.flash = getFromPool(/obj/screen)
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	mymob.blind = getFromPool(/obj/screen)
 	mymob.blind.icon_state = "black"
 	mymob.blind.name = " "
-	mymob.blind.screen_loc = "1,1 to 15,15"
+	mymob.blind.screen_loc = ui_entire_screen
 	mymob.blind.layer = 0
 
 	mymob.client.screen += adding + other + list(mymob.flash, mymob.blind)

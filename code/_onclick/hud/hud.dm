@@ -234,14 +234,14 @@ var/datum/global_hud/global_hud = new()
 /datum/global_hud/New()
 	//420erryday psychedellic colours screen overlay for when you are high
 	druggy = getFromPool(/obj/screen)
-	druggy.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	druggy.screen_loc = ui_entire_screen
 	druggy.icon_state = "druggy"
 	druggy.layer = 17
 	druggy.mouse_opacity = 0
 
 	//that white blurry effect you get when you eyes are damaged
 	blurry = getFromPool(/obj/screen)
-	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	blurry.screen_loc = ui_entire_screen
 	blurry.icon_state = "blurry"
 	blurry.layer = 17
 	blurry.mouse_opacity = 0

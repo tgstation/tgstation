@@ -149,7 +149,7 @@
 	mymob.flash.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	// Zone
