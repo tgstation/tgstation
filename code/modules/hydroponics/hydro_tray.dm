@@ -480,12 +480,10 @@
 
 //Refreshes the icon and sets the luminosity
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
-
 	overlays.len = 0
 
 	// Updates the plant overlay.
 	if(!isnull(seed))
-
 		if(draw_warnings && health <= (seed.endurance / 2))
 			overlays += image(seed.plant_dmi,"over_lowhealth3")
 
@@ -494,13 +492,7 @@
 		else if(harvest)
 			overlays += image(seed.plant_dmi,"[seed.plant_icon]-harvest")
 		else if(age < seed.maturation)
-
-			var/t_growthstate
-			if(age >= seed.maturation)
-				t_growthstate = seed.growth_stages
-			else
-				t_growthstate = round(seed.maturation / seed.growth_stages)
-
+			var/t_growthstate = max(1,round((age * seed.growth_stages) / seed.maturation))
 			overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[t_growthstate]")
 			lastproduce = age
 		else
