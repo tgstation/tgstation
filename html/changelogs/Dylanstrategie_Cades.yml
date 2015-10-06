@@ -1,9 +1,0 @@
-author: Dylanstrategie
-delete-after: True
-changes:
-  - rscadd: Added directional barricades. Barricade kits now build like windows (outside of building on windows or airlocks, which is still done via bashing them)
-  - rscadd: You can now deconstruct barricades using a crowbar instead of bashing them into pieces. This takes five seconds and harm intent but it just works, and is much faster than bashing it into pieces
-  - rscadd: Many procs ported from windows, notably allowing barricade slamming and examining to check health
-  - tweak: All barricade types no longer let air pass and are opaque
-  - tweak: All barricades are now more robust in general, and also against explosions
-  - imageadd: Updated all barricade-related sprites, except for the window barricade
