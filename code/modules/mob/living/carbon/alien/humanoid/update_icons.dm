@@ -21,6 +21,8 @@
 		icon_state = "alien[caste]_sleep"
 	else if(m_intent == "run")
 		icon_state = "alien[caste]_running"
+	else if(mob_size == MOB_SIZE_LARGE)
+		icon_state = "alien[caste]"
 	else
 		icon_state = "alien[caste]_s"
 
@@ -52,27 +54,29 @@
 	..()
 	update_icons()
 
-
-/mob/living/carbon/alien/humanoid/queen/large/update_icons()
-	update_hud()		//TODO: remove the need for this to be here
-	overlays.Cut()
-	if(stat == DEAD)
-		icon_state = "queen_dead"
-	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
-		icon_state = "queen_l"
-	else if(sleeping || lying || resting)
-		icon_state = "queen_sleep"
-	else
-		icon_state = "queen_s"
-	for(var/image/I in overlays_standing)
-		overlays += I
-
-/mob/living/carbon/alien/humanoid/queen/large/update_inv_l_hand()
-	remove_overlay(L_HAND_LAYER)
-	if(handcuffed)
-		drop_l_hand()
-
-/mob/living/carbon/alien/humanoid/queen/large/update_inv_r_hand()
+//Royals have bigger sprites, so inhand things must be handled differently.
+/mob/living/carbon/alien/humanoid/royal/update_inv_r_hand()
+	..()
 	remove_overlay(R_HAND_LAYER)
-	if(handcuffed)
-		drop_r_hand()
+	if(r_hand)
+		var/itm_state = r_hand.item_state
+		if(!itm_state)
+			itm_state = r_hand.icon_state
+
+		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_r", "layer"=-R_HAND_LAYER)
+		overlays_standing[R_HAND_LAYER] = I
+
+		apply_overlay(R_HAND_LAYER)
+
+/mob/living/carbon/alien/humanoid/royal/update_inv_l_hand()
+	..()
+	remove_overlay(L_HAND_LAYER)
+	if(l_hand)
+		var/itm_state = l_hand.item_state
+		if(!itm_state)
+			itm_state = l_hand.icon_state
+
+		var/image/I = image("icon" = alt_inhands_file , "icon_state"="[itm_state][caste]_l", "layer"=-L_HAND_LAYER)
+		overlays_standing[L_HAND_LAYER] = I
+
+		apply_overlay(L_HAND_LAYER)

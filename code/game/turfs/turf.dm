@@ -34,16 +34,14 @@
 		Entered(AM)
 
 /turf/Destroy()
-	return QDEL_HINT_HARDDEL_NOW
-
-// Adds the adjacent turfs to the current atmos processing
-/turf/Del()
+	// Adds the adjacent turfs to the current atmos processing
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
 			if(istype(T))
 				SSair.add_to_active(T)
 	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)

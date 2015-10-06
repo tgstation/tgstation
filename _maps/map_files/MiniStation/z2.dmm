@@ -210,7 +210,7 @@
 "eb" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/extinguisher,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "ec" = (/obj/machinery/computer/emergency_shuttle,/turf/simulated/floor/plasteel/shuttle,/area/shuttle/escape)
 "ed" = (/turf/simulated/wall/shuttle{dir = 2; icon_state = "swallc3"},/area/shuttle/escape)
-"ee" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/space)
+"ee" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2; pixel_y = 3},/obj/item/weapon/crowbar,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "ef" = (/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "eg" = (/obj/machinery/button/door{desc = "A remote control switch for port-side blast doors."; icon_state = "doorctrl0"; id = "CentComPort"; name = "Security Doors"; pixel_y = 28; req_access_txt = "101"},/turf/simulated/floor/plasteel/black,/area/centcom/control)
 "eh" = (/turf/indestructible/fakeglass{icon_state = "fakewindows2"; dir = 6},/area/centcom/control)

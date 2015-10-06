@@ -258,6 +258,9 @@ CREATE TABLE `SS13_poll_question` (
   `question` varchar(255) NOT NULL,
   `adminonly` tinyint(1) DEFAULT '0',
   `multiplechoiceoptions` int(2) DEFAULT NULL,
+  `createdby_ckey` varchar(45) NULL DEFAULT NULL,
+  `createdby_ip` varchar(45) NULL DEFAULT NULL,
+  `for_trialmin` varchar(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -1,5 +1,5 @@
 /proc/radiation_pulse(turf/epicenter, heavy_range, light_range, severity, log=0)
-	if(!epicenter) return
+	if(!epicenter || !severity) return
 
 	if(!istype(epicenter, /turf))
 		epicenter = get_turf(epicenter.loc)
@@ -11,6 +11,7 @@
 	if(heavy_range > light_range)
 		light_range = heavy_range
 
+	var/light_severity = severity * 0.5
 	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)
 		if(distance < 0)
@@ -21,9 +22,9 @@
 			if(prob(50))
 				T.rad_act(severity)
 			else
-				T.rad_act(severity / 2)
+				T.rad_act(light_severity)
 		else if(distance <= light_range)
-			T.rad_act(severity / 2)
+			T.rad_act(light_severity)
 	return 1
 
 /atom/proc/rad_act(var/severity)
