@@ -215,7 +215,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/data,                // ???
 		var/compression,         // Level of compression
 		var/list/level)          // z-levels that can hear us
-	say_testing(speech.speaker, "broadcast_message start")
+	if(speech.speaker)
+		say_testing(speech.speaker, "broadcast_message start")
 	// Cut down on the message sizes.
 	speech.message = copytext(speech.message, 1, MAX_BROADCAST_LEN)
 
@@ -308,7 +309,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
-	say_testing(speech.speaker, "Broadcast_Message finished with [listeners.len] listener\s getting our message, [speech.message] lang = [speech.language ? speech.language.name : "none"]")
+	if(speech.speaker)
+		say_testing(speech.speaker, "Broadcast_Message finished with [listeners.len] listener\s getting our message, [speech.message] lang = [speech.language ? speech.language.name : "none"]")
 	spawn(50)
 		returnToPool(virt)
 
