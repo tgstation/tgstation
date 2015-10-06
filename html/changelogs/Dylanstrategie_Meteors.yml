@@ -1,0 +1,8 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+  - experiment: The Meteors gamemode has been thoroughly updated and should now work as intended again. Less shitcode, more action
+  - experiment: Reduced total length of gamemode by more than 20 minutes, shuttle arrives in 30 minutes, warning arrives just after intercept
+  - experiment: Updated supplies. The EOD suits were removed, other supplies are now more plentiful, and the PACMAN is now a SUPERPACMAN for power issues
+  - rscadd: The Bhangmeter now reports upcoming meteor waves in detail. The Bhangmeter no longer vocalizes meteor explosions under large meteors
+  - tweak: The Bhangmeter now has separate checks for vocalizing explosions and registering them at all
