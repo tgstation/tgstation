@@ -39,6 +39,7 @@
 
 /obj/structure/snow/attackby(obj/item/W,mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe/shovel))//using a shovel or spade harvests some snow and let's you click on the lower layers
+		playsound(loc, 'sound/items/shovel.ogg', 50, 1)
 		snow_amount = SNOWCOVERING_LITTLE
 		icon_state = "snow_dug"
 		mouse_opacity = 0

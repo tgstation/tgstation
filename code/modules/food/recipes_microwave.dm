@@ -1567,6 +1567,27 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/potentham
 
+/datum/recipe/claypot//it just works
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/ore/glass,
+		)
+	result = /obj/item/claypot
+
+/datum/recipe/cinnamonroll
+	reagents = list("milk" = 5, "sugar" = 10, "flour" = 5, "cinnamon" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+
+/datum/recipe/cinnamonpie
+	reagents = list("milk" = 5, "sugar" = 10, "flour" = 10, "cinnamon" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cinnamonpie
+
 // Currently Disabled //////////////////////////////////////////
 
 /*

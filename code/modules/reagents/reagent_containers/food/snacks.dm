@@ -3678,6 +3678,32 @@
 		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	name = "cinnamon roll"
+	desc = "Sweet and spicy!"
+	icon_state = "cinnamon_roll"
+	trash = /obj/item/trash/plate
+	food_flags = FOOD_SWEET
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("cinnamon",5)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonpie
+	name = "cinnamon pie"
+	desc = "Guarranted snake-free!"
+	icon_state = "cinnamon_pie"
+	trash = /obj/item/trash/pietin
+	food_flags = FOOD_SWEET
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("cinnamon",5)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/sundaeramen
 	name = "Sundae Ramen"
 	desc = "This is... sundae (?) flavored (?) ramen (?). You just don't know."

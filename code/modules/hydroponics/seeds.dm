@@ -13,6 +13,8 @@
 /obj/item/seeds/New()
 	update_seed()
 	..()
+	pixel_x = rand(-3,3)
+	pixel_y = rand(-3,3)
 
 //Grabs the appropriate seed datum from the global list.
 /obj/item/seeds/proc/update_seed()
@@ -150,6 +152,10 @@
 	seed_type = "soybean"
 	vending_cat = "vegetables"
 
+/obj/item/seeds/koiseed
+	seed_type = "koibean"
+	vending_cat = "vegetables"
+
 /obj/item/seeds/wheatseed
 	seed_type = "wheat"
 	vending_cat = "cereals"
@@ -184,6 +190,7 @@
 
 /obj/item/seeds/towermycelium
 	seed_type = "towercap"
+	vending_cat = "trees"
 
 /obj/item/seeds/glowshroom
 	seed_type = "glowshroom"
@@ -215,6 +222,14 @@
 
 /obj/item/seeds/sunflowerseed
 	seed_type = "sunflowers"
+	vending_cat = "flowers"
+
+/obj/item/seeds/moonflowerseed
+	seed_type = "moonflowers"
+	vending_cat = "flowers"
+
+/obj/item/seeds/novaflowerseed
+	seed_type = "novaflowers"
 	vending_cat = "flowers"
 
 /obj/item/seeds/brownmold
@@ -292,3 +307,7 @@
 /obj/item/seeds/kudzuseed
 	seed_type = "kudzu"
 	vending_cat = "weeds"
+
+/obj/item/seeds/cinnamomum
+	seed_type = "cinnamomum"
+	vending_cat = "trees"
