@@ -166,7 +166,7 @@
 	playstyle_string = "As a Chaos type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will randomly teleport enemies."
 	environment_smash = 1
 	magic_fluff_string = "..And draw the Wizard, bringer of endless chaos!"
-	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Holographic projector online."
+	tech_fluff_string = "Boot sequence complete. Crowd control modules activated. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, ready to sow havoc at random."
 
 /mob/living/simple_animal/hostile/guardian/fire/Life() //Dies if the summoner dies
@@ -214,7 +214,7 @@
 	playstyle_string = "As a standard type you have no special abilities, but have a high damage resistance and a powerful attack capable of smashing through walls."
 	environment_smash = 2
 	magic_fluff_string = "..And draw the Assistant, faceless and generic, but never to be underestimated."
-	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Holographic projector online."
+	tech_fluff_string = "Boot sequence complete. Standard combat modules loaded. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm stirs to life, ready to tear apart your enemies."
 	var/battlecry = "AT"
 
@@ -248,7 +248,7 @@
 	melee_damage_upper = 15
 	playstyle_string = "As a Support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent mob will warp them to your bluespace beacon after a short delay."
 	magic_fluff_string = "..And draw the CMO, a potent force of life...and death."
-	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Holographic projector online."
+	tech_fluff_string = "Boot sequence complete. Medical modules active. Bluespace modules activated. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of mending wounds and travelling via bluespace."
 	var/turf/simulated/floor/beacon
 	var/beacon_cooldown = 0
@@ -370,7 +370,7 @@
 	range = 13
 	playstyle_string = "As a ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit."
 	magic_fluff_string = "..And draw the Sentinel, an alien master of ranged combat."
-	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Holographic projector online."
+	tech_fluff_string = "Boot sequence complete. Ranged combat modules active. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of spraying shards of crystal."
 	var/list/snares = list()
 	var/toggle = FALSE
@@ -451,7 +451,7 @@
 	range = 13
 	playstyle_string = "As an explosive type, you have only moderate close combat abilities, but are capable of converting any adjacent item into a disguised bomb via alt click."
 	magic_fluff_string = "..And draw the Scientist, master of explosive death."
-	tech_fluff_string = "Boot sequence complete. Explosive modules active. Holographic projector online."
+	tech_fluff_string = "Boot sequence complete. Explosive modules active. Nanoswarm online."
 	bio_fluff_string = "Your scarab swarm finishes mutating and stirs to life, capable of stealthily booby trapping items."
 	var/bomb_cooldown = 0
 
@@ -609,12 +609,12 @@
 	random = FALSE
 
 /obj/item/weapon/guardiancreator/tech
-	name = "holographic injector"
-	desc = "An experimental holographic projection apparatus, administered via injection. Though capable of near-sorcerous feats via hard-light and nanomachines, it requires a living host to function, and will fail in the event of the host's death."
+	name = "guardian nanoswarm injector"
+	desc = "A small injection apparatus used to introduce swarms of alien nanomachines to a living host. Upon contact, this \"nanoswarm\" will bind itself to the creature, forming into a single living creature under the host's will. If the host dies, the nanomachines will shut down."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "combat_hypo"
 	theme = "tech"
-	mob_name = "Hard-Light Hologram"
+	mob_name = "Nanoswarm"
 	use_message = "<span class='notice'>You press the injector to your chest and attempt to activate it...</span>"
 	used_message = "<span class='warning'>The hypo seems to be empty!</span>"
 	failure_message = "<span class='boldannounce'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
@@ -640,20 +640,23 @@
 
 
 /obj/item/weapon/paper/guardian
-	name = "Holographic Projector Manual"
+	name = "nanoswarm use manual"
 	icon_state = "alienpaper_words"
-	info = {"<b>A list of Hologram Types</b><br>
-
+	info = {"This device will allow you to administer a large amount of alien nanomachines into your body, which will form them into a single organism to obey your will. Syndicate command recommends \
+	avoiding death at all costs while using these nanomachines, as we do not currently know how they are made or how to create more of them, and because they shut down upon your death, this makes them \
+	very expensive to replace.
+ <br><br>
+ The nanoswarm can adapt to the user's needs at their initial startup. Here is a list of the types they can become:<br>
  <br>
  <b>Chaos</b>: Ignites creatures on touch. teleports them at random on attack. Automatically extinguishes the user if they catch fire.<br>
  <br>
- <b>Standard</b>: Devestating close combat attacks and high damage resist. No special powers.<br>
+ <b>Standard</b>: Devestating close combat attacks and high damage resistance. No special powers.<br>
  <br>
- <b>Ranged</b>: Has two modes. Ranged: Extremely weak, highly spammable projectile attack. Scout: Can not attack, but can move through walls. Can lay surveillance snares in either mode.<br>
+ <b>Ranged</b>: Has two modes. Ranged: Extremely weak, highly spammable projectile attack. Scout: Cannot attack, but can move through walls and is difficult to see. Can lay surveillance snares in either mode.<br>
  <br>
- <b>Support</b>: Has two modes. Combat: Medium power attacks and damage resist. Healer: Attacks heal damage, but low damage resist and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
+ <b>Support</b>: Has two modes. Combat: Medium power attacks and damage resist. Healer: Attacks heal the target. Low damage resistance and slow movement. Can deploy a bluespace beacon and warp targets to it (including you) in either mode.<br>
  <br>
- <b>Explosive</b>: High damage resist and medium power attack. Can turn any object into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered.<br>
+ <b>Explosive</b>: High damage resistance and medium power attack. Can turn any object into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after some time of being left idle.<br>
 "}
 
 /obj/item/weapon/paper/guardian/update_icon()
