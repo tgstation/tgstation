@@ -477,6 +477,7 @@
 	var/num = 1
 	if(!hud_used) return
 	if(!client) return
+	var/list/used = list()
 
 	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
 		return
@@ -496,20 +497,21 @@
 					actionitem.screen_loc = ui_action_slot4
 				if(5)
 					actionitem.screen_loc = ui_action_slot5
+			used += actionitem.owner
 			num++
 		else
 			client.screen -= actionitem
+			client.images -= actionitem.overlay
 			hud_used.item_action_list -= actionitem
 			returnToPool(actionitem)
 
-	if(num > 5)
-		return
-
-	for(var/obj/item/I in (src.contents-hud_used.item_action_list))
+	for(var/obj/item/I in (src.contents-used))
 		if(I.action_button_name && (num < 6))
 			var/obj/screen/item_action/newactionitem = getFromPool(/obj/screen/item_action,null,I)
+			newactionitem.icon = ui_style2icon(client.prefs.UI_style)
 			hud_used.item_action_list += newactionitem
 			client.screen += newactionitem
+			client.images += newactionitem.overlay
 			switch(num)
 				if(1)
 					newactionitem.screen_loc = ui_action_slot1

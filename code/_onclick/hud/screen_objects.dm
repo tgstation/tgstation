@@ -78,6 +78,7 @@
 
 
 /obj/screen/item_action
+	icon_state = "template"
 	var/obj/item/owner
 	var/image/overlay
 
@@ -85,7 +86,7 @@
 	..()
 	owner = I
 	name = I.action_button_name
-	overlay = image(loc = src)
+	overlay = image(loc = src, layer=src.layer+1)
 	overlay.appearance = I.appearance
 	overlay.name = I.action_button_name
 	overlay.dir = SOUTH
