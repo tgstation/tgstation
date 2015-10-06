@@ -5,6 +5,7 @@
 
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
+	anchored = TRUE
 
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
