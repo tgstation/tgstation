@@ -6,7 +6,13 @@
 	bitesize = 12
 	origin_tech = "biotech=4"
 	var/grown = 0
-	var/datum/recruiter/recruiter
+	var/hatching = 0 // So we don't spam ghosts.
+	var/datum/recruiter/recruiter = null
+
+	var/list/required_mols=list(
+		"toxins"=MOLES_PLASMA_VISIBLE,
+		"oxygen"=5
+	)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/borer/New()
 	..()
@@ -20,22 +26,26 @@
 	icon_state = "borer egg-grown"
 	processing_objects.Add(src)
 
-	recruiter = new()
-	recruiter.display_name = "borer"
-	recruiter.role = ROLE_BORER
-	recruiter.jobban_roles = list("pAI")
+	if(!recruiter)
+		recruiter = new()
+		recruiter.display_name = "borer"
+		recruiter.role = ROLE_BORER
+		recruiter.jobban_roles = list("pAI")
 
-	// A player has their role set to Yes or Always
-	recruiter.player_volunteering.Add(src, "recruiter_recruiting")
-	// ", but No or Never
-	recruiter.player_not_volunteering.Add(src, "recruiter_not_recruiting")
+		// A player has their role set to Yes or Always
+		recruiter.player_volunteering.Add(src, "recruiter_recruiting")
+		// ", but No or Never
+		recruiter.player_not_volunteering.Add(src, "recruiter_not_recruiting")
 
-	recruiter.recruited.Add(src, "recruiter_recruited")
-	return
+		recruiter.recruited.Add(src, "recruiter_recruited")
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/Hatch()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch() called tick#: [world.time]")
+	if(hatching)
+		return
 	processing_objects.Remove(src)
+	icon_state="borer egg-triggered"
+	hatching=1
 	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	recruiter.request_player()
 
@@ -53,18 +63,25 @@
 	var/mob/dead/observer/O = args["player"]
 	if(O)
 		var/turf/T = get_turf(src)
-		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
+		src.visible_message("<span class='notice'>\The [name] bursts open!</span>")
 		var/mob/living/simple_animal/borer/B = new (T)
 		B.transfer_personality(O.client)
 		// Play hatching noise here.
 		qdel(src)
+	else
+		src.visible_message("<span class='notice'>\The [name] calms down.</span>")
+		Grow() // Reset egg, check for hatchability.
 
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/borer/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	//testing("[type]/PROCESS() - plasma: [environment.toxins]")
-	if (environment.toxins > MOLES_PLASMA_VISIBLE)//plasma exposure causes the egg to hatch
+	var/meets_conditions=1
+	for(var/gas_id in required_mols)
+		if(environment.vars[gas_id] <= required_mols[gas_id])
+			meets_conditions=0
+	if(meets_conditions)
 		src.Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/borer/attackby(obj/item/weapon/W as obj, mob/user as mob)
