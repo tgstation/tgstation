@@ -258,13 +258,14 @@ bool writeToFile()
 			if(storedSrc[i] != "Blank") outputFile << storedSrc[i] << endl;
 		}
 		
+		//and finally, hard deletes
 		if(totalHardDels > 0)
 		{
-			outputFile << "** Hard deletions **";
+			outputFile << endl << "** Hard deletions **";
 			for(int i=0; i <= maxStorage; i++)
 			{
 				if(numHardDel[i] != 0) outputFile << endl << endl << "The following path has failed to GC " << numHardDel[i] << " time(s).\n";
-				if(storedHardDel[i] != "Blank") outputFile << storedRuntime[i] << endl;
+				if(storedHardDel[i] != "Blank") outputFile << storedHardDel[i] << endl;
 			}
 		}
 		outputFile.close();
@@ -329,6 +330,45 @@ void sortRuntimes()
 	}
 }
 
+void sortHardDels() //copypasting and I don't care~
+{
+	string tempHardDel[maxStorage + 1];
+	unsigned int tempNumHardDel[maxStorage + 1];
+	unsigned int highestCount = 0;
+
+	for (int i = 0; i <= maxStorage; i++)
+	{
+		//Get the largest occurance of a single runtime
+		if (highestCount < numRuntime[i])
+		{
+			highestCount = numRuntime[i];
+		}
+
+		tempHardDel[i] = storedHardDel[i];	storedHardDel[i] = "Blank";
+		tempNumHardDel[i] = numHardDel[i];	numHardDel[i] = 0;
+	}
+
+	while (highestCount > 0)
+	{
+		for (int i = 0; i <= maxStorage; i++) //For every runtime
+		{
+			if (tempNumHardDel[i] == highestCount) //If the number of occurances of that runtime is equal to our current highest
+			{
+				for (int j = 0; j <= maxStorage; j++) //Find the next available slot and store the info
+				{
+					if (storedHardDel[j] == "Blank") //Found an empty spot
+					{
+						storedHardDel[j] = tempHardDel[i];
+						numHardDel[j] = tempNumHardDel[i];
+						break;
+					}
+				}
+			}
+		}
+		highestCount--; //Lower our 'highest' by one and continue
+	}
+}
+
 
 int main() {
 	char exit; //Used to stop the program from immediatly exiting
@@ -360,6 +400,7 @@ int main() {
 	}
 
 	sortRuntimes();
+	sortHardDels();
 
 	if(writeToFile())
 	{
