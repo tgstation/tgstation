@@ -1,7 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - rscadd: "Some virus symptoms that had no messages now have them."
-  - rscadd: "New virology symptom: Weakness. This will cause stamina damage and fainting spells."
-  - tweak: "Many virus symptom messages have been changed to be more threatening."
