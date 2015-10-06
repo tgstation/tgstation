@@ -191,13 +191,13 @@
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
 		switch(votetype)
-			if("OPTION")
+			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				vote_on_poll(pollid, optionid)
-			if("TEXT")
+			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				log_text_poll_reply(pollid, replytext)
-			if("NUMVAL")
+			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
@@ -216,7 +216,7 @@
 								return
 
 						vote_on_numval_poll(pollid, optionid, rating)
-			if("MULTICHOICE")
+			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 

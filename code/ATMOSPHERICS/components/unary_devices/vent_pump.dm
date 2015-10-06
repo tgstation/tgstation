@@ -309,13 +309,6 @@
 		stat |= NOPOWER
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
-	if(initial_loc)
-		initial_loc.air_vent_info -= id_tag
-		initial_loc.air_vent_names -= id_tag
-	..()
-
-
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded
 
