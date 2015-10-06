@@ -25,7 +25,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv1"
-	using.screen_loc = ui_inv3
+	using.screen_loc = ui_inv2
 	using.layer = 20
 	src.adding += using			// Place using in our adding list
 	M.inv_tool = using			// Save this using as our MoMMI's inv_sight
@@ -35,7 +35,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "sight"
-	using.screen_loc = ui_inv2
+	using.screen_loc = ui_borg_sight
 	using.layer = 20
 	src.adding += using
 	M.sensor = using
@@ -82,14 +82,14 @@
 	mymob.hands.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
-	mymob.hands.screen_loc = ui_borg_module
+	mymob.hands.screen_loc = ui_mommi_module
 
 	// Module Panel
 	using = getFromPool(/obj/screen)
 	using.name = "panel"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "panel"
-	using.screen_loc = ui_borg_panel
+	using.screen_loc = ui_mommi_panel
 	using.layer = 19
 	src.adding += using
 
