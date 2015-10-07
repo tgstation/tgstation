@@ -2143,11 +2143,11 @@
 	icon_state = "chapel"
 	products = list(
 		/obj/item/clothing/under/rank/chaplain = 2,
-		/obj/item/clothing/under/shoes/black = 2,
+		/obj/item/clothing/shoes/black = 2,
 		/obj/item/clothing/suit/nun = 2,
 		/obj/item/clothing/head/nun_hood = 2,
 		/obj/item/clothing/suit/chaplain_hoodie = 2,
-		/obj/item/clothing/suit/chaplain_hood = 2,
+		/obj/item/clothing/head/chaplain_hood = 2,
 		/obj/item/clothing/suit/holidaypriest = 2,
 		/obj/item/clothing/under/wedding/bride_white = 2,
 		/obj/item/clothing/head/hasturhood = 2,
@@ -2159,7 +2159,7 @@
 		/obj/item/clothing/mask/chapmask = 2,
 		/obj/item/clothing/under/sl_suit = 2,
 		/obj/item/weapon/storage/backpack/cultpack = 2,
-		/obj/item/storage/fancy/candle_box = 5,
+		/obj/item/weapon/storage/fancy/candle_box = 5,
 		)
 	premium = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
