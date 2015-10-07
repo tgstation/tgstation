@@ -6,7 +6,7 @@ rmdir /q gamecode\%AB%\cfg >nul 2>nul
 del /q gamecode\%AB%\nudge.py >nul 2>nul
 del /q gamecode\%AB%\CORE_DATA.py >nul 2>nul
 
-del /S /F /Q gamecode\%AB%
+del /S /F /Q gamecode\%AB% >nul 2>nul
 
 echo Copying files
 xcopy gitrepo gamecode\%AB% /Y /X /K /R /H /I /C /V /E /Q /EXCLUDE:copyexclude.txt >nul
