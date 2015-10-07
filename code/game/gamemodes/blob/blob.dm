@@ -189,8 +189,9 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob/proc/stage(stage)
 
 	switch(stage)
-		if (0)
-			send_intercept(1)
+/*		if (0)
+			send_intercept(1) //Temporarily unused - see stage 0 comment
+*/
 		if (1)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
