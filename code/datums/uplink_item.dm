@@ -245,8 +245,8 @@ var/list/uplink_items = list()
 		T.TC_cost = cost
 
 /datum/uplink_item/dangerous/guardian
-	name = "Holoparasites"
-	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
+	name = "Guardian Nanoswarm Injector"
+	desc = "A small injector containing a large amount of alien nanomachines of unknown composition. Upon contact with a living creature,  these nanomachines will form into a single organism, dubbed \"Guardian Nanoswarm\", and obey the will of its host. If the host dies, the nanoswarm will subsequently shut down permanently."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	excludefrom = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 	cost = 12
