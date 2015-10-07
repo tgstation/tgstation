@@ -1,7 +1,6 @@
 
 var/global/list/global_handofgod_traptypes = list()
 var/global/list/global_handofgod_structuretypes = list()
-var/global/list/global_handofgod_itemtypes = list()
 
 
 /datum/game_mode
@@ -21,18 +20,12 @@ var/global/list/global_handofgod_itemtypes = list()
 /datum/game_mode/hand_of_god
 	name = "hand of god"
 	config_tag = "handofgod"
-	antag_flag = BE_HOG_CULTIST		//Followers use BE_HOG_CULTIST, Gods are picked later on with BE_HOG_GOD
+	antag_flag = ROLE_HOG_CULTIST		//Followers use ROLE_HOG_CULTIST, Gods are picked later on with ROLE_HOG_GOD
 
-	required_players = 1 	//20-25+
-	required_enemies = 0 	//This MUST be an even number to function properly.  This number counts
-							//all enemy players involved, as in both teams combined.  Recommended: 8
-							//If you want to test something by yourself, set to zero.  Note that you will produce one unavoidable
-							//runtime due to an empty list being pick()'d.
-
-	recommended_enemies = 2
-
+	required_players = 25
+	required_enemies = 8
+	recommended_enemies = 8
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
-	var/finished = 0
 
 
 /datum/game_mode/hand_of_god/announce()
@@ -85,29 +78,32 @@ var/global/list/global_handofgod_itemtypes = list()
 /datum/game_mode/hand_of_god/post_setup()
 
 	//Find viable red god
-	var/list/red_god_possibilities = get_players_for_role(BE_HOG_GOD)
+	var/list/red_god_possibilities = get_players_for_role(ROLE_HOG_GOD)
 	red_god_possibilities &= red_deity_followers //followers only
 	if(!red_god_possibilities.len) //No candidates? just pick any follower regardless of prefs
 		red_god_possibilities = red_deity_followers
 
 	//Make red god
 	var/datum/mind/red_god = pick_n_take(red_god_possibilities)
-	red_god.current.become_god("red")
-	ticker.mode.forge_deity_objectives(red_god)
-	remove_hog_follower(red_god,0)
-	add_god(red_god,"red")
+	if(red_god)
+		red_god.current.become_god("red")
+		ticker.mode.forge_deity_objectives(red_god)
+		remove_hog_follower(red_god,0)
+		add_god(red_god,"red")
 
 	//Find viable blue god
-	var/list/blue_god_possibilities = get_players_for_role(BE_HOG_GOD)
+	var/list/blue_god_possibilities = get_players_for_role(ROLE_HOG_GOD)
 	blue_god_possibilities &= blue_deity_followers //followers only
 	if(!blue_god_possibilities.len) //No candidates? just pick any follower regardless of prefs
 		blue_god_possibilities = blue_deity_followers
 
+	//Make blue god
 	var/datum/mind/blue_god = pick_n_take(blue_god_possibilities)
-	blue_god.current.become_god("blue")
-	ticker.mode.forge_deity_objectives(blue_god)
-	remove_hog_follower(blue_god,0)
-	add_god(blue_god,"blue")
+	if(blue_god)
+		blue_god.current.become_god("blue")
+		ticker.mode.forge_deity_objectives(blue_god)
+		remove_hog_follower(blue_god,0)
+		add_god(blue_god,"blue")
 
 
 ///////////////////
@@ -145,7 +141,7 @@ var/global/list/global_handofgod_itemtypes = list()
 			deity.objectives += build
 			build.gen_amount_goal(8, 16)
 
-			var/datum/objective/sacrifice_prophet/sacrifice
+			var/datum/objective/sacrifice_prophet/sacrifice = new
 			sacrifice.owner = deity
 			deity.objectives += sacrifice
 
@@ -194,6 +190,8 @@ var/global/list/global_handofgod_itemtypes = list()
 	if(colour == "blue")
 		blue_deity_followers += follower_mind
 
+	H.faction |= "[colour] god"
+
 	update_hog_icons_added(follower_mind, colour)
 	follower_mind.special_role = "Hand of God: [capitalize(colour)] Follower"
 	follower_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the [colour] follower cult!</font>"
@@ -217,6 +215,11 @@ var/global/list/global_handofgod_itemtypes = list()
 	follower_mind.remove_hog_follower_prophet()
 	update_hog_icons_removed(follower_mind,"red")
 	update_hog_icons_removed(follower_mind,"blue")
+
+	if(follower_mind.current)
+		var/mob/living/carbon/human/H = follower_mind.current
+		H.faction -= "red god"
+		H.faction -= "blue god"
 
 	if(announce)
 		follower_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been deconverted from a deity's cult!</font>"
@@ -296,7 +299,6 @@ var/global/list/global_handofgod_itemtypes = list()
 	var/mob/living/carbon/human/H = A
 	if(!H.mind)
 		return 0
-
 	if(side == "red")
 		if(H.mind in ticker.mode.red_deity_prophets)
 			return 1
@@ -305,12 +307,13 @@ var/global/list/global_handofgod_itemtypes = list()
 			return 1
 
 
+
 //////////////////////
 //Roundend Reporting//
 //////////////////////
 
 
-/datum/game_mode/proc/declare_completion_handofgod()
+/datum/game_mode/hand_of_god/declare_completion()
 	if(red_deities.len)
 		var/text = "<BR><font size=3 color='red'><B>The red cult:</b></font>"
 		for(var/datum/mind/red_god in red_deities)
@@ -422,15 +425,15 @@ var/global/list/global_handofgod_itemtypes = list()
 	var/rank = 0
 	if(side == "red")
 		hud_key = ANTAG_HUD_HOG_RED
-		if(is_handofgod_redprophet(hog_mind))
+		if(is_handofgod_redprophet(hog_mind.current))
 			rank = 1
 
 	else if(side == "blue")
 		hud_key = ANTAG_HUD_HOG_BLUE
-		if(is_handofgod_blueprophet(hog_mind))
+		if(is_handofgod_blueprophet(hog_mind.current))
 			rank = 1
 
-	if(is_handofgod_god(hog_mind))
+	if(is_handofgod_god(hog_mind.current))
 		rank = 2
 
 	if(hud_key)

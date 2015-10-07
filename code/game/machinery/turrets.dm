@@ -363,10 +363,11 @@
 
 /obj/machinery/gun_turret/New()
 	..()
-	take_damage(0) //check your health
-	icon_state = "[base_icon_state]" + "0"
 	if(!base)
 		base = src
+	take_damage(0) //check your health
+	icon_state = "[base_icon_state]" + "0"
+
 
 /obj/machinery/gun_turret/ex_act(severity, target)
 	switch(severity)
@@ -400,8 +401,6 @@
 				die()
 				return
 			state = 2
-	if(!base)
-		state = 2
 
 	update_icon()
 	return

@@ -1,18 +1,43 @@
 
 /mob/camera/god/proc/ability_cost(cost = 0,structures = 0, requires_conduit = 0)
-	if(cost && faith < cost)
+	if(faith < cost)
+		src << "<span class='danger'>You lack the faith!</span>"
 		return 0
-	if(structures && !(isturf(loc) || istype(loc, /turf/space)))
-		src << "<span class='danger'>Your structure would just float away, you need stable ground!</span>"
-		return 0
-	if(structures && (locate(/obj/structure) in get_turf(src)))
-		src << "<span class='danger'>There is another structure here, Select an empty spot.</span>"
+
+	if(structures)
+		if(!isturf(loc) || istype(loc, /turf/space))
+			src << "<span class='danger'>Your structure would just float away, you need stable ground!</span>"
+			return 0
+
+		var/turf/T = get_turf(src)
+		if(T)
+			if(T.density)
+				src << "<span class='danger'>There is something blocking your structure!</span>"
+				return 0
+
+			for(var/atom/movable/AM in T)
+				if(AM == src)
+					continue
+				if(AM.density)
+					src << "<span class='danger'>There is something blocking your structure!</span>"
+					return 0
 
 	if(requires_conduit)
 		//Organised this way as there can be multiple conduits, so it's more likely to be a conduit check.
-		if(!locate(/obj/structure/divine/conduit) in range(src,15))
-			if(!locate(/obj/structure/divine/nexus) in range(src, 15))
-				return 0
+		var/valid = 0
+		for(var/obj/structure/divine/conduit/C in range(src,15))
+			if(C.side == side)
+				valid++
+				break
+
+		if(!valid)
+			for(var/obj/structure/divine/nexus/N in range(src,15))
+				if(N.side == side)
+					valid++
+					break
+		if(!valid)
+			src << "<span class='danger'>You must be near your Nexus or a Conduit to do this!</span>"
+			return 0
 
 	return 1
 
@@ -34,9 +59,9 @@
 	set desc = "Teleports you to one of your followers."
 	var/list/following = list()
 	if(side == "red")
-		following = ticker.mode.red_deity_followers
+		following = ticker.mode.red_deity_followers|ticker.mode.red_deity_prophets
 	else if(side == "blue")
-		following = ticker.mode.blue_deity_followers
+		following = ticker.mode.blue_deity_followers|ticker.mode.blue_deity_prophets
 	else
 		src << "You are unaligned, and thus do not have followers"
 		return
@@ -54,16 +79,19 @@
 	var/list/following = list()
 
 	if(!ability_cost(100))
-		src << "You lack the faith to make a prophet."
 		return
 	if(side == "red")
-		if(ticker.mode.red_deity_prophets.len)
+		var/datum/mind/old_proph = locate() in ticker.mode.red_deity_prophets
+		if(old_proph && old_proph.current && old_proph.current.stat != DEAD)
 			src << "You can only have one prophet alive at a time."
+			return
 		else
 			following = ticker.mode.red_deity_followers
 	else if(side == "blue")
-		if(ticker.mode.blue_deity_prophets.len)
+		var/datum/mind/old_proph = locate() in ticker.mode.blue_deity_prophets
+		if(old_proph && old_proph.current && old_proph.current.stat != DEAD)
 			src << "You can only have one prophet alive at a time."
+			return
 		else
 			following = ticker.mode.blue_deity_followers
 
@@ -83,7 +111,6 @@
 	set name = "Talk to Anyone (20)"
 	set desc = "Allows you to send a message to anyone, regardless of their faith."
 	if(!ability_cost(20))
-		src << "You lack the faith to convene with others."
 		return
 	var/mob/choice = input("Choose who you wish to talk to", "Talk to ANYONE") as null|anything in mob_list
 	if(choice)
@@ -100,7 +127,6 @@
 	set desc = "Hits anything under you with a moderate amount of damage."
 
 	if(!ability_cost(40,0,1))
-		src << "You lack the faith to smite others."
 		return
 	if(!range(7,god_nexus))
 		src << "You lack the strength to smite this far from your nexus."
@@ -120,7 +146,6 @@
 	set desc = "Knocks out the mortal below you for a brief amount of time."
 
 	if(!ability_cost(20,0,1))
-		src << "You lack the faith to lull mortals to sleep."
 		return
 
 	for(var/mob/living/L in get_turf(src))
@@ -136,7 +161,6 @@
 	set desc = "Tug at the fibres of reality itself and bend it to your whims!"
 
 	if(!ability_cost(300,0,1))
-		src << "You lack the faith to bend reality."
 		return
 
 	var/event = pick(/datum/round_event/meteor_wave, /datum/round_event/communications_blackout, /datum/round_event/radiation_storm, /datum/round_event/carp_migration,
@@ -151,15 +175,10 @@
 	set name = "Construct Nexus"
 	set desc = "Instantly creates your nexus, You can only do this once, make sure you're happy with it!"
 
-	if(ability_cost(0,1,0))
-		var/obj/structure/divine/nexus/N = new(get_turf(src))
-		N.deity = src
-		N.side = side
-		god_nexus = N
-		nexus_required = TRUE
-		verbs -= /mob/camera/god/verb/constructnexus
-		//verbs += /mob/camera/god/verb/movenexus //Translocators have no sprite
-		update_health_hud()
+	if(!ability_cost(0,1,0) || z != 1)
+		return
+
+	place_nexus()
 
 
 /* //Transolocators have no sprite
@@ -195,21 +214,23 @@
 	set name = "Construct Structure (75)"
 	set desc = "Create the foundation of a divine object."
 
-	if(ability_cost(75,1,1))
-		var/construct = input("Choose what you wish to create.", "Divine Construction") as null|anything in global_handofgod_structuretypes
-		if(!construct || !global_handofgod_structuretypes[construct] || !ability_cost(75,1,1)) //check again, they might try to cheat the input window.
-			return
-		var/obj/structure/divine/construct_type = global_handofgod_structuretypes[construct] //it's a path but we need to initial() some vars
-		if(!construct_type)
-			return
+	if(!ability_cost(75,1,1))
+		return
 
-		src << "You lay the foundations for \a [construct], your followers must finish the construction using metal and glass."
-		add_faith(-75)
+	var/construct = input("Choose what you wish to create.", "Divine Construction") as null|anything in global_handofgod_structuretypes
+	if(!construct || !global_handofgod_structuretypes[construct] || !ability_cost(75,1,1)) //check again, they might try to cheat the input window.
+		return
 
-		var/obj/structure/divine/construction_holder/CH = new(get_turf(src))
-		CH.assign_deity(src)
-		CH.setup_construction(construct_type)
-		CH.visible_message("<span class='notice'>[src] has created a transparent, unfinished [construct]. It can be finished by adding materials.</span>")
+	var/obj/structure/divine/construct_type = global_handofgod_structuretypes[construct] //it's a path but we need to initial() some vars
+	if(!construct_type)
+		return
+
+	add_faith(-75)
+
+	var/obj/structure/divine/construction_holder/CH = new(get_turf(src))
+	CH.assign_deity(src)
+	CH.setup_construction(construct_type)
+	CH.visible_message("<span class='notice'>[src] has created a transparent, unfinished [construct]. It can be finished by adding materials.</span>")
 
 
 /mob/camera/god/verb/construct_traps()
@@ -217,16 +238,18 @@
 	set name = "Construct Trap (20)"
 	set desc = "Creates a ward or trap."
 
-	if(ability_cost(20,1,1))
-		var/trap = input("Choose what you wish to create.", "Divine Traps") as null|anything in global_handofgod_traptypes
-		if(!trap || !global_handofgod_traptypes[trap] || !ability_cost(20,1,1))
-			return
+	if(!ability_cost(20,1,1))
+		return
 
-		src << "You lay \a [trap]."
-		add_faith(-20)
+	var/trap = input("Choose what you wish to create.", "Divine Traps") as null|anything in global_handofgod_traptypes
+	if(!trap || !global_handofgod_traptypes[trap] || !ability_cost(20,1,1))
+		return
 
-		var/traptype = global_handofgod_traptypes[trap]
-		new traptype (get_turf(src))
+	src << "You lay \a [trap]."
+	add_faith(-20)
+
+	var/traptype = global_handofgod_traptypes[trap]
+	new traptype (get_turf(src))
 
 
 
@@ -236,25 +259,27 @@
 	set name = "Construct Items (20)"
 	set desc = "Construct some items for your followers"
 
-	if(ability_cost(20,1,1))
-		var/list/item_types = list()
-		if(side == "red")
-			item_types["red banner"] = /obj/item/weapon/banner/red
-			item_types["red bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/red
-			item_types["red armour"] = /obj/item/weapon/storage/box/itemset/crusader/red
+	if(!ability_cost(20,1,1))
+		return
 
-		else if(side == "blue")
-			item_types["blue banner"] = /obj/item/weapon/banner/blue
-			item_types["blue bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/blue
-			item_types["blue armour"] = /obj/item/weapon/storage/box/itemset/crusader/blue
+	var/list/item_types = list("claymore sword" = /obj/item/weapon/claymore)
+	if(side == "red")
+		item_types["red banner"] = /obj/item/weapon/banner/red
+		item_types["red bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/red
+		item_types["red armour"] = /obj/item/weapon/storage/box/itemset/crusader/red
+
+	else if(side == "blue")
+		item_types["blue banner"] = /obj/item/weapon/banner/blue
+		item_types["blue bannerbackpack"] = /obj/item/weapon/storage/backpack/bannerpack/blue
+		item_types["blue armour"] = /obj/item/weapon/storage/box/itemset/crusader/blue
 
 
-		var/item = input("Choose what you wish to create.", "Divine Items") as null|anything in item_types
-		if(!item || !global_handofgod_itemtypes[item] || !ability_cost(20,1,1))
-			return
+	var/item = input("Choose what you wish to create.", "Divine Items") as null|anything in item_types
+	if(!item || !item_types[item] || !ability_cost(20,1,1))
+		return
 
-		src << "You produce \a [item]"
-		add_faith(-20)
+	src << "You produce \a [item]"
+	add_faith(-20)
 
-		var/itemtype = global_handofgod_itemtypes[item]
-		new itemtype (get_turf(src))
+	var/itemtype = item_types[item]
+	new itemtype (get_turf(src))

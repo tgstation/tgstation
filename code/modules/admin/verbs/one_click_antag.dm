@@ -65,11 +65,11 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(BE_TRAITOR in applicant.client.prefs.be_special)
+		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "traitor") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
 									candidates += applicant
@@ -101,11 +101,11 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(BE_CHANGELING in applicant.client.prefs.be_special)
+		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "changeling") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
 									candidates += applicant
@@ -135,11 +135,11 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(BE_REV in applicant.client.prefs.be_special)
+		if(ROLE_REV in applicant.client.prefs.be_special)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "revolutionary") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
 									candidates += applicant
@@ -206,11 +206,11 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(BE_CULTIST in applicant.client.prefs.be_special)
+		if(ROLE_CULTIST in applicant.client.prefs.be_special)
 			if(applicant.stat == CONSCIOUS)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
 									candidates += applicant
@@ -386,11 +386,11 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(BE_GANG in applicant.client.prefs.be_special)
+		if(ROLE_GANG in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "gangster") && !jobban_isbanned(applicant, "Syndicate"))
+						if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
 									candidates += applicant
@@ -584,7 +584,7 @@
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(BE_SHADOWLING in applicant.client.prefs.be_special)
+		if(ROLE_SHADOWLING in applicant.client.prefs.be_special)
 			if(!applicant.stat)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)

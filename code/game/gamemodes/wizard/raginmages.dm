@@ -78,8 +78,8 @@
 	spawn(rand(500, 700))
 		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client && !G.client.holder && !G.client.is_afk() && (BE_WIZARD in G.client.prefs.be_special))
-				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+			if(G.client && !G.client.holder && !G.client.is_afk() && (ROLE_WIZARD in G.client.prefs.be_special))
+				if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate"))
 					if(age_check(G.client))
 						candidates += G
 		if(!candidates.len)

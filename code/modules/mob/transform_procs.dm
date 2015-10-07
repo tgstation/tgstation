@@ -433,11 +433,9 @@
 	gib(src)
 
 
-/mob/proc/become_god(var/side)
-	if(client)
-		src << sound(null, repeat = 0, wait = 0, wolume = 85, channel = 1)
-
-	var/mob/camera/god/G = new(loc, side = side)
+/mob/proc/become_god(var/side_colour)
+	var/mob/camera/god/G = new /mob/camera/god(loc)
+	G.side = side_colour
 	G.invisibility = 40
 	if(mind)
 		mind.transfer_to(G)
@@ -446,6 +444,7 @@
 
 	G.job = "Deity"
 	G.rename_self("deity", 0)
+	G.update_icons()
 
 	. = G
 	qdel(src)

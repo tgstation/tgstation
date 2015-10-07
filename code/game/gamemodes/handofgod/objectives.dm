@@ -29,9 +29,10 @@
 	martyr_compatible = 1
 
 /datum/objective/deicide/check_completion()
-	if(target && target.current && target.current.stat == DEAD)
-		return 1
-	return 0
+	if(target)
+		if(target.current) //Gods are deleted when they lose
+			return 0
+	return 1
 
 
 /datum/objective/deicide/find_target()

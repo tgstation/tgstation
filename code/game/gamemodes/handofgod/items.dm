@@ -6,6 +6,33 @@
 	icon_state = "banner"
 	item_state = "banner"
 	desc = "A banner with Nanotrasen's logo on it."
+	var/moralecooldown = 0
+	var/moralewait = 600
+
+
+/obj/item/weapon/banner/attack_self(mob/living/carbon/human/user)
+	if(moralecooldown + moralewait > world.time)
+		return
+	var/side = ""
+	if(is_handofgod_redcultist(user))
+		side = "red"
+	else if (is_handofgod_bluecultist(user))
+		side = "blue"
+
+	if(!side)
+		return
+	user << "<span class='notice'>You increase the morale of your fellows!</span>"
+	moralecooldown = world.time
+
+	for(var/mob/living/carbon/human/H in range(4,get_turf(src)))
+		if((side == "red") && is_handofgod_redcultist(H) || (side == "blue") && is_handofgod_bluecultist(H))
+			H << "<span class='notice'>Your morale is increased by [user]'s banner!</span>"
+			H.adjustBruteLoss(-15)
+			H.adjustFireLoss(-15)
+			H.AdjustStunned(-2)
+			H.AdjustWeakened(-2)
+			H.AdjustParalysis(-2)
+
 
 /obj/item/weapon/banner/red
 	name = "red banner"
@@ -16,15 +43,15 @@
 /obj/item/weapon/banner/red/examine()
 	..()
 	if(is_handofgod_redcultist(usr))
-		usr << "A banner representing our might against the heretics."
+		usr << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
 	else if(is_handofgod_bluecultist(usr))
 		usr << "A heretical banner that should be destroyed posthaste."
 
 
 /obj/item/weapon/banner/blue
-	name = "red banner"
-	icon_state = "banner-red"
-	item_state = "banner-red"
+	name = "blue banner"
+	icon_state = "banner-blue"
+	item_state = "banner-blue"
 	desc = "A banner with the logo of the blue deity"
 
 /obj/item/weapon/banner/blue/examine()
@@ -33,7 +60,7 @@
 	if(is_handofgod_redcultist(usr))
 		usr << "A heretical banner that should be destroyed posthaste."
 	else if(is_handofgod_bluecultist(usr))
-		usr << "A banner representing our might against the heretics."
+		usr << "A banner representing our might against the heretics. We may use it to increase the morale of our fellow members!"
 
 
 /obj/item/weapon/storage/backpack/bannerpack
@@ -58,7 +85,7 @@
 
 //this is all part of one item set
 /obj/item/clothing/suit/armor/plate/crusader
-	name = "Crusader's Armor"
+	name = "Crusader's Armour"
 	icon_state = "crusader"
 	w_class = 4 //bulky
 	slowdown = 2.0 //gotta pretend we're balanced.
@@ -73,9 +100,9 @@
 /obj/item/clothing/suit/armor/plate/crusader/examine(mob/user)
 	..()
 	if(!is_handofgod_cultist(user))
-		usr << "Armor that's comprised of metal and cloth."
+		usr << "Armour that's comprised of metal and cloth."
 	else
-		usr << "Armor that was used to protect from backstabs, gunshots, explosives, and lasers.  The original wearers of this type of armor were trying to avoid being murdered.  Since they're not around anymore, you're not sure if they were successful or not."
+		usr << "Armour that was used to protect from backstabs, gunshots, explosives, and lasers.  The original wearers of this type of armour were trying to avoid being murdered.  Since they're not around anymore, you're not sure if they were successful or not."
 
 
 /obj/item/clothing/head/helmet/plate/crusader
@@ -154,8 +181,8 @@
 
 
 /obj/item/weapon/storage/box/itemset/crusader
-	name = "Crusader's Armor Set" //i can't into ck2 references
-	desc = "This armor is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
+	name = "Crusader's Armour Set" //i can't into ck2 references
+	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
 
 
 /obj/item/weapon/storage/box/itemset/crusader/blue/New()

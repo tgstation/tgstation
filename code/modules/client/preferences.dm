@@ -2,26 +2,6 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm
-//some autodetection here.
-	"traitor" = /datum/game_mode/traitor,					//0
-	"operative" = /datum/game_mode/nuclear,					//1
-	"changeling" = /datum/game_mode/changeling,				//2
-	"wizard" = /datum/game_mode/wizard,						//3
-	"malf AI" = /datum/game_mode/malfunction,				//4
-	"revolutionary" = /datum/game_mode/revolution,			//5
-	"alien",												//6
-	"pAI/posibrain",										//7
-	"cultist" = /datum/game_mode/cult,						//8
-	"blob" = /datum/game_mode/blob,							//9
-	"ninja",												//10
-	"monkey" = /datum/game_mode/monkey,						//11
-	"gangster" = /datum/game_mode/gang,						//12
-	"shadowling" = /datum/game_mode/shadowling,				//13
-	"abductor" = /datum/game_mode/abduction,				//14
-	"hand of god, god" = /datum/game_mode/hand_of_god, 		//15
-	"hand of god, culstist" = /datum/game_mode/hand_of_god, //16
-)
 
 
 /datum/preferences
@@ -367,7 +347,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
-			dat += "<h2>Antagonist Settings</h2>"
+			dat += "<h2>Special Role Settings</h2>"
 
 			if(jobban_isbanned(user, "Syndicate"))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
@@ -376,7 +356,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 			for (var/i in special_roles)
 				if(jobban_isbanned(user, i))
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
+					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
 				else
 					var/days_remaining = null
 					if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
@@ -384,12 +364,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						var/datum/game_mode/temp_mode = new mode_path
 						days_remaining = temp_mode.get_remaining_days(user.client)
 
-					var/antagkey = capitalize(i)
-
 					if(days_remaining)
-						dat += "<b>Be [i]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
+						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
 					else
-						dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[be_special_flags[antagkey]]'>[(antagkey in be_special) ? "Yes" : "No"]</a><br>"
+						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 
 			dat += "</td></tr></table>"
 
@@ -1000,7 +978,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					toggles ^= ANNOUNCE_LOGIN
 
 				if("be_special")
-					var/be_special_type = text2num(href_list["be_special_type"])
+					var/be_special_type = href_list["be_special_type"]
 					if(be_special_type in be_special)
 						be_special -= be_special_type
 					else

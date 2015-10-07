@@ -15,7 +15,7 @@
 /datum/round_event/slaughter/proc/get_slaughter(end_if_fail = 0)
 	key_of_slaughter = null
 	if(!key_of_slaughter)
-		var/list/candidates = get_candidates(BE_ALIEN)
+		var/list/candidates = get_candidates(ROLE_ALIEN)
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0

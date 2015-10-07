@@ -4,7 +4,7 @@
 /datum/game_mode/monkey
 	name = "monkey"
 	config_tag = "monkey"
-	antag_flag = BE_MONKEY
+	antag_flag = ROLE_MONKEY
 
 	required_players = 20
 	required_enemies = 1

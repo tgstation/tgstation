@@ -526,7 +526,7 @@
 		return
 	used = TRUE
 	user << "[use_message]"
-	var/list/candidates = get_candidates(BE_ALIEN, ALIEN_AFK_BRACKET)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
 
 	shuffle(candidates)
 

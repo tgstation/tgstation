@@ -61,10 +61,10 @@
 	src.key = key
 
 
-/datum/mind/proc/transfer_to(mob/living/new_character)
-	if(!istype(new_character))
-		throw EXCEPTION("transfer_to(): new_character must be mob/living")
-		return
+/datum/mind/proc/transfer_to(mob/new_character)
+	//if(!istype(new_character))
+	//	throw EXCEPTION("transfer_to(): new_character must be mob/living")
+	//	return
 
 	if(current)					//remove ourself from our old body's mind variable
 		current.mind = null
@@ -285,7 +285,7 @@
 		else
 			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 
-		if(current && current.client && (BE_REV in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_REV in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -303,7 +303,7 @@
 		else
 			text += "<B>NONE</B>"
 
-		if(current && current.client && (BE_GANG in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_GANG in current.client.prefs.be_special))
 			text += "|Enabled in Prefs<BR>"
 		else
 			text += "|Disabled in Prefs<BR>"
@@ -350,7 +350,7 @@
 		else
 			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 
-		if(current && current.client && (BE_CULTIST in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -370,7 +370,7 @@
 		else
 			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
 
-		if(current && current.client && (BE_WIZARD in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -394,7 +394,7 @@
 //			if (istype(changeling) && changeling.changelingdeath)
 //				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
 
-		if(current && current.client && (BE_CHANGELING in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -419,7 +419,7 @@
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
 
-		if(current && current.client && (BE_OPERATIVE in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -438,7 +438,7 @@
 	else
 		text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>LOYAL</b>"
 
-	if(current && current.client && (BE_TRAITOR in current.client.prefs.be_special))
+	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
@@ -457,7 +457,7 @@
 	else
 		text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
 
-	if(current && current.client && (BE_SHADOWLING in current.client.prefs.be_special))
+	if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
@@ -476,7 +476,7 @@
 	else
 		text += "<a href='?src=\ref[src];abductor=abductor'>Abductor</a>|<b>human</b>"
 
-	if(current && current.client && (BE_ABDUCTOR in current.client.prefs.be_special))
+	if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
@@ -499,12 +499,12 @@
 	else
 		text += "<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<b>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>"
 
-	if(current && current.client && (BE_HOG_GOD in current.client.prefs.be_special))
+	if(current && current.client && (ROLE_HOG_GOD in current.client.prefs.be_special))
 		text += "|HOG God Enabled in Prefs"
 	else
 		text += "|HOG God Disabled in Prefs"
 
-	if(current && current.client && (BE_HOG_CULTIST in current.client.prefs.be_special))
+	if(current && current.client && (ROLE_HOG_CULTIST in current.client.prefs.be_special))
 		text += "|HOG Cultist Enabled in Prefs"
 	else
 		text += "|HOG Disabled in Prefs"
@@ -532,7 +532,7 @@
 		else
 			text += "healthy|infected|human|<b>OTHER</b>"
 
-		if(current && current.client && (BE_MONKEY in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -563,7 +563,7 @@
 					n_e_robots++
 			text += "<br>[n_e_robots] of [ai.connected_robots.len] slaved cyborgs are emagged. <a href='?src=\ref[src];silicon=unemagcyborgs'>Unemag</a>"
 
-		if(current && current.client && (BE_MALF in current.client.prefs.be_special))
+		if(current && current.client && (ROLE_MALF in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -1536,6 +1536,8 @@
 
 			ticker.mode.blue_deity_followers -= src
 			ticker.mode.blue_deity_prophets -= src
+			current.faction |= "red god"
+			current.faction -= "blue god"
 
 			if(src in ticker.mode.red_deity_prophets)
 				current << "<span class='danger'><B>You have lost the connection with your deity, but you still believe in their grand design, You are no longer a prophet!</b></span>"
@@ -1553,6 +1555,8 @@
 
 			ticker.mode.red_deity_followers -= src
 			ticker.mode.red_deity_prophets -= src
+			current.faction -= "red god"
+			current.faction |= "blue god"
 
 			if(src in ticker.mode.blue_deity_prophets)
 				current << "<span class='danger'><B>You have lost the connection with your deity, but you still believe in their grand design, You are no longer a prophet!</b></span>"
@@ -1579,6 +1583,8 @@
 
 			if(src in ticker.mode.blue_deity_followers || src in ticker.mode.blue_deity_prophets)
 				current << "<span class='danger'><B>You are no longer a member of the Blue cult!<B></span>"
+				current.faction -= "blue god"
+			current.faction |= "red god"
 
 			ticker.mode.blue_deity_followers -= src
 			ticker.mode.blue_deity_prophets -= src
@@ -1594,6 +1600,8 @@
 
 			if(src in ticker.mode.red_deity_followers || src in ticker.mode.red_deity_prophets)
 				current << "<span class='danger'><B>You are no longer a member of the Red cult!<B></span>"
+				current.faction -= "red god"
+			current.faction |= "blue god"
 
 			ticker.mode.red_deity_followers -= src
 			ticker.mode.red_deity_prophets -= src

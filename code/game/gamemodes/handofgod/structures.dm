@@ -1,10 +1,24 @@
 
+/proc/build_hog_construction_lists()
+	if(global_handofgod_traptypes.len && global_handofgod_structuretypes.len)
+		return
+
+	var/list/types = typesof(/obj/structure/divine) - /obj/structure/divine - /obj/structure/divine/trap
+	for(var/T in types)
+		var/obj/structure/divine/D = T
+		if(initial(D.constructable))
+			if(initial(D.trap))
+				global_handofgod_traptypes[initial(D.name)] = T
+			else
+				global_handofgod_structuretypes[initial(D.name)] = T
+
 /obj/structure/divine
 	name = "divine construction site"
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	desc = "An unfinished divine building"
 	anchored = 1
 	density = 1
+	var/constructable = TRUE
 	var/trap = FALSE
 	var/metal_cost = 0
 	var/glass_cost = 0
@@ -18,12 +32,6 @@
 
 /obj/structure/divine/New()
 	..()
-	if(!trap)
-		if(!global_handofgod_structuretypes[name])
-			global_handofgod_structuretypes[name] = type
-	else
-		if(!global_handofgod_traptypes[name])
-			global_handofgod_traptypes[name] = type
 
 
 /obj/structure/divine/proc/update_icons()
@@ -48,7 +56,7 @@
 		return 0
 
 	playsound(get_turf(src), I.hitsound, 50, 1)
-	visible_message("<span class='danger'>\The [src] has been attack with \the [I][(user ? " by [user]/" : ".")]!</span>")
+	visible_message("<span class='danger'>\The [src] has been attack with \the [I][(user ? " by [user]" : ".")]!</span>")
 	health = max(0, health-I.force)
 	healthcheck()
 
@@ -77,18 +85,27 @@
 /obj/structure/divine/proc/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
 	if(!new_deity)
 		return 0
-	if(deity && alert_old_deity)
-		deity << "<span class='danger'><B>Your [name] was captured by [new_deity]'s cult!</B></span>"
-	deity.structures -= src
+	if(deity)
+		if(alert_old_deity)
+			deity << "<span class='danger'><B>Your [name] was captured by [new_deity]'s cult!</B></span>"
+		deity.structures -= src
 	deity = new_deity
 	deity.structures |= src
 	side = deity.side
 	update_icons()
+	return 1
 
 
 /obj/structure/divine/construction_holder
 	alpha = 125
+	constructable = FALSE
 	var/obj/structure/divine/construction_result = /obj/structure/divine //a path, but typed to /obj/structure/divine for initial()
+
+
+
+/obj/structure/divine/construction_holder/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
+	if(..())
+		color = side
 
 
 /obj/structure/divine/construction_holder/proc/setup_construction(construct_type)
@@ -161,7 +178,8 @@
 /obj/structure/divine/construction_holder/proc/check_completion()
 	if(!metal_cost && !glass_cost && !lesser_gem_cost && !greater_gem_cost)
 		visible_message("<span class='notice'>\The [initial(construction_result.name)] is complete!</span>")
-		new construction_result (get_turf(src))
+		var/obj/structure/divine/D = new construction_result (get_turf(src))
+		D.assign_deity(deity)
 		qdel(src)
 
 
@@ -169,7 +187,7 @@
 	..()
 
 	if(metal_cost || glass_cost || lesser_gem_cost || greater_gem_cost)
-		user << "To finish construction it requires the following materials: <BR>"
+		user << "To finish construction it requires the following materials:"
 		if(metal_cost)
 			user << "[metal_cost] metal <IMG CLASS=icon SRC=icons/obj/items.dmi ICONSTATE='sheet-metal'>"
 		if(glass_cost)
@@ -186,6 +204,7 @@
 	icon_state = "nexus"
 	health = 500
 	maxhealth = 500
+	constructable = FALSE
 	var/faith_regen_rate = 1
 	var/list/powerpylons = list()
 
@@ -199,7 +218,7 @@
 		deity.update_health_hud()
 
 	if(!health)
-		if(deity && deity.nexus_required)
+		if(!qdeleted(deity) && deity.nexus_required)
 			deity << "<span class='danger'>Your nexus was destroyed. You feel yourself fading...</span>"
 			qdel(deity)
 		visible_message("<span class='danger'>\The [src] was destroyed!</span>")
@@ -214,6 +233,7 @@
 	if(deity)
 		deity.update_followers()
 		deity.add_faith(faith_regen_rate + (powerpylons.len / 5) + (deity.alive_followers / 3))
+		deity.max_faith = initial(deity.max_faith) + (deity.alive_followers*10) //10 followers = 100 max faith, so disaster() at around 20 followers
 
 
 /obj/structure/divine/nexus/Destroy()
@@ -231,6 +251,7 @@
 	glass_cost = 10
 
 
+/* //No good sprites, and not enough items to make it viable yet
 /obj/structure/divine/forge
 	name = "forge"
 	desc = "A forge fueled by divine might, it allows the creation of sacred and powerful artifacts.  It requires common materials to craft objects."
@@ -240,7 +261,7 @@
 	density = 0
 	maxhealth = 250
 	metal_cost = 40
-
+*/
 
 /obj/structure/divine/convertaltar
 	name = "conversion taltar"
@@ -248,9 +269,11 @@
 	icon_state = "convertaltar"
 	density = 0
 	metal_cost = 20
+	can_buckle = 1
 
 
 /obj/structure/divine/convertaltar/attack_hand(mob/living/user)
+	..()
 	var/mob/living/carbon/human/H = locate() in get_turf(src)
 	if(!is_handofgod_cultist(user))
 		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
@@ -274,9 +297,11 @@
 	icon_state = "sacrificealtar"
 	density = 0
 	metal_cost = 30
+	can_buckle = 1
 
 
 /obj/structure/divine/sacrificealtar/attack_hand(mob/living/user)
+	..()
 	var/mob/living/L = locate() in get_turf(src)
 	if(!is_handofgod_cultist(user))
 		user << "<span class='notice'>You try to use it, but unfortunately you don't know any rituals.</span>"
@@ -329,7 +354,7 @@
 /obj/structure/divine/healingfountain
 	name = "healing fountain"
 	desc = "A fountain containing the waters of life... or death, depending on where your allegiances lie"
-	icon_state = "puddle"
+	icon_state = "fountain"
 	metal_cost = 15
 	glass_cost = 10
 	autocolours = FALSE
@@ -349,13 +374,16 @@
 		user << "<span class='notice'>The water feels warm ans soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
 		user.reagents.add_reagent("doctorsdelight",20)
 	update_icons()
+	spawn(time_between_uses)
+		if(src)
+			update_icons()
 
 
 /obj/structure/divine/healingfountain/update_icons()
 	if(last_process + time_between_uses > world.time)
 		icon_state = "fountain-dry"
 	else
-		icon_state = "fountain"
+		icon_state = "fountain-[side]"
 
 
 /obj/structure/divine/powerpylon
@@ -405,7 +433,7 @@
 
 /obj/structure/divine/defensepylon/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)
 	if(..() && pylon_gun)
-		pylon_gun.faction = side
+		pylon_gun.faction = "[side] god"
 		pylon_gun.side = side
 
 

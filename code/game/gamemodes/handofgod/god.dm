@@ -8,25 +8,31 @@
 	see_in_dark = 0
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	languages = HUMAN | MONKEY | ALIEN | ROBOT | SLIME | DRONE | SWARMER
+	hud_possible = list(ANTAG_HUD)
 
-	var/faith = 0
+	var/faith = 100 //For initial prophet appointing/stupid purchase
 	var/max_faith = 100
 	var/side = "neutral" //Red or Blue for the gamemode
 	var/obj/structure/divine/nexus/god_nexus = null //The source of the god's power in this realm, kill it and the god is kill
 	var/nexus_required = FALSE //If the god dies from losing it's nexus, defaults to off so that gods don't instantly die at roundstart
 	var/followers_required = 0 //Same as above
 	var/alive_followers = 0
-	var/mob/living/carbon/human/prophet = null //The prophet of this god
 	var/list/structures = list()
 	var/prophets_sacrificed_in_name = 0
 
 
-/mob/camera/god/New(loc, newName, side = "neutral")
+/mob/camera/god/New()
 	..()
-	real_name = newName
-	name = real_name
-	side = side
 	update_icons()
+	build_hog_construction_lists()
+
+	//Force nexuses after 2 minutes in hand of god mode
+	if(ticker && ticker.mode && ticker.mode.name == "hand of god")
+		spawn(1200)
+			if(src)
+				if(!god_nexus)
+					place_nexus()
+					src << "<span class='danger'>You failed to place your nexus, and it has been placed for you!</span>"
 
 
 /mob/camera/god/update_icons()
@@ -47,10 +53,10 @@
 	sync_mind()
 	src << "<span class='notice'>You are a deity!</span>"
 	src << "You are a deity and are worshipped by a cult!  You are rather weak right now, but that will change as you gain more followers."
-	src << "You will need to place an anchor to this world, a <b>Nexus</b>, in two minutes.  If you don't, one will be placed for you randomly."
-	src << "Your <b>Follower</b> count determines how many people believe in you and are a part of your cult.  If this drops to zero, you will die."
-	src << "Your <b>Nexus Integrity</b> tells you the condition of your nexus.  If your nexus is destroyed, you die as well, but your powers are amplified when near it."
-	src << "Your <b>Faith</b> is used to interact with the world.  This will regenerate on it's own, and it goes faster when you have more followers."
+	src << "You will need to place an anchor to this world, a <b>Nexus</b>, in two minutes.  If you don't, one will be placed immediately below you."
+	src << "Your <b>Follower</b> count determines how many people believe in you and are a part of your cult."
+	src << "Your <b>Nexus Integrity</b> tells you the condition of your nexus.  If your nexus is destroyed, you will die."
+	src << "Your <b>Faith</b> is used to interact with the world.  This will regenerate on it's own, and it goes faster when you have more followers and power pylons."
 	src << "The first thing you should do after placing your nexus is to <b>appoint a prophet</b>.  Only prophets can hear you talk, unless you use an expensive power."
 	update_health_hud()
 
@@ -62,9 +68,24 @@
 
 /mob/camera/god/proc/add_faith(faith_amt)
 	if(faith_amt)
-		faith = Clamp(faith+faith_amt, 0, max_faith)
+		faith = round(Clamp(faith+faith_amt, 0, max_faith))
 		if(hud_used && hud_used.deity_power_display)
 			hud_used.deity_power_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='cyan'>[faith]  </font></div>"
+
+
+
+/mob/camera/god/proc/place_nexus()
+	if(god_nexus)
+		return 0
+
+	var/obj/structure/divine/nexus/N = new(get_turf(src))
+	N.assign_deity(src)
+	god_nexus = N
+	nexus_required = TRUE
+	verbs -= /mob/camera/god/verb/constructnexus
+	//verbs += /mob/camera/god/verb/movenexus //Translocators have no sprite
+	update_health_hud()
+
 
 
 /mob/camera/god/proc/update_followers()

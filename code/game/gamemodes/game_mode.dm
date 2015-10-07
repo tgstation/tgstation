@@ -292,21 +292,6 @@
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
 
-	var/roletext
-	switch(role)
-		if(BE_CHANGELING)	roletext="changeling"
-		if(BE_TRAITOR)		roletext="traitor"
-		if(BE_OPERATIVE)	roletext="operative"
-		if(BE_WIZARD)		roletext="wizard"
-		if(BE_REV)			roletext="revolutionary"
-		if(BE_GANG)			roletext="gangster"
-		if(BE_CULTIST)		roletext="cultist"
-		if(BE_MONKEY)		roletext="monkey"
-		if(BE_ABDUCTOR)		roletext="abductor"
-		if(BE_HOG_GOD)		roletext="hand of god, god"
-		if(BE_HOG_CULTIST)	roletext="hand of god, cultist"
-
-
 	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
@@ -319,7 +304,7 @@
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_special)
-				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -333,7 +318,7 @@
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
-					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
 	if(restricted_jobs)

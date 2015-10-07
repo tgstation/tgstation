@@ -215,18 +215,33 @@
 	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
 
 //be special
-/client/verb/toggle_be_special(role in be_special_flags)
+/client/verb/toggle_be_special(/*role in be_special_flags*/)
 	set name = "Toggle SpecialRole Candidacy"
 	set category = "Preferences"
 	set desc = "Toggles which special roles you would like to be a candidate for, during events."
-	var/role_flag = be_special_flags[role]
-	if(!role_flag)	return
+
+	var/list/options = list()
+
+	for(var/role in special_roles)
+		var/key = capitalize(role)
+		if(role in prefs.be_special)
+			key += " (Enabled)"
+		else
+			key += " (Disabled)"
+		options[key] = role
+
+	var/a_input = input(src,"Special role candicacy","Special roles") as null|anything in options
+	if(!a_input || !options[a_input])
+		return
+
+	var/role_flag = options[a_input]
 	if(role_flag in prefs.be_special)
 		prefs.be_special -= role_flag
 	else
 		prefs.be_special += role_flag
+
 	prefs.save_preferences()
-	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
+	src << "You will [(role_flag in prefs.be_special) ? "now" : "no longer"] be considered for [capitalize(role_flag)] events (where possible)."
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_member_publicity()

@@ -22,9 +22,7 @@
 		last_trigger = world.time
 		alpha = 200
 		trap_effect(L)
-		spawn(time_between_triggers)
-			if(src)
-				alpha = 30
+		animate(src, alpha = 30, time = time_between_triggers)
 
 
 /obj/structure/divine/trap/examine(mob/user)
@@ -33,9 +31,7 @@
 		return
 	user << "You reveal a trap!"
 	alpha = 200
-	spawn(time_between_triggers)
-		if(src)
-			alpha = 30
+	animate(src, alpha = 30, time = time_between_triggers)
 
 
 /obj/structure/divine/trap/proc/trap_effect(mob/living/L)
@@ -99,7 +95,7 @@
 
 
 /obj/structure/divine/trap/ward
-	name = "Divine Ward"
+	name = "divine ward"
 	desc = "A divine barrier, It looks like you could destroy it with enough effort, or wait for it to dissipate..."
 	icon_state = "ward"
 	health = 150

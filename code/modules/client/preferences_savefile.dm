@@ -52,14 +52,45 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/B_revenant = 32768
 
 		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_shadowling,B_abductor,B_revenant)
-		var/list/new_be_special = list()
+
+		be_special = list()
 
 		for(var/flag in archived)
 			if(old_be_special & flag)
-				new_be_special += flag
-
-		be_special = new_be_special.Copy()
-
+				//this is shitty, but this proc should only be run once per player and then never again for the rest of eternity,
+				switch(flag)
+					if(1) //why aren't these the variables above? Good question, it's because byond complains the expression isn't constant, when it is.
+						be_special += ROLE_TRAITOR
+					if(2)
+						be_special += ROLE_OPERATIVE
+					if(4)
+						be_special += ROLE_CHANGELING
+					if(8)
+						be_special += ROLE_WIZARD
+					if(16)
+						be_special += ROLE_MALF
+					if(32)
+						be_special += ROLE_REV
+					if(64)
+						be_special += ROLE_ALIEN
+					if(128)
+						be_special += ROLE_PAI
+					if(256)
+						be_special += ROLE_CULTIST
+					if(512)
+						be_special += ROLE_BLOB
+					if(1024)
+						be_special += ROLE_NINJA
+					if(2048)
+						be_special += ROLE_MONKEY
+					if(4096)
+						be_special += ROLE_GANG
+					if(8192)
+						be_special += ROLE_SHADOWLING
+					if(16384)
+						be_special += ROLE_ABDUCTOR
+					if(32768)
+						be_special += ROLE_REVENANT
 
 
 /datum/preferences/proc/update_preferences(current_version)
