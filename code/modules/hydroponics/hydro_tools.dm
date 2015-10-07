@@ -374,6 +374,10 @@
 			if(prob(80))
 				qdel(B)
 		qdel(A)
+	if(istype(A, /turf/simulated/floor))
+		for(var/obj/effect/plantsegment/B in orange(A,1))
+			if(prob(80))
+				qdel(B)
 
 /obj/item/claypot
 	name = "clay pot"
@@ -392,7 +396,7 @@
 /obj/item/claypot/attackby(var/obj/item/O,var/mob/user)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/weapon/grown))
 		user << "<span class='warning'>You have to transplant the plant into the pot directly from the hydroponic tray, using a spade.</span>"
-	else if(istype(O,/obj/item/weapon/pickaxe/shovel/spade))
+	else if(istype(O,/obj/item/weapon/pickaxe/shovel))
 		user << "<span class='warning'>There is no plant to remove in \the [src].</span>"
 	else
 		user << "<span class='warning'>You cannot plant \the [O] in \the [src].</span>"
@@ -403,7 +407,7 @@
 	if(prob(40))
 		playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 75, 1)
 		new/obj/effect/decal/cleanable/clay_fragments(src.loc)
-		src.visible_message("<span class='warning'>[src.name] has been squashed.</span>","<span class='warning'>You hear a smack.</span>")
+		src.visible_message("<span class='warning'>\The [src.name] has been smashed.</span>","<span class='warning'>You hear a crashing sound.</span>")
 		qdel(src)
 
 /obj/structure/claypot
@@ -431,7 +435,7 @@
 			user.visible_message(	"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 									"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
 									"<span class='notice'>You hear a ratchet.</span>")
-	else if(plant_name && istype(O,/obj/item/weapon/pickaxe/shovel/spade))
+	else if(plant_name && istype(O,/obj/item/weapon/pickaxe/shovel))
 		user << "<span class='notice'>\icon[src] You start removing the [plant_name] from \the [src].</span>"
 		if(do_after(user, src, 30))
 			playsound(loc, 'sound/items/shovel.ogg', 50, 1)

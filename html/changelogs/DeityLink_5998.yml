@@ -15,3 +15,4 @@ changes:
   - tweak: digging up a soil mound now yields back a few sand pieces.
   - tweak: spades can now be printed at the autolathe.
   - soundadd: added a sound for when using a shovel/spade.
+  - tweak: you can remove vines with the scythe by hitting the turf under them, you no longer need pinpoint accuracy.

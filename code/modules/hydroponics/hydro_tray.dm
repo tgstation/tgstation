@@ -623,7 +623,7 @@
 		user << "<span class='warning'>You must place the pot on the ground and use a spade on \the [src] to make a transplant.</span>"
 		return
 
-	if(seed && istype(O, /obj/item/weapon/pickaxe/shovel/spade))
+	if(seed && istype(O, /obj/item/weapon/pickaxe/shovel))
 		var/obj/item/claypot/C = locate() in range(user,1)
 		if(!C)
 			user << "<span class='warning'>You need an empty clay pot next to you.</span>"
@@ -928,8 +928,8 @@
 	if(istype(O, /obj/item/weapon/pickaxe/shovel))
 		if(!seed)
 			user << "You clear up [src]!"
-			new /obj/item/weapon/ore/glass(src)//we get some of the dirt back
-			new /obj/item/weapon/ore/glass(src)
+			new /obj/item/weapon/ore/glass(loc)//we get some of the dirt back
+			new /obj/item/weapon/ore/glass(loc)
 			qdel(src)
 		else
 			..()
