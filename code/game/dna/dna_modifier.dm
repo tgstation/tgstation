@@ -93,6 +93,18 @@
 	add_fingerprint(usr)
 	return
 
+/obj/machinery/dna_scannernew/crowbarDestroy(mob/user)
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
+		return
+	return ..()
+
+/obj/machinery/dna_scannernew/Destroy()
+
+	go_out() //Eject everything
+
+	. = ..()
+
 /obj/machinery/dna_scannernew/proc/eject_occupant(var/exit = loc)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/dna_scannernew/proc/eject_occupant() called tick#: [world.time]")
 	src.go_out(exit)
