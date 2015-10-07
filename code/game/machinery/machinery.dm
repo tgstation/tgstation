@@ -413,7 +413,7 @@ Class Procs:
 /obj/machinery/proc/display_parts(mob/user)
 	user << "<span class='notice'>Following parts detected in the machine:</span>"
 	for(var/var/obj/item/C in component_parts)
-		user << "<span class='notice'>   [C.name]</span>"
+		user << "<span class='notice'>\icon[C] [C.name]</span>"
 
 /obj/machinery/examine(mob/user)
 	..(user)
