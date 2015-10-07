@@ -341,12 +341,18 @@
 	return
 
 /obj/machinery/cloning/clonepod/crowbarDestroy(mob/user)
-	if (occupant)
-		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
 		return
 	for(biomass; biomass > 0;biomass -= 50)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(loc)
 	return..()
+
+/obj/machinery/cloning/clonepod/Destroy()
+
+	go_out() //Eject everything
+
+	. = ..()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/cloning/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)
