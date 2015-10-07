@@ -22,7 +22,7 @@
 
 /obj/item/weapon/twohanded/singularityhammer/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 
 /obj/item/weapon/twohanded/singularityhammer/process()

@@ -22,7 +22,8 @@
 		icon_state = "larva[state]"
 
 /mob/living/carbon/alien/larva/update_transform() //All this is handled in update_icons()
+	..()
 	return update_icons()
 
-/mob/living/carbon/larva/update_inv_handcuffed()
+/mob/living/carbon/alien/larva/update_inv_handcuffed()
 	return

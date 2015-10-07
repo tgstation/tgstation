@@ -19,7 +19,7 @@
 
 
 /datum/AI_Module/large/fireproof_core
-	module_name = "Core upgrade"
+	module_name = "Core Upgrade"
 	mod_pick_name = "coreup"
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 	cost = 50
@@ -36,7 +36,7 @@
 	src << "<span class='notice'>Core fireproofed.</span>"
 
 /datum/AI_Module/large/upgrade_turrets
-	module_name = "AI Turret upgrade"
+	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"
 	description = "Improves the power and health of all AI turrets. This effect is permanent."
 	cost = 50
@@ -120,30 +120,35 @@
 
 	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
 
-/datum/AI_Module/large/disable_rcd
-	module_name = "RCD disable"
+/datum/AI_Module/large/destroy_rcd
+	module_name = "Destroy RCDs"
 	mod_pick_name = "rcd"
-	description = "Send a specialised pulse to break all RCD devices on the station."
-	cost = 50
+	description = "Send a specialised pulse to detonate all hand-held and exosuit Rapid Cconstruction Devices on the station."
+	cost = 25
+	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/disable_rcd
 
 /mob/living/silicon/ai/proc/disable_rcd()
 	set category = "Malfunction"
-	set name = "Disable RCDs"
+	set name = "Destroy RCDs"
+	set desc = "Detonate all RCDs on the station, while sparing onboard cyborg RCDs."
 
-	if(!canUseTopic())
+	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/datum/AI_Module/large/disable_rcd/rcdmod in current_modules)
-		if(rcdmod.uses > 0)
-			rcdmod.uses --
-			for(var/obj/item/weapon/rcd/rcd in world)
-				rcd.disabled = 1
-			for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd in world)
-				rcd.disabled = 1
-			src << "<span class='warning>RCD-disabling pulse emitted.</span>"
-		else src << "<span class='notice'>Out of uses.</span>"
+	for(var/obj/item/RCD in rcd_list)
+		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
+			spawn(50) //5 seconds to get rid of it!
+				if(RCD) //Make sure it still exists (In case of chain-reaction)
+					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
+					qdel(RCD)
+
+	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
+	malf_cooldown = 1
+	spawn(100)
+		malf_cooldown = 0
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
@@ -217,7 +222,7 @@
 
 
 /datum/AI_Module/small/overload_machine
-	module_name = "Machine overload"
+	module_name = "Machine Overload"
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
@@ -246,7 +251,7 @@
 	else src << "<span class='notice'>That's not a machine.</span>"
 
 /datum/AI_Module/small/override_machine
-	module_name = "Machine override"
+	module_name = "Machine Override"
 	mod_pick_name = "override"
 	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4

@@ -29,7 +29,7 @@ var/datum/subsystem/radio/radio_controller
 		frequency.remove_listener(device)
 
 		if(frequency.devices.len == 0)
-			del(frequency)
+			qdel(frequency)
 			frequencies -= f_text
 
 	return 1

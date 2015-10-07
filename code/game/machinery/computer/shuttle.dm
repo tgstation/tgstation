@@ -3,7 +3,7 @@
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
-	var/auth_need = 3.0
+	var/auth_need = 3
 	var/list/authorized = list()
 
 
@@ -93,7 +93,9 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying && !ismonkey(M) && !isslime(M))	//If your not laying down, or a small creature, no pass.
+		if(M.buckled && istype(M.buckled, /obj/machinery/bot/mulebot)) // mulebot passenger gets a free pass.
+			return 1
+		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
 
@@ -124,7 +126,7 @@
 	if(T)
 		if(istype(T, /turf/simulated/floor))
 			T.blocks_air = 0
-	..()
+	return ..()
 
 /obj/machinery/computer/supplycomp
 	name = "supply shuttle console"

@@ -69,6 +69,8 @@ var/const/VOX_DELAY = 600
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 
+	if(usr.stat == 2)
+		return //won't work if dead
 
 	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
 	<UL><LI>You can also click on the word to preview it.</LI>\

@@ -392,8 +392,18 @@
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
 	id = "doctorsdelight"
-	description = "A gulp a day keeps the MediBot away. That's probably for the best."
+	description = "A gulp a day keeps the Medibot away! A mixture of juices that heals most damage types fairly quickly at the cost of hunger."
 	color = "#FF8CFF" // rgb: 255, 140, 255
+
+/datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-0.5)
+	M.adjustFireLoss(-0.5)
+	M.adjustToxLoss(-0.5)
+	M.adjustOxyLoss(-0.5)
+	if(M.nutrition && (M.nutrition - 2 > 0))
+		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+			M.nutrition -= 2
+	..()
 
 /datum/reagent/consumable/chocolatepudding
 	name = "Chocolate Pudding"

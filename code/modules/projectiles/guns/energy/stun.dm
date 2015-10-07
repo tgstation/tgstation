@@ -30,6 +30,7 @@
 	var/charge_tick = 0
 	var/recharge_time = 10
 	can_flashlight = 0
+	can_charge = 0
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
 	..()
@@ -38,7 +39,7 @@
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++
@@ -78,7 +79,7 @@
 
 /obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
 	charge_tick++

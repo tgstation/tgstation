@@ -128,7 +128,7 @@ Class Procs:
 	SSmachine.processing -= src
 	if(occupant)
 		dropContents()
-	..()
+	return ..()
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -230,6 +230,8 @@ Class Procs:
 		return
 
 /mob/living/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return
 	if(no_dextery)
 		if(be_close && in_range(M, src))
 			return 1
@@ -334,6 +336,7 @@ Class Procs:
 		deconstruction()
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+		transfer_fingerprints_to(M)
 		M.state = 2
 		M.icon_state = "box_1"
 		for(var/obj/item/I in component_parts)
@@ -364,7 +367,7 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W))
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)

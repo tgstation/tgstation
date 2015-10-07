@@ -4,8 +4,6 @@
 	var/team = 0
 
 /obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	if(!H.dna)
-		return 0
 	return H.dna.species.id == "abductor"
 
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
@@ -28,7 +26,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/obj/item/device/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment

@@ -7,7 +7,7 @@
 	if(master)
 		master.post_signal(signal, comm_line)
 	else
-		del(signal)
+		qdel(signal)
 
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
 
@@ -77,7 +77,7 @@
 /obj/machinery/embedded_controller/radio/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
-	..()
+	return ..()
 
 /obj/machinery/embedded_controller/radio/initialize()
 	set_frequency(frequency)

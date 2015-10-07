@@ -42,7 +42,7 @@
 
 /obj/singularity/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
@@ -65,16 +65,16 @@
 
 /obj/singularity/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(current_size <= STAGE_TWO)
 				investigate_log("has been destroyed by a heavy explosion.","singulo")
 				qdel(src)
 				return
 			else
 				energy -= round(((energy+1)/2),1)
-		if(2.0)
+		if(2)
 			energy -= round(((energy+1)/3),1)
-		if(3.0)
+		if(3)
 			energy -= round(((energy+1)/4),1)
 	return
 
@@ -364,13 +364,13 @@
 		radiation += round((energy-150)/10,1)
 		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.irradiate(rand(radiationmin,radiation))
+		M.rad_act(rand(radiationmin,radiation))
 
 
 /obj/singularity/proc/combust_mobs()
 	for(var/mob/living/carbon/C in orange(20, src))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
-						  "<span class='boldannounce'>You feel an inner fire as your skin is suddenly covered in fire!</span>")
+						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
 	return

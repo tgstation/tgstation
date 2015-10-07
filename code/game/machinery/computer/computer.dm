@@ -3,7 +3,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
@@ -41,17 +41,17 @@
 		qdel(src)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(25))
 				qdel(src)
 				return
 			if (prob(50))
 				verbs.Cut()
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				verbs.Cut()
 				set_broken()

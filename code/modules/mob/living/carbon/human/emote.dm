@@ -18,7 +18,7 @@
 	if(mind)
 		miming=mind.miming
 
-	if(src.stat == 2.0 && (act != "deathgasp"))
+	if(src.stat == 2 && (act != "deathgasp"))
 		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
@@ -45,6 +45,7 @@
 
 		if ("collapse","collapses")
 			Paralyse(2)
+			adjustStaminaLoss(100) // Hampers abuse against simple mobs, but still leaves it a viable option.
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
 
@@ -307,7 +308,7 @@
 				m_type = 2
 
 		if("wag","wags")
-			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (features["tail_human"] != "None")))
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None")))
 				message = "<B>[src]</B> wags \his tail."
 				startTailWag()
 			else

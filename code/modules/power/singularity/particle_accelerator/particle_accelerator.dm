@@ -71,11 +71,15 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/strength = null
 	var/desc_holder = null
 
+/obj/structure/particle_accelerator/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = 0
 	if(master)
 		master.part_scan()
-	..()
+	return ..()
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
@@ -100,6 +104,16 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
+
+/obj/structure/particle_accelerator/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
 
 /obj/structure/particle_accelerator/verb/rotateccw()
 	set name = "Rotate Counter Clockwise"

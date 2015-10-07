@@ -64,6 +64,16 @@
 	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
 	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggleannouncelogin()
+	set name = "Do/Don't Announce Login"
+	set category = "Preferences"
+	set desc = "Toggle if you want an announcement to admins when you login during a round"
+	if(!holder)	return
+	prefs.toggles ^= ANNOUNCE_LOGIN
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login."
+	feedback_add_details("admin_verb","TAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
@@ -145,6 +155,13 @@
 			src << admin_sound
 			admin_sound.status ^= SOUND_PAUSED
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/stop_client_sounds()
+	set name = "Stop Sounds"
+	set category = "Preferences"
+	set desc = "Kills all currently playing sounds, use if admin taste in midis a shite"
+	src << sound(null)
+	feedback_add_details("admin_verb","SAPS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/listen_ooc()
 	set name = "Show/Hide OOC"

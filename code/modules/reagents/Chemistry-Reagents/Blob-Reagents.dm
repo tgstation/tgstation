@@ -1,179 +1,114 @@
 // These can only be applied by blobs. They are what blobs are made out of.
 // The 4 damage
 /datum/reagent/blob
+	description = ""
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
 
-/datum/reagent/blob/boiling_oil
-	name = "Boiling Oil"
-	id = "boiling_oil"
-	description = ""
-	color = "#B68D00"
-	message = "The blob splashes you with burning oil"
+/datum/reagent/blob/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection)
+	return round(reac_volume * min(1.5 - touch_protection, 1), 0.1) //full touch protection means 50% volume, any prot below 0.5 means 100% volume.
 
-/datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(15*ratio, BURN)
-		M.adjust_fire_stacks(2*ratio)
-		M.IgniteMob()
-		if(isliving(M))
-			M.emote("scream")
-
-/datum/reagent/blob/toxic_goop
-	name = "Toxic Goop"
-	id = "toxic_goop"
-	description = ""
-	color = "#008000"
-	message_living = ", and you feel sick and nauseated"
-
-/datum/reagent/blob/toxic_goop/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(20*ratio, TOX)
-
-/datum/reagent/blob/skin_ripper
-	name = "Skin Ripper"
-	id = "skin_ripper"
-	description = ""
-	color = "#FF4C4C"
+/datum/reagent/blob/ripping_tendrils //does brute and a little stamina damage
+	name = "Ripping Tendrils"
+	id = "ripping_tendrils"
+	color = "#7F0000"
 	message_living = ", and you feel your skin ripping and tearing off"
 
-/datum/reagent/blob/skin_ripper/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(20*ratio, BRUTE)
-		if(iscarbon(M))
-			M.emote("scream")
+/datum/reagent/blob/ripping_tendrils/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
+	M.adjustStaminaLoss(0.4*reac_volume)
+	if(iscarbon(M))
+		M.emote("scream")
 
-// Combo Reagents
-
-/datum/reagent/blob/skin_melter
-	name = "Skin Melter"
-	id = "skin_melter"
-	description = ""
-	color = "#7F0000"
+/datum/reagent/blob/boiling_oil //sets you on fire, does burn damage
+	name = "Boiling Oil"
+	id = "boiling_oil"
+	color = "#B68D00"
+	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
 
-/datum/reagent/blob/skin_melter/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(10*ratio, BRUTE)
-		M.apply_damage(10*ratio, BURN)
-		M.adjust_fire_stacks(2*ratio)
-		M.IgniteMob()
-		if(iscarbon(M))
-			M.emote("scream")
+/datum/reagent/blob/boiling_oil/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	M.adjust_fire_stacks(round(reac_volume/12))
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BURN)
+	M.IgniteMob()
+	if(iscarbon(M))
+		M.emote("scream")
 
-/datum/reagent/blob/lung_destroying_toxin
-	name = "Lung Destroying Toxin"
-	id = "lung_destroying_toxin"
-	description = ""
+/datum/reagent/blob/envenomed_filaments //toxin, hallucination, and some bonus spore toxin
+	name = "Envenomed Filaments"
+	id = "envenomed_filaments"
+	color = "#9ACD32"
+	message_living = ", and you feel sick and nauseated"
+
+/datum/reagent/blob/envenomed_filaments/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, TOX)
+	M.hallucination += 0.6*reac_volume
+	M.reagents.add_reagent("spore", 0.4*reac_volume)
+
+/datum/reagent/blob/lexorin_jelly //does tons of oxygen damage and a little brute
+	name = "Lexorin Jelly"
+	id = "lexorin_jelly"
 	color = "#00FFC5"
 	message_living = ", and your lungs feel heavy and weak"
 
-/datum/reagent/blob/lung_destroying_toxin/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(20* ratio, OXY)
-		M.losebreath += 15*ratio
-		M.apply_damage(20*ratio, TOX)
+/datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, BRUTE)
+	M.apply_damage(1*reac_volume, OXY)
+	M.losebreath += round(0.3*reac_volume)
 
-// Special Reagents
+/datum/reagent/blob/kinetic //does semi-random brute damage
+	name = "Kinetic Gelatin"
+	id = "kinetic"
+	color = "#FFA500"
+	message = "The blob pummels you"
 
-/datum/reagent/blob/radioactive_liquid
-	name = "Radioactive Liquid"
-	id = "radioactive_liquid"
-	description = ""
-	color = "#00EE00"
-	message_living = ", and your skin feels papery and everything hurts"
+/datum/reagent/blob/kinetic/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	var/damage = rand(5, 35)/25
+	M.apply_damage(damage*reac_volume, BRUTE)
 
-/datum/reagent/blob/radioactive_liquid/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(10*ratio, BRUTE)
-		if(istype(M, /mob/living/carbon/human))
-			M.irradiate(40*ratio)
-			if(prob(33*ratio))
-				randmuti(M)
-				if(prob(98))
-					randmutb(M)
-				domutcheck(M, null)
-				updateappearance(M)
+/datum/reagent/blob/cryogenic_liquid //does low burn damage and stamina damage and cools targets down
+	name = "Cryogenic Liquid"
+	id = "cryogenic_liquid"
+	color = "#8BA6E9"
+	message = "The blob splashes you with an icy liquid"
+	message_living = ", and you feel cold and tired"
 
-/datum/reagent/blob/dark_matter
+/datum/reagent/blob/cryogenic_liquid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.4*reac_volume, BURN)
+	M.adjustStaminaLoss(0.4*reac_volume)
+	M.reagents.add_reagent("frostoil", 0.4*reac_volume)
+
+/datum/reagent/blob/dark_matter //does brute damage and throws or pulls nearby objects at the target
 	name = "Dark Matter"
 	id = "dark_matter"
-	description = ""
 	color = "#61407E"
 	message = "You feel a thrum as the blob strikes you, and everything flies at you"
 
-/datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(15*ratio, BRUTE)
-		reagent_vortex(M, 0)
+/datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reagent_vortex(M, 0, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
 
-
-/datum/reagent/blob/b_sorium
+/datum/reagent/blob/b_sorium //does brute damage and throws or pushes nearby objects away from the target
 	name = "Sorium"
 	id = "b_sorium"
-	description = ""
 	color = "#808000"
 	message = "The blob slams into you, and sends you flying"
 
-/datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.apply_damage(15*ratio, BRUTE)
-		reagent_vortex(M, 1)
+/datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	reagent_vortex(M, 1, reac_volume)
+	reac_volume = ..()
+	M.apply_damage(0.6*reac_volume, BRUTE)
 
-
-/datum/reagent/blob/explosive // I'm gonna burn in hell for this one
-	name = "Explosive Gelatin"
-	id = "explosive"
-	description = ""
-	color = "#FFA500"
-	message = "The blob strikes you, and its tendrils explode"
-
-/datum/reagent/blob/explosive/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		if(prob(75*ratio))
-			explosion(M.loc, 0, 0, 1, 0, 0)
-
-/datum/reagent/blob/omnizine
-	name = "Omnizine"
-	id = "b_omnizine"
-	description = ""
-	color = "#C8A5DC"
-	message = "The blob squirts something at you"
-	message_living = ", and you feel great"
-
-/datum/reagent/blob/omnizine/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.reagents.add_reagent("omnizine", 11*ratio)
-
-/datum/reagent/blob/spacedrugs
-	name = "Space drugs"
-	id = "b_space_drugs"
-	description = ""
-	color = "#60A584"
-	message = "The blob squirts something at you"
-	message_living = ", and you feel funny"
-
-/datum/reagent/blob/spacedrugs/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(method == TOUCH)
-		var/ratio = volume/25
-		M.hallucination += 20*ratio
-		M.reagents.add_reagent("space_drugs", 15*ratio)
-		M.apply_damage(10*ratio, TOX)
-
-
-/datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type)
+/datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
 	var/turf/pull = get_turf(M)
-	var/range_power = Clamp(round(volume/5, 1), 1, 5)
+	var/range_power = Clamp(round(reac_volume/5, 1), 1, 5)
 	for(var/atom/movable/X in range(range_power,pull))
 		if(istype(X, /obj/effect))
 			continue

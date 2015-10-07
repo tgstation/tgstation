@@ -56,6 +56,7 @@
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
 	flying = 1
+	gold_core_spawnable = 2
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -618,7 +619,7 @@
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				item = C
 		if(item)
-			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance))
+			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance_cardinal))
 				item = null
 				continue
 			return item
@@ -809,6 +810,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)

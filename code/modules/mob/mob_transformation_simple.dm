@@ -40,15 +40,15 @@
 		M.name = src.name
 		M.real_name = src.real_name
 
-	if(check_dna_integrity(src) && istype(M, /mob/living/carbon))
+	if(has_dna() && M.has_dna())
 		var/mob/living/carbon/C = src
 		var/mob/living/carbon/D = M
-		D.dna = C.dna
-		updateappearance(D)
-	else
-		if(istype(M, /mob/living/carbon/human))
-			src.client.prefs.copy_to(M)
-		ready_dna(M)
+		C.dna.transfer_identity(D)
+		D.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		client.prefs.copy_to(H)
+		H.dna.update_dna_identity()
 
 	if(mind && istype(M, /mob/living))
 		mind.transfer_to(M)

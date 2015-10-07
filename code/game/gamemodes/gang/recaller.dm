@@ -5,7 +5,7 @@
 	icon_state = "gangtool-white"
 	item_state = "walkietalkie"
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
@@ -280,10 +280,13 @@
 						usr << "<span class='warning'>There's not enough room here!</span>"
 						return
 
-				if(gang.points >= 30)
-					item_type = /obj/machinery/dominator
-					usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
-					pointcost = 30
+				if(usrarea.type in gang.territory|gang.territory_new)
+					if(gang.points >= 30)
+						item_type = /obj/machinery/dominator
+						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
+						pointcost = 30
+				else
+					usr << "<span class='notice'>The <b>dominator</b> can be spawned only on territory controlled by your gang.</span>"
 
 		if(item_type)
 			gang.points -= pointcost

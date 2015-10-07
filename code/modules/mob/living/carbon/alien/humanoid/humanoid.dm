@@ -2,6 +2,7 @@
 	name = "alien"
 	icon_state = "alien_s"
 	pass_flags = PASSTABLE
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -14,7 +15,6 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
-	create_reagents(1000)
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	..()
 

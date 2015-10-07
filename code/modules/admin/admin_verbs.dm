@@ -1,6 +1,7 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
+	/client/proc/toggleannouncelogin, /*toggles if an admin's login is announced during a round*/
 	/client/proc/deadmin_self,			/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
@@ -59,14 +60,13 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	//sends text to all mobs within view of atmo
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words,			/*displays cult-words*/
-	/client/proc/reset_all_tcs			/*resets all telecomms scripts*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/jobbans,
 	/client/proc/unjobban_panel,
-	/client/proc/DB_ban_panel
+	/client/proc/DB_ban_panel,
+	/client/proc/stickybanpanel
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -130,14 +130,16 @@ var/list/admin_verbs_debug = list(
 	/proc/machine_upgrade,
 	/client/proc/populate_world,
 	/client/proc/cmd_display_del_log,
-	/client/proc/reset_latejoin_spawns
+	/client/proc/reset_latejoin_spawns,
+	/client/proc/create_outfits
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
 	/proc/release
 	)
 var/list/admin_verbs_permissions = list(
-	/client/proc/edit_admin_permissions
+	/client/proc/edit_admin_permissions,
+	/client/proc/create_poll
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
@@ -168,7 +170,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_direct_narrate,
 	/client/proc/cmd_admin_world_narrate,
 	/client/proc/cmd_admin_local_narrate,
-	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
 	/client/proc/set_round_end_sound,
@@ -205,7 +206,6 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release,
 	/client/proc/reload_admins,
-	/client/proc/reset_all_tcs,
 	/client/proc/panicbunker,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,

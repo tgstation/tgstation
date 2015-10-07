@@ -59,7 +59,6 @@ var/datum/subsystem/ticker/ticker
 		return ..()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
-	setupGenetics()
 	setupFactions()
 	..()
 
@@ -137,7 +136,7 @@ var/datum/subsystem/ticker/ticker
 		mode = config.pick_mode(master_mode)
 		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
-			del(mode)
+			qdel(mode)
 			SSjob.ResetOccupations()
 			return 0
 
@@ -148,7 +147,7 @@ var/datum/subsystem/ticker/ticker
 
 	if(!Debug2)
 		if(!can_continue)
-			del(mode)
+			qdel(mode)
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
@@ -289,8 +288,8 @@ var/datum/subsystem/ticker/ticker
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					sleep(100)
-					if(cinematic)	del(cinematic)
-					if(temp_buckle)	del(temp_buckle)
+					if(cinematic)	qdel(cinematic)
+					if(temp_buckle)	qdel(temp_buckle)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -370,7 +369,7 @@ var/datum/subsystem/ticker/ticker
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
-	var/station_integrity = min(round( 100.0 *  start_state.score(end_state), 0.1), 100.0)
+	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
 	world << "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B>"
 	world << "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>"

@@ -54,7 +54,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = 1
 	var/list/fields = list()
 	var/read_only = 0 //Well,it's still a floppy disk
 
@@ -185,7 +185,7 @@
 	H.ckey = ckey
 	H << "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>"
 
-	hardset_dna(H, ui, se, null, null, mrace, features)
+	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 	H.faction |= factions
 
 	H.set_cloned_appearance()
@@ -301,13 +301,13 @@
 	return
 
 /obj/machinery/clonepod/proc/go_out()
-	if (src.locked)
+	if (locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
-		src.mess = 0
-		gibs(src.loc)
-		src.icon_state = "pod_0"
+	if (mess) //Clean that mess and dump those gibs!
+		mess = 0
+		gibs(loc)
+		icon_state = "pod_0"
 
 		/*
 		for(var/obj/O in src)
@@ -315,22 +315,22 @@
 		*/
 		return
 
-	if (!(src.occupant))
+	if (!occupant)
 		return
 	/*
 	for(var/obj/O in src)
 		O.loc = src.loc
 	*/
 
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
+	if (occupant.client)
+		occupant.client.eye = occupant.client.mob
+		occupant.client.perspective = MOB_PERSPECTIVE
 	if(occupant.loc == src)
-		src.occupant.loc = src.loc
-	src.icon_state = "pod_0"
-	src.eject_wait = 0 //If it's still set somehow.
-	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
-	src.occupant = null
+		occupant.loc = loc
+	icon_state = "pod_0"
+	eject_wait = 0 //If it's still set somehow.
+	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
+	occupant = null
 	return
 
 /obj/machinery/clonepod/proc/malfunction()

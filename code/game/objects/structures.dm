@@ -8,17 +8,21 @@
 		smooth_icon(src)
 		smooth_icon_neighbors(src)
 		icon_state = ""
+	if(ticker)
+		cameranet.updateVisibility(src)
 
 /obj/structure/blob_act()
 	if(prob(50))
 		qdel(src)
 
 /obj/structure/Destroy()
+	if(ticker)
+		cameranet.updateVisibility(src)
 	if(opacity)
 		UpdateAffectingLights()
 	if(smooth)
 		smooth_icon_neighbors(src)
-	..()
+	return ..()
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
 	if(M.damtype == "brute")
