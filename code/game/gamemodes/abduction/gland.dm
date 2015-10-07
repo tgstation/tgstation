@@ -75,20 +75,9 @@
 
 /obj/item/organ/internal/gland/slime/activate()
 	owner << "<span class='warning'>You feel nauseous!</span>"
-	if(owner.is_muzzled())
-		owner << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+	owner.vomit(20)
 
-	owner.visible_message("<span class='danger'>[owner] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
-
-	owner.nutrition -= 20
-	owner.adjustToxLoss(-3)
-
-	var/turf/pos = get_turf(owner)
-	pos.add_vomit_floor(owner)
-	playsound(pos, 'sound/effects/splat.ogg', 50, 1)
-
-	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(pos)
+	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(get_turf(owner))
 	Slime.Friends = list(owner)
 	Slime.Leader = owner
 
