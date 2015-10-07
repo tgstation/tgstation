@@ -4,9 +4,13 @@
 if not exist setnewmap.bat exit 11
 call setnewmap.bat
 cd ..
+
+if exists updating.lk exit 21
+if exists rotating.lk exit 22
+
 if not exist config.bat exit 12
 call config.bat
-
+echo lock>rotating.lk
 cls
 echo Rotating map to %MAPROTATE%
 
@@ -21,7 +25,8 @@ cls
 echo Rotating map to %MAPROTATE%
 
 call bin\build.bat
-if %DM_EXIT% neq 0 exit 13
+@del /F /Q rotating.lk >nul 2>nul
+if %DM_EXIT% neq 0 exit 31
 
 rmdir /q gamefolder
 mklink /d gamefolder gamecode\%AB%

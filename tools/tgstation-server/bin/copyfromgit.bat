@@ -4,9 +4,9 @@ rmdir /q gamecode\%AB%\data >nul 2>nul
 rmdir /q gamecode\%AB%\config >nul 2>nul
 rmdir /q gamecode\%AB%\cfg >nul 2>nul
 del /q gamecode\%AB%\nudge.py >nul 2>nul
-del /q gamecode\%AB%\CORE_DATA >nul 2>nul
+del /q gamecode\%AB%\CORE_DATA.py >nul 2>nul
 
-rmdir /S /q gamecode\%AB%
+del /S /F /Q gamecode\%AB%
 
 echo Copying files
 xcopy gitrepo gamecode\%AB% /Y /X /K /R /H /I /C /V /E /Q /EXCLUDE:copyexclude.txt >nul
@@ -20,5 +20,3 @@ rmdir /s /q gamecode\%AB%\data >nul 2>nul
 mklink /d gamecode\%AB%\data ..\..\gamedata\data >nul
 mklink /d gamecode\%AB%\config ..\..\gamedata\config >nul
 mklink /d gamecode\%AB%\cfg ..\..\gamedata\cfg >nul
-
-copy bin\maprotate.bat gamecode\%AB%\maprotate.bat

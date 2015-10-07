@@ -330,7 +330,7 @@ var/failed_db_connections = 0
 		if (VM.minusers > 0 && players < VM.minusers)
 			mapvotes.Remove(map)
 			continue
-		if (VM.maxusers > 0 && players < VM.maxusers)
+		if (VM.maxusers > 0 && players > VM.maxusers)
 			mapvotes.Remove(map)
 			continue
 
@@ -350,6 +350,8 @@ var/failed_db_connections = 0
 		return
 	if (!istype(VM))
 		return
+
+	log_game("Changing map to [VM.name]([VM.friendlyname])")
 	var/file = file("setnewmap.bat")
 	file << "\nset MAPROTATE=[VM.name]\n"
 	. = shell("..\\bin\\maprotate.bat")
@@ -359,15 +361,25 @@ var/failed_db_connections = 0
 			log_game("Failed to change map: Could not run map rotator")
 		if (0)
 			log_game("Changed to map [VM.friendlyname]")
+		//1x: file errors
 		if (11)
-			message_admins("Failed to change map: Map rotator script couldn't find file listing new map")
-			log_game("Failed to change map: Map rotator script couldn't find file listing new map")
+			message_admins("Failed to change map: File error: Map rotator script couldn't find file listing new map")
+			log_game("Failed to change map: File error: Map rotator script couldn't find file listing new map")
 		if (12)
-			message_admins("Failed to change map: Map rotator script couldn't find tgstation-server framework")
-			log_game("Failed to change map: Map rotator script couldn't find tgstation-server framework")
-		if (13)
-			message_admins("Failed to change map: Could not compile new map:[VM.name]")
-			log_game("Failed to change map: Could not compile new map:[VM.name]")
+			message_admins("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
+			log_game("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
+		//2x: conflicting operation errors
+		if (21)
+			message_admins("Failed to change map: Conflicting operation error: Current server update operation detected")
+			log_game("Failed to change map: Conflicting operation error: Current server update operation detected")
+		if (22)
+			message_admins("Failed to change map: Conflicting operation error: Current map rotation operation detected")
+			log_game("Failed to change map: Conflicting operation error: Current map rotation operation detected")
+		//3x: external errors
+		if (31)
+			message_admins("Failed to change map: External error: Could not compile new map:[VM.name]")
+			log_game("Failed to change map: External error: Could not compile new map:[VM.name]")
+
 		else
-			message_admins("Failed to change map: Unknown error")
-			log_game("Failed to change map: Unknown error")
+			message_admins("Failed to change map: Unknown error: Error code #[.]")
+			log_game("Failed to change map: Unknown error: Error code #[.]")
