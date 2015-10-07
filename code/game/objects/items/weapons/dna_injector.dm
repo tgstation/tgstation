@@ -18,9 +18,6 @@
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
-		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
-			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)

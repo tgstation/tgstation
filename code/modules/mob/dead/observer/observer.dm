@@ -206,12 +206,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if(target && target != src)
-		if(orbiting && orbiting == target)
-			return
-		src << "<span class='notice'>Now orbiting [target].</span>"
-		orbit(target,24,0)
+	if (!istype(target))
+		return
 
+	var/icon/I = icon(target.icon,target.icon_state,target.dir)
+
+	var/orbitsize = (I.Width()+I.Height())*0.5
+	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+
+	if(orbiting != target)
+		src << "<span class='notice'>Now orbiting [target].</span>"
+
+	orbit(target,orbitsize,0)
+
+/mob/dead/observer/orbit()
+	..()
+	//restart our floating animation after orbit is done.
+	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
+	if (!orbiting) //make sure another orbit hasn't started
+		pixel_y = 0
+		animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

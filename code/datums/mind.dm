@@ -1691,9 +1691,13 @@
 	mind.special_role = "Alien"
 	mind.assigned_role = "Alien"
 	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/queen/mind_initialize()
+/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
 	..()
 	mind.special_role = "Queen"
+
+/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
+	..()
+	mind.special_role = "Praetorian"
 
 /mob/living/carbon/alien/humanoid/hunter/mind_initialize()
 	..()

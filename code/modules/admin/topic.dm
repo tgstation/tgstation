@@ -23,6 +23,8 @@
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help")
 
+	else if(href_list["stickyban"])
+		stickyban(href_list["stickyban"],href_list)
 
 	else if(href_list["makeAntag"])
 		if (!ticker.mode)
@@ -381,7 +383,8 @@
 			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
 			if("drone")				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
 			if("hunter")			M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
+			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/queen , null, null, delmob )
+			if("praetorian")		M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/praetorian , null, null, delmob )
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
@@ -1528,8 +1531,6 @@
 		if(!isobserver(usr))	C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(M)
-		log_admin("[key_name(usr)] followed [key_name(M)]")
-		message_admins("[key_name_admin(usr)] followed [key_name_admin(M)]")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
@@ -1861,9 +1862,7 @@
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
-										I.loc = R.module
-										R.module.rebuild()
+										R.module.add_module(I)
 										R.activate_module(I)
 
 

@@ -674,7 +674,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0, progress = 1)
+	//This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -685,7 +686,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/timefraction = round(time/numticks)
 	var/image/progbar
 	for(var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
@@ -711,7 +712,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar.pixel_y = 32
 		return progbar
 
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null, progress = 1)
 	if(!user)
 		return 0
 
@@ -730,7 +731,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		holdingnull = 0 //User is holding a tool of some kind
 	var/image/progbar
 	for (var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
 			if(progbar)
 				user.client.images |= progbar
@@ -1347,30 +1348,34 @@ B --><-- A
 	var/myid = orbitid
 	if (orbiting)
 		stop_orbit()
-		//sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
-		sleep(1)
+		//sadly this is the only way to ensure the original orbit proc stops
+		//and resets the atom's transform before we continue.
+		//time is based on the sleep in the loop and the time for the final animation of initial_transform.
+		sleep(2.6+world.tick_lag)
 		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
 			return
 	orbiting = A
 	var/lastloc = loc
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
-	spawn
-		while(orbiting && orbiting.loc && orbitid == myid && (!lockinorbit || loc == lastloc))
-			loc = get_turf(orbiting.loc)
-			lastloc = loc
-			angle += angle_increment
 
-			var/matrix/shift = matrix(initial_transform)
-			shift.Translate(radius,0)
-			if(clockwise)
-				shift.Turn(angle)
-			else
-				shift.Turn(-angle)
-			animate(src,transform = shift,2)
+	while(orbiting && orbiting.loc && orbitid == myid)
+		var/targetloc = get_turf(orbiting)
+		if (!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		loc = targetloc
+		lastloc = loc
+		angle += angle_increment
 
-			sleep(0.6) //the effect breaks above 0.6 delay
-		animate(src,transform = initial_transform,2)
+		var/matrix/shift = matrix(initial_transform)
+		shift.Translate(radius,0)
+		if(clockwise)
+			shift.Turn(angle)
+		else
+			shift.Turn(-angle)
+		animate(src, transform = shift, 2)
+		sleep(0.6) //the effect breaks above 0.6 delay
+	animate(src, transform = initial_transform, 2)
 
 
 /atom/movable/proc/stop_orbit()

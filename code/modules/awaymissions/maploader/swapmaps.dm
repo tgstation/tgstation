@@ -163,7 +163,7 @@ swapmap
 		z2=z?(z):1
 		AllocateSwapMap()
 
-	Del()
+	Destroy()
 		// a temporary datum for a chunk can be deleted outright
 		// for others, some cleanup is necessary
 		if(!ischunk)
@@ -186,6 +186,7 @@ swapmap
 				if(x2>=world.maxx || y2>=world.maxy || z2>=world.maxz) CutXYZ()
 				qdel(areas)
 		..()
+		return QDEL_HINT_HARDDEL_NOW
 
 	/*
 		Savefile format:
