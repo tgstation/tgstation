@@ -2,5 +2,4 @@ author: Xhuis
 delete-after: True
 
 changes: 
-  - rscadd: "A new wizard spell has been added: Cauterize. When used, this will instantly heal all conventional damage on the wizard. However, after a short time, half of the original damage will slowly be applied to the wizard again, in the form of burn damage."
-  - tweak: "The spell book has received a rebalancing! There are now ten uses by default, but most spells cost two uses. Some underused spells, like Blind, Smoke, and Forcewall, only cost a single use. The Staff of Change costs three uses, for obvious reasons!"
+  - tweak: "The spell book has received a rebalancing! There are now ten uses by default, but most spells cost two uses. Some underused spells, like Blind, Smoke, and Forcewall, only cost a single use."
