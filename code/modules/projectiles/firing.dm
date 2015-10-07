@@ -6,7 +6,7 @@
 		ready_proj(target, user, quiet, zone_override)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(targloc, user, params))
+		if(!throw_proj(target, targloc, user, params))
 			return 0
 		if(i > 1)
 			newshot()
@@ -15,7 +15,7 @@
 	update_icon()
 	return 1
 
-/obj/item/ammo_casing/proc/ready_proj(atom/target as mob|obj|turf, mob/living/user, quiet, zone_override = "")
+/obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if (!BB)
 		return
 	BB.original = target
@@ -30,14 +30,15 @@
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets
 		qdel(reagents)
 
-/obj/item/ammo_casing/proc/throw_proj(var/turf/targloc, mob/living/user as mob|obj, params)
+/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params)
 	var/turf/curloc = user.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)
-		if(BB.original == user) //if we target ourselves we go straight to bullet_act()
-			user.bullet_act(BB, BB.def_zone)
+		if(target) //if the target is right on our location we go straight to bullet_act()
+			target.bullet_act(BB, BB.def_zone)
 		qdel(BB)
+		BB = null
 		return 1
 	BB.loc = get_turf(user)
 	BB.starting = get_turf(user)
@@ -51,7 +52,6 @@
 			BB.p_x = text2num(mouse_control["icon-x"])
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
-
 	if(BB)
 		BB.fire()
 	BB = null

@@ -140,6 +140,7 @@ var/datum/subsystem/ticker/ticker
 		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
 			qdel(mode)
+			mode = null
 			SSjob.ResetOccupations()
 			return 0
 
@@ -151,6 +152,7 @@ var/datum/subsystem/ticker/ticker
 	if(!Debug2)
 		if(!can_continue)
 			qdel(mode)
+			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
@@ -291,8 +293,11 @@ var/datum/subsystem/ticker/ticker
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					sleep(100)
-					if(cinematic)	qdel(cinematic)
-					if(temp_buckle)	qdel(temp_buckle)
+					if(cinematic)
+						qdel(cinematic)
+						cinematic = null
+					if(temp_buckle)
+						qdel(temp_buckle)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)

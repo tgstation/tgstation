@@ -668,6 +668,7 @@ What a mess.*/
 						if(active2)
 							data_core.security -= active2
 							qdel(active2)
+							active2 = null
 
 					if("Delete Record (ALL) Execute")
 						if(active1)
@@ -679,10 +680,12 @@ What a mess.*/
 									break
 							data_core.general -= active1
 							qdel(active1)
+							active1 = null
 
 						if(active2)
 							data_core.security -= active2
 							qdel(active2)
+							active2 = null
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 
