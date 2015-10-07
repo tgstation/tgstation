@@ -476,7 +476,7 @@ var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 		detach()
 
 // Try to reset everything, also while handling invalid host/host_brain states.
-mob/living/simple_animal/borer/proc/detach()
+/mob/living/simple_animal/borer/proc/detach()
 	if(host)
 		if(istype(host,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = host
@@ -607,7 +607,7 @@ mob/living/simple_animal/borer/proc/detach()
 		src << text("<span class='notice'>You have stopped hiding.</span>")
 
 //Procs for grabbing players.
-mob/living/simple_animal/borer/proc/request_player()
+/mob/living/simple_animal/borer/proc/request_player()
 	var/list/candidates=list()
 
 	candidates = getCandidates("Do you wish to be considered for a cortical borer lifeform?", null, null)
@@ -639,7 +639,7 @@ mob/living/simple_animal/borer/proc/request_player()
 
 	return 0
 
-mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
+/mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 
 	if(!candidate)
 		return
@@ -667,7 +667,7 @@ mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 			src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 /*
-mob/living/simple_animal/borer/proc/forge_objectives()
+/mob/living/simple_animal/borer/proc/forge_objectives()
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = mind
 	mind.objectives += survive_objective
@@ -676,7 +676,7 @@ mob/living/simple_animal/borer/proc/forge_objectives()
 	multiply_objective.owner = mind
 	mind.objectives += multiply_objective
 */
-mob/living/proc/is_suitable_borer_host()
+/mob/living/proc/is_suitable_borer_host()
 	if(!iscarbon(src))
 		return 0
 	if(isslime(src))
@@ -689,7 +689,7 @@ mob/living/proc/is_suitable_borer_host()
 		return 1
 	return 0
 
-mob/living/carbon/proc/transfer_borer(var/mob/living/target)
+/mob/living/carbon/proc/transfer_borer(var/mob/living/target)
 	var/mob/living/M = src
 	var/mob/living/T = target
 	if(!M.has_brain_worms())
@@ -715,14 +715,14 @@ mob/living/carbon/proc/transfer_borer(var/mob/living/target)
 			B.client.perspective = EYE_PERSPECTIVE
 	B.update_interface()
 
-mob/living/proc/detach_borer()
+/mob/living/proc/detach_borer()
 	for (var/I in contents)
 		if(isborer(I))
 			var/mob/living/simple_animal/borer/B = I
 			B.detach()
 
 
-mob/living/proc/destroy_borer()
+/mob/living/proc/destroy_borer()
 	for (var/I in contents)
 		if(isborer(I))
 			var/mob/living/simple_animal/borer/B = I

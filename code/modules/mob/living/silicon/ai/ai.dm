@@ -290,7 +290,7 @@ var/list/ai_list = list()
 			usr << "Wireless control is disabled!"
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as text
+	var/reason = stripped_input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -647,7 +647,7 @@ var/list/ai_list = list()
 	if(usr.stat == 2)
 		usr <<"You cannot change your emotional status because you are dead!"
 		return
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow","Flowey","Flowey Grin")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))

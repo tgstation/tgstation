@@ -14,7 +14,8 @@
 	hair_color = random_short_color()
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
-	pref_species = new /datum/species/human()
+	if(!pref_species)
+		pref_species = new /datum/species/human()
 	backbag = 2
 	age = rand(AGE_MIN,AGE_MAX)
 
@@ -47,9 +48,16 @@
 
 	if(pref_species.id == "human" || !config.mutant_races)
 		preview_icon = new /icon('icons/mob/human.dmi', "[skin_tone]_[g]_s")
-	else
-		preview_icon = new /icon('icons/mob/human.dmi', "[pref_species.id]_[g]_s")
-		preview_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
+	else	//What's object oriented programming?
+		var/base_icon_state
+		if(pref_species.sexes)
+			base_icon_state = "[pref_species.id]_[g]"
+		else
+			base_icon_state = "[pref_species.id]"
+
+		preview_icon = new /icon('icons/mob/human.dmi', "[base_icon_state]_s") //new /icon('icons/mob/human.dmi', "[pref_species.id]_[g]_s")
+		if(mutant_color != "FFF" && mutant_color != "#FFF")
+			preview_icon.Blend("#[mutant_color]", ICON_MULTIPLY)
 
 	var/datum/sprite_accessory/S
 	if(underwear)

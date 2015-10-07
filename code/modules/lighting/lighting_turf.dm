@@ -60,7 +60,7 @@
 	lighting_build_overlays()
 	return
 
-turf/proc/lighting_test_overlays()
+/turf/proc/lighting_test_overlays()
 	var/count
 	for(var/atom/movable/lighting_overlay/L in src)
 		count++

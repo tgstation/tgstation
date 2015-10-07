@@ -98,7 +98,7 @@
 	anchored = 1
 	invisibility = 60
 
-obj/effect/dummy/slaughter/relaymove(mob/user, direction)
+/obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	if (!src.canmove || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	loc = newLoc

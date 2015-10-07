@@ -290,8 +290,8 @@
 /datum/game_mode/proc/get_players_for_role(var/role)
 	var/list/players = list()
 	var/list/candidates = list()
-	var/list/drafted = list()
-	var/datum/mind/applicant = null
+	//var/list/drafted = list()
+	//var/datum/mind/applicant = null   //No more drafting for now
 
 	var/roletext
 	switch(role)
@@ -328,7 +328,11 @@
 				if(player.assigned_role == job)
 					candidates -= player
 
-	if(candidates.len < recommended_enemies)
+	//experimentation to remove drafting and forced antag
+	//hopefully, defaults games to Extended if no players have antag preferences on
+	//The proc "can_start()" handles what happens when there's not enough candidates
+
+	/*if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in players)
 			if(player.client && player.ready)
 				if(!(player.client.prefs.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
@@ -376,7 +380,7 @@
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
-
+	*/
 	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.

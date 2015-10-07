@@ -56,6 +56,32 @@
 	icon_state = "chocolatebar"
 	wrapped = 1
 
+/obj/item/weapon/reagent_containers/food/snacks/butterbar
+	name = "butter bar"
+	desc = "I can't believe it."
+	icon_state = "butterunwrapped"
+	wrapped = 0
+	list_reagents = list("nutriment" = 2, "fat" = 4)
+	filling_color = "#A0522D"
+
+/obj/item/weapon/reagent_containers/food/snacks/butterbar/attack_self(mob/user)
+	if(wrapped)
+		Unwrap(user)
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/butterbar/proc/Unwrap(mob/user)
+		icon_state = "butterunwrapped"
+		desc = "It won't make you all sticky."
+		user << "<span class='notice'>You remove the foil.</span>"
+		wrapped = 0
+
+
+/obj/item/weapon/reagent_containers/food/snacks/butterbar/wrapped
+	desc = "Maybe it's butter wrapped in some foil."
+	icon_state = "butter"
+	wrapped = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
 	desc = "A slice from a huge mushroom."

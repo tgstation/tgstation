@@ -89,6 +89,20 @@
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	list_reagents = list("vitamin" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/dindu
+	name = "dindu nuffin"
+	desc = "This muffin needs more money for the programs."
+	icon_state = "nuffin"
+	list_reagents = list("purple_drank" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/dindu/New()
+	..()
+	src.visible_message("<span class='alertalien'>[src] shouts ["I DINDU NUFFIN!"]</span>")
+
+/obj/item/weapon/reagent_containers/food/snacks/dindu/On_Consume()
+	src.visible_message("<span class='danger'>[src] shouts ["I DINDU NUFFIN!"]</span>")
+	..()
+
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles

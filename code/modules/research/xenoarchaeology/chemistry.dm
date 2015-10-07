@@ -73,7 +73,7 @@
 
 ///obj/item/weapon/reagent_containers/glass/solution_tray/mop_act(obj/item/weapon/mop/M, mob/user)
 //	return 1
-obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
+/obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
 		var/new_label = copytext(sanitize(input("What should the new label be?","Label solution tray") as text|null), 1, MAX_NAME_LEN)
 		if(new_label && Adjacent(user) && !user.stat)

@@ -472,26 +472,32 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/chem_dispenser/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I,/obj/item/weapon/screwdriver))
-		switch( alert("Current mode is set to: [finish_type]","Circuitboard interface","Chemical dispenser", "Booze dispenser", "Soda dispenser", "Cancel") )
-			if("Chemical dispenser")
+		var/board_choice = input("Current mode is set to: [finish_type]","Circuitboard interface") in list("Advanced Chem Synthesizer","Chemical Dispenser", "Booze Dispenser", "Soda Dispenser", "Cancel")
+		switch( board_choice )
+			if("Advanced Chem Synthesizer")
+				name = "circuit board (Advanced Chem Synthesizer)"
+				build_path = /obj/machinery/chem_dispenser/constructable/synth
+				finish_type = "advanced chem synthesizer"
+				return
+			if("Chemical Dispenser")
 				name = "circuit board (Portable Chem Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable
 				finish_type = "chemical dispenser"
-
-			if("Booze dispenser")
+				return
+			if("Booze Dispenser")
 				name = "circuit board (Portable Booze Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable/booze
 				finish_type = "booze dispenser"
-
-			if("Soda dispenser")
+				return
+			if("Soda Dispenser")
 				name = "circuit board (Portable Soda Dispenser)"
 				build_path = /obj/machinery/chem_dispenser/constructable/drinks
 				finish_type = "soda dispenser"
-
+				return
 			if("Cancel")
 				return
 			else
-				user << "Invalid input, try again"
+				user << "[board_choice]: Invalid input, try again"
 	return
 
 
@@ -611,7 +617,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
-obj/item/weapon/circuitboard/rdserver
+/obj/item/weapon/circuitboard/rdserver
 	name = "circuit board (R&D Server)"
 	build_path = /obj/machinery/r_n_d/server
 	board_type = "machine"

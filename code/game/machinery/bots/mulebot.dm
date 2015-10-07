@@ -78,7 +78,7 @@ var/global/mulebot_count = 0
 			suffix = "#[mulebot_count]"
 		name = "\improper Mulebot ([suffix])"
 
-obj/machinery/bot/mulebot/bot_reset()
+/obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
 

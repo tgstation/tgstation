@@ -111,7 +111,9 @@
 	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	if (href_list["make"])
-		if (src.get_amount() < 1) qdel(src) //Never should happen
+		if ( !is_cyborg && src.get_amount() < 1) //qdel(src) //Never should happen
+			amount = 0
+		//if this line shouldn't even happen, what the hell is it doing here? Just set it to 0, and no recipes can be made with it.
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
@@ -170,13 +172,14 @@
 		return 0
 	return 1
 
+//really funny, use() should return wether it had enough sheets or not, but the return value isn't used anywhere in this file
 /obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
 	if (is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return 0
 	amount -= used
-	if (amount <= 0)
+	if (!is_cyborg && amount <= 0) //just to be sure
 		if(usr)
 			usr.unEquip(src, 1)
 		qdel(src)

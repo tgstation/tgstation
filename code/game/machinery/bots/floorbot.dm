@@ -332,7 +332,7 @@
 		return 1
 
 //Floorbots, having several functions, need sort out special conditions here.
-obj/machinery/bot/floorbot/process_scan(var/scan_target)
+/obj/machinery/bot/floorbot/process_scan(var/scan_target)
 	var/result
 	var/turf/simulated/floor/F
 	switch(process_type)

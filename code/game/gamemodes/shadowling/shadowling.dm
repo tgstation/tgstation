@@ -47,7 +47,7 @@ Made by Xhuis
 	var/list/datum/mind/shadows = list()
 	var/list/datum/mind/thralls = list()
 	var/list/shadow_objectives = list()
-	var/required_thralls = 15 //How many thralls are needed (hardcoded for now)
+	var/required_thralls = 10 //How many thralls are needed (hardcoded for now)
 	var/shadowling_ascended = 0 //If at least one shadowling has ascended
 	var/shadowling_dead = 0 //is shadowling kill
 
@@ -68,11 +68,11 @@ Made by Xhuis
 	name = "shadowling"
 	config_tag = "shadowling"
 	antag_flag = BE_SHADOWLING
-	required_players = 20
+	required_players = 15
 	required_enemies = 2
 	recommended_enemies = 2
-	restricted_jobs = list("AI", "Cyborg", "MoMMI")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("AI", "Cyborg", "MoMMI", "Mr. Meeseeks")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
@@ -211,6 +211,8 @@ Made by Xhuis
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
 	burnmod = 2 //2x burn damage lel
 	heatmod = 2
+
+	roundstart = 0	//Used to inherit from shadows
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	//H.shadowling_status = 1 //If they are affected more strongly by flashes and stuff

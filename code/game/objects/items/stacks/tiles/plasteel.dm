@@ -7,7 +7,7 @@
 	icon_state = "tile"
 	w_class = 3.0
 	force = 6.0
-	materials = list(MAT_METAL=937.5)
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/4)  // 4 tiles per metal sheet.
 	throwforce = 10.0
 	throw_speed = 3
 	throw_range = 7

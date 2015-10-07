@@ -20,9 +20,9 @@ Bonus
 	name = "Stimulant"
 	stealth = -1
 	resistance = -3
-	stage_speed = -2
+	stage_speed = 4
 	transmittable = -4
-	level = 3
+	level = 4
 
 /datum/symptom/stimulant/Activate(var/datum/disease/advance/A)
 	..()
@@ -30,11 +30,13 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(5)
-				if (M.reagents.get_reagent_amount("ephedrine") < 10)
-					M.reagents.add_reagent("ephedrine", 10)
-				if (M.reagents.get_reagent_amount("coffee") < 30)
-					M.reagents.add_reagent("coffee", 15)
+				if (M.reagents.get_reagent_amount("ephedrine") < 15)
+					M.reagents.add_reagent("ephedrine", 7)
+				if (M.reagents.get_reagent_amount("coffee") < 20)
+					M.reagents.add_reagent("coffee", 20)
+				if (M.reagents.get_reagent_amount("Hyperzine") < 15)
+					M.reagents.add_reagent("Hyperzine", 7)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
-					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
+					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.", "You feel like GOING FAST around the station.")]</span>"
 	return

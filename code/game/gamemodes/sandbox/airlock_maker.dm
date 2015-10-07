@@ -4,15 +4,15 @@
 	-Sayu
 */
 
-obj/structure/door_assembly
+/obj/structure/door_assembly
 	var/datum/airlock_maker/maker = null
 
-obj/structure/door_assembly/attack_hand()
+/obj/structure/door_assembly/attack_hand()
 	..()
 	if(maker)
 		maker.interact()
 
-datum/airlock_maker
+/datum/airlock_maker
 	var/obj/structure/door_assembly/linked = null
 
 	var/list/access_used = null
@@ -23,7 +23,7 @@ datum/airlock_maker
 
 	var/doorname = "airlock"
 
-datum/airlock_maker/New(var/atom/target_loc)
+/datum/airlock_maker/New(var/atom/target_loc)
 	linked = new(target_loc)
 	linked.maker = src
 	linked.anchored = 0
@@ -31,7 +31,7 @@ datum/airlock_maker/New(var/atom/target_loc)
 
 	interact()
 
-datum/airlock_maker/proc/linkpretty(href,desc,active)
+/datum/airlock_maker/proc/linkpretty(href,desc,active)
 	if(!desc)
 		var/static/list/defaults = list("No","Yes")
 		desc = defaults[active+1]
@@ -39,7 +39,7 @@ datum/airlock_maker/proc/linkpretty(href,desc,active)
 		return "<a href='?src=\ref[src];[href]'><b>[desc]</b></a>"
 	return "<a href='?src=\ref[src];[href]'><i>[desc]</i></a>"
 
-datum/airlock_maker/proc/interact()
+/datum/airlock_maker/proc/interact()
 	var/list/leftcolumn = list()
 	var/list/rightcolumn = list()
 	leftcolumn += "<u><b>Required Access</b></u>"
@@ -68,7 +68,7 @@ datum/airlock_maker/proc/interact()
 	dat += "</table><hr><a href='?src=\ref[src];done'>Finalize Airlock Construction</a> | <a href='?src=\ref[src];cancel'>Cancel and Destroy Airlock</a>"
 	usr << browse(dat,"window=airlockmaker")
 
-datum/airlock_maker/Topic(var/href,var/list/href_list)
+/datum/airlock_maker/Topic(var/href,var/list/href_list)
 	if(!usr) return
 	if(!src || !linked || !linked.loc)
 		usr << browse(null,"window=airlockmaker")

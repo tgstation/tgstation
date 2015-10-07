@@ -28,7 +28,7 @@ Relevant vars/procs:
 global: (uh, I placed the only one in lighting_system.dm)
   - var/list/all_lighting_overlays; Just a list of ALL of the lighting overlays.
 
-atom: (lighting_atom.dm)
+/atom: (lighting_atom.dm)
   - var/light_range; range in tiles of the light, used for calculating falloff
   - var/light_power; multiplier for the brightness of lights
   - var/light_color; hex string representing the RGB colour of the light
@@ -45,7 +45,7 @@ atom: (lighting_atom.dm)
 	  - Updates the light var on this atom, deleting or creating as needed and calling .update()
 
 
-turf: (lighting_turf.dm)
+/turf: (lighting_turf.dm)
   - var/list/affecting_lights; list of light sources that are shining onto this turf
   - var/list/lighting_overlays; list of lighting overlays in the turf. (only used if higher resolutions
   - var/lighting_overlay; ref to the lighting overlay (only used if resolution is 1)
@@ -61,7 +61,7 @@ turf: (lighting_turf.dm)
   	  - Returns a decimal according to the amount of lums on a turf's overlay (also averages them)
   	  - With default arguments (based on the fact that 0 = pitch black and 1 = full bright), it will return .5 for a 50% lit tile.
 
-atom/movable/lighting_overlay: (lighting_overlay.dm)
+/atom/movable/lighting_overlay: (lighting_overlay.dm)
   - var/lum_r, var/lum_g, var/lum_b; lumcounts of each colour
   - var/needs_update; set on update_lumcount, checked by lighting process
 

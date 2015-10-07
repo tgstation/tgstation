@@ -11,12 +11,12 @@ var/list/blob_nodes = list()
 	config_tag = "blob"
 	antag_flag = BE_BLOB
 
-	required_players = 20
+	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 1
 
 	round_ends_with_antag_death = 1
-	restricted_jobs = list("Cyborg", "AI", "MoMMI")
+	restricted_jobs = list("Cyborg", "AI", "MoMMI", "Mr. Meeseeks")
 
 	var/declared = 0
 	var/burst = 0

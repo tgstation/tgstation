@@ -32,6 +32,9 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
+	if(stat == DEAD)
+		plasma_revive()	//Plasmaman resurrection
+
 	if (notransform)
 		return
 
@@ -373,5 +376,55 @@
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
 	return
+
+/mob/living/carbon/human/proc/plasma_revive()
+	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
+	if(breath && (disabilities & HUSK || dna.species.safe_toxins_min) && reagents)	//Plasmaman re-revival
+		var/Toxins_pp = breath.get_breath_partial_pressure(breath.toxins)
+		if(Toxins_pp > 10 && breath.temperature > T0C+150)	//Pressure quivalent to about 16.7 at 500K, temperature required is plasmaman cold damage limit
+			for(var/A in reagents.reagent_list)
+				var/datum/reagent/R = A
+				if(R.id == "plasma" && R.volume >= 20)
+					plasmaman_resurrection(breath.temperature)
+
+/*	else	Doesn't seem to be working. Test more later
+		if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
+			var/datum/gas_mixture/C_air_contents = C.airs[AIR1]
+
+			if(C_air_contents.total_moles() < 10)
+				return
+			if(C_air_contents.temperature > 350)
+				breath = C.handle_internal_lifeform(src, BREATH_VOLUME)
+				if(breath.get_breath_partial_pressure(breath.toxins) > 16)
+					plasmaman_resurrection()*/
+
+/mob/living/carbon/human/proc/plasmaman_resurrection(temperature)
+	var/mob/dead/observer/ghost = get_ghost()
+	if(ghost && !revivalnotification)
+		ghost << "<span class='ghostalert'>Your feel a fire burning in your body. Return to your body if you want to be revived!</span> (Verbs -> Ghost -> Re-enter corpse)"
+		ghost << 'sound/effects/genetics.ogg'
+		revivalnotification = 1
+	if(!get_ghost() && getorgan(/obj/item/organ/internal/brain))
+		revivalnotification = 0
+		hardset_dna(src, null, null, null, null, /datum/species/plasmaman)
+		bodytemperature = temperature
+		setOxyLoss(0)
+		setToxLoss(0)
+		var/total_burn = getFireLoss()
+		var/total_brute = getBruteLoss()
+		//Damage set to max. 75
+		if(total_burn+total_brute != 0)
+			var/burn_to_heal = (health + 75) * (total_burn / (total_burn + total_brute))
+			var/brute_to_heal = (health + 75) * (total_brute / (total_burn + total_brute))
+			adjustFireLoss(burn_to_heal)
+			adjustBruteLoss(brute_to_heal)
+		stat = UNCONSCIOUS
+		if(disabilities & HUSK)
+			disabilities &= ~HUSK
+		update_base_icon_state()
+		dead_mob_list -= src
+		living_mob_list |= list(src)
+		emote("gasp")
 
 #undef HUMAN_MAX_OXYLOSS

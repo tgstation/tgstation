@@ -380,7 +380,7 @@
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	category = list("Computer Boards")
 
-datum/design/circuit/rcon_console
+/datum/design/circuit/rcon_console
 	name = "RCON remote control console"
 	id = "rcon_console"
 	req_tech = list("programming" = 4, "engineering" = 3, "powerstorage" = 5)

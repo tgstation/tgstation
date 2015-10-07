@@ -24,6 +24,7 @@
 #define SPAN_YELL "yell"
 #define SPAN_ITALICS "italics"
 #define SPAN_SANS "sans"
+#define SPAN_PAPYRUS "papyrus"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1

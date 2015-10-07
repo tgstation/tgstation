@@ -451,7 +451,7 @@ swapmap
 	proc/BuildInTurfs(list/turfs,item)
 		for(var/T in turfs) new item(T)
 
-atom
+/atom
 	Write(savefile/S)
 		for(var/V in vars-"x"-"y"-"z"-"contents"-"icon"-"overlays"-"underlays")
 			if(issaved(vars[V]))

@@ -428,7 +428,9 @@
 	stored_obj = A
 	anchored = A.anchored
 	density = A.density
-	appearance = A.appearance
+	//appearance = A.appearance
+	icon = A.icon
+	icon_state = A.icon_state
 	spawn(600)
 		stored_obj.loc = get_turf(src.loc)
 		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"

@@ -80,7 +80,7 @@
 
 /obj/machinery/power/breakerbox/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/device/multitool))
-		var/newtag = input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system") as text
+		var/newtag = stripped_input(user, "Enter new RCON tag. Use \"NO_TAG\" to disable RCON or leave empty to cancel.", "SMES RCON system")
 		if(newtag)
 			RCon_tag = newtag
 			user << "<span class='notice'>You changed the RCON tag to: [newtag]</span>"
@@ -100,7 +100,24 @@
 					connection_dirs += direction
 					break
 
-		for(var/direction in connection_dirs)
+		if(connection_dirs[2])
+			var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
+			C.d1 = connection_dirs[1]
+			C.d2 = connection_dirs[2]
+			C.icon_state = "[C.d1]-[C.d2]"
+			C.breaker_box = 1
+
+			var/datum/powernet/PN = new()
+			PN.add_cable(C)
+
+			C.mergeConnectedNetworks(C.d1)
+			C.mergeConnectedNetworks(C.d2)
+			C.mergeConnectedNetworksOnTurf()
+
+			if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
+				C.mergeDiagonalsNetworks(C.d2)
+
+/*		for(var/direction in connection_dirs)
 			var/obj/structure/cable/C = new/obj/structure/cable(src.loc)
 			C.d1 = 0
 			C.d2 = direction
@@ -114,13 +131,16 @@
 			C.mergeConnectedNetworksOnTurf()
 
 			if(C.d2 & (C.d2 - 1))// if the cable is layed diagonally, check the others 2 possible directions
-				C.mergeDiagonalsNetworks(C.d2)
+				C.mergeDiagonalsNetworks(C.d2)*/
 
 	else
 		icon_state = icon_state_off
 		for(var/obj/structure/cable/C in src.loc)
-			del(C)
-
+//			C.denode()
+			C.Destroy()
+//			del(C)
+	for (var/obj/machinery/computer/monitor/mon in machines)
+		mon.forceupdate()
 // Used by RCON to toggle the breaker box.
 /obj/machinery/power/breakerbox/proc/auto_toggle()
 	if(!update_locked)

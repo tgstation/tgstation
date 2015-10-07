@@ -9,3 +9,10 @@
 *.lk
 *.int
 *.backup
+*.db
+
+#Ignore text editor autosaves
+\#*\#
+*~
+.#*
+*.swp
