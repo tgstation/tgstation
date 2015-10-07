@@ -5,8 +5,8 @@ if not exist setnewmap.bat exit 11
 call setnewmap.bat
 cd ..
 
-if exists updating.lk exit 21
-if exists rotating.lk exit 22
+if exist updating.lk exit 21
+if exist rotating.lk exit 22
 
 if not exist config.bat exit 12
 call config.bat

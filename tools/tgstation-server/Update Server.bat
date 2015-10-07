@@ -6,13 +6,13 @@ call bin\getcurdate.bat
 echo This will handle downloading git, compiling the server, and applying the update.
 echo ready?
 timeout 120
-if exists updating.lk (
+if exist updating.lk (
 	echo ERROR! A current update script has been detected running. if you know this is a mistake:
 	pause
 	echo Please be double sure that an update script is not currently running, if you think one might be, close this window. otherwise:
 	pause
 )
-if exists rotating.lk (
+if exist rotating.lk (
 	echo ERROR! A current map rotation operation has been detected running. IT IS STRONGLY RECOMMENDED YOU DO NOT UPDATE RIGHT NOW. if you know this is a mistake, and that the game server is not currently rotating the map:
 	pause
 	echo IT IS STRONGLY RECOMMENDED YOU DO NOT UPDATE RIGHT NOW. If a map rotation script runs at the same time as an update script the server will generally break in ways not trivial to recover from. Are you REALLY sure? Please close this window if you are not, otherwise:
