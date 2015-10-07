@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Added "Gardener" job title and uniform for Botanists.
-  - bugfix: Fixed a bug that caused some of the randomly generated plants to have invisible sprites at some points of their growth.
