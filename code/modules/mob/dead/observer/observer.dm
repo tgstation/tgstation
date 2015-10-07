@@ -196,10 +196,8 @@ Works together with spawning an observer, noted above.
 			return "health10"
 		if(1 to 5)
 			return "health1"
-		if(-49 to 0)
+		if(-99 to 0)
 			return "health0"
-		if(-99 to -50)
-			return "health-50"
 		else
 			return "health-100"
 	return "0"
