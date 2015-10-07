@@ -59,6 +59,14 @@
 	plantname = "cherry"
 	slot_flags = SLOT_EARS
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon
+	name = "cinnamon sticks"
+	desc = "Straight from the bark!"
+	icon_state = "cinnamon"
+	filling_color = "#D2691E"
+	gender = PLURAL
+	plantname = "cinnamomum"
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
@@ -74,6 +82,14 @@
 	potency = 1
 	filling_color = "#D4B2C9"
 	plantname = "harebells"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
+	name = "moonflower"
+	desc = "Store in a location at least 50 yards away from werewolves."
+	icon_state = "moonflower"
+	potency = 25
+	filling_color = "#E6E6FA"
+	plantname = "moonflowers"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	name = "potato"
@@ -336,6 +352,14 @@
 	filling_color = "#E6E8B7"
 	icon_state = "soybeans"
 	plantname = "soybean"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
+	name = "koibean"
+	desc = "Something about these seems fishy."
+	gender = PLURAL
+	icon_state = "koibeans"
+	filling_color = "#F0E68C"
+	plantname = "koibean"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	name = "tomato"

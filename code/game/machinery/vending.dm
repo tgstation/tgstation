@@ -1466,6 +1466,7 @@
 		/obj/item/seeds/cherryseed = 3,
 		/obj/item/seeds/plastiseed = 3,
 		/obj/item/seeds/riceseed = 3,
+		/obj/item/seeds/cinnamomum = 3,
 		)//,/obj/item/seeds/synthmeatseed = 3)
 	contraband = list(
 		/obj/item/seeds/amanitamycelium = 2,

@@ -119,6 +119,8 @@ proc/populate_seed_list()
 
 	var/mob_drop					// Seed type dropped by the mobs when it dies without an host
 
+	var/large = 1					// Is the plant large? For clay pots.
+
 //Creates a random seed. MAKE SURE THE LINE HAS DIVERGED BEFORE THIS IS CALLED.
 /datum/seed/proc/randomize()
 
@@ -166,6 +168,8 @@ proc/populate_seed_list()
 		list("seed-harebell",           "harebell"),
 		list("seed-poppy",              "poppy"),
 		list("seed-sunflower",          "sunflower"),
+		list("seed-moonflower",         "moonflower"),
+		list("seed-novaflower",         "novaflower"),
 		list("seed-grapes",             "grape"),
 		list("seed-greengrapes",        "greengrape"),
 		list("seed-peanut",             "peanut"),
@@ -176,6 +180,7 @@ proc/populate_seed_list()
 		list("seed-corn",               "corn"),
 		list("seed-potato",             "potato"),
 		list("seed-soybean",            "soybean"),
+		list("seed-koibean",            "koibean"),
 		list("seed-wheat",              "wheat"),
 		list("seed-rice",               "rice"),
 		list("seed-carrot",             "carrot"),
@@ -191,7 +196,8 @@ proc/populate_seed_list()
 		list("seed-cocoapod",           "cocoapod"),
 		list("seed-cherry",             "cherry"),
 		list("seed-kudzu",              "kudzu"),
-		list("seed-dionanode",          "dionanode")
+		list("seed-dionanode",          "dionanode"),
+		list("seed-cinnamomum",         "cinnamomum"),
 		))
 
 	packet_icon = plant_icons[1]
@@ -943,6 +949,8 @@ proc/populate_seed_list()
 	yield = 5
 	potency = 10
 
+	large = 0
+
 /datum/seed/apple/poison
 	name = "poisonapple"
 	mutants = null
@@ -980,6 +988,8 @@ proc/populate_seed_list()
 	production = 6
 	yield = 6
 	potency = 5
+
+	large = 0
 
 
 /datum/seed/ambrosia/cruciatus
@@ -1210,17 +1220,60 @@ proc/populate_seed_list()
 	yield = 6
 	growth_stages = 3
 
+	large = 0
+
 /datum/seed/flower/sunflower
 	name = "sunflowers"
 	seed_name = "sunflower"
 	display_name = "sunflowers"
 	packet_icon = "seed-sunflower"
 	products = list(/obj/item/weapon/grown/sunflower)
+	mutants = list("moonflower","novaflower")
 	plant_icon = "sunflower"
 
 	lifespan = 25
 	maturation = 6
 	growth_stages = 3
+
+	large = 0
+
+/datum/seed/flower/sunflower/moonflower
+	name = "moonflowers"
+	seed_name = "moonflower"
+	display_name = "moonflowers"
+	packet_icon = "seed-moonflower"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower)
+	mutants = null
+	plant_icon = "moonflower"
+	chems = list("nutriment" = list(1), "moonshine" = list(1,5))
+
+	lifespan = 25
+	maturation = 6
+	growth_stages = 3
+	potency = 30
+	biolum = 1
+	biolum_colour = "#B5ABDD"
+
+	large = 0
+
+/datum/seed/flower/sunflower/novaflower
+	name = "novaflowers"
+	seed_name = "novaflower"
+	display_name = "novaflowers"
+	packet_icon = "seed-novaflower"
+	products = list(/obj/item/weapon/grown/novaflower)
+	mutants = null
+	plant_icon = "novaflower"
+	chems = list("nutriment" = list(1), "capsaicin" = list(1,5))
+
+	lifespan = 25
+	maturation = 6
+	growth_stages = 3
+	potency = 30
+	biolum = 1
+	biolum_colour = "#FF9900"
+
+	large = 0
 
 //Grapes/varieties
 /datum/seed/grapes
@@ -1239,6 +1292,8 @@ proc/populate_seed_list()
 	production = 5
 	yield = 4
 	potency = 10
+
+	large = 0
 
 /datum/seed/grapes/green
 	name = "greengrapes"
@@ -1347,6 +1402,8 @@ proc/populate_seed_list()
 	potency = 20
 	growth_stages = 3
 
+	large = 0
+
 /datum/seed/potato
 	name = "potato"
 	seed_name = "potato"
@@ -1378,6 +1435,22 @@ proc/populate_seed_list()
 	production = 4
 	yield = 3
 	potency = 5
+
+/datum/seed/koiseed
+	name = "koibean"
+	seed_name = "koibean"
+	display_name = "koibeans"
+	packet_icon = "seed-koibean"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans)
+	plant_icon = "soybean"
+	harvest_repeat = 1
+	chems = list("nutriment" = list(1,10),"carpotoxin" = list(1,25))
+
+	lifespan = 25
+	maturation = 4
+	production = 4
+	yield = 3
+	potency = 10
 
 /datum/seed/wheat
 	name = "wheat"
@@ -1522,6 +1595,8 @@ proc/populate_seed_list()
 	yield = 4
 	potency = 15
 
+	large = 0
+
 /datum/seed/lemon
 	name = "lemon"
 	seed_name = "lemon"
@@ -1538,6 +1613,8 @@ proc/populate_seed_list()
 	yield = 4
 	potency = 10
 
+	large = 0
+
 /datum/seed/orange
 	name = "orange"
 	seed_name = "orange"
@@ -1553,6 +1630,8 @@ proc/populate_seed_list()
 	production = 6
 	yield = 5
 	potency = 1
+
+	large = 0
 
 /datum/seed/grass
 	name = "grass"
@@ -1586,6 +1665,8 @@ proc/populate_seed_list()
 	potency = 10
 	growth_stages = 5
 
+	large = 0
+
 /datum/seed/cherries
 	name = "cherry"
 	seed_name = "cherry"
@@ -1603,6 +1684,27 @@ proc/populate_seed_list()
 	yield = 3
 	potency = 10
 	growth_stages = 5
+
+	large = 0
+
+/datum/seed/cinnamomum
+	name = "cinnamomum"
+	seed_name = "cinnamomum"
+	display_name = "cinnamomum tree"
+	packet_icon = "seed-cinnamomum"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "cinnamomum"
+	chems = list("cinnamon" = list(4,3))
+
+	lifespan = 80
+	maturation = 15
+	production = 1
+	yield = 4
+	potency = 10
+	growth_stages = 4
+
+	large = 0
 
 /datum/seed/kudzu
 	name = "kudzu"

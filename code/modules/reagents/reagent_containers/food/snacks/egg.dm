@@ -6,16 +6,16 @@
 	icon_state = "egg"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/New()
-		..()
-		reagents.add_reagent("nutriment", 4)
-		src.bitesize = 3
+	..()
+	reagents.add_reagent("nutriment", 4)
+	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("<span class='warning'>[src.name] has been squashed.</span>","<span class='warning'>You hear a smack.</span>")
-		del(src)
+	..()
+	new/obj/effect/decal/cleanable/egg_smudge(src.loc)
+	src.reagents.reaction(hit_atom, TOUCH)
+	src.visible_message("<span class='warning'>\The [src.name] has been squashed.</span>","<span class='warning'>You hear a smack.</span>")
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"

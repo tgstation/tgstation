@@ -782,6 +782,7 @@
 	if(!holder) return
 	if(ishuman(M))
 		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		M.druggy = max(M.druggy, 50)
 		holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
 	return
 
@@ -2812,6 +2813,14 @@
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
 	reagent_state = SOLID
 	// no color (ie, black)
+
+/datum/reagent/cinnamon
+	name = "Cinnamon Powder"
+	id = "cinnamon"
+	description = "A spice, obtained from the bark of cinnamomum trees."
+	reagent_state = SOLID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#D2691E" // rgb: 210, 105, 30
 
 /datum/reagent/coco
 	name = "Coco Powder"
