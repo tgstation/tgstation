@@ -345,6 +345,8 @@ var/failed_db_connections = 0
 	if (. == 0)
 		world << "<span class='boldannounce'>Map rotation has choosen [VM.friendlyname] for next round!</span>"
 
+var/datum/votablemap/nextmap
+
 /proc/changemap(var/datum/votablemap/VM)
 	if (!SERVERTOOLS)
 		return
@@ -361,6 +363,7 @@ var/failed_db_connections = 0
 			log_game("Failed to change map: Could not run map rotator")
 		if (0)
 			log_game("Changed to map [VM.friendlyname]")
+			nextmap = VM
 		//1x: file errors
 		if (11)
 			message_admins("Failed to change map: File error: Map rotator script couldn't find file listing new map")
