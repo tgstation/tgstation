@@ -183,7 +183,7 @@ var/const/VOX_DELAY = 600
 		play_vox_word(word, src.z, null)
 
 
-var/list/vox_units=list(
+var/list/vox_digits=list(
 	'sound/vox_fem/one.ogg',
 	'sound/vox_fem/two.ogg',
 	'sound/vox_fem/three.ogg',
@@ -206,7 +206,8 @@ var/list/vox_units=list(
 )
 
 var/list/vox_tens=list(
-	'sound/vox_fem/ten.ogg',
+	null,
+	null,
 	'sound/vox_fem/twenty.ogg',
 	'sound/vox_fem/thirty.ogg',
 	'sound/vox_fem/fourty.ogg',
@@ -217,51 +218,15 @@ var/list/vox_tens=list(
 	'sound/vox_fem/ninety.ogg'
 )
 
-// Stolen from here: http://stackoverflow.com/questions/2729752/converting-numbers-in-to-words-c-sharp
+var/list/vox_units=list(
+	null, // Don't yell units
+	'sound/vox_fem/thousand.ogg',
+	'sound/vox_fem/million.ogg',
+	//'sound/vox_fem/billion.ogg'
+)
+
 /proc/vox_num2list(var/number)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/vox_num2list() called tick#: [world.time]")
-	if(!isnum(number))
-		warning("vox_num2list fed a non-number: [number]")
-		return list()
-	number=round(number)
-	if(number == 0)
-		return list('sound/vox_fem/zero.ogg')
-
-	if(number < 0)
-		return list('sound/vox_fem/minus.ogg') + vox_num2list(abs(number))
-
-	var/list/words=list()
-
-	if (round(number / 1000000) > 0)
-		words += vox_num2list(number / 1000000)
-		words.Add('sound/vox_fem/million.ogg')
-		number %= 1000000
-
-	if (round(number / 1000) > 0)
-		words += vox_num2list(number / 1000)
-		words.Add('sound/vox_fem/thousand.ogg')
-		number %= 1000
-
-	if (round(number / 100) > 0)
-		words += vox_num2list(number / 100)
-		words.Add('sound/vox_fem/hundred.ogg')
-		number %= 100
-
-	if (number > 0)
-		// Sounds fine without the and.
-		//if (words != "")
-		//	words += "and "
-
-		if (number < 19) //BYOND LISTS START KEYS AT 1 NOT 0
-			words += vox_units[number+1]
-		else
-			var/indice = (number / 10)+1
-			if(indice < vox_tens.len)
-				words += vox_tens[indice]
-			if ((number % 10) > 0)
-				words.Add(vox_units[(number % 10)+1])
-
-	return words
+	return num2words(number, zero='sound/vox_fem/zero.ogg', minus='sound/vox_fem/minus.ogg', hundred='sound/vox_fem/hundred.ogg', digits=vox_digits, tens=vox_tens, units=vox_units)
 
 /proc/play_vox_word(var/word, var/z_level, var/mob/only_listener)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/play_vox_word() called tick#: [world.time]")
