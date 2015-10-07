@@ -131,6 +131,10 @@
 	//Dump eaten stuff
 	for(var/obj/O in src)
 		O.loc = loc
+		var/eject_dir = pick(alldirs)
+		if(step(O, eject_dir))
+			if(prob(50))
+				step(O, eject_dir)
 
 	for(var/mob/M in src)
 		M.loc = loc
@@ -169,12 +173,15 @@
 				L.loc = src
 				adjustBruteLoss(-50)
 			return
-	if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) // Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
 			if(do_after(src,20, target = I))
 				visible_message("<span class='warning'>[src] swallows [target] whole!</span>")
-				I.loc = src
+				if(contents.len<50)
+					I.loc = src
+				else
+					qdel(I)
 			return
 	target.attack_animal(src)
 
