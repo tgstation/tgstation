@@ -274,7 +274,6 @@
 		return O.relaymove(mob, dir)
 
 	if(isturf(mob.loc))
-
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
@@ -283,6 +282,16 @@
 						return 0
 					else
 						M.stop_pulling()
+			if(mob.tether)
+				var/datum/chain/chain_datum = mob.tether.chain_datum
+				if(chain_datum.extremity_A == mob)
+					if(istype(chain_datum.extremity_B,/mob/living))
+						src << "<span class='notice'> You're restrained! You can't move!</span>"
+						return 0
+				else if(chain_datum.extremity_B == mob)
+					if(istype(chain_datum.extremity_A,/mob/living))
+						src << "<span class='notice'> You're restrained! You can't move!</span>"
+						return 0
 
 		if(mob.pinned.len)
 			src << "<span class='notice'> You're pinned to a wall by [mob.pinned[1]]!</span>"
