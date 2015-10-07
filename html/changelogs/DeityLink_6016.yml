@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Hook chains prevent you from moving if you are also restrained and a mob is holding the hookshot (just as if they were pulling you).
