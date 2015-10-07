@@ -27,6 +27,7 @@ obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	return
 
 /obj/effect/dummy/slaughter/Destroy()
+	..()
 	return QDEL_HINT_PUTINPOOL
 
 
