@@ -33,9 +33,17 @@
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "A pair of snazzy goggles used to protect against chemical spills."
+	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items."
 	icon_state = "purple"
 	item_state = "glasses"
+
+/obj/item/clothing/glasses/science/equipped(mob/user, slot)
+	user.research_scanner = 1
+	..(user, slot)
+
+/obj/item/clothing/glasses/science/dropped(mob/user)
+	user.research_scanner = initial(user.research_scanner) //Because some mobs might have it defaulted to 1.
+	..(user)
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"

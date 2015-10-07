@@ -324,6 +324,14 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
 
+/obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/user, slot)
+	user.research_scanner = 1
+	..(user, slot)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/user)
+	user.research_scanner = 0
+	..(user)
+
 /obj/item/clothing/suit/space/hardsuit/rd
 	icon_state = "hardsuit-rd"
 	name = "prototype hardsuit"
