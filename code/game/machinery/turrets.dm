@@ -346,7 +346,7 @@
 
 /obj/machinery/gun_turret //related to turrets but work way differentely because of being mounted on a moving ship.
 	name = "machine gun turret"
-	desc = "Syndicate defense turret. It really packs a bunch."
+	desc = "Syndicate defense turret. It really packs a punch."
 	density = 1
 	anchored = 1
 	var/state = 0 //Like stat on mobs, 0 is alive, 1 is damaged, 2 is dead
