@@ -343,7 +343,7 @@ var/failed_db_connections = 0
 	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
 	. = changemap(VM)
 	if (. == 0)
-		world << "<span class='boldannounce'>Map rotation has choosen [VM.friendlyname] for next round!</span>"
+		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
 
 var/datum/votablemap/nextmap
 

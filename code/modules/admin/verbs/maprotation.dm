@@ -33,11 +33,11 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/choosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
-	if (!choosenmap)
+	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
+	if (!chosenmap)
 		return
 	ticker.maprotatechecked = 1
-	var/datum/votablemap/VM = maprotatechoices[choosenmap]
+	var/datum/votablemap/VM = maprotatechoices[chosenmap]
 	message_admins("[key_name_admin(usr)] is changing the map to [VM.name]([VM.friendlyname])")
 	log_admin("[key_name(usr)] is changing the map to [VM.name]([VM.friendlyname])")
 	if (changemap(VM) == 0)
