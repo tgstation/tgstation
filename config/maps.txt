@@ -30,3 +30,12 @@ endmap
 	maxplayers 30
 	voteweight 0
 endmap
+
+map dreamstation
+	friendlyname Dream Station
+endmap
+
+map DiscStation
+	friendlyname Disc Station
+	voteweight 0
+endmap
