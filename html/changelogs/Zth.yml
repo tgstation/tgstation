@@ -1,6 +1,0 @@
-author: Zth
-
-delete-after: True
-
-changes: 
-  - rscadd: External airlocks now close faster by default to minimize depressurization.
