@@ -325,11 +325,11 @@
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/user, slot)
-	user.research_scanner = 1
+	user.scanner.Grant(user)
 	..(user, slot)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/user)
-	user.research_scanner = 0
+	user.scanner.devices -= 1
 	..(user)
 
 /obj/item/clothing/suit/space/hardsuit/rd

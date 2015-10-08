@@ -189,7 +189,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				msg += "[capitalize(copytext(mat, 2))]<BR>" //Capitize first word, remove the "$"
 		else
 			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
-		msg += "*--------* <BR>"
+		msg += "*--------*"
 		user << msg
 
 

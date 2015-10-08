@@ -38,11 +38,12 @@
 	item_state = "glasses"
 
 /obj/item/clothing/glasses/science/equipped(mob/user, slot)
-	user.research_scanner = 1
+	if(slot == slot_glasses)
+		user.scanner.Grant(user)
 	..(user, slot)
 
 /obj/item/clothing/glasses/science/dropped(mob/user)
-	user.research_scanner = initial(user.research_scanner) //Because some mobs might have it defaulted to 1.
+	user.scanner.devices -= 1
 	..(user)
 
 /obj/item/clothing/glasses/night
