@@ -21,7 +21,7 @@
 			if(query_log_get.NextRow())
 				var/polltype = query_log_get.item[1]
 				var/question = query_log_get.item[2]
-				var/adminonly = query_log_get.item[3]
+				var/adminonly = text2num(query_log_get.item[3])
 				log_admin("[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]")
 				message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
 		else
