@@ -704,7 +704,7 @@ mob/living/simple_animal/borer/proc/detach()
 			if(istype(T, /turf/simulated))
 				T.add_vomit_floor(null, 1)
 			new /obj/item/weapon/reagent_containers/food/snacks/egg/borer(T)
-			busy=0
+		busy=0
 
 	else
 		src << "You do not have enough chemicals stored to reproduce."
