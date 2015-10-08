@@ -111,7 +111,7 @@ obj/structure/barricade/wooden/proc/take_damage(damage, leave_debris=1, message)
 			take_damage(25, message = "<span class='warning'>The barricade is blown apart!</span>")
 
 /obj/structure/barricade/wooden/blob_act()
-	take_damage(25, message = "<span class='warning'>The blob eats through the barricade!</span>")
+	take_damage(25, leave_debris = 0, message = "<span class='warning'>The blob eats through the barricade!</span>")
 
 
 /obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
