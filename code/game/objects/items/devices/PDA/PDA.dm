@@ -589,7 +589,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = input(U, "Please enter new ringtone", name, ttone) as text //this gets sanitized later because of hidden uplink logic
 				if (in_range(src, U) && loc == U)
 					if (t)
 						if(src.hidden_uplink && hidden_uplink.check_trigger(U, trim(lowertext(t)), trim(lowertext(lock_code))))
