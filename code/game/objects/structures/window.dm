@@ -468,8 +468,8 @@
 	smooth = 1
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 
-/obj/structure/window/reinforced/tinted/fulltile
-	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+/obj/structure/window/reinforced/tinted/fulltile //This is the correct type for the tinted windows on the map
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi' //some double nigger was using map instanced non-fulltile twindows that could only be hit from certain angles
 	icon_state = "tinted_window"
 	dir = 5
 	fulltile = 1

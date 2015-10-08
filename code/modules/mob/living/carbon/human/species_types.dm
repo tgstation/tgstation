@@ -530,6 +530,7 @@
 
 /datum/species/abductor/handle_speech(message)
 	//Hacks
+	//Extra Hacks
 	var/mob/living/carbon/human/user = usr
 	var/datum/species/abductor/target_spec
 	if (abductor)
@@ -556,33 +557,28 @@
 	if(tele_target)
 		tele_target << "<i><font color=#800080><b>[user.name]:</b> [message]</font></i>"
 
-/datum/species/abductor/spec_attack_hand(var/mob/living/carbon/human/M, var/mob/living/carbon/human/H)
-	//telepathy target adquiring
-	if(M.a_intent == "help" && tele_target != H)
-		tele_target = H
-		M.visible_message("<span class='notice'>[M] touches [H] and it's eyes glow eerily.</span>", \
-					"<span class='notice'>You touch [H] and gain acess into it's mind.</span>")
-	else
-		..() //so they can user their hands normally now
+//Telepathy shit moved to main proc to make it work with all species
+
 /datum/species/abductor/spec_life(var/mob/living/carbon/human/H)
 	var/alone_test = 0 //to check if we found someone
 	var/pain_felt = 0
-	for (var/mob/living/carbon/M in range(7,H))
-		if(!M.stat && M.client) //only interacts with players
+	for (var/mob/living/carbon/M in range(7,H))  //not orange() because this should probably look for hurt mobs who are in the same tile as H
+		if(M.stat != DEAD && M.client && M != H) //only interacts with other players
 			alone_test = 1 //we're not lonely!
 			if(M.health < M.getMaxHealth())
-				pain_felt += (M.getMaxHealth() - M.health) / M.getMaxHealth() //coefficient, goes from 0% to 1 if it's in crit. >1 if it's closer to death.
+				pain_felt += (M.getMaxHealth() - M.health) / M.getMaxHealth() //coefficient, goes from 0% to 1 if it's in crit. >1 if it's closer to death
 	if(pain_felt)
 		H.AdjustWeakened(-pain_felt)
 		H.adjustStaminaLoss(-pain_felt)
-		H.Jitter(pain_felt)
+		H.Jitter(pain_felt) //comically low levels of jitter
 		if(prob(10))
 			H << "<span class='alert'>You feel someone in pain!</span>"
 	if(!alone_test)
 		H.adjustStaminaLoss(-1)
-		H.Dizzy(5)
 		if(prob(10))
+			H.Dizzy(4) //This will get annoying fast now that it can actually get triggered
 			H << "<span class='alert'>You feel no minds nearby. Your mind echoes in the distance.</span>"
+	return
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -618,7 +614,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 
-	if(!(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/plasma) && istype(H.head, /obj/item/clothing/head/bio_hood/plasma)) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/atmos/plasmaman))
+	if(!(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/plasma) && istype(H.head, /obj/item/clothing/head/bio_hood/plasma)) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/atmos/plasmaman)) //disgust
 		if(environment)
 			var/total_moles = environment.total_moles()
 			if(total_moles)

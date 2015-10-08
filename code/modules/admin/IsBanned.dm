@@ -83,11 +83,13 @@ world/IsBanned(key,address,computer_id)
 					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey]</span>")
 					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey]</span>")
 					continue
+
 			var/expires = ""
 			if(text2num(duration) > 0)
 				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 			else
 				expires = " The is a permanent ban."
+
 			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
@@ -95,7 +97,6 @@ world/IsBanned(key,address,computer_id)
 
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			return .
-
 
 	. = ..()	//default pager ban stuff
 	if (.)
@@ -111,3 +112,4 @@ world/IsBanned(key,address,computer_id)
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["message"]]")
 
 	return .
+

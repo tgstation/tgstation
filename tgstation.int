@@ -1,0 +1,9 @@
+// BEGIN_INTERNALS
+/*
+DIR: code code\modules code\modules\admin code\modules\client 
+AUTO_FILE_DIR: OFF
+MAP_ICON_TYPE: 0
+WINDOW: code\modules\admin\IsBanned.dm;code\modules\admin\stickyban.dm;code\modules\admin\topic.dm;code\modules\client\client procs.dm;code\modules\client\message.dm
+FILE: code\modules\client\message.dm
+*/
+// END_INTERNALS

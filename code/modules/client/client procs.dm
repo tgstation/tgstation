@@ -180,6 +180,7 @@ var/next_external_rsc = 0
 		for (var/message in clientmessages[ckey])
 			src << message
 		clientmessages.Remove(ckey)
+
 	//////////////
 	//DISCONNECT//
 	//////////////
