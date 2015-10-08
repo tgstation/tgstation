@@ -1,7 +1,7 @@
 /*
 Birdstation by Tokiko1
 
-More detailed description soon.
+A small map intended for lowpop(40 players and less).
 
 How to compile:
 Make sure this is the only ticked file in the .dm folder, then compile as usual.
