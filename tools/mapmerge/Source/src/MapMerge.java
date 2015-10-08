@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+//This is just a wrapper over the merge tool
 public class MapMerge {
 
 	private static Scanner input = new Scanner(System.in);

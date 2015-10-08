@@ -31,6 +31,7 @@ class Location
   }
 
   public int hashCode()
+      //hash code for location item (allows to store in hash map)
   {
     return (this.z * 256 + this.y) * 256 + this.x;
   }

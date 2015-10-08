@@ -18,7 +18,7 @@ class SavingThread extends Thread
   public void run()
   {
     this.result.append("(" + this.mymap.minx + "," + this.mymap.miny + "," + this.z + ") = {\"\r\n");
-
+    //Write out map file items
     int i = (this.mymap.maxx - this.mymap.minx) * (this.mymap.maxy - this.mymap.miny) / 100;
     int j = 0;
     for (int k = this.mymap.miny; k <= this.mymap.maxy; k++)
