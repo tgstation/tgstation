@@ -131,7 +131,7 @@
 	holder.icon_state = "hudno_id"
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
-
+	sec_hud_set_security_status()
 	var/turf/T = get_turf(src)
 	if (T) crewmonitor.queueUpdate(T.z)
 
