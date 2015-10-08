@@ -411,16 +411,16 @@ var/list/camera_names=list()
 	return "<span class='game say'><span class='name'>[namepart]</span>[messagepart]</span>"
 	*/
 
-/obj/machinery/camera/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+/obj/machinery/camera/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(isHearing())
 		for(var/obj/machinery/computer/security/S in tv_monitors)
 			if(S.current == src)
 				if(istype(S, /obj/machinery/computer/security/telescreen))
 					for(var/mob/M in viewers(world.view,S))
-						M << "<span style='color:grey'>\icon[S][tv_message(M, speaker,speaking,raw_message)]</span>"
+						M << "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>"
 				else
 					for(var/mob/M in viewers(1,S))
-						M << "<span style='color:grey'>\icon[S][tv_message(M, speaker,speaking,raw_message)]</span>"
+						M << "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>"
 
 /obj/machinery/camera/arena
 	name = "arena camera"

@@ -53,13 +53,13 @@
 	else
 		return ..()
 
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
+/mob/living/silicon/ai/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
 	. = ..()
 	if(.)
 		return .
 
 	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message,speaking)
+		holopad_talk(speech.message, speech.language)
 		return 1
 
 //For holopads only. Usable by AI.

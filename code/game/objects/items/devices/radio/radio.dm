@@ -224,7 +224,7 @@
 	return
 
 */
-/obj/item/device/radio/talk_into(var/datum/speech/speech)
+/obj/item/device/radio/talk_into(var/datum/speech/speech, var/channel=null)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!speech.speaker || !speech.message) return
@@ -251,22 +251,15 @@
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
 
-	// WHY THE FUCK WAS THIS GRABBING THE FUCKING FREQUENCY WHEN WE ALREADY KNOW IT
-	/*
-	var/freq
 	if(channel && channels && channels.len > 0)
 		if(channel == "department")
 			channel = channels[1]
-		freq = secure_radio_connections[channel]
+		speech.frequency = secure_radio_connections[channel]
 		if(!channels[channel])
 			return
 	else
-		freq = frequency
+		speech.frequency = frequency
 		channel = null
-	*/
-
-	// Override speech frequency.
-	speech.frequency=frequency
 
 	var/turf/position = get_turf(src)
 
@@ -424,12 +417,12 @@
 		// Send a mundane broadcast with limited targets:
 		Broadcast_Message(speech, voicemask, filter_type, signal.data["compression"], list(position.z))
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(radio_freq)
+/obj/item/device/radio/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(!speech.speaker || speech.frequency)
 		return
 	if (broadcasting)
-		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, null, speaking)
+		if(get_dist(src, speech.speaker) <= canhear_range)
+			talk_into(speech)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

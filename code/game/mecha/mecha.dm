@@ -218,7 +218,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/drop_item() called tick#: [world.time]")
 	return
 
-/obj/mecha/Hear(var/datum/speech/speech, var/message)
+/obj/mecha/Hear(var/datum/speech/speech, var/rendered_message="")
 	if(speech.speaker == occupant && radio.broadcasting)
 		radio.talk_into(speech)
  	return

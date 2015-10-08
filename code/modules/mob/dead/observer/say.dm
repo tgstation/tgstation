@@ -27,24 +27,24 @@
 
 	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], \"[text]\"";
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if (isnull(client))
+/mob/dead/observer/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if (isnull(client) || !speech.speaker)
 		return
 
-	var/source = speaker.GetSource()
+	var/source = speech.speaker.GetSource()
 
 	var/source_turf = get_turf(source)
 
 	if (get_dist(source_turf, src) <= world.view) // If this isn't true, we can't be in view, so no need for costlier proc.
 		if (source_turf in view(src))
-			message = "<B>[message]</B>"
+			rendered_speech = "<B>[rendered_speech]</B>"
 	else
 		if(client && client.prefs)
-			if (isnull(radio_freq))
+			if (isnull(speech.frequency))
 				if (!(client.prefs.toggles & CHAT_GHOSTEARS))
 					return
 			else
 				if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
 					return
 
-	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [message]"
+	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [rendered_speech]"

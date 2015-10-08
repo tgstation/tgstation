@@ -21,10 +21,10 @@
 	throw_speed = 4
 	throw_range = 20
 
-/obj/item/device/taperecorder/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+/obj/item/device/taperecorder/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(recording)
 		timestamp += timerecorded
-		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] [strip_html_properly(html_decode(raw_message))]"
+		storedinfo += "\[[time2text(timerecorded*10,"mm:ss")]\] \"[html_encode(speech.message)]\""
 
 /obj/item/device/taperecorder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

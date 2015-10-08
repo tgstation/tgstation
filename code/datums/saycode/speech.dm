@@ -84,3 +84,6 @@
 	job = signal.data["job"]
 	lquote = signal.data["left_quote"]
 	rquote = signal.data["right_quote"]
+
+/datum/speech/proc/set_language(var/lang_id)
+	language = all_languages[lang_id]

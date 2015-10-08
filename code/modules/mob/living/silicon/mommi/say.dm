@@ -8,21 +8,21 @@
 
 	return "states, \"[text]\"";
 
-/mob/living/silicon/robot/mommi/handle_inherent_channels(var/message, var/message_mode, var/datum/language/speaking)
+/mob/living/silicon/robot/mommi/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
 	. = ..()
 	if(.)
 		return .
 	if(src.keeper)
-		message = trim(message)
-		if (!message)
+		speech.message = trim(speech.message)
+		if (!speech.message)
 			return
 
 		var/turf/T = get_turf(src)
 		var/msg = !T ? "Nullspace" : "[T.x],[T.y],[T.z]"
-		log_say("[key_name(src)] (@[msg]) Damage Control: [message]")
+		log_say("[key_name(src)] (@[msg]) Damage Control: [html_encode(speech.message)]")
 
 
-		var/interior_message = say_quote(message)
+		var/interior_message = say_quote(html_encode(speech.message))
 		var/rendered = text("<i><span class='mommi game say'>Damage Control, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,interior_message)
 
 		for (var/mob/S in player_list)

@@ -11,13 +11,15 @@
 
 	return "telepathically chirps, \"[text]\"";
 
-/mob/living/carbon/slime/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(speaker != src && !radio_freq)
-		if(speaker) speaker = speaker.GetSource()
+/mob/living/carbon/slime/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(speech.speaker && speech.speaker != src && !speech.frequency)
+		var/atom/movable/speaker=speech.speaker
+		if(speaker)
+			speaker = speaker.GetSource()
 		if(speaker in Friends)
 			speech_buffer = list()
-			speech_buffer += speaker.name
-			speech_buffer += lowertext(html_decode(message))
+			speech_buffer += speech.name
+			speech_buffer += lowertext(html_encode(rendered_speech))
 	..()
 
 /mob/living/carbon/slime/say_understands(var/other)

@@ -23,7 +23,7 @@
 			speaking = null
 		speaking = get_default_language()
 
-	message = trim(strip_html_properly(message))
+	message = trim(message)
 	if(!can_speak(message))
 		return
 
@@ -43,13 +43,16 @@
 	if(stat == UNCONSCIOUS && (!critical || said_last_words))
 		return
 
+	var/datum/speech/speech = create_speech(message)
+	speech.set_language(speaking)
+
 	log_whisper("[key_name(src)] ([formatLocation(src)]): [message]")
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
 	if(critical && !said_last_words)
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
-		var/message_len = length(message)
+		var/message_len = length(speech.message)
 		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 		message = Ellipsis(message, 10, 1)
 		whispers = "whispers in their final breath"
@@ -66,7 +69,7 @@
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listener.Hear(rendered, src, speaking, message)
+			listener.Hear(speech, rendered)
 
 	listeners = null
 
@@ -76,7 +79,7 @@
 
 	for (var/atom/movable/eavesdropper in eavesdroppers)
 		if (eavesdropper)
-			eavesdropper.Hear(rendered, src, speaking, message)
+			eavesdropper.Hear(speech, rendered)
 
 	eavesdroppers = null
 

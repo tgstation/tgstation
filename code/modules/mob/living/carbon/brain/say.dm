@@ -14,7 +14,7 @@
 	if(message_mode && istype(container, /obj/item/device/mmi/radio_enabled))
 		var/obj/item/device/mmi/radio_enabled/R = container
 		if(R.radio)
-			R.radio.talk_into(speech)
+			R.radio.talk_into(speech) // Might need message_mode
 			return ITALICS | REDUCE_RANGE
 
 /mob/living/carbon/brain/lingcheck()

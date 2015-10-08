@@ -32,7 +32,7 @@ var/global/list/mob/virtualhearer/virtualhearers = list()
 /mob/virtualhearer/resetVariables()
 	return
 
-/mob/virtualhearer/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+/mob/virtualhearer/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(attached)
 		attached.Hear(args)
 	else

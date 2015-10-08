@@ -187,7 +187,7 @@ var/list/department_radio_keys = list(
 		speech.language = get_default_language()
 		say_testing(src, "Didnt have a language, get_default_language() gave us [speech.language ? speech.language.name : "null"]")
 	speech.message = trim_left(speech.message)
-	if(handle_inherent_channels(speech.message, message_mode, speech.language))
+	if(handle_inherent_channels(speech, message_mode))
 		say_testing(src, "Handled by inherent channel")
 		return
 	if(!can_speak_vocal(speech.message))
@@ -315,14 +315,14 @@ var/list/department_radio_keys = list(
 	else if(length(message) > 2)
 		return department_radio_keys[copytext(message, 1, 3)]
 
-/mob/living/proc/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
+/mob/living/proc/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/handle_inherent_channels() called tick#: [world.time]")
 	switch(message_mode)
 		if(MODE_CHANGELING)
 			if(lingcheck())
 				var/turf/T = get_turf(src)
-				log_say("[mind.changeling.changelingID]/[key_name(src)] (@[T.x],[T.y],[T.z]) Changeling Hivemind: [message]")
-				var/themessage = text("<i><font color=#800080><b>[]:</b> []</font></i>",mind.changeling.changelingID,message)
+				log_say("[mind.changeling.changelingID]/[key_name(src)] (@[T.x],[T.y],[T.z]) Changeling Hivemind: [html_encode(speech.message)]")
+				var/themessage = text("<i><font color=#800080><b>[]:</b> []</font></i>",mind.changeling.changelingID,html_encode(speech.message))
 				for(var/mob/M in player_list)
 					if(M.lingcheck() || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
 						handle_render(M,themessage,src)
@@ -330,22 +330,23 @@ var/list/department_radio_keys = list(
 		if(MODE_CULTCHAT)
 			if(construct_chat_check(1)) /*sending check for humins*/
 				var/turf/T = get_turf(src)
-				log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [message]")
-				var/themessage = text("<span class='sinister'><b>[]:</b> []</span>",src.name,message)
+				log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [html_encode(speech.message)]")
+				var/themessage = text("<span class='sinister'><b>[]:</b> []</span>",src.name,html_encode(speech.message))
 				for(var/mob/M in player_list)
 					if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
 						handle_render(M,themessage,src)
 				return 1
 		if(MODE_ANCIENT)
-			if(isMoMMI(src)) return 0 //Noice try, I really do appreciate the effort
+			if(isMoMMI(src))
+				return 0 //Noice try, I really do appreciate the effort
 			var/list/stone = search_contents_for(/obj/item/commstone)
 			if(stone.len)
 				var/obj/item/commstone/commstone = stone[1]
 				if(commstone.commdevice)
 					var/list/stones = commstone.commdevice.get_active_stones()
-					var/themessage = text("<span class='ancient'>Ancient communication, <b>[]:</b> []</span>",src.name,message)
+					var/themessage = text("<span class='ancient'>Ancient communication, <b>[]:</b> []</span>",src.name,html_encode(speech.message))
 					var/turf/T = get_turf(src)
-					log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ancient chat: [message]")
+					log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ancient chat: [html_encode(speech.message)]")
 					for(var/thestone in stones)
 						var/mob/M = find_holder_of_type(thestone,/mob)
 						handle_render(M,themessage,src)

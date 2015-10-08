@@ -127,14 +127,14 @@
 		stat("Mode",a_intent)
 
 
-/mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(speaker != src && prob(20)) //Don't imitate outselves
+/mob/living/simple_animal/parrot/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(speech.speaker && speech.speaker != src && prob(20)) //Don't imitate outselves
 		if(speech_buffer.len >= 20)
 			speech_buffer -= pick(speech_buffer)
-		speech_buffer |= strip_html_properly(html_decode(raw_message))
+		speech_buffer |= speech.message
 	..()
 
-/mob/living/simple_animal/parrot/radio(message, message_mode, raw_message, var/datum/language/speaking) //literally copied from human/radio(), but there's no other way to do this, at least it's better than it used to be.
+/mob/living/simple_animal/parrot/radio(var/datum/speech/speech, var/message_mode)
 	. = ..()
 	if(. != 0)
 		return .
@@ -142,21 +142,21 @@
 	switch(message_mode)
 		if(MODE_HEADSET)
 			if (ears)
-				ears.talk_into(src, message, null, speaking)
+				ears.talk_into(speech)
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_SECURE_HEADSET)
 			if(ears)
-				ears.talk_into(src, message, 1, speaking)
+				ears.talk_into(speech, 1) // No fucking clue why message_mode is 1.
 			return ITALICS | REDUCE_RANGE
 		if(MODE_DEPARTMENT)
 			if(ears)
-				ears.talk_into(src, message, message_mode, speaking)
+				ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 	if(message_mode in radiochannels)
 		if(ears)
-			ears.talk_into(src, message, message_mode, speaking)
+			ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 	return 0

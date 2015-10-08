@@ -615,10 +615,10 @@
 		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 	return dat
 
-/obj/machinery/body_scanconsole/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/machinery/body_scanconsole/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(!src.connected || src.connected.scanning<3)
 		return
-	if(speaker in range(src,3) && findtext(raw_message, "scanner, print"))
+	if(speech.speaker && speech.speaker in range(src,3) && findtext(speech.message, "scanner, print"))
 		if(!src.connected.occupant||!istype(src.connected.occupant,/mob/living/carbon/human))
 			return
 		var/obj/item/weapon/paper/R = new(src.loc)
