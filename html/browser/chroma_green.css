@@ -202,6 +202,12 @@ h4
 	height: 16px;
 }
 
+#text_box{
+	width:380px;
+	height:200px;
+	
+}
+
 div.notice
 {
 	clear: both;

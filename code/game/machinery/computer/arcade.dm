@@ -439,7 +439,7 @@
 		user << browse_rsc(graps[turns],"turngrap")
 		dat = "<center><h1>[title]</h1></center>"
 		dat += "</br><center><img src=turngrap></center>"
-		dat += "<p class=JAnimConsole data-list=\"[subtext]\"></p>"
+		dat += "<div id=\"text_box\" data-list=\"[subtext]\" onload=\"writemsg(this)\" onunload=\"stoptimer()\"><p id=\"parText\"></p></div>" //wew, escape characters
 		dat += "<h3><b>Crew:</b></h3>"
 		dat += english_list(settlers)
 		dat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
@@ -463,10 +463,9 @@
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a></b></center>"
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
-	popup.set_content(dat)
 	popup.add_stylesheet("arcade", 'html/browser/chroma_green.css')
-	popup.add_script("arcade","libraries.min.js")
-	popup.add_script("arcade",'typing2.js')
+	popup.add_script("arcade",'html/typing.js')
+	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
