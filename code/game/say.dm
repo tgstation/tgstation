@@ -92,11 +92,9 @@ var/list/freqtoname = list(
 	/*
 	return {"
 		<span class='[filtered_speech.render_wrapper_classes()]'>
-			<span class='name'>
-				[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)]
-				[(filtered_speech.radio) ?" \icon[filtered_speech.radio]":""][freqpart]
-				[render_job(filtered_speech)]
-			</span>
+			<span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][(filtered_speech.radio) ?" \icon[filtered_speech.radio]":""]
+				[freqpart]
+				[render_job(filtered_speech)]</span>
 			[filtered_speech.render_message()]
 		</span>"}
 	*/

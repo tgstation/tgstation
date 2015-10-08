@@ -203,7 +203,7 @@ var/list/department_radio_keys = list(
 		return
 
 	if(radio_return & ITALICS)
-		speech.message_classes.Add("italics")
+		speech.message_classes.Add("talkinto")
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 	if(copytext(text, length(text)) == "!")

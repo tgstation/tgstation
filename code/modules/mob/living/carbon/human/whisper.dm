@@ -34,7 +34,7 @@
 			src << "<span class='danger'>You cannot whisper (muted).</span>"
 			return
 
-	var/alt_name = get_alt_name()
+	//var/alt_name = get_alt_name()
 
 	var/whispers = "whispers"
 	var/critical = InCritical()
@@ -45,6 +45,7 @@
 
 	var/datum/speech/speech = create_speech(message)
 	speech.set_language(speaking)
+	speech.message_classes.Add("whisper")
 
 	log_whisper("[key_name(src)] ([formatLocation(src)]): [message]")
 
@@ -53,11 +54,11 @@
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
 		var/message_len = length(speech.message)
-		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
-		message = Ellipsis(message, 10, 1)
+		speech.message = copytext(speech.message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+		speech.message = Ellipsis(speech.message, 10, 1)
 		whispers = "whispers in their final breath"
 		said_last_words = src.stat
-	message = treat_message(message)
+	speech.message = treat_message(speech.message)
 
 	var/listeners = get_hearers_in_view(1, src) | observers
 
@@ -65,7 +66,9 @@
 
 	var/watchers = hearers(5, src) - listeners - eavesdroppers
 
-	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+
+	//"<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	var/rendered = render_speech(speech)
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
@@ -73,9 +76,10 @@
 
 	listeners = null
 
-	message = stars(message)
+	speech.message = stars(speech.message)
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	//rendered = "<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	rendered = render_speech(speech)
 
 	for (var/atom/movable/eavesdropper in eavesdroppers)
 		if (eavesdropper)
