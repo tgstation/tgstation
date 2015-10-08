@@ -158,10 +158,17 @@
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
+	var/L_old_on_fire = L.on_fire
 
 	if(on_fire) //Only spread fire stacks if we're on fire
-		L.fire_stacks = fire_stacks
+		fire_stacks /= 2
+		L.fire_stacks += fire_stacks
 		L.IgniteMob()
+
+	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
+		L.fire_stacks /= 2
+		fire_stacks += L.fire_stacks
+		IgniteMob()
 
 //Mobs on Fire end
 

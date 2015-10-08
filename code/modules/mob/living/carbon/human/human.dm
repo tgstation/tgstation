@@ -260,18 +260,13 @@
 	popup.open()
 
 // called when something steps onto a human
+// this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(atom/movable/AM)
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOver(src)
 
-	var/mob/living/carbon/M = AM
-	if(M.fire_stacks > 0) //stand on top of a burning person when covered in flammable stuff, catch fire
-		spreadFire(AM)
-		return
-
-	if(do_after(AM, 20, target = null)) //stand still for too long on top of a burning person, catch fire
-		spreadFire(AM)
+	spreadFire(AM)
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, safety = 0, override = 0)
