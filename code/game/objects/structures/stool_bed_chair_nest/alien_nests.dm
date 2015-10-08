@@ -1,6 +1,6 @@
 //Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
 
-/obj/structure/stool/bed/nest
+/obj/structure/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
@@ -9,13 +9,14 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 	canSmoothWith = null
+	buildstacktype = null
 	var/image/nest_overlay
 
-/obj/structure/stool/bed/nest/New()
+/obj/structure/bed/nest/New()
 	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
 	return ..()
 
-/obj/structure/stool/bed/nest/user_unbuckle_mob(mob/living/user)
+/obj/structure/bed/nest/user_unbuckle_mob(mob/living/user)
 	if(buckled_mob && buckled_mob.buckled == src)
 		var/mob/living/M = buckled_mob
 
@@ -48,7 +49,7 @@
 		unbuckle_mob()
 		add_fingerprint(user)
 
-/obj/structure/stool/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
+/obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/living/user)
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || user.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
@@ -65,7 +66,7 @@
 			"<span class='danger'>[user.name] drenches you in a foul-smelling resin, trapping you in [src]!</span>",\
 			"<span class='italics'>You hear squelching...</span>")
 
-/obj/structure/stool/bed/nest/post_buckle_mob(mob/living/M)
+/obj/structure/bed/nest/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
@@ -77,14 +78,14 @@
 		M.layer = initial(M.layer)
 		overlays -= nest_overlay
 
-/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/bed/nest/attackby(obj/item/weapon/W, mob/user, params)
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	visible_message("<span class='danger'>[user] hits [src] with [W]!</span>")
 	healthcheck()
 
-/obj/structure/stool/bed/nest/proc/healthcheck()
+/obj/structure/bed/nest/proc/healthcheck()
 	if(health <=0)
 		density = 0
 		qdel(src)
