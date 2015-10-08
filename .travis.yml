@@ -10,6 +10,8 @@ env:
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
+    - DM_MAPFILE="DiscStation"
+    - DM_MAPFILE="dreamstation"
   
 cache:
   directories:

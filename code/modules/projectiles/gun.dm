@@ -168,6 +168,12 @@
 			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
 				return 0
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.martial_art && H.martial_art.name == "The Sleeping Carp") //great dishonor to famiry
+			user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+			return 0
 	return 1
 
 
