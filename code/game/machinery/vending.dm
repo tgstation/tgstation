@@ -1794,12 +1794,14 @@
 		/obj/item/clothing/under/clownpiece = 3,
 		/obj/item/clothing/suit/clownpiece = 3,
 		/obj/item/clothing/head/clownpiece = 3,
+		/obj/item/clothing/head/cowboy = 3,
 		) //Pretty much everything that had a chance to spawn.
 	contraband = list(
 		/obj/item/clothing/suit/cardborg = 3,
 		/obj/item/clothing/head/cardborg = 3,
 		/obj/item/clothing/suit/judgerobe = 3,
 		/obj/item/clothing/head/powdered_wig = 3,
+		/obj/item/toy/gun = 3,
 		)
 	premium = list(
 		/obj/item/clothing/suit/hgpirate = 3,
