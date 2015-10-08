@@ -111,13 +111,13 @@
 	Radio.listening = 0 //Makes bot radios transmit only so no one hears things while adjacent to one.
 
 /obj/machinery/bot/Destroy()
+	SSbot.processing -= src
 	qdel(Radio)
 	qdel(botcard)
 	return ..()
 
 
 /obj/machinery/bot/proc/explode()
-	SSbot.processing -= src
 	qdel(src)
 
 /obj/machinery/bot/proc/healthcheck()

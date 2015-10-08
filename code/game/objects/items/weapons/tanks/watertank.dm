@@ -339,7 +339,7 @@
 				G.temperature = 2
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
-				H.Kill()
+				qdel(H)
 				if(G.toxins)
 					G.nitrogen += (G.toxins)
 					G.toxins = 0

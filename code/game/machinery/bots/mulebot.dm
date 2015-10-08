@@ -838,7 +838,7 @@ var/global/mulebot_count = 0
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
+	..()
 
 #undef SIGH
 #undef ANNOYED

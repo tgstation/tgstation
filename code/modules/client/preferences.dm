@@ -42,6 +42,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/allow_midround_antag = 1
+	var/preferred_map = null
 
 	//character preferences
 	var/real_name						//our character's name
@@ -355,6 +356,22 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
 
+			if (SERVERTOOLS && config.maprotation)
+				var/p_map = preferred_map
+				if (!p_map)
+					p_map = "Default"
+					if (config.defaultmap)
+						p_map += " ([config.defaultmap.friendlyname])"
+				else
+					if (p_map in config.maplist)
+						var/datum/votablemap/VM = config.maplist[p_map]
+						if (!VM)
+							p_map += " (No longer exists)"
+						else
+							p_map = VM.friendlyname
+					else
+						p_map += " (No longer exists)"
+				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -955,6 +972,21 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						custom_names["deity"] = new_deity_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+				if ("preferred_map")
+					var/maplist = list()
+					var/default = "Default"
+					if (config.defaultmap)
+						default += " ([config.defaultmap.friendlyname])"
+					for (var/M in config.maplist)
+						var/datum/votablemap/VM = config.maplist[M]
+						var/friendlyname = "[VM.friendlyname] "
+						if (VM.voteweight <= 0)
+							friendlyname += " (disabled)"
+						maplist[friendlyname] = VM.name
+					maplist[default] = null
+					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
+					if (pickedmap)
+						preferred_map = maplist[pickedmap]
 
 
 		else

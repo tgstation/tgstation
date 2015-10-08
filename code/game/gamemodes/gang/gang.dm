@@ -8,6 +8,16 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	var/list/datum/gang/gangs = list()
 	var/datum/gang_points/gang_points
 
+/proc/is_gangster(var/mob/living/M)
+	return istype(M) && M.mind && M.mind.gang_datum
+
+/proc/is_in_gang(var/mob/living/M, var/gang_type)
+	if(!is_gangster(M) || !gang_type)
+		return 0
+	var/datum/gang/G = M.mind.gang_datum
+	if(G.name == gang_type)
+		return 1
+	return 0
 
 /datum/game_mode/gang
 	name = "gang war"

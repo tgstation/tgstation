@@ -167,7 +167,7 @@
 			return
 		else
 			if(!connect_to_network())
-				user << "This device must be placed over an exposed cable."
+				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 				return
 			anchored = 1
 			user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"

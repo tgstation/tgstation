@@ -69,12 +69,6 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-
-/obj/item/weapon/katana/energy/Del()
-	qdel(spark_system)
-	spark_system = null
-	..()
-
 /obj/item/weapon/katana/energy/Destroy()
 	qdel(spark_system)
 	spark_system = null
