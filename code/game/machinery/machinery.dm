@@ -284,6 +284,8 @@ Class Procs:
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
+	if(..())// unbuckling etc
+		return 1 
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())

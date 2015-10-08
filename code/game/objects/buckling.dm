@@ -11,12 +11,14 @@
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
 	if(can_buckle && buckled_mob)
-		user_unbuckle_mob(user)
+		if(user_unbuckle_mob(user))
+			return 1
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && istype(M))
-		user_buckle_mob(M, user)
+		if(user_buckle_mob(M, user))
+			return 1
 
 
 //Cleanup
@@ -73,7 +75,7 @@
 //Wrapper procs that handle sanity and user feedback
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
 	if(!in_range(user, src) || user.stat || user.restrained())
-		return
+		return 0
 
 	add_fingerprint(user)
 
@@ -88,6 +90,8 @@
 				"<span class='warning'>[user] buckles [M] to [src]!</span>",\
 				"<span class='warning'>[user] buckles you to [src]!</span>",\
 				"<span class='italics'>You hear metal clanking.</span>")
+		return 1
+
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
 	var/mob/living/M = unbuckle_mob()
