@@ -1,9 +1,9 @@
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armor_penetration, penetrated_text)
 	var/armor = getarmor(def_zone, attack_flag)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor && armour_penetration)
-		armor = max(0, armor - armour_penetration)
+	if(armor && armor_penetration)
+		armor = max(0, armor - armor_penetration)
 		if(penetrated_text)
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
@@ -29,7 +29,7 @@
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
+	var/armor = run_armor_check(def_zone, P.flag, "","",P.armor_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 	return P.on_hit(src, armor, def_zone)
@@ -69,7 +69,7 @@
 		if(!blocked)
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 							"<span class='userdanger'>[src] has been hit by [I].</span>")
-			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
+			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armor_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor, I)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
@@ -83,7 +83,7 @@
 			step_away(src,M,15)
 		switch(M.damtype)
 			if("brute")
-				Paralyse(1)
+				Paralyze(1)
 				take_overall_damage(rand(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if("fire")

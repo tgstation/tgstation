@@ -297,7 +297,7 @@
 	if(!src.panel_open) //Needed check due to bugs
 		return
 	else
-		user << "<span class='notice'>You push the button. The coloured LED next to it changes.</span>"
+		user << "<span class='notice'>You push the button. The colored LED next to it changes.</span>"
 		src.safetieson = !src.safetieson
 
 

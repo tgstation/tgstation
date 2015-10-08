@@ -314,7 +314,7 @@
 			<li>Find an item with a technological background</li>
 			<li>Insert the item into the E.X.P.E.R.I-MENTOR</li>
 			<li>Cycle through each processing method of the device.</li>
-			<li>Stand back, even in case of a successful experiment, as the machine might produce undesired behaviour.</li>
+			<li>Stand back, even in case of a successful experiment, as the machine might produce undesired behavior.</li>
 		</ol>
 
 		<h2>ADVANCED USAGE</h2>
@@ -821,7 +821,7 @@
 			<li>Using your forensic scanning computer, scan your Scanner to upload all of your evidence into the database.</li>
 			<li>Browse through the resulting dossiers, looking for the one that either has the most complete set of prints, or the most suspicious items handled. </li>
 			<li>If you have 80% or more of the print (The print is displayed) go to step 10, otherwise continue to step 8.</li>
-			<li>Look for clues from the suit fibres you found on your perp, and go about looking for more evidence with this new information, scanning as you go. </li>
+			<li>Look for clues from the suit fibers you found on your perp, and go about looking for more evidence with this new information, scanning as you go. </li>
 			<li>Try to get a fingerprint card of your perp, as if used in the computer, the prints will be completed on their dossier.</li>
 			<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
 			<li>Since you now have both your dossier and the name of the person, print both out as evidence, and get security to nab your baddie.</li>

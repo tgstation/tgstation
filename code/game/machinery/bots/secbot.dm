@@ -97,7 +97,7 @@
 	dat += text({"
 <TT><B>Securitron v1.6 controls</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+Behavior controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )

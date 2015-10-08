@@ -291,7 +291,7 @@
 
 /obj/structure/table/wood
 	name = "wooden table"
-	desc = "Do not apply fire to this. Rumour says it burns easily."
+	desc = "Do not apply fire to this. Rumor says it burns easily."
 	icon = 'icons/obj/smooth_structures/wood_table.dmi'
 	icon_state = "wood_table"
 	frame = /obj/structure/table_frame/wood

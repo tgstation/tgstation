@@ -74,7 +74,7 @@
 
 /obj/item/weapon/hatchet
 	name = "hatchet"
-	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	desc = "A very sharp ax blade upon a short fibermetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
@@ -97,7 +97,7 @@
 /obj/item/weapon/scythe
 	icon_state = "scythe0"
 	name = "scythe"
-	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
+	desc = "A sharp and curved blade on a long fibermetal handle, this tool makes it easy to reap what you sow."
 	force = 13
 	throwforce = 5
 	throw_speed = 2

@@ -190,15 +190,15 @@
 	category = list("Ammo")
 
 /datum/design/mag_oldsmg/ap_mag
-	name = "WT-550 Auto Gun Armour Piercing Magazine (9mmAP)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
+	name = "WT-550 Auto Gun Armor Piercing Magazine (9mmAP)"
+	desc = "A 20 round armor piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ap"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 200)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
 
 /datum/design/mag_oldsmg/ic_mag
 	name = "WT-550 Auto Gun Incendiary Magazine (9mmIC)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
+	desc = "A 20 round armor piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ic"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 200, MAT_GLASS = 800)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
@@ -223,8 +223,8 @@
 	category = list("Ammo")
 
 /datum/design/mag_smg/ap_mag
-	name = "SABR SMG Armour Piercing Magazine (9mmAP)"
-	desc = "A 30-round armour piercing magazine for the prototype submachine gun. Deals slightly less damage by bypasses most armour"
+	name = "SABR SMG Armor Piercing Magazine (9mmAP)"
+	desc = "A 30-round armor piercing magazine for the prototype submachine gun. Deals slightly less damage by bypasses most armor"
 	id = "mag_smg_ap"
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 100)
 	build_path = /obj/item/ammo_box/magazine/smgm9mm/ap

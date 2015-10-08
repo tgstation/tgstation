@@ -147,7 +147,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask,,0)
 
-		if(!sterile) M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile) M.Paralyze(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
 		var/mob/living/simple_animal/pet/dog/corgi/C = M
 		loc = C

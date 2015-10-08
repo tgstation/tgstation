@@ -20,8 +20,8 @@
 	return active * sharpness
 
 /obj/item/weapon/melee/energy/axe
-	name = "energy axe"
-	desc = "An energised battle axe."
+	name = "energy ax"
+	desc = "An energized battle ax."
 	icon_state = "axe0"
 	force = 40
 	force_on = 150

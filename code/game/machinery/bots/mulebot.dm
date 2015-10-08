@@ -41,7 +41,7 @@ var/global/mulebot_count = 0
 	blockcount	= 0		//number of times retried a blocked path
 	var/reached_target = 1 	//true if already reached the target
 
-	var/refresh = 1			// true to refresh dialogue
+	var/refresh = 1			// true to refresh dialog
 	var/auto_return = 1		// true if auto return to home beacon after unload
 	var/auto_pickup = 1 	// true if auto-pickup at beacon
 	var/report_delivery = 1 // true if bot will announce an arrival to a location.
@@ -55,7 +55,7 @@ var/global/mulebot_count = 0
 
 	var/wires = 1023		// all flags on
 
-	var/list/wire_text	// list of wire colours
+	var/list/wire_text	// list of wire colors
 	var/list/wire_order	// order of wire indices
 	*/
 

@@ -278,7 +278,7 @@ var/global/floorIsLava = 0
 		if(11)
 			dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
 			dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
-			dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
+			dat+="morale, integrity or disciplinary behavior. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 			dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
 			if(isemptylist(news_network.network_channels))
 				dat+="<I>No feed channels found active...</I><BR>"
@@ -516,7 +516,7 @@ var/global/floorIsLava = 0
 		usr << "<font color='red'>Error: Start Now: Game is in startup, please wait until it has finished.</font>"
 	else
 		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
-		
+
 	return 0
 
 /datum/admins/proc/toggleenter()

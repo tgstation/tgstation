@@ -4,7 +4,7 @@
  * A large number of misc global procs.
  */
 
-//Inverts the colour of an HTML string
+//Inverts the color of an HTML string
 /proc/invertHTML(HTMLstring)
 
 	if (!( istext(HTMLstring) ))

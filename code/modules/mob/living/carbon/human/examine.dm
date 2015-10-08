@@ -6,7 +6,7 @@
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
-	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_He = "It" //capitalized for use at the start of each line.
 	var/t_his = "its"
 	var/t_him = "it"
 	var/t_has = "has"

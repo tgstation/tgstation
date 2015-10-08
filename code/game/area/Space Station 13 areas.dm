@@ -570,8 +570,8 @@ var/list/teleportlocs = list()
 	icon_state = "bar"
 
 /area/crew_quarters/theatre
-	name = "\improper Theatre"
-	icon_state = "Theatre"
+	name = "\improper Theater"
+	icon_state = "Theater"
 
 /area/library
  	name = "\improper Library"
@@ -867,7 +867,7 @@ var/list/teleportlocs = list()
 	icon_state = "firingrange"
 
 /area/security/transfer
-	name = "\improper Transfer Centre"
+	name = "\improper Transfer Center"
 	icon_state = "armory"
 
 /*
@@ -1080,7 +1080,7 @@ var/list/teleportlocs = list()
 	icon_state = "hallS"
 
 /area/derelict/arrival
-	name = "\improper Derelict Arrival Centre"
+	name = "\improper Derelict Arrival Center"
 	icon_state = "yellow"
 
 /area/derelict/storage/equipment

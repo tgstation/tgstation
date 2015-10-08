@@ -116,7 +116,7 @@
 				cameraticks++
 				if(cameraticks > 9)
 					U.cameraFollow = null
-					U << "<span class='warning'>Unable to reacquire, cancelling track...</span>"
+					U << "<span class='warning'>Unable to reacquire, canceling track...</span>"
 					tracking = 0
 					return
 				else

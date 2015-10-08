@@ -53,13 +53,13 @@
 //spooky foods (you can't actually make these when it's not halloween)
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull
 	name = "skull cookie"
-	desc = "Spooky! It's got delicious calcium flavouring!"
+	desc = "Spooky! It's got delicious calcium flavoring!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "skeletoncookie"
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin
 	name = "coffin cookie"
-	desc = "Spooky! It's got delicious coffee flavouring!"
+	desc = "Spooky! It's got delicious coffee flavoring!"
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "coffincookie"
 

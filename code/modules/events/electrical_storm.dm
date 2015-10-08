@@ -15,21 +15,21 @@
 
 
 /datum/round_event/electrical_storm/start()
-	var/list/epicentreList = list()
+	var/list/epicenterList = list()
 
 	for(var/i=1, i <= lightsoutAmount, i++)
-		var/list/possibleEpicentres = list()
-		for(var/obj/effect/landmark/newEpicentre in landmarks_list)
-			if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
-				possibleEpicentres += newEpicentre
-		if(possibleEpicentres.len)
-			epicentreList += pick(possibleEpicentres)
+		var/list/possibleEpicenters = list()
+		for(var/obj/effect/landmark/newEpicenter in landmarks_list)
+			if(newEpicenter.name == "lightsout" && !(newEpicenter in epicenterList))
+				possibleEpicenters += newEpicenter
+		if(possibleEpicenters.len)
+			epicenterList += pick(possibleEpicenters)
 		else
 			break
 
-	if(!epicentreList.len)
+	if(!epicenterList.len)
 		return
 
-	for(var/obj/effect/landmark/epicentre in epicentreList)
-		for(var/obj/machinery/power/apc/apc in range(epicentre,lightsoutRange))
+	for(var/obj/effect/landmark/epicenter in epicenterList)
+		for(var/obj/machinery/power/apc/apc in range(epicenter,lightsoutRange))
 			apc.overload_lighting()

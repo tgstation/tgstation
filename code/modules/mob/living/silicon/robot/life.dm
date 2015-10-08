@@ -57,7 +57,7 @@
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
 		if(getOxyLoss() > maxHealth*0.5)
-			Paralyse(3)
+			Paralyze(3)
 
 		if (paralysis || stunned || weakened) //Stunned etc.
 			stat = UNCONSCIOUS

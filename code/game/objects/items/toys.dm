@@ -314,11 +314,11 @@
 
 /obj/item/toy/crayon
 	name = "crayon"
-	desc = "A colourful crayon. Looks tasty. Mmmm..."
+	desc = "A colorful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
 	w_class = 1
-	attack_verb = list("attacked", "coloured")
+	attack_verb = list("attacked", "colored")
 	var/colour = "#FF0000" //RGB
 	var/drawtype = "rune"
 	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","poseur tag")
@@ -326,7 +326,7 @@
 	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/uses = 30 //0 for unlimited uses
 	var/instant = 0
-	var/colourName = "red" //for updateIcon purposes
+	var/colorName = "red" //for updateIcon purposes
 	var/dat
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/gang = 0 //For marking territory
@@ -338,7 +338,7 @@
 
 /obj/item/toy/crayon/New()
 	..()
-	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
+	name = "[colorName] crayon" //Makes crayons identifiable in things like grinders
 	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
 	if(config)
 		if(config.mutant_races == 1)

@@ -449,17 +449,17 @@
 
 // CENTCOM RESPONSE TEAM
 /datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armory Access)", "Amber: Full ERT (Armory Access)", "Red: Elite ERT (Armory Access + Pulse Weapons)", "Delta: Deathsquad")
 	if(!alert)
 		return
 	switch(alert)
 		if("Delta: Deathsquad")
 			return makeDeathsquad()
-		if("Red: Elite ERT (Armoury Access + Pulse Weapons)")
+		if("Red: Elite ERT (Armory Access + Pulse Weapons)")
 			alert = "Red"
-		if("Amber: Full ERT (Armoury Access)")
+		if("Amber: Full ERT (Armory Access)")
 			alert = "Amber"
-		if("Blue: Light ERT (No Armoury Access)")
+		if("Blue: Light ERT (No Armory Access)")
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()

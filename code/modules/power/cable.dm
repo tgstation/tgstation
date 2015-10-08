@@ -398,13 +398,13 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	return .
 
-//should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the centre of a turf.
+//should be called after placing a cable which extends another cable, creating a "smooth" cable that no longer terminates in the center of a turf.
 //needed as this can, unlike other placements, disconnect cables
 /obj/structure/cable/proc/denode()
 	var/turf/T1 = loc
 	if(!T1) return
 
-	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the centre of the turf, with or without a powernet
+	var/list/powerlist = power_list(T1,src,0,0) //find the other cables that ended in the center of the turf, with or without a powernet
 	if(powerlist.len>0)
 		var/datum/powernet/PN = new()
 		propagate_network(powerlist[1],PN) //propagates the new powernet beginning at the source cable
@@ -735,7 +735,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 				C.Deconstruct()
 				return
 
-		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
+		C.denode()// this call may have disconnected some cables that terminated on the center of the turf, if so split the powernets.
 		return
 
 //////////////////////////////

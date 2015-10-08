@@ -37,7 +37,7 @@
 	staticOverlays = list()
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter")
-	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
+	var/picked = FALSE //Have we picked our visual appearence (+ color if applicable)
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\

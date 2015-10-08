@@ -101,7 +101,7 @@
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
 // the watertank backpack. Allowing it to be placed elsewhere or created without a parent
-// watertank object will likely lead to weird behaviour or runtimes.
+// watertank object will likely lead to weird behavior or runtimes.
 /obj/item/weapon/reagent_containers/spray/mister
 	name = "water mister"
 	desc = "A mister nozzle attached to a water tank."

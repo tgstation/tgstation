@@ -495,7 +495,7 @@
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 				else
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+					D.desc = "Autonomous Power Loader Unit. Its armor is enhanced with some goliath hide plates."
 				qdel(src)
 			else
 				user << "<span class='warning'>You can't improve [D] any further!</span>"

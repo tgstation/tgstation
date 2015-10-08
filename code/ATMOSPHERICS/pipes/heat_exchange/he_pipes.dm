@@ -60,9 +60,9 @@
 		if(abs(pipe_air.temperature - icon_temperature) > 10)
 			icon_temperature = pipe_air.temperature
 
-			var/h_r = heat2colour_r(icon_temperature)
-			var/h_g = heat2colour_g(icon_temperature)
-			var/h_b = heat2colour_b(icon_temperature)
+			var/h_r = heat2color_r(icon_temperature)
+			var/h_g = heat2color_g(icon_temperature)
+			var/h_b = heat2color_b(icon_temperature)
 
 			if(icon_temperature < 2000)//scale glow until 2000K
 				var/scale = (icon_temperature - 500) / 1500

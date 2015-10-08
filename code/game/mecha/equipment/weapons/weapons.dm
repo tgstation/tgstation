@@ -176,7 +176,7 @@
 		M.Weaken(3)
 		if(prob(30))
 			M.Stun(10)
-			M.Paralyse(4)
+			M.Paralyze(4)
 		else
 			M.Jitter(500)
 

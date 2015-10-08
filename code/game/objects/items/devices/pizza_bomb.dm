@@ -106,7 +106,7 @@
 
 /obj/item/device/pizza_bomb/proc/disarm()
 	audible_message("\icon[src] \The [src] suddenly stops beeping and seems lifeless.")
-	icon_state = "pizzabox_bomb_[wires.GetColour(PIZZA_WIRE_DISARM)]"
+	icon_state = "pizzabox_bomb_[wires.GetColor(PIZZA_WIRE_DISARM)]"
 	name = "pizza bomb"
 	desc = "A devious contraption, made of a small explosive payload hooked up to pressure-sensitive wires. It's disarmed."
 	disarmed = 1

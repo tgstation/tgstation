@@ -887,20 +887,20 @@ var/list/slot_equipment_priority = list( \
 		update_canmove()	//updates lying, canmove and icons
 	return
 
-/mob/proc/Paralyse(amount)
-	if(status_flags & CANPARALYSE)
+/mob/proc/Paralyze(amount)
+	if(status_flags & CANPARALYZE)
 		paralysis = max(max(paralysis,amount),0)
 		update_canmove()
 	return
 
 /mob/proc/SetParalysis(amount)
-	if(status_flags & CANPARALYSE)
+	if(status_flags & CANPARALYZE)
 		paralysis = max(amount,0)
 		update_canmove()
 	return
 
 /mob/proc/AdjustParalysis(amount)
-	if(status_flags & CANPARALYSE)
+	if(status_flags & CANPARALYZE)
 		paralysis = max(paralysis + amount,0)
 		update_canmove()
 	return

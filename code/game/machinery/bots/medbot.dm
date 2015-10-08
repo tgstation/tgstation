@@ -151,7 +151,7 @@
 		dat += "<A href='?src=\ref[src];eject=1'>Loaded \[[reagent_glass.reagents.total_volume]/[reagent_glass.reagents.maximum_volume]\]</a>"
 	else
 		dat += "None Loaded"
-	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
+	dat += "<br>Behavior controls are [locked ? "locked" : "unlocked"]<hr>"
 	if(!locked || issilicon(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "

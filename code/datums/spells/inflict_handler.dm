@@ -57,7 +57,7 @@
 		target.oxyloss += amt_dam_oxy
 		//disabling
 		target.Weaken(amt_weakened)
-		target.Paralyse(amt_paralysis)
+		target.Paralyze(amt_paralysis)
 		target.Stun(amt_stunned)
 
 		target.eye_blind += amt_eye_blind

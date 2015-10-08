@@ -233,7 +233,7 @@
 			icon_state = "blue-red"
 		invisibility = INVISIBILITY_LIGHTING
 	else
-	//	new lighting behaviour with obj lights
+	//	new lighting behavior with obj lights
 		icon_state = null
 		invisibility = INVISIBILITY_MAXIMUM
 
@@ -379,7 +379,7 @@
 			if(ismob(AM))
 				if(istype(AM, /mob/living))//mobs take damage
 					var/mob/living/living_mob = AM
-					living_mob.Paralyse(10)
+					living_mob.Paralyze(10)
 					living_mob.take_organ_damage(80)
 					living_mob.anchored = 0 //Unbuckle them so they can be moved
 				else

@@ -247,7 +247,7 @@
 	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_nuke(datum/mind/correct_person)
-	src.text += "<BR><BR>Centcom recently received a report of a plot to destroy one of our stations in your area. We believe the Nuclear Authentication Disc "
+	src.text += "<BR><BR>Centcom recently received a report of a plot to destroy one of our stations in your area. We believe the Nuclear Authentication Disk "
 	src.text += "that is standard issue aboard your vessel may be a target. We recommend removal of this object, and it's storage in a safe "
 	src.text += "environment. As this may cause panic among the crew, all efforts should be made to keep this information a secret from all but "
 	src.text += "the most trusted crew-members."
@@ -257,7 +257,7 @@
 	var/a_name = pick(src.anomalies)
 	src.text += "<BR><BR>A <B><U>[a_name]</U></B> was recently picked up by a nearby stations sensors in your sector. If it came into contact with your ship or "
 	src.text += "electrical equipment, it may have had hazardarous and unpredictable effect. Closely observe any non carbon based life forms "
-	src.text += "for signs of unusual behaviour, but keep this information discreet at all times due to this possibly dangerous scenario."
+	src.text += "for signs of unusual behavior, but keep this information discreet at all times due to this possibly dangerous scenario."
 	src.text += "<BR><HR>"
 
 /datum/intercept_text/proc/build_changeling(datum/mind/correct_person)

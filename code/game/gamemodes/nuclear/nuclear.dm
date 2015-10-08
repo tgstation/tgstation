@@ -249,12 +249,12 @@
 	else if ((disk_rescued || SSshuttle.emergency.mode < SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
+		world << "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>"
 
 	else if ( disk_rescued )
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
-		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
+		world << "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk not secured")

@@ -82,7 +82,7 @@
 	else
 		target.take_organ_damage(drill_damage)
 	if(target)
-		target.Paralyse(10)
+		target.Paralyze(10)
 		target.updatehealth()
 
 

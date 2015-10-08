@@ -111,7 +111,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/wt550
 	name = "security auto rifle"
-	desc = "A outdated personal defence weapon. Uses 9mm rounds and is designated the WT-550 Automatic Rifle."
+	desc = "A outdated personal defense weapon. Uses 9mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
 	item_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
@@ -137,7 +137,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "\improper L6 SAW LMG"
-	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7.62 light machine gun, designated 'L6 SAW'. Has 'Aussec Armory - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = 5

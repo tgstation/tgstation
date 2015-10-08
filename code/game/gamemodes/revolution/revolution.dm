@@ -34,7 +34,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+//Gets the round setup, canceling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/pre_setup()
 
@@ -266,7 +266,7 @@
 			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
-			rev_mind.current.Paralyse(5)
+			rev_mind.current.Paralyze(5)
 			rev_mind.current << "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>"
 
 		update_rev_icons_removed(rev_mind)

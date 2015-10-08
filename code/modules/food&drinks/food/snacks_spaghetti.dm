@@ -53,7 +53,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
-	desc = "A lawyers favourite."
+	desc = "A lawyers favorite."
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spesslaw"
 	trash = /obj/item/trash/plate

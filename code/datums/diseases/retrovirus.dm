@@ -52,7 +52,7 @@
 				affected_mob << "You feel very strange."
 			if (prob(4))
 				affected_mob << "<span class='danger'>You feel a stabbing pain in your head!</span>"
-				affected_mob.Paralyse(2)
+				affected_mob.Paralyze(2)
 			if (prob(4))
 				affected_mob << "<span class='danger'>Your stomach churns.</span>"
 		if(3)

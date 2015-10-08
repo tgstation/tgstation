@@ -30,8 +30,8 @@
 	icon_state = "appendixburger"
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fish
-	name = "fillet -o- carp sandwich"
-	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
+	name = "filet -o- carp sandwich"
+	desc = "Almost like a carp is yelling somewhere... Give me back that filet -o- carp, give me that carp."
 	icon_state = "fishburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 

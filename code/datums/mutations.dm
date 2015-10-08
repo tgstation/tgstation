@@ -125,7 +125,7 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	var/status = CANSTUN | CANWEAKEN | CANPARALYZE | CANPUSH
 	owner.status_flags &= ~status
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -145,7 +145,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYZE | CANPUSH
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
@@ -240,7 +240,7 @@
 /datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
 	if((prob(1) && owner.paralysis < 1))
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
-		owner.Paralyse(10)
+		owner.Paralyze(10)
 		owner.Jitter(1000)
 		spawn(90)
 			owner.jitteriness = 10

@@ -49,7 +49,7 @@
 		if(WEAKEN)
 			Weaken(effect * blocked)
 		if(PARALYZE)
-			Paralyse(effect * blocked)
+			Paralyze(effect * blocked)
 		if(IRRADIATE)
 			radiation += max(effect * blocked, 0)
 		if(SLUR)

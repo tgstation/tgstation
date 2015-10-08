@@ -144,7 +144,7 @@
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
-			user << "<span class='notice'>You [locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
+			user << "<span class='notice'>You [locked ? "lock" : "unlock"] \the [src] behavior controls.</span>"
 		else
 			if(emagged)
 				user << "<span class='warning'>ERROR</span>"

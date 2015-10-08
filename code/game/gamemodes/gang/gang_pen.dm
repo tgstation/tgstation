@@ -26,7 +26,7 @@
 					var/recruitable = ticker.mode.add_gangster(M.mind,G)
 					switch(recruitable)
 						if(2)
-							M.Paralyse(5)
+							M.Paralyze(5)
 							cooldown(G)
 						if(1)
 							user << "<span class='warning'>This mind is resistant to recruitment!</span>"
@@ -105,7 +105,7 @@
 
 		if(ishuman(target))
 			if(success && ticker.mode.add_gangster(target.mind,gang,0))
-				target.Paralyse(5)
+				target.Paralyze(5)
 			else
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 

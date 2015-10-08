@@ -198,9 +198,9 @@
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
-	var/list/wipe_colours = list()
+	var/list/wipe_colors = list()
 	for(var/turf/T in trange(max_range, epicenter))
-		wipe_colours += T
+		wipe_colors += T
 		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
 		if(newmode == "Yes")
@@ -234,7 +234,7 @@
 			continue
 
 	sleep(100)
-	for(var/turf/T in wipe_colours)
+	for(var/turf/T in wipe_colors)
 		T.color = null
 		T.maptext = ""
 

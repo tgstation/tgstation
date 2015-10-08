@@ -171,7 +171,7 @@ LINEN BINS
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
-	desc = "It looks rather cosy."
+	desc = "It looks rather cozy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1

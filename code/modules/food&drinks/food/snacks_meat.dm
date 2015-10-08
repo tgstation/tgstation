@@ -14,9 +14,9 @@
 	list_reagents = list("nutriment" = 6, "capsaicin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
-	name = "carp fillet"
-	desc = "A fillet of spess carp meat."
-	icon_state = "fishfillet"
+	name = "carp filet"
+	desc = "A filet of spess carp meat."
+	icon_state = "fishfilet"
 	list_reagents = list("nutriment" = 3, "carpotoxin" = 2, "vitamin" = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
@@ -26,7 +26,7 @@
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/imitation
-	name = "imitation carp fillet"
+	name = "imitation carp filet"
 	desc = "Almost just like the real thing, kinda."
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers

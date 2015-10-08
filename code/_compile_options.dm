@@ -3,8 +3,8 @@
 								//uncommented, but not visible in the release version)
 
 #define PRELOAD_RSC	1			/*set to:
-								0 to allow using external resources or on-demand behaviour;
-								1 to use the default behaviour;
+								0 to allow using external resources or on-demand behavior;
+								1 to use the default behavior;
 								2 for preloading absolutely everything;
 								*/
 

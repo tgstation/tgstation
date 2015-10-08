@@ -26,9 +26,9 @@
 /obj/item/projectile/bullet/incendiary/firebullet
 	damage = 10
 
-/obj/item/projectile/bullet/armourpiercing
+/obj/item/projectile/bullet/armorpiercing
 	damage = 17
-	armour_penetration = 10
+	armor_penetration = 10
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"

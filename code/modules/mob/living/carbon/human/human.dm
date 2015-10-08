@@ -137,7 +137,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			if (prob(70))
-				Paralyse(10)
+				Paralyze(10)
 
 		if(3)
 			b_loss += 30
@@ -146,7 +146,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(50))
-				Paralyse(10)
+				Paralyze(10)
 
 	var/update = 0
 	for(var/obj/item/organ/limb/temp in organs)

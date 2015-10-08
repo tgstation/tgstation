@@ -26,7 +26,7 @@
 /obj/item/ammo_casing/c9mmap
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
-	projectile_type =/obj/item/projectile/bullet/armourpiercing
+	projectile_type =/obj/item/projectile/bullet/armorpiercing
 
 /obj/item/ammo_casing/c9mmtox
 	desc = "A 9mm bullet casing."

@@ -32,7 +32,7 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(14 + rand(1,9))
-		Paralyse(1)
+		Paralyze(1)
 		step_away(src,user,15)
 		sleep(1)
 		step_away(src,user,15)
@@ -48,7 +48,7 @@
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 							"<span class='userdanger'>[M] has punched [src]!</span>")
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of weakening an alien.
-						Paralyse(2)
+						Paralyze(2)
 						visible_message("<span class='danger'>[M] has weakened [src]!</span>", \
 								"<span class='userdanger'>[M] has weakened [src]!</span>")
 					adjustBruteLoss(damage)
@@ -61,7 +61,7 @@
 			if ("disarm")
 				if (!lying)
 					if (prob(5))
-						Paralyse(2)
+						Paralyze(2)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \

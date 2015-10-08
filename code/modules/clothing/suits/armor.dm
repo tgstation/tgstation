@@ -72,7 +72,7 @@
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
-	desc = "For when an armoured vest isn't fashionable enough."
+	desc = "For when an armored vest isn't fashionable enough."
 	icon_state = "capformal"
 	item_state = "capspacesuit"
 

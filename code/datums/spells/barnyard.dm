@@ -41,7 +41,7 @@
 	magichead.flags |=NODROP
 	magichead.flags_inv = null
 	target.visible_message("<span class='danger'>[target]'s face lights up in fire, and after the event a barnyard animal's head takes it's place!</span>", \
-						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
+						   "<span class='danger'>Your face burns up, and shortly after the fire you realize you have the face of a barnyard animal!</span>")
 	if(!target.unEquip(target.wear_mask))
 		qdel(target.wear_mask)
 	target.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)

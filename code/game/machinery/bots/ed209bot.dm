@@ -66,7 +66,7 @@
 			shot_delay = 6//Longer shot delay because JESUS CHRIST
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
-			req_access = list(access_maint_tunnels, access_theatre)
+			req_access = list(access_maint_tunnels, access_theater)
 			arrest_type = 1
 			if((lasercolor == "b") && (name == "\improper ED-209 Security Robot"))//Picks a name if there isn't already a custome one
 				name = pick("BLUE BALLER","SANIC","BLUE KILLDEATH MURDERBOT")
@@ -107,7 +107,7 @@
 	dat += text({"
 <TT><B>Security Unit v2.6 controls</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+Behavior controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
 
 "<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )

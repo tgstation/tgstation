@@ -21,7 +21,7 @@
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
 	var/health = 80			//the turret's health
-	var/locked = 1			//if the turret's behaviour control access is locked
+	var/locked = 1			//if the turret's behavior control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
 	var/installation = /obj/item/weapon/gun/energy/gun/turret		//the type of weapon installed
@@ -81,7 +81,7 @@
 		if(/obj/item/weapon/gun/energy/laser/bluetag)
 			eprojectile = /obj/item/projectile/lasertag/bluetag
 			lasercolor = "b"
-			req_access = list(access_maint_tunnels, access_theatre)
+			req_access = list(access_maint_tunnels, access_theater)
 			check_records = 0
 			criminals = 0
 			auth_weapons = 1
@@ -92,7 +92,7 @@
 		if(/obj/item/weapon/gun/energy/laser/redtag)
 			eprojectile = /obj/item/projectile/lasertag/redtag
 			lasercolor = "r"
-			req_access = list(access_maint_tunnels, access_theatre)
+			req_access = list(access_maint_tunnels, access_theater)
 			check_records = 0
 			criminals = 0
 			auth_weapons = 1
@@ -162,7 +162,7 @@
 		dat += text({"
 					<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 					Status: []<BR>
-					Behaviour controls are [locked ? "locked" : "unlocked"]"},
+					Behavior controls are [locked ? "locked" : "unlocked"]"},
 
 					"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
@@ -211,7 +211,7 @@
 		updateUsrDialog()
 		return
 
-	switch(href_list["operation"])	//toggles customizable behavioural protocols
+	switch(href_list["operation"])	//toggles customizable behavioral protocols
 		if("authweapon")
 			auth_weapons = !auth_weapons
 		if("checkrecords")
@@ -872,7 +872,7 @@
 		dat += text({"
 <TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 Status: []<BR>
-Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
+Behavior controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
 
 "<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 
@@ -909,7 +909,7 @@ Status: []<BR>"},
 		dat += text({"
 					<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 					Status: []<BR>
-					Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
+					Behavior controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
 
 					"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 

@@ -20,7 +20,7 @@ var/global/list/rockTurfEdgeCache
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
-	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
+	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighboring tiles
 	var/last_act = 0
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/hidden = 1

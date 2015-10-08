@@ -150,7 +150,7 @@
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if(world.time - co2overloadtime > 120)
-			Paralyse(3)
+			Paralyze(3)
 			adjustOxyLoss(3)
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
@@ -174,7 +174,7 @@
 		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
 			var/SA_partialpressure = (SA.moles/breath.total_moles())*breath_pressure
 			if(SA_partialpressure > SA_para_min)
-				Paralyse(3)
+				Paralyze(3)
 				if(SA_partialpressure > SA_sleep_min)
 					sleeping = max(sleeping+2, 10)
 			else if(SA_partialpressure > 0.01)
@@ -266,7 +266,7 @@
 			return
 
 		if(getOxyLoss() > 50 || health <= config.health_threshold_crit)
-			Paralyse(3)
+			Paralyze(3)
 			stat = UNCONSCIOUS
 
 		if(sleeping)
@@ -343,7 +343,7 @@
 		eye_blurry = max(2, eye_blurry)
 		if(prob(5))
 			sleeping += 1
-			Paralyse(5)
+			Paralyze(5)
 
 	if(confused)
 		confused = max(0, confused - 1)

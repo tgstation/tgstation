@@ -1,5 +1,5 @@
 /obj/mecha/working/ripley
-	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of the EVA mining process."
+	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armor against the dangers of the EVA mining process."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
 	step_in = 5

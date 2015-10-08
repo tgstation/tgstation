@@ -102,7 +102,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 			return
 
 		var/theOriginalPix = Ico.GetPixel(pixX,pixY)
-		if(thePix != theOriginalPix) //colour changed
+		if(thePix != theOriginalPix) //color changed
 			DrawPixelOn(theOriginalPix,pixX,pixY)
 		qdel(masterpiece)
 		return

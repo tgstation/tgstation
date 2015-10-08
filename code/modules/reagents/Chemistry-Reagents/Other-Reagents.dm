@@ -740,20 +740,20 @@
 
 
 
-/////////////////////////Coloured Crayon Powder////////////////////////////
-//For colouring in /proc/mix_color_from_reagents
+/////////////////////////Colored Crayon Powder////////////////////////////
+//For coloring in /proc/mix_color_from_reagents
 
 
 /datum/reagent/crayonpowder
 	name = "Crayon Powder"
 	id = "crayon powder"
 	var/colorname = "none"
-	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
+	description = "A powder made by grinding down crayons, good for coloring chemical reagents."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 
 /datum/reagent/crayonpowder/New()
-	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
+	description = "\an [colorname] powder made by grinding down crayons, good for coloring chemical reagents."
 
 
 /datum/reagent/crayonpowder/red
