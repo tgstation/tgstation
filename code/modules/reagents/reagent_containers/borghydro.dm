@@ -21,6 +21,7 @@ Borg Hypospray
 	var/charge_cost = 50
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
+	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin")
@@ -55,7 +56,7 @@ Borg Hypospray
 	//update_icon()
 	return 1
 
-// Purely for testing purposes I swear~
+// Purely for testing purposes I swear~ //don't lie to me
 /*
 /obj/item/weapon/reagent_containers/borghypo/verb/add_cyanide()
 	set src in world
@@ -89,7 +90,7 @@ Borg Hypospray
 		return
 	if (!( istype(M) ))
 		return
-	if (R.total_volume && M.can_inject(user, 1))
+	if (R.total_volume && M.can_inject(user, 1, penetrate_thick = bypass_protection))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
@@ -128,11 +129,12 @@ Borg Hypospray
 
 /obj/item/weapon/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
-	desc = "A modified hypospray that generates reagents more quickly and consumes less power."
+	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."
 	icon_state = "borghypo_s"
 	charge_cost = 20
 	recharge_time = 2
 	reagent_ids = list("syndicate_nanites", "potass_iodide", "morphine")
+	bypass_protection = 1
 
 /*
 Borg Shaker
@@ -149,7 +151,7 @@ Borg Shaker
 	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
-	return //Can't inject stuff with a shaker, can we?
+	return //Can't inject stuff with a shaker, can we? //not with that attitude
 
 /obj/item/weapon/reagent_containers/borghypo/borgshaker/regenerate_reagents()
 	if(isrobot(src.loc))

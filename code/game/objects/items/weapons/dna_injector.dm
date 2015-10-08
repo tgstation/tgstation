@@ -18,9 +18,6 @@
 
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
-		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
-			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
@@ -138,6 +135,20 @@
 	New()
 		..()
 		add_mutations.Add(mutations_list[COUGH])
+
+/obj/item/weapon/dnainjector/antidwarf
+	name = "\improper DNA injector (Anti-Dwarfism)"
+	desc = "Helps you grow big and strong."
+	New()
+		..()
+		remove_mutations.Add(mutations_list[DWARFISM])
+
+/obj/item/weapon/dnainjector/dwarf
+	name = "\improper DNA injector (Dwarfism)"
+	desc = "Its a small world after all."
+	New()
+		..()
+		add_mutations.Add(mutations_list[DWARFISM])
 
 /obj/item/weapon/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"

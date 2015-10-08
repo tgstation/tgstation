@@ -127,7 +127,7 @@
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
-			hotspot.Kill()
+			qdel(hotspot)
 	return
 
 /*

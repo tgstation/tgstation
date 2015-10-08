@@ -10,7 +10,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	var/datum/dna/original_dna = null
 	var/transformed = 0
-	desc = "This disease transplants the genetic code of the intial vector into new hosts."
+	desc = "This disease transplants the genetic code of the initial vector into new hosts."
 	severity = MEDIUM
 
 
@@ -61,7 +61,7 @@
 
 	return
 
-/datum/disease/dnaspread/Del()
+/datum/disease/dnaspread/Destroy()
 	if (original_dna && transformed && affected_mob)
 		original_dna.transfer_identity(affected_mob, transfer_SE = 1)
 		affected_mob.real_name = affected_mob.dna.real_name
@@ -69,4 +69,4 @@
 		affected_mob.domutcheck()
 
 		affected_mob << "<span class='notice'>You feel more like yourself.</span>"
-	..()
+	return ..()

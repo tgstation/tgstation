@@ -21,26 +21,6 @@
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
 
-/obj/structure/stool/bed/Move(atom/newloc, direct) //Some bed children move
-	. = ..()
-	if(buckled_mob)
-		if(!buckled_mob.Move(loc, direct))
-			loc = buckled_mob.loc //we gotta go back
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			. = 0
-
-/obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
-	if(buckled_mob)
-		return buckled_mob.Process_Spacemove(movement_dir)
-	return ..()
-
-/obj/structure/stool/bed/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(mover == buckled_mob)
-		return 1
-	return ..()
-
 /obj/structure/stool/bed/attack_paw(mob/user)
 	return src.attack_hand(user)
 

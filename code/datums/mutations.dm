@@ -52,7 +52,7 @@
 		. = on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner) || (src in owner.dna.mutations))
+	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
 		return 1
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
 		return 1
@@ -87,7 +87,7 @@
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
-		if(text_lose_indication)
+		if(text_lose_indication && owner.stat != DEAD)
 			owner << text_lose_indication
 		if(visual_indicators.len)
 			var/list/mut_overlay = list()
@@ -277,6 +277,23 @@
 		owner.drop_item()
 		owner.emote("cough")
 
+/datum/mutation/human/dwarfism
+
+	name = "Dwarfism"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
+	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
+
+/datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 0.8
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
+
+/datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
+	if(..())	return
+	owner.resize = 1.25
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
+
 /datum/mutation/human/clumsy
 
 	name = "Clumsiness"
@@ -364,7 +381,7 @@
 	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
-	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
+	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
 

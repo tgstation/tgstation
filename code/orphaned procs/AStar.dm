@@ -3,48 +3,26 @@ A Star pathfinding algorithm
 Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
 windows along the route into account.
 Use:
-your_list = AStar(start location, end location, adjacent turf proc, distance proc)
-For the adjacent turf proc i wrote:
-/turf/proc/AdjacentTurfs
-And for the distance one i wrote:
-/turf/proc/Distance
-So an example use might be:
-
-src.path_list = AStar(src.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
-
-Then to start on the path, all you need to do it:
-Step_to(src, src.path_list[1])
-src.path_list -= src.path_list[1] or equivilent to remove that node from the list.
+your_list = AStar(start location, end location, moving atom, distance proc, max nodes, maximum node depth, minimum distance to target, adjacent proc, atom id, turfs to exclude, check only simulated)
 
 Optional extras to add on (in order):
+Distance proc : the distance used in every A* calculation (length of path and heuristic)
 MaxNodes: The maximum number of nodes the returned path can be (0 = infinite)
 Maxnodedepth: The maximum number of nodes to search (default: 30, 0 = infinite)
 Mintargetdist: Minimum distance to the target before path returns, could be used to get
 near a target, but not right to it - for an AI mob with a gun, for example.
-Minnodedist: Minimum number of nodes to return in the path, could be used to give a path a minimum
-length to avoid portals or something i guess?? Not that they're counted right now but w/e.
+Adjacent proc : returns the turfs to consider around the actually processed node
+Simulated only : whether to consider unsimulated turfs or not (used by some Adjacent proc)
+
+Also added 'exclude' turf to avoid travelling over; defaults to null
+
+Actual Adjacent procs :
+
+	/turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
+
+	/turf/proc/reachableAdjacentAtmosTurfs : returns turfs in cardinal directions reachable via atmos
+
 */
-
-// Modified to provide ID argument - supplied to 'adjacent' proc, defaults to null
-// Used for checking if route exists through a door which can be opened
-
-// Also added 'exclude' turf to avoid travelling over; defaults to null
-
-//Currently, there's four main ways to call AStar
-//
-// 1) adjacent = "/turf/proc/AdjacentTurfsWithAccess" and distance = "/turf/proc/Distance"
-//	Seeks a path moving in all directions (including diagonal) and checking for the correct id to get through doors
-//
-// 2) adjacent = "/turf/proc/CardinalTurfsWithAccess" and distance = "/turf/proc/Distance_cardinal"
-//  Seeks a path moving only in cardinal directions and checking if for the correct id to get through doors
-//  Used by most bots, including Beepsky
-//
-// 3) adjacent = "/turf/proc/AdjacentTurfs" and distance = "/turf/proc/Distance"
-//  Same as 1), but don't check for ID. Can get only get through open doors
-//
-// 4) adjacent = "/turf/proc/AdjacentTurfsSpace" and distance = "/turf/proc/Distance"
-//  Same as 1), but check all turf, including unsimulated
-
 
 //////////////////////
 //PathNode object
@@ -79,27 +57,27 @@ length to avoid portals or something i guess?? Not that they're counted right no
 /proc/PathWeightCompare(PathNode/a, PathNode/b)
 	return a.f - b.f
 
-//search if there's a PathNode that points to turf T in the Priority Queue
-/proc/SeekTurf(var/PriorityQueue/Queue, turf/T)
-	var/i = 1
-	var/PathNode/PN
-	while(i < Queue.L.len + 1)
-		PN = Queue.L[i]
-		if(PN.source == T)
-			return i
-		i++
-	return 0
+//reversed so that the Heap is a MinHeap rather than a MaxHeap
+/proc/HeapPathWeightCompare(PathNode/a, PathNode/b)
+	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, turf/exclude=null)
-	var/list/path = AStar(start, end, atom, dist, maxnodes, maxnodedepth, mintargetdist, minnodedist,id, exclude)
+/proc/get_path_to(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/list/path = AStar(start, end, atom, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
 
 //the actual algorithm
-/proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, minnodedist, id=null, turf/exclude=null)
-	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare) //the open list, ordered using the PathWeightCompare proc, from lower f to higher
+/proc/AStar(start, end, atom, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+
+	if(maxnodes)
+		//if start turf is farther than maxnodes from end turf, no need to do anything
+		if(call(start, dist)(end) > maxnodes)
+			return 0
+		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
+
+	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/closed = new() //the closed list
 	var/list/path = null //the returned path, if any
 	var/PathNode/cur //current processed turf
@@ -110,13 +88,13 @@ length to avoid portals or something i guess?? Not that they're counted right no
 		return 0
 
 	//initialization
-	open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end),0))
+	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
 
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 	{
 		//get the lower f node on the open list
-		cur = open.Dequeue() //get the lower f turf in the open list
+		cur = open.Pop() //get the lower f turf in the open list
 		closed.Add(cur.source) //and tell we've processed it
 
 		//if we only want to get near the target, check if we're close enough
@@ -132,33 +110,28 @@ length to avoid portals or something i guess?? Not that they're counted right no
 		if(cur.source == end || closeenough)
 			path = new()
 			path.Add(cur.source)
+
 			while(cur.prevNode)
 				cur = cur.prevNode
 				path.Add(cur.source)
+
 			break
 
-		//IMPLEMENTATION TO FINISH
-		//do we really need this minnodedist ???
-		/*if(minnodedist && maxnodedepth)
-			if(call(cur.source,minnodedist)(end) + cur.nt >= maxnodedepth)
-				continue
-		*/
-
 		//get adjacents turfs using the adjacent proc, checking for access with id
-		//var/list/L = call(cur.source,adjacent)(id,closed)
-		var/list/L = cur.source.reachableAdjacentTurfs(atom, id)
+		var/list/L = call(cur.source,adjacent)(atom,id, simulated_only)
 		for(var/turf/T in L)
-			if(T == exclude)
+			if(T == exclude || T in closed)
 				continue
 
 			var/newg = cur.g + call(cur.source,dist)(T)
 			if(!T.PNode) //is not already in open list, so add it
-				open.Enqueue(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
+				open.Insert(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
 			else //is already in open list, check if it's a better way from the current turf
 				if(newg < T.PNode.g)
 					T.PNode.prevNode = cur
 					T.PNode.g = newg
 					T.PNode.calc_f()
+					T.PNode.nt = cur.nt + 1
 					open.ReSort(T.PNode)//reorder the changed element in the list
 
 	}
@@ -169,10 +142,6 @@ length to avoid portals or something i guess?? Not that they're counted right no
 	for(var/turf/T in closed)
 		T.PNode = null
 
-	//if the path is longer than maxnodes, then don't return it
-	if(path && maxnodes && path.len > (maxnodes + 1))
-		return 0
-
 	//reverse the path to get it from start to finish
 	if(path)
 		for(var/i = 1; i <= path.len/2; i++)
@@ -180,33 +149,33 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 	return path
 
-/turf/proc/reachableAdjacentTurfs(atom, ID)
+//Returns adjacent turfs in cardinal directions that are reachable
+//simulated_only controls whether only simulated turfs are considered or not
+/turf/proc/reachableAdjacentTurfs(atom, ID, simulated_only)
 	var/list/L = new()
 	var/turf/simulated/T
-	if(ID)
-		for(var/dir in cardinal)
-			T = get_step(src,dir)
-			if(!istype(T) || T.density)
-				continue
-			if(!LinkBlockedWithAccess(T, ID))
-				L.Add(T)
-	else
-		for(var/dir in cardinal)
-			if(dir & atmos_adjacent_turfs)
-				T = get_step(src,dir)
-				if(!istype(T))
-					continue
-				if(!LinkBlocked(atom, T))
-					L.Add(T)
+
+	for(var/dir in cardinal)
+		T = get_step(src,dir)
+		if(simulated_only && !istype(T))
+			continue
+		if(!T.density && !LinkBlockedWithAccess(T, ID))
+			L.Add(T)
 	return L
 
-/turf/proc/LinkBlocked(atom, turf/T)
-	if(istype(atom, /atom/movable))
-		for(var/obj/O in T)
-			if(!O.CanPass(atom, T, 1))
-				return 1
-		return 0
-	return 0
+//Returns adjacent turfs in cardinal directions that are reachable via atmos
+/turf/proc/reachableAdjacentAtmosTurfs()
+	var/list/L = new()
+	var/turf/simulated/T
+
+	for(var/dir in cardinal)
+		if(dir & atmos_adjacent_turfs)
+			T = get_step(src,dir)
+			if(!istype(T))
+				continue
+			if(CanAtmosPass(T))
+				L.Add(T)
+	return L
 
 /turf/proc/LinkBlockedWithAccess(turf/T, obj/item/weapon/card/id/ID)
 	var/adir = get_dir(src, T)

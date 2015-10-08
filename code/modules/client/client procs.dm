@@ -176,12 +176,18 @@ var/next_external_rsc = 0
 		else
 			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
+	if (ckey in clientmessages)
+		for (var/message in clientmessages[ckey])
+			src << message
+		clientmessages.Remove(ckey)
+
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
 
-	//////////////
-	//DISCONNECT//
-	//////////////
+//////////////
+//DISCONNECT//
+//////////////
+
 /client/Del()
 	if(holder)
 		adminGreet(1)
@@ -272,6 +278,14 @@ var/next_external_rsc = 0
 /client/proc/is_afk(duration=3000)
 	if(inactivity > duration)	return inactivity
 	return 0
+
+// Byond seemingly calls stat, each tick.
+// Calling things each tick can get expensive real quick.
+// So we slow this down a little.
+// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
+/client/Stat()
+	. = ..()
+	sleep(1)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
