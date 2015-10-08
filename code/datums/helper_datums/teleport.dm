@@ -120,8 +120,18 @@
 
 	playSpecials(curturf,effectin,soundin)
 
+	if(istype(teleatom,/obj/item/projectile))
+		var/Xchange = destturf.x - curturf.x
+		var/Ychange = destturf.y - curturf.y
+		var/obj/item/projectile/P = teleatom
+		P.override_starting_X += Xchange
+		P.override_starting_Y += Ychange
+		P.override_target_X += Xchange
+		P.override_target_Y += Ychange
+		P.reflected = 1//you can now get hit by the projectile you just fired. Careful with portals!
+
 	if(force_teleport)
-		teleatom.forceMove(destturf)
+		teleatom.forceMove(destturf,1)
 		playSpecials(destturf,effectout,soundout)
 	else
 		if(teleatom.Move(destturf))

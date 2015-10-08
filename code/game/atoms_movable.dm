@@ -273,7 +273,7 @@
 	..()
 	return
 
-/atom/movable/proc/forceMove(atom/destination)
+/atom/movable/proc/forceMove(atom/destination,var/no_tp=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/forceMove() called tick#: [world.time]")
 	if(destination)
 		if(loc)
@@ -285,8 +285,14 @@
 			var/area/A = get_area_master(destination)
 			A.Entered(src)
 
-		for(var/atom/movable/AM in loc)
-			AM.Crossed(src)
+		if(!no_tp)
+			for(var/atom/movable/AM in loc)
+				AM.Crossed(src)
+		else
+			for(var/atom/movable/AM in loc)
+				if(!istype(AM,/obj/effect/portal))//so we don't loop infinitely between the arrival portal and the departure portal.
+					AM.Crossed(src)
+
 
 		for(var/atom/movable/AM in locked_atoms)
 			AM.forceMove(loc)

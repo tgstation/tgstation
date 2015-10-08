@@ -266,6 +266,7 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
+	var/wait = 0
 
 /obj/item/projectile/beam/OnFired()	//if assigned, allows for code when the projectile gets fired
 	target = get_turf(original)
@@ -340,14 +341,18 @@ var/list/beam_master = list()
 			var/atom/step = get_step(src, dB)
 			if(!step)
 				bullet_die()
+			world << "Move()"
 			src.Move(step)
+			world << "Proj at ([x],[y])"
 			error += distA
 			target_dir = null
 		else
 			var/atom/step = get_step(src, dA)
 			if(!step)
 				bullet_die()
+			world << "Move()"
 			src.Move(step)
+			world << "Proj at ([x],[y])"
 			error -= distB
 			target_dir = dA
 			if(error < 0)
@@ -417,6 +422,9 @@ var/list/beam_master = list()
 		if(tS)
 			timestopped = loc.timestopped
 			tS = 0
+		if(wait)
+			sleep(wait)
+			wait = 0
 		while((loc.timestopped || timestopped) && !first)
 			sleep(3)
 		first = 0

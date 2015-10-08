@@ -36,7 +36,7 @@ var/global/list/ghdel_profiling = list()
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
-	var/list/beams
+	var/list/beams = list()
 
 	// EVENTS
 	/////////////////////////////
