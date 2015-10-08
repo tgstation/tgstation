@@ -377,7 +377,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
 			var/mob/living/M = loc
-			M << "<span class='notice'>Your [name] goes out, and you empty the ash.</span>"
+			M << "<span class='notice'>Your [name] goes out.</span>"
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
