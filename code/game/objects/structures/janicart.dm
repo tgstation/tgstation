@@ -217,13 +217,13 @@
 		overlays += "cart_buffer"
 
 /obj/structure/stool/bed/chair/janicart/attack_hand(mob/user)
-	if(mybag)
+	if(..())
+		return 1
+	else if(mybag)
 		mybag.loc = get_turf(user)
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
-	else
-		..()
 
 
 /obj/structure/stool/bed/chair/janicart/relaymove(mob/user, direction)
@@ -256,7 +256,7 @@
 	if(buckled_mob)
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
-	..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/janicart/handle_rotation()
 	if((dir == SOUTH) || (dir == WEST) || (dir == EAST))
@@ -271,6 +271,10 @@
 
 	update_mob()
 
+/obj/structure/stool/bed/chair/janicart/Bump(atom/movable/M)
+	. = ..()
+	if(istype(M, /obj/machinery/door) && buckled_mob)
+		M.Bumped(buckled_mob)
 
 /obj/structure/stool/bed/chair/janicart/proc/update_mob()
 	if(buckled_mob)
