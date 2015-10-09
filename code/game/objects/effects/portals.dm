@@ -29,7 +29,9 @@
 	spawn()
 		src.teleport(M)
 */
-/obj/effect/portal/Crossed(AM as mob|obj)
+/obj/effect/portal/Crossed(AM as mob|obj,var/no_tp=0)
+	if(no_tp)
+		return
 	if(istype(AM,/obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = AM
 		B.wait = 1

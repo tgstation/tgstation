@@ -262,7 +262,6 @@
 		if (src.engaged)
 			teleport(AM)
 			use_power(5000)
-	return
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/hub/proc/teleport() called tick#: [world.time]")

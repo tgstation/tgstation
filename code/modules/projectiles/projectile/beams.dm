@@ -341,9 +341,7 @@ var/list/beam_master = list()
 			var/atom/step = get_step(src, dB)
 			if(!step)
 				bullet_die()
-			world << "Move()"
 			src.Move(step)
-			world << "Proj at ([x],[y])"
 			error += distA
 			target_dir = null
 		else
