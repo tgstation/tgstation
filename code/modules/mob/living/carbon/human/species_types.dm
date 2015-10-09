@@ -81,6 +81,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 /datum/species/lizard/qualifies_for_rank(rank, list/features)
 	if(rank in command_positions)
 		return 0
+	if(rank in security_positions) //This list does not include lawyers.
+		return 0
 	return 1
 
 /datum/species/lizard/handle_speech(message)
