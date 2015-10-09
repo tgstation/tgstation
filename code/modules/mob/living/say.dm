@@ -198,7 +198,7 @@ var/list/department_radio_keys = list(
 	send_speech(speech, message_range, bubble_type)
 	var/turf/T = get_turf(src)
 	log_say("[name]/[key] [T?"(@[T.x],[T.y],[T.z])":"(@[x],[y],[z])"] [speech.language ? "As [speech.language.name] ":""]: [message]")
-
+	returnToPool(speech)
 	return 1
 
 

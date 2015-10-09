@@ -481,6 +481,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			speech.message="[mobname] has died-zzzzt in-in-in..."
 			processing_objects.Remove(src)
 	Broadcast_Message(speech, vmask=0, data=0, compression=0, level=list(0,1))
+	returnToPool(speech)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
 	if (malfunction)		//so I'm just going to add a meltdown chance here

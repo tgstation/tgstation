@@ -231,20 +231,24 @@
 	say_testing(loc, "\[Radio\] - Got radio/talk_into([html_encode(speech_orig.message)], [channel]).")
 	if(!on)
 		say_testing(loc, "\[Radio\] - Not on.")
+		returnToPool(speech)
 		return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!speech.speaker || !speech.message)
 		say_testing(loc, "\[Radio\] - speech.speaker or speech.message are null. [speech.speaker], [html_encode(speech.message)]")
+		returnToPool(speech)
 		return
 
 	//  Uncommenting this. To the above comment:
 	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(isWireCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		say_testing(loc, "\[Radio\] - TRANSMIT wire cut.")
+		returnToPool(speech)
 		return
 
 	if(!speech.speaker.IsVocal())
 		say_testing(loc, "\[Radio\] - Speaker not vocal.")
+		returnToPool(speech)
 		return
 
 	/* Quick introduction:
@@ -278,6 +282,7 @@
 			speech.frequency = secure_radio_connections[channel]
 			if(!channels[channel])
 				say_testing(loc, "\[Radio\] - Unable to find channel \"[channel]\".")
+				returnToPool(speech)
 				return
 		else
 			speech.frequency = frequency
@@ -389,6 +394,7 @@
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
+		returnToPool(speech)
 		return
 
 
@@ -439,11 +445,13 @@
 
 		if(signal.data["done"] && position.z in signal.data["level"])
 			// we're done here.
+			returnToPool(speech)
 			return
 
 		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
 		// Send a mundane broadcast with limited targets:
 		Broadcast_Message(speech, voicemask, filter_type, signal.data["compression"], list(position.z))
+		returnToPool(speech)
 
 /obj/item/device/radio/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(!speech.speaker || speech.frequency)

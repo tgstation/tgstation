@@ -40,6 +40,7 @@ var/list/freqtoname = list(
 	var/datum/speech/speech = create_speech(message, world.view, radio)
 	speech.language=speaking
 	send_speech(speech, world.view)
+	returnToPool(speech)
 
 /atom/movable/proc/Hear(var/datum/speech/speech, var/rendered_speech="")
 	return
@@ -85,7 +86,12 @@ var/list/freqtoname = list(
 			radioicon = "\icon[speech.radio]"
 		freqpart = " [radioicon]\[[get_radio_name(speech.frequency)]\]"
 		speech.wrapper_classes.Add(get_radio_span(speech.frequency))
-	var/datum/speech/filtered_speech = (speech.language) ? speech.language.filter_speech(speech.clone()) : speech
+	var/pooled=0
+	var/datum/speech/filtered_speech
+	if(speech_language)
+		filtered_speech = speech.language.filter_speech(speech.clone())
+	else
+		filtered_speech = speech
 
 #ifdef SAY_DEBUG
 	var/enc_wrapclass=list2text(filtered_speech.wrapper_classes, ", ")
@@ -176,6 +182,7 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 			return "makes a strange sound."
 	else
 		return "makes a strange sound."*/
+
 
 /proc/get_radio_span(freq)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/get_radio_span() called tick#: [world.time]")

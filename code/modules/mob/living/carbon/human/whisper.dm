@@ -97,3 +97,5 @@
 
 	if (said_last_words) // dying words
 		succumb(1)
+
+	returnToPool(speech)

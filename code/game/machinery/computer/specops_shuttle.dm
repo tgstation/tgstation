@@ -99,6 +99,7 @@ var/specops_shuttle_timeleft = 0
 		data=0,
 		compression=0,
 		level=list(0,1))
+	returnToPool(speech)
 
 /proc/specops_process()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/specops_process() called tick#: [world.time]")

@@ -399,7 +399,7 @@
 		speech.as_name = "Arrivals Announcement Computer"
 
 		Broadcast_Message(speech, vmask=null, data=0, compression=0, zlevels=list(0,1), frequency=1459)
-		//del(a)
+		returnToPool(speech)
 
 /mob/new_player/proc/LateChoices()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/LateChoices() called tick#: [world.time]")
