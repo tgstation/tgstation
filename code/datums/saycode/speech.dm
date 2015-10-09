@@ -25,9 +25,10 @@
 	name = new_speaker.GetVoice()
 	as_name = new_speaker.get_alt_name()
 
-/datum/speech/Destroy()
-	say_testing(speaker, "\[SPEECH\] Destroy() called!")
+/datum/speech/Del()
+	say_testing(speaker,"\[SPEECH\] Destroy() called!")
 	..()
+
 /datum/speech/proc/clone()
 	var/datum/speech/clone = getFromDPool(/datum/speech)
 
