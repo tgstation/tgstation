@@ -17,7 +17,7 @@
 "q" = (/obj/structure/closet/athletic_mixed,/turf/simulated/floor/plating/beach/sand,/area/awaymission/beach)
 "r" = (/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/item/clothing/shoes/sandal,/obj/structure/closet/crate,/turf/simulated/floor/plating/beach/sand,/area/awaymission/beach)
 "s" = (/turf/indestructible{tag = "icon-sandstone3"; icon_state = "sandstone3"},/area/awaymission/beach)
-"t" = (/obj/structure/closet/gmcloset{icon_closed = "black"; icon_state = "black"; name = "formal wardrobe"},/turf/simulated/floor/plating{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
+"t" = (/obj/structure/closet/gmcloset{icon_state = "black"; name = "formal wardrobe"},/turf/simulated/floor/plating{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "u" = (/obj/structure/closet/secure_closet/bar,/turf/simulated/floor/plating{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "v" = (/obj/structure/table/wood,/obj/item/weapon/book/manual/barman_recipes,/turf/simulated/floor/plating{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
 "w" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/shaker,/turf/simulated/floor/plating{tag = "icon-wood"; icon_state = "wood"},/area/awaymission/beach)
