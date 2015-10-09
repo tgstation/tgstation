@@ -109,7 +109,7 @@
 		if(MODE_SECURE_HEADSET)
 			if (ears)
 				say_testing(src, "Talking into our headset (MODE_SECURE_HEADSET)")
-				ears.talk_into(speech, 1)
+				ears.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_DEPARTMENT)

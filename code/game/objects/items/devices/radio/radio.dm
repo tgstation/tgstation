@@ -258,17 +258,29 @@
 	/*
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
+	var/skip_freq_search=0
+	switch(channel)
+		if(MODE_HEADSET,null) // Used for ";" prefix, which always sends to src.frequency.
+			say_testing(loc, "\[Radio\] - channel=[channel]; Forcing frequency to be [frequency].")
+			speech.frequency = src.frequency
+			channel = null
+			skip_freq_search=1
+		if(MODE_SECURE_HEADSET) // Secure headset (?)
+			channel = 1 // Always pick the first channel...?
 
-	if(channel && channels && channels.len > 0)
-		if(channel == "department")
-			channel = channels[1]
-		speech.frequency = secure_radio_connections[channel]
-		if(!channels[channel])
-			say_testing(loc, "\[Radio\] - Unable to find channel \"[channel]\".")
-			return
-	else
-		speech.frequency = frequency
-		channel = null
+
+	if(!skip_freq_search)
+		if(channel && channels && channels.len > 0)
+			if(channel == "department")
+				channel = channels[1]
+			speech.frequency = secure_radio_connections[channel]
+			if(!channels[channel])
+				say_testing(loc, "\[Radio\] - Unable to find channel \"[channel]\".")
+				return
+		else
+			speech.frequency = frequency
+			channel = null
+
 	say_testing(loc, "talk_into(): frequency set to [speech.frequency]")
 
 	var/turf/position = get_turf(src)

@@ -1305,3 +1305,21 @@ var/proccalls = 1
 
 #define log_adminwarn(text) diary << html_decode("\[[time_stamp()]]ADMINWARN: [text]")
 #define log_pda(text) diary << html_decode("\[[time_stamp()]]PDA: [text]")
+
+
+
+//message modes. you're not supposed to mess with these.
+#define MODE_HEADSET "headset"
+#define MODE_ROBOT "robot"
+#define MODE_R_HAND "right hand"
+#define MODE_L_HAND "left hand"
+#define MODE_INTERCOM "intercom"
+#define MODE_BINARY "binary"
+#define MODE_WHISPER "whisper"
+#define MODE_SECURE_HEADSET "secure headset"
+#define MODE_DEPARTMENT "department"
+#define MODE_ALIEN "alientalk"
+#define MODE_HOLOPAD "holopad"
+#define MODE_CHANGELING "changeling"
+#define MODE_CULTCHAT "cultchat"
+#define MODE_ANCIENT "ancientchat"

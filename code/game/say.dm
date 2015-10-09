@@ -50,7 +50,7 @@ var/list/freqtoname = list(
 
 /atom/movable/proc/send_speech(var/datum/speech/speech, var/range=7)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/send_speech() called tick#: [world.time]")
-	say_testing(src, "/atom/movable/proc/send_speech() start, msg = [ speech.message]; message_range = [range]; language = [speech.language ? speech.language.name : "None"];")
+	say_testing(src, "/atom/movable/proc/send_speech() start, msg = [speech.message]; message_range = [range]; language = [speech.language ? speech.language.name : "None"];")
 	if(isnull(range))
 		range = 7
 	var/rendered = render_speech(speech)
@@ -80,7 +80,7 @@ var/list/freqtoname = list(
 	say_testing(src, "render_speech() - Freq: [speech.frequency], ")
 	var/freqpart = ""
 	if(speech.frequency)
-		freqpart = "\[[get_radio_name(speech.frequency)]\]"
+		freqpart = " \[[get_radio_name(speech.frequency)]\]"
 		speech.wrapper_classes.Add(get_radio_span(speech.frequency))
 	var/datum/speech/filtered_speech = (speech.language) ? speech.language.filter_speech(speech) : speech
 
@@ -98,7 +98,7 @@ var/list/freqtoname = list(
 			[filtered_speech.render_message()]
 		</span>"}
 	*/
-	. = "<span class='[filtered_speech.render_wrapper_classes()]'><span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][(filtered_speech.radio) ?" \icon[filtered_speech.radio]":""] [freqpart] [render_job(filtered_speech)]</span> [filtered_speech.render_message()]</span>"
+	. = "<span class='[filtered_speech.render_wrapper_classes()]'><span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][!isnull(filtered_speech.radio) ?" \icon[filtered_speech.radio]":""][freqpart][render_job(filtered_speech)]</span> [filtered_speech.render_message()]</span>"
 	say_testing(src, html_encode(.))
 
 
@@ -113,7 +113,7 @@ var/list/freqtoname = list(
 
 /atom/movable/proc/render_job(var/datum/speech/speech)
 	if(speech.job)
-		return "([speech.job])"
+		return " ([speech.job])"
 	return ""
 
 /atom/movable/proc/say_quote(var/text)
