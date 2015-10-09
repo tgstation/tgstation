@@ -1499,6 +1499,7 @@
 #include "code\modules\projectiles\guns\hookshot.dm"
 #include "code\modules\projectiles\guns\lawgiver.dm"
 #include "code\modules\projectiles\guns\projectile.dm"
+#include "code\modules\projectiles\guns\special.dm"
 #include "code\modules\projectiles\guns\energy\gravitywell.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
 #include "code\modules\projectiles\guns\energy\nuclear.dm"
