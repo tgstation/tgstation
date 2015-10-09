@@ -184,7 +184,7 @@ Frequency:
 	var/T = L[t1]
 
 	if(prob(5))
-		T = locate(rand(7, world.maxx - 7), rand(7, world.maxy -7), 3)
+		T = locate(rand(7, world.maxx - 7), rand(7, world.maxy -7), map.zTCommSat)
 
 	var/turf/U = get_turf(src)
 	U.visible_message("<span class='notice'>Locked In.</span>")

@@ -20,9 +20,9 @@
 	..()
 	switch(setting)
 		if(0)
-			user << "It's current setting is <font color='#0066FF'>blue</font>."
+			user << "It's current setting is <span style='color: #0066FF;'>blue</span>."
 		if(1)
-			user << "It's current setting is <font color='#FF6600'>red</font>."
+			user << "It's current setting is <span style='color: #FF6600;'>red</span>."
 
 /obj/item/weapon/gun/portalgun/Destroy()
 	if(blue_portal)

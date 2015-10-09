@@ -9,6 +9,8 @@
 	tDomeX = 127
 	tDomeY = 67
 	tDomeZ = 2
+	zAsteroid = 6
+	zDeepSpace = 5
 	zLevels = list(
 		/datum/zLevel/station,
 		/datum/zLevel/centcomm,

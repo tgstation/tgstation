@@ -285,13 +285,8 @@
 			var/area/A = get_area_master(destination)
 			A.Entered(src)
 
-		if(!no_tp)
-			for(var/atom/movable/AM in loc)
-				AM.Crossed(src)
-		else
-			for(var/atom/movable/AM in loc)
-				if(!istype(AM,/obj/effect/portal))//so we don't loop infinitely between the arrival portal and the departure portal.
-					AM.Crossed(src)
+		for(var/atom/movable/AM in loc)
+			AM.Crossed(src,no_tp)
 
 
 		for(var/atom/movable/AM in locked_atoms)
