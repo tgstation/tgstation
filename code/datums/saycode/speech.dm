@@ -30,7 +30,7 @@
 	..()
 
 /datum/speech/proc/clone()
-	var/datum/speech/clone = getFromDPool(/datum/speech)
+	var/datum/speech/clone = getFromPool(/datum/speech)
 
 	clone.name=name
 	clone.as_name=as_name

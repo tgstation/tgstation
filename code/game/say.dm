@@ -60,7 +60,7 @@ var/list/freqtoname = list(
 /atom/movable/proc/create_speech(var/message, var/frequency=0, var/atom/movable/transmitter=null)
 	if(!transmitter)
 		transmitter=GetDefaultRadio()
-	var/datum/speech/speech = getFromDPool(/datum/speech)
+	var/datum/speech/speech = getFromPool(/datum/speech)
 	speech.message = message
 	speech.frequency = frequency
 	speech.job = get_job(speech)

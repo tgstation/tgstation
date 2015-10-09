@@ -133,9 +133,8 @@ var/global/list/whitelisted_species = list("Human")
 				var/datum/dna/gene/gene = dna_genes[gene_type]
 				if(!gene.block)
 					continue
-				if(gene.is_active(H))
-					if(gene.OnSay(H,speech))
-						return 0
+				if(gene.OnSay(H,speech))
+					return 0
 	return 1
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
