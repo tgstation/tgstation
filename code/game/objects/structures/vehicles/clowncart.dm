@@ -85,7 +85,7 @@
 		user.visible_message("<span class='notice'>[user] honks at [src].</span>", \
 		"<span class='notice'>You honk at [src].</span>", \
 		"<span class='notice'>You hear honking.</span>")
-		playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(get_turf(src), W.hitsound, 50, 1)
 		if(reagents.get_reagent_amount("banana") <= 5)
 			if(activated)
 				visible_message("<span class='warning'>[nick] lets out a last honk before running out of fuel and activating its ejection seat.</span>")
@@ -260,8 +260,9 @@
 	if(reagents.total_volume <= 0) //No fuel
 		if(user)
 			user << "<span class='warning'>[src] has no fuel, it activates its ejection seat as soon as you jam down the pedal!</span>"
+			unlock_atom(user)
 			activated = 0
-			user.Weaken(5)
+			user.Weaken(5) //Only Weaken after unbuckling
 		return
 	if(activated)
 		var/old_pos = get_turf(src)

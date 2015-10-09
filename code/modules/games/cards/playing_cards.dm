@@ -37,11 +37,12 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_full"
 
-	var/list/cards = list() //list of the singlecard items we carry
+	var/list/cards  //list of the singlecard items we carry
 	var/strict_deck = 1 //if we only accept cards that came from us
 
 /obj/item/toy/cards/New()
 	..()
+	cards = list()
 	generate_cards()
 	update_icon()
 

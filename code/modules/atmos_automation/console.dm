@@ -52,7 +52,7 @@
 
 /obj/machinery/computer/general_air_control/atmos_automation/proc/send_signal(var/list/data, filter = RADIO_ATMOSIA)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/send_signal() called tick#: [world.time]")
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 	signal.data=data
@@ -200,7 +200,11 @@
 	if(href_list["read"])
 		var/code = input("Input exported AAC code.","Automations","") as message|null
 		if(!code || !Adjacent(usr)) return 0
-		ReadCode(code)
+		try // To prevent invalid JSON causing runtimes.
+			ReadCode(code)
+		catch
+			usr << "<span class=warning>Invalid JSON.</span>"
+			return 1
 		updateUsrDialog()
 		investigation_log(I_ATMOS,"had an automations list imported by [key_name(usr)]: [code]")
 		return 1
@@ -254,7 +258,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/general_air_control/atmos_automation/proc/ReadCode() called tick#: [world.time]")
 	automations.len = 0
 	var/list/json=json2list(jsonStr)
-	if(json.len>0)
+	if(json && json.len > 0)
 		for(var/list/cData in json)
 			if(isnull(cData) || !("type" in cData))
 				testing("AAC: Null cData in root JS array.")

@@ -28,7 +28,7 @@ var/global/datum/store/centcomm_store=new
 	for(var/itempath in typesof(/datum/storeitem) - /datum/storeitem/)
 		items += new itempath()
 
-/datum/store/proc/charge(var/mob/user,var/amount,var/datum/storeitem/item)
+/datum/store/proc/charge(var/mob/user,var/amount,var/datum/storeitem/item,var/obj/machinery/computer/merch/merchcomp)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/store/proc/charge() called tick#: [world.time]")
 	if(!user)
 		//testing("No initial_account")
@@ -47,16 +47,19 @@ var/global/datum/store/centcomm_store=new
 		return 0
 
 	if(D.money < amount)
-		//testing("Not enough cash")
+		user << "\icon[merchcomp]<span class='warning'>You don't have that much money!</span>"
 		return 0
 	D.money -= amount
+
+	user << "\icon[merchcomp]<span class='notice'>Remaining balance: [D.money]$</span>"
+
 	var/datum/transaction/T = new()
-	T.target_name = "[command_name()] Merchandising"
+	T.target_name = D.owner_name
 	T.purpose = "Purchase of [item.name]"
 	T.amount = -amount
 	T.date = current_date_string
 	T.time = worldtime2text()
-	T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
+	T.source_terminal = merchcomp.name
 	D.transaction_log.Add(T)
 
 	if(vendor_account)
@@ -66,7 +69,7 @@ var/global/datum/store/centcomm_store=new
 		T.amount = amount
 		T.date = current_date_string
 		T.time = worldtime2text()
-		T.source_terminal = "\[CLASSIFIED\] Terminal #[rand(111,333)]"
+		T.source_terminal = merchcomp.name
 		vendor_account.transaction_log.Add(T)
 
 	return 1
@@ -80,15 +83,16 @@ var/global/datum/store/centcomm_store=new
 				linked_db = DB
 				break
 
-/datum/store/proc/PlaceOrder(var/mob/living/usr, var/itemID)
+/datum/store/proc/PlaceOrder(var/mob/living/usr, var/itemID, var/obj/machinery/computer/merch/merchcomp)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/store/proc/PlaceOrder() called tick#: [world.time]")
 	// Get our item, first.
-	var/datum/storeitem/item = items[itemID]
+
+	var/datum/storeitem/item = new itemID()
 	if(!item)
 		return 0
 	// Try to deduct funds.
-	if(!charge(usr,item.cost,item))
+	if(!charge(usr,item.cost,item,merchcomp))
 		return 0
 	// Give them the item.
-	item.deliver(usr)
+	item.deliver(usr,merchcomp)
 	return 1

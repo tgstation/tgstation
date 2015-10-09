@@ -29,8 +29,7 @@
 /proc/ethereal_jaunt(var/mob/living/target, duration, enteranim = "liquify", exitanim = "reappear", mist = 1)
 	var/mobloc = get_turf(target)
 	var/previncorp = target.incorporeal_move //This shouldn't ever matter under usual circumstances
-	var/prevalpha = target.alpha
-	if(target.incorporeal_move == 3) //they're already jaunting, we have another fix for this but this is sane)
+	if(target.incorporeal_move == INCORPOREAL_ETHEREAL) //they're already jaunting, we have another fix for this but this is sane)
 		return
 	target.unlock_from()
 	//Begin jaunting with an animation
@@ -41,10 +40,14 @@
 		steam.set_up(10, 0, mobloc)
 		steam.start()
 	//Turn on jaunt incorporeal movement, make him invincible and invisible
-	target.incorporeal_move = 3
+	target.incorporeal_move = INCORPOREAL_ETHEREAL
 	target.invisibility = INVISIBILITY_MAXIMUM
 	target.flags |= INVULNERABLE
-	target.alpha = 125 //Spoopy mode to know you are jaunting
+	var/old_density = target.density
+	target.density = 0
+	target.candrop = 0
+	target.alphas["etheral_jaunt"] = 125 //Spoopy mode to know you are jaunting
+	target.handle_alpha()
 	for(var/obj/screen/movable/spell_master/SM in target.spell_masters)
 		SM.silence_spells(duration+25)
 	target.delayNextAttack(duration+25)
@@ -67,8 +70,11 @@
 	for(var/obj/screen/movable/spell_master/SM in target.spell_masters)
 		SM.silence_spells(0)
 	target.flags &= ~INVULNERABLE
+	target.density = old_density
+	target.candrop = 1
 	target.incorporeal_move = previncorp
-	target.alpha = prevalpha
+	target.alphas -= "etheral_jaunt"
+	target.handle_alpha()
 
 /spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"

@@ -120,7 +120,7 @@
 
 /obj/machinery/vending/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	if(product_records.len&&cardboard) //Only spit out if we have slotted cardboard
@@ -136,6 +136,11 @@
 	if(coinbox)
 		coinbox.loc = get_turf(src)
 	..()
+
+/obj/machinery/vending/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSMACHINE))
+		return 1
+	return ..()
 
 /obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
@@ -405,7 +410,7 @@
 					var/datum/transaction/T = new()
 					T.target_name = "[linked_account.owner_name] (via [src.name])"
 					T.purpose = "Purchase of [currently_vending.product_name]"
-					T.amount = "[transaction_amount]"
+					T.amount = "-[transaction_amount]"
 					T.source_terminal = src.name
 					T.date = current_date_string
 					T.time = worldtime2text()
@@ -1461,6 +1466,7 @@
 		/obj/item/seeds/cherryseed = 3,
 		/obj/item/seeds/plastiseed = 3,
 		/obj/item/seeds/riceseed = 3,
+		/obj/item/seeds/cinnamomum = 3,
 		)//,/obj/item/seeds/synthmeatseed = 3)
 	contraband = list(
 		/obj/item/seeds/amanitamycelium = 2,
@@ -1788,12 +1794,14 @@
 		/obj/item/clothing/under/clownpiece = 3,
 		/obj/item/clothing/suit/clownpiece = 3,
 		/obj/item/clothing/head/clownpiece = 3,
+		/obj/item/clothing/head/cowboy = 3,
 		) //Pretty much everything that had a chance to spawn.
 	contraband = list(
 		/obj/item/clothing/suit/cardborg = 3,
 		/obj/item/clothing/head/cardborg = 3,
 		/obj/item/clothing/suit/judgerobe = 3,
 		/obj/item/clothing/head/powdered_wig = 3,
+		/obj/item/toy/gun = 3,
 		)
 	premium = list(
 		/obj/item/clothing/suit/hgpirate = 3,
@@ -2128,3 +2136,37 @@
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum = 5)
 
 	pack = /obj/structure/vendomatpack/nuka
+
+/obj/machinery/vending/chapel
+	name = "PietyVend"
+	desc = "A holy vendor for a pious man."
+	product_slogans = "Bene orasse est bene studuisse.;Beati pauperes spiritu.;Di immortales virtutem approbare, non adhibere debent ."
+	product_ads = "Deus tecum."
+	vend_reply = "Deus vult!"
+	icon_state = "chapel"
+	products = list(
+		/obj/item/clothing/under/rank/chaplain = 2,
+		/obj/item/clothing/shoes/black = 2,
+		/obj/item/clothing/suit/nun = 2,
+		/obj/item/clothing/head/nun_hood = 2,
+		/obj/item/clothing/suit/chaplain_hoodie = 2,
+		/obj/item/clothing/head/chaplain_hood = 2,
+		/obj/item/clothing/suit/holidaypriest = 2,
+		/obj/item/clothing/under/wedding/bride_white = 2,
+		/obj/item/clothing/head/hasturhood = 2,
+		/obj/item/clothing/suit/hastur = 2,
+		/obj/item/clothing/suit/unathi/robe = 2,
+		/obj/item/clothing/head/wizard/amp = 2,
+		/obj/item/clothing/suit/wizrobe/psypurple = 2,
+		/obj/item/clothing/suit/imperium_monk = 2,
+		/obj/item/clothing/mask/chapmask = 2,
+		/obj/item/clothing/under/sl_suit = 2,
+		/obj/item/weapon/storage/backpack/cultpack = 2,
+		/obj/item/weapon/storage/fancy/candle_box = 5,
+		)
+	premium = list(
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
+		)
+
+	pack = /obj/structure/vendomatpack/chapelvend
+

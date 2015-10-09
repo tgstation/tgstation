@@ -11,7 +11,8 @@
 
 	var/splicing = 0
 	var/scanning = 0
-
+	var/spliced = 0
+	
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/diseasesplicer/attackby(var/obj/I as obj, var/mob/user as mob)
@@ -101,6 +102,7 @@
 	if(splicing)
 		splicing -= 1
 		if(!splicing)
+			spliced = 1
 			alert_noise("ping")
 	if(burning)
 		burning -= 1
@@ -130,6 +132,11 @@
 		scanning = 10
 
 	else if(href_list["eject"])
+		if (spliced != 0)
+			//Here we generate a new ID so the spliced pathogen gets it's own entry in the database instead of being shown as the old one.
+			dish.virus2.uniqueID = rand(0,10000)
+			dish.virus2.addToDB()
+			spliced = 0
 		dish.loc = src.loc
 		dish = null
 

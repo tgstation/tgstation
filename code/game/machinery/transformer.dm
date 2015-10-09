@@ -6,7 +6,7 @@
 	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
-	var/transform_dead = 0
+	var/transform_dead = 0 //This variable doesn't seem to do anything
 	var/transform_standing = 0
 	var/cooldown_duration = 900 // 1.5 minutes
 	var/cooldown_time = 0
@@ -62,6 +62,10 @@
 
 	if(!transform_dead && H.stat == DEAD)
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
+		return
+
+	if(jobban_isbanned(H, "Cyborg"))
+		src.visible_message("<span class='danger'>\The [src.name] throws an exception. Lifeform not compatible with factory.</span>")
 		return
 
 	playsound(get_turf(src), 'sound/items/Welder.ogg', 50, 1)

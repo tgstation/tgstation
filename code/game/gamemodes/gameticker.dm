@@ -309,12 +309,6 @@ var/global/datum/controller/gameticker/ticker
 					flick("station_explode_fade_red",cinematic)
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_malf"
-				if("blob") //Station nuked (nuke,explosion,summary)
-					flick("intro_nuke",cinematic)
-					sleep(35)
-					flick("station_explode_fade_red",cinematic)
-					world << sound('sound/effects/explosionfar.ogg')
-					cinematic.icon_state = "summary_selfdes"
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -322,14 +316,18 @@ var/global/datum/controller/gameticker/ticker
 					world << sound('sound/effects/explosionfar.ogg')
 					cinematic.icon_state = "summary_selfdes"
 			for(var/mob/living/M in living_mob_list)
-				if(M.loc.z == 1)
-					M.death()//No mercy
+				if(M)
+					var/turf/T = get_turf(M)
+					if(T && T.z == 1)
+						M.death()//No mercy
 	//If its actually the end of the round, wait for it to end.
 	//Otherwise if its a verb it will continue on afterwards.
 	sleep(300)
 
-	if(cinematic)	del(cinematic)		//end the cinematic
-	if(temp_buckle)	del(temp_buckle)	//release everybody
+	if(cinematic)
+		qdel(cinematic)		//end the cinematic
+	if(temp_buckle)
+		qdel(temp_buckle)	//release everybody
 	return
 
 
@@ -344,7 +342,7 @@ var/global/datum/controller/gameticker/ticker
 				continue
 			else
 				player.FuckUpGenes(player.create_character())
-				del(player)
+				qdel(player)
 
 
 /datum/controller/gameticker/proc/collect_minds()
@@ -422,7 +420,7 @@ var/global/datum/controller/gameticker/ticker
 					blackbox.save_all_data_to_sql()
 
 			if (watchdog.waiting)
-				world << "<span class='notice'><B>Server will shut down for an automatic update [config.map_voting ? "[(restart_timeout/10)] seconds." : "in a few seconds."]</B></span>"
+				world << "<span class='notice'><B>Server will shut down for an automatic update in [config.map_voting ? "[(restart_timeout/10)] seconds." : "a few seconds."]</B></span>"
 				if(config.map_voting)
 					sleep(restart_timeout) //waiting for a mapvote to end
 				if(!delay_end)

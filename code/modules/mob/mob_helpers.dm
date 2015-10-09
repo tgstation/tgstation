@@ -250,10 +250,12 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 /proc/shake_camera(mob/M, duration=0, strength=1)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/shake_camera() called tick#: [world.time]")
-	if(!M || !M.client || M.shakecamera)
-		return
 	spawn(1)
+		if(!M || !M.client || M.shakecamera)
+			return
+
 		var/oldeye=M.client.eye
+
 		M.shakecamera = 1
 
 		for (var/x = 1 to duration)

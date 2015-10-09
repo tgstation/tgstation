@@ -137,6 +137,7 @@ Frequency:
 	starting_materials = list(MAT_IRON = 10000, MAT_GOLD = 500, MAT_PHAZON = 50)
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;bluespace=3"
+	var/list/portals = list()
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
@@ -173,10 +174,7 @@ Frequency:
 
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
-	var/count = 0	//num of portals from this teleport in world
-	for(var/obj/effect/portal/PO in world)
-		if(PO.creator == src)	count++
-	if(count >= 3)
+	if(portals.len >= 3)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
@@ -185,7 +183,7 @@ Frequency:
 	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
 	P.target = T
 	P.creator = src
+	portals += P
 	src.add_fingerprint(user)
-	return
 
 

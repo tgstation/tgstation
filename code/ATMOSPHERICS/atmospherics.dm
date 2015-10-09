@@ -40,6 +40,8 @@ Pipelines + Other Objects -> Pipe network
 
 	var/piping_layer = PIPING_LAYER_DEFAULT //used in multi-pipe-on-tile - pipes only connect if they're on the same pipe layer
 
+	internal_gravity = 1 // Ventcrawlers can move in pipes without gravity since they have traction.
+
 
 /obj/machinery/atmospherics/New()
 	..()
@@ -51,8 +53,9 @@ Pipelines + Other Objects -> Pipe network
 		M.remove_ventcrawl()
 		M.forceMove(src.loc)
 	if(pipe_image)
-		for(var/mob/M in player_list)
+		for(var/mob/living/M in player_list)
 			M.client.images -= pipe_image
+			M.pipes_shown -= pipe_image
 		pipe_image = null
 	atmos_machines -= src
 	centre_overlay = null
@@ -88,21 +91,22 @@ Pipelines + Other Objects -> Pipe network
 		var/con_dir = get_dir(src, connected_node)
 		missing_nodes -= con_dir // finds all the directions that aren't pointed to by a node
 		var/image/nodecon = node_con["[con_dir]"]
-		if (default_colour && connected_node.default_colour && (connected_node.default_colour != default_colour)) // if both pipes have special colours - average them
-			var/list/centre_colour = GetHexColors(default_colour)
-			var/list/other_colour = GetHexColors(connected_node.default_colour)
-			var/list/average_colour = list(((centre_colour[1]+other_colour[1])/2),((centre_colour[2]+other_colour[2])/2),((centre_colour[3]+other_colour[3])/2))
-			nodecon.color = rgb(average_colour[1],average_colour[2],average_colour[3])
-		else if (color)
-			nodecon.color = null
-		else if (connected_node.color)
-			nodecon.color = connected_node.color
-		else if(default_colour)
-			nodecon.color = default_colour
-		else if(connected_node.default_colour && connected_node.default_colour != "#B4B4B4")
-			nodecon.color = connected_node.default_colour
-		else nodecon.color = "#B4B4B4"
-		underlays += nodecon
+		if(nodecon)
+			if (default_colour && connected_node.default_colour && (connected_node.default_colour != default_colour)) // if both pipes have special colours - average them
+				var/list/centre_colour = GetHexColors(default_colour)
+				var/list/other_colour = GetHexColors(connected_node.default_colour)
+				var/list/average_colour = list(((centre_colour[1]+other_colour[1])/2),((centre_colour[2]+other_colour[2])/2),((centre_colour[3]+other_colour[3])/2))
+				nodecon.color = rgb(average_colour[1],average_colour[2],average_colour[3])
+			else if (color)
+				nodecon.color = null
+			else if (connected_node.color)
+				nodecon.color = connected_node.color
+			else if(default_colour)
+				nodecon.color = default_colour
+			else if(connected_node.default_colour && connected_node.default_colour != "#B4B4B4")
+				nodecon.color = connected_node.default_colour
+			else nodecon.color = "#B4B4B4"
+			underlays += nodecon
 		if (!adjacent_procd && connected_node.update_icon_ready && !(istype(connected_node,/obj/machinery/atmospherics/pipe/simple)))
 			connected_node.update_icon(1)
 	for (var/missing_dir in missing_nodes)

@@ -31,11 +31,9 @@
 	var/mode
 	switch(src.stage)
 		if(1)
-			mode = "It's an empty frame."
+			mode = "It's empty and lacks wiring."
 		if(2)
 			mode = "It's wired."
-		if(3)
-			mode = "The casing is closed."
 	user << "<span class='info'>[mode]</span>"
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -51,57 +49,25 @@
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 75, 1)
-			del(src)
+			qdel(src)
 		if (src.stage == 2)
 			usr << "You have to remove the wires first."
 			return
 
-		if (src.stage == 3)
-			usr << "You have to unscrew the case first."
-			return
-
-	if(istype(W, /obj/item/weapon/wirecutters))
-		if (src.stage != 2) return
-		src.stage = 1
-		switch(fixture_type)
-			if ("tube")
-				src.icon_state = "tube-construct-stage1"
-			if("bulb")
-				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("[user.name] removes the wiring from [src].", \
-			"You remove the wiring from [src].", "You hear a noise.")
-		playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 100, 1)
-		return
-
 	if(istype(W, /obj/item/stack/cable_coil))
-		if (src.stage != 1) return
-		var/obj/item/stack/cable_coil/coil = W
-		coil.use(1)
-		switch(fixture_type)
-			if ("tube")
-				src.icon_state = "tube-construct-stage2"
-			if("bulb")
-				src.icon_state = "bulb-construct-stage2"
-		src.stage = 2
-		user.visible_message("[user.name] adds wires to [src].", \
-			"You add wires to [src].")
-		return
-
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if (src.stage == 2)
+		if (src.stage == 1)
+			var/obj/item/stack/cable_coil/coil = W
+			coil.use(1)
 			switch(fixture_type)
 				if ("tube")
 					src.icon_state = "tube-empty"
 				if("bulb")
 					src.icon_state = "bulb-empty"
-			src.stage = 3
-			user.visible_message("[user.name] closes [src]'s casing.", \
-				"You close [src]'s casing.", "You hear a noise.")
-			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 75, 1)
+			src.stage = 2
+			user.visible_message("[user.name] adds wires to \the [src].", \
+				"You add wires to \the [src]")
 
 			switch(fixture_type)
-
 				if("tube")
 					newlight = new /obj/machinery/light/built(src.loc)
 				if ("bulb")
@@ -109,7 +75,7 @@
 
 			newlight.dir = src.dir
 			src.transfer_fingerprints_to(newlight)
-			del(src)
+			qdel(src)
 			return
 	..()
 
@@ -144,7 +110,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	var/on_gs = 0
 	var/static_power_used = 0
 	var/brightness_range = 8	// luminosity when on, also used in power calculation
-	var/brightness_power = 4
+	var/brightness_power = 1
 	var/brightness_color = null
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -181,7 +147,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 2
+	brightness_power = 1
 	brightness_color = LIGHT_COLOR_TUNGSTEN
 	cost = 4
 	desc = "A small lighting fixture."
@@ -193,7 +159,7 @@ var/global/list/obj/machinery/light/alllights = list()
 	fitting = "large tube"
 	light_type = /obj/item/weapon/light/tube/large
 	brightness_range = 8
-	brightness_power = 3
+	brightness_power = 1
 	cost = 8
 
 /obj/machinery/light/built/New()
@@ -331,7 +297,7 @@ var/global/list/obj/machinery/light/alllights = list()
 			var/obj/item/weapon/light/L = W
 			if(L.fitting == fitting)
 				status = L.status
-				user << "You insert the [L.name]."
+				user << "You insert \the [L.name]."
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness_range = L.brightness_range
@@ -377,30 +343,31 @@ var/global/list/obj/machinery/light/alllights = list()
 
 		else
 			user << "You hit the light!"
-	// attempt to stick weapon into light socket
+	// attempt to deconstruct / stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
-			playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 75, 1)
-			user.visible_message("[user.name] opens [src]'s casing.", \
-				"You open [src]'s casing.", "You hear a noise.")
+		if(istype(W, /obj/item/weapon/wirecutters)) //If it's a wirecutter take out the wires
+			playsound(get_turf(src), 'sound/items/Wirecutter.ogg', 75, 1)
+			user.visible_message("[user.name] removes \the [src]'s wires.", \
+				"You remove \the [src]'s wires.", "You hear a noise.")
 			var/obj/machinery/light_construct/newlight = null
 			switch(fitting)
 				if("tube")
 					newlight = new /obj/machinery/light_construct(src.loc)
-					newlight.icon_state = "tube-construct-stage2"
+					newlight.icon_state = "tube-construct-stage1"
 
 				if("bulb")
 					newlight = new /obj/machinery/light_construct/small(src.loc)
-					newlight.icon_state = "bulb-construct-stage2"
+					newlight.icon_state = "bulb-construct-stage1"
+			new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
 			newlight.dir = src.dir
-			newlight.stage = 2
+			newlight.stage = 1
 			newlight.fingerprints = src.fingerprints
 			newlight.fingerprintshidden = src.fingerprintshidden
 			newlight.fingerprintslast = src.fingerprintslast
-			del(src)
+			qdel(src)
 			return
 
-		user << "You stick \the [W] into the light socket!"
+		user << "You stick \the [W] into the light socket!" //If not stick it in the socket.
 		if(has_power() && (W.is_conductor()))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)

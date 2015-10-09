@@ -150,6 +150,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = "syndicate"
 	can_butcher = 0
+	flying = 1
 
 	min_oxy = 0
 	max_oxy = 0
@@ -161,8 +162,23 @@
 	max_n2 = 0
 	minbodytemp = 0
 
+/mob/living/simple_animal/hostile/viscerator/Life()
+	..()
+	if(stat == CONSCIOUS)
+		animate(src, pixel_x = rand(-12,12), pixel_y = rand(-12,12), time = 15, easing = SINE_EASING)
+
 /mob/living/simple_animal/hostile/viscerator/Die()
 	..()
 	visible_message("<span class='warning'><b>[src]</b> is smashed into pieces!</span>")
 	del src
 	return
+
+/mob/living/simple_animal/hostile/viscerator/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+	if(air_group || (height == 0))
+		return 1
+	if(istype(mover, /mob/living/simple_animal/hostile/viscerator))
+		return 1
+	if(istype(mover, /obj/item/projectile))
+		return prob(66)
+	else
+		return !density

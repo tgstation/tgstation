@@ -20,6 +20,7 @@
 	icon_state = "livingpuddi-happy"
 	icon_living = "livingpuddi-happy"
 	icon_dead = "livingpuddi-happy-dead"
+	turns_per_move = 5
 
 /mob/living/simple_animal/puddi/anger
 	icon_state = "livingpuddi-anger"
@@ -27,3 +28,4 @@
 	icon_dead = "livingpuddi-anger-dead"
 	speak = list("PUDDI!")
 	response_harm   = "stomps"
+	turns_per_move = 2

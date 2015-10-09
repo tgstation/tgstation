@@ -2,7 +2,7 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
 
-	luminosity = 1
+	luminosity = 0
 
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
@@ -58,6 +58,10 @@
 
 	var/dynamic_lighting = 1
 
+	//For shuttles - if 1, the turf's underlay will never be changed when moved
+	//See code/datums/shuttle.dm @ 544
+	var/preserve_underlay = 0
+
 	forceinvertredraw = 1
 
 /turf/examine(mob/user)
@@ -76,7 +80,10 @@
 			src.Entered(AM)
 			return
 	turfs |= src
-	return
+
+	var/area/A = loc
+	if(!dynamic_lighting || !A.lighting_use_dynamic)
+		luminosity = 1
 
 /turf/DblClick()
 	if(istype(usr, /mob/living/silicon/ai))
@@ -219,6 +226,9 @@
 	return 0
 /turf/proc/is_carpet_floor()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/is_carpet_floor() called tick#: [world.time]")
+	return 0
+/turf/proc/is_arcade_floor()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/is_arcade_floor() called tick#: [world.time]")
 	return 0
 /turf/proc/is_mineral_floor()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/turf/proc/is_mineral_floor() called tick#: [world.time]")

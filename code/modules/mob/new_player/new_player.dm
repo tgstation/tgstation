@@ -342,7 +342,9 @@
 	if(character.client.prefs.randomslot) character.client.prefs.random_character_sqlite(character, character.ckey)
 	job_master.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
-	character.loc = pick(latejoin)
+
+	// TODO:  Job-specific latejoin overrides.
+	character.loc = pick((assistant_latejoin.len > 0 && rank == "Assistant") ? assistant_latejoin : latejoin)
 	//Give them their fucking wheelchair where they spawn instead of inside of the splash screen
 	var/datum/organ/external/left_leg = character.get_organ("l_foot")
 	var/datum/organ/external/right_leg = character.get_organ("r_foot")

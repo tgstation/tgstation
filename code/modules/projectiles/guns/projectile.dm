@@ -44,6 +44,8 @@
 		chamber_round()
 		AM.update_icon()
 		update_icon()
+		user.update_inv_r_hand()
+		user.update_inv_l_hand()
 		return 1
 	return 0
 
@@ -57,6 +59,8 @@
 		stored_magazine.update_icon()
 		stored_magazine = null
 		update_icon()
+		user.update_inv_r_hand()
+		user.update_inv_l_hand()
 		return 1
 	return 0
 

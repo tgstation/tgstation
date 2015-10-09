@@ -33,7 +33,7 @@
 	var/antagHUD = 0
 	var/atom/movable/following = null
 	var/mob/canclone = null
-	incorporeal_move = 1
+	incorporeal_move = INCORPOREAL_GHOST
 
 /mob/dead/observer/New(var/mob/body=null, var/flags=1)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF

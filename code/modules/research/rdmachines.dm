@@ -2,24 +2,24 @@
 var/global/list/rnd_machines = list()
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 /obj/machinery/r_n_d
-	name = "R&D Device"
-	icon = 'icons/obj/machines/research.dmi'
-	density = 1
-	anchored = 1
-	use_power = 1
-	var/busy = 0
-	var/hacked = 0
-	var/disabled = 0
-	var/shocked = 0
+	name			= "R&D Device"
+	icon			= 'icons/obj/machines/research.dmi'
+	density			= 1
+	anchored		= 1
+	use_power		= 1
+	var/busy		= 0
+	var/hacked		= 0
+	var/disabled	= 0
+	var/shocked		= 0
 	var/obj/machinery/computer/rdconsole/linked_console
-	var/obj/output
-	var/stopped = 0
-	var/base_state = ""
-	var/build_time = 0
+	var/output_dir	= 0 // Direction used to output to (for things like fabs), set to 0 for loc.
+	var/stopped		= 0
+	var/base_state	= ""
+	var/build_time	= 0
 
-	machine_flags = SCREWTOGGLE | CROWDESTROY
+	machine_flags	= SCREWTOGGLE | CROWDESTROY
 
-	var/nano_file = ""
+	var/nano_file	= ""
 
 	var/max_material_storage = 0
 	var/list/allowed_materials[0] //list of material IDs we take, if we whitelist
@@ -38,19 +38,17 @@ var/global/list/rnd_machines = list()
 	icon_state_open = "[base_state]_t"
 
 	if(research_flags & TAKESMATIN && !materials)
-		materials = getFromDPool(/datum/materials, src)
+		materials = getFromPool(/datum/materials, src)
 
 	if(ticker) initialize()
 
 // Define initial output.
 /obj/machinery/r_n_d/initialize()
 	..()
-	output = src // broke protolathes you dummy
 	if(research_flags &HASOUTPUT)
 		for(var/direction in cardinal)
-			var/O = locate(/obj/machinery/mineral/output, get_step(get_turf(src), direction))
-			if(O)
-				output=O
+			if(locate(/obj/machinery/mineral/output, get_step(get_turf(src), direction)))
+				output_dir = direction
 				break
 
 /obj/machinery/r_n_d/Destroy()
@@ -62,6 +60,11 @@ var/global/list/rnd_machines = list()
 	wires = null
 	..()
 
+/obj/machinery/r_n_d/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSMACHINE))
+		return 1
+	return ..()
+
 /obj/machinery/r_n_d/update_icon()
 	overlays.len = 0
 	if(linked_console)
@@ -69,7 +72,7 @@ var/global/list/rnd_machines = list()
 
 /obj/machinery/r_n_d/blob_act()
 	if (prob(50))
-		del(src)
+		qdel(src)
 
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
@@ -147,28 +150,19 @@ var/global/list/rnd_machines = list()
 			var/result = input("Set your location as output?") in list("Yes","No","Machine Location")
 			switch(result)
 				if("Yes")
-					var/found=0
-					for(var/direction in cardinal)
-						if(locate(user) in get_step(src,direction))
-							found=1
-					if(!found)
-						user << "<span class='warning'>Cannot set this as the output location; You're too far away.</span>"
-						return
-					if(istype(output,/obj/machinery/mineral/output))
-						del(output)
-					output=new /obj/machinery/mineral/output(usr.loc)
+					if(!Adjacent(user))
+						user << "<span class='warning'>Cannot set this as the output location; You're not adjacent to it!</span>"
+						return 1
+
+					output_dir = get_dir(src, user)
 					user << "<span class='notice'>Output set.</span>"
-				if("No")
-					return
 				if("Machine Location")
-					if(istype(output,/obj/machinery/mineral/output))
-						del(output)
-					output=src
+					output_dir = 0
 					user << "<span class='notice'>Output set.</span>"
 			return 1
 		return
 	if (!linked_console && !(istype(src, /obj/machinery/r_n_d/fabricator))) //fabricators get a free pass because they aren't tied to a console
-		user << "\The [src.name] must be linked to an R&D console first!"
+		user << "\The [src] must be linked to an R&D console first!"
 		return 1
 	if(istype(O,/obj/item/stack/sheet) && research_flags &TAKESMATIN)
 		busy = 1
@@ -179,18 +173,18 @@ var/global/list/rnd_machines = list()
 			if(M.sheettype==O.type)
 				found = matID
 		if(!found)
-			user << "<span class='warning'>\The [src.name] rejects \the [O.name].</span>"
+			user << "<span class='warning'>\The [src] rejects \the [O.name].</span>"
 			busy = 0
 			return 1
 		if(allowed_materials && allowed_materials.len)
 			if(!(found in allowed_materials))
-				user << "<span class='warning'>\The [src.name] rejects \the [O.name].</span>"
+				user << "<span class='warning'>\The [src] rejects \the [O.name].</span>"
 				busy = 0
 				return 1
 
 		var/obj/item/stack/sheet/S = O
 		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='warning'>\The [src.name]'s material bin is full. Please remove material before adding more.</span>"
+			user << "<span class='warning'>\The [src]'s material bin is full. Please remove material before adding more.</span>"
 			busy = 0
 			return 1
 
@@ -218,7 +212,7 @@ var/global/list/rnd_machines = list()
 		icon_state = "[base_state]"
 		use_power(max(1000, (3750*amount/10)))
 		stack.use(amount)
-		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
+		user << "<span class='notice'>You add [amount] sheet[amount > 1 ? "s":""] to the [src.].</span>"
 		icon_state = "[base_state]"
 
 		var/datum/material/material = materials.getMaterial(found)
@@ -233,3 +227,13 @@ var/global/list/rnd_machines = list()
 	if(materials)
 		return materials.getVolume()
 	return 0
+
+// Returns the atom to output to.
+// Yes this can potentially return null, however that shouldn't be an issue for the code that uses it.
+/obj/machinery/r_n_d/proc/get_output()
+	if(!output_dir)
+		return get_turf(loc)
+
+	. = get_step(get_turf(src), output_dir)
+	if(!.)
+		return loc // Map edge I guess.

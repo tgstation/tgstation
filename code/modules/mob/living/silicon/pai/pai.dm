@@ -63,6 +63,7 @@
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
+	sight &= ~BLIND
 	canmove = 0
 	src.loc = paicard
 	card = paicard
@@ -197,43 +198,8 @@
 
 // See software.dm for Topic()
 
-//mob/living/silicon/pai/bullet_act(var/obj/item/projectile/Proj)
-
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return
-
-	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
-		M << "You cannot attack someone in the spawn area."
-		return
-
-	switch(M.a_intent)
-
-		if (I_HELP)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>"), 1)
-
-		else //harm
-			var/damage = rand(10, 20)
-			if (prob(90))
-				playsound(get_turf(src), 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>[] has slashed at []!</span>", M, src), 1)
-				if(prob(8))
-					flick("noise", src.flash)
-				src.adjustBruteLoss(damage)
-				src.updatehealth()
-			else
-				playsound(get_turf(src), 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("<span class='danger'>[] took a swipe at []!</span>", M, src), 1)
-	return
-
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M as mob)
+	return //Pais do not do this
 
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/switchCamera() called tick#: [world.time]")
@@ -260,7 +226,8 @@
 	src:cameraFollow = null
 
 /mob/living/silicon/pai/ClickOn(var/atom/A, var/params)
-	A.attack_pai(src)
+	if(istype(A,/obj/machinery)||(istype(A,/mob)&&secHUD))
+		A.attack_pai(src)
 
 /atom/proc/attack_pai(mob/user as mob)
 	return

@@ -66,9 +66,26 @@
 	can_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
-	suicide_act(mob/user)
-		viewers(user) << "<span class='danger'>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</span>"
-		return(OXYLOSS)
+	slot_flags = SLOT_BELT | SLOT_HEAD
+	flags = FPRINT | BLOCK_BREATHING | BLOCK_GAS_SMOKE_EFFECT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+
+/obj/item/weapon/storage/bag/plasticbag/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
+	//Forbid wearing bags with something inside!
+	.=..()
+	if(contents.len && (slot == slot_head))
+		return 0
+
+/obj/item/weapon/storage/bag/plasticbag/can_be_inserted()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.head == src) //If worn
+			return 0
+	return ..()
+
+/obj/item/weapon/storage/bag/plasticbag/suicide_act(mob/user)
+	user.visible_message("<span class='danger'>[user] puts the [src.name] over \his head and tightens the handles around \his neck! It looks like \he's trying to commit suicide.</span>")
+	return(OXYLOSS)
 
 // -----------------------------
 //        Mining Satchel
@@ -120,6 +137,20 @@
 	if(contents.len < 1)
 		icon_state = "foodbag0"
 	else icon_state = "foodbag1"
+
+/obj/item/weapon/storage/bag/food/menu1/New()
+	..()
+	new/obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)//6 nutriments
+	new/obj/item/weapon/reagent_containers/food/snacks/fries(src)//4 nutriments
+	new/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola(src)//-3 drowsy
+	update_icon()
+
+/obj/item/weapon/storage/bag/food/menu2/New()
+	..()
+	new/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger(src)//14 nutriments
+	new/obj/item/weapon/reagent_containers/food/snacks/cheesyfries(src)//6 nutriments
+	new/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind(src)//-7 drowsy, -1 sleepy
+	update_icon()
 
 // -----------------------------
 //          Borg Food bag

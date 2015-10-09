@@ -8,11 +8,26 @@
 	var/material=null
 	var/datum/geosample/geologic_data
 
+/obj/item/weapon/ore/New()
+	. = ..()
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 0)
+
+/obj/item/weapon/ore/ex_act()
+	return
+
 /obj/item/weapon/ore/recycle(var/datum/materials/rec)
 	if(material==null)
 		return NOT_RECYCLABLE
 	rec.addAmount(material, 1)
 	return w_type
+
+/obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/device/core_sampler))
+		var/obj/item/device/core_sampler/C = W
+		C.sample_item(src, user)
+	else
+		return ..()
 
 /obj/item/weapon/ore/uranium
 	name = "Uranium ore"
@@ -35,13 +50,13 @@
 	material=MAT_GLASS
 	melt_temperature = MELTPOINT_GLASS
 
-	attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
+/obj/item/weapon/ore/glass/attack_self(mob/living/user as mob) //It's magic I ain't gonna explain how instant conversion with no tool works. -- Urist
 		var/location = get_turf(user)
 		for(var/obj/item/weapon/ore/glass/sandToConvert in location)
 			new /obj/item/stack/sheet/mineral/sandstone(location)
 			qdel(sandToConvert)
 		new /obj/item/stack/sheet/mineral/sandstone(location)
-		del(src)
+		qdel(src)
 
 /obj/item/weapon/ore/plasma
 	name = "Plasma ore"
@@ -153,34 +168,39 @@
 	desc = "A chunk of Erebite, an extremely volatile high-energy mineral."
 	icon_state = "erebite"
 	material="erebite"
+
 /obj/item/weapon/ore/erebite/ex_act()
 	explosion(src.loc,-1,0,2)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/ore/erebite/bullet_act(var/obj/item/projectile/P)
 	explosion(src.loc,-1,0,2)
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/ore/cerenkite
 	name = "cerenkite ore"
 	desc = "A chunk of Cerenkite, a highly radioactive mineral."
 	icon_state = "cerenkite"
 	material="cerenkite"
+
 /obj/item/weapon/ore/cerenkite/ex_act()
 	var/L = get_turf(src)
 	for(var/mob/living/carbon/human/M in viewers(L, null))
 		M.apply_effect((rand(10, 50)), IRRADIATE, 0)
-	del(src)
+	qdel(src)
+
 /obj/item/weapon/ore/cerenkite/attack_hand(mob/user as mob)
 	var/L = get_turf(user)
 	for(var/mob/living/carbon/human/M in viewers(L, null))
 		M.apply_effect((rand(10, 50)), IRRADIATE, 0)
-	del(src)
+	qdel(src)
+
 /obj/item/weapon/ore/cerenkite/bullet_act(var/obj/item/projectile/P)
 	var/L = get_turf(src)
 	for(var/mob/living/carbon/human/M in viewers(L, null))
 		M.apply_effect((rand(10, 50)), IRRADIATE, 0)
-	del(src)
+	qdel(src)
+
 /obj/item/weapon/ore/cytine
 	name = "cytine"
 	desc = "A glowing Cytine gemstone, somewhat valuable but not paticularly useful."
@@ -194,7 +214,7 @@
 	var/obj/item/weapon/glowstick/G = new /obj/item/weapon/glowstick(user.loc)
 	G.color = color
 	G.light_color = color
-	del(src)
+	qdel(src)
 
 /obj/item/weapon/ore/uqill
 	name = "uqill nugget"
@@ -270,19 +290,4 @@
 						explosion(src.loc,1,2,5,adminlog = notify_admins)
 					if(3)
 						explosion(src.loc,2,4,9,adminlog = notify_admins)
-				del(src)
-
-/obj/item/weapon/ore/New()
-	. = ..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 0)
-
-/obj/item/weapon/ore/ex_act()
-	return
-
-/obj/item/weapon/ore/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/device/core_sampler))
-		var/obj/item/device/core_sampler/C = W
-		C.sample_item(src, user)
-	else
-		return ..()
+				qdel(src)

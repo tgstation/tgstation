@@ -7,28 +7,29 @@
 	unacidable = 1//Can't destroy energy portals.
 	var/failchance = 5
 	var/obj/item/target = null
-	var/creator = null
+	var/obj/item/weapon/hand_tele/creator = null
 	anchored = 1.0
 	w_type=NOT_RECYCLABLE
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	spawn(0)
 		src.teleport(M)
-		return
-	return
 
 /obj/effect/portal/Crossed(AM as mob|obj)
 	spawn(0)
 		src.teleport(AM)
-		return
-	return
 
 /obj/effect/portal/New()
 	..()
 	spawn(300)
 		qdel(src)
-		return
-	return
+
+/obj/effect/portal/Destroy()
+	..()
+	target = null
+	if(creator)
+		creator.portals -= src
+		creator = null
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/portal/proc/teleport() called tick#: [world.time]")

@@ -28,7 +28,7 @@
 							/obj/item/clothing/suit/syndicatefake			= 2,
 							/obj/item/weapon/storage/fancy/crayons			= 2,
 							/obj/item/toy/spinningtoy						= 2,
-							/obj/item/toy/minimeteor					= 2,
+							/obj/item/toy/minimeteor						= 2,
 							/obj/item/device/whisperphone					= 2,
 							/obj/item/toy/prize/ripley						= 1,
 							/obj/item/toy/prize/fireripley					= 1,
@@ -59,6 +59,38 @@
 
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
+
+
+/obj/machinery/computer/arcade/proc/import_game_data(var/obj/item/weapon/circuitboard/arcade/A)
+	if(!A || !A.game_data || !A.game_data.len)
+		return
+	name = A.game_data["name"]
+	emagged = A.game_data["emagged"]
+	enemy_name = A.game_data["enemy_name"]
+	temp = A.game_data["temp"]
+	player_hp = A.game_data["player_hp"]
+	player_mp = A.game_data["player_mp"]
+	enemy_hp = A.game_data["enemy_hp"]
+	enemy_mp =A.game_data["enemy_mp"]
+	gameover = A.game_data["gameover"]
+	blocked = A.game_data["blocked"]
+
+/obj/machinery/computer/arcade/proc/export_game_data(var/obj/item/weapon/circuitboard/arcade/A)
+	if(!A) return
+	if(!A.game_data)
+		A.game_data = list()
+	A.game_data.len = 0
+	A.game_data["name"] = name
+	A.game_data["emagged"] = emagged
+	A.game_data["enemy_name"] = enemy_name 
+	A.game_data["temp"] = temp
+	A.game_data["player_hp"] = player_hp
+	A.game_data["player_mp"] = player_mp
+	A.game_data["enemy_hp"] = enemy_hp
+	A.game_data["enemy_mp"] = enemy_mp
+	A.game_data["gameover"] = gameover
+	A.game_data["blocked"] = blocked
+
 
 
 /obj/machinery/computer/arcade/attack_ai(mob/user as mob)
@@ -270,3 +302,10 @@
 		new empprize(src.loc)
 
 	..(severity)
+
+/obj/machinery/computer/arcade/togglePanelOpen(var/obj/toggleitem, mob/user)
+	var/obj/item/weapon/circuitboard/arcade/A
+	if(circuit)
+		A = new
+		export_game_data(A)
+	..(toggleitem, user, A)

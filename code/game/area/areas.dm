@@ -390,7 +390,7 @@
 /area/Entered(atom/movable/Obj, atom/OldLoc)
 	var/area/oldArea = Obj.areaMaster
 	Obj.areaMaster = src
-	if (!ismob(Obj))
+	if(!ismob(Obj))
 		return
 
 	var/mob/M = Obj
@@ -398,51 +398,45 @@
 	// /vg/ - EVENTS!
 	CallHook("MobAreaChange", list("mob" = M, "new" = Obj.areaMaster, "old" = oldArea))
 
-	// Being ready when you change areas gives you a chance to avoid falling all together.
-	if(!oldArea || !M.areaMaster)
-		thunk(M)
-	else if (!oldArea.has_gravity && M.areaMaster.has_gravity && M.m_intent == "run")
-		thunk(M)
-
-	if (isnull(M.client))
+	if(isnull(M.client))
 		return
 
-	if (M.client.prefs.toggles & SOUND_AMBIENCE)
-		if (isnull(M.areaMaster.media_source) && !M.client.ambience_playing)
+	if(M.client.prefs.toggles & SOUND_AMBIENCE)
+		if(isnull(M.areaMaster.media_source) && !M.client.ambience_playing)
 			M.client.ambience_playing = 1
 			var/sound = 'sound/ambience/shipambience.ogg'
 
-			if (prob(35))
-				// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks!
-				// Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch.
-				// TODO: This is dumb - N3X.
-				if (istype(src, /area/chapel))
+			if(prob(35))
+				//Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks!
+				//Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch.
+				//TODO: This is dumb - N3X.
+				if(istype(src, /area/chapel))
 					sound = pick('sound/ambience/ambicha1.ogg', 'sound/ambience/ambicha2.ogg', 'sound/ambience/ambicha3.ogg', 'sound/ambience/ambicha4.ogg')
-				else if (istype(src, /area/medical/morgue))
+				else if(istype(src, /area/medical/morgue))
 					sound = pick('sound/ambience/ambimo1.ogg', 'sound/ambience/ambimo2.ogg', 'sound/music/main.ogg')
-				else if (type == /area)
+				else if(type == /area)
 					sound = pick('sound/ambience/ambispace.ogg', 'sound/music/space.ogg', 'sound/music/main.ogg', 'sound/music/traitor.ogg', 'sound/ambience/spookyspace1.ogg', 'sound/ambience/spookyspace2.ogg')
-				else if (istype(src, /area/engineering))
+				else if(istype(src, /area/engineering))
 					sound = pick('sound/ambience/ambisin1.ogg', 'sound/ambience/ambisin2.ogg', 'sound/ambience/ambisin3.ogg', 'sound/ambience/ambisin4.ogg')
-				else if (istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
+				else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
 					sound = pick('sound/ambience/ambimalf.ogg')
-				else if (istype(src, /area/maintenance/ghettobar))
+				else if(istype(src, /area/maintenance/ghettobar))
 					sound = pick('sound/ambience/ghetto.ogg')
-				else if (istype(src, /area/shuttle/salvage/derelict))
+				else if(istype(src, /area/shuttle/salvage/derelict))
 					sound = pick('sound/ambience/derelict1.ogg', 'sound/ambience/derelict2.ogg', 'sound/ambience/derelict3.ogg', 'sound/ambience/derelict4.ogg')
-				else if (istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
+				else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
 					sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg', 'sound/music/torvus.ogg')
-				else if (istype(src, /area/maintenance/fsmaint2) || istype(src, /area/maintenance/port) || istype(src, /area/maintenance/aft) || istype(src, /area/maintenance/asmaint))
+				else if(istype(src, /area/maintenance/fsmaint2) || istype(src, /area/maintenance/port) || istype(src, /area/maintenance/aft) || istype(src, /area/maintenance/asmaint))
 					sound = pick('sound/ambience/spookymaint1.ogg', 'sound/ambience/spookymaint2.ogg')
-				else if (istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
+				else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
 					sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 				else
 					sound = pick('sound/ambience/ambigen1.ogg', 'sound/ambience/ambigen3.ogg', 'sound/ambience/ambigen4.ogg', 'sound/ambience/ambigen5.ogg', 'sound/ambience/ambigen6.ogg', 'sound/ambience/ambigen7.ogg', 'sound/ambience/ambigen8.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambigen11.ogg', 'sound/ambience/ambigen12.ogg', 'sound/ambience/ambigen14.ogg')
 
 			M << sound(sound, 0, 0, SOUND_AMBIANCE, 25)
 
-			spawn (600) // Ewww - this is very very bad.
-				if (M && M.client)
+			spawn(600) // Ewww - this is very very bad.
+				if(M && M.client)
 					M.client.ambience_playing = 0
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
@@ -451,30 +445,17 @@
 
 	A.has_gravity = gravitystate
 
-	A.has_gravity = gravitystate
-
 	if(gravitystate)
-		for(var/mob/living/carbon/human/M in A)
-			thunk(M)
+		for(var/mob/living/carbon/human/H in A)
+			if(istype(get_turf(H), /turf/space)) //You can't fall on space
+				continue
+			if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP))
+				continue
+			if(H.locked_to) //Locked to something, anything
+				continue
 
-/area/proc/thunk(mob)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/thunk() called tick#: [world.time]")
-	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
-		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
-			return
-
-	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
-		return
-
-	if((istype(mob,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
-		mob:AdjustStunned(5)
-		mob:AdjustWeakened(5)
-
-	else if (istype(mob,/mob/living/carbon/human/))
-		mob:AdjustStunned(2)
-		mob:AdjustWeakened(2)
-
-	mob << "Gravity!"
+			H.AdjustStunned(5)
+			H << "<span class='warning'>Gravity!</span>"
 
 /area/proc/set_apc(var/obj/machinery/power/apc/apctoset)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/area/proc/set_apc() called tick#: [world.time]")
@@ -537,10 +518,7 @@
 			AM.change_area(old_area,src)
 
 var/list/ignored_keys = list("loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group","contents","air","light","areaMaster","underlays","lighting_overlay")
-var/list/moved_landmarks = list(latejoin, wizardstart, meteor_materialkit,\
-	meteor_bombkit, meteor_bombkitextra, meteor_tankkit, meteor_canisterkit,\
-	meteor_buildkit, meteor_pizzakit, meteor_panickit, meteor_shieldkit,\
-	meteor_genkit, meteor_breachkit) //Landmarks that are moved by move_area_to and move_contents_to
+var/list/moved_landmarks = list(latejoin, wizardstart) //Landmarks that are moved by move_area_to and move_contents_to
 var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f9","swall_f10") //icon_states for which to prepare an underlay
 
 /area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/direction = null)

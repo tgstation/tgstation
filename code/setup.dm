@@ -235,6 +235,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define	NOREACT		16384 			//Reagents dont' react inside this container.
 
+#define BLOCK_BREATHING 32768		//When worn, prevents breathing!
+
 #define INVULNERABLE 128
 
 #define ALL ~0
@@ -245,6 +247,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define PASSGLASS	2
 #define PASSGRILLE	4
 #define PASSBLOB	8
+#define PASSMACHINE	16//computers, vending machines, rnd machines
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
@@ -923,6 +926,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define RECYK_BIOLOGICAL 3
 #define RECYK_METAL      4
 #define RECYK_ELECTRONIC 5
+#define RECYK_WOOD		 6
 
 ////////////////
 // job.info_flags
@@ -1240,6 +1244,12 @@ var/proccalls = 1
 #define ORE_PROCESSING_ALLOY 2
 
 #define SOUND_AMBIANCE			485	//Literally arbitrary.
+
+//incorporeal_move values
+#define INCORPOREAL_DEACTIVATE	0
+#define INCORPOREAL_GHOST		1
+#define INCORPOREAL_NINJA		2
+#define INCORPOREAL_ETHEREAL	3
 
 
 //MALFUNCTION FLAGS

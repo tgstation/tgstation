@@ -480,12 +480,10 @@
 
 //Refreshes the icon and sets the luminosity
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
-
 	overlays.len = 0
 
 	// Updates the plant overlay.
 	if(!isnull(seed))
-
 		if(draw_warnings && health <= (seed.endurance / 2))
 			overlays += image(seed.plant_dmi,"over_lowhealth3")
 
@@ -494,13 +492,7 @@
 		else if(harvest)
 			overlays += image(seed.plant_dmi,"[seed.plant_icon]-harvest")
 		else if(age < seed.maturation)
-
-			var/t_growthstate
-			if(age >= seed.maturation)
-				t_growthstate = seed.growth_stages
-			else
-				t_growthstate = round(seed.maturation / seed.growth_stages)
-
+			var/t_growthstate = max(1,round((age * seed.growth_stages) / seed.maturation))
 			overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[t_growthstate]")
 			lastproduce = age
 		else
@@ -626,6 +618,59 @@
 
 	if(..())
 		return 1
+
+	if(istype(O, /obj/item/claypot))
+		user << "<span class='warning'>You must place the pot on the ground and use a spade on \the [src] to make a transplant.</span>"
+		return
+
+	if(seed && istype(O, /obj/item/weapon/pickaxe/shovel))
+		var/obj/item/claypot/C = locate() in range(user,1)
+		if(!C)
+			user << "<span class='warning'>You need an empty clay pot next to you.</span>"
+			return
+		playsound(loc, 'sound/items/shovel.ogg', 50, 1)
+		if(do_after(user, src, 50))
+			user.visible_message(	"<span class='notice'>[user] transplants \the [seed.display_name] into \the [C].</span>",
+									"<span class='notice'>\icon[src] You transplant \the [seed.display_name] into \the [C].</span>",
+									"<span class='notice'>You hear a ratchet.</span>")
+
+			var/obj/structure/claypot/S = new(get_turf(C))
+			transfer_fingerprints(C, S)
+			qdel(C)
+
+			if(seed.large)
+				S.icon_state += "-large"
+
+			if(dead)
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-dead")
+			else if(harvest)
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-harvest")
+			else if(age < seed.maturation)
+				var/t_growthstate = max(1,round((age * seed.growth_stages) / seed.maturation))
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[t_growthstate]")
+			else
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[seed.growth_stages]")
+
+			S.plant_name = seed.display_name
+
+			if(seed.biolum)
+				S.set_light(round(seed.potency/10))
+				if(seed.biolum_colour)
+					S.light_color = seed.biolum_colour
+
+			harvest = 0
+			seed = null
+			dead = 0
+			sampled = 0
+			age = 0
+			yield_mod = 0
+			mutation_mod = 0
+			set_light(0)
+
+			check_level_sanity()
+			update_icon()
+
+		return
 
 	if(istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/weapon/scalpel))
 
@@ -881,8 +926,13 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/pickaxe/shovel))
-		user << "You clear up [src]!"
-		qdel(src)
+		if(!seed)
+			user << "You clear up [src]!"
+			new /obj/item/weapon/ore/glass(loc)//we get some of the dirt back
+			new /obj/item/weapon/ore/glass(loc)
+			qdel(src)
+		else
+			..()
 	else if(istype(O,/obj/item/weapon/pickaxe/shovel) || istype(O,/obj/item/weapon/tank))
 		return
 	else

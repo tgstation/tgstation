@@ -19,10 +19,9 @@
 	damage = 50
 	flag = "bullet"
 
-
-/obj/item/projectile/bullet/gyro/on_hit(var/atom/target, var/blocked = 0)
+/obj/item/projectile/bullet/gyro/Bump(var/atom/target) //The bullets lose their ability to penetrate (which was pitiful for these ones) but now explode when hitting anything instead of only some things.
 	explosion(target, -1, 0, 2)
-	return 1
+	qdel(src)
 
 /obj/item/projectile/temp
 	name = "freeze beam"
@@ -36,6 +35,7 @@
 	var/obj/item/weapon/gun/energy/temperature/T = null
 
 /obj/item/projectile/temp/OnFired()
+	..()
 	T = shot_from
 	temperature = T.temperature
 	switch(temperature)

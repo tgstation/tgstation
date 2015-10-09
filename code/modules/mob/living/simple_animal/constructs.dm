@@ -26,6 +26,7 @@
 	show_stat_health = 0
 	faction = "cult"
 	supernatural = 1
+	flying = 1
 	var/nullblock = 0
 
 	mob_swap_flags = HUMAN|SIMPLE_ANIMAL|SLIME|MONKEY

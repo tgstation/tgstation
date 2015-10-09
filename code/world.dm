@@ -101,7 +101,6 @@ var/savefile/panicfile
 
 	if(!setup_database_connection())
 		world.log << "Your server failed to establish a connection with the feedback database."
-		dbcon = null
 	else
 		world.log << "Feedback database connection established."
 	migration_controller_mysql = new

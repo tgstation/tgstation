@@ -360,7 +360,7 @@
 		if(do_after(user, src,40))
 			user.visible_message("<span class='warning'>[src] dissasembles \the [src]</span>", \
 			"<span class='notice'>You dissasemble \the [src]</span>")
-			new /obj/effect/decal/remains/human(get_turf(src))
+			//new /obj/effect/decal/remains/human(get_turf(src))	//Commented out until remains are cleanable
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe))

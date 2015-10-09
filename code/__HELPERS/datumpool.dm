@@ -4,81 +4,93 @@
 
 //#define DEBUG_DATUM_POOL
 
-#define MAINTAINING_DATUM_POOL_COUNT 500
-var/global/list/masterdatumPool = new
-var/global/list/pooledvariables = new
+#define MAINTAINING_OBJECT_POOL_COUNT 500
+
+// Read-only or compile-time vars and special exceptions.
+/var/list/exclude = list("inhand_states", "loc", "locs", "parent_type", "vars", "verbs", "type", "x", "y", "z","group", "animate_movement")
+
+/var/global/list/masterdatumPool = new
+/var/global/list/pooledvariables = new
 
 /*
  * @args : datum type, normal arguments
  * Example call: getFromPool(/datum/pipeline, args)
  */
-/proc/getFromDPool()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getFromDPool() called tick#: [world.time]")
-	var/A = args[1]
-	var/list/B = list()
-	B += (args - A)
-	if(length(masterdatumPool["[A]"]) <= 0)
+/proc/getFromPool(var/type, ...)
+	var/list/B = (args - type)
+
+	if(length(masterdatumPool[type]) <= 0)
+
 		#ifdef DEBUG_DATUM_POOL
 		if(ticker)
-			world << text("DEBUG_DATUM_POOL: new proc has been called ([] | []).", A, list2params(B))
+			world << text("DEBUG_DATUM_POOL: new proc has been called ([] | []).", type, list2params(B))
 		#endif
-		//so the GC knows we're pooling this type.
-		if(isnull(masterdatumPool["[A]"]))
-			masterdatumPool["[A]"] = list(new A)
-		if(B && B.len)
-			return new A(arglist(B))
-		else
-			return new A()
 
-	var/datum/O = masterdatumPool["[A]"][1]
-	masterdatumPool["[A]"] -= O
+		//so the GC knows we're pooling this type.
+		if(isnull(masterdatumPool[type]))
+			masterdatumPool[type] = list()
+
+		if(B && B.len)
+			return new type(arglist(B))
+		else
+			return new type()
+
+	var/datum/O = masterdatumPool[type][1]
+	masterdatumPool[type] -= O
 
 	#ifdef DEBUG_DATUM_POOL
-	world << text("DEBUG_DATUM_POOL: getFromPool([]) [] left arglist([]).", A, length(masterdatumPool[A]), list2params(B))
+	world << text("DEBUG_DATUM_POOL: getFromPool([]) [] left arglist([]).", type, length(masterdatumPool[type]), list2params(B))
 	#endif
+
 	if(!O || !istype(O))
-		O = new A(arglist(B))
+		O = new type(arglist(B))
 	else
+		if(istype(O, /atom/movable) && B.len) // B.len check so we don't OoB.
+			var/atom/movable/AM = O
+			AM.loc = B[1]
+
 		if(B && B.len)
 			O.New(arglist(B))
 		else
 			O.New()
+
 		O.disposed = null //Set to process once again
 	return O
 
 /*
  * @args
- * A, datum instance
+ * D, datum instance
  *
- * @return
- * -1, if A is not a movable atom
- *
- * Example call: returnToDPool(src)
+ * Example call: returnToPool(src)
  */
-/proc/returnToDPool(const/datum/D)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/returnToDPool() called tick#: [world.time]")
-	if(!D)
-		return
-	if(length(masterdatumPool["[D.type]"]) > MAINTAINING_DATUM_POOL_COUNT)
+
+/proc/returnToPool(const/datum/D)
+	ASSERT(D)
+
+	if(istype(D, /atom/movable) && length(masterdatumPool[D.type]) > MAINTAINING_OBJECT_POOL_COUNT)
 		#ifdef DEBUG_DATUM_POOL
-		world << text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_DATUM_POOL_COUNT)
+		world << text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_OBJECT_POOL_COUNT)
 		#endif
-		var/list/pool = masterdatumPool["[D.type]"]
-		pool.Cut(1,2) //LET IT GO. LET IT GOOOOOO. AKA REMOVE THE OLDEST ENTRY
+
+		qdel(D)
 		return
-	if(isnull(masterdatumPool["[D.type]"]))
-		masterdatumPool["[D.type]"] = list()
+
+	if(isnull(masterdatumPool[D.type]))
+		masterdatumPool[D.type] = list()
+
 	D.Destroy()
 	D.resetVariables()
 	D.disposed = 1 //Set to stop processing while pooled
-	#ifdef DEBUG_DATUM_POOL
-	if(D in masterdatumPool["[D.type]"])
-		world << text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type)
-	#endif
-	masterdatumPool["[D.type]"] |= D
 
 	#ifdef DEBUG_DATUM_POOL
-	world << text("DEBUG_DATUM_POOL: returnToPool([]) [] left.", D.type, length(masterdatumPool["[D.type]"]))
+	if(D in masterdatumPool[D.type])
+		world << text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type)
+	#endif
+
+	masterdatumPool[D.type] |= D
+
+	#ifdef DEBUG_DATUM_POOL
+	world << text("DEBUG_DATUM_POOL: returnToPool([]) [] left.", D.type, length(masterdatumPool[D.type]))
 	#endif
 
 #undef MAINTAINING_DATUM_POOL_COUNT
@@ -88,7 +100,6 @@ var/global/list/pooledvariables = new
 #endif
 
 /datum/proc/createVariables()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/datum/proc/createVariables() called tick#: [world.time]")
 	pooledvariables[type] = new/list()
 	var/list/exclude = global.exclude + args
 
@@ -102,7 +113,6 @@ var/global/list/pooledvariables = new
 //SEE http://www.byond.com/forum/?post=76850 AS A REFERENCE ON THIS
 
 /datum/proc/resetVariables()
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/datum/proc/resetVariables() called tick#: [world.time]")
 	if(!pooledvariables[type])
 		createVariables(args)
 
@@ -110,7 +120,6 @@ var/global/list/pooledvariables = new
 		vars[key] = pooledvariables[type][key]
 
 /proc/isInTypes(atom/Object, types)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/isInTypes() called tick#: [world.time]")
 	if(!Object)
 		return 0
 	var/prototype = Object.type

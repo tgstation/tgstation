@@ -14,6 +14,7 @@
 	speed = 4
 	maxHealth = 20
 	health = 20
+	flying = 1
 
 	harm_intent_damage = 8
 	melee_damage_lower = 10
@@ -31,6 +32,8 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+
+	holder_type = null //Can't pick a SWARM OF BATS up
 
 	environment_smash = 1
 	size = SIZE_TINY
@@ -145,6 +148,8 @@
 	melee_damage_upper = 10
 	attacktext = "clamps shut on"
 	attack_sound = 'sound/effects/pageturn3.ogg'
+
+	holder_type = /obj/item/weapon/holder/animal //CAN pick up a single book!
 
 mob/living/simple_animal/hostile/scarybat/book/New()
 	..()

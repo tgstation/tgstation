@@ -69,8 +69,7 @@
 				T.amount = "([transaction_amount])"
 			else
 				T.amount = "[transaction_amount]"
-			if(terminal_id)
-				T.source_terminal = terminal_id
+			T.source_terminal = terminal_name
 			T.date = current_date_string
 			T.time = worldtime2text()
 			dest.transaction_log.Add(T)
@@ -80,9 +79,8 @@
 		if(terminal_name!="")
 			T.target_name += " (via [terminal_name])"
 		T.purpose = transaction_purpose
-		T.amount = "[transaction_amount]"
-		if(terminal_id)
-			T.source_terminal = terminal_id
+		T.amount = "-[transaction_amount]"
+		T.source_terminal = terminal_name
 		T.date = current_date_string
 		T.time = worldtime2text()
 		transaction_log.Add(T)

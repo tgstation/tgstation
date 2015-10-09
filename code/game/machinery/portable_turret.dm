@@ -514,12 +514,16 @@ Status: []<BR>"},
 		for(var/mob/living/simple_animal/C in view(7,src))
 			if(C.stat)
 				continue
+			if(C.flags & INVULNERABLE)
+				continue
 			// Ignore lazarus-injected mobs.
 			if(dd_hasprefix(C.faction, "lazarus"))
 				continue
 			targets += C
 
 	for (var/mob/living/carbon/C in view(7,src)) // loops through all living carbon-based lifeforms in view(12)
+		if(C.flags & INVULNERABLE)
+			continue
 		if(istype(C, /mob/living/carbon/alien) && src.check_anomalies) // git those fukken xenos
 			if(!C.stat) // if it's dead/dying, there's no need to keep shooting at it.
 				targets += C
@@ -569,48 +573,60 @@ Status: []<BR>"},
 				spawn() popUp() // pop the turret up if it's not already up.
 				dir=get_dir(src,M) // even if you can't shoot, follow the target
 				spawn() shootAt(M) // shoot the target, finally
+		if(prob(15))
+			if(prob(50))
+				playsound(get_turf(src), 'sound/effects/turret/move1.wav', 60, 1)
+			else
+				playsound(get_turf(src), 'sound/effects/turret/move2.wav', 60, 1)
 
+	else if(secondarytargets.len>0) // if there are no primary targets, go for secondary targets
+		var/mob/t = pick(secondarytargets)
+		if (istype(t, /mob/living))
+			if (t.stat!=2)
+				spawn() popUp()
+				dir=get_dir(src,t)
+				shootAt(t)
+		if(prob(15))
+			if(prob(50))
+				playsound(get_turf(src), 'sound/effects/turret/move1.wav', 60, 1)
+			else
+				playsound(get_turf(src), 'sound/effects/turret/move2.wav', 60, 1)
 	else
-		if(secondarytargets.len>0) // if there are no primary targets, go for secondary targets
-			var/mob/t = pick(secondarytargets)
-			if (istype(t, /mob/living))
-				if (t.stat!=2)
-					spawn() popUp()
-					dir=get_dir(src,t)
-					shootAt(t)
-		else
-			spawn() popDown()
+		spawn()
+			popDown()
 
-/obj/machinery/porta_turret/proc
-	popUp() // pops the turret up
-		if(disabled)
-			return
-		if(raising || raised) return
-		if(stat & BROKEN) return
-		invisibility=0
-		raising=1
-		flick("popup",cover)
-		sleep(5)
-		sleep(5)
-		raising=0
-		cover.icon_state="openTurretCover"
-		raised=1
-		layer=4
 
-	popDown() // pops the turret down
-		if(disabled)
-			return
-		if(raising || !raised) return
-		if(stat & BROKEN) return
-		layer=3
-		raising=1
-		flick("popdown",cover)
-		sleep(10)
-		raising=0
-		cover.icon_state="turretCover"
-		raised=0
-		invisibility=2
-		icon_state="[lasercolor]grey_target_prism"
+/obj/machinery/porta_turret/proc/popUp() // pops the turret up
+	if(disabled)
+		return
+	if(raising || raised) return
+	if(stat & BROKEN) return
+	invisibility=0
+	raising=1
+	flick("popup",cover)
+	playsound(get_turf(src), 'sound/effects/turret/open.wav', 60, 1)
+	sleep(5)
+	sleep(5)
+	raising=0
+	cover.icon_state="openTurretCover"
+	raised=1
+	layer=4
+
+/obj/machinery/porta_turret/proc/popDown() // pops the turret down
+	if(disabled)
+		return
+	if(raising || !raised) return
+	if(stat & BROKEN) return
+	layer=3
+	raising=1
+	flick("popdown",cover)
+	playsound(get_turf(src), 'sound/effects/turret/open.wav', 60, 1)
+	sleep(10)
+	raising=0
+	cover.icon_state="turretCover"
+	raised=0
+	invisibility=2
+	icon_state="[lasercolor]grey_target_prism"
 
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp as mob)
@@ -1114,6 +1130,7 @@ Status: []<BR>"},
 			user << "<span class='warning'>Access denied.</span>"
 
 	else
+		playsound(get_turf(src), 'sound/weapons/smash.ogg', 60, 1)
 		Parent_Turret.health -= W.force * 0.5
 		if (Parent_Turret.health <= 0)
 			Parent_Turret.die()

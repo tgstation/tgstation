@@ -4,6 +4,37 @@
 	var/uses = 0
 	var/nullblock = 0
 
+/obj/item/weapon/paper/talisman/examine(mob/user)
+	..()
+	if(iscultist(user) || isobserver(user))
+		switch(imbue)
+			if("newtome")
+				user << "This talisman has been imbued with the power of spawning a new Arcane Tome."
+			if("armor")
+				user << "This talisman has been imbued with the power of clothing yourself in cult fighting gear."
+			if("emp")
+				user << "This talisman has been imbued with the power of disabling technology in a small radius around you."
+			if("conceal")
+				user << "This talisman has been imbued with the power of concealing nearby runes."
+			if("revealrunes")
+				user << "This talisman has been imbued with the power of revealing hidden nearby runes."
+			if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
+				user << "This talisman has been imbued with the power of taking you to someplace else. You can read <i>[imbue]</i> on it."
+			if("communicate")
+				user << "This talisman has been imbued with the power of communicating your whispers to your allies."
+			if("deafen")
+				user << "This talisman has been imbued with the power of deafening visible enemies."
+			if("blind")
+				user << "This talisman has been imbued with the power of blinding visible enemies."
+			if("runestun")
+				user << "This talisman has been imbued with the power of paralyzing the beings you touch with it. The effect works on silicons as well, but humans will also be muted for a short time."
+			if("supply")
+				user << "This talisman has been imbued with the power of providing you and your allies with some supplies to start your cult."
+			else
+				user << "This talisman.....has no particular power. Is this some kind of joke?"
+	else
+		user << "Something about the blood stains on this paper fills you with uneasiness."
+
 /obj/item/weapon/paper/talisman/proc/findNullRod(var/atom/target)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/paper/talisman/proc/findNullRod() called tick#: [world.time]")
 	if(istype(target,/obj/item/weapon/nullrod))

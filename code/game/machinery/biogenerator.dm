@@ -210,6 +210,23 @@
 	name="Box of Crayons"
 	result=/obj/item/weapon/storage/fancy/crayons
 
+/datum/biogen_recipe/flooring
+	category="Flooring"
+
+/datum/biogen_recipe/flooring/carpet
+	cost=10
+	id="carpet"
+	name="Piece of Carpet"
+	other_amounts=list(5,10,20)
+	result=/obj/item/stack/tile/carpet
+
+/datum/biogen_recipe/flooring/arcade
+	cost=10
+	id="arcadecarpet"
+	name="Piece of Arcade Carpet"
+	other_amounts=list(5,10,20)
+	result=/obj/item/stack/tile/arcade
+
 /obj/machinery/biogenerator
 	name = "Biogenerator"
 	desc = ""

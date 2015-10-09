@@ -129,7 +129,8 @@ var/global/list/whitelisted_species = list("Human")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_speech() called tick#: [world.time]")
 	if(H.dna)
 		if(length(speech.message) >= 2)
-			for(var/datum/dna/gene/gene in dna_genes)
+			for(var/gene_type in H.active_genes)
+				var/datum/dna/gene/gene = dna_genes[gene_type]
 				if(!gene.block)
 					continue
 				if(gene.is_active(H))

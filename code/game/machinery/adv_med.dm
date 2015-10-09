@@ -65,7 +65,11 @@
 		return 0
 
 /obj/machinery/bodyscanner/Destroy()
-	..()
+
+	go_out() //Eject everything
+
+	. = ..()
+
 	if(connected)
 		connected.connected = null
 		qdel(connected)
@@ -226,10 +230,10 @@
 	return
 
 /obj/machinery/bodyscanner/crowbarDestroy(mob/user)
-	if (occupant)
-		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
 		return
-	return..()
+	return ..()
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/W as obj, user as mob)
 	if(iswrench(W) && !occupant)

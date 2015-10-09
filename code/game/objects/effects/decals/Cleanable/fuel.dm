@@ -4,7 +4,7 @@
 	icon_state = "fuel"
 	layer = TURF_LAYER+0.2
 	anchored = 1
-	var/amount = 1 //Basically moles.
+	amount = 1 //Basically moles.
 
 	volatility = 0.02
 
@@ -86,7 +86,7 @@
 
 			spawn(1)
 				O.hotspot_expose(7000, 500, 1, 1)
-				//O.hotspot_expose((T20C*2) + 380, 500, surfaces = 1) 
+				//O.hotspot_expose((T20C*2) + 380, 500, surfaces = 1)
 
 			if(FF)
 				transferred_amount += FF.amount

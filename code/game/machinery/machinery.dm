@@ -377,8 +377,8 @@ Class Procs:
 		if (!usr.dexterity_check())
 			usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 			return 1
-
-		if(!isAI(usr) && usr.z != z)
+		var/turf/T = get_turf(usr)
+		if(!isAI(usr) && T.z != z)
 			if(usr.z != 2)
 				usr << "<span class='warning'>WARNING: Unable to interface with \the [src.name].</span>"
 				return 1

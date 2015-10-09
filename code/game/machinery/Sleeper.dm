@@ -195,7 +195,11 @@
 	return
 
 /obj/machinery/sleeper/Destroy()
-	..()
+
+	go_out() //Eject everything
+
+	. = ..()
+
 	connected.connected = null
 	qdel(connected)
 	connected = null
@@ -333,11 +337,10 @@
 	return
 
 /obj/machinery/sleeper/crowbarDestroy(mob/user)
-	if (occupant)
-		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
 		return
-	return..()
-
+	return ..()
 
 /obj/machinery/sleeper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(iswrench(W)&&!occupant)
