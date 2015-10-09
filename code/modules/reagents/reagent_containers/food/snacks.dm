@@ -3693,7 +3693,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cinnamonpie
 	name = "cinnamon pie"
-	desc = "Guarranted snake-free!"
+	desc = "Guarranted snail-free!"
 	icon_state = "cinnamon_pie"
 	trash = /obj/item/trash/pietin
 	food_flags = FOOD_SWEET
