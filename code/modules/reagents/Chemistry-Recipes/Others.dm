@@ -75,6 +75,19 @@
 	required_reagents = list("capsaicin" = 1, "ethanol" = 5)
 	result_amount = 5
 
+/datum/chemical_reaction/soapification
+	name = "Soapification"
+	id = "soapification"
+	result = null
+	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
+	required_temp = 374
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/soap/homemade(location)
+	return
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
@@ -358,3 +371,10 @@
 	result = "saltpetre"
 	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
 	result_amount = 3
+
+/datum/chemical_reaction/lye
+	name = "lye"
+	id = "lye"
+	result = "lye"
+	required_reagents = list("sodium" = 1, "hydrogen" = 1)
+	result_amount = 2
