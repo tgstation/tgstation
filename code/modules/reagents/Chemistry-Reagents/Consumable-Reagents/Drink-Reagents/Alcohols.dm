@@ -29,7 +29,7 @@
 		M.Dizzy(5)
 	if(current_cycle >= boozepwr*2.5 && prob(33))
 		if (!M.confused) M.confused = 1
-		M.confused += 2
+		M.confused += 3
 	if(current_cycle >= boozepwr*10 && prob(33))
 		M.adjustToxLoss(2)
 	..()
