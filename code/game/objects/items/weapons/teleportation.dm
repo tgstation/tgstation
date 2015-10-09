@@ -183,7 +183,7 @@ Frequency:
 		return
 	var/T = L[t1]
 
-	if(prob(5))
+	if((t1 == "None (Dangerous)") && prob(5))
 		T = locate(rand(7, world.maxx - 7), rand(7, world.maxy -7), map.zTCommSat)
 
 	var/turf/U = get_turf(src)
