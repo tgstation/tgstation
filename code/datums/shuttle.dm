@@ -618,8 +618,7 @@
 		new_turf.icon_state = old_turf.icon_state
 		new_turf.icon = old_turf.icon
 		if(rotate)
-			spawn
-				new_turf.shuttle_rotate(rotate)
+			new_turf.shuttle_rotate(rotate)
 
 		//*****Move air*****
 
@@ -640,9 +639,9 @@
 				continue
 
 			AM.forceMove(new_turf)
+
 			if(rotate)
-				spawn
-					AM.shuttle_rotate(rotate)
+				AM.shuttle_rotate(rotate)
 
 		//Move landmarks - for moving the arrivals shuttle
 		for(var/list/L in moved_landmarks) //moved_landmarks: code/game/area/areas.dm, 527 (above the move_contents_to proc)

@@ -549,13 +549,14 @@ its easier to just keep the beam vertical.
 /atom/proc/shuttle_act(var/datum/shuttle/S)
 	return
 
-//Called when a shuttle rotates
+//Called on every object in a shuttle which rotates
 /atom/proc/shuttle_rotate(var/angle)
 	src.dir = turn(src.dir, -angle)
 
 	if(canSmoothWith) //Smooth the smoothable
-		relativewall()
-		relativewall_neighbours()
+		spawn //Usually when this is called right after an atom is moved. Not having this "spawn" here will cause this atom to look for its neighbours BEFORE they have finished moving, causing bad stuff.
+			relativewall()
+			relativewall_neighbours()
 
 	if(pixel_x || pixel_y)
 		var/cosine	= cos(angle)
