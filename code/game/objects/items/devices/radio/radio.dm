@@ -224,17 +224,25 @@
 	return
 
 */
+
 /obj/item/device/radio/talk_into(var/datum/speech/speech, var/channel=null)
-	if(!on) return // the device has to be on
+	say_testing(loc, "Got radio/talk_into([speech], [channel])")
+	if(!on)
+		say_testing(loc, "\[Radio\] - Not on.")
+		return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
-	if(!speech.speaker || !speech.message) return
+	if(!speech.speaker || !speech.message)
+		say_testing(loc, "\[Radio\] - speech.speaker or speech.message are null. [speech.speaker], [html_encode(speech.message)]")
+		return
 
 	//  Uncommenting this. To the above comment:
 	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(isWireCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+		say_testing(loc, "\[Radio\] - TRANSMIT wire cut.")
 		return
 
 	if(!speech.speaker.IsVocal())
+		say_testing(loc, "\[Radio\] - Speaker not vocal.")
 		return
 
 	/* Quick introduction:
@@ -256,10 +264,12 @@
 			channel = channels[1]
 		speech.frequency = secure_radio_connections[channel]
 		if(!channels[channel])
+			say_testing(loc, "\[Radio\] - Unable to find channel \"[channel]\".")
 			return
 	else
 		speech.frequency = frequency
 		channel = null
+	say_testing(loc, "talk_into(): frequency set to [speech.frequency]")
 
 	var/turf/position = get_turf(src)
 

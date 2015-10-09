@@ -369,22 +369,27 @@ var/list/department_radio_keys = list(
 /mob/living/proc/radio(var/datum/speech/speech, var/message_mode)
 	switch(message_mode)
 		if(MODE_R_HAND)
+			say_testing(src, "/mob/living/radio() - MODE_R_HAND")
 			if (r_hand)
 				r_hand.talk_into(speech)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
+			say_testing(src, "/mob/living/radio() - MODE_L_HAND")
 			if (l_hand)
 				l_hand.talk_into(speech)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_INTERCOM)
+			say_testing(src, "/mob/living/radio() - MODE_INTERCOM")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(speech)
 			return ITALICS | REDUCE_RANGE
 		if(MODE_BINARY)
+			say_testing(src, "/mob/living/radio() - MODE_BINARY")
 			if(binarycheck())
 				robot_talk(speech.message)
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 		if(MODE_WHISPER)
+			say_testing(src, "/mob/living/radio() - MODE_WHISPER")
 			whisper(speech.message, speech.language)
 			return NOPASS
 	return 0
