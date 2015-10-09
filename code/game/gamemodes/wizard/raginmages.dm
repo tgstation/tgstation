@@ -154,4 +154,6 @@
 	required_players = 20
 	use_huds = 1
 	bullshit_mode = 1
-	time_check = 600
+	time_check = 250
+	spawn_delay_min = 50
+	spawn_delay_max = 150
