@@ -135,7 +135,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
+		return
 	if(istype(glass))	//you can dip cigarettes into beakers
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
