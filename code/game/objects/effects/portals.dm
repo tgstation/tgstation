@@ -93,12 +93,19 @@
 /obj/effect/portal/singularity_pull()
 	return
 
+var/list/portal_cache = list()
+
+
 /obj/effect/portal/proc/blend_icon(var/obj/effect/portal/P)
 	var/turf/T = P.loc
-	var/icon/I1 = icon(icon,"portal_mask")
-	var/icon/I2 = icon(initial(T.icon),T.icon_state)
-	I1.Blend(I2,ICON_MULTIPLY)
-	overlays += I1
+
+	if(!("icon[initial(T.icon)]_iconstate[T.icon_state]" in portal_cache))//If the icon has not been added yet
+		var/icon/I1 = icon(icon,"portal_mask")//Generate it.
+		var/icon/I2 = icon(initial(T.icon),T.icon_state)
+		I1.Blend(I2,ICON_MULTIPLY)
+		portal_cache["icon[initial(T.icon)]_iconstate[T.icon_state]"] = I1 //And cache it!
+
+	overlays += portal_cache["icon[initial(T.icon)]_iconstate[T.icon_state]"]
 
 /obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/portal/proc/teleport() called tick#: [world.time]")

@@ -124,7 +124,8 @@ Frequency:
 /*
  * Hand-tele
  */
- #define HANDTELE_MAX_CHARGES 3
+ #define HANDTELE_MAX_CHARGE	45
+ #define HANDTELE_PORTAL_COST	15
 /obj/item/weapon/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology."
@@ -139,7 +140,7 @@ Frequency:
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;bluespace=3"
 	var/list/portals = list()
-	var/charges = HANDTELE_MAX_CHARGES//how many pairs of portal can the hand-tele sustain at once. a new charge is added every 30 seconds until the maximum is reached..
+	var/charge = HANDTELE_MAX_CHARGE//how many pairs of portal can the hand-tele sustain at once. a new charge is added every 30 seconds until the maximum is reached..
 	var/recharging = 0
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
@@ -177,7 +178,7 @@ Frequency:
 
 	if((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
-	if(charges < 1)
+	if(charge < HANDTELE_PORTAL_COST)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
@@ -200,20 +201,17 @@ Frequency:
 	portals += P2
 	src.add_fingerprint(user)
 
-	charges--
+	charge = max(charge - HANDTELE_PORTAL_COST,0)
 	if(!recharging)
 		recharging = 1
-		spawn()
-			recharges()
+		processing_objects.Add(src)
 
-/obj/item/weapon/hand_tele/proc/recharges()
-	sleep(300)
-	charges = max(charges+1,HANDTELE_MAX_CHARGES)
-
-	if(charges == HANDTELE_MAX_CHARGES)
+/obj/item/weapon/hand_tele/process()
+	charge = min(HANDTELE_MAX_CHARGE,charge+1)
+	if(charge >= HANDTELE_MAX_CHARGE)
+		processing_objects.Remove(src)
 		recharging = 0
-		return
+	return 1
 
-	recharges()
-
- #undef HANDTELE_MAX_CHARGES
+ #undef HANDTELE_MAX_CHARGE
+ #undef HANDTELE_PORTAL_COST

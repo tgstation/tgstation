@@ -46,11 +46,11 @@
 		if(0)
 			setting = 1
 			fire_sound = 'sound/weapons/portalgun_red.ogg'
-			user << "Now set to fire <font color='#FF6600'>red portals</font>."
+			user << "Now set to fire <span style='color: #FF6600;'>red portals</span>."
 		if(1)
 			setting = 0
 			fire_sound = 'sound/weapons/portalgun_blue.ogg'
-			user << "Now set to fire <font color='#0066FF'>blue portals</font>."
+			user << "Now set to fire <span style='color: #0066FF;'>blue portals</span>."
 	update_icon()
 	user.regenerate_icons()
 
