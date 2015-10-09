@@ -658,7 +658,7 @@ Code:
 			mode = 433
 
 		if("Supply Orders")
-			loc:mode =47
+			pda.mode =47
 			mode = 47
 
 		if("Newscaster Access")
