@@ -2140,7 +2140,7 @@
 /obj/machinery/vending/chapel
 	name = "PietyVend"
 	desc = "A holy vendor for a pious man."
-	product_slogans = "Bene orasse est bene studuisse.;Beati pauperes spiritu.;Di immortales virtutem approbare, non adhibere debent ."
+	product_slogans = "Bene orasse est bene studuisse.;Beati pauperes spiritu.;Di immortales virtutem approbare, non adhibere debent."
 	product_ads = "Deus tecum."
 	vend_reply = "Deus vult!"
 	icon_state = "chapel"
@@ -2167,6 +2167,7 @@
 	premium = list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
 		)
+	req_access_txt = "22"
 
 	pack = /obj/structure/vendomatpack/chapelvend
 
