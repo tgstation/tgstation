@@ -31,13 +31,13 @@ var/list/freqtoname = list(
 	"1345" = "Response Team",
 )
 
-/atom/movable/proc/say(message, var/datum/language/speaking) //so we can force nonmobs to speak a certain language
+/atom/movable/proc/say(message, var/datum/language/speaking, var/atom/movable/radio=src) //so we can force nonmobs to speak a certain language
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/say() called tick#: [world.time]")
 	if(!can_speak())
 		return
 	if(message == "" || !message)
 		return
-	var/datum/speech/speech = create_speech(message, world.view)
+	var/datum/speech/speech = create_speech(message, world.view, radio)
 	speech.language=speaking
 	send_speech(speech, world.view)
 
@@ -77,12 +77,15 @@ var/list/freqtoname = list(
 	return "[speech.name][speech.render_as_name()]"
 
 /atom/movable/proc/render_speech(var/datum/speech/speech)
-	say_testing(src, "render_speech() - Freq: [speech.frequency], ")
+	say_testing(src, "render_speech() - Freq: [speech.frequency], radio=\ref[speech.radio]")
 	var/freqpart = ""
+	var/radioicon = ""
 	if(speech.frequency)
-		freqpart = " \[[get_radio_name(speech.frequency)]\]"
+		if(speech.radio)
+			radioicon = "\icon[speech.radio]"
+		freqpart = " [radioicon]\[[get_radio_name(speech.frequency)]\]"
 		speech.wrapper_classes.Add(get_radio_span(speech.frequency))
-	var/datum/speech/filtered_speech = (speech.language) ? speech.language.filter_speech(speech) : speech
+	var/datum/speech/filtered_speech = (speech.language) ? speech.language.filter_speech(speech.clone()) : speech
 
 #ifdef SAY_DEBUG
 	var/enc_wrapclass=list2text(filtered_speech.wrapper_classes, ", ")
@@ -92,13 +95,15 @@ var/list/freqtoname = list(
 	/*
 	return {"
 		<span class='[filtered_speech.render_wrapper_classes()]'>
-			<span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][(filtered_speech.radio) ?" \icon[filtered_speech.radio]":""]
+			<span class='name'>
+				[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)]
 				[freqpart]
-				[render_job(filtered_speech)]</span>
+				[render_job(filtered_speech)]
+			</span>
 			[filtered_speech.render_message()]
 		</span>"}
 	*/
-	. = "<span class='[filtered_speech.render_wrapper_classes()]'><span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][!isnull(filtered_speech.radio) ?" \icon[filtered_speech.radio]":""][freqpart][render_job(filtered_speech)]</span> [filtered_speech.render_message()]</span>"
+	. = "<span class='[filtered_speech.render_wrapper_classes()]'><span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][freqpart][render_job(filtered_speech)]</span> [filtered_speech.render_message()]</span>"
 	say_testing(src, html_encode(.))
 
 

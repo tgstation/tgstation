@@ -91,13 +91,6 @@ var/specops_shuttle_timeleft = 0
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
 	del(announcer)
-
-/*
-/proc/Broadcast_Message(var/atom/movable/AM, var/datum/language/speaking,
-						var/vmask, var/obj/item/device/radio/radio,
-						var/message, var/name, var/job, var/realname,
-						var/data, var/compression, var/list/level, var/freq)
-*/
 /proc/AliceAnnounce(var/atom/movable/announcer,var/message)
 	var/datum/speech/speech = announcer.create_speech(message=message, frequency=radiochannels["Response Team"], transmitter=announcer)
 	//speech.name="A.L.I.C.E."

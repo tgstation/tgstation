@@ -182,7 +182,7 @@ var/list/department_radio_keys = list(
 
 
 	var/message_range = 7
-	speech.message = treat_message(speech.message)
+	treat_speech(speech)
 	var/radio_return = radio(speech, message_mode)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
@@ -341,15 +341,13 @@ var/list/department_radio_keys = list(
 					return 1
 	return 0
 
-/mob/living/proc/treat_message(message, genesay = 0)
+/mob/living/proc/treat_speech(var/datum/speech/speech, genesay = 0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/proc/treat_message() called tick#: [world.time]")
 	if(getBrainLoss() >= 60)
-		message = derpspeech(message, stuttering)
+		speech.message = derpspeech(speech.message, stuttering)
 
 	if(stuttering)
-		message = stutter(message)
-
-	return message
+		speech.message = stutter(speech.message)
 
 /mob/living/proc/radio(var/datum/speech/speech, var/message_mode)
 	switch(message_mode)

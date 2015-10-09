@@ -21,19 +21,19 @@
 
 	return "says, \"[text]\"";
 
-/mob/living/carbon/human/treat_message(message)
+/mob/living/carbon/human/treat_speech(var/datum/speech/speech, var/genesay=0)
 	if(wear_mask && istype(wear_mask))
-		if(!(copytext(message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")))
-			message = wear_mask.treat_mask_message(message)
+		if(!(copytext(speech.message, 1, 2) == "*" || (mind && mind.changeling && department_radio_keys[copytext(speech.message, 1, 3)] != "changeling")))
+			wear_mask.treat_mask_speech(speech)
 
-	if ((M_HULK in mutations) && health >= 25 && length(message))
-		message = "[uppertext(replacetext(message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
+	if ((M_HULK in mutations) && health >= 25 && length(speech.message))
+		speech.message = "[uppertext(replacetext(speech.message, ".", "!"))]!!" //because I don't know how to code properly in getting vars from other files -Bro
 	if (src.slurring)
-		message = slur(message)
+		speech.message = slur(speech.message)
 
 	if(viruses)
 		for(var/datum/disease/pierrot_throat/D in viruses)
-			var/list/temp_message = text2list(message, " ") //List each word in the message
+			var/list/temp_message = text2list(speech.message, " ") //List each word in the message
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
 				pick_list += i
@@ -43,12 +43,11 @@
 					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
-				message = list2text(temp_message, " ")
+				speech.message = list2text(temp_message, " ")
 
-	message = ..(message)
+	..(speech)
 	if(dna)
-		message = species.handle_speech(message,src)
-	return message
+		species.handle_speech(speech,src)
 
 
 /mob/living/carbon/human/GetVoice()

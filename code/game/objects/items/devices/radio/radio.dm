@@ -225,8 +225,10 @@
 
 */
 
-/obj/item/device/radio/talk_into(var/datum/speech/speech, var/channel=null)
-	say_testing(loc, "Got radio/talk_into([speech], [channel])")
+/obj/item/device/radio/talk_into(var/datum/speech/speech_orig, var/channel=null)
+	var/datum/speech/speech=speech_orig.clone()
+	speech.radio=src
+	say_testing(loc, "\[Radio\] - Got radio/talk_into([html_encode(speech_orig.message)], [channel]).")
 	if(!on)
 		say_testing(loc, "\[Radio\] - Not on.")
 		return // the device has to be on
@@ -375,6 +377,8 @@
 		)
 		signal.frequency = speech.frequency // Quick frequency set
 
+		say_testing(loc, "talk_into(): subspace signal frequency set to [signal.frequency]")
+
 	  //#### Sending the signal to all subspace receivers ####//
 
 		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
@@ -425,6 +429,8 @@
 		"language" = speech.language
 	)
 	signal.frequency = speech.frequency // Quick frequency set
+
+	say_testing(loc, "talk_into(): subspace signal frequency set to [signal.frequency]")
 
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 		R.receive_signal(signal)

@@ -70,10 +70,9 @@
 			return 1
 	return 0
 
-/mob/living/silicon/treat_message(message, genesay = 0)
-	message = ..()
-	message = "<span class='siliconsay'>[message]</span>"
-	return message
+/mob/living/silicon/treat_speech(var/datum/speech/speech, genesay = 0)
+	..(speech)
+	speech.message_classes.Add("siliconsay")
 
 /mob/living/silicon/say_understands(var/atom/movable/other,var/datum/language/speaking = null)
 	//These only pertain to common. Languages are handled by mob/say_understands()

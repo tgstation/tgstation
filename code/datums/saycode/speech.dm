@@ -25,6 +25,9 @@
 	name = new_speaker.GetVoice()
 	as_name = new_speaker.get_alt_name()
 
+/datum/speech/Destroy()
+	say_testing(speaker, "\[SPEECH\] Destroy() called!")
+	..()
 /datum/speech/proc/clone()
 	var/datum/speech/clone = getFromDPool(/datum/speech)
 
@@ -37,8 +40,8 @@
 	clone.radio=radio
 	clone.speaker=speaker
 
-	clone.message_classes=message_classes
-	clone.wrapper_classes=wrapper_classes
+	clone.message_classes=message_classes.Copy()
+	clone.wrapper_classes=wrapper_classes.Copy()
 	return clone
 
 /datum/speech/proc/scramble()

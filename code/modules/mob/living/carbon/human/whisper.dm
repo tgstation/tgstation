@@ -58,7 +58,7 @@
 		speech.message = Ellipsis(speech.message, 10, 1)
 		whispers = "whispers in their final breath"
 		said_last_words = src.stat
-	speech.message = treat_message(speech.message)
+	treat_speech(speech)
 
 	var/listeners = get_hearers_in_view(1, src) | observers
 

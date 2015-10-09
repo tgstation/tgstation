@@ -215,8 +215,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		var/data,                // ???
 		var/compression,         // Level of compression
 		var/list/level)          // z-levels that can hear us
+#ifdef SAY_DEBUG
 	if(speech.speaker)
-		say_testing(speech.speaker, "broadcast_message start")
+		say_testing(speech.speaker, "broadcast_message start - Sending \"[html_encode(speech.message)]\" to [speech.frequency]")
+#endif
+
 	// Cut down on the message sizes.
 	speech.message = copytext(speech.message, 1, MAX_BROADCAST_LEN)
 
