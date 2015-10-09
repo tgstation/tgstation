@@ -1227,7 +1227,7 @@ proc/populate_seed_list()
 	display_name = "sunflowers"
 	packet_icon = "seed-sunflower"
 	products = list(/obj/item/weapon/grown/sunflower)
-	mutants = list("moonflower","novaflower")
+	mutants = list("moonflowers","novaflowers")
 	plant_icon = "sunflower"
 
 	lifespan = 25
@@ -1425,6 +1425,7 @@ proc/populate_seed_list()
 	display_name = "soybeans"
 	packet_icon = "seed-soybean"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans)
+	mutants = list("koibean")
 	plant_icon = "soybean"
 	harvest_repeat = 1
 	chems = list("nutriment" = list(1,20))
