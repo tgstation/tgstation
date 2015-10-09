@@ -95,7 +95,7 @@
 "abQ" = (/obj/machinery/alarm{pixel_y = 23},/obj/machinery/vending/security,/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/security/main)
 "abR" = (/obj/structure/closet/secure_closet/security/sec,/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor/plasteel{icon_state = "showroomfloor"},/area/security/main)
 "abS" = (/obj/machinery/computer/secure_data,/turf/simulated/floor/carpet,/area/security/hos)
-"abT" = (/obj/machinery/requests_console{announcementConsole = 1; department = "Head of Security's Desk"; departmentType = 5; name = "Head of Security RC"; pixel_x = 0; pixel_y = 30},/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = -31},/obj/structure/filingcabinet,/turf/simulated/floor/carpet,/area/security/hos)
+"abT" = (/obj/machinery/requests_console{announcementConsole = 1; department = "Head of Security's Desk"; departmentType = 5; name = "Head of Security RC"; pixel_x = 0; pixel_y = 30},/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = -31},/obj/machinery/suit_storage_unit/hos,/turf/simulated/floor/carpet,/area/security/hos)
 "abU" = (/obj/machinery/computer/card/minor/hos,/turf/simulated/floor/carpet,/area/security/hos)
 "abV" = (/obj/machinery/computer/security,/turf/simulated/floor/carpet,/area/security/hos)
 "abW" = (/obj/machinery/alarm{pixel_y = 23},/obj/structure/reagent_dispensers/peppertank{pixel_x = 30; pixel_y = 0},/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,/turf/simulated/floor/carpet,/area/security/hos)
