@@ -153,7 +153,7 @@ var/list/portal_cache = list()
 		qdel(BE)
 
 /obj/effect/portal/proc/add_beams()
-	if((!beams.len) || !target || !istype(target,/obj/effect/portal))
+	if((!beams) || (!beams.len) || !target || !istype(target,/obj/effect/portal))
 		return
 
 	var/obj/effect/portal/PE = target
