@@ -182,7 +182,7 @@
 			return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/Entered(atom/movable/Obj,atom/OldLoc,var/ignore_portals=0)
+/turf/Entered(atom/movable/Obj,atom/OldLoc)
 	var/loopsanity = 100
 
 	if(ismob(Obj))

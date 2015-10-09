@@ -1,6 +1,6 @@
 /obj/effect/portal
 	name = "portal"
-	desc = "There's a hole in the sky... through which I can fly."
+	desc = "Looks stable, but still, best to test it with the clown first."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal0"
 	density = 0
