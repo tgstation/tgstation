@@ -73,7 +73,7 @@
 	name = "Thermite"
 	id = "thermite"
 	result = "thermite"
-	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+	required_reagents = list("aluminum" = 1, "iron" = 1, "oxygen" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/emp_pulse
@@ -173,7 +173,7 @@
 	name = "Flash powder"
 	id = "flash_powder"
 	result = "flash_powder"
-	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
+	required_reagents = list("aluminum" = 1, "potassium" = 1, "sulfur" = 1 )
 	result_amount = 3
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)

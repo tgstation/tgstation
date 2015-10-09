@@ -16,7 +16,7 @@
 
 
 /obj/effect/effect/foam/metal
-	name = "aluminium foam"
+	name = "aluminum foam"
 	metal = 1
 	icon_state = "mfoam"
 
@@ -178,7 +178,7 @@
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	var/metal = 1		// 1=aluminium, 2=iron
+	var/metal = 1		// 1=aluminum, 2=iron
 
 /obj/structure/foamedmetal/New()
 	..()

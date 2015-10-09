@@ -57,14 +57,14 @@
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = "mine_salve"
 	result = "mine_salve"
 	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
 	id = "mine_salve"
@@ -83,7 +83,7 @@
 	name = "Styptic Powder"
 	id = "styptic_powder"
 	result = "styptic_powder"
-	required_reagents = list("aluminium" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
+	required_reagents = list("aluminum" = 1, "hydrogen" = 1, "oxygen" = 1, "sacid" = 1)
 	result_amount = 4
 	mix_message = "The solution yields an astringent powder."
 
@@ -127,7 +127,7 @@
 	name = "Salbutamol"
 	id = "salbutamol"
 	result = "salbutamol"
-	required_reagents = list("sal_acid" = 1, "lithium" = 1, "aluminium" = 1, "bromine" = 1, "ammonia" = 1)
+	required_reagents = list("sal_acid" = 1, "lithium" = 1, "aluminum" = 1, "bromine" = 1, "ammonia" = 1)
 	result_amount = 5
 
 /datum/chemical_reaction/perfluorodecalin

@@ -577,9 +577,9 @@
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 			reagentdecal.reagents.add_reagent("uranium", reac_volume)
 
-/datum/reagent/aluminium
-	name = "Aluminium"
-	id = "aluminium"
+/datum/reagent/aluminum
+	name = "Aluminum"
+	id = "aluminum"
 	description = "A silvery white and ductile member of the boron group of chemical elements."
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168
