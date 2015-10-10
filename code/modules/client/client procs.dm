@@ -127,7 +127,7 @@ var/next_external_rsc = 0
 			src << "Web client is disabled"
 			del(src)
 			return 0
-		if (config.webclientmembersonly && !is_content_unlocked())
+		if (config.webclientmembersonly && !IsByondMember()))
 			src << "Sorry, but the web client is restricted to byond members only."
 			del(src)
 			return 0
