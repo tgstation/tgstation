@@ -107,6 +107,17 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
+	if(config.autoadmin)
+		if(!admin_datums[ckey])
+			var/datum/admin_rank/autorank
+			for(var/datum/admin_rank/R in admin_ranks)
+				if(R.name == config.autoadmin_rank)
+					autorank = R
+			if(!autorank)
+				world << "Autoadmin rank not found"
+			else
+				var/datum/admins/D = new(autorank, ckey)
+				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
 		admins += src

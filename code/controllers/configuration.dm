@@ -173,6 +173,9 @@
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
 
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -363,6 +366,10 @@
 					config.maprotation = 1
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
+				if("autoadmin")
+					config.autoadmin = 1
+					if(value)
+						config.autoadmin_rank = ckeyEx(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
