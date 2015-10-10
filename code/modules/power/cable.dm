@@ -105,6 +105,25 @@ By design, d1 is the smallest direction and d2 is the highest
 	attached = null
 	..()								// then go ahead and delete the cable
 
+/obj/structure/cable/forceMove()
+	.=..()
+
+	if(powernet)
+		powernet.set_to_build() // update the powernets
+
+/obj/structure/cable/shuttle_rotate(angle)
+	if(d1)
+		d1 = turn(d1, -angle)
+	if(d2)
+		d2 = turn(d2, -angle)
+
+	if(d1 > d2) //Cable icon states start with the lesser number. For example, there's no "8-4" icon state, but there is a "4-8".
+		var/oldD2 = d2
+		d2 = d1
+		d1 = oldD2
+
+	update_icon()
+
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
@@ -153,8 +172,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			getFromPool(/obj/item/stack/cable_coil, T, 1, light_color)
 
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='warning'>[user] cuts the cable.</span>", 1)
+		user.visible_message("<span class='warning'>[user] cuts the cable.</span>", "<span class='info'>You cut the cable.</span>")
 
 		//investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
