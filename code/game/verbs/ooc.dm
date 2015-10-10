@@ -29,14 +29,17 @@
 		if(prefs.muted & MUTE_OOC)
 			src << "<span class='warning'>You cannot use OOC (muted).</span>"
 			return
+		if(oocban_isbanned(ckey))
+			src << "<span class='warning'>You cannot use OOC (banned).</span>"
+			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
-		if(findtext(msg, "byond://"))
+		/*if(findtext(msg, "byond://"))
 			src << "<B>Advertising other servers is not allowed.</B>"
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
-
+		*/
 	log_ooc("[mob.name]/[key] (@[mob.x],[mob.y],[mob.z]): [msg]")
 
 	var/display_colour = config.default_ooc_color
@@ -119,14 +122,17 @@
 		if(prefs.muted & MUTE_OOC)
 			src << "<span class='warning'>You cannot use LOOC (muted).</span>"
 			return
+		if(oocban_isbanned(ckey))
+			src << "<span class='warning'>You cannot use LOOC (banned).</span>"
+			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
-		if(findtext(msg, "byond://"))
+		/*if(findtext(msg, "byond://"))
 			src << "<B>Advertising other servers is not allowed.</B>"
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in LOOC: [msg]")
 			return
-
+		*/
 	log_ooc("(LOCAL) [mob.name]/[key] (@[mob.x],[mob.y],[mob.z]): [msg]")
 	var/list/heard
 	var/mob/living/silicon/ai/AI

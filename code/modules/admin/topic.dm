@@ -182,6 +182,15 @@
 					return
 				banduration = null
 				banjob = null
+			if(BANTYPE_OOC_PERMA)
+				if(!banckey || !banreason)
+					usr << "Not enough parameters (Requires ckey and reason)"
+					return
+				banduration = null
+			if(BANTYPE_OOC_TEMP)
+				if(!banckey || !banreason || !banduration)
+					usr << "Not enough parameters (Requires ckey, reason, and duration)"
+					return
 
 		var/mob/playermob
 
@@ -456,6 +465,75 @@
 		unbanpanel()
 
 	/////////////////////////////////////new ban stuff
+	else if(href_list["oocban"])
+		if(!check_rights(R_BAN))
+			return
+		var/mob/M = locate(href_list["oocban"])
+		if(!ismob(M))
+			usr << "This can only be used on instances of type /mob"
+			return
+		if(!M.ckey)	//sanity
+			usr << "This mob has no ckey"
+			return
+		var/oocbanned = oocban_isbanned("[M.ckey]")
+		if(oocbanned)
+			switch(alert("Reason: Remove OOC ban?","Please Confirm","Yes","No"))
+				if("Yes")
+					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s OOC ban")
+					log_admin("[key_name(usr)] removed [key_name(M)]'s OOC ban")
+					feedback_inc("ban_ooc_unban", 1)
+					DB_ban_unban(M.ckey, BANTYPE_OOC_PERMA)
+					ooc_unban(M)
+					message_admins("<span class='notice'>[key_name_admin(usr)] removed [key_name_admin(M)]'s OOC ban</span>", 1)
+					M << "<span class='warning'><BIG><B>[usr.client.ckey] has removed your OOC ban.</B></BIG></span>"
+		else switch(alert("OOC ban [M.ckey]?",,"Yes","No"))
+			if("Yes")
+				switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+					if("Yes")
+						var/mins = input(usr,"How long (in minutes)?","OOC Ban time",1440) as num|null
+						if(!mins)
+							return
+						if(mins >= 525600) mins = 525599
+						var/reason = input(usr,"Reason?","reason","Shinposting") as text|null
+						if(!reason)
+							return
+						ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
+						M << "<span class='warning'><BIG><B>You have been OOC banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
+						M << "<span class='warning'>This is a temporary ooc ban, it will be removed in [mins] minutes.</span>"
+						feedback_inc("ban_ooc_tmp",1)
+						DB_ban_record(BANTYPE_OOC_TEMP, M, mins, reason)
+						feedback_inc("ban_ooc_tmp_mins",mins)
+						if(config.banappeals)
+							M << "<span class='warning'>To try to resolve this matter head to [config.banappeals] or consider not being a shithead in OOC</span>"
+						else
+							M << "<span class='warning'>No ban appeals URL has been set.</span>"
+						log_admin("[usr.client.ckey] has ooc banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
+						message_admins("<span class='warning'>[usr.client.ckey] has ooc banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
+
+					if("No")
+						var/reason = input(usr,"Reason?","reason","Shinposting") as text|null
+						if(!reason)
+							return
+						M << "<span class='warning'><BIG><B>You have been ooc banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>"
+						M << "<span class='warning'>This is a permanent ooc ban.</span>"
+						if(config.banappeals)
+							M << "<span class='warning'>To try to resolve this matter head to [config.banappeals] or consider not being a shithead in OOC</span>"
+						else
+							M << "<span class='warning'>No ban appeals URL has been set.</span>"
+						ban_unban_log_save("[usr.client.ckey] has perma-ooc-banned [M.ckey]. - Reason: [reason] - This is a permanent ooc ban.")
+						log_admin("[usr.client.ckey] has ooc banned [M.ckey].\nReason: [reason]\nThis is a permanent ooc ban.")
+						message_admins("<span class='warning'>[usr.client.ckey] has ooc banned [M.ckey].\nReason: [reason]\nThis is a permanent ooc ban.</span>")
+						feedback_inc("ban_ooc_perma",1)
+						DB_ban_record(BANTYPE_OOC_PERMA, M, -1, reason)
+
+					if("Cancel")
+						return
+				ooc_ban(M)
+				return
+			if("No")
+				return
+			else
+				return
 
 	else if(href_list["appearanceban"])
 		if(!check_rights(R_BAN))

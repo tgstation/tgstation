@@ -124,6 +124,8 @@ Frequency:
 /*
  * Hand-tele
  */
+ #define HANDTELE_MAX_CHARGE	45
+ #define HANDTELE_PORTAL_COST	15
 /obj/item/weapon/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology."
@@ -138,6 +140,8 @@ Frequency:
 	w_type = RECYK_ELECTRONIC
 	origin_tech = "magnets=1;bluespace=3"
 	var/list/portals = list()
+	var/charge = HANDTELE_MAX_CHARGE//how many pairs of portal can the hand-tele sustain at once. a new charge is added every 30 seconds until the maximum is reached..
+	var/recharging = 0
 
 /obj/item/weapon/hand_tele/attack_self(mob/user as mob)
 	var/turf/current_location = get_turf(user)//What turf is the user on?
@@ -172,18 +176,42 @@ Frequency:
 
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
 
-	if ((user.get_active_hand() != src || user.stat || user.restrained()))
+	if((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
-	if(portals.len >= 3)
+	if(charge < HANDTELE_PORTAL_COST)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/T = L[t1]
-	for(var/mob/O in hearers(user, null))
-		O.show_message("<span class='notice'>Locked In.</span>", 2)
-	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
-	P.target = T
-	P.creator = src
-	portals += P
+
+	if((t1 == "None (Dangerous)") && prob(5))
+		T = locate(rand(7, world.maxx - 7), rand(7, world.maxy -7), map.zTCommSat)
+
+	var/turf/U = get_turf(src)
+	U.visible_message("<span class='notice'>Locked In.</span>")
+	var/obj/effect/portal/P1 = new (U)
+	var/obj/effect/portal/P2 = new (get_turf(T))
+	P1.target = P2
+	P2.target = P1
+	P2.icon_state = "portal1"
+	P1.creator = src
+	P2.creator = src
+	P1.blend_icon(P2)
+	P2.blend_icon(P1)
+	portals += P1
+	portals += P2
 	src.add_fingerprint(user)
 
+	charge = max(charge - HANDTELE_PORTAL_COST,0)
+	if(!recharging)
+		recharging = 1
+		processing_objects.Add(src)
 
+/obj/item/weapon/hand_tele/process()
+	charge = min(HANDTELE_MAX_CHARGE,charge+1)
+	if(charge >= HANDTELE_MAX_CHARGE)
+		processing_objects.Remove(src)
+		recharging = 0
+	return 1
+
+ #undef HANDTELE_MAX_CHARGE
+ #undef HANDTELE_PORTAL_COST

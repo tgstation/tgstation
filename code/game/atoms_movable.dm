@@ -273,7 +273,7 @@
 	..()
 	return
 
-/atom/movable/proc/forceMove(atom/destination)
+/atom/movable/proc/forceMove(atom/destination,var/no_tp=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/proc/forceMove() called tick#: [world.time]")
 	if(destination)
 		if(loc)
@@ -286,7 +286,8 @@
 			A.Entered(src)
 
 		for(var/atom/movable/AM in loc)
-			AM.Crossed(src)
+			AM.Crossed(src,no_tp)
+
 
 		for(var/atom/movable/AM in locked_atoms)
 			AM.forceMove(loc)
