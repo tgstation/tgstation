@@ -120,8 +120,10 @@
 		user << "Current clone cycle is [round(completion)]% complete."
 	return
 
-//Start growing a human clone in the pod!
+/obj/machinery/clonepod/attack_ai(mob/user)
+	return examine(user)
 
+//Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)
 	if(panel_open)
 		return 0
