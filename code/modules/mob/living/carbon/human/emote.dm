@@ -146,12 +146,6 @@
 			message = "<B>[src]</B>'s cheeks flush with colour."
 			m_type = 1
 
-		if ("gargle","gargles")
-			if (!muzzled)
-				if (!miming)
-					message = "<B>[src]</B> gargles!"
-					m_type = 2
-
 		if ("gasp","gasps")
 			if (miming)
 				message = "<B>[src]</B> appears to be gasping!"
