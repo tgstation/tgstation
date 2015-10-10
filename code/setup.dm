@@ -605,6 +605,8 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 #define BANTYPE_APPEARANCE	6
+#define BANTYPE_OOC_PERMA	7
+#define BANTYPE_OOC_TEMP	8
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -1314,3 +1316,6 @@ var/proccalls = 1
 
 #define log_adminwarn(text) diary << html_decode("\[[time_stamp()]]ADMINWARN: [text]")
 #define log_pda(text) diary << html_decode("\[[time_stamp()]]PDA: [text]")
+
+//OOC isbanned
+#define oocban_isbanned(key) oocban_keylist.Find("[ckey(key)]")
