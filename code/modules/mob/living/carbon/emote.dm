@@ -91,18 +91,32 @@
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
+		if ("flounder","flounders")
+			if (!src.restrained())
+				message = "<B>[src]</B> flounders about."
+				m_type = 1
+
 		if ("gasp","gasps")
 			if (!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 2
+		
+		if ("grimace","grimaces")
+			message = "<B>[src]</B>'s face contorts into a grimace."
+			m_type = 2
 
 		if ("giggle","giggles")
 			if (!muzzled)
 				..(act)
 			else
 				message = "<B>[src]</B> makes a noise."
+				m_type = 2
+		
+		if ("huff", "huffs")
+			if (!muzzled)
+				message = "<B>[src]</B> huffs!"
 				m_type = 2
 
 		if ("laugh","laughs")
@@ -120,6 +134,10 @@
 			message = "<B>[src]</B> nods."
 			m_type = 1
 
+		if ("scowl","scowls")
+			message = "<B>[src]</B> scowls."
+			m_type = 1
+
 		if ("scream","screams")
 			if (!muzzled)
 				..(act)
@@ -129,6 +147,10 @@
 
 		if ("shake","shakes")
 			message = "<B>[src]</B> shakes \his head."
+			m_type = 1
+
+		if ("slump","slumps")
+			message = "<B>[src]</B> slumps."
 			m_type = 1
 
 		if ("sneeze","sneezes")
@@ -156,6 +178,16 @@
 				message = "<B>[src]</B> makes a noise."
 				m_type = 2
 
+		if ("stomp","stomps")
+			if (!src.restrained())
+				message = "<B>[src]</B> stomps!"
+				m_type = 2
+		
+		if ("tongue","tongues")
+			if (!muzzled)
+				message = "<B>[src]</B> sticks \his tongue out."
+				m_type = 1
+
 		if ("whimper","whimpers")
 			if (!muzzled)
 				..(act)
@@ -172,7 +204,7 @@
 				..(act)
 
 		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sigh, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
+			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, flounder, frown, gasp, giggle, glare-(none)/mob, grimace, grin, huff, jump, laugh, look, me, nod, point-atom, scowl, scream, shake, sigh, sit, slump, smile, sneeze, sniff, snore, stare-(none)/mob, stomp, sulk, sway, tongue, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 
 		else
 			..(act)
