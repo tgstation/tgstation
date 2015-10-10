@@ -375,7 +375,7 @@
 				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blanch, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, cutthroat-(none)/mob, dance, dap, deathgasp, drool, eyebrow, faint, flap, flounder, flush, frown, gargle, gasp, giggle, glare-(none)/mob, grin, grit, groan, grimace, grumble, gulp, huff, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, rolleye, salute, scoff, scowl, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, slump, smile, smirk, sneeze, sniff, snigger, snore, stare-(none)/mob, stomp, sulk, sway, stopwag, tongue, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blanch, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, cutthroat-(none)/mob, dance, dap, deathgasp, drool, eyebrow, faint, flap, flounder, flush, frown, gasp, giggle, glare-(none)/mob, grin, grit, groan, grimace, grumble, gulp, huff, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, rolleye, salute, scoff, scowl, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, slump, smile, smirk, sneeze, sniff, snigger, snore, stare-(none)/mob, stomp, sulk, sway, stopwag, tongue, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
 
 		else
 			..(act)
