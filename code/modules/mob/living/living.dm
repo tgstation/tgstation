@@ -581,6 +581,8 @@ Sorry Giacom. Please don't be mad :(
 		M.UpdateFeed(src)
 
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
+	if(!has_gravity(M))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))

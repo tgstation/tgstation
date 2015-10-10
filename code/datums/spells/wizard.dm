@@ -338,7 +338,7 @@
 			spawn(0) AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/Tail_swing.ogg'

@@ -49,7 +49,6 @@
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
-	var/health_repair_max = 0 //Drone will only be able to be repaired/reactivated up to this point, defaults to health
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
@@ -70,15 +69,14 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 
-	if(!health_repair_max)
-		health_repair_max = initial(health)
-
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
 		equip_to_slot_or_del(I, "drone_storage_slot")
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
+
+	scanner.Grant(src)
 
 	alert_drones(DRONE_NET_CONNECT)
 

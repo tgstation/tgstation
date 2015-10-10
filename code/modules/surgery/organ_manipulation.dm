@@ -93,7 +93,7 @@
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(current_type == "mend")
-		user.visible_message("[user] mend the incision in [target]'s [parse_zone(target_zone)].",
+		user.visible_message("[user] mends the incision in [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
 		return 1
 	else if(current_type == "insert")

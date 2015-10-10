@@ -367,9 +367,9 @@
 	unacidable = 1
 	layer = TURF_LAYER
 
-	New()
-		..()
-		SSobj.processing |= src
+/obj/effect/golemrune/New()
+	..()
+	SSobj.processing |= src
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -397,6 +397,7 @@
 	G.set_species(/datum/species/golem/adamantine)
 	G.set_cloned_appearance()
 	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
+	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
