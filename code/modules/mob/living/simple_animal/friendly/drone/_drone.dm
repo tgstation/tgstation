@@ -80,6 +80,8 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
 
+	scanner.Grant(src)
+
 	alert_drones(DRONE_NET_CONNECT)
 
 
