@@ -415,7 +415,7 @@
 			else if (findtext(phrase, "stop"))
 				if (buckled) // We are asked to stop feeding
 					if (Friends[who] > 4)
-						//phil235 must do stop feed proc here
+						Feedstop()
 						Target = null
 						if (Friends[who] < 7)
 							--Friends[who]
