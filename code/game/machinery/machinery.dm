@@ -130,6 +130,10 @@ Class Procs:
 		dropContents()
 	return ..()
 
+/obj/machinery/attackby(obj/item/weapon/W, mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
+	..()
+
 /obj/machinery/proc/locate_machinery()
 	return
 
@@ -285,7 +289,7 @@ Class Procs:
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
 	if(..())// unbuckling etc
-		return 1 
+		return 1
 	if(user.lying || user.stat)
 		return 1
 	if(!user.IsAdvancedToolUser())
