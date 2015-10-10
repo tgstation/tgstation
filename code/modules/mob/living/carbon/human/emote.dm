@@ -1,6 +1,6 @@
 /mob/living/carbon/human/emote(act,m_type=1,message = null)
 	var/param = null
-//*grimace "<B>[src]</B>\'s" *rolleye *huff *blanch *snigger *smirk *cutthroat *gulp *tongue *grit *flounder *flush *slump *stomp *gargle *scowl
+
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
@@ -143,7 +143,7 @@
 				m_type = 2
 
 		if ("flush","flushes")
-			message = "<B>[src]</B>'s cheeks flush a rosy red."
+			message = "<B>[src]</B>'s cheeks flush with colour."
 			m_type = 1
 
 		if ("gargle","gargles")
@@ -294,6 +294,10 @@
 				else
 					message = "<B>[src]</b> salutes."
 			m_type = 1
+		
+		if ("scoff","scoffs")
+			if (!muzzled && !miming)
+				message = "<B>[src]</B> scoffs!"
 
 		if ("scream","screams")
 			if (miming)
