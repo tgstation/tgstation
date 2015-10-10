@@ -52,7 +52,7 @@
 			m_type = 2
 
 		if ("collapse","collapses")
-			Paralyse(2)
+			Paralyze(2)
 			message = "<B>[src]</B> collapses!"
 			m_type = 2
 

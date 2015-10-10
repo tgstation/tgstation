@@ -1,43 +1,43 @@
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
 	colour = "#DA0000"
-	colourName = "red"
+	colorName = "red"
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#FF9300"
-	colourName = "orange"
+	colorName = "orange"
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	colour = "#FFF200"
-	colourName = "yellow"
+	colorName = "yellow"
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#A8E61D"
-	colourName = "green"
+	colorName = "green"
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	colour = "#00B7EF"
-	colourName = "blue"
+	colorName = "blue"
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#DA00FF"
-	colourName = "purple"
+	colorName = "purple"
 
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	colour = "#FFFFFF"
-	colourName = "white"
+	colorName = "white"
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	colour = "#FFFFFF"
-	colourName = "mime"
+	colorName = "mime"
 	uses = -1
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user)
@@ -62,7 +62,7 @@
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	colour = "#FFF000"
-	colourName = "rainbow"
+	colorName = "rainbow"
 	uses = -1
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
@@ -75,7 +75,7 @@
 /obj/item/toy/crayon/rainbow/Topic(href,href_list[])
 
 	if(href_list["color"])
-		var/temp = input(usr, "Please select colour.", "Crayon colour") as color
+		var/temp = input(usr, "Please select color.", "Crayon color") as color
 		if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 			return
 		colour = temp
@@ -110,11 +110,11 @@
 /obj/item/weapon/storage/crayons/update_icon()
 	overlays.Cut()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
+		overlays += image('icons/obj/crayons.dmi',crayon.colorName)
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/toy/crayon))
-		switch(W:colourName)
+		switch(W:colorName)
 			if("mime")
 				usr << "This crayon is too sad to be contained in this box."
 				return

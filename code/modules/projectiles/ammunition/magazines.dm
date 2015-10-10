@@ -184,7 +184,7 @@
 	icon_state = "9mmt-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtap
-	name = "wt550 magazine (Armour Piercing 9mm)"
+	name = "wt550 magazine (Armor Piercing 9mm)"
 	ammo_type = /obj/item/ammo_casing/c9mmap
 
 /obj/item/ammo_box/magazine/wt550m9/wttx
@@ -214,7 +214,7 @@
 	max_ammo = 42
 
 /obj/item/ammo_box/magazine/smgm9mm/ap
-	name = "SMG magazine (Armour Piercing 9mm)"
+	name = "SMG magazine (Armor Piercing 9mm)"
 	ammo_type = /obj/item/ammo_casing/c9mmap
 
 /obj/item/ammo_box/magazine/smgm9mm/toxin

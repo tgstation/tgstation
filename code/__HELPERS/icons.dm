@@ -618,7 +618,7 @@ world
 	else return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
 
-//Used in the OLD chem colour mixing algorithm
+//Used in the OLD chem color mixing algorithm
 /proc/GetColors(hex)
 	hex = uppertext(hex)
 	// No alpha set? Default to full alpha.
@@ -861,28 +861,28 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = "<font size = 4>[letter]</font>"
-	text_image.color = AverageColour(atom_icon)
+	text_image.color = AverageColor(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	del(atom_icon)
 	return text_image
 
 
-//Find's the average colour of the icon
+//Find's the average color of the icon
 //By vg's ComicIronic
-/proc/AverageColour(icon/I)
-	var/list/colours = list()
+/proc/AverageColor(icon/I)
+	var/list/colors = list()
 	for(var/x_pixel = 1 to I.Width())
 		for(var/y_pixel = 1 to I.Height())
-			var/this_colour = I.GetPixel(x_pixel, y_pixel)
-			if(this_colour)
-				colours.Add(this_colour)
+			var/this_color = I.GetPixel(x_pixel, y_pixel)
+			if(this_color)
+				colors.Add(this_color)
 
-	if(!colours.len)
+	if(!colors.len)
 		return null
 
-	var/final_average = colours[1]
-	for(var/colour in (colours - colours[1]))
+	var/final_average = colors[1]
+	for(var/colour in (colors - colors[1]))
 		final_average = BlendRGB(final_average, colour, 1)
 	return final_average
 

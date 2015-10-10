@@ -38,7 +38,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+//Gets the round setup, canceling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -219,7 +219,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[gangster_mind.current]'>FLW</A>) has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
 		else
 			if(!silent)
-				gangster_mind.current.Paralyse(5)
+				gangster_mind.current.Paralyze(5)
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
 			gangster_mind.current << "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>"
 

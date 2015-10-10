@@ -1341,7 +1341,7 @@
 				I.layer = initial(I.layer)
 				I.dropped(M)
 
-		M.Paralyse(5)
+		M.Paralyze(5)
 		sleep(5)
 		M.loc = pick(tdome1)
 		spawn(50)
@@ -1370,7 +1370,7 @@
 				I.layer = initial(I.layer)
 				I.dropped(M)
 
-		M.Paralyse(5)
+		M.Paralyze(5)
 		sleep(5)
 		M.loc = pick(tdome2)
 		spawn(50)
@@ -1392,7 +1392,7 @@
 			usr << "This cannot be used on instances of type /mob/living/silicon/ai"
 			return
 
-		M.Paralyse(5)
+		M.Paralyze(5)
 		sleep(5)
 		M.loc = pick(tdomeadmin)
 		spawn(50)
@@ -1425,7 +1425,7 @@
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
-		M.Paralyse(5)
+		M.Paralyze(5)
 		sleep(5)
 		M.loc = pick(tdomeobserve)
 		spawn(50)

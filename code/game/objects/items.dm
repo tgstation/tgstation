@@ -45,7 +45,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/armour_penetration = 0 //percentage of armour effectiveness to remove
+	var/armor_penetration = 0 //percentage of armor effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 	var/strip_delay = 40
@@ -442,7 +442,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				if(M.drop_item())
 					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 			M.eye_blurry += 10
-			M.Paralyse(1)
+			M.Paralyze(1)
 			M.Weaken(2)
 		if (prob(M.eye_stat - 10 + 1) && !(M.disabilities & BLIND))
 			if(M.stat != 2)
@@ -478,7 +478,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/meltingpwr = acid_volume*acidpwr
 	var/melting_threshold = 100
-	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulphuric
+	if(meltingpwr <= melting_threshold) // so a single unit can't melt items. You need 5.1+ unit for fluoro and 10.1+ for sulfuric
 		return
 	for(var/V in armor)
 		if(armor[V] > 0)
@@ -496,8 +496,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			S.do_quick_empty() //melted storage item drops its content.
 		qdel(src)
 	else
-		for(var/armour_value in armor) //but is weakened
-			armor[armour_value] = max(armor[armour_value]-min(acidpwr,meltingpwr/10),0)
+		for(var/armor_value in armor) //but is weakened
+			armor[armor_value] = max(armor[armor_value]-min(acidpwr,meltingpwr/10),0)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 

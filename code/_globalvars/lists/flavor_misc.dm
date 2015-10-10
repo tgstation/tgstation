@@ -64,7 +64,7 @@ var/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.
 15 HoP Office
 16 Library
 17 Chapel
-18 Theatre
+18 Theater
 19 Bar
 20 Kitchen
 21 Hydroponics
@@ -76,5 +76,5 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"Cargo Bay", "QM Office", "Engineering", "CE Office",
 	"Atmospherics", "Security", "HoS Office", "Medbay",
 	"CMO Office", "Chemistry", "Research", "RD Office",
-	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
+	"Robotics", "HoP Office", "Library", "Chapel", "Theater",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")

@@ -108,7 +108,7 @@
 	switch(appearence)
 		if("Maintenance Drone")
 			visualAppearence = MAINTDRONE
-			var/colour = input("Choose your colour!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
+			var/colour = input("Choose your color!", "Colour", "grey") in list("grey", "blue", "red", "green", "pink", "orange")
 			icon_state = "[visualAppearence]_[colour]"
 			icon_living = "[visualAppearence]_[colour]"
 			icon_dead = "[visualAppearence]_dead"

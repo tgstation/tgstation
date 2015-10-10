@@ -371,8 +371,8 @@
 	category = list("initial", "Misc")
 
 /datum/design/voice_analyser
-	name = "Voice analyser"
-	id = "voice_analyser"
+	name = "Voice analyzer"
+	id = "voice_analyzer"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 50)
 	build_path = /obj/item/device/assembly/voice

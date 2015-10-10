@@ -1,7 +1,7 @@
 /* Two-handed Weapons
  * Contains:
  * 		Twohanded
- *		Fireaxe
+ *		Fireax
  *		Double-Bladed Energy Swords
  *		Spears
  */
@@ -10,7 +10,7 @@
 ##################### TWO HANDED WEAPONS BE HERE~ -Agouri :3 ########
 ####################################################################*/
 
-//Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireaxe to make new ones ~Carn
+//Rewrote TwoHanded weapons stuff and put it all here. Just copypasta fireax to make new ones ~Carn
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
@@ -148,12 +148,12 @@
 /obj/item/weapon/twohanded/
 
 /*
- * Fireaxe
+ * Fireax
  */
 /obj/item/weapon/twohanded/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
-	name = "fire axe"
-	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
+	name = "fire ax"
+	desc = "Truly, the weapon of a madman. Who would think to fight fire with an ax?"
 	force = 5
 	throwforce = 15
 	w_class = 4
@@ -165,7 +165,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
-	icon_state = "fireaxe[wielded]"
+	icon_state = "fireax[wielded]"
 	return
 
 /obj/item/weapon/twohanded/fireaxe/suicide_act(mob/user)

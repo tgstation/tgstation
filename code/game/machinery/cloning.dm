@@ -176,7 +176,7 @@
 	//Get the clone body ready
 	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
-	H.Paralyse(4)
+	H.Paralyze(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
@@ -211,7 +211,7 @@
 			return
 
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
-			src.occupant.Paralyse(4)
+			src.occupant.Paralyze(4)
 
 			 //Slowly get that clone healed and finished.
 			src.occupant.adjustCloneLoss(-((speed_coeff/2)))

@@ -23,7 +23,7 @@
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
-	desc = "A light and compact fibreglass-framed model fire extinguisher."
+	desc = "A light and compact fiberglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.

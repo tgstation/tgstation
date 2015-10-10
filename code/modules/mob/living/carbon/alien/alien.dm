@@ -19,7 +19,7 @@
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = CANPARALYZE|CANPUSH
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -105,7 +105,7 @@
 		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
-				Paralyse(1)
+				Paralyze(1)
 			adjustEarDamage(15,60)
 
 	updatehealth()

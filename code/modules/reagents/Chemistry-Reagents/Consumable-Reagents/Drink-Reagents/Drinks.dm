@@ -278,7 +278,7 @@
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
 	id = "dr_gibb"
-	description = "A delicious blend of 42 different flavours"
+	description = "A delicious blend of 42 different flavors"
 	color = "#102000" // rgb: 16, 32, 0
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/M)

@@ -476,7 +476,7 @@ About the new airlock wires panel:
 			user << "Airlock AI control has been blocked. Beginning fault-detection."
 			sleep(50)
 			if(src.canAIControl())
-				user << "Alert cancelled. Airlock control has been restored without our assistance."
+				user << "Alert canceled. Airlock control has been restored without our assistance."
 				src.aiHacking=0
 				return
 			else if(!src.canAIHack())
@@ -488,7 +488,7 @@ About the new airlock wires panel:
 			user << "Attempting to hack into airlock. This may take some time."
 			sleep(200)
 			if(src.canAIControl())
-				user << "Alert cancelled. Airlock control has been restored without our assistance."
+				user << "Alert canceled. Airlock control has been restored without our assistance."
 				src.aiHacking=0
 				return
 			else if(!src.canAIHack())
@@ -498,7 +498,7 @@ About the new airlock wires panel:
 			user << "Upload access confirmed. Loading control program into airlock software."
 			sleep(170)
 			if(src.canAIControl())
-				user << "Alert cancelled. Airlock control has been restored without our assistance."
+				user << "Alert canceled. Airlock control has been restored without our assistance."
 				src.aiHacking=0
 				return
 			else if(!src.canAIHack())
@@ -872,13 +872,13 @@ About the new airlock wires panel:
 			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 		else if( !welded && !operating)
 			if(density)
-				if(beingcrowbarred == 0) //being fireaxe'd
+				if(beingcrowbarred == 0) //being fireax'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
 						spawn(0)
 							open(2)
 					else
-						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
+						user << "<span class='warning'>You need to be wielding the fire ax to do that!</span>"
 				else
 					spawn(0)
 						open(2)
@@ -889,7 +889,7 @@ About the new airlock wires panel:
 						spawn(0)
 							close(2)
 					else
-						user << "<span class='warning'>You need to be wielding the fire axe to do that!</span>"
+						user << "<span class='warning'>You need to be wielding the fire ax to do that!</span>"
 				else
 					spawn(0)
 						close(2)
@@ -942,7 +942,7 @@ About the new airlock wires panel:
 		detonated = 1
 		charge = null
 		for(var/mob/living/carbon/human/H in orange(1,src))
-			H.Paralyse(8)
+			H.Paralyze(8)
 			H.adjust_fire_stacks(1)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
 			H.apply_damage(20, BRUTE, "chest")

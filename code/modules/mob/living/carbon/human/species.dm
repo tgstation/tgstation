@@ -118,7 +118,7 @@
 	else
 		return "[id]"
 
-/datum/species/proc/update_color(mob/living/carbon/human/H, forced_colour)
+/datum/species/proc/update_color(mob/living/carbon/human/H, forced_color)
 	H.remove_overlay(SPECIES_LAYER)
 
 	var/image/standing
@@ -142,10 +142,10 @@
 
 		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
 
-		if(!forced_colour && !use_skintones)
+		if(!forced_color && !use_skintones)
 			spec_base.color = "#[H.dna.features["mcolor"]]"
 		else
-			spec_base.color = forced_colour
+			spec_base.color = forced_color
 
 		standing = spec_base
 
@@ -154,7 +154,7 @@
 
 	H.apply_overlay(SPECIES_LAYER)
 
-/datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
+/datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_color)
 	H.remove_overlay(HAIR_LAYER)
 
 	var/datum/sprite_accessory/S
@@ -167,7 +167,7 @@
 
 			img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			if(!forced_colour)
+			if(!forced_color)
 				if(hair_color)
 					if(hair_color == "mutcolor")
 						img_facial_s.color = "#" + H.dna.features["mcolor"]
@@ -176,7 +176,7 @@
 				else
 					img_facial_s.color = "#" + H.facial_hair_color
 			else
-				img_facial_s.color = forced_colour
+				img_facial_s.color = forced_color
 
 			img_facial_s.alpha = hair_alpha
 
@@ -199,7 +199,7 @@
 
 			img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
-			if(!forced_colour)
+			if(!forced_color)
 				if(hair_color)
 					if(hair_color == "mutcolor")
 						img_hair_s.color = "#" + H.dna.features["mcolor"]
@@ -208,7 +208,7 @@
 				else
 					img_hair_s.color = "#" + H.hair_color
 			else
-				img_hair_s.color = forced_colour
+				img_hair_s.color = forced_color
 			img_hair_s.alpha = hair_alpha
 
 			standing	+= img_hair_s
@@ -264,7 +264,7 @@
 
 	return
 
-/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
+/datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_color)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	var/list/standing	= list()
@@ -377,7 +377,7 @@
 			I = image("icon" = 'icons/mob/mutant_bodyparts.dmi', "icon_state" = icon_string, "layer" =- layer)
 
 			if(!(H.disabilities & HUSK))
-				if(!forced_colour)
+				if(!forced_color)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							I.color = "#[H.dna.features["mcolor"]]"
@@ -391,7 +391,7 @@
 						if(EYECOLOR)
 							I.color = "#[H.eye_color]"
 				else
-					I.color = forced_colour
+					I.color = forced_color
 			standing += I
 
 			if(S.hasinner)
@@ -1010,7 +1010,7 @@
 	else
 		return 0
 
-	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
+	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armor_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -1190,7 +1190,7 @@
 		if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 			H.co2overloadtime = world.time
 		else if(world.time - H.co2overloadtime > 120)
-			H.Paralyse(3)
+			H.Paralyze(3)
 			H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(8)
@@ -1251,8 +1251,8 @@
 	if(breath.trace_gases.len && !(NOBREATH in specflags))	// If there's some other shit in the air lets deal with it here.
 		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
 			var/SA_pp = breath.get_breath_partial_pressure(SA.moles)
-			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-				H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+			if(SA_pp > SA_para_min) // Enough to make us paralyzed for a bit
+				H.Paralyze(3) // 3 gives them one second to wake up and run away a bit!
 				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 					H.sleeping = max(H.sleeping+2, 10)
 			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
@@ -1364,7 +1364,7 @@
 		H.clear_alert("temp")
 
 	// Account for massive pressure differences.  Done by Polymorph
-	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
+	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an ax sticking from his head for his previous hardcoded nonsense!
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.

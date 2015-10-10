@@ -3,7 +3,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
-	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
+	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artifacts power."
 	w_class = 1
 	slot_flags = SLOT_BELT
 	origin_tech = "bluespace=4;materials=4"
@@ -22,7 +22,7 @@
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Paralyze(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
@@ -40,7 +40,7 @@
 	if (!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Paralyze(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
 	user.set_machine(src)

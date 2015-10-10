@@ -43,7 +43,7 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(5 + rand(1,9))
-		Paralyse(1)
+		Paralyze(1)
 		spawn()
 			step_away(src,user,15)
 			sleep(1)
@@ -59,7 +59,7 @@
 			visible_message("<span class='danger'>[M] has kicked [src]!</span>", \
 					"<span class='userdanger'>[M] has kicked [src]!</span>")
 			if ((stat != DEAD) && (damage > 4.9))
-				Paralyse(rand(5,10))
+				Paralyze(rand(5,10))
 
 			adjustBruteLoss(damage)
 			updatehealth()

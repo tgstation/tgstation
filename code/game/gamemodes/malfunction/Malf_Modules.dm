@@ -272,7 +272,7 @@
 			if(override.uses > 0)
 				override.uses --
 				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
-				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
+				src << "<span class='warning'>Reprogramming machine behavior...</span>"
 				spawn(50)
 					if(M && !M.gc_destroyed)
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)

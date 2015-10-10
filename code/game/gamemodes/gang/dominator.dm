@@ -98,7 +98,7 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
+		gang.message_gangtools("Hostile takeover canceled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"

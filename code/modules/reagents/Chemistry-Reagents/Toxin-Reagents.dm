@@ -610,12 +610,12 @@
 
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric acid"
+	name = "Sulfuric acid"
 	id = "sacid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#DB5008" // rgb: 219, 80, 8
 	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
+	var/acidpwr = 10 //the amount of protection removed from the armor
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))

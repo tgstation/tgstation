@@ -26,9 +26,9 @@
 /obj/item/projectile/bullet/incendiary/firebullet
 	damage = 10
 
-/obj/item/projectile/bullet/armourpiercing
+/obj/item/projectile/bullet/armorpiercing
 	damage = 17
-	armour_penetration = 10
+	armor_penetration = 10
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -155,7 +155,7 @@
 /obj/item/projectile/bullet/dart/metalfoam
 	New()
 		..()
-		reagents.add_reagent("aluminium", 15)
+		reagents.add_reagent("aluminum", 15)
 		reagents.add_reagent("foaming_agent", 5)
 		reagents.add_reagent("facid", 5)
 

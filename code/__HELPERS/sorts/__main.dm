@@ -191,7 +191,7 @@ var/datum/sortInstance/sortInstance = new()
 
 
 	//Merges all runs on the stack until only one remains.
-	//Called only once, to finalise the sort
+	//Called only once, to finalize the sort
 	proc/mergeForceCollapse()
 		while(runBases.len >= 2)
 			var/n = runBases.len - 1

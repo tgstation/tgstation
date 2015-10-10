@@ -92,7 +92,7 @@
 				if (prob(40))
 					damage = rand(10, 15)
 					if ( (paralysis < 5)  && (health > 0) )
-						Paralyse(rand(10, 15))
+						Paralyze(rand(10, 15))
 						spawn( 0 )
 							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
@@ -109,7 +109,7 @@
 			if (!( paralysis ))
 				M.do_attack_animation(src)
 				if (prob(25))
-					Paralyse(2)
+					Paralyze(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
@@ -130,7 +130,7 @@
 				if (damage >= 25)
 					damage = rand(20, 40)
 					if (paralysis < 15)
-						Paralyse(rand(10, 15))
+						Paralyze(rand(10, 15))
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>[M] has wounded [name]!</span>")
 				else
@@ -218,7 +218,7 @@
 		if(3)
 			adjustBruteLoss(30)
 			if (prob(50))
-				Paralyse(10)
+				Paralyze(10)
 			adjustEarDamage(15,60)
 
 	updatehealth()

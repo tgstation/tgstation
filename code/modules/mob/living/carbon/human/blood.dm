@@ -98,7 +98,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				oxyloss += 5
 				if(prob(15))
-					Paralyse(rand(1,3))
+					Paralyze(rand(1,3))
 					var/word = pick("dizzy","woozy","faint")
 					src << "<span class='warning'>You feel extremely [word].</span>"
 			if(0 to BLOOD_VOLUME_SURVIVE)

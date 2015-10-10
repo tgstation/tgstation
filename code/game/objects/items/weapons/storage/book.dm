@@ -143,7 +143,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 	if (user.disabilities & CLUMSY && prob(50))
 		user << "<span class='danger'>The [src] slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
-		user.Paralyse(20)
+		user.Paralyze(20)
 		return
 
 //	if(..() == BLOCKED)

@@ -188,7 +188,7 @@
 		if(M==U)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
 		M.adjustBruteLoss(damage)
-		M.Paralyse(damage/5)
+		M.Paralyze(damage/5)
 	for(var/obj/mecha/M in src)
 		M.take_damage(damage*2, "brute")
 

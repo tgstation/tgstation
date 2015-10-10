@@ -59,7 +59,7 @@
 		scanning = 1
 
 		user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.")
-		user << "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>"
+		user << "<span class='notice'>You scan \the [A]. The scanner is now analyzing the results...</span>"
 
 
 		// GATHER INFORMATION

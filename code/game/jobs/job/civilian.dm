@@ -14,8 +14,8 @@ Clown
 
 	outfit = /datum/outfit/job/clown
 
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
+	access = list(access_theater)
+	minimal_access = list(access_theater)
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -58,8 +58,8 @@ Mime
 
 	outfit = /datum/outfit/job/mime
 
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
+	access = list(access_theater)
+	minimal_access = list(access_theater)
 
 /datum/outfit/job/mime
 	name = "Mime"

@@ -350,7 +350,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
-					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 				if(unlock_content)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
@@ -762,7 +762,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 				if("hair")
-					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
+					var/new_hair = input(user, "Choose your character's hair color:", "Character Preference") as null|color
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
 
@@ -789,7 +789,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						hair_style = previous_list_item(hair_style, hair_styles_female_list)
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
+					var/new_facial = input(user, "Choose your character's facial-hair color:", "Character Preference") as null|color
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
@@ -842,7 +842,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						socks = new_socks
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+					var/new_eyes = input(user, "Choose your character's eye color:", "Character Preference") as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
@@ -853,7 +853,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if(result)
 						var/newtype = roundstart_species[result]
 						pref_species = new newtype()
-						//Now that we changed our species, we must verify that the mutant colour is still allowed.
+						//Now that we changed our species, we must verify that the mutant color is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
 						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
@@ -922,7 +922,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						skin_tone = new_s_tone
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					var/new_ooccolor = input(user, "Choose your OOC color:", "Game Preference") as color|null
 					if(new_ooccolor)
 						ooccolor = sanitize_ooccolor(new_ooccolor)
 

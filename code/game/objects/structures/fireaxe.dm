@@ -1,6 +1,6 @@
 /obj/structure/fireaxecabinet
-	name = "fire axe cabinet"
-	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
+	name = "fire ax cabinet"
+	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the ax. As if."
 	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
@@ -78,7 +78,7 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			user << "<span class='caution'>You take the fire axe from the [name].</span>"
+			user << "<span class='caution'>You take the fire ax from the [name].</span>"
 			src.add_fingerprint(user)
 			update_icon()
 			return
@@ -91,7 +91,7 @@
 		return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/user)
-	if(ismonkey(user)) //no fire-axe wielding aliens allowed
+	if(ismonkey(user)) //no fire-ax wielding aliens allowed
 		attack_hand(user)
 	return
 

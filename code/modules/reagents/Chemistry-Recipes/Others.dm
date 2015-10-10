@@ -170,7 +170,7 @@
 	name = "Metal Foam"
 	id = "metalfoam"
 	result = null
-	required_reagents = list("aluminium" = 3, "foaming_agent" = 1, "facid" = 1)
+	required_reagents = list("aluminum" = 3, "foaming_agent" = 1, "facid" = 1)
 	result_amount = 5
 	mob_react = 1
 

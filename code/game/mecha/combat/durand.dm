@@ -10,15 +10,15 @@
 	max_temperature = 30000
 	infra_luminosity = 8
 	force = 40
-	var/defence = 0
-	var/defence_deflect = 35
+	var/defense = 0
+	var/defense_deflect = 35
 	wreckage = /obj/structure/mecha_wreckage/durand
-	var/datum/action/mecha/mech_defence_mode/defense_action = new
+	var/datum/action/mecha/mech_defense_mode/defense_action = new
 
 /obj/mecha/combat/durand/relaymove(mob/user,direction)
-	if(defence)
+	if(defense)
 		if(world.time - last_message > 20)
-			src.occupant_message("<span class='danger'>Unable to move while in defence mode</span>")
+			src.occupant_message("<span class='danger'>Unable to move while in defense mode</span>")
 			last_message = world.time
 		return 0
 	. = ..()
@@ -35,23 +35,23 @@
 
 /obj/mecha/combat/durand/get_stats_part()
 	var/output = ..()
-	output += "<b>Defence mode:</b> [defence?"on":"off"]"
+	output += "<b>Defense mode:</b> [defense?"on":"off"]"
 	return output
 
-/datum/action/mecha/mech_defence_mode
+/datum/action/mecha/mech_defense_mode
 	name = "Toggle Defense Mode"
 	button_icon_state = "mech_defense_mode_off"
 
-/datum/action/mecha/mech_defence_mode/Activate()
+/datum/action/mecha/mech_defense_mode/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/durand/D = chassis
-	D.defence = !D.defence
-	button_icon_state = "mech_defense_mode_[D.defence ? "on" : "off"]"
-	if(D.defence)
-		D.deflect_chance = D.defence_deflect
-		D.occupant_message("<span class='notice'>You enable [D] defence mode.</span>")
+	D.defense = !D.defense
+	button_icon_state = "mech_defense_mode_[D.defense ? "on" : "off"]"
+	if(D.defense)
+		D.deflect_chance = D.defense_deflect
+		D.occupant_message("<span class='notice'>You enable [D] defense mode.</span>")
 	else
 		D.deflect_chance = initial(D.deflect_chance)
-		D.occupant_message("<span class='danger'>You disable [D] defence mode.</span>")
-	D.log_message("Toggled defence mode.")
+		D.occupant_message("<span class='danger'>You disable [D] defense mode.</span>")
+	D.log_message("Toggled defense mode.")

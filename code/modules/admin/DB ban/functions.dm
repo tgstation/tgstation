@@ -216,7 +216,7 @@
 	if(!check_rights(R_BAN))	return
 
 	if(!isnum(banid) || !istext(param))
-		usr << "Cancelled"
+		usr << "Canceled"
 		return
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, duration, reason FROM [format_table_name("ban")] WHERE id = [banid]")
@@ -244,7 +244,7 @@
 				value = input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text
 				value = sanitizeSQL(value)
 				if(!value)
-					usr << "Cancelled"
+					usr << "Canceled"
 					return
 
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
@@ -254,7 +254,7 @@
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
 				if(!isnum(value) || !value)
-					usr << "Cancelled"
+					usr << "Canceled"
 					return
 
 			var/DBQuery/update_query = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET duration = [value], edits = CONCAT(edits,'- [eckey] changed ban duration from [duration] to [value]<br>'), expiration_time = DATE_ADD(bantime, INTERVAL [value] MINUTE) WHERE id = [banid]")
@@ -265,10 +265,10 @@
 				DB_ban_unban_by_id(banid)
 				return
 			else
-				usr << "Cancelled"
+				usr << "Canceled"
 				return
 		else
-			usr << "Cancelled"
+			usr << "Canceled"
 			return
 
 /datum/admins/proc/DB_ban_unban_by_id(id)

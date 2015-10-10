@@ -1198,7 +1198,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 10
 	containertype = /obj/structure/closet/crate/secure
 	containername = "standard costumes"
-	access = access_theatre
+	access = access_theater
 
 /datum/supply_packs/misc/wizard
 	name = "Wizard Costume Crate"

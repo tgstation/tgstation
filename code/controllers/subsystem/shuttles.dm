@@ -289,7 +289,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			while(--lostAmt >= 0)
 				qdel(pick(Crate.contents))
 
-	//manifest finalisation
+	//manifest finalization
 	slip.info += "</ul><br>"
 	slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>" // And now this is actually meaningful.
 	slip.loc = Crate

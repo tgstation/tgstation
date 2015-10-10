@@ -195,7 +195,7 @@
 	highlight("#0f0")
 	#endif
 
-//this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
+//this is a hook for custom behavior. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
 	return 0	//0 means we can move
 
@@ -291,7 +291,7 @@
 
 
 //this is the main proc. It instantly moves our mobile port to stationary port S1
-//it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
+//it handles all the generic behavior, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1)
 	. = canDock(S1)
 	if(.)
@@ -451,7 +451,7 @@
 			if(ismob(AM))
 				if(istype(AM, /mob/living))
 					var/mob/living/M = AM
-					M.Paralyse(10)
+					M.Paralyze(10)
 					M.take_organ_damage(80)
 					M.anchored = 0
 				else

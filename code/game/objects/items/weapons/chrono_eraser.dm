@@ -210,7 +210,7 @@
 			qdel(captured)
 			qdel(src)
 		else
-			captured.Paralyse(4)
+			captured.Paralyze(4)
 			if(captured.loc != src)
 				captured.loc = src
 			update_icon()

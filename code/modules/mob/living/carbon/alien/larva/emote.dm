@@ -19,7 +19,7 @@
 			message = "<span class='name'>[src]</span> chokes."
 			m_type = 2
 		if ("collapse","collapses")
-			Paralyse(2)
+			Paralyze(2)
 			message = "<span class='name'>[src]</span> collapses!"
 			m_type = 2
 		if ("dance","dances")

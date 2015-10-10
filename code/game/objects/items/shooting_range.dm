@@ -30,7 +30,7 @@
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			removeOverlays()
-			usr << "<span class='notice'>You slice off [src]'s uneven chunks of aluminium and scorch marks.</span>"
+			usr << "<span class='notice'>You slice off [src]'s uneven chunks of aluminum and scorch marks.</span>"
 
 /obj/item/target/attack_hand(mob/user)
 	if(pinnedLoc)

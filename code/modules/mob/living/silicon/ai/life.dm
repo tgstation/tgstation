@@ -71,12 +71,12 @@
 				home.use_power(1000, EQUIP)
 
 			if (src:aiRestorePowerRoutine==2)
-				src << "Alert cancelled. Power has been restored without our assistance."
+				src << "Alert canceled. Power has been restored without our assistance."
 				src:aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
 			else if (src:aiRestorePowerRoutine==3)
-				src << "Alert cancelled. Power has been restored."
+				src << "Alert canceled. Power has been restored."
 				src:aiRestorePowerRoutine = 0
 				src.blind.layer = 0
 				return
@@ -108,7 +108,7 @@
 						sleep(50)
 						if (loc.master.power_equip)
 							if (!istype(T, /turf/space))
-								src << "Alert cancelled. Power has been restored without our assistance."
+								src << "Alert canceled. Power has been restored without our assistance."
 								src.aiRestorePowerRoutine = 0
 								src.blind.layer = 0
 								return
@@ -146,7 +146,7 @@
 								return
 							if (loc.master.power_equip)
 								if (!istype(T, /turf/space))
-									src << "Alert cancelled. Power has been restored without our assistance."
+									src << "Alert canceled. Power has been restored without our assistance."
 									src:aiRestorePowerRoutine = 0
 									src.blind.layer = 0 //This, too, is a fix to issue 603
 									return

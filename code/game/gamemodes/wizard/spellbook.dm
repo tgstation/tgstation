@@ -234,7 +234,7 @@
 
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
-	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
+	desc = "An artifact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/staff/change
 	log_name = "ST"
 
@@ -295,7 +295,7 @@
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	desc = "An artifact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
 	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
 	log_name = "HS"
 
@@ -484,7 +484,7 @@
 			dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
 			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
 		if("Rituals")
-			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
+			dat += "These powerful spells change the very fabric of reality. Not always in your favor.<BR>"
 	return dat
 
 /obj/item/weapon/spellbook/proc/wrap(content)

@@ -150,7 +150,7 @@ emp_act
 	var/list/inventory_items_to_kill = list()
 	var/acidity = min(acidpwr*acid_volume/200, toxpwr)
 	var/acid_volume_left = acid_volume
-	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for fluoro, 10 for sulphuric
+	var/acid_decay = 100/acidpwr // how much volume we lose per item we try to melt. 5 for fluoro, 10 for sulfuric
 
 	//HEAD//
 	var/obj/item/clothing/head_clothes = null
@@ -272,7 +272,7 @@ emp_act
 		update_damage_overlays()
 
 	//MELTING INVENTORY ITEMS//
-	//these items are all outside of armour visually, so melt regardless.
+	//these items are all outside of armor visually, so melt regardless.
 	if(back)
 		inventory_items_to_kill += back
 	if(belt)
@@ -344,7 +344,7 @@ emp_act
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 20)
-						Paralyse(1)
+						Paralyze(1)
 					update |= temp.take_damage(rand(M.force/2, M.force), 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 				if("fire")

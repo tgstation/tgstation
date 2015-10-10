@@ -433,7 +433,7 @@
 			if("icetea")
 				icon_state = "icedteaglass"
 				name = "Iced Tea"
-				desc = "All natural, antioxidant-rich flavour sensation."
+				desc = "All natural, antioxidant-rich flavor sensation."
 			if("coffee")
 				icon_state = "glass_brown"
 				name = "glass of coffee"

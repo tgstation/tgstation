@@ -72,7 +72,7 @@
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
 	id = "kahlua"
-	description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
+	description = "A widely known, Mexican coffee-flavored liqueur. In production since 1936!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 45
 
@@ -163,7 +163,7 @@
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
 	id = "tequila"
-	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty, hombre?"
+	description = "A strong and mildly flavored, mexican produced spirit. Feeling thirsty, hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 35
 

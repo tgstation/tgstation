@@ -149,7 +149,7 @@
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
-		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		world << "<span class='boldannounce'>Reboot was canceled by an admin.</span>"
 		return
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")

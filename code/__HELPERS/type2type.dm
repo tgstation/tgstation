@@ -302,7 +302,7 @@
 		if("Plasmafire")	return 'icons/mob/screen_plasmafire.dmi'
 		else			return 'icons/mob/screen_midnight.dmi'
 
-//colour formats
+//color formats
 /proc/rgb2hsl(red, green, blue)
 	red /= 255;green /= 255;blue /= 255;
 	var/max = max(red,green,blue)
@@ -514,11 +514,11 @@ for(var/t in test_times)
 
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
-/proc/heat2colour(temp)
-	return rgb(heat2colour_r(temp), heat2colour_g(temp), heat2colour_b(temp))
+/proc/heat2color(temp)
+	return rgb(heat2color_r(temp), heat2color_g(temp), heat2color_b(temp))
 
 
-/proc/heat2colour_r(temp)
+/proc/heat2color_r(temp)
 	temp /= 100
 	if(temp <= 66)
 		. = 255
@@ -526,7 +526,7 @@ for(var/t in test_times)
 		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
 
 
-/proc/heat2colour_g(temp)
+/proc/heat2color_g(temp)
 	temp /= 100
 	if(temp <= 66)
 		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
@@ -534,7 +534,7 @@ for(var/t in test_times)
 		. = max(0, min(255, 288.1221685293 * ((temp - 60) ** -0.075148492)))
 
 
-/proc/heat2colour_b(temp)
+/proc/heat2color_b(temp)
 	temp /= 100
 	if(temp >= 66)
 		. = 255

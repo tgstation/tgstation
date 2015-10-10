@@ -583,9 +583,9 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("uranium", reac_volume)
 
-/datum/reagent/aluminium
-	name = "Aluminium"
-	id = "aluminium"
+/datum/reagent/aluminum
+	name = "Aluminum"
+	id = "aluminum"
 	description = "A silvery white and ductile member of the boron group of chemical elements."
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168
@@ -746,20 +746,20 @@
 
 
 
-/////////////////////////Coloured Crayon Powder////////////////////////////
-//For colouring in /proc/mix_color_from_reagents
+/////////////////////////Colored Crayon Powder////////////////////////////
+//For coloring in /proc/mix_color_from_reagents
 
 
 /datum/reagent/crayonpowder
 	name = "Crayon Powder"
 	id = "crayon powder"
 	var/colorname = "none"
-	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
+	description = "A powder made by grinding down crayons, good for coloring chemical reagents."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
 
 /datum/reagent/crayonpowder/New()
-	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
+	description = "\an [colorname] powder made by grinding down crayons, good for coloring chemical reagents."
 
 
 /datum/reagent/crayonpowder/red

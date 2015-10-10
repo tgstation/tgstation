@@ -70,7 +70,7 @@
 			return 1
 	return 0
 
-//Object behaviour on storage dump
+//Object behavior on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	for(var/obj/item/I in src_object)
 		if(user.s_active != src_object)

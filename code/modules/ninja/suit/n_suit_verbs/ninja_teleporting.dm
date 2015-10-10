@@ -48,7 +48,7 @@ Contents:
 				anim(H.loc,H,'icons/mob/mob.dmi',,"phasein",,H.dir)
 
 			spawn(0)
-				destination.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
+				destination.phase_damage_creatures(20,H)//Paralyze and damage mobs and mechas on the turf
 			s_coold = 1
 		else
 			H << "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>"
@@ -80,7 +80,7 @@ Contents:
 				anim(H.loc,H,'icons/mob/mob.dmi',,"phasein",,H.dir)
 
 			spawn(0)//Any living mobs in teleport area are gibbed.
-				T.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
+				T.phase_damage_creatures(20,H)//Paralyze and damage mobs and mechas on the turf
 			s_coold = 1
 		else
 			H << "<span class='danger'>You cannot teleport into solid walls or from solid matter</span>"
