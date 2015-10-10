@@ -3320,7 +3320,7 @@
 "blR" = (/obj/machinery/door/poddoor{id_tag = "toxin_mix"; name = "Mixing Chamber Shutters"},/turf/simulated/floor/engine/vacuum,/area/science/mixing)
 "blS" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/chapel/office)
 "blT" = (/obj/structure/closet/coffin,/turf/simulated/floor{icon_state = "dark"},/area/chapel/office)
-"blU" = (/obj/structure/closet/secure_closet/chaplain,/turf/simulated/floor{icon_state = "dark"},/area/chapel/office)
+"blU" = (/obj/machinery/vending/chapel,/turf/simulated/floor{icon_state = "dark"},/area/chapel/office)
 "blV" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/chapel/main)
 "blW" = (/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{dir = 9; icon_state = "brown"},/area/supply/sorting)
 "blX" = (/obj/structure/bed/chair,/turf/simulated/shuttle/floor,/area/shuttle/arrival/station)
