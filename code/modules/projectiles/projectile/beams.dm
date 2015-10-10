@@ -93,17 +93,3 @@
 /obj/item/projectile/lasertag/bluetag
 	icon_state = "bluelaser"
 	suit_types = list(/obj/item/clothing/suit/redtag)
-
-
-/obj/item/projectile/beam/accelerator
-	name = "accelerator beam"
-	icon_state = "scatterlaser"
-	damage = 5
-
-/obj/item/projectile/beam/accelerator/Range()
-	damage += 8
-	if(damage>20)
-		icon_state = "laser"
-	else if (damage > 40)
-		icon_state = "heavylaser"
-	return
