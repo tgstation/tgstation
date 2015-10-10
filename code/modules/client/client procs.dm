@@ -113,6 +113,7 @@ var/next_external_rsc = 0
 			for(var/datum/admin_rank/R in admin_ranks)
 				if(R.name == config.autoadmin_rank)
 					autorank = R
+					break
 			if(!autorank)
 				world << "Autoadmin rank not found"
 			else
