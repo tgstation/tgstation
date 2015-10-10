@@ -1,9 +1,6 @@
 // BEGIN_INTERNALS
 /*
-DIR: _maps _maps\map_files _maps\map_files\TgStation 
-AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
-WINDOW: _maps\map_files\TgStation\tgstation.2.1.3.dmm
-FILE: _maps\map_files\TgStation\tgstation.2.1.3.dmm
+AUTO_FILE_DIR: OFF
 */
 // END_INTERNALS
