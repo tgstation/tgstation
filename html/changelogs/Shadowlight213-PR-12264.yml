@@ -34,5 +34,5 @@ delete-after: True
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
   - rscadd: "Nanotrasen has finally fixed the critical error in their gateway systems. Away mission destinations have been re-aquired! Ask your local Nanotrasen station manager if your station can opt into the program."
-  -wip: "Away missions have not been completely balanced yet, and there are multiple sprite errors in them. Please report any issues you find"
+  - wip: "Away missions have not been completely balanced yet, and there are multiple sprite errors in them. Please report any issues you find"
 
