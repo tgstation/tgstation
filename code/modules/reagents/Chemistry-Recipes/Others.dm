@@ -89,6 +89,20 @@
 	new /obj/item/weapon/soap/homemade(location)
 	return
 
+/datum/chemical_reaction/candlefication
+	name = "candlefication"
+	id = "candlefication"
+	result = null
+	required_reagents = list("liquidgibs" = 5, "stabilizing_agent"  = 5) //
+	required_temp = 374
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/candle(location)
+	return
+
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
 /datum/chemical_reaction/virus_food
@@ -376,5 +390,5 @@
 	name = "lye"
 	id = "lye"
 	result = "lye"
-	required_reagents = list("sodium" = 1, "hydrogen" = 1)
-	result_amount = 2
+	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 3)
+	result_amount = 3
