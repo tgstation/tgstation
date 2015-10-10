@@ -280,7 +280,9 @@
 /datum/mutation/human/dwarfism
 
 	name = "Dwarfism"
-	quality = MINOR_NEGATIVE
+	quality = POSITIVE
+	get_chance = 15
+	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
 	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
 
