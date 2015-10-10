@@ -1179,7 +1179,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_VOX "Vox-pidgin"
 #define LANGUAGE_CULT "Cult"
 
-#define SAY_DEBUG 1
+//#define SAY_DEBUG 1
 #ifdef SAY_DEBUG
 	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
 	#define say_testing(a,x) a << ("([__FILE__]:[__LINE__] say_testing) [x]")
@@ -1188,7 +1188,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 	// null << "[x][a]"
 #endif
 
-#define JUSTFUCKMYSHITUP 1
+//#define JUSTFUCKMYSHITUP 1
 #ifdef JUSTFUCKMYSHITUP
 #define writepanic(a) if(ticker && ticker.current_state >= 3 && world.cpu > 100) write_panic(a)
 #warning IMA FUCK YOUR SHIT UP
