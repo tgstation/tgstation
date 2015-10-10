@@ -886,6 +886,7 @@
 		src.occupier.parent = malf.parent
 	else
 		src.occupier.parent = malf
+	malf.shunted = 1
 	malf.mind.transfer_to(src.occupier)
 	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
@@ -903,6 +904,7 @@
 		return
 	if(src.occupier.parent && src.occupier.parent.stat != 2)
 		src.occupier.mind.transfer_to(src.occupier.parent)
+		src.occupier.parent.shunted = 0
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
 		qdel(src.occupier)
