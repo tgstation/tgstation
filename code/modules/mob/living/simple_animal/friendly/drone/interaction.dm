@@ -32,14 +32,14 @@
 
 								D << "<span class='warning'>You can't seem to find the [pick(faux_gadgets)]! Without it, [src] [pick(faux_problems)].</span>"
 								return
-							D.visible_message("[D] begins to reactivate [src].", "<span class='notice'>You begin to reactivate [src]...</span>")
+							D.visible_message("<span class='notice'>[D] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 							if(do_after(user,30,needhand = 1, target = src))
-								health = health_repair_max
+								adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
 								stat = CONSCIOUS
 								icon_state = icon_living
 								dead_mob_list -= src
 								living_mob_list += src
-								D.visible_message("[D] reactivates [src]!", "<span class='notice'>You reactivate [src].</span>")
+								D.visible_message("<span class='notice'>[D] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
 								alert_drones(DRONE_NET_CONNECT)
 								if(G)
 									G << "<span class='boldnotice'>DRONE NETWORK: </span><span class='ghostalert'>You were reactivated by [D]!</span>"
@@ -48,9 +48,9 @@
 
 						if("Cannibalize")
 							if(D.health < D.maxHealth)
-								D.visible_message("[D] begins to cannibalize parts from [src].", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
+								D.visible_message("<span class='notice'>[D] begins to cannibalize parts from [src].</span>", "<span class='notice'>You begin to cannibalize parts from [src]...</span>")
 								if(do_after(D, 60,5,0, target = src))
-									D.visible_message("[D] repairs itself using [src]'s remains!", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
+									D.visible_message("<span class='notice'>[D] repairs itself using [src]'s remains!</span>", "<span class='notice'>You repair yourself using [src]'s remains.</span>")
 									D.adjustBruteLoss(-src.maxHealth)
 									new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
 									qdel(src)
@@ -78,7 +78,7 @@
 		visible_message("<span class='warning'>[user] picks up [src]!</span>", \
 						"<span class='userdanger'>[user] picks you up!</span>")
 		if(buckled)
-			user << "<span class='warning'>[src] is buckled to the [buckled.name] and cannot be picked up!</span>"
+			user << "<span class='warning'>[src] is buckled to [buckled] and cannot be picked up!</span>"
 			return
 		user << "<span class='notice'>You pick [src] up.</span>"
 		drop_l_hand()
@@ -96,12 +96,11 @@
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
-		if(health < health_repair_max)
+		if(health < maxHealth)
 			user << "<span class='notice'>You start to tighten loose screws on [src]...</span>"
 			if(do_after(user,80,target=user))
-				var/repair = health_repair_max - health
-				adjustBruteLoss(-repair)
-				visible_message("[user] tightens [src == user ? "their" : "[src]'s"] loose screws!", "<span class='notice'>You tighten [src == user ? "their" : "[src]'s"] loose screws.</span>")
+				adjustBruteLoss(-getBruteLoss())
+				visible_message("<span class='notice'>[user] tightens [src == user ? "their" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
 				user << "<span class='warning'>You need to remain still to tighten [src]'s screws!</span>"
 		else
@@ -109,7 +108,7 @@
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
 	if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
-							 "<span class='notice'>You unfasten [src]'s maintenance panel and begin a factory reset...</span>")
+							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(!do_after(user, 50, target = src))
 			return
@@ -121,7 +120,7 @@
 		..()
 
 /mob/living/simple_animal/drone/proc/update_drone_hack(var/restore = 0) //If you're using this proc, use 0 for hacking the drone and 1 for removing the hack
-	if(!istype(src) || !mind || stat)
+	if(!istype(src) || !mind)
 		return 0
 	if(!restore)
 		if(hacked)
