@@ -1,7 +1,9 @@
 /mob/living/carbon/human/whisper(message as text)
 	if(!IsVocal())
 		return
+#ifdef SAY_DEBUG
 	var/oldmsg = message
+#endif
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
@@ -9,25 +11,27 @@
 	if(stat == DEAD)
 		return
 
-	var/datum/language/speaking
-	if(!speaking)
-		speaking = parse_language(message)
-	if(istype(speaking))
-		message = copytext(message,2+length(speaking.key))
-	else
-		if(!isnull(speaking))
-			//var/oldmsg = message
-			var/n = speaking
-			message = copytext(message,1+length(n))
-			say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
-			speaking = null
-		speaking = get_default_language()
+	var/datum/speech/speech = create_speech(message)
+	speech.language = parse_language(speech.message)
+	speech.mode = SPEECH_MODE_WHISPER
+	speech.message_classes.Add("whisper")
 
-	message = trim(message)
+	if(istype(speech.language))
+		speech.message = copytext(speech.message,2+length(speech.language.key))
+	else
+		if(!isnull(speech.language))
+			//var/oldmsg = message
+			var/n = speech.language
+			speech.message = copytext(speech.message,1+length(n))
+			say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [speech.message]")
+			speech.language = null
+		speech.language = get_default_language()
+
+	speech.message = trim(speech.message)
 	if(!can_speak(message))
 		return
 
-	message = "[message]"
+	speech.message = "[message]"
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
@@ -43,10 +47,6 @@
 	if(stat == UNCONSCIOUS && (!critical || said_last_words))
 		return
 
-	var/datum/speech/speech = create_speech(message)
-	speech.set_language(speaking)
-	speech.message_classes.Add("whisper")
-
 	log_whisper("[key_name(src)] ([formatLocation(src)]): [message]")
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
@@ -56,7 +56,8 @@
 		var/message_len = length(speech.message)
 		speech.message = copytext(speech.message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 		speech.message = Ellipsis(speech.message, 10, 1)
-		whispers = "whispers in their final breath"
+		speech.mode= SPEECH_MODE_FINAL
+		whispers = "whispers with their final breath"
 		said_last_words = src.stat
 	treat_speech(speech)
 

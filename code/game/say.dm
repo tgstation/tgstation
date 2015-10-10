@@ -88,7 +88,7 @@ var/list/freqtoname = list(
 		speech.wrapper_classes.Add(get_radio_span(speech.frequency))
 	var/pooled=0
 	var/datum/speech/filtered_speech
-	if(speech_language)
+	if(speech.language)
 		filtered_speech = speech.language.filter_speech(speech.clone())
 	else
 		filtered_speech = speech
@@ -111,6 +111,8 @@ var/list/freqtoname = list(
 	*/
 	. = "<span class='[filtered_speech.render_wrapper_classes()]'><span class='name'>[render_speaker_track_start(filtered_speech)][render_speech_name(filtered_speech)][render_speaker_track_end(filtered_speech)][freqpart][render_job(filtered_speech)]</span> [filtered_speech.render_message()]</span>"
 	say_testing(src, html_encode(.))
+	if(pooled)
+		returnToPool(filtered_speech)
 
 
 /atom/movable/proc/render_speaker_track_start(var/datum/speech/speech)

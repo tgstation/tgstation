@@ -159,12 +159,16 @@ var/list/department_radio_keys = list(
 		speech.language = parse_language(speech.message)
 		say_testing(src, "Getting speaking language, got [istype(speech.language) ? speech.language.name : "null"]")
 	if(istype(speech.language))
+#ifdef SAY_DEBUG
 		var/oldmsg = message
+#endif
 		speech.message = copytext(speech.message,2+length(speech.language.key))
 		say_testing(src, "Have a language, oldmsg = [oldmsg], newmsg = [message]")
 	else
 		if(!isnull(speech.language))
+#ifdef SAY_DEBUG
 			var/oldmsg = message
+#endif
 			var/n = speech.language
 			message = copytext(message,1+length(n))
 			say_testing(src, "We tried to speak a language we don't have; length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
@@ -188,7 +192,7 @@ var/list/department_radio_keys = list(
 		return
 
 	if(radio_return & ITALICS)
-		speech.message_classes.Add("talkinto")
+		speech.message_classes.Add("italics")
 	if(radio_return & REDUCE_RANGE)
 		message_range = 1
 	if(copytext(text, length(text)) == "!")

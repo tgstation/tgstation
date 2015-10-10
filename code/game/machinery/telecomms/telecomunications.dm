@@ -41,9 +41,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/telecomms/proc/relay_information() called tick#: [world.time]")
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
+#ifdef SAY_DEBUG
 	var/mob/mob = signal.data["mob"]
 	var/datum/language/language = signal.data["language"]
 	var/langname = (language ? language.name : "No language")
+#endif
 	say_testing(mob, "[src] relay_information start, language [langname]")
 	if(!on)
 		return
@@ -282,10 +284,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
+#ifdef SAY_DEBUG
 	var/mob/mob = signal.data["mob"]
 	var/datum/language/language = signal.data["language"]
 	var/langname = (language ? language.name : "No language")
 	say_testing(mob, "[src] received radio signal from us, language [langname]")
+#endif
+
 	if(!on) // has to be on to receive messages
 		return
 	if(!signal)

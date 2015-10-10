@@ -378,7 +378,10 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"language" = speech.language //The language M is talking in.
+			"language" = speech.language, //The language M is talking in.
+
+			"r_quote"  = speech.rquote,
+			"l_quote"  = speech.lquote,
 		)
 		signal.frequency = speech.frequency // Quick frequency set
 
@@ -432,7 +435,10 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-		"language" = speech.language
+		"language" = speech.language,
+
+		"r_quote"  = speech.rquote,
+		"l_quote"  = speech.lquote,
 	)
 	signal.frequency = speech.frequency // Quick frequency set
 
