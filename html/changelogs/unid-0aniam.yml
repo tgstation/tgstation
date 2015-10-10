@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-  - tweak: Cables are now properly moved, rotated and updated by shuttles
