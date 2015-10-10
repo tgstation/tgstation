@@ -104,7 +104,7 @@ About the new airlock wires panel:
 	qdel(wires)
 	wires = null
 	if(id_tag)
-		for(var/obj/machinery/doorButtons/D in world)
+		for(var/obj/machinery/doorButtons/D in machines)
 			D.removeMe(src)
 	return ..()
 
