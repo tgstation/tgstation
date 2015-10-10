@@ -78,11 +78,6 @@
 /mob/playsound_local(var/turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)
 		return
-	if(blind)
-		var/image/I = image('icons/effects/sound.dmi',turf_source)
-		I.layer = (blind.layer  > 0) ? (blind.layer + 1) : 1
-		I.mouse_opacity = 0
-		client.show_image(I,10)
 	..()
 
 /client/proc/playtitlemusic()

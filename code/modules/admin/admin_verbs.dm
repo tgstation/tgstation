@@ -58,8 +58,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words,			/*displays cult-words*/
-	/client/proc/reset_all_tcs			/*resets all telecomms scripts*/
+	/client/proc/check_words			/*displays cult-words*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -194,7 +193,6 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release,
 	/client/proc/reload_admins,
-	/client/proc/reset_all_tcs,
 	/client/proc/panicbunker
 	)
 
