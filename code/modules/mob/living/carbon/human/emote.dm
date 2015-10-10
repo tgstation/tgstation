@@ -25,6 +25,10 @@
 			if (!src.restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
+		
+		if ("blanch","blanches")
+			message = "<B>[src]</B> blanches."
+			m_type = 1
 
 		if ("choke","chokes")
 			if (miming)
@@ -100,6 +104,21 @@
 					return
 				message = "<B>[src]</B> [input]"
 
+		if ("cutthroat", "cutthroats")
+			if (!src.restrained() && !src.r_hand)
+				var/mob/M = null
+				m_type = 1
+				if (param)
+					for (var/mob/A in view(src))
+						if (param == A.name)
+							M = A
+							break
+					if (M != src && M != null)
+						var/genderType = gender == MALE ? "his" : "her"
+						message = "<B>[src]</B> points [genderType] finger at [M] and then draws a line across [genderType] throat."
+				else
+					message = "<B>[src]</B> draws \his finger across \his throat in a line of grim intent."
+
 		if ("dap","daps")
 			m_type = 1
 			if (!src.restrained())
@@ -123,6 +142,10 @@
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
+		if ("flush","flushes")
+			message = "<B>[src]</B>'s cheeks flush with colour."
+			m_type = 1
+
 		if ("gasp","gasps")
 			if (miming)
 				message = "<B>[src]</B> appears to be gasping!"
@@ -134,6 +157,10 @@
 				message = "<B>[src]</B> giggles silently!"
 			else
 				..(act)
+
+		if ("grit","grits")
+			if (!muzzled)
+				message = "<B>[src]</B> grits \his teeth."
 
 		if ("groan","groans")
 			if (miming)
@@ -152,6 +179,14 @@
 			else
 				message = "<B>[src]</B> makes a noise."
 				m_type = 2
+
+		if ("gulp","gulps")
+			if (!muzzled)
+				if (miming)
+					message = "<B>[src]</B> gulps silently."
+				else
+					message = "<B>[src]</B> gulps!"
+					m_type = 2
 
 		if ("handshake")
 			m_type = 1
@@ -234,6 +269,10 @@
 				message = "<B>[src]</B> raises a hand."
 			m_type = 1
 
+		if ("rolleye","rolleyes")
+			message = "<B>[src]</B> rolls \his eyes."
+			m_type = 1
+
 		if ("salute","salutes")
 			if (!src.buckled)
 				var/M = null
@@ -249,6 +288,10 @@
 				else
 					message = "<B>[src]</b> salutes."
 			m_type = 1
+		
+		if ("scoff","scoffs")
+			if (!muzzled && !miming)
+				message = "<B>[src]</B> scoffs!"
 
 		if ("scream","screams")
 			if (miming)
@@ -279,6 +322,10 @@
 					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
 						message = "<B>[src]</B> raises [t1] finger\s."
 			m_type = 1
+		
+		if ("smirk","smirks")
+			message = "<B>[src]</B> smirks."
+			m_type = 1
 
 		if ("sneeze","sneezes")
 			if (miming)
@@ -289,6 +336,12 @@
 		if ("sniff","sniffs")
 			message = "<B>[src]</B> sniffs."
 			m_type = 2
+		
+		if ("snigger","snigger")
+			if (miming)
+				message = "<B>[src]</B> sniggers silently."
+			if (!muzzled)
+				message = "<B>[src]</B> sniggers!"
 
 		if ("snore","snores")
 			if (miming)
@@ -322,7 +375,7 @@
 				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, stopwag, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
+			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blanch, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, cutthroat-(none)/mob, dance, dap, deathgasp, drool, eyebrow, faint, flap, flounder, flush, frown, gasp, giggle, glare-(none)/mob, grin, grit, groan, grimace, grumble, gulp, huff, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, rolleye, salute, scoff, scowl, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, slump, smile, smirk, sneeze, sniff, snigger, snore, stare-(none)/mob, stomp, sulk, sway, stopwag, tongue, tremble, twitch, twitch_s, wave, whimper, wink, wag, yawn"
 
 		else
 			..(act)
