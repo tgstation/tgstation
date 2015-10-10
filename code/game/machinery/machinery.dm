@@ -179,7 +179,7 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)
+			if(C.buckled || C.buckled_mob)
 				continue
 			else
 				target = C

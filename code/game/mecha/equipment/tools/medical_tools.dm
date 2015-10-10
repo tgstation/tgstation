@@ -48,10 +48,9 @@
 	if(patient)
 		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
 		return
-	for(var/mob/living/simple_animal/slime/M in range(1,target))
-		if(M.Victim == target)
-			occupant_message("<span class='warning'>[target] will not fit into the sleeper because they have a slime latched onto their head!</span>")
-			return
+	if(target.buckled_mob) //slime attached to them
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they have a slime latched onto their head!</span>")
+		return
 	occupant_message("<span class='notice'>You start putting [target] into [src]...</span>")
 	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
 	if(do_after_cooldown(target))
