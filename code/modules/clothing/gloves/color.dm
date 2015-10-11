@@ -2,10 +2,10 @@
 	desc = "These gloves will protect the wearer from electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
-	item_state = "ygloves"
+	item_state = "yellow"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	_color="yellow"
+	_color = "yellow"
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/yellow/power //fuck you don't relative path this
@@ -66,12 +66,11 @@
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
 	name = "budget insulated gloves"
 	icon_state = "yellow"
-	item_state = "ygloves"
+	item_state = "yellow"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 	species_fit = list("Vox")
-
-	_color="yellow"
+	_color = "yellow"
 
 /obj/item/clothing/gloves/fyellow/New()
 	. = ..()
@@ -81,8 +80,8 @@
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"
 	icon_state = "black"
-	item_state = "bgloves"
-	_color="black"
+	item_state = "black"
+	_color = "black"
 	species_fit = list("Vox")
 
 	cold_protection = HANDS
@@ -111,15 +110,15 @@
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
-	item_state = "orangegloves"
-	_color="orange"
+	item_state = "orange"
+	_color = "orange"
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/red
 	name = "red gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
-	item_state = "redgloves"
+	item_state = "red"
 	_color = "red"
 	species_fit = list("Vox")
 
@@ -130,7 +129,7 @@
 	name = "rainbow gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "rainbow"
-	item_state = "rainbowgloves"
+	item_state = "rainbow"
 	_color = "rainbow"
 	species_fit = list("Vox")
 
@@ -141,40 +140,53 @@
 	name = "blue gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
-	item_state = "bluegloves"
-	_color="blue"
+	item_state = "blue"
+	_color = "blue"
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
-	item_state = "purplegloves"
-	_color="purple"
+	item_state = "purple"
+	_color = "purple"
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
-	item_state = "greengloves"
-	_color="green"
+	item_state = "green"
+	_color = "green"
 	species_fit = list("Vox")
+
+/obj/item/clothing/gloves/white
+	name = "white gloves"
+	desc = "These look pretty fancy."
+	icon_state = "white"
+	item_state = "white"
+	_color = "mime"
+	species_fit = list("Vox")
+
+/obj/item/clothing/gloves/white/stunglove // For Clown Planet's mimes. - N3X
+	New()
+		..()
+		cell = new /obj/item/weapon/cell/crap/empty(src)
 
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
-	item_state = "graygloves"
-	_color="grey"
+	item_state = "gray"
+	_color = "grey"
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/light_brown
 	name = "light brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
-	item_state = "lightbrowngloves"
-	_color="light brown"
+	item_state = "lightbrown"
+	_color = "light brown"
 	species_fit = list("Vox")
 
 /obj/item/clothing/gloves/brown
