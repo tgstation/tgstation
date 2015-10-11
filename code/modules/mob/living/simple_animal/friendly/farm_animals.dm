@@ -208,7 +208,7 @@
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
-	size = SIZE_TINY
+	size = SIZE_SMALL
 
 /mob/living/simple_animal/chicken/New()
 	if(prob(5))
