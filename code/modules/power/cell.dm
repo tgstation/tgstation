@@ -150,6 +150,14 @@
 	materials = list(MAT_GLASS=40)
 	rating = 2
 
+/obj/item/weapon/stock_parts/cell/apc
+	name = "heavy duty power cell"
+	desc = "An old proprietary cell format used in apcs. It has a power rating of 2500, and you should not swallow it."
+	origin_tech = "powerstorage=1"
+	maxcharge = 2500
+	materials = list(MAT_GLASS=40)
+	rating = 2
+
 /obj/item/weapon/stock_parts/cell/crap/empty/New()
 	..()
 	charge = 0
