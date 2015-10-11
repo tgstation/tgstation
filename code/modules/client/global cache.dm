@@ -20,7 +20,7 @@
 /proc/send_asset_list(var/client/client, var/list/asset_list)
 	for(var/asset_name in asset_list)
 		send_asset(client, asset_name)
-	
+
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
 /proc/register_asset(var/asset_name, var/asset)
@@ -47,12 +47,12 @@
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
-		
+
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
 
 /datum/asset/simple/pda
-	assets = list(	
+	assets = list(
 		"pda_atmos.png"		= 'icons/pda_icons/pda_atmos.png',
 		"pda_back.png"			= 'icons/pda_icons/pda_back.png',
 		"pda_bell.png"			= 'icons/pda_icons/pda_bell.png',
@@ -81,7 +81,8 @@
 		"pda_clock.png"			= 'icons/pda_icons/pda_clock.png',
 		"pda_game.png"		= 'icons/pda_icons/pda_game.png',
 		"pda_egg.png"			= 'icons/pda_icons/pda_egg.png',
-		"pda_minimap_box"	= 'icons/pda_icons/pda_minimap_box.png',
+		"pda_money.png"				= 'icons/pda_icons/pda_money.png',
+		"pda_minimap_box.png"	= 'icons/pda_icons/pda_minimap_box.png',
 		"pda_minimap_bg_notfound.png"	= 'icons/pda_icons/pda_minimap_bg_notfound.png',
 		"pda_minimap_deff.png"					= 'icons/pda_icons/pda_minimap_deff.png',
 		"pda_minimap_taxi.png"					= 'icons/pda_icons/pda_minimap_taxi.png',
@@ -167,7 +168,7 @@
 		"snake_volume3.png"		= 'icons/pda_icons/snake_icons/volume/snake_volume3.png',
 		"snake_volume4.png"		= 'icons/pda_icons/snake_icons/volume/snake_volume4.png',
 		"snake_volume5.png"		= 'icons/pda_icons/snake_icons/volume/snake_volume5.png',
-		"snake_volume6.png"		= 'icons/pda_icons/snake_icons/volume/snake_volume6.png'	
+		"snake_volume6.png"		= 'icons/pda_icons/snake_icons/volume/snake_volume6.png'
 	)
 
 /datum/asset/simple/pda_mine

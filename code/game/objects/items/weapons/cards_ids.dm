@@ -170,7 +170,7 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
-	desc = "A card used to provide ID and determine access across the station."
+	desc = "A card used to provide ID and determine access across the station. Features a virtual wallet accessible by PDA."
 	icon_state = "id"
 	item_state = "card-id"
 	var/list/access = list()
@@ -186,13 +186,16 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+	var/datum/money_account/virtual_wallet = null	//money!
+
 /obj/item/weapon/card/id/New()
 	..()
-
+	update_virtual_wallet()
 	spawn(30) //AWFULNESS AHOY
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			SetOwnerInfo(H)
+		update_virtual_wallet()
 
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
@@ -214,6 +217,23 @@
 
 /obj/item/weapon/card/id/GetID()
 	return src
+
+/obj/item/weapon/card/id/proc/update_virtual_wallet(var/new_funds=0)
+	if(!virtual_wallet)
+		virtual_wallet = new()
+		virtual_wallet.virtual = 1
+
+	virtual_wallet.owner_name = registered_name
+
+	if(new_funds)
+		virtual_wallet.money = new_funds
+
+	//Virtual wallet accounts are tied to an ID card, not an account database, thus they don't need an acount number.
+	//For now using the virtual wallet doesn't require a PIN either.
+
+	if(!virtual_wallet.account_number)
+		virtual_wallet.account_number = next_account_number
+		next_account_number += rand(1,25)
 
 /obj/item/weapon/card/id/proc/UpdateName()
 	name = "[src.registered_name]'s ID Card ([src.assignment])"

@@ -99,8 +99,14 @@
 	cost = 200
 
 /////////////////////////////
-// Luxurt
+// Luxury
 /////////////////////////////
+/datum/storeitem/wallet
+	name = "Wallet"
+	desc = "A convenient way to carry IDs, credits, coins, papers, and a bunch of other small items."
+	typepath = /obj/item/weapon/storage/wallet
+	cost = 30
+
 /datum/storeitem/photo_album
 	name = "Photo Album"
 	desc = "Clearly all your photos of the clown's shenanigans deserve this investment."

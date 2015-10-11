@@ -131,10 +131,7 @@ var/global/list/all_money_accounts = list()
 	var/security_level = 1	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
-
-/datum/money_account/New()
-	..()
-	security_level = pick (0,1) //Stealing is now slightly viable
+	var/virtual = 0
 
 /datum/transaction
 	var/target_name = ""
@@ -394,7 +391,7 @@ var/global/list/all_money_accounts = list()
 			T.target_name = source_name
 			T.purpose = purpose
 			if(amount < 0)
-				T.amount = "([amount])"
+				T.amount = "-[amount]"
 			else
 				T.amount = "[amount]"
 			T.date = current_date_string
