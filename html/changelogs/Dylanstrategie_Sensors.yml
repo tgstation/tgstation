@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+ - rscadd: Tactical turtlenecks now have sensors. They are off by default to prevent an intensification of fluke ops
