@@ -1059,16 +1059,16 @@
 		switch(href_list["shadowling"])
 			if("clear")
 				ticker.mode.update_shadow_icons_removed(src)
-				src.spell_list = null
 				if(src in ticker.mode.shadows)
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					src.spell_list = null
-					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
-					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hatch)
 					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_ascend)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
 					ticker.mode.remove_thrall(src,0)
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
@@ -1512,9 +1512,13 @@
 	mind.special_role = "Alien"
 	mind.assigned_role = "Alien"
 	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/queen/mind_initialize()
+/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
 	..()
 	mind.special_role = "Queen"
+
+/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
+	..()
+	mind.special_role = "Praetorian"
 
 /mob/living/carbon/alien/humanoid/hunter/mind_initialize()
 	..()

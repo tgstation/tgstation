@@ -64,6 +64,7 @@
 	return //don't want the emitters to miss
 
 /obj/item/projectile/beam/emitter/Destroy()
+	..()
 	return QDEL_HINT_PUTINPOOL
 
 /obj/item/projectile/lasertag

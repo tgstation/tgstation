@@ -122,7 +122,7 @@
 			var/mob/living/GM = G.affecting
 			if(G.state >= GRAB_AGGRESSIVE)
 				if(GM.loc != get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to on [src].</span>"
+					user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
 				GM.adjustBruteLoss(8)

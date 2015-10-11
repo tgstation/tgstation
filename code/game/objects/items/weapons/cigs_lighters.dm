@@ -135,7 +135,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
+		return
 	if(istype(glass))	//you can dip cigarettes into beakers
 		var/transfered = glass.reagents.trans_to(src, chem_volume)
 		if(transfered)	//if reagents were transfered, show the message
@@ -377,7 +378,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
 			var/mob/living/M = loc
-			M << "<span class='notice'>Your [name] goes out, and you empty the ash.</span>"
+			M << "<span class='notice'>Your [name] goes out.</span>"
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off

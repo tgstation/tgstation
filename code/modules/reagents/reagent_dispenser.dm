@@ -160,8 +160,11 @@
 		user << "<span class='warning'>No cups left!</span>"
 		return
 	cups--
-	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
-	user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
+	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/SC = new(loc)
+	if(Adjacent(user)) //not TK
+		user.put_in_hands(SC)
+		user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
+
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))

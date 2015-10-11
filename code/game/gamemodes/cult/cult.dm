@@ -55,8 +55,8 @@
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 20
-	required_enemies = 6
-	recommended_enemies = 6
+	required_enemies = 4
+	recommended_enemies = 4
 	enemy_minimum_age = 14
 
 
@@ -82,10 +82,6 @@
 	else
 		cult_objectives += "eldergod"
 		cult_objectives += "sacrifice"
-
-	if(num_players() >= 30)
-		recommended_enemies = 9	// 3+3+3 - d' magic number o' magic numbars mon
-		acolytes_needed = 15
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs

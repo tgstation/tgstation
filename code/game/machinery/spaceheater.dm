@@ -73,7 +73,7 @@
 			user.unset_machine()
 	else
 		..()
-	return
+
 
 /obj/machinery/space_heater/attack_hand(mob/user)
 	src.add_fingerprint(user)

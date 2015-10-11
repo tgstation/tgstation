@@ -188,9 +188,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return type
 
 
-/datum/disease/Del()
+/datum/disease/Destroy()
 	SSdisease.processing.Remove(src)
-	..()
+	return ..()
 
 
 /datum/disease/proc/IsSpreadByTouch()
