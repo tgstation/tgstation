@@ -15,7 +15,7 @@ z7 = empty space
 
 #if !defined(MAP_FILE)
 
-        #include "map_files\DreamStation\dreamstation03.dmm"
+        #include "map_files\DreamStation\dreamstation04.dmm"
         #include "map_files\DreamStation\z2.dmm"
         /*z2 is literally only edited because converyor belts don't play nice with shuttles*/
         #include "map_files\generic\z3.dmm"
@@ -24,7 +24,7 @@ z7 = empty space
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
-        #define MAP_FILE "dreamstation03.dmm"
+        #define MAP_FILE "dreamstation04.dmm"
         #define MAP_NAME "DreamStation"
 
 #elif !defined(MAP_OVERRIDE)
