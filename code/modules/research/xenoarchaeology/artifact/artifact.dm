@@ -36,6 +36,7 @@
 	density = 1
 	opacity = 1
 	anchored = 1
+	var/busy = 0 //No message spam, thanks
 	var/excavation_level = 0
 	var/datum/geosample/geological_data
 	var/datum/artifact_find/artifact_find
@@ -67,8 +68,12 @@
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice>[user] extends [P] towards [src].","<span class='notice'>You extend [P] towards [src].</span></span>")
-		if(do_after(user, src,40))
+		busy = 1
+		if(do_after(user, src, 40))
+			busy = 0
 			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>"
+		else
+			busy = 0
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -79,32 +84,38 @@
 
 		user << "<span class='rose'>You start [P.drill_verb] [src].</span>"
 
-		if(!do_after(user,src, P.digspeed))
-			return
+		busy = 1
 
-		user << "<span class='notice'>You finish [P.drill_verb] [src].</span>"
-		excavation_level += P.excavation_amount
+		if(do_after(user,src, P.digspeed))
 
-		if(excavation_level > 100)
-			//failure
-			src.visible_message("<span class='danger'>\The [src] suddenly crumbles away.</span>")
-			user << "<span class='rose'>\The [src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>"
-			returnToPool(src)
-			return
+			busy = 0
 
-		if(prob(excavation_level))
-			//success
-			src.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
-			if(artifact_find)
-				var/spawn_type = artifact_find.artifact_find_type
-				var/obj/O = new spawn_type(get_turf(src))
-				if(istype(O,/obj/machinery/artifact))
-					var/obj/machinery/artifact/X = O
-					if(X.my_effect)
-						X.my_effect.artifact_id = artifact_find.artifact_id
-			else
-				user << "<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>"
-			returnToPool(src)
+			user << "<span class='notice'>You finish [P.drill_verb] [src].</span>"
+			excavation_level += P.excavation_amount
+
+			if(excavation_level > 100)
+				//failure
+				src.visible_message("<span class='danger'>\The [src] suddenly crumbles away.</span>")
+				user << "<span class='rose'>\The [src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>"
+				returnToPool(src)
+				return
+
+			if(prob(excavation_level))
+				//success
+				src.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
+				if(artifact_find)
+					var/spawn_type = artifact_find.artifact_find_type
+					var/obj/O = new spawn_type(get_turf(src))
+					if(istype(O,/obj/machinery/artifact))
+						var/obj/machinery/artifact/X = O
+						if(X.my_effect)
+							X.my_effect.artifact_id = artifact_find.artifact_id
+				else
+					user << "<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>"
+				returnToPool(src)
+		else
+			busy = 0
+		return
 
 /obj/structure/boulder/Bumped(AM)
 	. = ..()
