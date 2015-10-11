@@ -159,6 +159,9 @@
 
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
+	//Human Only
+	synd_mob.set_species("human")
+
 	var/radio_freq = SYND_FREQ
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(synd_mob)
