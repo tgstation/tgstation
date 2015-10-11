@@ -95,15 +95,30 @@
 		#undef S1
 
 //slower then list2text, but correctly processes associative lists.
-proc/tg_list2text(list/list, glue=",")
+proc/tg_list2text(list/list, glue = ",")
 	//writepanic("[__FILE__].[__LINE__] \\/proc/tg_list2text() called tick#: [world.time]")
 	if(!istype(list) || !list.len)
 		return
-	var/output
 	for(var/i=1 to list.len)
-		output += (i!=1? glue : null)+(!isnull(list["[list[i]]"])?"[list["[list[i]]"]]":"[list[i]]")
-	return output
+		. += (i != 1 ? glue : null)+	\
+		(!isnull(list["[list[i]]"]) ?	\
+		"[list["[list[i]]"]]" :			\
+		"[list[i]]")
+	return .
 
+// Yeah, so list2text doesn't do assoc values, tg_list2text only does assoc values if they're available, and NTSL needs to stay relatively simple.
+/proc/vg_list2text(var/list/list, var/glue = ", ", var/assoc_glue = " = ")
+	if(!islist(list) || !list.len)
+		return // Valid lists you nerd.
+
+	for(var/i = 1 to list.len)
+		if(isnull(list[list[i]]))
+			. += "[list[i]][glue]"
+		else
+			. += "[list[i]][assoc_glue][list[list[i]]][glue]"
+
+	. = copytext(., 1, length(.) - length(glue) + 1) // Shush. (cut out the glue which is added to the end.)
+	
 // HTTP GET URL query builder thing.
 // list("a"="b","c"="d") -> ?a=b&c=d
 /proc/buildurlquery(list/list,sep="&")
@@ -121,7 +136,7 @@ proc/tg_list2text(list/list, glue=",")
 	return output
 
 //Converts a string into a list by splitting the string at each delimiter found. (discarding the seperator)
-/proc/text2list(text, delimiter="\n")
+/proc/text2list(text, delimiter = "\n")
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/text2list() called tick#: [world.time]")
 	var/delim_len = length(delimiter)
 	if(delim_len < 1) return list(text)
