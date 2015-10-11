@@ -87,6 +87,8 @@
 		cell = new /obj/item/weapon/stock_parts/cell(src)
 		cell.maxcharge = 7500
 		cell.charge = 7500
+		cell.name = "cyborg power cell"
+		cell.desc = "This cell has a power rating of 7500, and you should put it back in the borg."
 
 	if(lawupdate)
 		make_laws()
