@@ -332,12 +332,11 @@
 	else
 		O.clean_blood()
 
-	if(isturf(loc))
-		var/turf/turf = get_turf(src)
-		turf.clean_blood()
-		for(var/obj/effect/E in turf)
-			if(istype(E, /obj/effect/rune) || istype(E, /obj/effect/decal/cleanable) || istype(E, /obj/effect/overlay))
-				qdel(E)
+	var/turf/turf = get_turf(src)
+	turf.clean_blood()
+	for(var/obj/effect/E in turf)
+		if(istype(E, /obj/effect/rune) || istype(E, /obj/effect/decal/cleanable) || istype(E, /obj/effect/overlay))
+			qdel(E)
 
 /obj/machinery/shower/process()
 	if(!on)
