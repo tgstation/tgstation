@@ -91,9 +91,22 @@
 		for(var/obj/item/weapon/implant/I in target)
 			if(I != src)
 				qdel(I)
-		if(target.stat != DEAD)		
-			if(target.mind in ticker.mode.get_gangsters())		
-				ticker.mode.remove_gangster(target.mind)
+
+		var/success
+		if(target.stat != DEAD)
+			if(target.mind in ticker.mode.get_gangsters())
+				if(ticker.mode.remove_gangster(target.mind,0,1))
+					success = 1	//Was not a gang boss, convert as usual
+			else
+				success = 1
+
+		if(!target.mind)
+			return 0
+
+		if(ishuman(target))
+			if(!success)
+				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
+
 		qdel(src)
 		return -1
 
