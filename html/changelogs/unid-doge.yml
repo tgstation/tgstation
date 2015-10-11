@@ -1,0 +1,8 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+  - tweak: Chickens are now bigger - this means they can be buckled into chairs and beds!
+  - imageadd: Added in-hands for corgis.
+  - bugfix: Fixed a bug which happened when you tried to pick up a larger animal while holding something.
