@@ -31,7 +31,6 @@
 	cell_power_per_energy = 50
 
 	schematics			= list(
-	/datum/rcd_schematic/rsf/dosh,
 	/datum/rcd_schematic/rsf/glass,
 	/datum/rcd_schematic/rsf/flask,
 	/datum/rcd_schematic/rsf/paper,
@@ -40,6 +39,7 @@
 	/datum/rcd_schematic/rsf/cards,
 	/datum/rcd_schematic/rsf/cardboard
 	)
+	//datum/rcd_schematic/rsf/dosh,
 /obj/item/device/rcd/borg/rsf/attack_self(var/mob/living/user)
 	if(!selected || user.shown_schematics_background || !selected.show(user))
 		user.hud_used.toggle_show_schematics_display(schematics["Service"], 0, src)
