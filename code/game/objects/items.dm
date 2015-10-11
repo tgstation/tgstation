@@ -658,9 +658,18 @@
 	if(!ishuman(user))
 		user.show_message("You can't wield \the [src] as it's too heavy.")
 		return
+
 	if(!wielded)
 		wielded = getFromPool(/obj/item/offhand)
-		if(user.put_in_inactive_hand(wielded) || (!inactive && user.put_in_active_hand(wielded)))
+
+		//Long line ahead, let's break that up!
+		//
+		//((user.get_active_hand() in list(null, src)) && user.put_in_inactive_hand(wielded))
+		//By default this proc assumes that the wielded item is held in the ACTIVE hand!
+		//(user.get_active_hand() in list(null, src)) is the part which checks whether the ACTIVE hand is either nothing, or the wielded item. Otherwise, abort!
+
+		//The second half is the same, except that the proc assumes that the wielded item is held in the INACTIVE hand. So the INACTIVE hand is checked for holding either nothing or wielded item.
+		if(((user.get_active_hand() in list(null, src)) && user.put_in_inactive_hand(wielded)) || (!inactive && ((user.get_inactive_hand() in list(null, src)) && user.put_in_active_hand(wielded))))
 			wielded.attach_to(src)
 			update_wield(user)
 			return 1

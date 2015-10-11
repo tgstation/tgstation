@@ -95,3 +95,10 @@
 		item_state = initial(mouse.icon_state) //Initial icon states are "mouse_gray", "mouse_white", etc
 		if(!item_state in list("mouse_white", "mouse_brown", "mouse_gray"))
 			item_state = "mouse_gray"
+
+//CORGI
+
+/obj/item/weapon/holder/animal/corgi
+	name = "corgi holder"
+	desc = "Icon states yay!"
+	item_state = "corgi"
