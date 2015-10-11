@@ -103,7 +103,7 @@
 		A.power_environ = 0
 		A.power_change()
 
-	for(var/obj/machinery/power/apc/C in machines)
+	for(var/obj/machinery/power/apc/C in apcs_list)
 		if(C.cell && C.z == ZLEVEL_STATION)
 			var/area/A = get_area(C)
 

@@ -546,7 +546,7 @@ var/global/list/g_fancy_list_of_types = null
 		if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
-	for(var/obj/machinery/power/apc/APC in machines)
+	for(var/obj/machinery/power/apc/APC in apcs_list)
 		var/area/A = get_area(APC)
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
