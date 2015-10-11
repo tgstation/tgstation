@@ -499,6 +499,8 @@
 	flags = TWOHANDABLE | MUSTTWOHAND | FPRINT
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ram"
+	item_state = "ram"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
 	siemens_coefficient = 0
 	throwforce = 15
 	w_class = 3
