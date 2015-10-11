@@ -266,7 +266,8 @@
 					step(C, olddir)
 					C.spin(1,1)
 		if(C.lying != oldlying) //did we actually fall?
-			C.adjustBruteLoss(2)
+			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/singularity_act()
