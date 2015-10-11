@@ -26,10 +26,10 @@
 	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	if (H && !qdeleted(H))
 		spawn(0)
-		for(var/obj/item/W in H)
-			H.unEquip(W)
-			if(prob(50))
-				step(W, pick(alldirs))
+			for(var/obj/item/W in H)
+				H.unEquip(W)
+				if(prob(50))
+					step(W, pick(alldirs))
 		H.hair_style = "Bald"
 		H.update_hair()
 		H.blood_max = 5
