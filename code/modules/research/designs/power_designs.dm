@@ -22,7 +22,7 @@
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
 	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/high
-	category = list("Misc","Power Designs","Machinery","hacked")
+	category = list("Misc","Power Designs")
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
