@@ -1759,7 +1759,7 @@ mob/proc/assess_threat()
 
 mob/proc/walking()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/walking() called tick#: [world.time]")
-	return !(lying || flying)
+	return !(lying || flying || locked_to)
 
 /mob/proc/dexterity_check()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")
