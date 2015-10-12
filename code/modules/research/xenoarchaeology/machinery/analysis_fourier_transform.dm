@@ -1,10 +1,22 @@
 
 // This machine tells the distance to a nearby artifact, if there is one
 
-obj/machinery/anomaly/fourier_transform
+/obj/machinery/anomaly/fourier_transform
 	name = "Fourier Transform spectroscope"
 
-obj/machinery/anomaly/fourier_transform/ScanResults()
+/obj/machinery/anomaly/fourier_transform/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/fourier_transform/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

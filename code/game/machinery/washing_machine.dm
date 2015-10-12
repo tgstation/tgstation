@@ -20,8 +20,24 @@
 	//1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
+	var/speed_coefficient = 1
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE
+
+/obj/machinery/washing_machine/New()
+	..()
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/washing_machine,
+		/obj/item/weapon/stock_parts/matter_bin,
+		/obj/item/weapon/stock_parts/manipulator
+	)
+	RefreshParts()
+
+/obj/machinery/washing_machine/RefreshParts()
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+	speed_coefficient = 1/manipcount
 
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
@@ -38,7 +54,7 @@
 	else
 		wash_state = 5
 	update_icon()
-	sleep(200)
+	sleep(200*speed_coefficient)
 	for(var/atom/A in contents)
 		A.clean_blood()
 

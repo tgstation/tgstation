@@ -9,6 +9,8 @@
 
 	var/scanning = 0
 	var/pause = 0
+	var/process_time = 5
+	var/minimum_growth = 50
 
 	var/obj/item/weapon/virusdish/dish = null
 
@@ -25,6 +27,15 @@
 	)
 
 	RefreshParts()
+
+/obj/machinery/disease2/diseaseanalyser/RefreshParts()
+	var/scancount = 0
+	var/lasercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/micro_laser)) lasercount += SP.rating-1
+	minimum_growth = initial(minimum_growth) - (scancount * 3)
+	process_time = initial(process_time) - lasercount
 
 /obj/machinery/disease2/diseaseanalyser/attackby(var/obj/I as obj, var/mob/user as mob)
 	..()
@@ -64,9 +75,9 @@
 			visible_message("\The [src.name] prints a sheet of paper")
 
 	else if(dish && !scanning && !pause)
-		if(dish.virus2 && dish.growth > 50)
+		if(dish.virus2 && dish.growth > minimum_growth)
 			dish.growth -= 10
-			scanning = 5
+			scanning = process_time
 			icon_state = "analyser_processing"
 		else
 			pause = 1

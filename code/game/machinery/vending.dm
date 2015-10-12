@@ -38,6 +38,7 @@
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
+	var/shoot_chance = 2 //How often do we throw items?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 	var/delay_product_spawn // If set, uses sleep() in product spawn proc (mostly for seeds to retrieve correct names).
 	// To be filled out at compile time
@@ -117,6 +118,12 @@
 		initialize()
 
 	return
+
+/obj/machinery/vending/RefreshParts()
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+	shoot_chance = manipcount * 3
 
 /obj/machinery/vending/Destroy()
 	if(wires)
@@ -821,7 +828,7 @@
 		src.speak(slogan)
 		src.last_slogan = world.time
 
-	if(src.shoot_inventory && prob(2))
+	if(src.shoot_inventory && prob(shoot_chance))
 		src.throw_item()
 
 	return

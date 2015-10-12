@@ -5,6 +5,8 @@
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/obj/mecha/recharging_mecha = null
+	var/capacitor_max = 0 //How much can be stored
+	var/capacitor_stored = 0 //How much is presently stored
 	layer = TURF_LAYER + 0.1 //Just above the floor
 	anchored = 1
 	density = 0
@@ -17,6 +19,22 @@
 								/obj/item/weapon/stock_parts/scanning_module,
 								/obj/item/weapon/stock_parts/capacitor,
 								/obj/item/weapon/stock_parts/capacitor)
+
+/obj/machinery/mech_bay_recharge_floor/RefreshParts()
+	var/capcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/capacitor)) capcount += SP.rating-1
+	capacitor_max = initial(capacitor_max)+(capcount * 750)
+
+/obj/machinery/mech_bay_recharge_floor/process()
+	..()
+	if(recharging_mecha&&capacitor_stored)
+		recharging_mecha.give_power(capacitor_stored)
+		capacitor_stored = 0
+	else if(capacitor_stored<capacitor_max && recharge_port && !recharging_mecha)
+		var/delta = min(recharge_port.pr_recharger.max_charge,capacitor_max-capacitor_stored)
+		use_power(delta*150)
+		capacitor_stored += delta
 
 /obj/machinery/mech_bay_recharge_floor/Crossed(var/obj/mecha/mecha)
 	. = ..()
@@ -73,11 +91,19 @@
 
 	component_parts = newlist(/obj/item/weapon/circuitboard/mech_bay_power_port,
 								/obj/item/weapon/stock_parts/micro_laser,
-								/obj/item/weapon/stock_parts/scanning_module,
+								/obj/item/weapon/stock_parts/micro_laser,
 								/obj/item/weapon/stock_parts/console_screen)
 
 	pr_recharger = new /datum/global_iterator/mech_bay_recharger(null,0)
+
+	RefreshParts()
 	return
+
+/obj/machinery/mech_bay_recharge_port/RefreshParts()
+	var/lasercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/micro_laser)) lasercount += SP.rating-1
+	set_voltage(45+lasercount*10)
 
 /obj/machinery/mech_bay_recharge_port/proc/start_charge(var/obj/mecha/recharging_mecha)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mech_bay_recharge_port/proc/start_charge() called tick#: [world.time]")
@@ -224,15 +250,6 @@
 		output += "<span class='rose'>Mech Bay Power Port not initialized.</span><br>"
 	else
 		output += "<b>Mech Bay Power Port Status: </b>[recharge_port.active()?"Now charging":"On hold"]<br>"
-
-	/*
-	output += {"<hr>
-					<b>Settings:</b>
-					<div style='margin-left: 15px;'>
-					<b>Start sequence on succesful init: </b><a href='?src=\ref[src];autostart=1'>[autostart?"On":"Off"]</a><br>
-					<b>Recharge Port Voltage: </b><a href='?src=\ref[src];voltage=30'>Low</a> - <a href='?src=\ref[src];voltage=45'>Medium</a> - <a href='?src=\ref[src];voltage=60'>High</a><br>
-					</div>"}
-	*/
 
 	output += "</ body></html>"
 	user << browse(output, "window=mech_bay_console")
