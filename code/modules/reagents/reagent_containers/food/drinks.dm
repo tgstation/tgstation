@@ -709,7 +709,15 @@
 	src.pixel_x = rand(-10, 10)
 	src.pixel_y = rand(-10, 10)
 
-
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink
+	name = "Brawndo"
+	icon_state = "brawndo"
+	desc = "It has what plants crave! Electrolytes!"
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink/New()
+	..()
+	reagents.add_reagent("sportdrink", 30)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/coloring
 	name = "Vial of Food Coloring"

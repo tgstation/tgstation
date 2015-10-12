@@ -1460,6 +1460,7 @@
 #include "code\modules\power\smes.dm"
 #include "code\modules\power\solar.dm"
 #include "code\modules\power\terminal.dm"
+#include "code\modules\power\treadmill.dm"
 #include "code\modules\power\turbine.dm"
 #include "code\modules\power\antimatter\containment_jar.dm"
 #include "code\modules\power\antimatter\control.dm"

@@ -452,6 +452,16 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/capacitor" = 3,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
+/obj/item/weapon/circuitboard/treadmill
+	name = "Circuit Board (Treadmill Generator)"
+	build_path = "/obj/machinery/power/treadmill"
+	board_type = "machine"
+	origin_tech = "engineering=2;powerstorage=4"
+	frame_desc = "Requires 4 capacitors and 1 console screen."
+	req_components = list (
+							"/obj/item/weapon/stock_parts/capacitor" = 4,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
 /obj/item/weapon/circuitboard/chem_dispenser
 	name = "Circuit Board (Chemistry Dispenser)"
 	build_path = "/obj/machinery/chem_dispenser"
