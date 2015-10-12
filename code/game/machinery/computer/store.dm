@@ -30,6 +30,7 @@
 			/datum/storeitem/robotnik_jumpsuit,
 			),
 		"Luxury" = list(
+			/datum/storeitem/wallet,
 			/datum/storeitem/photo_album,
 			/datum/storeitem/painting,
 			),

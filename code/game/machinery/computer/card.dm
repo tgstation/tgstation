@@ -293,6 +293,7 @@
 						modify.registered_name = temp_name
 					else
 						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+					modify.update_virtual_wallet()
 			nanomanager.update_uis(src)
 
 		if ("account")
