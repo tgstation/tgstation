@@ -1364,6 +1364,7 @@
 #include "code\modules\mob\living\simple_animal\borer\egg.dm"
 #include "code\modules\mob\living\simple_animal\borer\unlocks.dm"
 #include "code\modules\mob\living\simple_animal\borer\verbs_attached.dm"
+#include "code\modules\mob\living\simple_animal\borer\verbs_beheaded.dm"
 #include "code\modules\mob\living\simple_animal\borer\verbs_detached.dm"
 #include "code\modules\mob\living\simple_animal\friendly\cat.dm"
 #include "code\modules\mob\living\simple_animal\friendly\corgi.dm"

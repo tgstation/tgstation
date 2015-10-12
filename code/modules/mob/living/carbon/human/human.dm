@@ -1136,6 +1136,9 @@
 				if(H.brainmob.mind)
 					H.brainmob.mind.transfer_to(src)
 					del(H)
+				if(H.borer)
+					H.borer.perform_infestation(src)
+					H.borer=null
 
 	for(var/datum/organ/internal/I in internal_organs)
 		I.damage = 0

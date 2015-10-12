@@ -1,3 +1,6 @@
+#define BORER_MODE_ATTACHED 1
+#define BORER_MODE_DETACHED 0
+#define BORER_MODE_BEHEADED 2
 
 var/global/borer_chem_types = typesof(/datum/borer_chem) - /datum/borer_chem
 var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlockable/borer - /datum/unlockable/borer/chem_unlock - /datum/unlockable/borer/verb_unlock
@@ -42,6 +45,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	var/list/avail_chems=list()
 	var/list/avail_abilities=list()         // Unlocked powers.
 	var/list/attached_verbs=list(/obj/item/verbs/borer/attached)
+	var/list/beheaded_verbs=list(/obj/item/verbs/borer/beheaded)
 	var/list/detached_verbs=list(/obj/item/verbs/borer/detached)
 	var/numChildren=0
 
@@ -61,7 +65,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 
-	update_verbs(0)
+	update_verbs(BORER_MODE_DETACHED)
 
 	for(var/chemtype in borer_chem_types)
 		var/datum/borer_chem/C = new chemtype()
@@ -91,16 +95,19 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
-/mob/living/simple_animal/borer/proc/update_verbs(var/attached)
+/mob/living/simple_animal/borer/proc/update_verbs(var/mode)
 	if(verb_holders.len>0)
 		for(var/VH in verb_holders)
 			qdel(VH)
 	verb_holders=list()
 	var/list/verbtypes = list()
-	if(attached)
-		verbtypes=attached_verbs
-	else
-		verbtypes=detached_verbs
+	switch(mode)
+		if(BORER_MODE_ATTACHED) // 1
+			verbtypes=attached_verbs
+		if(BORER_MODE_DETACHED) // 0
+			verbtypes=detached_verbs
+		if(BORER_MODE_BEHEADED) // 2
+			verbtypes=beheaded_verbs
 	for(var/verbtype in verbtypes)
 		verb_holders+=new verbtype(src)
 
@@ -445,13 +452,23 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	host.reagents.add_reagent(chem.name, units)
 	chemicals -= chem.cost*units
 
+// We've been moved to someone's head.
+/mob/living/simple_animal/borer/proc/infest_head(var/obj/item/weapon/organ/head/head)
+	detach()
+	head.borer=src
+	loc=head
+
+	update_verbs(BORER_MODE_BEHEADED)
+
+
 /mob/living/simple_animal/borer/proc/abandon_host()
 	set category = "Alien"
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/simple_animal/borer/proc/abandon_host() called tick#: [world.time]")
 
-	if(!host)
+	var/in_head= istype(loc, /obj/item/weapon/organ/head)
+	if(!host && !in_head)
 		src << "<span class='warning'>You are not inside a host body.</span>"
 		return
 
@@ -459,7 +476,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		src << "<span class='warning'>You cannot leave your host in your current state.</span>"
 		return
 
-	if(research.unlocking)
+	if(research.unlocking && !in_head)
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
@@ -470,13 +487,16 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 	spawn(200)
 
-		if(!host || !src) return
+		if((!host && !in_head) || !src) return
 
 		if(src.stat)
 			src << "<span class='warning'>You cannot abandon [host] in your current state.</span>"
 			return
 
-		src << "<span class='info'>You wiggle out of [host]'s ear and plop to the ground.</span>"
+		if(in_head)
+			src << "<span class='info'>You wiggle out of the ear of \the [loc] and plop to the ground.</span>"
+		else
+			src << "<span class='info'>You wiggle out of [host]'s ear and plop to the ground.</span>"
 
 		detach()
 
@@ -518,7 +538,7 @@ mob/living/simple_animal/borer/proc/detach()
 		host_brain.real_name = "host brain"
 
 	host = null
-	update_verbs(0)
+	update_verbs(BORER_MODE_DETACHED)
 
 /client/proc/borer_infest()
 	set category = "Alien"
@@ -600,7 +620,7 @@ mob/living/simple_animal/borer/proc/detach()
 		error("[src]: Unable to perform_infestation on [M]!")
 		return 0
 
-	update_verbs(1) // Must be called before being removed from turf. (BYOND verb transfer bug)
+	update_verbs(BORER_MODE_ATTACHED) // Must be called before being removed from turf. (BYOND verb transfer bug)
 
 	src.host = M
 	src.loc = M
