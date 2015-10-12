@@ -1,6 +1,2 @@
 author: Duny
-changes: 
-  - bugfix: Removed the leftover walls under mechbay and science entrance doors.
-  - tweak: Hydrophonics and the kitchen are now only separated by two windoors, no table. This allows the chef and botanists to cooperate easily if they so wish by leaving the windoors open, or to access each room easily in case of no botanists/no chefs by simply asking silicons to open the windoor you don't have access to. Still allows for the same functionality as the table too.
-  - tweak: Heavily modified the list of weapons available at round end.
-  - tweak: Nerfed the entrance of the gooncode facility. Buffed the second room (more of a fix really). Remade the last room, hopefully the emitters cause no problems now. Modified rewards a bit (on top of the gooncode that is), only one is rng-reliant for now.
+changes: []
