@@ -228,7 +228,6 @@ proc/populate_seed_list()
 			"cryoxadone",
 			"blood",
 			"water",
-			"potassium",
 			"plasticide",
 			"slimetoxin",
 			"aslimetoxin",
