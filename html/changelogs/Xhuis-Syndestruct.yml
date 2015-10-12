@@ -1,0 +1,5 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Syndicate cyborgs now possess the ability to self-destruct to prevent themselves from falling into enemy hands. This can be initiated from the Robot Commands tab."
