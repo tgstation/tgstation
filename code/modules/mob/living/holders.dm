@@ -102,3 +102,9 @@
 	name = "corgi holder"
 	desc = "Icon states yay!"
 	item_state = "corgi"
+
+//CARP
+
+/obj/item/weapon/holder/animal/carp
+	name = "carp holder"
+	item_state = "carp"
