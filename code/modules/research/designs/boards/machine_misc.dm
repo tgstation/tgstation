@@ -105,4 +105,7 @@
 	name = "Circuit Design (Washing Machine)"
 	desc = "Allows for the construction of circuit boards used to build a washing machine."
 	id = "washingmachine"
+	req_tech = list("materials" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/washing_machine
