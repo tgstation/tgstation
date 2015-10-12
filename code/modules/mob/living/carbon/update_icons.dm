@@ -101,24 +101,26 @@
 
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
+
 	if(istype(wear_mask, /obj/item/clothing/mask))
 
-		var/layer2use
-		if(wear_mask.alternate_worn_layer)
-			layer2use = wear_mask.alternate_worn_layer
-		if(!layer2use)
-			layer2use = FACEMASK_LAYER
+		if(!(head && (head.flags_inv & HIDEMASK)))
+			var/layer2use
+			if(wear_mask.alternate_worn_layer)
+				layer2use = wear_mask.alternate_worn_layer
+			if(!layer2use)
+				layer2use = FACEMASK_LAYER
 
-		var/image/standing
-		if(wear_mask.alternate_worn_icon)
-			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
+			var/image/standing
+			if(wear_mask.alternate_worn_icon)
+				standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
+			if(!standing)
+				standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
 
-		overlays_standing[FACEMASK_LAYER]	= standing
+			overlays_standing[FACEMASK_LAYER]	= standing
 
-		if(wear_mask.blood_DNA && (wear_mask.body_parts_covered & HEAD))
-			standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+			if(wear_mask.blood_DNA && (wear_mask.body_parts_covered & HEAD))
+				standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 		return wear_mask
 
 /mob/living/carbon/update_inv_back()
