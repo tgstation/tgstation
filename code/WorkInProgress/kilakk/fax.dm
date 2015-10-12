@@ -19,19 +19,36 @@ var/list/alldepartments = list("Central Command")
 	var/authenticated = 0
 
 	var/obj/item/weapon/paper/tofax = null // what we're sending
-	var/sendcooldown = 0 // to avoid spamming fax messages
 	var/faxtime = 0 //so people can know when we can fax again!
+	var/cooldown_time = 900
 
 	var/department = "Unknown" // our department
 
 	var/dpt = "Central Command" // the department we're sending to
 
 /obj/machinery/faxmachine/New()
-	..()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/fax,
+		/obj/item/weapon/stock_parts/subspace/ansible,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
 	allfaxes += src
+
+	if(department == "Unknown")
+		department = "Fax #[allfaxes.len]"
 
 	if( !("[department]" in alldepartments) )
 		alldepartments += department
+
+/obj/machinery/faxmachine/RefreshParts()
+	var/scancount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+	cooldown_time = initial(cooldown_time) - 300*scancount
 
 /obj/machinery/faxmachine/attack_ghost(mob/user as mob)
 	usr << "<span class='warning'>Nope.</span>"
@@ -69,7 +86,7 @@ var/list/alldepartments = list("Central Command")
 		if(tofax)
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><br><br>"
 
-			if(sendcooldown)
+			if(faxtime>world.timeofday)
 				dat += "<b>Transmitter arrays realigning. Please stand by for [(faxtime - world.timeofday) / 10] second\s.</b><br>"
 
 			else
@@ -81,7 +98,7 @@ var/list/alldepartments = list("Central Command")
 				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dpt]</a><br>"
 
 		else
-			if(sendcooldown)
+			if(faxtime>world.timeofday)
 				dat += "Please insert paper to send via secure connection.<br><br>"
 				dat += "<b>Transmitter arrays realigning. Please stand by for [(faxtime - world.timeofday) / 10] second\s.</b><br>"
 			else
@@ -111,16 +128,12 @@ var/list/alldepartments = list("Central Command")
 							new /obj/item/demote_chip(src.loc)
 						if(findtext(tofax.name,"Commendation"))
 							new /obj/item/mounted/poster(src.loc,-1)
-				sendcooldown = 900
 
 			else
 				SendFax(tofax.info, tofax.name, usr, dpt)
-				sendcooldown = 600
 
 			usr << "Message transmitted successfully."
-			faxtime = world.timeofday + sendcooldown
-			spawn(sendcooldown) // cooldown time
-				sendcooldown = 0
+			faxtime = world.timeofday + cooldown_time
 
 	if(href_list["remove"])
 		if(tofax)

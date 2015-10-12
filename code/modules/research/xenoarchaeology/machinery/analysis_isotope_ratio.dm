@@ -1,13 +1,25 @@
 
 // This machine shows the age for newer finds
 
-obj/machinery/anomaly/isotope_ratio
+/obj/machinery/anomaly/isotope_ratio
 	name = "Isotope ratio spectrometer"
 	desc = "A specialised, complex analysis machine."
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 
-obj/machinery/anomaly/isotope_ratio/ScanResults()
+/obj/machinery/anomaly/isotope_ratio/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom/iso,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/isotope_ratio/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

@@ -47,13 +47,3 @@
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/processor
-
-/datum/design/chicken_processor
-	name = "Circuit Design (Chicken Processor)"
-	desc = "Allows for the construction of circuit boards used to build a Chicken Processor."
-	id = "chicken"
-	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	category = "Machine Boards"
-	build_path = /obj/item/weapon/circuitboard/chicken_processor

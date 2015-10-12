@@ -18,6 +18,8 @@
 
 	var/foodsupply = 0
 	var/toxins = 0
+	var/mutatechance = 5
+	var/growthrate = 3
 
 	var/virusing
 
@@ -37,6 +39,15 @@
 	)
 
 	RefreshParts()
+
+/obj/machinery/disease2/incubator/RefreshParts()
+	var/scancount = 0
+	var/lasercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/micro_laser)) lasercount += SP.rating-1
+	mutatechance = initial(mutatechance) + scancount
+	growthrate = initial(growthrate) + lasercount
 
 /obj/machinery/disease2/incubator/attackby(var/obj/B as obj, var/mob/user as mob)
 	..()
@@ -130,22 +141,25 @@
 	var/string = "Off"
 	if(on)
 		string = "On"
-	dat += "Power status : <A href='?src=\ref[src];power=1'>[string]</a>"
+	dat += "Power status: <A href='?src=\ref[src];power=1'>[string]</a>"
 	dat += "<BR>"
-	dat += "Food supply : [foodsupply]"
+	dat += "Food supply: [foodsupply]"
 	dat += "<BR>"
-	dat += "Radiation Levels : [radiation] RADS : <A href='?src=\ref[src];rad=1'>Radiate</a>"
+	dat += "Radiation levels: [radiation] RADS (<A href='?src=\ref[src];rad=1'>Radiate</a>)"
 	dat += "<BR>"
-	dat += "Toxins : [toxins]"
+	dat += "Toxins: [toxins]"
+	if(dish)
+		dat += "<BR>"
+		dat += "Growth level: [dish.growth]"
 	dat += "<BR><BR>"
 	if(beaker)
-		dat += "Eject chemicals : <A href='?src=\ref[src];ejectchem=1'> Eject</a>"
+		dat += "Eject chemicals: <A href='?src=\ref[src];ejectchem=1'> Eject</a>"
 		dat += "<BR>"
 	if(dish)
-		dat += "Eject Virus dish : <A href='?src=\ref[src];ejectdish=1'> Eject</a>"
+		dat += "Eject Virus dish: <A href='?src=\ref[src];ejectdish=1'> Eject</a>"
 		dat += "<BR>"
 		if(beaker)
-			dat += "Breed viral culture in beaker : <A href='?src=\ref[src];virus=1'> Start</a>"
+			dat += "Breed viral culture in beaker: <A href='?src=\ref[src];virus=1'> Start</a>"
 			dat += "<BR>"
 	dat += "<BR><BR>"
 	dat += "<A href='?src=\ref[src];flush=1'>Flush system</a><BR>"
@@ -162,7 +176,7 @@
 			icon_state = "incubator"
 		if(foodsupply)
 			foodsupply -= 1
-			dish.growth += 3
+			dish.growth += growthrate
 			if(dish.growth >= 100)
 				if(icon_state != "incubator_fed")
 					icon_state = "incubator_fed"
@@ -170,7 +184,7 @@
 					last_notice = world.time
 					alert_noise("ping")
 		if(radiation)
-			if(radiation > 50 & prob(5))
+			if(radiation > 50 & prob(mutatechance))
 				dish.virus2.log += "<br />[timestamp()] MAJORMUTATE (incubator rads)"
 				dish.virus2.majormutate()
 				if(dish.info)
@@ -179,7 +193,7 @@
 				alert_noise("beep")
 				flick("incubator_mut", src)
 
-			else if(prob(5))
+			else if(prob(mutatechance))
 				dish.virus2.minormutate()
 			radiation -= 1
 		if(toxins && prob(5))

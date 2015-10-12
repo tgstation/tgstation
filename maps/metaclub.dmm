@@ -7071,7 +7071,7 @@
 "cFY" = (/obj/structure/table,/obj/item/weapon/storage/box/beakers{pixel_x = 2; pixel_y = 2},/obj/item/weapon/storage/box/syringes,/obj/item/device/radio/intercom{pixel_x = -28; pixel_y = 0},/obj/item/weapon/reagent_containers/spray/cleaner,/obj/item/weapon/reagent_containers/dropper,/turf/simulated/floor{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
 "cFZ" = (/obj/structure/table,/obj/machinery/computer/med_data/laptop,/turf/simulated/floor{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
 "cGa" = (/obj/machinery/computer/diseasesplicer,/turf/simulated/floor{icon_state = "greenfull"},/area/medical/virology)
-"cGb" = (/obj/machinery/computer/centrifuge,/turf/simulated/floor{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
+"cGb" = (/obj/machinery/centrifuge,/turf/simulated/floor{dir = 9; icon_state = "whitegreen"},/area/medical/virology)
 "cGc" = (/obj/structure/table,/obj/item/clothing/gloves/latex,/obj/item/device/healthanalyzer,/obj/item/clothing/glasses/hud/health,/obj/structure/reagent_dispensers/virusfood{density = 0; pixel_x = 0; pixel_y = 30},/obj/item/weapon/reagent_containers/syringe/antiviral,/turf/simulated/floor{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
 "cGd" = (/obj/structure/table,/obj/item/weapon/bananapeel,/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/medical/break_room)
 "cGe" = (/obj/machinery/atmospherics/unary/vent_pump{dir = 1; on = 1},/turf/simulated/floor{tag = "icon-cafeteria (NORTHEAST)"; icon_state = "cafeteria"; dir = 5},/area/medical/break_room)
