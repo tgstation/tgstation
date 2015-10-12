@@ -232,6 +232,16 @@
 	else
 		del(src)
 
+/obj/machinery/vending/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	switch(severity)
+		if(1.0)
+			malfunction()
+		if(2.0)
+			if(prob(50)) malfunction()
+		if(3.0)
+			if(prob(25)) malfunction()
 
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/build_inventory() called tick#: [world.time]")
@@ -548,8 +558,8 @@
 			stat |= BROKEN
 			src.update_vicon()
 			return
-		if(prob(4))
-			src.throw_item()
+		if(prob(2)) //Jackpot!
+			malfunction()
 		if(prob(2))
 			src.TurnOff(600) //A whole minute
 		/*if(prob(1))
@@ -860,18 +870,10 @@
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/malfunction() called tick#: [world.time]")
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-
-		while(R.amount>0)
-			new dump_path(src.loc)
-			R.amount--
-		break
-
+	var/lost_inventory = rand(1,12)
+	while(lost_inventory>0)
+		throw_item()
+		lost_inventory--
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
 	return
@@ -884,22 +886,25 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
+	var/list/throwable = product_records
+	var/tries = 10 //Give up eventually
+	if(extended_inventory) throwable += hidden_records
 
+	while(tries)
+		var/datum/data/vending_product/R = pick(throwable)
+		var/obj/item/dump_path = R.product_path
+		if(R.amount <= 0 || !dump_path)
+			tries--
+			continue
 		R.amount--
 		throw_item = new dump_path(src.loc)
-		break
-	if (!throw_item)
-		return 0
-	spawn(0)
-		throw_item.throw_at(target, 16, 3)
-	src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
-	return 1
+		if(!throw_item)
+			return 0
+		spawn(0)
+			throw_item.throw_at(target, 16, 3)
+		src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
+		return 1
+	return 0
 
 /obj/machinery/vending/update_icon()
 	if(panel_open)

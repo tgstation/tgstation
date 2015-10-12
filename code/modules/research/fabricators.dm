@@ -163,6 +163,7 @@
 	return counter
 
 /obj/machinery/r_n_d/fabricator/process()
+	..()
 	if(busy || stopped || being_built)
 		return
 	if(queue.len==0)
