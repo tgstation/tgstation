@@ -26,7 +26,7 @@ var/const/RND_WIRE_HACK = 4
 		if(RND_WIRE_DISABLE)
 			rnd.disabled = !rnd.disabled
 		if(RND_WIRE_SHOCK)
-			rnd.shocked = !rnd.shocked
+			rnd.shocked += 30
 		if(RND_WIRE_HACK)
 			rnd.hacked = !rnd.hacked
 			rnd.update_hacked()
@@ -35,6 +35,9 @@ var/const/RND_WIRE_HACK = 4
 	var/obj/machinery/r_n_d/rnd = holder
 	switch(index)
 		if(RND_WIRE_DISABLE)
-			rnd.disabled = !rnd.disabled
+			rnd.disabled = !mended
 		if(RND_WIRE_SHOCK)
-			rnd.shocked = !rnd.shocked
+			rnd.shocked = (mended ? 0 : -1)
+		if(RND_WIRE_HACK)
+			rnd.hacked = 0
+			rnd.update_hacked()

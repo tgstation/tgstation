@@ -125,6 +125,8 @@ var/global/mulebot_count = 0
 		user.drop_item(C, src)
 		cell = C
 		updateDialog()
+	else if(istype(I,/obj/item/weapon/wirecutters)||istype(I,/obj/item/device/multitool))
+		attack_hand(user)
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
 			user << "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>"

@@ -1,0 +1,11 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - tweak: Vending machines now throw at random from their products (and if unlocked, contraband), instead of just the first item from products alone.
+ - rscadd: Tweaked the malfunction proc, which now fires on emp_act as well, and a (2%) chance when kicking, too.
+ - rscadd: The wires display for MULEbots is much more verbose.
+ - rscadd: You can use a multitool or wirecutters on a mulebot to get the wires prompt, instead of just your hand.
+ - bugfix: Cleared up some ambiguity for radio transmitter wires.
+ - bugfix: Transmitters now don't get unresponsive if you cut the LINK wire.
+ - rscadd: The wires display for the particle accelerator is somewhat more verbose.
+ - bugfix: Fabricator (e.g.: Autolathe) wires behave much more rationally. Cut shock wire for indefinite shock, pulse for 30 second shock. The machine can no longer be powered at all if the power line is cut. Cutting the contraband wire resets it to default.
