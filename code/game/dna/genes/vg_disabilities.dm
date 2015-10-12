@@ -9,13 +9,12 @@
 		..()
 		block=LOUDBLOCK
 
+	OnSay(var/mob/M, var/datum/speech/speech)
+		speech.message = replacetext(speech.message,".","!")
+		speech.message = replacetext(speech.message,"?","?!")
+		speech.message = replacetext(speech.message,"!","!!")
 
-
-	OnSay(var/mob/M, var/message)
-		message = replacetext(message,".","!")
-		message = replacetext(message,"?","?!")
-		message = replacetext(message,"!","!!")
-		return uppertext(message)
+		speech.message = uppertext(speech.message)
 
 
 /datum/dna/gene/disability/speech/whisper
@@ -34,9 +33,9 @@
 			return 0
 		return ..(M,flags)
 
-	OnSay(var/mob/M, var/message)
-		return message
+	OnSay(var/mob/M, var/datum/speech/speech)
 		//M.whisper(message)
+		return 0
 
 
 /datum/dna/gene/disability/dizzy
@@ -67,6 +66,5 @@
 		..()
 		block=SANSBLOCK
 
-
-	OnSay(var/mob/M, var/message)
-		return "<span class='sans'>[message]</span>"
+	OnSay(var/mob/M, var/datum/speech/speech)
+		speech.message_classes.Add("sans") // SPEECH 2.0!!!1

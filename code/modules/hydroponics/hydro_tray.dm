@@ -43,6 +43,11 @@
 
 	var/bees = 0				//Are there currently bees above the tray?
 
+	var/decay_reduction = 0     //How much is mutation decay reduced by?
+	var/weed_coefficient = 1    //Coefficient to the chance of weeds appearing
+	var/internal_light = 1
+	var/light_on = 0
+
 	// Seed details/line data.
 	var/datum/seed/seed = null // The currently planted seed
 
@@ -149,6 +154,18 @@
 	if(closed_system)
 		flags &= ~OPENCONTAINER
 
+/obj/machinery/portable_atmospherics/hydroponics/RefreshParts()
+	var/capcount = 0
+	var/scancount = 0
+	var/mattercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/capacitor)) capcount += SP.rating
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin)) mattercount += SP.rating
+	decay_reduction = scancount
+	weed_coefficient = 2/mattercount
+	internal_light = capcount
+
 /obj/machinery/portable_atmospherics/hydroponics/bullet_act(var/obj/item/projectile/Proj)
 
 	//Don't act on seeds like dionaea that shouldn't change.
@@ -186,7 +203,7 @@
 	lastcycle = world.time
 
 	// Mutation level drops each main tick.
-	mutation_level -= rand(2,4)
+	mutation_level -= rand(2-decay_reduction,4-decay_reduction)
 
 	var/mob/living/simple_animal/bee/BEE = locate() in loc
 	if(BEE && (BEE.feral < 1))
@@ -197,7 +214,7 @@
 	// Weeds like water and nutrients, there's a chance the weed population will increase.
 	// Bonus chance if the tray is unoccupied.
 	if(waterlevel > 10 && nutrilevel > 2 && prob(isnull(seed) ? 5 : (1/(1+bees))))
-		weedlevel += 1 * HYDRO_SPEED_MULTIPLIER
+		weedlevel += 1 * HYDRO_SPEED_MULTIPLIER * weed_coefficient
 
 	// There's a chance for a weed explosion to happen if the weeds take over.
 	// Plants that are themselves weeds (weed_tolerance > 10) are unaffected.
@@ -513,18 +530,18 @@
 		if(harvest)
 			overlays += "over_harvest3"
 
-	// Update bioluminescence.
-	if(seed)
-		if(seed.biolum)
-			set_light(round(seed.potency/10))
-			if(seed.biolum_colour)
-				light_color = seed.biolum_colour
-			else
-				light_color = null
-			return
-
-	set_light(0)
+	// Update bioluminescence and tray light
+	calculate_light()
 	return
+
+/obj/machinery/portable_atmospherics/hydroponics/proc/calculate_light()
+	var/light_out = 0
+	if(light_on) light_out += internal_light
+	if(seed&&seed.biolum)
+		light_out+=round(seed.potency/10)
+		if(seed.biolum_colour) light_color = seed.biolum_colour
+		else light_color = null
+	set_light(light_out)
 
  // If a weed growth is sufficient, this proc is called.
 /obj/machinery/portable_atmospherics/hydroponics/proc/weed_invasion()
@@ -915,6 +932,15 @@
 		flags |= OPENCONTAINER
 
 	update_icon()
+
+/obj/machinery/portable_atmospherics/hydroponics/verb/light_toggle()
+	set name = "Toggle Light"
+	set category = "Object"
+	set src in view(1)
+	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+		return
+	light_on = !light_on
+	calculate_light()
 
 /obj/machinery/portable_atmospherics/hydroponics/soil
 	name = "soil"

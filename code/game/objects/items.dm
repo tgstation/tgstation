@@ -222,7 +222,7 @@
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
-/obj/item/proc/talk_into(mob/M as mob, var/text, var/channel=null)
+/obj/item/proc/talk_into(var/datum/speech/speech, var/channel=null)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/talk_into() called tick#: [world.time]")
 	return
 

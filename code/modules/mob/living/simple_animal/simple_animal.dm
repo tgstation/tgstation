@@ -7,6 +7,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	treadmill_speed = 0.5 //Ian & pals aren't as good at powering a treadmill
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal
 

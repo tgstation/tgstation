@@ -11,7 +11,7 @@
 "aak" = (/obj/structure/table,/obj/machinery/computer/med_data/laptop,/obj/item/device/radio/intercom{frequency = 1485; name = "Station Intercom (Medbay)"; pixel_x = -30; pixel_y = 0},/turf/simulated/floor{dir = 1; icon_state = "whitegreen"},/area/medical/virology)
 "aal" = (/obj/machinery/computer/diseasesplicer,/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "aam" = (/obj/machinery/disease2/diseaseanalyser,/turf/simulated/floor{dir = 1; icon_state = "whitegreen"},/area/medical/virology)
-"aan" = (/obj/machinery/computer/centrifuge,/obj/structure/reagent_dispensers/virusfood{pixel_x = 30},/turf/simulated/floor{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
+"aan" = (/obj/machinery/centrifuge,/obj/structure/reagent_dispensers/virusfood{pixel_x = 30},/turf/simulated/floor{dir = 5; icon_state = "whitegreen"},/area/medical/virology)
 "aao" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/medical/virology)
 "aap" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/machinery/alarm{pixel_y = 23},/obj/item/weapon/bedsheet/medical,/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
 "aaq" = (/obj/machinery/atmospherics/unary/vent_pump,/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)

@@ -401,12 +401,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/mode = 0
 	var/condi = 0
 	var/useramount = 30 // Last used amount
-	var/pillamount = 10
 	//var/bottlesprite = "1" //yes, strings
 	var/pillsprite = "1"
 
 	var/client/has_sprites = list()
 	var/chem_board = /obj/item/weapon/circuitboard/chemmaster3000
+	var/max_bottle_size = 30
+	var/max_pill_count = 20
 
 	light_color = LIGHT_COLOR_BLUE
 	light_range_on = 3
@@ -430,7 +431,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		/obj/item/weapon/stock_parts/manipulator,
 		/obj/item/weapon/stock_parts/scanning_module,
 		/obj/item/weapon/stock_parts/scanning_module,
-		/obj/item/weapon/stock_parts/scanning_module,
 		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/console_screen,
@@ -441,6 +441,24 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 	RefreshParts()
 	update_icon() //Needed to add the prongs cleanly
+
+/obj/machinery/chem_master/RefreshParts()
+	var/scancount = 0
+	var/lasercount = 0
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/micro_laser)) lasercount += SP.rating-1
+	max_bottle_size = initial(max_bottle_size) + lasercount*5
+	max_pill_count = initial(max_pill_count) + manipcount*5
+	handle_new_reservoir(scancount*25+100)
+
+/obj/machinery/chem_master/proc/handle_new_reservoir(var/newvol)
+	if(reagents.maximum_volume == newvol) return //Volume did not change
+	if(reagents.maximum_volume>newvol)
+		reagents.remove_any(reagents.maximum_volume-newvol) //If we have more than our new max, remove equally until we reach new max
+	reagents.maximum_volume = newvol
 
 /obj/machinery/chem_master/proc/user_moved(var/list/args)
 	var/event/E = args["event"]
@@ -604,9 +622,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 		else if(href_list["createpill"] || href_list["createpill_multiple"])
 			var/count = 1
-			if(href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, pillamount) as num)
-			if(count > 20)
-				count = 20	//Pevent people from creating huge stacks of pills easily. Maybe move the number to defines?
+			if(href_list["createpill_multiple"]) count = isgoodnumber(input("Select the number of pills to make.", 10, max_pill_count) as num)
+			count = min(max_pill_count, count)
 			if(!count)
 				return
 
@@ -651,10 +668,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 				if(count < 1)
 					count = 1
 				var/amount_per_bottle = reagents.total_volume > 0 ? reagents.total_volume/count : 0
-				if(amount_per_bottle > 30)
-					amount_per_bottle = 30
+				amount_per_bottle = min(amount_per_bottle,max_bottle_size)
 				while(count--)
-					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+					var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc,max_bottle_size)
 					P.name = "[name] bottle"
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
@@ -810,10 +826,10 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			//dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><a href=\"?src=\ref[src]&change_bottle=1\"><img src=\"bottle[bottlesprite].png\" /></a><BR>"}
 			dat += {"<a href=\"?src=\ref[src]&change_pill=1\"><img src=\"pill[pillsprite].png\" /></a><BR>"}
 			dat += {"<HR><BR><A href='?src=\ref[src];createpill=1'>Create single pill (50 units max)</A><BR>
-					<A href='?src=\ref[src];createpill_multiple=1'>Create multiple pills (50 units max each; 20 max)</A><BR>
+					<A href='?src=\ref[src];createpill_multiple=1'>Create multiple pills (50 units max each; [max_pill_count] max)</A><BR>
 					<A href='?src=\ref[src];createpill_multiple=1;createempty=1'>Create empty pills</A><BR>
-					<A href='?src=\ref[src];createbottle=1'>Create bottle (30 units max)</A><BR>
-					<A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles (30 units max each; 4 max)</A><BR>"}
+					<A href='?src=\ref[src];createbottle=1'>Create bottle ([max_bottle_size] units max)</A><BR>
+					<A href='?src=\ref[src];createbottle_multiple=1'>Create multiple bottles ([max_bottle_size] units max each; 4 max)</A><BR>"}
 			// END AUTOFIX
 		else
 			dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A>"

@@ -38,6 +38,7 @@
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
+	var/shoot_chance = 2 //How often do we throw items?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 	var/delay_product_spawn // If set, uses sleep() in product spawn proc (mostly for seeds to retrieve correct names).
 	// To be filled out at compile time
@@ -117,6 +118,12 @@
 		initialize()
 
 	return
+
+/obj/machinery/vending/RefreshParts()
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+	shoot_chance = manipcount * 3
 
 /obj/machinery/vending/Destroy()
 	if(wires)
@@ -395,43 +402,62 @@
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		if(linked_account)
-			var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0) // Pin = 0, Sec level 2, PIN not required.
-			if(D)
-				var/transaction_amount = currently_vending.price
-				if(transaction_amount <= D.money)
+			//we start by checking the ID card's virtual wallet
+			var/datum/money_account/D = C.virtual_wallet
+			var/using_account = "Virtual Wallet"
 
-					//transfer the money
-					D.money -= transaction_amount
-					linked_account.money += transaction_amount
+			//if there isn't one for some reason we create it, that should never happen but oh well.
+			if(!D)
+				C.update_virtual_wallet()
+				D = C.virtual_wallet
 
-					usr << "\icon[src]<span class='notice'>Remaining balance: [D.money]$</span>"
+			var/transaction_amount = currently_vending.price
 
-					//create entries in the two account transaction logs
-					var/datum/transaction/T = new()
-					T.target_name = "[linked_account.owner_name] (via [src.name])"
-					T.purpose = "Purchase of [currently_vending.product_name]"
-					T.amount = "-[transaction_amount]"
-					T.source_terminal = src.name
-					T.date = current_date_string
-					T.time = worldtime2text()
-					D.transaction_log.Add(T)
-					//
-					T = new()
-					T.target_name = D.owner_name
-					T.purpose = "Purchase of [currently_vending.product_name]"
-					T.amount = "[transaction_amount]"
-					T.source_terminal = src.name
-					T.date = current_date_string
-					T.time = worldtime2text()
-					linked_account.transaction_log.Add(T)
+			//if there isn't enough money in the virtual wallet, then we check the bank account connected to the ID
+			if(D.money < transaction_amount)
+				D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0)
+				using_account = "Bank Account"
+				if(!D)								//first we check if there IS a bank account in the first place
+					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
+					usr << "\icon[src]<span class='warning'>Unable to access your bank account.</span>"
+					return 0
+				else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
+					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
+					usr << "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>"
+					return 0
+				else if(D.money < transaction_amount)//and lastly we check if there's enough money on it, duh
+					usr << "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>"
+					return 0
 
-					// Vend the item
-					src.vend(src.currently_vending, usr)
-					currently_vending = null
-				else
-					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
-			else
-				usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
+			//transfer the money
+			D.money -= transaction_amount
+			linked_account.money += transaction_amount
+
+			usr << "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>"
+
+			//create an entry on the buy's account's transaction log
+			var/datum/transaction/T = new()
+			T.target_name = "[linked_account.owner_name] (via [src.name])"
+			T.purpose = "Purchase of [currently_vending.product_name]"
+			T.amount = "-[transaction_amount]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			D.transaction_log.Add(T)
+
+			//and another entry on the vending machine's vendor account's transaction log
+			T = new()
+			T.target_name = D.owner_name
+			T.purpose = "Purchase of [currently_vending.product_name]"
+			T.amount = "[transaction_amount]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			linked_account.transaction_log.Add(T)
+
+			// Vend the item
+			src.vend(src.currently_vending, usr)
+			currently_vending = null
 		else
 			usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
 
@@ -802,7 +828,7 @@
 		src.speak(slogan)
 		src.last_slogan = world.time
 
-	if(src.shoot_inventory && prob(2))
+	if(src.shoot_inventory && prob(shoot_chance))
 		src.throw_item()
 
 	return
@@ -2110,12 +2136,14 @@
 		/obj/item/weapon/reagent_containers/food/drinks/filk = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink = 10,
 		)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/drinks/groans = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/filk = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 30,
 		/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink = 50,
 		/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 50,
 		)
 	contraband = list(

@@ -1,18 +1,37 @@
-/obj/machinery/computer/centrifuge
+/obj/machinery/centrifuge
 	name = "Isolation Centrifuge"
 	desc = "Used to separate things with different weight. Spin 'em round, round, right round."
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "centrifuge"
-	circuit = "/obj/item/weapon/circuitboard/centrifuge"
+	density = 1
+	machine_flags = SCREWTOGGLE | CROWDESTROY
 	var/curing
 	var/isolating
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/sample = null
 	var/datum/disease2/disease/virus2 = null
+	var/general_process_time = 40
 
 	light_color = null
 
-/obj/machinery/computer/centrifuge/attackby(var/obj/item/weapon/reagent_containers/glass/beaker/vial/I, var/mob/user as mob)
+/obj/machinery/centrifuge/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/centrifuge,
+		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator
+	)
+
+	RefreshParts()
+
+/obj/machinery/centrifuge/RefreshParts()
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+	general_process_time = initial(general_process_time) / manipcount
+
+/obj/machinery/centrifuge/attackby(var/obj/item/weapon/reagent_containers/glass/beaker/vial/I, var/mob/user as mob)
 	if(!istype(I))
 		return ..()
 
@@ -23,13 +42,13 @@
 
 	attack_hand(user)
 
-/obj/machinery/computer/centrifuge/update_icon()
+/obj/machinery/centrifuge/update_icon()
 	..()
 	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
 		light_color = LIGHT_COLOR_CYAN
 		icon_state = "centrifuge_moving"
 
-/obj/machinery/computer/centrifuge/attack_hand(var/mob/user as mob)
+/obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
 	if(..())
 		return
 	user.set_machine(src)
@@ -68,7 +87,7 @@
 	onclose(user, "computer")
 	return
 
-/obj/machinery/computer/centrifuge/process()
+/obj/machinery/centrifuge/process()
 	..()
 
 	if(stat & (NOPOWER|BROKEN))
@@ -91,7 +110,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/centrifuge/Topic(href, href_list)
+/obj/machinery/centrifuge/Topic(href, href_list)
 	if(..())
 		return
 
@@ -99,7 +118,7 @@
 
 	switch(href_list["action"])
 		if("antibody")
-			var/delay = 20
+			var/delay = general_process_time
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 			if (!B)
 				say("No antibody carrier detected.")
@@ -120,7 +139,7 @@
 				var/choice = href_list["isolate"]
 				if (choice in virus)
 					virus2 = virus[choice]
-					isolating = 40
+					isolating = general_process_time * 2
 					update_icon()
 				else
 					say("No such pathogen detected.")
@@ -136,7 +155,7 @@
 	return
 
 
-/obj/machinery/computer/centrifuge/proc/cure()
+/obj/machinery/centrifuge/proc/cure()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/cure() called tick#: [world.time]")
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
 	if (!B)
@@ -149,7 +168,7 @@
 
 	alert_noise("ping")
 
-/obj/machinery/computer/centrifuge/proc/isolate()
+/obj/machinery/centrifuge/proc/isolate()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/isolate() called tick#: [world.time]")
 	var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
 	dish.virus2 = virus2

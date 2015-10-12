@@ -25,6 +25,7 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	universal_speak = 0
+	treadmill_speed = 0.2 //You can still do it, but you're not going to generate much power.
 
 	size = SIZE_TINY
 

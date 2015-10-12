@@ -66,7 +66,7 @@
 				T.target_name += " (via [terminal_name])"
 			T.purpose = transaction_purpose
 			if(transaction_amount > 0)
-				T.amount = "([transaction_amount])"
+				T.amount = "-[transaction_amount]"
 			else
 				T.amount = "[transaction_amount]"
 			T.source_terminal = terminal_name

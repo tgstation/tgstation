@@ -27,6 +27,7 @@
 	faction = "cult"
 	supernatural = 1
 	flying = 1
+	treadmill_speed = 0 //It floats!
 	var/nullblock = 0
 
 	mob_swap_flags = HUMAN|SIMPLE_ANIMAL|SLIME|MONKEY
@@ -40,15 +41,15 @@
 	if(mind in ticker.mode.cult)
 		return 1
 
-/mob/living/simple_animal/construct/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
+/mob/living/simple_animal/construct/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
 	if(..())
 		return 1
 	if(message_mode == MODE_HEADSET && construct_chat_check(0))
 		var/turf/T = get_turf(src)
-		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [message]")
+		log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Cult channel: [html_encode(speech.message)]")
 		for(var/mob/M in mob_list)
 			if(M.construct_chat_check(2) /*receiving check*/ || ((M in dead_mob_list) && !istype(M, /mob/new_player)))
-				M << "<span class='sinister'><b>[src.name]:</b> [message]</span>"
+				M << "<span class='sinister'><b>[src.name]:</b> [html_encode(speech.message)]</span>"
 		return 1
 
 /mob/living/simple_animal/construct/cultify()
