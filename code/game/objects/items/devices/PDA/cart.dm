@@ -318,7 +318,7 @@ Code:
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in world)
+			for(var/obj/machinery/computer/monitor/pMon in machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon

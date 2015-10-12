@@ -215,7 +215,7 @@ var/datum/subsystem/ticker/ticker
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	var/obj/structure/stool/bed/temp_buckle = new(src)
+	var/obj/structure/bed/temp_buckle = new(src)
 	if(station_missed)
 		for(var/mob/M in mob_list)
 			M.buckled = temp_buckle				//buckles the mob so it can't do anything
