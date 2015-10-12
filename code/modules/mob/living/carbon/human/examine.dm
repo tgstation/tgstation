@@ -174,8 +174,6 @@
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/internal/brain))//Only perform these checks if there is no brain
-			if(suiciding)
-				msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 			if(!key)
 				var/foundghost = 0

@@ -461,7 +461,6 @@ Sorry Giacom. Please don't be mad :(
 	heal_overall_damage(1000, 1000)
 	ExtinguishMob()
 	fire_stacks = 0
-	suiciding = 0
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		C.handcuffed = initial(C.handcuffed)

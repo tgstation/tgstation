@@ -51,7 +51,6 @@
 	if(ismob(target))
 		var/old_stat = target.stat
 		target.revive()
-		target.suiciding = 0
 		if(!target.ckey)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(target.real_name == ghost.real_name)

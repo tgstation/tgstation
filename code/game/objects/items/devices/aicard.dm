@@ -115,7 +115,6 @@
 				else
 					flush = 1
 					for(var/mob/living/silicon/ai/A in src)
-						A.suiciding = 1
 						A << "Your core files are being wiped!"
 						while (A.stat != 2)
 							A.adjustOxyLoss(2)

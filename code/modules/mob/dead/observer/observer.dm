@@ -17,6 +17,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
+	var/do_not_resusitate = 0 //Player has a corpse but doesn't want to play, bodies will revive, but will end up souless
 	var/atom/movable/following = null
 	var/fun_verbs = 0
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
@@ -146,6 +147,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(isnum(G.dom_timer))
 						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+
+/mob/dead/observer/verb/do_not_resuscitate()
+	set category = "Ghost"
+	set name = "Quit Round"
+	set desc= "Tells players that you're done playing for the round and don't want to be revived."
+
+	if(!can_reenter_corpse)
+		src << "<span class='notice'>You are already set to do not resuscitate.</span>"
+		return
+	if(alert(src, "Setting this option will keep you from reentering your body for the rest of the round. You cannot take this choice back!", "Do Not Resuscitate", "Proceed", "Nevermind!") == "Nevermind!")
+		return
+	can_reenter_corpse = 0
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"

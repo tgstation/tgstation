@@ -1,5 +1,3 @@
-/mob/var/suiciding = 0
-
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())
@@ -8,7 +6,6 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		var/obj/item/held_item = get_active_hand()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
@@ -71,12 +68,10 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>", \
 						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>")
 		spawn(50)
 			death(0)
-			suiciding = 0
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
@@ -86,7 +81,6 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		visible_message("<span class='danger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>")
@@ -102,7 +96,6 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		visible_message("<span class='danger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>")
 		//put em at -175
@@ -118,7 +111,6 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		visible_message("<span class='danger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>")
 		//put em at -175
@@ -147,7 +139,6 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
 				"<span class='italics'>You hear thrashing.</span>")
@@ -164,7 +155,6 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
 		visible_message("<span class='danger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>", \
 						"<span class='userdanger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>")
 		death(0)

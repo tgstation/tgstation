@@ -190,7 +190,6 @@
 
 	H.set_cloned_appearance()
 
-	H.suiciding = 0
 	src.attempting = 0
 	return 1
 
@@ -204,7 +203,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
-		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || !occupant.key)  //Autoeject corpses
 			src.locked = 0
 			src.go_out()
 			src.connected_message("Clone Rejected: Deceased.")

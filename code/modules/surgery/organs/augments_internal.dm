@@ -229,8 +229,6 @@
 		return
 	if(owner.stat != UNCONSCIOUS)
 		return
-	if(owner.suiciding)
-		return
 
 	revive_cost = 0
 	reviving = 1
