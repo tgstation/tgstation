@@ -36,8 +36,7 @@
 /obj/machinery/power/treadmill/RefreshParts()
 	var/calc = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
-			calc++
+		if(istype(SP, /obj/item/weapon/stock_parts/capacitor)) calc+=SP.rating
 	power_efficiency = calc/4 //Possible results 1, 2, and 3 -- basically, what tier we have
 
 /obj/machinery/power/treadmill/examine(mob/user as mob)
@@ -84,10 +83,6 @@
 		return 1
 
 /obj/machinery/power/treadmill/wrenchAnchor(mob/user)
-	visible_message("[user.name] secures the [src] to the floor.", \
-			"You secure the anchor bolts to the floor.", \
-			"You hear a ratchet")
-	anchored = !anchored
-	playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+	..()
 	if(anchored) connect_to_network()
 	else disconnect_from_network()
