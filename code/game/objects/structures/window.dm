@@ -201,7 +201,7 @@
 	user.delayNextAttack(10)
 	health -= damage
 	user.visible_message("<span class='danger'>\The [user] smashes into \the [src]!</span>", \
-	"<span class='warning'>You smash into \the [src]!</span>")
+	"<span class='danger'>You smash into \the [src]!</span>")
 	healthcheck(user)
 
 /obj/structure/window/attack_alien(mob/user as mob)
@@ -289,7 +289,7 @@
 
 				if(istype(W, /obj/item/weapon/crowbar))
 					playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-					user.visible_message("<span class='warning'>[user] pries \the [src] into its frame.</span>", \
+					user.visible_message("<span class='notice'>[user] pries \the [src] into its frame.</span>", \
 					"<span class='notice'>You pry \the [src] into its frame.</span>")
 					d_state = WINDOWUNSECUREFRAME
 					return
@@ -314,7 +314,7 @@
 
 				if(istype(W, /obj/item/weapon/screwdriver))
 					playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-					user.visible_message("<span class='warning'>[user] fastens \the [src]'s frame to the floor.</span>", \
+					user.visible_message("<span class='notice'>[user] fastens \the [src]'s frame to the floor.</span>", \
 					"<span class='notice'>You fasten \the [src]'s frame to the floor.</span>")
 					d_state = WINDOWLOOSEFRAME
 					anchored = 1
@@ -337,7 +337,7 @@
 							qdel(src)
 							return
 					else
-						user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+						user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
 						return
 
 	else if(!reinforced) //Normal window steps
@@ -367,7 +367,7 @@
 					Destroy()
 					return
 			else
-				user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+				user << "<span class='warning'>You need more welding fuel to complete this task.</span>"
 				return
 
 	if(W.damtype == BRUTE || W.damtype == BURN)
@@ -401,7 +401,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/window/verb/rotate()  called tick#: [world.time]")
 
 	if(anchored)
-		usr << "<span class='warning'>Is fastened to the floor, therefore you can't rotate it!</span>"
+		usr << "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>"
 		return 0
 
 	update_nearby_tiles() //Compel updates before
@@ -417,7 +417,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/obj/structure/window/verb/revrotate()  called tick#: [world.time]")
 
 	if(anchored)
-		usr << "<span class='warning'>Is fastened to the floor, therefore you can't rotate it!</span>"
+		usr << "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>"
 		return 0
 
 	update_nearby_tiles() //Compel updates before
