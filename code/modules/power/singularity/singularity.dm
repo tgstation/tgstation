@@ -34,7 +34,7 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break

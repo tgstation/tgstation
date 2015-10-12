@@ -119,7 +119,7 @@ proc/CallMaterialName(ID)
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in world)
+	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
 			C.files.AddTech2Known(T)
 		for(var/datum/design/D in files.known_designs)
@@ -132,7 +132,7 @@ proc/CallMaterialName(ID)
 	files = new /datum/research(src) //Setup the research data holder.
 	matching_designs = list()
 	if(!id)
-		for(var/obj/machinery/r_n_d/server/centcom/S in world)
+		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
 			S.initialize()
 			break
 
@@ -314,7 +314,7 @@ proc/CallMaterialName(ID)
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in world)
+					for(var/obj/machinery/r_n_d/server/S in machines)
 						var/server_processed = 0
 						if(S.disabled)
 							continue
