@@ -102,7 +102,7 @@
 			src << "Help for larva emotes. You can use these emotes with say \"*emote\":\n\nburp, choke, collapse, dance, deathgasp, drool, gasp, gnarl, hiss, jump, me, moan, nod, roll, roar, scratch, screech, shake, shiver, sign-#, sulk, sway, tail, twitch, whimper"
 
 		else
-			..(act)
+			src << "<span class='info'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 	if ((message && src.stat == 0))
 		log_emote("[name]/[key] : [message]")
