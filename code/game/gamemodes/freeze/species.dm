@@ -6,7 +6,9 @@
 	burnmod = 1.1 //we don't like heat
 	heatmod = 1.1
 	coldmod = -0.5
-	specflags = list(NOBREATH, NOBLOOD, COLDRES) //NOBREATH and NOBLOOD because we're frozen; our heart's not pumping.
+	specflags = list(NOBREATH, NOBLOOD, COLDRES, EYECOLOR,HAIR,FACEHAIR,LIPS)	//NOBREATH and NOBLOOD because we're frozen; our heart's not pumping.
+														//COLDRES for obvious reasons; may be removed if I can get cold damage to heal.
+														//appearance flags to prevent metagaming: "Assist McShitter is bald lynch he"
 
 /datum/species/human/frosty/spec_life(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //we're frozen; our body's not really processing anything
@@ -32,5 +34,6 @@
 	burnmod = 1.7 //we REALLY don't like heat
 	heatmod = 1.7
 	coldmod = 1 //even stronger healing
+	specflags = list(NOBREATH, NOBLOOD, COLDRES)
 
 #undef FROST_HEALING_FACTOR

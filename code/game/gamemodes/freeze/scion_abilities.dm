@@ -127,7 +127,6 @@
 							   "<span class='warning'>Your heart stops.</b></span>")
 		target.setOxyLoss(0) //In case the scion was choking them out
 		ticker.mode.make_pawn(target.mind)
-		target.mind.special_role = "FrostPawn"
 		return 1
 
 /obj/effect/proc_holder/spell/targeted/scion_transform

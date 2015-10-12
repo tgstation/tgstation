@@ -23,6 +23,10 @@
 		frostImageCache[WEED_EAST_EDGING] = image('icons/obj/frosty.dmi', "frost_side_e", layer=2.11, pixel_x = -32)
 		frostImageCache[WEED_WEST_EDGING] = image('icons/obj/frosty.dmi', "frost_side_w", layer=2.11, pixel_x = 32)
 
+/obj/structure/alien/weeds/frost/New()
+	..()
+	ventclog()
+
 /obj/structure/alien/weeds/frost/getWeedOverlay(C)
 	return frostImageCache["[C]"]
 
@@ -30,6 +34,9 @@
 	var/turf/simulated/T = get_turf(src)
 	T.MakeSlippery()
 	return ..()
+
+/obj/structure/alien/weeds/frost/proc/ventclog()
+	return
 
 /obj/structure/alien/weeds/frost/node
 	name = "thick frost"
@@ -43,14 +50,10 @@
 /obj/structure/alien/weeds/frost/node/New()
 	..(loc, src)
 	SSobj.processing += src
-	ventclog()
 
 /obj/structure/alien/weeds/frost/node/Destroy()
 	SSobj.processing -= src
 	return ..()
-
-/obj/structure/alien/weeds/frost/node/proc/ventclog()
-
 
 /obj/structure/alien/weeds/frost/node/process()
 	var/turf/simulated/T = get_turf(src)
