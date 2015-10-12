@@ -35,4 +35,5 @@ changes:
   - bugfix: Marauder toys now have a sprite
   - bugfix: Fixed MoMMI blueprints improperly behaving while in blueprint-created areas
   - tweak: Ghosts can now teleport to blueprint areas. Those areas appear on the end of the list when choosing a teleport destination!
+  - imageadd: Added in-hands for space carps
   - experiment: MoMMI blueprints may now be used to rename blueprint-created areas!
