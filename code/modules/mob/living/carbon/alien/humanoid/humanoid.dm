@@ -32,10 +32,16 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		adjustBruteLoss(14 + rand(1,9))
-		Paralyse(1)
-		step_away(src,user,15)
-		sleep(1)
-		step_away(src,user,15)
+		var/hitverb = "punched"
+		if(mob_size < MOB_SIZE_LARGE)
+			Paralyse(1)
+			step_away(src,user,15)
+			sleep(1)
+			step_away(src,user,15)
+			hitverb = "slammed"
+		playsound(loc, "punch", 25, 1, -1)
+		visible_message("<span class='danger'>[user] has [hitverb] [src]!</span>", \
+		"<span class='userdanger'>[user] has [hitverb] [src]!</span>")
 		return 1
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
@@ -141,3 +147,13 @@
 
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
+
+//For alien evolution/promotion procs. Checks for
+proc/alien_type_present(var/alienpath)
+	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
+		if(!istype(A, alienpath))
+			continue
+		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		return 1
+	return 0

@@ -290,4 +290,5 @@ so as to remain in compliance with the most up-to-date laws."
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
+	..()
 	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

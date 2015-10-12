@@ -166,7 +166,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	if(target)
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(loc, target.loc, src, /turf/proc/Distance, 0, 30, id=botcard)
+			path = get_path_to(loc, target.loc, src, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if (!bot_move(target))
 				add_to_ignore(target)
 				target = null
@@ -237,8 +237,7 @@ text("<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>"))
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
-	return
+	..()
 
 /obj/item/weapon/bucket_sensor/attackby(obj/item/W, mob/user as mob, params)
 	..()

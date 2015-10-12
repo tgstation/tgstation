@@ -27,7 +27,7 @@
 
 /datum/round_event/alien_infestation/start()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in world)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(qdeleted(temp_vent))
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)

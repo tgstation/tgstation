@@ -276,7 +276,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for (var/obj/machinery/message_server/MS in world)
+	for (var/obj/machinery/message_server/MS in message_servers)
 		if (MS.chat_msgs.len > chat_msg_amt)
 			chat_msg_amt = MS.chat_msgs.len
 		if (MS.pda_msgs.len > pda_msg_amt)

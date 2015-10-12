@@ -167,7 +167,7 @@
 			return
 		else
 			if(!connect_to_network())
-				user << "This device must be placed over an exposed cable."
+				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 				return
 			anchored = 1
 			user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"
@@ -218,3 +218,7 @@
 /obj/item/device/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
+
+/obj/item/device/sbeacondrop/powersink
+	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
+	droptype = /obj/item/device/powersink

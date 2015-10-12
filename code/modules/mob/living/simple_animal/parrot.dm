@@ -619,7 +619,7 @@
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				item = C
 		if(item)
-			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance))
+			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance_cardinal))
 				item = null
 				continue
 			return item

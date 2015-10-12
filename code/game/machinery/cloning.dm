@@ -109,11 +109,10 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_paw(mob/user)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_hand(mob/user)
+//Clonepod
+
+/obj/machinery/clonepod/examine(mob/user)
+	..()
 	if (isnull(src.occupant) || !is_operational())
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != 2))
@@ -121,7 +120,8 @@
 		user << "Current clone cycle is [round(completion)]% complete."
 	return
 
-//Clonepod
+/obj/machinery/clonepod/attack_ai(mob/user)
+	return examine(user)
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions)

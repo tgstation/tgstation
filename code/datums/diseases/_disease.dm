@@ -122,7 +122,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/C in oview(spread_range, source))
 			if(isturf(C.loc))
-				if(AStar(source.loc, C.loc, null, /turf/proc/Distance, spread_range))
+				if(AStar(source.loc, C.loc, null, /turf/proc/Distance, spread_range, adjacent = (spread_flags & AIRBORNE) ? /turf/proc/reachableAdjacentAtmosTurfs : /turf/proc/reachableAdjacentTurfs))
 					C.ContractDisease(src)
 
 
@@ -188,9 +188,9 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	return type
 
 
-/datum/disease/Del()
+/datum/disease/Destroy()
 	SSdisease.processing.Remove(src)
-	..()
+	return ..()
 
 
 /datum/disease/proc/IsSpreadByTouch()

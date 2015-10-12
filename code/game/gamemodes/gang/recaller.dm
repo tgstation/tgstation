@@ -142,8 +142,8 @@
 		else
 			dat += "C4 Explosive<br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
+		dat += "(15 Influence) "
+		if(points >= 15)
 			dat += "<a href='?src=\ref[src];purchase=implant'>Implant Breaker</a><br>"
 		else
 			dat += "Implant Breaker<br>"
@@ -252,10 +252,10 @@
 					else
 						pointcost = 50
 			if("implant")
-				if(gang.points >= 10)
+				if(gang.points >= 15)
 					item_type = /obj/item/weapon/implanter/gang
 					usr << "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
-					pointcost = 10
+					pointcost = 15
 			if("gangtool")
 				if(gang.points >= 10)
 					if(usr.mind == gang.bosses[1])
@@ -280,10 +280,13 @@
 						usr << "<span class='warning'>There's not enough room here!</span>"
 						return
 
-				if(gang.points >= 30)
-					item_type = /obj/machinery/dominator
-					usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
-					pointcost = 30
+				if(usrarea.type in gang.territory|gang.territory_new)
+					if(gang.points >= 30)
+						item_type = /obj/machinery/dominator
+						usr << "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
+						pointcost = 30
+				else
+					usr << "<span class='notice'>The <b>dominator</b> can be spawned only on territory controlled by your gang.</span>"
 
 		if(item_type)
 			gang.points -= pointcost

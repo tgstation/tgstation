@@ -253,6 +253,23 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
+/obj/item/clothing/under/blueskirt
+	name = "blue skirt"
+	desc = "A blue, casual skirt."
+	icon_state = "blueskirt"
+	item_color = "blueskirt"
+	item_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
+/obj/item/clothing/under/blueskirt/redskirt
+	name = "red skirt"
+	desc = "A red, casual skirt."
+	icon_state = "redskirt"
+	item_color = "redskirt"
+	item_state = "r_suit"
+
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
 	desc = "It's just like one of my Japanese animes!"

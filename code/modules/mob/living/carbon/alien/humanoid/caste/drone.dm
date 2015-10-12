@@ -19,25 +19,20 @@
 	. += 1
 
 /obj/effect/proc_holder/alien/evolve
-	name = "Evolve"
-	desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
+	name = "Evolve to Praetorian"
+	desc = "Praetorian"
 	plasma_cost = 500
 
 	action_icon_state = "alien_evolve_drone"
 
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
-	var/no_queen = 1
-	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		if(!Q.key || !Q.getorgan(/obj/item/organ/internal/brain))
-			continue
-		no_queen = 0
-	if(no_queen)
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/))
 		user << "<span class='noticealien'>You begin to evolve!</span>"
 		user.visible_message("<span class='alertalien'>[user] begins to twist and contort!</span>")
-		var/mob/living/carbon/alien/humanoid/queen/new_xeno = new (user.loc)
+		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
 		user.mind.transfer_to(new_xeno)
 		qdel(user)
 		return 1
 	else
-		user << "<span class='notice'>We already have an alive queen.</span>"
+		user << "<span class='notice'>We already have a living royal!</span>"
 		return 0

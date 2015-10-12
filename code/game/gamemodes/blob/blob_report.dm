@@ -20,7 +20,7 @@
 			intercepttext += "Message ends."
 		if(2)
 			var/nukecode = rand(10000, 99999)
-			for(var/obj/machinery/nuclearbomb/bomb in world)
+			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode

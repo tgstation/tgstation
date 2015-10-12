@@ -383,7 +383,8 @@
 			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
 			if("drone")				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
 			if("hunter")			M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
+			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/queen , null, null, delmob )
+			if("praetorian")		M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/praetorian , null, null, delmob )
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
@@ -988,9 +989,9 @@
 			if(!check_if_greater_rights_than(M.client))
 				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
 				return
-			M << "<span class='danger'>You have been kicked from the server.</span>"
-			log_admin("[key_name(usr)] booted [key_name(M)].")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
+			M << "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>"
+			log_admin("[key_name(usr)] kicked [key_name(M)].")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
 			//M.client = null
 			del(M.client)
 
@@ -1530,8 +1531,6 @@
 		if(!isobserver(usr))	C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(M)
-		log_admin("[key_name(usr)] followed [key_name(M)]")
-		message_admins("[key_name_admin(usr)] followed [key_name_admin(M)]")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
@@ -1863,9 +1862,7 @@
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
-										I.loc = R.module
-										R.module.rebuild()
+										R.module.add_module(I)
 										R.activate_module(I)
 
 
@@ -2102,7 +2099,7 @@
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				usr << "Kick clients from lobby aborted"
 				return
-			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by an Administrator.</span>", afkonly)
+			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>", afkonly)
 
 			var/strkicked = ""
 			for(var/name in listkicked)

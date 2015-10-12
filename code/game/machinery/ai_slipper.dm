@@ -46,8 +46,7 @@
 					src.attack_hand(usr)
 		else
 			user << "<span class='danger'>Access denied.</span>"
-			return
-	return
+
 
 /obj/machinery/ai_slipper/attack_ai(mob/user)
 	return attack_hand(user)
