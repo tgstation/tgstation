@@ -51,7 +51,6 @@
 	else if(subjectjob)
 		S.name = "[subjectjob] meatsteak"
 
-
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans"
@@ -113,6 +112,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/synthmeat
 	name = "synthmeat"
 	desc = "A synthetic slab of meat."
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
+	name = "meat product"
+	desc = "A meatlike substance created by food chemists from... well...."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	name = "monkey meat"

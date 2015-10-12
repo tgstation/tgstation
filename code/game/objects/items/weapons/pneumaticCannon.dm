@@ -73,6 +73,9 @@
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)
 	if(user.a_intent == "harm" || !ishuman(user))
 		return ..()
+	if(is_in_gang(user, "Sleeping Carp"))
+		user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+		return
 	if(!loadedItems || !loadedWeightClass)
 		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
 		return

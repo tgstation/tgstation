@@ -142,7 +142,7 @@ Frequency:
 		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in world)
+	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target

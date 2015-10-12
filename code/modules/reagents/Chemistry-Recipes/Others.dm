@@ -79,7 +79,7 @@
 	name = "Soapification"
 	id = "soapification"
 	result = null
-	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
+	required_reagents = list("liquidgibs" = 15, "lye"  = 15) // requires three scooped gib tiles
 	required_temp = 374
 	result_amount = 1
 	mob_react = 1
@@ -93,7 +93,7 @@
 	name = "candlefication"
 	id = "candlefication"
 	result = null
-	required_reagents = list("liquidgibs" = 5, "stabilizing_agent"  = 5) //
+	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5)
 	required_temp = 374
 	result_amount = 1
 	mob_react = 1
@@ -101,6 +101,19 @@
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/candle(location)
+	return
+
+/datum/chemical_reaction/meatification
+	name = "meatification"
+	id = "meatification"
+	result = "null"
+	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
 	return
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////

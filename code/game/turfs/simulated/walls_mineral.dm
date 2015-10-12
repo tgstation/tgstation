@@ -138,21 +138,6 @@
 		PlasmaBurn(500)
 	..()
 
-/*
-/turf/simulated/wall/mineral/proc/shock()
-	if (electrocute_mob(user, C, src))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		return 1
-	else
-		return 0
-
-/turf/simulated/wall/mineral/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if((mineral == "gold") || (mineral == "silver"))
-		if(shocked)
-			shock()
-*/
 
 /turf/simulated/wall/mineral/wood
 	name = "wooden wall"

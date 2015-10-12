@@ -5,6 +5,7 @@
 	var/current_target = null
 	var/temporary = 0
 	var/datum/martial_art/base = null // The permanent style
+	var/deflection_chance = 0 //Chance to deflect projectiles
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -263,6 +264,7 @@
 #define ELBOW_DROP_COMBO "HDHDH"
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
+	deflection_chance = 100
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
@@ -295,7 +297,7 @@
 		D.emote("scream")
 		D.drop_item()
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
-		D.Stun(2)
+		D.Stun(3)
 		return 1
 	return basic_hit(A,D)
 
@@ -312,10 +314,10 @@
 /datum/martial_art/the_sleeping_carp/proc/kneeStomach(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.weakened)
 		D.visible_message("<span class='warning'>[A] knees [D] in the stomach!</span>", \
-						  "<span class'userdanger'>[A] winds you with a knee in the stomach!</span>")
+						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
-		D.Stun(1)
+		D.Stun(2)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
 	return basic_hit(A,D)
@@ -326,7 +328,8 @@
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
 		D.apply_damage(20, BRUTE, "head")
 		D.drop_item()
-		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+		D.Stun(4)
 		return 1
 	return basic_hit(A,D)
 
@@ -337,7 +340,7 @@
 		if(D.stat)
 			D.death() //FINISH HIM!
 		D.apply_damage(50, BRUTE, "chest")
-		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 100, 1, -1)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		return 1
 	return basic_hit(A,D)
 
@@ -354,10 +357,14 @@
 	add_to_streak("H")
 	if(check_streak(A,D))
 		return 1
-	D.visible_message("<span class='danger'>[A] [pick("punches", "kicks", "chops", "hits", "slams")] [D]!</span>", \
-					  "<span class='userdanger'>[A] hits you!</span>")
-	D.apply_damage(10, BRUTE)
-	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
+	var/atk_verb = pick("punches", "kicks", "chops", "hits", "slams")
+	D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
+					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
+	D.apply_damage(rand(10,15), BRUTE)
+	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
+	if(prob(D.getBruteLoss()) && !D.lying)
+		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
+		D.Weaken(4)
 	return 1
 
 
@@ -449,10 +456,11 @@
 /obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
-	user << "<span class='notice'>You begin to read the scroll...</span>"
-	user << "<span class='sciradio'><i>And all at once the secrets of the Sleeping Carp fill your mind. The ancient clan's martial teachings have been imbued into this scroll. As you read through it, \
- 	these secrets flood into your mind and body.<br>You now know the martial techniques of the Sleeping Carp. Your hand-to-hand combat has become much more effective, and you may now perform powerful \
- 	combination attacks.<br>To learn more about these combos, use the Recall Teachings ability in the Sleeping Carp tab.</i></span>"
+	if(!is_in_gang(user, "Sleeping Carp")) //Only the Sleeping Carp can use the scroll
+		user << "<span class='warning'>You can't comprehend the runes and symbols drawn on [src].</span>"
+		return 0
+	user << "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
+	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
 	user.verbs += /mob/living/carbon/human/proc/sleeping_carp_help
 	var/datum/martial_art/the_sleeping_carp/theSleepingCarp = new(null)
 	theSleepingCarp.teach(user)

@@ -9,5 +9,4 @@
 *.lk
 *.int
 *.backup
-config/admins.txt
-.gitignore
+*.int

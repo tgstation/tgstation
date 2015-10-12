@@ -20,6 +20,8 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
+	var/turns_since_scan = 0
+	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
@@ -30,11 +32,9 @@
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
-	var/turns_since_scan = 0
-	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 0
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
+/mob/living/simple_animal/pet/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
@@ -45,6 +45,10 @@
 					movement_target = null
 					stop_automated_movement = 0
 					break
+			for(var/obj/item/toy/cattoy/T in view(1,src))
+				if (T.cooldown < (world.time - 400))
+					emote("me", 1, "bats \the [T] around with its paw!")
+					T.cooldown = world.time
 
 	..()
 
