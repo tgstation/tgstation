@@ -17,7 +17,6 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
-	var/do_not_resusitate = 0 //Player has a corpse but doesn't want to play, bodies will revive, but will end up souless
 	var/atom/movable/following = null
 	var/fun_verbs = 0
 	var/image/ghostimage = null //this mobs ghost image, for deleting and stuff
