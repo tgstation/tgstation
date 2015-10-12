@@ -69,6 +69,8 @@
 /mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
 	var/damage = amount * src.damage_transfer
 	if (src.summoner)
+		if(src.loc == summoner)
+			return
 		src.summoner.adjustBruteLoss(damage)
 		if(damage)
 			src.summoner << "<span class='danger'><B>Your [src.name] is under attack! You take damage!</span></B>"
@@ -80,9 +82,6 @@
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
 		if (1)
-			if(src.summoner)
-				src.summoner << "<span class='danger'><B>Your [src.name] was blown up!</span></B>"
-				src.summoner.gib()
 			gib()
 			return
 		if (2)
@@ -91,6 +90,12 @@
 		if(3)
 			adjustBruteLoss(30)
 
+/mob/living/simple_animal/hostile/guardian/gib()
+	if(summoner)
+		src.summoner << "<span class='danger'><B>Your [src.name] was blown up!</span></B>"
+		src.summoner.gib()
+	ghostize()
+	qdel(src)
 
 //Manifest, Recall, Communicate
 
@@ -130,7 +135,7 @@
 		if(M == src.summoner || (M in dead_mob_list))
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -222,7 +227,7 @@
 	set name = "Set Battlecry"
 	set category = "Guardian"
 	set desc = "Choose what you shout as you punch"
-	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 6)
+	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 5 characters.", ,"", 6)
 	if(input)
 		src.battlecry = input
 
