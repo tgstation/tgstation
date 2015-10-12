@@ -42,20 +42,12 @@
 		return
 	if(!istype(target))
 		return
-	if(target.buckled)
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they are buckled to [target.buckled]!</span>")
-		return
-	if(patient)
-		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
-		return
-	if(target.buckled_mob) //slime attached to them
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they have a slime latched onto their head!</span>")
+	if(!patient_insertion_check(target))
 		return
 	occupant_message("<span class='notice'>You start putting [target] into [src]...</span>")
 	chassis.visible_message("<span class='warning'>[chassis] starts putting [target] into \the [src].</span>")
 	if(do_after_cooldown(target))
-		if(patient)
-			occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
+		if(!patient_insertion_check(target))
 			return
 		target.forceMove(src)
 		patient = target
@@ -65,6 +57,18 @@
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
 		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
 		log_message("[target] loaded. Life support functions engaged.")
+
+/obj/item/mecha_parts/mecha_equipment/sleeper/proc/patient_insertion_check(mob/living/carbon/target)
+	if(target.buckled)
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they are buckled to [target.buckled]!</span>")
+		return
+	if(target.buckled_mob)
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.buckled_mob] is attached to it!</span>")
+		return
+	if(patient)
+		occupant_message("<span class='warning'>The sleeper is already occupied!</span>")
+		return
+	return 1
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/proc/go_out()
 	if(!patient)
