@@ -10,11 +10,11 @@
 				message = Gibberish(message, (emp_damage*6)) //scrambles the message, gets worse when emp_damage is higher
 	return ..(message)
 
-/mob/living/carbon/brain/radio(message, message_mode, raw_message, var/datum/language/speaking)
+/mob/living/carbon/brain/radio(var/datum/speech/speech, var/message_mode)
 	if(message_mode && istype(container, /obj/item/device/mmi/radio_enabled))
 		var/obj/item/device/mmi/radio_enabled/R = container
 		if(R.radio)
-			R.radio.talk_into(src, sanitize(message))
+			R.radio.talk_into(speech) // Might need message_mode
 			return ITALICS | REDUCE_RANGE
 
 /mob/living/carbon/brain/lingcheck()

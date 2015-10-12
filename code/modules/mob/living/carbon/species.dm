@@ -125,16 +125,17 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
 
-/datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_speech() called tick#: [world.time]")
 	if(H.dna)
-		if(length(message) >= 2)
+		if(length(speech.message) >= 2)
 			for(var/gene_type in H.active_genes)
 				var/datum/dna/gene/gene = dna_genes[gene_type]
 				if(!gene.block)
 					continue
-				message = gene.OnSay(H,message)
-	return message
+				if(gene.OnSay(H,speech))
+					return 0
+	return 1
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 

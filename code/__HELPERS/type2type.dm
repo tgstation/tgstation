@@ -10,8 +10,8 @@
 
 // Concatenates a list of strings into a single string.  A seperator may optionally be provided.
 /proc/list2text(list/ls, sep)
-	if(ls.len <= 1) // Early-out code for empty or singleton lists.
-		return ls.len ? ls[1] : ""
+	if(ls && ls.len <= 1) // Early-out code for empty or singleton lists.
+		return (ls && ls.len) ? ls[1] : ""
 
 	var/l = ls.len // Made local for sanic speed.
 	var/i = 0 // Incremented every time a list index is accessed.

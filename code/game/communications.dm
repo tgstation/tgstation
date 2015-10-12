@@ -340,10 +340,14 @@ var/list/pointers = list()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/receive_signal() called tick#: [world.time]")
 	return
 
+#define SIGNAL_WIRE     0
+#define SIGNAL_RADIO    1
+#define SIGNAL_SUBSPACE 2
+
 /datum/signal
 	var/obj/source
 
-	var/transmission_method = 0
+	var/transmission_method = SIGNAL_WIRE
 	//0 = wire
 	//1 = radio transmission
 	//2 = subspace transmission

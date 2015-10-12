@@ -8,6 +8,7 @@
 	var/speech_verb = "says"         // 'says', 'hisses', 'farts'.
 	var/ask_verb = "asks"            // Used when sentence ends in a ?
 	var/exclaim_verb = "exclaims"    // Used when sentence ends in a !
+	var/whisper_verb = "whispers"    // For whispers and final whispers.
 	var/colour = "body"         // CSS style to use for strings in this language.
 	var/key = "x"                    // Character used to speak in language eg. :o for Unathi.
 	var/flags = 0                    // Various language flags.
@@ -15,10 +16,15 @@
 	var/list/syllables
 	var/list/space_chance = 55       // Likelihood of getting a space in the random scramble string.
 
-/datum/language/proc/get_spoken_verb(var/msg, var/silicon)
+/datum/language/proc/get_spoken_verb(var/msg, var/silicon, var/mode)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/datum/language/proc/get_spoken_verb()  called tick#: [world.time]")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/get_spoken_verb() called tick#: [world.time]")
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\\\/datum/language/proc/get_spoken_verb()  called tick#: [world.time]")
+	switch(mode)
+		if(SPEECH_MODE_WHISPER)
+			return "[whisper_verb]"
+		if(SPEECH_MODE_FINAL)
+			return "[whisper_verb] with their final breath"
 	var/msg_end = copytext(msg,length(msg))
 	switch(msg_end)
 		if("!")
@@ -31,6 +37,20 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/say_misunderstood() called tick#: [world.time]")
 	return stars(message)
 
+// N3X15-saycode splits saycode into two phases: filtering and rendering.
+//  Therefore, filtering is in one proc while actual rendering is last.
+
+/datum/language/proc/filter_speech(var/datum/speech/speech)
+	//var/datum/speech/speech2 = speech.clone()
+	speech.message_classes.Add(colour)
+	speech.message=capitalize(speech.message)
+	return speech
+
+/datum/language/proc/render_speech(var/datum/speech/speech, var/html_message)
+	// html_message is the message itself + <span> tags. Do NOT filter it.
+	return "[get_spoken_verb(speech.message,issilicon(speech.speaker),speech.mode)], [html_message]"
+
+/* Obsolete, here for reference
 /datum/language/proc/format_message(mob/M, message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
@@ -42,6 +62,7 @@
 /datum/language/proc/format_message_radio(mob/M, message)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/language/proc/format_message_radio() called tick#: [world.time]")
 	return "[get_spoken_verb(message,issilicon(M))], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+*/
 
 /datum/language/unathi
 	name = "Sinta'unathi"

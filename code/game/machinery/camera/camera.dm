@@ -400,22 +400,27 @@ var/list/camera_names=list()
 		return 1
 	return 0
 
-/obj/machinery/camera/proc/tv_message(atom/movable/hearer, atom/movable/speaker, var/datum/language/speaking, raw_message)
+/obj/machinery/camera/proc/tv_message(var/atom/movable/hearer, var/datum/speech/speech)
+	speech.wrapper_classes.Add("tv")
+	hearer.Hear(speech)
+
+	/*
 	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()] "
 	var/messagepart = "<span class='message'>[hearer.lang_treat(speaker, speaking, raw_message)]</span>"
 
 	return "<span class='game say'><span class='name'>[namepart]</span>[messagepart]</span>"
+	*/
 
-/obj/machinery/camera/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
+/obj/machinery/camera/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(isHearing())
 		for(var/obj/machinery/computer/security/S in tv_monitors)
 			if(S.current == src)
 				if(istype(S, /obj/machinery/computer/security/telescreen))
 					for(var/mob/M in viewers(world.view,S))
-						M << "<span style='color:grey'>\icon[S][tv_message(M, speaker,speaking,raw_message)]</span>"
+						M << "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>"
 				else
 					for(var/mob/M in viewers(1,S))
-						M << "<span style='color:grey'>\icon[S][tv_message(M, speaker,speaking,raw_message)]</span>"
+						M << "<span style='color:grey'>\icon[S][tv_message(M, speech, rendered_speech)]</span>"
 
 /obj/machinery/camera/arena
 	name = "arena camera"

@@ -88,10 +88,9 @@
 	var/voicechange = 0
 	siemens_coefficient = 0.9
 
-/obj/item/clothing/mask/horsehead/treat_mask_message(var/message)
+/obj/item/clothing/mask/horsehead/treat_mask_speech(var/datum/speech/speech)
 	if(src.voicechange)
-		return pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
-	return message
+		speech.message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
 /obj/item/clothing/mask/chapmask
 	name = "venetian mask"

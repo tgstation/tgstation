@@ -164,5 +164,5 @@
 		..()
 		block=LISPBLOCK
 
-	OnSay(var/mob/M, var/message)
-		return replacetext(message,"s","th")
+	OnSay(var/mob/M, var/datum/speech/speech)
+		speech.message = replacetext(speech.message,"s","th")
