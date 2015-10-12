@@ -108,9 +108,22 @@ obj/item/device/mmi/Destroy()
 	if(try_handling_mommi_construction(O,user))
 		return
 	if(istype(O,/obj/item/organ/brain) && !brainmob) //Time to stick a brain in it --NEO
-		if(!O:brainmob)
+		var/obj/item/organ/brain/BO = O
+		if(!BO.brainmob)
 			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>"
 			return
+
+		var/mob/living/carbon/brain/BM = BO.brainmob
+		if(!brainmob.key)
+			var/ghost_can_reenter = 0
+			if(BM.mind)
+				for(var/mob/dead/observer/G in player_list)
+					if(G.can_reenter_corpse && G.mind == BM.mind)
+						ghost_can_reenter = 1
+						break
+			if(!ghost_can_reenter)
+				user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
+				return
 		src.visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		brainmob = O:brainmob
