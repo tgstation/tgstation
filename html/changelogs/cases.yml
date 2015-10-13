@@ -1,9 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - rscadd: "Display cases can now be built using 5 wood planks and 10 glass sheets."
-  - rscadd: "Add airlock electronics to open it with id later, otherwise you'll have to use crowbar"
-  - tweak: "Broken display cases can be fixed with glass sheets or removed using crowbar"
-  - tweak: "Added start_showpiece_type variable for mappers to create custom displays"

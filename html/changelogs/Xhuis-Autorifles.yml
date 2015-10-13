@@ -1,6 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - rscdel: "All instances of autorifles have been removed from Security."
-  - rscadd: "The armory has been re-mapped."

@@ -799,6 +799,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/datum/signal/signal = src.telecomms_process()
 
+	if(!P || qdeleted(P) || !U) //in case the PDA or mob gets destroyed during telecomms_process()
+		return
+
 	var/useTC = 0
 	if(signal)
 		if(signal.data["done"])

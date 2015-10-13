@@ -203,6 +203,8 @@
 
 	if(burst_size > 1)
 		for(var/i = 1 to burst_size)
+			if(!user)
+				break
 			if(!issilicon(user))
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
@@ -240,10 +242,11 @@
 		spawn(fire_delay)
 			semicd = 0
 
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	if(user)
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)

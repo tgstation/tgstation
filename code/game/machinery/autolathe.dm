@@ -39,6 +39,7 @@
 							"Construction",
 							"T-Comm",
 							"Security",
+							"Machinery",
 							"Medical",
 							"Misc"
 							)
@@ -373,7 +374,7 @@
 
 	if(hack)
 		for(var/datum/design/D in files.possible_designs)
-			if((D.build_type & 4) && ("hacked" in D.category))
+			if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 				files.known_designs += D
 	else
 		for(var/datum/design/D in files.known_designs)

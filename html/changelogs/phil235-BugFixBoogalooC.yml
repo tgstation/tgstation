@@ -1,8 +1,0 @@
-
-author: phil235
-
-delete-after: True
-
-changes: 
-  - rscdel: "Dipping cigarette (to asbsorb liquids) in a glass can now only be done with an unlit cigarette. Lit cigarette now heats up the glass content (like other heat sources)."
-  - bugfix: "Fixes trashbag not being able to pickup drinks and ammo casings."
