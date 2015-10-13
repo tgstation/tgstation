@@ -8,4 +8,4 @@ changes:
  - bugfix: Cleared up some ambiguity for radio transmitter wires.
  - bugfix: Transmitters now don't get unresponsive if you cut the LINK wire.
  - rscadd: The wires display for the particle accelerator is somewhat more verbose.
- - bugfix: Fabricator (e.g.: Autolathe) wires behave much more rationally. Cut shock wire for indefinite shock, pulse for 30 second shock. The machine can no longer be powered at all if the power line is cut. Cutting the contraband wire resets it to default.
+ - bugfix: "Fabricator (e.g.: Autolathe) wires behave much more rationally. Cut shock wire for indefinite shock, pulse for 30 second shock. The machine can no longer be powered at all if the power line is cut. Cutting the contraband wire resets it to default."
