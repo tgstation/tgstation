@@ -382,6 +382,9 @@
 
 			"r_quote"  = speech.rquote,
 			"l_quote"  = speech.lquote,
+
+			"message_classes" = speech.message_classes.Copy(),
+			"wrapper_classes" = speech.wrapper_classes.Copy()
 		)
 		signal.frequency = speech.frequency // Quick frequency set
 

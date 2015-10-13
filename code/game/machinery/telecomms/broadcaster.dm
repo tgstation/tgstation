@@ -329,7 +329,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	spawn(50)
 		returnToPool(virt)
 
-/*
+/* Obsolete, RIP
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Broadcast_SimpleMessage() called tick#: [world.time]")
