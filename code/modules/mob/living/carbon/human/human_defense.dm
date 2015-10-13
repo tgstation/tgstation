@@ -60,7 +60,7 @@ emp_act
 
 			return -1 // complete projectile permutation
 
-	if(check_shields(P.damage, "the [P.name]", P))
+	if(check_shields(P.damage, "the [P.name]", P, 0, P.armour_penetration))
 		P.on_hit(src, 100, def_zone)
 		return 2
 	return (..(P , def_zone))
@@ -80,8 +80,9 @@ emp_act
 
 //End Here
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0)
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0, armour_penetration = 0)
 	var/block_chance = 50 + 30*thrown_proj - round(damage / 3) //thrown things are easier to block
+	block_chance -= armour_penetration
 	if(AM)
 		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
@@ -295,12 +296,12 @@ emp_act
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]"))
+		if(check_shields(damage, "the [M.name]", "", "", M.armour_penetration))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, M.melee_damage_type, affecting, armor)
+		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
 		updatehealth()
 
 
