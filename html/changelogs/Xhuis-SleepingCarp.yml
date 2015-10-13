@@ -1,8 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - experiment: "After searching through the Sleeping Carp's ancient monastery in deep space, more secrets have been uncovered of their traditional fighting techniques."
-  - tweak: "Members of the Sleeping Carp gang are now able to deflect all ranged projectiles."
-  - tweak: "Members of the Sleeping Carp gang are now uanble to use any type of ranged weaponry. Doing so would be dishonorable."
-  - tweak: "The Sleeping Carp martial art's effects are more damaging, and many stuns have been increased in duration."

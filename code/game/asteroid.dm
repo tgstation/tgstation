@@ -69,7 +69,7 @@ var/global/max_secret_rooms = 6
 			theme = "cult"
 			walltypes = list(/turf/simulated/wall/cult=3,/turf/simulated/mineral/random/high_chance=1)
 			floortypes = list(/turf/simulated/floor/plasteel/cult)
-			treasureitems = list(/obj/item/device/soulstone=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
+			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
 			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
 							  /obj/item/organ/internal/heart=2, /obj/effect/decal/cleanable/blood=4,/obj/structure/table/wood=2,/obj/item/weapon/ectoplasm=3,

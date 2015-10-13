@@ -120,8 +120,6 @@
 			reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
-		return
 	var/hotness = I.is_hot()
 	if(hotness)
 		var/added_heat = (hotness / 100) //ishot returns a temperature

@@ -232,7 +232,7 @@
 	..()
 	if(istype(target, /mob/living))
 		src.say("[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]\
-		[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
+		[src.battlecry][src.battlecry][src.battlecry][src.battlecry][src.battlecry]")
 		playsound(loc, src.attack_sound, 50, 1, 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
 		playsound(loc, src.attack_sound, 50, 1, 1)
@@ -253,6 +253,11 @@
 	var/turf/simulated/floor/beacon
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
+
+/mob/living/simple_animal/hostile/guardian/healer/New()
+	..()
+	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
+	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	..()

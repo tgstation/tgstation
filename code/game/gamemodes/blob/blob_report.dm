@@ -6,7 +6,7 @@
 		if(0)
 			..()
 			return
-		if(1)
+/*		if(1) // Report is temporarily unused. see comment on stage 0 in blob.dm
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
 			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
@@ -17,10 +17,10 @@
 			intercepttext += " 3. If found, use any neccesary means to contain the organism.<BR>"
 			intercepttext += " 4. Avoid damage to the capital infrastructure of the station.<BR>"
 			intercepttext += "<BR>Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.<BR>"
-			intercepttext += "Message ends."
+			intercepttext += "Message ends."*/
 		if(2)
 			var/nukecode = rand(10000, 99999)
-			for(var/obj/machinery/nuclearbomb/bomb in world)
+			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)
 						bomb.r_code = nukecode

@@ -989,9 +989,9 @@
 			if(!check_if_greater_rights_than(M.client))
 				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
 				return
-			M << "<span class='danger'>You have been kicked from the server.</span>"
-			log_admin("[key_name(usr)] booted [key_name(M)].")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
+			M << "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>"
+			log_admin("[key_name(usr)] kicked [key_name(M)].")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
 			//M.client = null
 			del(M.client)
 
@@ -2099,7 +2099,7 @@
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				usr << "Kick clients from lobby aborted"
 				return
-			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by an Administrator.</span>", afkonly)
+			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>", afkonly)
 
 			var/strkicked = ""
 			for(var/name in listkicked)

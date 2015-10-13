@@ -63,56 +63,56 @@ for reference:
 	var/health = 100
 	var/maxhealth = 100
 
+/obj/structure/barricade/wooden/attack_animal(mob/living/simple_animal/M)
+	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
+	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+		return
+	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
+	add_logs(M, src, "attacked")
+	take_damage(M.melee_damage_upper)
+
+obj/structure/barricade/wooden/proc/take_damage(damage, leave_debris=1, message)
+	health -= damage
+	if(health <= 0)
+		if(message)
+			visible_message(message)
+		else
+			visible_message("<span class='warning'>The barricade is smashed apart!</span>")
+		if(leave_debris)
+			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 3)
+		qdel(src)
+
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/stack/sheet/mineral/wood))
-		if (src.health < src.maxhealth)
+		if (health < maxhealth)
 			visible_message("[user] begins to repair \the [src]!", "<span class='notice'>You begin to repair \the [src]...</span>")
 			if(do_after(user,20, target = src))
-				src.health = src.maxhealth
+				health = maxhealth
 				W:use(1)
 				visible_message("[user] repairs \the [src]!", "<span class='notice'>You repair \the [src].</span>")
-				return
-		else
-			return
-		return
 	else
+		..()
+		var/damage = 0
 		switch(W.damtype)
 			if("fire")
-				src.health -= W.force * 1
+				damage = W.force * 1
 			if("brute")
-				src.health -= W.force * 0.75
-			else
-		if (src.health <= 0)
-			visible_message("<span class='warning'>The barricade is smashed apart!</span>")
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-			qdel(src)
-		..()
+				damage = W.force * 0.75
+		take_damage(damage)
+
 
 /obj/structure/barricade/wooden/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			visible_message("<span class='warning'>The barricade is blown apart!</span>")
 			qdel(src)
-			return
 		if(2)
-			src.health -= 25
-			if (src.health <= 0)
-				visible_message("<span class='warning'>The barricade is blown apart!</span>")
-				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-				new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-				qdel(src)
-			return
+			take_damage(25, message = "<span class='warning'>The barricade is blown apart!</span>")
 
 /obj/structure/barricade/wooden/blob_act()
-	src.health -= 25
-	if (src.health <= 0)
-		visible_message("<span class='warning'>The blob eats through the barricade!</span>")
-		qdel(src)
-	return
+	take_damage(25, leave_debris = 0, message = "<span class='warning'>The blob eats through the barricade!</span>")
+
 
 /obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
@@ -148,17 +148,22 @@ for reference:
 
 	src.icon_state = "barrier[src.locked]"
 
+/obj/machinery/deployable/barrier/proc/take_damage(damage)
+	health -= damage
+	if(health <= 0)
+		explode()
+
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user, params)
 	if (W.GetID())
 		if (src.allowed(user))
-			if	(src.emagged < 2)
-				src.locked = !src.locked
-				src.anchored = !src.anchored
-				src.icon_state = "barrier[src.locked]"
-				if ((src.locked == 1) && (src.emagged < 2))
+			if	(emagged < 2)
+				locked = !locked
+				anchored = !anchored
+				icon_state = "barrier[locked]"
+				if ((locked == 1) && (emagged < 2))
 					user << "Barrier lock toggled on."
 					return
-				else if ((src.locked == 0) && (src.emagged < 2))
+				else if ((locked == 0) && (emagged < 2))
 					user << "Barrier lock toggled off."
 					return
 			else
@@ -169,28 +174,27 @@ for reference:
 				return
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
-		if (src.health < src.maxhealth)
-			src.health = src.maxhealth
-			src.emagged = 0
-			src.req_access = list(access_security)
+		if (health < maxhealth)
+			health = maxhealth
+			emagged = 0
+			req_access = list(access_security)
 			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 			return
 		else if (src.emagged > 0)
-			src.emagged = 0
-			src.req_access = list(access_security)
+			emagged = 0
+			req_access = list(access_security)
 			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 			return
 		return
 	else
+		..()
+		var/damage = 0
 		switch(W.damtype)
 			if("fire")
-				src.health -= W.force * 0.75
+				damage = W.force * 0.75
 			if("brute")
-				src.health -= W.force * 0.5
-			else
-		if (src.health <= 0)
-			src.explode()
-		..()
+				damage = W.force * 0.5
+		take_damage(damage)
 
 /obj/machinery/deployable/emag_act(mob/user)
 	if (src.emagged == 0)
@@ -214,13 +218,10 @@ for reference:
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
 		if(1)
-			src.explode()
-			return
+			explode()
 		if(2)
-			src.health -= 25
-			if (src.health <= 0)
-				src.explode()
-			return
+			take_damage(25)
+
 
 /obj/machinery/deployable/barrier/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -231,10 +232,7 @@ for reference:
 		icon_state = "barrier[src.locked]"
 
 /obj/machinery/deployable/barrier/blob_act()
-	src.health -= 25
-	if (src.health <= 0)
-		src.explode()
-	return
+	take_damage(25)
 
 /obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)

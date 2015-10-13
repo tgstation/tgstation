@@ -18,7 +18,6 @@ var/list/blob_nodes = list()
 	round_ends_with_antag_death = 1
 	restricted_jobs = list("Cyborg", "AI")
 
-	var/declared = 0
 	var/burst = 0
 
 	var/cores_to_spawn = 1
@@ -171,10 +170,11 @@ var/list/blob_nodes = list()
 
 		burst_blobs()
 
-		// Stage 0
+/*
+		// Stage 0			Keeping this here for possible re-addition in the future. Re-add when classified reports are added to other round types so people stop metagaming.
 		sleep(wait_time)
 		stage(0)
-
+*/
 		// Stage 1
 		sleep(wait_time)
 		stage(1)
@@ -189,10 +189,9 @@ var/list/blob_nodes = list()
 /datum/game_mode/blob/proc/stage(stage)
 
 	switch(stage)
-		if (0)
-			send_intercept(1)
-			declared = 1
-
+/*		if (0)
+			send_intercept(1) //Temporarily unused - see stage 0 comment
+*/
 		if (1)
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 
