@@ -146,7 +146,7 @@
 	for(var/obj/structure/docking_port/D in linked_area)
 		docking_ports_aboard |= D
 
-	return 1
+	return
 
 /datum/shuttle/Destroy()
 	shuttles -= src
@@ -541,12 +541,12 @@
 		if(!old_turf)
 			message_admins("ERROR when moving [src.name] ([src.type]) - failed to get original turf at [old_C.x_pos];[old_C.y_pos];[our_center.z]")
 			continue
-		else if(istype(old_turf,/turf/simulated/shuttle/wall))
+		else if(old_turf.preserve_underlay == 0 && istype(old_turf,/turf/simulated/shuttle/wall)) //Varediting a turf's "preserve_underlay" to 1 will protect its underlay from being changed
 			if(old_turf.icon_state in transparent_icons)
 				add_underlay = 1
 				if(old_turf.underlays.len) //this list is in code/game/area/areas.dm
 					var/image/I = locate(/image) in old_turf.underlays //bandaid
-					if(I.icon == 'icons/turf/shuttle.dmi') //Don't change corners that are over the shuttle floors
+					if(I.icon == 'icons/turf/shuttle.dmi') //Don't change underlay to space if CURRENT underlay is a shuttle floor!
 						add_underlay = 0
 
 		if(!new_turf)
@@ -618,8 +618,7 @@
 		new_turf.icon_state = old_turf.icon_state
 		new_turf.icon = old_turf.icon
 		if(rotate)
-			spawn
-				new_turf.shuttle_rotate(rotate)
+			new_turf.shuttle_rotate(rotate)
 
 		//*****Move air*****
 
@@ -640,9 +639,9 @@
 				continue
 
 			AM.forceMove(new_turf)
+
 			if(rotate)
-				spawn
-					AM.shuttle_rotate(rotate)
+				AM.shuttle_rotate(rotate)
 
 		//Move landmarks - for moving the arrivals shuttle
 		for(var/list/L in moved_landmarks) //moved_landmarks: code/game/area/areas.dm, 527 (above the move_contents_to proc)

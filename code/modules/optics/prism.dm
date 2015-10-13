@@ -20,16 +20,7 @@ var/list/obj/machinery/prism/prism_list = list()
 	..()
 
 	component_parts = newlist(
-		/obj/item/weapon/circuitboard/prism,
-		/obj/item/weapon/stock_parts/capacitor,
-		/obj/item/weapon/stock_parts/capacitor,
-		/obj/item/weapon/stock_parts/capacitor,
-		/obj/item/weapon/stock_parts/capacitor,
-		/obj/item/weapon/stock_parts/capacitor,
-		/obj/item/weapon/stock_parts/capacitor,
-		/obj/item/weapon/stock_parts/micro_laser/high,
-		/obj/item/weapon/stock_parts/micro_laser/high,
-		/obj/item/weapon/stock_parts/micro_laser/high,
+		/obj/item/weapon/circuitboard/prism
 	)
 	prism_list += src
 

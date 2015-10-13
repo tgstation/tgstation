@@ -25,12 +25,13 @@
 			death()
 			return
 
-		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
-				src.reset_view(null)
-		else
-			if(!isTeleViewing(client.eye))
-				reset_view(null)
+		if(client)
+			if (src.machine)
+				if (!( src.machine.check_eye(src) ))
+					src.reset_view(null)
+			else
+				if(!isTeleViewing(client.eye))
+					reset_view(null)
 
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)

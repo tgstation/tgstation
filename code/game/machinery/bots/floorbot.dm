@@ -669,7 +669,7 @@ var/global/list/floorbot_targets=list()
 
 	if(!frequency) return
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.source = src
 	signal.transmission_method = 1
 	//for(var/key in keyval)

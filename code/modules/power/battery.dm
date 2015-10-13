@@ -38,8 +38,6 @@ var/global/list/battery_online =	list(
 		overlays += battery_charge[clevel]
 	return
 
-#define SMESMAXCHARGELEVEL 200000
-#define SMESMAXOUTPUT 200000
 #define SMESRATE 0.05 				// rate of internal charge to external power
 
 /obj/machinery/power/battery
@@ -60,6 +58,8 @@ var/global/list/battery_online =	list(
 	var/chargecount = 0 //How long we've spent since not charging
 	var/chargelevel = 50000
 	var/online = 1
+	var/smes_input_max = 200000
+	var/smes_output_max = 200000
 
 	var/name_tag = ""
 
@@ -71,6 +71,16 @@ var/global/list/battery_online =	list(
 	var/last_online = 0
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
+
+/obj/machinery/power/battery/RefreshParts()
+	var/capcount = 0
+	var/lasercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/capacitor)) capcount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/micro_laser)) lasercount += SP.rating-1
+	capacity = initial(capacity) + capcount*5e5
+	smes_input_max = initial(smes_input_max) + lasercount*25000
+	smes_output_max = initial(smes_output_max) + lasercount*25000
 
 /obj/machinery/power/battery/process()
 	if (stat & BROKEN)
@@ -180,10 +190,10 @@ var/global/list/battery_online =	list(
 	data["charging"] = charging
 	data["chargeMode"] = chargemode
 	data["chargeLevel"] = chargelevel
-	data["chargeMax"] = SMESMAXCHARGELEVEL
+	data["chargeMax"] = smes_input_max
 	data["outputOnline"] = online
 	data["outputLevel"] = output
-	data["outputMax"] = SMESMAXOUTPUT
+	data["outputMax"] = smes_output_max
 	data["outputLoad"] = round(loaddemand)
 
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -231,20 +241,20 @@ var/global/list/battery_online =	list(
 			if("min")
 				chargelevel = 0
 			if("max")
-				chargelevel = SMESMAXCHARGELEVEL		//30000
+				chargelevel = smes_input_max		//30000
 			if("set")
-				chargelevel = input(usr, "Enter new input level (0-[SMESMAXCHARGELEVEL])", "SMES Input Power Control", chargelevel) as num
-		chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
+				chargelevel = input(usr, "Enter new input level (0-[smes_input_max])", "SMES Input Power Control", chargelevel) as num
+		chargelevel = max(0, min(smes_input_max, chargelevel))	// clamp to range
 
 	else if( href_list["output"] )
 		switch( href_list["output"] )
 			if("min")
 				output = 0
 			if("max")
-				output = SMESMAXOUTPUT		//30000
+				output = smes_output_max		//30000
 			if("set")
-				output = input(usr, "Enter new output level (0-[SMESMAXOUTPUT])", "SMES Output Power Control", output) as num
-		output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
+				output = input(usr, "Enter new output level (0-[smes_output_max])", "SMES Output Power Control", output) as num
+		output = max(0, min(smes_output_max, output))	// clamp to range
 
 	investigation_log(I_SINGULO,"input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]")
 

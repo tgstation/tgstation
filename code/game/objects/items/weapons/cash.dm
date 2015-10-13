@@ -48,7 +48,7 @@ var/global/list/moneytypes = list(
 	icon_state = "cash[worth]"
 	//Up to 100 items per stack.
 	overlays = 0
-	var/stacksize=round(amount/25)
+	var/stacksize=round(amount/2.5)
 	pixel_x = rand(-7, 7)
 	pixel_y = rand(-14, 14)
 	if(stacksize)
@@ -64,7 +64,7 @@ var/global/list/moneytypes = list(
 /obj/item/weapon/spacecash/proc/collect_from(var/obj/item/weapon/spacecash/cash)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/spacecash/proc/collect_from() called tick#: [world.time]")
 	if(cash.worth == src.worth)
-		var/taking = min(100-src.amount,cash.amount)
+		var/taking = min(10-src.amount,cash.amount)
 		cash.amount -= taking
 		src.amount += taking
 		if(cash.amount <= 0)
@@ -117,7 +117,7 @@ var/global/list/moneytypes = list(
 		var/dispense_count = Floor(amount/slice)
 		amount = amount % slice
 		while(dispense_count>0)
-			var/dispense_this_time = min(dispense_count,100)
+			var/dispense_this_time = min(dispense_count,10)
 			if(dispense_this_time > 0)
 				new cashtype(loc,dispense_this_time)
 				dispense_count -= dispense_this_time

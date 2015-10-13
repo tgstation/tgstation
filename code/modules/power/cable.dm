@@ -105,6 +105,25 @@ By design, d1 is the smallest direction and d2 is the highest
 	attached = null
 	..()								// then go ahead and delete the cable
 
+/obj/structure/cable/forceMove()
+	.=..()
+
+	if(powernet)
+		powernet.set_to_build() // update the powernets
+
+/obj/structure/cable/shuttle_rotate(angle)
+	if(d1)
+		d1 = turn(d1, -angle)
+	if(d2)
+		d2 = turn(d2, -angle)
+
+	if(d1 > d2) //Cable icon states start with the lesser number. For example, there's no "8-4" icon state, but there is a "4-8".
+		var/oldD2 = d2
+		d2 = d1
+		d1 = oldD2
+
+	update_icon()
+
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
@@ -153,8 +172,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			getFromPool(/obj/item/stack/cable_coil, T, 1, light_color)
 
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='warning'>[user] cuts the cable.</span>", 1)
+		user.visible_message("<span class='warning'>[user] cuts the cable.</span>", "<span class='info'>You cut the cable.</span>")
 
 		//investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
 
@@ -295,7 +313,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			continue
 		if(C.d1 == (direction ^ 3) || C.d2 == (direction ^ 3)) // we've got a diagonally matching cable
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
+				var/datum/powernet/newPN = getFromPool(/datum/powernet/)
 				newPN.add_cable(C)
 			if(powernet) //if we already have a powernet, then merge the two powernets
 				merge_powernets(powernet,C.powernet)
@@ -312,7 +330,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			continue
 		if(C.d1 == (direction ^ 12) || C.d2 == (direction ^ 12)) // we've got a diagonally matching cable
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
+				var/datum/powernet/newPN = getFromPool(/datum/powernet/)
 				newPN.add_cable(C)
 			if(powernet) // if we already have a powernet, then merge the two powernets
 				merge_powernets(powernet, C.powernet)
@@ -336,7 +354,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			continue
 		if(C.d1 == fdir || C.d2 == fdir) // we've got a matching cable in the neighbor turf
 			if(!C.powernet) // if the matching cable somehow got no powernet, make him one (should not happen for cables)
-				var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
+				var/datum/powernet/newPN = getFromPool(/datum/powernet/)
 				newPN.add_cable(C)
 			if(powernet) // if we already have a powernet, then merge the two powernets
 				merge_powernets(powernet,C.powernet)
@@ -350,7 +368,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/list/connections = list()
 
 	if(!powernet) // if we somehow have no powernet, make one (should not happen for cables)
-		var/datum/powernet/newPN = getFromDPool(/datum/powernet/)
+		var/datum/powernet/newPN = getFromPool(/datum/powernet/)
 		newPN.add_cable(src)
 
 	// first let's add turf cables to our powernet
@@ -448,8 +466,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/list/powerlist = power_list(T1, src, 0, 0) // find the other cables that ended in the centre of the turf, with or without a powernet
 
 	if(powerlist.len>0)
-		var/datum/powernet/PN = getFromDPool(/datum/powernet/)
+		var/datum/powernet/PN = getFromPool(/datum/powernet/)
 		propagate_network(powerlist[1], PN) // propagates the new powernet beginning at the source cable
 
 		if(PN.is_empty()) // can happen with machines made nodeless when smoothing cables
-			returnToDPool(PN) //powernets do not get qdelled
+			returnToPool(PN) //powernets do not get qdelled

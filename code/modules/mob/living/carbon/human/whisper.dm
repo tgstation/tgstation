@@ -1,7 +1,9 @@
 /mob/living/carbon/human/whisper(message as text)
 	if(!IsVocal())
 		return
-
+#ifdef SAY_DEBUG
+	var/oldmsg = message
+#endif
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
@@ -9,32 +11,34 @@
 	if(stat == DEAD)
 		return
 
-	var/datum/language/speaking
-	if(!speaking)
-		speaking = parse_language(message)
-	if(istype(speaking))
-		message = copytext(message,2+length(speaking.key))
-	else
-		if(!isnull(speaking))
-			//var/oldmsg = message
-			var/n = speaking
-			message = copytext(message,1+length(n))
-			//say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [message]")
-			speaking = null
-		speaking = get_default_language()
+	var/datum/speech/speech = create_speech(message)
+	speech.language = parse_language(speech.message)
+	speech.mode = SPEECH_MODE_WHISPER
+	speech.message_classes.Add("whisper")
 
-	message = trim(strip_html_properly(message))
+	if(istype(speech.language))
+		speech.message = copytext(speech.message,2+length(speech.language.key))
+	else
+		if(!isnull(speech.language))
+			//var/oldmsg = message
+			var/n = speech.language
+			speech.message = copytext(speech.message,1+length(n))
+			say_testing(src, "We tried to speak a language we don't have length = [length(n)], oldmsg = [oldmsg] parsed message = [speech.message]")
+			speech.language = null
+		speech.language = get_default_language()
+
+	speech.message = trim(speech.message)
 	if(!can_speak(message))
 		return
 
-	message = "[message]"
+	speech.message = "[message]"
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
 			src << "<span class='danger'>You cannot whisper (muted).</span>"
 			return
 
-	var/alt_name = get_alt_name()
+	//var/alt_name = get_alt_name()
 
 	var/whispers = "whispers"
 	var/critical = InCritical()
@@ -49,12 +53,13 @@
 	if(critical && !said_last_words)
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
-		var/message_len = length(message)
-		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
-		message = Ellipsis(message, 10, 1)
-		whispers = "whispers in their final breath"
+		var/message_len = length(speech.message)
+		speech.message = copytext(speech.message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+		speech.message = Ellipsis(speech.message, 10, 1)
+		speech.mode= SPEECH_MODE_FINAL
+		whispers = "whispers with their final breath"
 		said_last_words = src.stat
-	message = treat_message(message)
+	treat_speech(speech)
 
 	var/listeners = get_hearers_in_view(1, src) | observers
 
@@ -62,21 +67,24 @@
 
 	var/watchers = hearers(5, src) - listeners - eavesdroppers
 
-	var/rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+
+	//"<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	var/rendered = render_speech(speech)
 
 	for (var/atom/movable/listener in listeners)
 		if (listener)
-			listener.Hear(rendered, src, speaking, message)
+			listener.Hear(speech, rendered)
 
 	listeners = null
 
-	message = stars(message)
+	speech.message = stars(speech.message)
 
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	//rendered = "<span class='game say'><span class='name'>[GetVoice()]</span> (as [alt_name]) [whispers], <span class='message'>\"<i>[message]</i>\"</span></span>"
+	rendered = render_speech(speech)
 
 	for (var/atom/movable/eavesdropper in eavesdroppers)
 		if (eavesdropper)
-			eavesdropper.Hear(rendered, src, speaking, message)
+			eavesdropper.Hear(speech, rendered)
 
 	eavesdroppers = null
 
@@ -90,3 +98,5 @@
 
 	if (said_last_words) // dying words
 		succumb(1)
+
+	returnToPool(speech)

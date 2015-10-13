@@ -101,3 +101,13 @@
 
 /obj/item/weapon/fossil/plant/New()
 	icon_state = "plant[rand(1,4)]"
+	var/prehistoric_plants = list(
+		/obj/item/seeds/telriis,
+		/obj/item/seeds/thaadra,
+		/obj/item/seeds/jurlmah,
+		/obj/item/seeds/amauri,
+		/obj/item/seeds/gelthi,
+		/obj/item/seeds/vale,
+		/obj/item/seeds/surik,
+		)
+	nonplant_seed_type = pick(prehistoric_plants)

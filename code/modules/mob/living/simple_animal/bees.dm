@@ -32,6 +32,8 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 
+	holder_type = null //Can't pick BEES up!
+
 	var/max_hive_dist=5
 
 /mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)

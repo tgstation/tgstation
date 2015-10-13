@@ -34,7 +34,7 @@
 		user  << "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow."
 		var/obj/item/weapon/shard/shrapnel/S = new()
 		S.loc = get_turf(src)
-		src.Destroy()
+		qdel(src)
 
 /obj/item/weapon/crossbow
 

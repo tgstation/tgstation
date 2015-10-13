@@ -38,6 +38,7 @@
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/vend_delay = 10	//How long does it take to vend?
+	var/shoot_chance = 2 //How often do we throw items?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 	var/delay_product_spawn // If set, uses sleep() in product spawn proc (mostly for seeds to retrieve correct names).
 	// To be filled out at compile time
@@ -118,9 +119,15 @@
 
 	return
 
+/obj/machinery/vending/RefreshParts()
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+	shoot_chance = manipcount * 3
+
 /obj/machinery/vending/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	if(product_records.len&&cardboard) //Only spit out if we have slotted cardboard
@@ -136,6 +143,11 @@
 	if(coinbox)
 		coinbox.loc = get_turf(src)
 	..()
+
+/obj/machinery/vending/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSMACHINE))
+		return 1
+	return ..()
 
 /obj/machinery/vending/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
@@ -220,6 +232,16 @@
 	else
 		del(src)
 
+/obj/machinery/vending/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	switch(severity)
+		if(1.0)
+			malfunction()
+		if(2.0)
+			if(prob(50)) malfunction()
+		if(3.0)
+			if(prob(25)) malfunction()
 
 /obj/machinery/vending/proc/build_inventory(var/list/productlist,hidden=0,req_coin=0)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/build_inventory() called tick#: [world.time]")
@@ -390,43 +412,62 @@
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		if(linked_account)
-			var/datum/money_account/D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0) // Pin = 0, Sec level 2, PIN not required.
-			if(D)
-				var/transaction_amount = currently_vending.price
-				if(transaction_amount <= D.money)
+			//we start by checking the ID card's virtual wallet
+			var/datum/money_account/D = C.virtual_wallet
+			var/using_account = "Virtual Wallet"
 
-					//transfer the money
-					D.money -= transaction_amount
-					linked_account.money += transaction_amount
+			//if there isn't one for some reason we create it, that should never happen but oh well.
+			if(!D)
+				C.update_virtual_wallet()
+				D = C.virtual_wallet
 
-					usr << "\icon[src]<span class='notice'>Remaining balance: [D.money]$</span>"
+			var/transaction_amount = currently_vending.price
 
-					//create entries in the two account transaction logs
-					var/datum/transaction/T = new()
-					T.target_name = "[linked_account.owner_name] (via [src.name])"
-					T.purpose = "Purchase of [currently_vending.product_name]"
-					T.amount = "[transaction_amount]"
-					T.source_terminal = src.name
-					T.date = current_date_string
-					T.time = worldtime2text()
-					D.transaction_log.Add(T)
-					//
-					T = new()
-					T.target_name = D.owner_name
-					T.purpose = "Purchase of [currently_vending.product_name]"
-					T.amount = "[transaction_amount]"
-					T.source_terminal = src.name
-					T.date = current_date_string
-					T.time = worldtime2text()
-					linked_account.transaction_log.Add(T)
+			//if there isn't enough money in the virtual wallet, then we check the bank account connected to the ID
+			if(D.money < transaction_amount)
+				D = linked_db.attempt_account_access(C.associated_account_number, 0, 2, 0)
+				using_account = "Bank Account"
+				if(!D)								//first we check if there IS a bank account in the first place
+					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
+					usr << "\icon[src]<span class='warning'>Unable to access your bank account.</span>"
+					return 0
+				else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
+					usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
+					usr << "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>"
+					return 0
+				else if(D.money < transaction_amount)//and lastly we check if there's enough money on it, duh
+					usr << "\icon[src]<span class='warning'>You don't have that much money on your bank account!</span>"
+					return 0
 
-					// Vend the item
-					src.vend(src.currently_vending, usr)
-					currently_vending = null
-				else
-					usr << "\icon[src]<span class='warning'>You don't have that much money!</span>"
-			else
-				usr << "\icon[src]<span class='warning'>Unable to access account. Check security settings and try again.</span>"
+			//transfer the money
+			D.money -= transaction_amount
+			linked_account.money += transaction_amount
+
+			usr << "\icon[src]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>"
+
+			//create an entry on the buy's account's transaction log
+			var/datum/transaction/T = new()
+			T.target_name = "[linked_account.owner_name] (via [src.name])"
+			T.purpose = "Purchase of [currently_vending.product_name]"
+			T.amount = "-[transaction_amount]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			D.transaction_log.Add(T)
+
+			//and another entry on the vending machine's vendor account's transaction log
+			T = new()
+			T.target_name = D.owner_name
+			T.purpose = "Purchase of [currently_vending.product_name]"
+			T.amount = "[transaction_amount]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			linked_account.transaction_log.Add(T)
+
+			// Vend the item
+			src.vend(src.currently_vending, usr)
+			currently_vending = null
 		else
 			usr << "\icon[src]<span class='warning'>EFTPOS is not connected to an account.</span>"
 
@@ -517,8 +558,8 @@
 			stat |= BROKEN
 			src.update_vicon()
 			return
-		if(prob(4))
-			src.throw_item()
+		if(prob(2)) //Jackpot!
+			malfunction()
 		if(prob(2))
 			src.TurnOff(600) //A whole minute
 		/*if(prob(1))
@@ -797,7 +838,7 @@
 		src.speak(slogan)
 		src.last_slogan = world.time
 
-	if(src.shoot_inventory && prob(2))
+	if(src.shoot_inventory && prob(shoot_chance))
 		src.throw_item()
 
 	return
@@ -812,7 +853,7 @@
 	say(message)
 
 /obj/machinery/vending/say_quote(text)
-	return "beeps, \"[text]\""
+	return "beeps, [text]"
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
@@ -829,18 +870,10 @@
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/vending/proc/malfunction() called tick#: [world.time]")
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-
-		while(R.amount>0)
-			new dump_path(src.loc)
-			R.amount--
-		break
-
+	var/lost_inventory = rand(1,12)
+	while(lost_inventory>0)
+		throw_item()
+		lost_inventory--
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
 	return
@@ -853,22 +886,25 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
+	var/list/throwable = product_records
+	var/tries = 10 //Give up eventually
+	if(extended_inventory) throwable += hidden_records
 
+	while(tries)
+		var/datum/data/vending_product/R = pick(throwable)
+		var/obj/item/dump_path = R.product_path
+		if(R.amount <= 0 || !dump_path)
+			tries--
+			continue
 		R.amount--
 		throw_item = new dump_path(src.loc)
-		break
-	if (!throw_item)
-		return 0
-	spawn(0)
-		throw_item.throw_at(target, 16, 3)
-	src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
-	return 1
+		if(!throw_item)
+			return 0
+		spawn(0)
+			throw_item.throw_at(target, 16, 3)
+		src.visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
+		return 1
+	return 0
 
 /obj/machinery/vending/update_icon()
 	if(panel_open)
@@ -1461,6 +1497,7 @@
 		/obj/item/seeds/cherryseed = 3,
 		/obj/item/seeds/plastiseed = 3,
 		/obj/item/seeds/riceseed = 3,
+		/obj/item/seeds/cinnamomum = 3,
 		)//,/obj/item/seeds/synthmeatseed = 3)
 	contraband = list(
 		/obj/item/seeds/amanitamycelium = 2,
@@ -1788,12 +1825,14 @@
 		/obj/item/clothing/under/clownpiece = 3,
 		/obj/item/clothing/suit/clownpiece = 3,
 		/obj/item/clothing/head/clownpiece = 3,
+		/obj/item/clothing/head/cowboy = 3,
 		) //Pretty much everything that had a chance to spawn.
 	contraband = list(
 		/obj/item/clothing/suit/cardborg = 3,
 		/obj/item/clothing/head/cardborg = 3,
 		/obj/item/clothing/suit/judgerobe = 3,
 		/obj/item/clothing/head/powdered_wig = 3,
+		/obj/item/toy/gun = 3,
 		)
 	premium = list(
 		/obj/item/clothing/suit/hgpirate = 3,
@@ -2102,12 +2141,14 @@
 		/obj/item/weapon/reagent_containers/food/drinks/filk = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink = 10,
 		)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/drinks/groans = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/filk = 20,
 		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/grifeo = 30,
 		/obj/item/weapon/reagent_containers/food/drinks/mannsdrink = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink = 50,
 		/obj/item/weapon/reagent_containers/food/drinks/groansbanned = 50,
 		)
 	contraband = list(
@@ -2128,3 +2169,38 @@
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum = 5)
 
 	pack = /obj/structure/vendomatpack/nuka
+
+/obj/machinery/vending/chapel
+	name = "PietyVend"
+	desc = "A holy vendor for a pious man."
+	product_slogans = "Bene orasse est bene studuisse.;Beati pauperes spiritu.;Di immortales virtutem approbare, non adhibere debent."
+	product_ads = "Deus tecum."
+	vend_reply = "Deus vult!"
+	icon_state = "chapel"
+	products = list(
+		/obj/item/clothing/under/rank/chaplain = 2,
+		/obj/item/clothing/shoes/black = 2,
+		/obj/item/clothing/suit/nun = 2,
+		/obj/item/clothing/head/nun_hood = 2,
+		/obj/item/clothing/suit/chaplain_hoodie = 2,
+		/obj/item/clothing/head/chaplain_hood = 2,
+		/obj/item/clothing/suit/holidaypriest = 2,
+		/obj/item/clothing/under/wedding/bride_white = 2,
+		/obj/item/clothing/head/hasturhood = 2,
+		/obj/item/clothing/suit/hastur = 2,
+		/obj/item/clothing/suit/unathi/robe = 2,
+		/obj/item/clothing/head/wizard/amp = 2,
+		/obj/item/clothing/suit/wizrobe/psypurple = 2,
+		/obj/item/clothing/suit/imperium_monk = 2,
+		/obj/item/clothing/mask/chapmask = 2,
+		/obj/item/clothing/under/sl_suit = 2,
+		/obj/item/weapon/storage/backpack/cultpack = 2,
+		/obj/item/weapon/storage/fancy/candle_box = 5,
+		)
+	premium = list(
+		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater = 1,
+		)
+	req_access_txt = "22"
+
+	pack = /obj/structure/vendomatpack/chapelvend
+

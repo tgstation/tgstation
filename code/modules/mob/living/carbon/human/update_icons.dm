@@ -7,31 +7,23 @@ core parts. The key difference is that when we generate overlays we do not gener
 versions. Instead, we generate both and store them in two fixed-length lists, both using the same list-index
 (The indexes are in update_icons.dm): Each list for humans is (at the time of writing) of length 19.
 This will hopefully be reduced as the system is refined.
-
 	var/overlays_lying[19]			//For the lying down stance
 	var/overlays_standing[19]		//For the standing stance
-
 When we call update_icons, the 'lying' variable is checked and then the appropriate list is assigned to our overlays!
 That in itself uses a tiny bit more memory (no more than all the ridiculous lists the game has already mind you).
-
 On the other-hand, it should be very CPU cheap in comparison to the old system.
 In the old system, we updated all our overlays every life() call, even if we were standing still inside a crate!
 or dead!. 25ish overlays, all generated from scratch every second for every xeno/human/monkey and then applied.
 More often than not update_clothing was being called a few times in addition to that! CPU was not the only issue,
 all those icons had to be sent to every client. So really the cost was extremely cumulative. To the point where
 update_clothing would frequently appear in the top 10 most CPU intensive procs during profiling.
-
 Another feature of this new system is that our lists are indexed. This means we can update specific overlays!
 So we only regenerate icons when we need them to be updated! This is the main saving for this system.
-
 In practice this means that:
 	everytime you fall over, we just switch between precompiled lists. Which is fast and cheap.
 	Everytime you do something minor like take a pen out of your pocket, we only update the in-hand overlay
 	etc...
-
-
 There are several things that need to be remembered:
-
 >	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
 	( i.e. you do something like l_hand = /obj/item/something new(src) )
 	You will need to call the relevant update_inv_* proc:
@@ -51,12 +43,9 @@ There are several things that need to be remembered:
 		update_inv_back()
 		update_inv_handcuffed()
 		update_inv_wear_mask()
-
 	All of these are named after the variable they update from. They are defined at the mob/ level like
 	update_clothing was, so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
 	slime etc. Instead, it'll just return without doing any work. So no harm in calling it for slimes and such.
-
-
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
 		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
@@ -65,7 +54,6 @@ There are several things that need to be remembered:
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
 																			...eyes were merged into update_body)
 		update_targeted() // Updates the target overlay when someone points a gun at you
-
 >	All of these procs update our overlays_lying and overlays_standing, and then call update_icons() by default.
 	If you wish to update several overlays at once, you can set the argument to 0 to disable the update and call
 	it manually:
@@ -73,25 +61,20 @@ There are several things that need to be remembered:
 		update_inv_head(0)
 		update_inv_l_hand(0)
 		update_inv_r_hand()		//<---calls update_icons()
-
 	or equivillantly:
 		update_inv_head(0)
 		update_inv_l_hand(0)
 		update_inv_r_hand(0)
 		update_icons()
-
 >	If you need to update all overlays you can use regenerate_icons(). it works exactly like update_clothing used to.
-
 >	I reimplimented an old unused variable which was in the code called (coincidentally) var/update_icon
 	It can be used as another method of triggering regenerate_icons(). It's basically a flag that when set to non-zero
 	will call regenerate_icons() at the next life() call and then reset itself to 0.
 	The idea behind it is icons are regenerated only once, even if multiple events requested it.
-
 This system is confusing and is still a WIP. It's primary goal is speeding up the controls of the game whilst
 reducing processing costs. So please bear with me while I iron out the kinks. It will be worth it, I promise.
 If I can eventually free var/lying stuff from the life() process altogether, stuns/death/status stuff
 will become less affected by lag-spikes and will be instantaneous! :3
-
 If you have any questions/constructive-comments/bugs-to-report/or have a massivly devestated butt...
 Please contact me on #coderbus IRC. ~Carn x
 */
@@ -163,12 +146,9 @@ var/global/list/damage_icon_parts = list()
 		if(O.status & ORGAN_DESTROYED) damage_appearance += "d"
 		else
 			damage_appearance += O.damage_state
-
-
 	if(damage_appearance == previous_damage_appearance)
 		// nothing to do here
 		return
-
 	previous_damage_appearance = damage_appearance
 	*/
 
@@ -374,16 +354,16 @@ var/global/list/damage_icon_parts = list()
 	if(gender == FEMALE)	g = "f"
 	// DNA2 - Drawing underlays.
 	var/hulk = 0
-	for(var/datum/dna/gene/gene in dna_genes)
+	for(var/gene_type in active_genes)
+		var/datum/dna/gene/gene = dna_genes[gene_type]
 		if(!gene.block)
 			continue
-		if(gene.is_active(src))
-			if(gene.name == "Hulk") hulk = 1
-			var/underlay=gene.OnDrawUnderlays(src,g,fat)
-			if(underlay)
-				//standing.underlays += underlay
-				O.underlays += underlay
-				add_image = 1
+		if(gene.name == "Hulk") hulk = 1
+		var/underlay=gene.OnDrawUnderlays(src,g,fat)
+		if(underlay)
+			//standing.underlays += underlay
+			O.underlays += underlay
+			add_image = 1
 	for(var/mut in mutations)
 		switch(mut)
 			if(M_HULK)
@@ -555,6 +535,11 @@ var/global/list/damage_icon_parts = list()
 		if(w_uniform.icon_override)
 			standing.icon	= w_uniform.icon_override
 
+		if(w_uniform.dynamic_overlay)
+			if(w_uniform.dynamic_overlay["[UNIFORM_LAYER]"])
+				var/image/dyn_overlay = w_uniform.dynamic_overlay["[UNIFORM_LAYER]"]
+				O.overlays += dyn_overlay
+
 		if(w_uniform.blood_DNA && w_uniform.blood_DNA.len)
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "uniformblood")
 			bloodsies.color		= w_uniform.blood_color
@@ -597,6 +582,11 @@ var/global/list/damage_icon_parts = list()
 			var/obj/Overlays/O = obj_overlays[ID_LAYER]
 			O.icon = 'icons/mob/mob.dmi'
 			O.icon_state = "id"
+			O.overlays.len = 0
+			if(wear_id.dynamic_overlay)
+				if(wear_id.dynamic_overlay["[ID_LAYER]"])
+					var/image/dyn_overlay = wear_id.dynamic_overlay["[ID_LAYER]"]
+					O.overlays += dyn_overlay
 			overlays += O
 			obj_overlays[ID_LAYER] = O
 			//overlays_standing[ID_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "id")
@@ -626,6 +616,10 @@ var/global/list/damage_icon_parts = list()
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
 			if(species.gloves_icons)
 				standing.icon = species.gloves_icons
+		if(gloves.dynamic_overlay)
+			if(gloves.dynamic_overlay["[GLOVES_LAYER]"])
+				var/image/dyn_overlay = gloves.dynamic_overlay["[GLOVES_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(gloves.blood_DNA && gloves.blood_DNA.len)
 			var/image/bloodsies	= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "bloodyhands")
@@ -669,6 +663,11 @@ var/global/list/damage_icon_parts = list()
 			var/obj/Overlays/O = obj_overlays[GLASSES_OVER_HAIR_LAYER]
 			O.icon = standing
 			O.icon_state = standing.icon_state
+			O.overlays.len = 0
+			if(glasses.dynamic_overlay)
+				if(glasses.dynamic_overlay["[GLASSES_OVER_HAIR_LAYER]"])
+					var/image/dyn_overlay = glasses.dynamic_overlay["[GLASSES_OVER_HAIR_LAYER]"]
+					O.overlays += dyn_overlay
 			overlays += O
 			obj_overlays[GLASSES_OVER_HAIR_LAYER] = O
 			//overlays_standing[GLASSES_OVER_HAIR_LAYER]	= standing
@@ -676,6 +675,11 @@ var/global/list/damage_icon_parts = list()
 			var/obj/Overlays/O = obj_overlays[GLASSES_LAYER]
 			O.icon = standing
 			O.icon_state = standing.icon_state
+			O.overlays.len = 0
+			if(glasses.dynamic_overlay)
+				if(glasses.dynamic_overlay["[GLASSES_LAYER]"])
+					var/image/dyn_overlay = glasses.dynamic_overlay["[GLASSES_LAYER]"]
+					O.overlays += dyn_overlay
 			overlays += O
 			obj_overlays[GLASSES_LAYER] = O
 			//overlays_standing[GLASSES_LAYER]	= standing
@@ -700,6 +704,11 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[EARS_LAYER]
 		O.icon = standing
 		O.icon_state = standing.icon_state
+		O.overlays.len = 0
+		if(ears.dynamic_overlay)
+			if(ears.dynamic_overlay["[EARS_LAYER]"])
+				var/image/dyn_overlay = ears.dynamic_overlay["[EARS_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[EARS_LAYER] = O
 		//overlays_standing[EARS_LAYER] = standing
@@ -722,6 +731,10 @@ var/global/list/damage_icon_parts = list()
 				//standing.icon = species.shoes_icons
 
 		O.overlays.len = 0
+		if(shoes.dynamic_overlay)
+			if(shoes.dynamic_overlay["[SHOES_LAYER]"])
+				var/image/dyn_overlay = shoes.dynamic_overlay["[SHOES_LAYER]"]
+				O.overlays += dyn_overlay
 		if(shoes.blood_DNA && shoes.blood_DNA.len)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "shoeblood")
 			bloodsies.color = shoes.blood_color
@@ -742,6 +755,11 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[SUIT_STORE_LAYER]
 		O.icon = 'icons/mob/belt_mirror.dmi'
 		O.icon_state = t_state
+		O.overlays.len = 0
+		if(s_store.dynamic_overlay)
+			if(s_store.dynamic_overlay["[SUIT_STORE_LAYER]"])
+				var/image/dyn_overlay = s_store.dynamic_overlay["[SUIT_STORE_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[SUIT_STORE_LAYER] = O
 		//overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'icons/mob/belt_mirror.dmi', "icon_state" = "[t_state]")
@@ -767,6 +785,11 @@ var/global/list/damage_icon_parts = list()
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
 			if(species.head_icons)
 				standing.icon = species.head_icons
+
+		if(head.dynamic_overlay)
+			if(head.dynamic_overlay["[HEAD_LAYER]"])
+				var/image/dyn_overlay = head.dynamic_overlay["[HEAD_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(head.blood_DNA && head.blood_DNA.len)
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
@@ -798,6 +821,11 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[BELT_LAYER]
 		O.icon = standing
 		O.icon_state = standing.icon_state
+		O.overlays.len = 0
+		if(belt.dynamic_overlay)
+			if(belt.dynamic_overlay["[BELT_LAYER]"])
+				var/image/dyn_overlay = belt.dynamic_overlay["[BELT_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[BELT_LAYER] = O
 		//overlays_standing[BELT_LAYER]	= standing
@@ -822,6 +850,11 @@ var/global/list/damage_icon_parts = list()
 		if(species.name in I.species_fit) //Allows clothes to display differently for multiple species
 			if(species.wear_suit_icons)
 				standing.icon = species.wear_suit_icons
+
+		if(wear_suit.dynamic_overlay)
+			if(wear_suit.dynamic_overlay["[SUIT_LAYER]"])
+				var/image/dyn_overlay = wear_suit.dynamic_overlay["[SUIT_LAYER]"]
+				O.overlays += dyn_overlay
 
 		if(wear_suit.blood_DNA && wear_suit.blood_DNA.len)
 			var/obj/item/clothing/suit/S = wear_suit
@@ -862,6 +895,11 @@ var/global/list/damage_icon_parts = list()
 			if(species.wear_mask_icons)   //This REQUIRES the species to be listed in species_fit and also to have an appropriate dmi allocated in their species datum
 				standing.icon = species.wear_mask_icons
 
+		if(wear_mask.dynamic_overlay)
+			if(wear_mask.dynamic_overlay["[FACEMASK_LAYER]"])
+				var/image/dyn_overlay = wear_mask.dynamic_overlay["[FACEMASK_LAYER]"]
+				O.overlays += dyn_overlay
+
 		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA && wear_mask.blood_DNA.len )
 			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "maskblood")
 			bloodsies.color = wear_mask.blood_color
@@ -892,6 +930,11 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[BACK_LAYER]
 		O.icon = standing
 		O.icon_state = standing.icon_state
+		O.overlays.len = 0
+		if(back.dynamic_overlay)
+			if(back.dynamic_overlay["[BACK_LAYER]"])
+				var/image/dyn_overlay = back.dynamic_overlay["[BACK_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[BACK_LAYER] = O
 
@@ -956,6 +999,11 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = t_state
 		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
 		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
+		O.overlays.len = 0
+		if(r_hand.dynamic_overlay)
+			if(r_hand.dynamic_overlay["[R_HAND_LAYER]"])
+				var/image/dyn_overlay = r_hand.dynamic_overlay["[R_HAND_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[R_HAND_LAYER] = O
 		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
@@ -979,6 +1027,11 @@ var/global/list/damage_icon_parts = list()
 		O.icon_state = t_state
 		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
 		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
+		O.overlays.len = 0
+		if(l_hand.dynamic_overlay)
+			if(l_hand.dynamic_overlay["[L_HAND_LAYER]"])
+				var/image/dyn_overlay = l_hand.dynamic_overlay["[L_HAND_LAYER]"]
+				O.overlays += dyn_overlay
 		overlays += O
 		obj_overlays[L_HAND_LAYER] = O
 		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")

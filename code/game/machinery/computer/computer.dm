@@ -11,7 +11,7 @@
 	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | MULTITOOL_MENU | SHUTTLEWRENCH
 
 	use_auto_lights = 1
-	light_power_on = 2
+	light_power_on = 1
 	light_range_on = 3
 
 /obj/machinery/computer/cultify()
@@ -22,6 +22,11 @@
 	..()
 	if(ticker)
 		initialize()
+
+/obj/machinery/computer/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	if(istype(mover) && mover.checkpass(PASSMACHINE))
+		return 1
+	return ..()
 
 /obj/machinery/computer/initialize()
 	..()
@@ -90,16 +95,18 @@
 	stat |= BROKEN
 	update_icon()
 
-/obj/machinery/computer/togglePanelOpen(var/obj/toggleitem, mob/user)
+/obj/machinery/computer/togglePanelOpen(var/obj/toggleitem, mob/user, var/obj/item/weapon/circuitboard/CC = null)
 	if(!circuit) //we can't disassemble with no circuit, so add some fucking circuits if you want disassembly
 		return
 	playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 	user.visible_message(	"[user] begins to unscrew \the [src]'s monitor.",
 							"You begin to unscrew the monitor...")
-	if (do_after(user, src, 20) && circuit)
+	if (do_after(user, src, 20) && (circuit || CC))
 		var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-		var/obj/item/weapon/circuitboard/M = new circuit( A )
-		A.circuit = M
+		if(!CC) CC = new circuit( A )
+		else
+			CC.loc = A
+		A.circuit = CC
 		A.anchored = 1
 		for (var/obj/C in src)
 			C.loc = src.loc

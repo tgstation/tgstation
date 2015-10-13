@@ -150,7 +150,7 @@
 
 /obj/machinery/alarm/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 	for(var/obj/machinery/computer/atmoscontrol/AC in atmos_controllers)
 		if(AC.current == src)
@@ -400,7 +400,7 @@
 	if(!radio_connection)
 		return 0
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 
@@ -463,7 +463,7 @@
 	if(!frequency)
 		return
 
-	var/datum/signal/alert_signal = getFromDPool(/datum/signal)
+	var/datum/signal/alert_signal = getFromPool(/datum/signal)
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
 	alert_signal.data["zone"] = areaMaster.name

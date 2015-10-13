@@ -20,6 +20,16 @@
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/photocopier
 
+/datum/design/fax
+	name = "Circuit Design (Fax)"
+	desc = "Allows for the construction of circuit boards to build fax machines."
+	id = "fax"
+	req_tech = list ("bluespace" = 2, "materials" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Machine Boards"
+	build_path = /obj/item/weapon/circuitboard/fax
+
 /datum/design/condimaster
 	name = "Circuit Design (CondiMaster)"
 	desc = "Allows for the cosntruction of circuit boards used to build CondiMasters"
@@ -90,3 +100,12 @@
 	desc = "Allows for the construction of circuit boards used to build a destinations sorting machine"
 	id = "destsortingmachine"
 	build_path = /obj/item/weapon/circuitboard/sorting_machine/destination
+
+/datum/design/washing_machine
+	name = "Circuit Design (Washing Machine)"
+	desc = "Allows for the construction of circuit boards used to build a washing machine."
+	id = "washingmachine"
+	req_tech = list("materials" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/washing_machine

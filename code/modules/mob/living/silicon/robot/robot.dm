@@ -18,6 +18,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
+	var/obj/screen/sensor = null
 
 	var/shown_robot_modules = 0
 	var/obj/screen/robot_modules_background
@@ -214,6 +215,11 @@
 		if(client)
 			client.screen -= robot_modules_background
 		robot_modules_background = null
+	if(sensor)
+		returnToPool(sensor)
+		if(client)
+			client.screen -= sensor
+		sensor = null
 
 /proc/getAvailableRobotModules()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getAvailableRobotModules() called tick#: [world.time]")
@@ -1312,7 +1318,7 @@
 		src << "<span class='warning'>No Sensor Augmentations located or no module has been equipped.</span>"
 		return
 	var/sensor_type
-	if(module.sensor_augs.len == 1) // Only one choice so toggle between it.
+	if(module.sensor_augs.len == 2) // Only one choice so toggle between it.
 		if(!sensor_mode)
 			sensor_type = module.sensor_augs[1]
 		else

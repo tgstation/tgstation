@@ -54,10 +54,12 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 	var/weapons_check = 0
-	var/safe_weapons = list(\
-		/obj/item/weapon/gun/energy/laser/bluetag,\
-		/obj/item/weapon/gun/energy/laser/redtag,\
-		/obj/item/weapon/gun/energy/laser/practice)
+	var/safe_weapons = list(
+		/obj/item/weapon/gun/energy/laser/bluetag,
+		/obj/item/weapon/gun/energy/laser/redtag,
+		/obj/item/weapon/gun/energy/laser/practice,
+		/obj/item/weapon/gun/hookshot,
+		)
 	light_color = LIGHT_COLOR_RED
 	power_change()
 		..()
@@ -604,7 +606,7 @@ Auto Patrol: []"},
 
 	if(!frequency) return
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.source = src
 	signal.transmission_method = 1
 	//for(var/key in keyval)

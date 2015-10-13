@@ -94,7 +94,8 @@
 
 
 /obj/machinery/power/supermatter/Destroy()
-	del(radio)
+	qdel(radio)
+	radio = null
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
@@ -102,11 +103,11 @@
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 		new /turf/unsimulated/wall/supermatter(get_turf(src))
 		SetUniversalState(/datum/universal_state/supermatter_cascade)
-		del(src)
+		qdel(src)
 
 /obj/machinery/power/supermatter/shard/explode()
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		del src
+		qdel(src)
 		return
 
 /obj/machinery/power/supermatter/ex_act(severity)
@@ -179,7 +180,12 @@
 			else
 				warning = "[short_name] hyperstructure returning to safe operating levels. Instability: [stability]%"
 			//radio.say(warning, "Supermatter [short_name] Monitor")
-			Broadcast_Message(radio, all_languages[LANGUAGE_SOL_COMMON], null, radio, warning, "Supermatter [short_name] Monitor", "Automated Announcement", "Supermatter [short_name] Monitor", 0, 0, list(0,1), 1459)
+			var/datum/speech/speech = radio.create_speech(warning, frequency=1459, transmitter=radio)
+			speech.name = "Supermatter [short_name] Monitor"
+			speech.job = "Automated Announcement"
+			speech.as_name = "Supermatter [short_name] Monitor"
+			Broadcast_Message(speech, level = list(0,1))
+			returnToPool(speech)
 
 			lastwarning = world.timeofday - offset
 
@@ -205,7 +211,7 @@
 
 		if(!radio_connection) return
 
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.source = src
 		signal.transmission_method = 1
 		signal.data = list(

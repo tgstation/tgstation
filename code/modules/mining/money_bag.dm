@@ -15,7 +15,7 @@
 /obj/item/weapon/moneybag/attack_hand(user as mob)
 	var/credits=0
 	if(!coin_value)
-		coin_value = getFromDPool(/datum/materials)
+		coin_value = getFromPool(/datum/materials)
 	else
 		coin_value.resetVariables() //make its storage be 0
 

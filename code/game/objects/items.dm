@@ -48,6 +48,7 @@
 
 
 	var/vending_cat = null// subcategory for vending machines.
+	var/list/dynamic_overlay[0] //For items which need to slightly alter their on-mob appearance while being worn.
 
 /obj/item/Destroy()
 	if(istype(src.loc, /mob))
@@ -221,7 +222,7 @@
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
-/obj/item/proc/talk_into(mob/M as mob, var/text, var/channel=null)
+/obj/item/proc/talk_into(var/datum/speech/speech, var/channel=null)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/talk_into() called tick#: [world.time]")
 	return
 
@@ -238,7 +239,7 @@
 ///called when an item is stripped off by another person, called AFTER it is on the ground
 /obj/item/proc/stripped(mob/wearer as mob, mob/stripper as mob)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/stripped() called tick#: [world.time]")
-	return
+	return unequipped(wearer)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -267,6 +268,10 @@
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/proc/equipped() called tick#: [world.time]")
+	return
+
+// called after an item is unequipped or stripped
+/obj/item/proc/unequipped(mob/user)
 	return
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -653,9 +658,18 @@
 	if(!ishuman(user))
 		user.show_message("You can't wield \the [src] as it's too heavy.")
 		return
+
 	if(!wielded)
 		wielded = getFromPool(/obj/item/offhand)
-		if(user.put_in_inactive_hand(wielded) || (!inactive && user.put_in_active_hand(wielded)))
+
+		//Long line ahead, let's break that up!
+		//
+		//((user.get_active_hand() in list(null, src)) && user.put_in_inactive_hand(wielded))
+		//By default this proc assumes that the wielded item is held in the ACTIVE hand!
+		//(user.get_active_hand() in list(null, src)) is the part which checks whether the ACTIVE hand is either nothing, or the wielded item. Otherwise, abort!
+
+		//The second half is the same, except that the proc assumes that the wielded item is held in the INACTIVE hand. So the INACTIVE hand is checked for holding either nothing or wielded item.
+		if(((user.get_active_hand() in list(null, src)) && user.put_in_inactive_hand(wielded)) || (!inactive && ((user.get_inactive_hand() in list(null, src)) && user.put_in_active_hand(wielded))))
 			wielded.attach_to(src)
 			update_wield(user)
 			return 1
@@ -783,7 +797,7 @@
 	if(!blood_overlay)
 		blood_overlay = blood_overlays[type]
 	else
-		overlays -= blood_overlay
+		overlays.Remove(blood_overlay)
 
 	//apply the blood-splatter overlay if it isn't already in there, else it updates it.
 	blood_overlay.color = blood_color

@@ -16,4 +16,3 @@
 		pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
 	if(pipe)
 		handle_ventcrawl(pipe)
-	handle_ventcrawl(pipe)

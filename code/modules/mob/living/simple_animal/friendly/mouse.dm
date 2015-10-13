@@ -25,6 +25,7 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	universal_speak = 0
+	treadmill_speed = 0.2 //You can still do it, but you're not going to generate much power.
 
 	size = SIZE_TINY
 
@@ -196,7 +197,7 @@
 /mob/living/simple_animal/mouse/say_quote(text)
 	if(!text)
 		return "squeaks, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	return "squeaks, \"[text]\"";
+	return "squeaks, [text]";
 
 /mob/living/simple_animal/mouse/singularity_act()
 	if(!(src.flags & INVULNERABLE))

@@ -124,6 +124,7 @@
 	name = "Circuit board (Arcade)"
 	build_path = "/obj/machinery/computer/arcade"
 	origin_tech = "programming=1"
+	var/list/game_data = list()
 /obj/item/weapon/circuitboard/turbine_control
 	name = "Circuit board (Turbine control)"
 	build_path = "/obj/machinery/computer/turbine_computer"
@@ -214,10 +215,6 @@
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
 	origin_tech = "programming=3;biotech=4"
-/obj/item/weapon/circuitboard/centrifuge
-	name = "Circuit board (Isolation Centrifuge)"
-	build_path = "/obj/machinery/computer/centrifuge"
-	origin_tech = "programming=3;biotech=3"
 
 /obj/item/weapon/circuitboard/shuttle_control
 	name = "Circuit board (Shuttle Control)"
@@ -422,6 +419,10 @@
 					var/obj/machinery/computer/supplycomp/SC = B
 					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
 					SC.can_order_contraband = C.contraband_enabled
-				del(src)
+				else if(istype(circuit,/obj/item/weapon/circuitboard/arcade))
+					var/obj/machinery/computer/arcade/arcade = B
+					var/obj/item/weapon/circuitboard/arcade/C = circuit
+					arcade.import_game_data(C)
+				qdel(src)
 				return 1
 	return 0

@@ -57,6 +57,11 @@
 	stun = 5
 	weaken = 5
 
+/obj/item/projectile/bullet/midbullet/lawgiver
+	damage = 10
+	stun = 0
+	weaken = 0
+
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
 

@@ -10,6 +10,9 @@
 	opacity = 0
 	anchored = 1
 
+/obj/structure/shuttle/window/shuttle_rotate(angle) //WOW
+	src.transform = turn(src.transform, angle)
+
 /obj/structure/shuttle/window/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(!height || air_group)
 		return 0

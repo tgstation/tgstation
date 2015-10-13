@@ -145,6 +145,7 @@ var/global/secure_GPS_count = 0
 
 /obj/item/device/gps/secure/stripped(mob/wearer as mob)
 	if(emped) return
+	.=..()
 
 	for(var/E in SPS_list)
 		var/obj/item/device/gps/secure/S  = E

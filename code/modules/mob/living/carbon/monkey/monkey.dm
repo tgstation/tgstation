@@ -7,9 +7,9 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
-
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/monkey
 	species_type = /mob/living/carbon/monkey
+	treadmill_speed = 0.8 //Slow apes!
 
 	mob_bump_flag = MONKEY
 	mob_swap_flags = MONKEY|SLIME|SIMPLE_ANIMAL

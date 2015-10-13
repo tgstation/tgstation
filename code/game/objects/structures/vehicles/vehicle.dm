@@ -106,12 +106,17 @@
 		return 0
 	if(empstun > 0)
 		if(user)
-			user << "<span class='warning'>\the [src] is unresponsive.</span>"
+			user << "<span class='warning'>\The [src] is unresponsive.</span>"
 		return 0
 	if(move_delayer.blocked())
 		return 0
-	if(istype(src.loc, /turf/space))
-		if(!src.Process_Spacemove(0))	return 0
+
+	//If we're in space or our area has no gravity...
+	if(istype(get_turf(src), /turf/space) || (areaMaster && areaMaster.has_gravity == 0))
+
+		// Block relaymove() if needed.
+		if(!Process_Spacemove(0))
+			return 0
 
 	var/can_pull_tether = 0
 	if(user.tether)
@@ -143,42 +148,29 @@
 		S.Entered(src)*/
 	return 0
 
-
 /obj/structure/bed/chair/vehicle/proc/Process_Spacemove(var/check_drift = 0, mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/structure/stool/bed/chair/vehicle/proc/Process_Spacemove() called tick#: [world.time]")
+
 	if(can_spacemove && occupant)
 		return 1
-	//First check to see if we can do things
-
-	/*
-	if(istype(src,/mob/living/carbon))
-		if(src.l_hand && src.r_hand)
-			return 0
-	*/
 
 	var/dense_object = 0
 	if(!user)
-		for(var/turf/turf in oview(1,src))
-			if(istype(turf,/turf/space))
+		for(var/turf/turf in oview(1, src))
+
+			if(istype(turf, /turf/space))
 				continue
-			/*
-			if((istype(turf,/turf/simulated/floor))
-				if(user)
-					if(user.lastarea.has_gravity == 0)
-						continue*/
 
-
-
-		/*
-		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))
-			continue
-		*/
-
+			if(istype(turf, /turf/simulated/floor) && (src.areaMaster && src.areaMaster.has_gravity == 0)) //No gravity
+				continue
 
 			dense_object++
 			break
 
 		if(!dense_object && (locate(/obj/structure/lattice) in oview(1, src)))
+			dense_object++
+
+		if(!dense_object && (locate(/obj/structure/catwalk) in oview(1, src)))
 			dense_object++
 
 		//Lastly attempt to locate any dense objects we could push off of
@@ -190,27 +182,21 @@
 					dense_object++
 					break
 	else
-		for(var/turf/turf in oview(1,user))
-			if(istype(turf,/turf/space))
+		for(var/turf/turf in oview(1, user))
+
+			if(istype(turf, /turf/space))
 				continue
-			/*
-			if((istype(turf,/turf/simulated/floor))
-				if(user)
-					if(user.lastarea.has_gravity == 0)
-						continue*/
 
-
-
-		/*
-		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))
-			continue
-		*/
-
+			if(istype(turf, /turf/simulated/floor) && (src.areaMaster && src.areaMaster.has_gravity == 0)) //No gravity
+				continue
 
 			dense_object++
 			break
 
 		if(!dense_object && (locate(/obj/structure/lattice) in oview(1, user)))
+			dense_object++
+
+		if(!dense_object && (locate(/obj/structure/catwalk) in oview(1, src)))
 			dense_object++
 
 		//Lastly attempt to locate any dense objects we could push off of
@@ -221,20 +207,18 @@
 				if((O) && (O.density) && (O.anchored))
 					dense_object++
 					break
+
 	//Nothing to push off of so end here
 	if(!dense_object)
 		return 0
 
-
-/* The cart has very grippy tires and or magnets to keep it from slipping when on a good surface
 	//Check to see if we slipped
-	if(prob(Process_Spaceslipping(5)))
-		src << "<span class='notice'><B>You slipped!</B></span>"
+	if(prob(5))
+		src << "<span class='bnotice'>You slipped!</span>"
 		src.inertia_dir = src.last_move
 		step(src, src.inertia_dir)
 		return 0
 	//If not then we can reset inertia and move
-	*/
 	inertia_dir = 0
 	return 1
 

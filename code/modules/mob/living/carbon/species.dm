@@ -122,19 +122,20 @@ var/global/list/whitelisted_species = list("Human")
 
 	//If we will apply mutant race overlays or not.
 	var/has_mutant_race = 1
-	
+
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
 
-/datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_speech() called tick#: [world.time]")
 	if(H.dna)
-		if(length(message) >= 2)
-			for(var/datum/dna/gene/gene in dna_genes)
+		if(length(speech.message) >= 2)
+			for(var/gene_type in H.active_genes)
+				var/datum/dna/gene/gene = dna_genes[gene_type]
 				if(!gene.block)
 					continue
-				if(gene.is_active(H))
-					message = gene.OnSay(H,message)
-	return message
+				if(gene.OnSay(H,speech))
+					return 0
+	return 1
 
 /datum/species/proc/clear_organs(var/mob/living/carbon/human/H)
 	if(H.organs)
@@ -289,11 +290,11 @@ var/global/list/whitelisted_species = list("Human")
 
 	default_mutations=list(SKELETON)
 	brute_mod = 2.0
-	
+
 	has_organ = list(
 		"brain" =    /datum/organ/internal/brain,
 		)
-	
+
 	move_speed_mod = 3
 
 /datum/species/skellington/handle_speech(message, mob/living/carbon/human/H)
@@ -436,7 +437,7 @@ var/global/list/whitelisted_species = list("Human")
 		"appendix" = /datum/organ/internal/appendix,
 		"eyes" =     /datum/organ/internal/eyes/muton
 	)
-	
+
 	move_speed_mod = 1
 
 /datum/species/muton/equip(var/mob/living/carbon/human/H)
@@ -629,6 +630,6 @@ var/global/list/whitelisted_species = list("Human")
 
 	has_mutant_race = 0
 	burn_mod = 2.5 //treeeeees
-	
+
 	move_speed_mod = 7
 

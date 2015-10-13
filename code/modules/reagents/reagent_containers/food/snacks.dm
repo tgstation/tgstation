@@ -3678,6 +3678,32 @@
 		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	name = "cinnamon roll"
+	desc = "Sweet and spicy!"
+	icon_state = "cinnamon_roll"
+	trash = /obj/item/trash/plate
+	food_flags = FOOD_SWEET
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("cinnamon",5)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonpie
+	name = "cinnamon pie"
+	desc = "Guarranted snail-free!"
+	icon_state = "cinnamon_pie"
+	trash = /obj/item/trash/pietin
+	food_flags = FOOD_SWEET
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("cinnamon",5)
+		bitesize = 3
+
 /obj/item/weapon/reagent_containers/food/snacks/sundaeramen
 	name = "Sundae Ramen"
 	desc = "This is... sundae (?) flavored (?) ramen (?). You just don't know."
@@ -3794,3 +3820,25 @@
 		..()
 		reagents.add_reagent("hamserum", 1)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet
+	name = "\improper Sweet"
+	desc = "Comes in many different and unique flavours!"
+	food_flags = FOOD_SWEET
+	icon = 'icons/obj/candymachine.dmi'
+	bitesize = 5
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet/New()
+	..()
+	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("sugar", 2)
+	icon_state = "sweet[rand(1,12)]"
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet/strange
+	desc = "Something about this sweet doesn't seem right."
+
+/obj/item/weapon/reagent_containers/food/snacks/sweet/strange/New()
+	..()
+	var/list/possible_reagents=list("zombiepowder"=5, "mindbreaker"=5, "pacid"=5, "hyperzine"=5, "chloralhydrate"=5, "tricordazine"=5, "doctorsdelight"=5, "mutationtoxin"=5, "mercury"=5, "anti_toxin"=5, "space_drugs"=5, "holywater"=5,  "ryetalyn"=5, "cryptobiolin"=5, "dexalinp"=5, "hamserum"=1)
+	var/reagent=pick(possible_reagents)
+	reagents.add_reagent(reagent, possible_reagents[reagent])

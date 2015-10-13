@@ -182,7 +182,7 @@
 
 		if(!radio_connection) return	//the desk bell also works like a simple send-only signaler.
 
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.source = src
 		signal.encryption = code					//Since its default code is 0, which cannot be set on a remote signaling device,
 		signal.data["message"] = "ACTIVATE"			//there is no risk that one of the desk bells already there at round start could trigger a signaler

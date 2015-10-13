@@ -524,12 +524,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			new_character.internals.icon_state = "internal1"
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)
-				if("Cyborg")//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/proc/add_law_zero)(new_character)
 				if("AI")
 					new_character = new_character.AIize()
+					if(new_character.mind.special_role=="traitor")
+						call(/datum/game_mode/proc/add_law_zero)(new_character)
+				if("Cyborg")//More rigging to make em' work and check if they're traitor.
+					new_character = new_character.Robotize()
 					if(new_character.mind.special_role=="traitor")
 						call(/datum/game_mode/proc/add_law_zero)(new_character)
 				//Add aliens.
@@ -544,7 +544,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				data_core.manifest_inject(new_character)
 
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
-				call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
+				AnnounceArrival(new_character, new_character.mind.assigned_role)
 
 
 	message_admins("<span class='notice'>[admin] has respawned [player_key] as [new_character.real_name].</span>", 1)

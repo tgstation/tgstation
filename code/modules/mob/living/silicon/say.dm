@@ -2,11 +2,11 @@
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
-		return "queries, \"[text]\"";
+		return "queries, [text]";
 	else if (ending == "!")
-		return "declares, \"[text]\"";
+		return "declares, [text]";
 
-	return "states, \"[text]\"";
+	return "states, [text]";
 
 /mob/living/silicon/say(var/message)
 	return ..(message, "R")
@@ -37,18 +37,18 @@
 /mob/living/silicon/lingcheck()
 	return 0 //Borged or AI'd lings can't speak on the ling channel.
 
-/mob/living/silicon/radio(message, message_mode, raw_message, var/datum/language/speaking)
+/mob/living/silicon/radio(var/datum/speech/speech, var/message_mode)
 	. = ..()
 	if(. != 0)
 		return .
 	if(message_mode == "robot")
 		if(radio)
-			radio.talk_into(src, message, null, speaking)
+			radio.talk_into(speech)
 		return REDUCE_RANGE
 
 	else if(message_mode in radiochannels)
 		if(radio)
-			radio.talk_into(src, message, message_mode, speaking)
+			radio.talk_into(speech, message_mode)
 			return ITALICS | REDUCE_RANGE
 	return 0
 
@@ -59,21 +59,20 @@
 	else
 		return .
 
-/mob/living/silicon/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
+/mob/living/silicon/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
 	. = ..()
 	if(.)
 		return .
 
 	if(message_mode == MODE_BINARY)
 		if(binarycheck())
-			robot_talk(message)
+			robot_talk(speech.message)
 			return 1
 	return 0
 
-/mob/living/silicon/treat_message(message, genesay = 0)
-	message = ..()
-	message = "<span class='siliconsay'>[message]</span>"
-	return message
+/mob/living/silicon/treat_speech(var/datum/speech/speech, genesay = 0)
+	..(speech)
+	speech.message_classes.Add("siliconsay")
 
 /mob/living/silicon/say_understands(var/atom/movable/other,var/datum/language/speaking = null)
 	//These only pertain to common. Languages are handled by mob/say_understands()

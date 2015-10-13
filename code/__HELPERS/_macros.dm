@@ -95,6 +95,10 @@
 
 #define islightingoverlay(A) (istype(A, /atom/movable/lighting_overlay))
 
+#define ischair(A) (istype(A, /obj/structure/bed/chair))
+
+#define isvehicle(A) (istype(A, /obj/structure/bed/chair/vehicle))
+
 //Macros for antags
 
 #define isvampire(H) ((H.mind in ticker.mode.vampires) || H.mind.vampire)

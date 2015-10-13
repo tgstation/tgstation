@@ -117,6 +117,7 @@ var/list/impact_master = list()
 		return 0
 	var/obj/item/projectile/test/in_chamber = getFromPool(/obj/item/projectile/test, get_step_to(user, target)) //Making the test....
 	in_chamber.target = target
+	in_chamber.ttarget = target //what the fuck
 	in_chamber.flags = flags //Set the flags...
 	in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
 	in_chamber.firer = user
@@ -133,6 +134,8 @@ var/list/impact_master = list()
 	..("permutated")
 
 /obj/item/projectile/Bump(atom/A as mob|obj|turf|area)
+	if (!A)	//This was runtiming if by chance A was null.
+		return 0
 	if((A == firer) && !reflected)
 		loc = A.loc
 		return 0 //cannot shoot yourself, unless an ablative armor sent back the projectile
@@ -214,11 +217,15 @@ var/list/impact_master = list()
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 	if(forcedodge == -1) // the bullet passes through a dense object!
 		bumped = 0 // reset bumped variable!
+
 		if(istype(A, /turf))
 			loc = A
 		else
 			loc = A.loc
-		permutated.Add(A)
+
+		if(permutated)
+			permutated.Add(A)
+
 		return 0
 	else if(!custom_impact)
 		var/impact_icon = null
@@ -250,12 +257,13 @@ var/list/impact_master = list()
 		impact.pixel_y = PixelY
 
 		var/turf/T = src.loc
-		T.overlays += impact
+		if(T) //Trying to fix a runtime that happens when a flare hits a window, T somehow becomes null.
+			T.overlays += impact
 
-		spawn(3)
-			T.overlays -= impact
+			spawn(3)
+				T.overlays -= impact
 
-		playsound(T, impact_sound, 30, 1)
+			playsound(T, impact_sound, 30, 1)
 
 	if(istype(A,/turf))
 		for(var/obj/O in A)
@@ -574,9 +582,7 @@ var/list/impact_master = list()
 	while(loc) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( ttarget ) || loc == ttarget))
-			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
-		step_towards(src, ttarget)
+
 		var/mob/living/M = locate() in get_turf(src)
 		if(istype(M)) //If there is someting living...
 			return 1 //Return 1
@@ -584,3 +590,7 @@ var/list/impact_master = list()
 			M = locate() in get_step(src,ttarget)
 			if(istype(M))
 				return 1
+
+		if((!( ttarget ) || loc == ttarget))
+			ttarget = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		step_towards(src, ttarget)

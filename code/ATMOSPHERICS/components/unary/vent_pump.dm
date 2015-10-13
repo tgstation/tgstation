@@ -32,6 +32,8 @@
 
 	machine_flags = MULTITOOL_MENU
 
+	starting_volume = 400 // Previously 200
+
 /obj/machinery/atmospherics/unary/vent_pump/on
 	on = 1
 	icon_state = "hout"
@@ -169,7 +171,7 @@
 	if(!radio_connection)
 		return 0
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 

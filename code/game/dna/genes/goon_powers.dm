@@ -37,7 +37,8 @@
 
 	deactivate(var/mob/M, var/connected, var/flags)
 		if(..(M,connected,flags))
-			M.alpha=255
+			M.alphas -= "chameleon_stealth"
+			M.handle_alpha()
 
 // WAS: /datum/bioEffect/darkcloak
 /*/datum/dna/gene/basic/stealth/darkcloak
@@ -70,9 +71,9 @@
 
 	OnMobLife(var/mob/M)
 		if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
-			M.alpha -= 25
+			M.alphas["chameleon_stealth"] = max(M.alphas["chameleon_stealth"] - 25, 0)
 		else
-			M.alpha = round(255 * 0.80)
+			M.alphas["chameleon_stealth"] = round(255 * 0.80)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -275,7 +276,12 @@
 
 	if(max_targets == 0) //unlimited
 		for(var/atom/movable/target in view_or_range(range, user, selection_type))
-			if(!is_type_in_list(target, compatible_mobs) && !istype(target, /obj/item)) continue
+			if(!is_type_in_list(target, compatible_mobs) && !istype(target, /obj/item))
+				continue
+			if(istype(target, /obj/item/weapon/implant))
+				var/obj/item/weapon/implant/implant = target
+				if(implant.imp_in) //Implanted implant, don't eat that
+					continue
 			targets += target
 	else if(max_targets == 1) //single target can be picked
 		if(range <= 0 && spell_flags & INCLUDEUSER)
@@ -286,7 +292,12 @@
 			for(var/atom/movable/M in view_or_range(range, user, selection_type))
 				if(!(spell_flags & INCLUDEUSER) && M == user)
 					continue
-				if(!is_type_in_list(M, compatible_mobs) && !istype(M, /obj/item)) continue
+				if(!is_type_in_list(M, compatible_mobs) && !istype(M, /obj/item))
+					continue
+				if(istype(M, /obj/item/weapon/implant))
+					var/obj/item/weapon/implant/implant = M
+					if(implant.imp_in) //Implanted implant, don't eat that
+						continue
 				possible_targets += M
 
 			if(possible_targets.len)
@@ -303,6 +314,10 @@
 		var/list/possible_targets = list()
 
 		for(var/atom/movable/target in view_or_range(range, user, selection_type))
+			if(istype(target, /obj/item/weapon/implant))
+				var/obj/item/weapon/implant/implant = target
+				if(implant.imp_in) //Implanted implant, don't eat that
+					continue
 			possible_targets += target
 
 		if(spell_flags & SELECTABLE)

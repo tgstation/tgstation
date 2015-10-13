@@ -61,7 +61,7 @@
 
 /obj/machinery/door/airlock/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()
@@ -95,6 +95,7 @@
 	name = "External Airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
 	assembly_type = /obj/structure/door_assembly/door_assembly_ext
+	normalspeed = 0 //So they close fast, not letting the air to depressurize in a fucking second
 
 /obj/machinery/door/airlock/external/cultify()
 	new /obj/machinery/door/mineral/wood(loc)
@@ -695,7 +696,7 @@ About the new airlock wires panel:
 	//testing("in range: [am_in_range], turf ok: [turf_ok]")
 	if(am_in_range && turf_ok)
 		usr.set_machine(src)
-		if(panel_open)
+		if(!panel_open)
 			var/obj/item/device/multitool/P = get_multitool(usr)
 			if(P && istype(P))
 				if("set_id" in href_list)
@@ -1068,9 +1069,9 @@ About the new airlock wires panel:
 		if (!operating && panel_open)
 			wires.Interact(user)
 	else if (istype(I, /obj/item/device/multitool))
-		if (!operating && panel_open)
-			wires.Interact(user)
-			update_multitool_menu(user)
+		if (!operating)
+			if(panel_open) wires.Interact(user)
+			else update_multitool_menu(user)
 		attack_hand(user)
 	else if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/fireaxe) )
 		if(src.busy) return
@@ -1267,6 +1268,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/wirejack(var/mob/living/silicon/pai/P)
 	if(..())
-		attack_ai(P)
+		//attack_ai(P)
+		open(1)
 		return 1
 	return 0

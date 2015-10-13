@@ -194,6 +194,15 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	containername = "Carpet Crate"
 	group = "Supplies"
 
+/datum/supply_packs/arcade
+	name = "30 Arcade Tiles"
+	contains = list(/obj/item/stack/tile/arcade)
+	amount = 30
+	cost = 15
+	containertype = /obj/structure/closet/crate
+	containername = "Arcade Tiles Crate"
+	group = "Supplies"
+
 /datum/supply_packs/grass
 	name = "30 Grass Tiles"
 	contains = list(/obj/item/stack/tile/grass)

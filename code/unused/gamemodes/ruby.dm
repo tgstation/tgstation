@@ -123,13 +123,13 @@
 		usr.sight |= SEE_OBJS
 		usr.sight |= SEE_TURFS
 		//usr.density = 0
-		usr.incorporeal_move = 1
+		usr.incorporeal_move = INCORPOREAL_GHOST
 	else
 		usr.sight &= ~SEE_MOBS
 		usr.sight &= ~SEE_TURFS
 		usr.sight &= ~SEE_OBJS
 		usr.density = 1
-		usr.incorporeal_move = 0
+		usr.incorporeal_move = INCORPOREAL_DEACTIVATE
 		src.verbs -= /client/proc/planar_shift
 		spawn(300) src.verbs += /client/proc/planar_shift
 	*/

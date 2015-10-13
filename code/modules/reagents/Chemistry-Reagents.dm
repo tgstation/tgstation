@@ -18,6 +18,7 @@
 	var/list/data = null
 	var/volume = 0
 	var/nutriment_factor = 0
+	var/sport = 1 //High sport helps you show off on a treadmill; multiplicative
 	var/custom_metabolism = REAGENTS_METABOLISM
 	var/overdose = 0
 	var/overdose_dam = 1
@@ -791,6 +792,7 @@
 	if(!holder) return
 	if(ishuman(M))
 		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		M.druggy = max(M.druggy, 50)
 		holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
 	return
 
@@ -1012,6 +1014,7 @@
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
+	sport = 1.2
 
 /datum/reagent/sugar/on_mob_life(var/mob/living/M as mob)
 	M.nutrition += 1*REM
@@ -1257,17 +1260,25 @@
 	if(!M) M = holder.my_atom
 
 	var/needs_update = M.mutations.len > 0
-	if(ishuman(M))
-		M:hulk_time = 0
-	for(var/datum/dna/gene/G in dna_genes)
-		if(G.is_active(M))
-			if(G.name == "Hulk" && ishuman(M))
-				G.OnMobLife(M)
+
+	var/mob/living/carbon/human/H = M
+	if(istype(H))
+		H.hulk_time = 0
+		for(var/gene_type in H.active_genes)
+			var/datum/dna/gene/gene = dna_genes[gene_type]
 			var/tempflag = 0
-			if(ishuman(M) && M:species && (G.block in M:species:default_blocks))
+			if(H.species && (gene.block in H.species.default_blocks))
 				tempflag |= GENE_NATURAL
-			if(G.can_deactivate(M, tempflag))
-				G.deactivate(M,0, tempflag)
+			if(gene.name == "Hulk")
+				gene.OnMobLife(H)
+			if(gene.can_deactivate(H, tempflag))
+				gene.deactivate(H, 0, tempflag)
+	else
+		for(var/gene_type in M.active_genes)
+			var/datum/dna/gene/gene = dna_genes[gene_type]
+			if(gene.can_deactivate(M, 0))
+				gene.deactivate(M, 0, 0)
+
 	M.alpha = 255
 	//M.mutations = list()
 	//M.active_genes = list()
@@ -1279,8 +1290,7 @@
 	M.jitteriness = 0
 
 	// Might need to update appearance for hulk etc.
-	if(needs_update && ishuman(M))
-		var/mob/living/carbon/human/H = M
+	if(needs_update && istype(H))
 		H.update_mutations()
 
 	..()
@@ -1309,7 +1319,7 @@
 /datum/reagent/thermite/reaction_turf(var/turf/T, var/volume)
 	src = null
 	if(volume >= 5)
-		if(istype(T, /turf/simulated/wall))
+		if(istype(T, /turf/simulated/wall) && T:can_thermite)
 			T:thermite = 1
 			T.overlays.len = 0
 			T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
@@ -2814,6 +2824,14 @@
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
 	reagent_state = SOLID
 	// no color (ie, black)
+
+/datum/reagent/cinnamon
+	name = "Cinnamon Powder"
+	id = "cinnamon"
+	description = "A spice, obtained from the bark of cinnamomum trees."
+	reagent_state = SOLID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#D2691E" // rgb: 210, 105, 30
 
 /datum/reagent/coco
 	name = "Coco Powder"
@@ -4861,14 +4879,13 @@ var/global/list/tonio_doesnt_remove=list(
 	id = "etank"
 	description = "Regardless of how energized this coffee makes you feel, jumping against doors will still never be a viable way to open them."
 
-
 /datum/reagent/drink/cold/quantum
 	name = "Nuka Cola Quantum"
 	id = "quantum"
 	description = "Take the leap... enjoy a Quantum!"
 	color = "#100800" // rgb: 16, 8, 0
 	adj_sleepy = -2
-
+	sport = 5
 
 /datum/reagent/drink/cold/quantum/on_mob_life(var/mob/living/M as mob)
 
@@ -4877,3 +4894,11 @@ var/global/list/tonio_doesnt_remove=list(
 	M.apply_effect(2,IRRADIATE,0)
 	..()
 	return
+
+/datum/reagent/drink/sportdrink
+	name = "Sport Drink"
+	id = "sportdrink"
+	description = "You like sports, and you don't care who knows."
+	sport = 5
+	color = "#CCFF66" //rgb: 204, 255, 51
+	custom_metabolism =  0.01

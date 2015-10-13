@@ -100,7 +100,7 @@ var/global/mulebot_count = 0
 		radio_controller.remove_object(src, control_freq)
 		radio_controller.remove_object(src, beacon_freq)
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()
@@ -125,6 +125,8 @@ var/global/mulebot_count = 0
 		user.drop_item(C, src)
 		cell = C
 		updateDialog()
+	else if(istype(I,/obj/item/weapon/wirecutters)||istype(I,/obj/item/device/multitool))
+		attack_hand(user)
 	else if(istype(I,/obj/item/weapon/screwdriver))
 		if(locked)
 			user << "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>"
@@ -881,7 +883,7 @@ var/global/mulebot_count = 0
 
 
 
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.source = src
 	signal.transmission_method = 1
 	//for(var/key in keyval)

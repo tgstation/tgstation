@@ -5,11 +5,13 @@
 	category	= "Service"
 
 /datum/rcd_schematic/rsf/New()
-		var/atom/A = getFromPool(spawn_type)
-		icon = A.icon
-		icon_state = A.icon_state
-		returnToPool(A)
-		..()
+	if(!spawn_type)
+		return 0
+	var/atom/A = getFromPool(spawn_type)
+	icon = A.icon
+	icon_state = A.icon_state
+	returnToPool(A)
+	..()
 
 /datum/rcd_schematic/rsf/attack(var/atom/A, var/mob/user)
 	if(!is_type_in_list(A, list(/obj/structure/table, /turf/simulated/floor)))

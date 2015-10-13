@@ -18,6 +18,7 @@
 	turns_per_move = 10
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal/corgi
+	holder_type = /obj/item/weapon/holder/animal/corgi
 
 	response_help  = "pets"
 	response_disarm = "bops"

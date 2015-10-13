@@ -152,7 +152,6 @@
 	var/text = ""
 
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey) || istype(current, /mob/living/simple_animal/construct))
-		/mob/living/simple_animal/borer
 		/** HAS BORER **/
 		text = "Has Borer"
 		text = "<i><b>[text]</b></i>: "

@@ -1,10 +1,21 @@
-
-obj/machinery/anomaly/hyperspectral
+/obj/machinery/anomaly/hyperspectral
 	name = "Hyperspectral Imager"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "scanner"
 
-obj/machinery/anomaly/hyperspectral/process()
+/obj/machinery/anomaly/hyperspectral/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom/hyper,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/hyperspectral/process()
 	..()
 	if(scan_process)
 		icon_state = "scanner_active"
@@ -14,7 +25,7 @@ obj/machinery/anomaly/hyperspectral/process()
 			flick(src, "scanner_active")
 
 
-obj/machinery/anomaly/hyperspectral/ScanResults()
+/obj/machinery/anomaly/hyperspectral/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

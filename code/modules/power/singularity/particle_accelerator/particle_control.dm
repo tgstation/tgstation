@@ -33,7 +33,7 @@
 		toggle_power()
 
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 
 	..()
@@ -43,6 +43,11 @@
 		interact(user)
 	else if(construction_state == 2) // Wires exposed
 		wires.Interact(user)
+
+/obj/machinery/particle_accelerator/control_box/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I,/obj/item/weapon/wirecutters)||istype(I,/obj/item/device/multitool))
+		attack_hand(user)
+	..()
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)

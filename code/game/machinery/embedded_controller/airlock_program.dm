@@ -218,12 +218,12 @@
 	if(master)
 		master.post_signal(signal, comm_line)
 	else
-		returnToDPool(signal)
+		returnToPool(signal)
 
 
 /datum/computer/file/embedded_program/proc/signalDoor(var/tag, var/command)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/signalDoor() called tick#: [world.time]")
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.data["tag"] = tag
 	signal.data["command"] = command
 	post_signal(signal)
@@ -231,7 +231,7 @@
 
 /datum/computer/file/embedded_program/proc/signalPump(var/tag, var/power, var/direction, var/pressure)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/computer/file/embedded_program/proc/signalPump() called tick#: [world.time]")
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.data = list(
 		"tag" = tag,
 		"sigtype" = "command",

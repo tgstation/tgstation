@@ -121,7 +121,7 @@
 		I.pixel_y = 12-empty_Y_space(C)
 	else
 		I = src.filling
-		if(S.filling_color != "#FFFFFF")
+		if(istype(S) && S.filling_color != "#FFFFFF")
 			I.color = S.filling_color
 		else
 			I.color = AverageColor(getFlatIcon(S, S.dir, 0), 1, 1)
@@ -143,7 +143,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/customizable/proc/updateName() called tick#: [world.time]")
 	var/i = 1
 	var/new_name
-	for(var/obj/item/weapon/reagent_containers/food/snacks/S in src.ingredients)
+	for(var/obj/item/S in src.ingredients)
 		if(i == 1) new_name += "[S.name]"
 		else if(i == src.ingredients.len) new_name += " and [S.name]"
 		else new_name += ", [S.name]"

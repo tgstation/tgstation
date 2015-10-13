@@ -99,19 +99,25 @@
 	return ..()
 
 /obj/item/weapon/shard/Crossed(AM as mob|obj)
-	if(ismob(AM))
-		var/mob/M = AM
-		M << "<span class='danger'>You step in the broken glass!</span>"
-		playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
-					return
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if(M.locked_to) //Mob is locked to something, so it's not actually stepping on the glass
+			playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1) //Make noise
+			return //Stop here
+		if(M.flying) //We don't check for lying because it's intended to hurt
+			return
+		else //Stepping on the glass
+			M << "<span class='danger'>You step in the broken glass!</span>"
+			playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
+					var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
+					if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
+						return
 
-				H.Weaken(3)
-				if(affecting.take_damage(5, 0))
-					H.UpdateDamageIcon()
-				H.updatehealth()
+					H.Weaken(3)
+					if(affecting.take_damage(5, 0))
+						H.UpdateDamageIcon()
+					H.updatehealth()
 	..()

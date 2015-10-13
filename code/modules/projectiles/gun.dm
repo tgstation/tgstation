@@ -38,25 +38,25 @@
 	var/fire_delay = 2
 	var/last_fired = 0
 
-	proc/ready_to_fire()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ready_to_fire() called tick#: [world.time]")
-		if(world.time >= last_fired + fire_delay)
-			last_fired = world.time
-			return 1
-		else
-			return 0
-
-	proc/process_chambered()
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_chambered() called tick#: [world.time]")
+/obj/item/weapon/gun/proc/ready_to_fire()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/ready_to_fire() called tick#: [world.time]")
+	if(world.time >= last_fired + fire_delay)
+		last_fired = world.time
+		return 1
+	else
 		return 0
 
-	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
-		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/special_check() called tick#: [world.time]")
-		return 1
+/obj/item/weapon/gun/proc/process_chambered()
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/process_chambered() called tick#: [world.time]")
+	return 0
 
-	emp_act(severity)
-		for(var/obj/O in contents)
-			O.emp_act(severity)
+/obj/item/weapon/gun/proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/special_check() called tick#: [world.time]")
+	return 1
+
+/obj/item/weapon/gun/emp_act(severity)
+	for(var/obj/O in contents)
+		O.emp_act(severity)
 
 /obj/item/weapon/gun/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
 	if(flag)	return //we're placing gun on a table or in backpack
@@ -127,7 +127,12 @@
 	if(!istype(src, /obj/item/weapon/gun/energy/laser/redtag) && !istype(src, /obj/item/weapon/gun/energy/laser/redtag))
 		log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[in_chamber.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])[struggle ? " due to being disarmed." :""]" )
 	in_chamber.firer = user
-	in_chamber.def_zone = user.zone_sel.selecting
+
+	if(user.zone_sel)
+		in_chamber.def_zone = user.zone_sel.selecting
+	else
+		in_chamber.def_zone = "chest"
+
 	if(targloc == curloc)
 		user.bullet_act(in_chamber)
 		del(in_chamber)
@@ -264,5 +269,7 @@
 		else if(target && M in target)
 			src.Fire(M,user,0,0,1) ///Otherwise, shoot!
 			return
+		else
+			return ..() //Allows a player to choose to melee instead of shoot, by being on help intent.
 	else
 		return ..() //Pistolwhippin'

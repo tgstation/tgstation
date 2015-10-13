@@ -5,18 +5,18 @@
 	icon = null
 	invisibility = 101
 
-	// If we have brain worms, dump 'em.
+	//If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
 	if(B)
 		B.detach()
 
 	for(var/datum/organ/external/E in src.organs)
-		if(istype(E, /datum/organ/external/chest))
+		if(istype(E, /datum/organ/external/chest) || istype(E, /datum/organ/external/groin)) //Really bad stuff happens when either get removed
 			continue
-		// Only make the limb drop if it's not too damaged
+		//Only make the limb drop if it's not too damaged
 		if(prob(100 - E.get_damage()))
-			// Override the current limb status and don't cause an explosion
-			E.droplimb(1,1)
+			//Override the current limb status and don't cause an explosion
+			E.droplimb(1, 1)
 
 	anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "gibbed-h", sleeptime = 15)
 	hgibs(loc, viruses, dna, species.flesh_color, species.blood_color)
@@ -29,12 +29,12 @@
 	icon = null
 	invisibility = 101
 
-	// If we have brain worms, dump 'em.
+	//If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
 	if(B)
 		B.detach()
 
-	if (istype(src, /mob/living/carbon/human/manifested))
+	if(istype(src, /mob/living/carbon/human/manifested))
 		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-hm", sleeptime = 15)
 	else
 		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-h", sleeptime = 15)
@@ -42,15 +42,15 @@
 	new /obj/effect/decal/remains/human(loc)
 	qdel(src)
 
-
 /mob/living/carbon/human/death(gibbed)
-	if(stat == DEAD)	return
+	if(stat == DEAD)
+		return
 	if(healths)		healths.icon_state = "health7"
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
 
-	// If we have brain worms, dump 'em.
+	//If we have brain worms, dump 'em.
 	var/mob/living/simple_animal/borer/B=has_brain_worms()
 	if(B && B.controlling)
 		src << "<span class='danger'>Your host has died.  You reluctantly release control.</span>"
@@ -71,12 +71,12 @@
 			H.mind.kills += "[name] ([ckey])"
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		emote("deathgasp") //Let the world KNOW WE ARE DEAD
 
 		update_canmove()
 		if(client)	blind.layer = 0
 
-	tod = worldtime2text()		//weasellos time of death patch
+	tod = worldtime2text() //Weasellos time of death patch
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 		if(!suiciding) //Cowards don't count
@@ -84,12 +84,13 @@
 	if(ticker && ticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		ticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/makeSkeleton() called tick#: [world.time]")
-	if(SKELETON in src.mutations)	return
+	if(SKELETON in src.mutations)
+		return
 
 	if(f_style)
 		f_style = "Shaved"
@@ -105,16 +106,16 @@
 
 /mob/living/carbon/human/proc/ChangeToHusk()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/carbon/human/proc/ChangeToHusk() called tick#: [world.time]")
-	if(M_HUSK in mutations)	return
-
+	if(M_HUSK in mutations)
+		return
 	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+		f_style = "Shaved" //We only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
 	if(h_style)
 		h_style = "Bald"
 	update_hair(0)
 
 	mutations.Add(M_HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	status_flags |= DISFIGURED	//Makes them unknown without fucking up other stuff like admintools
 	update_body(0)
 	update_mutantrace()
 	return

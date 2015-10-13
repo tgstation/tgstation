@@ -7,6 +7,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	treadmill_speed = 0.5 //Ian & pals aren't as good at powering a treadmill
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal
 
@@ -296,8 +297,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
 		if(emote)
-			return "[emote], \"[text]\""
-	return "says, \"[text]\"";
+			return "[emote], [text]"
+	return "says, [text]";
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(timestopped) return //under effects of time magick
@@ -371,6 +372,20 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 					O.show_message("<span class='warning'>[M] [response_harm] [src]!</span>")
 
 	return
+
+/mob/living/simple_animal/MouseDrop(mob/living/carbon/human/M)
+	if(M != usr)		return
+	if(!istype(M))		return
+	if(M.stat)			return
+	if(M.restrained())	return
+	if(!Adjacent(M))	return
+
+	var/strength_of_M = (M.size - 1) //Can only pick up mobs whose size is less or equal to this value. Normal human's size is 3, so his strength is 2 - he can pick up TINY and SMALL animals. Varediting human's size to 5 will allow him to pick up goliaths.
+
+	if((M.a_intent != I_HELP) && (src.size <= strength_of_M) && (isturf(src.loc)) && (src.holder_type))
+		scoop_up(M)
+	else
+		..()
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 
@@ -537,7 +552,6 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 /mob/living/simple_animal/ex_act(severity)
 	if(flags & INVULNERABLE)
 		return
-
 	..()
 	switch (severity)
 		if (1.0)

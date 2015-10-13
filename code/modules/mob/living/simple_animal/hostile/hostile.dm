@@ -45,6 +45,13 @@
 	if(client && !deny_client_move)
 		return 0
 	if(!stat)
+		if(size > SIZE_TINY && istype(loc, /obj/item/weapon/holder)) //If somebody picked us up and we're big enough to fight!
+			var/mob/living/L = loc.loc
+			if(!istype(L) || (L.faction != src.faction) || IsInvalidTarget(L)) //If we're not being held by a mob, OR we're being held by a mob who isn't from our faction OR we're being held by a mob whom we don't consider a valid target!
+				returnToPool(loc)
+			else
+				return 0
+
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
 				if(environment_smash)
@@ -131,6 +138,10 @@
 		if(L.flags & INVULNERABLE)
 			return 0
 		if((L.faction == src.faction && !attack_same) || (L.faction != src.faction && attack_same == 2) || (L.faction != attack_faction && attack_faction))
+			return 0
+		if((faction == "\ref[L]") && !attack_same)
+			return 0
+		if(isnukeop(L) && (faction == "syndicate"))
 			return 0
 		if(iscultist(L) && (faction == "cult"))
 			return 0
@@ -304,9 +315,17 @@
 		del(A)
 		return
 	A.current = target
+
+	var/turf/T = get_turf(src)
+	var/turf/U = get_turf(target)
+	A.original = target
+	A.target = U
+	A.current = T
+	A.starting = T
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
-	spawn( 0 )
+	spawn()
+		A.OnFired()
 		A.process()
 	return
 

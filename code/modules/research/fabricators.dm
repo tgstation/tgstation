@@ -163,6 +163,7 @@
 	return counter
 
 /obj/machinery/r_n_d/fabricator/process()
+	..()
 	if(busy || stopped || being_built)
 		return
 	if(queue.len==0)
@@ -284,7 +285,7 @@
 	src.overlays -= "[base_state]_ani"
 	if(being_built)
 		if(!being_built.materials)
-			being_built.materials = getFromDPool(/datum/materials, being_built)
+			being_built.materials = getFromPool(/datum/materials, being_built)
 		for(var/matID in part.materials)
 			if(copytext(matID, 1, 2) != "$") //it's not a material, let's ignore it
 				continue
@@ -302,6 +303,7 @@
 			being_built.loc = L //Put the thing in the lockbox
 			L.name += " ([being_built.name])"
 			being_built = L //Building the lockbox now, with the thing in it
+		var/turf/output = get_output()
 		being_built.loc = get_turf(output)
 		src.visible_message("\icon [src] \The [src] beeps: \"Succesfully completed \the [being_built.name].\"")
 		src.being_built = null
@@ -617,7 +619,7 @@
 	if(user.stat || user.restrained()) //allowed is later on, so we don't check it
 		return
 
-	var/turf/exit = get_turf(output)
+	var/turf/exit = get_output()
 	if(exit.density)
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
 		return

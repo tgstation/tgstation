@@ -57,7 +57,7 @@
 	if(name != real_name)
 		alt_name = " (died as [real_name])"
 
-	message = src.say_quote(message)
+	message = src.say_quote("\"[html_encode(message)]\"")
 	//var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 	var/rendered2 = null//edited
 	for(var/mob/M in player_list)
@@ -115,7 +115,7 @@
 				return L
 			else
 				if(istype(L))
-					//say_testing(src, "Tried to speak [L.name] but don't know it, prefix length is [length(language_prefix)] before [message] after [copytext(message, 1+length(language_prefix))]")
+					say_testing(src, "Tried to speak [L.name] but don't know it, prefix length is [length(language_prefix)] before [message] after [copytext(message, 1+length(language_prefix))]")
 					return language_prefix
 
 	return null

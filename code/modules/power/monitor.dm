@@ -10,7 +10,7 @@
 
 	use_auto_lights = 1
 	light_range_on = 3
-	light_power_on = 2
+	light_power_on = 1
 	light_color = LIGHT_COLOR_YELLOW
 
 	//computer stuff
@@ -81,24 +81,27 @@
 		<table class="table" width="100%; table-layout: fixed;">
 			<colgroup><col/><col style="width: 60px;"/><col style="width: 60px;"/><col style="width: 60px;"/><col style="width: 80px;"/><col style="width: 80px;"/><col style="width: 20px;"/></colgroup>
 			<thead><tr><th>Area</th><th>Eqp.</th><th>Lgt.</th><th>Env.</th><th align="right">Load</th><th align="right">Cell</th><th></th></tr></thead>
-			<tbody id="APCTable">				
+			<tbody id="APCTable">
 
 			</tbody>
 		</table>
 		</div>
 		<div id="n_operatable" style="display: none;">
 			<span class="error">No connection.</span>
-		</div>		
+		</div>
 	"}
 
 	interface.updateContent("content", dat)
-	
+
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	. = attack_hand(user)
 
 /obj/machinery/power/monitor/Destroy()
 	..()
 	html_machines -= src
+
+	qdel(interface)
+	interface = null
 
 /obj/machinery/power/monitor/attack_hand(mob/user)
 	. = ..()
@@ -111,7 +114,7 @@
 //Needs to be overriden because else it will use the shitty set_machine().
 /obj/machinery/power/monitor/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
 	return hclient.client.mob.html_mob_check(src.type)
-	
+
 /obj/machinery/power/monitor/interact(mob/user)
 	var/delay = 0
 	delay += send_asset(user.client, "Chart.js")
@@ -124,7 +127,7 @@
 
 		for(var/i = 1 to POWER_MONITOR_HIST_SIZE)
 			interface.callJavaScript("pushPowerData", list(demand_hist[i], supply_hist[i], load_hist[i]), user)
-	
+
 /obj/machinery/power/monitor/power_change()
 	..()
 	if(stat & BROKEN)
@@ -180,7 +183,7 @@
 		load_hist.Cut(1,2)
 
 	interface.callJavaScript("pushPowerData", list(load(), avail(), powernet.viewload))
-	
+
 	// src.next_process == 0 is in place to make it update the first time around, then wait until someone watches
 	if ((!src.next_process || src.interface.isUsed()) && world.time >= src.next_process)
 		src.next_process = world.time + 30
@@ -197,7 +200,7 @@
 		for(var/obj/machinery/power/terminal/term in powernet.nodes)
 			if(istype(term.master, /obj/machinery/power/apc))
 
-							
+
 				var/obj/machinery/power/apc/A = term.master
 				tbl += "<tr>"
 				tbl += "<td><span class=\"area\">["\The [A.areaMaster]"]</span></td>"

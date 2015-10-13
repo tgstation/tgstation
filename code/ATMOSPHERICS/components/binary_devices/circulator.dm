@@ -129,11 +129,11 @@
 		if(node1)
 			node1.disconnect(src)
 			if(network1)
-				returnToDPool(network1)
+				returnToPool(network1)
 		if(node2)
 			node2.disconnect(src)
 			if(network2)
-				returnToDPool(network2)
+				returnToPool(network2)
 
 		node1 = null
 		node2 = null

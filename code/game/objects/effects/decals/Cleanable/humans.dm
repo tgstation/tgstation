@@ -13,62 +13,17 @@ var/global/list/blood_list = list()
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "mfloor1"
 	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
+
 	var/base_icon = 'icons/effects/blood.dmi'
-	var/list/viruses = list()
-	blood_DNA = list()
-	var/basecolor="#A10808" // Color when wet.
-	var/list/datum/disease2/disease/virus2 = list()
-	var/amount = 5
+
+	basecolor="#A10808" // Color when wet.
+	amount = 5
+	counts_as_blood = 1
+	transfers_dna = 1
+	absorbs_types=list(/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/writing)
 
 /obj/effect/decal/cleanable/blood/cultify()
 	return
-
-/obj/effect/decal/cleanable/blood/Destroy()
-	blood_list -= src
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
-		D.holder = null
-
-	if(ticker.mode && ticker.mode.name == "cult")
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		var/turf/T = get_turf(src)
-		if(T && (T.z == map.zMainStation))
-			mode_ticker.bloody_floors -= T
-			mode_ticker.blood_check()
-	..()
-
-/obj/effect/decal/cleanable/blood/resetVariables()
-	Destroy()
-	..("viruses","virus2", "blood_DNA", "random_icon_states", args)
-	viruses = list()
-	virus2 = list()
-	blood_DNA = list()
-
-/obj/effect/decal/cleanable/blood/New()
-	..()
-	blood_list += src
-	update_icon()
-
-	if(ticker && ticker.mode && ticker.mode.name == "cult")
-		var/datum/game_mode/cult/mode_ticker = ticker.mode
-		var/turf/T = get_turf(src)
-		if(T && (T.z == map.zMainStation))//F I V E   T I L E S
-			if(!(locate("\ref[T]") in mode_ticker.bloody_floors))
-				mode_ticker.bloody_floors += T
-				mode_ticker.bloody_floors[T] = T
-				mode_ticker.blood_check()
-
-	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
-		return
-	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
-		return // We handle our own drying.
-	if(src.type == /obj/effect/decal/cleanable/blood)
-		if(src.loc && isturf(src.loc))
-			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
-				if(B != src)
-					if (B.blood_DNA)
-						blood_DNA |= B.blood_DNA.Copy()
-					returnToPool(B)
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
@@ -78,66 +33,6 @@ var/global/list/blood_list = list()
 	blood.Blend(basecolor,ICON_MULTIPLY)
 
 	icon = blood
-
-/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
-	if (!istype(perp))
-		return
-	if(amount < 1)
-		return
-
-	if(perp.shoes)
-		perp.shoes:track_blood = max(amount,perp.shoes:track_blood)                //Adding blood to shoes
-
-		if(!blood_overlays[perp.shoes.type]) //If there isn't a precreated blood overlay make one
-			perp.shoes.generate_blood_overlay()
-		if(perp.shoes.blood_overlay)
-			overlays -= perp.shoes.blood_overlay
-		else
-			perp.shoes.blood_overlay = blood_overlays[perp.shoes.type]
-		perp.shoes.blood_overlay.color = basecolor
-		perp.shoes.overlays += perp.shoes.blood_overlay
-		perp.shoes.blood_color=basecolor
-
-		if(!perp.shoes.blood_DNA)
-			perp.shoes.blood_DNA = list()
-		if(blood_DNA)
-			perp.shoes.blood_DNA |= blood_DNA.Copy()
-		perp.update_inv_shoes(1)
-	else
-		perp.track_blood = max(amount,perp.track_blood)                                //Or feet
-		if(!perp.feet_blood_DNA)
-			perp.feet_blood_DNA = list()
-		if(!istype(blood_DNA, /list))
-			blood_DNA = list()
-		else
-			perp.feet_blood_DNA |= blood_DNA.Copy()
-		perp.feet_blood_color=basecolor
-
-	amount--
-
-/obj/effect/decal/cleanable/blood/proc/dry()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/effect/decal/cleanable/blood/proc/dry() called tick#: [world.time]")
-	name = "dried [src.name]"
-	desc = "It's dry and crusty. Someone is not doing their job."
-	color = adjust_brightness(color, -50)
-	amount = 0
-
-/obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
-	..()
-	if (amount && istype(user))
-		add_fingerprint(user)
-		if (user.gloves)
-			return
-		var/taken = rand(1,amount)
-		amount -= taken
-		user << "<span class='notice'>You get some of \the [src] on your hands.</span>"
-		if (!user.blood_DNA)
-			user.blood_DNA = list()
-		user.blood_DNA |= blood_DNA.Copy()
-		user.bloody_hands += taken
-		user.hand_blood_color = basecolor
-		user.update_inv_gloves(1)
-		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("mgibbl1", "mgibbl2", "mgibbl3", "mgibbl4", "mgibbl5")
@@ -272,5 +167,4 @@ var/global/list/blood_list = list()
 	icon_state = "mucus"
 	random_icon_states = list("mucus")
 
-	var/list/datum/disease2/disease/virus2 = list()
-	var/dry=0 // Keeps the lag down
+	var/dry=0

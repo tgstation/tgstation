@@ -93,6 +93,10 @@
 		"<span class='warning'>You hear fizzling coming from \the [src] and a wire turns red hot as you swipe the electromagnetic card. Better not use it anymore.</span>")
 		return
 
+/obj/machinery/cell_charger/attack_robot(mob/user as mob)
+	if(isMoMMI(user) && Adjacent(user)) //To be able to remove cells from the charger
+		return attack_hand(user)
+
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	if(charging)
 		if(emagged) //Oh shit nigger what are you doing

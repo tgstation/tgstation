@@ -239,7 +239,7 @@ var/global/datum/controller/radio/radio_controller
 	if(range)
 		start_point = get_turf(source)
 		if(!start_point)
-			returnToDPool(signal)
+			returnToPool(signal)
 			return 0
 
 	if (filter) //here goes some copypasta. It is for optimisation. -rastaf0
@@ -287,7 +287,7 @@ var/global/datum/controller/radio/radio_controller
 	//log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y], [source.z]),filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
 
 
-	returnToDPool(signal)
+	returnToPool(signal)
 
 /datum/radio_frequency/proc/add_listener(const/obj/device, var/filter)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/radio_frequency/proc/add_listener() called tick#: [world.time]")
@@ -340,10 +340,14 @@ var/list/pointers = list()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/proc/receive_signal() called tick#: [world.time]")
 	return
 
+#define SIGNAL_WIRE     0
+#define SIGNAL_RADIO    1
+#define SIGNAL_SUBSPACE 2
+
 /datum/signal
 	var/obj/source
 
-	var/transmission_method = 0
+	var/transmission_method = SIGNAL_WIRE
 	//0 = wire
 	//1 = radio transmission
 	//2 = subspace transmission

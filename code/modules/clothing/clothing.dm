@@ -111,6 +111,7 @@ BLIND     // can't see anything
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/gloves.dmi', "right_hand" = 'icons/mob/in-hand/right/gloves.dmi')
 	siemens_coefficient = 0.50
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
@@ -191,9 +192,8 @@ BLIND     // can't see anything
 /obj/item/clothing/mask/attack_self()
 	togglemask()
 
-/obj/item/clothing/mask/proc/treat_mask_message(var/message)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/clothing/mask/proc/treat_mask_message() called tick#: [world.time]")
-	return message
+/obj/item/clothing/mask/proc/treat_mask_speech(var/datum/speech/speech)
+	return
 
 //Shoes
 /obj/item/clothing/shoes

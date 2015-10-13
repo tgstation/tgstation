@@ -190,6 +190,11 @@
 				desc = "Sweet and healthy!"
 				icon_state = "honey"
 				item_state = null
+			if("cinnamon")
+				name = "cinnamon shaker"
+				desc = "A spice, obtained from the bark of cinnamomum trees."
+				icon_state = "cinnamon"
+				item_state = null
 			else
 				name = "misc condiment bottle"
 				desc = "Just your average condiment container."

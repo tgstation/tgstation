@@ -119,3 +119,23 @@
 	materials = list(MAT_IRON = 50, MAT_GLASS = 50)
 	category = "Medical"
 	build_path = /obj/item/clothing/glasses/hud/health
+
+/datum/design/chemmask
+	name = "Chemical Mask"
+	desc = "A rather sinister mask designed for connection to a chemical pack, providing the pack's safeties are disabled."
+	id = "chemmask"
+	req_tech = list("biotech" = 5, "materials" = 5, "engineering" = 5, "combat" = 5, "syndicate" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_IRON = 500, MAT_SILVER = 100)
+	category = "Medical"
+	build_path = /obj/item/clothing/mask/chemmask
+
+/datum/design/antibody_scanner
+	name = "Antibody Scanner"
+	desc = "Used to scan living beings for antibodies in their blood."
+	id = "antibody_scanner"
+	req_tech = list("magnets" = 2, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list (MAT_IRON = 1000, MAT_GLASS = 1000)
+	category = "Medical"
+	build_path = /obj/item/device/antibody_scanner

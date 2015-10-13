@@ -49,6 +49,7 @@
 	var/locked = 0
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/injector_cooldown = 300 //Used by attachment
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
 	light_color = LIGHT_COLOR_CYAN
@@ -68,6 +69,11 @@
 	)
 
 	RefreshParts()
+
+/obj/machinery/dna_scannernew/RefreshParts()
+	var/efficiency = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts) efficiency += SP.rating-1
+	injector_cooldown = initial(injector_cooldown) - 30*(efficiency)
 
 /obj/machinery/dna_scannernew/allow_drop()
 	return 0
@@ -92,6 +98,18 @@
 
 	add_fingerprint(usr)
 	return
+
+/obj/machinery/dna_scannernew/crowbarDestroy(mob/user)
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
+		return
+	return ..()
+
+/obj/machinery/dna_scannernew/Destroy()
+
+	go_out() //Eject everything
+
+	. = ..()
 
 /obj/machinery/dna_scannernew/proc/eject_occupant(var/exit = loc)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/dna_scannernew/proc/eject_occupant() called tick#: [world.time]")
@@ -917,7 +935,7 @@
 					I.loc = src.loc
 					I.name += " ([buf.name])"
 					src.injector_ready = 0
-					spawn(300)
+					spawn(connected.injector_cooldown)
 						src.injector_ready = 1
 			return 1
 

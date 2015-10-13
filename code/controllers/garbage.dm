@@ -23,18 +23,18 @@ var/soft_dels = 0
 	var/dels_count = 0
 	var/hard_dels = 0
 
-/datum/garbage_collector/proc/addTrash(const/atom/movable/AM)
+/datum/garbage_collector/proc/addTrash(const/datum/D)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/garbage_collector/proc/addTrash() called tick#: [world.time]")
-	if(!istype(AM))
+	if(istype(D, /atom) && !istype(D, /atom/movable))
 		return
 
 	if(del_everything)
-		del(AM)
+		del(D)
 		hard_dels++
 		dels_count++
 		return
 
-	queue["\ref[AM]"] = world.timeofday
+	queue["\ref[D]"] = world.timeofday
 
 /datum/garbage_collector/proc/process()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/garbage_collector/proc/process() called tick#: [world.time]")
@@ -49,20 +49,23 @@ var/soft_dels = 0
 		if(destroyedAtTime > collectionTimeScope)
 			break
 
-		var/atom/movable/AM = locate(refID)
-		if(AM) // Something's still referring to the qdel'd object. del it.
-			if(isnull(AM.gcDestroyed))
+		var/datum/D = locate(refID)
+		if(D) // Something's still referring to the qdel'd object. del it.
+			if(isnull(D.gcDestroyed))
 				queue -= refID
 				continue
 			if(remainingForceDelPerTick <= 0)
 				break
 
 			#ifdef GC_DEBUG
-			WARNING("gc process force delete [AM.type]")
+			WARNING("gc process force delete [D.type]")
 			#endif
 
-			AM.hard_deleted = 1
-			del AM
+			if(istype(D, /atom/movable))
+				var/atom/movable/AM = D
+				AM.hard_deleted = 1
+
+			del D
 
 			hard_dels++
 			remainingForceDelPerTick--
@@ -88,35 +91,36 @@ var/soft_dels = 0
 	dels_count++
 
 /*
- * NEVER USE THIS FOR ANYTHING OTHER THAN /atom/movable
- * OTHER TYPES CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED OR THEY DON'T HAVE ONE.
+ * NEVER USE THIS FOR /atom OTHER THAN /atom/movable
+ * BASE ATOMS CANNOT BE QDEL'D BECAUSE THEIR LOC IS LOCKED.
  */
-/proc/qdel(const/atom/movable/AM, ignore_pooling = 0)
+/proc/qdel(const/datum/D, ignore_pooling = 0, ignore_destroy = 0)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/qdel() called tick#: [world.time]")
-	if(isnull(AM))
+	if(isnull(D))
 		return
 
 	if(isnull(garbageCollector))
-		del(AM)
+		del(D)
 		return
 
-	if(!istype(AM))
-		WARNING("qdel() passed object of type [AM.type]. qdel() can only handle /atom/movable types.")
-		del(AM)
+	if(istype(D, /atom) && !istype(D, /atom/movable))
+		WARNING("qdel() passed object of type [D.type]. qdel() cannot handle unmovable atoms.")
+		del(D)
 		garbageCollector.hard_dels++
 		garbageCollector.dels_count++
 		return
 
 	//We are object pooling this.
-	if(("[AM.type]" in masterPool) && !ignore_pooling)
-		returnToPool(AM)
+	if(("[D.type]" in masterdatumPool) && !ignore_pooling)
+		returnToPool(D)
 		return
 
-	if(isnull(AM.gcDestroyed))
+	if(isnull(D.gcDestroyed))
 		// Let our friend know they're about to get fucked up.
-		AM.Destroy()
+		if(!ignore_destroy)
+			D.Destroy()
 
-		garbageCollector.addTrash(AM)
+		garbageCollector.addTrash(D)
 
 /datum/controller
 	var/processing = 0
@@ -131,8 +135,7 @@ var/soft_dels = 0
  * Called BEFORE qdel moves shit.
  */
 /datum/proc/Destroy()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/proc/Destroy() called tick#: [world.time]")
-	del(src)
+	qdel(src, 1, 1)
 
 /client/proc/qdel_toggle()
 	set name = "Toggle qdel Behavior"

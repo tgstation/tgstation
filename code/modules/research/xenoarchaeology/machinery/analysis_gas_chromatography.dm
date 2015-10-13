@@ -1,10 +1,22 @@
 
 // This machine shows the materials that are present
 
-obj/machinery/anomaly/gas_chromatography
+/obj/machinery/anomaly/gas_chromatography
 	name = "Gas Chromatography spectrometer"
 
-obj/machinery/anomaly/gas_chromatography/ScanResults()
+/obj/machinery/anomaly/gas_chromatography/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom/gas,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/gas_chromatography/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

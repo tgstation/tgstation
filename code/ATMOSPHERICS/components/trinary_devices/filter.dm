@@ -216,9 +216,9 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 	pipe_flags = IS_MIRROR
 
 /obj/machinery/atmospherics/trinary/filter/mirrored/update_icon(var/adjacent_procd)
+	..(adjacent_procd)
 	if(stat & NOPOWER)
 		icon_state = "hintactm_off"
 	else if(!(node2 && node3 && node1))
 		on = 0
 	icon_state = "hintactm_[on?("on"):("off")]"
-	..(adjacent_procd)

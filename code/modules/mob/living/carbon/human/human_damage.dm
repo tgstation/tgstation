@@ -339,7 +339,7 @@ This function restores all organs.
 			S.add_blood(src)
 	if(istype(used_weapon,/obj/item/projectile/flare)) //We want them to carry the flare, not a projectile
 		var/obj/item/projectile/flare/F = used_weapon
-		if(damagetype == BURN && F.embed && istype(F.shot_from, /obj/item/weapon/gun/projectile/flare/syndicate) && prob(75)) //only syndicate guns are dangerous
+		if(damagetype == BURN && F.embed && (istype(F.shot_from, /obj/item/weapon/gun/projectile/flare/syndicate) || istype(F.shot_from, /obj/item/weapon/gun/lawgiver)) && prob(75)) //only syndicate guns are dangerous, except for the lawgiver, which is intended to fire incendiary rounds
 			var/obj/item/device/flashlight/flare/FS = new
 			FS.name = "shot [FS.name]"
 			FS.desc = "[FS.desc]. It looks like it was fired from [F.shot_from]."

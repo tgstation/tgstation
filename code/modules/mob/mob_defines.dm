@@ -102,6 +102,7 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
+	var/candrop = 1
 	var/lastpuke = 0
 	var/unacidable = 0
 
@@ -118,6 +119,7 @@
 	var/list/abilities = list()         // For species-derived or admin-given powers.
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
 	var/emote_type = 1		// Define emote default type, 1 for seen emotes, 2 for heard emotes
+	var/treadmill_speed = 1 //1 for most player things, simple animals get lower, xenos get higher
 
 	var/name_archive //For admin things like possession
 
@@ -258,7 +260,7 @@
 
 	// /vg/ - Prevent mobs from being moved by a client.
 	var/deny_client_move = 0
-	var/incorporeal_move = 0
+	var/incorporeal_move = INCORPOREAL_DEACTIVATE
 
 	//Keeps track of where the mob was spawned. Mostly for teleportation purposes. and no, using initial() doesn't work.
 	var/origin_x = 0
@@ -273,6 +275,8 @@
 	var/stat_fucked = 1
 	var/event/on_uattack
 	forceinvertredraw = 1
+
+	var/list/alphas = list()
 
 /mob/resetVariables()
 	..("callOnFace", "pinned", "embedded", "abilities", "grabbed_by", "requests", "mapobjs", "mutations", "spell_list", "viruses", "resistances", "radar_blips", "active_genes", "attack_log", "speak_emote", args)

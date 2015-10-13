@@ -94,7 +94,7 @@
 		return
 
 	else if (istype(W, /obj/item/weapon/module/rust_fuel_port) && opened && !(has_electronics & 1))
-		user << "You trying to insert the port control board into the frame..."
+		user << "You try to insert the port control board into the frame..."
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, src, 10))
 			has_electronics &= 1

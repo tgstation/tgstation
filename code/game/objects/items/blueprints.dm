@@ -21,6 +21,10 @@
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
 
+	var/can_create_areas_in = list(AREA_SPACE)
+	var/can_rename_areas = list(AREA_STATION, AREA_BLUEPRINTS)
+	var/can_delete_areas = list(AREA_BLUEPRINTS)
+
 /obj/item/blueprints/attack_self(mob/M as mob)
 	if (!istype(M,/mob/living/carbon/human))
 		M << "This stack of blue paper means nothing to you." //monkeys cannot into projecting
@@ -35,17 +39,17 @@
 
 	switch(href_list["action"])
 		if ("create_area")
-			if (get_area_type()!=AREA_SPACE)
+			if (!(get_area_type() in can_create_areas_in))
 				interact()
 				return 1
 			create_area()
 		if ("edit_area")
-			if (!(get_area_type() in list(AREA_STATION, AREA_BLUEPRINTS)))
+			if (!(get_area_type() in can_rename_areas))
 				interact()
 				return 1
 			edit_area()
 		if ("delete_area")
-			if (get_area_type()!=AREA_BLUEPRINTS)
+			if (!(get_area_type() in can_delete_areas))
 				interact()
 				return 1
 			delete_area(usr)
@@ -74,7 +78,7 @@ move an amendment</a> to the drawing.</p>
 "}
 		if (AREA_BLUEPRINTS)
 			text += {"
-<p>According to the blueprints, you are now <b>\"[A.name]\"</b> This place seems to be relatively new on the blueprints.</p>"}
+<p>According to the blueprints, you are now in <b>\"[A.name]\"</b> This place seems to be relatively new on the blueprints.</p>"}
 			text += "<p>You may <a href='?src=\ref[src];action=edit_area'>move an amendment</a> to the drawing.</p>"//, or <a href='?src=\ref[src];action=delete_area'>erase</a> this place from the blueprints."
 
 		else
@@ -146,6 +150,8 @@ move an amendment</a> to the drawing.</p>
 		for(var/atom/allthings in T.contents)
 			allthings.change_area(oldarea,newarea)
 	newarea.addSorted()
+
+	ghostteleportlocs[newarea.name] = newarea
 
 	sleep(5)
 	interact()

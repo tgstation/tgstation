@@ -33,10 +33,10 @@
 
 /obj/machinery/media/transmitter/broadcast/Destroy()
 	if(wires)
-		wires.Destroy()
+		qdel(wires)
 		wires = null
 	if(power_connection)
-		power_connection.Destroy()
+		qdel(power_connection)
 		power_connection = null
 	..()
 
@@ -95,8 +95,6 @@
 
 /obj/machinery/media/transmitter/broadcast/attackby(var/obj/item/W, mob/user)
 	. = ..()
-	if(.)
-		return .
 	if(panel_open && (istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters)))
 		attack_hand(user)
 	if(issolder(W))

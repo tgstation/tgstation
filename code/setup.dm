@@ -235,6 +235,8 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define	NOREACT		16384 			//Reagents dont' react inside this container.
 
+#define BLOCK_BREATHING 32768		//When worn, prevents breathing!
+
 #define INVULNERABLE 128
 
 #define ALL ~0
@@ -245,6 +247,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define PASSGLASS	2
 #define PASSGRILLE	4
 #define PASSBLOB	8
+#define PASSMACHINE	16//computers, vending machines, rnd machines
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
@@ -602,6 +605,8 @@ var/list/liftable_structures = list(\
 #define BANTYPE_JOB_TEMP	4
 #define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
 #define BANTYPE_APPEARANCE	6
+#define BANTYPE_OOC_PERMA	7
+#define BANTYPE_OOC_TEMP	8
 
 #define SEE_INVISIBLE_MINIMUM 5
 
@@ -923,6 +928,7 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define RECYK_BIOLOGICAL 3
 #define RECYK_METAL      4
 #define RECYK_ELECTRONIC 5
+#define RECYK_WOOD		 6
 
 ////////////////
 // job.info_flags
@@ -1173,15 +1179,16 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 #define LANGUAGE_VOX "Vox-pidgin"
 #define LANGUAGE_CULT "Cult"
 
-/*#define SAY_DEBUG 0
+//#define SAY_DEBUG 1
 #ifdef SAY_DEBUG
 	#warning SOME ASSHOLE FORGOT TO COMMENT SAY_DEBUG BEFORE COMMITTING
-	#define say_testing(a,x) a << ("([__FILE__]L[__LINE__] SAYDEBUG) [x]")
+	#define say_testing(a,x) a << ("([__FILE__]:[__LINE__] say_testing) [x]")
 #else
-	#define say_testing(a,x) null << "[x][a]"
+	#define say_testing(a,x)
+	// null << "[x][a]"
 #endif
 
-#define JUSTFUCKMYSHITUP 1
+//#define JUSTFUCKMYSHITUP 1
 #ifdef JUSTFUCKMYSHITUP
 #define writepanic(a) if(ticker && ticker.current_state >= 3 && world.cpu > 100) write_panic(a)
 #warning IMA FUCK YOUR SHIT UP
@@ -1239,6 +1246,12 @@ var/proccalls = 1
 #define ORE_PROCESSING_ALLOY 2
 
 #define SOUND_AMBIANCE			485	//Literally arbitrary.
+
+//incorporeal_move values
+#define INCORPOREAL_DEACTIVATE	0
+#define INCORPOREAL_GHOST		1
+#define INCORPOREAL_NINJA		2
+#define INCORPOREAL_ETHEREAL	3
 
 
 //MALFUNCTION FLAGS
@@ -1304,3 +1317,23 @@ var/proccalls = 1
 
 #define log_adminwarn(text) diary << html_decode("\[[time_stamp()]]ADMINWARN: [text]")
 #define log_pda(text) diary << html_decode("\[[time_stamp()]]PDA: [text]")
+
+//OOC isbanned
+#define oocban_isbanned(key) oocban_keylist.Find("[ckey(key)]")
+
+//message modes. you're not supposed to mess with these.
+#define MODE_HEADSET "headset"
+#define MODE_ROBOT "robot"
+#define MODE_R_HAND "right hand"
+#define MODE_L_HAND "left hand"
+#define MODE_INTERCOM "intercom"
+#define MODE_BINARY "binary"
+#define MODE_WHISPER "whisper"
+#define MODE_SECURE_HEADSET "secure headset"
+#define MODE_DEPARTMENT "department"
+#define MODE_ALIEN "alientalk"
+#define MODE_HOLOPAD "holopad"
+#define MODE_CHANGELING "changeling"
+#define MODE_CULTCHAT "cultchat"
+#define MODE_ANCIENT "ancientchat"
+

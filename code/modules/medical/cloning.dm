@@ -229,6 +229,7 @@
 	H.adjustCloneLoss(150) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	H.adjustBrainLoss(src.heal_level + 50 + rand(10, 30)) // The rand(10, 30) will come out as extra brain damage
 	H.Paralyse(4)
+	H.stat = UNCONSCIOUS //There was a bug which allowed you to talk for a few seconds after being cloned, because your stat wasn't updated until next Life() tick. This is a fix for this!
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
@@ -340,12 +341,18 @@
 	return
 
 /obj/machinery/cloning/clonepod/crowbarDestroy(mob/user)
-	if (occupant)
-		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
 		return
 	for(biomass; biomass > 0;biomass -= 50)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(loc)
 	return..()
+
+/obj/machinery/cloning/clonepod/Destroy()
+
+	go_out() //Eject everything
+
+	. = ..()
 
 //Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/cloning/clonepod/attackby(obj/item/weapon/W as obj, mob/user as mob)

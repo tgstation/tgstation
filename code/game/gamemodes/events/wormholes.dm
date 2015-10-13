@@ -58,10 +58,8 @@
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/create_wormhole() called tick#: [world.time]")
 	var/obj/effect/portal/P = new /obj/effect/portal( enter )
 	P.target = exit
-	P.creator = null
 	P.icon = 'icons/obj/objects.dmi'
-	P.failchance = 0
 	P.icon_state = "anom"
 	P.name = "wormhole"
-	spawn(rand(300,600))
-		del(P)
+	spawn(rand(300,600)) //This isn't useful, the new in hand tele will likely override it
+		qdel(P)

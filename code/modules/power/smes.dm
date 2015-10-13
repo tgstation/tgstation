@@ -18,13 +18,11 @@
 
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/smes,
-		/obj/item/weapon/stock_parts/matter_bin,
-		/obj/item/weapon/stock_parts/matter_bin,
-		/obj/item/weapon/stock_parts/matter_bin,
-		/obj/item/weapon/stock_parts/matter_bin,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/micro_laser,
 		/obj/item/weapon/stock_parts/micro_laser,

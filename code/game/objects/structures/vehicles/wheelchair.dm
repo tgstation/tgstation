@@ -33,7 +33,7 @@
 		overlays -= wheel_overlay
 
 /obj/structure/bed/chair/vehicle/wheelchair/can_buckle(mob/M, mob/user)
-	if(M != user || !Adjacent(user) || (!ishuman(user) && !isalien(user) && !ismonkey(user)) || user.restrained() || user.stat || user.locked_to || destroyed) //Same as vehicle/can_buckle, minus check for user.lying as well as allowing monkey and ayliens
+	if(M != user || !Adjacent(user) || (!ishuman(user) && !isalien(user) && !ismonkey(user)) || user.restrained() || user.stat || user.locked_to || destroyed || occupant) //Same as vehicle/can_buckle, minus check for user.lying as well as allowing monkey and ayliens
 		return 0
 	return 1
 
@@ -117,3 +117,32 @@
 	getFromPool(/obj/item/stack/sheet/metal, get_turf(src), 4)
 	getFromPool(/obj/item/stack/rods, get_turf(src), 2)
 	qdel(src)
+
+/obj/structure/bed/chair/vehicle/wheelchair/multi_people
+	nick = "hella ride"
+	desc = "A chair with fitted wheels. Something seems off about this one..."
+
+/obj/structure/bed/chair/vehicle/wheelchair/multi_people/examine(mob/user)
+	..()
+
+	if(locked_atoms.len > 9)
+		user << "<b>WHAT THE FUCK</b>"
+
+/obj/structure/bed/chair/vehicle/wheelchair/multi_people/can_buckle(mob/M, mob/user)
+	//Same as parent's, but no occupant check!
+	if(M != user || !Adjacent(user) || (!ishuman(user) && !isalien(user) && !ismonkey(user)) || user.restrained() || user.stat || user.locked_to || destroyed)
+		return 0
+	return 1
+
+/obj/structure/bed/chair/vehicle/wheelchair/multi_people/update_mob()
+	var/i = 0
+	for(var/mob/living/L in locked_atoms)
+		L.pixel_x = 0
+		L.pixel_y = 3 + (i*6) //Stack people on top of each other!
+
+		i++
+
+/obj/structure/bed/chair/vehicle/wheelchair/multi_people/manual_unbuckle(mob/user)
+	..()
+
+	update_mob() //Update the rest

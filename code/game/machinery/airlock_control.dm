@@ -60,7 +60,7 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 obj/machinery/door/airlock/proc/send_status()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/door/airlock/proc/send_status() called tick#: [world.time]")
 	if(radio_connection)
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
@@ -86,7 +86,7 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density && radio_connection && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
-			var/datum/signal/signal = getFromDPool(/datum/signal)
+			var/datum/signal/signal = getFromPool(/datum/signal)
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
 			signal.data["timestamp"] = world.time
@@ -156,7 +156,7 @@ obj/machinery/airlock_sensor/update_icon()
 obj/machinery/airlock_sensor/attack_hand(mob/user)
 	if(..())
 		return
-	var/datum/signal/signal = getFromDPool(/datum/signal)
+	var/datum/signal/signal = getFromPool(/datum/signal)
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
 	signal.data["command"] = command
@@ -166,7 +166,7 @@ obj/machinery/airlock_sensor/attack_hand(mob/user)
 
 obj/machinery/airlock_sensor/process()
 	if(on)
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = id_tag
 		signal.data["timestamp"] = world.time
@@ -315,7 +315,7 @@ obj/machinery/access_button/attack_hand(mob/user)
 		user << "<span class='warning'>Access Denied</span>"
 
 	else if(radio_connection)
-		var/datum/signal/signal = getFromDPool(/datum/signal)
+		var/datum/signal/signal = getFromPool(/datum/signal)
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = master_tag
 		signal.data["command"] = command

@@ -67,7 +67,8 @@
 		circ2.linked_generator = null
 		circ2 = null
 
-	del(interface)
+	qdel(interface)
+	interface = null
 
 	html_machines -= src
 

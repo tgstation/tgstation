@@ -174,6 +174,13 @@ var/global/obj/screen/fuckstat/FUCK = new
 		returnToPool(zone_sel)
 		if(client) client.screen -= zone_sel
 		zone_sel = null
+	if(hud_used)
+		for(var/obj/screen/item_action/actionitem in hud_used.item_action_list)
+			if(client)
+				client.screen -= actionitem
+				client.images -= actionitem.overlay
+			returnToPool(actionitem)
+			hud_used.item_action_list -= actionitem
 
 /mob/proc/cultify()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/cultify() called tick#: [world.time]")
@@ -302,7 +309,14 @@ var/global/obj/screen/fuckstat/FUCK = new
 // blind_drugged_message (optional) is shown to blind hallucinating people
 
 /mob/visible_message(var/message, var/self_message, var/blind_message, var/drugged_message, var/self_drugged_message, var/blind_drugged_message)
-	for(var/mob/M in viewers(src))
+	var/list/L //Go through mobs in this list and show them the message. Unless the mob is picked up (and is in a "holder" item), this equals to viewers(src).
+
+	if(istype(loc, /obj/item/weapon/holder))
+		L = viewers(get_turf(src))
+	else
+		L = viewers(src)
+
+	for(var/mob/M in L)
 		if(M.see_invisible < invisibility)
 			continue
 		var/hallucination = M.hallucinating()
@@ -1745,7 +1759,7 @@ mob/proc/assess_threat()
 
 mob/proc/walking()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/walking() called tick#: [world.time]")
-	return !(lying || flying)
+	return !(lying || flying || locked_to)
 
 /mob/proc/dexterity_check()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")
@@ -1802,6 +1816,18 @@ mob/proc/walking()
 		pre_msg = pick("You hear [adjective] voice[location]...")
 
 	src << "<b>[pre_msg] <em>[msg]</em></b>"
+
+/mob/attack_pai(mob/user as mob)
+	ShiftClick(user)
+
+/mob/proc/handle_alpha()
+	if(alphas.len < 1)
+		alpha = 255
+	else
+		var/lowest_alpha = 255
+		for(var/alpha_modification in alphas)
+			lowest_alpha = min(lowest_alpha,alphas[alpha_modification])
+		alpha = lowest_alpha
 
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING

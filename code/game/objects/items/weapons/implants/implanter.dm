@@ -26,7 +26,7 @@
 		return
 	if (user && src.imp)
 		for (var/mob/O in viewers(M, null))
-			O.show_message("<span class='warning'>[user] is attemping to implant [M].</span>", 1)
+			O.show_message("<span class='warning'>[user] is attempting to implant [M].</span>", 1)
 
 		var/turf/T1 = get_turf(M)
 		if (T1 && ((M == user) || do_after(user,M, 50)))

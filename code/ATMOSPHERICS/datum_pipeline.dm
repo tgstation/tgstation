@@ -13,7 +13,7 @@
 
 /datum/pipeline/Destroy()
 	if(network) //For the pipenet rebuild
-		returnToDPool(network)
+		returnToPool(network)
 	if(air && air.volume) //For the pipeline rebuild next tick
 		temporarily_store_air()
 		del(air)
@@ -132,7 +132,7 @@
 /datum/pipeline/proc/return_network(obj/machinery/atmospherics/reference)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/pipeline/proc/return_network() called tick#: [world.time]")
 	if(!network)
-		network = getFromDPool(/datum/pipe_network)
+		network = getFromPool(/datum/pipe_network)
 		network.build_network(src, null)
 			//technically passing these parameters should not be allowed
 			//however pipe_network.build_network(..) and pipeline.network_extend(...)

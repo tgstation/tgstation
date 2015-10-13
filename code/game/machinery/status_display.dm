@@ -96,9 +96,11 @@ var/global/list/status_displays = list() //This list contains both normal status
 			if("Emergency shuttle timer")
 				mode = MODE_SHUTTLE_TIMER
 			if("Text message")
-				message1 = input(A, "Write the first line: ", "Status display", message1)
-				message2 = input(A, "Write the second line: ", "Status display", message2)
+				var/msg1 = input(A, "Write the first line: ", "Status display", message1) //First line
+				var/msg2 = input(A, "Write the second line: ", "Status display", message2) //Second line
 				mode = MODE_MESSAGE
+
+				set_message(msg1, msg2)
 			if("Picture")
 				var/new_icon = input(A, "Load an image to be desplayed on [src].", "Status display") in status_display_images
 
@@ -369,6 +371,7 @@ var/global/list/status_display_images = list(
 
 		if(new_icon)
 			src.mode = MODE_EMOTION
+			src.emotion = new_icon
 			src.set_picture(status_display_images[new_icon])
 
 /obj/machinery/ai_status_display/process()
@@ -396,8 +399,8 @@ var/global/list/status_display_images = list(
 			overlays = list()
 
 		if(MODE_EMOTION)
-			if(emotion in ai_emotions)
-				set_picture(ai_emotions[emotion])
+			if(emotion in status_display_images)
+				set_picture(status_display_images[emotion])
 			else
 				set_picture("ai_bsod") //Can't find icon state for our emotion - throw a BSOD
 

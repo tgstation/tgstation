@@ -5,9 +5,9 @@
 	nitrogen = 0.01
 	temperature = TCMB
 
-	New()
-		..()
-		name = "floor"
+/turf/simulated/floor/airless/New()
+	..()
+	name = "floor"
 
 
 
@@ -18,9 +18,9 @@
 	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
 	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 
-	New()
-		..()
-		name = "plating"
+/turf/simulated/floor/plating/vox/New()
+	..()
+	name = "plating"
 
 /turf/simulated/floor/vox
 	icon_state = "floor"
@@ -29,9 +29,9 @@
 	oxygen=0 // BIRDS HATE OXYGEN FOR SOME REASON
 	nitrogen = MOLES_O2STANDARD+MOLES_N2STANDARD // So it totals to the same pressure
 
-	New()
-		..()
-		name = "floor"
+/turf/simulated/floor/vox/New()
+	..()
+	name = "floor"
 
 /turf/simulated/floor/vox/wood
 	name = "floor"
@@ -43,12 +43,12 @@
 	soot_type = null
 	melt_temperature = 0 // Doesn't melt.
 
-	New()
-		if(floor_tile)
-			returnToPool(floor_tile)
-			floor_tile = null
-		floor_tile = getFromPool(/obj/item/stack/tile/wood, null)
-		..()
+/turf/simulated/floor/vox/wood/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/wood, null)
+	..()
 
 /turf/simulated/floor/light
 	name = "Light floor"
@@ -56,18 +56,18 @@
 	icon_state = "light_on"
 	floor_tile
 
-	New()
-		if(floor_tile)
-			returnToPool(floor_tile)
-			floor_tile = null
-		floor_tile = getFromPool(/obj/item/stack/tile/light, null)
-		floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
-		var/n = name //just in case commands rename it in the ..() call
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				name = n
+/turf/simulated/floor/light/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/light, null)
+	floor_tile.New() //I guess New() isn't run on objects spawned without the definition of a turf to house them, ah well.
+	var/n = name //just in case commands rename it in the ..() call
+	..()
+	spawn(4)
+		if(src)
+			update_icon()
+			name = n
 
 /turf/simulated/floor/wood
 	name = "floor"
@@ -79,23 +79,23 @@
 	soot_type = null
 	melt_temperature = 0 // Doesn't melt.
 
-	New()
-		floor_tile = getFromPool(/obj/item/stack/tile/wood,null)
-		..()
+/turf/simulated/floor/wood/New()
+	floor_tile = getFromPool(/obj/item/stack/tile/wood,null)
+	..()
 
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
+/turf/simulated/floor/vault/New(location,type)
+	..()
+	icon_state = "[type]vault"
 
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
 
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
+/turf/simulated/wall/vault/New(location,type)
+	..()
+	icon_state = "[type]vault"
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
@@ -156,14 +156,15 @@
 	nitrogen = 0.01
 
 /turf/simulated/floor/engine/n20
-	New()
-		..()
-		if(src.air)
-			// EXACTLY the same code as fucking roomfillers.  If this doesn't work, something's fucked.
-			var/datum/gas/sleeping_agent/trace_gas = new
-			air.trace_gases += trace_gas
-			trace_gas.moles = 9*4000
-			air.update_values()
+
+/turf/simulated/floor/engine/n20/New()
+	..()
+	if(src.air)
+		// EXACTLY the same code as fucking roomfillers.  If this doesn't work, something's fucked.
+		var/datum/gas/sleeping_agent/trace_gas = new
+		air.trace_gases += trace_gas
+		trace_gas.moles = 9*4000
+		air.update_values()
 
 /turf/simulated/floor/engine/nitrogen
 	name = "nitrogen floor"
@@ -198,9 +199,9 @@
 	nitrogen = 0.01
 	temperature = TCMB
 
-	New()
-		..()
-		name = "plating"
+/turf/simulated/floor/plating/airless/New()
+	..()
+	name = "plating"
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
@@ -209,102 +210,6 @@
 /turf/simulated/floor/greengrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gcircuit"
-
-
-/turf/simulated/shuttle
-	name = "shuttle"
-	icon = 'icons/turf/shuttle.dmi'
-	thermal_conductivity = 0.05
-	heat_capacity = 0
-	layer = 2
-	dynamic_lighting = 1 //We dynamic lighting now
-
-	soot_type = null
-	melt_temperature = 0 // Doesn't melt.
-
-/turf/simulated/shuttle/wall
-	name = "wall"
-	icon_state = "wall1"
-	opacity = 1
-	density = 1
-	blocks_air = 1
-	explosion_block = 2
-
-/turf/simulated/shuttle/wall/shuttle_rotate(angle) //delete this when autosmooth is added
-	src.transform = turn(src.transform, angle)
-
-/turf/simulated/shuttle/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	user.delayNextAttack(8)
-	if (!user.dexterity_check())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-		return
-	if(istype(W,/obj/item/weapon/solder) && bullet_marks)
-		var/obj/item/weapon/solder/S = W
-		if(!S.remove_fuel(bullet_marks*2,user))
-			return
-		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		user << "<span class='notice'>You remove the bullet marks with \the [W].</span>"
-		bullet_marks = 0
-		icon = initial(icon)
-	..()
-
-/turf/simulated/shuttle/wall/cultify()
-	ChangeTurf(/turf/simulated/wall/cult)
-	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
-	return
-
-/turf/simulated/shuttle/floor
-	name = "floor"
-	icon_state = "floor"
-
-/turf/simulated/shuttle/floor/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			new/obj/effect/decal/cleanable/soot(src)
-		if(2.0)
-			if(prob(65))
-				new/obj/effect/decal/cleanable/soot(src)
-		if(3.0)
-			if(prob(20))
-				new/obj/effect/decal/cleanable/soot(src)
-			return
-	return
-
-/turf/simulated/shuttle/floor/cultify()
-	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
-		name = "engraved floor"
-		icon_state = "cult"
-		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1)
-	return
-
-/turf/simulated/shuttle/plating
-	name = "plating"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-
-/turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
-	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
-	icon_state = "floor4"
-
-/turf/simulated/shuttle/floor4/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			new/obj/effect/decal/cleanable/soot(src)
-		if(2.0)
-			if(prob(65))
-				new/obj/effect/decal/cleanable/soot(src)
-		if(3.0)
-			if(prob(20))
-				new/obj/effect/decal/cleanable/soot(src)
-			return
-	return
-
-/turf/simulated/shuttle/floor4/cultify()
-	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
-		name = "engraved floor"
-		icon_state = "cult"
-		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1)
-	return
 
 /turf/simulated/floor/beach
 	name = "Beach"
@@ -334,52 +239,60 @@
 	icon_state = "grass1"
 	floor_tile
 
-	New()
-		if(floor_tile)
-			returnToPool(floor_tile)
-			floor_tile = null
-		floor_tile = getFromPool(/obj/item/stack/tile/grass, null)
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
-		icon_state = "grass[pick("1","2","3","4")]"
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+/turf/simulated/floor/grass/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/grass, null)
+	floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
+	icon_state = "grass[pick("1","2","3","4")]"
+	..()
+	spawn(4)
+		if(src)
+			update_icon()
+			for(var/direction in cardinal)
+				if(istype(get_step(src,direction),/turf/simulated/floor))
+					var/turf/simulated/floor/FF = get_step(src,direction)
+					FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/carpet
 	name = "Carpet"
 	icon_state = "carpet"
 	floor_tile
 	var/has_siding=1
-	New()
-		if(floor_tile)
-			returnToPool(floor_tile)
-			floor_tile = null
-		floor_tile = getFromPool(/obj/item/stack/tile/carpet, null)
-		floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
-		if(!icon_state)
-			icon_state = initial(icon_state)
-		..()
-		if(has_siding)
-			spawn(4)
-				if(src)
-					update_icon()
-					for(var/direction in alldirs)
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
-							FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/carpet/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/carpet, null)
+	floor_tile.New() //I guess New() isn't ran on objects spawned without the definition of a turf to house them, ah well.
+	if(!icon_state)
+		icon_state = initial(icon_state)
+	..()
+	if(has_siding)
+		spawn(4)
+			if(src)
+				update_icon()
+				for(var/direction in alldirs)
+					if(istype(get_step(src,direction),/turf/simulated/floor))
+						var/turf/simulated/floor/FF = get_step(src,direction)
+						FF.update_icon() //so siding get updated properly
+
 /turf/simulated/floor/carpet/cultify()
 	return
 
-/turf/simulated/floor/carpet/arcade
+/turf/simulated/floor/arcade
 	name = "Arcade Carpet"
-	icon_state = "arcadecarpet"
-	has_siding=0
+	icon_state = "arcade"
+	floor_tile
 
+/turf/simulated/floor/arcade/New()
+	if(floor_tile)
+		returnToPool(floor_tile)
+		floor_tile = null
+	floor_tile = getFromPool(/obj/item/stack/tile/arcade, null)
+	..()
 
 /turf/simulated/floor/plating/ironsand/New()
 	..()

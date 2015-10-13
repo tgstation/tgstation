@@ -21,6 +21,16 @@
 //Module select
 
 	using = getFromPool(/obj/screen)
+	using.name = INV_SLOT_SIGHT
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1_robot.dmi'
+	using.icon_state = "sight"
+	using.screen_loc = ui_borg_sight
+	using.layer = 20
+	src.adding += using
+	mymob:sensor = using
+
+	using = getFromPool(/obj/screen)
 	using.name = "module1"
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
@@ -144,7 +154,7 @@
 	mymob.flash.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	mymob.zone_sel = getFromPool(/obj/screen/zone_sel)

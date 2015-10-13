@@ -342,7 +342,9 @@
 	if(character.client.prefs.randomslot) character.client.prefs.random_character_sqlite(character, character.ckey)
 	job_master.EquipRank(character, rank, 1)					//equips the human
 	EquipCustomItems(character)
-	character.loc = pick(latejoin)
+
+	// TODO:  Job-specific latejoin overrides.
+	character.loc = pick((assistant_latejoin.len > 0 && rank == "Assistant") ? assistant_latejoin : latejoin)
 	//Give them their fucking wheelchair where they spawn instead of inside of the splash screen
 	var/datum/organ/external/left_leg = character.get_organ("l_foot")
 	var/datum/organ/external/right_leg = character.get_organ("r_foot")
@@ -352,6 +354,8 @@
 		W.buckle_mob(character,character)
 	character.store_position()
 
+	// WHY THE FUCK IS THIS HERE
+	// FOR GOD'S SAKE USE EVENTS
 	if(bomberman_mode)
 		character.client << sound('sound/bomberman/start.ogg')
 		if(character.wear_suit)
@@ -373,8 +377,6 @@
 
 	ticker.mode.latespawn(character)
 
-	//ticker.mode.latespawn(character)
-
 	if(character.mind.assigned_role != "Cyborg")
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
@@ -384,15 +386,19 @@
 		character.Robotize()
 	del(src)
 
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/AnnounceArrival() called tick#: [world.time]")
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
-		//say("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
-		//Broadcast_Message(speaker, vmask, radio, message, name, job, realname, data, compression, zlevels, frequency)
-		Broadcast_Message(announcement_intercom, all_languages[LANGUAGE_SOL_COMMON], null, announcement_intercom, "[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer", "Automated Announcement", "Arrivals Announcement Computer", 0, 0, list(0,1), 1459)
-		//del(a)
+		var/datum/speech/speech = announcement_intercom.create_speech("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", transmitter=announcement_intercom)
+		speech.name = "Arrivals Announcement Computer"
+		speech.job = "Automated Announcement"
+		speech.as_name = "Arrivals Announcement Computer"
+		speech.frequency = 1459
+
+		Broadcast_Message(speech, vmask=null, data=0, compression=0, level=list(0,1))
+		returnToPool(speech)
 
 /mob/new_player/proc/LateChoices()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/LateChoices() called tick#: [world.time]")

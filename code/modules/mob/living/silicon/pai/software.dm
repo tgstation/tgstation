@@ -313,9 +313,9 @@
 			if(href_list["toggle"])
 				lighted = !lighted
 				if(lighted)
-					set_light(4) //Equal to flashlight
+					card.set_light(4) //Equal to flashlight
 				else
-					set_light(0)
+					card.set_light(0)
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
@@ -481,10 +481,11 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/softwareMedicalRecord() called tick#: [world.time]")
 	var/dat = ""
 	if(src.subscreen == 0)
+		dat += "<a href='byond://?src=\ref[src];software=medicalsupplement;sub=2'>Host Bioscan</a><br>"
 		dat += "<h3>Medical Records</h3><HR>"
 		if(!isnull(data_core.general))
 			for(var/datum/data/record/R in sortRecord(data_core.general))
-				dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+				dat += text("<A href='?src=\ref[];med_rec=\ref[];software=medicalsupplement;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 		//dat += text("<HR><A href='?src=\ref[];screen=0;softFunction=medical records'>Back</A>", src)
 	if(src.subscreen == 1)
 		dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
@@ -497,7 +498,36 @@
 			dat += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[];field=b_type'>[]</A><BR>\nDNA: <A href='?src=\ref[];field=b_dna'>[]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[];field=mi_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=mi_dis_d'>[]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[];field=ma_dis'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=ma_dis_d'>[]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[];field=alg'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=alg_d'>[]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[];field=cdi'>[]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[];field=cdi_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src, src.medicalActive2.fields["b_type"], src, src.medicalActive2.fields["b_dna"], src, src.medicalActive2.fields["mi_dis"], src, src.medicalActive2.fields["mi_dis_d"], src, src.medicalActive2.fields["ma_dis"], src, src.medicalActive2.fields["ma_dis_d"], src, src.medicalActive2.fields["alg"], src, src.medicalActive2.fields["alg_d"], src, src.medicalActive2.fields["cdi"], src, src.medicalActive2.fields["cdi_d"], src, src.medicalActive2.fields["notes"])
 		else
 			dat += "<pre>Requested medical record not found.</pre><BR>"
-		dat += text("<BR>\n<A href='?src=\ref[];software=medicalrecord;sub=0'>Back</A><BR>", src)
+		dat += text("<BR>\n<A href='?src=\ref[];software=medicalsupplement;sub=0'>Back</A><BR>", src)
+	if(src.subscreen == 2)
+		dat += {"<h3>Medical Analysis Suite</h3><br>
+				 <h4>Host Bioscan</h4><br>
+				"}
+		var/mob/living/M = src.loc
+		if(!istype(M, /mob/living))
+			while (!istype(M, /mob/living))
+				M = M.loc
+				if(istype(M, /turf))
+					src.temp = "Error: No biological host found. <br>"
+					src.subscreen = 0
+					return dat
+		dat += {"Bioscan Results for [M]: <br>
+		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
+		Scan Breakdown: <br>
+		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
+		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
+		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
+		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
+		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
+		"}
+		for(var/datum/disease/D in M.viruses)
+			dat += {"<h4>Infection Detected.</h4><br>
+					 Name: [D.name]<br>
+					 Type: [D.spread]<br>
+					 Stage: [D.stage]/[D.max_stages]<br>
+					 Possible Cure: [D.cure]<br>
+					"}
+		dat += "<a href='byond://?src=\ref[src];software=medicalsupplement;sub=0'>Return to Records</a><br>"
 	return dat
 
 // Security Records
@@ -508,7 +538,7 @@
 		dat += "<h3>Security Records</h3><HR>"
 		if(!isnull(data_core.general))
 			for(var/datum/data/record/R in sortRecord(data_core.general))
-				dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securityrecord;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+				dat += text("<A href='?src=\ref[];sec_rec=\ref[];software=securitysupplement;sub=1'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
 	if(src.subscreen == 1)
 		dat += "<h3>Security Record</h3>"
 		if ((istype(src.securityActive1, /datum/data/record) && data_core.general.Find(src.securityActive1)))
@@ -519,7 +549,7 @@
 			dat += text("<BR>\nSecurity Data<BR>\nCriminal Status: []<BR>\n<BR>\nMinor Crimes: <A href='?src=\ref[];field=mi_crim'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=mi_crim_d'>[]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=\ref[];field=ma_crim'>[]</A><BR>\nDetails: <A href='?src=\ref[];field=ma_crim_d'>[]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[];field=notes'>[]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", src.securityActive2.fields["criminal"], src, src.securityActive2.fields["mi_crim"], src, src.securityActive2.fields["mi_crim_d"], src, src.securityActive2.fields["ma_crim"], src, src.securityActive2.fields["ma_crim_d"], src, src.securityActive2.fields["notes"])
 		else
 			dat += "<pre>Requested security record not found,</pre><BR>"
-		dat += text("<BR>\n<A href='?src=\ref[];software=securityrecord;sub=0'>Back</A><BR>", src)
+		dat += text("<BR>\n<A href='?src=\ref[];software=securitysupplement;sub=0'>Back</A><BR>", src)
 	return dat
 
 // Universal Translator
@@ -540,50 +570,6 @@
 				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
 				"}
-	return dat
-
-// Medical HUD
-/mob/living/silicon/pai/proc/medicalAnalysis()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/pai/proc/medicalAnalysis() called tick#: [world.time]")
-	var/dat = ""
-	if(src.subscreen == 0)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Visual Status Overlay</h4><br>
-					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
-					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
-					<br>
-					<a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Host Bioscan</a><br>
-					"}
-	if(src.subscreen == 1)
-		dat += {"<h3>Medical Analysis Suite</h3><br>
-				 <h4>Host Bioscan</h4><br>
-				"}
-		var/mob/living/M = src.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
-				M = M.loc
-				if(istype(M, /turf))
-					src.temp = "Error: No biological host found. <br>"
-					src.subscreen = 0
-					return dat
-		dat += {"Bioscan Results for [M]: <br>"
-		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
-		Scan Breakdown: <br>
-		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
-		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
-		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
-		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
-		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
-		"}
-		for(var/datum/disease/D in M.viruses)
-			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
-					"}
-		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
 
 // Atmospheric Scanner
