@@ -203,6 +203,7 @@
 #include "code\datums\diseases\advance\symptoms\heal.dm"
 #include "code\datums\diseases\advance\symptoms\horrorfiredeath.dm"
 #include "code\datums\diseases\advance\symptoms\hothead.dm"
+#include "code\datums\diseases\advance\symptoms\inert.dm"
 #include "code\datums\diseases\advance\symptoms\itching.dm"
 #include "code\datums\diseases\advance\symptoms\liggeritis.dm"
 #include "code\datums\diseases\advance\symptoms\mlady.dm"
