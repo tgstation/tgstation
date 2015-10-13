@@ -1,6 +1,2 @@
 author: N3X15
-changes:
-  - experiment: "Speech code has had some major changes under the hood.  Expect some buggy behavior while we straighten this shit out.  Report issues on github so we can find them easily."
-  - bugfix: "Speech with special formatting (such as the SANS disability, and borg speech) now transmit over tcomms properly."
-  - bugfix: "Issues with ghost chat formatting and encoding fixed."
-  - bugfix: "Mobs and objects now use the proper verb for speaking."
+changes: []
