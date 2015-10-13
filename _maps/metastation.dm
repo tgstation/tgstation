@@ -23,8 +23,10 @@ z7 = empty space
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+
         #define MAP_FILE "MetaStation.v41F.dmm"
         #define MAP_NAME "MetaStation"
+        #define MAP_TRANSITION_CONFIG	list("Main Station" = 2,"CentComm" = 1,"Abandoned_Satellite" = 2,"Derelicted Station" = 2,"Mining Asteroid" = 2,"Empty Area 1" = 2,"Empty Area 2" = 2)
 
 #elif !defined(MAP_OVERRIDE)
 

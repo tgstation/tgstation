@@ -56,8 +56,10 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
         #include "map_files\generic\z6.dmm"
         #include "map_files\generic\z7.dmm"
 
+
         #define MAP_FILE "MiniStation.dmm"
         #define MAP_NAME "MiniStation"
+        #define MAP_TRANSITION_CONFIG	list("Main Station" = 2,"CentComm" = 1,"Abandoned_Satellite" = 2,"Derelicted Station" = 2,"Mining Asteroid" = 2,"Empty Area 1" = 2,"Empty Area 2" = 2)
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES

@@ -20,6 +20,8 @@ Make sure this is the only ticked file in the .dm folder, then compile as usual.
 
         #define MAP_FILE "BirdStation.dmm"
         #define MAP_NAME "BirdboatStation"
+        #define MAP_TRANSITION_CONFIG	list("Main Station" = 2,"CentComm" = 1,"Abandoned_Satellite" = 2,"Derelicted Station" = 2,"Mining Asteroid" = 2,"Empty Area 1" = 2,"Empty Area 2" = 2)
+
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
