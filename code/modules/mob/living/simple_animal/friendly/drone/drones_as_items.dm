@@ -16,15 +16,27 @@
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/attack_ghost(mob/user)
-	if(jobban_isbanned(user,"drone"))
+	if(jobban_isbanned(user,"drone") || !istype(user, /mob/dead/observer))
 		return
 
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || gc_destroyed)
 		return
+	if(qdeleted(src))
+		user << "<span class='warning'>This drone shell has already been activated.</span>"
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.key = user.key
 	qdel(src)
+
+/obj/item/drone_shell/New()
+	notify_ghosts("An unactivated [name] has been created in [get_area(src)]. <a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>")
+	..()
+
+/obj/item/drone_shell/Topic(href, href_list)
+	if(href_list["ghostjoin"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
 
 
 //DRONE HOLDER
