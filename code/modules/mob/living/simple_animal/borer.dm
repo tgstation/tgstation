@@ -155,7 +155,7 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 
 
 /mob/living/simple_animal/borer/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
 	message = capitalize(message)
 
 	if(!message)
@@ -184,8 +184,10 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		src << "You have no host to speak to."
 		return //No host, no audible speech.
 
-	src << "You drop words into [host]'s mind: <span class='borer2host'>\"[message]\"</span>"
-	host << "<span class='borer2host'>\"[message]\"</span>"
+	var/encoded_message = html_encode(message)
+
+	src << "You drop words into [host]'s mind: <span class='borer2host'>\"[encoded_message]\"</span>"
+	host << "<span class='borer2host'>\"[encoded_message]\"</span>"
 	var/turf/T = get_turf(src)
 	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) -> [host]([key_name(host)]) Borer->Host Speech: [message]")
 
@@ -196,13 +198,13 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 			var/controls = "<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"
 			if(M.client.holder)
 				controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
-			var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[truename]</b> ([controls]) -> <b>[host]:</b> [message]</span>"
+			var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[truename]</b> ([controls]) -> <b>[host]:</b> [encoded_message]</span>"
 			M.show_message(rendered, 2) //Takes into account blindness and such.
 
 	/*
 	for(var/mob/M in mob_list)
 		if(M.mind && (istype(M, /mob/dead/observer)))
-			M << "<i>Thought-speech, <b>[truename]</b> -> <b>[host]:</b> [copytext(message, 2)]</i>"
+			M << "<i>Thought-speech, <b>[truename]</b> -> <b>[host]:</b> [copytext(html_encode(message), 2)]</i>"
 	*/
 
 /mob/living/simple_animal/borer/Stat()

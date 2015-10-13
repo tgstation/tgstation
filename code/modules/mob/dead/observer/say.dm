@@ -1,5 +1,5 @@
 /mob/dead/observer/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return
