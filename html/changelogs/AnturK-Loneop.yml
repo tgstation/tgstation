@@ -1,7 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - rscadd: "Syndicate Lone Operatives spotted near the nanotrasen stations! Keep the disk safe!"
-  - tweak: "Admin spawned nuclear operatives will now have access to nukeop equipment"
