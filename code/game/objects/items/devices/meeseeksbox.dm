@@ -33,9 +33,8 @@
 		if(candidates.len)
 			var/mob/dead/observer/C = pick(candidates)
 			var/mob/living/carbon/human/M = new /mob/living/carbon/human
-			hardset_dna(M, null, null, null, null, /datum/species/golem/meeseeks)
+			hardset_dna(M, null, null, "Mr. Meeseeks ([rand(1, 1000)])", null, /datum/species/golem/meeseeks)
 			M.set_cloned_appearance()
-			M.real_name = text("Mr. Meeseeks ([rand(1, 1000)])")
 			M.job = "Mr. Meeseeks"
 			M.dna.species.auto_equip(M)
 			M.loc = user.loc

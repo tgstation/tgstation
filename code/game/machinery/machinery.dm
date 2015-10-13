@@ -619,6 +619,7 @@ Class Procs:
 			return 1
 
 /obj/machinery/attackby(var/obj/O, var/mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(O, /obj/item/weapon/card/emag))//&& machine_flags & EMAGGABLE) //Will do nothing if it has no emag_act
 		emag_act(user)
 		return

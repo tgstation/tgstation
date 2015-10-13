@@ -420,6 +420,9 @@
 	var/mob/living/carbon/human/MST = master
 
 	if((MST && MST.stat == DEAD) || !MST)
+		if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0) // This mob has no business being a meeseeks
+			hardset_dna(H, null, null, null, null, /datum/species/human )
+			return // get me the hell out of here.
 		for(var/mob/M in viewers(7, H.loc))
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
 		H.drop_everything()
