@@ -52,4 +52,5 @@
 	user.drop_item()
 	var/obj/item/organ/internal/gland/gland = tool
 	gland.Insert(target, 2)
+	target.heal_organ_damage(100,0)//alien magic
 	return 1
