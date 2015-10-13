@@ -2,10 +2,11 @@
 	name = "wired glass tile"
 	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
+	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
-	w_class = 3.0
-	force = 3.0
-	throwforce = 5.0
+	w_class = 3
+	force = 3
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT

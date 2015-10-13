@@ -3,7 +3,7 @@
 	desc = "A security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "ed2090"
-	layer = 5.0
+	layer = 5
 	density = 1
 	anchored = 0
 //	weight = 1.0E7
@@ -441,7 +441,7 @@ Auto Patrol[]"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
+	..()
 
 /obj/machinery/bot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'

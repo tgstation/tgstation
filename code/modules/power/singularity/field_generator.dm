@@ -150,7 +150,6 @@ field_generator power level display
 					return
 	else
 		..()
-		return
 
 
 /obj/machinery/field/generator/emp_act()
@@ -172,7 +171,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/Destroy()
 	src.cleanup()
-	..()
+	return ..()
 
 
 

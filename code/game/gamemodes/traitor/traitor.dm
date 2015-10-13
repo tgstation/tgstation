@@ -98,7 +98,7 @@
 
 	else
 		var/objective_count = 0
-		if(!exchange_blue && traitors.len >= 5) 	//Set up an exchange if there are enough traitors
+		if(!exchange_blue && traitors.len >= 8) 	//Set up an exchange if there are enough traitors
 			if(!exchange_red)
 				exchange_red = traitor
 			else

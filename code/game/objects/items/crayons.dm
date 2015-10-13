@@ -91,7 +91,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2.0
+	w_class = 2
 	storage_slots = 6
 	can_hold = list(
 		/obj/item/toy/crayon
@@ -133,6 +133,23 @@
 	instant = 1
 	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
+
+/obj/item/toy/crayon/spraycan/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(capped)
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, but nothing happens! Maybe they should have uncapped it first! Nonetheless--</span>")
+		user.say("MEDIOCRE!!")
+	else
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, spraying silver paint across their teeth!</span>")
+		user.say("WITNESS ME!!")
+		playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		colour = "#C0C0C0"
+		update_icon()
+		H.lip_style = "spray_face"
+		H.lip_color = colour
+		H.update_body()
+		uses = max(0, uses - 10)
+	return (OXYLOSS)
 
 /obj/item/toy/crayon/spraycan/New()
 	..()

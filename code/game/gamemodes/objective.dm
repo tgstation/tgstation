@@ -268,9 +268,8 @@
 	for(var/mob/living/player in player_list)
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
-						continue
+				if(istype(player, /mob/living/silicon)) //Borgs are technically dead anyways
+					continue
 				if(get_area(player) == A)
 					if(!player.mind.special_role && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
 						return 0
@@ -292,9 +291,8 @@
 	for(var/mob/living/player in player_list) //Make sure nobody else is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
-						continue
+				if(istype(player, /mob/living/silicon))
+					continue
 				if(get_area(player) == A)
 					if(player.real_name != owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
 						return 0
@@ -302,9 +300,8 @@
 	for(var/mob/living/player in player_list) //Make sure at least one of you is onboard
 		if(player.mind && player.mind != owner)
 			if(player.stat != DEAD)
-				switch(player.type)
-					if(/mob/living/silicon/ai, /mob/living/silicon/pai)
-						continue
+				if(istype(player, /mob/living/silicon))
+					continue
 				if(get_area(player) == A)
 					if(player.real_name == owner.current.real_name && !istype(get_turf(player.mind.current), /turf/simulated/floor/plasteel/shuttle/red))
 						return 1
@@ -618,7 +615,7 @@ var/global/list/possible_items_special = list()
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
+		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
 			if(M.stat==2)
 				captured_amount+=1.5
 			else
@@ -865,7 +862,7 @@ var/global/list/possible_items_special = list()
 				var/turf/cloc = get_turf(changeling.current)
 				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
 					for(var/name in check_names) //Is he (disguised as) one of the staff?
-						if(H.dna && H.dna.real_name == name)
+						if(H.dna.real_name == name)
 							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
 							success++ //A living changeling staff member made it to centcomm
 							continue changelings

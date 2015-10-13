@@ -25,7 +25,7 @@ var/list/world_uplinks = list()
 
 /obj/item/device/uplink/Destroy()
 	world_uplinks-=src
-	..()
+	return ..()
 
 //Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()

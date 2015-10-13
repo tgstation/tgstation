@@ -24,7 +24,7 @@ z7 = empty space
         #include "map_files\generic\z7.dmm"
 
         #define MAP_FILE "tgstation.2.1.3.dmm"
-        #define MAP_NAME "TGstation 2"
+        #define MAP_NAME "Box Station"
 
 #elif !defined(MAP_OVERRIDE)
 

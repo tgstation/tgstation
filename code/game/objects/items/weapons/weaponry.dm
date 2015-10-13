@@ -5,7 +5,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("banned")
@@ -104,7 +104,7 @@
 	force = 9
 	throwforce = 10
 	w_class = 3
-	materials = list(MAT_METAL=1875)
+	materials = list(MAT_METAL=1000)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
@@ -146,6 +146,7 @@
 	w_class = 2
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
+	sharpness = IS_SHARP
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -212,7 +213,7 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
-	if(locate(/obj/structure/stool) in user.loc)
+	if(locate(/obj/structure/bed/stool) in user.loc)
 		user.visible_message("<span class='notice'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='notice'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")

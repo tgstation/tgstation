@@ -120,9 +120,7 @@
 			reagents.clear_reagents()
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clothing/mask/cigarette)) //ciggies are weird
-		return
-	var/hotness = is_hot(I)
+	var/hotness = I.is_hot()
 	if(hotness)
 		var/added_heat = (hotness / 100) //ishot returns a temperature
 		if(reagents)
@@ -253,7 +251,7 @@
 	icon_state = "bucket"
 	item_state = "bucket"
 	materials = list(MAT_METAL=200)
-	w_class = 3.0
+	w_class = 3
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70

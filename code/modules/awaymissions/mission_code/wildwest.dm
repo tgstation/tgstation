@@ -82,20 +82,17 @@
 				user.dna.add_mutation(LASEREYES)
 				user.dna.add_mutation(COLDRES)
 				user.dna.add_mutation(XRAY)
-				hardset_dna(user, null, null, null, null, /datum/species/shadow)
-				user.regenerate_icons()
+				user.set_species(/datum/species/shadow)
 			if("Wealth")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				new /obj/structure/closet/syndicate/resources/everything(loc)
-				hardset_dna(user, null, null, null, null, /datum/species/shadow)
-				user.regenerate_icons()
+				user.set_species(/datum/species/shadow)
 			if("Immortality")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				user.verbs += /mob/living/carbon/proc/immortality
-				hardset_dna(user, null, null, null, null, /datum/species/shadow)
-				user.regenerate_icons()
+				user.set_species(/datum/species/shadow)
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."

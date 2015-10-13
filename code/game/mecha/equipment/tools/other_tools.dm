@@ -286,7 +286,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
 	SSobj.processing.Remove(src)
@@ -378,7 +378,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
 	fuel = new /obj/item/stack/sheet/mineral/plasma(src)
@@ -500,10 +500,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		for(var/mob/living/carbon/M in view(chassis))
-			if(istype(M,/mob/living/carbon/human))
-				M.irradiate(rad_per_cycle*3)
-			else
-				M.irradiate(rad_per_cycle)
+		radiation_pulse(get_turf(src), 2, 7, rad_per_cycle, 1)
 
 

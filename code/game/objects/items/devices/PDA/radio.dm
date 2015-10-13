@@ -20,7 +20,7 @@
 
 /obj/item/radio/integrated/signal
 	var/frequency = 1457
-	var/code = 30.0
+	var/code = 30
 	var/last_transmission
 	var/datum/radio_frequency/radio_connection
 
@@ -32,7 +32,7 @@
 /obj/item/radio/integrated/signal/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
-	..()
+	return ..()
 
 /obj/item/radio/integrated/signal/initialize()
 	if (src.frequency < 1200 || src.frequency > 1600)

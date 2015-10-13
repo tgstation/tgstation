@@ -2,8 +2,10 @@
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
-	health = 200
-	fire_resist = 2
+	desc = "A huge, pulsating yellow mass."
+	health = 400
+	maxhealth = 400
+	explosion_block = 6
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
@@ -39,9 +41,12 @@
 		overmind.blob_core = null
 	overmind = null
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
+
+/obj/effect/blob/core/ex_act(severity, target)
 	return
 
 /obj/effect/blob/core/update_icon()
@@ -63,7 +68,7 @@
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
-	health = min(initial(health), health + 1)
+	health = min(maxhealth, health+health_regen)
 	if(overmind)
 		overmind.update_health()
 	pulseLoop(0)

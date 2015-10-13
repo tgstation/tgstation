@@ -38,6 +38,9 @@
 
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
+		return
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
@@ -68,4 +71,4 @@
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	item_state = "electropack"
-	w_class = 1.0
+	w_class = 1

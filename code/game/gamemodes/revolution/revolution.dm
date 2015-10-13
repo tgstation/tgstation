@@ -126,8 +126,9 @@
 			mob.dna.remove_mutation(CLOWNMUT)
 
 
-	var/obj/item/device/flash/T = new(mob)
+	var/obj/item/device/assembly/flash/T = new(mob)
 	var/obj/item/toy/crayon/spraycan/R = new(mob)
+	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -137,9 +138,15 @@
 		"right hand" = slot_r_hand,
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
+	var/where2 = mob.equip_in_one_of_slots(C, slots)
 	mob.equip_in_one_of_slots(R,slots)
 
 	mob.update_icons()
+
+	if (!where2)
+		mob << "The Syndicate were unfortunately unable to get you a chameleon security HUD."
+	else
+		mob << "The chameleon security HUD in your [where2] will help you keep track of who is loyalty-implanted, and unable to be recruited."
 
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
@@ -314,16 +321,15 @@
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
-		world << "<span class='danger'><FONT size = 3>The heads of staff were killed or exiled! The revolutionaries win!</FONT></span>"
+		world << "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		world << "<span class='danger'><FONT size = 3>The heads of staff managed to stop the revolution!</FONT></span>"
+		world << "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
 	..()
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_revolution()
 	var/list/targets = list()
-
 	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
 		var/num_revs = 0
 		var/num_survivors = 0
@@ -333,78 +339,28 @@
 				if(survivor.mind)
 					if((survivor.mind in head_revolutionaries) || (survivor.mind in revolutionaries))
 						num_revs++
-
 		if(num_survivors)
 			world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
-
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
-
 		for(var/datum/mind/headrev in head_revolutionaries)
-			text += "<br><b>[headrev.key]</b> was <b>[headrev.name]</b> ("
-			if(headrev.current)
-				if(headrev.current.stat == DEAD)
-					text += "died"
-				else if(headrev.current.z > ZLEVEL_STATION)
-					text += "fled the station"
-				else
-					text += "survived the revolution"
-				if(headrev.current.real_name != headrev.name)
-					text += " as <b>[headrev.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-
-			for(var/datum/objective/mutiny/objective in headrev.objectives)
-				targets |= objective.target
+			text += printplayer(headrev, 1)
 		text += "<br>"
-
 		world << text
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
-
 		for(var/datum/mind/rev in revolutionaries)
-			text += "<br><b>[rev.key]</b> was <b>[rev.name]</b> ("
-			if(rev.current)
-				if(rev.current.stat == DEAD || isbrain(rev.current))
-					text += "died"
-				else if(rev.current.z > ZLEVEL_STATION)
-					text += "fled the station"
-				else
-					text += "survived the revolution"
-				if(rev.current.real_name != rev.name)
-					text += " as <b>[rev.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
+			text += printplayer(rev, 1)
 		text += "<br>"
-
 		world << text
-
 
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
-
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)
 			var/target = (head in targets)
 			if(target)
-				text += "<font color='red'>"
-			text += "<br><b>[head.key]</b> was <b>[head.name]</b> ("
-			if(head.current)
-				if(head.current.stat == DEAD || isbrain(head.current))
-					text += "died"
-				else if(head.current.z > ZLEVEL_STATION)
-					text += "fled the station"
-				else
-					text += "survived the revolution"
-				if(head.current.real_name != head.name)
-					text += " as <b>[head.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-			if(target)
-				text += "</font>"
+				text += "<span class='boldannounce'>Target</span>"
+			text += printplayer(head, 1)
 		text += "<br>"
-
 		world << text

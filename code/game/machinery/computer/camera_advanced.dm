@@ -38,7 +38,7 @@
 		GrantActions(user)
 		current_user = user
 		eyeobj.user = user
-		eyeobj.name = "Camere Eye ([user.name])"
+		eyeobj.name = "Camera Eye ([user.name])"
 		L.remote_view = 1
 		L.remote_control = eyeobj
 		L.client.perspective = EYE_PERSPECTIVE

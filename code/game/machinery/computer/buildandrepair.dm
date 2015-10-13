@@ -13,12 +13,13 @@
 /obj/item/weapon/circuitboard
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = 2
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
+	materials = list(MAT_GLASS=200)
 	var/frequency = null
 	var/build_path = null
 	var/board_type = "computer"
@@ -192,16 +193,6 @@
 	name = "circuit board (Telecommunications Server Monitor)"
 	build_path = /obj/machinery/computer/telecomms/server
 	origin_tech = "programming=3"
-/obj/item/weapon/circuitboard/comm_traffic
-	name = "circuitboard (Telecommunications Traffic Control)"
-	build_path = /obj/machinery/computer/telecomms/traffic
-	origin_tech = "programming=3"
-/*/obj/item/weapon/circuitboard/curefab
-	name = "circuit board (Cure fab)"
-	build_path = /obj/machinery/computer/curer
-/obj/item/weapon/circuitboard/splicer
-	name = "circuit board (Disease Splicer)"
-	build_path = /obj/machinery/computer/diseasesplicer*/
 /obj/item/weapon/circuitboard/shuttle
 	name = "circuit board (Shuttle)"
 	build_path = /obj/machinery/computer/shuttle

@@ -18,7 +18,6 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	var/list/butcher_results = null
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -288,6 +287,7 @@
 	return
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
+	..()
 	switch(M.a_intent)
 
 		if("help")
@@ -364,16 +364,6 @@
 	if(O.flags & NOBLUDGEON)
 		return
 
-	if((butcher_results) && (stat == DEAD))
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/sharpness = is_sharp(O)
-		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
-				harvest(user)
-			return
-
 	..()
 
 /mob/living/simple_animal/movement_delay()
@@ -402,14 +392,14 @@
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
 	switch (severity)
-		if (1.0)
+		if (1)
 			gib()
 			return
 
-		if (2.0)
+		if (2)
 			adjustBruteLoss(60)
 
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 	updatehealth()
 
@@ -467,11 +457,6 @@
 			continue
 	if(alone && partner && children < 3)
 		new childtype(loc)
-
-// Harvest an animal's delicious byproducts
-/mob/living/simple_animal/proc/harvest(mob/living/user)
-	visible_message("<span class='notice'>[user] butchers [src].</span>")
-	gib()
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
