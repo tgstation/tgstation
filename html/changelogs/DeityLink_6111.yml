@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Tray lids now prevent gas outside the tray from being consumed/exuded by plants.
