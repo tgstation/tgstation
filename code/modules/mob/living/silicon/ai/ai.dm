@@ -840,3 +840,6 @@ var/list/ai_list = list()
 	if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
+
+/mob/living/silicon/ai/can_buckle()
+	return 0

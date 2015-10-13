@@ -34,6 +34,9 @@
 				target.buckled.unbuckle_mob()
 			if(target.pulledby)
 				target.pulledby.stop_pulling()
+			target.stop_pulling()
+			if(target.buckled_mob)
+				target.unbuckle_mob(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder
 			target.notransform=0 //mob is safely inside holder now, no need for protection.

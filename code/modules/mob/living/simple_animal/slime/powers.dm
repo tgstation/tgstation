@@ -20,129 +20,44 @@
 	if(!Adjacent(M))
 		return 0
 
-	if(Victim)
+	if(buckled)
 		Feedstop()
 		return 0
 
 	if(isslime(M))
-		src << "<i>I can't latch onto another slime...</i>"
+		src << "<span class='warning'><i>I can't latch onto another slime...</i></span>"
 		return 0
 
 	if(docile)
-		src << "<i>I'm not hungry anymore...</i>"
+		src << "<span class='notice'><i>I'm not hungry anymore...</i></span>"
 		return 0
 
 	if(stat)
-		src << "<i>I must be conscious to do this...</i>"
+		src << "<span class='warning'><i>I must be conscious to do this...</i></span>"
 		return 0
 
 	if(M.stat == DEAD)
-		src << "<i>This subject does not have a strong enough life energy...</i>"
+		src << "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>"
 		return 0
 
-	for(var/mob/living/simple_animal/slime/met in view())
-		if(met.Victim == M && met != src)
-			src << "<i>The [met.name] is already feeding on this subject...</i>"
-			return 0
+	if(isslime(M.buckled_mob))
+		src << "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>"
+		return 0
 	return 1
 
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
+	if(M.buckle_mob(src, force=1))
+		M.visible_message("<span class='danger'>The [name] has latched onto [M]!</span>", \
+						"<span class='userdanger'>The [name] has latched onto [M]!</span>")
+	else
+		src << "<span class='warning'><i>I have failed to latch onto the subject</i></span>"
 
-	src << "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>"
-	M << "<span class='userdanger'>The [name] has latched onto [M.name]!</span>"
-
-	Victim = M
-	src.loc = M.loc
-	canmove = 0
-	anchored = 1
-	var/lastnut = nutrition
-	var/fed_succesfully = 0
-
-	while(Victim && Victim == M && Victim.stat != DEAD && stat != DEAD)
-		canmove = 0
-
-		if(Adjacent(Victim))
-			loc = M.loc
-
-			if(iscarbon(Victim))
-				Victim.adjustCloneLoss(rand(5,6))
-				Victim.adjustToxLoss(rand(1,2))
-				if(Victim.health <= 0)
-					Victim.adjustToxLoss(rand(2,4))
-
-				if(prob(15) && Victim.client)
-					Victim << "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
-					"You feel like you're about to die!", \
-					"You feel every part of your body screaming in agony!", \
-					"A low, rolling pain passes through your body!", \
-					"Your body feels as if it's falling apart!", \
-					"You feel extremely weak!", \
-					"A sharp, deep pain bathes every inch of your body!")]</span>"
-
-				fed_succesfully = 1
-
-			else if(isanimal(Victim)) //we already know it's a simple_animal from above
-				Victim.adjustBruteLoss(is_adult ? rand(7, 15) : rand(4, 12))
-				fed_succesfully = 1
-
-			else
-				src << "<span class='warning'>[pick("This subject is incompatible", \
-				"This subject does not have a life energy", "This subject is empty", \
-				"I am not satisified", "I can not feed from this subject", \
-				"I do not feel nourished", "This subject is not food")]!</span>"
-
-			if(fed_succesfully)
-				add_nutrition(rand(15,30), lastnut)
-
-				//Heal yourself.
-				adjustBruteLoss(-10)
-
-				updatehealth()
-				if(Victim)
-					Victim.updatehealth()
-
-			sleep(rand(15,45))
-
-		else
-			break
-
-	canmove = 1
-	anchored = 0
-
-
-	if(M && M.stat == DEAD)
-		if(!client)
-			if(Victim && !rabid && !attacked)
-				if(Victim.LAssailant && Victim.LAssailant != Victim)
-					if(prob(50))
-						if(!(Victim.LAssailant in Friends))
-							Friends[Victim.LAssailant] = 1
-						else
-							++Friends[Victim.LAssailant]
-
-		if(M.client && ishuman(M))
-			if(prob(85))
-				rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
-
-		if(client)
-			src << "<i>This subject does not have a strong enough life energy anymore...</i>"
-
-	else if(client)
-		src << "<i>I have stopped feeding...</i>"
-
-	Victim = null
-
-/mob/living/simple_animal/slime/proc/Feedstop()
-	if(Victim)
-		if(Victim.client)
-			Victim << "[src] has let go of your head!"
-		Victim = null
-
-/mob/living/simple_animal/slime/proc/UpdateFeed(mob/M)
-	if(Victim)
-		if(Victim == M)
-			loc = M.loc // simple "attach to head" effect!
-
+/mob/living/simple_animal/slime/proc/Feedstop(silent=0)
+	if(buckled)
+		if(!silent)
+			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
+							"<span class='notice'><i>I stopped feeding.</i></span>")
+		buckled.unbuckle_mob(force=1)
 
 /mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"

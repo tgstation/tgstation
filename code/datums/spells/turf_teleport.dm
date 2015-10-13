@@ -36,5 +36,9 @@
 			return
 
 		if(!target.Move(picked))
+			if(target.buckled)
+				target.buckled.unbuckle_mob()
+			if(target.buckled_mob)
+				target.unbuckle_mob(force=1)
 			target.loc = picked
 			playsound(get_turf(usr), sound2, 50,1)
