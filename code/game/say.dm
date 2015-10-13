@@ -139,7 +139,9 @@ var/list/freqtoname = list(
 	if (ending == "!")
 		return "exclaims, [text]"
 
-	return "says, \"[text]\""
+	return "says, [text]"
+
+
 var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost")
 /atom/movable/proc/render_lang(var/datum/speech/speech)
 	var/raw_message=speech.message
