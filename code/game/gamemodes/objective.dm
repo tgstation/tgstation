@@ -20,15 +20,14 @@
 	for(var/i = 1, i <= objectives_made, i++)
 		if(i == objectives_made && has_escape)
 			var/datum/objective/holder_obj = pick(escape_objective_types)
-			var/datum/objective/O = new holder_obj
-			add_objective(M, O)
+			add_objective(M, holder_obj)
 			return
 		else
 			var/datum/objective/holder_obj = pick(objective_types)
 			var/datum/objective/O = new holder_obj
 			if(!O.martyr_compatible)
 				escape_objective_types -= list(/datum/objective/escape_obj/martyr)
-			add_objective(M, O)
+			add_objective(M, holder_obj)
 
 
 /proc/add_objective(var/datum/mind/M, var/datum/objective/O, var/announce_new_objectives = 0)
