@@ -2328,19 +2328,14 @@ obj/item/device/pda/AltClick()
 
 /obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if ( M.CheckSlip() < 1 || M.m_intent == "walk" || M.lying)
-			return
+		var/mob/living/carbon/M = AM
+		if (M.Slip(8, 5))
+			to_chat(M, "<span class='notice'>You slipped on the PDA!</span>")
 
-		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))
-			if (src.cartridge:honk_charges < 5)
-				src.cartridge:honk_charges++
-
-		M.stop_pulling()
-		to_chat(M, "<span class='notice'>You slipped on the PDA!</span>")
-		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(8)
-		M.Weaken(5)
+			if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))
+				var/obj/item/weapon/cartridge/clown/honkcartridge = src.cartridge
+				if (honkcartridge.honk_charges < 5)
+					honkcartridge.honk_charges++
 
 /obj/item/device/pda/proc/available_pdas()
 	var/list/names = list()

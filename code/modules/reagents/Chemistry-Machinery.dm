@@ -1235,8 +1235,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		/obj/item/stack/sheet/charcoal        = list("charcoal" = 20),
 
 		//Blender Stuff
-		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = -10), //I have no fucking idea what most of these numbers mean and I hate them.
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = -7),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),

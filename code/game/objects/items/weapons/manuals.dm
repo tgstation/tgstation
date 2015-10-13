@@ -454,7 +454,7 @@
 				The service cyborg module comes ready to serve your human needs. It includes various entertainment and refreshment devices. Occasionally some service cyborgs may have been referred to as "Bros"<br>A Service Cyborg comes with:
 				<ul>
 				  <li>Shaker</li>
-				  <li>Industrail Dropper</li>
+				  <li>Industrial Dropper</li>
 				  <li>Platter</li>
 				  <li>Beer Synthesizer</li>
 				  <li>Zippo Lighter</li>

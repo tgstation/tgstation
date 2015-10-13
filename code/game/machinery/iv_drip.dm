@@ -100,8 +100,8 @@
 		if(mode)
 			if(src.beaker.volume > 0)
 				var/transfer_amount = REAGENTS_METABOLISM
-				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
-					// speed up transfer on blood packs
+				if(beaker.reagents.reagent_list.len == 1 && beaker.reagents.has_reagent("blood"))
+					// speed up transfer if the container has ONLY blood
 					transfer_amount = 4
 				src.beaker.reagents.trans_to(src.attached, transfer_amount)
 				update_icon()

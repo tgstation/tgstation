@@ -817,15 +817,9 @@ steam.start() -- spawns the effect
 		return
 
 	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if (istype(M, /mob/living/carbon/human) && M.CheckSlip() < 1)
-			return
-
-		M.stop_pulling()
-		to_chat(M, "<span class='notice'>You slipped on the foam!</span>")
-		playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(5)
-		M.Weaken(2)
+		var/mob/living/carbon/M = AM
+		if (M.Slip(5, 2, 1))
+			to_chat(M, "<span class='notice'>You slipped on the foam!</span>")
 
 
 /datum/effect/effect/system/foam_spread

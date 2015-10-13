@@ -413,7 +413,7 @@ var/global/mr_clean_targets = list(
 	/obj/effect/decal/mecha_wreckage,
 	/obj/effect/decal/remains,
 	/obj/effect/plantsegment,
-	/obj/effect/plant_controller,
+	///obj/effect/plant_controller,
 	/obj/effect/biomass,
 	/obj/effect/biomass_controller,
 	/obj/effect/rune,

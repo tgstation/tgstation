@@ -43,8 +43,9 @@
 	var/setting_refill = 1
 	var/setting_fertilize = 1
 	var/setting_weed = 1
-	var/setting_ignoreWeeds = 1
-	var/setting_ignoreMushrooms = 1
+	//var/setting_ignoreWeeds = 1 //These don't seem to do anything
+	//var/setting_ignoreMushrooms = 1
+	var/setting_ignoreEmpty = 0
 
 	var/atom/target //Current target, can be a human, a hydroponics tray, or a sink
 	var/mode //Which mode is being used, 0 means it is looking for work
@@ -122,8 +123,9 @@
 		dat += " Fertilize Plants : <A href='?src=\ref[src];fertilize=1'>[src.setting_fertilize ? "Yes" : "No"]</A><BR>"
 		dat += "<br>Weeding Controls:<br>"
 		dat += " Weed Plants : <A href='?src=\ref[src];weed=1'>[src.setting_weed ? "Yes" : "No"]</A><BR>"
-		dat += "<br>Ignore Weeds : <A href='?src=\ref[src];ignoreWeed=1'>[src.setting_ignoreWeeds ? "Yes" : "No"]</A><BR>"
-		dat += "Ignore Mushrooms : <A href='?src=\ref[src];ignoreMush=1'>[src.setting_ignoreMushrooms ? "Yes" : "No"]</A><BR>"
+		//dat += "<br>Ignore Weeds : <A href='?src=\ref[src];ignoreWeed=1'>[src.setting_ignoreWeeds ? "Yes" : "No"]</A><BR>"
+		//dat += "Ignore Mushrooms : <A href='?src=\ref[src];ignoreMush=1'>[src.setting_ignoreMushrooms ? "Yes" : "No"]</A><BR>"
+		dat += "Ignore Empty Trays : <A href='?src=\ref[src];ignoreEmpty=1'>[src.setting_ignoreEmpty ? "Yes" : "No"]</A><BR>"
 		dat += "</TT>"
 
 	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[dat]", "window=autofarm")
@@ -149,10 +151,12 @@
 		setting_fertilize = !setting_fertilize
 	else if((href_list["weed"]) && (!src.locked))
 		setting_weed = !setting_weed
-	else if((href_list["ignoreWeed"]) && (!src.locked))
-		setting_ignoreWeeds = !setting_ignoreWeeds
-	else if((href_list["ignoreMush"]) && (!src.locked))
-		setting_ignoreMushrooms = !setting_ignoreMushrooms
+	//else if((href_list["ignoreWeed"]) && (!src.locked))
+	//	setting_ignoreWeeds = !setting_ignoreWeeds
+	//else if((href_list["ignoreMush"]) && (!src.locked))
+	//	setting_ignoreMushrooms = !setting_ignoreMushrooms
+	else if((href_list["ignoreEmpty"]) && (!src.locked))
+		setting_ignoreEmpty = !setting_ignoreEmpty
 	else if (href_list["eject"] )
 		flick("farmbot_hatch",src)
 		for (var/obj/item/weapon/reagent_containers/glass/fertilizer/fert in contents)
@@ -325,7 +329,10 @@
 		return 0
 
 /obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/portable_atmospherics/hydroponics/tray)
-	if ( !tray.seed || tray.dead )
+	if ( tray.dead )
+		return 0
+
+	if ( !setting_ignoreEmpty && !tray.seed )
 		return 0
 
 	if ( setting_water && tray.waterlevel <= 10 && tank && tank.reagents.total_volume >= 1 )
@@ -334,7 +341,7 @@
 	if ( setting_weed && tray.weedlevel >= 5 )
 		return FARMBOT_MODE_WEED
 
-	if ( setting_fertilize && tray.nutrilevel <= 2 && get_total_ferts() )
+	if ( setting_fertilize && tray.nutrilevel <= 2 && get_total_ferts() && (!tray.seed || !tray.seed.hematophage) )
 		return FARMBOT_MODE_FERTILIZE
 
 	return 0
@@ -482,13 +489,8 @@
 			if(b_amount + tray.waterlevel > 100)
 				b_amount = 100 - tray.waterlevel
 			tank.reagents.remove_reagent("water", b_amount)
-			tray.waterlevel += b_amount
+			tray.adjust_water(b_amount)
 			playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
-
-	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
-			tray.toxins -= round(b_amount/4)
-			if (tray.toxins < 0 ) // Make sure it won't go overboard
-				tray.toxins = 0
 
 		//tray.updateicon()
 		mode = FARMBOT_MODE_WAITING

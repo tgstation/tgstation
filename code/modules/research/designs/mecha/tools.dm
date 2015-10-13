@@ -70,7 +70,7 @@
 	materials = list(MAT_IRON=10000,MAT_GOLD=2000,MAT_SILVER=3000,MAT_GLASS=2000)
 
 /datum/design/mech_ccw_armor
-	name = "Module Design(Melee Armor Booster Module)"
+	name = "Module Design (Melee Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
@@ -80,7 +80,7 @@
 	materials = list(MAT_IRON=20000,MAT_SILVER=5000)
 
 /datum/design/mech_proj_armor
-	name = "Module Design(Projectile Armor Booster Module)"
+	name = "Module Design (Projectile Armor Booster Module)"
 	desc = "Exosuit-mounted armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
@@ -98,6 +98,16 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
 	category = "Exosuit_Tools"
 	materials = list(MAT_IRON=3000,MAT_GLASS=2000)
+
+/datum/design/mech_scythe
+	name = "Module Design (Heavy-Duty Pneumatic Scythe)"
+	desc = "An exosuit-mounted pneumatic scythe, fit for complete weed extermination."
+	id = "mech_scythe"
+	build_type = MECHFAB
+	req_tech = list("materials" = 1, "engineering" = 2, "combat" = 2)
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/scythe
+	category = "Exosuit_Tools"
+	materials = list(MAT_IRON=7500)
 
 /datum/design/mech_drill
 	name = "Module Design (Mining Drill)"

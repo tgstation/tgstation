@@ -145,7 +145,7 @@
 //Virologist's little friend!
 /mob/living/simple_animal/hostile/giant_spider/spiderling/salk
 	name = "Salk"
-	desc = "Named after someone who did their job much better than you do"
+	desc = "Named after someone who did their job much better than you do."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "jonas"
 	icon_living = "jonas"

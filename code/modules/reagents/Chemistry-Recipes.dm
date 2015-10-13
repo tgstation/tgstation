@@ -630,9 +630,8 @@ datum
 			name = "Condensed Capsaicin"
 			id = "condensedcapsaicin"
 			result = "condensedcapsaicin"
-			required_reagents = list("capsaicin" = 2)
-			required_catalysts = list("plasma" = 5)
-			result_amount = 1
+			required_reagents = list("capsaicin" = 1, "ethanol" = 5)
+			result_amount = 5
 
 		methylin
 			name = "Methylin"

@@ -133,11 +133,11 @@
  * Sunflower & NovaFlower
  */
 
-/obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
+/*/obj/item/weapon/grown/sunflower/attack(mob/M as mob, mob/user as mob)
 	to_chat(M, "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>")
-	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
+	to_chat(user, "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")*/
 
-/obj/item/weapon/grown/novaflower
+/*/obj/item/weapon/grown/novaflower
 	name = "novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon = 'icons/obj/harvest.dmi'
@@ -150,24 +150,24 @@
 	w_class = 1.0
 	throw_speed = 1
 	throw_range = 3
-	attack_verb = list("seared", "heated", "whacked", "steamed")
+	attack_verb = list("seared", "heated", "whacked", "steamed")*/
 
-/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
+/*/obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(!..()) return
 	if(istype(M, /mob/living))
 		to_chat(M, "<span class='warning'>You are heated by the warmth of the of the [name]!</span>")
-		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT
+		M.bodytemperature += potency/2 * TEMPERATURE_DAMAGE_COEFFICIENT*/
 
-
+/*
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		to_chat(user, "<span class='warning'>The [name] burns your bare hand!</span>")
-		user.adjustFireLoss(rand(1,5))
+		user.adjustFireLoss(rand(1,5))*/
 
 /*
  * Nettle
  */
-/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
+/*/obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(!user.gloves)
 		to_chat(user, "<span class='warning'>The nettle burns your bare hand!</span>")
 		if(istype(user, /mob/living/carbon/human))
@@ -180,13 +180,13 @@
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
 	potency = newValue
-	force = round((5+potency/5), 1)
+	force = round((5+potency/5), 1)*/
 
 /*
  * Deathnettle
  */
 
-/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob)
+/*/obj/item/weapon/grown/deathnettle/pickup(mob/living/carbon/human/user as mob) //todo this
 	if(!user.gloves)
 		if(istype(user, /mob/living/carbon/human))
 			var/organ = ((user.hand ? "l_":"r_") + "arm")
@@ -223,16 +223,16 @@
 
 /obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
 	potency = newValue
-	force = round((5+potency/2.5), 1)
+	force = round((5+potency/2.5), 1)*/
 
 
 /*
  * Corncob
  */
-/obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/*/obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large) || istype(W, /obj/item/weapon/kitchen/utensil/knife/large/ritual))
 		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
-		return
+		return*/

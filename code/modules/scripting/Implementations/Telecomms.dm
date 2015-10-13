@@ -222,7 +222,7 @@
 	interpreter.SetProc("sec",			/proc/Sec)
 	interpreter.SetProc("todegrees",	/proc/ToDegrees)
 	interpreter.SetProc("toradians",	/proc/ToRadians)
-	interpreter.SetProc("lerp",			/proc/Lerp)
+	interpreter.SetProc("lerp",			/proc/mix)
 	interpreter.SetProc("max",			/proc/n_max)
 	interpreter.SetProc("min",			/proc/n_min)
 

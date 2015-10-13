@@ -48,7 +48,7 @@
 
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
-			qdel(SV)
+			SV.die_off()
 			if(prob(10))
 				say("Nom")
 
@@ -69,7 +69,7 @@
 	if(!stat)
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
-			qdel(SV)
+			SV.die_off()
 			if(prob(10))
 				say("Nom")
 

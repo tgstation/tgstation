@@ -1,0 +1,53 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general adding of nice things)
+#   rscadd (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.  
+author: 9600bauds
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+changes: 
+  - experiment: "Massive rework to Botany mutations and Botany in general. PLEASE remember to use the in-game reporter for any bugs/issues you encounter! The changes here are not final and feedback is appreciated."
+  - spellcheck: "This changelog is a very simplified version, it does not cover all the changes. To see the full changelog, check out the PR in Github: https://github.com/d3athrow/vgstation13/pull/6734"
+  - rscadd: "Added 6 new plant traits, as well as many new non-stat mutations. A few plant traits that could previously only be obtained through Cargo exotic seeds can now also be obtained through mutations."
+  - experiment: "Some mutations will have effect on the grown fruit and require special handling. If you see a mutant banana lying around on the hallway, you may want to examine it before touching it."
+  - tweak: "Botany stat mutations will no longer give random stat penalties. All stat-related changes from mutations are now strictly positive."
+  - rscadd: "For stat-increasing mutations, the strength of the mutation will be directly proportional to the amount of mutage used. Example: 10u mutagen will improve a stat twice as much as 5u would. Mutations are now 100% guaranteed for any amount of mutagen, just that small amounts will give weak mutations."
+  - rscadd: "New mutation system adds a bit of depth to mutagen usage: Using more than 10-ish units of mutagen at a time will give you potentially dangerous effects."
+  - tweak: "As you improve your plants, they will start to build up resistance to small mutagen doses. Past a certain point, you may experience diminishing returns from mutations, and you may want to use bigger dosage (though be wary of the potential for dangerous results!)"
+  - experiment: "Adult plants WILL NO LONGER MUTATE SPECIES. To cause species mutations, you need to add mutagen to a young plant (less than 60ish seconds of life). For a better explanation, see the full changelog."
+  - tweak: "Robust Harvest no longer temporarily increases yield. Now gradually improves your plant's potency stat, with a couple subtle downsides. Diethylamine now makes your plant grow faster, as well as gradually increase it's lifespan an endurance. Clonexadone massively heals plants on trays, as well as induce rapid reverse aging."
+  - rscadd: "Floral Somatorays now work 100% of the time. You can now right-click them to change the strength of the ensuing mutation when set to \"Induce Mutations\" (X mutation strength is equivalent to X units of mutagen). Now sometimes give a free yield-increasing mutation when under \"Induce Mutations\" mode."
+  - rscadd: "Hydroponics Trays will now change their name to match the plant growing in them. You can now label trays by right-clicking them."
+  - tweak: "Improper plant conditions (not enough water/nutriment/light etc) will now slightly slow your plant's growth."
+  - tweak: "A few changes to Exotic Seeds to make them slightly healthier and slightly more fun."
+  - tweak: "Spreading plants (i.e. Kudzu) will no longer leave an empty tray when planted. Now require being fully mature before spawning vines. You can prevent vines from spawning by keeping the plant fed: Kudzu won't try to spread unless it has less than 80% nutriment and water."
+  - tweak: "Plant-b-Gone used as a spray now targets space vines in a 3x3 area around itself. Scythes now have a 1 second cooldown when used. Added a Heavy-Duty Pneumatic Scythe, can be attached to Ripleys. Some strains of Kuzdu can become resistant to certain types of damage through mutations."
+  - rscadd: "Xenobotany gene injector now has two modes: Splice and Purge. Added two more Xenobotany genes, and modified existing ones somewhat."
+  - tweak: "Condensed Capsaicin now requires Capsaicin and Ethanol to produce."
+  - tweak: "IV Drips now give their increased transfer speed to any container that has only blood inside, rather than only IV bags."

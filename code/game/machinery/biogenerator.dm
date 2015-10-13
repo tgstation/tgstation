@@ -42,7 +42,7 @@
 
 /datum/biogen_recipe/food/monkeycube
 	id="monkeycube"
-	name="monkey cube"
+	name="Monkey cube"
 	cost=250
 	other_amounts=list(5)
 	result=/obj/item/weapon/reagent_containers/food/snacks/monkeycube

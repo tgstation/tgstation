@@ -204,4 +204,4 @@
 		var/turf/simulated/floor/Floor = pick(Floors)
 		new/obj/effect/biomass_controller(Floor) // spawn a controller at floor
 		log_admin("Event: Biomass spawned at [Floor.loc] ([Floor.x],[Floor.y],[Floor.z]).")
-		message_admins("Event: Biomass spawned at [Floor.loc] [formatJumpTo(Floor)]")
+		message_admins("<span class='notice'>Event: Biomass spawned at [Floor.loc] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[Floor.x];Y=[Floor.y];Z=[Floor.z]'>(JMP)</a></span>")

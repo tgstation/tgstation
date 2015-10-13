@@ -105,6 +105,16 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
 
+/obj/effect/decal/cleanable/fruit_smudge
+	name = "smudge"
+	desc = "Some kind of fruit smear."
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'icons/effects/tomatodecal.dmi'
+	random_icon_states = list("fruit_smudge1", "fruit_smudge2", "fruit_smudge3")
+	icon_state = "fruit_smudge1"
+
 /obj/effect/decal/cleanable/egg_smudge
 	name = "smashed egg"
 	desc = "Seems like this one won't hatch."

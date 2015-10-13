@@ -40,28 +40,32 @@ obj/item/proc/get_clamped_volume()
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+	handle_attack(src, M, user, def_zone)
+
+// Making this into a helper proc because of inheritance wonkyness making children of reagent_containers being nigh impossible to attack with.
+/obj/item/proc/handle_attack(obj/item/I, mob/living/M as mob, mob/living/user as mob, def_zone)
 	. = 1
 	if (!istype(M)) // not sure if this is the right thing...
 		return 0
 	//var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
-		if (do_surgery(M,user,src))
+		if (do_surgery(M,user,I))
 			return 1
 	//if (istype(M,/mob/living/carbon/brain))
 	//	messagesource = M:container
 	if (hitsound)
-		playsound(loc, hitsound, 50, 1, -1)
+		playsound(I.loc, I.hitsound, 50, 1, -1)
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
 
-	add_logs(user, M, "attacked", object=src.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+	add_logs(user, M, "attacked", object=I.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(I.damtype)])")
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
 	/////////////////////////
 
-	var/power = force
+	var/power = I.force
 	if(M_HULK in user.mutations)
 		power *= 2
 
@@ -69,7 +73,7 @@ obj/item/proc/get_clamped_volume()
 		if(istype(M, /mob/living/carbon/slime))
 			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
-				to_chat(user, "<span class='warning'>[src] passes right through [M]!</span>")
+				to_chat(user, "<span class='warning'>[I] passes right through [M]!</span>")
 				return 0
 
 			if(power > 0)
@@ -143,26 +147,26 @@ obj/item/proc/get_clamped_volume()
 		if(!(user in viewers(M, null)))
 			showname = "."
 
-		if(istype(attack_verb,/list) && attack_verb.len)
-			M.visible_message("<span class='danger'>[M] has been [pick(attack_verb)] with [src][showname]</span>",
+		if(istype(I.attack_verb,/list) && I.attack_verb.len)
+			M.visible_message("<span class='danger'>[M] has been [pick(I.attack_verb)] with [I][showname]</span>",
 			"<span class='userdanger'>[M] has been [pick(attack_verb)] with [src][showname]!</span>")
-		else if(force == 0)
-			M.visible_message("<span class='danger'>[M] has been [pick("tapped","patted")] with [src][showname]</span>",
-			"<span class='userdanger'>[M] has been [pick("tapped","patted")] with [src][showname]</span>")
+		else if(I.force == 0)
+			M.visible_message("<span class='danger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>",
+			"<span class='userdanger'>[M] has been [pick("tapped","patted")] with [I][showname]</span>")
 		else
-			M.visible_message("<span class='danger'>[M] has been attacked with [src][showname]</span>",
-			"<span class='userdanger'>[M] has been attacked with [src][showname]</span>")
+			M.visible_message("<span class='danger'>[M] has been attacked with [I][showname]</span>",
+			"<span class='userdanger'>[M] has been attacked with [I][showname]</span>")
 
 		if(!showname && user)
 			if(user.client)
-				to_chat(user, "<span class='danger'>You attack [M] with [src]. </span>")
+				to_chat(user, "<span class='danger'>You attack [M] with [I]. </span>")
 
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		. = H.attacked_by(src, user, def_zone)
+		. = H.attacked_by(I, user, def_zone)
 	else
-		switch(damtype)
+		switch(I.damtype)
 			if("brute")
 				if(istype(src, /mob/living/carbon/slime))
 					M.adjustBrainLoss(power)
@@ -172,7 +176,7 @@ obj/item/proc/get_clamped_volume()
 						var/mob/living/carbon/monkey/K = M
 						power = K.defense(power,def_zone)
 					M.take_organ_damage(power)
-					if (prob(33) && src.force) // Added blood for whacking non-humans too
+					if (prob(33) && I.force) // Added blood for whacking non-humans too
 						var/turf/location = M.loc
 						if (istype(location, /turf/simulated))
 							location:add_blood_floor(M)
@@ -184,5 +188,5 @@ obj/item/proc/get_clamped_volume()
 					M.take_organ_damage(0, power)
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
-	add_fingerprint(user)
+	I.add_fingerprint(user)
 	return .

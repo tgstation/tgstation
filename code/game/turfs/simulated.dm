@@ -39,7 +39,7 @@
 			var/list/bloodDNA = null
 			var/bloodcolor=""
 
-			// We have shoes?
+			// Do we have shoes?
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(S.track_blood && S.blood_DNA)
@@ -71,15 +71,12 @@
 				var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
 				if(hair_style && (hair_style.flags & HAIRSTYLE_CANTRIP))
 					if(H.m_intent == "run" && prob(5))
-						H.stop_pulling()
-						step(H, H.dir)
-						to_chat(H, "<span class='notice'>You tripped over your hair!</span>")
-						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-						H.Stun(4)
-						H.Weaken(5)
+						if (H.Slip(4, 5))
+							step(H, H.dir)
+							to_chat(H, "<span class='notice'>You tripped over your hair!</span>")
 
 		//Anything beyond that point will not fire if the mob isn't physically walking here
-		if(!M.walking()) //Checks lying, flying and locked.to
+		if(!M.on_foot()) //Checks lying, flying and locked.to
 			return ..()
 
 		//And anything beyond that point will not fire for slimes
@@ -88,16 +85,10 @@
 
 		switch(src.wet)
 			if(1) //Water
-				if(M.CheckSlip() < 1) //No slipping
-					return ..()
-				if(M.m_intent == "run")
-					M.stop_pulling()
+				if (M.Slip(5, 3))
 					step(M, M.dir)
 					M.visible_message("<span class='warning'>[M] slips on the wet floor!</span>", \
 					"<span class='warning'>You slip on the wet floor!</span>")
-					playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-					M.Stun(5)
-					M.Weaken(3)
 
 			if(2) //Lube
 				M.stop_pulling()
@@ -116,18 +107,11 @@
 				playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
 				M.Weaken(10)
 
-			if(3) //Ice
-				if(!M.CheckSlip() < 1) //No slipping
-					return ..()
-				if((M.m_intent == "run") && prob(30))
-					M.stop_pulling()
+			if(3) // Ice
+				if(prob(30) && M.Slip(4, 3))
 					step(M, M.dir)
 					M.visible_message("<span class='warning'>[M] slips on the icy floor!</span>", \
 					"<span class='warning'>You slip on the icy floor!</span>")
-					playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-					M.Stun(4)
-					M.Weaken(3)
-
 	..()
 
 //returns 1 if made bloody, returns 0 otherwise

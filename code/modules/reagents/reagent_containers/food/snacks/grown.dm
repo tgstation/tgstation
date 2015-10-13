@@ -10,6 +10,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/
 	var/plantname
 	var/potency = -1
+	var/datum/seed/seed
 	icon = 'icons/obj/harvest.dmi'
 	New(newloc, newpotency)
 		if(!isnull(newpotency))
@@ -25,21 +26,231 @@
 	spawn(1)
 		//Fill the object up with the appropriate reagents.
 		if(!isnull(plantname))
-			var/datum/seed/S = seed_types[plantname]
-			if(!S || !S.chems)
+			seed = plant_controller.seeds[plantname]
+			if(!seed || !seed.chems)
 				return
 
-			potency = S.potency
+			potency = round(seed.potency)
+			force = seed.thorny ? 5+seed.carnivorous*3 : 0
 
-			for(var/rid in S.chems)
-				var/list/reagent_data = S.chems[rid]
+			for(var/rid in seed.chems)
+				var/list/reagent_data = seed.chems[rid]
 				var/rtotal = reagent_data[1]
 				if(reagent_data.len > 1 && potency > 0)
 					rtotal += round(potency/reagent_data[2])
 				reagents.add_reagent(rid, max(1, rtotal))
 
+			if(seed.teleporting)
+				name = "blue-space [name]"
+			if(seed.stinging)
+				name = "stinging [name]"
+			if(seed.juicy == 2)
+				name = "slippery [name]"
+
 		if(reagents.total_volume > 0)
 			bitesize = 1 + round(reagents.total_volume/2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
+	..()
+	if(!seed || !src) return
+	//if(seed.stinging)   			//we do NOT want to transfer reagents on throw, as it would mean plantbags full of throwable chloral injectors
+	//	stinging_apply_reagents(M)  //plus all sorts of nasty stuff like throw_impact not targeting a specific bodypart to check for protection.
+
+	// We ONLY want to apply special effects if we're hitting a turf! That's because throw_impact will always be
+	// called on a turf AFTER it's called on the things ON the turf, and will runtime if the item doesn't exist anymore.
+	if(isturf(hit_atom))
+		do_splat_effects(hit_atom)
+	return
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/do_splat_effects(atom/hit_atom)
+	if(seed.teleporting)
+		splat_reagent_reaction(get_turf(hit_atom))
+		if(do_fruit_teleport(hit_atom, usr, potency))
+			visible_message("<span class='danger'>The [src] splatters, causing a distortion in space-time!</span>")
+		else if(splat_decal(get_turf(hit_atom)))
+			visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		qdel(src)
+		return
+
+	if(seed.juicy)
+		splat_decal(get_turf(hit_atom))
+		splat_reagent_reaction(get_turf(hit_atom))
+		visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		qdel(src)
+		return
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/attack(mob/living/M, mob/user, def_zone)
+	if(user.a_intent == I_HURT)
+		. = handle_attack(src,M,user,def_zone)
+		if(seed.stinging)
+			if(M.getarmor(def_zone, "melee") < 5)
+				var/reagentlist = stinging_apply_reagents(M)
+				if(reagentlist)
+					to_chat(M, "<span class='danger'>You are stung by \the [src]!</span>")
+					add_attacklogs(user, M, "stung", object = src, addition = "Reagents: [english_list(seed.get_reagent_names())]", admin_warn = 1)
+			to_chat(user, "<span class='alert'>Some of \the [src]'s stingers break off in the hit!</span>")
+			potency -= rand(1,(potency/3)+1)
+		do_splat_effects(M)
+		return
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/Crossed(var/mob/living/carbon/M)
+	..()
+	if(!seed) return
+	if(!istype(M)) return
+	if(!M.on_foot())
+		return
+	if(seed.thorny || seed.stinging)
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(!H.check_body_part_coverage(FEET))
+				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
+				if(affecting && affecting.is_organic())
+					if(thorns_apply_damage(M, affecting))
+						to_chat(H, "<span class='danger'>You step on \the [src]'s sharp thorns!</span>")
+						if(H.species && !(H.species.flags & NO_PAIN))
+							H.Weaken(3)
+					if(stinging_apply_reagents(M))
+						to_chat(H, "<span class='danger'>Your step on \the [src]'s stingers!</span>")
+						potency -= rand(1,(potency/3)+1)
+	if(seed.juicy == 2)
+		if(M.Slip(3, 2))
+			to_chat(M, "<span class='notice'>You slipped on the [name]!</span>")
+			do_splat_effects(M)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
+	..()
+	if(!seed) return
+	if(seed.thorny || seed.stinging)
+		var/mob/living/carbon/human/H = user
+		if(!istype(H))
+			return
+		if(H.check_body_part_coverage(HANDS))
+			return
+		var/datum/organ/external/affecting = H.get_organ(pick("r_hand","l_hand"))
+		if(!affecting || !affecting.is_organic())
+			return
+		if(stinging_apply_reagents(H))
+			to_chat(H, "<span class='danger'>You are stung by \the [src]!</span>")
+			potency -= rand(1,(potency/3)+1)
+		if(thorns_apply_damage(H, affecting))
+			to_chat(H, "<span class='danger'>You are prickled by the sharp thorns on \the [src]!</span>")
+			spawn(3)
+				if(H.species && !(H.species.flags & NO_PAIN))
+					H.drop_item(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/On_Consume(var/mob/living/carbon/human/H)
+	if(seed.thorny && istype(H))
+		var/datum/organ/external/affecting = H.get_organ("head")
+		if(affecting)
+			if(thorns_apply_damage(H, affecting))
+				to_chat(H, "<span class='danger'>Your mouth is cut by \the [src]'s sharp thorns!</span>")
+				//H.stunned++ //just a 1 second pause to prevent people from spamming pagedown on this, since it's important
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/examine(mob/user)
+	..()
+	if(!seed) return
+	var/traits = ""
+	if(seed.stinging) traits += "<span class='alert'>It's covered in tiny stingers.</span> "
+	if(seed.thorny) traits += "<span class='alert'>It's covered in sharp thorns.</span> "
+	if(seed.juicy == 2) traits += "It looks ripe and excessively juicy. "
+	if(seed.teleporting) traits += "It seems to be spatially unstable. "
+	if(traits) to_chat(user, traits)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/splat_decal(turf/T)
+	var/obj/effect/decal/cleanable/S = getFromPool(seed.splat_type,T)
+	S.New(S.loc)
+	if(seed.splat_type == /obj/effect/decal/cleanable/fruit_smudge/)
+		if(filling_color != "#FFFFFF")
+			S.color = filling_color
+		else
+			S.color = AverageColor(getFlatIcon(src, src.dir, 0), 1, 1)
+		S.name = "[seed.name] smudge"
+	if(seed.biolum && seed.biolum_colour)
+		S.set_light(1, l_color = seed.biolum_colour)
+	return 1
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/splat_reagent_reaction(turf/T)
+	if(src.reagents.total_volume > 0)
+		src.reagents.reaction(T)
+		for(var/atom/A in T)
+			src.reagents.reaction(A)
+		return 1
+	return 0
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/thorns_apply_damage(mob/living/carbon/human/H, datum/organ/external/affecting)
+	if(!seed.thorny || !affecting)
+		return 0
+	//if(affecting.take_damage(5+seed.carnivorous*3, 0, 0, "plant thorns")) //For some fucked up reason, it's not returning 1
+	affecting.take_damage(5+seed.carnivorous*3, 0, 0, "plant thorns")
+	H.UpdateDamageIcon()
+	return 1
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/stinging_apply_reagents(mob/living/carbon/human/H)
+	if(!seed.stinging)
+		return 0
+	if(!reagents || reagents.total_volume <= 0)
+		return 0
+	if(!seed.chems || !seed.chems.len)
+		return 0
+	var/injecting = Clamp(1, 3, potency/10)
+	for(var/rid in seed.chems) //Only transfer reagents that the plant naturally produces, no injecting chloral into your nettles.
+		reagents.trans_id_to(H,rid,injecting)
+		. = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/proc/do_fruit_teleport(atom/hit_atom, mob/M, var/potency)	//Does this need logging?
+	var/datum/zLevel/L = get_z_level(src)
+	if(!L || L.teleJammed)
+		return 0
+
+	var/outer_teleport_radius = potency/10 //Plant potency determines radius of teleport.
+	var/inner_teleport_radius = potency/15 //At base potency, nothing will happen, since the radius is 0.
+	if(inner_teleport_radius < 1)
+		return 0
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+
+	var/list/turfs = new/list()
+	//This could likely use some standardization but I have no idea how to not break it.
+	for(var/turf/T in trange(outer_teleport_radius, get_turf(hit_atom)))
+		if(get_dist(T, hit_atom) <= inner_teleport_radius)
+			continue
+		if(is_blocked_turf(T) || istype(T, /turf/space))
+			continue
+		if(T.x > world.maxx-outer_teleport_radius || T.x < outer_teleport_radius)
+			continue
+		if(T.y > world.maxy-outer_teleport_radius || T.y < outer_teleport_radius)
+			continue
+		turfs += T
+	if(!turfs.len)
+		var/list/turfs_to_pick_from = list()
+		for(var/turf/T in trange(outer_teleport_radius, get_turf(hit_atom)))
+			if(get_dist(T, hit_atom) > inner_teleport_radius)
+				turfs_to_pick_from += T
+		turfs += pick(/turf in turfs_to_pick_from)
+	var/turf/picked = pick(turfs)
+	if(!isturf(picked))
+		return 0
+	switch(rand(1, 2)) //50-50 % chance to teleport the thrower or the target.
+		if(1) //Teleports the person who threw the fruit
+			s.set_up(3, 1, M)
+			s.start()
+			new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
+			M.forceMove(picked) //Send then to that location we picked previously
+			spawn()
+				s.set_up(3, 1, M)
+				s.start() //Two set of sparks, one before the teleport and one after. //Sure then ?
+		if(2) //Teleports the target instead.
+			s.set_up(3, 1, hit_atom)
+			s.start()
+			new/obj/effect/decal/cleanable/molten_item(get_turf(hit_atom)) //Leave a pile of goo behind for dramatic effect...
+			for(var/mob/A in get_turf(hit_atom)) //For the mobs in the tile that was hit...
+				A.forceMove(picked) //And teleport them to the chosen location.
+				spawn()
+					s.set_up(3, 1, A)
+					s.start()
+	return 1
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	name = "ear of corn"
@@ -369,13 +580,6 @@
 	potency = 10
 	plantname = "tomato"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
-	..()
-	new/obj/effect/decal/cleanable/tomato_smudge(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	qdel(src)
-	return
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
 	name = "killer-tomato"
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
@@ -400,17 +604,6 @@
 	filling_color = "#FF0000"
 	plantname = "bloodtomato"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
-	..()
-	var/obj/effect/decal/cleanable/blood/splatter/S = getFromPool(/obj/effect/decal/cleanable/blood/splatter,src.loc)
-	S.New(S.loc)
-	visible_message("<span class='warning'>\The [src] splatters.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
-	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
-	qdel(src)
-	return
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	name = "blue-tomato"
 	desc = "I say blue-mah-to, you say blue-mae-to."
@@ -418,17 +611,6 @@
 	potency = 10
 	filling_color = "#586CFC"
 	plantname = "bluetomato"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
-	..()
-	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil,src.loc)
-	O.New(O.loc)
-	visible_message("<span class='notice'>\The [src] splatters.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
-	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
-	qdel(src)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	name = "wheat"
@@ -557,70 +739,13 @@
 // *************************************
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
-	name = "blue-space tomato"
+	name = "tomato" //"blue-space" is applied on new(), provided it's teleporting trait hasn't been removed
 	desc = "Its juices lubricate so well, you might slip through space-time."
 	icon_state = "bluespacetomato"
 	potency = 20
 	origin_tech = "bluespace = 3"
 	filling_color = "#91F8FF"
 	plantname = "bluespacetomato"
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom)
-	..()
-	var/mob/M = usr
-	var/outer_teleport_radius = potency/10 //Plant potency determines radius of teleport.
-	var/inner_teleport_radius = potency/15
-	var/list/turfs = new/list()
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
-		new/obj/effect/decal/cleanable/blood/oil(src.loc)
-		visible_message("<span class='notice'>\The [src] splatters.</span>")
-		qdel(src)
-		return
-	for(var/turf/T in orange(M,outer_teleport_radius))
-		if(T in orange(M, inner_teleport_radius))
-			continue
-		if(istype(T, /turf/space))
-			continue
-		if(T.density)
-			continue
-		if(T.x > world.maxx-outer_teleport_radius || T.x < outer_teleport_radius)
-			continue
-		if(T.y > world.maxy-outer_teleport_radius || T.y < outer_teleport_radius)
-			continue
-		turfs += T
-	if(!turfs.len)
-		var/list/turfs_to_pick_from = list()
-		for(var/turf/T in orange(M, outer_teleport_radius))
-			if(!(T in orange(M, inner_teleport_radius)))
-				turfs_to_pick_from += T
-		turfs += pick(/turf in turfs_to_pick_from)
-	var/turf/picked = pick(turfs)
-	if(!isturf(picked))
-		return
-	switch(rand(1, 2)) //50-50 % chance to teleport the thrower or the target.
-		if(1) //Teleports the person who threw the tomato.
-			s.set_up(3, 1, M)
-			s.start()
-			new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
-			M.loc = picked //Send then to that location we picked previously
-			spawn()
-				s.set_up(3, 1, M)
-				s.start() //Two set of sparks, one before the teleport and one after. //Sure then ?
-		if(2) //Teleports the target instead.
-			for(var/mob/A in get_turf(hit_atom)) //For the mobs in the tile that was hit...
-				s.set_up(3, 1, A)
-				s.start()
-				new/obj/effect/decal/cleanable/molten_item(A.loc) //Leave a pile of goo behind for dramatic effect...
-				A.loc = picked//And teleport them to the chosen location.
-				spawn()
-					s.set_up(3, 1, A)
-					s.start()
-	var/obj/effect/decal/cleanable/blood/oil/O = getFromPool(/obj/effect/decal/cleanable/blood/oil, src.loc)
-	O.New(O.loc)
-	visible_message("<span class='danger'>The [src] splatters, causing a distortion in space-time.</span>")
-	qdel(src)
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
 	plantname = "ambrosiacruciatus"
