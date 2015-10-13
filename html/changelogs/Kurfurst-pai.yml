@@ -1,7 +1,0 @@
-author: Kurfurst
-delete-after: True
-changes:
- - bugfix: Fixed pAI Brightness Enhancer
- - bugfix: Fixed pAI Medical Records + brought back bioscan
- - bugfix: Fixed pAI Security Records
- - bugfix: Fixed pAI Door wirejacking
