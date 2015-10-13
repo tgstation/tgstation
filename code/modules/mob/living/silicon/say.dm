@@ -2,11 +2,11 @@
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
-		return "queries, \"[text]\"";
+		return "queries, [text]";
 	else if (ending == "!")
-		return "declares, \"[text]\"";
+		return "declares, [text]";
 
-	return "states, \"[text]\"";
+	return "states, [text]";
 
 /mob/living/silicon/say(var/message)
 	return ..(message, "R")

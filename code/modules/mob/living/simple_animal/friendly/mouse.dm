@@ -197,7 +197,7 @@
 /mob/living/simple_animal/mouse/say_quote(text)
 	if(!text)
 		return "squeaks, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	return "squeaks, \"[text]\"";
+	return "squeaks, [text]";
 
 /mob/living/simple_animal/mouse/singularity_act()
 	if(!(src.flags & INVULNERABLE))

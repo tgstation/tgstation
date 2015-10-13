@@ -178,8 +178,10 @@ var/list/department_radio_keys = list(
 	speech.message = trim_left(speech.message)
 	if(handle_inherent_channels(speech, message_mode))
 		say_testing(src, "Handled by inherent channel")
+		returnToPool(speech)
 		return
 	if(!can_speak_vocal(speech.message))
+		returnToPool(speech)
 		return
 
 	//parse the language code and consume it
@@ -189,6 +191,7 @@ var/list/department_radio_keys = list(
 	treat_speech(speech)
 	var/radio_return = radio(speech, message_mode)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
+		returnToPool(speech)
 		return
 
 	if(radio_return & ITALICS)
@@ -399,9 +402,9 @@ var/list/department_radio_keys = list(
 
 /mob/living/say_quote()
 	if (stuttering)
-		return "stammers, \"[text]\""
+		return "stammers, [text]"
 	if (getBrainLoss() >= 60)
-		return "gibbers, \"[text]\""
+		return "gibbers, [text]"
 	return ..()
 
 /mob/living/proc/send_speech_bubble(var/message,var/bubble_type, var/list/hearers)

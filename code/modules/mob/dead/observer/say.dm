@@ -21,11 +21,11 @@
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
-		return "[pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")], \"[text]\"";
+		return "[pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")], [text]";
 	else if (ending == "!")
-		return "[pick("screams", "screeches", "howls")], \"[text]\"";
+		return "[pick("screams", "screeches", "howls")], [text]";
 
-	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], \"[text]\"";
+	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], [text]";
 
 /mob/dead/observer/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if (isnull(client) || !speech.speaker)

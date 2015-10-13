@@ -843,7 +843,7 @@
 	say(message)
 
 /obj/machinery/vending/say_quote(text)
-	return "beeps, \"[text]\""
+	return "beeps, [text]"
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)

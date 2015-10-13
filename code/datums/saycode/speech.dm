@@ -70,6 +70,11 @@
 	rendered="<span class='[list2text(message_classes, " ")]'>[lquote][rendered][rquote]</span>"
 	if(language)
 		rendered=language.render_speech(src, rendered)
+	else
+		if(speaker)
+			rendered=speaker.say_quote(rendered)
+		else
+			warning("Speaker not set! (message=\"[message]\")")
 #ifdef SAY_DEBUG
 	speaker << "[type]/render_message(): message = \"[html_encode(rendered)]\""
 #endif

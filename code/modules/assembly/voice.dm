@@ -36,7 +36,7 @@
 
 // why is this here.
 /obj/machinery/vending/say_quote(text)
-	return "beeps, \"[text]\""
+	return "beeps, [text]"
 
 /obj/item/device/assembly/voice/toggle_secure()
 	. = ..()

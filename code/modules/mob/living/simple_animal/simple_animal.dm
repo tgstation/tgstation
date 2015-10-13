@@ -297,8 +297,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
 		if(emote)
-			return "[emote], \"[text]\""
-	return "says, \"[text]\"";
+			return "[emote], [text]"
+	return "says, [text]";
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(timestopped) return //under effects of time magick

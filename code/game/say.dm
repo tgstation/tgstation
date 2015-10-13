@@ -135,9 +135,9 @@ var/list/freqtoname = list(
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
 	if (ending == "?")
-		return "asks, \"[text]\""
+		return "asks, [text]"
 	if (ending == "!")
-		return "exclaims, \"[text]\""
+		return "exclaims, [text]"
 
 	return "says, \"[text]\""
 var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost")

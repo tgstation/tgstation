@@ -6,20 +6,20 @@
 		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
 	if (src.stuttering)
-		return "stammers, \"[text]\"";
+		return "stammers, [text]";
 	if(isliving(src))
 		var/mob/living/L = src
 		if (L.getBrainLoss() >= 60)
-			return "gibbers, \"[text]\"";
+			return "gibbers, [text]";
 	if (ending == "?")
-		return "asks, \"[text]\"";
+		return "asks, [text]";
 	if (ending == "!")
-		return "exclaims, \"[text]\"";
+		return "exclaims, [text]";
 
 //	if(dna)
 //		return "[dna.species.say_mod], \"[text]\"";
 
-	return "says, \"[text]\"";
+	return "says, [text]";
 
 /mob/living/carbon/human/treat_speech(var/datum/speech/speech, var/genesay=0)
 	if(wear_mask && istype(wear_mask))

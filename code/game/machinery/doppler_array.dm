@@ -147,4 +147,4 @@ var/list/doppler_arrays = list()
 	nanomanager.update_uis(src)
 
 /obj/machinery/doppler_array/say_quote(text)
-	return "states coldly, \"[text]\""
+	return "coldly states, [text]"
