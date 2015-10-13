@@ -13,8 +13,6 @@ log transactions
 #define VIEW_TRANSACTION_LOGS 3
 #define PRINT_DELAY 100
 
-/obj/item/weapon/card/id/var/money = 2000
-
 /obj/machinery/atm
 	name = "NanoTrasen Automatic Teller Machine"
 	desc = "For all your monetary needs!"
@@ -121,7 +119,7 @@ log transactions
 	else
 		..()
 
-/obj/machinery/atm/attack_hand(mob/user as mob)
+/obj/machinery/atm/attack_hand(mob/user as mob,var/fail_safe=0)
 	if(isobserver(user))
 		user << "<span class='warning'>Your ghostly limb passes right through \the [src].</span>"
 		return
@@ -130,7 +128,8 @@ log transactions
 		return
 	if(get_dist(src,user) <= 1)
 		//check to see if the user has low security enabled
-		scan_user(user)
+		if(!fail_safe)
+			scan_user(user)
 
 		//js replicated from obj/machinery/computer/card
 		var/dat = {"<h1>NanoTrasen Automatic Teller Machine</h1>
@@ -241,6 +240,7 @@ log transactions
 		user << browse(null,"window=atm")
 
 /obj/machinery/atm/Topic(var/href, var/href_list)
+	var/failsafe = 0
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("transfer")
@@ -459,9 +459,10 @@ log transactions
 						held_card = I
 			if("logout")
 				authenticated_account = null
+				failsafe = 1
 				//usr << browse(null,"window=atm")
 
-	src.attack_hand(usr)
+	src.attack_hand(usr,failsafe)
 
 //create the most effective combination of notes to make up the requested amount
 /obj/machinery/atm/proc/withdraw_arbitrary_sum(var/mob/user,var/arbitrary_sum)
