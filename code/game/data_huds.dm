@@ -131,7 +131,7 @@
 	holder.icon_state = "hudno_id"
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
-
+	sec_hud_set_security_status()
 	var/turf/T = get_turf(src)
 	if (T) crewmonitor.queueUpdate(T.z)
 
@@ -154,15 +154,16 @@
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder
+	holder = hud_list[WANTED_HUD]
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname)
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
 		if(R)
-			holder = hud_list[WANTED_HUD]
 			switch(R.fields["criminal"])
 				if("*Arrest*")		holder.icon_state = "hudwanted"
 				if("Incarcerated")	holder.icon_state = "hudincarcerated"
 				if("Parolled")		holder.icon_state = "hudparolled"
 				if("Discharged")	holder.icon_state = "huddischarged"
 				else				holder.icon_state = null
-
+		else 	holder.icon_state = null
+	else	holder.icon_state = null

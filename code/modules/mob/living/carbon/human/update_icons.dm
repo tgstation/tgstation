@@ -226,7 +226,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += wear_id
 
 		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
-
+	sec_hud_set_ID()
 	apply_overlay(ID_LAYER)
 
 
@@ -379,6 +379,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 			client.screen += H						//Either way, add the item to the HUD
 
 	update_mutant_bodyparts()
+	sec_hud_set_security_status()
 	apply_overlay(HEAD_LAYER)
 
 
@@ -468,6 +469,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 				M.screen_loc = ui_mask	//TODO	//...draw the item in the inventory screen
 			client.screen += M					//Either way, add the item to the HUD
 	update_mutant_bodyparts()
+	sec_hud_set_security_status()
 	apply_overlay(FACEMASK_LAYER)
 
 

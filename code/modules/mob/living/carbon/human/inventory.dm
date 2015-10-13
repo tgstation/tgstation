@@ -133,11 +133,9 @@
 			if(internals)
 				internals.icon_state = "internal0"
 			internal = null
-		sec_hud_set_ID()
 		update_inv_wear_mask()
 	else if(I == wear_id)
 		wear_id = null
-		sec_hud_set_ID()
 		update_inv_wear_id()
 	else if(I == r_store)
 		r_store = null
