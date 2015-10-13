@@ -1,0 +1,7 @@
+author: Kurfurst
+delete-after: True
+changes:
+ - rscadd: Added treadmill generators. They power based on a few attributes, such as your run speed, the chemicals in your body (such as Brawndo), and genetic traits like Hulk or fastrun.
+ - bugfix: Fixed a bug with treadmill generator bonus calculation related to upgrades.
+ - bugfix: Fixed a bug related to treadmill anchoring.
+ - bugfix: Fixed a bug in which you couldn't print out washing machine circuitboards.

@@ -60,6 +60,11 @@ var/global/list/rnd_machines = list()
 	wires = null
 	..()
 
+/obj/machinery/r_n_d/process()
+	..()
+	if(shocked>0)
+		shocked--
+
 /obj/machinery/r_n_d/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover) && mover.checkpass(PASSMACHINE))
 		return 1
