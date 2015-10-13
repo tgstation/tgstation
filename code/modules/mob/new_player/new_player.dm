@@ -386,19 +386,18 @@
 		character.Robotize()
 	del(src)
 
-/mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/new_player/proc/AnnounceArrival() called tick#: [world.time]")
 	if (ticker.current_state == GAME_STATE_PLAYING)
 		if(character.mind.role_alt_title)
 			rank = character.mind.role_alt_title
-		//say("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", "Arrivals Announcement Computer")
-		//Broadcast_Message(speaker, vmask, radio, message, name, job, realname, data, compression, zlevels, frequency)
 		var/datum/speech/speech = announcement_intercom.create_speech("[character.real_name],[rank ? " [rank]," : " visitor," ] has arrived on the station.", transmitter=announcement_intercom)
 		speech.name = "Arrivals Announcement Computer"
 		speech.job = "Automated Announcement"
 		speech.as_name = "Arrivals Announcement Computer"
+		speech.frequency = 1459
 
-		Broadcast_Message(speech, vmask=null, data=0, compression=0, zlevels=list(0,1), frequency=1459)
+		Broadcast_Message(speech, vmask=null, data=0, compression=0, level=list(0,1))
 		returnToPool(speech)
 
 /mob/new_player/proc/LateChoices()

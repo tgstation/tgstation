@@ -184,7 +184,7 @@
 			speech.name = "Supermatter [short_name] Monitor"
 			speech.job = "Automated Announcement"
 			speech.as_name = "Supermatter [short_name] Monitor"
-			Broadcast_Message(speech, zlevels = list(0,1))
+			Broadcast_Message(speech, level = list(0,1))
 			returnToPool(speech)
 
 			lastwarning = world.timeofday - offset
