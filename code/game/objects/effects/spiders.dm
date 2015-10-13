@@ -117,6 +117,10 @@
 	pixel_y = rand(6,-6)
 	SSobj.processing |= src
 
+/obj/effect/spider/spiderling/Destroy()
+	SSobj.processing.Remove(src)
+	return ..()
+
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
@@ -149,7 +153,7 @@
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
 								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
-
+			travelling_in_vent = 1
 			spawn(rand(20,60))
 				loc = exit_vent
 				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
