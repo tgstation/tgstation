@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: Logging out of an ATM with a Zero security account doesn't automatically re-log you in anymore.

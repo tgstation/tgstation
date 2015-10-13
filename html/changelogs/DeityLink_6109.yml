@@ -1,4 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - bugfix: You can no longer be teleported while locked_to an atom (such as buckled on a chair. If the chair gets teleported you'll still be teleported along with it)
