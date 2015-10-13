@@ -1,9 +1,9 @@
 /datum/game_mode/nuclear/blackops
 	name = "black ops"
 	config_tag = "blackops"
-	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
-	required_enemies = 5
-	recommended_enemies = 5
+	required_players = 1 // 20 players - 5 players to be the nuke ops = 15 players remaining
+	required_enemies = 1
+	recommended_enemies = 1
 	antag_flag = BE_OPERATIVE
 	enemy_minimum_age = 14
 	enemy_name = "black ops agent"
@@ -27,6 +27,7 @@
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly // no you arent
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
+	var/obj/effect/landmark/beacon_point = locate("landmark*Beacon-Point")
 
 	var/leader_selected = 0
 	var/agent_number = 1
@@ -53,6 +54,8 @@
 		new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
 	if(nuke_spawn)
 		new /obj/machinery/computer/syndicate_blackops_console(nuke_spawn.loc)
+	if(beacon_point)
+		new /obj/machinery/extraction_point/syndicate(beacon_point.loc)
 	return ..()
 
 /datum/game_mode/nuclear/blackops/proc/greet_blackops(datum/mind/syndicate, you_are=1)
@@ -88,7 +91,9 @@
 	for(var/i = 0, i < 3, i++)
 		add_objective(blackops_objective_holder, /datum/objective/default/assassinate)
 	for(var/i = 0, i < 3, i++)
-		add_objective(blackops_objective_holder, /datum/objective/kidnap)
+		add_objective(blackops_objective_holder, /datum/objective/destroy_machine)
+	for(var/i = 0, i < 3, i++)
+		add_objective(blackops_objective_holder, /datum/objective/extract_machine)
 
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
@@ -99,10 +104,10 @@
 			add_objective(blackops_objective_holder, /datum/objective/ai_mag)
 
 		else
-			add_objective(blackops_objective_holder, /datum/objective/kidnap)
+			add_objective(blackops_objective_holder, /datum/objective/extract_machine)
 
 	else
-		add_objective(blackops_objective_holder, /datum/objective/kidnap)
+		add_objective(blackops_objective_holder, /datum/objective/extract_machine)
 
 /datum/game_mode/nuclear/blackops/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
@@ -133,3 +138,9 @@
 			text += objectives
 		world << text
 		..()
+
+/datum/game_mode/nuclear/blackops/equip_syndicate(mob/living/carbon/human/synd_mob)
+	..()
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/emag(synd_mob.back), slot_in_backpack)
+	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/extraction_pack/syndicate(synd_mob.back), slot_in_backpack)
+	return 1

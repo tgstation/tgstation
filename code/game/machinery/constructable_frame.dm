@@ -424,7 +424,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
-/obj/item/weapon/circuitboard/gibber
+/obj/item/weapon/circuitboard/extraction_point
 	name = "circuit board (Balloon Extraction Point)"
 	build_path = /obj/machinery/extraction_point
 	board_type = "machine"

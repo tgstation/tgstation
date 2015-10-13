@@ -1,78 +1,85 @@
-var/list/blackops_steal_list = list(/obj/machinery/power/emitter,
+var/list/blackops_machine_list = list(/obj/machinery/power/emitter,
 									/obj/machinery/announcement_system,
 									/obj/machinery/field/generator,
-									/obj/structure/particle_accelerator,
 									/obj/machinery/r_n_d/circuit_imprinter,
 									/obj/machinery/r_n_d/protolathe,
 									/obj/machinery/r_n_d/destructive_analyzer,
 									/obj/machinery/r_n_d/server,
-									/obj/machinery/autolathe,
+									/obj/machinery/clonepod,
+									/obj/machinery/biogenerator,
 									/obj/machinery/vending/boozeomat) // essential stuff
-/datum/objective/kidnap // Kidnap X person and bring them to the black ops shuttle.
-	var/steal_
-	dangerrating = 10
-	martyr_compatible = 1
-
-/datum/objective/kidnap/find_target_by_role(role, role_type=0, invert=0)
-	if(!invert)
-		target_role_type = role_type
-	..()
-	return target
-
-/datum/objective/kidnap/check_completion()
-	if(!target)			//If it's a free objective.
-		return 1
-	if(target.current)
-		if(target.current.stat) // syndicate cant use dead people
-			return 0
-		var/area/A = get_area(target.current)
-		if(!istype(A, /area/shuttle/syndicate))
-			return 0
-		return 1
-	return 0
-
-/datum/objective/kidnap/update_explanation_text()
-	..()
-	if(target && target.current)
-		explanation_text = "Extract [target.name], the [!target_role_type ? target.assigned_role : target.special_role] to the syndicate shuttle alive."
-	else
-		explanation_text = "Free Objective (Kidnap)"
 
 /datum/objective/extract_machine
 	var/obj/machinery/steal_machine
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/ai_mag/find_target()
-	var/list/possible_targets = active_ais(1)
-	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
-	target = target_ai.mind
-	update_explanation_text()
-	return target
+/datum/objective/extract_machine/update_explanation_text()
+	if(steal_machine)
+		var/obj/machinery/M = new steal_machine
+		explanation_text = "Extract all [M]s located on the station."
+		qdel(M)
+	else
+		explanation_text = "Free Objective (Extract)"
 
-/datum/objective/kidnap/check_completion()
-	if(!target)			//If it's a free objective.
+/datum/objective/extract_machine/check_completion()
+	var/total_machines
+	var/stolen_machines
+	for(var/obj/machinery/M in machines)
+		if(istype(M, steal_machine))
+			total_machines++
+			var/area/location_area = get_area(M)
+			if(istype(location_area, /area/shuttle/syndicate))
+				stolen_machines++
+	if(stolen_machines == total_machines)
 		return 1
-	for(var/obj/machinery/M in machines_list)
+	else
+		return 0
 	return 0
 
-/datum/objective/extract_machine/update_explanation_text()
-	..()
-	if(target && target.current)
-		explanation_text = "Extract a [target.name]."
-	else
-		explanation_text = "Free Objective (Kidnap)"
+/datum/objective/extract_machine/find_target()
+	var/picked_machine = pick(blackops_machine_list)
+	steal_machine = picked_machine
+	blackops_machine_list -= picked_machine
+	target = picked_machine
+	return target
 
-/datum/objective/ai_mag // Kidnap X person and bring them to the black ops shuttle.
+/datum/objective/destroy_machine
+	var/obj/machinery/destroy_machine
 	dangerrating = 10
 	martyr_compatible = 1
 
-/datum/objective/ai_mag/find_target()
-	var/list/possible_targets = active_ais(1)
-	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
-	target = target_ai.mind
-	update_explanation_text()
+/datum/objective/destroy_machine/update_explanation_text()
+	if(destroy_machine)
+		var/obj/machinery/M = new destroy_machine
+		explanation_text = "Destroy all [M]s located on the station."
+		qdel(M)
+	else
+		explanation_text = "Free Objective (Destroy)"
+
+/datum/objective/destroy_machine/check_completion()
+	var/total_machines
+	for(var/obj/machinery/M in machines)
+		if(istype(M, destroy_machine))
+			total_machines++
+	if(!total_machines)
+		return 1
+	else
+		return 0
+	return 0
+
+
+/datum/objective/destroy_machine/find_target()
+	var/picked_machine = pick(blackops_machine_list)
+	destroy_machine = picked_machine
+	blackops_machine_list -= picked_machine
+	target = picked_machine
 	return target
+
+
+/datum/objective/ai_mag
+	dangerrating = 10
+	martyr_compatible = 1
 
 /datum/objective/ai_mag/check_completion()
 	if(ticker && ticker.mode)
@@ -90,6 +97,13 @@ var/list/blackops_steal_list = list(/obj/machinery/power/emitter,
 		explanation_text = "Apply an cryptographic sequencer to an AI upload console."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/ai_mag/find_target()
+	var/list/possible_targets = active_ais(1)
+	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	target = target_ai.mind
+	update_explanation_text()
+	return target
 
 /obj/machinery/computer/syndicate_blackops_console
 	name = "syndicate black ops console"

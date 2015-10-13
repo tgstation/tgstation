@@ -57,6 +57,7 @@ var/list/total_extraction_beacons = list()
 			balloon = image(icon,"extraction_balloon")
 			balloon.pixel_y = 10
 			holder_obj.overlays += balloon
+			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -67,6 +68,7 @@ var/list/total_extraction_beacons = list()
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
+			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
 			animate(holder_obj, pixel_z = 1000, time = 30)
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/L = A

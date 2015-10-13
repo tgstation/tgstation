@@ -32,11 +32,12 @@
 
 
 /proc/add_objective(var/datum/mind/M, var/datum/objective/O, var/announce_new_objectives = 0)
-	var/datum/objective/objective = new O.type
+	var/datum/objective/objective = new O
 	objective.owner = M
 	M.objectives += objective
 	objective.find_target()
 	objective.extra_prep()
+	objective.update_explanation_text()
 	if(announce_new_objectives)
 		if(M.special_role)
 			M.current << "<B>You are the [M.special_role].</B>"

@@ -100,8 +100,7 @@
 				user.mind.special_role = "traitor"
 				add_objective(user.mind, /datum/objective/escape_obj/hijack, 1)
 				user << "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>"
-				hardset_dna(user, null, null, null, null, /datum/species/shadow)
-				user.regenerate_icons()
+				user.set_species(/datum/species/shadow)
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
