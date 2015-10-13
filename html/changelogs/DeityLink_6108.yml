@@ -1,0 +1,4 @@
+author: Deity Link
+delete-after: true
+changes:
+  - bugfix: Chemical puffs such as those coming out of sprayers can now move past tables, grilles, and various machines.
