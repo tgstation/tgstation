@@ -804,7 +804,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if (P == src)	continue
 						if(P.hidden) continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-						if (id)
+						if (id && !istype(P,/obj/item/device/pda/ai))
 							dat += " (<a href='byond://?src=\ref[src];choice=transferFunds;target=\ref[P]'><img src=pda_money.png>*Send Money*</a>)"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
