@@ -25,7 +25,8 @@ z7 = empty space
 
         #define MAP_FILE "tgstation.2.1.3.dmm"
         #define MAP_NAME "Box Station"
-        #define MAP_TRANSITION_CONFIG	list("Main Station" = 2,"CentComm" = 1,"Abandoned_Satellite" = 2,"Derelicted Station" = 2,"Mining Asteroid" = 2,"Empty Area 1" = 2,"Empty Area 2" = 2)
+
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 
