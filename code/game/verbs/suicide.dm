@@ -47,6 +47,7 @@
 
 				updatehealth()
 				death(0)
+				ghostize(0)
 				return
 
 		var/suicide_message = pick("[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.", \
@@ -59,6 +60,7 @@
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 		death(0)
+		ghostize(0)
 
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
@@ -72,6 +74,7 @@
 						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>")
 		spawn(50)
 			death(0)
+			ghostize(0)
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
@@ -87,6 +90,7 @@
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 		death(0)
+		ghostize(0)
 
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
@@ -102,6 +106,7 @@
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 		death(0)
+		ghostize(0)
 
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
@@ -117,6 +122,7 @@
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 		death(0)
+		ghostize(0)
 
 /mob/living/silicon/pai/verb/suicide()
 	set category = "pAI Commands"
@@ -128,6 +134,7 @@
 		var/turf/T = get_turf(src.loc)
 		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
 		death(0)
+		ghostize(0)
 	else
 		src << "Aborting suicide attempt."
 
@@ -146,6 +153,7 @@
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 		death(0)
+		ghostize(0)
 
 /mob/living/simple_animal/verb/suicide()
 	set hidden = 1
@@ -158,7 +166,7 @@
 		visible_message("<span class='danger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>", \
 						"<span class='userdanger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>")
 		death(0)
-
+		ghostize(0)
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
