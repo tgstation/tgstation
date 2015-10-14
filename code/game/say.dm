@@ -93,6 +93,15 @@ var/list/freqtoname = list(
 	else
 		filtered_speech = speech
 
+	var/atom/movable/source = speech.speaker.GetSource()
+	say_testing(speech.speaker, "Checking if [src]([type]) understands [source]([source.type])")
+	if(!say_understands(source))
+		say_testing(speech.speaker," We don't understand this fuck, adding stars().")
+		filtered_speech=filtered_speech.scramble()
+		pooled=1
+	else
+		say_testing(speech.speaker," We <i>do</i> understand this gentle\[wo\]man.")
+
 #ifdef SAY_DEBUG
 	var/enc_wrapclass=list2text(filtered_speech.wrapper_classes, ", ")
 	say_testing(src, "render_speech() - wrapper_classes = \[[enc_wrapclass]\]")
@@ -161,9 +170,19 @@ var/global/image/ghostimg = image("icon"='icons/mob/mob.dmi',"icon_state"="ghost
 
 	else
 		var/atom/movable/AM = speech.speaker.GetSource()
+		var/atom/movable/source = istype(AM) ? AM : speech.speaker
+
 		var/rendered = raw_message
-		if(!say_understands(speech.speaker))
+
+		say_testing(speech.speaker, "Checking if [src]([type]) understands [source]([source.type])")
+		if(!say_understands(source))
+			say_testing(speech.speaker," We don't understand this fuck, adding stars().")
 			rendered = stars(rendered)
+		else
+			say_testing(speech.speaker," We <i>do</i> understand this gentle\[wo\]man.")
+
+		rendered=html_encode(rendered)
+
 		if(AM)
 			return AM.say_quote(rendered)
 		else
