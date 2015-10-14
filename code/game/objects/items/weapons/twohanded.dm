@@ -319,7 +319,6 @@
 		user.say("[war_cry]")
 		explosive.prime()
 		qdel(src)
-		return
 
 /obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
 	..()
@@ -349,7 +348,6 @@
 	if(explosive)
 		explosive.prime()
 		qdel(src)
-		return
 
 */
 /obj/item/weapon/twohanded/spear/AltClick()
