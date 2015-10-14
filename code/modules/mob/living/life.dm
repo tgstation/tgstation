@@ -190,7 +190,7 @@
 		if(blind)
 			if(eye_blind)
 				blind.layer = 18
-				throw_alert("blind")
+				throw_alert("blind", /obj/screen/alert/blind)
 			else
 				blind.layer = 0
 				clear_alert("blind")
@@ -203,7 +203,7 @@
 
 				if (druggy)
 					client.screen += global_hud.druggy
-					throw_alert("high")
+					throw_alert("high", /obj/screen/alert/high)
 				else
 					clear_alert("high")
 

@@ -379,7 +379,7 @@ emp_act
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
 				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
-					throw_alert("embeddedobject")
+					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/organ/limb/L = pick(organs)
 					L.embedded_objects |= I
 					I.add_blood(src)//it embedded itself in you, of course it's bloody!
