@@ -1080,6 +1080,7 @@
 #include "code\modules\html_interface\nanotrasen\nanotrasen.dm"
 #include "code\modules\html_interface\RCD\RCD.dm"
 #include "code\modules\html_interface\voting\voting.dm"
+#include "code\modules\hydroponics\eggincubator.dm"
 #include "code\modules\hydroponics\grown_inedible.dm"
 #include "code\modules\hydroponics\hydro_tools.dm"
 #include "code\modules\hydroponics\hydro_tray.dm"
