@@ -6,7 +6,7 @@
 		return //won't work if dead
 	show_laws()
 
-/mob/living/silicon/robot/show_laws(everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = 0, laws_changed = 0)
 	laws_sanity_check()
 	var/who
 
@@ -29,8 +29,10 @@
 		else
 			src << "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>"
 			lawupdate = 0
-
-	who << "<b>Obey these laws:</b>"
+	if(!laws_changed)
+		who << "<b>Obey these laws:</b>"
+	else
+		who << "From now on, these are your laws:"
 	laws.show_laws(who)
 	if (is_special_character(src) && connected_ai)
 		who << "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>"

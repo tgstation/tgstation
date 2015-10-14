@@ -124,9 +124,10 @@
 	if(exchange_parts(user, O))
 		return
 
-	if(panel_open && istype(O, /obj/item/weapon/crowbar))
-		default_deconstruction_crowbar(O)
+	if(default_unfasten_wrench(user, O))
 		return
+
+	default_deconstruction_crowbar(O)
 
 	if(!checkCircumstances(O))
 		user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"

@@ -84,6 +84,9 @@ Note: Must be placed west/left of and R&D console to function.
 	if(exchange_parts(user, O))
 		return
 
+	if(default_unfasten_wrench(user, O))
+		return
+
 	if (panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
