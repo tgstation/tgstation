@@ -50,6 +50,15 @@
 	icon_opened = "trashcartopen"
 	icon_closed = "trashcart"
 
+/obj/structure/closet/crate/chest
+	desc = "A heavy wooden chest. Probably filled with gold and treasure!"
+	name = "chest"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "chest"
+	density = 1
+	icon_opened = "chestopen"
+	icon_closed = "chest"
+
 /*these aren't needed anymore
 /obj/structure/closet/crate/hat
 	desc = "A crate filled with Valuable Collector's Hats!."
