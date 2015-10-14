@@ -166,8 +166,8 @@
 	melee_damage_lower = 12
 	melee_damage_upper = 16
 
-	maxHealth = 170
-	health = 170
+	maxHealth = 140
+	health = 140
 
 	stat_attack = 1 //Attack unconscious dudes
 
