@@ -260,7 +260,7 @@
 		for(var/datum/wound/Wound in wounds)
 			if(Wound.internal)
 				internal_bleeding = 1
-			break
+				break
 		if(!internal_bleeding)
 			var/datum/wound/internal_bleeding/I = new (15)
 			wounds += I
