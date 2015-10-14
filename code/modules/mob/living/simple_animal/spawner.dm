@@ -7,7 +7,7 @@
 	var/max_mobs = 5
 	var/spawn_delay = 0
 	var/spawn_time = 300 //30 seconds default
-	var/list/c = (/mob/living/simple_animal/hostile/carp)
+	var/mob_type = /mob/living/simple_animal/hostile/carp
 	var/spawn_text = "emerges from"
 	status_flags = 0
 	anchored = 1
@@ -38,8 +38,7 @@
 	if(spawn_delay > world.time)
 		return 0
 	spawn_delay = world.time + spawn_time
-	var/picked_mob = pick(mob_types)
-	var/mob/living/simple_animal/L = new picked_mob(src.loc)
+	var/mob/living/simple_animal/L = new mob_type(src.loc)
 	spawned_mobs += L
 	L.nest = src
 	visible_message("<span class='danger'>[L] [spawn_text] [src].</span>")
@@ -51,6 +50,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_types = (/mob/living/simple_animal/hostile/syndicate/melee, /mob/living/simple_animal/hostile/syndicate/ranged)
+	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged
 
 
