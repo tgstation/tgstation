@@ -256,9 +256,15 @@
 	//Possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
 	if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && is_organic() && !(owner.species && owner.species.flags & NO_BLOOD))
-		var/datum/wound/internal_bleeding/I = new (15)
-		wounds += I
-		owner.custom_pain("You feel something rip in your [display_name]!", 1)
+		var/internal_bleeding = 0
+		for(var/datum/wound/Wound in wounds)
+			if(Wound.internal)
+				internal_bleeding = 1
+				break
+		if(!internal_bleeding)
+			var/datum/wound/internal_bleeding/I = new (15)
+			wounds += I
+			owner.custom_pain("You feel something rip in your [display_name]!", 1)
 
 	//Check whether we can add the wound to an existing wound
 	for(var/datum/wound/other in wounds)
