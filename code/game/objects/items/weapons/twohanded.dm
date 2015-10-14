@@ -303,7 +303,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
-	var/explosive = 0
+	var/obj/item/weapon/grenade/explosive = null
 	var/war_cry = "AAAAARGH!"
 
 /obj/item/weapon/twohanded/spear/update_icon()
@@ -315,75 +315,41 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	switch(explosive)
-		if(0)
-			return
-		if(1) //IED
-			explosion(AM.loc,-1,-1,2,flame_range = 3)
-			user.say("[war_cry]")
-			qdel(src)
-			return
-		if(2) //C4
-			explosion(AM.loc,0,0,3)
-			user.say("[war_cry]")
-			qdel(src)
-			return
-		if(3) //Minibomb
-			explosion(AM.loc,1,2,4,flame_range = 2)
-			user.say("[war_cry]")
-			qdel(src)
-			return
-		if(4) //Flame only
-			explosion(AM.loc,-1,-1,-1,flame_range = 4)
-			user.say("[war_cry]")
-			qdel(src)
-			return
+	if(explosive)
+		user.say("[war_cry]")
+		explosive.prime()
+		qdel(src)
+		return
 
 /obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/weapon/grenade/iedcasing))
-		arm(I, user, 1)
+	if(istype(I, /obj/item/weapon/grenade))
+		arm(I, user)
 
 	if(istype(I, /obj/item/weapon/c4))
-		arm(I, user, 2)
+		var /obj/item/weapon/grenade/C4/C = new /obj/item/weapon/grenade/C4(src)
+		qdel(I)
+		arm(C, user)
 
-	if(istype(I, /obj/item/weapon/grenade/syndieminibomb))
-		arm(I, user, 3)
-
-/obj/item/weapon/twohanded/spear/proc/arm(obj/item/I, mob/user, strength = 0)
+/obj/item/weapon/twohanded/spear/proc/arm(obj/item/I, mob/user)
 	if(explosive)
 		user << "<span class='notice'>There is already an explosive fastened to the spear.</span>"
 		return
 	user << "<span class='notice'>You fasten the [src] to the spear. Alt+click on the spear to set your war cry!</span>"
 	name = "explosive lance"
 	desc = "A makeshift spear with [src] attached to it."
-	explosive = strength
+	explosive = I
 	update_icon()
-	qdel(I)
+	I.loc = src
 
 
 /* //THIS MIGHT BE UNBALANCED SO I DUNNO
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
 	if(explosive)
-		var/bomb_turf = get_turf(target.loc)
-		if(0)
-			return
-		if(1) //IED
-			explosion(bomb_turf,-1,-1,2,flame_range = 3)
-			qdel(src)
-			return
-		if(2) //C4
-			explosion(bomb_turf,0,0,3)
-			return
-		if(3) //Minibomb
-			explosion(bomb_turf,1,2,4,flame_range = 2)
-			qdel(src)
-			return
-		if(4) //Flame only
-			explosion(bomb_turf,-1,-1,-1,flame_range = 4)
-			qdel(src)
-			return
+		explosive.prime()
+		qdel(src)
+		return
 
 */
 /obj/item/weapon/twohanded/spear/AltClick()
@@ -395,3 +361,13 @@
 		var/input = stripped_input(M,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 		if(input)
 			src.war_cry = input
+
+//Placeholder C4 "grenade" for use on this spear
+/obj/item/weapon/grenade/C4
+	name = "C-4"
+	desc = "A brick of C-4."
+
+/obj/item/weapon/grenade/C4/prime()
+	update_mob()
+	explosion(src.loc,1,1,3)
+	qdel(src)
