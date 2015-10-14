@@ -70,7 +70,7 @@
 	if(status > 1)	return
 	src.onfire = !( src.onfire )
 	if (src.onfire)
-		src.force = 3
+		src.force = 15
 		src.damtype = "fire"
 		src.icon_state = "cake1"
 		SSobj.processing |= src
