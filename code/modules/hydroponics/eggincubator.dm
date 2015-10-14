@@ -2,7 +2,6 @@
 	name = "egg incubator"
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"
-	layer = 2.9
 	density = 1
 	anchored = 1
 	use_power = 1
@@ -46,7 +45,7 @@
 	if(..())
 		return 1
 	if(contents.len >= limit)
-		usr << "[src] has no more space for eggs!"
+		user << "\The [src] has no more space for eggs!"
 		return 1
 	if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/egg))
 		if(animal_count[/mob/living/simple_animal/chicken] >= ANIMAL_CHILD_CAP)
@@ -54,7 +53,7 @@
 			return 1
 		user.drop_item(O, src)
 		user.visible_message( \
-			"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
+			"<span class='notice'>\The [user] has added \the [O] to \the [src].</span>", \
 			"<span class='notice'>You add \the [O] to \the [src].</span>")
 	src.updateUsrDialog()
 
@@ -65,6 +64,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/egg_incubator/attack_hand(mob/user as mob)
+	if(..()) return 1
 	user.set_machine(src)
 	interact(user)
 
@@ -72,7 +72,7 @@
 	var/dat = ""
 	var/counter = 0
 	if(!(contents.len))
-		dat += "The incubator is empty."
+		dat += "\The [src] is empty."
 	for (var/obj/item/weapon/reagent_containers/food/snacks/egg/E in contents)
 		counter++
 		dat += "Egg [counter]: [E.amount_grown]% grown. <A href='?src=\ref[src];egg=\ref[E]'>(Eject)</A><BR>"
@@ -81,6 +81,7 @@
 	onclose(user, "egg_incubator")
 
 /obj/machinery/egg_incubator/Topic(href, href_list)
+	if(..()) return 1
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/E = locate(href_list["egg"])
 	if(!istype(E)) return //How did we get here at all?
 	eject(E)
@@ -103,6 +104,6 @@
 
 /obj/machinery/egg_incubator/proc/eject(var/obj/E)
 	if(E.loc != src) return //You can't eject it if it's not here.
-	E.loc = src.loc
+	E.forceMove(get_turf(src))
 	src.updateUsrDialog()
-	visible_message("<span class='info'>An egg was ejected from [src].</span>")
+	visible_message("<span class='info'>An egg was ejected from \the [src].</span>")
