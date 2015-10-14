@@ -75,15 +75,6 @@ var/list/z_levels_list = list()
 	if(y-1 >= 1)
 		neigbours |= grid[x][y-1]
 
-
-//config/space_levels.txt is where you define your zlevel datum names, their connection to actual z levels and if you want them connected to one another or not
-//Grammar: Name;z value;linked/unlinked
-//Name is the name of the datum, just for the sake of it
-//z value is to what actual map z level this datum is pointing
-//linked/unlinked decide if you want the z level in the general map or not, for example centcomm is not reachable
-//Each entry must be separated with a single empty line, no spaces outside the name
-//No comments in the file allowed
-
 /proc/setup_map_transitions() //listamania
 	var/list/SLS = list()
 	var/datum/space_level/D
