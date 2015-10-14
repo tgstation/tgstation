@@ -85,3 +85,44 @@
 		reagents.add_reagent("nutriment", 12)
 		reagents.add_reagent("hyperzine", 5)
 		src.bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mimic
+	name = "mimic meat"
+	desc = "Woah! You were eating THIS all along?"
+	icon_state = "rottenmeat"
+
+	New()
+		..()
+		reagents.add_reagent("space_drugs", rand(0,8))
+		reagents.add_reagent("mindbreaker", rand(0,2))
+		reagents.add_reagent("nutriment", rand(0,8))
+		bitesize = 5
+
+		shapeshift()
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mimic/attackby(obj/item/W, mob/user)
+	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
+		user.visible_message("<span class='notice'>[user] starts smacking \the [src] with \the [W].</span>", "<span class='info'>You start reshaping \the [src] with \the [W].</span>")
+
+		if(do_after(user, src, 10))
+			if(prob(80))
+				shapeshift() //Turn into a random foodstuff
+			else
+				src.appearance = initial(src.appearance) //Turn into "mimic meat"
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mimic/bless()
+	visible_message("<span class='info'>\The [src] starts fizzling!</span>")
+	spawn(10)
+		shapeshift(/obj/item/weapon/storage/bible) //Turn into a bible
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mimic/spook()
+	visible_message("<span class='info'>\The [src] transforms into a pile of bones!</span>")
+	shapeshift(/obj/effect/decal/remains/human) //Turn into human remains
+
+var/global/list/valid_random_food_types = typesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable) - /obj/item/weapon/reagent_containers/food/snacks
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/mimic/proc/shapeshift(atom/atom_to_copy = null)
+	if(!atom_to_copy)
+		atom_to_copy = pick(valid_random_food_types)
+
+	src.appearance = initial(atom_to_copy.appearance) //This works!

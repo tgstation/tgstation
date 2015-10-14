@@ -6,7 +6,7 @@ var/global/list/ghdel_profiling = list()
 
 	var/ghost_read  = 1 // All ghosts can read
 	var/ghost_write = 0 // Only aghosts can write
-	var/blessed=0 // Chaplain did his thing. (set by holywater)
+	var/blessed=0 // Chaplain did his thing. (set by bless() proc, which is called by holywater)
 
 	var/level = 2
 	var/flags = FPRINT
@@ -808,3 +808,7 @@ its easier to just keep the beam vertical.
 	if(blessed)
 		return 0
 	return 1
+
+//Called on holy_water's reaction_obj()
+/atom/proc/bless()
+	blessed = 1
