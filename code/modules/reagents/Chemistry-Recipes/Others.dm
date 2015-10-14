@@ -377,4 +377,4 @@
 	id = "lye"
 	result = "lye"
 	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 1)
-	result_amount = 2
+	result_amount = 3
