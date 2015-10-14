@@ -184,6 +184,8 @@
 	if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
 		teleatom.visible_message("<span class='danger'>The [teleatom] bounces off of the portal!</span>")
 		return 0
+	if(teleatom.locked_to)
+		return 0
 
 	if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
 		if(istype(teleatom, /mob/living))

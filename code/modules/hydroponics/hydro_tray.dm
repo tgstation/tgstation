@@ -266,7 +266,7 @@
 	var/datum/gas_mixture/environment
 
 	// If we're closed, take from our internal sources.
-	if(closed_system && (connected_port || holding))
+	if(closed_system)
 		environment = air_contents
 
 	// If atmos input is not there, grab from turf.

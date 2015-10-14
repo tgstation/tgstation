@@ -80,24 +80,27 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			copy.frequency = signal.frequency
 			// Copy the main data contents! Workaround for some nasty bug where the actual array memory is copied and not its contents.
 			copy.data = list(
-
-			"mob" = signal.data["mob"],
-			"language" = signal.data["language"],
-			"mobtype" = signal.data["mobtype"],
-			"realname" = signal.data["realname"],
-			"name" = signal.data["name"],
-			"job" = signal.data["job"],
-			"key" = signal.data["key"],
-			"vmask" = signal.data["vmask"],
-			"compression" = signal.data["compression"],
-			"message" = signal.data["message"],
-			"radio" = signal.data["radio"],
-			"slow" = signal.data["slow"],
-			"traffic" = signal.data["traffic"],
-			"type" = signal.data["type"],
-			"server" = signal.data["server"],
-			"reject" = signal.data["reject"],
-			"level" = signal.data["level"]
+				"mob" = signal.data["mob"],
+				"language" = signal.data["language"],
+				"mobtype" = signal.data["mobtype"],
+				"realname" = signal.data["realname"],
+				"name" = signal.data["name"],
+				"job" = signal.data["job"],
+				"key" = signal.data["key"],
+				"vmask" = signal.data["vmask"],
+				"compression" = signal.data["compression"],
+				"message" = signal.data["message"],
+				"radio" = signal.data["radio"],
+				"slow" = signal.data["slow"],
+				"traffic" = signal.data["traffic"],
+				"type" = signal.data["type"],
+				"server" = signal.data["server"],
+				"reject" = signal.data["reject"],
+				"level" = signal.data["level"],
+				"lquote" = signal.data["lquote"],
+				"rquote" = signal.data["rquote"],
+				"message_classes" = signal.data["message_classes"],
+				"wrapper_classes" = signal.data["wrapper_classes"]
 			)
 
 			// Keep the "original" signal constant

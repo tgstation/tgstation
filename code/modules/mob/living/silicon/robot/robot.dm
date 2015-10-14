@@ -873,7 +873,16 @@
 		if(wiresexposed)
 			user << "Close the panel first."
 		else if(cell)
-			user << "There is a power cell already installed."
+			user << "You swap the power cell within with the new cell in your hand."
+			var/obj/item/weapon/oldpowercell = cell
+			C.wrapped = null
+			C.installed = 0
+			cell = W
+			user.drop_item(W, src)
+			user.put_in_hands(oldpowercell)
+			C.installed = 1
+			C.wrapped = W
+			C.install()
 		else
 			user.drop_item(W, src)
 			cell = W

@@ -398,7 +398,13 @@
 			update_icon()
 	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(cell)
-			user << "There is a power cell already installed."
+			user << "You swap the power cell within with the new cell in your hand."
+			var/obj/item/weapon/oldpowercell = cell
+			user.drop_item(W, src)
+			cell = W
+			chargecount = 0
+			update_icon()
+			user.put_in_hands(oldpowercell)
 			return
 		else
 			if (stat & MAINT)
