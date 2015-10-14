@@ -77,7 +77,7 @@ h1.alert, h2.alert		{color: #000000;}
 .good					{color: green;}
 .average				{color: #FF8000;}
 .bad					{color: #FF0000;}
-/* /vg/ Saycode Rewrite*/
+/* /vg/ Saycode Rewrite */
 .italics, .talkinto		{font-style:italic;}
 .whisper				{font-style:italic;color:#999999}
 /* Recruiting stuff */
