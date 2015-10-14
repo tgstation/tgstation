@@ -33,7 +33,9 @@
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 		if(istype(over_object, /obj/structure/table) && M.Adjacent(over_object))
-			empty_contents_to(over_object)
+			var/mob/living/L = usr
+			if(istype(L) && !(L.restrained() || L.stat || L.weakened || L.stunned || L.paralysis || L.resting))
+				empty_contents_to(over_object)
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
 		if(!(src.loc == usr) || (src.loc && src.loc.loc == usr))
