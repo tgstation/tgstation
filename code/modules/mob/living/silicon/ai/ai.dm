@@ -379,7 +379,7 @@ var/list/ai_list = list()
 			if(1)
 				view_core()
 			if(2)
-				ai_call_shuttle()
+				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
 	..()
 
 /mob/living/silicon/ai/ex_act(severity, target)
