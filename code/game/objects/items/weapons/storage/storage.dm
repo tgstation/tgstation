@@ -336,7 +336,8 @@
 			M.client.screen -= W
 
 	if(ismob(loc))
-		W.dropped(usr)
+		var/mob/M = loc
+		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.loc = new_location
 
