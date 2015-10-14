@@ -41,6 +41,7 @@
 	var/mob/living/simple_animal/L = new mob_type(src.loc)
 	spawned_mobs += L
 	L.nest = src
+	L.faction = src.faction
 	visible_message("<span class='danger'>[L] [spawn_text] [src].</span>")
 
 
@@ -51,5 +52,6 @@
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
 	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged
+	faction = list("syndicate")
 
 
