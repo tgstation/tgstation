@@ -309,10 +309,8 @@
 /obj/item/weapon/twohanded/spear/update_icon()
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
-		return
 	else
 		icon_state = "spearglass[wielded]"
-		return
 
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
