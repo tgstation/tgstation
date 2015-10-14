@@ -22,7 +22,7 @@
 
 /mob/living/simple_animal/hostile/spawner/Destroy()
 	for(var/mob/living/simple_animal/L in spawned_mobs)
-		if(L. == src)
+		if(L.nest == src)
 			L.nest = null
 	spawned_mobs = null
 	return ..()
