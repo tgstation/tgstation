@@ -34,7 +34,7 @@
 						burnt_out = 1
 					charged_item = M
 					break
-			else if(istype(item, /obj/item/weapon/spellbook/oneuse))
+			else if(istype(item, /obj/item/weapon/spellbook))
 				if(istype(item, /obj/item/weapon/spellbook/oneuse))
 					var/obj/item/weapon/spellbook/oneuse/I = item
 					if(prob(80))
