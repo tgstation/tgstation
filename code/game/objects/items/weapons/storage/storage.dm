@@ -32,12 +32,14 @@
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
-		if (!( istype(over_object, /obj/screen) ))
+		if(istype(over_object, /obj/structure/table) && M.Adjacent(over_object))
+			empty_contents_to(over_object)
+		if(!( istype(over_object, /obj/screen) ))
 			return ..()
-		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		if(!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
 		playsound(get_turf(src), "rustle", 50, 1, -5)
-		if (!( M.restrained() ) && !( M.stat ))
+		if(!( M.restrained() ) && !( M.stat ))
 			switch(over_object.name)
 				if("r_hand")
 					M.u_equip(src,0)
@@ -54,6 +56,12 @@
 			return
 	return
 
+/obj/item/weapon/storage/proc/empty_contents_to(var/atom/place)
+	var/turf = get_turf(place)
+	for(var/obj/objects in contents)
+		remove_from_storage(objects, turf)
+		objects.pixel_x = rand(-6,6)
+		objects.pixel_y = rand(-6,6)
 
 /obj/item/weapon/storage/proc/return_inv()
 
