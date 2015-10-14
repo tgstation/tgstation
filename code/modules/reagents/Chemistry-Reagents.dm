@@ -695,7 +695,7 @@
 /datum/reagent/holywater/reaction_obj(var/obj/O, var/volume)
 	src = null //WHAT
 	if(volume >= 1)
-		O.blessed = 1
+		O.bless()
 /datum/reagent/holywater/on_mob_life(var/mob/living/M as mob,var/alien)
 	if(!holder)
 		return

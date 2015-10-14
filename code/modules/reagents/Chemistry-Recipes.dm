@@ -1163,6 +1163,9 @@ datum
 					/mob/living/simple_animal/hostile/slime,
 					/mob/living/simple_animal/hostile/slime/adult,
 					/mob/living/simple_animal/hostile/mining_drone,
+					/mob/living/simple_animal/hostile/mimic,
+					/mob/living/simple_animal/hostile/mimic/copy,
+					/mob/living/simple_animal/hostile/mimic/crate/item
 					)//exclusion list for things you don't want the reaction to create.
 				var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
 
