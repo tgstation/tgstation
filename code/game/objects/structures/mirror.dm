@@ -118,7 +118,7 @@
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = list("human","lizard")
+	choosable_races = roundstart_species
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
