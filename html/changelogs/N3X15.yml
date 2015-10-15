@@ -1,3 +1,2 @@
 author: N3X15
-changes: 
-  - bugfix: "Brains will display as \"unresponsive\" if the ghost cannot re-enter due to mousing. This resolves conflicting and confusing messages between brains and MMIs."
+changes: []
