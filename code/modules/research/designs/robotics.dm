@@ -32,7 +32,7 @@
 	category = "Robotics"
 
 /datum/design/adv_eyes
-	name = "Advanced Eyes (L1)"
+	name = "Advanced Eyes"
 	desc = "These eyes have built-in welding protection and enhance night-vision."
 	id = "adv_eyes_1"
 	req_tech = list("programming" = 2, "biotech" = 4)
