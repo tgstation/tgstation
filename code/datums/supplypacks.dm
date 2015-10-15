@@ -1290,7 +1290,8 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 			/obj/item/weapon/reagent_containers/food/snacks/egg,
 			/obj/item/weapon/reagent_containers/food/snacks/egg,
 			/obj/item/weapon/reagent_containers/food/snacks/egg,
-			/obj/item/weapon/kitchen/utensil/knife/large
+			/obj/item/weapon/kitchen/utensil/knife/large,
+			/obj/item/clothing/head/cowboy
 		)
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
