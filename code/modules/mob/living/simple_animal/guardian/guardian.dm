@@ -75,7 +75,7 @@
 			src.summoner.visible_message("<span class='danger'>Blood sprays from [summoner] as [src] takes damage!</span>")
 		if(src.summoner.stat == UNCONSCIOUS)
 			src.summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src.name] in this condition, it begins to fall apart!</span></B>"
-			src.summoner.adjustCloneLoss(damage/2)
+			src.summoner.adjustCloneLoss(damage)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
