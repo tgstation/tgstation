@@ -308,7 +308,7 @@
 			bodyparts_to_add -= "waggingspines"
 
 	if("snout" in mutant_bodyparts) //Take a closer look at that snout!
-		if(H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE))
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)))
 			bodyparts_to_add -= "snout"
 
 	if("frills" in mutant_bodyparts)
@@ -998,7 +998,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-	if(H.check_shields(I.force, "the [I.name]", I))
+	if(H.check_shields(I.force, "the [I.name]", I, 0, I.armour_penetration))
 		return 0
 
 	if(I.attack_verb && I.attack_verb.len)

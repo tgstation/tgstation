@@ -130,7 +130,7 @@
 			user <<  "<span class='notice'>You [open ? "close":"open"] the [src]</span>"
 			open = !open
 			update_icon()
-	else if(open)
+	else if(open && !showpiece)
 		if(user.unEquip(W))
 			W.loc = src
 			showpiece = W
@@ -195,7 +195,7 @@
 	if(istype(I, /obj/item/weapon/electronics/airlock))
 		user << "<span class='notice'>You start installing the electronics into [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(user.unEquip(I) && do_after(user, 30, target = src)) 
+		if(user.unEquip(I) && do_after(user, 30, target = src))
 			I.loc = src
 			electronics = I
 			user << "<span class='notice'>You install the airlock electronics.</span>"
