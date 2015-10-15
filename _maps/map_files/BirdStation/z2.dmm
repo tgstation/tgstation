@@ -373,7 +373,7 @@
 "hi" = (/turf/simulated/floor/plasteel,/area/centcom/supply)
 "hj" = (/turf/simulated/floor/plasteel/green/corner{dir = 1},/area/centcom/control)
 "hk" = (/turf/simulated/floor/plasteel/green/corner{dir = 4},/area/centcom/control)
-"hl" = (/obj/structure/table/glass,/obj/item/weapon/storage/firstaid/fire{pixel_x = 5; pixel_y = 5},/obj/item/weapon/storage/firstaid/fire,/turf/simulated/floor/plasteel{icon_state = "white"},/area/shuttle/escape)
+"hl" = (/obj/structure/table/glass,/obj/item/weapon/storage/firstaid/fire{pixel_x = 5; pixel_y = 5},/obj/item/weapon/storage/firstaid/toxin,/turf/simulated/floor/plasteel{icon_state = "white"},/area/shuttle/escape)
 "hm" = (/turf/simulated/floor/plasteel/shuttle,/area/shuttle/supply)
 "hn" = (/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/supply)
 "ho" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/turf/simulated/floor/plating,/area/shuttle/supply)
@@ -1080,3 +1080,4 @@ abababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 ababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 "}
+

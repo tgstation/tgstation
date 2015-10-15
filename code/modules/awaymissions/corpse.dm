@@ -8,6 +8,7 @@
 	name = "Unknown"
 	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
 	var/mobgender = MALE //Set to male by default due to the patriarchy. Other options include FEMALE and NEUTER
+	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton
 	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
@@ -35,6 +36,8 @@
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
 	M.gender = src.mobgender
+	if(mob_species)
+		M.set_species(mob_species)
 	M.death(1) //Kills the new mob
 	if(src.corpsehusk)
 		M.Drain()
@@ -235,6 +238,15 @@
 /obj/effect/landmark/corpse/miner/rig
 	corpsesuit = /obj/item/clothing/suit/space/hardsuit/mining
 	corpsemask = /obj/item/clothing/mask/breath
+
+
+/obj/effect/landmark/corpse/plasmaman
+	mob_species = "plasmaman"
+	corpsehelmet = /obj/item/clothing/head/helmet/space/hardsuit/plasmaman
+	corpsesuit = /obj/item/clothing/suit/space/eva/plasmaman
+	corpseback = /obj/item/weapon/tank/internals/plasmaman/full
+	corpsemask = /obj/item/clothing/mask/breath
+
 
 
 /////////////////Officers//////////////////////
