@@ -95,6 +95,7 @@
 			return
 		makeMoMMI(user)
 
+
 /obj/machinery/mommi_spawner/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(!..())
 		if(istype(O,/obj/item/device/mmi))
@@ -105,14 +106,9 @@
 			if(!mmi.brainmob)
 				user << "<span class='warning'>\The [mmi] appears to be devoid of any soul.</span>"
 				return 1
+
 			if(!mmi.brainmob.key)
-				var/ghost_can_reenter = 0
-				if(mmi.brainmob.mind)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.can_reenter_corpse && G.mind == mmi.brainmob.mind)
-							ghost_can_reenter = 1
-							break
-				if(!ghost_can_reenter)
+				if(!mind_can_reenter(mmi.brainmob.mind))
 					user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
 					return TRUE
 

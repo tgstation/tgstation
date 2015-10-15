@@ -49,13 +49,7 @@ obj/item/device/mmi/Destroy()
 			user << "<span class='warning'>What are you doing oh god put the brain back in.</span>"
 			return TRUE
 		if(!brainmob.key)
-			var/ghost_can_reenter = 0
-			if(brainmob.mind)
-				for(var/mob/dead/observer/G in player_list)
-					if(G.can_reenter_corpse && G.mind == brainmob.mind)
-						ghost_can_reenter = 1
-						break
-			if(!ghost_can_reenter)
+			if(!mind_can_reenter(brainmob.mind))
 				user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
 				return TRUE
 		if(brainmob.stat == DEAD)
@@ -115,13 +109,7 @@ obj/item/device/mmi/Destroy()
 
 		// Checking to see if the ghost has been moused/borer'd/etc since death.
 		var/mob/living/carbon/brain/BM = BO.brainmob
-		var/ghost_can_reenter = 0
-		if(BM.mind)
-			for(var/mob/dead/observer/G in player_list)
-				if(G.can_reenter_corpse && G.mind == BM.mind)
-					ghost_can_reenter = 1
-					break
-		if(!ghost_can_reenter)
+		if(!mind_can_reenter(BM.mind))
 			user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
 			return
 		src.visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")

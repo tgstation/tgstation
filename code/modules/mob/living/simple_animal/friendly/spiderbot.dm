@@ -53,13 +53,7 @@
 			user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 			return
 		if(!B.brainmob.key)
-			var/ghost_can_reenter = 0
-			if(B.brainmob.mind)
-				for(var/mob/dead/observer/G in player_list)
-					if(G.can_reenter_corpse && G.mind == B.brainmob.mind)
-						ghost_can_reenter = 1
-						break
-			if(!ghost_can_reenter)
+			if(!mind_can_reenter(B.brainmob.mind))
 				user << "<span class='notice'>[O] is completely unresponsive; there's no point.</span>"
 				return
 
