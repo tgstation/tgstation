@@ -213,15 +213,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(smoke_spread)
 			if(smoke_spread == 1)
 				var/datum/effect/effect/system/smoke_spread/smoke = new
-				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // if more than one smoke, spread it around
+				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 2)
 				var/datum/effect/effect/system/smoke_spread/bad/smoke = new
-				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
+				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 3)
 				var/datum/effect/effect/system/smoke_spread/sleeping/smoke = new
-				smoke.set_up(smoke_amt, 0, location, smoke_amt == 1 ? 15 : 0) // same here
+				smoke.set_up(smoke_amt, location)
 				smoke.start()
 
 
