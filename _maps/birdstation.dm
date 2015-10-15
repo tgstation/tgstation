@@ -21,6 +21,8 @@ Make sure this is the only ticked file in the .dm folder, then compile as usual.
         #define MAP_FILE "BirdStation.dmm"
         #define MAP_NAME "BirdboatStation"
 
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\BirdStation\telecomms.dm"

@@ -5,6 +5,8 @@
 	view = "15x15"
 	cache_lifespan = 7
 
+var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
+
 /world/New()
 	map_ready = 1
 

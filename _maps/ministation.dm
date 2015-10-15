@@ -59,6 +59,8 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
         #define MAP_FILE "MiniStation.dmm"
         #define MAP_NAME "MiniStation"
 
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
+
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES
 				#include "map_files\MiniStation\misc.dm"
