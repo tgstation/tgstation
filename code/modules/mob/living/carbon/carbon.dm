@@ -31,14 +31,14 @@
 	if(.)
 		if(src.nutrition && src.stat != 2)
 			src.nutrition -= HUNGER_FACTOR/10
-			if(src.m_intent == "run")
+			if(src.m_intent == RUN)
 				src.nutrition -= HUNGER_FACTOR/10
-			else if(src.m_intent == "sprint")
+			else if(src.m_intent == SPRINT)
 				src.nutrition -= 2*HUNGER_FACTOR/10
 		if((src.disabilities & FAT) && src.bodytemperature <= 360)
-			if(src.m_intent == "run")
+			if(src.m_intent == RUN)
 				src.bodytemperature += 2
-			else if(src.m_intent == "sprint")
+			else if(src.m_intent == SPRINT)
 				src.bodytemperature += 10
 
 /mob/living/carbon/movement_delay()

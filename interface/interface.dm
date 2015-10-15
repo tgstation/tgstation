@@ -94,6 +94,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \tb = resist
 \tx = swap-hand
 \tz = activate held object (or y)
+\t` = toggle running/walking (hold for sprinting)
 \tf = cycle-intents-left
 \tg = cycle-intents-right
 \t1 = help-intent
@@ -115,6 +116,7 @@ Any-Mode: (hotkey doesn't need to be on)
 \tCtrl+O = OOC
 \tCtrl+x = swap-hand
 \tCtrl+z = activate held object (or Ctrl+y)
+\tCtrl+` = toggle running/walking (hold for sprinting)
 \tCtrl+f = cycle-intents-left
 \tCtrl+g = cycle-intents-right
 \tCtrl+1 = help-intent

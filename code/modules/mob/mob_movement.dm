@@ -157,17 +157,17 @@
 						M.stop_pulling()
 
 		switch(mob.m_intent)
-			if("sprint")
+			if(SPRINT)
 				move_delay += config.run_speed
-			if("run")
+			if(RUN)
 				if(mob.drowsyness > 0)
 					move_delay += 6
 				move_delay += config.run_speed
-			if("walk")
+			if(WALK)
 				move_delay += config.walk_speed
 		move_delay += mob.movement_delay()
 
-		if(mob.m_intent == "sprint" && ishuman(mob))
+		if(mob.m_intent == SPRINT && ishuman(mob))
 			var/mob/living/L = mob
 			var/old_move_delay = move_delay
 			move_delay = world.time

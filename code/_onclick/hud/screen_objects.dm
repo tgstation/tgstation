@@ -146,6 +146,7 @@
 
 /obj/screen/mov_intent
 	name = "sprint/run/walk toggle"
+	desc = "Click to toggle run/walk, Double click to start a sprint."
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "running"
 	var/double_clicking = 0
@@ -154,29 +155,13 @@
 	if(double_clicking) //Click always happens during a double click
 		double_clicking = 0
 		return
-	switch(usr.m_intent)
-		if("sprint")
-			usr.m_intent = "run"
-			icon_state = "running"
-		if("run")
-			usr.m_intent = "walk"
-			icon_state = "walking"
-		if("walk")
-			usr.m_intent = "run"
-			icon_state = "running"
-	usr.update_icons()
+	usr.movespeed(0)
 
 /obj/screen/mov_intent/DblClick()
 	if(!ishuman(usr))
 		return
 	double_clicking = 1
-	if(usr.m_intent != "sprint")
-		usr.m_intent = "sprint"
-		icon_state = "sprinting"
-	else
-		usr.m_intent = "run"
-		icon_state = "running"
-	usr.update_icons()
+	usr.movespeed(1)
 
 /obj/screen/pull
 	name = "stop pulling"
