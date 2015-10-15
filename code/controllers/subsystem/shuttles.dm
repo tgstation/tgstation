@@ -203,15 +203,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)
-		var/tid = trim(M.id)
+		if(!M.roundstart_move)
+			continue
 		for(var/obj/docking_port/stationary/S in stationary)
-			if(S.id == tid)
+			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
 				S.width = M.width
 				S.height = M.height
 				S.dwidth = M.dwidth
 				S.dheight = M.dheight
-		if(M.roundstart_move)
-			moveShuttle(M.id, "[M.roundstart_move]", 0)
+		moveShuttle(M.id, "[M.roundstart_move]", 0)
 
 /datum/supply_order
 	var/ordernum

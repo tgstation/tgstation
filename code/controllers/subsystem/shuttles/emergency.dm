@@ -7,6 +7,7 @@
 	height = 11
 	dir = 4
 	travelDir = -90
+	roundstart_move = "emergency_away"
 
 /obj/docking_port/mobile/emergency/New()
 	..()
