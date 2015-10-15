@@ -107,8 +107,8 @@ REAGENT SCANNER
 	if(.)
 		return
 	if(last_reading)
-		user.visible_message("<span class='bnotice'Accessing Prior Scan Result</span>")
-		user.visible_message(last_reading)
+		user.show_message("<span class='bnotice'Accessing Prior Scan Result</span>")
+		user.show_message(last_reading)
 
 proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, var/skip_checks=0, var/silent=0)
 	var/message = ""
@@ -234,7 +234,7 @@ proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/mode = 0, va
 			else
 				message += "\n<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl</span>"
 		message += "\n<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span>"
-	user.visible_message(message)
+	user.show_message(message)
 	return message
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
