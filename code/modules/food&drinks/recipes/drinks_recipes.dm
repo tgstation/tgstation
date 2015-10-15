@@ -569,4 +569,12 @@
 	id = "grapesoda"
 	result = "grape_soda"
 	required_reagents = list("grapejuice" = 1, "sodawater" = 1)
-	result_amount = 5
+	result_amount = 2
+
+/datum/chemical_reaction/grappa
+	name = "grappa"
+	id = "grappa"
+	result = "grappa"
+	required_reagents = list ("wine" = 10)
+	required_catalysts = list ("enzyme" = 5)
+	result_amount = 10
