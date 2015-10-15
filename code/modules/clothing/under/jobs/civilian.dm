@@ -6,7 +6,7 @@
 	icon_state = "barman"
 	item_state = "bar_suit"
 	item_color = "barman"
-	modesty = 1
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
@@ -47,7 +47,7 @@
 	desc = "A suit which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef"
 	item_color = "chef"
-	modesty = 1
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/rank/clown
@@ -123,7 +123,7 @@
 	item_state = "bluesuit"
 	item_color = "bluesuit"
 	can_adjust = 1
-	modesty = 1
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/lawyer/purpsuit
@@ -133,7 +133,7 @@
 	item_color = "lawyer_purp"
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 1
-	modesty = 1
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/lawyer/blacksuit
@@ -143,7 +143,7 @@
 	item_state = "bar_suit"
 	item_color = "blacksuit"
 	can_adjust = 1
-	modesty = 1
+	alt_covers_chest = 1
 
 
 /obj/item/clothing/under/rank/librarian

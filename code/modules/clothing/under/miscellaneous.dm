@@ -94,7 +94,7 @@
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
-	modesty = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -469,7 +469,7 @@
 	item_color = "plaid_red"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 1
-	modesty = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -479,7 +479,7 @@
 	item_color = "plaid_blue"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 1
-	modesty = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/plaid_skirt/purple
 	name = "purple plaid skirt"
@@ -489,7 +489,7 @@
 	item_color = "plaid_purple"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 1
-	modesty = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/jester
 	name = "jester suit"

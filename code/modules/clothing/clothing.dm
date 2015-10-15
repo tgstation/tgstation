@@ -216,6 +216,7 @@ BLIND     // can't see anything
 	burn_state = -1 //Not Burnable
 
 //Under clothing
+
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
@@ -229,7 +230,7 @@ BLIND     // can't see anything
 	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
 	var/can_adjust = 1
 	var/adjusted = 0
-	var/modesty = 0 // 0 = exposes chest and arms, 1 = exposes arms only
+	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
 
@@ -367,7 +368,7 @@ atom/proc/generate_female_clothing(index,t_color,icon,type)
 		if(src.fitted != FEMALE_UNIFORM_TOP)
 			src.fitted = NO_FEMALE_UNIFORM
 		src.item_color += "_d"
-		if (src.modesty) // for the special snowflake suits that don't expose the chest when adjusted
+		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
 			src.body_parts_covered = CHEST|GROIN|LEGS
 		else
 			src.body_parts_covered = GROIN|LEGS
