@@ -124,6 +124,9 @@
 			ITD.throw_speed = pressureSetting * 2
 			ITD.loc = get_turf(src)
 			ITD.throw_at(target_turf, pressureSetting * 5, pressureSetting * 2,user)
+	if(pressureSetting >= 3 && user)
+		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		user.Weaken(3)
 
 
 /obj/item/weapon/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
@@ -131,7 +134,7 @@
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
 	w_class = 3
-	maxWeightClass = 10
+	maxWeightClass = 7
 	gasPerThrow = 5
 
 /datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
