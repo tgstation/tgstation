@@ -52,10 +52,51 @@
 /mob/living/simple_animal/hostile/mimic/show_inv() //Makes it harder to distinguish mimics from real dudes
 	return
 
+/mob/living/simple_animal/hostile/mimic/proc/environment_disguise(list/L = crate_mimic_disguises)
+	if(!L) return
+	//First, determine the environment we're in
+
+	var/our_area_type = "default"
+
+	var/area/A = get_area(src)
+	if(A.fire)
+		our_area_type = "emergency"
+	else
+		if(isspace(A))
+			our_area_type = "space"
+		else if(istype(A,/area/engine) || istype(A,/area/engineering) || istype(A,/area/construction))
+			our_area_type = "engineering"
+		else if(istype(A,/area/medical/medbay))
+			our_area_type = "medbay"
+		else if(istype(A,/area/crew_quarters/bar))
+			our_area_type = "bar"
+		else if(istype(A,/area/security))
+			our_area_type = "security"
+
+	//Found our area type - time to get a disguise!
+
+	var/list/possible_disguises = L[our_area_type]
+
+	if(!possible_disguises || !possible_disguises.len) //If can't find a disguise for that type of area
+		possible_disguises = L["default"] //Use default disguise
+		if(!possible_disguises || !possible_disguises.len) //No default disguise - abort
+			return
+
+	copied_object = pick(possible_disguises) //We did it!
+
 //
 // Crate mimic
 //
 // Sits still until somebody tries to open it!
+
+var/global/list/crate_mimic_disguises = list(\
+	"default" = list(/obj/structure/closet/crate),
+	"space"   = list(/obj/structure/closet/emcloset),
+	"medbay"  = list(/obj/structure/closet/crate, /obj/structure/closet/crate/medical),
+	"engineering" = list(/obj/structure/closet/crate, /obj/structure/closet/crate/engi, /obj/structure/closet/crate/secure/engisec),
+	"bar" = list(/obj/structure/closet/crate, /obj/structure/closet/cabinet),
+	"emergency" = list(/obj/structure/closet/emcloset),
+)
 
 /mob/living/simple_animal/hostile/mimic/crate
 	a_intent = I_HURT //To prevent dudes from swapping positions with us
@@ -64,13 +105,19 @@
 	health = 100
 
 /mob/living/simple_animal/hostile/mimic/crate/New()
+	environment_disguise() //Disguise ourselves appropriately
+
 	..()
 
 	drop_meat(src) //Fill the mimic up with its own meat
 	initialize() //Collect all items from its turf!
 
 /mob/living/simple_animal/hostile/mimic/crate/Life()
-	if(!angry) return
+	if(!angry)
+		if(pulledby && prob(25))
+			anger()
+		else
+			return
 
 	.=..()
 
@@ -188,7 +235,7 @@
 		if(!locked_atoms.len) //Eating nobody
 			if(prob(60))
 				lock_atom(H)
-				visible_message("<span class='danger'>\The [src] grabs \the [H]!")
+				visible_message("<span class='danger'>\The [src] grabs \the [H] with its tongue!")
 		else
 			if(H in locked_atoms)
 				if(prob(20))
@@ -235,6 +282,9 @@
 					visible_message("<span class='notice'>\The [src] loses its hold on [M].</span>")
 	..()
 
+/mob/living/simple_animal/hostile/mimic/crate/chest/environment_disguise(list/L) //We're always chests
+	return 0
+
 /mob/living/simple_animal/hostile/mimic/crate/chest/anger(berserk, change_icon = 1)
 	..()
 
@@ -245,47 +295,28 @@
 //
 // Lies still until somebody tries to pick it up
 
-var/global/list/allowed_itemmimic_appearances = list(
-	/obj/item/alien_embryo,
-	/obj/item/ammo_storage,
-	/obj/item/asteroid/goliath_hide,
-	/obj/item/blueprints,
-	/obj/item/device/chameleon,
-	/obj/item/toy/minimeteor,
-	/obj/item/toy/crossbow,
-	/obj/item/toy/spinningtoy,
-	/obj/item/toy/waterflower,
-	/obj/item/trash/discountchocolate,
-	/obj/item/trash/tray,
-	/obj/item/weapon/banhammer/admin, //hunk
-	/obj/item/weapon/barricade_kit,
-	/obj/item/weapon/batteringram,
-	/obj/item/weapon/beach_ball,
-	/obj/item/weapon/bonesetter,
-	/obj/item/weapon/card/emag,
-	/obj/item/weapon/caution,
-	/obj/item/weapon/circular_saw,
-	/obj/item/weapon/crossbow,
-	/obj/item/weapon/extinguisher,
-	/obj/item/weapon/fireaxe,
-	/obj/item/weapon/gun/gatling,
-	/obj/item/weapon/gun/hookshot,
-	/obj/item/weapon/gun/projectile/deagle,
-	/obj/item/weapon/gun/projectile/shotgun/doublebarrel,
-	/obj/item/weapon/gun/stickybomb,
-	/obj/item/weapon/gun/syringe/rapidsyringe,
-	/obj/item/weapon/hand_labeler,
-	/obj/item/weapon/katana/hfrequency,
-	/obj/item/weapon/melee/baton,
-	/obj/item/weapon/melee/defibrillator,
-	/obj/item/weapon/pinpointer,
-	/obj/item/weapon/soap,
-	/obj/item/weapon/spellbook,
-	/obj/item/weapon/surgicaldrill,
-	/obj/item/weapon/table_parts,
-	/obj/item/weapon/tome,
-	/obj/item/weapon/wrench/socket
-	)
+var/global/list/item_mimic_disguises = list(
+	"default" = list(/obj/item/alien_embryo, /obj/item/ammo_storage, /obj/item/device/chameleon, /obj/item/toy/crossbow, /obj/item/toy/waterflower, /obj/item/weapon/banhammer/admin,\
+				/obj/item/weapon/beach_ball, /obj/item/weapon/card/emag, /obj/item/weapon/extinguisher, /obj/item/weapon/hand_labeler, /obj/item/weapon/soap, /obj/item/weapon/crowbar,\
+				/obj/item/weapon/caution, /obj/item/weapon/bananapeel, /obj/item/device/chameleon, /obj/item/weapon/storage/pneumatic, /obj/item/trash/discountchocolate,\
+				/obj/item/weapon/fireaxe, /obj/item/weapon/gun/gatling, /obj/item/weapon/table_parts, /obj/item/weapon/wrench/socket, /obj/item/weapon/lighter, /obj/item/weapon/bikehorn/rubberducky,\
+				/obj/item/weapon/lipstick, /obj/item/weapon/stamp/clown, /obj/item/weapon/storage/backpack/holding, /obj/item/clothing/gloves/yellow), //Common items
+
+	"medbay" = list(/obj/item/weapon/circular_saw, /obj/item/weapon/melee/defibrillator, /obj/item/weapon/surgicaldrill, /obj/item/weapon/hemostat, /obj/item/weapon/dnainjector/hulkmut,\
+				/obj/item/weapon/bonesetter, /obj/item/weapon/autopsy_scanner, /obj/item/weapon/FixOVein, /obj/item/stack/medical/ointment, /obj/item/weapon/storage/firstaid,\
+				/obj/item/weapon/gun/syringe/rapidsyringe, /obj/item/weapon/storage/firstaid/fire, /obj/item/weapon/storage/firstaid/o2, /obj/item/weapon/storage/firstaid/toxin,\
+				/obj/item/weapon/cautery, /obj/item/device/healthanalyzer), //Medbay items
+
+	"security" = list(/obj/item/device/chameleon, /obj/item/weapon/card/emag, /obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton, /obj/item/weapon/tome,\
+				/obj/item/weapon/crowbar, /obj/item/weapon/storage/fancy/donut_box, /obj/item/weapon/storage/firstaid, /obj/item/weapon/storage/pneumatic, /obj/item/weapon/gun/gatling,\
+				/obj/item/weapon/handcuffs, /obj/item/weapon/melee/energy/sword/green, /obj/item/clothing/gloves/yellow), //Security and illegal items
+
+	"bar" = (typesof(/obj/item/weapon/reagent_containers/food/drinks) - typesof(/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable) - /obj/item/weapon/reagent_containers/food/drinks/bottle - /obj/item/weapon/reagent_containers/food/drinks/soda_cans),  //All drinks (except for abstract types)
+
+	"emergency" = list(/obj/item/clothing/mask/breath, /obj/item/weapon/tank/jetpack/oxygen, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/tank/air, /obj/item/weapon/crowbar,\
+					/obj/item/weapon/storage/firstaid, /obj/item/weapon/storage/backpack/holding, /obj/item/weapon/storage/backpack/security, /obj/item/device/maracas, /obj/item/device/multitool,\
+					/obj/item/clothing/gloves/yellow) //Focus on breath masks, jetpacks/oxygen tanks and generally useful stuff
+)
 
 /mob/living/simple_animal/hostile/mimic/crate/item
 	name = "item mimic"
@@ -298,16 +329,11 @@ var/global/list/allowed_itemmimic_appearances = list(
 	var/icon/mouth_overlay = icon('icons/mob/mob.dmi', icon_state = "mimic_mouth")
 
 /mob/living/simple_animal/hostile/mimic/crate/item/New()
-	copied_object = pick(allowed_itemmimic_appearances)
+	environment_disguise()
 	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/item/initialize()
 	return //Don't take any items!
-
-/mob/living/simple_animal/hostile/mimic/crate/item/Crossed(atom/movable/AM)
-	if(ishuman(AM))
-		anger()
-	..()
 
 /mob/living/simple_animal/hostile/mimic/crate/item/examine(mob/user) //Total override to make the mimics look EXACTLY like items!
 	var/s_size
@@ -360,11 +386,15 @@ var/global/list/allowed_itemmimic_appearances = list(
 	density = 0
 
 	//Disguise as something else for bonus stealth points
-	copied_object = pick(allowed_itemmimic_appearances)
-	appearance = initial(copied_object.appearance)
+	environment_disguise()
+	if(copied_object)
+		appearance = initial(copied_object.appearance)
 
-	var/obj/item/I = copied_object
-	size = initial(I.w_class)
+		var/obj/item/I = copied_object
+		size = initial(I.w_class)
+
+/mob/living/simple_animal/hostile/mimic/crate/item/environment_disguise(list/L = item_mimic_disguises)
+	return ..(item_mimic_disguises)
 
 //
 // Copy Mimic

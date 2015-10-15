@@ -125,6 +125,10 @@
 
 #define isdeathsquad(H) (H.mind in ticker.mode.deathsquads)
 
+//Macro for AREAS!
+
+#define isspace(A) (A.type == /area)
+
 //1 line helper procs compressed into defines.
 #define Clamp(x, y, z) 	(x <= y ? y : (x >= z ? z : x))
 
