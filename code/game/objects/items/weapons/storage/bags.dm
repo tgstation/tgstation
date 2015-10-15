@@ -370,7 +370,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
-	storage_slots = 50
+	storage_slots = 25
 	max_combined_w_class = 200
 	w_class = 1
 	preposition = "in"
