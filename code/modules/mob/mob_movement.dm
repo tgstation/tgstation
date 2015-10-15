@@ -157,13 +157,21 @@
 						M.stop_pulling()
 
 		switch(mob.m_intent)
-			if("run")
+			if(SPRINT)
+				move_delay += config.run_speed
+			if(RUN)
 				if(mob.drowsyness > 0)
 					move_delay += 6
 				move_delay += config.run_speed
-			if("walk")
+			if(WALK)
 				move_delay += config.walk_speed
 		move_delay += mob.movement_delay()
+
+		if(mob.m_intent == SPRINT && ishuman(mob))
+			var/mob/living/L = mob
+			var/old_move_delay = move_delay
+			move_delay = world.time
+			L.adjustStaminaLoss(old_move_delay-move_delay) //The more you're overcoming slowdown, the faster you tire
 
 		if(config.Tickcomp)
 			move_delay -= 1.3

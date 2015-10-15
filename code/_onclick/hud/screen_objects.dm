@@ -145,19 +145,23 @@
 						C << "<span class='warning'>You don't have an oxygen tank!</span>"
 
 /obj/screen/mov_intent
-	name = "run/walk toggle"
+	name = "sprint/run/walk toggle"
+	desc = "Click to toggle run/walk, Double click to start a sprint."
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "running"
+	var/double_clicking = 0
 
 /obj/screen/mov_intent/Click()
-	switch(usr.m_intent)
-		if("run")
-			usr.m_intent = "walk"
-			icon_state = "walking"
-		if("walk")
-			usr.m_intent = "run"
-			icon_state = "running"
-	usr.update_icons()
+	if(double_clicking) //Click always happens during a double click
+		double_clicking = 0
+		return
+	usr.movespeed(0)
+
+/obj/screen/mov_intent/DblClick()
+	if(!ishuman(usr))
+		return
+	double_clicking = 1
+	usr.movespeed(1)
 
 /obj/screen/pull
 	name = "stop pulling"

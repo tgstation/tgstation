@@ -334,6 +334,10 @@ macro "macro"
 		command = "a-intent right"
 		is-disabled = false
 	elem 
+		name = "CTRL+O"
+		command = "ooc"
+		is-disabled = false
+	elem 
 		name = "CTRL+Q"
 		command = ".northwest"
 		is-disabled = false
@@ -382,10 +386,6 @@ macro "macro"
 		command = "Aghost"
 		is-disabled = false
 	elem 
-		name = "CTRL+O"
-		command = "ooc"
-		is-disabled = false
-	elem 
 		name = "F6"
 		command = "Player-Panel"
 		is-disabled = false
@@ -400,6 +400,14 @@ macro "macro"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "CTRL+`"
+		command = "movespeed 0"
+		is-disabled = false
+	elem 
+		name = "CTRL+`+REP"
+		command = "movespeed 1"
 		is-disabled = false
 
 macro "hotkeymode"
@@ -654,6 +662,22 @@ macro "hotkeymode"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "`"
+		command = "movespeed 0"
+		is-disabled = false
+	elem 
+		name = "CTRL+`"
+		command = "movespeed 0"
+		is-disabled = false
+	elem 
+		name = "`+REP"
+		command = "movespeed 1"
+		is-disabled = false
+	elem 
+		name = "CTRL+`+REP"
+		command = "movespeed 1"
 		is-disabled = false
 
 macro "borgmacro"

@@ -158,7 +158,7 @@
 		return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.m_intent == "walk")
+		if(C.m_intent == WALK)
 			var/turf/T = get_turf(src)
 			C.loc = T
 

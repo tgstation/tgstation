@@ -81,7 +81,7 @@
 	var/losebreath = 0//Carbon
 	var/shakecamera = 0
 	var/a_intent = "help"//Living
-	var/m_intent = "run"//Living
+	var/m_intent = RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
 	var/obj/item/l_hand = null//Living

@@ -235,6 +235,8 @@
 	if(has_gravity(src))
 		var/obj/buckled_obj
 		var/oldlying = C.lying
+		if(C.m_intent == SPRINT) //No stopping the hubris here
+			lube = SLIDE|GALOSHES_DONT_HELP
 		if(C.buckled)
 			buckled_obj = C.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
@@ -242,7 +244,7 @@
 		else
 			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
+			if(C.m_intent== WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
 
 		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"

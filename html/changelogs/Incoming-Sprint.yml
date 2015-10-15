@@ -1,0 +1,9 @@
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - rscadd: "Humans can now sprint! While sprinting you ignore all slowdowns, but take stamina damage equivilent to how fast you normally would run. Be careful, sprinting too long can cause your stamina damage to rise to the point of collapse."
+  - rscadd: "You can enter sprint mode by double clicking the walk/run icon. Alternatively there is a hotkey to toggle your movement, ` (that thing next to the 1 key). Note that entering sprint works a little different in hotkey mode, instead of double clicking, you click and hold."
+  - rscadd: "As a tip you should be very cautious about sprinting if you are either very slowed down for some reason (space suit/clown shoes/fat) or have taken significant damage already. Either one of these conditions can quickly leave you collapsed, and your stamina damage will deplete slowly, leaving you very vunerable to further knockdowns."
+  - rscadd: "For a sense of scale: A healthy spaceman on box station can expect to be able to sprint from the captain's room wall to escape before collapsing. A spaceman in a hardsuit can expect to pass out just past the library. Anyone in poor condition will be able to reach, at the very furthest, the entrance to the medbay."

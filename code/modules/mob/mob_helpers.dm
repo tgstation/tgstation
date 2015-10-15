@@ -398,6 +398,29 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			else
 				hud_used.action_intent.icon_state = "help"
 
+/mob/verb/movespeed(var/sprint as num)
+	set hidden = 1
+
+	if(sprint)
+		usr.m_intent = SPRINT
+	else
+		switch(usr.m_intent)
+			if(SPRINT)
+				usr.m_intent = RUN
+			if(RUN)
+				usr.m_intent = WALK
+			if(WALK)
+				usr.m_intent = RUN
+
+	if(hud_used && hud_used.move_intent)
+		switch(usr.m_intent)
+			if(SPRINT)
+				hud_used.move_intent.icon_state = "sprinting"
+			if(RUN)
+				hud_used.move_intent.icon_state = "running"
+			if(WALK)
+				hud_used.move_intent.icon_state = "walking"
+
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A

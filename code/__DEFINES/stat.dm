@@ -33,3 +33,8 @@
 #define SHUTTLE_STRANDED 4
 #define SHUTTLE_ESCAPE 5
 #define SHUTTLE_ENDGAME 6
+
+//Movement modes
+#define WALK 0
+#define RUN 1
+#define SPRINT 2

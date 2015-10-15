@@ -14,7 +14,7 @@
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == RUN ? "running" : (WALK ? "walking" : "sprinting"))
 	using.screen_loc = ui_movi
 	adding += using
 	move_intent = using
