@@ -9,6 +9,20 @@ var/global/list/available_paintings = list(
 	"aymao",
 	"flowey",
 	"sunset",
+	"Flowereater",
+	"Sadclown",
+	"hospital",
+	"prophecy",
+	"anatomy",
+	"Mime",
+	"wizard",
+	"bland",
+	"Blu",
+	"Kate",
+	"daddy",
+	"beach",
+	"b_girl",
+	"carp",
 	)
 
 /obj/item/mounted/frame/painting
@@ -76,6 +90,49 @@ var/global/list/available_paintings = list(
 		if("sunset")
 			name = "\improper Path toward the Sunset"
 			desc = "A painting by D.T.Link. The colours fill you with hope and determination."
+		if("Flowereater")
+			name = "\improper Blumenliebhaber"
+			desc = "A painting by Guertena Weiss. An odd painting that fills you with hesitation. Its said you can hear cackling at night wherever its hung."
+		if("Sadclown")
+			name = "\improper Pagliacci"
+			desc = "A morose painting of a sad clown. Is it possible that beneath that cheerful latext mask lays a somber and tired heart? Probably not."
+		if("hospital")
+			name = "\improper Kattelox Hospital"
+			desc = "A painting depicting a compact but efficient hospital. The red really helps make the normally drab pallet pop."
+		if("prophecy")
+			name = "\improper Prophetic Mural"
+			desc = "A copy of an ancient mural. It depicts a blue armored warrior fighting off an inhuman monstrocity. Its said many still wait for its conclusion."
+		if("anatomy")
+			name = "\improper Anatomy Poster"
+			desc = "A NT approved anatomy poster! Remember, eat a burger every 20-30 minutes. For your health."
+		if("Mime")
+			name = "\improper Pretencious Mime Painting"
+			desc = "There are no words to discribe this painting."
+		if("wizard")
+			name = "\improper Nausiating Glow in the Dark Velvet Wizard Poster"
+			desc = "Oh god he's looking right at me, what do I do what do I do!?"
+		if("bland")
+			name = "\improper Pitcher and Orange"
+			desc = "A painfully standard painting, used to decorate dining rooms and bathrooms alike."
+		if("Blu")
+			name = "\improper Wai-Blu"
+			desc = "Faithfully Serving NanoTransen during her shift, gladly serving YOU after."
+		if("Kate")
+			name = "\improper Cindy Kate"
+			desc = "Through the carnage and bloodshed she's gunning for you, champ."
+		if("daddy")
+			name = "\improper I <3 Daddy!"
+			desc = "'NanoTransen respects the right for all associates and their families to be able to express their indivuality though many media. However, soliciting NanoTransen related merchandise without proper warrant is strickly prohibited. Luckly for you, you can now own your very own contraband NanoTransen merch without the threat of *REDACTED*!'"
+		if("beach")
+			name = "\improper Pristine Beach"
+			desc = "A beautiful beach that reminds you of cool breezes, soft waves, and greys screaming in pain."
+		if("b_girl")
+			name = "\improper Beach Star Yamamoto!"
+			desc = "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
+		if("carp")
+			name = "\improper 'Singing' Mounted Carp"
+			desc = "Too unrobust to beat a carp to death with your bare hands and mount it on a plank of wood? Then this professionally taxidermied trophy is just for you! Note: Does not actually sing."
+
 		else
 			name = "painting"
 			desc = "a blank painting."
@@ -172,6 +229,49 @@ var/global/list/available_paintings = list(
 		if("sunset")
 			name = "\improper Path toward the Sunset"
 			desc = "A painting by D.T.Link. The colours fill you with hope and determination."
+		if("Flowereater")
+			name = "\improper Blumenliebhaber"
+			desc = "A painting by Guertena Weiss. An odd painting that fills you with hesitation. Its said you can hear cackling at night wherever its hung."
+		if("Sadclown")
+			name = "\improper Pagliacci"
+			desc = "A morose painting of a sad clown. Is it possible that beneath that cheerful latext mask lays a somber and tired heart? Probably not."
+		if("hospital")
+			name = "\improper Kattelox Hospital"
+			desc = "A painting depicting a compact but efficient hospital. The red really helps make the normally drab pallet pop."
+		if("prophecy")
+			name = "\improper Prophetic Mural"
+			desc = "A copy of an ancient mural. It depicts a blue armored warrior fighting off an inhuman monstrocity. Its said many still wait for its conclusion."
+		if("anatomy")
+			name = "\improper Anatomy Poster"
+			desc = "A NT approved anatomy poster! Remember, eat a burger every 20-30 minutes. For your health."
+		if("Mime")
+			name = "\improper Pretencious Mime Painting"
+			desc = "There are no words to discribe this painting."
+		if("wizard")
+			name = "\improper Nausiating Glow in the Dark Velvet Wizard Poster"
+			desc = "Oh god he's looking right at me, what do I do what do I do!?"
+		if("bland")
+			name = "\improper Pitcher and Orange"
+			desc = "A painfully standard painting, used to decorate dining rooms and bathrooms alike."
+		if("Blu")
+			name = "\improper Wai-Blu"
+			desc = "Faithfully Serving NanoTransen during her shift, gladly serving YOU after."
+		if("Kate")
+			name = "\improper Cindy Kate"
+			desc = "Through the carnage and bloodshed she's gunning for you, champ."
+		if("daddy")
+			name = "\improper I <3 Daddy!"
+			desc = "'NanoTransen respects the right for all associates and their families to be able to express their indivuality though many media. However, soliciting NanoTransen related merchandise without proper warrant is strickly prohibited. Luckly for you, you can now own your very own contraband NanoTransen merch without the threat of *REDACTED*!'"
+		if("beach")
+			name = "\improper Pristine Beach"
+			desc = "A beautiful beach that reminds you of cool breezes, soft waves, and greys screaming in pain."
+		if("b_girl")
+			name = "\improper Beach Star Yamamoto!"
+			desc = "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
+		if("carp")
+			name = "\improper 'Singing' Mounted Carp"
+			desc = "Too unrobust to beat a carp to death with your bare hands and mount it on a plank of wood? Then this professionally taxidermied trophy is just for you! Note: Does not actually sing."
+
 		else
 			name = "painting"
 			desc = "a blank painting."
