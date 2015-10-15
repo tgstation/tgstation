@@ -38,17 +38,17 @@
 			occupied = 1
 			O.loc = src
 			hidden = O
-			user << "<span class='notice'>[O] flies out of your hands and into a compartment of the desk, one that wasn't there before.</span>"
+			user << "<span class='notice'>[O] flies out of your hands and into a compartment of the desk -- one that wasn't there before.</span>"
 
 /obj/structure/table/cult/attack_hand(mob/user)
 	if(!occupied)
-		user << "<span class='notice'>You can't seem to find any drawers. Strange...</span>"
+		user << "<span class='notice'>The table feels hollow, but you can't seem to find any drawers. Strange...</span>"
 		return
 	else
 		occupied = 0
 		hidden.loc = user.loc
 		user.put_in_hands(hidden)
-		user << "<span class='notice'>As you touch the desk, [hidden] flies out of a compartment that wasnn't there before and into your hands.</span>"
+		user << "<span class='notice'>As you touch the desk, [hidden] flies out of a compartment that wasn't there before and into your hands.</span>"
 		hidden = null
 
 /obj/effect/gateway
