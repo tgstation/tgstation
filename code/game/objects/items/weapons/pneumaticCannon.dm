@@ -85,8 +85,8 @@
 	Fire(user, target)
 
 
-/obj/item/weapon/pneumatic_cannon/proc/Fire(var/mob/living/carbon/human/user, var/turf/target_turf)
-	if(!istype(user) && !target_turf)
+/obj/item/weapon/pneumatic_cannon/proc/Fire(var/mob/living/carbon/human/user, var/atom/target)
+	if(!istype(user) && !target)
 		return
 	var/discharge = 0
 	if(is_in_gang(user, "Sleeping Carp"))
@@ -101,21 +101,19 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		user << "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>"
 		return
-	if(user.disabilities & CLUMSY && prob(25))
-		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", \
-							 "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+	if(user.disabilities & CLUMSY && prob(75))
+		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		user.drop_item()
 		if(prob(10))
-			target_turf = get_turf(user)
+			target = get_turf(user)
 		else
-			for(var/turf/T in range(3,src))
-				if(prob(25))
-					target_turf = T
+			var/list/possible_targets = range(3,src)
+			target = pick(possible_targets)
 		discharge = 1
 	if(!discharge)
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
-	add_logs(user, target_turf, "fired at", src)
+	add_logs(user, target, "fired at", src)
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
 		spawn(0)
@@ -123,7 +121,7 @@
 			loadedWeightClass -= ITD.w_class
 			ITD.throw_speed = pressureSetting * 2
 			ITD.loc = get_turf(src)
-			ITD.throw_at(target_turf, pressureSetting * 5, pressureSetting * 2,user)
+			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)
