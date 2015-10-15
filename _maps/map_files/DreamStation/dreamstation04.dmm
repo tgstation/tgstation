@@ -4165,7 +4165,7 @@
 "bCe" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/turf/simulated/floor/wood,/area/library)
 "bCf" = (/turf/simulated/floor/plasteel/cult,/area/library)
 "bCg" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/plasteel/cult,/area/library)
-"bCh" = (/obj/structure/cult/tome,/obj/item/clothing/under/suit_jacket/red,/turf/simulated/floor/plasteel/cult,/area/library)
+"bCh" = (/obj/structure/table/cult,/obj/item/clothing/under/suit_jacket/red,/turf/simulated/floor/plasteel/cult,/area/library)
 "bCi" = (/obj/structure/filingcabinet/chestdrawer/wheeled,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "bCj" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/mob/living/simple_animal/mouse,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "bCk" = (/obj/structure/cable/green{tag = "icon-1-4"; icon_state = "1-4"},/obj/item/weapon/cigbutt/cigarbutt,/obj/structure/cable/green{tag = "icon-1-2"; icon_state = "1-2"},/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
