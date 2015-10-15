@@ -13,9 +13,6 @@
 	use_skintones = 1
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
-	if(!config.mutant_humans) //No mutie scum here
-		return 1
-
 	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
 		return 1	//Pure humans are always allowed in all roles.
 
