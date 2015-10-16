@@ -273,6 +273,10 @@ var/list/advance_cures = 	list(
 	if(s)
 		AddSymptom(s)
 		Refresh(1)
+
+	if(symptoms.len>2)
+		for(var/datum/symptom/S in symptoms)
+			if(istype(S,/datum/symptom/inert)) src.RemoveSymptom(S) //removes the Inert Symptom
 	return
 
 // Randomly remove a symptom.
