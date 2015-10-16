@@ -87,11 +87,14 @@
 			var/list/args_list = query_tree["args"]
 
 			for(var/datum/d in objs)
+				var/list/new_args = list()
+				for(var/arg in args_list)
+					new_args += SDQL_expression(d, arg)
 				for(var/v in call_list)
 					// To stop any procs which sleep from executing slowly.
 					if(d)
 						if(hascall(d, v))
-							spawn() call(d, v)(arglist(args_list)) // Spawn in case the function sleeps.
+							spawn() call(d, v)(arglist(new_args)) // Spawn in case the function sleeps.
 
 		if("delete")
 			for(var/datum/d in objs)
