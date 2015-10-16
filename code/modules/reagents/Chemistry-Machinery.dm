@@ -846,11 +846,13 @@
 					if(!ispath(vaccine_type))
 						if(archive_diseases[path])
 							var/datum/disease/D = archive_diseases[path]
-							vaccine_type = D
-
-					B.name = "[vaccine_type.name] vaccine bottle"
-					B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
-					replicator_cooldown(200)
+							B.name = "[D.name] vaccine bottle"
+							B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
+							replicator_cooldown(200)
+					else
+						B.name = "[vaccine_type.name] vaccine bottle"
+						B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
+						replicator_cooldown(200)
 		else
 			src.temp_html = "The replicator is not ready yet."
 		src.updateUsrDialog()
