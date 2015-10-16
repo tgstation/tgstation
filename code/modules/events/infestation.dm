@@ -13,6 +13,7 @@
 #define VERM_SLIMES  3
 #define VERM_BATS    4
 #define VERM_BORERS  5
+#define VERM_MIMICS  6
 
 /datum/event/infestation
 	announceWhen = 15
@@ -55,7 +56,7 @@
 
 	var/list/spawn_types = list()
 	var/max_number = 4
-	var/vermin = pick(VERM_MICE, VERM_LIZARDS, VERM_SPIDERS, VERM_SLIMES, VERM_BATS, VERM_BORERS)
+	var/vermin = pick(VERM_MICE, VERM_LIZARDS, VERM_SPIDERS, VERM_SLIMES, VERM_BATS, VERM_BORERS, VERM_MIMICS)
 	switch(vermin)
 		if(VERM_MICE)
 			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white)
@@ -78,6 +79,10 @@
 			spawn_types = /mob/living/simple_animal/borer
 			vermstring = "cortical borers"
 			max_number = 5
+		if(VERM_MIMICS)
+			spawn_types = /mob/living/simple_animal/hostile/mimic/crate/item
+			vermstring = "mimics"
+			max_number = 1 //1 to 2
 
 	var/number = rand(2, max_number)
 
@@ -114,3 +119,4 @@
 #undef VERM_SPIDERS
 #undef VERM_SLIMES
 #undef VERM_BATS
+#undef VERB_MIMICS

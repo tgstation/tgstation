@@ -73,6 +73,16 @@
 			our_area_type = "bar"
 		else if(istype(A,/area/security))
 			our_area_type = "security"
+		else if(istype(A,/area/chapel))
+			our_area_type = "chapel"
+		else if(istype(A,/area/library))
+			our_area_type = "library"
+		else if(istype(A,/area/hydroponics))
+			our_area_type = "botany"
+		else if(istype(A,/area/crew_quarters/kitchen))
+			our_area_type = "kitchen"
+		else if(istype(A,/area/storage/nuke_storage))
+			our_area_type = "vault"
 
 	if(health < (0.75*maxHealth)) //Health below 3/4
 		if(L["lowhealth"]) //If we have a special set of disguises for low health
@@ -88,6 +98,8 @@
 			return
 
 	copied_object = pick(possible_disguises) //We did it!
+	if(!initial(copied_object.icon_state) || !initial(copied_object.icon)) //No icon!
+		copied_object = initial(copied_object) //Revert to default
 
 /mob/living/simple_animal/hostile/mimic/proc/apply_disguise()
 	if(ispath(copied_object))
@@ -336,7 +348,7 @@ var/global/list/item_mimic_disguises = list(
 				/obj/item/device/aicard, /obj/item/device/analyzer, /obj/item/device/assembly/igniter, /obj/item/device/camera, /obj/item/device/codebreaker, /obj/item/device/device_analyser,\
 				/obj/item/device/flash, /obj/item/device/flashlight, /obj/item/device/hailer, /obj/item/device/material_synth, /obj/item/device/megaphone, /obj/item/device/paicard,\
 				/obj/item/device/pda/clown, /obj/item/device/rcd/matter/engineering, /obj/item/device/radio, /obj/item/device/robotanalyzer, /obj/item/device/soulstone,\
-				/obj/item/device/soundsynth, /obj/item/device/violin, /obj/item/device/wormhole_jaunter, /obj/item/weapon/gun/portalgun), //Common items
+				/obj/item/device/soundsynth, /obj/item/device/violin, /obj/item/device/wormhole_jaunter, /obj/item/weapon/gun/portalgun, /obj/item/target), //Common items
 
 	"medbay" = list(/obj/item/weapon/circular_saw, /obj/item/weapon/melee/defibrillator, /obj/item/weapon/surgicaldrill, /obj/item/weapon/hemostat, /obj/item/weapon/dnainjector/hulkmut,\
 				/obj/item/weapon/bonesetter, /obj/item/weapon/autopsy_scanner, /obj/item/weapon/FixOVein, /obj/item/stack/medical/ointment, /obj/item/weapon/storage/firstaid,\
@@ -356,7 +368,20 @@ var/global/list/item_mimic_disguises = list(
 					/obj/item/weapon/storage/firstaid, /obj/item/weapon/storage/backpack/holding, /obj/item/weapon/storage/backpack/security, /obj/item/device/maracas, /obj/item/device/multitool,\
 					/obj/item/clothing/gloves/yellow, /obj/item/weapon/hand_tele, /obj/item/weapon/card/id/captains_spare, /obj/item/weapon/card/emag, /obj/item/weapon/extinguisher, /obj/item/weapon/gun/portalgun), //Focus on breath masks, jetpacks/oxygen tanks and generally useful stuff
 
-	"lowhealth" = list(/obj/item/weapon/cigbutt, /obj/item/weapon/shard, /obj/item/toy/blink, /obj/item/toy/ammo/crossbow, /obj/item/ammo_casing/a666) //Small, hard-to-notice items to turn into when at low health
+	"lowhealth" = list(/obj/item/weapon/cigbutt, /obj/item/weapon/shard, /obj/item/toy/blink, /obj/item/toy/ammo/crossbow, /obj/item/ammo_casing/a666), //Small, hard-to-notice items to turn into when at low health
+
+	//All foods EXCEPT for those with no icons (plenty of them)
+	"kitchen" = (typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks - typesof(/obj/item/weapon/reagent_containers/food/snacks/chip) - typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable) - typesof(/obj/item/weapon/reagent_containers/food/snacks/sliceable) - /obj/item/weapon/reagent_containers/food/snacks/slimesoup - typesof(/obj/item/weapon/reagent_containers/food/snacks/sweet)),
+
+	"library" = typesof(/obj/item/weapon/book), //All default books
+
+	"botany" = (typesof(/obj/item/weapon/reagent_containers/food/snacks/grown) - /obj/item/weapon/reagent_containers/food/snacks/grown), //All grown items
+
+	//Nuke, nuke disk, all coins, all minerals (except for those with no icons)
+	"vault" = list(/obj/machinery/nuclearbomb, /obj/item/weapon/disk/nuclear) + typesof(/obj/item/weapon/coin) + typesof(/obj/item/stack/sheet/mineral) - /obj/item/stack/sheet/mineral - /obj/item/stack/sheet/mineral/enruranium,
+
+	"chapel" = list(/obj/item/weapon/storage/bible, /obj/item/clothing/head/chaplain_hood, /obj/item/clothing/head/helmet/space/plasmaman/chaplain, /obj/item/clothing/suit/chaplain_hoodie, /obj/item/clothing/suit/space/plasmaman/chaplain,\
+				/obj/item/device/pda/chaplain, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/staff), //Chaplain garb, null rod, bible, holy water
 )
 
 /mob/living/simple_animal/hostile/mimic/crate/item
@@ -366,6 +391,8 @@ var/global/list/item_mimic_disguises = list(
 	move_to_delay = 2 //Faster than crate mimics
 	maxHealth = 60
 	health = 60 //Slightly less robust
+
+	copied_object = /obj/item/target //Default form for us if we accidentally morph into an item with no icon. Gets overridden on New()
 
 	var/icon/mouth_overlay = icon('icons/mob/mob.dmi', icon_state = "mimic_mouth")
 
@@ -431,15 +458,20 @@ var/global/list/item_mimic_disguises = list(
 	if(copied_object)
 		appearance = initial(copied_object.appearance)
 
-		var/obj/item/I = copied_object
-		size = initial(I.w_class)
+		if(ispath(copied_object, /obj/item))
+			var/obj/item/I = copied_object
+			size = initial(I.w_class)
+		else
+			size = SIZE_NORMAL
 
 /mob/living/simple_animal/hostile/mimic/crate/item/environment_disguise(list/L = item_mimic_disguises)
 	..(item_mimic_disguises)
 
-	var/obj/item/I = copied_object
-	if(istype(I))
+	if(ispath(copied_object, /obj/item))
+		var/obj/item/I = copied_object
 		size = initial(I.w_class)
+	else
+		size = SIZE_NORMAL
 
 //
 // Copy Mimic
