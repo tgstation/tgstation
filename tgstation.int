@@ -1,7 +1,11 @@
 // BEGIN_INTERNALS
 /*
-DIR: code code\modules code\modules\admin code\modules\client 
+LAST_COMPILE_TIME: 1444767831
+DIR: _maps _maps\map_files _maps\map_files\MetaStation code code\__DATASTRUCTURES code\controllers code\controllers\subsystem code\datums code\datums\diseases code\datums\wires code\defines code\defines\procs code\game code\game\gamemodes code\game\gamemodes\abduction code\game\gamemodes\changeling code\game\gamemodes\changeling\powers code\game\gamemodes\nuclear code\game\gamemodes\traitor code\game\gamemodes\wizard code\game\jobs code\game\machinery code\game\machinery\bots code\game\machinery\computer code\game\mecha code\game\objects code\game\objects\items code\game\objects\items\weapons code\modules code\modules\admin\verbs code\modules\endgame\supermatter_cascade code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\alien code\modules\mob\living\carbon\alien\humanoid code\modules\mob\living\silicon code\modules\mob\living\silicon\ai code\modules\mob\living\silicon\robot code\modules\power code\modules\research 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
+LAST_COMPILE_VERSION: 507.1286
+WINDOW: code\game\gamemodes\antag_spawner.dm;code\game\gamemodes\changeling\changeling.dm;code\game\gamemodes\game_mode.dm;code\game\gamemodes\nuclear\blackopsitems.dm;code\game\gamemodes\nuclear\blackops_objectives.dm;code\game\gamemodes\nuclear\nuclear.dm;code\modules\research\protolathe.dm;code\game\gamemodes\objective.dm;code\datums\mind.dm;code\game\gamemodes\setupgame.dm;code\game\gamemodes\abduction\abduction_gear.dm;code\datums\diseases\_disease.dm;code\defines\procs\AStar.dm;code\__DATASTRUCTURES\priority_queue.dm;code\modules\mob\living\carbon\alien\humanoid\queen.dm;code\game\gamemodes\changeling\powers\absorb.dm;code\modules\mob\living\silicon\laws.dm;code\controllers\subsystem\ticker.dm;code\modules\mob\living\silicon\robot\laws.dm;code\modules\mob\living\silicon\ai\laws.dm;code\modules\mob\living\silicon\ai\ai.dm;code\game\gamemodes\changeling\changeling_power.dm;code\game\gamemodes\changeling\evolution_menu.dm;code\game\gamemodes\nuclear\blackops.dm;code\game\gamemodes\traitor\double_agents.dm;code\game\gamemodes\traitor\traitor.dm;code\game\jobs\jobs.dm
+FILE: code\game\jobs\jobs.dm
 */
 // END_INTERNALS
