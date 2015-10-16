@@ -1,0 +1,40 @@
+################################
+# Example Changelog File
+#
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+#
+# Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
+# When it is, any changes listed below will disappear.
+#
+# Valid Prefixes: 
+#   bugfix
+#   wip (For works in progress)
+#   tweak
+#   soundadd
+#   sounddel
+#   rscdel (general adding of nice things)
+#   rscadd (general deleting of nice things)
+#   imageadd
+#   imagedel
+#   spellcheck (typo fixes)
+#   experiment
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.  
+author: Unid
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+changes: 
+  - tweak: Mimics now sleep until somebody attempts to interact with them. When they stop attacking, they go back to sleep and regenerate.
+  - tweak: Attempting to snipe a mimic from distance will result in it going berserk.
+  - rscadd: Added item mimics and chest mimics.
+  - rscadd: Chest mimics are more robust and have a grabbing attack which weakens its victims. Attacking chest mimics with sharp objects will interrupt the grabbing attack.
+  - rscadd: Added mimic meat. Rolling pins, holy water and the Boo spell can interact with it
+  - rscdel: Mimics no longer spawn from gold slime cores
