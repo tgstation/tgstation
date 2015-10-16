@@ -76,7 +76,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 
 
-	initialize_killswitch() //make the explode if they leave their z-level
+//	initialize_killswitch() //make the explode if they leave their z-level. Only for spawner-MoMMIs now
 
 
 	if(connected_ai)
