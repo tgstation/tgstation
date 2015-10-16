@@ -109,7 +109,7 @@ obj/item/device/mmi/Destroy()
 
 		// Checking to see if the ghost has been moused/borer'd/etc since death.
 		var/mob/living/carbon/brain/BM = BO.brainmob
-		if(!mind_can_reenter(BM.mind))
+		if(!BM.client)
 			user << "<span class='notice'>\The [src] indicates that their mind is completely unresponsive; there's no point.</span>"
 			return
 		src.visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
