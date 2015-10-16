@@ -34,8 +34,8 @@ Bonus
 					M.reagents.add_reagent("ephedrine", 7)
 				if (M.reagents.get_reagent_amount("coffee") < 20)
 					M.reagents.add_reagent("coffee", 20)
-				if (M.reagents.get_reagent_amount("Hyperzine") < 15)
-					M.reagents.add_reagent("Hyperzine", 7)
+				if (M.reagents.get_reagent_amount("hyperzine") < 15)
+					M.reagents.add_reagent("hyperzine", 7)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
 					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.", "You feel like GOING FAST around the station.")]</span>"

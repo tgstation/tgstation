@@ -340,15 +340,6 @@
 	build_path = /obj/item/weapon/circuitboard/message_monitor
 	category = list("Computer Boards")
 
-/datum/design/comm_traffic
-	name = "Computer Design (Telecommunications Traffic Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a telecommunications traffic control console."
-	id = "comm_traffic"
-	req_tech = list("programming" = 3)
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/comm_traffic
-	category = list("Computer Boards")
 
 /datum/design/telesci_console
 	name = "Computer Design (Telepad Control Console Board)"
