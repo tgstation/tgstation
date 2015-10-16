@@ -90,7 +90,6 @@ world/IsBanned(key,address,computer_id)
 			else
 				expires = " The is a permanent ban."
 
-
 			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
@@ -98,6 +97,7 @@ world/IsBanned(key,address,computer_id)
 
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			return .
+
 	. = ..()	//default pager ban stuff
 	if (.)
 		//byond will not trigger isbanned() for "global" host bans,
