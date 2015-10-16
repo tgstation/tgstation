@@ -1,0 +1,6 @@
+author: Xhuis
+delete-after: True
+
+changes: 
+  - rscadd: "Geiger counters have been added and are obtainable from autolathes and EngiVends. They are built into engineering hardsuits."
+  - tweak: "When a mob is impacted by radiation, the radiation is now relayed to all items on the mob."
