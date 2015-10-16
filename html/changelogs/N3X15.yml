@@ -1,2 +1,5 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: "Machinery no longer speaks on channel \".7\"."
+  - bugfix: "GHOSTEARS and GHOSTRADIO should work properly after server upgrade to 509.1307."
+  - bugfix: "If name and as_name are the same, \"(as whatever)\" will not be rendered."

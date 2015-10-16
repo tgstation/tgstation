@@ -84,7 +84,7 @@
 	return rendered
 
 /datum/speech/proc/render_as_name()
-	if(as_name)
+	if(as_name && as_name != name)
 		return " (as [as_name])"
 	return ""
 
