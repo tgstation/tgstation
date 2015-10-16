@@ -255,7 +255,9 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70
-	flags = OPENCONTAINER
+	flags = OPENCONTAINER | BLOCKHAIR
+	slot_flags = SLOT_HEAD
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))
@@ -273,3 +275,10 @@
 		user.put_in_hands(new /obj/item/weapon/bucket_sensor)
 	else
 		..()
+
+/obj/item/weapon/reagent_containers/glass/bucket/equipped(mob/user, slot)
+	..()
+	if(slot == slot_head && reagents.total_volume)
+		user << "<span class='userdanger'>[src]'s contents spill all over you!</span>"
+		reagents.reaction(user, TOUCH)
+		reagents.clear_reagents()
