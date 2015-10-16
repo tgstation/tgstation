@@ -70,36 +70,36 @@
 
 		interpreter.container = src
 
-		interpreter.SetVar("PI"		, 	3.141592653)	// value of pi
-		interpreter.SetVar("E" 		, 	2.718281828)	// value of e
-		interpreter.SetVar("SQURT2" , 	1.414213562)	// value of the square root of 2
-		interpreter.SetVar("FALSE"  , 	0)				// boolean shortcut to 0
-		interpreter.SetVar("false"  , 	0)				// boolean shortcut to 0
-		interpreter.SetVar("TRUE"	,	1)				// boolean shortcut to 1
-		interpreter.SetVar("true"	,	1)				// boolean shortcut to 1
+		interpreter.SetVar("PI",        3.141592653)	// value of pi
+		interpreter.SetVar("E",         2.718281828)	// value of e
+		interpreter.SetVar("SQURT2",    1.414213562)	// value of the square root of 2
+		interpreter.SetVar("FALSE",     0)				// boolean shortcut to 0
+		interpreter.SetVar("false",     0)				// boolean shortcut to 0
+		interpreter.SetVar("TRUE",      1)				// boolean shortcut to 1
+		interpreter.SetVar("true",      1)				// boolean shortcut to 1
 
-		interpreter.SetVar("NORTH" 	, 	NORTH)			// NORTH (1)
-		interpreter.SetVar("SOUTH" 	, 	SOUTH)			// SOUTH (2)
-		interpreter.SetVar("EAST" 	, 	EAST)			// EAST  (4)
-		interpreter.SetVar("WEST" 	, 	WEST)			// WEST  (8)
+		interpreter.SetVar("NORTH",     NORTH)			// NORTH (1)
+		interpreter.SetVar("SOUTH",     SOUTH)			// SOUTH (2)
+		interpreter.SetVar("EAST",      EAST)			// EAST  (4)
+		interpreter.SetVar("WEST",      WEST)			// WEST  (8)
 
 		// Channel macros
-		interpreter.SetVar("$common",	1459)
-		interpreter.SetVar("$science",	1351)
-		interpreter.SetVar("$command",	1353)
-		interpreter.SetVar("$medical",	1355)
-		interpreter.SetVar("$engineering",1357)
-		interpreter.SetVar("$security",	1359)
-		interpreter.SetVar("$supply",	1347)
+		interpreter.SetVar("$common",      1459)
+		interpreter.SetVar("$science",     1351)
+		interpreter.SetVar("$command",     1353)
+		interpreter.SetVar("$medical",     1355)
+		interpreter.SetVar("$engineering", 1357)
+		interpreter.SetVar("$security",    1359)
+		interpreter.SetVar("$supply",      1347)
 
 		// Signal data
 
-		interpreter.SetVar("$content", 	signal.data["message"])
-		interpreter.SetVar("$freq"   , 	signal.frequency)
-		interpreter.SetVar("$source" , 	signal.data["name"])
-		interpreter.SetVar("$job"    , 	signal.data["job"])
-		interpreter.SetVar("$sign"   ,	signal)
-		interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
+		interpreter.SetVar("$content", signal.data["message"])
+		interpreter.SetVar("$freq",    signal.frequency)
+		interpreter.SetVar("$source",  signal.data["name"])
+		interpreter.SetVar("$job",     signal.data["job"])
+		interpreter.SetVar("$sign",    signal)
+		interpreter.SetVar("$pass",    !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
 
 		// Set up the script procs
 

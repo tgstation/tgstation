@@ -226,29 +226,23 @@
 */
 
 /obj/item/device/radio/talk_into(var/datum/speech/speech_orig, var/channel=null)
-	var/datum/speech/speech=speech_orig.clone()
-	speech.radio=src
-	say_testing(loc, "\[Radio\] - Got radio/talk_into([html_encode(speech_orig.message)], [channel]).")
+	say_testing(loc, "\[Radio\] - Got radio/talk_into([html_encode(speech_orig.message)], [channel!=null ? channel : "null"]).")
 	if(!on)
 		say_testing(loc, "\[Radio\] - Not on.")
-		returnToPool(speech)
 		return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
-	if(!speech.speaker || !speech.message)
-		say_testing(loc, "\[Radio\] - speech.speaker or speech.message are null. [speech.speaker], [html_encode(speech.message)]")
-		returnToPool(speech)
+	if(!speech_orig.speaker || !speech_orig.message)
+		say_testing(loc, "\[Radio\] - speech.speaker or speech.message are null. [speech_orig.speaker], [html_encode(speech_orig.message)]")
 		return
 
 	//  Uncommenting this. To the above comment:
 	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(isWireCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		say_testing(loc, "\[Radio\] - TRANSMIT wire cut.")
-		returnToPool(speech)
 		return
 
-	if(!speech.speaker.IsVocal())
+	if(!speech_orig.speaker.IsVocal())
 		say_testing(loc, "\[Radio\] - Speaker not vocal.")
-		returnToPool(speech)
 		return
 
 	/* Quick introduction:
@@ -264,6 +258,14 @@
 	/*
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
+	var/datum/speech/speech=speech_orig.clone()
+	speech.radio=src
+	#ifdef SAY_DEBUG
+	var/msgclasses  = speech.render_message_classes(", ")
+	var/wrapclasses = speech.render_wrapper_classes(", ")
+	say_testing(loc, "\[Radio\] - Cloned speech - language=[speech.language], message_classes={[msgclasses]}, wrapper_classes={[wrapclasses]}")
+	#endif
+
 	var/skip_freq_search=0
 	switch(channel)
 		if(MODE_HEADSET,null) // Used for ";" prefix, which always sends to src.frequency.
@@ -442,6 +444,9 @@
 
 		"r_quote"  = speech.rquote,
 		"l_quote"  = speech.lquote,
+
+		"message_classes" = speech.message_classes.Copy(),
+		"wrapper_classes" = speech.wrapper_classes.Copy(),
 	)
 	signal.frequency = speech.frequency // Quick frequency set
 

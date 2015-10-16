@@ -59,8 +59,11 @@
 	clone.message = language.scramble(message)
 	return clone
 
-/datum/speech/proc/render_wrapper_classes()
-	return list2text(wrapper_classes, " ")
+/datum/speech/proc/render_wrapper_classes(var/sep=" ")
+	return list2text(wrapper_classes, sep)
+
+/datum/speech/proc/render_message_classes(var/sep=" ")
+	return list2text(message_classes, sep)
 
 /datum/speech/proc/render_message()
 #ifdef SAY_DEBUG
