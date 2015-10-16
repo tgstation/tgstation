@@ -18,7 +18,7 @@
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = 2.8
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
@@ -28,7 +28,7 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/mob/tableclimber
-	smooth = 1
+	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
 /obj/structure/table/New()
@@ -88,14 +88,15 @@
 	return
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
-	if(height==0) return 1
+	if(height==0)
+		return 1
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return 1
 	else
-		return 0
+		return !density
 
 /obj/structure/table/MouseDrop_T(atom/movable/O, mob/user)
 	if(ismob(O) && user == O && ishuman(user))
@@ -240,13 +241,15 @@
 	tableclimber = user
 	if(do_mob(user, user, climb_time))
 		if(src.loc) //Checking if table has been destroyed
-			user.pass_flags += PASSTABLE
-			step(user,get_dir(user,src.loc))
-			user.pass_flags -= PASSTABLE
-			user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
+			density = 0
+			if(step(user,get_dir(user,src.loc)))
+				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
-			add_logs(user, src, "climbed onto")
-			user.Stun(2)
+				add_logs(user, src, "climbed onto")
+				user.Stun(2)
+			else
+				user << "<span class='warning'>You fail to climb onto [src].</span>"
+			density = 1
 			tableclimber = null
 			return 1
 	tableclimber = null
@@ -363,20 +366,20 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	var/health = 5
 
 /obj/structure/rack/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if(prob(50))
 				rack_destroy()
 			else
 				qdel(src)
-		if(3.0)
+		if(3)
 			if(prob(25))
 				rack_destroy()
 
@@ -481,7 +484,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rack_parts"
 	flags = CONDUCT
-	materials = list(MAT_METAL=3750)
+	materials = list(MAT_METAL=2000)
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	..()

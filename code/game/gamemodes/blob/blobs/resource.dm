@@ -2,8 +2,9 @@
 	name = "resource blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
-	health = 30
-	fire_resist = 2
+	desc = "A thin spire of slightly swaying tendrils."
+	health = 60
+	maxhealth = 60
 	var/resource_delay = 0
 
 /obj/effect/blob/resource/update_icon()

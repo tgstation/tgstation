@@ -857,6 +857,15 @@ menu "menu"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem 
+		name = "&Reconnect"
+		command = ".reconnect"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"

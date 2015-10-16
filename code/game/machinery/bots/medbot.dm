@@ -8,7 +8,7 @@
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
-	layer = 5.0
+	layer = 5
 	density = 0
 	anchored = 0
 	health = 20
@@ -70,7 +70,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = 3.0
+	w_class = 3
 
 	/obj/item/weapon/firstaid_arm_assembly/New()
 		..()
@@ -523,8 +523,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
-	return
+	..()
 
 /obj/machinery/bot/medbot/proc/declare(crit_patient)
 	if(declare_cooldown)

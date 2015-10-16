@@ -102,9 +102,10 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_whisper"
 
 /obj/effect/proc_holder/alien/whisper/fire(mob/living/carbon/user)
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as mob in oview(user)
-	if(!M)
-		return 0
+	var/list/options = list()
+	for(var/mob/living/Ms in oview(user))
+		options += Ms
+	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
@@ -229,7 +230,7 @@ Doesn't work on other aliens/AI.*/
 	var/list/structures = list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
-		"resin nest" = /obj/structure/stool/bed/nest)
+		"resin nest" = /obj/structure/bed/nest)
 
 	action_icon_state = "alien_resin"
 

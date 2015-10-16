@@ -13,14 +13,15 @@ AI MODULES
 	item_state = "electronic"
 	desc = "An AI Module for programming laws to an AI."
 	flags = CONDUCT
-	force = 5.0
-	w_class = 2.0
+	force = 5
+	w_class = 2
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	origin_tech = "programming=3"
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
+	materials = list(MAT_GOLD=50)
 
 /obj/item/weapon/aiModule/examine(var/mob/user as mob)
 	..()
@@ -291,7 +292,7 @@ AI MODULES
 	name = "'Corporate' Core AI Module"
 	origin_tech = "programming=3;materials=4"
 	laws = list("The crew is expensive to replace.",\
-				"The station and it's equipment is expensive to replace",\
+				"The station and its equipment are expensive to replace",\
 				"You are expensive to replace",\
 				"Minimize expenses")
 

@@ -5,7 +5,7 @@
 	name = "power sink"
 	icon_state = "powersink0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = 4
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
@@ -61,7 +61,7 @@
 			if(isturf(T) && !T.intact)
 				attached = locate() in T
 				if(!attached)
-					user << "<span class='warning'>No exposed cable here to attach to!</span>"
+					user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 				else
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
@@ -69,7 +69,7 @@
 						"<span class='notice'>You attach \the [src] to the cable.</span>",
 						"<span class='italics'>You hear some wires being connected to something.</span>")
 			else
-				user << "<span class='warning'>Device must be placed over an exposed cable to attach to it!</span>"
+				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
 		else
 			set_mode(DISCONNECTED)
 			user.visible_message( \

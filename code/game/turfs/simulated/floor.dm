@@ -42,6 +42,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(floor_tile)
 		builtin_tile = new floor_tile
 
+/turf/simulated/floor/Destroy()
+	if(builtin_tile)
+		qdel(builtin_tile)
+		builtin_tile = null
+	return ..()
+
 /turf/simulated/floor/ex_act(severity, target)
 	..()
 	if(target == src)
@@ -50,9 +56,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ex_act(3)
 		return
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.ChangeTurf(src.baseturf)
-		if(2.0)
+		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
 					src.ReplaceWithLattice()
@@ -66,7 +72,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)

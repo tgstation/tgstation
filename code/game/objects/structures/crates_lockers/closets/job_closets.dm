@@ -66,6 +66,7 @@
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/holosign_creator(src)
 	new /obj/item/device/lightreplacer(src)
+	new /obj/item/weapon/soap(src)
 	new /obj/item/weapon/storage/bag/trash(src)
 	new /obj/item/clothing/shoes/galoshes(src)
 	new /obj/item/weapon/watertank/janitor(src)
@@ -187,9 +188,6 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/head/hardhat/atmos(src)
-	new /obj/item/clothing/head/hardhat/atmos(src)
-	new /obj/item/clothing/head/hardhat/atmos(src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow

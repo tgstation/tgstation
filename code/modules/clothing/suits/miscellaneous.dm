@@ -36,7 +36,7 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-
+	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 /obj/item/clothing/suit/hgpirate
 	name = "pirate captain coat"
@@ -44,6 +44,7 @@
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
 	flags_inv = HIDEJUMPSUIT
+	allowed = list(/obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 
 
 /obj/item/clothing/suit/cyborg_suit
@@ -322,7 +323,7 @@
 	item_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
+	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
 
 // WINTER COATS

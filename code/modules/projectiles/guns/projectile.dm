@@ -3,7 +3,7 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
-	w_class = 3.0
+	w_class = 3
 	materials = list(MAT_METAL=1000)
 
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
@@ -89,7 +89,7 @@
 
 /obj/item/weapon/gun/projectile/attack_hand(mob/user)
 	if(loc == user)
-		if(suppressed)
+		if(suppressed && can_unsuppress)
 			var/obj/item/weapon/suppressor/S = suppressed
 			if(user.l_hand != src && user.r_hand != src)
 				..()
@@ -139,7 +139,7 @@
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
 		sleep(25)
 		if(user.l_hand == src || user.r_hand == src)
-			process_fire(user, user, 0)
+			process_fire(user, user, 0, zone_override = "head")
 			user.visible_message("<span class='suicide'>[user] blows \his brains out with the [src.name]!</span>")
 			return(BRUTELOSS)
 		else

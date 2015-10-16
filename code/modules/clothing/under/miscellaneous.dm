@@ -94,6 +94,7 @@
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
@@ -252,6 +253,23 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+
+/obj/item/clothing/under/blueskirt
+	name = "blue skirt"
+	desc = "A blue, casual skirt."
+	icon_state = "blueskirt"
+	item_color = "blueskirt"
+	item_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 0
+
+/obj/item/clothing/under/blueskirt/redskirt
+	name = "red skirt"
+	desc = "A red, casual skirt."
+	icon_state = "redskirt"
+	item_color = "redskirt"
+	item_state = "r_suit"
 
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
@@ -451,6 +469,7 @@
 	item_color = "plaid_red"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -458,6 +477,9 @@
 	icon_state = "plaid_blue"
 	item_state = "plaid_blue"
 	item_color = "plaid_blue"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/plaid_skirt/purple
 	name = "purple plaid skirt"
@@ -465,6 +487,9 @@
 	icon_state = "plaid_purple"
 	item_state = "plaid_purple"
 	item_color = "plaid_purple"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 1
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/jester
 	name = "jester suit"

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
-	var/health = 100.0
+	var/health = 100
 
 	var/valve_open = 0
 	var/release_pressure = ONE_ATMOSPHERE
@@ -217,21 +217,21 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if(destroyed || prob(30))
 				qdel(src)
 			else
 				src.health = 0
 				healthcheck()
 			return
-		if(2.0)
+		if(2)
 			if(destroyed)
 				qdel(src)
 			else
 				src.health -= rand(40, 100)
 				healthcheck()
 			return
-		if(3.0)
+		if(3)
 			src.health -= rand(15,40)
 			healthcheck()
 			return
@@ -239,10 +239,9 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user, params)
 	if(!istype(W, /obj/item/weapon/wrench) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
-		visible_message("<span class='danger'>[user] hits \the [src] with a [W]!</span>")
 		investigate_log("was smacked with \a [W] by [key_name(user)]", "atmos")
-		src.health -= W.force
-		src.add_fingerprint(user)
+		health -= W.force
+		add_fingerprint(user)
 		healthcheck()
 
 	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))

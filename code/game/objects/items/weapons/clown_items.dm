@@ -15,7 +15,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = 1.0
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -34,6 +34,12 @@
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	icon_state = "soapsyndie"
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
+
+/obj/item/weapon/soap/suicide_act(mob/user)
+	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
+	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
+	PoolOrNew(/obj/effect/effect/foam, loc)
+	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
@@ -78,13 +84,18 @@
 	item_state = "bike_horn"
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = 1.0
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
 	var/spam_flag = 0
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/cooldowntime = 20
+
+/obj/item/weapon/bikehorn/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] solemnly points the horn at \his temple! It looks like \he's trying to commit suicide..</span>")
+	playsound(src.loc, honksound, 50, 1)
+	return (BRUTELOSS)
 
 /obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!spam_flag)

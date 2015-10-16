@@ -22,7 +22,7 @@
 	F << "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
-/client/proc/investigate_show( subject in list("hrefs","notes","ntsl","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu") )
+/client/proc/investigate_show( subject in list("hrefs","notes","watchlist","ntsl","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu") )
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)	return
@@ -46,3 +46,5 @@
 				return
 		if("notes")
 			show_note()
+		if("watchlist")
+			watchlist_show()

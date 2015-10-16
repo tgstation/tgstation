@@ -16,7 +16,7 @@
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in range(0)
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
 	if (N)
@@ -106,5 +106,7 @@
 	else
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
 		reagents.reaction(target, TOUCH)
+		if(qdeleted(src))
+			return
 
 	reagents.clear_reagents()

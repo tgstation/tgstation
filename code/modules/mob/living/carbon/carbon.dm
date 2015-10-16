@@ -22,6 +22,8 @@
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
 	remove_from_all_data_huds()
+	if(dna)
+		qdel(dna)
 	return ..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -78,7 +80,7 @@
 	. = ..()
 
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, override = 0)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0)
 	shock_damage *= siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
@@ -270,7 +272,7 @@
 /mob/living/carbon/can_use_hands()
 	if(handcuffed)
 		return 0
-	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
+	if(buckled && ! istype(buckled, /obj/structure/bed/chair)) // buckling does not restrict hands
 		return 0
 	return 1
 
@@ -583,4 +585,32 @@ var/const/GALOSHES_DONT_HELP = 4
 		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+		if(locate(/obj/item/device/assembly/health) in src)
+			stat(null, "Health: [health]")
+
 	add_abilities_to_panel()
+
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood)
+	if(src.is_muzzled())
+		src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
+		return 0
+	Stun(4)
+	if(nutrition < 100 && !blood)
+		visible_message("<span class='warning'>[src] dry heaves!</span>", \
+						"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
+		Weaken(10)
+	else
+		visible_message("<span class='danger'>[src] throws up!</span>", \
+						"<span class='userdanger'>You throw up!</span>")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+		var/turf/T = get_turf(src)
+		if(blood)
+			if(T)
+				T.add_blood_floor(src)
+			adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src)
+			nutrition -= lost_nutrition
+			adjustToxLoss(-3)
+	return 1

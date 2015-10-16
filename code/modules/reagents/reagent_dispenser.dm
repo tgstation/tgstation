@@ -12,14 +12,14 @@
 
 /obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				qdel(src)
 				return
@@ -67,15 +67,15 @@
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				PoolOrNew(/obj/effect/effect/water, src.loc)
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(5))
 				PoolOrNew(/obj/effect/effect/water, src.loc)
 				qdel(src)
@@ -160,8 +160,11 @@
 		user << "<span class='warning'>No cups left!</span>"
 		return
 	cups--
-	user.put_in_hands(new /obj/item/weapon/reagent_containers/food/drinks/sillycup)
-	user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
+	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/SC = new(loc)
+	if(Adjacent(user)) //not TK
+		user.put_in_hands(SC)
+		user.visible_message("[user] gets a cup from [src].","<span class='notice'>You get a cup from [src].</span>")
+
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/paper))

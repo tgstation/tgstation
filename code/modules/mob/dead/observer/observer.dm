@@ -69,7 +69,7 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
-	..()
+	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
@@ -106,6 +106,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
+	if (orbiting)
+		stop_orbit()
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -158,12 +160,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		usr << "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>"
 		return
-	if(mind.current.ajourn && mind.current.stat != DEAD) 	//check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
-		var/obj/effect/rune/R = locate() in mind.current.loc	//whilst corpse is alive, we can only reenter the body if it's on the rune
-		if(!(R && R.word1 == wordhell && R.word2 == wordtravel && R.word3 == wordself))	//astral journeying rune
-			usr << "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>"
-			return
-	mind.current.ajourn=0
 	mind.current.key = key
 	return 1
 
@@ -200,8 +196,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
-	set name = "Follow" // "Haunt"
-	set desc = "Follow and haunt a mob."
+	set name = "Orbit" // "Haunt"
+	set desc = "Follow and orbit a mob."
 
 	var/list/mobs = getmobs()
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
@@ -210,24 +206,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if(target && target != src)
-		if(following && following == target)
-			return
-		following = target
-		src << "<span class='notice'>Now following [target].</span>"
-		spawn(0)
-			var/turf/pos = get_turf(src)
-			while(loc == pos && target && following == target && client)
-				var/turf/T = get_turf(target)
-				if(!T)
-					break
-				// To stop the ghost flickering.
-				if(loc != T)
-					loc = T
-				pos = loc
-				sleep(15)
-			if (target == following) following = null
+	if (!istype(target))
+		return
 
+	var/icon/I = icon(target.icon,target.icon_state,target.dir)
+
+	var/orbitsize = (I.Width()+I.Height())*0.5
+	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+
+	if(orbiting != target)
+		src << "<span class='notice'>Now orbiting [target].</span>"
+
+	orbit(target,orbitsize,0)
+
+/mob/dead/observer/orbit()
+	..()
+	//restart our floating animation after orbit is done.
+	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
+	if (!orbiting) //make sure another orbit hasn't started
+		pixel_y = 0
+		animate(src, pixel_y = 2, time = 10, loop = -1)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"

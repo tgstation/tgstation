@@ -19,6 +19,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	throw_range = 5
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	layer = MOB_LAYER
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -103,8 +104,8 @@ var/const/MAX_ACTIVE_TIME = 400
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
-	if(!isliving(M)) return 0
-
+	if(!isliving(M))
+		return 0
 	if((!iscorgi(M) && !iscarbon(M)) || isalien(M))
 		return 0
 	if(attached)
@@ -113,17 +114,17 @@ var/const/MAX_ACTIVE_TIME = 400
 		attached++
 		spawn(MAX_IMPREGNATION_TIME)
 			attached = 0
-
-	if(M.getorgan(/obj/item/organ/internal/alien/hivenode)) return 0
-	if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)) return 0
-
-	if(loc == M) return 0
-	if(stat != CONSCIOUS)	return 0
+	if(M.getorgan(/obj/item/organ/internal/alien/hivenode))
+		return 0
+	if(M.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		return 0
+	if(loc == M)
+		return 0
+	if(stat != CONSCIOUS)
+		return 0
 	if(!sterile) M.take_organ_damage(strength,0) //done here so that even borgs and humans in helmets take damage
-
 	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
 						"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
-
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered(head_only = 1))
@@ -131,13 +132,14 @@ var/const/MAX_ACTIVE_TIME = 400
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
 			return 0
-
 	if(iscarbon(M))
 		var/mob/living/carbon/target = M
 		if(target.wear_mask)
-			if(prob(20))	return 0
+			if(prob(20))
+				return 0
 			var/obj/item/clothing/W = target.wear_mask
-			if(W.flags & NODROP)	return 0
+			if(W.flags & NODROP)
+				return 0
 			target.unEquip(W)
 
 			target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
@@ -145,8 +147,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		src.loc = target
 		target.equip_to_slot(src, slot_wear_mask,,0)
-
-		if(!sterile) M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile)
+			M.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 	else if (iscorgi(M))
 		var/mob/living/simple_animal/pet/dog/corgi/C = M
 		loc = C

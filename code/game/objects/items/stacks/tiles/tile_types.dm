@@ -3,9 +3,9 @@
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
-	w_class = 3.0
-	force = 1.0
-	throwforce = 1.0
+	w_class = 3
+	force = 1
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
@@ -21,7 +21,7 @@
 			user << "<span class='warning'>You need at least four tiles to do this!</span>"
 			return
 
-		if(is_hot(WT) && !mineralType)
+		if(WT.is_hot() && !mineralType)
 			user << "<span class='warning'>You can not reform this!</span>"
 			return
 
@@ -121,9 +121,9 @@
 	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
-	force = 6.0
-	materials = list(MAT_METAL=937.5)
-	throwforce = 10.0
+	force = 6
+	materials = list(MAT_METAL=500)
+	throwforce = 10
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor/plasteel

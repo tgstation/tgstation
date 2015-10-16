@@ -263,7 +263,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	if(!wear_mask && is_thrall(src) && in_range(user,src))
+	if(!skipface && is_thrall(src) && in_range(user,src))
 		msg += "Their features seem unnaturally tight and drawn.\n"
 
 	if(istype(user, /mob/living/carbon/human))
@@ -280,7 +280,8 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
 					var/implant_detect
 					for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
-						implant_detect += "[name] is modified with a [CI.name].<br>"
+						if(CI.status == ORGAN_ROBOTIC)
+							implant_detect += "[name] is modified with a [CI.name].<br>"
 					if(implant_detect)
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect

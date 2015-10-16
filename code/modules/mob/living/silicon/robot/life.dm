@@ -42,21 +42,21 @@
 
 	if (..()) //Alive.
 
-		if(health <= config.health_threshold_dead) //die only once
+		if(health <= -maxHealth) //die only once
 			death()
 			return
 
-		if(health < 50) //Gradual break down of modules as more damage is sustained
+		if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
 			if(uneq_module(module_state_3))
 				src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
 			if(health < 0)
 				if(uneq_module(module_state_2))
 					src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
-				if(health < -50)
+				if(health < -maxHealth*0.5)
 					if(uneq_module(module_state_1))
 						src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
 
-		if(getOxyLoss() > 50)
+		if(getOxyLoss() > maxHealth*0.5)
 			Paralyse(3)
 
 		if (paralysis || stunned || weakened) //Stunned etc.
@@ -131,38 +131,37 @@
 /mob/living/silicon/robot/handle_hud_icons_health()
 	if (healths)
 		if (stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(50 to 100)
-					healths.icon_state = "health2"
-				if(0 to 50)
-					healths.icon_state = "health3"
-				if(-50 to 0)
-					healths.icon_state = "health4"
-				if(config.health_threshold_dead to -50)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
+			if(health >= maxHealth)
+				healths.icon_state = "health0"
+			else if(health > maxHealth*0.5)
+				healths.icon_state = "health2"
+			else if(health > 0)
+				healths.icon_state = "health3"
+			else if(health > -maxHealth*0.5)
+				healths.icon_state = "health4"
+			else if(health > -maxHealth)
+				healths.icon_state = "health5"
+			else
+				healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
 
 /mob/living/silicon/robot/proc/update_cell()
 	if (cell)
-		var/cellcharge = src.cell.charge/src.cell.maxcharge
+		var/cellcharge = cell.charge/cell.maxcharge
 		switch(cellcharge)
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge","lowcell",1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 1)
 			if(0.25 to 0.5)
-				throw_alert("charge","lowcell",2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 2)
 			if(0.01 to 0.25)
-				throw_alert("charge","lowcell",3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 3)
 			else
-				throw_alert("charge","emptycell")
+				throw_alert("charge", /obj/screen/alert/emptycell)
 	else
-		throw_alert("charge","nocell")
+		throw_alert("charge", /obj/screen/alert/nocell)
 
 /mob/living/silicon/robot/proc/update_items()
 	if (client)
@@ -205,4 +204,5 @@
 		canmove = 0
 	else
 		canmove = 1
+	update_transform()
 	return canmove

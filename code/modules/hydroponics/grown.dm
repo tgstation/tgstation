@@ -305,7 +305,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/Destroy()
 	if(istype(loc,/mob))
 		loc.AddLuminosity(round(-potency / 5,1))
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow/pickup(mob/user)
 	src.SetLuminosity(0)
@@ -487,7 +487,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
-	if(is_sharp(W))
+	if(W.is_sharp())
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 		qdel(src)
@@ -862,7 +862,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood/add_juice(loc, potency = 10)
 	..()
-	reagents.add_reagent("blood", 1 + round((potency / 5), 1))
+	reagents.add_reagent("blood", 1 + round((potency / 5)), list("blood_type"="O-"))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
@@ -1208,7 +1208,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
 	if(istype(loc,/mob))
 		loc.AddLuminosity(round(-potency / 10,1))
-	..()
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
 	SetLuminosity(0)

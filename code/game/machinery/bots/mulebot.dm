@@ -26,7 +26,6 @@ var/global/mulebot_count = 0
 	var/atom/movable/load = null
 	bot_type = MULE_BOT
 	model = "MULE"
-	blood_DNA = list()
 	can_buckle = 1
 	buckle_lying = 0
 
@@ -79,30 +78,15 @@ var/global/mulebot_count = 0
 			suffix = "#[mulebot_count]"
 		name = "\improper Mulebot ([suffix])"
 
-obj/machinery/bot/mulebot/bot_reset()
+/obj/machinery/bot/mulebot/Destroy()
+	unload(0)
+	qdel(wires)
+	wires = null
+	return ..()
+
+/obj/machinery/bot/mulebot/bot_reset()
 	..()
 	reached_target = 0
-
-
-obj/machinery/bot/mulebot/Move(atom/newloc, direct)
-	. = ..()
-	if(buckled_mob)
-		if(!buckled_mob.Move(loc, direct))
-			loc = buckled_mob.loc //we gotta go back
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			. = 0
-
-obj/machinery/bot/mulebot/Process_Spacemove(movement_dir = 0)
-	if(buckled_mob)
-		return buckled_mob.Process_Spacemove(movement_dir)
-	return ..()
-
-obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(mover == buckled_mob)
-		return 1
-	return ..()
 
 // attack by item
 // emag : lock/unlock,
@@ -420,13 +404,13 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 /obj/machinery/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
-			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			audible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		if(ANNOYED)
-			visible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
+			audible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
 			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		if(DELIGHT)
-			visible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
+			audible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
 			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 
@@ -480,7 +464,7 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 	load= AM
 	mode = BOT_IDLE
 
-/obj/machinery/bot/mulebot/buckle_mob(mob/living/M)
+/obj/machinery/bot/mulebot/buckle_mob(mob/living/M, force = 0)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)
@@ -719,7 +703,7 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 /obj/machinery/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_frequency = SUPP_FREQ //Supply channel
-		visible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
+		audible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
 		reached_target = 1
 
@@ -795,8 +779,8 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(loc)
-	B.blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
-	blood_DNA[H.dna.unique_enzymes] = H.dna.blood_type
+	B.add_blood_list(H)
+	add_blood_list(H)
 	bloodiness += 4
 
 // player on mulebot attempted to move
@@ -854,11 +838,7 @@ obj/machinery/bot/mulebot/CanPass(atom/movable/mover, turf/target, height=1.5)
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
-
-/obj/machinery/bot/mulebot/Destroy()
-	unload(0)
-	return ..()
+	..()
 
 #undef SIGH
 #undef ANNOYED

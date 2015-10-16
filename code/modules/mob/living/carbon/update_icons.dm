@@ -4,7 +4,7 @@
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = 0
-	if(lying != lying_prev)
+	if(lying != lying_prev && rotate_on_lying)
 		changed++
 		ntransform.TurnTo(lying_prev,lying)
 		if(lying == 0) //Lying to standing
@@ -52,7 +52,10 @@
 		var/t_state = r_hand.item_state
 		if(!t_state)
 			t_state = r_hand.icon_state
-		overlays_standing[R_HAND_LAYER] = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
+
+		var/image/I = image("icon" = r_hand.righthand_file, "icon_state"="[t_state]", "layer"=-R_HAND_LAYER)
+		I = center_image(I, r_hand.inhand_x_dimension, r_hand.inhand_y_dimension)
+		overlays_standing[R_HAND_LAYER] = I
 
 	apply_overlay(R_HAND_LAYER)
 
@@ -68,7 +71,10 @@
 		var/t_state = l_hand.item_state
 		if(!t_state)
 			t_state = l_hand.icon_state
-		overlays_standing[L_HAND_LAYER] = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
+
+		var/image/I = image("icon" = l_hand.lefthand_file, "icon_state"="[t_state]", "layer"=-L_HAND_LAYER)
+		I = center_image(I, l_hand.inhand_x_dimension, l_hand.inhand_y_dimension)
+		overlays_standing[L_HAND_LAYER] = I
 
 	apply_overlay(L_HAND_LAYER)
 
@@ -95,24 +101,26 @@
 
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
+
 	if(istype(wear_mask, /obj/item/clothing/mask))
 
-		var/layer2use
-		if(wear_mask.alternate_worn_layer)
-			layer2use = wear_mask.alternate_worn_layer
-		if(!layer2use)
-			layer2use = FACEMASK_LAYER
+		if(!(head && (head.flags_inv & HIDEMASK)))
+			var/layer2use
+			if(wear_mask.alternate_worn_layer)
+				layer2use = wear_mask.alternate_worn_layer
+			if(!layer2use)
+				layer2use = FACEMASK_LAYER
 
-		var/image/standing
-		if(wear_mask.alternate_worn_icon)
-			standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
+			var/image/standing
+			if(wear_mask.alternate_worn_icon)
+				standing = image("icon"=wear_mask.alternate_worn_icon, "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
+			if(!standing)
+				standing = image("icon"='icons/mob/mask.dmi', "icon_state"="[wear_mask.icon_state]", "layer"=-layer2use)
 
-		overlays_standing[FACEMASK_LAYER]	= standing
+			overlays_standing[FACEMASK_LAYER]	= standing
 
-		if(wear_mask.blood_DNA && (wear_mask.body_parts_covered & HEAD))
-			standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+			if(wear_mask.blood_DNA && (wear_mask.body_parts_covered & HEAD))
+				standing.overlays += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
 		return wear_mask
 
 /mob/living/carbon/update_inv_back()
@@ -177,5 +185,9 @@
 			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
 			R.overlays = null
 			L.overlays = null
+
+
+
+
 
 

@@ -23,7 +23,7 @@
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
-	implements = list(/obj/item/organ/internal = 100)
+	implements = list(/obj/item/organ/internal = 100, /obj/item/weapon/reagent_containers/food/snacks/organ = 0)
 	var/implements_extract = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 55)
 	var/implements_mend = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	var/current_type
@@ -84,11 +84,16 @@
 
 	else if(implement_type in implements_mend)
 		current_type = "mend"
+		user.visible_message("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)].",
+			"<span class='notice'>You begin to mend the incision in [target]'s [parse_zone(target_zone)]...</span>")
 
+	else if(istype(tool, /obj/item/weapon/reagent_containers/food/snacks/organ))
+		user << "<span class='warning'>[tool] was biten by someone! It's too damaged to use!</span>"
+		return -1
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(current_type == "mend")
-		user.visible_message("[user] mend the incision in [target]'s [parse_zone(target_zone)].",
+		user.visible_message("[user] mends the incision in [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You mend the incision in [target]'s [parse_zone(target_zone)].</span>")
 		return 1
 	else if(current_type == "insert")

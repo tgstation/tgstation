@@ -38,7 +38,7 @@
 /obj/machinery/power/am_control_unit/Destroy()//Perhaps damage and run stability checks rather than just del on the others
 	for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 		qdel(AMS)
-	..()
+	return ..()
 
 
 /obj/machinery/power/am_control_unit/process()
@@ -138,7 +138,6 @@
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(!istype(W) || !user) return
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -177,7 +176,7 @@
 		stability -= W.force/2
 		check_stability()
 	..()
-	return
+
 
 
 /obj/machinery/power/am_control_unit/attack_hand(mob/user)

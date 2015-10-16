@@ -13,9 +13,8 @@
 		bang(get_turf(M), M)
 
 	for(var/obj/effect/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
-		var/damage = round(30/(get_dist(B,get_turf(src))+1))
-		B.health -= damage
-		B.update_icon()
+		var/damage = round(40/(get_dist(B,get_turf(src))+1))
+		B.take_damage(damage, BURN)
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)

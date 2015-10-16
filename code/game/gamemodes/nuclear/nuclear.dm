@@ -159,33 +159,7 @@
 
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
-	var/radio_freq = SYND_FREQ
-
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(synd_mob)
-	R.set_frequency(radio_freq)
-	R.freqlock = 1
-	synd_mob.equip_to_slot_or_del(R, slot_ears)
-
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(synd_mob), slot_gloves)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
-	if(synd_mob.backbag == 1) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/pistol(synd_mob), slot_belt)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
-
-	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(synd_mob)
-	U.hidden_uplink.uplink_owner="[synd_mob.key]"
-	U.hidden_uplink.uses = 20
-	synd_mob.equip_to_slot_or_del(U, slot_in_backpack)
-
-	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(synd_mob)
-	W.implant(synd_mob)
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
-	E.implant(synd_mob)
-	synd_mob.faction |= "syndicate"
-	synd_mob.update_icons()
+	synd_mob.equipOutfit(/datum/outfit/syndicate)
 	return 1
 
 
@@ -278,36 +252,18 @@
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
-
 		var/purchases = ""
 		var/TC_uses = 0
-
 		for(var/datum/mind/syndicate in syndicates)
-
-			text += "<br><b>[syndicate.key]</b> was <b>[syndicate.name]</b> ("
-			if(syndicate.current)
-				if(syndicate.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(syndicate.current.real_name != syndicate.name)
-					text += " as <b>[syndicate.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-
+			text += printplayer(syndicate)
 			for(var/obj/item/device/uplink/H in world_uplinks)
 				if(H && H.uplink_owner && H.uplink_owner==syndicate.key)
 					TC_uses += H.used_TC
 					purchases += H.purchase_log
-
 		text += "<br>"
-
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
-
 		if(TC_uses==0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
-
 		world << text
 	return 1
 
@@ -332,3 +288,62 @@
 		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
 		synd_mind.current.real_name = synd_mind.name
 	return
+
+/datum/outfit/syndicate
+	name = "Syndicate Operative - Basic"
+
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/weapon/storage/backpack
+	ears = /obj/item/device/radio/headset/syndicate/alt
+	id = /obj/item/weapon/card/id/syndicate
+	belt = /obj/item/weapon/gun/projectile/automatic/pistol
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
+
+	var/tc = 20
+
+/datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(SYND_FREQ)
+	R.freqlock = 1
+
+	var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
+	U.hidden_uplink.uplink_owner="[H.key]"
+	U.hidden_uplink.uses = tc
+	U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
+	H.equip_to_slot_or_del(U, slot_in_backpack)
+	
+	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
+	W.implant(H)
+	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(H)
+	E.implant(H)
+	H.faction |= "syndicate"
+	H.update_icons()
+
+/datum/outfit/syndicate/full
+	name = "Syndicate Operative - Full Kit"
+
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi
+	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+	r_pocket = /obj/item/weapon/gun/projectile/automatic/pistol
+	belt = /obj/item/weapon/storage/belt/military 
+	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
+		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
+		/obj/item/weapon/pinpointer/nukeop=1)
+
+	tc = 30
+
+/datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
+	..()
+
+	
+	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
+	suit.ToggleHelmet()
+	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
+	helmet.attack_self(H)
+
+	H.internal = H.l_store

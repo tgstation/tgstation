@@ -11,7 +11,7 @@ var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
 var/list/advance_cures = 	list(
-									"nutriment", "sugar", "orangejuice",
+									"sodiumchloride", "sugar", "orangejuice",
 									"spaceacillin", "salglu_solution", "ethanol",
 									"leporazine", "synaptizine", "lipolicide",
 									"silver", "gold"
@@ -69,11 +69,11 @@ var/list/advance_cures = 	list(
 	..(process, D)
 	return
 
-/datum/disease/advance/Del()
+/datum/disease/advance/Destroy()
 	if(processing)
 		for(var/datum/symptom/S in symptoms)
 			S.End(src)
-	..()
+	return ..()
 
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()

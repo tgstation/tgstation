@@ -7,10 +7,14 @@
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
+	var/obj/effect/spacevine/SV = new()
+
 	for(var/area/hallway/A in world)
 		for(var/turf/simulated/F in A)
-			if(!F.density && !F.contents.len)
+			if(F.Enter(SV))
 				turfs += F
+
+	qdel(SV)
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/T = pick(turfs)
@@ -323,7 +327,7 @@
 	SetOpacity(0)
 	if(buckled_mob)
 		unbuckle_mob()
-	..()
+	return ..()
 
 /obj/effect/spacevine/proc/on_chem_effect(datum/reagent/R)
 	var/override = 0
@@ -362,7 +366,7 @@
 				qdel(B)
 		qdel(src)
 
-	else if(is_sharp(W))
+	else if(W.is_sharp())
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
@@ -423,7 +427,7 @@
 
 /obj/effect/spacevine_controller/Destroy()
 	SSobj.processing.Remove(src)
-	..()
+	return ..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/effect/spacevine/parent, list/muts)
 	var/obj/effect/spacevine/SV = new(location)
@@ -473,7 +477,7 @@
 			if(prob(20))
 				SV.grow()
 		else //If tile is fully grown
-			SV.buckle_mob()
+			SV.entangle_mob()
 
 		//if(prob(25))
 		SV.spread()
@@ -497,14 +501,14 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_grow(src)
 
-/obj/effect/spacevine/buckle_mob()
+/obj/effect/spacevine/proc/entangle_mob()
 	if(!buckled_mob && prob(25))
 		for(var/mob/living/carbon/V in src.loc)
 			for(var/datum/spacevine_mutation/SM in mutations)
 				SM.on_buckle(src, V)
 			if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
 				V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-				..(V)
+				buckle_mob(V)
 				break //only capture one mob at a time
 
 /obj/effect/spacevine/proc/spread()
@@ -554,14 +558,14 @@
 
 /obj/effect/spacevine/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(90))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(50))
 				qdel(src)
 				return

@@ -165,6 +165,14 @@
 
 	var/autoconvert_notes = 0 //if all connecting player's notes should attempt to be converted to the database
 
+	var/announce_admin_logout = 0
+	var/announce_admin_login = 0
+
+	var/list/datum/votablemap/maplist = list()
+	var/datum/votablemap/defaultmap = null
+	var/maprotation = 1
+	var/maprotatechancedelta = 0.75
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for(var/T in L)
@@ -347,6 +355,14 @@
 						world.log = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
+				if("announce_admin_logout")
+					config.announce_admin_logout = 1
+				if("announce_admin_login")
+					config.announce_admin_login = 1
+				if("maprotation")
+					config.maprotation = 1
+				if("maprotationchancedelta")
+					config.maprotatechancedelta = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -521,6 +537,58 @@
 	fps = round(fps)
 	if(fps <= 0)
 		fps = initial(fps)
+
+
+/datum/configuration/proc/loadmaplist(filename)
+	var/list/Lines = file2list(filename)
+
+	var/datum/votablemap/currentmap = null
+	for(var/t in Lines)
+		if(!t)	continue
+
+		t = trim(t)
+		if(length(t) == 0)
+			continue
+		else if(copytext(t, 1, 2) == "#")
+			continue
+
+		var/pos = findtext(t, " ")
+		var/command = null
+		var/data = null
+
+		if(pos)
+			command = lowertext(copytext(t, 1, pos))
+			data = copytext(t, pos + 1)
+		else
+			command = lowertext(t)
+
+		if(!command)
+			continue
+
+		if (!currentmap && command != "map")
+			continue
+
+		switch (command)
+			if ("map")
+				currentmap = new (data)
+			if ("friendlyname")
+				currentmap.friendlyname = data
+			if ("minplayers","minplayer")
+				currentmap.minusers = text2num(data)
+			if ("maxplayers","maxplayer")
+				currentmap.maxusers = text2num(data)
+			if ("friendlyname")
+				currentmap.friendlyname = data
+			if ("weight","voteweight")
+				currentmap.voteweight = text2num(data)
+			if ("default","defaultmap")
+				config.defaultmap = currentmap
+			if ("endmap")
+				config.maplist[currentmap.name] = currentmap
+				currentmap = null
+			else
+				diary << "Unknown command in map vote config: '[command]'"
+
 
 /datum/configuration/proc/loadsql(filename)
 	var/list/Lines = file2list(filename)

@@ -56,6 +56,14 @@
 			update_icon()
 			return
 
+	if(istype(I, /obj/item/weapon/reagent_containers))
+		if (!open)
+			return
+		var/obj/item/weapon/reagent_containers/RG = I
+		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
+		return
+
 	if(istype(I, /obj/item/weapon/grab))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/grab/G = I
@@ -122,8 +130,9 @@
 			var/mob/living/GM = G.affecting
 			if(G.state >= GRAB_AGGRESSIVE)
 				if(GM.loc != get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to on [src].</span>"
+					user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
 					return
+				user.changeNext_move(CLICK_CD_MELEE)
 				user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='notice'>You slam [GM] into [src]!</span>")
 				GM.adjustBruteLoss(8)
 			else

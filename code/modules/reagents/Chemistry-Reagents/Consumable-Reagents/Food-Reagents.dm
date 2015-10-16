@@ -121,7 +121,7 @@
 	name = "Frost Oil"
 	id = "frostoil"
 	description = "A special oil that noticably chills the body. Extraced from Icepeppers."
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#8BA6E9" // rgb: 139, 166, 233
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
 	switch(current_cycle)
@@ -332,7 +332,7 @@
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
-		hotspot.Kill()
+		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
