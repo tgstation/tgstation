@@ -105,6 +105,8 @@
 		M.cell.loc = M
 		src.loc = M//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 		M.mmi = src
+		
+		M.initialize_killswitch() // Confine roboticist-build MoMMI to their z-level/service the station.
 		return TRUE
 	for(var/t in mommi_assembly_parts)
 		if(istype(O,t))
