@@ -1,46 +1,4 @@
-/*
-Clown
-*/
-/datum/job/clown
-	title = "Clown"
-	flag = CLOWN
-	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
-	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
-	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
 
-	outfit = /datum/outfit/job/clown
-
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
-
-/datum/outfit/job/clown
-	name = "Clown"
-
-	belt = /obj/item/device/pda/clown
-	uniform = /obj/item/clothing/under/rank/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	l_pocket = /obj/item/weapon/bikehorn
-	r_pocket = /obj/item/toy/crayon/rainbow
-	backpack_contents = list(/obj/item/weapon/stamp/clown=1,/obj/item/weapon/reagent_containers/spray/waterflower=1)
-
-	backpack = /obj/item/weapon/storage/backpack/clown
-	satchel = /obj/item/weapon/storage/backpack/clown
-
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.fully_replace_character_name(H.real_name, pick(clown_names))
-
-/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H)
-	..()
-	new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H.back, 50)
-
-	H.dna.add_mutation(CLOWNMUT)
-	H.rename_self("clown")
 
 /*
 Mime
