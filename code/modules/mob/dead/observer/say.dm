@@ -32,19 +32,22 @@
 		return
 
 	var/source = speech.speaker.GetSource()
-
 	var/source_turf = get_turf(source)
+
+	say_testing(src, "/mob/dead/observer/Hear(): source=[source], frequency=[speech.frequency], source_turf=[formatJumpTo(source_turf)]")
 
 	if (get_dist(source_turf, src) <= world.view) // If this isn't true, we can't be in view, so no need for costlier proc.
 		if (source_turf in view(src))
 			rendered_speech = "<B>[rendered_speech]</B>"
 	else
 		if(client && client.prefs)
-			if (isnull(speech.frequency))
-				if (!(client.prefs.toggles & CHAT_GHOSTEARS))
+			if (!speech.frequency)
+				if ((client.prefs.toggles & CHAT_GHOSTEARS) != CHAT_GHOSTEARS)
+					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTEARS is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTEARS]) = [client.prefs.toggles & CHAT_GHOSTEARS]")
 					return
 			else
-				if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
+				if ((client.prefs.toggles & CHAT_GHOSTRADIO) != CHAT_GHOSTRADIO)
+					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTRADIO is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTRADIO]) = [client.prefs.toggles & CHAT_GHOSTRADIO]")
 					return
 
 	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [rendered_speech]"

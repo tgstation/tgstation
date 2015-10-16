@@ -6,7 +6,7 @@
 	var/name         = "" // Displayed name
 	var/as_name      = "" // (as [as_name])
 	var/message      = "" // Message to send. DO NOT INCLUDE HTML OR I WILL STAB YOU IN THE NECK.
-	var/frequency    = "" // Displayed radio frequency
+	var/frequency    = null // Displayed radio frequency
 	var/job          = ""
 	var/lquote       = "\"" // Left quote character
 	var/rquote       = "\"" // Right quote character

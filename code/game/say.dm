@@ -37,7 +37,7 @@ var/list/freqtoname = list(
 		return
 	if(message == "" || !message)
 		return
-	var/datum/speech/speech = create_speech(message, world.view, radio)
+	var/datum/speech/speech = create_speech(message, null, radio)
 	speech.language=speaking
 	send_speech(speech, world.view)
 	returnToPool(speech)
