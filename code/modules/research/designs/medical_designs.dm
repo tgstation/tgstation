@@ -107,6 +107,16 @@
 	build_path = /obj/item/bodybag/bluespace
 	category = list("Medical Designs")
 
+/datum/design/plasmarefiller
+	name = "Plasma-man jumpsuit refill"
+	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
+	id = "plasmarefiller"
+	req_tech = list("materials" = 2, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 1000)
+	reliability = 76
+	build_path = /obj/item/device/extinguisher_refill
+	category = list("Medical Designs")
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
