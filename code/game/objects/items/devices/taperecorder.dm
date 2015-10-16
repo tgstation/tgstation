@@ -14,7 +14,7 @@
 	var/playing = 0
 	var/playsleepseconds = 0
 	var/obj/item/device/tape/mytape
-	var/open_panel = 0
+//	var/open_panel = 0 //no wires anymore
 	var/canprint = 1
 
 
@@ -25,7 +25,7 @@
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
-	user << "The wire panel is [open_panel ? "opened" : "closed"]."
+//	user << "The wire panel is [open_panel ? "opened" : "closed"]."//no wires anymore
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
