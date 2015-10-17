@@ -59,7 +59,7 @@
 		return .
 
 	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(speech.message, speech.language)
+		holopad_talk(speech)
 		return 1
 
 //For holopads only. Usable by AI.
@@ -76,7 +76,7 @@
 	var/obj/machinery/hologram/holopad/T = current
 	if(istype(T) && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 		send_speech(speech, 7, "R")
-		src << "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message'>\"[speech.message]\"</span></span></i>"//The AI can "hear" its own message.
+		src << "<i><span class='[speech.render_wrapper_classes()]'>Holopad transmitted, <span class='name'>[real_name]</span> [speech.render_message()]</span></i>"//The AI can "hear" its own message.
 	else
 		src << "No holopad connected."
 	return
