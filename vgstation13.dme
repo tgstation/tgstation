@@ -1391,6 +1391,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\necro.dm"
 #include "code\modules\mob\living\simple_animal\hostile\slime.dm"
 #include "code\modules\mob\living\simple_animal\hostile\tree.dm"
+#include "code\modules\mob\living\simple_animal\hostile\viscerator.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider\base_spider.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider\effects.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider\hunter.dm"
