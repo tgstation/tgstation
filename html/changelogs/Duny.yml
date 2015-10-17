@@ -1,2 +1,8 @@
 author: Duny
-changes: []
+changes: 
+  - bugfix: Added a landmark for the bluespace rift.
+  - rscadd: Added all the machines missing from xenobotany.
+  - tweak: The starting SMES cells should now contain enough power to delay power failure long enough to set up the engine.
+  - bugfix: The posibrain in robotics is no longer buried under sheets of metal.
+  - bugfix: Fixed the access on the new science entrance. It required both upload and science access instead of either.
+  - experiment: Nobody fuckings reads the changelog anyway.
