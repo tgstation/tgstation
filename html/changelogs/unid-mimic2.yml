@@ -32,5 +32,4 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 changes: 
-  - rscadd: Added an admin-only Launch Event command (found in the Fun tab), which can be used to instantly start any random event
   - experiment: Item mimics can spawn from the vermin infestation event
