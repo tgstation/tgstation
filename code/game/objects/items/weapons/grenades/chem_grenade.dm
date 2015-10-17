@@ -359,7 +359,6 @@
 	B1.reagents.add_reagent("potassium", 40)
 	B2.reagents.add_reagent("phosphorus", 40)
 	B2.reagents.add_reagent("sugar", 40)
-	B1.reagents.add_reagent("condensedcapsaicin", 20)
 
 	beakers += B1
 	beakers += B2

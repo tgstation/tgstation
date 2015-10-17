@@ -29,7 +29,7 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		smoke.set_up(0, H.loc)
 		smoke.start()
 
 //---//
@@ -61,7 +61,7 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		smoke.set_up(0, H.loc)
 		smoke.start()
 
 //---//
@@ -93,5 +93,5 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		var/datum/effect/effect/system/smoke_spread/smoke = new
-		smoke.set_up(max(1,1), 0, H.loc)
+		smoke.set_up(0, H.loc)
 		smoke.start()
