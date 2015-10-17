@@ -16,6 +16,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+	maxbodytemp = 10000000
 	attacktext = "punches"
 	maxHealth = 100000 //The spirit itself is invincible
 	health = 100000
@@ -39,12 +40,14 @@
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
-			visible_message("<span class='danger'>The [src] dies along with its user!</span>")
+			visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
+			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
+			summoner.gib()
 			ghostize()
 			qdel(src)
 	else
 		src << "<span class='danger'>Your summoner has died!</span>"
-		visible_message("<span class='danger'>The [src] dies along with its user!</span>")
+		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 		ghostize()
 		qdel(src)
 	if(summoner)
@@ -74,10 +77,10 @@
 		summoner.adjustBruteLoss(damage)
 		if(damage)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
-			summoner.visible_message("<span class='danger'>Blood sprays from [summoner] as [src] takes damage!</span>")
+			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 		if(summoner.stat == UNCONSCIOUS)
 			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(damage/2)
+			summoner.adjustCloneLoss(damage)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
@@ -182,7 +185,7 @@
 
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	..()
-	if(prob(30))
+	if(prob(45))
 		if(istype(target, /atom/movable))
 			var/atom/movable/M = target
 			if(!M.anchored && M != summoner)
@@ -203,7 +206,7 @@
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
-		if(AM != summoner)
+		if(AM != summoner && M.fire_stacks <= 0)
 			M.adjust_fire_stacks(7)
 			M.IgniteMob()
 
@@ -366,6 +369,7 @@
 	icon_state = "guardian"
 	damage = 5
 	damage_type = BRUTE
+	armour_penetration = 100
 
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = "help"
