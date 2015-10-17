@@ -346,7 +346,7 @@
  //THIS MIGHT BE UNBALANCED SO I DUNNO
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
-	if(explosive)
+	if(explosive && wielded)
 		explosive.prime()
 		qdel(src)
 
