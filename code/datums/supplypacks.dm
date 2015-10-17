@@ -148,6 +148,18 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "weed control crate"
 	access = access_hydroponics
 
+/datum/supply_packs/emergency/radsafety
+	name = "Radiation Safety Crate"
+	contains = list(/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/head/radiation,
+					/obj/item/clothing/suit/radiation,
+					/obj/item/clothing/head/radiation,
+					/obj/item/weapon/storage/firstaid/radiation,
+					/obj/item/weapon/storage/firstaid/radiation)
+	containertype = /obj/structure/closet/crate/radiation
+	containername = "radiation safety crate"
+	cost = 20
+
 /datum/supply_packs/emergency/specialops
 	name = "Special Ops supplies"
 	contains = list(/obj/item/weapon/storage/box/emps,
