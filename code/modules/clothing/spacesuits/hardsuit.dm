@@ -274,8 +274,6 @@
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	unacidable = 1
-
 
 /obj/item/clothing/suit/space/hardsuit/wizard
 	icon_state = "hardsuit-wiz"
@@ -289,7 +287,6 @@
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	unacidable = 1
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
 
 
