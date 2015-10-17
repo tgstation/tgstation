@@ -168,7 +168,7 @@
 	icon_state = "misterjani"
 	item_state = "misterjani"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 
 /obj/item/weapon/watertank/janitor/make_noz()
 	return new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)

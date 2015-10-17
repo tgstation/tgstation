@@ -16,7 +16,7 @@ Borg Hypospray
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
