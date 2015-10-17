@@ -208,6 +208,12 @@
 	icon_state = "bottle12"
 	list_reagents = list("atropine" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/inert_virion
+	name = "Inert virion culture bottle"
+	desc = "A small bottle. Contains an Inert virion culture in synthblood medium."
+	icon_state = "bottle3"
+	spawned_disease = /datum/disease/advance/inert
+
 /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
