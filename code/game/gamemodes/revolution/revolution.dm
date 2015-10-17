@@ -263,11 +263,17 @@
 				if(head_rev.current.client)
 					for(var/datum/mind/rev in revolutionaries)
 						if(rev.current)
-							var/I = image('icons/mob/mob.dmi', loc = rev.current, icon_state = "rev")
+							var/imageloc = rev.current
+							if(istype(rev.current.loc,/obj/mecha))
+								imageloc = rev.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev", layer = 13)
 							head_rev.current.client.images += I
 					for(var/datum/mind/head_rev_1 in head_revolutionaries)
 						if(head_rev_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = head_rev_1.current, icon_state = "rev_head")
+							var/imageloc = head_rev_1.current
+							if(istype(head_rev_1.current.loc,/obj/mecha))
+								imageloc = head_rev_1.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev_head", layer = 13)
 							head_rev.current.client.images += I
 
 		for(var/datum/mind/rev in revolutionaries)
@@ -275,11 +281,17 @@
 				if(rev.current.client)
 					for(var/datum/mind/head_rev in head_revolutionaries)
 						if(head_rev.current)
-							var/I = image('icons/mob/mob.dmi', loc = head_rev.current, icon_state = "rev_head")
+							var/imageloc = head_rev.current
+							if(istype(head_rev.current.loc,/obj/mecha))
+								imageloc = head_rev.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev_head", layer = 13)
 							rev.current.client.images += I
 					for(var/datum/mind/rev_1 in revolutionaries)
 						if(rev_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = rev_1.current, icon_state = "rev")
+							var/imageloc = rev_1.current
+							if(istype(rev_1.current.loc,/obj/mecha))
+								imageloc = rev_1.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev", layer = 13)
 							rev.current.client.images += I
 
 ////////////////////////////////////////////////////
@@ -292,21 +304,33 @@
 		for(var/datum/mind/head_rev_mind in head_revolutionaries)
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/imageloc = rev_mind.current
+					if(istype(rev_mind.current.loc,/obj/mecha))
+						imageloc = rev_mind.current.loc
+					var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev", layer = 13)
 					head_rev_mind.current.client.images += I
 			if(rev_mind.current)
 				if(rev_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = head_rev_mind.current, icon_state = "rev_head")
+					var/imageloc = head_rev_mind.current
+					if(istype(head_rev_mind.current.loc,/obj/mecha))
+						imageloc = head_rev_mind.current.loc
+					var/image/J = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev_head", layer = 13)
 					rev_mind.current.client.images += J
 
 		for(var/datum/mind/rev_mind_1 in revolutionaries)
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = rev_mind.current, icon_state = "rev")
+					var/imageloc = rev_mind.current
+					if(istype(rev_mind.current.loc,/obj/mecha))
+						imageloc = rev_mind.current.loc
+					var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev", layer = 13)
 					rev_mind_1.current.client.images += I
 			if(rev_mind.current)
 				if(rev_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = rev_mind_1.current, icon_state = "rev")
+					var/imageloc = rev_mind_1.current
+					if(istype(rev_mind_1.current.loc,/obj/mecha))
+						imageloc = rev_mind_1.current.loc
+					var/image/J = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "rev", layer = 13)
 					rev_mind.current.client.images += J
 
 ///////////////////////////////////
@@ -319,7 +343,7 @@
 			if(head_rev_mind.current)
 				if(head_rev_mind.current.client)
 					for(var/image/I in head_rev_mind.current.client.images)
-						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
+						if((I.icon_state == "rev" || I.icon_state == "rev_head") && ((I.loc == rev_mind.current) || (I.loc == rev_mind.current.loc)))
 							//del(I)
 							head_rev_mind.current.client.images -= I
 
@@ -327,7 +351,7 @@
 			if(rev_mind_1.current)
 				if(rev_mind_1.current.client)
 					for(var/image/I in rev_mind_1.current.client.images)
-						if((I.icon_state == "rev" || I.icon_state == "rev_head") && I.loc == rev_mind.current)
+						if((I.icon_state == "rev" || I.icon_state == "rev_head") && ((I.loc == rev_mind.current) || (I.loc == rev_mind.current.loc)))
 							//del(I)
 							rev_mind_1.current.client.images -= I
 
