@@ -11,8 +11,8 @@ Make sure this is the only ticked file in the .dm folder, then compile as usual.
 #if !defined(MAP_FILE)
 
         #include "map_files\BirdStation\BirdStation.dmm"
-        #include "map_files\BirdStation\z2.dmm"
-        #include "map_files\BirdStation\z3.dmm"
+        #include "map_files\generic\z2.dmm"
+        #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
         #include "map_files\BirdStation\z5.dmm"
         #include "map_files\generic\z6.dmm"
