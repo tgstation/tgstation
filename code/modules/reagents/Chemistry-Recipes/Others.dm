@@ -273,6 +273,13 @@
 	required_reagents = list("ammonia" = 1, "water" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/space_cleaner2
+	name = "Space cleaner"
+	id = "cleaner"
+	result = "cleaner"
+	required_reagents = list("lye" = 1, "water" = 1)
+	result_amount = 2
+
 /datum/chemical_reaction/plantbgone
 	name = "Plant-B-Gone"
 	id = "plantbgone"
@@ -405,3 +412,10 @@
 	result = "lye"
 	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/lye2
+	name = "lye"
+	id = "lye"
+	result = "lye"
+	required_reagents = list("ash" = 1, "water" = 1)
+	result_amount = 2
