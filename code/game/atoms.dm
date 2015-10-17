@@ -244,7 +244,7 @@ its easier to just keep the beam vertical.
 				var/total_volume = 0
 				for(var/datum/reagent/R in reagents.reagent_list)
 					total_volume += R.volume
-				user << "[total_volume] units of reagents"
+				user << "[total_volume] units of various reagents"
 		else
 			user << "Nothing."
 
