@@ -120,7 +120,9 @@
 /obj/item/weapon/razor/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-
+		if(H.dna.species.id != "human")
+			user << "<span class='warning'>There is nothing to shave!</span>"
+			return
 		var/location = user.zone_sel.selecting
 		if(location == "mouth")
 			if(!get_location_accessible(H, location))
