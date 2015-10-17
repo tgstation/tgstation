@@ -1029,7 +1029,7 @@ var/list/slot_equipment_priority = list( \
 		return 1
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		var/obj/item/clothing/glasses/G = H.get_item_by_slot(slot_glasses)
-		if(istype(G, /obj/item/clothing/glasses/science)) //Science goggles can view reagents
-			return 1
+		for(var/obj/item/clothing/C in H) //If they have some clothing equipped that lets them see reagents, they can see reagents
+			if(C.scan_reagents)
+				return 1
 	return 0
