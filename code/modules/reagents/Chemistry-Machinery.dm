@@ -843,7 +843,7 @@
 				B.pixel_y = rand(-3, 3)
 				var/vaccine_type = new_cures[text2num(href_list["cure"])]
 				if(vaccine_type)
-					if(!istype(vaccine_type))
+					if(!istype(vaccine_type, /datum/disease))
 						if(archive_diseases[vaccine_type])
 							var/datum/disease/D = archive_diseases[vaccine_type]
 							B.name = "[D.name] vaccine bottle"
