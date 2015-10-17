@@ -3744,7 +3744,7 @@
 "btZ" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/science/robotics)
 "bua" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{icon_state = "white"},/area/science/hallway)
 "bub" = (/obj/structure/disposalpipe/segment,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "white"},/area/science/hallway)
-"buc" = (/obj/machinery/door/airlock/research{id_tag = "ScienceFoyer"; name = "Research Division Access"; req_access_txt = "16;47"},/turf/simulated/floor{icon_state = "white"},/area/science/hallway)
+"buc" = (/obj/machinery/door/airlock/research{id_tag = "ScienceFoyer"; name = "Research Division Access"; req_access_txt = "0"; req_one_access_txt = "16;47"},/turf/simulated/floor{icon_state = "white"},/area/science/hallway)
 "bud" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor,/area/hallway/primary/central)
 "bue" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9},/obj/effect/decal/warning_stripes{tag = "icon-warning (EAST)"; icon_state = "warning"; dir = 4},/turf/simulated/floor,/area/hallway/primary/central)
 "buf" = (/obj/structure/shuttle/engine/propulsion/burst{dir = 4},/turf/space,/area/shuttle/mining/station)
