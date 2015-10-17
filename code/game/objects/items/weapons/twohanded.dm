@@ -337,9 +337,10 @@
 		return
 	user << "<span class='notice'>You fasten the [src] to the spear. Alt+click on the spear to set your war cry!</span>"
 	name = "explosive lance"
-	desc = "A makeshift spear with [src] attached to it."
+	desc = "A makeshift spear with [I] attached to it."
 	explosive = I
 	update_icon()
+	user.unEquip(I)
 	I.loc = src
 
 
