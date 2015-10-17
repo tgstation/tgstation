@@ -317,6 +317,7 @@
 		return
 	if(explosive)
 		user.say("[war_cry]")
+		explosive.loc = AM
 		explosive.prime()
 		qdel(src)
 
@@ -342,14 +343,14 @@
 	I.loc = src
 
 
-/* //THIS MIGHT BE UNBALANCED SO I DUNNO
+ //THIS MIGHT BE UNBALANCED SO I DUNNO
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
 	if(explosive)
 		explosive.prime()
 		qdel(src)
 
-*/
+
 /obj/item/weapon/twohanded/spear/AltClick()
 	..()
 	if(!explosive)
