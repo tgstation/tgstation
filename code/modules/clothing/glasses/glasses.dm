@@ -33,7 +33,7 @@
 
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items."
+	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
 
@@ -45,6 +45,21 @@
 /obj/item/clothing/glasses/science/dropped(mob/user)
 	user.scanner.devices -= 1
 	..(user)
+
+/obj/item/clothing/glasses/chemical
+	name = "\improper ChemHUD"
+	desc = "A pair of goggles that allow for detailed analyzing of reagents in a container."
+	icon_state = "chemhud_off"
+	item_state = "glasses"
+	var/scanning = 0
+
+/obj/item/clothing/glasses/chemical/attack_self(mob/user)
+	scanning = !scanning
+	if(scanning)
+		icon_state = "chemhud_on"
+	else
+		icon_state = "chemhud_off"
+	user << "<span class='notice'>\icon[src] You [scanning ? "enable" : "disable"] [src].</span>"
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
