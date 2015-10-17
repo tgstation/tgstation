@@ -843,15 +843,16 @@
 				B.pixel_y = rand(-3, 3)
 				var/vaccine_type = new_cures[text2num(href_list["cure"])]
 				if(vaccine_type)
-					if(!ispath(vaccine_type))
-						if(archive_diseases[path])
-							var/datum/disease/D = archive_diseases[path]
+					if(!istype(vaccine_type))
+						if(archive_diseases[vaccine_type])
+							var/datum/disease/D = archive_diseases[vaccine_type]
 							B.name = "[D.name] vaccine bottle"
 							B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
 							replicator_cooldown(200)
 					else
-						B.name = "[vaccine_type.name] vaccine bottle"
-						B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
+						var/datum/disease/DD = vaccine_type
+						B.name = "[DD.name] vaccine bottle"
+						B.reagents.add_reagent("vaccine", 15, list(DD))
 						replicator_cooldown(200)
 		else
 			src.temp_html = "The replicator is not ready yet."
