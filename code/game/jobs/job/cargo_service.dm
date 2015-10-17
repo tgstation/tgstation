@@ -15,7 +15,7 @@ Quartermaster
 	default_pda = /obj/item/device/pda/quartermaster
 	default_headset = /obj/item/device/radio/headset/headset_cargo
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom,access_heads,access_hop)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
 
 /datum/job/qm/equip_items(var/mob/living/carbon/human/H)
