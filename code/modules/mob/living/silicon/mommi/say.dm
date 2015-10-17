@@ -22,7 +22,7 @@
 	if(.)
 		return .
 
-	if((keeper == 1) || message_mode == MODE_MOMMI)
+	if((mute && keeper) || message_mode == MODE_MOMMI)
 		mommi_talk(message)
 		return 1
 

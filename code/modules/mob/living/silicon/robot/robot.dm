@@ -1132,3 +1132,6 @@
 	if(mob_negates_gravity())
 		return
 	..()
+
+/mob/living/silicon/robot/proc/unrestrict()	//Only used by MoMMIs for now
+	return 0
