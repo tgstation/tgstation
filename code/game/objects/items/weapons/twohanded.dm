@@ -369,5 +369,5 @@
 
 /obj/item/weapon/grenade/C4/prime()
 	update_mob()
-	explosion(src.loc,1,1,3)
+	explosion(src.loc,-1,1,3)
 	qdel(src)
