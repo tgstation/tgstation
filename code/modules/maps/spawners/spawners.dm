@@ -773,7 +773,7 @@
 	name = "space russian spawner"
 	icon_state = "space_russian"
 	chance = 5
-	toSpawn = list(/mob/living/simple_animal/hostile/russian/ranged)
+	toSpawn = list(/mob/living/simple_animal/hostile/humanoid/russian/ranged)
 
 // Mobs ////////////////////////////////////////////////////////
 
