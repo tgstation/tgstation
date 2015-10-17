@@ -3,7 +3,6 @@
 	var/implement_type = null		//the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
 	var/accept_hand = 0				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = 0			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
-	var/time = 10					//how long does the step take?
 	var/name
 
 
@@ -42,25 +41,27 @@
 		surgery.step_in_progress = 0
 		return
 
-	if(do_after(user, time, target = target))
-		var/advance = 0
-		var/prob_chance = 100
+	var/advance = 0
+	var/prob_chance = 100
 
-		if(implement_type)	//this means it isn't a require hand or any item step.
-			prob_chance = implements[implement_type]
-		prob_chance *= get_location_modifier(target)
+	if(implement_type)	//this means it isn't a require hand or any item step.
+		prob_chance = implements[implement_type]
+	prob_chance *= get_location_modifier(target)
 
-		if(prob(prob_chance) || isrobot(user))
-			if(success(user, target, target_zone, tool, surgery))
-				advance = 1
-		else
-			if(failure(user, target, target_zone, tool, surgery))
-				advance = 1
+	if(user == target) // Self surgery is harder
+		prob_chance *= 0.7
 
-		if(advance)
-			surgery.status++
-			if(surgery.status > surgery.steps.len)
-				surgery.complete(target)
+	if(prob(prob_chance) || isrobot(user))
+		if(success(user, target, target_zone, tool, surgery))
+			advance = 1
+	else
+		if(failure(user, target, target_zone, tool, surgery))
+			advance = 1
+
+	if(advance)
+		surgery.status++
+		if(surgery.status > surgery.steps.len)
+			surgery.complete(target)
 
 	surgery.step_in_progress = 0
 

@@ -6,7 +6,6 @@
 
 /datum/surgery_step/remove_object
 	name = "remove embedded objects"
-	time = 32
 	accept_hand = 1
 	var/obj/item/organ/limb/L = null
 

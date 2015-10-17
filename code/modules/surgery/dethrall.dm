@@ -9,7 +9,6 @@
 /datum/surgery_step/dethrall
 	name = "search head"
 	accept_hand = 1
-	time = 70
 	var/obj/item/organ/internal/brain/B = null
 
 /datum/surgery_step/dethrall/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
