@@ -79,9 +79,9 @@ Contents:
 		reagent_id == "radium" ? reagents.add_reagent(reagent_id, r_maxamount+(a_boost*a_transfer)) : reagents.add_reagent(reagent_id, r_maxamount)//It will take into account radium used for adrenaline boosting.
 
 	//Cell Init
-	cell = new/obj/item/weapon/stock_parts/cell/high/
+	cell = new/obj/item/weapon/stock_parts/cell/high
 	cell.charge = 9000
-	cell.name = "dark power cell"
+	cell.name = "black power cell"
 	cell.icon_state = "bscell"
 
 
