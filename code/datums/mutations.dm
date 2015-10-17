@@ -287,13 +287,13 @@
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.resize = 0.8
-	owner.pass_flags = PASSTABLE
+	owner.pass_flags |= PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.resize = 1.25
-	owner.pass_flags = 0
+	owner.pass_flags &= ~PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
 
 /datum/mutation/human/clumsy
