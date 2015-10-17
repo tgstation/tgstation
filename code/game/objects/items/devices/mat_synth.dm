@@ -139,9 +139,9 @@
 /obj/item/device/material_synth/examine(mob/user)
 	..()
 	if(istype(src, /obj/item/device/material_synth/robot))
-		user << "<span class='info'>It's been set to draw power from a power cell.</span>"
+		user << "It's been set to draw power from a power cell."
 	else
-		user << "<span class='info'>It currently holds [matter]/[MAX_MATSYNTH_MATTER] matter-units.</span>"
+		user << "It currently holds [matter]/[MAX_MATSYNTH_MATTER] matter-units."
 
 /obj/item/device/material_synth/attackby(var/obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/rcd_ammo))
