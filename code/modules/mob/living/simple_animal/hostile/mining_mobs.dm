@@ -255,6 +255,7 @@
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/Die()
+	mouse_opacity = 1
 	new /obj/item/asteroid/hivelord_core(src.loc)
 	..()
 
@@ -331,7 +332,6 @@
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
 	attack_sound = 'sound/weapons/heavysmash.ogg'
-	mouse_opacity = 2
 	move_to_delay = 40
 	ranged = 1
 	ranged_cooldown_cap = 8
