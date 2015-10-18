@@ -15,13 +15,13 @@
 
 */
 
-/client/proc/SDQL2_query(query_text as message)
+/client/proc/SDQL2_query(var/query_text as message)
 	set category = "Debug"
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/client/proc/SDQL2_query() called tick#: [world.time]")
 
-	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
-		message_admins("<span class='warning'>ERROR: Non-admin [usr.key] attempted to execute a SDQL query!</span>")
-		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
+	if(!check_rights(R_DEBUG))  // Shouldn't happen... but just to be safe.
+		message_admins("<span class='warning'>ERROR: Non-admin [usr.key] attempted to execute the following SDQL query: [query_text]</span>")
+		log_admin("Non-admin [usr.key] attempted to execute the following SDQL query: [query_text]!")
+		return
 
 	if(!query_text || length(query_text) < 1)
 		return
@@ -125,29 +125,25 @@
 			if("set" in query_tree)
 				var/list/set_list = query_tree["set"]
 				for(var/datum/d in objs)
-					var/list/vals = list()
-					for(var/v in set_list)
-						if(v in d.vars)
-							vals += v
-							vals[v] = SDQL_expression(d, set_list[v])
+					for(var/list/sets in set_list)
+						var/datum/temp = d
+						var/i = 0
+						for(var/v in sets)
+							i++
+							if(i == sets.len)
+								if(istype(temp, /turf) && (v == "x" || v == "y" || v == "z"))
+									break
 
-					if(istype(d, /turf))
-						for(var/v in vals)
-							if(v == "x" || v == "y" || v == "z")
-								continue
+								temp.vars[v] = SDQL_expression(d, set_list[sets])
+								break
 
-							d.vars[v] = vals[v]
+							if(v in temp.vars.Find(v) && (istype(temp.vars[v], /datum) || istype(temp.vars[v], /client)))
+								temp = temp.vars[v]
 
-					else
-						for(var/v in vals)
-							d.vars[v] = vals[v]
-
-
-
-
+							else
+								break
 
 /proc/SDQL_parse(list/query_list)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_parse() called tick#: [world.time]")
 	var/datum/SDQL_parser/parser = new(query_list)
 	var/list/query_tree = parser.parse()
 

@@ -325,15 +325,17 @@
 
 
 //assignment:	<variable name> '=' expression
-/datum/SDQL_parser/proc/assignment(i, list/node)
+/datum/SDQL_parser/proc/assignment(var/i, var/list/node, var/list/assignment_list = list())
+	assignment_list += token(i)
 
-	node += token(i)
+	if(token(i + 1) == ".")
+		i = assignment(i + 2, node, assignment_list)
 
-	if(token(i + 1) == "=")
-		var/varname = token(i)
-		node[varname] = list()
+	else if(token(i + 1) == "=")
+		var/exp_list = list()
+		node[assignment_list] = exp_list
 
-		i = expression(i + 2, node[varname])
+		i = expression(i + 2, exp_list)
 
 	else
 		parse_error("Assignment expected, but no = found")
