@@ -62,6 +62,8 @@ Calculate the longest number of ticks the MC can wait between each cycle without
 	for(var/datum/subsystem/S in subsystems)
 		S.AfterInitialize(zlevel)
 
+	crewmonitor.generateMiniMaps()
+
 	world << "<span class='boldannounce'>Initializations complete</span>"
 	world.log << "Initializations complete"
 
