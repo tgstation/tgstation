@@ -7,7 +7,7 @@
 	icon_state = "core"
 	flags = FPRINT
 	siemens_coefficient = 1
-	origin_tech = "materials=4;plasma=3;bluespace=2;engineering=3"
+	origin_tech = "materials=4;plasmatech=3;bluespace=2;engineering=3"
 
 /obj/item/pod_parts/pod_frame
 	name = "Space Pod Frame"
