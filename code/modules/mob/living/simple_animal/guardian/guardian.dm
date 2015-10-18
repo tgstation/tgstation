@@ -42,6 +42,9 @@
 			src << "<span class='danger'>Your summoner has died!</span>"
 			visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
 			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
+			for(var/obj/item/W in summoner)
+				if(!summoner.unEquip(W))
+					qdel(W)
 			summoner.gib()
 			ghostize()
 			qdel(src)
