@@ -7,7 +7,7 @@ Names of z-level do not matter, but order does greatly, for instances such as ch
 #if !defined(MAP_FILE)
 
         #include "map_files\AsteroidStation\AsteroidStationv1.dmm"
-        #include "map_files\AsteroidStation\z2.dmm"
+        #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
         #include "map_files\AsteroidStation\z5.dmm"
@@ -16,6 +16,8 @@ Names of z-level do not matter, but order does greatly, for instances such as ch
 
         #define MAP_FILE "AsteroidStation.dmm"
         #define MAP_NAME "AsteroidStation"
+
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
 
 #elif !defined(MAP_OVERRIDE)
 
