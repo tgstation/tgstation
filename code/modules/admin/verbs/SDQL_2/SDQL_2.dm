@@ -13,6 +13,7 @@
 
 	--You can use operators other than ==, such as >, <=, != and etc..
 
+	--Lists can be done through [], so say UPDATE /mob SET client.color = [1, 0.75, ...].
 */
 
 /client/proc/SDQL2_query(var/query_text as message)
@@ -26,7 +27,11 @@
 	if(!query_text || length(query_text) < 1)
 		return
 
-	//world << query_text
+	var/query_log = "[key_name(src)] executed SDQL query: \"[query_text]\"."
+	world.log << query_log
+	message_admins(query_log)
+	log_game(query_log)
+	sleep(-1) // Incase the server crashes due to a huge query, we allow the server to log the above things (it might just delay it).
 
 	var/list/query_list = SDQL2_tokenize(query_text)
 
@@ -75,11 +80,6 @@
 		for(var/datum/d in objs_temp)
 			if(SDQL_expression(d, query_tree["where"]))
 				objs += d
-
-	var/query_log = "[key_name(src)] executed SDQL query: \"[query_text]\"."
-	world.log << query_log
-	message_admins(query_log)
-	log_game(query_log)
 
 	switch(query_tree[1])
 		if("call")
@@ -301,7 +301,6 @@
 	return result
 
 /proc/SDQL_value(datum/object, list/expression, start = 1)
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_value() called tick#: [world.time]")
 	var/i = start
 	var/val = null
 
@@ -335,6 +334,12 @@
 	else if(copytext(expression[i], 1, 2) in list("'", "\""))
 		val = copytext(expression[i], 2, length(expression[i]))
 
+	else if(expression[i] == "\[")
+		var/list/expressions_list = expression[++i]
+		val = list()
+		for(var/list/expression_list in expressions_list)			
+			val += SDQL_expression(object, expression_list)
+
 	else
 		val = SDQL_var(object, expression, i)
 		i = expression.len
@@ -342,9 +347,6 @@
 	return list("val" = val, "i" = i)
 
 /proc/SDQL_var(datum/object, list/expression, start = 1)
-
-	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL_var() called tick#: [world.time]")
-
 	if(expression[start] in object.vars)
 
 		if(start < expression.len && expression[start + 1] == ".")
@@ -361,7 +363,7 @@
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/SDQL2_tokenize() called tick#: [world.time]")
 
 	var/list/whitespace = list(" ", "\n", "\t")
-	var/list/single = list("(", ")", ",", "+", "-", ".")
+	var/list/single = list("(", ")", ",", "+", "-", ".", "\[", "]")
 	var/list/multi = list(
 					"=" = list("", "="),
 					"<" = list("", "=", ">"),
