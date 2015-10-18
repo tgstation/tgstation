@@ -1,0 +1,8 @@
+  
+author: phil235
+
+delete-after: True
+
+changes: 
+  - tweak: "Changing the transfer amount of all reagent containers (beaker, bucket, glass) is now done by clicking them, similar to spray. Reagent dispensers (watertank, fueltank, pepperspray dispenser) no longer have their own transfer amounts and use the reagent container's transfer amount instead (except for sprays which get 50u for faster refilling)."
+

@@ -10,7 +10,7 @@
 
 
 /obj/effect/proc_holder/changeling/chameleon_skin/sting_action(mob/user)
-	var/mob/living/carbon/human/H = user //SHOULD always be human, because req_human = 1 //phil235 so why is it needd?
+	var/mob/living/carbon/human/H = user //SHOULD always be human, because req_human = 1
 	if(!istype(H)) // req_human could be done in can_sting stuff.
 		return
 	var/datum/mutation/human/HM = mutations_list[CHAMELEON]

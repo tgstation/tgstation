@@ -37,7 +37,7 @@
 		if(M.reagents)
 			var/modifier = Clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
-			if(amount >= 1)
+			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)
 	return 1
 

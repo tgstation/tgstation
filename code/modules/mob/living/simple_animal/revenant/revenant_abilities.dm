@@ -156,7 +156,7 @@
 					bot.open = 1
 					bot.Emag(null)
 			for(var/obj/machinery/mach in T.contents)
-				if(istype(mach, /obj/machinery/dominator) || istype(mach, /obj/machinery/power/apc)) //Doesn't work on dominators and APCs, to prevent kekkery
+				if(istype(mach, /obj/machinery/dominator) || istype(mach, /obj/machinery/power/apc) || istype(mach, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 					continue
 				if(prob(10))
 					mach.emag_act(null)

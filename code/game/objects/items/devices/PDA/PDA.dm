@@ -678,7 +678,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if("Toggle Door")
 				if(cartridge && cartridge.access_remote_door)
-					for(var/obj/machinery/door/poddoor/M in world)
+					for(var/obj/machinery/door/poddoor/M in machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
 								M.open()
@@ -798,6 +798,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				useMS = MS
 
 	var/datum/signal/signal = src.telecomms_process()
+
+	if(!P || qdeleted(P) || !U) //in case the PDA or mob gets destroyed during telecomms_process()
+		return
 
 	var/useTC = 0
 	if(signal)

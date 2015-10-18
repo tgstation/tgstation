@@ -577,9 +577,6 @@ Sorry Giacom. Please don't be mad :(
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
-	for(var/mob/living/simple_animal/slime/M in oview(1,src))
-		M.UpdateFeed(src)
-
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
 	if(!has_gravity(M))
 		return
@@ -681,7 +678,7 @@ Sorry Giacom. Please don't be mad :(
 	if(has_gravity)
 		clear_alert("weightless")
 	else
-		throw_alert("weightless")
+		throw_alert("weightless", /obj/screen/alert/weightless)
 	float(!has_gravity)
 
 /mob/living/proc/float(on)

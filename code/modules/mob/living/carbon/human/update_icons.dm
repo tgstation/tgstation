@@ -275,19 +275,20 @@ Please contact me on #coderbus IRC. ~Carnie x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
-		var/layer2use
-		if(glasses.alternate_worn_layer)
-			layer2use = glasses.alternate_worn_layer
-		if(!layer2use)
-			layer2use = GLASSES_LAYER
+		if(!(head && (head.flags_inv & HIDEEYES)))
+			var/layer2use
+			if(glasses.alternate_worn_layer)
+				layer2use = glasses.alternate_worn_layer
+			if(!layer2use)
+				layer2use = GLASSES_LAYER
 
-		var/image/standing
-		if(glasses.alternate_worn_icon)
-			standing = image("icon"=glasses.alternate_worn_icon, "icon_state"="[glasses.icon_state]","layer"=-layer2use)
-		if(!standing)
-			standing = image("icon"='icons/mob/eyes.dmi', "icon_state"="[glasses.icon_state]", "layer"=-layer2use)
+			var/image/standing
+			if(glasses.alternate_worn_icon)
+				standing = image("icon"=glasses.alternate_worn_icon, "icon_state"="[glasses.icon_state]","layer"=-layer2use)
+			if(!standing)
+				standing = image("icon"='icons/mob/eyes.dmi', "icon_state"="[glasses.icon_state]", "layer"=-layer2use)
 
-		overlays_standing[GLASSES_LAYER] = standing
+			overlays_standing[GLASSES_LAYER] = standing
 
 	apply_overlay(GLASSES_LAYER)
 

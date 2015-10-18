@@ -85,7 +85,7 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/shadowlings = max(2, round(num_players()/20))
+	var/shadowlings = max(3, round(num_players()/14))
 
 
 	while(shadowlings)

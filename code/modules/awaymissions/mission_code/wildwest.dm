@@ -125,7 +125,6 @@
 	layer = 3
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/meatgrinder/New()
@@ -142,25 +141,17 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
-		call(src,triggerproc)(M)
 
-/obj/effect/meatgrinder/proc/triggerrad1(mob)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	for(var/mob/O in viewers(world.view, src.loc))
-		s.set_up(3, 1, src)
-		s.start()
-		explosion(mob, 1, 0, 0, 0)
-		qdel(src)
-
-/*/obj/effect/meatgrinder
-	name = "Meat Grinder"
-	icon_state = "blob"
-	triggerproc = "triggerrad1"*/
-
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		for(var/mob/O in viewers(world.view, src.loc))
+			s.set_up(3, 1, src)
+			s.start()
+			explosion(M, 1, 0, 0, 0)
+			qdel(src)
 
 /////For the Wishgranter///////////
 
-/mob/living/carbon/proc/immortality()
+/mob/living/carbon/proc/immortality() //Mob proc so people cant just clone themselves to get rid of the shadowperson race. No hiding your wickedness.
 	set category = "Immortality"
 	set name = "Resurrection"
 
@@ -170,21 +161,8 @@
 		return
 	C << "<span class='notice'>Death is not your end!</span>"
 
-	spawn(rand(800,1200))
-		if(C.stat == DEAD)
-			dead_mob_list -= C
-			living_mob_list += C
-		C.stat = CONSCIOUS
-		C.tod = null
-		C.setToxLoss(0)
-		C.setOxyLoss(0)
-		C.setCloneLoss(0)
-		C.SetParalysis(0)
-		C.SetStunned(0)
-		C.SetWeakened(0)
-		C.radiation = 0
-		C.heal_overall_damage(C.getBruteLoss(), C.getFireLoss())
-		C.reagents.clear_reagents()
+	spawn(rand(80,120))
+		C.revive()
 		C << "<span class='notice'>You have regenerated.</span>"
 		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
 		C.update_canmove()

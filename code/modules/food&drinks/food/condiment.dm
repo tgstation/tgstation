@@ -67,7 +67,7 @@
 			user << "<span class='warning'>[src] is full!</span>"
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
