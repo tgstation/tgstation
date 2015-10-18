@@ -38,15 +38,6 @@
 	item_state = "glasses"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 
-/obj/item/clothing/glasses/science/bartender
-	name = "science glasses"
-	desc = "A pair of imitation sunglasses that allow for scanning of reagents inside containers. Functions like normal sunglasses."
-	icon_state = "sun"
-	item_state = "sunglasses"
-	darkness_view = 1
-	flash_protect = 1
-	tint = 1
-
 /obj/item/clothing/glasses/science/equipped(mob/user, slot)
 	if(slot == slot_glasses)
 		user.scanner.Grant(user)
@@ -112,6 +103,11 @@
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
+
+/obj/item/clothing/glasses/sunglasses/reagent
+	name = "sunscanners"
+	desc = "Strangely ancient technology used to help provide rudimentary eye color. Outfitted with apparatus to scan individual reagents."
+	scan_reagents = 1
 
 /obj/item/clothing/glasses/sunglasses/garb
 	desc = "Go beyond impossible and kick reason to the curb!"
