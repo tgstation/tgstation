@@ -363,6 +363,11 @@
 				returnToPool(G)
 	if(!item) return //Grab processing has a chance of returning null
 
+	var/obj/item/I = item
+	if(I.cant_drop)
+		usr << "<span class='warning'>It's stuck to your hand!</span>"
+		return
+
 	remove_from_mob(item)
 
 	//actually throw it!

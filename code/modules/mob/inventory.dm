@@ -136,7 +136,7 @@
 
 //Drops the item in our hand - you can specify an item and a location to drop to
 
-/mob/proc/drop_item(var/obj/item/to_drop, var/atom/Target, force_drop = 0)
+/mob/proc/drop_item(var/obj/item/to_drop, var/atom/Target, force_drop = 0) //Set force_drop to 1 to force the item to drop (even if it can't be dropped normally)
 
 	if(!candrop) //can't drop items while etheral
 		return 0
@@ -147,7 +147,7 @@
 	if(!istype(to_drop)) //still nothing to drop?
 		return 0 //bail
 
-	if(to_drop.glued && !force_drop)
+	if(to_drop.cant_drop && !force_drop)
 		return 0
 
 	if(!Target)

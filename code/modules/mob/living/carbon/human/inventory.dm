@@ -711,7 +711,11 @@ It can still be worn/put on as normal.
 	if(source.loc != s_loc) return		//source has moved
 	if(target.loc != t_loc) return		//target has moved
 	if(!source.Adjacent(target)) return	//Use a proxi!
-	if(item && source.get_active_hand() != item) return	//Swapped hands / removed item from the active one
+
+	if(item)
+		if(source.get_active_hand() != item) return //Swapped hands / removed item from the active one
+		if(item.cant_drop) return //Item can't be dropped
+
 	if ((source.restrained() || source.stat)) return //Source restrained or unconscious / dead
 
 	var/slot_to_process
