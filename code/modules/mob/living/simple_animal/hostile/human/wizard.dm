@@ -20,6 +20,7 @@
 	retreat_distance = 6
 	minimum_distance = 6
 	projectiletype = /obj/item/projectile/simple_fireball
+	gender = MALE
 
 	faction = "wizard"
 
