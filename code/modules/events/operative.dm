@@ -29,7 +29,7 @@
 			spawn_locs += L.loc
 	if(!spawn_locs.len)
 		return kill()
-
+	
 	var/mob/living/carbon/human/operative = new(pick(spawn_locs))
 	var/datum/preferences/A = new
 	A.copy_to(operative)
@@ -45,7 +45,7 @@
 
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in machines
 	if(nuke)
-		var/nuke_code
+		var/nuke_code 
 		if(!nuke.r_code || nuke.r_code == "ADMIN")
 			nuke_code = "[rand(10000, 99999)]"
 			nuke.r_code = nuke_code

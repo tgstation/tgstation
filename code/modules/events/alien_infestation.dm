@@ -28,10 +28,6 @@
 /datum/round_event/alien_infestation/start()
 	get_alien()
 
-
-
-
-
 /datum/round_event/alien_infestation/proc/get_alien(end_if_fail = 0)
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
@@ -51,7 +47,6 @@
 		if(end_if_fail)
 			return 0
 		return find_alien()
-
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
 		var/client/C = pick_n_take(candidates)
@@ -65,7 +60,6 @@
 		log_game("[new_xeno.key] was spawned as an alien by an event.")
 	if(successSpawn)
 		return 1
-
 
 /datum/round_event/alien_infestation/proc/find_alien()
 	message_admins("Event attempted to spawn an alien but no candidates were available. Will try again momentarily...")
