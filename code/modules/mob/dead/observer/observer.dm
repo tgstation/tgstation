@@ -147,6 +147,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 					if(isnum(G.dom_timer))
 						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
 
+/mob/dead/observer/verb/do_not_resuscitate()
+	set category = "Ghost"
+	set name = "Quit Round"
+	set desc= "Tells players that you're done playing for the round and don't want to be revived."
+
+	if(!can_reenter_corpse)
+		src << "<span class='notice'>You are already set to do not resuscitate.</span>"
+		return
+	if(alert(src, "Setting this option will keep you from reentering your body for the rest of the round. You cannot take this choice back!", "Do Not Resuscitate", "Proceed", "Nevermind!") == "Nevermind!")
+		return
+	can_reenter_corpse = 0
+
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"

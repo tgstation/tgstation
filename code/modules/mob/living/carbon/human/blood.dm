@@ -167,8 +167,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["mind"] = src.mind
 	if(ckey)
 		B.data["ckey"] = src.ckey
-	if(!suiciding)
-		B.data["cloneable"] = 1
+	B.data["cloneable"] = 1
 	B.data["blood_type"] = copytext(src.dna.blood_type,1,0)
 	B.data["gender"] = src.gender
 	B.data["real_name"] = src.real_name
