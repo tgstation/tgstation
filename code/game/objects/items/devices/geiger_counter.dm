@@ -8,7 +8,7 @@
 	name = "geiger counter"
 	desc = "A handheld device used for detecting and measuring radiation pulses."
 	icon_state = "geiger_off"
-	item_state = "electronic"
+	item_state = "multitool"
 	w_class = 2
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
