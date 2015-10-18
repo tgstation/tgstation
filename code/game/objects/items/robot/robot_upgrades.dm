@@ -184,11 +184,14 @@
 /obj/item/borg/upgrade/syndicate/action(var/mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(ismommi(R))
-		return 0
-
 	if(R.emagged == 1)
 		return 0
+
+	if(ismommi(R))	//Removes speech and killswitch restrictions. Still thinking if I should just set keeper to zero, but that has other implications too
+		if(R.scrambledcodes)
+			R.unrestrict()
+			return 1
+		else return 0
 
 	R.SetEmagged(1)
 	return 1
