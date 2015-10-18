@@ -7,6 +7,7 @@ Sorry Giacom. Please don't be mad :(
 	if(A && A.push_dir)
 		push_mob_back(src, A.push_dir)
 */
+
 /mob/living/New()
 	. = ..()
 	generateStaticOverlay()
