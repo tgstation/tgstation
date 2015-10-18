@@ -79,7 +79,7 @@
 					var/list/animals = typesof(/mob/living/simple_animal)
 
 					if(mobtype in humans)
-						race = "Human"
+						race = "Humanoid"
 						language = race
 
 					else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
