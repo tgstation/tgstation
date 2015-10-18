@@ -68,12 +68,12 @@
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.remove_fuel(0, user))
-				user << "<span class='notice'>You begin repairing the shaterred [src]...</span>"
+				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 				if(do_after(user, 10, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
-					user << "<span class='notice'>You repair the shattered [src].</span>"
+					user << "<span class='notice'>You repair [src].</span>"
 					shattered = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
