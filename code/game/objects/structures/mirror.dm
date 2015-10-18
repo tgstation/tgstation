@@ -75,8 +75,8 @@
 						return
 					user << "<span class='notice'>You repair the shattered [src].</span>"
 					shattered = 0
-					icon_state = "mirror"
-					desc = "Mirror mirror on the wall, who's the most robust of them all?"
+					icon_state = initial(icon_state)
+					desc = initial(desc)
 					return
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
