@@ -5472,7 +5472,7 @@
 "cbl" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plasteel/brown{tag = "icon-brown (SOUTHEAST)"; icon_state = "brown"; dir = 6},/area/quartermaster/office)
 "cbm" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plating,/area/quartermaster/office)
 "cbn" = (/obj/structure/cable/orange{tag = "icon-1-2"; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment,/turf/simulated/floor/plasteel/brown{tag = "icon-brown (SOUTHWEST)"; icon_state = "brown"; dir = 10},/area/quartermaster/office)
-"cbo" = (/obj/machinery/conveyor_switch/oneway{convdir = -1; id = "packageExternal"},/turf/simulated/floor/plasteel/brown{dir = 9; icon_state = "brown"; nitrogen = 100; oxygen = 0; tag = "icon-brown (NORTHWEST)"; temperature = 80},/area/quartermaster/office)
+"cbo" = (/obj/machinery/conveyor_switch/oneway{convdir = -1; id = "packageExternal"},/turf/simulated/floor/plasteel/brown{dir = 9},/area/quartermaster/office)
 "cbp" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor/plasteel/loadingarea{tag = "icon-loadingarea (NORTH)"; icon_state = "loadingarea"; dir = 1},/area/quartermaster/office)
 "cbq" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,/turf/simulated/floor/plasteel,/area/quartermaster/office)
 "cbr" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/table,/obj/machinery/cell_charger,/turf/simulated/floor/plasteel,/area/quartermaster/office)
