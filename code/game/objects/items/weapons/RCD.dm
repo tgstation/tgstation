@@ -72,7 +72,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	if (!ishuman(usr) && !isrobot(usr) && !isdrone(usr))
+	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
 
 	var/mob/living/carbon/human/H = usr
@@ -126,14 +126,14 @@ RCD
 
 /obj/item/weapon/rcd/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || (!ishuman(usr) && !isrobot(usr)))
+	if (usr.stat || usr.restrained())
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
 		return
 
 	if (href_list["login"])
-		if(allowed(usr) || isdrone(usr))
+		if(allowed(usr))
 			src.locked = 0
 			src.last_configurator = usr.name
 
