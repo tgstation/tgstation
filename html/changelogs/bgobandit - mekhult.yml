@@ -1,0 +1,5 @@
+author: bgobandit
+delete-after: True
+changes: 
+  - rscadd: "CentComm has been informed that the librarian's backroom table does not work like a table. A new, working table has been shipped. We... don't want to talk about it anymore...."
+  - rscadd: "Cult tables and altars now work like tables. In addition, cult tables can hide one tome and/or talisman."
