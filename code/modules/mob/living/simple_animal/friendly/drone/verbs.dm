@@ -51,11 +51,3 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
-
-
-/mob/living/simple_animal/drone/verb/drone_alerts()
-	set category = "Drone"
-	set name = "Show Alerts"
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	robot_alerts()
