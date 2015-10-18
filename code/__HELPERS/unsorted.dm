@@ -1389,9 +1389,7 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 /proc/multinum_display(var/number,var/digits)//multinum_display(42,4) = "0042"; multinum_display(-137,6) = "-000137"; multinum_display(4572,3) = "999"
 	var/result = ""
 	if((digits < 1))
-		for(var/D=0;D<digits;D++)
-			result += "0"
-		return result
+		return "0"
 	var/abs = abs(number)
 	if(abs > (10**digits))
 		for(var/D=0;D<digits;D++)
