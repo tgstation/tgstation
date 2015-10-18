@@ -211,12 +211,17 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	ignored_by = list(/mob/living/simple_animal/slime)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
+	burnmod = 0.5
+	coldmod = 2
+	heatmod = 0.5
 	var/recently_changed = 1
 
 /datum/species/slime/spec_life(mob/living/carbon/human/H)
 	if(!H.reagents.get_reagent_amount("slimejelly"))
 		if(recently_changed)
 			H.reagents.add_reagent("slimejelly", 80)
+			var/datum/action/split_body/S = new
+			S.Grant(H)
 			recently_changed = 0
 		else
 			H.reagents.add_reagent("slimejelly", 5)
@@ -224,6 +229,13 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 			H << "<span class='danger'>You feel empty!</span>"
 
 	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume >= 200)
+			if(prob(5))
+				H << "<span class='notice'>You feel very bloated!</span>"
+		if(S.volume < 200)
+			if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+				H.reagents.add_reagent("slimejelly", 0.5)
+				H.nutrition -= 5
 		if(S.volume < 100)
 			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 				H.reagents.add_reagent("slimejelly", 0.5)
@@ -237,6 +249,65 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 /datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "slimejelly")
 		return 1
+
+/datum/action/split_body
+	name = "Split Body"
+	action_type = AB_INNATE
+	check_flags = AB_CHECK_ALIVE
+	button_icon_state = "split"
+	background_icon_state = "bg_alien"
+
+/datum/action/split_body/Activate()
+	var/mob/living/carbon/human/H = owner
+	if(!ishuman(owner) || !H.dna || !H.dna.species || H.dna.species.id != "slime")
+		owner << "<span class='warning'>Your biology is no longer compatible!</span>"
+		Remove(owner)
+		return
+
+	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
+	H.notransform = 1
+	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
+		if(S.volume >= 200)
+			var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
+			spare.underwear = "Nude"
+			H.dna.transfer_identity(spare, transfer_SE=1)
+			H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+			spare.real_name = spare.dna.real_name
+			spare.name = spare.dna.real_name
+			spare.updateappearance(mutcolor_update=1)
+			spare.domutcheck()
+			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
+			S.volume = 80
+			H.notransform = 0
+			var/datum/action/swap_body/callforward = new /datum/action/swap_body()
+			var/datum/action/swap_body/callback = new /datum/action/swap_body()
+			callforward.body = spare
+			callforward.Grant(H)
+			callback.body = H
+			callback.Grant(spare)
+			H.mind.transfer_to(spare)
+			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+			return
+
+	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
+	H.notransform = 0
+
+/datum/action/swap_body
+	name = "Swap Body"
+	action_type = AB_INNATE
+	check_flags = AB_CHECK_ALIVE
+	button_icon_state = "slimeswap"
+	background_icon_state = "bg_alien"
+	var/mob/living/carbon/human/body
+
+/datum/action/swap_body/Activate()
+	if(!body || !istype(body) || body.stat != CONSCIOUS || qdeleted(body))
+		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
+		Remove(owner)
+		return
+
+	owner.mind.transfer_to(body)
+
 /*
  JELLYPEOPLE
 */
