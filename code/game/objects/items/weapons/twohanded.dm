@@ -315,7 +315,9 @@
 /obj/item/weapon/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
 		return
-	if(explosive)
+	if(istype(AM, /turf/simulated/floor)) //So you can actually melee with it
+		return
+	if(explosive && wielded)
 		user.say("[war_cry]")
 		explosive.loc = AM
 		explosive.prime()
@@ -347,7 +349,7 @@
  //THIS MIGHT BE UNBALANCED SO I DUNNO
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
-	if(explosive && wielded)
+	if(explosive)
 		explosive.prime()
 		qdel(src)
 
