@@ -575,6 +575,7 @@
 	else
 		return
 
+//Shadowling
 /datum/admins/proc/makeShadowling()
 	var/datum/game_mode/shadowling/temp = new
 	if(config.protect_roles_from_antagonist)
@@ -588,10 +589,11 @@
 			if(!applicant.stat)
 				if(applicant.mind)
 					if(!applicant.mind.special_role)
-						if(temp.age_check(applicant.client))
-							if(!(applicant.job in temp.restricted_jobs))
-								if(!(is_shadow_or_thrall(applicant)))
-									candidates += applicant
+						if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
+							if(temp.age_check(applicant.client))
+								if(!(applicant.job in temp.restricted_jobs))
+									if(!(is_shadow_or_thrall(applicant)))
+										candidates += applicant
 
 	if(candidates.len)
 		H = pick(candidates)

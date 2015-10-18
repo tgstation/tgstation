@@ -77,7 +77,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 	if(candidates.len)
 		C = pick(candidates)
-	else if(owner.client)
+	else if(owner.client && !(jobban_isbanned(owner, "alien candidate") || jobban_isbanned(owner, "Syndicate")))
 		C = owner.client
 	else
 		stage = 4 // Let's try again later.
