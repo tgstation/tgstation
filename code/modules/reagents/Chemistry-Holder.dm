@@ -2,7 +2,7 @@
 
 var/const/TOUCH = 1 //splashing
 var/const/INGEST = 2 //injection, ingestion
-var/const/VAPOR = 3 //smoke, foam, spray, blob attack
+var/const/VAPOR = 3 //foam, spray, blob attack
 var/const/PATCH = 4 //patches
 
 ///////////////////////////////////////////////////////////////////////////////////

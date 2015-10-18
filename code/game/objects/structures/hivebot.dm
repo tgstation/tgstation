@@ -11,7 +11,7 @@
 /obj/structure/hivebot_beacon/New()
 	..()
 	var/datum/effect/effect/system/smoke_spread/smoke = new
-	smoke.set_up(5, 0, src.loc)
+	smoke.set_up(2, loc)
 	smoke.start()
 	visible_message("<span class='boldannounce'>The [src] warps in!</span>")
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)

@@ -222,13 +222,13 @@
 	if(holder.has_reagent("stabilizing_agent"))
 		return
 	holder.remove_reagent("smoke_powder", created_volume)
-	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
+	var/smoke_radius = round(sqrt(created_volume / 2), 1)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(holder, smoke_amount, 0, location)
+		S.set_up(holder, smoke_radius, 0, location)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()
@@ -245,12 +245,12 @@
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	var/smoke_amount = round(Clamp(created_volume/5, 1, 20),1)
+	var/smoke_radius = round(sqrt(created_volume / 2), 1)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	S.attach(location)
 	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 	if(S)
-		S.set_up(holder, smoke_amount, 0, location)
+		S.set_up(holder, smoke_radius, 0, location)
 		S.start()
 	if(holder && holder.my_atom)
 		holder.clear_reagents()

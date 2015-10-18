@@ -15,7 +15,8 @@
 	health = 25
 	maxHealth = 25
 	healable = 0
-	see_invisible = INVISIBILITY_REVENANT
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	languages = ALL
 	response_help   = "passes through"
 	response_disarm = "swings at"
