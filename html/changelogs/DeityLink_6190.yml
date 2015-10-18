@@ -1,0 +1,6 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: Credit chips can finally be stacked and un-stacked like sheet stacks.
+  - rscadd: Every vending machines/merch computer/pda terminal/etc now has an ID number which is referenced in the transaction logs.
+  - bugfix: Fixed a few transaction logs having incorrect amount values/having an empty "source terminal" field.
