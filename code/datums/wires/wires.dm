@@ -141,8 +141,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 				// Attach
 				else
 					if(istype(I, /obj/item/device/assembly/signaler))
-						L.drop_item(I)
-						Attach(colour, I)
+						if(L.drop_item(I))
+							Attach(colour, I)
 					else
 						to_chat(L, "<span class='error'>You need a remote signaller!</span>")
 

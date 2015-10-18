@@ -56,12 +56,15 @@
 		if (istype(G, /obj/item/weapon/gun/energy/staff))
 			to_chat(user, "<span class='notice'>The recharger rejects the magical apparatus.</span>")
 			return
+		if(!user.drop_item(G, src))
+			user << "<span class='warning'>You can't let go of \the [G]!</span>"
+			return
+
 		appearance_backup = G.appearance
 		var/matrix/M = matrix()
 		M.Scale(0.625)
 		M.Translate(0,6)
 		G.transform = M
-		user.drop_item(G, src)
 		charging = G
 		if(!self_powered)
 			use_power = 2

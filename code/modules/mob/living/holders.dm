@@ -22,7 +22,7 @@
 	//Hopefully this will stop the icon from remaining on human mobs.
 	if(istype(loc,/mob/living))
 		var/mob/living/A = src.loc
-		A.drop_item(src)
+		A.drop_item(src, force_drop = 1)
 		A.update_icons()
 
 	for(var/mob/M in contents)

@@ -848,7 +848,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	W.add_blood(owner)
 	if(ismob(W.loc))
 		var/mob/living/H = W.loc
-		H.drop_item(W)
+		H.drop_item(W, force_drop = 1)
 	W.loc = owner
 
 /****************************************************

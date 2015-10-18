@@ -201,13 +201,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			to_chat(user, "A disk is already loaded into the machine.")
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
+		if(istype(D, /obj/item/weapon/disk/tech_disk))
+			if(user.drop_item(D,src))
+				t_disk = D
+		else if (istype(D, /obj/item/weapon/disk/design_disk))
+			if(user.drop_item(D,src))
+				d_disk = D
 		else
 			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
 			return
-		user.drop_item(D, src)
+
 		to_chat(user, "<span class='notice'>You add the disk to the machine!</span>")
+
 	src.updateUsrDialog()
 	return
 

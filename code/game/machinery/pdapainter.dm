@@ -91,10 +91,10 @@ Feel free to do whatever with this if you think it lacks.
 		else
 			var/obj/item/device/pda/P = O
 			if(istype(P))
-				user.drop_item(P, src)
-				storedpda = P
-				//P.add_fingerprint(usr)
-				update_icon()
+				if(user.drop_item(P, src))
+					storedpda = P
+					//P.add_fingerprint(usr)
+					update_icon()
 
 /obj/machinery/pdapainter/attack_hand(mob/user as mob)
 	..()

@@ -127,3 +127,38 @@
 	attack_verb = list("quacked")
 	hitsound = 'sound/items/quack.ogg'
 	honk_delay = 10
+
+/obj/item/weapon/glue
+	name = "superglue"
+	desc = "A small plastic bottle full of high quality superglue."
+
+	icon = 'icons/obj/items.dmi'
+	icon_state = "glue0"
+
+	var/spent = 0
+
+/obj/item/weapon/glue/examine(mob/user)
+	..()
+	if(Adjacent(user))
+		user.show_message("<span class='info'>The label reads: </span><span class='notice'>Instructions: 1) Gently apply glue to an object 2) Apply object to human flesh.</span>", MESSAGE_SEE)
+
+/obj/item/weapon/glue/update_icon()
+	..()
+	icon_state = "glue[spent]"
+
+/obj/item/weapon/glue/afterattack(obj/item/target, mob/user, flag)
+	if(!flag)
+		return
+
+	if(spent)
+		user << "<span class='warning'>There's no glue left in the bottle.</span>"
+		return
+
+	if(!istype(target)) //Can only apply to items!
+		user << "<span class='warning'>That would be a waste of glue.</span>"
+		return
+
+	user << "<span class='info'>You gently apply the whole bottle of [src] to \the [target].</span>"
+	update_icon()
+	spent = 1
+	target.glued = 1

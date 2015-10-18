@@ -59,25 +59,27 @@
 				to_chat(user, "A beaker is already loaded into the machine.")
 			return
 
-		src.beaker =  B
-		user.drop_item(B, src)
-		if(istype(B,/obj/item/weapon/reagent_containers/syringe))
-			to_chat(user, "You add the syringe to the machine!")
-			src.updateUsrDialog()
-		else
-			to_chat(user, "You add the beaker to the machine!")
-			src.updateUsrDialog()
+		if(user.drop_item(B, src))
+			src.beaker =  B
+
+			if(istype(B,/obj/item/weapon/reagent_containers/syringe))
+				to_chat(user, "You add the syringe to the machine!")
+				src.updateUsrDialog()
+			else
+				to_chat(user, "You add the beaker to the machine!")
+				src.updateUsrDialog()
 	else
 		if(istype(B,/obj/item/weapon/virusdish))
 			if(src.dish)
 				to_chat(user, "A dish is already loaded into the machine.")
 				return
 
-			src.dish =  B
-			user.drop_item(B, src)
-			if(istype(B,/obj/item/weapon/virusdish))
-				to_chat(user, "You add the dish to the machine!")
-				src.updateUsrDialog()
+			if(user.drop_item(B, src))
+				src.dish =  B
+
+				if(istype(B,/obj/item/weapon/virusdish))
+					to_chat(user, "You add the dish to the machine!")
+					src.updateUsrDialog()
 
 /obj/machinery/disease2/incubator/Topic(href, href_list)
 	if(..()) return 1

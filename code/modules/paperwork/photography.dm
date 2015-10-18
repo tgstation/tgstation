@@ -162,13 +162,15 @@
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		user.drop_item(I)
-		qdel(I)
-		pictures_left = pictures_max
-		icon_state = icon_on
-		on = 1
-		return
+
+		if(user.drop_item(I))
+			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+
+			qdel(I)
+			pictures_left = pictures_max
+			icon_state = icon_on
+			on = 1
+			return
 	..()
 
 

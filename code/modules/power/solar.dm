@@ -81,12 +81,12 @@ var/list/solars_list = list()
 
 	if(!tracker)
 		if(istype(W, /obj/item/weapon/tracker_electronics))
-			tracker = 1
-			user.drop_item(W)
-			qdel(W)
-			user.visible_message("<span class='notice'>[user] inserts the electronics into [src].</span>", \
-			"<span class='notice'>You insert the electronics into [src].</span>")
-			return 1
+			if(user.drop_item(W))
+				tracker = 1
+				qdel(W)
+				user.visible_message("<span class='notice'>[user] inserts the electronics into [src].</span>", \
+				"<span class='notice'>You insert the electronics into [src].</span>")
+				return 1
 	else
 		if(iscrowbar(W))
 			new /obj/item/weapon/tracker_electronics(src.loc)

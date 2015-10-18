@@ -516,9 +516,9 @@
 		qdel(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(W, src.loc)
-		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
-		return
+		if(user.drop_item(W, src.loc))
+			visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
+			return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(istype(mover,/obj/item) && mover.throwing)

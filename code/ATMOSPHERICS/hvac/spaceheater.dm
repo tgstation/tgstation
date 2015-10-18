@@ -114,10 +114,10 @@
 				// insert cell
 				var/obj/item/weapon/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item(C, src)
-					cell = C
-					C.add_fingerprint(usr)
-					user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+					if(user.drop_item(C, src))
+						cell = C
+						C.add_fingerprint(usr)
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 		else
 			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
@@ -253,11 +253,11 @@
 				if(panel_open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item(C, src)
-						cell = C
-						C.add_fingerprint(usr)
+						if(usr.drop_item(C, src))
+							cell = C
+							C.add_fingerprint(usr)
 
-						usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+							usr.visible_message("<span class='notice'>[usr] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 
 		updateDialog()
 	else

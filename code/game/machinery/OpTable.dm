@@ -81,9 +81,9 @@
 
 	if ((( istype(O, /obj/item/weapon) ) || user.get_active_hand() == O))
 
-		user.drop_item(O)
-		if (O.loc != src.loc)
-			step(O, get_dir(O, src))
+		if(user.drop_item(O))
+			if (O.loc != src.loc)
+				step(O, get_dir(O, src))
 		return
 	else
 		if(!ismob(O)) //humans only

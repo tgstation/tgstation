@@ -43,19 +43,19 @@
 /obj/structure/bed/chair/vehicle/janicart/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/mecha_parts/janicart_upgrade) && !upgraded && !destroyed)
-		user.drop_item(W)
-		qdel(W)
-		to_chat(user, "<span class='notice'>You upgrade \the [nick].</span>")
-		upgraded = 1
-		name = "upgraded [name]"
-		icon_state = "pussywagon_upgraded"
+		if(user.drop_item(W))
+			qdel(W)
+			to_chat(user, "<span class='notice'>You upgrade \the [nick].</span>")
+			upgraded = 1
+			name = "upgraded [name]"
+			icon_state = "pussywagon_upgraded"
 	else if(istype(W, /obj/item/weapon/storage/bag/trash))
 		if(mybag)
 			to_chat(user, "<span class='warning'>There's already a [W.name] on \the [nick]!</span>")
 			return
-		to_chat(user, "<span class='notice'>You hook \the [W] onto \the [nick].</span>")
-		user.drop_item(W, src)
-		mybag = W
+		if(user.drop_item(W, src))
+			to_chat(user, "<span class='notice'>You hook \the [W] onto \the [nick].</span>")
+			mybag = W
 
 /obj/structure/bed/chair/vehicle/janicart/mop_act(obj/item/weapon/mop/M, mob/user)
 	if(istype(M))

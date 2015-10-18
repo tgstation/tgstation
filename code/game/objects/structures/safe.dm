@@ -150,10 +150,10 @@ FLOOR SAFES
 /obj/structure/safe/attackby(obj/item/I as obj, mob/user as mob)
 	if(open)
 		if(I.w_class + space <= maxspace)
-			space += I.w_class
-			user.drop_item(I, src)
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-			updateUsrDialog()
+			if(user.drop_item(I, src))
+				space += I.w_class
+				to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+				updateUsrDialog()
 			return
 		else
 			to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")

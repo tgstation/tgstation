@@ -299,12 +299,12 @@
 			return
 
 		if(!keyslot1)
-			user.drop_item(W, src)
-			keyslot1 = W
+			if(user.drop_item(W, src))
+				keyslot1 = W
 
 		else
-			user.drop_item(W, src)
-			keyslot2 = W
+			if(user.drop_item(W, src))
+				keyslot2 = W
 
 
 		recalculateChannels()

@@ -266,12 +266,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
 		else if(!panel_open)
+			if(!user.drop_item(D, src))
+				to_chat(user, "<span class='warning'>You can't let go of \the [D]!</span>")
+				return
+
 			src.beaker =  D
 			if(user.type == /mob/living/silicon/robot)
 				var/mob/living/silicon/robot/R = user
 				R.uneq_active()
-			user.drop_item(D, src)
+
 			to_chat(user, "You add the beaker to the machine!")
+
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return 1
 		else
@@ -496,14 +501,18 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(src.beaker)
 			to_chat(user, "<span class='warning'>There already is a beaker loaded in the machine.</span>")
 			return
+		if(!user.drop_item(B, src))
+			to_chat(user, "<span class='warning'>You can't let go of \the [B]!</span>")
+			return
+
 		src.beaker = B
 		if(user.type == /mob/living/silicon/robot)
 			var/mob/living/silicon/robot/R = user
 			R.uneq_active()
 			targetMoveKey =  R.on_moved.Add(src, "user_moved")
 
-		user.drop_item(B, src)
 		to_chat(user, "<span class='notice'>You add the beaker into \the [src]!</span>")
+
 		src.updateUsrDialog()
 		update_icon()
 		return 1
@@ -515,10 +524,14 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(src.loaded_pill_bottle)
 			to_chat(user, "<span class='warning'>There already is a pill bottle loaded in the machine.</span>")
 			return
+		if(!user.drop_item(B, src))
+			to_chat(user, "<span class='warning'>You can't let go of \the [B]!</span>")
+			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item(B, src)
+
 		to_chat(user, "<span class='notice'>You add the pill bottle into \the [src]'s dispenser slot!</span>")
+
 		src.updateUsrDialog()
 		return 1
 
@@ -1185,6 +1198,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		if(src.beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
+		if(!user.drop_item(I, src))
+			to_chat(user, "<span class='warning'>You can't let go of \the [I]!</span>")
+			return
 
 		src.beaker =  I
 		if(user.type == /mob/living/silicon/robot)
@@ -1192,8 +1208,8 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			R.uneq_active()
 			targetMoveKey =  R.on_moved.Add(src, "user_moved")
 
-		user.drop_item(I, src)
 		to_chat(user, "You add the beaker to the machine!")
+
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
@@ -1349,13 +1365,16 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			to_chat(user, "You can't load a beaker while the maintenance panel is open.")
 			return 0
 		else
+			if(!user.drop_item(O, src))
+				to_chat(user, "<span class='warning'>You can't let go of \the [O]!</span>")
+				return
+
 			src.beaker =  O
 			if(user.type == /mob/living/silicon/robot)
 				var/mob/living/silicon/robot/R = user
 				R.uneq_active()
 				targetMoveKey =  R.on_moved.Add(src, "user_moved")
 
-			user.drop_item(O, src)
 			update_icon()
 			src.updateUsrDialog()
 			return 1
@@ -1785,9 +1804,12 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		..()
 
 /obj/item/weapon/electrolyzer/proc/insert_beaker(obj/item/weapon/W as obj, mob/user as mob)
-	W.loc = src
-	beakers += W
-	user.drop_item(W, src)
+	if(user.drop_item(W, src))
+		W.loc = src
+		beakers += W
+	else
+		to_chat(user, "<span class='warning'>You can't let go of \the [W]!</span>")
+		return
 
 
 /obj/structure/centrifuge
@@ -1818,10 +1840,9 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		qdel(src)
 	if(W.is_open_container())
 		if(!W.reagents.total_volume)
-			W.loc = src
-			cans += W
-			user.drop_item(W, src)
-			to_chat(user, "<span class='notice'>You add a passive container. It now contains [cans.len].</span>")
+			if(user.drop_item(W, src))
+				cans += W
+				to_chat(user, "<span class='notice'>You add a passive container. It now contains [cans.len].</span>")
 		else
 			if(!beaker)
 				to_chat(user, "<span class='notice'>You insert an active container.</span>")
@@ -1830,8 +1851,6 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 					var/mob/living/silicon/robot/R = user
 					R.uneq_active()
 					targetMoveKey =  R.on_moved.Add(src, "user_moved")
-
-				user.drop_item(W, src)
 			else
 				to_chat(user, "<span class='warning'>There is already an active container.</span>")
 		return
@@ -1968,13 +1987,17 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		to_chat(user, "<span class ='warning'>You can't grind that!</span>")
 		return ..()
+
 	if(istype(O, /obj/item/stack/))
 		var/obj/item/stack/N = new O.type(src, amount=1)
 		var/obj/item/stack/S = O
 		S.use(1)
 		crushable = N
 		return 0
-	user.drop_item(O, src)
+	else if(!user.drop_item(O, src))
+		to_chat(user, "<span class='warning'>You can't let go of \the [O]!</span>")
+		return
+
 	crushable = O
 	return 0
 

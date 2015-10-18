@@ -17,10 +17,10 @@
 		if(cur_assembly)
 			to_chat(user, "<span class='warning'>There is already a fuel rod assembly in there!</span>")
 		else
-			cur_assembly = I
-			user.drop_item(I, src)
-			icon_state = "port1"
-			to_chat(user, "<span class='notice'>You insert [I] into [src]. Touch the panel again to insert [I] into the injector.</span>")
+			if(user.drop_item(I, src))
+				cur_assembly = I
+				icon_state = "port1"
+				to_chat(user, "<span class='notice'>You insert [I] into [src]. Touch the panel again to insert [I] into the injector.</span>")
 
 /obj/machinery/rust_fuel_assembly_port/attack_hand(mob/user)
 	add_fingerprint(user)

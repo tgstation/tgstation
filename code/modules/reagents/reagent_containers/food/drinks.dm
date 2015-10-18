@@ -1049,7 +1049,7 @@
 			new /obj/item/weapon/reagent_containers/glass/rag(get_turf(src))
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	user.drop_item()
+	user.drop_item(force_drop = 1)
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	B.icon_state = src.icon_state
 	B.force = src.force

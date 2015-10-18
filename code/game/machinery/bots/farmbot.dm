@@ -178,11 +178,11 @@
 		if ( get_total_ferts() >= Max_Fertilizers )
 			to_chat(user, "The fertilizer storage is full!")
 			return
-		user.drop_item(W, src)
-		to_chat(user, "You insert [W].")
-		flick("farmbot_hatch",src)
-		src.updateUsrDialog()
-		return
+		if(user.drop_item(W, src))
+			to_chat(user, "You insert [W].")
+			flick("farmbot_hatch",src)
+			src.updateUsrDialog()
+			return
 
 	else
 		..()

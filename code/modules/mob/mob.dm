@@ -543,23 +543,24 @@ var/global/obj/screen/fuckstat/FUCK = new
 							if(EQUIP_FAILACTION_DROP)
 								W.loc=get_turf(src) // I think.
 						return
-					drop_item(W)
-					if(!(put_in_active_hand(wearing)))
-						equip_to_slot(wearing, slot, redraw_mob)
-						switch(act_on_fail)
-							if(EQUIP_FAILACTION_DELETE)
-								qdel(W)
-							else
-								if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
-									to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
-						return
-					else
-						equip_to_slot(W, slot, redraw_mob)
-						u_equip(wearing,0)
-						put_in_active_hand(wearing)
-					if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
-						u_equip(H.s_store,1)
+					if(drop_item(W))
+						if(!(put_in_active_hand(wearing)))
+							equip_to_slot(wearing, slot, redraw_mob)
+							switch(act_on_fail)
+								if(EQUIP_FAILACTION_DELETE)
+									qdel(W)
+								else
+									if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
+										to_chat(src, "<span class='warning'> You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+
+							return
+						else
+							equip_to_slot(W, slot, redraw_mob)
+							u_equip(wearing,0)
+							put_in_active_hand(wearing)
+						if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
+							u_equip(H.s_store,1)
 		return 1
 	else
 		if(!W.mob_can_equip(src, slot, disable_warning))

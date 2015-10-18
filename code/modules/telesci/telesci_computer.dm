@@ -66,9 +66,11 @@
 				to_chat(user, "<span class='warning'>\The [name] blinks red as you try to insert the cell!</span>")
 				return
 
-			user.drop_item(W, src)
-			cell = W
-			user.visible_message("[user] inserts a cell into the [src].", "You insert a cell into the [src].")
+			if(user.drop_item(W, src))
+				cell = W
+				user.visible_message("[user] inserts a cell into the [src].", "You insert a cell into the [src].")
+			else
+				user << "<span class='warning'>You can't let go of \the [W]!</span>"
 		update_icon()
 
 /obj/machinery/computer/telescience/update_icon()

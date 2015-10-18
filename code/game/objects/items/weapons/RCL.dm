@@ -24,9 +24,9 @@
 /obj/item/weapon/rcl/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/stack/cable_coil))
 		if(!loaded)
-			loaded = W
-			loaded.max_amount = max_amount //We store a lot.
-			user.drop_item(W,src)
+			if(user.drop_item(W,src))
+				loaded = W
+				loaded.max_amount = max_amount //We store a lot.
 		else
 			loaded.preattack(W,user,1)
 		update_icon()

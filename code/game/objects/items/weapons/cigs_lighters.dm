@@ -253,14 +253,14 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 			new type_butt(get_turf(glass))
 			processing_objects.Remove(src)
 			to_chat(user, "<span class='warning'>Half of \the [src] dissolves with a nasty fizzle as you dip it into \the [glass].</span>")
-			user.drop_item(src)
+			user.drop_item(src, force_drop = 1)
 			qdel(src)
 			return
 		if(glass.reagents.has_reagent("water") && lit) //Dumping a lit cigarette into water, the result is obvious
 			new type_butt(get_turf(glass))
 			processing_objects.Remove(src)
 			to_chat(user, "<span class='warning'>\The [src] fizzles as you dip it into \the [glass].</span>")
-			user.drop_item(src)
+			user.drop_item(src, force_drop = 1)
 			qdel(src)
 			return
 		var/transfered = glass.reagents.trans_to(src, chem_volume)

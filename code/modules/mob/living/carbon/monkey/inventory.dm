@@ -89,7 +89,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/clothing/mask))
-					source.drop_item(item)
+					source.drop_item(item, force_drop = 1)
 					loc = target
 					item.layer = 20
 					target.wear_mask = item
@@ -107,7 +107,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item))
-					source.drop_item(item)
+					source.drop_item(item, force_drop = 1)
 					loc = target
 					item.layer = 20
 					target.l_hand = item
@@ -127,7 +127,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item))
-					source.drop_item(item)
+					source.drop_item(item, force_drop = 1)
 					loc = target
 					item.layer = 20
 					target.r_hand = item
@@ -147,7 +147,7 @@
 				W.add_fingerprint(source)
 			else
 				if ((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
-					source.drop_item(item)
+					source.drop_item(item, force_drop = 1)
 					loc = target
 					item.layer = 20
 					target.back = item
@@ -165,7 +165,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/weapon/handcuffs))
-					source.drop_item(item)
+					source.drop_item(item, force_drop = 1)
 					target.handcuffed = item
 					item.loc = target
 		if("internal")

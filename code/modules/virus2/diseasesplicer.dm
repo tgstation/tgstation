@@ -22,9 +22,9 @@
 	if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		if(!dish)
-
-			dish = I
 			if(!c.drop_item(I, src)) return 1
+			dish = I
+
 	if(istype(I,/obj/item/weapon/diseasedisk))
 		to_chat(user, "You upload the contents of the disk into the buffer")
 		memorybank = I:effect

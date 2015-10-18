@@ -38,7 +38,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O as obj, mob/user as mob)
 	if (src.extended)
 		if (istype(O, /obj/item/weapon/disk/nuclear))
-			usr.drop_item(O, src)
+			usr.drop_item(O, src, force_drop = 1)
 			src.auth = O
 			src.add_fingerprint(user)
 			return
@@ -188,7 +188,7 @@ var/bomb_set
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/disk/nuclear))
-					usr.drop_item(I, src)
+					usr.drop_item(I, src, force_drop = 1) //FORCE DROP for balance reasons
 					src.auth = I
 		if (src.auth)
 			if (href_list["type"])

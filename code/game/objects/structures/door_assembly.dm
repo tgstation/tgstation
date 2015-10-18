@@ -246,7 +246,7 @@
 		busy = 1
 		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 100, 1)
 		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
-		user.drop_item(W, src)
+		user.drop_item(W, src, force_drop = 1)
 
 		if(do_after(user, src, 40))
 			if(!src) return

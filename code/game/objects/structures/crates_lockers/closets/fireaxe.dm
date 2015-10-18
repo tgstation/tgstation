@@ -93,8 +93,8 @@
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield [F] first!</span>")
 				return
+			user.drop_item(F, src, force_drop = 1)
 			fireaxe = O
-			user.drop_item(F, src)
 			visible_message("<span class='notice'>[user] places [F] back into [src].</span>", \
 			"<span class='notice'>You place [F] back into [src].</span>")
 			update_icon()

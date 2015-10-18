@@ -314,11 +314,11 @@
 		var/obj/item/weapon/spacecash/S = I
 		var/money_add = S.amount * S.worth
 
-		user.drop_item(I)
-		qdel(I)
+		if(user.drop_item(I))
+			qdel(I)
 
-		src.stored_money += money_add
-		src.updateUsrDialog()
+			src.stored_money += money_add
+			src.updateUsrDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_play() //If no money in OUR account, return 0
 	if(!our_money_account)

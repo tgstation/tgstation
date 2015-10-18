@@ -191,16 +191,16 @@ var/global/list/library_section_names = list("Any", "Fiction", "Non-Fiction", "A
 
 /obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/paper/nano))
-		user.drop_item(O, src)
-		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-		src.visible_message("[src] begins to hum as it warms up its printing drums.")
-		sleep(rand(200,400))
-		src.visible_message("[src] whirs as it prints and binds a new book.")
-		var/obj/item/weapon/book/b = new(src.loc)
-		b.dat = O:info
-		b.name = "Print Job #[rand(100, 999)]"
-		b.icon_state = "book[rand(1,9)]"
-		qdel(O)
-		O = null
+		if(user.drop_item(O, src))
+			user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
+			src.visible_message("[src] begins to hum as it warms up its printing drums.")
+			sleep(rand(200,400))
+			src.visible_message("[src] whirs as it prints and binds a new book.")
+			var/obj/item/weapon/book/b = new(src.loc)
+			b.dat = O:info
+			b.name = "Print Job #[rand(100, 999)]"
+			b.icon_state = "book[rand(1,9)]"
+			qdel(O)
+			O = null
 	else
 		return ..()

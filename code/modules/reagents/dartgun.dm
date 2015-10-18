@@ -84,11 +84,12 @@
 				to_chat(user, "<span class='notice'>There's already a cartridge in [src].</span>")
 				return 0
 
-		user.drop_item(D, src)
-		cartridge = D
-		to_chat(user, "<span class='notice'>You slot [D] into [src].</span>")
-		update_icon()
-		return
+		if(user.drop_item(D, src))
+			cartridge = D
+			to_chat(user, "<span class='notice'>You slot [D] into [src].</span>")
+			update_icon()
+			return
+
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!istype(I, container_type))
 			to_chat(user, "<span class='notice'>[I] doesn't seem to fit into [src].</span>")
@@ -97,10 +98,11 @@
 			to_chat(user, "<span class='warning'>[src] already has [max_beakers] beakers in it - another one isn't going to fit!</span>")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/B = I
-		user.drop_item(B, src)
-		beakers += B
-		to_chat(user, "<span class='notice'>You slot [B] into [src].</span>")
-		src.updateUsrDialog()
+
+		if(user.drop_item(B, src))
+			beakers += B
+			to_chat(user, "<span class='notice'>You slot [B] into [src].</span>")
+			src.updateUsrDialog()
 
 /obj/item/weapon/gun/dartgun/can_fire()
 	if(!cartridge)

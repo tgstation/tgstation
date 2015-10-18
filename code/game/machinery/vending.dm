@@ -364,10 +364,10 @@ var/global/num_vending_terminals = 1
 		return
 	else if(premium.len > 0 && is_type_in_list(W, list(/obj/item/weapon/coin/, /obj/item/weapon/reagent_containers/food/snacks/chococoin)))
 		if (isnull(coin))
-			user.drop_item(W, src)
-			coin = W
-			to_chat(user, "<span class='notice'>You insert a coin into [src].</span>")
-			src.updateUsrDialog()
+			if(user.drop_item(W, src))
+				coin = W
+				to_chat(user, "<span class='notice'>You insert a coin into [src].</span>")
+				src.updateUsrDialog()
 		else
 			to_chat(user, "<SPAN CLASS='notice'>There's already a coin in [src].</SPAN>")
 		return
@@ -376,10 +376,10 @@ var/global/num_vending_terminals = 1
 		return
 	else if(istype(W, /obj/item/voucher))
 		if(can_accept_voucher(W, user))
-			user.drop_item(W, src)
-			to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
-			return voucher_act(W, user)
-			src.updateUsrDialog()
+			if(user.drop_item(W, src))
+				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+				return voucher_act(W, user)
+				src.updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>\The [src] refuses to take [W].</span>")
 			return 1
@@ -399,9 +399,9 @@ var/global/num_vending_terminals = 1
 			src.updateUsrDialog()
 	else
 		if(is_type_in_list(W, allowed_inputs))
-			user.drop_item(W, src)
-			add_item(W)
-			src.updateUsrDialog()
+			if(user.drop_item(W, src))
+				add_item(W)
+				src.updateUsrDialog()
 	/*else if(istype(W, /obj/item/weapon/card) && currently_vending)
 		//attempt to connect to a new db, and if that doesn't work then fail
 		if(!linked_db)
@@ -1346,12 +1346,12 @@ var/global/num_vending_terminals = 1
 					return
 				to_chat(usr, "You begin to insert \the [C] into \the [src].")
 				if(do_after(user, src, 10))
-					to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
-					user.drop_item(C, src)
-					_circuitboard=C
-					playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
-					build++
-					update_icon()
+					if(user.drop_item(C, src))
+						to_chat(usr, "<span class='notice'>You secure \the [C]!</span>")
+						_circuitboard=C
+						playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
+						build++
+						update_icon()
 				return 1
 		if(1) // Circuitboard installed
 			if(istype(W, /obj/item/weapon/crowbar))

@@ -127,6 +127,10 @@
 			return ..()
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, src, 20))
+			if(!user.drop_item(W, src))
+				user << "<span class='warning'>Oops! You can't let go of \the [W]!</span>"
+				return
+
 			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].", "<span class='notice'> You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
@@ -135,7 +139,6 @@
 				log_game("[key_name(user)] rigged fueltank at ([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
-			user.drop_item(W, src)
 
 			var/icon/test = getFlatIcon(W)
 			test.Shift(NORTH,1)

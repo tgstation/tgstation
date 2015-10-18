@@ -17,10 +17,10 @@
 	switch(state)
 		if(0)
 			if(istype(W, /obj/item/weapon/circuitboard/airlock) && W:icon_state != "door_electronics_smoked")
-				user.drop_item(W, src)
-				circuit=W
-				state++
-				playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+				if(user.drop_item(W, src))
+					circuit=W
+					state++
+					playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
 			if(istype(W, /obj/item/weapon/crowbar))
 				var/obj/machinery/constructable_frame/machine_frame/MF = new /obj/machinery/constructable_frame/machine_frame(T)
 				MF.state = 1
@@ -226,10 +226,10 @@
 		if(locked)
 			to_chat(user, "<span class='rose'>It's locked, you can't put anything into it.</span>")
 		else if(!occupant)
-			to_chat(user, "<span class='notice'>You insert \the [W] into \the [src], and it floats as the hoverfield activates.</span>")
-			user.drop_item(W, src)
-			occupant=W
-			update_icon()
+			if(user.drop_item(W, src))
+				to_chat(user, "<span class='notice'>You insert \the [W] into \the [src], and it floats as the hoverfield activates.</span>")
+				occupant=W
+				update_icon()
 
 /obj/structure/displaycase/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

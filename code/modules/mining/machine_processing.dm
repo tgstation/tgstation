@@ -194,8 +194,8 @@
 
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			usr.drop_item(I, src)
-			id = I
+			if(usr.drop_item(I, src))
+				id = I
 
 		updateUsrDialog()
 		return 1
@@ -220,10 +220,10 @@
 			to_chat(usr, "<span class='notify'>There is already an ID in the console!</span>")
 			return 1
 
-		user.drop_item(W, src)
-		id = W
-		updateUsrDialog()
-		return 1
+		if(user.drop_item(W, src))
+			id = W
+			updateUsrDialog()
+			return 1
 
 	. = ..()
 

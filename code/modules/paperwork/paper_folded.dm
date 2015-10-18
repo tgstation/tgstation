@@ -53,7 +53,8 @@
 	return
 
 /obj/item/weapon/p_folded/proc/processunfolding(var/obj/item/weapon/p_folded/P, mob/user)
-	user.drop_item(P, src) //drop the item first to free our hand, but don't delete it yet because it contains the unfolding result.
+	user.drop_item(P, src, force_drop = 1) //drop the item first to free our hand, but don't delete it yet because it contains the unfolding result.
+
 	if(P.unfolded)
 		user.put_in_hands(P.unfolded)
 		user.visible_message("<span class='notice'>[user] unfolds \the [src].</span>", \

@@ -59,7 +59,10 @@
 /obj/item/weapon/crossbow/attackby(obj/item/W as obj, mob/user as mob)
 	if(!arrow)
 		if (istype(W,/obj/item/weapon/arrow))
-			user.drop_item(W, src)
+			if(!user.drop_item(W, src))
+				user << "<span class='warning'>You can't let go of \the [W]!</span>"
+				return
+
 			arrow = W
 			user.visible_message("[user] slides [arrow] into [src].","You slide [arrow] into [src].")
 			icon_state = "crossbow-nocked"
@@ -82,7 +85,10 @@
 
 	if(istype(W, /obj/item/weapon/cell))
 		if(!cell)
-			user.drop_item(W, src)
+			if(!user.drop_item(W, src))
+				user << "<span class='warning'>You can't let go of \the [W]!</span>"
+				return
+
 			cell = W
 			to_chat(user, "<span class='notice'>You jam [cell] into [src] and wire it to the firing coil.</span>")
 			if(arrow)

@@ -71,9 +71,15 @@
 		if((exact && (AC.type == text2path(ammo_type))) || (!exact && istype(AC, text2path(ammo_type))))//if it's the exact type we want, or the general class
 			accepted = 1
 		if(AC.BB && accepted && stored_ammo.len < max_ammo)
+			if(user.drop_item(A, src))
+				to_chat(user, "<span class='notice'>You successfully load the [src] with \the [AC]. </span>")
+			else
+				to_chat(user, "<span class='warning'>You can't let go of \the [A]!</span>")
+				return
+
+
 			stored_ammo += AC
-			user.drop_item(A, src)
-			to_chat(user, "<span class='notice'>You successfully load the [src] with \the [AC]. </span>")
+
 			update_icon()
 		else if(!AC.BB)
 			to_chat(user, "<span class='notice'>You can't load a spent bullet.</span>")

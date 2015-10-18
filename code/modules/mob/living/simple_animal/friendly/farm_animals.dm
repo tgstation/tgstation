@@ -230,8 +230,11 @@
 /mob/living/simple_animal/chicken/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
+			if(!user.drop_item(O))
+				user << "<span class='notice'>You can't let go of \the [O]!</span>"
+				return
+
 			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
-			user.drop_item(O)
 			qdel(O)
 			eggsleft += rand(1, 4)
 //			to_chat(world, eggsleft)

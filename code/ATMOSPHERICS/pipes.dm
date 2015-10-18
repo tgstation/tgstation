@@ -894,8 +894,8 @@
 
 	if(istype(W, /obj/item/pipe_meter))
 		var/obj/item/pipe_meter/meter = W
-		user.drop_item(meter, src.loc)
-		meter.setAttachLayer(src.piping_layer)
+		if(user.drop_item(meter, src.loc))
+			meter.setAttachLayer(src.piping_layer)
 
 	if(istype(W,/obj/item/device/analyzer))
 		var/obj/item/device/analyzer/A = W

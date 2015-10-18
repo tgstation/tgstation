@@ -95,10 +95,10 @@
 	if(istype(I, /obj/item/toy/singlecard))
 		var/obj/item/toy/singlecard/C = I
 		if((!C.parentdeck && !strict_deck) || C.parentdeck == src)
-			src.cards += C
-			user.drop_item(C, src)
-			user.visible_message("<span class = 'notice'>[user] adds a card to the bottom of the deck.</span>",
-								 "You add the card to the bottom of the deck.</span>")
+			if(user.drop_item(C, src))
+				src.cards += C
+				user.visible_message("<span class = 'notice'>[user] adds a card to the bottom of the deck.</span>",
+									 "You add the card to the bottom of the deck.</span>")
 		else
 			to_chat(user, "<span class = 'warning'>You can't mix cards from other decks.</span>")
 			update_icon()
@@ -106,13 +106,13 @@
 	if(istype(I, /obj/item/toy/cardhand))
 		var/obj/item/toy/cardhand/C = I
 		if((!C.parentdeck && !strict_deck) || C.parentdeck == src)
-			for(var/obj/item/toy/singlecard/card in C.currenthand)
-				card.loc = src
-				cards += card
-			user.drop_item(C)
-			user.visible_message("<span class = 'notice'>[user] puts their hand of cards into the deck.</span>",
-								 "<span class = 'notice'>You put the hand into the deck.</span>")
-			qdel(C)
+			if(user.drop_item(C))
+				for(var/obj/item/toy/singlecard/card in C.currenthand)
+					card.loc = src
+					cards += card
+				user.visible_message("<span class = 'notice'>[user] puts their hand of cards into the deck.</span>",
+									 "<span class = 'notice'>You put the hand into the deck.</span>")
+				qdel(C)
 		else
 			to_chat(user, "<span class = 'warning'>You can't mix cards from other decks.</span>")
 		update_icon()
@@ -178,11 +178,11 @@
 			if(currenthand.len >= max_hand_size)
 				to_chat(user, "<span class = 'warning'> You can't add any more cards to this hand.</span>")
 				return
-			hand_click.action(C, user, params)
-			user.drop_item(C, src)
-			user.visible_message("<span class = 'notice'>[user] adds a card to their hand.</span>",
-								 "<span class = 'notice'>You add the [C.cardname] to your hand.</span>")
-			update_icon()
+			if(user.drop_item(C, src))
+				hand_click.action(C, user, params)
+				user.visible_message("<span class = 'notice'>[user] adds a card to their hand.</span>",
+									 "<span class = 'notice'>You add the [C.cardname] to your hand.</span>")
+				update_icon()
 		else
 			to_chat(user, "<span class = 'warning'> You can't mix cards from other decks.</span>")
 		return 1
@@ -275,9 +275,11 @@
 		if(!(C.parentdeck || src.parentdeck) || C.parentdeck == src.parentdeck)
 			var/obj/item/toy/cardhand/H = new/obj/item/toy/cardhand(user.loc)
 			H.parentdeck = C.parentdeck
+			user.drop_item(C, H, force_drop = 1)
 			user.put_in_active_hand(H)
 			to_chat(user, "<span class = 'notice'>You combine \the [C] and \the [src] into a hand.</span>")
-			user.drop_item(C, H)
+			user.drop_item(C, H, force_drop = 1)
+
 			user.remove_from_mob(src) //we could be anywhere!
 			src.forceMove(H)
 			H.currenthand += C

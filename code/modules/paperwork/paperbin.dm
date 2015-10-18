@@ -79,12 +79,11 @@
 	if(!istype(i))
 		return
 
-	user.drop_item(i, src)
-	to_chat(user, "<span class='notice'>You put [i] in [src].</span>")
-	papers.Add(i)
-	amount++
-	update_icon()
-
+	if(user.drop_item(i, src))
+		to_chat(user, "<span class='notice'>You put [i] in [src].</span>")
+		papers.Add(i)
+		amount++
+		update_icon()
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()

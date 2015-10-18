@@ -22,7 +22,7 @@
 			if (contents.len >= max_butts)
 				to_chat(user, "This ashtray is full.")
 				return
-			user.drop_item(W, src)
+			user.drop_item(W, src, force_drop = 1)
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if(istype(cig, /obj/item/weapon/cigbutt))
 				to_chat(user, "You drop the [cig] into [src].")

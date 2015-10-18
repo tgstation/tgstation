@@ -22,10 +22,10 @@
 		if(!wired)
 			to_chat(user, "<span class='notice'>[src] need to be wired first.</span>")
 		else if(!cell)
-			user.drop_item(W, src)
-			cell = W
-			to_chat(user, "<span class='notice'>You attach a cell to [src].</span>")
-			update_icon()
+			if(user.drop_item(W, src))
+				cell = W
+				to_chat(user, "<span class='notice'>You attach a cell to [src].</span>")
+				update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already have a cell.</span>")
 

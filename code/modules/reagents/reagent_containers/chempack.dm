@@ -173,13 +173,13 @@ obj/item/weapon/reagent_containers/chempack/verb/set_fill()
 				to_chat(user, "There is already a beaker loaded into \the [src].")
 				return
 			else
-				src.beaker = W
-				user.drop_item(W, src)
-				to_chat(user, "You add the beaker to \the [src]'s auxiliary chamber!")
-				if(user.wear_mask && istype(user.wear_mask, /obj/item/clothing/mask/chemmask))
-					var/obj/item/clothing/mask/chemmask/C = user.wear_mask
-					C.update_verbs()
-				return 1
+				if(user.drop_item(W, src))
+					src.beaker = W
+					to_chat(user, "You add the beaker to \the [src]'s auxiliary chamber!")
+					if(user.wear_mask && istype(user.wear_mask, /obj/item/clothing/mask/chemmask))
+						var/obj/item/clothing/mask/chemmask/C = user.wear_mask
+						C.update_verbs()
+					return 1
 		else
 			return
 

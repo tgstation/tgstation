@@ -311,12 +311,12 @@
 		to_chat(user, "<span class='notice'>You stamp [src] with your rubber stamp.</span>")
 
 	else if(istype(P, /obj/item/weapon/photo))
-		if(img)
-			to_chat(user, "<span class='notice'>This paper already has a photo attached.</span>")
-			return
-		img = P
-		user.drop_item(P, src)
-		to_chat(user, "<span class='notice'>You attach the photo to the piece of paper.</span>")
+		if(user.drop_item(P, src))
+			if(img)
+				to_chat(user, "<span class='notice'>This paper already has a photo attached.</span>")
+				return
+			img = P
+			to_chat(user, "<span class='notice'>You attach the photo to the piece of paper.</span>")
 	else if(P.is_hot())
 		src.ashify_item(user)
 		return //no fingerprints, paper is gone
@@ -372,7 +372,7 @@ var/global/list/paper_folding_results = list ( \
 	if (. == null) return
 	if (!canfold(usr)) return //second check in case some chucklefuck moves the paper or falls down while the menu is open
 
-	usr.drop_item(src)	//Drop the original paper to free our hand and call proper inventory handling code
+	usr.drop_item(src, force_drop = 1)	//Drop the original paper to free our hand and call proper inventory handling code
 	var/obj/item/weapon/p_folded/P = new .(get_turf(usr)) 	//Let's make a new item
 	P.unfolded = src										//that unfolds into the original paper
 	src.loc = P												//and also contains it, for good measure.

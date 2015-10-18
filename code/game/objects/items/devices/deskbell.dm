@@ -322,18 +322,21 @@
 					qdel(src)
 					return
 				if(istype(W,/obj/item/device/assembly/signaler) && !has_signaler)
-					var/obj/item/device/assembly/signaler/S = W
-					frequency = S.frequency
-					if(S.code == NOSIGNAL_CODE)	//setting a code of "30" guarantees that you'll never be triggering any remote signaling devices.
-						code = 0
-					else
-						code = S.code
-					user.drop_item(W)
-					qdel(W)
-					W = null
-					has_signaler = 1
-					update_icon()
-					return
+
+					if(user.drop_item(W))
+
+						var/obj/item/device/assembly/signaler/S = W
+						frequency = S.frequency
+						if(S.code == NOSIGNAL_CODE)	//setting a code of "30" guarantees that you'll never be triggering any remote signaling devices.
+							code = 0
+						else
+							code = S.code
+
+						qdel(W)
+						W = null
+						has_signaler = 1
+						update_icon()
+						return
 
 /obj/item/device/deskbell_assembly/attack_self(mob/living/carbon/user)
 	if(has_signaler)
