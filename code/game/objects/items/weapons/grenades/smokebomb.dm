@@ -19,11 +19,9 @@
 /obj/item/weapon/grenade/smokebomb/prime()
 	update_mob()
 	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
-	src.smoke.set_up(10, 0, usr.loc)
-	spawn(0)
-		src.smoke.start()
-		sleep(10)
-		src.smoke.start()
+	smoke.set_up(4, usr.loc)
+	smoke.start()
+
 
 	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))

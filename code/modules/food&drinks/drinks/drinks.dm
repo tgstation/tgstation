@@ -62,7 +62,7 @@
 			user << "<span class='warning'>[src] is full.</span>"
 			return
 
-		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
 
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
@@ -107,7 +107,7 @@
 	throwforce = 10
 	amount_per_transfer_from_this = 20
 	materials = list(MAT_GOLD=1000)
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	volume = 150
 	flags = CONDUCT | OPENCONTAINER
 	spillable = 1
@@ -181,7 +181,7 @@
 	name = "Paper Cup"
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
-	possible_transfer_amounts = null
+	possible_transfer_amounts = list()
 	volume = 10
 	spillable = 1
 
