@@ -248,7 +248,7 @@
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
 		if(U2)
 			if(H.dna.species.sexes && H.gender == FEMALE)
-				standing	+=	wear_female_version(U2.icon_state, U2.icon, BODY_LAYER)
+				standing	+=	wear_female_version("[U2.icon_state]_s", U2.icon, BODY_LAYER)
 			else
 				standing	+= image("icon"=U2.icon, "icon_state"="[U2.icon_state]_s", "layer"=-BODY_LAYER)
 
