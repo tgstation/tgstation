@@ -235,6 +235,11 @@
 	desc = "Contains calomel."
 	list_reagents = list("calomel" = 15)
 
+/obj/item/weapon/reagent_containers/syringe/pentetic
+	name = "syringe (pentetic acid)"
+	desc = "Contains pentetic acid. Strong medicine for hard gamma rays."
+	list_reagents = list("pen_acid" = 15)
+
 /obj/item/weapon/reagent_containers/syringe/lethal
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
