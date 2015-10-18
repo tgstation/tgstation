@@ -7,7 +7,7 @@ Sorry Giacom. Please don't be mad :(
 	if(A && A.push_dir)
 		push_mob_back(src, A.push_dir)
 */
-
+var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 /mob/living/New()
 	. = ..()
 	generateStaticOverlay()
@@ -905,3 +905,26 @@ Sorry Giacom. Please don't be mad :(
 			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib()
+
+/mob/living/proc/robot_alerts()
+	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
+	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
+
+	for (var/cat in alarms)
+		dat += text("<B>[cat]</B><BR>\n")
+		var/list/L = alarms[cat]
+		if (L.len)
+			for (var/alarm in L)
+				var/list/alm = L[alarm]
+				var/area/A = alm[1]
+				var/list/sources = alm[3]
+				dat += "<NOBR>"
+				dat += text("-- [A.name]")
+				if (sources.len > 1)
+					dat += text("- [sources.len] sources")
+				dat += "</NOBR><BR>\n"
+		else
+			dat += "-- All Systems Nominal<BR>\n"
+		dat += "<BR>\n"
+
+	src << browse(dat, "window=robotalerts&can_close=0")

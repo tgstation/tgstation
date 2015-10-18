@@ -72,7 +72,7 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	if (!ishuman(usr) && !isrobot(usr))
+	if (!ishuman(usr) && !isrobot(usr) && !isdrone(usr))
 		return ..(usr)
 
 	var/mob/living/carbon/human/H = usr
@@ -133,7 +133,7 @@ RCD
 		return
 
 	if (href_list["login"])
-		if(allowed(usr))
+		if(allowed(usr) || isdrone(usr))
 			src.locked = 0
 			src.last_configurator = usr.name
 

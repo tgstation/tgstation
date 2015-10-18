@@ -43,7 +43,6 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 	var/viewalerts = 0
 	var/modtype = "robot"
 	var/lower_mod = 0
@@ -281,30 +280,6 @@
 	set name = "Unequip Module"
 	set hidden = 1
 	uneq_active()
-
-
-/mob/living/silicon/robot/proc/robot_alerts()
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
-	for (var/cat in alarms)
-		dat += text("<B>[cat]</B><BR>\n")
-		var/list/L = alarms[cat]
-		if (L.len)
-			for (var/alarm in L)
-				var/list/alm = L[alarm]
-				var/area/A = alm[1]
-				var/list/sources = alm[3]
-				dat += "<NOBR>"
-				dat += text("-- [A.name]")
-				if (sources.len > 1)
-					dat += text("- [sources.len] sources")
-				dat += "</NOBR><BR>\n"
-		else
-			dat += "-- All Systems Nominal<BR>\n"
-		dat += "<BR>\n"
-
-	viewalerts = 1
-	src << browse(dat, "window=robotalerts&can_close=0")
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != 2)
