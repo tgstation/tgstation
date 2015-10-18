@@ -360,7 +360,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		return
 
 	if(opened)//Cover is open
-		if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(emagged || !scrambledcodes)	return//Prevents the X has hit Y with Z message also you cant emag them twice. You also can't emag MoMMIs with illegals
 		if(wiresexposed)
 			user << "You must close the panel first"
 			return
