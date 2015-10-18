@@ -109,6 +109,19 @@
 		explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
 		qdel(src)
 
+//Simple fireball
+/obj/item/projectile/simple_fireball
+	name = "fireball"
+	icon_state = "fireball"
+	animate_movement = 2
+	damage = 0
+	nodamage = 1
+	flag = "bullet"
+
+/obj/item/projectile/simple_fireball/Bump(atom/A)
+	explosion(get_turf(src), -1, -1, 2, 2)
+	return qdel(src)
+
 /obj/item/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
