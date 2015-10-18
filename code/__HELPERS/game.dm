@@ -301,6 +301,8 @@
 						if (jobbanType)
 							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
 								candidates += G.client
+						else
+							candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 
