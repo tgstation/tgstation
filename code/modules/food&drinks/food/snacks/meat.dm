@@ -115,7 +115,7 @@
 	desc = "A synthetic slab of meat."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
-	name = "synthmeat"
+	name = "meat product"
 	desc = "A slab of station reclaimed and chemically processed meat product."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
