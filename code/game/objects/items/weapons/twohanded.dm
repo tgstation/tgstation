@@ -369,3 +369,4 @@
 		qdel(C4)
 		explosive = C42
 		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
+	update_icon()
