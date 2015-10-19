@@ -1,6 +1,0 @@
-author: AnturK
-
-delete-after: True
-
-changes: 
-  - rscadd: "Handheld T-Ray Scanners now detect critters in pipes."
