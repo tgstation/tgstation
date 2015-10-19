@@ -28,9 +28,10 @@
 
 /obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status as well as individual chemicals in containers."
 	icon_state = "healthhud"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
+	scan_reagents = 1
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "Night Vision Health Scanner HUD"
