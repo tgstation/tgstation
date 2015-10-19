@@ -16,6 +16,17 @@
 	--Lists can be done through [], so say UPDATE /mob SET client.color = [1, 0.75, ...].
 */
 
+// Used by update statements, this is to handle shit like preventing editing the /datum/admins though SDQL but WITHOUT +PERMISSIONS.
+// Assumes the variable actually exists.
+/datum/proc/SDQL_update(var/const/var_name, var/new_value)
+	vars[var_name] = new_value
+	return 1
+
+// Because /client isn't a subtype of /datum...
+/client/proc/SDQL_update(var/const/var_name, var/new_value)
+	vars[var_name] = new_value
+	return 1
+	
 /client/proc/SDQL2_query(var/query_text as message)
 	set category = "Debug"
 
@@ -129,15 +140,14 @@
 						var/datum/temp = d
 						var/i = 0
 						for(var/v in sets)
-							i++
-							if(i == sets.len)
+							if(++i == sets.len)
 								if(istype(temp, /turf) && (v == "x" || v == "y" || v == "z"))
 									break
 
-								temp.vars[v] = SDQL_expression(d, set_list[sets])
+								temp.SDQL_update(v, SDQL_expression(d, set_list[sets]))
 								break
 
-							if(v in temp.vars.Find(v) && (istype(temp.vars[v], /datum) || istype(temp.vars[v], /client)))
+							if(temp.vars.Find(v) && (istype(temp.vars[v], /datum) || istype(temp.vars[v], /client)))
 								temp = temp.vars[v]
 
 							else
