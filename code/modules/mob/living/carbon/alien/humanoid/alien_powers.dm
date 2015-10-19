@@ -106,6 +106,8 @@ Doesn't work on other aliens/AI.*/
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
 	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
+	if(!M)
+		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")

@@ -156,7 +156,7 @@
 		nadeassembly.on_found(finder)
 
 /obj/item/weapon/grenade/chem_grenade/prime()
-	if(stage != READY)
+	if(stage != READY || !reagents)
 		return
 
 	var/has_reagents
