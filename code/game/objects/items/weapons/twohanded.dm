@@ -317,6 +317,8 @@
 		return
 	if(istype(AM, /turf/simulated/floor)) //So you can actually melee with it
 		return
+	if(istype(AM, /turf/space)) //So you can actually melee with it
+		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
 		explosive.loc = AM
