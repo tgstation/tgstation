@@ -15,6 +15,7 @@
 	desc = "A tank of oxygen."
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	force = 10
 
 
 /obj/item/weapon/tank/internals/oxygen/New()
@@ -40,6 +41,7 @@
 	desc = "A tank with an N2O/O2 gas mix."
 	icon_state = "anesthetic"
 	item_state = "an_tank"
+	force = 10
 
 /obj/item/weapon/tank/internals/anesthetic/New()
 	..()
@@ -59,6 +61,7 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
+	force = 10
 
 
 /obj/item/weapon/tank/internals/air/New()
@@ -78,6 +81,7 @@
 	icon_state = "plasma"
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
+	force = 8
 
 
 /obj/item/weapon/tank/internals/plasma/New()
@@ -112,6 +116,7 @@
 /obj/item/weapon/tank/internals/plasmaman
 	icon_state = "plasmaman_tank"
 	item_state = "plasmaman_tank"
+	force = 10
 
 /obj/item/weapon/tank/internals/plasmaman/New()
 	..()
@@ -130,6 +135,7 @@
 	icon_state = "plasmaman_tank_belt"
 	item_state = "plasmaman_tank_belt"
 	slot_flags = SLOT_BELT
+	force = 5
 
 /obj/item/weapon/tank/internals/plasmaman/belt/full/New()
 	..()
