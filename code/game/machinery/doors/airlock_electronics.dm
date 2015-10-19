@@ -11,7 +11,7 @@
 	var/locked = 1
 
 /obj/item/weapon/electronics/airlock/attack_self(mob/user)
-	if (!ishuman(user))
+	if (!ishuman(user) && !usr.has_unlimited_silicon_privilege)
 		return ..(user)
 
 	var/mob/living/carbon/human/H = user
@@ -65,7 +65,7 @@
 
 /obj/item/weapon/electronics/airlock/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || !ishuman(usr))
+	if (usr.stat || usr.restrained() || (!ishuman(usr) && !usr.has_unlimited_silicon_privilege))
 		return
 	if (href_list["close"])
 		usr << browse(null, "window=airlock")
