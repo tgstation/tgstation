@@ -173,27 +173,27 @@
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 
 /obj/item/ammo_box/magazine/wt550m9
-	name = "wt550 magazine (9mm)"
-	icon_state = "9mmt-20"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
+	name = "wt550 magazine (4.6x30mm)"
+	icon_state = "46x30mmt-20"
+	ammo_type = /obj/item/ammo_casing/c46x30mm
+	caliber = "4x6x30mm"
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon()
 	..()
-	icon_state = "9mmt-[round(ammo_count(),4)]"
+	icon_state = "46x30mmt-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtap
-	name = "wt550 magazine (Armour Piercing 9mm)"
-	ammo_type = /obj/item/ammo_casing/c9mmap
+	name = "wt550 magazine (Armour Piercing 4.6x30mm)"
+	ammo_type = /obj/item/ammo_casing/c46x30mmap
 
 /obj/item/ammo_box/magazine/wt550m9/wttx
-	name = "wt550 magazine (Toxin Tipped 9mm)"
-	ammo_type = /obj/item/ammo_casing/c9mmtox
+	name = "wt550 magazine (Toxin Tipped 4.6x30mm)"
+	ammo_type = /obj/item/ammo_casing/c46x30mmtox
 
 /obj/item/ammo_box/magazine/wt550m9/wtic
-	name = "wt550 magazine (Incindiary 9mm)"
-	ammo_type = /obj/item/ammo_casing/c9mminc
+	name = "wt550 magazine (Incindiary 4.6x30mm)"
+	ammo_type = /obj/item/ammo_casing/c46x30mminc
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"

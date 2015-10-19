@@ -1,6 +1,7 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
+	var/ratingdesc
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
@@ -20,7 +21,8 @@
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	charge = maxcharge
-	desc = "This cell has a power rating of [maxcharge], and you should not swallow it."
+	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
+	desc = desc + ratingdesc
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
@@ -187,6 +189,13 @@
 	materials = list(MAT_GLASS=60)
 	rating = 3
 	chargerate = 1500
+
+/obj/item/weapon/stock_parts/cell/high/plus
+	name = "high-capacity power cell+"
+	desc = "Where did these come from?"
+	icon_state = "h+cell"
+	maxcharge = 15000
+	chargerate = 2250
 
 /obj/item/weapon/stock_parts/cell/high/empty/New()
 	..()

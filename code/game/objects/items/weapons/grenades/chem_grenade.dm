@@ -156,7 +156,7 @@
 		nadeassembly.on_found(finder)
 
 /obj/item/weapon/grenade/chem_grenade/prime()
-	if(stage != READY)
+	if(stage != READY || !reagents)
 		return
 
 	var/has_reagents
@@ -359,7 +359,6 @@
 	B1.reagents.add_reagent("potassium", 40)
 	B2.reagents.add_reagent("phosphorus", 40)
 	B2.reagents.add_reagent("sugar", 40)
-	B1.reagents.add_reagent("condensedcapsaicin", 20)
 
 	beakers += B1
 	beakers += B2

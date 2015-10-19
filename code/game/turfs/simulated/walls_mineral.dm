@@ -7,10 +7,6 @@
 	canSmoothWith = null
 	smooth = SMOOTH_TRUE
 
-/turf/simulated/wall/mineral/New()
-	sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-	..()
-
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
 	desc = "A wall with gold plating. Swag!"
@@ -18,6 +14,7 @@
 	icon_state = "gold"
 	walltype = "gold"
 	mineral = "gold"
+	sheet_type = /obj/item/stack/sheet/mineral/gold
 	//var/electro = 1
 	//var/shocked = null
 	explosion_block = 0 //gold is a soft metal you dingus.
@@ -30,6 +27,7 @@
 	icon_state = "silver"
 	walltype = "silver"
 	mineral = "silver"
+	sheet_type = /obj/item/stack/sheet/mineral/silver
 	//var/electro = 0.75
 	//var/shocked = null
 	canSmoothWith = list(/turf/simulated/wall/mineral/silver, /obj/structure/falsewall/silver)
@@ -41,6 +39,7 @@
 	icon_state = "diamond"
 	walltype = "diamond"
 	mineral = "diamond"
+	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
 	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
@@ -55,6 +54,7 @@
 	icon_state = "bananium"
 	walltype = "bananium"
 	mineral = "bananium"
+	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/simulated/wall/mineral/clown, /obj/structure/falsewall/clown)
 
 /turf/simulated/wall/mineral/sandstone
@@ -64,6 +64,7 @@
 	icon_state = "sandstone"
 	walltype = "sandstone"
 	mineral = "sandstone"
+	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	explosion_block = 0
 	canSmoothWith = list(/turf/simulated/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
 
@@ -74,6 +75,7 @@
 	icon_state = "uranium"
 	walltype = "uranium"
 	mineral = "uranium"
+	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	canSmoothWith = list(/turf/simulated/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
 /turf/simulated/wall/mineral/uranium/proc/radiate()
@@ -107,6 +109,7 @@
 	icon_state = "plasma"
 	walltype = "plasma"
 	mineral = "plasma"
+	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/simulated/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
@@ -146,6 +149,17 @@
 	icon_state = "wood"
 	walltype = "wood"
 	mineral = "wood"
+	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
 	canSmoothWith = list(/turf/simulated/wall/mineral/wood, /obj/structure/falsewall/wood)
+
+/turf/simulated/wall/mineral/iron
+	name = "rough metal wall"
+	desc = "A wall with rough metal plating."
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron"
+	walltype = "iron"
+	mineral = "rods"
+	sheet_type = /obj/item/stack/rods
+	canSmoothWith = list(/turf/simulated/wall/mineral/iron, /obj/structure/falsewall/iron)

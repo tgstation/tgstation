@@ -82,7 +82,7 @@
 			teleammount++
 			do_teleport(stuff, stuff, 10)
 			var/datum/effect/effect/system/smoke_spread/smoke = new
-			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 			smoke.start()
 
 /obj/item/projectile/magic/door
@@ -151,7 +151,10 @@
 					switch(robot)
 						if("cyborg")		new_mob = new /mob/living/silicon/robot(M.loc)
 						if("syndiborg")		new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
-						if("drone")			new_mob = new /mob/living/simple_animal/drone(M.loc)
+						if("drone")
+							new_mob = new /mob/living/simple_animal/drone(M.loc)
+							var/mob/living/simple_animal/drone/D = new_mob
+							D.update_drone_hack()
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0

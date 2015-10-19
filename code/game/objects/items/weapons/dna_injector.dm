@@ -374,3 +374,15 @@
 	New()
 		..()
 		remove_mutations.Add(mutations_list[ELVIS])
+
+/obj/item/weapon/dnainjector/lasereyesmut
+	name = "\improper DNA injector (Laser Eyes)"
+	New()
+		..()
+		add_mutations.Add(mutations_list[LASEREYES])
+
+/obj/item/weapon/dnainjector/antilasereyes
+	name = "\improper DNA injector (Anti-Laser Eyes)"
+	New()
+		..()
+		remove_mutations.Add(mutations_list[LASEREYES])

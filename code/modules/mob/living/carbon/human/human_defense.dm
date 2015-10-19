@@ -82,17 +82,20 @@ emp_act
 
 /mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, thrown_proj = 0, armour_penetration = 0)
 	var/block_chance = 50 + 30*thrown_proj - round(damage / 3) //thrown things are easier to block
-	block_chance -= armour_penetration
 	if(AM)
 		if(AM.flags & NOSHIELD) //weapon ignores shields altogether
 			return 0
 	var/blocker
 	if(l_hand)
-		if(l_hand.IsShield() && prob(block_chance))
-			blocker = l_hand
+		if(l_hand.IsShield())
+			block_chance -= Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100) //So armour piercing blades can still be parried by other blades, for example
+			if(prob(block_chance))
+				blocker = l_hand
 	if(r_hand)
-		if(r_hand.IsShield() && prob(block_chance))
-			blocker = r_hand
+		if(r_hand.IsShield())
+			block_chance -= Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)
+			if(prob(block_chance))
+				blocker = r_hand
 	if(blocker)
 		visible_message("<span class='danger'>[src] blocks [attack_text] with [blocker]!</span>", \
 						"<span class='userdanger'>[src] blocks [attack_text] with [blocker]!</span>")
@@ -296,7 +299,7 @@ emp_act
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]", "", "", M.armour_penetration))
+		if(check_shields(damage, "the [M.name]", null, 0, M.armour_penetration))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
@@ -380,7 +383,7 @@ emp_act
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
 				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
-					throw_alert("embeddedobject")
+					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/organ/limb/L = pick(organs)
 					L.embedded_objects |= I
 					I.add_blood(src)//it embedded itself in you, of course it's bloody!

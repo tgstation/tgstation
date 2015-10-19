@@ -27,8 +27,27 @@
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
+	time = 30
+	category = CAT_WEAPON
+
+/datum/table_recipe/lance
+	name = "explosive lance (grenade)"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/weapon/grenade = 1)
+	parts = list(/obj/item/weapon/grenade = 1)
+	time = 30
+	category = CAT_WEAPON
+
+/datum/table_recipe/lance2
+	name = "explosive lance (C4)"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/weapon/c4 = 1)
+	parts = list(/obj/item/weapon/c4 = 1)
 	time = 80
 	category = CAT_WEAPON
+
 
 /datum/table_recipe/molotov
 	name = "Molotov"

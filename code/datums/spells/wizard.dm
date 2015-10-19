@@ -67,7 +67,7 @@
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 2
-	smoke_amt = 10
+	smoke_amt = 4
 
 	action_icon_state = "smoke"
 
@@ -101,7 +101,7 @@
 
 
 	smoke_spread = 1
-	smoke_amt = 1
+	smoke_amt = 0
 
 	inner_tele_radius = 0
 	outer_tele_radius = 6
@@ -133,7 +133,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	smoke_spread = 1
-	smoke_amt = 5
+	smoke_amt = 2
 	sound1="sound/magic/Teleport_diss.ogg"
 	sound2="sound/magic/Teleport_app.ogg"
 
@@ -354,5 +354,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..()

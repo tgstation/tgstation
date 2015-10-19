@@ -15,7 +15,8 @@
 	health = 25
 	maxHealth = 25
 	healable = 0
-	see_invisible = INVISIBILITY_REVENANT
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	languages = ALL
 	response_help   = "passes through"
 	response_disarm = "swings at"
@@ -63,27 +64,8 @@
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
-
-	var/list/modifiers = params2list(params)
-	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
-	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
-	if(modifiers["alt"])
-		AltClickOn(A)
-		return
-	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
-
-	if(world.time <= next_move)
-		return
-	A.attack_ghost(src)
+	if(client.inquisitive_ghost)
+		A.examine(src)
 	if(ishuman(A) && in_range(src, A))
 		Harvest(A)
 

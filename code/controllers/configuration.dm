@@ -149,6 +149,9 @@
 	var/silent_ai = 0
 	var/silent_borg = 0
 
+	var/allowwebclient = 0
+	var/webclientmembersonly = 0
+
 	var/sandbox_autoclose = 0 // close the sandbox panel after spawning an item, potentially reducing griff
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
@@ -172,6 +175,9 @@
 	var/datum/votablemap/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -355,6 +361,10 @@
 						world.log = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
+				if("allow_webclient")
+					config.allowwebclient = 1
+				if("webclient_only_byond_members")
+					config.webclientmembersonly = 1
 				if("announce_admin_logout")
 					config.announce_admin_logout = 1
 				if("announce_admin_login")
@@ -363,6 +373,10 @@
 					config.maprotation = 1
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
+				if("autoadmin")
+					config.autoadmin = 1
+					if(value)
+						config.autoadmin_rank = ckeyEx(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

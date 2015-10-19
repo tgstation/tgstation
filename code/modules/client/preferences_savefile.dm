@@ -191,13 +191,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			>> backbag
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
-	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
-	S["feature_human_ears"]				>> features["ears"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
+	if(!config.mutant_humans)
+		features["tail_human"] = "none"
+		features["ears"] = "none"
+	else
+		S["feature_human_tail"]				>> features["tail_human"]
+		S["feature_human_ears"]				>> features["ears"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]

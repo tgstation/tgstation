@@ -102,6 +102,14 @@ HOSTEDBY Yournamehere
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+## Uncomment to allow web client connections
+#ALLOW_WEBCLIENT
+
+## Uncomment to restrict web client connections to byond members
+## This makes for a nice pay gate to cut down on ban evading, as the webclient's cid system isn't that great
+## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
+#WEBCLIENT_ONLY_BYOND_MEMBERS
+
 ## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
 # USEWHITELIST
@@ -214,3 +222,7 @@ ANNOUNCE_ADMIN_LOGOUT
 ##A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
 ##A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
 #MAPROTATIONCHANCEDELTA 0.75
+
+##AUTOADMIN
+##Uncomment to automatically give that admin rank to all players
+#AUTOADMIN Game Admin

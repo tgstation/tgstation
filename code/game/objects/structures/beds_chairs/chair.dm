@@ -4,6 +4,7 @@
 	icon_state = "chair"
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = -1 //Not Burnable
+	buildstackamount = 1
 
 /obj/structure/bed/chair/New()
 	..()
@@ -27,6 +28,7 @@
 		SK.loc = E
 		SK.master = E
 		qdel(src)
+
 /obj/structure/bed/chair/attack_tk(mob/user)
 	if(buckled_mob)
 		..()
@@ -105,6 +107,7 @@
 	color = rgb(255,255,255)
 	burn_state = 0 //Burnable
 	burntime = 30
+	buildstackamount = 2
 	var/image/armrest = null
 
 /obj/structure/bed/chair/comfy/New()
