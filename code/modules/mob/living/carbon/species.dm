@@ -390,8 +390,9 @@ var/global/list/whitelisted_species = list("Human")
 
 	flesh_color = "#34AF10"
 
-/datum/species/unathi/handle_speech(message, mob/living/carbon/human/H)
-	return ..(replacetext(message, "s", stutter("ss")), H)
+/datum/species/unathi/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
+	speech.message = replacetext(speech.message, "s", stutter("ss"))
+	return ..(speech, H)
 
 /datum/species/skellington // /vg/
 	name = "Skellington"
@@ -413,11 +414,11 @@ var/global/list/whitelisted_species = list("Human")
 
 	move_speed_mod = 3
 
-/datum/species/skellington/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/skellington/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if (prob(25))
-		message += "  ACK ACK!"
+		speech.message += "  ACK ACK!"
 
-	return ..(message, H)
+	return ..(speech, H)
 
 /datum/species/tajaran
 	name = "Tajaran"
@@ -469,18 +470,18 @@ var/global/list/whitelisted_species = list("Human")
 	filter.addReplacement("god","gosh")
 	filter.addWordReplacement("(ass|butt)", "rump")
 
-/datum/species/tajaran/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/tajaran/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if (prob(15))
-		message = ""
+		speech.message = ""
 
 		if (prob(50))
-			message = pick("GOD, PLEASE", "NO, GOD", "AGGGGGGGH") + " "
+			speech.message = pick("GOD, PLEASE", "NO, GOD", "AGGGGGGGH") + " "
 
-		message += pick("KILL ME", "END MY SUFFERING", "I CAN'T DO THIS ANYMORE")
+		speech.message += pick("KILL ME", "END MY SUFFERING", "I CAN'T DO THIS ANYMORE")
 
-		return ..(message, H)
+		return ..(speech, H)
 
-	return ..(filter.FilterSpeech(message), H)
+	return ..(filter.FilterSpeech(speech), H)
 
 /datum/species/grey // /vg/
 	name = "Grey"
