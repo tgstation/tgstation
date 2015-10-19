@@ -130,11 +130,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/afterattack(obj/O, mob/user,proximity)
 	if(!proximity) return
-	if(istype(O,/obj/structure/sink) && !wrapped)
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
-		user.drop_item()
-		loc = get_turf(O)
-		return Expand()
+	if(istype(O,/obj/structure/sink))
+		if (wrapped)
+			user << "<span class='notice'>You need to unwrap [src] first!</span>"
+			return
+		else
+			user << "<span class='notice'>You place [src] under a stream of water...</span>"
+			user.drop_item()
+			loc = get_turf(O)
+			return Expand()
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/attack_self(mob/user)
