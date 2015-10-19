@@ -1,0 +1,7 @@
+
+author: Joan
+
+delete-after: True
+
+changes: 
+  - bugfix: "You can now click on things under timestop effects, instead of clicking the effect and looking like a fool."
