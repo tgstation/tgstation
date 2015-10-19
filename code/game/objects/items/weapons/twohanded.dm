@@ -304,7 +304,7 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
 	var/obj/item/weapon/grenade/explosive = null
-	var/war_cry = "AAAAARGH!"
+	var/war_cry = "AAAAARGH!!!"
 
 /obj/item/weapon/twohanded/spear/update_icon()
 	if(explosive)
@@ -322,29 +322,6 @@
 		explosive.loc = AM
 		explosive.prime()
 		qdel(src)
-
-/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/weapon/grenade))
-		arm(I, user)
-
-	if(istype(I, /obj/item/weapon/c4))
-		var /obj/item/weapon/grenade/C4/C = new /obj/item/weapon/grenade/C4(src)
-		qdel(I)
-		arm(C, user)
-
-/obj/item/weapon/twohanded/spear/proc/arm(obj/item/I, mob/user)
-	if(explosive)
-		user << "<span class='notice'>There is already an explosive fastened to the spear.</span>"
-		return
-	user << "<span class='notice'>You fasten the [src] to the spear. Alt+click on the spear to set your war cry!</span>"
-	name = "explosive lance"
-	desc = "A makeshift spear with [I] attached to it."
-	explosive = I
-	update_icon()
-	user.unEquip(I)
-	I.loc = src
-
 
  //THIS MIGHT BE UNBALANCED SO I DUNNO
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
@@ -373,3 +350,20 @@
 	update_mob()
 	explosion(src.loc,-1,1,3)
 	qdel(src)
+
+/obj/item/weapon/twohanded/spear/CheckParts()
+	if(explosive)
+		explosive.loc = get_turf(src.loc)
+		explosive = null
+	var/obj/item/weapon/grenade/G = locate() in contents
+	if(G)
+		explosive = G
+		name = "explosive lance"
+		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
+		return
+	var/obj/item/weapon/c4/C4 = locate() in contents
+	if(C4)
+		var /obj/item/weapon/grenade/C4/C42 = new /obj/item/weapon/grenade/C4(src)
+		qdel(C4)
+		explosive = C42
+		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
