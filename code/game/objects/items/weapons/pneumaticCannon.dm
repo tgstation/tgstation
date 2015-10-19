@@ -132,7 +132,7 @@
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
 	w_class = 3
-	maxWeightClass = 7
+	maxWeightClass = 10
 	gasPerThrow = 5
 
 /datum/table_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
