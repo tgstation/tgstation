@@ -185,6 +185,11 @@ or something covering your eyes."
 If you're feeling frisky, click yourself in help intent to pull the object out."
 	icon_state = "embeddedobject"
 
+/obj/screen/alert/embeddedobject/Click()
+	if(isliving(usr))
+		var/mob/living/carbon/human/M = usr
+		return M.help_shake_act(M)
+
 /obj/screen/alert/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
@@ -302,10 +307,23 @@ so as to remain in compliance with the most up-to-date laws."
 	name = "Buckled"
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 
-/obj/screen/alert/handcuffed // Not used right now.
+/obj/screen/alert/handcuffed
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
+/obj/screen/alert/handcuffed/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		return L.resist()
+
+/obj/screen/alert/legcuffed
+	name = "Legcuffed"
+	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
+
+/obj/screen/alert/legcuffed/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		return L.resist()
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
