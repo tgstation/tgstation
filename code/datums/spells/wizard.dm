@@ -354,5 +354,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets)
 	if(istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..()
