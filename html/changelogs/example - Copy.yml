@@ -1,0 +1,6 @@
+author: bgobandit
+
+delete-after: True
+
+changes: 
+  - rscadd: "L3 biohazard closets now contain bio-bag satchels for the safe collection of biowaste products, such as slime extracts."
