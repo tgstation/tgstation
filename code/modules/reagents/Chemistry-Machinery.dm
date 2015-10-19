@@ -222,7 +222,7 @@
 			dispensable_reagents = dispensable_reagents | special_reagents[i] 
 		//the parameter to sortList() must be a list and not a product of a list operation.
 		//Watch for hits on git grep -E 'sortList\([^)]+\|[^)]+\)' , for example.
-	dispensable_reagents = sortList( dispensable_reagents }
+	dispensable_reagents = sortList( dispensable_reagents )
 
 /obj/machinery/chem_dispenser/constructable/attackby(var/obj/item/I, var/mob/user, params)
 	..()
