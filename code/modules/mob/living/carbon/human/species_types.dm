@@ -321,6 +321,7 @@
 	heatmod = 0
 	punchmod = 1
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_head, slot_w_uniform)
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
 	nojumpsuit = 1
 	meat = null
 	exotic_blood = null //insert white blood later

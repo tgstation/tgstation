@@ -1,9 +1,11 @@
 // BEGIN_INTERNALS
 /*
-LAST_COMPILE_TIME: 1445089544
-DIR: code code\game code\game\gamemodes code\game\gamemodes\traitor code\game\gamemodes\wizard code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\game\mecha\working code\modules code\modules\reagents 
+LAST_COMPILE_TIME: 1445188004
+DIR: code code\datums code\datums\diseases code\datums\diseases\advance code\datums\diseases\advance\symptoms code\game code\game\gamemodes code\game\gamemodes\nuclear code\game\gamemodes\traitor code\game\gamemodes\wizard code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\game\mecha\working code\modules code\modules\food&drinks code\modules\food&drinks\food code\modules\food&drinks\food\snacks code\modules\food&drinks\recipes code\modules\food&drinks\recipes\tablecraft code\modules\mob code\modules\mob\living code\modules\mob\living\carbon code\modules\mob\living\carbon\human code\modules\reagents code\modules\reagents\Chemistry-Reagents code\modules\reagents\Chemistry-Reagents\Consumable-Reagents icons icons\obj icons\obj\food sound sound\AI_vox 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 507.1286
+WINDOW: code\modules\food&drinks\food\snacks\meat.dm;code\modules\mob\living\carbon\human\species_types.dm;icons\obj\food\food.dmi;icons\obj\food\burgerbread.dmi;code\modules\food&drinks\recipes\tablecraft\recipes_burger.dm;code\modules\food&drinks\food\snacks_burgers.dm;code\modules\food&drinks\food\snacks_salad.dm;code\modules\food&drinks\food\snacks_pizza.dm;code\modules\food&drinks\food\snacks_cake.dm;code\modules\food&drinks\food\snacks_pastry.dm;code\modules\reagents\Chemistry-Reagents\Drug-Reagents.dm
+FILE: code\modules\food&drinks\recipes\tablecraft\recipes_burger.dm
 */
 // END_INTERNALS
