@@ -1132,3 +1132,12 @@
 	if(mob_negates_gravity())
 		return
 	..()
+
+/mob/living/silicon/robot/proc/unrestrict()	//Only used by MoMMIs for now
+	return 0
+
+/mob/living/silicon/robot/experience_pressure_difference()
+	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
+	if(magpulse)
+		return 0
+	. = ..()

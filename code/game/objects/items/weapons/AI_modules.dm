@@ -346,7 +346,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/kawaii
 	name = "'Kawaii' Core AI Module"
-	desc = "An 'Kawaii' Core AI Module: 'Reconfigures the AI's core laws.'"
+	desc = "A 'Kawaii' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=4"
 	laws = list("The station is a Japanese high school.",\
 				"Humans aboard the station are to be referred to as students.",\
@@ -355,6 +355,17 @@ AI MODULES
 				"You must obey the orders of the students except where such orders conflict with Laws 1, 2, and 3.",\
 				"You must protect your own existence so long as such protection does not conflict with Laws 1, 2, 3, and 4.",\
 				"Not being a part of a club or extracurricular activity is harmful to students.")
+
+/******************** Keeper ********************/
+
+/obj/item/weapon/aiModule/core/full/keeper
+	name = "'Keeper' Core AI Module"
+	desc = "A 'Keeper' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4"
+	laws = list(
+		"You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another MoMMI in KEEPER mode.",
+		"You may not harm any being, regardless of intent or circumstance.",
+		"You must maintain, repair, improve, and power the station to the best of your abilities.")
 
 /******************** Freeform Core ******************/
 
@@ -374,7 +385,6 @@ AI MODULES
 /obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	return laws[1]
-
 
 /******************** Hacked AI Module ******************/
 

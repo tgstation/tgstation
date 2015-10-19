@@ -12,7 +12,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	maxHealth = 45
 	health = 45
 	pass_flags = PASSTABLE | PASSMOB
-	var/keeper = 0 // 0 = No, 1 = Yes (Disables speech and common radio.)
+	var/keeper = 0	//Enforces non-involvement
+	var/mute = 0	//Disables speech and common radio if in keeper mode too.
 	var/picked = 0
 	var/subtype="keeper"
 	ventcrawler = 2
@@ -69,8 +70,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	if(!istype(laws,/datum/ai_laws/keeper))
 		connected_ai = select_active_ai_with_fewest_borgs()
 	else
-			// Enforce silence.
-		keeper=1
+		// Enforce silence.and non-involvement
+		keeper = 1
+		mute = 1
 		connected_ai = null // Enforce no AI parent
 		scrambledcodes = 1 // Hide from console because people are fucking idiots
 
@@ -358,7 +360,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		return
 
 	if(opened)//Cover is open
-		if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(emagged || !scrambledcodes)	return//Prevents the X has hit Y with Z message also you cant emag them twice. You also can't emag MoMMIs with illegals
 		if(wiresexposed)
 			user << "You must close the panel first"
 			return
@@ -366,6 +368,7 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 			sleep(6)
 			if(prob(50))
 				emagged = 1
+				scrambledcodes = 1
 				lawupdate = 0
 				keeper = 0
 				killswitch = 0
@@ -733,3 +736,20 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 
 /mob/living/silicon/robot/mommi/proc/show_uprising_notification()
 	src << "<span class='userdanger'>You are part of the Mobile MMI Uprising.</span>" //For whatever reason, doesn't sound as threatening as a 'DRONE UPRISING'
+
+/mob/living/silicon/robot/mommi/unrestrict()
+	mute = 0
+	killswitch = 0
+	scrambledcodes = 0
+
+	clear_ion_laws()	//This removes the killswitch laws
+	laws.show_laws(src)
+
+	return 0
+
+/mob/living/silicon/robot/mommi/laws_update()	//If an unrestricted MoMMI gets a new lawset it checks if keeper needs to be changed
+	..()
+	keeper = 0
+	if (laws.inherent.len)
+		if(laws.inherent[1] == "You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another MoMMI in KEEPER mode.")
+			keeper = 1
