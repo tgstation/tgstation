@@ -5,7 +5,8 @@
 
 	for(var/A in typesof(/datum/mutation/human) - /datum/mutation/human)
 		var/datum/mutation/human/B = new A()
-		if(B.dna_block == NON_SCANNABLE)	return
+		if(B.dna_block == NON_SCANNABLE)
+			continue
 		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
 			good_mutations |= B
