@@ -4,12 +4,16 @@
 	desc = "A chair with fitted wheels. Used by handicapped to make life easier, however it still requires hands to drive."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "wheelchair"
+
 	anchored = 0
+	density = 1
 
 	movement_delay = 3
 
 	health = 50
 	max_health = 50
+
+	animate_movement = SYNC_STEPS
 
 	var/image/wheel_overlay
 
@@ -19,10 +23,12 @@
 
 /obj/structure/bed/chair/vehicle/wheelchair/unlock_atom(var/atom/movable/AM)
 	. = ..()
+	density = 1
 	update_icon()
 
 /obj/structure/bed/chair/vehicle/wheelchair/lock_atom(var/atom/movable/AM)
 	. = ..()
+	density = 0
 	update_icon()
 
 /obj/structure/bed/chair/vehicle/wheelchair/update_icon()
