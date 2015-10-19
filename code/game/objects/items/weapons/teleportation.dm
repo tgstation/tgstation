@@ -149,7 +149,7 @@ Frequency:
 			else
 				L["[com.id] (Inactive)"] = com.target
 	var/list/turfs = list(	)
-	for(var/turf/T in orange(10))
+	for(var/turf/T in ultra_range(10, orange=1))
 		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb
 		if(T.y>world.maxy-8 || T.y<8)	continue
 		turfs += T

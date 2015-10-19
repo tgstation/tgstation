@@ -66,7 +66,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				H.SetStunned(0)
 				H << "<i><b><font size=3>YOU LIVE!!!</i></b></font>"
 
-				for(var/obj/structure/alien/resin/wall/shadowling/W in orange(H, 1))
+				for(var/obj/structure/alien/resin/wall/shadowling/W in orange(1, H))
 					playsound(W, 'sound/effects/splat.ogg', 50, 1)
 					qdel(W)
 				for(var/obj/structure/alien/weeds/node/N in shadowturf)

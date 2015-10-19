@@ -289,7 +289,7 @@
 		amount = dispense(amount, cointype, null, 0)
 
 	else
-		var/mob/living/target = locate() in range(src, 2)
+		var/mob/living/target = locate() in range(2, src)
 
 		amount = dispense(amount, cointype, target, 1)
 

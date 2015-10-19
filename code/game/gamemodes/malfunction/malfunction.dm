@@ -206,7 +206,7 @@
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
 
 	var/mob/living/silicon/ai/AI = usr
-	for(var/turf/simulated/floor/bluegrid/T in orange(AI, 5))
+	for(var/turf/simulated/floor/bluegrid/T in orange(5, AI))
 		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
 
 /datum/game_mode/malfunction/proc/ai_win()

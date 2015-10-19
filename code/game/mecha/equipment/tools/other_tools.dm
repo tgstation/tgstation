@@ -37,7 +37,7 @@
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
 	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM) return
 	var/list/theareas = list()
-	for(var/area/AR in orange(100, chassis))
+	for(var/area/AR in ultra_range(100, chassis, 1))
 		if(AR in theareas) continue
 		theareas += AR
 	if(!theareas.len)
@@ -113,9 +113,9 @@
 		if(2)
 			var/list/atoms = list()
 			if(isturf(target))
-				atoms = range(target,3)
+				atoms = range(3, target)
 			else
-				atoms = orange(target,3)
+				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
 				if(A.anchored) continue
 				spawn(0)

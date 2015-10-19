@@ -165,7 +165,7 @@
 			if(target)
 				loadProgram(target)
 			active = 0
-			for(var/mob/M in range(10,src))
+			for(var/mob/M in ultra_range(10,src))
 				M.show_message("The holodeck overloads!")
 
 
