@@ -321,7 +321,7 @@
 "gi" = (/turf/simulated/floor/plasteel/green/side{dir = 10},/area/space)
 "gj" = (/turf/simulated/floor/plasteel/green/side,/area/space)
 "gk" = (/turf/simulated/floor/plasteel/green/side{dir = 6},/area/space)
-"gl" = (/obj/docking_port/stationary{dir = 8; dwidth = 2; height = 12; id = "ferry_away"; name = "unknown"; turf_type = /turf/simulated/floor; width = 5},/turf/space,/area/space)
+"gl" = (/obj/docking_port/stationary{dir = 8; dwidth = 2; height = 12; id = "ferry_away"; name = "unknown"; width = 5},/turf/space,/area/space)
 "gm" = (/turf/indestructible/fakeglass,/area/centcom/control)
 "gn" = (/turf/simulated/floor/plasteel,/area/centcom/control)
 "go" = (/obj/structure/bed/chair,/turf/simulated/floor/plasteel/red/side{dir = 1},/area/centcom/evac)
