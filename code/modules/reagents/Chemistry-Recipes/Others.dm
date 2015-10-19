@@ -75,6 +75,46 @@
 	required_reagents = list("capsaicin" = 1, "ethanol" = 5)
 	result_amount = 5
 
+/datum/chemical_reaction/soapification
+	name = "Soapification"
+	id = "soapification"
+	result = null
+	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
+	required_temp = 374
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/soap/homemade(location)
+	return
+
+/datum/chemical_reaction/candlefication
+	name = "Candlefication"
+	id = "candlefication"
+	result = null
+	required_reagents = list("liquidgibs" = 5, "oxygen"  = 5) //
+	required_temp = 374
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/candle(location)
+	return
+
+/datum/chemical_reaction/meatification
+	name = "Meatification"
+	id = "meatification"
+	result = null
+	required_reagents = list("liquidgibs" = 10, "nutriment" = 10, "carbon" = 10)
+	result_amount = 1
+	mob_react = 1
+
+/datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct(location)
+	return
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
@@ -358,3 +398,17 @@
 	result = "saltpetre"
 	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
 	result_amount = 3
+
+/datum/chemical_reaction/lye
+	name = "lye"
+	id = "lye"
+	result = "lye"
+	required_reagents = list("sodium" = 1, "hydrogen" = 1, "oxygen" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/lye2
+	name = "lye"
+	id = "lye"
+	result = "lye"
+	required_reagents = list("ash" = 1, "water" = 1)
+	result_amount = 2
