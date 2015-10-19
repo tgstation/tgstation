@@ -28,7 +28,7 @@
 	return message
 
 /mob/living/carbon/human/get_spans()
-	return ..() | dna.mutations_get_spans()
+	return ..() | dna.mutations_get_spans() | dna.species_get_spans()
 
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))

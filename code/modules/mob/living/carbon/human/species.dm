@@ -588,6 +588,10 @@
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
 	return message
 
+//return a list of spans or an empty list
+/datum/species/proc/get_spans()
+	return list()
+
 ////////
 	//LIFE//
 	////////
