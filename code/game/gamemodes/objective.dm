@@ -188,6 +188,7 @@
 
 /datum/objective/default/debrain//I want braaaainssss
 	var/target_role_type=0
+	required_role = "changeling"
 	dangerrating = 20
 
 /datum/objective/default/debrain/find_target_by_role(role, role_type=0, invert=0)
@@ -400,7 +401,7 @@
 	explanation_text = "Stay alive until the end."
 	dangerrating = 3
 
-/datum/objective/survive/check_completion()
+/datum/objective/escape_obj/survive/check_completion()
 	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
 		return 0		//Brains no longer win survive objectives. --NEO
 	if(!is_special_character(owner.current)) //This fails borg'd traitors
@@ -719,6 +720,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/changeling_team_objective //Abstract type
 	martyr_compatible = 0	//Suicide is not teamwork!
 	explanation_text = "Changeling Friendship!"
+	required_role = "changeling"
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
 

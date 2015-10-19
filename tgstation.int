@@ -1,11 +1,11 @@
 // BEGIN_INTERNALS
 /*
-LAST_COMPILE_TIME: 1445089544
-DIR: code code\game code\game\gamemodes code\game\gamemodes\traitor code\game\gamemodes\wizard code\game\mecha code\game\mecha\equipment code\game\mecha\equipment\tools code\game\mecha\working code\modules code\modules\reagents code\modules\reagents\Chemistry-Recipes code\modules\research code\modules\research\xenoarchaeology code\modules\research\xenoarchaeology\artifact code\modules\research\xenoarchaeology\machinery icons icons\mecha sound sound\AI_vox 
+LAST_COMPILE_TIME: 1445290429
+DIR: code code\game code\game\objects code\game\objects\structures code\game\objects\structures\stool_bed_chair_nest code\game\objects\structures\vehicles icons icons\effects 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 507.1286
-WINDOW: code\game\gamemodes\nuclear\blackopsitems.dm;code\game\gamemodes\nuclear\blackops_objectives.dm;code\game\gamemodes\nuclear\blackops.dm;code\datums\diseases\advance\symptoms\itching.dm;code\datums\diseases\advance\symptoms\inert.dm;code\datums\diseases\advance\advance.dm;code\game\gamemodes\traitor\traitor.dm;code\modules\research\xenoarchaeology\artifact\artifact_replicator.dm;code\modules\research\xenoarchaeology\artifact\artifact_autocloner.dm;code\modules\research\xenoarchaeology\machinery\artifact_harvester.dm;code\modules\research\xenoarchaeology\artifact\artifact.dm;code\modules\research\xenoarchaeology\artifact\artifact_crystal.dm;code\modules\research\xenoarchaeology\artifact\artifact_unknown.dm;code\modules\reagents\Chemistry-Recipes\Medicine.dm;code\modules\research\xenoarchaeology\artifact\artifact_hoverpod.dm;code\game\mecha\working\working.dm;code\game\mecha\working\ripley.dm;code\game\mecha\mecha_parts.dm;code\game\mecha\mecha.dm;code\game\mecha\equipment\mecha_equipment.dm;code\game\mecha\equipment\tools\mining_tools.dm;code\game\mecha\equipment\tools\other_tools.dm;code\game\mecha\mecha_topic.dm;code\game\mecha\mecha_wreckage.dm;code\modules\reagents\Chemistry-Recipes\Pyrotechnics.dm;code\modules\reagents\Chemistry-Recipes\Others.dm;code\modules\reagents\Chemistry-Recipes\Drugs.dm;code\modules\reagents\Chemistry-Recipes\Slime_extracts.dm;code\modules\reagents\Chemistry-Recipes\Toxins.dm;code\game\gamemodes\objective.dm
-FILE: code\game\gamemodes\objective.dm
+WINDOW: code\modules\food&drinks\food\snacks\meat.dm;code\modules\mob\living\carbon\human\species_types.dm;icons\obj\food\food.dmi;icons\obj\food\burgerbread.dmi;code\modules\food&drinks\recipes\tablecraft\recipes_burger.dm;code\game\objects\structures\janicart.dm;code\game\objects\structures\vehicles\adminbus.dm;icons\effects\160x160.dmi;icons\effects\96x96.dmi
+FILE: icons\effects\96x96.dmi
 */
 // END_INTERNALS
