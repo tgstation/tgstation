@@ -188,7 +188,6 @@
 
 /datum/objective/default/debrain//I want braaaainssss
 	var/target_role_type=0
-	required_role = "changeling"
 	dangerrating = 20
 
 /datum/objective/default/debrain/find_target_by_role(role, role_type=0, invert=0)
@@ -720,7 +719,6 @@ var/global/list/possible_items_special = list()
 /datum/objective/changeling_team_objective //Abstract type
 	martyr_compatible = 0	//Suicide is not teamwork!
 	explanation_text = "Changeling Friendship!"
-	required_role = "changeling"
 	var/min_lings = 3 //Minimum amount of lings for this team objective to be possible
 	var/escape_objective_compatible = FALSE
 
