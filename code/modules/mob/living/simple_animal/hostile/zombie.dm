@@ -24,6 +24,7 @@
 	robust_searching = 1
 	stat_attack = 2
 	gold_core_spawnable = 1
+	faction = list("zombie")
 	var/mob/living/carbon/human/stored_corpse = null
 
 
@@ -37,8 +38,8 @@
 			Zombify(H)
 		else if (L.stat) //So they don't get stuck hitting a corpse
 			L.gib()
-			visible_message("<span class='danger'>[src] tears [L] to pieces!</span>", \
-			"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+			visible_message("<span class='danger'>[src] tears [L] to pieces!</span>")
+			src << "<span class='userdanger'>You feast on [L], restoring your health!</span>"
 			src.revive()
 
 /mob/living/simple_animal/hostile/zombie/death()
@@ -49,6 +50,7 @@
 			stored_corpse.ckey = src.ckey
 		qdel(src)
 		return
+	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
 	spawn(rand(800,1200))
 		visible_message("<span class='danger'>[src] staggers to their feet!</span>")
 		src.revive()
@@ -56,15 +58,14 @@
 /mob/living/simple_animal/hostile/zombie/proc/Zombify(mob/living/carbon/human/H)
 	H.set_species(/datum/species/zombie)
 	var/mob/living/simple_animal/hostile/zombie/Z = new /mob/living/simple_animal/hostile/zombie(H.loc)
-	Z.overlays = H.get_overlays_copy(list(L_HAND_LAYER,R_HAND_LAYER))
-	Z.icon_state = target.icon_state
-	Z.overlays = target.overlays
-	Z.name = H.name
+	Z.appearance = H.appearance
+	Z.transform = matrix()
+	Z.pixel_y = 0
 	if(H.ckey)
 		Z.ckey = H.ckey
 	H.stat = DEAD
 	H.loc = Z
 	Z.stored_corpse = H
-	visible_message("<span class='danger'>[Z] staggers to their feet!</span>", \
-	"<span class='userdanger'>You are now a zombie! Follow your creators lead!</span>")
+	visible_message("<span class='danger'>[Z] staggers to their feet!</span>")
+	Z << "<span class='userdanger'>You are now a zombie! Follow your creators lead!</span>"
 
