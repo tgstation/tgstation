@@ -108,6 +108,8 @@
 	flags = FPRINT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FULL_HEAD
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/clothing/head/justice
 	name = "justice hat"

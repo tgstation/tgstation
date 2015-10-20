@@ -696,6 +696,7 @@ var/list/liftable_structures = list(\
 #define MAT_PLASMA		"$plasma"
 #define MAT_CLOWN		"$clown"
 #define MAT_PLASTIC		"$plastic"
+#define MAT_CARDBOARD   "$cardboard"
 
 
 //Please don't edit these values without speaking to Errorage first	~Carn
