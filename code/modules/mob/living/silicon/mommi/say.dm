@@ -19,14 +19,15 @@
 
 		var/turf/T = get_turf(src)
 		var/msg = !T ? "Nullspace" : "[T.x],[T.y],[T.z]"
-		log_say("[key_name(src)] (@[msg]) Damage Control: [html_encode(speech.message)]")
+		log_say("[key_name(src)] (@[msg]) [damage_control_network]: [html_encode(speech.message)]")
 
 
 		var/interior_message = say_quote(html_encode(speech.message))
-		var/rendered = text("<i><span class='mommi game say'>Damage Control, <span class='name'>[]</span> <span class='message'>[]</span></span></i>",name,interior_message)
+		var/rendered = "<i><span class='mommi game say'>[damage_control_network], <span class='name'>[name]</span> <span class='message'>[interior_message]</span></span></i>"
 
 		for (var/mob/S in player_list)
 			var/mob/living/silicon/robot/mommi/test = S
+			// TODO: Add test.damage_control_network == damage_control_network to first test.
 			if((istype(test) && test.keeper) || istype(S,/mob/dead/observer))
 				handle_render(S,rendered,src)
 		return 1

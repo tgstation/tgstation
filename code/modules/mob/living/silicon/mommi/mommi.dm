@@ -16,6 +16,8 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	var/picked = 0
 	var/subtype="keeper"
 	var/obj/screen/inv_tool = null
+	var/prefix = "Mobile MMI"
+	var/damage_control_network = "Damage Control"
 
 	static_overlays
 	var/static_choice = "static"
@@ -173,13 +175,13 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 		if(client) client.screen -= inv_tool
 		inv_tool = null
 
-/mob/living/silicon/robot/mommi/updatename(var/prefix as text)
+/mob/living/silicon/robot/mommi/updatename(var/oldprefix as text)
 
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
 	else
-		changed_name = "Mobile MMI [num2text(ident)]"
+		changed_name = "[prefix] [num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 
@@ -190,6 +192,9 @@ They can only use one tool at a time, they can't choose modules, and they have 1
 	..()
 	remove_static_overlays()
 	updateicon()
+
+	// Check to see if we're emagged.  If so, we disable KEEPER.
+	keeper = 0
 
 /mob/living/silicon/robot/mommi/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool))

@@ -1,2 +1,4 @@
 author: N3X15
-changes: []
+changes:
+  - bugfix: "MoMMIs can speak when emagged."
+  - rscadd: "Derelict MoMMIs now have a special name and speak on a different channel than station MoMMIs. (They can still hear each other, for now.)"

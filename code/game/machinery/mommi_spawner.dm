@@ -164,7 +164,7 @@
 
 	M.mmi = new /obj/item/device/mmi(M)
 	M.mmi.transfer_identity(user)
-	M.Namepick()
+	//M.Namepick()
 	M.updatename()
 
 	del(user)
