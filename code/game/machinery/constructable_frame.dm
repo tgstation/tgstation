@@ -1064,7 +1064,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3;powerstorage=3"
 	frame_desc = "Requires 3 High-powered Micro-Lasers, and 6 Capacitors."
-	req_components = list()
+	req_components = list(
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 6)
 
 /obj/item/weapon/circuitboard/cell_charger
 	name = "Circuit Board (Cell Charger)"
