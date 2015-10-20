@@ -8,7 +8,7 @@
 // And this.
 /mob/living/silicon/robot/mommi/statelaws() // -- TLE
 	var/prefix=";"
-	if(src.keeper)
+	if(src.mute)
 		prefix=":b" // Binary channel.
 	src.say(prefix+"Current Active Laws:")
 	//src.laws_sanity_check()

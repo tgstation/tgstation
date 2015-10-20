@@ -254,10 +254,10 @@
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity) return
 	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
-		if(ismommi(user) && welding)
-			var/mob/living/silicon/robot/mommi/M = user
+		if(issilicon(user) && welding)
+			var/mob/living/silicon/M = user
 			if(M.keeper)
-				M <<"<span class= 'warning'>Your laws prevent you from doing this</span>" // no welderbombing for mommis
+				M <<"<span class= 'warning'>Your laws prevent you from doing this</span>" // no welderbombing for keepers
 				return
 		if(!welding)
 			O.reagents.trans_to(src, max_fuel)

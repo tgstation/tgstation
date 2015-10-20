@@ -257,9 +257,15 @@
 	return
 
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
-	if (ismommi(user))
+	if(ismommi(user))
 		user << "You cannot interface with this console"
 		return
+	if(user && issilicon(user))
+		var/mob/living/silicon/R = user
+		if(R.keeper)
+			user << "Your laws forbid you from doing this"
+			return
+
 	if(..())
 		return
 	user.set_machine(src)
