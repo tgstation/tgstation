@@ -349,6 +349,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
+	honksound = 'sound/items/Annoying_duck.ogg'
 
 
 
