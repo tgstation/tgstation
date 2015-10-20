@@ -189,18 +189,18 @@
 /mob/proc/update_action_buttons()
 	return
 
-#define AB_WEST_OFFSET 4
-#define AB_NORTH_OFFSET 26
 #define AB_MAX_COLUMNS 10
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
+	
 	var/coord_col = "+[col-1]"
 	var/coord_col_offset = 4+2*col
-	var/coord_row = "[-1 - row]"
-	var/coord_row_offset = 26
-	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
+	
+	var/coord_row = "[row ? -row : "+0"]"
+	
+	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-6"
 
 /datum/hud/proc/SetButtonCoords(obj/screen/button,number)
 	var/row = round((number-1)/AB_MAX_COLUMNS)
