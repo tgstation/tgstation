@@ -37,7 +37,8 @@ log transactions
 
 /obj/machinery/atm/New()
 	..()
-	machine_id = "[station_name()] RT #[num_financial_terminals++]"
+	machine_id = "[station_name()] ATM #[multinum_display(num_financial_terminals,4)]"
+	num_financial_terminals++
 	if(ticker)
 		initialize()
 

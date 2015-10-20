@@ -34,6 +34,53 @@ var/global/list/moneytypes = list(
 	amount = new_amount
 	update_icon()
 
+/obj/item/weapon/spacecash/attack_hand(mob/user as mob)
+	if (user.get_inactive_hand() == src)
+		var/obj/item/weapon/spacecash/C = new src.type(user, new_amount=1)
+		C.copy_evidences(src)
+		user.put_in_hands(C)
+		src.add_fingerprint(user)
+		C.add_fingerprint(user)
+		amount--
+		if(amount<=0)
+			qdel(src)
+		else
+			update_icon()
+	else
+		return ..()
+
+/obj/item/weapon/spacecash/proc/copy_evidences(obj/item/stack/from as obj)
+	src.blood_DNA = from.blood_DNA
+	src.fingerprints  = from.fingerprints
+	src.fingerprintshidden  = from.fingerprintshidden
+	src.fingerprintslast  = from.fingerprintslast
+
+/obj/item/weapon/spacecash/proc/can_stack_with(obj/item/other_stack)
+	return src.type == other_stack.type
+
+/obj/item/weapon/spacecash/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if (!proximity_flag)
+		return 0
+
+	if (can_stack_with(target))
+		var/obj/item/weapon/spacecash/S = target
+		if (amount >= 10)
+			user << "\The [src] cannot hold anymore chips."
+			return 1
+		var/to_transfer = 1
+		if (user.get_inactive_hand()!=S)
+			to_transfer = min(S.amount, 10-amount)
+		amount+=to_transfer
+		user << "You add [to_transfer] chip\s to the stack. It now contains [amount] chips, worth [amount*worth] credits."
+		S.amount-=to_transfer
+		if(S.amount<=0)
+			qdel(S)
+		else
+			S.update_icon()
+		update_icon()
+		return 1
+	return ..()
+
 /obj/item/weapon/spacecash/examine(mob/user)
 	if(amount > 1)
 		setGender(PLURAL)
