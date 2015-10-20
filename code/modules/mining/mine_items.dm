@@ -57,6 +57,7 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
+	desc = "An antique cast-iron tool for boring tunnels into earth. Ancient even by Old Earth standards, but nonetheless effective."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
@@ -70,6 +71,13 @@
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
+
+/obj/item/weapon/pickaxe/cushioned
+	name = "cushioned pickaxe"
+	desc = "A standard pickaxe that has been cushioned at its ends with small rubber caps. Less efficient at dealing damage and breaking rock, and the caps are too tight to remove."
+	icon_state = "pickaxe_cushioned"
+	force = 5 //Very inefficient, but hey it's still a pickaxe
+	digspeed = 60 //It might as well be hitting it with your fists, but it's 6 seconds for balance reasons
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
