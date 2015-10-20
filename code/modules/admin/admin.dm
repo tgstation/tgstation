@@ -22,6 +22,10 @@ var/global/floorIsLava = 0
 				var/msg = rendered
 				C << msg
 
+// Not happening.
+// Yes I could do a +PERMISSIONS check but I'm both too lazy and worried admins might do it on accident.
+/datum/admins/SDQL_update(var/const/var_name, var/new_value)
+	return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
