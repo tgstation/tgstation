@@ -283,11 +283,11 @@
 /datum/design/extraction_point
 	name = "Machine Design (Balloon Extraction Point Board)"
 	desc = "The circuit board for a Balloon Extraction Point."
-	id = "extraction_point"
+	id = "gibber"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/extraction_point
+	build_path = /obj/item/weapon/circuitboard/gibber
 	category = list ("Misc. Machinery")
 
 /datum/design/smartfridge
