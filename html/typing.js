@@ -9,18 +9,26 @@ var type ="";
 //maxlength=message.length+1;
 
 
-function writemsg(msg)
+function writemsg()
 {
-	message = msg.getAttribute('data-list');
-	maxlength = message.length+1;
 if (pos<maxlength)
 	{
 	txt=message.substring(pos,0);
 	document.getElementById("parText").innerHTML=txt;
 	pos++;
-	timer=setTimeout("writemsg()",50);
+	timer=setTimeout("writemsg",50);
 	}
 }
+
+function setVars(obj)
+{
+	message = obj;
+	maxlength = message.length+1;
+	document.getElementById("parText").innerHTML=message;
+	//document.getElementById("parText").innerHTML=message;
+	writemsg();
+}
+
 function stoptimer()
 {
 clearTimeout(timer);
