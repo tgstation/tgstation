@@ -50,10 +50,8 @@
 /obj/machinery/centrifuge/update_icon()
 	if(stat & BROKEN)
 		icon_state = "[icon_state]b"
-		light_color = null
 	else if(stat & NOPOWER)
 		icon_state = "[icon_state]0"
-		light_color = null
 	else if(isolating || curing)
 		light_color = LIGHT_COLOR_CYAN
 		icon_state = "[icon_state]_moving"
