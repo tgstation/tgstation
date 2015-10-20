@@ -1,5 +1,0 @@
-author: Deity Link
-delete-after: true
-changes:
-  - rscadd: Antag icons now appear above the lighting layer, and thus can be seen without issue in dark places.
-  - rscadd: Antag icons now appear on mechas. So now Juggernauts should stop breaking the cultist roboticist's durand.
