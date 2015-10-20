@@ -403,7 +403,7 @@
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents   //check for existing dirt
-		if(!T)
+		if(!D)
 			new /obj/effect/decal/cleanable/dirt(T)
 			return 1 //dirted
 		else
