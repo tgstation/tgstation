@@ -12,8 +12,8 @@
 	icon_state = "revenant_idle"
 	incorporeal_move = 3
 	invisibility = INVISIBILITY_REVENANT
-	health = 25
-	maxHealth = 25
+	health = INFINITY //Revenants don't use health, they use essence instead
+	maxHealth = INFINITY
 	healable = 0
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
@@ -33,29 +33,65 @@
 	flying = 1
 	anchored = 1
 
-	var/essence = 25 //The resource of revenants. Max health is equal to three times this amount
-	var/essence_regen_cap = 25 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
+	var/essence = 75 //The resource, and health, of revenants.
+	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
 	var/essence_regenerating = 1 //If the revenant regenerates essence or not; 1 for yes, 0 for no
-	var/essence_regen_amount = 2 //How much essence regenerates
-	var/essence_min = 1 //The minimum amount of essence a revenant can have; by default, it never drops below one
+	var/essence_regen_amount = 5 //How much essence regenerates
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
 	var/revealed = 0 //If the revenant can take damage from normal sources.
+	var/reveal_duration = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
+	var/stun_duration = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
-	var/essence_drained = 0 //How much essence the revenant has drained.
+	var/essence_drained = 0 //How much essence the revenant has drained from the corpse it's feasting on.
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 
+
 /mob/living/simple_animal/revenant/Life()
-	..()
-	if(essence < essence_min)
-		essence = essence_min
+	if(revealed && essence <= 0)
+		death()
+	if(reveal_duration)
+		reveal_duration --
+		if(reveal_duration <= 0)
+			reveal_duration = 0
+			revealed = 0
+			invisibility = INVISIBILITY_REVENANT
+			src << "<span class='boldnotice'>You are once more concealed.</span>"
+	if(stun_duration)
+		stun_duration --
+		if(stun_duration <= 0)
+			stun_duration = 0
+			notransform = 0
+			src << "<span class='boldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
-		essence += essence_regen_amount
-		if(essence > essence_regen_cap)
-			essence = essence_regen_cap
-	maxHealth = essence * 3
-	if(!revealed)
-		health = maxHealth //Heals to full when not revealed
+		essence = min(essence_regen_cap, essence+essence_regen_amount)
+
+
+/mob/living/simple_animal/revenant/proc/reveal(time)
+	if(!src)
+		return
+	if(time <= 0)
+		return
+	revealed = 1
+	invisibility = 0
+	if(!reveal_duration)
+		src << "<span class='userdanger'>You have been revealed!</span>"
+	else
+		src << "<span class='warning'>You have been revealed!</span>"
+	reveal_duration += time
+
+/mob/living/simple_animal/revenant/proc/stun(time)
+	if(!src)
+		return
+	if(time <= 0)
+		return
+	notransform = 1
+	if(!stun_duration)
+		src << "<span class='userdanger'>You cannot move!</span>"
+	else
+		src << "<span class='warning'>You cannot move!</span>"
+	stun_duration += time
+
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -63,12 +99,22 @@
 /mob/living/simple_animal/revenant/blob_act()
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
+/mob/living/simple_animal/revenant/singularity_act()
+	return //don't walk into the singularity expecting to find corpses, okay?
+
+/mob/living/simple_animal/revenant/adjustBruteLoss(amount)
+	if(!revealed)
+		return
+	essence = max(0, essence-amount)
+	if(essence == 0)
+		src << "<span class='userdanger'>You feel your essence fraying!/span>"
+
+
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
 	if(client.inquisitive_ghost)
 		A.examine(src)
 	if(ishuman(A) && in_range(src, A))
 		Harvest(A)
-
 
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
@@ -85,25 +131,27 @@
 			target << "You feel as if you are being watched."
 		return
 	draining = 1
-	essence_drained = 2
+	essence_drained = rand(15, 20)
 	src << "<span class='notice'>You search for the soul of [target].</span>"
 	if(do_after(src, 10, 3, 0, target)) //did they get deleted in that second?
 		if(target.ckey)
 			src << "<span class='notice'>Their soul burns with intelligence.</span>"
-			essence_drained += 2
+			essence_drained += rand(20, 30)
 		if(target.stat != DEAD)
 			src << "<span class='notice'>Their soul blazes with life!</span>"
-			essence_drained += 2
+			essence_drained += rand(40, 50)
 		else
 			src << "<span class='notice'>Their soul is weak and faltering.</span>"
 		if(do_after(src, 20, 6, 0, target)) //did they get deleted NOW?
 			switch(essence_drained)
-				if(1 to 2)
+				if(1 to 30)
 					src << "<span class='info'>[target] will not yield much essence. Still, every bit counts.</span>"
-				if(3 to 4)
+				if(30 to 70)
 					src << "<span class='info'>[target] will yield an average amount of essence.</span>"
-				if(5 to INFINITY)
+				if(70 to 95)
 					src << "<span class='info'>Such a feast! [target] will yield much essence to you.</span>"
+				if(95 to INFINITY)
+					src << "<span class='boldnotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
 			if(do_after(src, 30, 9, 0, target)) //how about now
 				if(!target.stat)
 					src << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
@@ -114,17 +162,24 @@
 				if(target.stat != DEAD)
 					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
 				icon_state = "revenant_draining"
-				reveal(65)
-				stun(65)
+				reveal(3)
+				stun(3)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
-				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=60)
-				if(target) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
-					change_essence_amount(essence_drained * 5, 0, target)
+				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=30)
+				if(target && in_range(src, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
+					change_essence_amount(essence_drained, 0, target)
+					if(essence_drained >= 95)
+						essence_regen_cap += 25
+						src << "<span class='info'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
 					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 										   "<span class='userdanger'>Violets lights, dancing in your vision, getting clo--</span>")
 					drained_mobs.Add(target)
 					target.death(0)
+				else
+					src << "<span class='warning'>[target] has been drawn out of your grasp. The link has been broken.</span>"
+					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+										   "<span class='userdanger'>Violets lights, dancing in your vision, receding--</span>")
 				icon_state = "revenant_idle"
 			else
 				src << "<span class='warning'>You are not close enough to siphon [target]'s soul. The link has been broken.</span>"
@@ -142,11 +197,13 @@
 			M << "<span class='deadsay'><b>REVENANT: [src]</b> says, \"[message]\"" //Can commune with the dead
 	return
 
+
 /mob/living/simple_animal/revenant/Stat()
 	..()
 	if(statpanel("Status"))
 		stat(null, "Current essence: [essence]E")
 		stat(null, "Stolen essence: [essence_accumulated]E")
+
 
 /mob/living/simple_animal/revenant/New()
 	..()
@@ -159,8 +216,8 @@
 			src << "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>"
 			src << "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
 			src << "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
-			src << "<b>You are invincible and invisible to everyone but other ghosts. Some abilities may change this.</b>"
-			src << "<b>To function, you are to drain the life essence from humans. This essence is a resource and will power all of your abilities.</b>"
+			src << "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
+			src << "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
 			src << "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
 			src << "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>"
 			var/datum/objective/revenant/objective = new
@@ -177,11 +234,12 @@
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf(null))
 
+
 /mob/living/simple_animal/revenant/death()
 	if(!revealed) //Revenants cannot die if they aren't revealed
 		return 0
 	..(1)
-	src << "<span class='userdanger'>NO! No... it's too late, you can feel yourself fading...</span>"
+	src << "<span class='userdanger'>NO! No... it's too late, you can feel your essence breaking apart...</span>"
 	notransform = 1
 	revealed = 1
 	invisibility = 0
@@ -203,12 +261,11 @@
 	if(istype(W, /obj/item/weapon/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
 						"<span class='userdanger'>As the null rod passes through you, you feel your essence draining away!</span>")
-		essence -= 25 //hella effective
+		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		spawn(30)
 			inhibited = 0
 	..()
-
 
 /mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
 	if(!src)
@@ -225,18 +282,14 @@
 		return 0
 	return 1
 
-
-
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = 0, source = null)
 	if(!src)
 		return
 	if(essence + essence_amt <= 0)
 		return
-	essence += essence_amt
-	essence = max(0, essence)
+	essence = max(0, essence+essence_amt)
 	if(essence_amt > 0)
-		essence_accumulated += essence_amt
-		essence_accumulated = max(0, essence_accumulated)
+		essence_accumulated = max(0, essence_accumulated+essence_amt)
 	if(!silent)
 		if(essence_amt > 0)
 			src << "<span class='notice'>Gained [essence_amt]E from [source].</span>"
@@ -244,40 +297,12 @@
 			src << "<span class='danger'>Lost [essence_amt]E from [source].</span>"
 	return 1
 
-
-
-/mob/living/simple_animal/revenant/proc/reveal(time)
-	if(!src)
-		return
-	if(time <= 0)
-		return
-	revealed = 1
-	invisibility = 0
-	src << "<span class='warning'>You have been revealed.</span>"
-	spawn(time)
-		revealed = 0
-		invisibility = INVISIBILITY_REVENANT
-		src << "<span class='notice'>You are once more concealed.</span>"
-
-/mob/living/simple_animal/revenant/proc/stun(time)
-	if(!src)
-		return
-	if(time <= 0)
-		return
-	notransform = 1
-	src << "<span class='warning'>You cannot move!</span>"
-	spawn(time)
-		notransform = 0
-		src << "<span class='notice'>You can move again!</span>"
-
-
-
 /datum/objective/revenant
 	dangerrating = 10
 	var/targetAmount = 100
 
 /datum/objective/revenant/New()
-	targetAmount = rand(100,200)
+	targetAmount = rand(200,500)
 	explanation_text = "Absorb [targetAmount] points of essence from humans."
 	..()
 
