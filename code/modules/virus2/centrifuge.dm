@@ -4,7 +4,10 @@
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "centrifuge"
 	density = 1
+	idle_power_usage = 10
+	active_power_usage = 500
 	machine_flags = SCREWTOGGLE | CROWDESTROY
+
 	var/curing
 	var/isolating
 
@@ -28,7 +31,8 @@
 /obj/machinery/centrifuge/RefreshParts()
 	var/manipcount = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator))
+			manipcount += SP.rating
 	general_process_time = initial(general_process_time) / manipcount
 
 /obj/machinery/centrifuge/attackby(var/obj/item/weapon/reagent_containers/glass/beaker/vial/I, var/mob/user as mob)
@@ -42,11 +46,20 @@
 
 	attack_hand(user)
 
+//Also handles luminosity
 /obj/machinery/centrifuge/update_icon()
-	..()
-	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
+	if(stat & BROKEN)
+		icon_state = "[icon_state]b"
+		light_color = null
+	else if(stat & NOPOWER)
+		icon_state = "[icon_state]0"
+		light_color = null
+	else if(isolating || curing)
 		light_color = LIGHT_COLOR_CYAN
-		icon_state = "centrifuge_moving"
+		icon_state = "[icon_state]_moving"
+	else
+		icon_state = "[initial(icon_state)]"
+		light_color = null
 
 /obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
 	if(..())
@@ -88,21 +101,22 @@
 	return
 
 /obj/machinery/centrifuge/process()
+
 	..()
 
 	if(stat & (NOPOWER|BROKEN))
+		update_icon()
 		return
-	use_power(500)
 
 	if(curing)
-		curing -= 1
-		if(curing == 0)
+		curing--
+		if(!curing)
 			if(sample)
 				cure()
 			update_icon()
 	if(isolating)
-		isolating -= 1
-		if(isolating == 0)
+		isolating--
+		if(!isolating)
 			if(sample)
 				isolate()
 			update_icon()
@@ -111,21 +125,23 @@
 	return
 
 /obj/machinery/centrifuge/Topic(href, href_list)
+
 	if(..())
 		return
 
-	if(usr) usr.set_machine(src)
+	if(usr)
+		usr.set_machine(src)
 
 	switch(href_list["action"])
 		if("antibody")
 			var/delay = general_process_time
 			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in sample.reagents.reagent_list
-			if (!B)
+			if(!B)
 				say("No antibody carrier detected.")
 
 			else if(sample.reagents.has_reagent("toxins"))
 				say("Pathogen purging speed above nominal.")
-				delay = delay/2
+				delay *= 0.5
 
 			else
 				curing = delay
@@ -153,7 +169,6 @@
 	src.updateUsrDialog()
 	attack_hand(usr)
 	return
-
 
 /obj/machinery/centrifuge/proc/cure()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/computer/centrifuge/proc/cure() called tick#: [world.time]")
