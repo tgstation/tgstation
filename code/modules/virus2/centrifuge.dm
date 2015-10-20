@@ -107,17 +107,22 @@
 		return
 
 	if(curing)
+		use_power = 2
 		curing--
 		if(!curing)
 			if(sample)
 				cure()
 			update_icon()
 	if(isolating)
+		use_power = 2
 		isolating--
 		if(!isolating)
 			if(sample)
 				isolate()
 			update_icon()
+
+	else
+		use_power = 1
 
 	src.updateUsrDialog()
 	return
