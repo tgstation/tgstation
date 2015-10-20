@@ -9,6 +9,16 @@
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
 
+/mob/living/silicon/proc/laws_update()
+	show_laws()
+	//law_change_counter++
+	if(isAI(src))
+		var/mob/living/silicon/ai/A = src
+		for(var/mob/living/silicon/robot/R in A.connected_robots)
+			if(R.lawupdate)
+				R.show_laws(1, 1)
+	//			R.law_change_counter++
+
 /mob/living/silicon/proc/add_inherent_law(var/law)
 	laws_sanity_check()
 	laws.add_inherent_law(law)
