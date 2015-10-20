@@ -10,7 +10,7 @@
 /datum/round_event/operative/proc/get_operative(end_if_fail = 0)
 	key_of_operative = null
 	if(!key_of_operative)
-		var/list/candidates = get_candidates(BE_OPERATIVE)
+		var/list/candidates = get_candidates(BE_OPERATIVE, 3000, "operative")
 		if(!candidates.len)
 			if(end_if_fail)
 				return 0
