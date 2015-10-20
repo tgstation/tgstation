@@ -101,7 +101,7 @@
 	store_dna(new_dna, user)
 
 /datum/changeling/proc/store_dna(var/datum/dna/new_dna, var/mob/user)
-	for(var/datum/objective/escape_obj/escape/escape_with_identity/E in user.mind.objectives)
+	for(var/datum/objective/escape/escape_with_identity/E in user.mind.objectives)
 		if(E.target_real_name == new_dna.real_name)
 			protected_dna |= new_dna
 			return

@@ -18,7 +18,6 @@
 	var/votable = 1
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/operatives_returned_to_home = 0
 	var/explosion_in_progress = 0 //sit back and relax
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new

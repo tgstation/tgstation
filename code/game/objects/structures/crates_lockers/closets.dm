@@ -226,8 +226,6 @@
 	else
 		if(istype(W, /obj/item/stack/packageWrap))
 			return
-		if(istype(W, /obj/item/weapon/extraction_pack))
-			return
 		if(istype(W, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.remove_fuel(0,user))

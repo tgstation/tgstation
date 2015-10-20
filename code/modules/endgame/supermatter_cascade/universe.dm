@@ -163,8 +163,8 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 	//		if(O.blocked)
 	//			failed_objectives=1
 
-		if(!locate(/datum/objective/escape_obj/survive) in M.objectives)
-			var/datum/objective/escape_obj/survive/live = new("Escape collapsing universe through the rift on the research output.")
+		if(!locate(/datum/objective/survive) in M.objectives)
+			var/datum/objective/survive/live = new("Escape collapsing universe through the rift on the research output.")
 			live.owner=M
 			M.objectives += live
 

@@ -108,9 +108,6 @@ Note: Must be placed west/left of and R&D console to function.
 	if(exchange_parts(user, O))
 		return
 
-	if(default_unfasten_wrench(user, O))
-		return
-
 	if (panel_open)
 		if(istype(O, /obj/item/device/multitool) || istype(O,/obj/item/weapon/wirecutters))
 			attack_hand(user)

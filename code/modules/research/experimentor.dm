@@ -127,9 +127,6 @@
 	if(exchange_parts(user, O))
 		return
 
-	if(default_unfasten_wrench(user, O))
-		return
-
 	default_deconstruction_crowbar(O)
 
 	if(!checkCircumstances(O))
