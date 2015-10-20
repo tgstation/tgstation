@@ -42,7 +42,7 @@
 	var/reveal_duration = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
 	var/stun_duration = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
-	var/essence_drained = 0 //How much essence the revenant has drained from the corpse it's feasting on.
+	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = 0 //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 
@@ -168,7 +168,7 @@
 				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=30)
 				if(target && in_range(src, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
-					if(essence_drained >= 95)
+					if(essence_drained > 95)
 						essence_regen_cap += 25
 						src << "<span class='info'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
 					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
@@ -201,7 +201,7 @@
 /mob/living/simple_animal/revenant/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Current essence: [essence]E")
+		stat(null, "Current essence: [essence]/[essence_regen_cap]E")
 		stat(null, "Stolen essence: [essence_accumulated]E")
 
 
