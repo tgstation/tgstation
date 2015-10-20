@@ -121,7 +121,7 @@
 		O.show_message(text("<span class='danger'>The slime extract begins to vibrate violently !</span>"), 1)
 	spawn(50)
 
-		chemical_mob_spawn(holder, 1, "Lesser Gold Slime", "neutral")
+		chemical_mob_spawn(holder, 3, "Lesser Gold Slime", "neutral")
 
 /datum/chemical_reaction/slimecritfriendly
 	name = "Slime Crit Friendly"
