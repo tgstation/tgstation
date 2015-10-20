@@ -1402,6 +1402,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\human\pirate.dm"
 #include "code\modules\mob\living\simple_animal\hostile\human\russian.dm"
 #include "code\modules\mob\living\simple_animal\hostile\human\syndicate.dm"
+#include "code\modules\mob\living\simple_animal\hostile\human\wizard.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\clown.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\cluwne.dm"
 #include "code\modules\mob\living\simple_animal\hostile\retaliate\drone.dm"

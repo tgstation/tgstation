@@ -2711,6 +2711,8 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "pizzabox1"
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 	var/open = 0 // Is the box open?
 	var/ismessy = 0 // Fancy mess on the lid

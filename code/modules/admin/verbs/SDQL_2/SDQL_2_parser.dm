@@ -325,15 +325,17 @@
 
 
 //assignment:	<variable name> '=' expression
-/datum/SDQL_parser/proc/assignment(i, list/node)
+/datum/SDQL_parser/proc/assignment(var/i, var/list/node, var/list/assignment_list = list())
+	assignment_list += token(i)
 
-	node += token(i)
+	if(token(i + 1) == ".")
+		i = assignment(i + 2, node, assignment_list)
 
-	if(token(i + 1) == "=")
-		var/varname = token(i)
-		node[varname] = list()
+	else if(token(i + 1) == "=")
+		var/exp_list = list()
+		node[assignment_list] = exp_list
 
-		i = expression(i + 2, node[varname])
+		i = expression(i + 2, exp_list)
 
 	else
 		parse_error("Assignment expected, but no = found")
@@ -403,6 +405,39 @@
 
 	return i + 1
 
+//array:	'[' expression, expression, ... ']'
+/datum/SDQL_parser/proc/array(var/i, var/list/node)
+	// Arrays get turned into this: list("[", list(exp_1a = exp_1b, ...), ...), "[" is to mark the next node as an array.
+	if(copytext(token(i), 1, 2) != "\[")
+		parse_error("Expected an array but found '[token(i)]'")
+		return i + 1
+
+	node += token(i) // Add the "["
+
+	var/list/expression_list = list()
+
+	if(token(i + 1) != "]")
+		var/list/temp_expression_list = list()
+
+		do
+			i = expression(i + 1, temp_expression_list)
+
+			if(token(i) == ",")
+				expression_list[++expression_list.len] = temp_expression_list
+
+				temp_expression_list = list()
+
+		while(token(i) && token(i) != "]")
+
+		expression_list[++expression_list.len] = temp_expression_list
+
+	else
+		
+		i++
+
+	node[++node.len] = expression_list
+
+	return i + 1
 
 //call_function:	<function name> ['(' [arguments] ')']
 /datum/SDQL_parser/proc/call_function(i, list/node, list/arguments)
@@ -410,6 +445,7 @@
 		node += token(i++)
 		if(token(i) != "(")
 			parse_error("Expected ( but found '[token(i)]'")
+
 		else if(token(i + 1) != ")")
 			var/list/temp_expression_list = list()
 			do
@@ -418,6 +454,7 @@
 					arguments[++arguments.len] = temp_expression_list
 					temp_expression_list = list()
 					continue
+
 			while(token(i) && token(i) != ")")
 
 			arguments[++arguments.len] = temp_expression_list // The code this is copy pasted from won't be executed when it's the last param, this fixes that.
@@ -537,6 +574,8 @@
 	else if(copytext(token(i), 1, 2) in list("'", "\""))
 		i = string(i, node)
 
+	else if(copytext(token(i), 1, 2) == "\[") // Start a list.
+		i = array(i, node)
 	else
 		i = variable(i, node)
 

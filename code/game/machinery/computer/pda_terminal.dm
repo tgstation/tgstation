@@ -6,11 +6,15 @@
 	light_color = LIGHT_COLOR_ORANGE
 
 	var/obj/item/device/pda/pda_device = null
+	var/machine_id = ""
 
 	machine_flags = EMAGGABLE | SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | MULTITOOL_MENU | PURCHASER
 
 /obj/machinery/computer/pda_terminal/New()
 	..()
+	machine_id = "[station_name()] PDA Terminal #[multinum_display(num_pda_terminals,4)]"
+	num_pda_terminals++
+
 	if(ticker)
 		initialize()
 
@@ -235,7 +239,7 @@
 			T.target_name = "[linked_account.owner_name] (via [src.name])"
 			T.purpose = "Purchase of [appdatum ? "[appdatum.name]" : "a new PDA"]"
 			T.amount = "-[transaction_amount]"
-			T.source_terminal = src.name
+			T.source_terminal = machine_id
 			T.date = current_date_string
 			T.time = worldtime2text()
 			D.transaction_log.Add(T)
@@ -245,7 +249,7 @@
 			T.target_name = D.owner_name
 			T.purpose = "Purchase of [appdatum ? "[appdatum.name]" : "a new PDA"]"
 			T.amount = "[transaction_amount]"
-			T.source_terminal = src.name
+			T.source_terminal = machine_id
 			T.date = current_date_string
 			T.time = worldtime2text()
 			linked_account.transaction_log.Add(T)

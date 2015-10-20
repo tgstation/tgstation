@@ -78,7 +78,7 @@ var/global/datum/store/centcomm_store=new
 	T.amount = -amount
 	T.date = current_date_string
 	T.time = worldtime2text()
-	T.source_terminal = merchcomp.name
+	T.source_terminal = merchcomp.machine_id
 	D.transaction_log.Add(T)
 
 	//and another entry on the vending machine's vendor account's transaction log
@@ -89,7 +89,7 @@ var/global/datum/store/centcomm_store=new
 		T.amount = amount
 		T.date = current_date_string
 		T.time = worldtime2text()
-		T.source_terminal = merchcomp.name
+		T.source_terminal = merchcomp.machine_id
 		vendor_account.transaction_log.Add(T)
 
 	return 1

@@ -14,37 +14,35 @@
 	flags = FPRINT
 	siemens_coefficient = 1
 	w_class = 3.0
-	origin_tech = "engineering=4;materials=5;power=3"
+	origin_tech = "engineering=4;materials=5;powerstorage=3"
 
-	var/mode = 1	//0 is material selection, 1 is material production
+	var/mode = 1 //0 is material selection, 1 is material production
 	var/emagged = 0
 
 	var/obj/item/stack/sheet/active_material = /obj/item/stack/sheet/metal
-	var/list/materials_scanned = list(	"metal" = /obj/item/stack/sheet/metal,
-										"glass" = /obj/item/stack/sheet/glass/glass,
-										"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
-										"plasteel" = /obj/item/stack/sheet/plasteel)
+	var/list/materials_scanned = list("metal" = /obj/item/stack/sheet/metal,
+									  "glass" = /obj/item/stack/sheet/glass/glass,
+									  "reinforced glass" = /obj/item/stack/sheet/glass/rglass,
+									  "plasteel" = /obj/item/stack/sheet/plasteel)
 	var/matter = 0
 
 /obj/item/device/material_synth/robot //Cyborg version, has less materials but can make rods n shit as well as scan.
-	materials_scanned = list(	"metal" = /obj/item/stack/sheet/metal,
-								"glass" = /obj/item/stack/sheet/glass/glass,
-								"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
-								"floor tiles" = /obj/item/stack/tile/plasteel,
-								"metal rods" = /obj/item/stack/rods)
+	materials_scanned = list("metal" = /obj/item/stack/sheet/metal,
+							 "glass" = /obj/item/stack/sheet/glass/glass,
+							 "reinforced glass" = /obj/item/stack/sheet/glass/rglass,
+							 "floor tiles" = /obj/item/stack/tile/plasteel,
+							 "metal rods" = /obj/item/stack/rods)
 
 /obj/item/device/material_synth/robot/mommi //MoMMI version, more materials but cannot scan.
-	materials_scanned = list(	"plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
-								"reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
-								"metal" = /obj/item/stack/sheet/metal,
-								"glass" = /obj/item/stack/sheet/glass/glass,
-								"reinforced glass" = /obj/item/stack/sheet/glass/rglass,
-								"plasteel" = /obj/item/stack/sheet/plasteel)
+	materials_scanned = list("plasma glass" = /obj/item/stack/sheet/glass/plasmaglass,
+							 "reinforced plasma glass" = /obj/item/stack/sheet/glass/plasmarglass,
+							 "metal" = /obj/item/stack/sheet/metal,
+							 "glass" = /obj/item/stack/sheet/glass/glass,
+							 "reinforced glass" = /obj/item/stack/sheet/glass/rglass,
+							 "plasteel" = /obj/item/stack/sheet/plasteel)
 
 /obj/item/device/material_synth/update_icon()
 	icon_state = "mat_synth[mode ? "on" : "off"]"
-
-
 
 /obj/item/device/material_synth/proc/create_material(mob/user, var/material)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/material_synth/proc/create_material() called tick#: [world.time]")
@@ -52,7 +50,7 @@
 
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
-		if(R && R.cell && material_type && R.cell.charge)
+		if(R && R.cell && R.cell.charge && material_type)
 			var/modifier = MAT_COST_COMMON
 			if(initial(active_material.perunit) < 3750)
 				modifier = MAT_COST_MEDIUM
@@ -68,21 +66,21 @@
 						R.module.modules += created_sheet
 						if(amount <= created_sheet.max_amount)
 							created_sheet.amount += (amount-created_sheet.amount)
-							R << "Added [amount] of [initial(material_type.name)] to the stack."
+							R << "<span class='notice'>Added [amount] of [initial(material_type.name)] to the stack.</span>"
 						else
 							if(created_sheet.amount <= created_sheet.max_amount)
 								var/transfer_amount = min(created_sheet.max_amount - created_sheet.amount, amount)
 								created_sheet.amount += (transfer_amount-1)
 								amount -= transfer_amount
 							if(amount >= 1 && (created_sheet.amount >= created_sheet.max_amount))
-								R << "Dropping [amount], you cannot hold anymore of [initial(material_type.name)]."
+								R << "<span class='warning'>Dropping [amount], you cannot hold anymore of [initial(material_type.name)].</span>"
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = (amount - 1)
 
 					else
 						if((inside_sheet.amount + amount) <= inside_sheet.max_amount)
 							inside_sheet.amount += amount
-							R << "Added [amount] of [initial(material_type.name)] to the stack."
+							R << "<span class='notice'>Added [amount] of [initial(material_type.name)] to the stack.</span>"
 							return
 						else
 							if(inside_sheet.amount <= inside_sheet.max_amount)
@@ -90,7 +88,7 @@
 								inside_sheet.amount += transfer_amount
 								amount -= transfer_amount
 							if(amount >= 1 && (inside_sheet.amount >= inside_sheet.max_amount))
-								R << "Dropping [amount], you cannot hold anymore of [initial(material_type.name)]."
+								R << "<span class='warning'>Dropping [amount], you cannot hold anymore of [initial(material_type.name)].</span>"
 								var/obj/item/stack/sheet/dropped_sheet = new material_type(get_turf(src))
 								dropped_sheet.amount = amount
 					R.module.rebuild()
@@ -103,12 +101,12 @@
 				return
 
 		else if(R.cell.charge)
-			R << "You need to select a sheet type first!"
+			R << "<span class='warning'>You need to select a sheet type first!</span>"
 			return
 	else
 		if(material_type && matter)
 			var/modifier = MAT_COST_COMMON
-			if(initial(active_material.perunit) < 3750) //synthesizing is EXPENSIVE
+			if(initial(active_material.perunit) < 3750) //Synthesizing is EXPENSIVE
 				modifier = MAT_COST_MEDIUM
 			if(initial(active_material.perunit) < 2000)
 				modifier = MAT_COST_RARE
@@ -119,10 +117,10 @@
 				spawned_sheet.amount = tospawn
 				TakeCost(tospawn, modifier, user)
 		else if(matter)
-			user << "You must select a sheet type first!"
+			user << "<span class='warning'>You must select a sheet type first!</span>"
 			return
 		else
-			user << "\The [src] is empty!"
+			user << "<span class='warning'>\The [src] is empty!</span>"
 
 	return 1
 /obj/item/device/material_synth/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -131,7 +129,7 @@
 	if(istype(target, /obj/item/stack/sheet))
 		for(var/matID in materials_scanned)
 			if(materials_scanned[matID] == target.type)
-				user <<"<span class='rose'>You've already scanned \the [target].</span>"
+				user <<"<span class='warning'>You have already scanned \the [target].</span>"
 				return
 		materials_scanned["[initial(target.name)]"] = target.type
 		user <<"<span class='notice'>You successfully scan \the [target] into \the [src]'s material banks.</span>"
@@ -149,7 +147,7 @@
 	if(istype(O, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/RA = O
 		if(matter + 10 > MAX_MATSYNTH_MATTER)
-			user <<"\The [src] can't take any more material right now."
+			user <<"<span class='warning'>\The [src] can't take any more material right now.</span>"
 			return
 		else
 			matter += 10
@@ -162,19 +160,19 @@
 			var/matter_rng = rand(5, 25)
 			if(matter >= matter_rng)
 				var/obj/item/device/spawn_item = pick(typesof(/obj/item/device) - /obj/item/device) //we make any kind of device. It's a surprise!
-				user.visible_message("<span class='rose'>\The [src] in [user]'s hands appears to be trying to synthesize... \a [initial(spawn_item.name)]?</span>",
-									 "You hear a loud popping noise.")
-				user <<"<span class='warning'>\The [src] pops and fizzles in your hands, before creating... \a [initial(spawn_item.name)]?</span>"
+				user.visible_message("<span class='warning'>\The [src] in [user]'s hands appears to be trying to synthesize... \a [initial(spawn_item.name)]?</span>", \
+									 "<span class='warning'>\The [src] pops and fizzles in your hands, before creating... \a [initial(spawn_item.name)]?</span>", \
+									 "<span class='warning'>You hear a loud popping noise.</span>")
 				sleep(10)
 				new spawn_item(get_turf(src))
 				matter -= matter_rng
 				return 1
 			else
 				user<<"<span class='danger'>The lack of matter in \the [src] shorts out the device!</span>"
-				explosion(src.loc, 0,0,1,2) //traitors - fuck them, am I right?
+				explosion(src.loc, 0, 0, 1, 2) //traitors - fuck them, am I right?
 				qdel(src)
 		else
-			user<<"You don't think you can do that again..."
+			user << "<span class='warning'>You don't think you can do that again.</span>"
 			return
 	return ..()
 
@@ -208,5 +206,5 @@
 /obj/item/device/material_synth/robot/TakeCost(var/spawned, var/modifier, mob/user)
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
-		return R.cell.use(spawned*modifier*MAT_SYNTH_ROBO)
+		return R.cell.use(spawned * modifier * MAT_SYNTH_ROBO)
 	return

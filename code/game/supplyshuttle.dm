@@ -756,12 +756,12 @@ var/list/mechtoys = list(
 				O = SO
 				P = O.object
 				A = SO.account
-				if(A && A.money >= P.cost)// + SUPPLY_TAX
+				if(A && A.money >= P.cost)
 					supply_shuttle.requestlist.Cut(i,i+1)
 					var/cargo_share = round((P.cost/100)*20)
 					var/centcom_share = P.cost-cargo_share
 					A.charge(centcom_share,null,"Supply Order #[SO.ordernum] ([P.name])",src.name,dest_name = "CentComm")
-					A.charge(cargo_share,cargo_acct,"Order Tax")
+					A.charge(cargo_share,cargo_acct,"Order Tax",src.name)
 					supply_shuttle.shoppinglist += O
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:658: temp = "Thanks for your order.<BR>"

@@ -453,6 +453,11 @@
 	close_all() //How are you going to see whats inside this thing while throwing it
 	..()
 
+/obj/item/weapon/storage/recycle(var/datum/materials/rec)
+	if(contents)
+		mass_remove(get_turf(src))
+	return ..()
+
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"

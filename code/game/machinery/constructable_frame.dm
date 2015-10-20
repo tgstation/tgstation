@@ -940,7 +940,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Reverse Engine)"
 	build_path = "/obj/machinery/r_n_d/reverse_engine"
 	board_type = "machine"
-	origin_tech = "materials=6;programming=4;engineering=3;bluespace=3;power=4"
+	origin_tech = "materials=6;programming=4;engineering=3;bluespace=3;powerstorage=4"
 	frame_desc = "Requires 2 Scanning Modules, 2 Capacitors, 1 Manipulator, and 1 Console Screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
@@ -963,7 +963,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Flatpack Fabricator)"
 	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker"
 	board_type = "machine"
-	origin_tech = "materials=5;engineering=4;power=3;programming=3"
+	origin_tech = "materials=5;engineering=4;powerstorage=3;programming=3"
 	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, 2 Micro-Lasers, 2 Scanning Modules, and 1 Beaker."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -1064,7 +1064,9 @@ obj/item/weapon/circuitboard/rdserver
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=3;powerstorage=3"
 	frame_desc = "Requires 3 High-powered Micro-Lasers, and 6 Capacitors."
-	req_components = list()
+	req_components = list(
+							"/obj/item/weapon/stock_parts/micro_laser/high" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 6)
 
 /obj/item/weapon/circuitboard/cell_charger
 	name = "Circuit Board (Cell Charger)"

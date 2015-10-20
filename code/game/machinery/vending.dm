@@ -2,6 +2,8 @@
 #define CAT_HIDDEN 2
 #define CAT_COIN   3
 
+var/global/num_vending_terminals = 1
+
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
@@ -77,6 +79,8 @@
 	var/list/categories = list()
 	var/list/allowed_inputs = list()	//items that we can directly slot into the vending machine
 
+	var/machine_id = "#"
+
 	machine_flags = SCREWTOGGLE | WRENCHMOVE | FIXED2WORK | CROWDESTROY | EJECTNOTDEL | PURCHASER | WIREJACK
 
 /obj/machinery/vending/cultify()
@@ -85,6 +89,8 @@
 
 /obj/machinery/vending/New()
 	..()
+	machine_id = "[name] #[multinum_display(num_vending_machines,4)]"
+	num_vending_machines++
 
 	overlays_vending[1] = "[icon_state]-panel"
 
@@ -450,7 +456,7 @@
 			T.target_name = "[linked_account.owner_name] (via [src.name])"
 			T.purpose = "Purchase of [currently_vending.product_name]"
 			T.amount = "-[transaction_amount]"
-			T.source_terminal = src.name
+			T.source_terminal = machine_id
 			T.date = current_date_string
 			T.time = worldtime2text()
 			D.transaction_log.Add(T)
@@ -460,7 +466,7 @@
 			T.target_name = D.owner_name
 			T.purpose = "Purchase of [currently_vending.product_name]"
 			T.amount = "[transaction_amount]"
-			T.source_terminal = src.name
+			T.source_terminal = machine_id
 			T.date = current_date_string
 			T.time = worldtime2text()
 			linked_account.transaction_log.Add(T)
