@@ -57,6 +57,8 @@
 		return 0
 	if(istype(A,/obj/singularity))
 		return 0
+	if(istype(A,/mob/living/simple_animal/hostile/morph))
+		return 0
 	return 1
 
 /mob/living/simple_animal/hostile/morph/ShiftClickOn(atom/movable/A)

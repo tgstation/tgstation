@@ -379,7 +379,7 @@ var/list/ai_list = list()
 			if(1)
 				view_core()
 			if(2)
-				ai_call_shuttle()
+				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
 	..()
 
 /mob/living/silicon/ai/ex_act(severity, target)
@@ -840,3 +840,6 @@ var/list/ai_list = list()
 	if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
+
+/mob/living/silicon/ai/can_buckle()
+	return 0

@@ -464,7 +464,7 @@ var/global/mulebot_count = 0
 	load= AM
 	mode = BOT_IDLE
 
-/obj/machinery/bot/mulebot/buckle_mob(mob/living/M)
+/obj/machinery/bot/mulebot/buckle_mob(mob/living/M, force = 0)
 	if(M.buckled)
 		return 0
 	var/turf/T = get_turf(src)

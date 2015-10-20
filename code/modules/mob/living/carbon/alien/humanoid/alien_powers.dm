@@ -102,7 +102,10 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_whisper"
 
 /obj/effect/proc_holder/alien/whisper/fire(mob/living/carbon/user)
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as mob in oview(user)
+	var/list/options = list()
+	for(var/mob/living/Ms in oview(user))
+		options += Ms
+	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in options
 	if(!M)
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)

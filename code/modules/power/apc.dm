@@ -937,7 +937,7 @@
 				src.malfhack = 1
 				update_icon()
 				var/datum/effect/effect/system/smoke_spread/smoke = new
-				smoke.set_up(3, 0, src.loc)
+				smoke.set_up(1, src.loc)
 				smoke.attach(src)
 				smoke.start()
 				var/datum/effect/effect/system/spark_spread/s = new

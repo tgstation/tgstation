@@ -81,6 +81,8 @@ Contents:
 	//Cell Init
 	cell = new/obj/item/weapon/stock_parts/cell/high
 	cell.charge = 9000
+	cell.name = "black power cell"
+	cell.icon_state = "bscell"
 
 
 /obj/item/clothing/suit/space/space_ninja/Destroy()

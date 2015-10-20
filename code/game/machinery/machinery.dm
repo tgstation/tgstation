@@ -179,17 +179,19 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)
+			if(C.buckled || C.buckled_mob)
 				continue
 			else
 				target = C
-	if(target)
+	if(target && !target.buckled && !target.buckled_mob)
 		if(target.client)
 			target.client.perspective = EYE_PERSPECTIVE
 			target.client.eye = src
 		occupant = target
 		target.loc = src
 		target.stop_pulling()
+		if(target.pulledby)
+			target.pulledby.stop_pulling()
 	updateUsrDialog()
 	update_icon()
 

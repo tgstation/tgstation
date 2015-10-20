@@ -41,6 +41,8 @@
 			maploader.load_map(file)
 			world.log << "away mission loaded: [map]"
 
+		map_transition_config.Add(AWAY_MISSION_LIST)
+
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if (L.name != "awaystart")
 				continue

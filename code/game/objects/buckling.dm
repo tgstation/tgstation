@@ -24,14 +24,13 @@
 //Cleanup
 /atom/movable/Destroy()
 	. = ..()
-	unbuckle_mob()
+	unbuckle_mob(force=1)
 
 //procs that handle the actual buckling and unbuckling
-/atom/movable/proc/buckle_mob(mob/living/M)
-	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || (buckle_requires_restraints && !M.restrained()) || M == src)
+/atom/movable/proc/buckle_mob(mob/living/M, force = 0)
+	if((!can_buckle && !force) || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || (buckle_requires_restraints && !M.restrained()) || M == src)
 		return 0
-
-	if (isslime(M) || isAI(M))
+	if(!M.can_buckle() && !force)
 		if(M == usr)
 			M << "<span class='warning'>You are unable to buckle yourself to the [src]!</span>"
 		else
@@ -43,19 +42,19 @@
 	buckled_mob = M
 	M.update_canmove()
 	post_buckle_mob(M)
-	M.throw_alert("buckled", new_master = src)
+	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
 
 	return 1
 
-/obj/buckle_mob(mob/living/M)
+/obj/buckle_mob(mob/living/M, force = 0)
 	. = ..()
 	if(.)
 		if(burn_state == 1) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 
-/atom/movable/proc/unbuckle_mob()
-	if(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr))
+/atom/movable/proc/unbuckle_mob(force=0)
+	if(buckled_mob && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)

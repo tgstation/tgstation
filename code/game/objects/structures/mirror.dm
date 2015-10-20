@@ -117,6 +117,10 @@
 				choosable_races += S.id
 	..()
 
+/obj/structure/mirror/magic/lesser/New()
+	choosable_races = roundstart_species
+	..()
+
 /obj/structure/mirror/magic/badmin/New()
 	for(var/speciestype in typesof(/datum/species) - /datum/species)
 		var/datum/species/S = new speciestype()

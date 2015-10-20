@@ -1,5 +1,5 @@
 // Foam
-// Similar to smoke, but spreads out more
+// Similar to smoke, but slower and mobs absorb its reagent through their exposed skin.
 
 /obj/effect/effect/foam
 	name = "foam"

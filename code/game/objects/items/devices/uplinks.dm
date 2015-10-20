@@ -19,6 +19,8 @@ var/list/world_uplinks = list()
 	var/uplink_owner = null//text-only
 	var/used_TC = 0
 
+	var/mode_override = null
+
 /obj/item/device/uplink/New()
 	..()
 	world_uplinks+=src
@@ -36,7 +38,7 @@ var/list/world_uplinks = list()
 	dat += "<B>Request item:</B><BR>"
 	dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"
 
-	var/list/buyable_items = get_uplink_items()
+	var/list/buyable_items = get_uplink_items(mode_override)
 
 	// Loop through categories
 	var/index = 0
@@ -100,7 +102,7 @@ var/list/world_uplinks = list()
 			var/category = split[1]
 			var/number = text2num(split[2])
 
-			var/list/buyable_items = get_uplink_items()
+			var/list/buyable_items = get_uplink_items(mode_override)
 
 			var/list/uplink = buyable_items[category]
 			if(uplink && uplink.len >= number)

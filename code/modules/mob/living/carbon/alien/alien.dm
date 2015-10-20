@@ -74,7 +74,7 @@
 
 	if(bodytemperature > 360.15)
 		//Body temperature is too hot.
-		throw_alert("alien_fire")
+		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)

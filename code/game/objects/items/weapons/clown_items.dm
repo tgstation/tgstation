@@ -25,6 +25,11 @@
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
 	icon_state = "soapnt"
 
+/obj/item/weapon/soap/homemade
+	desc = "A homemade bar of soap. Smells of... well...."
+	icon_state = "soapgibs"
+	cleanspeed = 45 // a little faster to reward chemists for going to the effort
+
 /obj/item/weapon/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	icon_state = "soapdeluxe"

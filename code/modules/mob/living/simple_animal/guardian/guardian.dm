@@ -67,22 +67,21 @@
 
 
 /mob/living/simple_animal/hostile/guardian/adjustBruteLoss(amount) //The spirit is invincible, but passes on damage to the summoner
-	var/damage = amount * src.damage_transfer
-	if (src.summoner)
-		src.summoner.adjustBruteLoss(damage)
+	var/damage = amount * damage_transfer
+	if (summoner)
+		if(loc == summoner)
+			return
+		summoner.adjustBruteLoss(damage)
 		if(damage)
-			src.summoner << "<span class='danger'><B>Your [src.name] is under attack! You take damage!</span></B>"
-			src.summoner.visible_message("<span class='danger'>Blood sprays from [summoner] as [src] takes damage!</span>")
-		if(src.summoner.stat == UNCONSCIOUS)
-			src.summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src.name] in this condition, it begins to fall apart!</span></B>"
-			src.summoner.adjustCloneLoss(damage/2)
+			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
+			summoner.visible_message("<span class='danger'>Blood sprays from [summoner] as [src] takes damage!</span>")
+		if(summoner.stat == UNCONSCIOUS)
+			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
+			summoner.adjustCloneLoss(damage/2)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch (severity)
 		if (1)
-			if(src.summoner)
-				src.summoner << "<span class='danger'><B>Your [src.name] was blown up!</span></B>"
-				src.summoner.gib()
 			gib()
 			return
 		if (2)
@@ -91,6 +90,12 @@
 		if(3)
 			adjustBruteLoss(30)
 
+/mob/living/simple_animal/hostile/guardian/gib()
+	if(summoner)
+		summoner << "<span class='danger'><B>Your [src] was blown up!</span></B>"
+		summoner.gib()
+	ghostize()
+	qdel(src)
 
 //Manifest, Recall, Communicate
 
@@ -100,8 +105,8 @@
 	set desc = "Spring forth into battle!"
 	if(cooldown > world.time)
 		return
-	if(src.loc == summoner)
-		src.loc = get_turf(summoner)
+	if(loc == summoner)
+		loc = get_turf(summoner)
 		cooldown = world.time + 30
 		if(animated_manifest)
 			var/end_icon = icon_state
@@ -115,7 +120,7 @@
 	set desc = "Return to your summoner."
 	if(cooldown > world.time)
 		return
-	src.loc = summoner
+	loc = summoner
 	buckled = null
 	cooldown = world.time + 30
 
@@ -127,10 +132,10 @@
 	if(!input) return
 
 	for(var/mob/M in mob_list)
-		if(M == src.summoner || (M in dead_mob_list))
+		if(M == summoner || (M in dead_mob_list))
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_say("[src.real_name]/[src.key] : [input]")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -180,31 +185,31 @@
 	if(prob(30))
 		if(istype(target, /atom/movable))
 			var/atom/movable/M = target
-			if(!M.anchored && M != src.summoner)
+			if(!M.anchored && M != summoner)
 				do_teleport(M, M, 10)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()
-	src.collision_ignite(AM)
+	collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/Bumped(AM as mob|obj)
 	..()
-	src.collision_ignite(AM)
+	collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
 	..()
-	src.collision_ignite(AM)
+	collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
-		if(AM != src.summoner)
+		if(AM != summoner)
 			M.adjust_fire_stacks(7)
 			M.IgniteMob()
 
 /mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
 	..()
-	src.collision_ignite(AM)
+	collision_ignite(AM)
 //Standard
 
 /mob/living/simple_animal/hostile/guardian/punch
@@ -222,9 +227,9 @@
 	set name = "Set Battlecry"
 	set category = "Guardian"
 	set desc = "Choose what you shout as you punch"
-	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 6)
+	var/input = stripped_input(src,"What do you want your battlecry to be? Max length of 5 characters.", ,"", 6)
 	if(input)
-		src.battlecry = input
+		battlecry = input
 
 
 

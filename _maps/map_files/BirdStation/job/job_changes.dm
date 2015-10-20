@@ -92,6 +92,9 @@
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
 
+/datum/outfit/job/mining/New()
+	box = /obj/item/weapon/storage/box/birdeng
+
 //Service
 
 /datum/job/bartender/New()

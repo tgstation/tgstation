@@ -862,7 +862,7 @@ obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy/add_juice()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood/add_juice(loc, potency = 10)
 	..()
-	reagents.add_reagent("blood", 1 + round((potency / 5), 1))
+	reagents.add_reagent("blood", 1 + round((potency / 5)), list("blood_type"="O-"))
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue

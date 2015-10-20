@@ -998,7 +998,7 @@
 	if(wires.LockedCut())
 		state = 1
 	if(state)
-		throw_alert("locked")
+		throw_alert("locked", /obj/screen/alert/locked)
 	else
 		clear_alert("locked")
 	lockcharge = state
@@ -1016,7 +1016,7 @@
 		hud_used.update_robot_modules_display()	//Shows/hides the emag item if the inventory screen is already open.
 	update_icons()
 	if(emagged)
-		throw_alert("hacked")
+		throw_alert("hacked", /obj/screen/alert/hacked)
 	else
 		clear_alert("hacked")
 

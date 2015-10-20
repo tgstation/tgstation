@@ -125,6 +125,8 @@
 		var/mob/living/L = teleatom
 		if(L.buckled)
 			L.buckled.unbuckle_mob()
+		if(L.buckled_mob)
+			L.unbuckle_mob(force=1)
 
 	destarea.Entered(teleatom)
 

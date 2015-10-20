@@ -24,7 +24,7 @@
 
 /obj/mecha/combat/marauder/New()
 	..()
-	smoke_system.set_up(3, 0, src)
+	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 
 /obj/mecha/combat/marauder/Destroy()

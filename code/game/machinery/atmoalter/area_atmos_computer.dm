@@ -113,7 +113,7 @@
 	connectedscrubbers = new()
 
 	var/found = 0
-	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in range(range, src.loc))
+	for(var/obj/machinery/portable_atmospherics/scrubber/huge/scrubber in ultra_range(range, src.loc))
 		if(istype(scrubber))
 			found = 1
 			connectedscrubbers += scrubber

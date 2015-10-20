@@ -3,16 +3,14 @@ Birdstation by Tokiko1
 
 A small map intended for lowpop(40 players and less).
 
-How to compile:
-Make sure this is the only ticked file in the .dm folder, then compile as usual.
 */
 
 
 #if !defined(MAP_FILE)
 
         #include "map_files\BirdStation\BirdStation.dmm"
-        #include "map_files\BirdStation\z2.dmm"
-        #include "map_files\BirdStation\z3.dmm"
+        #include "map_files\generic\z2.dmm"
+        #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
         #include "map_files\BirdStation\z5.dmm"
         #include "map_files\generic\z6.dmm"
@@ -20,6 +18,8 @@ Make sure this is the only ticked file in the .dm folder, then compile as usual.
 
         #define MAP_FILE "BirdStation.dmm"
         #define MAP_NAME "BirdboatStation"
+
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED)
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES

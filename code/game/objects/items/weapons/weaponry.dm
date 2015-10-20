@@ -121,7 +121,7 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/weapon/wirecutters) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		if(!remove_item_from_storage(user))
@@ -166,16 +166,16 @@
 	icon_state = "switchblade"
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
-	force = 20
+	force = 3
 	w_class = 2
-	throwforce = 15
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	origin_tech = "materials=1"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
-	var/extended
+	var/extended = 0
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
@@ -183,12 +183,12 @@
 	if(extended)
 		force = 20
 		w_class = 3
-		throwforce = 15
+		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 	else
-		force = 1
+		force = 3
 		w_class = 2
 		throwforce = 5
 		icon_state = "switchblade"
@@ -221,7 +221,7 @@
 
 /obj/item/weapon/cane
 	name = "cane"
-	desc = "A cane used by a true gentlemen. Or a clown."
+	desc = "A cane used by a true gentleman. Or a clown."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cane"
 	item_state = "stick"
@@ -232,7 +232,7 @@
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
 /obj/item/weapon/staff
-	name = "wizards staff"
+	name = "wizard staff"
 	desc = "Apparently a staff used by the wizard."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "staff"
