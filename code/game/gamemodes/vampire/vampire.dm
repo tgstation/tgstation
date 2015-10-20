@@ -533,7 +533,7 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 	if(ref in thralls)
 		if(vampire_mind.current)
 			if(vampire_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = vampire_mind.current, icon_state = "vampire")
+				var/I = image('icons/mob/mob.dmi', loc = vampire_mind.current, icon_state = "vampire", layer = 13)
 				vampire_mind.current.client.images += I
 	for(var/headref in thralls)
 		for(var/datum/mind/t_mind in thralls[headref])
@@ -541,15 +541,15 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			if(head)
 				if(head.current)
 					if(head.current.client)
-						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "vampthrall")
+						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "vampthrall", layer = 13)
 						head.current.client.images += I
 				if(t_mind.current)
 					if(t_mind.current.client)
-						var/I = image('icons/mob/mob.dmi', loc = head.current, icon_state = "vampire")
+						var/I = image('icons/mob/mob.dmi', loc = head.current, icon_state = "vampire", layer = 13)
 						t_mind.current.client.images += I
 				if(t_mind.current)
 					if(t_mind.current.client)
-						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "vampthrall")
+						var/I = image('icons/mob/mob.dmi', loc = t_mind.current, icon_state = "vampthrall", layer = 13)
 						t_mind.current.client.images += I
 
 /datum/game_mode/proc/update_vampire_icons_removed(datum/mind/vampire_mind)

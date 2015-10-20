@@ -80,16 +80,34 @@
 				if(synd_mind.current.client)
 					for(var/datum/mind/synd_mind_1 in syndicates)
 						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
+							var/imageloc = synd_mind_1.current
+							if(istype(synd_mind_1.current.loc,/obj/mecha))
+								imageloc = synd_mind_1.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "synd", layer = 13)
 							synd_mind.current.client.images += I
 
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_synd_icons_added() called tick#: [world.time]")
+	if(!synd_mind)
+		return 0
 	spawn(0)
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = synd_mind.current, icon_state = "synd")
-				synd_mind.current.client.images += I
+		for(var/datum/mind/synd in syndicates)
+			if(synd.current)
+				if(synd.current.client)
+					var/imageloc = synd_mind.current
+					if(istype(synd_mind.current.loc,/obj/mecha))
+						imageloc = synd_mind.current.loc
+					var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "synd", layer = 13)
+					synd.current.client.images += I
+			if(synd_mind.current)
+				if(synd_mind.current.client)
+					var/imageloc = synd_mind.current
+					if(istype(synd_mind.current.loc,/obj/mecha))
+						imageloc = synd_mind.current.loc
+					var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "synd", layer = 13)
+					synd_mind.current.client.images += I
+
+		update_all_synd_icons()
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/game_mode/proc/update_synd_icons_removed() called tick#: [world.time]")
@@ -98,7 +116,7 @@
 			if(synd.current)
 				if(synd.current.client)
 					for(var/image/I in synd.current.client.images)
-						if(I.icon_state == "synd" && I.loc == synd_mind.current)
+						if(I.icon_state == "synd" && ((I.loc == synd_mind.current) || (I.loc == synd_mind.current.loc)))
 							//del(I)
 							synd.current.client.images -= I
 
@@ -108,6 +126,7 @@
 					if(I.icon_state == "synd")
 						//del(I)
 						synd_mind.current.client.images -= I
+		update_all_synd_icons()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////

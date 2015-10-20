@@ -459,7 +459,10 @@
 				if(cultist.current.client)
 					for(var/datum/mind/cultist_1 in cult)
 						if(cultist_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
+							var/imageloc = cultist_1.current
+							if(istype(cultist_1.current.loc,/obj/mecha))
+								imageloc = cultist_1.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "cult")
 							cultist.current.client.images += I
 
 
@@ -471,11 +474,17 @@
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
 				if(cultist.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
+					var/imageloc = cult_mind.current
+					if(istype(cult_mind.current.loc,/obj/mecha))
+						imageloc = cult_mind.current.loc
+					var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "cult", layer = 13)
 					cultist.current.client.images += I
 			if(cult_mind.current)
 				if(cult_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
+					var/imageloc = cultist.current
+					if(istype(cultist.current.loc,/obj/mecha))
+						imageloc = cultist.current.loc
+					var/image/J = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "cult", layer = 13)
 					cult_mind.current.client.images += J
 
 
@@ -486,7 +495,7 @@
 			if(cultist.current)
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult" && I.loc == cult_mind.current)
+						if(I.icon_state == "cult" && ((I.loc == cult_mind.current) || (I.loc == cult_mind.current.loc)))
 							cultist.current.client.images -= I
 
 		if(cult_mind.current)
