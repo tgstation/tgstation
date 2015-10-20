@@ -265,7 +265,7 @@
 				icon_state = "changerock"
 			else
 				item_type = "smooth red crystal"
-				icon_state = "ore"
+				icon_state = "smoothrock"
 			additional_desc = pick("It shines faintly as it catches the light.","It appears to have a faint inner glow.","It seems to draw you inward as you look it at.","Something twinkles faintly as you look at it.","It's mesmerizing to behold.")
 
 			apply_material_decorations = 0
