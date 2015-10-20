@@ -176,8 +176,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(12)
+			radiation_pulse(get_turf(src), 3, 3, 12, 0)
 			last_event = world.time
 			active = null
 			return
@@ -217,10 +216,10 @@
 	..()
 
 /obj/structure/statue/plasma/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma statue ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma statue ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(W))
+		ignite(W.is_hot())
 		return
 	..()
 

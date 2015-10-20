@@ -78,7 +78,7 @@ Frequency:
 							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/weapon/implant/tracking/W in tracking_implants)
+				for (var/obj/item/weapon/implant/tracking/W in tracked_implants)
 					if (!W.implanted || !ismob(W.loc))
 						continue
 					else
@@ -142,7 +142,7 @@ Frequency:
 		user << "<span class='notice'>\The [src] is malfunctioning.</span>"
 		return
 	var/list/L = list(  )
-	for(var/obj/machinery/computer/teleporter/com in world)
+	for(var/obj/machinery/computer/teleporter/com in machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				L["[com.id] (Active)"] = com.target

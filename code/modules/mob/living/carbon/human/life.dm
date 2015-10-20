@@ -38,9 +38,8 @@
 	tinttotal = tintcheck() //here as both hud updates and status updates call it
 
 	if(..())
-		if(dna)
-			for(var/datum/mutation/human/HM in dna.mutations)
-				HM.on_life(src)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			HM.on_life(src)
 
 		//heart attack stuff
 		handle_heart()
@@ -50,18 +49,11 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	if(dna)
-		dna.species.spec_life(src) // for mutantraces
+	dna.species.spec_life(src) // for mutantraces
 
+	//If they're a vampire, do vampire-specific thingies
 	if(is_vampire(src))
-		var/datum/vampire/V = get_vampire(src)
-		if(V && V.clean_blood) //Vampires regenerate damage very slowly with clean blood in them
-			adjustBruteLoss(-0.1)
-			adjustFireLoss(-0.05) //Slower than others
-			adjustToxLoss(-0.1)
-			adjustOxyLoss(-1)
-			adjustCloneLoss(-0.1)
-			adjustBrainLoss(-0.1)
+		handle_vampirism()
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -108,16 +100,15 @@
 		reagents.metabolize(src, can_overdose=1)
 
 /mob/living/carbon/human/breathe()
-	if(!dna || !dna.species.breathe(src))
+	if(!dna.species.breathe(src))
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	if(!dna || !dna.species.check_breath(breath, src))
+	if(!dna.species.check_breath(breath, src))
 		..()
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
-	if(dna)
-		dna.species.handle_environment(environment, src)
+	dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
@@ -273,10 +264,7 @@
 
 /mob/living/carbon/human/handle_chemicals_in_body()
 	..()
-	if(dna)
-		dna.species.handle_chemicals_in_body(src)
-
-	return //TODO: DEFERRED
+	dna.species.handle_chemicals_in_body(src)
 
 /mob/living/carbon/human/handle_vision()
 	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask)
@@ -285,12 +273,10 @@
 	else
 		if(!client.adminobs)			reset_view(null)
 
-	if(dna)
-		dna.species.handle_vision(src)
+	dna.species.handle_vision(src)
 
 /mob/living/carbon/human/handle_hud_icons()
-	if(dna)
-		dna.species.handle_hud_icons(src)
+	dna.species.handle_hud_icons(src)
 
 /mob/living/carbon/human/handle_random_events()
 	// Puke if toxloss is too high
@@ -357,5 +343,34 @@
 		losebreath += 5
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
+
+/mob/living/carbon/human/proc/handle_vampirism()
+	var/datum/vampire/V = get_vampire(src)
+	if(!V)
+		return 0
+
+	//Things that require clean blood and will not substitute dirty blood go under here
+	if(V.clean_blood)
+		//Vampires slowly recuperate wounds using clean blood
+		if(V.use_blood(0.01, 1))
+			adjustBruteLoss(-0.1)
+			adjustFireLoss(-0.05) //Slower than others due to their fire vulnerability
+			adjustToxLoss(-0.1)
+			adjustOxyLoss(-1)
+			adjustCloneLoss(-0.1)
+			adjustBrainLoss(-1)
+			if(losebreath)
+				losebreath--
+
+	//Vampires use blood to stay nourished
+	if(V.use_blood(0.01, 1)) //Tiny, tiny amounts of clean blood
+		nutrition = NUTRITION_LEVEL_WELL_FED
+	else if(V.use_blood(0.1, 0)) //Or much larger amounts of dirty blood
+		nutrition = NUTRITION_LEVEL_WELL_FED
+	else //But if they have no blood at all...
+		if(nutrition > 0)
+			nutrition -= 50 //...they start starving FAST.
+			nutrition = Clamp(nutrition, 0, INFINITY)
+
 
 #undef HUMAN_MAX_OXYLOSS

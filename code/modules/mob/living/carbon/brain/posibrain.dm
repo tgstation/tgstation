@@ -55,17 +55,21 @@ var/global/posibrain_notif_cooldown = 0
 		return
 	transfer_personality(user)
 
-/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/H)
-	name = "positronic brain ([H])"
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna
-	brainmob.timeofhostdeath = H.timeofdeath
+/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/C)
+	name = "positronic brain ([C])"
+	brainmob.name = C.real_name
+	brainmob.real_name = C.real_name
+	brainmob.dna = C.dna
+	if(C.has_dna())
+		if(!brainmob.dna)
+			brainmob.dna = new /datum/dna(brainmob)
+		C.dna.copy_dna(brainmob.dna)
+	brainmob.timeofhostdeath = C.timeofdeath
 	brainmob.stat = 0
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
+	if(C.mind)
+		C.mind.transfer_to(brainmob)
 
 	brainmob.mind.remove_all_antag()
 	brainmob.mind.wipe_memory()

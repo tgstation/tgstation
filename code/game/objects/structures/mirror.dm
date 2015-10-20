@@ -117,6 +117,10 @@
 				choosable_races += S.id
 	..()
 
+/obj/structure/mirror/magic/lesser/New()
+	choosable_races = roundstart_species
+	..()
+
 /obj/structure/mirror/magic/badmin/New()
 	for(var/speciestype in typesof(/datum/species) - /datum/species)
 		var/datum/species/S = new speciestype()
@@ -148,16 +152,17 @@
 			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
 			newrace = species_list[racechoice]
 
-			if(!newrace || !H.dna)
+			if(!newrace)
 				return
 
-			hardset_dna(H, null, null, null, null, newrace)
+			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
 				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in skin_tones
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone
+					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.specflags)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change") as color|null
@@ -170,7 +175,10 @@
 					else
 						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
 
-			H.regenerate_icons()
+			H.update_body()
+			H.update_hair()
+			H.update_mutcolor()
+			H.update_mutations_overlay() // no hulk lizard
 
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
@@ -180,12 +188,19 @@
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
 					H << "<span class='notice'>Man, you feel like a woman!</span>"
-					H.regenerate_icons()
+				else
+					return
+
 			else
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "male"
 					H << "<span class='notice'>Whoa man, you feel like a man!</span>"
-					H.regenerate_icons()
+				else
+					return
+			H.dna.update_ui_block(DNA_GENDER_BLOCK)
+			H.update_body()
+			H.update_mutations_overlay() //(hulk male/female)
+
 
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
@@ -196,15 +211,17 @@
 				var/new_hair_color = input(H, "Choose your hair color", "Hair Color") as null|color
 				if(new_hair_color)
 					H.hair_color = sanitize_hexcolor(new_hair_color)
+					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 				if(H.gender == "male")
 					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color") as null|color
 					if(new_face_color)
 						H.facial_hair_color = sanitize_hexcolor(new_face_color)
-
+						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
 		if("eyes")
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color") as null|color
 			if(new_eye_color)
 				H.eye_color = sanitize_hexcolor(new_eye_color)
+				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				H.update_body()

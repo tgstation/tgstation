@@ -23,6 +23,7 @@
 	var/fire_sound = "gunshot"
 	var/suppressed = 0					//whether or not a message is displayed when fired
 	var/can_suppress = 0
+	var/can_unsuppress = 1
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
@@ -121,10 +122,14 @@
 
 /obj/item/weapon/gun/afterattack(atom/target as mob|obj|turf, mob/living/carbon/human/user as mob|obj, flag, params)//TODO: go over this
 	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(istype(target, /mob/) && target != user && !(target in user.contents)) //We make sure that it is a mob, it's not us or part of us.
-			if(user.a_intent == "harm") //Flogging action
-				return
-		else
+		if(target in user.contents) //can't shoot stuff inside us.
+			return
+		if(!ismob(target) || user.a_intent == "harm") //melee attack
+			return
+		if(user.zone_sel.selecting == "mouth")
+			handle_suicide(user, target, params)
+			return
+		if(target == user) //so we can't shoot ourselves (unless mouth selected)
 			return
 
 	//Exclude lasertag guns from the CLUMSY check.
@@ -156,13 +161,19 @@
 		return 0
 
 	if(trigger_guard)
-		if(istype(user) && user.dna)
+		if(user.has_dna())
 			if(user.dna.check_mutation(HULK))
 				user << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
 				return 0
 			if(NOGUNS in user.dna.species.specflags)
 				user << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
 				return 0
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.martial_art && H.martial_art.name == "The Sleeping Carp") //great dishonor to famiry
+			user << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+			return 0
 	return 1
 
 
@@ -192,6 +203,8 @@
 
 	if(burst_size > 1)
 		for(var/i = 1 to burst_size)
+			if(!user)
+				break
 			if(!issilicon(user))
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
@@ -229,10 +242,11 @@
 		spawn(fire_delay)
 			semicd = 0
 
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	if(user)
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 	feedback_add_details("gun_fired","[src.type]")
 
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
@@ -361,3 +375,41 @@
 		name = input
 		M << "You name the gun [input]. Say hello to your new friend."
 		return
+
+
+/obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
+	if(!ishuman(user) || !ishuman(target))
+		return
+
+	if(semicd)
+		return
+
+	if(user == target)
+		target.visible_message("<span class='warning'>[user] sticks [src] in their mouth, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>You stick [src] in your mouth, ready to pull the trigger...</span>")
+	else
+		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
+			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
+
+	semicd = 1
+
+	if(!do_mob(user, target, 120) || user.zone_sel.selecting != "mouth")
+		if(user)
+			if(user == target)
+				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
+			else if(target && target.Adjacent(user))
+				target.visible_message("<span class='notice'>[user] has decided to spare [target]'s life.</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
+		semicd = 0
+		return
+
+	semicd = 0
+
+	if(!can_trigger_gun(user))
+		return
+
+	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
+
+	if(chambered && chambered.BB)
+		chambered.BB.damage *= 5
+
+	process_fire(target, user, 1, params)

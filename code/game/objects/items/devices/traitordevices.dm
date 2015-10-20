@@ -98,7 +98,7 @@ effective or pretty fucking useless.
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
-				M.irradiate(intensity*10)
+				M.rad_act(intensity*10)
 	else
 		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
 

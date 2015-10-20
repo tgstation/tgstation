@@ -1,3 +1,7 @@
+#define CAMERA_UPGRADE_XRAY 1 
+#define CAMERA_UPGRADE_EMP_PROOF 2
+#define CAMERA_UPGRADE_MOTION 4
+
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -28,6 +32,9 @@
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
+
+	// Upgrades bitflag
+	var/upgrades = 0
 
 /obj/machinery/camera/New()
 	..()

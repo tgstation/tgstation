@@ -27,24 +27,24 @@
 /area/New()
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
+	master = src
 	uid = ++global_uid
 	related = list(src)
 
 	if(requires_power)
 		luminosity = 0
 	else
-		power_light = 1			//rastaf0
-		power_equip = 1			//rastaf0
-		power_environ = 1		//rastaf0
+		power_light = 1
+		power_equip = 1
+		power_environ = 1
 		luminosity = 1
 		lighting_use_dynamic = 0
 
 	..()
 
-	power_change()		// all machines set to current power level, also updates lighting icon
+	power_change()		// all machines set to current power level, also updates icon
 
-	blend_mode = BLEND_MULTIPLY // Putting this in the constructure so that it stops the icons being screwed up in the map editor.
+	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
 
 
 
@@ -225,20 +225,21 @@
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
 		if(fire && !eject && !party)
 			icon_state = "blue"
-		/*else if(atmosalm && !fire && !eject && !party)
-			icon_state = "bluenew"*/
 		else if(!fire && eject && !party)
 			icon_state = "red"
 		else if(party && !fire && !eject)
 			icon_state = "party"
 		else
 			icon_state = "blue-red"
+		invisibility = INVISIBILITY_LIGHTING
 	else
 	//	new lighting behaviour with obj lights
 		icon_state = null
+		invisibility = INVISIBILITY_MAXIMUM
 
 /area/space/updateicon()
 	icon_state = null
+	invisibility = INVISIBILITY_MAXIMUM
 
 /*
 #define EQUIP 1
@@ -271,8 +272,7 @@
 	for(var/area/RA in related)
 		for(var/obj/machinery/M in RA)	// for each machine in the area
 			M.power_change()				// reverify power status (to update icons etc.)
-		if (fire || eject || party)
-			RA.updateicon()
+		RA.updateicon()
 
 /area/proc/usage(chan)
 	var/used = 0

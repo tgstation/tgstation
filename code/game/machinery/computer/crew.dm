@@ -253,15 +253,12 @@ var/global/datum/crewmonitor/crewmonitor = new
 	procqueue.schedule(50, crewmonitor, "update", z)
 
 /datum/crewmonitor/proc/generateMiniMaps()
-	spawn
-		for (var/z = 1 to world.maxz) src.generateMiniMap(z)
-
-		world << "<span class='boldannounce'>All minimaps have been generated."
-
-		for (var/client/C in clients)
-			src.sendResources(C)
-
-		src.initialized = TRUE
+	for(var/z = 1 to world.maxz)
+		generateMiniMap(z)
+	world << "<span class='boldannounce'>All minimaps have been generated."
+	for(var/client/C in clients)
+		sendResources(C)
+	initialized = TRUE
 
 /datum/crewmonitor/proc/sendResources(client/C)
 	C << browse_rsc('crew.js', "crewmonitor.js")

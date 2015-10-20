@@ -84,7 +84,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(H), slot_gloves)
 				H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(H), slot_wear_mask)
 				H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(H), slot_glasses)
-				hardset_dna(H, null, null, null, null, /datum/species/shadow/ling) //can't be a shadowling without being a shadowling
+				H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
 
 				sleep(10)
 				H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"

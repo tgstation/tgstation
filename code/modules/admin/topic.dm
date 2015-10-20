@@ -23,6 +23,8 @@
 		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them")
 		log_admin("[key_name(usr)] Rejected [C.key]'s admin help")
 
+	else if(href_list["stickyban"])
+		stickyban(href_list["stickyban"],href_list)
 
 	else if(href_list["makeAntag"])
 		if (!ticker.mode)
@@ -274,7 +276,7 @@
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
 
 
-		href_list["secretsadmin"] = "check_antagonist"
+		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
 		if(!check_rights(R_SERVER))	return
@@ -284,7 +286,7 @@
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds")
 		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds</span>")
-		href_list["secretsadmin"] = "check_antagonist"
+		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))	return
@@ -345,7 +347,7 @@
 		ticker.delay_end = !ticker.delay_end
 		log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		message_admins("<span class='adminnotice'>[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
-		href_list["secretsadmin"] = "check_antagonist"
+		href_list["secrets"] = "check_antagonist"
 
 	else if(href_list["end_round"])
 		if(!check_rights(R_ADMIN))	return
@@ -381,7 +383,8 @@
 			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
 			if("drone")				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
 			if("hunter")			M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob )
+			if("queen")				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/queen , null, null, delmob )
+			if("praetorian")		M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/praetorian , null, null, delmob )
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
@@ -986,9 +989,9 @@
 			if(!check_if_greater_rights_than(M.client))
 				usr << "<span class='danger'>Error: They have more rights than you do.</span>"
 				return
-			M << "<span class='danger'>You have been kicked from the server.</span>"
-			log_admin("[key_name(usr)] booted [key_name(M)].")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
+			M << "<span class='danger'>You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>"
+			log_admin("[key_name(usr)] kicked [key_name(M)].")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] kicked [key_name_admin(M)].</span>")
 			//M.client = null
 			del(M.client)
 
@@ -1528,8 +1531,6 @@
 		if(!isobserver(usr))	C.admin_ghost()
 		var/mob/dead/observer/A = C.mob
 		A.ManualFollow(M)
-		log_admin("[key_name(usr)] followed [key_name(M)]")
-		message_admins("[key_name_admin(usr)] followed [key_name_admin(M)]")
 
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
@@ -1594,7 +1595,7 @@
 		src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;"
 		src.owner << "Location = [location_description];"
 		src.owner << "[special_role_description]"
-		src.owner << "(<a href='?priv_msg=[M.ckey]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+		src.owner << "(<a href='?priv_msg=[M.ckey]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</A>) (<A HREF='?src=\ref[src];secrets=check_antagonist'>CA</A>)"
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))	return
@@ -1672,7 +1673,7 @@
 
 	else if(href_list["BlueSpaceArtillery"])
 		var/mob/living/M = locate(href_list["BlueSpaceArtillery"])
-		M.client.bluespace_artillery(M)
+		usr.client.bluespace_artillery(M)
 
 	else if(href_list["CentcommReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommReply"])
@@ -1861,9 +1862,7 @@
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
-										I.loc = R.module
-										R.module.rebuild()
+										R.module.add_module(I)
 										R.activate_module(I)
 
 
@@ -2100,7 +2099,7 @@
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				usr << "Kick clients from lobby aborted"
 				return
-			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by an Administrator.</span>", afkonly)
+			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.ckey]"].</span>", afkonly)
 
 			var/strkicked = ""
 			for(var/name in listkicked)

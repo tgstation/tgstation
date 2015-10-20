@@ -27,6 +27,14 @@ MASS SPECTROMETER
 	if(on)
 		SSobj.processing |= src
 
+/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
+	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
+	I.alpha = 128
+	var/list/nearby = list()
+	for(var/mob/M in viewers(pipe))
+		if(M.client)
+			nearby |= M.client
+	flick_overlay(I,nearby,8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -37,29 +45,25 @@ MASS SPECTROMETER
 /obj/item/device/t_scanner/proc/scan()
 
 	for(var/turf/T in range(2, src.loc) )
-
-		if(!T.intact)
-			continue
-
 		for(var/obj/O in T.contents)
 
 			if(O.level != 1)
 				continue
-
+			
+			var/mob/living/L = locate() in O
+			
 			if(O.invisibility == 101)
 				O.invisibility = 0
+				if(L)
+					flick_sonar(O)
 				spawn(10)
 					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
 							O.invisibility = 101
-
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
+			else
+				if(L)
+					flick_sonar(O)
 
 
 /obj/item/device/healthanalyzer
@@ -162,8 +166,7 @@ MASS SPECTROMETER
 	// Species and body temperature
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna)
-			user << "<span class='info'>Species: [H.dna.species.name]</span>"
+		user << "<span class='info'>Species: [H.dna.species.name]</span>"
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
@@ -196,7 +199,8 @@ MASS SPECTROMETER
 
 		var/implant_detect
 		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
-			implant_detect += "[H.name] is modified with a [CI.name].<br>"
+			if(CI.status == ORGAN_ROBOTIC)
+				implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
 			user.show_message("<span class='notice'>Detected cybernetic modifications:</span>")
 			user.show_message("<span class='notice'>[implant_detect]</span>")

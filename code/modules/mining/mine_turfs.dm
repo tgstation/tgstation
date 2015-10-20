@@ -623,6 +623,9 @@ var/global/list/rockTurfEdgeCache
 /turf/simulated/mineral/updateMineralOverlays()
 	return
 
+/turf/simulated/wall/updateMineralOverlays()
+	return
+
 /turf/proc/fullUpdateMineralOverlays()
 	for (var/turf/t in range(1,src))
 		t.updateMineralOverlays()

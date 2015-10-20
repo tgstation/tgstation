@@ -587,15 +587,23 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	if(M.eye_blind > 0 && current_cycle > 20)
-		if(prob(30))
+	if(current_cycle > 15)
+		if(M.disabilities & BLIND)
+			if(prob(20))
+				M.disabilities &= ~BLIND
+				M.disabilities &= NEARSIGHT
+				M.eye_blurry = 35
+
+		else if(M.disabilities & NEARSIGHT)
+			M.disabilities &= ~NEARSIGHT
+			M.eye_blurry = 10
+
+		else if(M.eye_blind || M.eye_blurry)
 			M.eye_blind = 0
-		else if(prob(80))
-			M.eye_blind = 0
-			M.eye_blurry = 1
-		if(M.eye_blurry > 0)
-			if(prob(80))
-				M.eye_blurry = 0
+			M.eye_blurry = 0
+		else if(M.eye_stat > 0)
+			M.eye_stat -= 1
+
 	..()
 	return
 
@@ -724,7 +732,7 @@
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
-	if(istype(M) && M.dna)
+	if(M.has_dna())
 		M.dna.remove_all_mutations()
 	..()
 	return
@@ -900,5 +908,22 @@ datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM)
 	M.adjustBruteLoss(2*REM)
 	M.adjustFireLoss(2*REM)
+	..()
+	return
+
+datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
+	name = "Restorative Nanites"
+	id = "syndicate_nanites"
+	description = "Miniature medical robots that swiftly restore bodily damage. May begin to attack their host's cells in high amounts."
+	reagent_state = SOLID
+	color = "#555555"
+
+datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-5*REM) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustFireLoss(-5*REM)
+	M.adjustOxyLoss(-15*REM)
+	M.adjustToxLoss(-5*REM)
+	M.adjustBrainLoss(-15*REM)
+	M.adjustCloneLoss(-3*REM)
 	..()
 	return

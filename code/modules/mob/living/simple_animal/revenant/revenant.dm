@@ -3,17 +3,20 @@
 //Don't hear deadchat and are NOT normal ghosts
 //Admin-spawn or random event
 
+#define INVISIBILITY_REVENANT 30
+
 /mob/living/simple_animal/revenant
 	name = "revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
 	incorporeal_move = 3
-	invisibility = INVISIBILITY_OBSERVER
+	invisibility = INVISIBILITY_REVENANT
 	health = 25
 	maxHealth = 25
 	healable = 0
-	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	languages = ALL
 	response_help   = "passes through"
 	response_disarm = "swings at"
@@ -61,27 +64,8 @@
 	return //blah blah blobs aren't in tune with the spirit world, or something.
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
-
-	var/list/modifiers = params2list(params)
-	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
-	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
-	if(modifiers["alt"])
-		AltClickOn(A)
-		return
-	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
-
-	if(world.time <= next_move)
-		return
-	A.attack_ghost(src)
+	if(client.inquisitive_ghost)
+		A.examine(src)
 	if(ishuman(A) && in_range(src, A))
 		Harvest(A)
 
@@ -137,7 +121,8 @@
 				if(target) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained * 5, 0, target)
 					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"
-					target.visible_message("<span class='warning'>[target] gently slumps back onto the ground.</span>")
+					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+										   "<span class='userdanger'>Violets lights, dancing in your vision, getting clo--</span>")
 					drained_mobs.Add(target)
 					target.death(0)
 				icon_state = "revenant_idle"
@@ -150,7 +135,12 @@
 
 
 /mob/living/simple_animal/revenant/say(message)
-	return 0 //Revenants cannot speak out loud.
+	for(var/mob/M in mob_list)
+		if (istype(M, /mob/new_player))
+			continue
+		if(istype(M, /mob/living/simple_animal/revenant) || M.stat == DEAD)
+			M << "<span class='deadsay'><b>REVENANT: [src]</b> says, \"[message]\"" //Can commune with the dead
+	return
 
 /mob/living/simple_animal/revenant/Stat()
 	..()
@@ -182,14 +172,16 @@
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
-		mob_spell_list += new /obj/effect/proc_holder/spell/targeted/revenant_transmit
-		mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_light
-		mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile
-		mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_light(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_defile(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant_malf(null))
 
 /mob/living/simple_animal/revenant/death()
+	if(!revealed) //Revenants cannot die if they aren't revealed
+		return 0
 	..(1)
-	src << "<span class='userdanger'><b>NO! No... it's too late, you can feel yourself fading...</b></span>"
+	src << "<span class='userdanger'>NO! No... it's too late, you can feel yourself fading...</span>"
 	notransform = 1
 	revealed = 1
 	invisibility = 0
@@ -199,8 +191,9 @@
 	for(var/i = alpha, i > 0, i -= 10)
 		sleep(0.1)
 		alpha = i
-	visible_message("<span class='danger'>[src]'s body breaks apart into blue dust.</span>")
-	new /obj/item/weapon/ectoplasm/revenant(get_turf(src))
+	visible_message("<span class='danger'>[src]'s body breaks apart into a fine pile of blue dust.</span>")
+	var/obj/item/weapon/ectoplasm/revenant/R = new (get_turf(src))
+	R.client_to_revive = src.client //If the essence reforms, the old revenant is put back in the body
 	ghostize()
 	qdel(src)
 	return
@@ -209,7 +202,7 @@
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
-						"<span class='boldannounce'>As the null rod passes through you, you feel your essence draining away!</span>")
+						"<span class='userdanger'>As the null rod passes through you, you feel your essence draining away!</span>")
 		essence -= 25 //hella effective
 		inhibited = 1
 		spawn(30)
@@ -263,7 +256,7 @@
 	src << "<span class='warning'>You have been revealed.</span>"
 	spawn(time)
 		revealed = 0
-		invisibility = INVISIBILITY_OBSERVER
+		invisibility = INVISIBILITY_REVENANT
 		src << "<span class='notice'>You are once more concealed.</span>"
 
 /mob/living/simple_animal/revenant/proc/stun(time)
@@ -323,7 +316,8 @@
 	icon_state = "revenantEctoplasm"
 	w_class = 2
 	var/reforming = 0
-	var/reformed = 0
+	var/inert = 0
+	var/client/client_to_revive
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
@@ -332,17 +326,12 @@
 		if(src && reforming)
 			return reform()
 		if(src && !reforming)
+			reforming = 1
 			visible_message("<span class='warning'>[src] settles down and seems lifeless.</span>")
 			return
 
-/obj/item/weapon/ectoplasm/revenant/attack_hand(mob/user)
-	if(reformed)
-		user << "<span class='warning'>[src] keeps slipping out of your hands, you can't get a hold on it!</span>"
-		return
-	..()
-
 /obj/item/weapon/ectoplasm/revenant/attack_self(mob/user)
-	if(!reforming)
+	if(!reforming || inert)
 		return ..()
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
 						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
@@ -351,6 +340,8 @@
 
 /obj/item/weapon/ectoplasm/revenant/throw_impact(atom/hit_atom)
 	..()
+	if(inert)
+		return
 	visible_message("<span class='notice'>[src] breaks into particles upon impact, which fade away to nothingness.</span>")
 	qdel(src)
 
@@ -364,20 +355,29 @@
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
 	if(!reforming || !src)
 		return
+	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and has reformed into a new revenant.")
 	loc = get_turf(src) //In case it's in a backpack or someone's hand
 	visible_message("<span class='boldannounce'>[src] suddenly rises into the air before fading away.</span>")
 	var/mob/living/simple_animal/revenant/R = new(get_turf(src))
-	qdel(src)
-	var/list/candidates = get_candidates(BE_REVENANT)
-	if(!candidates.len)
-		message_admins("No candidates were found for the new revenant. Oh well!")
-		return 0
-	var/client/C = pick(candidates)
-	var/key_of_revenant = C.key
-	if(!key_of_revenant)
-		message_admins("No ckey was found for the new revenant. Oh well!")
-		return 0
+	if(client_to_revive)
+		for(var/mob/M in mob_list)
+			if(M.client == client_to_revive && M.stat == DEAD) //Only recreates the mob if the mob the client is in is dead
+				message_admins("[R.client] was a revenant and died. Re-making them into the new revenant formed by ectoplasm.")
+				R.client = client_to_revive
+				key_of_revenant = client_to_revive.key
+				break
+		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
+	else
+		var/list/candidates = get_candidates(BE_REVENANT)
+		if(!candidates.len)
+			message_admins("No candidates were found for the new revenant. Oh well!")
+			return 0
+		var/client/C = pick(candidates)
+		key_of_revenant = C.key
+		if(!key_of_revenant)
+			message_admins("No ckey was found for the new revenant. Oh well!")
+			return 0
 	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
 	player_mind.active = 1
 	player_mind.transfer_to(R)
@@ -386,4 +386,7 @@
 	ticker.mode.traitors |= player_mind
 	message_admins("[key_of_revenant] has been made into a revenant by reforming ectoplasm.")
 	log_game("[key_of_revenant] was spawned as a revenant by reforming ectoplasm.")
+	qdel(src)
+	if(src) //Should never happen, but just in case
+		inert = 1
 	return 1

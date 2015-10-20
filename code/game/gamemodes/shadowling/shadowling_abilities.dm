@@ -297,7 +297,7 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
 		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-		hardset_dna(user, null, null, null, null, /datum/species/shadow/ling)
+		user.set_species(/datum/species/shadow/ling)
 
 
 /obj/effect/proc_holder/spell/targeted/collective_mind //Lets a shadowling bring together their thralls' strength, granting new abilities and a headcount
@@ -403,9 +403,7 @@
 		var/datum/effect/effect/system/smoke_spread/chem/S = new
 		S.attach(B)
 		if(S)
-			S.set_up(B.reagents, 10, 0, B.loc)
-			S.start()
-			sleep(10)
+			S.set_up(B.reagents, 4, 0, B.loc)
 			S.start()
 		qdel(B)
 
@@ -569,7 +567,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				thrallToRevive.visible_message("<span class='warning'>[thrallToRevive] slowly rises, no longer recognizable as human.</span>", \
 											   "<span class='shadowling'><b>You feel new power flow into you. You have been gifted by your masters. You now closely resemble them. You are empowered in \
 											    darkness but wither slowly in light. In addition, Lesser Glare and Guise have been upgraded into their true forms.</b></span>")
-				hardset_dna(thrallToRevive, null, null, null, null, /datum/species/shadow/ling/lesser)
+				thrallToRevive.set_species(/datum/species/shadow/ling/lesser)
 				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_glare)
 				thrallToRevive.mind.remove_spell(/obj/effect/proc_holder/spell/targeted/lesser_shadow_walk)
 				thrallToRevive.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
@@ -754,6 +752,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Thrall\]</b><i> [usr.real_name]</i>: [text]</span>"
+		log_say("[user.real_name]/[user.key] : [text]")
 
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
@@ -909,6 +908,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Ascendant\]<i> [usr.real_name]</i>: [text]</b></span>" //Bigger text for ascendants.
+		log_say("[user.real_name]/[user.key] : [text]")
 
 
 /obj/effect/proc_holder/spell/targeted/ascendant_transmit //Sends a message to the entire world. If this gets abused too much it can be removed safely

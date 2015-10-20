@@ -4,12 +4,21 @@
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 
-/obj/item/weapon/gun/projectile/revolver/chamber_round()
-	if ((chambered && chambered.BB)|| !magazine) //if there's a live ammo in the chamber or no magazine
-		return
-	else if (magazine.ammo_count())
+/obj/item/weapon/gun/projectile/revolver/New()
+	..()
+	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
+		verbs -= /obj/item/weapon/gun/projectile/revolver/verb/spin
+
+/obj/item/weapon/gun/projectile/revolver/chamber_round(var/spin = 1)
+	if(spin)
 		chambered = magazine.get_round(1)
+	else
+		chambered = magazine.stored_ammo[1]
 	return
+
+/obj/item/weapon/gun/projectile/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
+	..()
+	chamber_round(1)
 
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
@@ -20,7 +29,7 @@
 		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>"
 		A.update_icon()
 		update_icon()
-		chamber_round()
+		chamber_round(0)
 
 	if(unique_rename)
 		if(istype(A, /obj/item/weapon/pen))
@@ -28,18 +37,38 @@
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
+	chambered = null
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
-		chambered = null
-		CB.loc = get_turf(src.loc)
-		CB.SpinAnimation(10, 1)
-		CB.update_icon()
-		num_unloaded++
+		if(CB)
+			CB.loc = get_turf(src.loc)
+			CB.SpinAnimation(10, 1)
+			CB.update_icon()
+			num_unloaded++
 	if (num_unloaded)
 		user << "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>"
 	else
 		user << "<span class='warning'>[src] is empty!</span>"
+
+/obj/item/weapon/gun/projectile/revolver/verb/spin()
+	set name = "Spin Chamber"
+	set category = "Object"
+	set desc = "Click to spin your revolver's chamber."
+
+	var/mob/M = usr
+
+	if(M.stat || !in_range(M,src))
+		return
+
+	if(istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
+		var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+		C.spin()
+		chamber_round(0)
+		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
+	else
+		verbs -= /obj/item/weapon/gun/projectile/revolver/verb/spin
+
 
 /obj/item/weapon/gun/projectile/revolver/can_shoot()
 	return get_ammo(0,0)
@@ -129,7 +158,7 @@
 	name = "\improper russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
+	mag_type = /obj/item/ammo_box/magazine/internal/rus357
 	var/spun = 0
 
 /obj/item/weapon/gun/projectile/revolver/russian/New()

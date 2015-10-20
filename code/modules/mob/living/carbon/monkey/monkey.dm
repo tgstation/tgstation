@@ -8,6 +8,7 @@
 	pass_flags = PASSTABLE
 	languages = MONKEY
 	ventcrawler = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = 1
@@ -16,15 +17,23 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
+	gender = pick(MALE, FEMALE)
+	real_name = name
+	if(good_mutations.len) //genetic mutations have been set up.
+		initialize()
+
 	internal_organs += new /obj/item/organ/internal/appendix
 	internal_organs += new /obj/item/organ/internal/heart
 	internal_organs += new /obj/item/organ/internal/brain
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
-	gender = pick(MALE, FEMALE)
 
 	..()
+
+/mob/living/carbon/monkey/initialize()
+	create_dna(src)
+	dna.initialize_dna(random_blood_type())
 
 /mob/living/carbon/monkey/prepare_data_huds()
 	//Prepare our med HUD...

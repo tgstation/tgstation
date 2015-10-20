@@ -402,7 +402,7 @@
 			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
 			var/code
-			for (var/obj/machinery/nuclearbomb/bombue in world)
+			for (var/obj/machinery/nuclearbomb/bombue in machines)
 				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 					code = bombue.r_code
 					break
@@ -978,10 +978,10 @@
 					usr << "<span class='danger'>Resetting DNA failed!</span>"
 				else
 					var/mob/living/carbon/C = current
-					C.dna = changeling.first_prof.dna
+					changeling.first_prof.dna.transfer_identity(C, transfer_SE=1)
 					C.real_name = changeling.first_prof.name
-					updateappearance(C)
-					domutcheck(C)
+					C.updateappearance(mutcolor_update=1)
+					C.domutcheck()
 
 	else if (href_list["nuclear"])
 		switch(href_list["nuclear"])
@@ -1023,7 +1023,7 @@
 					usr << "<span class='danger'>Equipping a syndicate failed!</span>"
 			if("tellcode")
 				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in world)
+				for (var/obj/machinery/nuclearbomb/bombue in machines)
 					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
 						code = bombue.r_code
 						break
@@ -1061,16 +1061,16 @@
 		switch(href_list["shadowling"])
 			if("clear")
 				ticker.mode.update_shadow_icons_removed(src)
-				src.spell_list = null
 				if(src in ticker.mode.shadows)
 					ticker.mode.shadows -= src
 					special_role = null
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					src.spell_list = null
-					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
-					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hatch)
 					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_ascend)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					remove_spell(/obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
+					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
 					ticker.mode.remove_thrall(src,0)
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
@@ -1411,7 +1411,7 @@
 
 	var/mob/living/carbon/human/H = current
 
-	hardset_dna(H,null,null,null,null,/datum/species/abductor,null)
+	H.set_species(/datum/species/abductor)
 	var/datum/species/abductor/S = H.dna.species
 
 	switch(role)
@@ -1514,9 +1514,13 @@
 	mind.special_role = "Alien"
 	mind.assigned_role = "Alien"
 	//XENO HUMANOID
-/mob/living/carbon/alien/humanoid/queen/mind_initialize()
+/mob/living/carbon/alien/humanoid/royal/queen/mind_initialize()
 	..()
 	mind.special_role = "Queen"
+
+/mob/living/carbon/alien/humanoid/royal/praetorian/mind_initialize()
+	..()
+	mind.special_role = "Praetorian"
 
 /mob/living/carbon/alien/humanoid/hunter/mind_initialize()
 	..()

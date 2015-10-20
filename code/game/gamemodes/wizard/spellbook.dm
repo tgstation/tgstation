@@ -5,7 +5,7 @@
 	var/desc = ""
 	var/category = "Offensive Spells"
 	var/log_name = "XX" //What it shows up as in logs
-	var/cost = 1
+	var/cost = 2
 	var/refundable = 1
 	var/surplus = -1 // -1 for infinite, not used by anything atm
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
@@ -113,6 +113,7 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	log_name = "DT"
 	category = "Utility Spells"
+	cost = 1
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
@@ -129,11 +130,13 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
 	log_name = "SM"
 	category = "Utility Spells"
+	cost = 1
 
 /datum/spellbook_entry/blind
 	name = "Blind"
 	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
 	log_name = "BD"
+	cost = 1
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
@@ -146,6 +149,7 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
 	log_name = "FW"
 	category = "Utility Spells"
+	cost = 1
 
 /datum/spellbook_entry/blink
 	name = "Blink"
@@ -176,6 +180,7 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/knock
 	log_name = "KN"
 	category = "Utility Spells"
+	cost = 1
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
@@ -187,6 +192,7 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/summonitem
 	log_name = "IS"
 	category = "Utility Spells"
+	cost = 1
 
 /datum/spellbook_entry/lichdom
 	name = "Bind Soul"
@@ -197,6 +203,7 @@
 	name = "Lightning Bolt"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
 	log_name = "LB"
+	cost = 2
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -248,6 +255,7 @@
 	desc = "A particular staff that can mold solid metal into ornate wooden doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/door
 	log_name = "SD"
+	cost = 1
 
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
@@ -336,7 +344,6 @@
 	name = "Summon Guns"
 	category = "Rituals"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
-	cost = 1
 	log_name = "SG"
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
@@ -375,7 +382,7 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
-	cost = 1
+	cost = 2
 	log_name = "SE"
 	var/times = 0
 
@@ -402,19 +409,26 @@
 
 /obj/item/weapon/spellbook
 	name = "spell book"
-	desc = "The legendary book of spells of the wizard."
+	desc = "An unearthly tome that glows with power."
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
 	w_class = 1
-	var/uses = 5
+	var/uses = 10
 	var/temp = null
 	var/op = 1
 	var/tab = null
 	var/mob/living/carbon/human/owner
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
+
+/obj/item/weapon/spellbook/examine(mob/user)
+	..()
+	if(owner)
+		user << "There is a small signature on the front cover: \"[owner]\"."
+	else
+		user << "It appears to have no author."
 
 /obj/item/weapon/spellbook/proc/Initialize()
 	var/entry_types = typesof(/datum/spellbook_entry) - /datum/spellbook_entry - /datum/spellbook_entry/item - /datum/spellbook_entry/summon

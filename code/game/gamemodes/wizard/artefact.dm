@@ -22,9 +22,9 @@
 
 /obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charges > 0)
-		new /obj/effect/rend(get_turf(usr), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message("<span class='boldannounce'>[src] hums with power as [usr] deals a blow to [activate_descriptor] itself!</span>")
+		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
@@ -59,7 +59,7 @@
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
-		user.visible_message("<span class='danger'>[usr] seals \the [src] with \the [I].</span>")
+		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
 		qdel(src)
 		return
 	..()
@@ -97,7 +97,7 @@
 
 /obj/item/weapon/scrying/attack_self(mob/user)
 	user << "<span class='notice'>You can see...everything!</span>"
-	visible_message("<span class='danger'>[usr] stares into [src], their eyes glazing over.</span>")
+	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
 
@@ -118,7 +118,7 @@
 	unlimited = 1
 
 /obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
-	if(!istype(M, /mob/living/carbon/human))
+	if(!istype(M))
 		return ..()
 
 	if(!istype(user) || !user.canUseTopic(M,1))
@@ -137,7 +137,7 @@
 		user << "<span class='warning'>This artifact can only affect three undead at a time!</span>"
 		return
 
-	hardset_dna(M, null, null, null, null, /datum/species/skeleton)
+	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive()
 	spooky_scaries |= M
 	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
@@ -261,13 +261,24 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M)
+	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
 	M.mind.name = usr.real_name
 	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
 	M.real_name = usr.real_name
 	M.name = usr.real_name
 	M.faction = list("[usr.real_name]")
+	if(prob(50))
+		var/list/all_species = list()
+		for(var/speciestype in typesof(/datum/species) - /datum/species)
+			var/datum/species/S = new speciestype()
+			if(!S.dangerous_existence)
+				all_species += speciestype
+		M.set_species(pick(all_species), icon_update=0)
+	M.update_body()
+	M.update_hair()
+	M.update_mutcolor()
+	M.dna.update_dna_identity()
 	equip_copy(M)
 
 	if(evil)
@@ -440,14 +451,6 @@ var/global/list/multiverse = list()
 		else
 			return
 
-	ready_dna(M)
-	if(M.dna && prob(50))
-		var/list/all_species = list()
-		for(var/speciestype in typesof(/datum/species) - /datum/species)
-			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence)
-				all_species += speciestype
-		hardset_dna(M, null, null, null, null, pick(all_species))
 	M.update_icons()
 	M.update_augments()
 
@@ -476,7 +479,7 @@ var/global/list/multiverse = list()
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(is_hot(I))
+		if(I.is_hot())
 			target << "<span class='userdanger'>You suddenly feel very hot</span>"
 			target.bodytemperature += 50
 			GiveHint(target)

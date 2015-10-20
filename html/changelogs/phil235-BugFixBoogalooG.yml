@@ -1,0 +1,14 @@
+
+author: phil235
+
+delete-after: True
+
+changes: 
+  - rscdel: "Removing Smile, Swedish, Chav and Elvis mutations from genetics. These mutation can still be acquired via adminspawned dna injector."
+  - rscadd: "Added a dna injector for laser eyes mutation for admin use."
+  - bugfix: "Fixes winter coat hood sprite appearing as a bucket."
+  - bugfix: "Fixes using razor on non human shaving non existent hair."
+  - bugfix: "Fixes chair deconstruction dropping too much metal."
+  - bugfix: "Fixes snapcorn not giving seeds."
+  - bugfix: "Fixes portable chem dispenser."
+

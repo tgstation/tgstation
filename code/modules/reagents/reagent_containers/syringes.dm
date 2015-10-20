@@ -8,7 +8,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = null	//list(5, 10, 15)
+	possible_transfer_amounts = list()
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
@@ -66,20 +66,16 @@
 			if(ismob(target))	//Blood!
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					if(H.dna)
-						if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
-							user << "<span class='warning'>You are unable to locate any blood!</span>"
-							return
+					if(NOBLOOD in H.dna.species.specflags && !H.dna.species.exotic_blood)
+						user << "<span class='warning'>You are unable to locate any blood!</span>"
+						return
 				if(reagents.has_reagent("blood"))
 					user << "<span class='warning'>There is already a blood sample in this syringe!</span>"
 					return
 				if(istype(target, /mob/living/carbon))	//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
-					if(!check_dna_integrity(T))
-						user << "<span class='warning'>You are unable to locate any blood!</span>"
-						return
-					if(T.disabilities & NOCLONE)	//target done been eat, no more blood in him
+					if(!T.has_dna() || (T.disabilities & NOCLONE))	//target done been eat, no more blood in him
 						user << "<span class='warning'>You are unable to locate any blood!</span>"
 						return
 					if(target != user)
@@ -95,7 +91,7 @@
 
 					if(!B && ishuman(target))
 						var/mob/living/carbon/human/H = target
-						if(H.dna && H.dna.species.exotic_blood && H.reagents.total_volume)
+						if(H.dna.species.exotic_blood && H.reagents.total_volume)
 							target.reagents.trans_to(src, amount)
 						else
 							user << "<span class='warning'>You are unable to locate any blood!</span>"
@@ -126,8 +122,6 @@
 		if(SYRINGE_INJECT)
 			if(!reagents.total_volume)
 				user << "<span class='notice'>[src] is empty.</span>"
-				return
-			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
 			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))

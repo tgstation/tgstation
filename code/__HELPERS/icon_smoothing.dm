@@ -1,10 +1,26 @@
-/atom/var/smooth = 0
+//Redefinitions of the diagonal directions so they can be stored in one var without conflicts
+#define NORTH_EAST	16
+#define NORTH_WEST	32
+#define SOUTH_EAST	64
+#define SOUTH_WEST	128
+
+#define SMOOTH_FALSE	0 //not smooth
+#define SMOOTH_TRUE		1 //smooths with exact specified types or just itself
+#define SMOOTH_MORE		2 //smooths with all subtypes of specified types or just itself
+
+/atom/var/smooth = SMOOTH_FALSE
 /atom/var/top_left_corner
 /atom/var/top_right_corner
 /atom/var/bottom_left_corner
 /atom/var/bottom_right_corner
 /atom/var/can_be_unanchored = 0
-/atom/var/list/canSmoothWith=list() // TYPE PATHS I CAN SMOOTH WITH~~~~~
+/atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
+
+/atom/proc/clear_smooth_overlays()
+	overlays -= top_left_corner
+	overlays -= top_right_corner
+	overlays -= bottom_right_corner
+	overlays -= bottom_left_corner
 
 //generic (by snowflake) tile smoothing code; smooth your icons with this!
 /*
@@ -16,13 +32,10 @@
 	Each atom has its own icon file with all the possible corner states. See 'smooth_wall.dmi' for a template.
 */
 
-//Redefinitions of the diagonal directions so they can be stored in one var without conflicts
-#define NORTH_EAST	16
-#define NORTH_WEST	32
-#define SOUTH_EAST	64
-#define SOUTH_WEST	128
-
 /proc/calculate_adjacencies(atom/A)
+	if(!A.loc)
+		return 0
+
 	var/adjacencies = 0
 
 	if(A.can_be_unanchored)
@@ -45,11 +58,13 @@
 	return adjacencies
 
 /proc/smooth_icon(atom/A)
+	if(qdeleted(A))
+		return
 	spawn(0) //don't remove this, otherwise smoothing breaks
 		if(A && A.smooth)
 			var/adjacencies = calculate_adjacencies(A)
 
-			clear_overlays(A)
+			A.clear_smooth_overlays()
 
 			A.top_left_corner = make_nw_corner(adjacencies)
 			A.top_right_corner = make_ne_corner(adjacencies)
@@ -60,7 +75,6 @@
 			A.overlays += A.top_right_corner
 			A.overlays += A.bottom_right_corner
 			A.overlays += A.bottom_left_corner
-
 
 /proc/make_nw_corner(adjacencies)
 	var/sdir = "i"
@@ -74,8 +88,6 @@
 			sdir = "n"
 		else if(adjacencies & WEST)
 			sdir = "w"
-		else
-			sdir = "i"
 	return "1-[sdir]"
 
 /proc/make_ne_corner(adjacencies)
@@ -90,8 +102,6 @@
 			sdir = "n"
 		else if(adjacencies & EAST)
 			sdir = "e"
-		else
-			sdir = "i"
 	return "2-[sdir]"
 
 /proc/make_sw_corner(adjacencies)
@@ -106,8 +116,6 @@
 			sdir = "s"
 		else if(adjacencies & WEST)
 			sdir = "w"
-		else
-			sdir = "i"
 	return "3-[sdir]"
 
 /proc/make_se_corner(adjacencies)
@@ -123,8 +131,6 @@
 		else
 			if(adjacencies & EAST)
 				sdir = "e"
-			else
-				sdir = "i"
 	return "4-[sdir]"
 
 /proc/smooth_icon_neighbors(atom/A)
@@ -149,26 +155,27 @@
 	var/turf/target_turf = locate(source.x + x_offset, source.y + y_offset, source.z)
 	if(source.canSmoothWith)
 		var/atom/A
-		for(var/a_type in source.canSmoothWith)
-			if(ispath(a_type, /turf))
-				if(a_type == target_turf.type)
+		if(source.smooth == SMOOTH_MORE)
+			for(var/a_type in source.canSmoothWith)
+				if( istype(target_turf, a_type) )
 					return target_turf
-			else
 				A = locate(a_type) in target_turf
-				if(A && A.type == a_type)
+				if(A)
 					return A
+			return null
+
+		for(var/a_type in source.canSmoothWith)
+			if(a_type == target_turf.type)
+				return target_turf
+			A = locate(a_type) in target_turf
+			if(A && A.type == a_type)
+				return A
 		return null
 	else
 		if(isturf(source))
 			return source.type == target_turf.type ? target_turf : null
 		var/atom/A = locate(source.type) in target_turf
 		return A && A.type == source.type ? A : null
-
-/proc/clear_overlays(atom/A)
-	A.overlays -= A.top_left_corner
-	A.overlays -= A.top_right_corner
-	A.overlays -= A.bottom_right_corner
-	A.overlays -= A.bottom_left_corner
 
 /proc/transform_dir(direction)
 	switch(direction)

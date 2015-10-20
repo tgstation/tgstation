@@ -1,6 +1,6 @@
 /obj/item/device/assembly/infra
 	name = "infrared emitter"
-	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
+	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 	origin_tech = "magnets=2"
@@ -144,12 +144,22 @@
 	dir = turn(dir, 90)
 	return
 
+/obj/item/device/assembly/infra/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
+
 
 
 /***************************IBeam*********************************/
 
 /obj/effect/beam/i_beam
-	name = "i beam"
+	name = "infrared beam"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	var/obj/effect/beam/i_beam/next = null

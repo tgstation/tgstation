@@ -376,7 +376,7 @@ Auto Patrol: []"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
+	..()
 
 /obj/machinery/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
@@ -464,8 +464,7 @@ Auto Patrol: []"},
 			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
-		S.loc = get_turf(src)
+		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
 		S.name = created_name
 		qdel(I)
 		qdel(src)

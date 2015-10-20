@@ -17,6 +17,9 @@
 /obj/machinery/door/poddoor/ert
 	desc = "A heavy duty blast door that only opens for dire emergencies."
 
+/obj/machinery/door/poddoor/shuttledock //special poddoors that open when emergency shuttle docks at centcom
+	var/checkdir = 4	//door won't open if turf in this dir is space
+
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)
 		return 0

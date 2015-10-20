@@ -34,7 +34,7 @@
 	src.energy = starting_energy
 	..()
 	SSobj.processing |= src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
@@ -364,13 +364,13 @@
 		radiation += round((energy-150)/10,1)
 		radiationmin = round((radiation/5),1)
 	for(var/mob/living/M in view(toxrange, src.loc))
-		M.irradiate(rand(radiationmin,radiation))
+		M.rad_act(rand(radiationmin,radiation))
 
 
 /obj/singularity/proc/combust_mobs()
 	for(var/mob/living/carbon/C in orange(20, src))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
-						  "<span class='boldannounce'>You feel an inner fire as your skin is suddenly covered in fire!</span>")
+						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)
 		C.IgniteMob()
 	return

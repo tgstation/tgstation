@@ -26,13 +26,11 @@
 			vampire_objective.owner = V.mind
 			V.mind.objectives += vampire_objective
 			V << "<b>Objective #1:</b> [vampire_objective.explanation_text]"
-			V.mind.memory += "<b>Objective #1</b>: [vampire_objective.explanation_text]"
 		if("convert")
 			var/datum/objective/convert_vampires/vampire_objective = new
 			vampire_objective.owner = V.mind
 			V.mind.objectives += vampire_objective
 			V << "<b>Objective #1:</b> [vampire_objective.explanation_text]"
-			V.mind.memory += "<b>Objective #1</b>: [vampire_objective.explanation_text]"
 
 
 /proc/is_vampire(var/mob/living/M)
@@ -64,7 +62,7 @@
 			qdel(src)
 
 
-/datum/vampire/proc/add_blood(var/blood_amount, var/dirty, var/source = "")
+/datum/vampire/proc/add_blood(var/blood_amount, var/dirty, var/source)
 	if(dirty)
 		dirty_blood += blood_amount
 	else
@@ -103,8 +101,8 @@
 	var/datum/vampire/VD = new (M)
 	M.vampire = VD
 	M.special_role = "Vampire"
-	V.grant_vampire_objectives()
 	VD.vampire_mob = M
+	V.verbs += /mob/living/carbon/human/proc/teach_vampire_martial_art
 	V << "<span class='userdanger'>Lilith's blessing warps your body... you are a vampire!</span>"
 	V << "<b>You are a vampire - a supernatural, nearly-immortal creature nourished by blood. You are physically incapable of death unless certain conditions are met, and you will slowly recuperate all \
 	wounds while blood is in your body. However, there are some weaknesses that \ will bypass your immortality. Holy water and consecrated areas will either outright hurt you or at least weaken \
@@ -113,6 +111,7 @@
 	fatally drain them of blood. You may distinguish other vampires by examining them.</b>"
 	var/datum/martial_art/vampirism/VM = new (null)
 	VM.teach(V)
+	V.grant_vampire_objectives()
 	return 1
 
 
@@ -127,6 +126,7 @@
 		M.vampire = null
 	else
 		return 0
+	V.verbs -= /mob/living/carbon/human/proc/teach_vampire_martial_art
 	V << "<span class='userdanger'>You feel Lilith's blessing vanish. Your immortality fades, your hunger ebbs... you are no longer a vampire!</span>"
 	M.special_role = null
 	V.attack_log += "\[[time_stamp()]\] <font color='red'>Is no longer a vampire!</font>"
@@ -229,127 +229,6 @@
 	return 0
 
 
-/obj/item/weapon/antag_spawner/vampire
-	name = "filled glass goblet"
-	desc = "It's topped off with what seems to be blood. If one listens closely, they can hear a faint singing..."
-	icon = 'icons/obj/vampire.dmi'
-	icon_state = "glass_goblet_filled"
-	w_class = 2
-
-/obj/item/weapon/antag_spawner/vampire/examine(mob/user)
-	..()
-	if(is_vampire(user) && used)
-		user << "<span class='warning'>If you are powerful enough, you may activate the goblet in your hand to refill it and create more vampires.</span>"
-
-/obj/item/weapon/antag_spawner/vampire/attack_self(mob/user)
-	if(!user.mind)
-		return 0
-	if(is_vampire(user))
-		if(!used)
-			user << "<span class='warning'>[src] is already full.</span>"
-			return
-		var/datum/vampire/V = user.get_vampire()
-		if(!V)
-			return 0
-		if(V.sucked_blood < 500) //They need quite a bit of blood
-			user << "<span class='warning'>You are not powerful enough to fill the goblet.</span>"
-			return 0
-		else
-			var/mob/living/carbon/human/H = user
-			if(V.clean_blood < 50) //50 blood to fill the goblet
-				user << "<span class='warning'>You do not possess enough clean blood to fill the goblet.</span>"
-				return 0
-			user.visible_message("<span class='warning'>[user] cuts their finger on the lip of [src] and begins dripping blood into it...</span>", "<span class='userdanger'>You begin preparing the goblet for conversion of fledgling vampires.</span>")
-			H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
-			if(!do_after(user, 100, target = user))
-				return 0
-			user.visible_message("<span class='warning'>[user] fills [src] with their own blood!</span>", "<span class='userdanger'>You fill the goblet. You may now create an additional vampire.</span>")
-			used = 0
-			name = initial(name)
-			desc = initial(desc)
-			icon_state = initial(icon_state)
-		return 1
-	if(used)
-		user << "<span class='notice'>The goblet is empty.</span>"
-		return 0
-	if(iscultist(user))
-		user << "<span class='warning'>Nar-Sie does not interfere with the business of Lilith. No good can from this.</span>"
-		return 0
-	if(user.mind.assigned_role == "Chaplain")
-		user.visible_message("<span class='warning'>[user] spills the contents of [src] onto the ground!</span>", \
-							 "<span class='warning'>The disgusting blood in the goblet reeks of the unholy. You spill it onto the ground.</span>")
-		used = 1
-		name = "glass goblet"
-		desc = "It's an empty glass goblet. It sparkles with a bright sheen."
-		icon_state = "glass_goblet"
-		return 0
-	if(isloyal(user))
-		user << "<span class='warning'>Something about the goblet fills you with dread. You can't bring yourself to drink it.</span>"
-		return 0
-	user.visible_message("<span class='warning'>[user] slowly raises [src] to their lips with a trembling hand...</span>", \
-						 "<span class='userdanger'>You slowly lift the goblet to your lips, the haunting song resonating in your ears...</span>")
-	if(!do_after(user, 50, target = user))
-		return 0
-	if(used)
-		return 0
-	playsound(user, 'sound/items/drink.ogg', 10, 1)
-	user.visible_message("<span class='warning'>[user] tips [src] up, spilling the contents into \his mouth.</span>", \
-						 "<span class='userdanger'>Something strange and terrifying enters your mind as you drink from the goblet...</span>")
-	user << "<font size=1 color='red'>\"The iron has been struck...\"</font>"
-	used = 1
-	name = "glass goblet"
-	desc = "It's an empty glass goblet. It has faint red stains at the bottom."
-	icon_state = "glass_goblet"
-	spawn(30)
-		if(user)
-			user.make_mob_into_vampire()
-
-/obj/item/weapon/antag_spawner/vampire/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
-	if(M == user)
-		return attack_self(user)
-	if(!is_vampire(user) || used)
-		return ..()
-	if(is_vampire(M))
-		user << "<span class='warning'>[M] has already received Lilith's blessing!</span>"
-		return 0
-	var/datum/reagent/blood = M.get_blood(M.vessel)
-	if(blood.volume > BLOOD_VOLUME_OKAY + 50) //Around the same drained by bloodsucking
-		user << "<span class='warning'>[M] requires less blood in their body so that they may hunger for it!</span>"
-		return 0
-	if(iscultist(M))
-		user << "<span class='warning'>[M] has already made a pact with another demon!</span>"
-		return 0
-	if(isloyal(M))
-		user << "<span class='warning'>[M]'s mind is enslaved by corporate bonds!</span>"
-		return 0
-	if(M.mind && M.mind.assigned_role == "Chaplain")
-		user << "<span class='warning'>[M]'s heretical aura wards away Lilith's blessing!</span>"
-		return 0
-	if(!M.mind || !M.client)
-		user << "<span class='warning'>[M] must not be braindead or catatonic!</span>"
-		return 0
-	M.visible_message("<span class='warning'>[user] brings [src] to [M]'s lips and begins tipping it back!</span>", \
-					  "<span class='userdanger'>A haunting song fills your ears as [user] begins forcing you to drink from [src]!</span>")
-	if(!do_after(user, 100, target = M))
-		return 0
-	playsound(user, 'sound/items/drink.ogg', 10, 1)
-	M.visible_message("<span class='warning'>[user] feeds [M] the contents of [src]!</span>", \
-					  "<span class='userdanger'>Something strange and terrifying enters your mind as you drink from the goblet...</span>")
-	user << "<font size=1 color='red'>\"The iron has been struck...\"</font>"
-	used = 1
-	name = "glass goblet"
-	desc = "It's an empty glass goblet. It has faint red stains at the bottom."
-	icon_state = "glass_goblet"
-	spawn(30)
-		if(M)
-			M.make_mob_into_vampire()
-
-/obj/item/weapon/antag_spawner/vampire/attack_hand(mob/user)
-	if(ishuman(user) && user.mind && user.mind.assigned_role != "Chaplain" && !is_vampire(user) && !used)
-		user << "<span class='warning'>The gentle harmony emanating from [src] grows louder for just a moment...</span>"
-	..()
-
-
 /datum/game_mode/proc/auto_declare_completion_vampire()
 	var/text = ""
 	if(vampires.len)
@@ -383,17 +262,17 @@
 				break
 			var/datum/reagent/blood = D.get_blood(D.vessel)
 			if(blood.volume < BLOOD_VOLUME_OKAY + 25) //Never fatally drains them
-				A << "<span class='warning'>[D] will yield no more blood.</span>"
+				A << "<span class='warning'>[D] will yield no more blood. They will soon forget this event - it would be wise to leave.</span>"
 				break
 			playsound(D, 'sound/effects/drain_blood.ogg', 10, 0)
-			D.drip(4) //nyaa~
+			D.drip(4) //Blood droplets on the floor - signifies where it happened
 			D.Stun(1.1) //The .1 is to make sure they don't have a split second of no stun
 			if(!D.silent)
 				D.silent += 1
 			if(D.mind && D.client && !(D.stat == DEAD))
-				V.add_blood(1, 0) //1 blood drained for every unit of blood in a human; quite slow
+				V.add_blood(4, 0) //1 blood drained for every unit of blood in a human; quite slow
 			else
-				V.add_blood(1, 1) //If it's braindead, dead in general, or has no mind, give dirty blood instead
+				V.add_blood(4, 1) //If it's braindead, dead in general, or has no mind, give dirty blood instead
 			if(D.job && D.job == "Chaplain") //A vampire drinks the chaplain's blood. This kills the vampire.
 				A << "<span class='userdanger'>THEIR BLOOD! IT BURNS!</span>"
 				A.audible_message("<span class='warning'>[A] screeches in agony and bursts into flames!</span>")
@@ -402,7 +281,6 @@
 				A.Stun(1)
 				break
 		V.draining_blood = 0
-		A << "<span class='danger'>[D] will soon forget this event. It would be wise to leave.</span>"
 		D << "<span class='userdanger'>...up and away...</span>"
 		D.Stun(5)
 		D.silent += 5
@@ -413,33 +291,17 @@
 		return basic_hit(A,D)
 	return 1
 
-/datum/round_event_control/create_vampire_goblet
-	name = "Create Blood Goblet"
-	typepath = /datum/round_event/create_vampire_goblet
-	weight = 7
-	max_occurrences = 3
-	earliest_start = 3600 //5 minutes
 
+/mob/living/carbon/human/proc/teach_vampire_martial_art() //In case another martial art overrides the blood-draining one
+	set name = "Recall Thirst"
+	set desc = "Recall how to drain blood from humans. Use if you suddenly cannot do so."
+	set category = "Vampirism"
 
-/datum/round_event/create_vampire_goblet
-
-
-/datum/round_event/create_vampire_goblet/start()
-	var/mob/living/carbon/human/H = get_vampire_candidate()
-	if(!H)
-		message_admins("Event attempted to spawn a vampire creation goblet, but could not find any candidates!")
+	if(!is_vampire(usr))
+		usr << "<span class='warning'>The knowledge slips away as you try to grasp it...</span>"
+		usr.verbs -= src
 		return 0
-	new /obj/item/weapon/antag_spawner/vampire(get_turf(H))
-	H << "<span class='userdanger'>You feel a gentle wind as an enticing goblet appears at your feet...</span>"
-	H << 'sound/spookoween/ghosty_wind.ogg'
 
-
-/datum/round_event/create_vampire_goblet/proc/get_vampire_candidate()
-	var/list/potential_candidates = list()
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.client && H.mind && !is_vampire(H) && !isloyal(H) && !iscultist(H))
-			potential_candidates.Add(H)
-	if(potential_candidates.len)
-		var/chosen_candidate = pick(potential_candidates)
-		return chosen_candidate
-	return 0
+	usr << "<span class='danger'>You recall how to drain blood from humans. If you forget how to do so, use this ability again.</span>"
+	var/datum/martial_art/vampirism/VM = new (null)
+	VM.teach(usr)

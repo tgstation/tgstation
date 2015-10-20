@@ -67,6 +67,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Map:", MAP_NAME)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
@@ -191,13 +192,13 @@
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
 		switch(votetype)
-			if("OPTION")
+			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				vote_on_poll(pollid, optionid)
-			if("TEXT")
+			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				log_text_poll_reply(pollid, replytext)
-			if("NUMVAL")
+			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
@@ -216,7 +217,7 @@
 								return
 
 						vote_on_numval_poll(pollid, optionid, rating)
-			if("MULTICHOICE")
+			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
@@ -362,20 +363,16 @@
 	var/mob/living/carbon/human/new_character = new(loc)
 	new_character.lastarea = get_area(loc)
 
-	create_dna(new_character)
-
 	if(config.force_random_names || appearance_isbanned(src))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)
-
+	new_character.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 	new_character.name = real_name
-
-	ready_dna(new_character, client.prefs.blood_type)
 
 	new_character.key = key		//Manually transfer the key to log them in
 	new_character.stopLobbySound()

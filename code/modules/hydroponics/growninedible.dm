@@ -302,7 +302,7 @@
 
 /obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
 	..()
-	if(is_sharp(W))
+	if(W.is_sharp())
 		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.unEquip(src)
@@ -310,6 +310,7 @@
 		return
 
 /obj/item/weapon/grown/snapcorn
+	seed = /obj/item/seeds/snapcornseed
 	name = "snap corn"
 	desc = "A cob with snap pops"
 	icon_state = "snapcorn"

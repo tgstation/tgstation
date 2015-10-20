@@ -16,6 +16,12 @@
 /mob/living/carbon/human/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
+	//initialize dna. for spawned humans; overwritten by other code
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna()
+
 	//initialise organs
 	organs = newlist(/obj/item/organ/limb/chest, /obj/item/organ/limb/head, /obj/item/organ/limb/l_arm,
 					 /obj/item/organ/limb/r_arm, /obj/item/organ/limb/r_leg, /obj/item/organ/limb/l_leg)
@@ -27,11 +33,6 @@
 
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.Insert(src)
-
-	// for spawned humans; overwritten by other code
-	create_dna(src)
-	randomize_human(src)
-	ready_dna(src)
 
 	make_blood()
 
@@ -77,6 +78,10 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			if(mind.vampire)
+				stat("Total Blood Stolen", "[mind.vampire.sucked_blood]cl")
+				stat("Clean Blood", "[mind.vampire.clean_blood]cl")
+				stat("Dirty Blood", "[mind.vampire.dirty_blood]cl")
 
 
 	//NINJACODE
@@ -90,9 +95,8 @@
 				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
 				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
 				//Ninja status
-				if(dna)
-					stat("Fingerprints:", "[md5(dna.uni_identity)]")
-					stat("Unique Identity:", "[dna.unique_enzymes]")
+				stat("Fingerprints:", "[md5(dna.uni_identity)]")
+				stat("Unique Identity:", "[dna.unique_enzymes]")
 				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
 				stat("Nutrition Status:", "[nutrition]")
 				stat("Oxygen Loss:", "[getOxyLoss()]")
@@ -174,6 +178,15 @@
 	var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
+
+/mob/living/carbon/human/bullet_act()
+	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
+		if(!prob(martial_art.deflection_chance))
+			return ..()
+		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
+			src.visible_message("<span class='warning'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			return 0
+	..()
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)
@@ -540,7 +553,7 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return !(src.stat || src.weakened || src.stunned || src.restrained())
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_sel.selecting
@@ -549,10 +562,10 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(above_neck(target_zone))
-		if(head && head.flags & THICKMATERIAL)
+		if(head && head.flags & THICKMATERIAL && !penetrate_thick)
 			. = 0
 	else
-		if(wear_suit && wear_suit.flags & THICKMATERIAL)
+		if(wear_suit && wear_suit.flags & THICKMATERIAL && !penetrate_thick)
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
@@ -663,7 +676,8 @@
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	regenerate_icons()
+	update_body()
+	update_hair()
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
@@ -683,7 +697,7 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				src << "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>"
-	irradiate(current_size * 3)
+	rad_act(current_size * 3)
 	if(mob_negates_gravity())
 		return
 	..()

@@ -236,14 +236,20 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
-	if(pale && !is_vampire(src))
+	if(pale && !is_vampire(user))
 		msg += "[t_He] [t_has] pale skin.\n"
+
+	if(!is_vampire(src) && is_vampire(user) && vessel) //Vampires can see exact blood levels at a glance
+		var/datum/reagent/blood/B = locate() in vessel.reagent_list
+		var/usable_blood = B.volume - (BLOOD_VOLUME_OKAY + 25)
+		usable_blood = Clamp(usable_blood, 0, INFINITY)
+		msg += "[t_He] [t_has] [B.volume]cl of blood, [usable_blood]cl of which is drinkable without harming [t_him].\n"
 
 	if(is_vampire(src) && is_vampire(user))
 		msg += "You recognize Lilith's blessing. [t_He], like you, is a vampire.\n"
 
 	if(is_vampire(src) && src.mind && src.mind.vampire && src.mind.vampire.clean_blood <= 10) //If they're a vampire with less than 10 units of CLEAN blood, give a unique examine text
-		msg += "[t_He] [t_has] skin pigmented a deathly shade of white.\n"
+		msg += "[t_He] has deathly pale. skin\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
@@ -269,7 +275,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-	if(!wear_mask && is_thrall(src) && in_range(user,src))
+	if(!skipface && is_thrall(src) && in_range(user,src))
 		msg += "Their features seem unnaturally tight and drawn.\n"
 
 	if(istype(user, /mob/living/carbon/human))
@@ -286,7 +292,8 @@
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
 					var/implant_detect
 					for(var/obj/item/organ/internal/cyberimp/CI in internal_organs)
-						implant_detect += "[name] is modified with a [CI.name].<br>"
+						if(CI.status == ORGAN_ROBOTIC)
+							implant_detect += "[name] is modified with a [CI.name].<br>"
 					if(implant_detect)
 						msg += "Detected cybernetic modifications:<br>"
 						msg += implant_detect

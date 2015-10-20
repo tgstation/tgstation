@@ -67,11 +67,11 @@
 		air.toxins = toxins
 		air.temperature = temperature
 
-/turf/simulated/Del()
+/turf/simulated/Destroy()
 	visibilityChanged()
 	if(active_hotspot)
-		active_hotspot.Kill()
-	..()
+		qdel(active_hotspot)
+	return ..()
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
 	if(!giver)	return 0

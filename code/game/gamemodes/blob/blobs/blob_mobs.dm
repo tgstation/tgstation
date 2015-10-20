@@ -104,7 +104,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
-	S.set_up(reagents, 1, 1, location, 15, 1) // only 1 smoke cloud
+	S.set_up(reagents, 0, location, silent=1)
 	S.start()
 
 	ghostize()

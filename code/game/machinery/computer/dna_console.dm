@@ -1,0 +1,480 @@
+#define INJECTOR_TIMEOUT 300
+#define REJUVENATORS_INJECT 15
+#define REJUVENATORS_MAX 90
+#define NUMBER_OF_BUFFERS 3
+
+#define RADIATION_STRENGTH_MAX 15
+#define RADIATION_STRENGTH_MULTIPLIER 1			//larger has a more range
+
+#define RADIATION_DURATION_MAX 30
+#define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
+
+#define RADIATION_IRRADIATION_MULTIPLIER 0.2	//multiplier for how much radiation a test subject recieves
+
+/obj/machinery/computer/scan_consolenew
+	name = "\improper DNA scanner access console"
+	desc = "Scan DNA."
+	icon_screen = "dna"
+	icon_keyboard = "med_key"
+	density = 1
+	circuit = /obj/item/weapon/circuitboard/scan_consolenew
+	var/radduration = 2
+	var/radstrength = 1
+
+	var/list/buffer[NUMBER_OF_BUFFERS]
+
+	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
+	var/current_screen = "mainmenu"
+	var/obj/machinery/dna_scannernew/connected = null
+	var/obj/item/weapon/disk/data/diskette = null
+	anchored = 1
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 400
+
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
+	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
+		if (!src.diskette)
+			if(!user.drop_item())
+				return
+			I.loc = src
+			src.diskette = I
+			user << "<span class='notice'>You insert [I].</span>"
+			src.updateUsrDialog()
+			return
+	else
+		..()
+	return
+
+/obj/machinery/computer/scan_consolenew/New()
+	..()
+
+	spawn(5)
+		for(dir in list(NORTH,EAST,SOUTH,WEST))
+			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+			if(!isnull(connected))
+				break
+		spawn(250)
+			injectorready = 1
+		return
+	return
+
+/obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
+	if(..())
+		return
+	ShowInterface(user)
+
+/obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
+	if(!user) return
+	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
+	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
+		popup.close()
+		return
+	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
+
+	var/mob/living/carbon/viable_occupant
+	var/occupant_status = "<div class='line'><div class='statusLabel'>Subject Status:</div><div class='statusValue'>"
+	var/scanner_status
+	var/temp_html
+	if(connected && connected.is_operational())
+		if(connected.occupant)	//set occupant_status message
+			viable_occupant = connected.occupant
+			if(viable_occupant.has_dna() && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3)))	//occupent is viable for dna modification
+				occupant_status += "[viable_occupant.name] => "
+				switch(viable_occupant.stat)
+					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
+					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span>"
+					else			occupant_status += "<span class='bad'>DEAD</span>"
+				occupant_status += "</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
+				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("epinephrine")
+				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
+				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
+			else
+				viable_occupant = null
+				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
+		else
+			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
+
+		if(connected.state_open)
+			scanner_status = "Open"
+		else
+			scanner_status = "Closed"
+			if(connected.locked)
+				scanner_status += " <span class='bad'>(Locked)</span>"
+			else
+				scanner_status += " <span class='good'>(Unlocked)</span>"
+
+
+	else
+		occupant_status += "<span class='bad'>----</span></div></div>"
+		scanner_status += "<span class='bad'>Error: No scanner detected</span>"
+
+	var/status = "<div class='statusDisplay'>"
+	status += "<div class='line'><div class='statusLabel'>Scanner:</div><div class='statusValue'>[scanner_status]</div></div>"
+	status += "[occupant_status]"
+
+
+	status += "<div class='line'><h3>Radiation Emitter Status</h3></div>"
+	var/stddev = radstrength*RADIATION_STRENGTH_MULTIPLIER
+	status += "<div class='line'><div class='statusLabel'>Output Level:</div><div class='statusValue'>[radstrength]</div></div>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Mutation:</div><div class='statusValue'>(-[stddev] to +[stddev] = 68 %) (-[2*stddev] to +[2*stddev] = 95 %)</div></div>"
+	if(connected)
+		stddev = RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected.precision_coeff ** 2))
+	else
+		stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
+	var/chance_to_hit
+	switch(stddev)	//hardcoded values from a z-table for a normal distribution
+		if(0 to 0.25)			chance_to_hit = ">95 %"
+		if(0.25 to 0.5)			chance_to_hit = "68-95 %"
+		if(0.5 to 0.75)			chance_to_hit = "55-68 %"
+		else					chance_to_hit = "<38 %"
+	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
+	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
+	status += "<br></div>" // Close statusDisplay div
+	var/buttons = "<a href='?src=\ref[src];'>Scan</a> "
+	if(connected)
+		buttons += " <a href='?src=\ref[src];task=toggleopen;'>[connected.state_open ? "Close" : "Open"] Scanner</a> "
+		if (connected.state_open)
+			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
+		else
+			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
+	else				buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
+	if(viable_occupant)	buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
+	else				buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
+	if(diskette)		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
+	else				buttons += "<span class='linkOff'>Eject Disk</span> "
+	if(current_screen == "buffer")	buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
+	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
+
+	switch(current_screen)
+		if("working")
+			temp_html += status
+			temp_html += "<h1>System Busy</h1>"
+			temp_html += "Working ... Please wait ([radduration] Seconds)"
+		if("buffer")
+			temp_html += status
+			temp_html += buttons
+			temp_html += "<h1>Buffer Menu</h1>"
+
+			if(istype(buffer))
+				for(var/i=1, i<=buffer.len, i++)
+					temp_html += "<br>Slot [i]: "
+					var/list/buffer_slot = buffer[i]
+					if( !buffer_slot || !buffer_slot.len || !buffer_slot["name"] || !((buffer_slot["UI"] && buffer_slot["UE"]) || buffer_slot["SE"]) )
+						temp_html += "<br>\tNo Data"
+						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+						else				temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
+						temp_html += "<span class='linkOff'>Clear Buffer</span> "
+						if(diskette)		temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+						else				temp_html += "<span class='linkOff'>Load from Disk</span> "
+						temp_html += "<span class='linkOff'>Save to Disk</span> "
+					else
+						var/ui = buffer_slot["UI"]
+						var/se = buffer_slot["SE"]
+						var/ue = buffer_slot["UE"]
+						var/name = buffer_slot["name"]
+						var/label = buffer_slot["label"]
+						var/blood_type = buffer_slot["blood_type"]
+						temp_html += "<br>\t<a href='?src=\ref[src];task=setbufferlabel;num=[i];'>Label</a>: [label ? label : name]"
+						temp_html += "<br>\tSubject: [name]"
+						if(ue && name && blood_type)
+							temp_html += "<br>\tBlood Type: [blood_type]"
+							temp_html += "<br>\tUE: [ue] "
+							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
+							else				temp_html += "<span class='linkOff'>Occupant</span>"
+							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ue'>Injector</a>"
+							else				temp_html += "<span class='linkOff'>Injector</span>"
+						else
+							temp_html += "<br>\tBlood Type: No Data"
+							temp_html += "<br>\tUE: No Data"
+						if(ui)
+							temp_html += "<br>\tUI: [ui] "
+							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
+							else				temp_html += "<span class='linkOff'>Occupant</span>"
+							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ui'>Injector</a>"
+							else				temp_html += "<span class='linkOff'>Injector</span>"
+						else
+							temp_html += "<br>\tUI: No Data"
+						if(se)
+							temp_html += "<br>\tSE: [se] "
+							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+							else												temp_html += "<span class='linkOff'>Occupant</span> "
+							if(injectorready)									temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
+							else												temp_html += "<span class='linkOff'>Injector</span>"
+						else
+							temp_html += "<br>\tSE: No Data"
+						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+						else				temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
+						temp_html += "<a href='?src=\ref[src];task=clearbuffer;num=[i];'>Clear Buffer</a> "
+						if(diskette)		temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+						else				temp_html += "<span class='linkOff'>Load from Disk</span> "
+						if(diskette && !diskette.read_only)	temp_html += "<a href='?src=\ref[src];task=savedisk;num=[i];'>Save to Disk</a> "
+						else								temp_html += "<span class='linkOff'>Save to Disk</span> "
+		else
+			temp_html += status
+			temp_html += buttons
+			temp_html += "<h1>Radiation Emitter Menu</h1>"
+
+			temp_html += "<a href='?src=\ref[src];task=setstrength;num=[radstrength-1];'>--</a> <a href='?src=\ref[src];task=setstrength;'>Output Level</a> <a href='?src=\ref[src];task=setstrength;num=[radstrength+1];'>++</a>"
+			temp_html += "<br><a href='?src=\ref[src];task=setduration;num=[radduration-1];'>--</a> <a href='?src=\ref[src];task=setduration;'>Pulse Duration</a> <a href='?src=\ref[src];task=setduration;num=[radduration+1];'>++</a>"
+
+			temp_html += "<h3>Irradiate Subject</h3>"
+			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
+
+			var/max_line_len = 7*DNA_BLOCK_SIZE
+			if(viable_occupant)
+				temp_html += "<div class='dnaBlockNumber'>1</div>"
+				var/len = length(viable_occupant.dna.uni_identity)
+				for(var/i=1, i<=len, i++)
+					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
+					if ((i % max_line_len) == 0)
+						temp_html += "</div><div class='clearBoth'>"
+					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
+						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+			else
+				temp_html += "----"
+			temp_html += "</div></div></div><br>"
+
+			temp_html += "<br><div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
+			if(viable_occupant)
+				temp_html += "<div class='dnaBlockNumber'>1</div>"
+				var/len = length(viable_occupant.dna.struc_enzymes)
+				for(var/i=1, i<=len, i++)
+					temp_html += "<a class='dnaBlock' href='?src=\ref[src];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
+					if ((i % max_line_len) == 0)
+						temp_html += "</div><div class='clearBoth'>"
+					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
+						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+			else
+				temp_html += "----"
+			temp_html += "</div></div></div>"
+
+	popup.set_content(temp_html)
+	popup.open()
+
+
+/obj/machinery/computer/scan_consolenew/Topic(href, href_list)
+	if(..())
+		return
+	if(!isturf(usr.loc))
+		return
+	if(!( (isturf(loc) && in_range(src, usr)) || istype(usr, /mob/living/silicon) ))
+		return
+	if(current_screen == "working")
+		return
+
+	add_fingerprint(usr)
+	usr.set_machine(src)
+
+	var/mob/living/carbon/viable_occupant
+	if(connected)
+		viable_occupant = connected.occupant
+		if(!istype(viable_occupant) || !viable_occupant.dna || (viable_occupant.disabilities & NOCLONE))
+			viable_occupant = null
+
+	//Basic Tasks///////////////////////////////////////////
+	var/num = round(text2num(href_list["num"]))
+	var/last_change
+	switch(href_list["task"])
+		if("togglelock")
+			if(connected)	connected.locked = !connected.locked
+		if("toggleopen")
+			if(connected)	connected.toggle_open(usr)
+		if("setduration")
+			if(!num)
+				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
+			if(num)
+				radduration = Wrap(num, 1, RADIATION_DURATION_MAX+1)
+		if("setstrength")
+			if(!num)
+				num = round(input(usr, "Choose pulse strength:", "Input an Integer", null) as num|null)
+			if(num)
+				radstrength = Wrap(num, 1, RADIATION_STRENGTH_MAX+1)
+		if("screen")
+			current_screen = href_list["text"]
+		if("rejuv")
+			if(viable_occupant && viable_occupant.reagents)
+				var/epinephrine_amount = viable_occupant.reagents.get_reagent_amount("epinephrine")
+				var/can_add = max(min(REJUVENATORS_MAX - epinephrine_amount, REJUVENATORS_INJECT), 0)
+				viable_occupant.reagents.add_reagent("epinephrine", can_add)
+		if("setbufferlabel")
+			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			if(num && text)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				var/list/buffer_slot = buffer[num]
+				if(istype(buffer_slot))
+					buffer_slot["label"] = text
+		if("setbuffer")
+			if(num && viable_occupant)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				buffer[num] = list(
+					"label"="Buffer[num]:[viable_occupant.real_name]",
+					"UI"=viable_occupant.dna.uni_identity,
+					"SE"=viable_occupant.dna.struc_enzymes,
+					"UE"=viable_occupant.dna.unique_enzymes,
+					"name"=viable_occupant.real_name,
+					"blood_type"=viable_occupant.dna.blood_type
+					)
+		if("clearbuffer")
+			if(num)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				var/list/buffer_slot = buffer[num]
+				if(istype(buffer_slot))
+					buffer_slot.Cut()
+		if("transferbuffer")
+			if(num && viable_occupant)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				var/list/buffer_slot = buffer[num]
+				if(istype(buffer_slot))                                                                                  //15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
+					viable_occupant.radiation += rand(15/(connected.damage_coeff ** 2),40/(connected.damage_coeff ** 2)) //Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
+					switch(href_list["text"])                                                                            //Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
+						if("se")
+							if(buffer_slot["SE"])
+								viable_occupant.dna.struc_enzymes = buffer_slot["SE"]
+								viable_occupant.domutcheck()
+						if("ui")
+							if(buffer_slot["UI"])
+								viable_occupant.dna.uni_identity = buffer_slot["UI"]
+								viable_occupant.updateappearance(mutations_overlay_update=1)
+						else
+							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+								viable_occupant.real_name = buffer_slot["name"]
+								viable_occupant.name = buffer_slot["name"]
+								viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
+								viable_occupant.dna.blood_type = buffer_slot["blood_type"]
+		if("injector")
+			if(num && injectorready)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				var/list/buffer_slot = buffer[num]
+				if(istype(buffer_slot))
+					var/obj/item/weapon/dnainjector/I
+					switch(href_list["text"])
+						if("se")
+							if(buffer_slot["SE"])
+								I = new /obj/item/weapon/dnainjector(loc)
+								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
+									if(HM.check_block_string(buffer_slot["SE"]))
+										if(prob(HM.get_chance))
+											I.add_mutations.Add(HM)
+									else
+										I.remove_mutations.Add(HM)
+								I.damage_coeff  = connected.damage_coeff
+						if("ui")
+							if(buffer_slot["UI"])
+								I = new /obj/item/weapon/dnainjector(loc)
+								I.fields = list("UI"=buffer_slot["UI"])
+								I.damage_coeff = connected.damage_coeff
+						else
+							if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+								I = new /obj/item/weapon/dnainjector(loc)
+								I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+								I.damage_coeff  = connected.damage_coeff
+					if(I)
+						injectorready = 0
+						spawn(INJECTOR_TIMEOUT)
+							injectorready = 1
+		if("loaddisk")
+			if(num && diskette && diskette.fields)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				buffer[num] = diskette.fields.Copy()
+		if("savedisk")
+			if(num && diskette && !diskette.read_only)
+				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
+				var/list/buffer_slot = buffer[num]
+				if(istype(buffer_slot))
+					diskette.name = "data disk \[[buffer_slot["label"]]\]"
+					diskette.fields = buffer_slot.Copy()
+		if("ejectdisk")
+			if(diskette)
+				diskette.loc = get_turf(src)
+				diskette = null
+		if("pulseui","pulsese")
+			if(num && viable_occupant && connected)
+				radduration = Wrap(radduration, 1, RADIATION_DURATION_MAX+1)
+				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
+
+				var/locked_state = connected.locked
+				connected.locked = 1
+
+				current_screen = "working"
+				ShowInterface(usr)
+
+				sleep(radduration*10)
+				current_screen = "mainmenu"
+
+				if(viable_occupant && connected && connected.occupant==viable_occupant)
+					viable_occupant.radiation += (RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength)/(connected.damage_coeff ** 2) //Read comment in "transferbuffer" section above for explanation
+					switch(href_list["task"])                                                                                             //Same thing as there but values are even lower, on best part they are about 0.0*, effectively no damage
+						if("pulseui")
+							var/len = length(viable_occupant.dna.uni_identity)
+							num = Wrap(num, 1, len+1)
+							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
+                                                                                                                         //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
+							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
+							var/subblock = num - block*DNA_BLOCK_SIZE
+							last_change = "UI #[block]-[subblock]; "
+
+							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
+							last_change += "[hex]"
+							hex = scramble(hex, radstrength, radduration)
+							last_change += "->[hex]"
+
+							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
+							viable_occupant.updateappearance(mutations_overlay_update=1)
+						if("pulsese")
+							var/len = length(viable_occupant.dna.struc_enzymes)
+							num = Wrap(num, 1, len+1)
+							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len)
+
+							var/block = round((num-1)/DNA_BLOCK_SIZE)+1
+							var/subblock = num - block*DNA_BLOCK_SIZE
+							last_change = "SE #[block]-[subblock]; "
+
+							var/hex = copytext(viable_occupant.dna.struc_enzymes, num, num+1)
+							last_change += "[hex]"
+							hex = scramble(hex, radstrength, radduration)
+							last_change += "->[hex]"
+
+							viable_occupant.dna.struc_enzymes = copytext(viable_occupant.dna.struc_enzymes, 1, num) + hex + copytext(viable_occupant.dna.struc_enzymes, num+1, 0)
+							viable_occupant.domutcheck()
+				else
+					current_screen = "mainmenu"
+
+				if(connected)
+					connected.locked = locked_state
+
+	ShowInterface(usr,last_change)
+
+/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
+	var/length = length(input)
+	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
+	if(ran == 0)		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-change makes people mad though
+	else if(ran < 0)	ran = round(ran)	//negative, so floor it
+	else				ran = -round(-ran)	//positive, so ceiling it
+	return num2hex(Wrap(hex2num(input)+ran, 0, 16**length), length)
+
+/obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
+	return Wrap(round(position_we_were_supposed_to_hit + gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration), 1), 1, number_of_blocks+1)
+
+
+
+/////////////////////////// DNA MACHINES
+#undef INJECTOR_TIMEOUT
+#undef REJUVENATORS_INJECT
+#undef REJUVENATORS_MAX
+#undef NUMBER_OF_BUFFERS
+
+#undef RADIATION_STRENGTH_MAX
+#undef RADIATION_STRENGTH_MULTIPLIER
+
+#undef RADIATION_DURATION_MAX
+#undef RADIATION_ACCURACY_MULTIPLIER
+
+#undef RADIATION_IRRADIATION_MULTIPLIER
+
+//#undef BAD_MUTATION_DIFFICULTY
+//#undef GOOD_MUTATION_DIFFICULTY
+//#undef OP_MUTATION_DIFFICULTY

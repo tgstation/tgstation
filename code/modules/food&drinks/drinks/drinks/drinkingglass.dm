@@ -185,7 +185,7 @@
 			if("doctorsdelight")
 				icon_state = "doctorsdelightglass"
 				name = "Doctor's Delight"
-				desc = "A healthy mixture of juices, guaranteed to keep you healthy until the next toolboxing takes place."
+				desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 			if("manlydorf")
 				icon_state = "manlydorfglass"
 				name = "The Manly Dorf"

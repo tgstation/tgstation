@@ -29,7 +29,7 @@
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "trashbag0"
+	icon_state = "trashbag"
 	item_state = "trashbag"
 
 	w_class = 4
@@ -46,12 +46,12 @@
 
 /obj/item/weapon/storage/bag/trash/update_icon()
 	if(contents.len == 0)
-		icon_state = "trashbag0"
+		icon_state = "[initial(icon_state)]"
 	else if(contents.len < 12)
-		icon_state = "trashbag1"
+		icon_state = "[initial(icon_state)]1"
 	else if(contents.len < 21)
-		icon_state = "trashbag2"
-	else icon_state = "trashbag3"
+		icon_state = "[initial(icon_state)]2"
+	else icon_state = "[initial(icon_state)]3"
 
 /obj/item/weapon/storage/bag/trash/cyborg
 
@@ -62,6 +62,13 @@
 
 /obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return
+
+/obj/item/weapon/storage/bag/trash/bluespace
+	name = "trash bag of holding"
+	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
+	icon_state = "bluetrashbag"
+	max_combined_w_class = 60
+	storage_slots = 60
 
 // -----------------------------
 //        Mining Satchel

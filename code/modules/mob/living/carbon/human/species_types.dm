@@ -38,8 +38,7 @@
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		hardset_dna(H, null, null, null, null, /datum/species/slime)
-		H.regenerate_icons()
+		H.set_species(/datum/species/slime)
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
 		return 1
@@ -97,13 +96,13 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		H.endTailWag()
 
 /*
- PLANTPEOPLE
+ PODPEOPLE
 */
 
-/datum/species/plant
-	// Creatures made of leaves and plant matter.
-	name = "Plant"
-	id = "plant"
+/datum/species/pod
+	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
+	name = "Podperson"
+	id = "pod"
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slash"
@@ -113,43 +112,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	heatmod = 1.5
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 
-/datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
 
-/datum/species/plant/on_hit(proj_type, mob/living/carbon/human/H)
-	switch(proj_type)
-		if(/obj/item/projectile/energy/floramut)
-			if(prob(15))
-				H.irradiate(rand(30,80))
-				H.Weaken(5)
-				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
-				if(prob(80))
-					randmutb(H)
-					domutcheck(H,null)
-				else
-					randmutg(H)
-					domutcheck(H,null)
-			else
-				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
-		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
-	return
-
-/*
- PODPEOPLE
-*/
-
-/datum/species/plant/pod
-	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
-	name = "Podperson"
-	id = "pod"
-	specflags = list(MUTCOLORS,EYECOLOR)
-
-/datum/species/plant/pod/spec_life(mob/living/carbon/human/H)
+/datum/species/pod/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
@@ -167,6 +131,31 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
+
+/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plantbgone")
+		H.adjustToxLoss(3)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+/datum/species/pod/on_hit(proj_type, mob/living/carbon/human/H)
+	switch(proj_type)
+		if(/obj/item/projectile/energy/floramut)
+			if(prob(15))
+				H.rad_act(rand(30,80))
+				H.Weaken(5)
+				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
+				if(prob(80))
+					randmutb(H)
+				else
+					randmutg(H)
+				H.domutcheck()
+			else
+				H.adjustFireLoss(rand(5,15))
+				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
+		if(/obj/item/projectile/energy/florayield)
+			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+	return
 
 /*
  SHADOWPEOPLE

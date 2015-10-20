@@ -98,7 +98,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
@@ -505,7 +505,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
@@ -577,10 +577,9 @@ Sorry Giacom. Please don't be mad :(
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
-	for(var/mob/living/simple_animal/slime/M in oview(1,src))
-		M.UpdateFeed(src)
-
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
+	if(!has_gravity(M))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
@@ -605,8 +604,8 @@ Sorry Giacom. Please don't be mad :(
 			if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				H.existing_dirs += newdir
 				H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-				if(check_dna_integrity(M)) //blood DNA
-					var/mob/living/carbon/DNA_helper = pulling
+				if(M.has_dna()) //blood DNA
+					var/mob/living/carbon/DNA_helper = M
 					H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
@@ -679,7 +678,7 @@ Sorry Giacom. Please don't be mad :(
 	if(has_gravity)
 		clear_alert("weightless")
 	else
-		throw_alert("weightless")
+		throw_alert("weightless", /obj/screen/alert/weightless)
 	float(!has_gravity)
 
 /mob/living/proc/float(on)
@@ -895,3 +894,14 @@ Sorry Giacom. Please don't be mad :(
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection()
 	return 0
+
+/mob/living/proc/harvest(mob/living/user)
+	if(qdeleted(src))
+		return
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1; i <= butcher_results[path];i++)
+				new path(src.loc)
+			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+	visible_message("<span class='notice'>[user] butchers [src].</span>")
+	gib()

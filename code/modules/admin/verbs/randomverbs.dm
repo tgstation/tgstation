@@ -208,11 +208,12 @@
 			usr << "<font color='red'>Error: create_xeno(): no suitable candidates.</font>"
 	if(!istext(ckey))	return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
-		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(spawn_here)
+		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(spawn_here)
+		if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(spawn_here)
 		if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
 		if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
 		if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
@@ -262,7 +263,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
 					if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
 					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
-					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(T)
+					if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
+					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(T)
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
@@ -300,15 +302,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.dna.blood_type = record_found.fields["blood_type"]
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
 	else
-		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
-		A.real_name = G_found.real_name
 		A.copy_to(new_character)
+		A.real_name = G_found.real_name
+		new_character.dna.update_dna_identity()
 
-	if(!new_character.real_name)
-		new_character.real_name = new_character.dna.species.random_name(new_character.gender,1)
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
@@ -316,13 +316,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
-	if(!new_character.mind.assigned_role)	new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
-
-	//DNA
-	if(record_found)//Pull up their name from database records if they did have a mind.
-		hardset_dna(new_character, record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
-	else//If they have no records, we just do a random DNA for them, based on their random appearance/savefile.
-		ready_dna(new_character)
+	if(!new_character.mind.assigned_role)
+		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
 	new_character.key = G_found.key
 
@@ -692,27 +687,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-/client/proc/reset_all_tcs()
-	set category = "Admin"
-	set name = "Reset Telecomms Scripts"
-	set desc = "Blanks all telecomms scripts from all telecomms servers"
-	if(!holder)
-		usr << "Admin only."
-		return
-
-	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
-
-	for(var/obj/machinery/telecomms/server/S in telecomms_list)
-		var/datum/TCS_Compiler/C = S.Compiler
-		S.rawcode = ""
-		C.Compile("")
-	for(var/obj/machinery/computer/telecomms/traffic/T in machines)
-		T.storedcode = ""
-	log_admin("[key_name(usr)] blanked all telecomms scripts.")
-	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
-	feedback_add_details("admin_verb","RAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/admin_change_sec_level()
 	set category = "Special Verbs"
 	set name = "Set Security Level"
@@ -822,7 +796,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		id_select += "<option value=\"[path]\">[path]</option>"
 	id_select += "</select>"
 
-	var/dat = {" 
+	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
 	<form name="outfit" action="byond://?src=\ref[src]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">

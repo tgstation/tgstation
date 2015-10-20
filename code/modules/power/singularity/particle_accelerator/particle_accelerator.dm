@@ -71,6 +71,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/strength = null
 	var/desc_holder = null
 
+/obj/structure/particle_accelerator/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = 0
 	if(master)
@@ -101,6 +105,16 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	src.dir = turn(src.dir, 270)
 	return 1
 
+/obj/structure/particle_accelerator/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(user))
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!in_range(src, user))
+		return
+	else
+		rotate()
+
 /obj/structure/particle_accelerator/verb/rotateccw()
 	set name = "Rotate Counter Clockwise"
 	set category = "Object"
@@ -130,11 +144,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(istool(W))
 		if(src.process_tool_hit(W,user))
 			return
 	..()
-	return
 
 
 /obj/structure/particle_accelerator/Move()

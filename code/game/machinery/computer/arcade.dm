@@ -506,12 +506,7 @@
 							M << "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>"
 							M.Stun(5)
 							sleep(30)
-							say("[M] violently throws up!")
-							playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-							M.nutrition -= 50 //lose a lot of food
-							var/turf/location = usr.loc
-							if(istype(location, /turf/simulated))
-								location.add_vomit_floor(src, 1)
+							M.vomit(50)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
 							M.Weaken(3)

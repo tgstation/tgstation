@@ -124,9 +124,9 @@
 
 			var/mob/living/carbon/human/T = attached
 
-			if(!istype(T)) return
-			if(!T.dna)
+			if(!istype(T))
 				return
+
 			if(T.disabilities & NOCLONE)
 				return
 

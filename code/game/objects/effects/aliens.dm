@@ -29,7 +29,7 @@
 	canSmoothWith = list(/obj/structure/alien/resin)
 	var/health = 200
 	var/resintype = null
-	smooth = 1
+	smooth = SMOOTH_TRUE
 
 
 /obj/structure/alien/resin/New(location)
@@ -474,9 +474,18 @@
 			T.dump_contents()
 			qdel(target)
 
+		if(istype(target, /turf/simulated/mineral))
+			var/turf/simulated/mineral/M = target
+			M.ChangeTurf(M.baseturf)
+
+		if(istype(target, /turf/simulated/floor))
+			var/turf/simulated/floor/F = target
+			F.ChangeTurf(F.baseturf)
+
 		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
+
 		else
 			qdel(target)
 

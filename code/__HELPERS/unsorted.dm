@@ -672,7 +672,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	else return get_step(ref, base_dir)
 
-/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0) //This is quite an ugly solution but i refuse to use the old request system.
+/proc/do_mob(mob/user , mob/target, time = 30, numticks = 5, uninterruptible = 0, progress = 1)
+	//This is quite an ugly solution but i refuse to use the old request system.
 	if(!user || !target)
 		return 0
 	if(numticks == 0)
@@ -683,7 +684,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/timefraction = round(time/numticks)
 	var/image/progbar
 	for(var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
 			user.client.images |= progbar
 		sleep(timefraction)
@@ -709,7 +710,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		progbar.pixel_y = 32
 		return progbar
 
-/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null)
+/proc/do_after(mob/user, delay, numticks = 5, needhand = 1, atom/target = null, progress = 1)
 	if(!user)
 		return 0
 
@@ -728,7 +729,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		holdingnull = 0 //User is holding a tool of some kind
 	var/image/progbar
 	for (var/i = 1 to numticks)
-		if(user.client)
+		if(user.client && progress)
 			progbar = make_progress_bar(i, numticks, target)
 			if(progbar)
 				user.client.images |= progbar
@@ -1108,90 +1109,6 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/is_hot(obj/item/W)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/O = W
-		if(O.isOn())
-			return 3800
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/O = W
-		if(O.lit)
-			return 1500
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/O = W
-		if(O.lit == 1)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/O = W
-		if(O.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/candle))
-		var/obj/item/candle/O = W
-		if(O.lit)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/device/flashlight/flare))
-		var/obj/item/device/flashlight/flare/O = W
-		if(O.on)
-			return 1000
-		else
-			return 0
-	if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
-		return 3800
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/O = W
-		if(O.active)
-			return 3500
-		else
-			return 0
-	if(istype(W, /obj/item/device/assembly/igniter))
-		return 1000
-	else
-		return 0
-
-//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
-/proc/is_sharp(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	var/list/sharp_things_1 = list(\
-	/obj/item/weapon/circular_saw,\
-	/obj/item/weapon/shovel,\
-	/obj/item/weapon/shard,\
-	/obj/item/weapon/broken_bottle,\
-	/obj/item/weapon/twohanded/fireaxe,\
-	/obj/item/weapon/hatchet,\
-	/obj/item/weapon/throwing_star,\
-	/obj/item/clothing/glasses/sunglasses/garb,\
-	/obj/item/clothing/glasses/sunglasses/gar,\
-	/obj/item/clothing/glasses/hud/security/sunglasses/gars,\
-	/obj/item/clothing/glasses/meson/gar,\
-	/obj/item/weapon/twohanded/spear)
-
-	//Because is_sharp is used for food or something.
-	var/list/sharp_things_2 = list(\
-	/obj/item/weapon/kitchen/knife,\
-	/obj/item/weapon/scalpel)
-
-	if(is_type_in_list(W,sharp_things_1))
-		return 1
-
-	if(is_type_in_list(W,sharp_things_2))
-		return 2 //cutting food
-
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/E = W
-		if(E.active)
-			return 1
-		else
-			return 0
-
 /proc/is_pointed(obj/item/W)
 	if(istype(W, /obj/item/weapon/pen))
 		return 1
@@ -1207,7 +1124,7 @@ var/global/list/common_tools = list(
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
 /proc/can_embed(obj/item/W)
-	if(is_sharp(W))
+	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
@@ -1420,7 +1337,7 @@ B --><-- A
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
 //we raise this each time orbit is called to prevent mutiple calls in a short time frame from breaking things
-/atom/movable/var/orbitid = 0 
+/atom/movable/var/orbitid = 0
 
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = 1, angle_increment = 15, lockinorbit = 0)
 	if(!istype(A))
@@ -1429,30 +1346,34 @@ B --><-- A
 	var/myid = orbitid
 	if (orbiting)
 		stop_orbit()
-		//sadly this is the only way to ensure the original orbit proc stops and resets the atom's transform.
-		sleep(1)
+		//sadly this is the only way to ensure the original orbit proc stops
+		//and resets the atom's transform before we continue.
+		//time is based on the sleep in the loop and the time for the final animation of initial_transform.
+		sleep(2.6+world.tick_lag)
 		if (orbiting || !istype(A) || orbitid != myid) //post sleep re-check
 			return
 	orbiting = A
 	var/lastloc = loc
 	var/angle = 0
 	var/matrix/initial_transform = matrix(transform)
-	spawn
-		while(orbiting && orbiting.loc && orbitid == myid && (!lockinorbit || loc == lastloc))
-			loc = get_turf(orbiting.loc)
-			lastloc = loc
-			angle += angle_increment
 
-			var/matrix/shift = matrix(initial_transform)
-			shift.Translate(radius,0)
-			if(clockwise)
-				shift.Turn(angle)
-			else
-				shift.Turn(-angle)
-			animate(src,transform = shift,2)
+	while(orbiting && orbiting.loc && orbitid == myid)
+		var/targetloc = get_turf(orbiting)
+		if (!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		loc = targetloc
+		lastloc = loc
+		angle += angle_increment
 
-			sleep(0.6) //the effect breaks above 0.6 delay
-		animate(src,transform = initial_transform,2)
+		var/matrix/shift = matrix(initial_transform)
+		shift.Translate(radius,0)
+		if(clockwise)
+			shift.Turn(angle)
+		else
+			shift.Turn(-angle)
+		animate(src, transform = shift, 2)
+		sleep(0.6) //the effect breaks above 0.6 delay
+	animate(src, transform = initial_transform, 2)
 
 
 /atom/movable/proc/stop_orbit()
@@ -1476,7 +1397,6 @@ B --><-- A
 	if(!x_dimension || !y_dimension)
 		return
 
-	//Get out of here, punk ass kids calling procs needlessly
 	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
 		return I
 

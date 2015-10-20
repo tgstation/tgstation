@@ -288,7 +288,7 @@
 		var/obj/machinery/abductor/console/console
 		if(ishuman(source))
 			var/mob/living/carbon/human/H = source
-			if(H.dna && istype(H.dna.species, /datum/species/abductor))
+			if(H.dna.species.id == "abductor")
 				var/datum/species/abductor/S = H.dna.species
 				console = get_team_console(S.team)
 				home = console.pad
@@ -405,8 +405,6 @@ Congratulations! You are now trained for xenobiology research!"}
 	if(!ishuman(user))
 		return 0
 	var/mob/living/carbon/human/H = user
-	if(!H.dna)
-		return 0
 	if(H.dna.species.id != "abductor")
 		return 0
 	return 1
@@ -496,11 +494,10 @@ Congratulations! You are now trained for xenobiology research!"}
 
 	var/species = "<span class='warning'>Unknown species</span>"
 	var/helptext = "<span class='warning'>Species unsuitable for experiments.</span>"
-	
+
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.dna && H.dna.species)
-			species = "<span clas=='notice'>[H.dna.species.name]</span>"
+		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
 		var/obj/item/organ/internal/gland/temp = locate() in H.internal_organs
@@ -583,7 +580,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	can_buckle = 1
 	buckle_lying = 1
 
-/obj/structure/stool/bed/abductor
+/obj/structure/bed/abductor
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon = 'icons/obj/abductor.dmi'

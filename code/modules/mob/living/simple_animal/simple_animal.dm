@@ -18,7 +18,6 @@
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	var/list/butcher_results = null
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -44,6 +43,7 @@
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
+	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
 	var/list/ignored_damage_types = list(BRUTE = 0, BURN = 0, TOX = 0, CLONE = 0, STAMINA = 1, OXY = 0) //Set 0 to receive that damage type, 1 to ignore
 	var/attacktext = "attacks"
@@ -288,6 +288,7 @@
 	return
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
+	..()
 	switch(M.a_intent)
 
 		if("help")
@@ -363,16 +364,6 @@
 /mob/living/simple_animal/attackby(obj/item/O, mob/living/user, params) //Marker -Agouri
 	if(O.flags & NOBLUDGEON)
 		return
-
-	if((butcher_results) && (stat == DEAD))
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/sharpness = is_sharp(O)
-		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
-				harvest(user)
-			return
 
 	..()
 
@@ -467,11 +458,6 @@
 			continue
 	if(alone && partner && children < 3)
 		new childtype(loc)
-
-// Harvest an animal's delicious byproducts
-/mob/living/simple_animal/proc/harvest(mob/living/user)
-	visible_message("<span class='notice'>[user] butchers [src].</span>")
-	gib()
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)

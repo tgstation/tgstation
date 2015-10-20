@@ -39,10 +39,10 @@
 		PlasmaBurn()
 
 /turf/simulated/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
+	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma flooring was ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Plasma flooring was ignited by [key_name(user)] in ([x],[y],[z])")
-		ignite(is_hot(W))
+		ignite(W.is_hot())
 		return
 	..()
 
@@ -163,8 +163,7 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			for(var/mob/living/L in range(3,src))
-				L.irradiate(1)
+			radiation_pulse(get_turf(src), 3, 3, 1, 0)
 			for(var/turf/simulated/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time

@@ -220,7 +220,7 @@
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
-				if(H.dna && H.ckey)
+				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=DNA;size=440x410")
@@ -231,12 +231,7 @@
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 			for(var/mob/living/carbon/human/H in mob_list)
 				if(H.ckey)
-					if(H.dna && H.dna.uni_identity)
-						dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
-					else if(H.dna && !H.dna.uni_identity)
-						dat += "<tr><td>[H]</td><td>H.dna.uni_identity = null</td></tr>"
-					else if(!H.dna)
-						dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=fingerprints;size=440x410")
 
@@ -259,8 +254,7 @@
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = species_list[result]
 				for(var/mob/living/carbon/human/H in mob_list)
-					hardset_dna(H, null, null, null, null, newtype)
-					H.regenerate_icons()
+					H.set_species(newtype)
 
 		if("corgi")
 			if(!check_rights(R_FUN))
@@ -382,7 +376,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
-			for(var/obj/machinery/light/L in world)
+			for(var/obj/machinery/light/L in machines)
 				L.broken()
 
 		if("whiteout")
@@ -391,7 +385,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","WO")
 			message_admins("[key_name_admin(usr)] fixed all lights")
-			for(var/obj/machinery/light/L in world)
+			for(var/obj/machinery/light/L in machines)
 				L.fix()
 
 		if("floorlava")
@@ -483,7 +477,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","EgL")
-			for(var/obj/machinery/door/airlock/W in world)
+			for(var/obj/machinery/door/airlock/W in machines)
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
@@ -564,7 +558,7 @@
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in world)
+			for(var/obj/machinery/door/airlock/maintenance/M in machines)
 				M.check_access()
 				if (access_maint_tunnels in M.req_access)
 					M.req_access = list(access_brig)
@@ -572,7 +566,7 @@
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in world)
+			for(var/obj/machinery/door/airlock/maintenance/M in machines)
 				M.check_access()
 				if (access_maint_tunnels in M.req_access)
 					M.req_access = list()

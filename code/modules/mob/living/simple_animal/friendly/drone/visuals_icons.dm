@@ -25,13 +25,14 @@
 	var/y_shift = getItemPixelShiftY()
 
 	if(r_hand)
+
 		var/r_state = r_hand.item_state
 		if(!r_state)
 			r_state = r_hand.icon_state
 
-		var/image/r_hand_image = image("icon" = r_hand.righthand_file, "icon_state"="[r_state]", "layer"=-DRONE_HANDS_LAYER)
-		if(y_shift != 0)
-			r_hand_image.pixel_y = y_shift
+		var/image/r_hand_image = r_hand.build_worn_icon(state = r_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		if(y_shift)
+			r_hand_image.pixel_y += y_shift
 
 		hands_overlays += r_hand_image
 
@@ -41,13 +42,14 @@
 			client.screen |= r_hand
 
 	if(l_hand)
+
 		var/l_state = l_hand.item_state
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = image("icon" = l_hand.lefthand_file, "icon_state"="[l_state]", "layer"=-DRONE_HANDS_LAYER)
-		if(y_shift != 0)
-			l_hand_image.pixel_y = y_shift
+		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.righthand_file, isinhands = TRUE)
+		if(y_shift)
+			l_hand_image.pixel_y += y_shift
 
 		hands_overlays += l_hand_image
 
@@ -76,13 +78,8 @@
 			head.screen_loc = ui_drone_head
 			client.screen += head
 
-
-		var/image/head_overlay = image("icon"='icons/mob/head.dmi', "icon_state"="[head.icon_state]", "layer"=-DRONE_HEAD_LAYER)
-		if(istype(head, /obj/item/clothing/mask))
-			head_overlay.icon = 'icons/mob/mask.dmi'
-		head_overlay.color = head.color
-		head_overlay.alpha = head.alpha
-		head_overlay.pixel_y = -15
+		var/image/head_overlay = head.build_worn_icon(state = icon_state, default_layer = DRONE_HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		head_overlay.pixel_y += -15
 
 		drone_overlays[DRONE_HEAD_LAYER]	= head_overlay
 

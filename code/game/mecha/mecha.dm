@@ -34,7 +34,7 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 0
-	var/dna	//dna-locking the mech
+	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -285,22 +285,22 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert("charge")
 				if(0.5 to 0.75)
-					occupant.throw_alert("charge","lowcell",1)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert("charge","lowcell",2)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert("charge","lowcell",3)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert("charge","emptycell")
+					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
 		var/integrity = health/initial(health)*100
 		switch(integrity)
 			if(30 to 45)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 1)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
 			if(15 to 35)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 2)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
 			if(-INFINITY to 15)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 3)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
 
@@ -557,7 +557,7 @@
 			else if(AI.stat || !AI.client)
 				user << "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>"
 				return
-			else if(occupant || dna) //Normal AIs cannot steal mechs!
+			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				user << "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"]."
 				return
 			AI.control_disabled = 0
@@ -653,10 +653,10 @@
 		log_append_to_last("Permission denied.")
 		return
 	var/passed
-	if(dna)
-		if(check_dna_integrity(user))
+	if(dna_lock)
+		if(user.has_dna())
 			var/mob/living/carbon/C = user
-			if(C.dna.unique_enzymes==src.dna)
+			if(C.dna.unique_enzymes==dna_lock)
 				passed = 1
 	else if(operation_allowed(user))
 		passed = 1
@@ -664,10 +664,13 @@
 		user << "<span class='warning'>Access denied.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/simple_animal/slime/S in range(1,user))
-		if(S.Victim == user)
-			user << "<span class='warning'>You're too busy getting your life sucked out of you!</span>"
-			return
+	if(user.buckled)
+		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
+		log_append_to_last("Permission denied.")
+		return
+	if(user.buckled_mob) //mob attached to us
+		user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you!</span>"
+		return
 
 	visible_message("[user] starts to climb into [src.name].")
 
@@ -676,6 +679,10 @@
 			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+		else if(user.buckled)
+			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
+		else if(user.buckled_mob)
+			user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you.</span>"
 		else
 			moved_inside(user)
 	else
@@ -711,8 +718,8 @@
 	else if(occupant)
 		user << "<span class='warning'>Occupant detected!</span>"
 		return 0
-	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
-		user << "<span class='warning'>Stop it!</span>"
+	else if(dna_lock && (!mmi_as_oc.brainmob.dna || dna_lock!=mmi_as_oc.brainmob.dna.unique_enzymes))
+		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
 	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")

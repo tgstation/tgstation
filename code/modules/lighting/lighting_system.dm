@@ -58,6 +58,8 @@
 		remove_effect()
 		owner.light = null
 		owner = null
+	if(changed)
+		SSlighting.changed_lights -= src
 	return ..()
 
 //Check a light to see if its effect needs reprocessing. If it does, remove any old effect and create a new one

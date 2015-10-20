@@ -46,6 +46,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/obj/screen/cinematic = null			//used for station explosion cinematic
 
+	var/maprotatechecked = 0
+
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -59,7 +61,6 @@ var/datum/subsystem/ticker/ticker
 		return ..()
 	if(!syndicate_code_phrase)		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)	syndicate_code_response	= generate_code_phrase()
-	setupGenetics()
 	setupFactions()
 	..()
 
@@ -69,7 +70,6 @@ var/datum/subsystem/ticker/ticker
 			timeLeft = config.lobby_countdown * 10
 			world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
-			crewmonitor.generateMiniMaps() // start generating minimaps (this is a background process)
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
@@ -101,6 +101,7 @@ var/datum/subsystem/ticker/ticker
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 			check_queue()
+			check_maprotate()
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -138,6 +139,7 @@ var/datum/subsystem/ticker/ticker
 		if(!mode.can_start())
 			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
 			qdel(mode)
+			mode = null
 			SSjob.ResetOccupations()
 			return 0
 
@@ -149,6 +151,7 @@ var/datum/subsystem/ticker/ticker
 	if(!Debug2)
 		if(!can_continue)
 			qdel(mode)
+			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
@@ -212,7 +215,7 @@ var/datum/subsystem/ticker/ticker
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
 
-	var/obj/structure/stool/bed/temp_buckle = new(src)
+	var/obj/structure/bed/temp_buckle = new(src)
 	if(station_missed)
 		for(var/mob/M in mob_list)
 			M.buckled = temp_buckle				//buckles the mob so it can't do anything
@@ -289,8 +292,11 @@ var/datum/subsystem/ticker/ticker
 					flick("station_intact",cinematic)
 					world << sound('sound/ambience/signal.ogg')
 					sleep(100)
-					if(cinematic)	qdel(cinematic)
-					if(temp_buckle)	qdel(temp_buckle)
+					if(cinematic)
+						qdel(cinematic)
+						cinematic = null
+					if(temp_buckle)
+						qdel(temp_buckle)
 					return	//Faster exit, since nothing happened
 				else //Station nuked (nuke,explosion,summary)
 					flick("intro_nuke",cinematic)
@@ -432,6 +438,14 @@ var/datum/subsystem/ticker/ticker
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
+	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(SSgarbage.didntgc.len)
+		var/dellog = ""
+		for(var/path in SSgarbage.didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
+		world.log << dellog
+
 	return 1
 
 /datum/subsystem/ticker/proc/send_random_tip()
@@ -460,3 +474,19 @@ var/datum/subsystem/ticker/ticker
 			next_in_line << "<span class='danger'>No response recieved. You have been removed from the line.</span>"
 			queued_players -= next_in_line
 			queue_delay = 0
+
+/datum/subsystem/ticker/proc/check_maprotate()
+	if (!config.maprotation || !SERVERTOOLS)
+		return
+	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
+		return
+	if (maprotatechecked)
+		return
+
+	maprotatechecked = 1
+
+	//map rotate chance defaults to 75% of the length of the round (in minutes)
+	if (!prob((world.time/600)*config.maprotatechancedelta))
+		return
+	spawn(-1) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
+		maprotate()

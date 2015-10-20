@@ -84,6 +84,14 @@
 			newVirus.holder = blood_prop
 	return
 
+/datum/reagent/blood/on_mob_life(mob/living/M)
+	if(is_vampire(M))
+		var/datum/vampire/V = M.get_vampire()
+		V.dirty_blood += volume //Vampires can drink stored blood to gain dirty blood
+		holder.remove_reagent(id, volume)
+		return 1
+	..()
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -127,7 +135,7 @@
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
-			hotspot.Kill()
+			qdel(hotspot)
 	return
 
 /*
@@ -179,6 +187,8 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
+		if(is_vampire(M))
+			M.adjustFireLoss(8) //Holy water kills vampires FAST.
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
@@ -188,6 +198,7 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
@@ -356,8 +367,7 @@
 	var/datum/species/mutation = pick(possible_morphs)
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
-		hardset_dna(H, null, null, null, null, mutation)
-		H.regenerate_icons()
+		H.set_species(mutation)
 		if(mutation == /datum/species/slime)
 			H.faction |= "slime"
 		else
@@ -455,7 +465,9 @@
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!istype(T, /turf/space))
-		new /obj/effect/decal/cleanable/dirt(T)
+		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
+		if(!D)
+			new /obj/effect/decal/cleanable/dirt(T)
 
 /datum/reagent/chlorine
 	name = "Chlorine"
@@ -531,8 +543,10 @@
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("radium", reac_volume)
+			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
+			if(!GG)
+				GG = new/obj/effect/decal/cleanable/greenglow(T)
+			GG.reagents.add_reagent("radium", reac_volume)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -575,8 +589,10 @@
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("uranium", reac_volume)
+			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
+			if(!GG)
+				GG = new/obj/effect/decal/cleanable/greenglow(T)
+			GG.reagents.add_reagent("uranium", reac_volume)
 
 /datum/reagent/aluminium
 	name = "Aluminium"

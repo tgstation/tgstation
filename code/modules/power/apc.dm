@@ -557,22 +557,16 @@
 				opened = 1
 			update_icon()
 	else
-		if (	((stat & BROKEN) || malfhack) \
-				&& !opened \
-				&& W.force >= 5 \
-				&& W.w_class >= 3 \
-				&& prob(20) )
+		if((!opened && wiresexposed && wires.IsInteractionTool(W)) || (issilicon(user) && !(stat & BROKEN) &&!malfhack))
+			return attack_hand(user)
+
+		..()
+		if( ((stat & BROKEN) || malfhack) && !opened && W.force >= 5 && W.w_class >= 3 && prob(20) )
 			opened = 2
 			user.visible_message("<span class='warning'>[user.name] has knocked down the APC cover  with the [W.name].</span>", \
 				"<span class='danger'>You knock down the APC cover with your [W.name]!</span>", \
 				"<span class='italics'>You hear bang.</span>")
 			update_icon()
-		else
-			if (istype(user, /mob/living/silicon))
-				return src.attack_hand(user)
-			if (!opened && wiresexposed && wires.IsInteractionTool(W))
-				return src.attack_hand(user)
-			..()
 
 /obj/machinery/power/apc/emag_act(mob/user)
 	if(!emagged && !malfhack)
@@ -892,6 +886,7 @@
 		src.occupier.parent = malf.parent
 	else
 		src.occupier.parent = malf
+	malf.shunted = 1
 	malf.mind.transfer_to(src.occupier)
 	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
@@ -909,6 +904,7 @@
 		return
 	if(src.occupier.parent && src.occupier.parent.stat != 2)
 		src.occupier.mind.transfer_to(src.occupier.parent)
+		src.occupier.parent.shunted = 0
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
 		qdel(src.occupier)
@@ -941,7 +937,7 @@
 				src.malfhack = 1
 				update_icon()
 				var/datum/effect/effect/system/smoke_spread/smoke = new
-				smoke.set_up(3, 0, src.loc)
+				smoke.set_up(1, src.loc)
 				smoke.attach(src)
 				smoke.start()
 				var/datum/effect/effect/system/spark_spread/s = new

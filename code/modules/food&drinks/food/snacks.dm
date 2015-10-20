@@ -150,9 +150,9 @@
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	if(is_sharp(W))
-		var/sharpness = is_sharp(W)
-		if(slice(sharpness, W, user))
+	var/sharp = W.is_sharp()
+	if(sharp)
+		if(slice(sharp, W, user))
 			return 1
 
 //Called when you finish tablecrafting a snack.
@@ -176,7 +176,7 @@
 		return 1
 
 	var/slices_lost = 0
-	if (accuracy > 1)
+	if (accuracy >= IS_SHARP_ACCURATE)
 		user.visible_message( \
 			"[user] slices [src].", \
 			"<span class='notice'>You slice [src].</span>" \
@@ -278,7 +278,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/store/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(W.w_class <= 2 & !istype(W, /obj/item/weapon/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(is_sharp(W))
+		if(W.is_sharp())
 			return 0
 		if(stored_item)
 			return 0

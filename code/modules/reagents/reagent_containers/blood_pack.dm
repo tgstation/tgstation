@@ -14,6 +14,16 @@
 		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
+/obj/item/weapon/reagent_containers/blood/attack_self(mob/user)
+	if(is_vampire(user) && reagents.has_reagent("blood"))
+		user.visible_message("<span class='warning'>[user] squeezes the contents of [src] into their mouth!</span>",\
+							 "<span class='danger'>You resign yourself to drinking the filthy blood from [src].</span>")
+		for(var/datum/reagent/R in reagents.reagent_list)
+			user.reagents.add_reagent(R.id, R.volume)
+			reagents.remove_reagent(R.id, R.volume)
+		return 1
+	..()
+
 /obj/item/weapon/reagent_containers/blood/on_reagent_change()
 	update_icon()
 

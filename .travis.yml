@@ -10,7 +10,10 @@ env:
     - DM_MAPFILE="tgstation2"
     - DM_MAPFILE="metastation"
     - DM_MAPFILE="ministation"
-  
+    - DM_MAPFILE="DiscStation"
+    - DM_MAPFILE="dreamstation"
+    - DM_MAPFILE="birdstation"
+
 cache:
   directories:
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}

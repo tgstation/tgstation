@@ -45,7 +45,7 @@
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
-		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
+		src << "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>."
 		return 0
 	return 1
 
@@ -92,7 +92,7 @@ var/next_external_rsc = 0
 
 	TopicData = null							//Prevent calls to client.Topic from connect
 
-	if(connection != "seeker")					//Invalid connection type.
+	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		return null
@@ -121,6 +121,16 @@ var/next_external_rsc = 0
 	prefs.last_id = computer_id			//these are gonna be used for banning
 
 	. = ..()	//calls mob.Login()
+
+	if (connection == "web")
+		if (!config.allowwebclient)
+			src << "Web client is disabled"
+			del(src)
+			return 0
+		if (config.webclientmembersonly && !IsByondMember())
+			src << "Sorry, but the web client is restricted to byond members only."
+			del(src)
+			return 0
 
 	if( (world.address == address || !address) && !host )
 		host = key
@@ -176,12 +186,18 @@ var/next_external_rsc = 0
 		else
 			winset(src, "rpane.changelogb", "background-color=#eaeaea;font-style=bold")
 
+	if (ckey in clientmessages)
+		for (var/message in clientmessages[ckey])
+			src << message
+		clientmessages.Remove(ckey)
+
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
 
-	//////////////
-	//DISCONNECT//
-	//////////////
+//////////////
+//DISCONNECT//
+//////////////
+
 /client/Del()
 	if(holder)
 		adminGreet(1)
@@ -272,6 +288,14 @@ var/next_external_rsc = 0
 /client/proc/is_afk(duration=3000)
 	if(inactivity > duration)	return inactivity
 	return 0
+
+// Byond seemingly calls stat, each tick.
+// Calling things each tick can get expensive real quick.
+// So we slow this down a little.
+// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
+/client/Stat()
+	. = ..()
+	sleep(1)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()

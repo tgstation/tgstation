@@ -37,20 +37,19 @@
 		if(istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if(prob(5))
-				H.irradiate(rand(100, 160))
+				H.rad_act(rand(100, 160))
 			else
-				H.irradiate(rand(15, 75))
+				H.rad_act(rand(15, 75))
 			if(prob(25))
 				if(prob(75))
 					randmutb(H)
-					domutcheck(H, null, 1)
 				else
 					randmutg(H)
-					domutcheck(H, null, 1)
+				H.domutcheck()
 
 		else if(istype(C, /mob/living/carbon/monkey))
 			var/mob/living/carbon/monkey/M = C
-			M.irradiate(rand(15, 75))
+			M.rad_act(rand(15, 75))
 
 
 /datum/round_event/radiation_storm/end()
