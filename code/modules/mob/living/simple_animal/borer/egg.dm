@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg
 	name = "borer egg"
 	desc = "A small, gelatinous egg."
 	icon = 'icons/mob/mob.dmi'
@@ -14,13 +14,13 @@
 		"oxygen"=5
 	)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/New()
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/New()
 	..()
 	reagents.add_reagent("nutriment", 4)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/Grow()
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/Grow()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow() called tick#: [world.time]")
 	grown = 1
 	icon_state = "borer egg-grown"
@@ -39,7 +39,7 @@
 
 		recruiter.recruited.Add(src, "recruiter_recruited")
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/Hatch()
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/Hatch()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch() called tick#: [world.time]")
 	if(hatching)
 		return
@@ -49,17 +49,17 @@
 	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	recruiter.request_player()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/recruiter_recruiting(var/list/args)
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/recruiter_recruiting(var/list/args)
 	var/mob/dead/observer/O = args["player"]
 	var/controls = args["controls"]
 	O << "<span class='recruit'>\The [src] is starting to hatch. You have been added to the list of potential ghosts. ([controls])</span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/recruiter_not_recruiting(var/list/args)
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/recruiter_not_recruiting(var/list/args)
 	var/mob/dead/observer/O = args["player"]
 	var/controls = args["controls"]
 	O << "<span class='recruit'>\The [src] is starting to hatch. ([controls])</span>"
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/proc/recruiter_recruited(var/list/args)
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/proc/recruiter_recruited(var/list/args)
 	var/mob/dead/observer/O = args["player"]
 	if(O)
 		var/turf/T = get_turf(src)
@@ -73,7 +73,7 @@
 		Grow() // Reset egg, check for hatchability.
 
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/process()
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	//testing("[type]/PROCESS() - plasma: [environment.toxins]")
@@ -84,7 +84,7 @@
 	if(meets_conditions)
 		src.Hatch()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/borer/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/borer_egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype( W, /obj/item/toy/crayon ))
 		return
 	else
