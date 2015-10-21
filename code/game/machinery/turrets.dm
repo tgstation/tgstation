@@ -23,7 +23,8 @@
 		if( Mech.occupant )
 			turretTargets |= Mech
 	else if(istype(O,/mob/living/simple_animal))
-		turretTargets |= O
+		if(!isbot(O))
+			turretTargets |= O
 	return 1
 
 /area/turret_protected/Exited(O)
@@ -135,7 +136,7 @@
 		if( iscarbon(T) )
 			var/mob/living/carbon/MC = T
 			if( !MC.stat )
-				if( !MC.lying || lasers )
+				if( !MC.lying || lasers)
 					return 1
 		else if( istype(T, /obj/mecha) )
 			var/obj/mecha/ME = T
@@ -143,7 +144,7 @@
 				return 1
 		else if(istype(T,/mob/living/simple_animal))
 			var/mob/living/simple_animal/A = T
-			if( !A.stat )
+			if( !A.stat && !isbot(A))
 				if(lasers)
 					return 1
 	return 0
@@ -159,7 +160,7 @@
 		if(M.occupant)
 			new_targets += M
 	for(var/mob/living/simple_animal/M in protected_area.turretTargets)
-		if(!M.stat)
+		if(!M.stat && !isbot(M))
 			new_targets += M
 	if(new_targets.len)
 		new_target = pick(new_targets)
