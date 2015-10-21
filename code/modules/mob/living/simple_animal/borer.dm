@@ -660,20 +660,8 @@ mob/living/simple_animal/borer/proc/detach()
 		src << "<span class='warning'>You are busy evolving.</span>"
 		return
 
-
-	var/mob/living/simple_animal/borer/B = src
-	var/atom/pipe
-	var/list/pipes = list()
-	for(var/obj/machinery/atmospherics/unary/U in view(1))
-		if((istype(U, /obj/machinery/atmospherics/unary/vent_pump) || istype(U,/obj/machinery/atmospherics/unary/vent_scrubber)) && Adjacent(U))
-			pipes |= U
-	if(!pipes || !pipes.len)
-		return
-	if(pipes.len == 1)
-		pipe = pipes[1]
-	else
-		pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
-	if(B.canmove && pipe)
+	var/pipe = start_ventcrawl()
+	if(pipe)
 		handle_ventcrawl(pipe)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
