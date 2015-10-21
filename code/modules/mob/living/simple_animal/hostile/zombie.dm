@@ -58,6 +58,7 @@
 /mob/living/simple_animal/hostile/zombie/proc/Zombify(mob/living/carbon/human/H)
 	H.set_species(/datum/species/zombie)
 	var/mob/living/simple_animal/hostile/zombie/Z = new /mob/living/simple_animal/hostile/zombie(H.loc)
+	Z.faction = src.faction
 	Z.appearance = H.appearance
 	Z.transform = matrix()
 	Z.pixel_y = 0
@@ -84,6 +85,7 @@
 	mob_type = /mob/living/simple_animal/hostile/zombie
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	faction = list("zombie")
 
 
 /mob/living/simple_animal/hostile/spawner/zombie/lesser
