@@ -1120,7 +1120,11 @@
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
+			user.visible_message("<span class='warning'>[user] removes [src]'s [cell.name].</span>", \
+			"<span class='notice'>You remove [src]'s [cell.name].</span>")
+			src.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their [cell.name] removed by [user.name] ([user.ckey])</font>"
+			user.attack_log += "\[[time_stamp()]\] <font color='red'>Removed the [cell.name] of [src.name] ([src.ckey])</font>"
+			log_attack("<font color='red'>[user.name] ([user.ckey]) removed [src]'s [cell.name] ([src.ckey])</font>")
 			cell = null
 			cell_component.wrapped = null
 			cell_component.installed = 0
