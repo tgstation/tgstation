@@ -35,9 +35,13 @@
 		return 0.5
 
 	var/totallums = 0
-
-	totallums = (lighting_overlay.lum_r + lighting_overlay.lum_b + lighting_overlay.lum_g) / 3 // Get the average between the 3 spectrums.
-
+	if(lighting_overlay.lum_r) totallums += lighting_overlay.lum_r
+	if(lighting_overlay.lum_b) totallums += lighting_overlay.lum_b
+	if(lighting_overlay.lum_g) totallums += lighting_overlay.lum_g
+	if(totallums)
+		totallums /= 3 // Get the average between the 3 spectrums
+	else
+		return 0
 	totallums = (totallums - minlum) / (maxlum - minlum)
 
 	return Clamp(totallums, 0, 1)
