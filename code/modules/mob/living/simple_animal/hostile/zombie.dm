@@ -8,8 +8,8 @@
 	turns_per_move = 5
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 100
-	health = 100
+	maxHealth = 120
+	health = 120
 	speed = 1
 	harm_intent_damage = 8
 	melee_damage_lower = 20
@@ -26,6 +26,9 @@
 	gold_core_spawnable = 1
 	faction = list("zombie")
 	var/mob/living/carbon/human/stored_corpse = null
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3)
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 
 
 
@@ -62,8 +65,11 @@
 	Z.appearance = H.appearance
 	Z.transform = matrix()
 	Z.pixel_y = 0
-	if(H.ckey)
-		Z.ckey = H.ckey
+	for(var/mob/dead/observer/ghost in player_list)
+		if(H.real_name == ghost.real_name)
+			ghost.reenter_corpse()
+			break
+	Z.ckey = H.ckey
 	H.stat = DEAD
 	H.loc = Z
 	Z.stored_corpse = H
