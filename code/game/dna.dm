@@ -133,6 +133,13 @@
 		spans |= M.get_spans()
 	return spans
 
+/datum/dna/proc/species_get_spans()
+	var/list/spans = list()
+	if(species)
+		spans |= species.get_spans()
+	return spans
+
+
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)

@@ -1,5 +1,5 @@
 /obj/structure/closet/l3closet
-	name = "level-3 biohazard suit closet"
+	name = "level-3 biohazard gear closet"
 	desc = "It's a storage unit for level-3 biohazard gear."
 	icon_state = "bio"
 
@@ -7,6 +7,7 @@
 	..()
 	new /obj/item/clothing/suit/bio_suit/general( src )
 	new /obj/item/clothing/head/bio_hood/general( src )
+	new /obj/item/weapon/storage/bag/bio( src )
 
 /obj/structure/closet/l3closet/virology
 	icon_state = "bio_viro"
@@ -16,7 +17,7 @@
 	contents = list()
 	new /obj/item/clothing/suit/bio_suit/virology( src )
 	new /obj/item/clothing/head/bio_hood/virology( src )
-
+	new /obj/item/weapon/storage/bag/bio( src )
 
 /obj/structure/closet/l3closet/security
 	icon_state = "bio_sec"
@@ -46,3 +47,4 @@
 	contents = list()
 	new /obj/item/clothing/suit/bio_suit/scientist( src )
 	new /obj/item/clothing/head/bio_hood/scientist( src )
+	new /obj/item/weapon/storage/bag/bio( src )

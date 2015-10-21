@@ -104,8 +104,7 @@
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	if(!dna.species.check_breath(breath, src))
-		..()
+	dna.species.check_breath(breath, src)
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)

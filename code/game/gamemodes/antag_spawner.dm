@@ -138,7 +138,7 @@
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	var/list/borg_candicates = get_candidates(BE_OPERATIVE, 3000, "operative")
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)

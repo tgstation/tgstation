@@ -5,6 +5,11 @@
 #define SECURITY_HAS_MAINT_ACCESS 2
 #define EVERYONE_HAS_MAINT_ACCESS 4
 
+//Not accessible from usual debug controller verb
+/datum/protected_configuration
+	var/autoadmin = 0
+	var/autoadmin_rank = "Game Admin"
+
 /datum/configuration
 	var/server_name = null				// server name (the name of the game window)
 	var/station_name = null				// station name (the name of the station in-game)
@@ -175,6 +180,8 @@
 	var/datum/votablemap/defaultmap = null
 	var/maprotation = 1
 	var/maprotatechancedelta = 0.75
+
+
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -370,6 +377,10 @@
 					config.maprotation = 1
 				if("maprotationchancedelta")
 					config.maprotatechancedelta = text2num(value)
+				if("autoadmin")
+					protected_config.autoadmin = 1
+					if(value)
+						protected_config.autoadmin_rank = ckeyEx(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

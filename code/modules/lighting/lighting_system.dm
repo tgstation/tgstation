@@ -267,7 +267,7 @@
 	lighting_object = locate() in src
 	init_lighting()
 
-	for(var/turf/space/S in orange(src,1))
+	for(var/turf/space/S in orange(1,src))
 		S.update_starlight()
 
 
