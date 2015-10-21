@@ -663,6 +663,7 @@ proc/populate_seed_list()
 	new_seed.name = "new line"
 	new_seed.uid = 0
 	new_seed.roundstart = 0
+	new_seed.large = large
 
 	//Copy over everything else.
 	if(products)       new_seed.products = products.Copy()
