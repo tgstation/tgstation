@@ -51,16 +51,16 @@
 /obj/machinery/centrifuge/update_icon()
 	if(stat & BROKEN)
 		icon_state = "[base_state]b"
-		set_light(0, 0, null)
+		set_light(0)
 	else if(stat & NOPOWER)
 		icon_state = "[base_state]0"
-		set_light(0, 0, null)
+		set_light(0)
 	else if(isolating || curing)
-		set_light(2, 2, LIGHT_COLOR_CYAN)
+		set_light(l_range = 2, l_power = 2, l_color = LIGHT_COLOR_CYAN)
 		icon_state = "[base_state]_moving"
 	else
 		icon_state = "[base_state]"
-		set_light(0, 0, null)
+		set_light(0)
 
 /obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
 	if(..())
