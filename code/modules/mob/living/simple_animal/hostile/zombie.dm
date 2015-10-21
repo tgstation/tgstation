@@ -69,3 +69,38 @@
 	visible_message("<span class='danger'>[Z] staggers to their feet!</span>")
 	Z << "<span class='userdanger'>You are now a zombie! Follow your creators lead!</span>"
 
+
+/mob/living/simple_animal/hostile/spawner/zombie
+	name = "corpse pit"
+	icon_state = "tombstone"
+	icon_living = "tombstone"
+	icon = 'icons/mob/nest.dmi'
+	health = 200
+	maxHealth = 200
+	list/spawned_mobs = list()
+	max_mobs = 40
+	spawn_delay = 0
+	spawn_time = 150
+	mob_type = /mob/living/simple_animal/hostile/zombie
+	spawn_text = "emerges from"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+
+
+/mob/living/simple_animal/hostile/spawner/zombie/death()
+	visible_message("<span class='danger'>[src] collapes, stopping the flow of zombies!</span>")
+	qdel(src)
+
+
+/obj/item/weapon/shovel/cursed
+	name = "cursed shovel"
+	desc = "You probably shouldn't use this particular shovel."
+	var/used = FALSE
+	force = 15
+
+/obj/item/weapon/shovel/cursed/attack_self(mob/living/user)
+	if(used == FALSE)
+		visible_message("<span class='danger'>[user] digs a pit to Hell!</span>")
+		new /mob/living/simple_animal/hostile/spawner/zombie(get_turf(src.loc))
+		used = TRUE
+	else
+		user << "The unearthly energies that once powered this shovel are now dormant. Still sharp though."
