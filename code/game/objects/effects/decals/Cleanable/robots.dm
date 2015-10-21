@@ -22,7 +22,7 @@
 				if (prob(40))
 					new /obj/effect/decal/cleanable/oil/streak(src.loc)
 				else if (prob(10))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(3, 1, src)
 					s.start()
 			if (step_to(src, get_step(src, direction), 0))
