@@ -29,6 +29,7 @@
 #include "code\__DEFINES\flags.dm"
 #include "code\__DEFINES\genetics.dm"
 #include "code\__DEFINES\hud.dm"
+#include "code\__DEFINES\is_helpers.dm"
 #include "code\__DEFINES\machines.dm"
 #include "code\__DEFINES\math.dm"
 #include "code\__DEFINES\misc.dm"
