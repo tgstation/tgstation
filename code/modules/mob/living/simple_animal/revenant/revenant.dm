@@ -148,11 +148,11 @@
 					src << "<span class='info'>[target] will not yield much essence. Still, every bit counts.</span>"
 				if(30 to 70)
 					src << "<span class='info'>[target] will yield an average amount of essence.</span>"
-				if(70 to 95)
+				if(70 to 90)
 					src << "<span class='info'>Such a feast! [target] will yield much essence to you.</span>"
-				if(95 to INFINITY)
+				if(90 to INFINITY)
 					src << "<span class='boldnotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>"
-			if(do_after(src, 30, 9, 0, target)) //how about now
+			if(do_after(src, 20, 6, 0, target)) //how about now
 				if(!target.stat)
 					src << "<span class='warning'>They are now powerful enough to fight off your draining.</span>"
 					target << "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>"
@@ -168,7 +168,7 @@
 				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=30)
 				if(target && in_range(src, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, 0, target)
-					if(essence_drained > 95)
+					if(essence_drained > 90)
 						essence_regen_cap += 25
 						src << "<span class='info'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>"
 					src << "<span class='info'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>"

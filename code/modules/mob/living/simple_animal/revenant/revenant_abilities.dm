@@ -110,6 +110,7 @@
 		spawn(0)
 			if(T.flags & NOJAUNT)
 				T.flags -= NOJAUNT
+				new/obj/effect/overlay/temp/revenant(T)
 			for(var/mob/living/carbon/human/human in T.contents)
 				human << "<span class='warning'>You suddenly feel tired.</span>"
 				human.adjustStaminaLoss(40)
@@ -173,7 +174,8 @@
 					new/obj/effect/overlay/temp/revenant(mach.loc)
 					mach.emag_act(null)
 				else
-					mach.emp_act(1)
+					if(istype(mach, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
+						mach.emp_act(1)
 			for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
 				S << 'sound/misc/interference.ogg'
