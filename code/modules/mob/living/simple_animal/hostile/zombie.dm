@@ -72,6 +72,7 @@
 
 /mob/living/simple_animal/hostile/spawner/zombie
 	name = "corpse pit"
+	desc = "A pit full of zombies."
 	icon_state = "tombstone"
 	icon_living = "tombstone"
 	icon = 'icons/mob/nest.dmi'
@@ -79,12 +80,17 @@
 	maxHealth = 200
 	list/spawned_mobs = list()
 	max_mobs = 40
-	spawn_delay = 0
 	spawn_time = 150
 	mob_type = /mob/living/simple_animal/hostile/zombie
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
+
+/mob/living/simple_animal/hostile/spawner/zombie/lesser
+	name = "lesser corpse pit"
+	desc = "A pit full of less zombies."
+	max_mobs = 10
+	spawn_time = 150
 
 /mob/living/simple_animal/hostile/spawner/zombie/death()
 	visible_message("<span class='danger'>[src] collapes, stopping the flow of zombies!</span>")
