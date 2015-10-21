@@ -162,16 +162,16 @@
 		spawn(0)
 			for(var/obj/machinery/bot/bot in T.contents)
 				if(!bot.emagged)
+					new/obj/effect/overlay/temp/revenant(bot.loc)
 					bot.locked = 0
 					bot.open = 1
 					bot.Emag(null)
-					new/obj/effect/overlay/temp/revenant(bot.loc)
 			for(var/obj/machinery/mach in T.contents)
 				if(istype(mach, /obj/machinery/dominator) || istype(mach, /obj/machinery/power/apc) || istype(mach, /obj/machinery/power/smes) || istype(mach, /obj/machinery/bot)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery //Also doesn't work on bots so they can go do stuff faster(god this is so ugly)
 					continue
 				if(prob(30))
-					mach.emag_act(null)
 					new/obj/effect/overlay/temp/revenant(mach.loc)
+					mach.emag_act(null)
 				else
 					mach.emp_act(1)
 			for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
