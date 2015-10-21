@@ -185,6 +185,15 @@
 	overlays += img
 	return
 
+
+/obj/screen/movable/action_button/MouseEntered(location,control,params)
+	openToolTip(usr,params,title = name,content = desc)
+
+
+/obj/screen/movable/action_button/MouseExited()
+	closeToolTip(usr)
+
+
 //This is the proc used to update all the action buttons. Properly defined in /mob/living/
 /mob/proc/update_action_buttons()
 	return

@@ -26,6 +26,7 @@ Customization:
 Notes:
 - You may have noticed 90% of the work is done via javascript on the client. Gotta save those cycles man.
 - This is entirely untested in any other codebase besides goonstation so I have no idea if it will port nicely. Good luck!
+	- After testing and discussion (Wire, Remie, MrPerson, AnturK) ToolTips are ok and work for /tg/station13
 */
 
 
@@ -62,12 +63,6 @@ Notes:
 		//Send stuff to the tooltip
 		src.owner << output(list2params(list(src.control, params, src.owner.view, "[title][content]", theme)), "[src.control]:tooltip.update")
 
-		//DEBUG
-		world << "SHOW() DEBUG"
-		world << "Tooltip Owner View: [src.owner.view]"
-		world << "Params: [params]"
-
-
 		//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
 		src.showing = 0
 		if (src.queueHide)
@@ -89,22 +84,30 @@ Notes:
 
 
 
-/client/var/datum/tooltip/tooltip
-/client/New()
-	..()
-	tooltip = new /datum/tooltip(src)
+/* TG SPECIFIC CODE */
 
 
-/obj/screen/movable/action_button/MouseEntered(location,control,params)
-	usr.client.tooltip.show(params,title = name, content = desc)
+//Open a tooltip for user, at a location based on params
+//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro)
+//Includes sanity.checks
+/proc/openToolTip(mob/user = null,params = null,title = "",content = "",theme = "")
+	if(istype(user))
+		if(user.client && user.client.tooltips)
+			if(!theme && user.client.prefs && user.client.prefs.UI_style)
+				theme = lowertext(user.client.prefs.UI_style)
+			if(!theme)
+				theme = "default"
+			user.client.tooltips.show(params,title,content,theme)
 
 
-/obj/screen/movable/action_button/MouseExited()
-	usr.client.tooltip.hide()
+//Arbitrarily close a user's tooltip
+//Includes sanity checks.
+/proc/closeToolTip(mob/user)
+	if(istype(user))
+		if(user.client && user.client.tooltips)
+			user.client.tooltips.hide()
 
 
-/mob/MouseEntered(location,control,params)
-	usr.client.tooltip.show(params,title = name, content = desc)
 
-/mob/MouseExited()
-	usr.client.tooltip.hide()
+
+
