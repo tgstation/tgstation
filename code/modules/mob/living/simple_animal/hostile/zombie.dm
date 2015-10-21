@@ -8,9 +8,9 @@
 	turns_per_move = 5
 	emote_see = list("groans")
 	a_intent = "harm"
-	maxHealth = 80
-	health = 80
-	speed = 0
+	maxHealth = 100
+	health = 100
+	speed = 1
 	harm_intent_damage = 8
 	melee_damage_lower = 20
 	melee_damage_upper = 20
