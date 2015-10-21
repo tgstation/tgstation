@@ -145,6 +145,9 @@ var/list/teleportlocs = list()
 /area/shuttle/abandoned
 	name = "\improper Abandoned Ship"
 
+/area/shuttle/labor_pod
+	name = "\improper Labor Camp Escape Pod"
+
 /area/start
 	name = "start area"
 	icon_state = "start"

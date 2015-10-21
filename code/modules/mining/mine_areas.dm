@@ -76,3 +76,6 @@
 
 /area/mine/laborcamp/living
 	name = "Labor Camp Quarters"
+
+/area/mine/laborcamp/podbay
+	name = "Labor Camp Pod Bay"
