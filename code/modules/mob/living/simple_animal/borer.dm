@@ -726,7 +726,7 @@ mob/living/simple_animal/borer/proc/detach()
 			playsound(T, 'sound/effects/splat.ogg', 50, 1)
 			if(istype(T, /turf/simulated))
 				T.add_vomit_floor(null, 1)
-			new /obj/item/weapon/reagent_containers/food/snacks/egg/borer(T)
+			new /obj/item/weapon/reagent_containers/food/snacks/borer_egg(T)
 		busy=0
 
 	else

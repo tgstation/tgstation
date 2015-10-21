@@ -6730,7 +6730,7 @@
 "czu" = (/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor{icon_state = "white"},/area/science/xenobiology)
 "czv" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/vending/wallmed1{name = "Emergency NanoMed"; pixel_y = -32; req_access_txt = "0"},/turf/simulated/floor,/area/science/xenobiology)
 "czw" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/obj/structure/sign/deathsposal{pixel_y = -32},/turf/simulated/floor{icon_state = "whitehall"; dir = 1},/area/science/xenobiology)
-"czx" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/egg/borer,/turf/simulated/floor,/area/science/xenobiology)
+"czx" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/borer_egg,/turf/simulated/floor,/area/science/xenobiology)
 "czy" = (/obj/structure/catwalk,/obj/machinery/power/solar/panel/tracker,/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/catwalk{icon_state = "catwalk4"},/turf/space,/area/solar/aport)
 "czz" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/catwalk{icon_state = "catwalk12"},/turf/space,/area/solar/aport)
 "czA" = (/obj/structure/catwalk,/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/catwalk{icon_state = "catwalk12"},/turf/space,/area/solar/aport)

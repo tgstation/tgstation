@@ -51,7 +51,7 @@
 /datum/design/eggincubator
 	name = "Circuit Design (Egg Incubator)"
 	desc = "Allows for the construction of circuit boards used to build an Egg Incubator."
-	id = "processor"
+	id = "eggubator"
 	req_tech = list("biotech" = 3)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
