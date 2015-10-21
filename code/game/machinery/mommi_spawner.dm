@@ -141,7 +141,7 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/mommi_spawner/proc/makeMoMMI() called tick#: [world.time]")
 	var/turf/T = get_turf(src)
 
-	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi(T)
+	var/mob/living/silicon/robot/mommi/M = new /mob/living/silicon/robot/mommi/soviet(T)
 	if(!M)	return
 
 	M.invisibility = 0
