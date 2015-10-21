@@ -49,15 +49,17 @@
 //Also handles luminosity
 /obj/machinery/centrifuge/update_icon()
 	if(stat & BROKEN)
-		icon_state = "[icon_state]b"
+		icon_state = "[initial(icon_state)]b"
+		set_light(0, 0, null)
 	else if(stat & NOPOWER)
-		icon_state = "[icon_state]0"
+		icon_state = "[initial(icon_state)]0"
+		set_light(0, 0, null)
 	else if(isolating || curing)
-		light_color = LIGHT_COLOR_CYAN
-		icon_state = "[icon_state]_moving"
+		set_light(2, 2, LIGHT_COLOR_CYAN)
+		icon_state = "[initial(icon_state)]_moving"
 	else
 		icon_state = "[initial(icon_state)]"
-		light_color = null
+		set_light(0, 0, null)
 
 /obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
 	if(..())
@@ -112,18 +114,17 @@
 		if(!curing)
 			if(sample)
 				cure()
-			update_icon()
 	if(isolating)
 		use_power = 2
 		isolating--
 		if(!isolating)
 			if(sample)
 				isolate()
-			update_icon()
 
 	else
 		use_power = 1
 
+	update_icon() //This might be a bit more expensive, but it's foolproof
 	src.updateUsrDialog()
 	return
 
