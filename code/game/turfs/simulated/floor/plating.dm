@@ -171,5 +171,10 @@
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
+/turf/simulated/floor/plating/abductor/airless
+	oxygen = 0
+	nitrogen = 0
+	temperature = TCMB
+
 /turf/simulated/floor/plating/shuttle
 	shuttle = 1
