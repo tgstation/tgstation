@@ -8,6 +8,7 @@
 	active_power_usage = 500
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
+	var/base_state = "centrifuge"
 	var/curing
 	var/isolating
 
@@ -49,16 +50,16 @@
 //Also handles luminosity
 /obj/machinery/centrifuge/update_icon()
 	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]b"
+		icon_state = "[base_state]b"
 		set_light(0, 0, null)
 	else if(stat & NOPOWER)
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "[base_state]0"
 		set_light(0, 0, null)
 	else if(isolating || curing)
 		set_light(2, 2, LIGHT_COLOR_CYAN)
-		icon_state = "[initial(icon_state)]_moving"
+		icon_state = "[base_state]_moving"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[base_state]"
 		set_light(0, 0, null)
 
 /obj/machinery/centrifuge/attack_hand(var/mob/user as mob)
