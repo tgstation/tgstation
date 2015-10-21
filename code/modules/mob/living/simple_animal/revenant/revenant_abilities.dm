@@ -68,7 +68,7 @@
 						if(M == user)
 							return
 						spawn(0)
-							M.Beam(L,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
+							M.Beam(L,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
 							M.electrocute_act(shock_damage, "[L.name]", safety=1)
 							var/datum/effect/effect/system/spark_spread/z = new /datum/effect/effect/system/spark_spread
 							z.set_up(4, 0, M)
