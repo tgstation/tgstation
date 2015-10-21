@@ -44,8 +44,8 @@ var/global/datum/shuttle/vox/vox_shuttle = new(starting_area=/area/shuttle/vox/s
 					return
 	.=..()
 
-/datum/shuttle/vox/after_flight(throw_dir)
-	.=..(throw_dir)
+/datum/shuttle/vox/after_flight()
+	.=..()
 	if(current_port == dock_home)
 		returned_home = 1	//If the round type is heist, this will cause the round to end
 							//See code/game/gamemodes/heist/heist.dm, 294

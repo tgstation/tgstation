@@ -72,7 +72,7 @@
 	//When the shuttle moves, coordinates of its final location will be offset by rand(-innacuracy, innacuracy)
 	var/innacuracy = 0
 
-	//When the shuttle moves, if stable is 0 then everything unanchored will be thrown back AND all unbuckled mobs will be stunned
+	//When the shuttle moves, if stable is 0 then all unbuckled mobs will be stunned
 	var/stable = 0
 
 	var/password = 28011
@@ -297,20 +297,21 @@
 
 	if(transit_port && get_transit_delay())
 		if(use_transit == TRANSIT_ALWAYS || (use_transit == TRANSIT_ACROSS_Z_LEVELS && (linked_area.z != destination_port.z)))
-			move_to_dock(transit_port, throw_direction = turn(src.dir,180)) //Throw everything backwards
+			move_to_dock(transit_port)
 			sleep(get_transit_delay())
 
 	if(destination_port)
-		move_to_dock(destination_port, throw_direction = src.dir) //Throw everything forwards
-		current_port = destination_port
+		if(move_to_dock(destination_port))
+			current_port = destination_port //Only change our location if we successfully moved to destination
+
 		destination_port = null
-		moving = 0
+
+	moving = 0
 
 //This is the proc you want to use to FORCE a shuttle to move. It always moves it, unless the shuttle or its area don't exist. Transit is skipped
-/datum/shuttle/proc/move_to_dock(var/obj/structure/docking_port/D, var/ignore_innacuracy = 0, var/throw_direction) //A direct proc with no bullshit
+/datum/shuttle/proc/move_to_dock(var/obj/structure/docking_port/D, var/ignore_innacuracy = 0) //A direct proc with no bullshit
 	if(!D) return
 	if(!linked_port) return
-	if(!throw_direction) throw_direction = turn(src.dir,180)
 
 	//List of all shuttles docked to this shuttle. They will be moved together with their parent.
 	//In the list, shuttles are associated with the docking port they are docked to
@@ -357,23 +358,25 @@
 		target_turf = pick(turf_list)
 
 	//****Finally, move the area***
-	move_area_to(get_turf(linked_port),\
-		target_turf,rotate)
-	linked_port.dock(D)
+	if(move_area_to(get_turf(linked_port), target_turf, rotate))
 
-	//****Move shuttles docked to us**
-	if(docked_shuttles.len)
-		for(var/datum/shuttle/S in docked_shuttles)
-			if(S in moved_shuttles) continue
-			var/obj/structure/docking_port/destination/our_moved_dock = docked_shuttles[S]
-			if(!our_moved_dock) continue
+		linked_port.dock(D) //Dock our docking port with the destination
 
-			moved_shuttles |= S
-			S.move_to_dock(our_moved_dock, ignore_innacuracy = 1)
+		//****Move shuttles docked to us**
+		if(docked_shuttles.len)
+			for(var/datum/shuttle/S in docked_shuttles)
+				if(S in moved_shuttles) continue
+				var/obj/structure/docking_port/destination/our_moved_dock = docked_shuttles[S]
+				if(!our_moved_dock) continue
 
-	after_flight(throw_direction)
+				moved_shuttles |= S
+				S.move_to_dock(our_moved_dock, ignore_innacuracy = 1)
 
-	return 1
+		after_flight() //Shake the shuttle, weaken unbuckled mobs, etc.
+
+		return 1
+
+	return
 
 /datum/shuttle/proc/close_all_doors()
 	for(var/obj/machinery/door/unpowered/shuttle/D in linked_area)
@@ -385,13 +388,10 @@
 		spawn(0)
 			D.open()
 
-//Shakes cameras for mobs, throws everything in specified direction
-/datum/shuttle/proc/after_flight(var/throw_dir = 0)
+//Shakes cameras for mobs
+/datum/shuttle/proc/after_flight()
 	for(var/atom/movable/AM in linked_area)
 		if(AM.anchored) continue
-
-		if(!src.stable && throw_dir)
-			AM.throw_at(get_edge_target_turf(AM,throw_dir,8,20))
 
 		if(istype(AM,/mob/living))
 			var/mob/living/M = AM
@@ -415,7 +415,7 @@
 	pre_flight_delay = 0
 	transit_delay = 0
 
-//Like input() in shuttles, but better
+//Like (input() in shuttles), but better
 /proc/select_shuttle_from_all(var/mob/user, var/message = "Select a shuttle", var/title = "Shuttle selection", var/list/omit_shuttles = null, var/show_lockdown = 0, var/show_cooldown = 0)
 	if(!user) return
 
@@ -447,14 +447,13 @@
 
 		possible_locations += S
 
-	var/obj/structure/docking_port/destination/target = pick(src.docking_ports)
-	if(!target)
-		return
+	if(!possible_locations.len) return
+	var/obj/structure/docking_port/destination/target = pick(possible_locations)
 
 	travel_to(target,,user)
 
 //The proc that does most of the work
-//RETURNS: nothing
+//RETURNS: 1 if everything is good, 0 if everything is bad
 /datum/shuttle/proc/move_area_to(var/turf/our_center, var/turf/new_center, var/rotate = 0)
 	if(!our_center) return
 	if(!new_center) return
@@ -523,7 +522,7 @@
 			return
 		//If any of the new turfs are in the moved shuttle's current area, EMERGENCY ABORT (this leads to the shuttle destroying itself & potentially gibbing everybody inside)
 		if("[new_coords.x_pos];[new_coords.y_pos];[new_center.z]" in our_own_turfs)
-			warning("Invalid movement by shuttle ([src.name]; [src.type]). Offending turf: [new_coords.x_pos];[new_coords.y_pos];[new_center.z]")
+			warning("Shuttle ([src.name]; [src.type]) has attempted to move to a location which overlaps with its current position. Offending turf: [new_coords.x_pos];[new_coords.y_pos];[new_center.z]")
 			message_admins("WARNING: A shuttle ([src.name]; [src.type]) has attempted to move to a location which overlaps with its current position. The shuttle will not be moved.")
 			return
 
@@ -600,7 +599,7 @@
 		if(old_turf.transform)
 			new_turf.transform = old_turf.transform
 
-		//****Prepare underlays****
+		//****Prepare underlays**** (only do this if add_underlay is 1 -> see above)
 		if(add_underlay && undlay)
 			new_turf.underlays = list(undlay) //Remove all old underlays, add space
 		else
@@ -675,8 +674,7 @@
 			for(var/obj/machinery/door/D2 in T1)
 				D2.update_nearby_tiles()
 
-	//Update shuttle's direction
-	src.dir = turn(linked_port.dir,180)
+	return 1
 
 /proc/setup_shuttles()
 	world.log << "Setting up all shuttles..."
