@@ -739,6 +739,126 @@
 				</html>
 			"}
 
+
+/obj/item/weapon/book/manual/chemistry
+	name = "Chemistry for dummies"
+	icon_state ="chemistrybook"
+	window_size = "600x400"
+	author = "Nanotrasen"
+	title = "Chemistry for dummies"
+	dat = {"<html>
+			<head>
+			<style>
+			h1 {font-size: 18px; margin: 15px 0px 5px;}
+			h2 {font-size: 15px; margin: 15px 0px 5px;}
+			li {margin: 2px 0px 2px 15px;}
+			ul {list-style: none; margin: 5px; padding: 0px;}
+			ol {margin: 5px; padding: 0px 15px;}
+			</style>
+			</head>
+			<body>
+			<h1>Chemistry Work</h1>
+
+			Mix different chemicals in a beaker to make them react and obtain new chemicals or effects.<br>
+			Use your Chem Dispenser to dispense chemicals into your beaker.<br>
+			Certain chemical reactions require heat. Place a beaker in your Chemical Heater and select a temperature to heat it.<br>
+			Some chemicals will react violently, be careful with what chemicals you mix together.<br>
+
+			<h1>List of chemical reactions:</h1>
+			<ul>
+			<li><b>Acetone:</b> 1 Oil + 1 Welding Fuel + 1 Oxygen</li>
+			<li><b>Ammonia:</b> 3 Hydrogen + 1 Nitrogen</li>
+			<li><b>Antihol:</b> 1 Ethanol + 1 Charcoal + 1 Copper</li>
+			<li><b>Aranesp:</b> 1 Epinephrine + 1 Atropine + 1 Morphine</li>
+			<li><b>Ash:</b> 1 Oil, heat to 480K</li>
+			<li><b>Atropine:</b> 1 Ethanol + 1 Acetone + 1 Diethylamine + 1 Phenol + 1 Sulfuric Acid</li>
+			<li><b>Bath Salts:</b> 1 Food Poisoning + 1 Saltpetre + 1 Nutriment + 1 Enzyme + 1 Space Cleaner + 1 Tea + 1 Mercury, heat to 374K</li>
+			<li><b>Black Powder:</b> 1 Saltpetre + 1 Charcoal + 1 Sulfur</li>
+			<li><b>Calomel:</b> 1 Mercury + 1 Chlorine, heat to 374K</li>
+			<li><b>Carpet:</b> 1 Space Drugs + 1 Blood</li>
+			<li><b>Charcoal:</b> 1 Ash + 1 Sodium Chloride, heat to 380K</li>
+			<li><b>Chloral Hydrate:</b> 3 Chlorine + 1 Ethanol + 1 Water</li>
+			<li><b>Chlorine Trifluoride:</b> 1 Chlorine + 3 Fluorine</li>
+			<li><b>Condensed Capsaicin:</b> 1 Capsaicin Oil + 5 Ethanol</li>
+			<li><b>Crank:</b> 1 Diphenhydramine + 1 Ammonia + 1 Lithium + 1 Sulfuric Acid + 1 Welding Fuel, heat to 390K</li>
+			<li><b>Cryostylane:</b> 1 Water + 1 Stable Plasma + 1 Nitrogen</li>
+			<li><b>Cryoxadone:</b> 1 Stable Plasma + 1 Acetone + 1 Unstable Mutagen</li>
+			<li><b>Cryptobiolin:</b> 1 Oxygen + 1 Potassium + 1 Sugar</li>
+			<li><b>Cyanide:</b> 1 Oil + 1 Ammonia + 1 Oxygen, heat to 380K</li>
+			<li><b>Diethylamine:</b> 1 Ammonia + 1 Ethanol</li>
+			<li><b>Diphenhydramine:</b> 1 Oil + 1 Carbon + 1 Bromine + 1 Diethylamine + 1 Ethanol</li>
+			<li><b>Drying Agent:</b> 2 Stable Plasma + 1 Ethanol + 1 Sodium</li>
+			<li><b>EMP:</b> 1 Iron + 1 Uranium</li>
+			<li><b>Ephedrine:</b> 1 Diethylamine + 1 Sugar + 1 Oil + 1 Hydrogen</li>
+			<li><b>Epinephrine:</b> 1 Phenol + 1 Acetone + 1 Diethylamine + 1 Oxygen + 1 Chlorine + 1 Hydrogen</li>
+			<li><b>Explosion:</b> 1 Potassium + 1 Water</li>
+			<li><b>Flash Powder:</b> 1 Aluminium + 1 Potassium + 1 Sulfur</li>
+			<li><b>Fluorosulfuric Acid:</b> 1 Fluorine + 1 Hydrogen + 1 Potassium + 1 Sulfuric Acid, heat to 380K</li>
+			<li><b>Foam Surfactant:</b> 2 Carbon + 2 Fluorine + 1 Sulfuric Acid</li>
+			<li><b>Foaming Agent:</b> 1 Lithium + 1 Hydrogen</li>
+			<li><b>Formaldehyde:</b> 1 Ethanol + 1 Oxygen + 1 Silver, heat to 420K</li>
+			<li><b>Glycerol:</b> 3 Corn Oil + 1 Sulfuric Acid</li>
+			<li><b>Impedrezene:</b> 1 Mercury + 1 Oxygen + 1 Sugar</li>
+			<li><b>Inacusiate:</b> 1 Charcoal + 1 Carbon + 1 Water</li>
+			<li><b>Itching Powder:</b> 1 Welding Fuel + 1 Ammonia + 1 Charcoal</li>
+			<li><b>Krokodil:</b> 1 Diphenhydramine + 1 Space Cleaner + 1 Potassium + 1 Morphine + 1 Phosphorus + 1 Welding Fuel, heat to 390K</li>
+			<li><b>Life:</b> 1 Strange Reagent + 1 Synthflesh + 1 Blood, heat to 375K</li>
+			<li><b>Leporazine:</b> 1 Copper + 1 Silicon + 5 Plasma(catalyst)</li>
+			<li><b>Liquid Dark Matter:</b> 1 Stable Plasma + 1 Radium + 1 Carbon</li>
+			<li><b>Lipolicide:</b> 1 Mercury + 1 Diethylamine + 1 Ephedrine</li>
+			<li><b>Lexorin:</b> 1 Hydrogen + 1 Nitrogen + 1 Plasma</li>
+			<li><b>Mannitol:</b> 1 Hydrogen + 1 Water + 1 Sugar</li>
+			<li><b>Metal Foam:</b> 3 Iron/aluminium + 1 Fluorosulfuric Acid + 1 Foaming Agent</li>
+			<li><b>Methamphetamine:</b> 1 Ephedrine + 1 Iodine + 1 Phosphorus + 1 Hydrogen, heat to 374K</li>
+			<li><b>Mindbreaker Toxin:</b> Anti-toxin + 1 Hydrogen + 1 Silicon</li>
+			<li><b>Mutadone:</b> 1 Unstable Mutagen + 1 Acetone + 1 Bromine</li>
+			<li><b>Mute Toxin:</b> 2 Uranium + 1 Water + 1 Carbon</li>
+			<li><b>Napalm:</b> 1 Sugar + 1 Welding Fuel + 1 Ethanol</li>
+			<li><b>Nitroglycerin:</b> 1 Glycerol + 1 Fluorosulfuric Acid + 1 Sulfuric Acid</li>
+			<li><b>Neurotoxin:</b> 1 Space Drugs, heat to 674K</li>
+			<li><b>Oculine:</b> 1 Charcoal + 1 Carbon + 1 Hydrogen</li>
+			<li><b>Oil:</b> 1 Welding Fuel + 1 Carbon + 1 Hydrogen</li>
+			<li><b>Oxandrolone:</b> 2 Carbon + 1 Phenol + 1 Hydrogen + 1 Oxygen</li>
+			<li><b>Pentetic Acid:</b> 1 Welding Fuel + 1 Chlorine + 1 Ammonia + 1 Formaldehyde + 1 Sodium + 1 Cyanide</li>
+			<li><b>Perfluorodecalin:</b> 1 Hydrogen + 1 Fluorine + 1 Oil, heat to 370K</li>
+			<li><b>Pest Killer:</b> 1 Toxin + 4 Ethanol</li>
+			<li><b>Phenol:</b> 1 Water + 1 Chlorine + 1 Oil</li>
+			<li><b>Phlogiston:</b> 1 Phosphorus + 1 Sulfuric Acid + 1 Stable Plasma</li>
+			<li><b>Plant-B-Gone:</b> 1 Toxin + 4 Water</li>
+			<li><b>Plasma Solidification:</b> 20 Plasma + 5 Frost Oil + 5 Iron</li>
+			<li><b>Potassium Iodide:</b> 1 Potassium + 1 Iodine</li>
+			<li><b>Pyrosium:</b> 1 Stable Plasma + 1 Radium + 1 Phosphorus</li>
+			<li><b>Rezadone:</b> 1 Carpotoxin + 1 Cryptobiolin + 1 Copper</li>
+			<li><b>Saltpetre:</b> 1 Potassium + 1 Nitrogen + 3 Oxygen</li>
+			<li><b>Saline-Glucose Solution:</b> 1 Sodium Chloride + 1 Water + 1 Sugar</li>
+			<li><b>Salbutamol:</b> 1 Salicyclic Acid + 1 Lithium + 1 Aluminium + 1 Bromine + 1 Ammonia</li>
+			<li><b>Salicyclic Acid:</b> 1 Sodium + 1 Phenol + 1 Carbon + 1 Oxygen + 1 Sulfuric Acid</li>
+			<li><b>Silver Sulfadiazine:</b> 1 Ammonia + 1 Silver + 1 Sulfur + 1 Chlorine + 1 Oxygen</li>
+			<li><b>Smoke:</b> 1 Phosphorus + 1 Potassium + 1 Sugar</li>
+			<li><b>Sonic Powder:</b> 1 Oxygen + 1 Cola + 1 Phosphorus</li>
+			<li><b>Sorium:</b> 1 Mercury + 1 Oxygen + 1 Nitrogen + 1 Carbon</li>
+			<li><b>Sodium Chloride:</b> 1 Sodium + 1 Chlorine + 1 Water</li>
+			<li><b>Space Cleaner:</b> 1 Ammonia + 1 Water</li>
+			<li><b>Space Drugs:</b> 1 Lithium + 1 Mercury + 1 Sugar</li>
+			<li><b>Space Lube:</b> 1 Oxygen + 1 Silicon + 1 Water</li>
+			<li><b>Spaceacillin:</b> 1 Epinephrine + 1 Cryptobiolin</li>
+			<li><b>Stabilizing Agent:</b> 1 Iron + 1 Oxygen + 1 Hydrogen</li>
+			<li><b>Sterilizine:</b> 1 Anti-toxin + 1 Chlorine + 1 Ethanol</li>
+			<li><b>Strange Reagent:</b> 1 Omnizine + 1 Holy Water + 1 Unstable Mutagen</li>
+			<li><b>Styptic Powder:</b> 1 Aluminium + 1 Hydrogen + 1 Oxygen + 1 Sulfuric Acid</li>
+			<li><b>Sulfonal:</b> 1 Acetone + 1 Diethylamine + 1 sulfur</li>
+			<li><b>Synaptizine:</b> 1 Sugar + 1 Lithium + 1 Water</li>
+			<li><b>Synthflesh:</b> 1 Blood + 1 Carbon + 1 Styptic Powder</li>
+			<li><b>Thermite:</b> 1 Aluminium + 1 Iron + 1 Oxygen</li>
+			<li><b>Unstable Mutagen:</b> 1 Chlorine + 1 Phosphorus + 1 Radium</li>
+			<li><b>Virus Food:</b> 1 Water + 1 Milk</li>
+			<li><b>Weed Killer:</b> 1 Toxin + 4 Ammonia</li>
+			<li><b>Zombie Powder:</b> 5 Morphine + 5 Carpotoxin + 5 Copper</li>
+			</ul>
+			</body>
+			</html>"}
+
+
 /obj/item/weapon/book/manual/barman_recipes
 	name = "Barman Recipes"
 	icon_state = "barbook"
