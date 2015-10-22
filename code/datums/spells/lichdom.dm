@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/lichdom
 	name = "Bind Soul"
-	desc = "A dark necromantic pact that can forever bind your soul to an item of your choosing. So long as both your body and the item remain intact you can revive from death, though the time between reincarnations grows steadily with use."
+	desc = "A dark necromantic pact that can forever bind your soul to an item of your choosing. So long as both your body and the item remain intact and on the same plane you can revive from death, though the time between reincarnations grows steadily with use."
 	school = "necromancy"
 	charge_max = 10
 	clothes_req = 0
@@ -14,6 +14,7 @@
 
 	var/obj/marked_item
 	var/mob/living/current_body
+	var/resurrections = 0
 
 	action_icon_state = "skeleton"
 
@@ -41,6 +42,9 @@
 			if(!marked_item || qdeleted(marked_item)) //Wait nevermind
 				user << "<span class='warning'>Your phylactery is gone!</span>"
 				return
+			else if(user.z != marked_item.z)
+				user << "<span class='warning'>Your phylactery is out of range!</span>"
+				return
 
 			if(isobserver(user))
 				var/mob/dead/observer/O = user
@@ -60,8 +64,8 @@
 			charge_max += 600
 			var/mob/old_body = current_body
 			current_body = lich
-			lich.Weaken(10)
-
+			lich.Weaken(10+10*resurrections)
+			++resurrections
 			if(old_body && old_body.loc)
 				if(iscarbon(old_body))
 					var/mob/living/carbon/C = old_body
@@ -70,6 +74,7 @@
 				var/wheres_wizdo = dir2text(get_dir(get_turf(old_body), get_turf(marked_item)))
 				if(wheres_wizdo)
 					old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
+					old_body.Beam(marked_item,icon_state="drain_life",icon='icons/effects/effects.dmi',time=10+10*resurrections,maxdistance=INFINITY)
 				old_body.dust()
 
 		if(!marked_item) //linking item to the spell
