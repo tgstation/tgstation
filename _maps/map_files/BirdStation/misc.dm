@@ -13,7 +13,7 @@
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/gib = 1
-	if(istype(L,/mob/living/carbon)
+	if(istype(L,/mob/living/carbon))
 		gib = 0
 		add_blood(L)
 
