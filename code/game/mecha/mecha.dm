@@ -76,6 +76,8 @@
 	var/datum/action/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/mecha/mech_view_stats/stats_action = new
 
+	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+
 
 /obj/mecha/New()
 	..()
@@ -90,6 +92,9 @@
 	SSobj.processing |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	prepare_huds()
 	return
 
 /obj/mecha/Destroy()
@@ -314,7 +319,10 @@
 		var/lights_energy_drain = 2
 		use_power(lights_energy_drain)
 
-
+//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
@@ -482,6 +490,7 @@
 	internal_damage |= int_dam_flag
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	occupant << sound('sound/machines/warning-buzzer.ogg',wait=0)
+	diag_hud_set_mechstat()
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
@@ -494,7 +503,7 @@
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
-
+	diag_hud_set_mechstat()
 
 /////////////////////////////////////
 //////////// AI piloting ////////////

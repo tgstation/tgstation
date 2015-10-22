@@ -9,10 +9,12 @@
 #define IMPLOYAL_HUD	"5" // loyality implant
 #define IMPCHEM_HUD		"6" // chemical implant
 #define IMPTRACK_HUD	"7" // tracking implant
-#define DIAG_STAT_HUD	"8"
-#define DIAG_HUD		"9"
+#define DIAG_STAT_HUD	"8" // Silicon/Mech Status
+#define DIAG_HUD		"9" // Silicon health bar
+#define DIAG_BATT_HUD	"10"// Borg/Mech power meter
+#define DIAG_MECH_HUD	"11"// Mech health bar
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"10"
+#define ANTAG_HUD		"12"
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!

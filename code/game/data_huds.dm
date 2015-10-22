@@ -45,7 +45,7 @@
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
-	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD)
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -177,8 +177,28 @@
 					return
 	holder.icon_state = null
 
+/***********************************************
+ Diagnostic HUDs!
+************************************************/
 
-//called when a silicon changes health
+//For the charge meter!
+/proc/RoundCell(var/charge)
+	var/icon_name = ""
+	switch(charge)
+		if(0.75 to INFINITY)
+			icon_name = "batthigh"
+		if(0.5 to 0.75)
+			icon_name = "battmed"
+		if(0.25 to 0.5)
+			icon_name = "battlow"
+		if(0.01 to 0.25)
+			icon_name = "battwarn"
+		else
+			icon_name = "battempty"
+	return icon_name
+
+
+//Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
 	if(stat == DEAD)
@@ -195,3 +215,43 @@
 			holder.icon_state = "hudoffline"
 		else
 			holder.icon_state = "huddead2"
+
+//Borgie battery tracking!
+/mob/living/silicon/robot/proc/diag_hud_set_borgcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	if (cell)
+		var/chargelvl = cell.charge/cell.maxcharge
+		holder.icon_state = "hud[RoundCell(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
+
+/*~~~~~~~~~~~~~~~~~~~~
+	BIG STOMPY MECHS
+~~~~~~~~~~~~~~~~~~~~~*/
+/obj/mecha/proc/diag_hud_set_mechhealth()
+	var/image/holder = hud_list[DIAG_MECH_HUD]
+	var/mechhealth = (health/initial(health))*100
+	switch(mechhealth)
+		if(75 to 100)
+			holder.icon_state = "hudmechgood"
+		if(50 to 74)
+			holder.icon_state = "hudmechmed"
+		if(25 to 49)
+			holder.icon_state = "hudmechbad"
+		if(0 to 24)
+			holder.icon_state = "hudmechcrit"
+
+
+/obj/mecha/proc/diag_hud_set_mechcell()
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	if (cell)
+		var/chargelvl = cell.charge/cell.maxcharge
+		holder.icon_state = "hud[RoundCell(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
+
+/obj/mecha/proc/diag_hud_set_mechstat()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	holder.icon_state = null
+	if(internal_damage)
+		holder.icon_state = "hudwarn"
