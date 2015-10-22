@@ -34,7 +34,7 @@
 	var/magic_fluff_string = " You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!"
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
 	var/bio_fluff_string = "Your scarabs fail to mutate. This shouldn't happen! Submit a bug report!"
-/*
+
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
 	if(summoner)
@@ -60,7 +60,7 @@
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
-*/
+
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
 	if(summoner)
