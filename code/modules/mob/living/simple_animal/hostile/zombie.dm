@@ -29,6 +29,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3)
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	layer = MOB_LAYER - 0.1
 
 
 
@@ -51,6 +52,9 @@
 		stored_corpse.loc = loc
 		if(ckey)
 			stored_corpse.ckey = src.ckey
+			stored_corpse << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
+			var/mob/living/simple_animal/hostile/zombie/holder/D = new/mob/living/simple_animal/hostile/zombie/holder(stored_corpse)
+			D.faction = src.faction
 		qdel(src)
 		return
 	src << "<span class='userdanger'>You're down, but not quite out. You'll be back on your feet within a minute or two.</span>"
@@ -60,6 +64,14 @@
 
 /mob/living/simple_animal/hostile/zombie/proc/Zombify(mob/living/carbon/human/H)
 	H.set_species(/datum/species/zombie)
+	if(H.head) //So people can see they're a zombie
+		var/obj/item/clothing/helmet = H.head
+		if(!H.unEquip(helmet))
+			qdel(helmet)
+	if(H.wear_mask)
+		var/obj/item/clothing/mask = H.wear_mask
+		if(!H.unEquip(mask))
+			qdel(mask)
 	var/mob/living/simple_animal/hostile/zombie/Z = new /mob/living/simple_animal/hostile/zombie(H.loc)
 	Z.faction = src.faction
 	Z.appearance = H.appearance
@@ -71,8 +83,11 @@
 			break
 	Z.ckey = H.ckey
 	H.stat = DEAD
+	H.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3) //So now you can carve them up when you kill them. Maybe not a good idea for the human versions.
 	H.loc = Z
 	Z.stored_corpse = H
+	for(var/mob/living/simple_animal/hostile/zombie/holder/D in H) //Dont want to revive them twice
+		qdel(D)
 	visible_message("<span class='danger'>[Z] staggers to their feet!</span>")
 	Z << "<span class='userdanger'>You are now a zombie! Follow your creators lead!</span>"
 
@@ -120,3 +135,22 @@
 		used = TRUE
 	else
 		user << "The unearthly energies that once powered this shovel are now dormant. Still sharp though."
+
+
+/mob/living/simple_animal/hostile/zombie/holder
+	name = "infection holder"
+	desc = "You shouldn't be seeing this."
+	maxbodytemp = 100000000000000000000
+	unsuitable_atmos_damage = 0
+	stat_attack = 2
+	gold_core_spawnable = 0
+	AIStatus = AI_OFF
+	stop_automated_movement = 1
+
+/mob/living/simple_animal/hostile/zombie/holder/New()
+	..()
+	spawn(rand(800,1200))
+		if(istype(loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = loc
+			Zombify(H)
+		qdel(src)
