@@ -15,7 +15,7 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 	step_energy_drain = 3
-	var/datum/action/mecha/mech_overload_mode/overload_action = new
+	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
@@ -93,11 +93,11 @@
 	..()
 	thrusters_action.Remove(user)
 
-/datum/action/mecha/mech_overload_mode
+/datum/action/innate/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"
 	button_icon_state = "mech_overload_off"
 
-/datum/action/mecha/mech_overload_mode/Activate()
+/datum/action/innate/mecha/mech_overload_mode/Activate()
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	var/obj/mecha/combat/gygax/G = chassis
