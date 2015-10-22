@@ -483,7 +483,7 @@
 		return
 
 	for(var/obj/screen/item_action/actionitem in hud_used.item_action_list)
-		if(actionitem.owner.loc == src)
+		if(actionitem.owner && actionitem.owner.loc == src)
 			actionitem.overlay.appearance = actionitem.owner.appearance
 			actionitem.overlay.dir = SOUTH
 			switch(num)
