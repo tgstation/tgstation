@@ -40,6 +40,12 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 
+/obj/item/clothing/glasses/hud/diagnostic
+	name = "Diagnostic HUD"
+	desc = "A heads-up display that scans silicons"
+	icon_state = "healthhud"
+	hud_type = DATA_HUD_DIAGNOSTIC
+
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."

@@ -9,8 +9,10 @@
 #define IMPLOYAL_HUD	"5" // loyality implant
 #define IMPCHEM_HUD		"6" // chemical implant
 #define IMPTRACK_HUD	"7" // tracking implant
+#define DIAG_STAT_HUD	"8"
+#define DIAG_HUD		"9"
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"8"
+#define ANTAG_HUD		"10"
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
@@ -18,10 +20,11 @@
 #define DATA_HUD_SECURITY_ADVANCED	2
 #define DATA_HUD_MEDICAL_BASIC		3
 #define DATA_HUD_MEDICAL_ADVANCED	4
+#define DATA_HUD_DIAGNOSTIC			5
 //antag HUD defines
-#define ANTAG_HUD_CULT		5
-#define ANTAG_HUD_REV		6
-#define ANTAG_HUD_OPS		7
+#define ANTAG_HUD_CULT		6
+#define ANTAG_HUD_REV		7
+#define ANTAG_HUD_OPS		8
 
-#define ANTAG_HUD_WIZ		8
-#define ANTAG_HUD_SHADOW    9
+#define ANTAG_HUD_WIZ		9
+#define ANTAG_HUD_SHADOW    10

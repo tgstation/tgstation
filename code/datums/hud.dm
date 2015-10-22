@@ -6,6 +6,7 @@ var/datum/atom_hud/huds = list( \
 	DATA_HUD_SECURITY_ADVANCED = new/datum/atom_hud/data/security/advanced(), \
 	DATA_HUD_MEDICAL_BASIC = new/datum/atom_hud/data/medical/basic(), \
 	DATA_HUD_MEDICAL_ADVANCED = new/datum/atom_hud/data/medical/advanced(), \
+	DATA_HUD_DIAGNOSTIC = new/datum/atom_hud/data/diagnostic(), \
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(), \
@@ -50,7 +51,8 @@ var/datum/atom_hud/huds = list( \
 	if(!M.client)
 		return
 	for(var/i in hud_icons)
-		M.client.images |= A.hud_list[i]
+		if(A.hud_list[i])
+			M.client.images |= A.hud_list[i]
 
 //MOB PROCS
 /mob/proc/reload_huds()

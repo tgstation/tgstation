@@ -323,10 +323,14 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/user, slot)
 	user.scanner.Grant(user)
+	var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+	DHUD.add_hud_to(user)
 	..(user, slot)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/user)
 	user.scanner.devices -= 1
+	var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]
+	DHUD.remove_hud_from(user)
 	..(user)
 
 /obj/item/clothing/suit/space/hardsuit/rd

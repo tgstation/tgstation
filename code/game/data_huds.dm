@@ -44,7 +44,10 @@
 /datum/atom_hud/data/security/advanced
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
-/* MED/SEC HUD HOOKS */
+/datum/atom_hud/data/diagnostic
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD)
+
+/* MED/SEC/DIAG HUD HOOKS */
 
 /*
  * THESE HOOKS SHOULD BE CALLED BY THE MOB SHOWING THE HUD
@@ -132,6 +135,7 @@
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
+
 	var/turf/T = get_turf(src)
 	if (T) crewmonitor.queueUpdate(T.z)
 
@@ -172,3 +176,22 @@
 					holder.icon_state = "huddischarged"
 					return
 	holder.icon_state = null
+
+
+//called when a silicon changes health
+/mob/living/silicon/proc/diag_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	if(stat == DEAD)
+		holder.icon_state = "hudhealth-100"
+	else
+		holder.icon_state = "hud[RoundHealth(health/maxHealth*100)]"
+
+/mob/living/silicon/proc/diag_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	switch(stat)
+		if(CONSCIOUS)
+			holder.icon_state = "hudstat"
+		if(UNCONSCIOUS)
+			holder.icon_state = "hudoffline"
+		else
+			holder.icon_state = "huddead2"
