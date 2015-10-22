@@ -86,7 +86,7 @@
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc)
 
 
 /obj/screen/alert/MouseExited()

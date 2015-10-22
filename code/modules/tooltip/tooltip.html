@@ -51,7 +51,6 @@
 		.colo-pod .wrap {border-color: #256fb9;}
 		.colo-pod .content {border-color: #000000; background-color: #000000;}
 		
-		
 		/* TG: Themes */
 		/* ScreenUI */
 		.midnight .wrap {border-color: #2B2B33;}
@@ -63,8 +62,7 @@
 		.retro .wrap {border-color: #005E00;}
 		.retro .content {color: #003366; border-color: #005E00; background-color: #00BD00;}
 		
-		
-		
+
 	</style>
 </head>
 <body>
@@ -74,33 +72,52 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript">
 		var tooltip = {
+			'tileSize': 32,
 			'control': '',
-			'params': '',
+			'params': {},
 			'clientView': 0,
 			'text': '',
 			'theme': '',
 			'padding': 2,
+			init: function(tileSize, control) {
+				tooltip.tileSize = parseInt(tileSize);
+				tooltip.control = control;
+			},
 			hide: function() {
-				window.location = 'byond://winset?id='+tooltip.controlName+';is-visible=false';
+				window.location = 'byond://winset?id='+tooltip.control+';is-visible=false';
 			},
 			updateCallback: function(map) {
 				if (typeof map === 'undefined' || !map) {return false;}
 
+				//alert(tooltip.params+' | '+tooltip.clientView+' | '+tooltip.text+' | '+tooltip.theme); //DEBUG
+
 				//Some reset stuff to avoid fringe issues with sizing
-				window.location = 'byond://winset?id='+tooltip.controlName+';anchor1=0,0;size=999x999';
+				window.location = 'byond://winset?id='+tooltip.control+';anchor1=0,0;size=999x999';
 
 				//Get the real icon size according to the client view
 				var mapWidth 		= map['view-size'].x,
 					mapHeight 		= map['view-size'].y,
 					tilesShown 		= (tooltip.clientView * 2) + 1,
 					realIconSize 	= mapWidth / tilesShown,
+					resizeRatio		= realIconSize / tooltip.tileSize,
 					//Calculate letterboxing offsets	
 					leftOffset 		= (map.size.x - mapWidth) / 2,
 					topOffset 		= (map.size.y - mapHeight) / 2;
 
-				//Parse out the tile locations from params screen-loc
-				var paramsA = tooltip.params.split(';');
-				if (paramsA.length < 3) {return false;}
+				//alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
+
+				//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
+				var paramsA = tooltip.params.cursor.split(';');
+				if (paramsA.length < 3) {return false;} //Sometimes screen-loc is never sent ahaha fuck you byond
+				//icon-x
+				var iconX = paramsA[0];
+				iconX = iconX.split('=');
+				iconX = parseInt(iconX[1]);
+				//icon-y
+				var iconY = paramsA[1];
+				iconY = iconY.split('=');
+				iconY = parseInt(iconY[1]);
+				//screen-loc
 				var screenLoc = paramsA[2];
 				screenLoc = screenLoc.split('=');
 				screenLoc = screenLoc[1].split(',');
@@ -110,16 +127,60 @@
 				if (!left || !top) {return false;}
 				screenLoc = left.split(':');
 				left = parseInt(screenLoc[0]);
+				var enteredX = parseInt(screenLoc[1]);
 				screenLoc = top.split(':');
 				top = parseInt(screenLoc[0]);
+				var enteredY = parseInt(screenLoc[1]);
+
+				//Screen loc offsets on objects (e.g. "WEST+0:6,NORTH-1:26") can royally mess with positioning depending on where the cursor enters
+				//This is a giant bitch to parse. Note that it only expects screen_loc in the format <west>,<north>.
+				var oScreenLoc = tooltip.params.screenLoc.split(','); //o for original ok
+
+				var west = oScreenLoc[0].split(':');
+				if (west.length > 1) { //Only if west has a pixel offset
+					var westOffset = parseInt(west[1]);
+					if (westOffset !== 0) {
+						if ((iconX + westOffset) !== enteredX) { //Cursor entered on the offset tile
+							left = left + (westOffset < 0 ? 1 : -1);
+						}
+						leftOffset = leftOffset + (westOffset * resizeRatio);
+					}
+				}
+
+				if (oScreenLoc.length > 1) { //If north is given
+					var north = oScreenLoc[1].split(':');
+					if (north.length > 1) { //Only if north has a pixel offset
+						var northOffset = parseInt(north[1]);
+						if (northOffset !== 0) {
+							if ((iconY + northOffset) === enteredY) { //Cursor entered on the original tile
+								top--;
+								topOffset = topOffset - ((tooltip.tileSize + northOffset) * resizeRatio);
+							} else { //Cursor entered on the offset tile
+								if (northOffset < 0) { //Offset southwards
+									topOffset = topOffset - ((tooltip.tileSize + northOffset) * resizeRatio);
+								} else { //Offset northwards
+									top--;
+									topOffset = topOffset - (northOffset * resizeRatio);
+								}
+							}
+						}
+					}
+				}
+
+				//Handle special cases (for fuck sake)
+				if (tooltip.special !== 'none') {
+					//Put yo special cases here
+				}
 
 				//Clamp values
 				left = (left < 0 ? 0 : (left > tilesShown ? tilesShown : left));
 				top = (top < 0 ? 0 : (top > tilesShown ? tilesShown : top));
 
-				//Calculate where on the screen the popup should appear (below the hovered tile) (the +2s are just for padding)
+				//Calculate where on the screen the popup should appear (below the hovered tile)
 				var posX = Math.round(((left - 1) * realIconSize) + leftOffset + tooltip.padding); //-1 to position at the left of the target tile
 				var posY = Math.round(((tilesShown - top + 1) * realIconSize) + topOffset + tooltip.padding); //+1 to position at the bottom of the target tile
+
+				//alert(mapWidth+' | '+mapHeight+' | '+tilesShown+' | '+realIconSize+' | '+leftOffset+' | '+topOffset+' | '+left+' | '+top+' | '+posX+' | '+posY); //DEBUG
 
 				$('body').attr('class', tooltip.theme);
 
@@ -139,20 +200,19 @@
 				}
 
 				//Actually size, move and show the tooltip box
-				window.location = 'byond://winset?id='+tooltip.controlName+';size='+docWidth+'x'+docHeight+';pos='+posX+','+posY+';is-visible=true';
+				window.location = 'byond://winset?id='+tooltip.control+';size='+docWidth+'x'+docHeight+';pos='+posX+','+posY+';is-visible=true';
 
 				$content.on('mouseover', function() {
 					tooltip.hide();
 				});
 			},
-			update: function(control, params, clientView, text, theme) {
-				if (!tooltip.controlName) {tooltip.controlName = control;}
-
+			update: function(params, clientView, text, theme, special) {
 				//Assign our global object
-				tooltip.params = params;
+				tooltip.params = $.parseJSON(params);
 				tooltip.clientView = parseInt(clientView);
 				tooltip.text = text;
 				tooltip.theme = theme;
+				tooltip.special = special;
 
 				//Go get the map details
 				window.location = 'byond://winget?callback=tooltip.updateCallback;id=mapwindow.map;property=size,view-size';
