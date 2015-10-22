@@ -77,7 +77,7 @@
 					shattered = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
-					return
+				return
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
 
