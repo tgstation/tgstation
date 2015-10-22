@@ -97,7 +97,7 @@
 	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
 	if (!msg)
 		return
-	for(var/mob/living/M in view(range,A))
+	for(var/mob/M in view(range,A))
 		M << msg
 
 	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
