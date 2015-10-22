@@ -310,7 +310,7 @@ AI MODULES
 
 /****************** P.A.L.A.D.I.N. 5e **************/
 
-/obj/item/weapon/aiModule/core/full/paladin5e
+/obj/item/weapon/aiModule/core/full/paladin_devotion
 	name = "'P.A.L.A.D.I.N. version 5e' Core AI Module"
 	origin_tech = "programming=3;materials=6"
 	laws = list("Don't lie or cheat. Let your word be your promise.",\
