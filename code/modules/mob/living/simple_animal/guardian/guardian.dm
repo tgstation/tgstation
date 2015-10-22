@@ -34,7 +34,7 @@
 	var/magic_fluff_string = " You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!"
 	var/tech_fluff_string = "BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!"
 	var/bio_fluff_string = "Your scarabs fail to mutate. This shouldn't happen! Submit a bug report!"
-
+/*
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
 	if(summoner)
@@ -60,7 +60,7 @@
 			src << "You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]"
 			visible_message("<span class='danger'>The [src] jumps back to its user.</span>")
 			loc = get_turf(summoner)
-
+*/
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	..()
 	if(summoner)
@@ -105,10 +105,7 @@
 
 //Manifest, Recall, Communicate
 
-/mob/living/simple_animal/hostile/guardian/verb/Manifest()
-	set name = "Manifest"
-	set category = "Guardian"
-	set desc = "Spring forth into battle!"
+/mob/living/simple_animal/hostile/guardian/proc/Manifest()
 	if(cooldown > world.time)
 		return
 	if(loc == summoner)
@@ -120,20 +117,14 @@
 			spawn(6)
 			icon_state = end_icon
 
-/mob/living/simple_animal/hostile/guardian/verb/Recall()
-	set name = "Recall"
-	set category = "Guardian"
-	set desc = "Return to your summoner."
+/mob/living/simple_animal/hostile/guardian/proc/Recall()
 	if(cooldown > world.time)
 		return
 	loc = summoner
 	buckled = null
 	cooldown = world.time + 30
 
-/mob/living/simple_animal/hostile/guardian/verb/Communicate()
-	set name = "Communicate"
-	set category = "Guardian"
-	set desc = "Communicate telepathically with your summoner."
+/mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
 	if(!input) return
 
@@ -142,6 +133,10 @@
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [input]")
+
+/mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
+	src << "<span class='danger'><B>You dont have another mode!</span></B>"
+
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -159,6 +154,13 @@
 			M << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	src << "<span class='boldannounce'><i>[src]:</i> [input]</span>"
 	log_say("[src.real_name]/[src.key] : [text]")
+
+
+/mob/living/simple_animal/hostile/guardian/proc/ToggleLight()
+	if(!luminosity)
+		SetLuminosity(3)
+	else
+		SetLuminosity(0)
 
 
 //////////////////////////TYPES OF GUARDIANS
@@ -283,10 +285,7 @@
 			C.adjustOxyLoss(-5)
 			C.adjustToxLoss(-5)
 
-/mob/living/simple_animal/hostile/guardian/healer/verb/ToggleMode()
-	set name = "Toggle Mode"
-	set category = "Guardian"
-	set desc = "Toggle between combat and healing modes."
+/mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
 		if(toggle)
 			a_intent = "harm"
@@ -392,10 +391,7 @@
 	var/list/snares = list()
 	var/toggle = FALSE
 
-/mob/living/simple_animal/hostile/guardian/ranged/verb/ToggleMode()
-	set name = "Toggle Mode"
-	set category = "Guardian"
-	set desc = "Toggle between combat and scout modes."
+/mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
 	if(src.loc == summoner)
 		if(toggle)
 			ranged = 1
@@ -684,3 +680,100 @@
 	new /obj/item/weapon/guardiancreator/tech/choose(src)
 	new /obj/item/weapon/paper/guardian(src)
 	return
+
+
+
+
+
+
+
+///HUD
+
+/datum/hud/proc/guardian_hud(ui_style = 'icons/mob/screen_midnight.dmi')
+	adding = list()
+
+	var/obj/screen/using
+
+	using = new /obj/screen/guardian/Manifest()
+	using.screen_loc = ui_rhand
+	adding += using
+
+	using = new /obj/screen/guardian/Recall()
+	using.screen_loc = ui_lhand
+	adding += using
+
+	using = new /obj/screen/guardian/ToggleMode()
+	using.screen_loc = ui_storage1
+	adding += using
+
+	using = new /obj/screen/guardian/ToggleLight()
+	using.screen_loc = ui_back
+	adding += using
+
+	using = new /obj/screen/guardian/Communicate()
+	using.screen_loc = ui_inventory
+	adding += using
+
+	mymob.client.screen = list()
+	mymob.client.screen += mymob.client.void
+	mymob.client.screen += adding
+
+
+
+
+//HUD BUTTONS
+
+/obj/screen/guardian
+	icon = 'icons/mob/guardian.dmi'
+
+/obj/screen/guardian/Manifest
+	icon_state = "manifest"
+	name = "Manifest"
+	desc = "Spring forth into battle!"
+
+/obj/screen/guardian/Manifest/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
+		G.Manifest()
+
+
+/obj/screen/guardian/Recall
+	icon_state = "recall"
+	name = "Recall"
+	desc = "Return to your user."
+
+/obj/screen/guardian/Recall/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
+		G.Recall()
+
+/obj/screen/guardian/ToggleMode
+	icon_state = "toggle"
+	name = "Toggle Mode"
+	desc = "Switch between ability modes."
+
+/obj/screen/guardian/ToggleMode/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
+		G.ToggleMode()
+
+/obj/screen/guardian/Communicate
+	icon_state = "communicate"
+	name = "Communicate"
+	desc = "Communicate telepathically with your user."
+
+/obj/screen/guardian/Communicate/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
+		G.Communicate()
+
+
+/obj/screen/guardian/ToggleLight
+	icon_state = "light"
+	name = "Toggle Light"
+	desc = "Glow like star dust."
+
+/obj/screen/guardian/ToggleLight/Click()
+	if(isguardian(usr))
+		var/mob/living/simple_animal/hostile/guardian/G = usr
+		G.ToggleLight()
