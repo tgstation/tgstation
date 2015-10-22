@@ -55,7 +55,7 @@
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
-			else
+			else if(!C.prefs.ignoring.Find(key))
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc(toggle = null)
@@ -138,3 +138,23 @@ var/global/normal_ooc_colour = "#002eb8"
 		return
 
 	show_note(usr, null, 1)
+
+/client/proc/ignore_key(client)
+	var/client/C = client
+	prefs.ignoring ^= C.key
+	src << "You are [prefs.ignoring.Find(src.key) ? "now" : "no longer"] ignoring [C.key] on the OOC channel."
+	prefs.save_preferences()
+
+/client/verb/select_ignore()
+	set name = "Ignore"
+	set category = "OOC"
+	set desc ="Ignore a player's messages on the OOC channel"
+
+	var/list/keys = list()
+	for(var/mob/M in player_list)
+		if(M.client != src)
+			keys += M.client
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(keys)
+	if(!selection)
+		return
+	ignore_key(selection)
