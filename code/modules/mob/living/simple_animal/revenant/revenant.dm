@@ -107,7 +107,7 @@
 		return
 	essence = max(0, essence-amount)
 	if(essence == 0)
-		src << "<span class='userdanger'>You feel your essence fraying!/span>"
+		src << "<span class='userdanger'>You feel your essence fraying!</span>"
 
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //Copypaste from ghost code - revenants can't interact with the world directly.
