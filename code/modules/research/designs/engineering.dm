@@ -1,3 +1,23 @@
+/datum/design/t_scanner
+	name = "T-Ray Scanner"
+	desc = "A terahertz-ray emitter and scanner that can pick up the faintest traces of energy, used to detect the invisible."
+	id = "t_scanner"
+	req_tech = list("engineering" = 1, "magnets" = 1)
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
+	materials = list(MAT_IRON = 150, MAT_GLASS = 50)
+	build_path = /obj/item/device/t_scanner
+	category = "Engineering"
+
+/datum/design/t_scanner/adv
+	name = "Advanced T-Ray Scanner"
+	desc = "A perahertz-ray emitter and scanner that can pick up the faintest traces of energy, used to detect the invisible. Resonates much better than the T-ray scanner."
+	id = "p_scanner"
+	req_tech = list("engineering" = 3, "magnets" = 3)
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
+	materials = list(MAT_IRON = 150, MAT_GLASS = 50)
+	build_path = /obj/item/device/t_scanner/adv
+	category = "Engineering"
+
 /datum/design/basic_cell
 	name = "Basic Power Cell"
 	desc = "A basic power cell that holds 1000 units of energy"
