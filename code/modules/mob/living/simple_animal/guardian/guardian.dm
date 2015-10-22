@@ -209,8 +209,8 @@
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(istype(AM, /mob/living/))
 		var/mob/living/M = AM
-		if(AM != summoner && M.fire_stacks <= 0)
-			M.adjust_fire_stacks(7)
+		if(AM != summoner && M.fire_stacks < 7)
+			M.fire_stacks = 7
 			M.IgniteMob()
 
 /mob/living/simple_animal/hostile/guardian/fire/Bump(AM as mob|obj)
@@ -482,11 +482,11 @@
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 400
+			bomb_cooldown = world.time + 200
 			B.spawner = src
 			B.disguise (A)
 		else
-			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 40 seconds between bombs.</span></B>"
+			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
 
 /obj/item/weapon/guardian_bomb
 	name = "bomb"
