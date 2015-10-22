@@ -656,9 +656,6 @@
 		D.visible_message("<span class='warning'>[D] slowly dissipates into dust and bones.</span>", \
 		"<span class='warning'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
 		"<span class='warning'>You hear faint rustle.</span>")
-		if(D.mind in cult)
-			update_cult_icons_removed(D.mind)
-			cult -= D.mind
 		D.dust()
 	return
 
