@@ -1169,6 +1169,10 @@ var/global/num_vending_terminals = 1
 		/obj/item/weapon/reagent_containers/pill/stox = 4,
 		/obj/item/weapon/reagent_containers/pill/antitox = 6,
 		/obj/item/weapon/reagent_containers/blood/OMinus = 1,
+		/obj/item/weapon/storage/pill_bottle/random = 2,
+		)
+	premium = list(
+		/obj/item/weapon/storage/pill_bottle/time_release = 2,
 		)
 
 	pack = /obj/structure/vendomatpack/medical

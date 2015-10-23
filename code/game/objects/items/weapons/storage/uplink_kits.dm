@@ -212,3 +212,12 @@
 	new /obj/item/weapon/gun/projectile/flare/syndicate(src)
 	new /obj/item/ammo_storage/box/flare(src)
 	return
+
+/obj/item/weapon/storage/box/syndie_kit/explosive_hug
+	name = "box (C)"
+
+/obj/item/weapon/storage/box/syndie_kit/explosive_hug/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/antisocial(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	return
