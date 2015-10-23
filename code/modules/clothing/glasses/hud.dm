@@ -42,9 +42,18 @@
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
-	desc = "A heads-up display that scans silicons"
-	icon_state = "healthhud"
+	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
+	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC
+
+/obj/item/clothing/glasses/hud/diagnostic/night
+	name = "Night Vision Diagnostic HUD"
+	desc = "A robotics diagnostic HUD fitted with a light amplifier."
+	icon_state = "diagnostichudnight"
+	item_state = "glasses"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM
+
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
