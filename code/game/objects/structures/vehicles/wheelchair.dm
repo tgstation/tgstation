@@ -151,3 +151,105 @@
 	..()
 
 	update_mob() //Update the rest
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized
+	name = "motorized wheelchair"
+	nick = "cripplin' revenge"
+	desc = "A chair with fitted wheels which is powered by an internal cell. It propels itself without the need for hands as long as it is charged."
+	var/maintenance = 0
+	var/motor_delay = 1
+	var/obj/item/weapon/cell/internal_battery = null
+
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/New()
+	..()
+	internal_battery = new /obj/item/weapon/cell/high(src)
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/examine(mob/user)
+	..()
+	if(internal_battery)
+		var/calc = round((internal_battery.charge / internal_battery.maxcharge) * 100,1)
+		user << "<span class='info'>The battery meter reads: [calc]%</span>"
+	else
+		user << "<span class='warning'>The 'check battery' light is blinking.</span>"
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/Move()
+	..()
+	internal_battery.use(2) //Example use: 100 charge to get from the cargo desk to medbay side entrance
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/getMovementDelay()
+	if(internal_battery && internal_battery.charge)
+		return motor_delay
+	else
+		return (..() * 2) //It's not designed to move this way!
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/check_key(var/mob/user)
+	if(internal_battery && internal_battery.charge)
+		return 1
+	else ..()
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(isscrewdriver(W))
+		user.visible_message("<span class='notice'>[user] screws [maintenance ? "closed" : "open"] \the [src]'s battery compartment.</span>", "<span class='notice'>You screw [maintenance ? "closed" : "open"] the battery compartment.</span>", "You hear screws being loosened.")
+		maintenance = !maintenance
+	else if(iscrowbar(W)&&maintenance)
+		if(internal_battery)
+			user.put_in_hands(internal_battery)
+			internal_battery = null
+		user.visible_message("<span class='notice'>[user] pries out \the [src]'s battery.</span>", "<span class='notice'>You pry out \the [src]'s battery.</span>", "You hear a clunk.")
+	else if(istype(W,/obj/item/weapon/cell)&&maintenance&&!internal_battery)
+		user.drop_item(W,src)
+		internal_battery = W
+		user.visible_message("<span class='notice'>[user] inserts \the [W] into the \the [src].</span>", "<span class='notice'>You insert \the [W] into \the [src].</span>", "You hear something being slid into place.")
+	else ..()
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate
+	nick = "medical malpractice"
+	desc = "A chair with fitted wheels which is powered by an internal cell. It seems to ride higher than other wheelchairs."
+	motor_delay = 0
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/New()
+	..()
+	qdel(internal_battery)
+	internal_battery = new /obj/item/weapon/cell/hyper(src) //Let's get a better one.
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/Bump(var/atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(isrobot(L))
+			src.visible_message("<span class='warning'>[src] slams into [L]!</span>")
+			L.Stun(2)
+			L.Weaken(2)
+			L.adjustBruteLoss(rand(4,6))
+		else
+			src.visible_message("<span class='warning'>[src] knocks over [L]!</span>")
+			L.stop_pulling()
+			L.Stun(8)
+			L.Weaken(5)
+			L.lying = 1
+			L.update_icons()
+	..()
+
+/obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate/proc/crush(var/mob/living/H,var/bloodcolor) //Basically identical to the MULE, see mulebot.dm
+	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	var/damage = rand(5,10) //We're not as heavy as a MULE. Where it does 30-90 damage, we do 20-40 damage
+	H.apply_damage(damage, BRUTE, "head")
+	H.apply_damage(damage, BRUTE, "chest")
+	H.apply_damage(0.5*damage, BRUTE, "l_leg")
+	H.apply_damage(0.5*damage, BRUTE, "r_leg")
+	H.apply_damage(0.5*damage, BRUTE, "l_arm")
+	H.apply_damage(0.5*damage, BRUTE, "r_arm")
+
+/obj/item/syndicate_wheelchair_kit
+	name = "Compressed Wheelchair Kit"
+	desc = "Collapsed parts, prepared to immediately spring into the shape of a wheelchair. One use. The Syndicate is not responsible for injury related to the use of this product."
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "rcd"
+	item_state = "rcdammo"
+	w_class = 2
+
+/obj/item/syndicate_wheelchair_kit/attack_self(mob/user)
+	new /obj/structure/bed/chair/vehicle/wheelchair/motorized/syndicate(get_turf(user))
+	user.visible_message("<span class='warning'>A wheelchair springs into existence!</span>")
+	qdel(src)

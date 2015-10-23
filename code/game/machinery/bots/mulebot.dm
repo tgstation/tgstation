@@ -742,13 +742,11 @@ var/global/mulebot_count = 0
 /obj/machinery/bot/mulebot/alter_health()
 	return get_turf(src)
 
-
-// called from mob/living/carbon/human/Crossed()
-// when mulebot is in the same loc
-/obj/machinery/bot/mulebot/proc/RunOver(var/mob/living/carbon/human/H)
+// called from mob/living/carbon/human/Crossed() as well as .../alien/Crossed()
+/obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
+	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/bot/mulebot/proc/RunOverCreature() called tick#: [world.time]")
 	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, "head")
 	H.apply_damage(2*damage, BRUTE, "chest")
@@ -756,14 +754,6 @@ var/global/mulebot_count = 0
 	H.apply_damage(0.5*damage, BRUTE, "r_leg")
 	H.apply_damage(0.5*damage, BRUTE, "l_arm")
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
-
-	blood_splatter(src,H,1)
-	bloodiness += 4
-	currentBloodColor="#A10808" // For if species get different blood colors.
-
-/obj/machinery/bot/mulebot/proc/RunOverCreature(var/mob/living/H,var/bloodcolor)
-	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	bloodiness += 4
 	currentBloodColor=bloodcolor // For if species get different blood colors.
 

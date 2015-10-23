@@ -70,15 +70,6 @@
 	var/obj/machinery/bot/mulebot/MB = AM
 	if(istype(MB))
 		MB.RunOverCreature(src,"#00ff00")
-
-		var/damage = rand(5,15)
-		apply_damage(2*damage, BRUTE, "head")
-		apply_damage(2*damage, BRUTE, "chest")
-		apply_damage(0.5*damage, BRUTE, "l_leg")
-		apply_damage(0.5*damage, BRUTE, "r_leg")
-		apply_damage(0.5*damage, BRUTE, "l_arm")
-		apply_damage(0.5*damage, BRUTE, "r_arm")
-
 		var/obj/effect/decal/cleanable/blood/xeno/X = getFromPool(/obj/effect/decal/cleanable/blood/xeno, src.loc) //new /obj/effect/decal/cleanable/blood/xeno(src.loc)
 		X.New(src.loc)
 

@@ -218,6 +218,14 @@ var/list/uplink_items = list()
 	cost = 4
 	job = list("Chemist", "Chief Medical Officer")
 
+//Medical Doctor
+/datum/uplink_item/jobspecific/medicalmalpractice
+	name = "Syndicate Wheelchair"
+	desc = "A combat-mofidied motorized wheelchair pre-loaded with a hyper power cell. Forward thrust is sufficient to knock down and run over victims."
+	item = /obj/item/syndicate_wheelchair_kit
+	cost = 6
+	job = list("Medical Doctor", "Chief Medical Officer")
+
 //Engineer
 /datum/uplink_item/jobspecific/powergloves
 	name = "Power Gloves"
