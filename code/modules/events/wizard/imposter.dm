@@ -14,7 +14,7 @@
 		if(!candidates)	return //Sad Trombone
 		var/client/C = pick(candidates)
 
-		PoolOrNew(/obj/effect/effect/smoke, W.loc)
+		PoolOrNew(/obj/effect/particle_effect/smoke, W.loc)
 
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
 		W.dna.transfer_identity(I, transfer_SE=1)

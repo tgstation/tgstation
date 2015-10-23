@@ -58,7 +58,7 @@
 						return
 					L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
 					sleep(10)
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(4, 1, L)
 					s.start()
 					sleep(10)
@@ -67,7 +67,7 @@
 							return
 						M.Beam(L,icon_state="lightning",icon='icons/effects/effects.dmi',time=5)
 						M.electrocute_act(25, "[L.name]")
-						var/datum/effect/effect/system/spark_spread/z = new /datum/effect/effect/system/spark_spread
+						var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
 						z.set_up(4, 1, M)
 						z.start()
 						playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
@@ -166,7 +166,7 @@
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
 				S << 'sound/misc/interference.ogg'
 				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
 				S.Weaken(6)

@@ -36,7 +36,7 @@
 	var/maint_access = 0
 	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
-	var/datum/effect/effect/system/spark_spread/spark_system = new
+	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference

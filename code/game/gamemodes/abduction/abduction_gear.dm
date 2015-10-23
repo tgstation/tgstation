@@ -522,7 +522,7 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
 							"<span class='userdanger'>[user]'s [src] break in a discharge of energy!</span>")
-	var/datum/effect/effect/system/spark_spread/S = new
+	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
 	qdel(src)
