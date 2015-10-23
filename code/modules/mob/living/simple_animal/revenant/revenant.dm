@@ -39,8 +39,8 @@
 	var/essence_regen_amount = 5 //How much essence regenerates
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
 	var/revealed = 0 //If the revenant can take damage from normal sources.
-	var/reveal_duration = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
-	var/stun_duration = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
+	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
+	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
 	var/inhibited = 0 //If the revenant's abilities are blocked by a chaplain's power.
 	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = 0 //If the revenant is draining someone.
@@ -50,19 +50,15 @@
 /mob/living/simple_animal/revenant/Life()
 	if(revealed && essence <= 0)
 		death()
-	if(reveal_duration)
-		reveal_duration --
-		if(reveal_duration <= 0)
-			reveal_duration = 0
-			revealed = 0
-			invisibility = INVISIBILITY_REVENANT
-			src << "<span class='boldnotice'>You are once more concealed.</span>"
-	if(stun_duration)
-		stun_duration --
-		if(stun_duration <= 0)
-			stun_duration = 0
-			notransform = 0
-			src << "<span class='boldnotice'>You can move again!</span>"
+	if(unreveal_time && world.time >= unreveal_time)
+		unreveal_time = 0
+		revealed = 0
+		invisibility = INVISIBILITY_REVENANT
+		src << "<span class='boldnotice'>You are once more concealed.</span>"
+	if(unstun_time && world.time >= unstun_time)
+		unstun_time = 0
+		notransform = 0
+		src << "<span class='boldnotice'>You can move again!</span>"
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
 
@@ -74,11 +70,11 @@
 		return
 	revealed = 1
 	invisibility = 0
-	if(!reveal_duration)
+	if(!unreveal_time)
 		src << "<span class='userdanger'>You have been revealed!</span>"
 	else
 		src << "<span class='warning'>You have been revealed!</span>"
-	reveal_duration += time
+	unreveal_time = world.time + time
 
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
@@ -86,12 +82,11 @@
 	if(time <= 0)
 		return
 	notransform = 1
-	if(!stun_duration)
+	if(!unstun_time)
 		src << "<span class='userdanger'>You cannot move!</span>"
 	else
 		src << "<span class='warning'>You cannot move!</span>"
-	stun_duration += time
-
+	unstun_time = world.time + time
 
 /mob/living/simple_animal/revenant/ex_act(severity, target)
 	return 1 //Immune to the effects of explosions.
@@ -162,8 +157,8 @@
 				if(target.stat != DEAD)
 					target << "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>"
 				icon_state = "revenant_draining"
-				reveal(3)
-				stun(3)
+				reveal(30)
+				stun(30)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
 				target.Beam(src,icon_state="drain_life",icon='icons/effects/effects.dmi',time=30)
 				if(target && in_range(src, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.

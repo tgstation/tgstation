@@ -31,8 +31,8 @@
 	range = 5
 	var/shock_range = 1
 	var/shock_damage = 20
-	var/reveal = 8
-	var/stun = 2
+	var/reveal = 80
+	var/stun = 40
 	var/locked = 1
 	action_icon_state = "overload_lights"
 	action_background_icon_state = "bg_revenant"
@@ -86,8 +86,8 @@
 	charge_max = 200
 	clothes_req = 0
 	range = 3
-	var/reveal = 6
-	var/stun = 2
+	var/reveal = 80
+	var/stun = 20
 	var/locked = 1
 	action_icon_state = "defile"
 	action_background_icon_state = "bg_revenant"
@@ -139,8 +139,8 @@
 	charge_max = 250
 	clothes_req = 0
 	range = 4
-	var/reveal = 4
-	var/stun = 2
+	var/reveal = 80
+	var/stun = 20
 	var/locked = 1
 	action_icon_state = "malfunction"
 	action_background_icon_state = "bg_revenant"
