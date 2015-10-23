@@ -383,9 +383,6 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/antisocial
 	//No special name or description
-	name = "bottle"
-	desc = "A small bottle."
-	icon = 'icons/obj/chemical.dmi'
 
 	New()
 		..()

@@ -73,6 +73,8 @@
 
 //OOP, HO!
 /obj/item/weapon/reagent_containers/pill/proc/injest(mob/M as mob)
+	if(!reagents) return
+	if(!M) return
 	if (!src.is_empty())
 		reagents.reaction(M, INGEST)
 		reagents.trans_to(M, reagents.total_volume)
@@ -238,7 +240,7 @@
 
 /obj/item/weapon/storage/pill_bottle/time_release/New()
 	..()
-	for(var/i=0,i<7,i++)
+	for(var/i=1 to 7)
 		new /obj/item/weapon/reagent_containers/pill/time_release(src)
 
 /obj/item/weapon/reagent_containers/pill/time_release
@@ -247,6 +249,8 @@
 	icon_state = "pill18"
 
 /obj/item/weapon/reagent_containers/pill/time_release/injest(mob/M as mob)
+	if(!reagents) return
+	if(!M) return
 	var/timer = round(reagents.get_reagent_amount("sugar"),1)
 	forceMove(M)
 	spawn(timer*30)
@@ -255,15 +259,13 @@
 		reagents.trans_to(M, reagents.total_volume)
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/pill/time_release/attackby()
-
 /obj/item/weapon/storage/pill_bottle/random
 	name = "trail mix"
 	desc = "Just what the assistant ordered."
 
 /obj/item/weapon/storage/pill_bottle/random/New()
 	..()
-	for(var/i=0,i<7,i++)
+	for(var/i=1 to 14)
 		new /obj/item/weapon/reagent_containers/pill/random(src)
 
 /obj/item/weapon/reagent_containers/pill/random
@@ -272,10 +274,10 @@
 
 /obj/item/weapon/reagent_containers/pill/random/New()
 	..()
-	var/chemical = pick("hyperzine", "oxycodone", "doctorsdelight", "lexorin", "leporazine", "mutagen", "ryetalyn", "radium", "pacid", "cornoil", "tonio", "space_drugs","zombiepowder")
-	reagents.add_reagent(chemical, 7)
+	var/chemical = pick("hyperzine", "oxycodone", "doctorsdelight", "lexorin", "leporazine", "mutagen", "ryetalyn", "pacid", "cornoil", "tonio", "space_drugs","zombiepowder")
+	reagents.add_reagent(chemical, 10)
 	/* Possible choices:
 	Good: Hyperzine, Oxycodone, Doctor's Delight, Leporazine
 	Neutral: Corn Oil, Ryetalyn, Tonio, Space Drugs
-	Bad: Mutagen, Polytrinic Acid, Radium, Zombie Powder
+	Bad: Mutagen, Polytrinic Acid, Lexorin, Zombie Powder
 	*/
