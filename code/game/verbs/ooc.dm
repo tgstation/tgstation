@@ -55,7 +55,7 @@
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
-			else if(!C.prefs.ignoring.Find(key))
+			else if(!(C.key in prefs.ignoring))
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc(toggle = null)
@@ -141,8 +141,11 @@ var/global/normal_ooc_colour = "#002eb8"
 
 /client/proc/ignore_key(client)
 	var/client/C = client
-	prefs.ignoring ^= C.key
-	src << "You are [prefs.ignoring.Find(src.key) ? "now" : "no longer"] ignoring [C.key] on the OOC channel."
+	if(C.key in prefs.ignoring)
+		prefs.ignoring -= C.key
+	else
+		prefs.ignoring |= C.key
+	src << "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel."
 	prefs.save_preferences()
 
 /client/verb/select_ignore()
@@ -150,11 +153,10 @@ var/global/normal_ooc_colour = "#002eb8"
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	var/list/keys = list()
-	for(var/mob/M in player_list)
-		if(M.client != src)
-			keys += M.client
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(keys)
+	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in sortKey(clients)
 	if(!selection)
+		return
+	if(selection == src)
+		src << "You can't ignore yourself."
 		return
 	ignore_key(selection)
