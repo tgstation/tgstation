@@ -64,6 +64,8 @@
 			if(H.stat == DEAD)
 				Zombify(H)
 				break
+	if(factory && z != factory.z)
+		death()
 	..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
