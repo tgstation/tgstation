@@ -126,9 +126,6 @@ REAGENT SCANNER
 proc/healthanalyze(mob/living/M as mob, mob/living/user as mob, var/verbosity = 0, var/skip_checks = 0, var/silent = 0)
 	var/message = ""
 	if(!skip_checks)
-		if(!user.dexterity_check())
-			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-			return
 		//writepanic("[__FILE__].[__LINE__] \\/proc/healthanalyze() called tick#: [world.time]")
 		if(((M_CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 			user.visible_message("<span class='warning'>[user] analyzes the floor's vitals!</span>", \
@@ -214,11 +211,11 @@ Subject's pulse: ??? BPM"}
 	if(M.has_brain_worms())
 		message += "<br><span class='warning'>Strange MRI readout. Subject needs further scanning.</span>"
 	else if(M.getBrainLoss() >= 100 || !M.has_brain())
-		message += "\n<span class='warning'>No brain activity has been detected. Subject is braindead.</span>"
+		message += "<br><span class='warning'>No brain activity has been detected. Subject is braindead.</span>"
 	else if(M.getBrainLoss() >= 60)
-		message += "\n<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
+		message += "<br><span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if(M.getBrainLoss() >= 10)
-		message += "\n<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span>"
+		message += "<br><span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.organs_by_name)
