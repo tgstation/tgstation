@@ -640,7 +640,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		return
 
 	user.set_machine(src)
-	var/dat = "<style>a:link {color: #0066CC} a:visited {color: #0066CC}</style>"
+	var/dat = list("<style>a:link {color: #0066CC} a:visited {color: #0066CC}</style>")
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
@@ -913,17 +913,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/datum/design/D in files.known_designs)
 					if(!(D.build_type & PROTOLATHE) || D.category != name_set)
 						continue
-					var/temp_dat = "[D.name]"
+					var/temp_dat = "[D.name] [linked_lathe.output_part_cost(D)]"
 					var/upTo=10
 					for(var/M in D.materials)
-						temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
-						var/num_units_avail=linked_lathe.check_mat(D,M,upTo)
-						if(upTo && num_units_avail<upTo)
-							upTo=num_units_avail
+						var/num_units_avail=linked_lathe.check_mat(D,M)
+						if(num_units_avail)
+							upTo = min(upTo, num_units_avail)
+						else
+							break
 					if (upTo)
 						dat += {"<li>
-							<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A>
-							<A href='?src=\ref[src];build=[D.id];n=1'>(Queue &times;1)</A>"}
+							<A href='?src=\ref[src];build=[D.id];n=1;now=1'>[temp_dat]</A> Queue: "}
 						if(upTo>=5)
 							dat += "<A href='?src=\ref[src];build=[D.id];n=5'>(&times;5)</A>"
 						if(upTo>=10)
@@ -1015,18 +1015,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/datum/design/D in files.known_designs)
 					if(!(D.build_type & IMPRINTER) || D.category != name_set)
 						continue
-					var/temp_dat = "[D.name]"
+					var/temp_dat = "[D.name] [linked_imprinter.output_part_cost(D)]"
 					var/upTo=10
 					for(var/M in D.materials)
-						temp_dat += " [D.materials[M]] [CallMaterialName(M)]"
-						var/num_units_avail=linked_imprinter.check_mat(D,M,upTo)
-						if(num_units_avail<upTo)
-							upTo=num_units_avail
-							if(!upTo)
-								break
+						var/num_units_avail=linked_imprinter.check_mat(D,M)
+						if(num_units_avail)
+							upTo = min(upTo, num_units_avail)
+						else
+							break
 					if (upTo)
-						dat += {"<li><A href='?src=\ref[src];imprint=[D.id];n=1;now=1'>[temp_dat]</A>
-							<A href='?src=\ref[src];imprint=[D.id];n=1'>(Queue &times;1)</A>"}
+						dat += {"<li><A href='?src=\ref[src];imprint=[D.id];n=1;now=1'>[temp_dat]</A> Queue: "}
 						if(upTo>=5)
 							dat += "<A href='?src=\ref[src];imprint=[D.id];n=5'>(&times;5)</A>"
 						if(upTo>=10)
@@ -1088,6 +1086,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			else
 				dat += "<A href='?src=\ref[src];setImprinterStopped=1' style='color:red'>Stop Production</A>"
 
+	dat = list2text(dat)
 	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=575x400")
 	onclose(user, "rdconsole")
 
