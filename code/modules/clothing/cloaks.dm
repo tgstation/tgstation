@@ -7,6 +7,8 @@
 	icon_state = "qmcloak"
 	w_class = 2
 	slot_flags = SLOT_BACK
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
 
 /obj/item/clothing/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling themself with [src]! It looks like they're trying to commit suicide.</span>")
