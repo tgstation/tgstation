@@ -72,25 +72,28 @@
 				user << "<span class='userdanger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>"
 			deactivate(1, 1)
 
-/obj/item/clothing/suit/space/chronos/proc/finish_chronowalk(mob/living/carbon/human/user)
-	user.next_click = world.time - 1
-	user.alpha = 255
-	user.color = "#ffffff"
-	user.animate_movement = FORWARD_STEPS
-	user.notransform = 0
-	user.anchored = 0
-	teleporting = 0
-	if(phase_underlay && !qdeleted(phase_underlay))
-		qdel(phase_underlay)
-		phase_underlay = null
-	if(camera)
-		camera.remove_target_ui()
-		camera.loc = user
-	if(teleport_now.button)
-		teleport_now.button.UpdateIcon()
+/obj/item/clothing/suit/space/chronos/proc/finish_chronowalk()
+	var/mob/living/carbon/human/user = src.loc
+	if(istype(user))
+		user.next_move = 1
+		user.alpha = 255
+		user.color = "#ffffff"
+		user.animate_movement = FORWARD_STEPS
+		user.notransform = 0
+		user.anchored = 0
+		teleporting = 0
+		if(phase_underlay && !qdeleted(phase_underlay))
+			qdel(phase_underlay)
+			phase_underlay = null
+		if(camera)
+			camera.remove_target_ui()
+			camera.loc = user
+		if(teleport_now.button)
+			teleport_now.button.UpdateIcon()
 
-/obj/item/clothing/suit/space/chronos/proc/chronowalk(mob/living/carbon/human/user, atom/location)
-	if(!teleporting && user && location && user.loc && location.loc && user.wear_suit == src && user.stat == CONSCIOUS)
+/obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
+	var/mob/living/carbon/human/user = src.loc
+	if(activated && !teleporting && user && istype(user) && location && user.loc && location.loc && user.wear_suit == src && user.stat == CONSCIOUS)
 		teleporting = 1
 		var/turf/from_turf = get_turf(user)
 		var/turf/to_turf = get_turf(location)
@@ -129,7 +132,7 @@
 		phase_underlay.pixel_y = user.pixel_y
 
 		user.animate_movement = NO_STEPS
-		user.next_click = world.time + (8 + phase_in_ds)
+		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
 		user.anchored = 1
 
@@ -150,7 +153,7 @@
 						sleep(3)
 			if(teleporting && user && !qdeleted(user))
 				user.loc = to_turf //this will cover if bad things happen before the teleport, yes it is redundant
-				finish_chronowalk(user)
+				finish_chronowalk()
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
@@ -160,7 +163,7 @@
 				if(!teleporting)
 					if(camera.loc != user && ((camera.x != user.x) || (camera.y != user.y) || (camera.z != user.z)))
 						if(camera.phase_time <= world.time)
-							chronowalk(user, camera)
+							chronowalk(camera)
 					else
 						camera.remove_target_ui()
 			else
@@ -224,8 +227,8 @@
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
+		finish_chronowalk()
 		if(teleporting && force)
-			finish_chronowalk(user)
 			user.electrocute_act(35, src, safety = 1)
 
 /obj/effect/chronos_cam
@@ -319,7 +322,7 @@
 /datum/action/item_action/hands_free/chrono_teleport/Activate()
 	if(IsAvailable())
 		if(chronosuit.camera)
-			chronosuit.chronowalk(owner, chronosuit.camera)
+			chronosuit.chronowalk(chronosuit.camera)
 
 /datum/action/item_action/hands_free/chrono_teleport/CheckRemoval()
 	return (..() && !(chronosuit && chronosuit.activated && chronosuit.camera))
