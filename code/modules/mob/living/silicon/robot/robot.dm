@@ -48,8 +48,8 @@
 	var/modtype = "robot"
 	var/lower_mod = 0
 	var/jetpack = 0
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
-	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/datum/effect_system/trail_follow/ion/ion_trail = null
+	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
 
 	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
@@ -71,7 +71,7 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD)
 
 /mob/living/silicon/robot/New(loc)
-	spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
@@ -126,7 +126,6 @@
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	toner = 40
-	scanner.Grant(src)
 	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO

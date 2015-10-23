@@ -293,7 +293,7 @@
 		if(!Adj|| !istype(target, /turf))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/effect/foam/metal/F = PoolOrNew(/obj/effect/effect/foam/metal, get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
@@ -311,7 +311,7 @@
 	pass_flags = PASSTABLE
 
 /obj/effect/nanofrost_container/proc/Smoke()
-	var/datum/effect/effect/system/smoke_spread/freezing/S = new
+	var/datum/effect_system/smoke_spread/freezing/S = new
 	S.set_up(2, src.loc, blasting=1)
 	S.start()
 	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)

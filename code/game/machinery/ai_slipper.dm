@@ -95,7 +95,7 @@
 		if(cooldown_on || disabled)
 			return
 		else
-			PoolOrNew(/obj/effect/effect/foam, loc)
+			PoolOrNew(/obj/effect/particle_effect/foam, loc)
 			src.uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100

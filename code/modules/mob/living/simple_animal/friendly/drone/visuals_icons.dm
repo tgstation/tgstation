@@ -47,7 +47,7 @@
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.righthand_file, isinhands = TRUE)
+		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 		if(y_shift)
 			l_hand_image.pixel_y += y_shift
 
@@ -78,7 +78,7 @@
 			head.screen_loc = ui_drone_head
 			client.screen += head
 
-		var/image/head_overlay = head.build_worn_icon(state = icon_state, default_layer = DRONE_HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		var/image/head_overlay = head.build_worn_icon(state = head.icon_state, default_layer = DRONE_HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		head_overlay.pixel_y += -15
 
 		drone_overlays[DRONE_HEAD_LAYER]	= head_overlay
