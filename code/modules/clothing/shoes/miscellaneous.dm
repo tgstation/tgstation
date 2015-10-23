@@ -17,7 +17,7 @@
 	origin_tech = "syndicate=3"
 	burn_state = -1 //Won't burn in fires
 	
-/obj/item/clothing/shoes/sneakers/nukegaloshes
+/obj/item/clothing/shoes/nukegaloshes
 	desc = "Advanced combat boots utilizing proprietary 'No-Slip' technology."
 	name = "adhesion combat boots"
 	icon_state = "jackboots"
