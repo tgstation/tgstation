@@ -57,11 +57,11 @@
 		/obj/item/clothing/suit/jacket/leather,
 		/obj/item/clothing/suit/poncho,
 		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red)
-		/obj/item/weapon/deck
+		/obj/item/clothing/suit/poncho/red,
+		/obj/item/weapon/deck)
 
 	gift_type_list += typesof(/obj/item/clothing/head/collectable) - /obj/item/clothing/head/collectable
-	gift_type_list += typesof(/obj/item/toy) - (typesof(/obj/item/toy/cards) + /obj/item/toy/ammo) + /obj/item/toy) //All toys, except for abstract types and cards.
+	gift_type_list += ((typesof(/obj/item/toy/cards) + /obj/item/toy/ammo) + /obj/item/toy) //All toys, except for abstract types and cards.
 
 	var/gift_type = pick(gift_type_list)
 
