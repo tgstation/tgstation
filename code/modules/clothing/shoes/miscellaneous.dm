@@ -16,6 +16,17 @@
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
 	burn_state = -1 //Won't burn in fires
+	
+/obj/item/clothing/shoes/sneakers/nukegaloshes
+	desc = "Advanced combat boots utilizing proprietary 'No-Slip' technology."
+	name = "adhesion combat boots"
+	icon_state = "jackboots"
+	item_state = "jackboots"
+	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0)
+	strip_delay = 70
+	flags = NOSLIP
+	origin_tech = "syndicate=3"
+	burn_state = -1 //Won't burn in fires
 
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
