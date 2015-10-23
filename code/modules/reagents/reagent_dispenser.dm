@@ -56,12 +56,12 @@
 			return
 		if(2)
 			if (prob(50))
-				PoolOrNew(/obj/effect/effect/water, src.loc)
+				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
 				qdel(src)
 				return
 		if(3)
 			if (prob(5))
-				PoolOrNew(/obj/effect/effect/water, src.loc)
+				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
 				qdel(src)
 				return
 		else
@@ -69,7 +69,7 @@
 
 /obj/structure/reagent_dispensers/watertank/blob_act()
 	if(prob(50))
-		PoolOrNew(/obj/effect/effect/water, loc)
+		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank

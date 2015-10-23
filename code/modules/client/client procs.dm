@@ -107,11 +107,11 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
-	if(config.autoadmin)
+	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
 			for(var/datum/admin_rank/R in admin_ranks)
-				if(R.name == config.autoadmin_rank)
+				if(R.name == protected_config.autoadmin_rank)
 					autorank = R
 					break
 			if(!autorank)

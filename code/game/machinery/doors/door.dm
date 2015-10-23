@@ -158,7 +158,7 @@
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
 		if(prob(80))
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 1, src)
 			s.start()
 		return

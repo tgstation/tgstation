@@ -53,13 +53,13 @@
 
 	var/faction = "neutral"
 
-	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
+	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
 /obj/machinery/porta_turret/New()
 	..()
 	icon_state = "[lasercolor]grey_target_prism"
 	//Sets up a spark system
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 

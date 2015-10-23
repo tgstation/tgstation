@@ -81,7 +81,7 @@
 		if(!stuff.anchored && stuff.loc)
 			teleammount++
 			do_teleport(stuff, stuff, 10)
-			var/datum/effect/effect/system/smoke_spread/smoke = new
+			var/datum/effect_system/smoke_spread/smoke = new
 			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 			smoke.start()
 
@@ -141,7 +141,7 @@
 
 			var/mob/living/new_mob
 
-			var/randomize = pick("monkey","robot","slime","xeno","human","animal")
+			var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
 			switch(randomize)
 				if("monkey")
 					new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -216,7 +216,7 @@
 							if("butterfly")	new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else			new_mob = new /mob/living/simple_animal/chick(M.loc)
 					new_mob.languages |= HUMAN
-				if("human")
+				if("humanoid")
 					new_mob = new /mob/living/carbon/human(M.loc)
 
 					var/datum/preferences/A = new()	//Randomize appearance for the human

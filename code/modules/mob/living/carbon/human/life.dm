@@ -84,7 +84,7 @@
 				if(4)
 					emote("drool")
 				if(5)
-					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY"))
+					say(pick("REMOVE SINGULARITY", "INSTLL TEG", "TURBIN IS BEST ENGIENE", "SOLIRS CAN POWER THE HOLE STATION ANEWAY", "parasteng was best"))
 
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
@@ -100,8 +100,7 @@
 		..()
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	if(!dna.species.check_breath(breath, src))
-		..()
+	dna.species.check_breath(breath, src)
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)

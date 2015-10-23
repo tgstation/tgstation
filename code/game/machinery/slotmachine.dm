@@ -100,7 +100,7 @@
 /obj/machinery/computer/slot_machine/emag_act()
 	if(!emagged)
 		emagged = 1
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(4, 0, src.loc)
 		spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)

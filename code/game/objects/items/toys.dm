@@ -516,7 +516,7 @@
 	w_class = 1
 
 /obj/item/toy/snappop/proc/pop_burst()
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(loc)
@@ -539,7 +539,7 @@
 		if(M.m_intent == "run")
 			M << "<span class='danger'>You step on the snap pop!</span>"
 
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
 			new /obj/effect/decal/cleanable/ash(src.loc)
