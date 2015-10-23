@@ -40,7 +40,7 @@
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
-	icon_state = "pestspray"
+	icon_state = "weedspray"
 	item_state = "spray"
 	volume = 100
 	flags = OPENCONTAINER
