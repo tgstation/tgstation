@@ -36,7 +36,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 11)
 		chat_toggles = TOGGLES_DEFAULT_CHAT
 		toggles = TOGGLES_DEFAULT
-	if(current_version << 12)
+	if(current_version < 12)
 		ignoring = list()
 
 
