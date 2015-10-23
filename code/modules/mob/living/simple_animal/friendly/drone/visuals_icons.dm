@@ -47,7 +47,7 @@
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.righthand_file, isinhands = TRUE)
+		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = DRONE_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 		if(y_shift)
 			l_hand_image.pixel_y += y_shift
 
