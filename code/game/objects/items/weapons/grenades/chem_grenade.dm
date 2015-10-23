@@ -183,7 +183,7 @@
 	mix_reagents()
 
 	if(reagents.total_volume)	//The possible reactions didnt use up all reagents, so we spread it around.
-		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 		steam.set_up(10, 0, get_turf(src))
 		steam.attach(src)
 		steam.start()

@@ -45,7 +45,6 @@
 		W.loc = src
 		r_hand = W
 		W.layer = 20
-//		r_hand.screen_loc = ui_rhand
 		W.equipped(src,slot_r_hand)
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
@@ -93,7 +92,7 @@
 
 
 //Drops the item in our left hand
-/mob/proc/drop_l_hand() //I really fucking wonder why this proc had an argument holy shit.
+/mob/proc/drop_l_hand()
 	if(!loc.allow_drop())
 		return
 	return unEquip(l_hand) //All needed checks are in unEquip
@@ -103,11 +102,11 @@
 /mob/proc/drop_r_hand()
 	if(!loc.allow_drop())
 		return
-	return unEquip(r_hand) //Why was this not calling unEquip in the first place jesus fuck.
+	return unEquip(r_hand)
 
 
 //Drops the item in our active hand.
-/mob/proc/drop_item() //THIS. DOES. NOT. NEED. AN. ARGUMENT.
+/mob/proc/drop_item()
 	if(hand)	return drop_l_hand()
 	else		return drop_r_hand()
 

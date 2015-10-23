@@ -833,7 +833,7 @@ var/global/mulebot_count = 0
 		cell.update_icon()
 		cell = null
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 

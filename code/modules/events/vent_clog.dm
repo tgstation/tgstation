@@ -34,7 +34,7 @@
 			R.my_atom = vent
 			R.add_reagent(pick(gunk), 50)
 
-			var/datum/effect/effect/system/smoke_spread/chem/smoke = new
+			var/datum/effect_system/smoke_spread/chem/smoke = new
 			smoke.set_up(R, 1, vent, silent = 1)
 			playsound(vent.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()

@@ -9,7 +9,7 @@
 
 	if(!ninjacost(0,N_SMOKE_BOMB))
 		var/mob/living/carbon/human/H = affecting
-		var/datum/effect/effect/system/smoke_spread/bad/smoke = new
+		var/datum/effect_system/smoke_spread/bad/smoke = new
 		smoke.set_up(4, H.loc)
 		smoke.start()
 		playsound(H.loc, 'sound/effects/bamf.ogg', 50, 2)
