@@ -479,12 +479,6 @@ var/list/uplink_items = list()
 	cost = 2
 	excludefrom = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	name = "Tactical No-Slip Brown Shoes"
-	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces, but the manufacturer guarantees they're somehow better than the normal ones."
-	cost = 4 //but they aren't
-	gamemodes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another. \
@@ -556,6 +550,13 @@ var/list/uplink_items = list()
 	item = /obj/item/weapon/storage/belt/military
 	cost = 3
 	excludefrom = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/device_tools/nukegaloshes
+	name = "No-Slip Combat Boots"
+	desc = "These boots will allow the wearer to run on wet floors and slippery objects without falling down. They do not work on heavily lubricated surfaces."
+	item = /obj/item/clothing/shoes/nukegaloshes
+	cost = 2
+	gamemodes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
