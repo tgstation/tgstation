@@ -303,18 +303,18 @@
 	icon_state = "chainsaw0"
 	name = "Chainsaw"
 	desc = "Perfect for felling trees or fellow spaceman."
-	force = 15
-	throwforce = 15
+	force = 13
+	throwforce = 13
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4.0 // can't fit in backpacks
-	force_unwielded = 15 //still pretty robust
-	force_wielded = 50  //you'll gouge their eye out! Or a limb...maybe even their entire body!
+	force_unwielded = 13 
+	force_wielded = 22 
 	wieldsound = 'sound/weapons/chainsawstart.ogg'
 	hitsound = null
 	no_hitsound = 1 //We have custom hitsounds
 	flags = NOSHIELD
-	origin_tech = "materials=6;syndicate=4"
+	origin_tech = "materials=2;combat=2;engineering=2"
 	attack_verb = list("bashed", "smacked")
 	var/wield_cooldown = 0
 //	bleedcap = 0 //You can bleed anytime bby
@@ -334,6 +334,7 @@
 		icon_state = "chainsaw[wielded]"
 	else
 		icon_state = "chainsaw0"
+	return
 
 /obj/item/weapon/twohanded/chainsaw/attack_self(mob/user as mob) //Override to create a cooldown
 	if(wielded)
