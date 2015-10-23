@@ -195,7 +195,7 @@
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 
@@ -226,7 +226,7 @@
 
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 
@@ -271,7 +271,7 @@
 	return 0
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0
 

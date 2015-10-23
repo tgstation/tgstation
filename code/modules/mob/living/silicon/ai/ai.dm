@@ -476,7 +476,7 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return
 
