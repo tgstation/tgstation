@@ -68,6 +68,7 @@
 	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/updating = 0 //portable camera camerachunk update
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD)
 
 /mob/living/silicon/robot/New(loc)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -126,6 +127,7 @@
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	toner = 40
 	scanner.Grant(src)
+	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()

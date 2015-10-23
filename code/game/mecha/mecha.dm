@@ -92,9 +92,13 @@
 	SSobj.processing |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
+	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
-	prepare_huds()
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
+
 	return
 
 /obj/mecha/Destroy()

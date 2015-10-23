@@ -32,9 +32,11 @@
 	var/law_change_counter = 0
 
 /mob/living/silicon/New()
+	..()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
-	..()
+	diag_hud_set_status()
+	diag_hud_set_health()
 
 /mob/living/silicon/Destroy()
 	radio = null
