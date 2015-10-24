@@ -1,8 +1,0 @@
-
-author: Gun Hog
-
-delete-after: True
-
-changes: 
-  - rscadd: "Nanotrasen's research team has released a new, high tech design for Science Goggles, which previously did nothing! They new come fitted with a portable scanning module which will display the potential research data gained from experimenting with an object. Nanotrasen has also released drivers which shall enable the prototype hardsuit's built in scan visor."
-  - rscadd: "Supporting this new design, Nanotrasen has seen fit to provide blueprints for Science Goggles to the station's protolathe."

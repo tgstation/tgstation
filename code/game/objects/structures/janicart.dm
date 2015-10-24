@@ -252,7 +252,7 @@
 	..()
 	update_mob()
 
-/obj/structure/bed/chair/janicart/unbuckle_mob()
+/obj/structure/bed/chair/janicart/unbuckle_mob(force = 0)
 	if(buckled_mob)
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0

@@ -12,7 +12,7 @@
 	var/smoke = 5
 	var/smoke_ready = 1
 	var/smoke_cooldown = 100
-	var/datum/effect/effect/system/smoke_spread/smoke_system = new
+	var/datum/effect_system/smoke_spread/smoke_system = new
 	operation_req_access = list(access_cent_specops)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	add_req_access = 0
@@ -24,7 +24,7 @@
 
 /obj/mecha/combat/marauder/New()
 	..()
-	smoke_system.set_up(3, 0, src)
+	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 
 /obj/mecha/combat/marauder/Destroy()

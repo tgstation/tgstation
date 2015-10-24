@@ -88,7 +88,7 @@
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		M << "Your Clown Mask has now morphed into [choice], all praise the Honk Mother!"
+		M << "Your Clown Mask has now morphed into [choice], all praise the Honkmother!"
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown

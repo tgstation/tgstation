@@ -204,6 +204,8 @@
 	if(!src)
 		return
 
+	listclearnulls(consenting_candidates) //some candidates might have left during sleep(50)
+
 	if(consenting_candidates.len)
 		var/client/C = null
 		C = pick(consenting_candidates)

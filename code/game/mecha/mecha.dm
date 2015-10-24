@@ -36,7 +36,7 @@
 	var/maint_access = 0
 	var/dna_lock//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
-	var/datum/effect/effect/system/spark_spread/spark_system = new
+	var/datum/effect_system/spark_spread/spark_system = new
 	var/lights = 0
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
@@ -285,22 +285,22 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert("charge")
 				if(0.5 to 0.75)
-					occupant.throw_alert("charge","lowcell",1)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert("charge","lowcell",2)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert("charge","lowcell",3)
+					occupant.throw_alert("charge",/obj/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert("charge","emptycell")
+					occupant.throw_alert("charge",/obj/screen/alert/emptycell)
 
 		var/integrity = health/initial(health)*100
 		switch(integrity)
 			if(30 to 45)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 1)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
 			if(15 to 35)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 2)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 2)
 			if(-INFINITY to 15)
-				occupant.throw_alert("mech damage", "low_mech_integrity", 3)
+				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
 
@@ -668,10 +668,9 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/simple_animal/slime/S in range(1,user))
-		if(S.Victim == user)
-			user << "<span class='warning'>You're too busy getting your life sucked out of you!</span>"
-			return
+	if(user.buckled_mob) //mob attached to us
+		user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you!</span>"
+		return
 
 	visible_message("[user] starts to climb into [src.name].")
 
@@ -681,7 +680,9 @@
 		else if(occupant)
 			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
-			user << "<span class='warning'>You have been buckled and cannot move.</span>"
+			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
+		else if(user.buckled_mob)
+			user << "<span class='warning'>You can't enter the exosuit with [user.buckled_mob] attached to you.</span>"
 		else
 			moved_inside(user)
 	else

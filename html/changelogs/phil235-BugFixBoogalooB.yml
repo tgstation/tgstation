@@ -1,8 +1,0 @@
- 
-author: phil235
-
-delete-after: True
-
-changes: 
-  - rscdel: "Morphs no longer automatically drop the things they swallowed, you have to butcher their corpse to retrieve their contents."
-  - bugfix: "butchering a corpse no longer also attacks it."

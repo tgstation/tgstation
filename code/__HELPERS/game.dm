@@ -290,7 +290,7 @@
 
 // Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
 
-/proc/get_candidates(be_special_flag=0, afk_bracket=3000)
+/proc/get_candidates(be_special_flag=0,afk_bracket=3000, var/jobbanType)
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
@@ -298,7 +298,11 @@
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special & be_special_flag))
-						candidates += G.client
+						if (jobbanType)
+							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
+								candidates += G.client
+						else
+							candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
 	return candidates
 

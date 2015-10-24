@@ -199,7 +199,9 @@
 		M << "You cannot attack people before the game has started."
 		return
 
-	if(M.Victim)
+	if(M.buckled)
+		if(M == buckled_mob)
+			M.Feedstop()
 		return // can't attack while eating!
 
 	if (stat != DEAD)

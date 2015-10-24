@@ -18,7 +18,7 @@
 			makeAbductorTeam()
 
 /datum/round_event/abductor/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for an Abductor Team?", "abductor", null, BE_ABDUCTOR )
 	
 	if(candidates.len >= 2)
 		//Oh god why we can't have static functions

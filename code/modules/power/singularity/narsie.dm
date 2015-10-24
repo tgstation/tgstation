@@ -25,7 +25,7 @@
 /obj/singularity/narsie/large/New()
 	..()
 	world << "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>"
-	world << 'sound/effects/narsie.ogg'
+	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 
 	var/area/A = get_area(src)
 	if(A)
@@ -42,7 +42,7 @@
 		user << "Your soul is too far away."
 		return
 	makeNewConstruct(/mob/living/simple_animal/construct/harvester, user, null, 1)
-	PoolOrNew(/obj/effect/effect/smoke/sleeping, user.loc)
+	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, user.loc)
 
 
 /obj/singularity/narsie/process()
@@ -139,7 +139,7 @@
 	set background = BACKGROUND_ENABLED
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
-	for(var/atom/X in orange(consume_range,src))
+	for(var/atom/X in ultra_range(consume_range,src,1))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)

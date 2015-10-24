@@ -371,7 +371,7 @@ Auto Patrol: []"},
 	if(prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
@@ -464,8 +464,7 @@ Auto Patrol: []"},
 			return
 		build_step++
 		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
-		S.loc = get_turf(src)
+		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
 		S.name = created_name
 		qdel(I)
 		qdel(src)

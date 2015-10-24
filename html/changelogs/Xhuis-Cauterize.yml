@@ -1,5 +1,0 @@
-author: Xhuis
-delete-after: True
-
-changes: 
-  - tweak: "The spell book has received a rebalancing! There are now ten uses by default, but most spells cost two uses. Some underused spells, like Blind, Smoke, and Forcewall, only cost a single use."

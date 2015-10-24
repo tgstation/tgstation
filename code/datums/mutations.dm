@@ -280,18 +280,22 @@
 /datum/mutation/human/dwarfism
 
 	name = "Dwarfism"
-	quality = MINOR_NEGATIVE
+	quality = POSITIVE
+	get_chance = 15
+	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Everything around you seems to grow..</span>"
 	text_lose_indication = "<span class='notice'>Everything around you seems to shrink..</span>"
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.resize = 0.8
+	owner.pass_flags |= PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())	return
 	owner.resize = 1.25
+	owner.pass_flags &= ~PASSTABLE
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>")
 
 /datum/mutation/human/clumsy
@@ -461,6 +465,7 @@
 /datum/mutation/human/smile
 	name = "Smile"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
@@ -547,6 +552,7 @@
 /datum/mutation/human/swedish
 	name = "Swedish"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
@@ -560,6 +566,7 @@
 /datum/mutation/human/chav
 	name = "Chav"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
@@ -592,6 +599,7 @@
 /datum/mutation/human/elvis
 	name = "Elvis"
 	quality = MINOR_NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
