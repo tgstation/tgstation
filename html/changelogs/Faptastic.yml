@@ -1,0 +1,3 @@
+author: Faptastic
+changes: 
+  - rscadd: Added the ability to store analysed virus samples inside the Disease Analyser
