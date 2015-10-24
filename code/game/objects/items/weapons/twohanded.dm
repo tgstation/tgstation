@@ -320,11 +320,13 @@
 
 /obj/item/weapon/twohanded/chainsaw/unwield()
 	..()
+	hitsound = initial(hitsound)
 //	bleedchance = 0
 	attack_verb = list("bashed", "smacked")
 
 /obj/item/weapon/twohanded/chainsaw/wield()
 	..()
+	hitsound = "chainsaw_attack"
 //	bleedchance = 50
 	attack_verb = list("sawed", "cut", "hacked", "carved", "cleaved", "butchered", "felled", "timbered")
 
@@ -334,31 +336,6 @@
 	else
 		icon_state = "chainsaw0"
 	return
-
-/obj/item/weapon/twohanded/chainsaw/attack_self(mob/user as mob) //Override to create a cooldown
-	if(wielded)
-		if(world.time <= wield_cooldown + 10)
-			return
-		wield_cooldown = world.time
-	..()
-
-/obj/item/weapon/twohanded/chainsaw/attack(mob/target as mob, mob/living/user as mob)
-	if(wielded)
-		//incredibly loud; you ain't goin' for stealth with this thing. Credit goes to where Hotline Miami 2 got the chainsaw sounds from.
-		playsound(loc, pick('sound/weapons/chainsawAttack1.ogg', 'sound/weapons/chainsawAttack2.ogg', 'sound/weapons/chainsawAttack3.ogg'), 80, 1, 2)
-		if(isrobot(target))
-			..()
-			return
-		if(!isliving(target))
-			return
-		else
-			target.Weaken(4)
-			..()
-			// user.changeNext_move(CLICK_CD_MELEE * 2) //As a balance measure it's not as spammable as other weapons.
-		return
-	else
-		playsound(loc, "swing_hit", 50, 1, -1)
-		return ..()
 
 /obj/item/weapon/twohanded/chainsaw/IsShield() //Disarming someone with a chainsaw should be difficult.
 	if(wielded)
