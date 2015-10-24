@@ -45,6 +45,7 @@ var/global/datum/shuttle/transport/transport_shuttle = new(starting_area = /area
 
 /obj/machinery/computer/shuttle_control/transport
 	machine_flags = 0 //No screwtoggle / emaggable to prevent mortals from fucking with shit
+	allow_silicons = 0
 
 /obj/machinery/computer/shuttle_control/transport/New()
 	link_to(transport_shuttle)
@@ -87,6 +88,7 @@ var/global/datum/shuttle/admin/admin_shuttle = new(starting_area = /area/shuttle
 
 /obj/machinery/computer/shuttle_control/transport
 	machine_flags = 0 //No screwtoggle / emaggable to prevent mortals from fucking with shit
+	allow_silicons = 0
 
 /obj/machinery/computer/shuttle_control/transport/New()
 	link_to(admin_shuttle)
