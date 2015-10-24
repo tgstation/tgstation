@@ -77,8 +77,8 @@
 	..()
 	total_positions = 5
 	spawn_positions = 5
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
-	minimal_access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology)
+	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage)
+	minimal_access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage)
 
 //Cargo
 
