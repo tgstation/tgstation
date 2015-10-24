@@ -206,6 +206,12 @@ var/next_external_rsc = 0
 	if (config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
 
+
+	//This is down here because of the browse() calls in tooltip/New()
+	if(!tooltips)
+		tooltips = new /datum/tooltip(src)
+
+
 //////////////
 //DISCONNECT//
 //////////////
