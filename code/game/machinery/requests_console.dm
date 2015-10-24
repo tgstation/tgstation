@@ -447,3 +447,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")
 			updateUsrDialog()
 	return
+
+/obj/machinery/requests_console/mechanic
+	name = "Mechanics Requests Console"
+	department = "Mechanics"
+	departmentType = 4

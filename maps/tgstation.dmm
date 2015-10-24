@@ -5195,7 +5195,7 @@
 "bVU" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor{dir = 8; icon_state = "cautioncorner"},/area/hallway/primary/aft)
 "bVV" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor,/area/hallway/primary/aft)
 "bVW" = (/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{dir = 4},/obj/machinery/door/firedoor/border_only{dir = 1; name = "Firelock North"},/turf/simulated/floor{icon_state = "yellowcorner"},/area/hallway/primary/aft)
-"bVX" = (/obj/item/weapon/paper_bin/nano,/obj/structure/table,/obj/machinery/requests_console{department = "Mechanic"; departmentType = 2; name = "Mechanic Requests Console"; pixel_x = -30},/turf/simulated/floor{icon_state = "dark vault full"},/area/engineering/mechanics)
+"bVX" = (/obj/item/weapon/paper_bin/nano,/obj/structure/table,/obj/machinery/requests_console/mechanic{dir = 8; pixel_x = -32},/turf/simulated/floor{icon_state = "dark vault full"},/area/engineering/mechanics)
 "bVY" = (/turf/simulated/floor,/area/engineering/mechanics)
 "bVZ" = (/obj/effect/decal/warning_stripes{tag = "icon-warning (WEST)"; icon_state = "warning"; dir = 8},/turf/simulated/floor{icon_state = "dark vault full"},/area/engineering/mechanics)
 "bWa" = (/turf/simulated/floor{icon_state = "dark vault full"},/area/engineering/mechanics)
