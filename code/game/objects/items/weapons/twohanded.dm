@@ -308,15 +308,23 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 4.0 // can't fit in backpacks
-	force_unwielded = 13 
-	force_wielded = 22 
+	force_unwielded = 13
+	force_wielded = 22
 	wieldsound = 'sound/weapons/chainsawstart.ogg'
 	hitsound = "swing_hit"
 	flags = NOSHIELD
 	origin_tech = "materials=2;combat=2;engineering=2"
 	attack_verb = list("bashed", "smacked")
 	var/wield_cooldown = 0
+	var/max_fuel = 20
 //	bleedcap = 0 //You can bleed anytime bby
+
+/obj/item/weapon/twohanded/chainsaw/New()
+	..()
+	create_reagents(max_fuel)
+	reagents.add_reagent("fuel", max_fuel)
+	update_icon()
+	return
 
 /obj/item/weapon/twohanded/chainsaw/unwield()
 	..()
@@ -324,11 +332,15 @@
 //	bleedchance = 0
 	attack_verb = list("bashed", "smacked")
 
-/obj/item/weapon/twohanded/chainsaw/wield()
-	..()
-	hitsound = "chainsaw_attack"
-//	bleedchance = 50
-	attack_verb = list("sawed", "cut", "hacked", "carved", "cleaved", "butchered", "felled", "timbered")
+/obj/item/weapon/twohanded/chainsaw/wield(user)
+	if(get_fuel())
+		..(user)
+		hitsound = "chainsaw_attack"
+		//bleedchance = 50
+		attack_verb = list("sawed", "cut", "hacked", "carved", "cleaved", "butchered", "felled", "timbered")
+		remove_fuel(1, user)
+	else
+		user << "<span class='notice'>The [src] is out of fuel.</span>"
 
 /obj/item/weapon/twohanded/chainsaw/update_icon()
 	if(wielded)
@@ -342,3 +354,53 @@
 		return 1
 	else
 		return 0
+
+/obj/item/weapon/twohanded/chainsaw/process()
+	if(wielded)
+		if(prob(5))
+			remove_fuel(1)
+
+/obj/item/weapon/twohanded/chainsaw/proc/remove_fuel(amount = 1, mob/user = null)
+	if(!wielded || !check_fuel(user))
+		return 0
+	if(get_fuel() >= amount)
+		reagents.remove_reagent("fuel", amount)
+		check_fuel(user)
+		return 1
+	return 0
+
+/obj/item/weapon/twohanded/chainsaw/afterattack(atom/O, mob/user, proximity)
+	if(!proximity) return
+	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
+		if(!wielded)
+			O.reagents.trans_to(src, max_fuel)
+			user << "<span class='notice'>[src] refueled.</span>"
+			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			return
+		else
+			user << "<span class='notice'>You can't refuel the [src] while it's running.</span>"
+	if(wielded)
+		remove_fuel(1, user)
+
+//Turns off the chainsaw if there is no more fuel
+/obj/item/weapon/twohanded/chainsaw/proc/check_fuel(mob/user)
+	if(get_fuel() <= 0 && wielded)
+		user << "<span class='notice'>The [src] has run out of fuel.</span>"
+		unwield(user)
+		return 0
+	return 1
+
+//Returns the amount of fuel in the chainsaw
+/obj/item/weapon/twohanded/chainsaw/proc/get_fuel()
+	return reagents.get_reagent_amount("fuel")
+
+/obj/item/weapon/twohanded/chainsaw/examine(mob/user)
+	..()
+	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+/obj/item/weapon/twohanded/chainsaw/attack_self(mob/user as mob) //Override to create a cooldown
+	if(wielded)
+		if(world.time <= wield_cooldown + 10)
+			return
+		wield_cooldown = world.time
+	..(user)
