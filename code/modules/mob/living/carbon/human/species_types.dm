@@ -453,12 +453,17 @@
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable))
-		var/turf/pos = get_turf(H)
-		var/vomit_pile = pos.add_vomit_floor(H)
-		H.reagents.trans_to(vomit_pile, H.reagents.total_volume) //might need nerfing later since it allows fly people to purge all poisons too.
-		playsound(pos, 'sound/effects/splat.ogg', 50, 1)
-		H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
+		var/datum/reagent/consumable/nutri_check = chem
+		if(nutri_check.nutriment_factor >0)
+			var/turf/pos = get_turf(H)
+			pos.add_vomit_floor(H,1) //toxic vomit, for the extra "disgusting" feeling
+			//var/vomit_pile =
+			//vomit_pile
+			//H.reagents.
+			//H.reagents.trans_to(vomit_pile, H.reagents.total_volume) //might need nerfing later since it allows fly people to purge all poisons too.
+			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()
 
 /*
