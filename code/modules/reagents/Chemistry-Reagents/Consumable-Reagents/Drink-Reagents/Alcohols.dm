@@ -23,15 +23,17 @@
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
-	if(current_cycle >= boozepwr)
-		if (!M.slurring) M.slurring = 1
-		M.slurring += 4
-		M.Dizzy(5)
-	if(current_cycle >= boozepwr*2.5 && prob(33))
-		if (!M.confused) M.confused = 1
-		M.confused += 3
-	if(current_cycle >= boozepwr*10 && prob(33))
-		M.adjustToxLoss(2)
+	if(current_cycle >= boozepwr*0.5)
+		var/drunk_value = sqrt(volume*1000/boozepwr)
+		if(volume >= boozepwr*0.2)
+			if(M.slurring < drunk_value)
+				M.slurring += 4
+			M.Dizzy(drunk_value)
+		if(volume >= boozepwr*0.8)
+			if(M.confused < drunk_value)
+				M.confused += 3
+		if(volume >= boozepwr*3.8)
+			M.adjustToxLoss(1)
 	..()
 	return
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
