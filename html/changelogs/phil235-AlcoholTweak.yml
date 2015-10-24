@@ -1,8 +1,0 @@
-  
-author: phil235
-
-delete-after: True
-
-changes: 
-  - tweak: "Changed the effects of alcohol to be more realistic. The effects of alcohol now appear twice as fast. Drunkenness now scales with how much alcohol is in you, not how long you've been drinking. This means drinking very little but continuously no longer makes you very drunk, or confused/slurring for a long time or give you alcohol poisoning. The dizziness and slurring effects now properly scale with how drunk you are (and dizziness is generally more pronounced)."
-
