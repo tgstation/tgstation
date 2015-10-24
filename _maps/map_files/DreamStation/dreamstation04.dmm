@@ -308,7 +308,7 @@
 "afV" = (/obj/effect/landmark{name = "Observer-Start"},/turf/simulated/floor/plasteel/shuttle,/area/shuttle/arrival)
 "afW" = (/obj/structure/closet/wardrobe/mixed,/turf/simulated/floor/plasteel/shuttle,/area/shuttle/arrival)
 "afX" = (/obj/structure/extinguisher_cabinet{pixel_x = 0; pixel_y = -30; tag = "s"},/turf/simulated/floor/plasteel,/area/hallway/secondary/entry)
-"afY" = (/obj/machinery/nuclearbomb{tag = "syndienuke"},/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
+"afY" = (/obj/machinery/nuclearbomb/syndicate,/turf/simulated/floor/plasteel/shuttle{icon_state = "shuttlefloor4"},/area/shuttle/syndicate)
 "afZ" = (/obj/machinery/alarm{dir = 1; icon_state = "alarm0"; pixel_y = -22},/obj/machinery/light/small,/turf/simulated/floor/plasteel,/area/hallway/secondary/entry)
 "aga" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/floor/plasteel,/area/hallway/secondary/entry)
 "agb" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 4; on = 1},/obj/machinery/firealarm{dir = 2; pixel_y = 24},/turf/simulated/floor/plasteel,/area/hallway/secondary/entry)
