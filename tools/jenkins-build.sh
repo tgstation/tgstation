@@ -1,8 +1,8 @@
 #!/bin/bash -ex
 set -x
 # ARGUMENT 1: Map
-BYOND_MAJOR="508"
-BYOND_MINOR="1296"
+BYOND_MAJOR="509"
+BYOND_MINOR="1307"
 # Jenkins doesn't have permissions to do this.
 # Jenkins is also on Debian so the packages are wrong.
 #apt-get update

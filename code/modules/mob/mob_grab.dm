@@ -104,10 +104,19 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 
+/obj/item/weapon/grab/attack_self()
+	. = ..()
+	if(.)
+		return
+	else if(hud)
+		return s_click(hud)
+
 
 /obj/item/weapon/grab/proc/s_click(obj/screen/S)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/grab/proc/s_click() called tick#: [world.time]")
 	if(!affecting || !assailant || timeDestroyed)
+		return
+	if(assailant.attack_delayer.blocked())
 		return
 	if(state == GRAB_UPGRADING)
 		return

@@ -29,16 +29,16 @@
 	using.layer = 20
 	src.adding += using			// Place using in our adding list
 	M.inv_tool = using			// Save this using as our MoMMI's inv_sight
-	/*
+
 	using = getFromPool(/obj/screen)
 	using.name = INV_SLOT_SIGHT
 	using.dir = SOUTHWEST
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "sight"
-	using.screen_loc = ui_inv1
+	using.screen_loc = ui_mommi_sight
 	using.layer = 20
 	src.adding += using
-	M.inv_sight = using*/
+	M.sensor = using
 	// End of module select
 
 	// Head
@@ -46,7 +46,7 @@
 	inv_box.name = "head"
 	inv_box.dir = NORTH
 	inv_box.icon_state = "hair"
-	inv_box.screen_loc = ui_monkey_mask
+	inv_box.screen_loc = ui_mommi_hats
 	inv_box.slot_id = slot_head
 	inv_box.layer = 19
 	src.adding += inv_box
@@ -82,14 +82,14 @@
 	mymob.hands.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
-	mymob.hands.screen_loc = ui_borg_module
+	mymob.hands.screen_loc = ui_mommi_module
 
 	// Module Panel
 	using = getFromPool(/obj/screen)
 	using.name = "panel"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "panel"
-	using.screen_loc = ui_borg_panel
+	using.screen_loc = ui_mommi_panel
 	using.layer = 19
 	src.adding += using
 
@@ -149,7 +149,7 @@
 	mymob.flash.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	// Zone
@@ -163,5 +163,3 @@
 	// Add everything to their screen
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
-
-	return

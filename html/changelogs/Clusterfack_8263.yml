@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: true
+changes:
+-bugfix: R&D console correctly displays the true cost for materials of the things it can make
+-rscadd: Chemical cost from the circuit imprinter varies with circuit imprinter part quality

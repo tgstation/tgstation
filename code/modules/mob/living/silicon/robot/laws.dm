@@ -9,10 +9,6 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/living/silicon/robot/proc/statelaws() called tick#: [world.time]")
 //	set category = "AI Commands"
 //	set name = "State Laws"
-	var/mob/living/silicon/robot/mommi/M
-	if(isMoMMI(src))
-		M = src
-		M.keeper = 0
 	src.say(";Current Active Laws:")
 	//src.laws_sanity_check()
 	//src.laws.show_laws(world)
@@ -53,8 +49,6 @@
 					src.say(";[number]. [law]")
 					sleep(10)
 				number++
-	if(M && istype(M))
-		M.keeper = 1
 
 /mob/living/silicon/robot/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 	set category = "Robot Commands"

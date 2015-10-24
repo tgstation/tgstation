@@ -1310,7 +1310,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
 /obj/machinery/newscaster/say_quote(text)
-	return "beeps, \"[text]\""
+	return "beeps, [text]"
 
 #undef NEWSCASTER_MENU
 #undef NEWSCASTER_CHANNEL_LIST

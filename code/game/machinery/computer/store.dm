@@ -5,6 +5,7 @@
 	circuit = "/obj/item/weapon/circuitboard/merch"
 	var/datum/html_interface/interface
 	var/tmp/next_process = 0
+	var/machine_id = ""
 
 	light_color = LIGHT_COLOR_ORANGE
 
@@ -30,6 +31,7 @@
 			/datum/storeitem/robotnik_jumpsuit,
 			),
 		"Luxury" = list(
+			/datum/storeitem/wallet,
 			/datum/storeitem/photo_album,
 			/datum/storeitem/painting,
 			),
@@ -37,6 +39,8 @@
 
 /obj/machinery/computer/merch/New()
 	..()
+	machine_id = "[station_name()] Merch Computer #[multinum_display(num_merch_computers,4)]"
+	num_merch_computers++
 
 	var/head = {"
 		<style type="text/css">

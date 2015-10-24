@@ -25,6 +25,7 @@
 	var/obj/item/weapon/last_find
 	var/datum/artifact_find/artifact_find
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
+	var/busy = 0 //Used for a bunch of do_after actions, because we can walk into the rock to trigger them
 
 /turf/unsimulated/mineral/Destroy()
 	return
@@ -191,6 +192,9 @@
 
 /turf/unsimulated/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
+	if(busy)
+		return
+
 	if (!usr.dexterity_check())
 		usr << "<span class='warning>You don't have the dexterity to do this!</span>"
 		return
@@ -211,8 +215,12 @@
 	if (istype(W, /obj/item/device/measuring_tape))
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
+		busy = 1
 		if(do_after(user, src,25))
 			user << "<span class='notice'>\icon[P] [src] has been excavated to a depth of [2*excavation_level]cm.</span>"
+			busy = 0
+		else
+			busy = 0
 		return
 
 	if (istype(W, /obj/item/weapon/pickaxe))
@@ -229,6 +237,7 @@
 
 		if(last_act + P.digspeed > world.time)//prevents message spam
 			return
+
 		last_act = world.time
 
 		playsound(user, P.drill_sound, 20, 1)
@@ -251,8 +260,12 @@
 				if(prob(50))
 					artifact_debris()
 
+		busy = 1
+
 		if(do_after(user, src, P.digspeed) && user)
 			user << "<span class='notice'>You finish [P.drill_verb] the rock.</span>"
+
+			busy = 0
 
 			if(finds && finds.len)
 				var/datum/find/F = finds[1]
@@ -348,6 +361,9 @@
 				geologic_data.UpdateNearbyArtifactInfo(src)
 				O.geologic_data = geologic_data
 */
+
+		else //Note : If the do_after() fails
+			busy = 0
 
 	else
 		return attack_hand(user)
@@ -525,6 +541,7 @@
 		playsound(get_turf(src), 'sound/effects/rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		if(do_after(user, used_digging.digspeed) && user) //the better the drill, the faster the digging
+			playsound(loc, 'sound/items/shovel.ogg', 50, 1)
 			user << "<span class='notice'>You dug a hole.</span>"
 			gets_dug()
 

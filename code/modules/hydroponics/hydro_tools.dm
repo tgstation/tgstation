@@ -159,6 +159,14 @@
 	if(grown_seed.alter_temp)
 		dat += "<br>It will periodically alter the local temperature by [grown_seed.alter_temp] degrees Kelvin."
 
+	if(grown_seed.consume_gasses)
+		for(var/gas in grown_seed.consume_gasses)
+			dat += "<br>It will remove [gas] from the environment."
+
+	if(grown_seed.exude_gasses)
+		for(var/gas in grown_seed.exude_gasses)
+			dat += "<br>It will release [gas] into the environment."
+
 	if(grown_seed.biolum)
 		dat += "<br>It is [grown_seed.biolum_colour ? "<font color='[grown_seed.biolum_colour]'>bio-luminescent</font>" : "bio-luminescent"]."
 	if(grown_seed.flowers)
@@ -366,3 +374,80 @@
 			if(prob(80))
 				qdel(B)
 		qdel(A)
+	if(istype(A, /turf/simulated/floor))
+		for(var/obj/effect/plantsegment/B in orange(A,1))
+			if(prob(80))
+				qdel(B)
+
+/obj/item/claypot
+	name = "clay pot"
+	desc = "Plants placed in those stop aging, but cannot be retrieved either."
+	icon = 'icons/obj/hydroponics2.dmi'
+	icon_state = "claypot-item"
+	item_state = "claypot"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/misc_tools.dmi', "right_hand" = 'icons/mob/in-hand/right/misc_tools.dmi')
+	w_class = 3.0
+	force = 5.0
+	throwforce = 20.0
+	throw_speed = 1
+	throw_range = 3
+	flags = FPRINT
+
+/obj/item/claypot/attackby(var/obj/item/O,var/mob/user)
+	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/weapon/grown))
+		user << "<span class='warning'>You have to transplant the plant into the pot directly from the hydroponic tray, using a spade.</span>"
+	else if(istype(O,/obj/item/weapon/pickaxe/shovel))
+		user << "<span class='warning'>There is no plant to remove in \the [src].</span>"
+	else
+		user << "<span class='warning'>You cannot plant \the [O] in \the [src].</span>"
+
+
+/obj/item/claypot/throw_impact(atom/hit_atom)
+	..()
+	if(prob(40))
+		playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 75, 1)
+		new/obj/effect/decal/cleanable/clay_fragments(src.loc)
+		src.visible_message("<span class='warning'>\The [src.name] has been smashed.</span>","<span class='warning'>You hear a crashing sound.</span>")
+		qdel(src)
+
+/obj/structure/claypot
+	name = "clay pot"
+	desc = "Plants placed in those stop aging, but cannot be retrieved either."
+	icon = 'icons/obj/hydroponics2.dmi'
+	icon_state = "claypot"
+	anchored = 0
+	density = 0
+	var/plant_name = ""
+
+/obj/structure/claypot/examine(mob/user)
+	..()
+	if(plant_name)
+		user << "<span class='info'>You can see [plant_name] planted in it.</span>"
+
+/obj/structure/claypot/attack_hand(mob/user as mob)
+	user << "It's too heavy to pick up while it has a plant in it."
+
+/obj/structure/claypot/attackby(var/obj/item/O,var/mob/user)
+	if(istype(O,/obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		if(do_after(user, src, 30))
+			anchored = !anchored
+			user.visible_message(	"<span class='notice'>[user] [anchored ? "wrench" : "unwrench"]es \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+									"<span class='notice'>\icon[src] You [anchored ? "wrench" : "unwrench"] \the [src] [anchored ? "in place" : "from its fixture"].</span>",
+									"<span class='notice'>You hear a ratchet.</span>")
+	else if(plant_name && istype(O,/obj/item/weapon/pickaxe/shovel))
+		user << "<span class='notice'>\icon[src] You start removing the [plant_name] from \the [src].</span>"
+		if(do_after(user, src, 30))
+			playsound(loc, 'sound/items/shovel.ogg', 50, 1)
+			user.visible_message(	"<span class='notice'>[user] removes the [plant_name] from \the [src].</span>",
+									"<span class='notice'>\icon[src] You remove the [plant_name] from \the [src].</span>",
+									"<span class='notice'>You hear some digging.</span>")
+			var/obj/item/claypot/C = new(loc)
+			transfer_fingerprints(src, C)
+			qdel(src)
+
+	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown) || istype(O,/obj/item/weapon/grown))
+		user << "<span class='warning'>There is already a plant in \the [src]</span>"
+
+	else
+		..()

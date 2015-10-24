@@ -1280,6 +1280,25 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 	access = access_hydroponics
 	group = "Hydroponics"
 
+/datum/supply_packs/ranching
+	name = "Ranching Crate"
+	contains = list(
+			/obj/item/weapon/circuitboard/egg_incubator,
+			/obj/item/weapon/stock_parts/capacitor,
+			/obj/item/weapon/stock_parts/capacitor,
+			/obj/item/weapon/stock_parts/matter_bin,
+			/obj/item/weapon/reagent_containers/food/snacks/egg,
+			/obj/item/weapon/reagent_containers/food/snacks/egg,
+			/obj/item/weapon/reagent_containers/food/snacks/egg,
+			/obj/item/weapon/kitchen/utensil/knife/large,
+			/obj/item/clothing/head/cowboy
+		)
+	cost = 15
+	containertype = /obj/structure/closet/crate/hydroponics
+	containername = "Ranching crate"
+	access = access_hydroponics
+	group = "Hydroponics"
+
 /datum/supply_packs/Hydroponics_Trays
 	name = "Hydroponic Trays Components Crate"
 	contains = list(

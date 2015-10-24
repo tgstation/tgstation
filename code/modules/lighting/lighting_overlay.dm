@@ -1,28 +1,30 @@
+// The overlay that provides the shading.
 /atom/movable/lighting_overlay
-	name = ""
-	mouse_opacity = 0
-	anchored = 1
+	name			= ""
+	mouse_opacity	= 0
+	anchored		= 1
 
-	icon_state = "light1"
-	icon = LIGHTING_ICON
-	layer = LIGHTING_LAYER
-	invisibility = INVISIBILITY_LIGHTING
-	blend_mode = BLEND_MULTIPLY
-	color = "#000000"
+	icon_state		= "light1"
+	icon			= LIGHTING_ICON
+	layer			= LIGHTING_LAYER
+	invisibility	= INVISIBILITY_LIGHTING
+	blend_mode		= BLEND_MULTIPLY
+	color			= "#000000"
 
 	var/lum_r
 	var/lum_g
 	var/lum_b
 
 	var/needs_update
-	ignoreinvert = 1
+	ignoreinvert	= 1
 
+// Cut our verbs so we're invisible on right-click.
 /atom/movable/lighting_overlay/New()
 	. = ..()
 	verbs.Cut()
 
+// This proc should be used to change the lumcounts of the overlay, it applies the changes and queus the overlay for updating, but only the latter if needed.
 /atom/movable/lighting_overlay/proc/update_lumcount(delta_r, delta_g, delta_b)
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/lighting_overlay/proc/update_lumcount() called tick#: [world.time]")
 	if(!delta_r && !delta_g && !delta_b) //Nothing is being changed all together.
 		return
 
@@ -50,12 +52,14 @@
 		needs_update = 1
 		lighting_update_overlays |= src
 
+// This proc changes the colour of us (the actual "colour" the light emits).
 /atom/movable/lighting_overlay/proc/update_overlay()
-	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/atom/movable/lighting_overlay/proc/update_overlay() called tick#: [world.time]")
-	var/mx = max(lum_r, lum_g, lum_b)
+	var/mx = max(lum_r, lum_g, lum_b) // Scale it so 1 is the strongest lum, if it is below 1.
 	. = 1 // factor
 	if(mx > 1)
-		. = 1/mx
+		. = 1 / mx
+
+	// Change the colour of the overlay, if we are using dynamic lighting we use animate(), else we don't.
 	#if LIGHTING_TRANSITIONS == 1
 	animate(src,
 		color = rgb(lum_r * 255 * ., lum_g * 255 * ., lum_b * 255 * .),
@@ -67,10 +71,10 @@
 
 	var/turf/T = loc
 
-	if(istype(T)) //Incase we're not on a turf, pool ourselves, something happened.
+	if(istype(T)) // Incase we're not on a turf, pool ourselves, something happened.
 		if(color != "#000000")
 			luminosity = 1
-		else  //No light, set the turf's luminosity to 0 to remove it from view()
+		else  // No light, set the turf's luminosity to 0 to remove it from view()
 			#if LIGHTING_TRANSITIONS == 1
 			spawn(LIGHTING_TRANSITION_SPEED)
 				luminosity = 0
@@ -78,16 +82,17 @@
 			luminosity = 0
 			#endif
 
-		universe.OnTurfTick(T)
+		universe.OnTurfTick(T) // Do a turf tick, yes this is a weird place to put it I know.
 	else
+		// PANIC.
 		if(loc)
 			warning("A lighting overlay realised its loc was NOT a turf (actual loc: [loc], [loc.type]) in update_overlay() and got pooled!")
 		else
 			warning("A lighting overlay realised it was in nullspace in update_overlay() and got pooled!")
 		returnToPool(src)
 
+// Special override of resetVariables() in the interest of speed.
 /atom/movable/lighting_overlay/resetVariables()
-//	testing("Lighting_overlays: resetvars called")
 	loc = null
 
 	lum_r = 0
@@ -99,6 +104,7 @@
 
 	needs_update = 0
 
+// Standard reference removal stuff.
 /atom/movable/lighting_overlay/Destroy()
 	all_lighting_overlays -= src
 	lighting_update_overlays -= src
@@ -107,6 +113,7 @@
 	if(istype(T))
 		T.lighting_overlay = null
 
+// Variety of overrides so the overlays don't get affected by weird things.
 /atom/movable/lighting_overlay/singuloCanEat()
 	return 0
 
@@ -119,7 +126,7 @@
 /atom/movable/lighting_overlay/can_shuttle_move()
 	return 0
 
-//Override here to prevent things accidentally moving around overlays.
+// Override here to prevent things accidentally moving around overlays.
 /atom/movable/lighting_overlay/forceMove(atom/destination, var/harderforce = 0)
 	if(harderforce)
 		. = ..()

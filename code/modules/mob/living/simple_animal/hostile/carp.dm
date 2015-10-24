@@ -23,6 +23,7 @@
 	can_breed = 1
 	childtype = /mob/living/simple_animal/hostile/carp/baby
 	child_amount = 1
+	holder_type = /obj/item/weapon/holder/animal/carp
 
 
 	harm_intent_damage = 8
@@ -117,6 +118,7 @@
 	icon_living = "holocarp"
 	can_breed = 0
 	pheromones_act = PHEROMONES_NO_EFFECT
+	holder_type = null
 
 /mob/living/simple_animal/hostile/carp/holocarp/Die()
 	qdel(src)

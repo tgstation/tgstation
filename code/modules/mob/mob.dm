@@ -174,6 +174,13 @@ var/global/obj/screen/fuckstat/FUCK = new
 		returnToPool(zone_sel)
 		if(client) client.screen -= zone_sel
 		zone_sel = null
+	if(hud_used)
+		for(var/obj/screen/item_action/actionitem in hud_used.item_action_list)
+			if(client)
+				client.screen -= actionitem
+				client.images -= actionitem.overlay
+			returnToPool(actionitem)
+			hud_used.item_action_list -= actionitem
 
 /mob/proc/cultify()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/cultify() called tick#: [world.time]")
@@ -1752,7 +1759,7 @@ mob/proc/assess_threat()
 
 mob/proc/walking()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\mob/proc/walking() called tick#: [world.time]")
-	return !(lying || flying)
+	return !(lying || flying || locked_to)
 
 /mob/proc/dexterity_check()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/mob/proc/dexterity_check() called tick#: [world.time]")

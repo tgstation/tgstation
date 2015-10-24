@@ -41,27 +41,47 @@ var/global/datum/store/centcomm_store=new
 	if(!linked_db)
 		return 0
 
-	var/datum/money_account/D = linked_db.attempt_account_access(card.associated_account_number, 0, 2, 0)
+	//we start by checking the ID card's virtual wallet
+	var/datum/money_account/D = card.virtual_wallet
+	var/using_account = "Virtual Wallet"
 
+	//if there isn't one for some reason we create it, that should never happen but oh well.
 	if(!D)
-		return 0
+		card.update_virtual_wallet()
+		D = card.virtual_wallet
 
+	//if there isn't enough money in the virtual wallet, then we check the bank account connected to the ID
 	if(D.money < amount)
-		user << "\icon[merchcomp]<span class='warning'>You don't have that much money!</span>"
-		return 0
+		D = linked_db.attempt_account_access(card.associated_account_number, 0, 2, 0)
+		using_account = "Bank Account"
+		if(!D)								//first we check if there IS a bank account in the first place
+			usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
+			usr << "\icon[src]<span class='warning'>Unable to access your bank account.</span>"
+			return 0
+		else if(D.security_level > 0)		//next we check if the security is low enough to pay directly from it
+			usr << "\icon[src]<span class='warning'>You don't have that much money on your virtual wallet!</span>"
+			usr << "\icon[src]<span class='warning'>Lower your bank account's security settings if you wish to pay directly from it.</span>"
+			return 0
+		else if(D.money < amount)			//and lastly we check if there's enough money on it, duh
+			user << "\icon[merchcomp]<span class='warning'>You don't have that much money on your bank account!</span>"
+			return 0
+
+	//transfer the money
 	D.money -= amount
 
-	user << "\icon[merchcomp]<span class='notice'>Remaining balance: [D.money]$</span>"
+	user << "\icon[merchcomp]<span class='notice'>Remaining balance ([using_account]): [D.money]$</span>"
 
+	//create an entry on the buy's account's transaction log
 	var/datum/transaction/T = new()
-	T.target_name = "[command_name()] Merchandising"
+	T.target_name = D.owner_name
 	T.purpose = "Purchase of [item.name]"
 	T.amount = -amount
 	T.date = current_date_string
 	T.time = worldtime2text()
-	T.source_terminal = merchcomp.name
+	T.source_terminal = merchcomp.machine_id
 	D.transaction_log.Add(T)
 
+	//and another entry on the vending machine's vendor account's transaction log
 	if(vendor_account)
 		T = new()
 		T.target_name = "[command_name()] Merchandising"
@@ -69,7 +89,7 @@ var/global/datum/store/centcomm_store=new
 		T.amount = amount
 		T.date = current_date_string
 		T.time = worldtime2text()
-		T.source_terminal = merchcomp.name
+		T.source_terminal = merchcomp.machine_id
 		vendor_account.transaction_log.Add(T)
 
 	return 1

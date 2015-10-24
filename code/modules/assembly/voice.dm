@@ -9,16 +9,16 @@
 	var/listening = 0
 	var/recorded = "" //the activation message
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(speaker == src)
+/obj/item/device/assembly/voice/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(!speech.speaker || speech.speaker == src)
 		return
-	if(listening && !radio_freq)
-		recorded = raw_message
+	if(listening && !speech.frequency)
+		recorded = speech.message
 		listening = 0
-		say("Activation message is '[recorded]'.")
+		say("Activation message is '[html_encode(speech.message)]'.")
 	else
-		if(findtext(message, recorded))
-			if(istype(speaker, /obj/item/device/assembly))
+		if(findtext(speech.message, recorded))
+			if(istype(speech.speaker, /obj/item/device/assembly))
 				playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
 			else
 				pulse(0)
@@ -34,8 +34,9 @@
 	activate()
 	return 1
 
+// why is this here.
 /obj/machinery/vending/say_quote(text)
-	return "beeps, \"[text]\""
+	return "beeps, [text]"
 
 /obj/item/device/assembly/voice/toggle_secure()
 	. = ..()

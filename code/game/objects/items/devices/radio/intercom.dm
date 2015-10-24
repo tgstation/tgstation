@@ -63,8 +63,8 @@
 	return canhear_range
 
 
-/obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(!src.anyai && !(speaker in src.ai))
+/obj/item/device/radio/intercom/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(speech.speaker && !src.anyai && !(speech.speaker in src.ai))
 		return
 	..()
 

@@ -1,29 +1,64 @@
 #define METEOR_TEMPERATURE
 
-/var/meteor_wave_delay = 300 //Failsafe wait between waves in tenths of seconds
-//Set it above 100 (10s delay) if you want to minimize lag for some reason
-
-/var/meteors_in_wave = 10 //Failsafe in case a number isn't called
-/var/meteorwavecurrent = 0
+/var/meteor_wave_delay = 300 //Default wait between waves in tenths of seconds
+/var/meteors_in_wave = 10 //Default absolute size
+/var/meteor_wave_active = 0
 /var/max_meteor_size = 0
 /var/chosen_dir = 1
 
-/proc/meteor_wave(var/number = meteors_in_wave, var/max_size = 0, var/list/types=null) //Call above constants to change
+/proc/meteor_wave(var/number = meteors_in_wave, var/max_size = 0, var/list/types = null) //Call above constants to change
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/meteor_wave() called tick#: [world.time]")
-	if(!ticker || meteorwavecurrent)
+	if(!ticker || meteor_wave_active)
 		return
-	meteorwavecurrent = 1
-	meteor_wave_delay = (rand(30,45)) * 10 //Between 30 and 45 seconds, makes everything more chaotic
+	meteor_wave_active = 1
+	meteor_wave_delay = (rand(25, 40)) * 10 //Between 30 and 45 seconds, engineers need time to shuffle in relative safety
 	chosen_dir = pick(cardinal) //Pick a direction
 	max_meteor_size = max_size
-	for(var/i = 0 to number)
-		spawn(rand(15,20)) //1.5 to 2 seconds between meteors
-			var/meteor_type = null
-			if(types != null)
-				meteor_type = pick(types)
-			spawn_meteor(chosen_dir, meteor_type)
+	//Generate a name for our wave
+	var/greek_alphabet = list("Alpha", "Beta", "Delta", "Epsilon", "Zeta", "Eta,", "Theta", "Iota", "Kappa", "Lambda", "Mu", \
+						 "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega")
+	var/wave_final_name = "[number > 25 ? "Major":"Minor"] Meteor [pick("Wave", "Cluster", "Group")] [pick(greek_alphabet)]-[rand(1, 999)]"
+	output_information(meteor_wave_delay, chosen_dir, max_size, number, wave_final_name)
 	spawn(meteor_wave_delay)
-		meteorwavecurrent = 0
+		for(var/i = 0 to number)
+			spawn(rand(15, 20)) //1.5 to 2 seconds between meteors
+				var/meteor_type = null
+				if(types != null)
+					meteor_type = pick(types)
+				spawn_meteor(chosen_dir, meteor_type)
+		sleep(50) //Five seconds for the chat to scroll
+		meteor_wave_active = 0
+
+//A bunch of information to be used by the bhangmeter (doubles as a meteor monitoring computer), and sent to the admins otherwise
+/proc/output_information(var/meteor_delay, var/wave_dir, var/meteor_size, var/wave_size, var/wave_name)
+
+	var/meteor_l_size = "normal"
+	switch(meteor_size)
+		if(1)
+			meteor_l_size = "small"
+		if(2)
+			meteor_l_size = "normal"
+		if(3)
+			meteor_l_size = "large"
+		else
+			meteor_l_size = "unknown"
+	var/wave_l_dir = "north"
+	switch(wave_dir)
+		if(1)
+			wave_l_dir = "north"
+		if(2)
+			wave_l_dir = "south"
+		if(4)
+			wave_l_dir = "east"
+		if(8)
+			wave_l_dir = "west"
+
+	message_admins("[wave_name], containing [wave_size] objects up to [meteor_l_size] size and incoming from the [wave_l_dir], will strike in [meteor_delay/10] seconds.")
+
+	//Send to all Bhangmeters
+	for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
+		if(bhangmeter && !bhangmeter.stat)
+			bhangmeter.say("Detected: [wave_name], containing [wave_size] objects up to [meteor_l_size] size and incoming from the [wave_l_dir], will strike in [meteor_delay/10] seconds.")
 
 /proc/spawn_meteor(var/chosen_dir, var/meteorpath = null)
 
@@ -112,11 +147,7 @@
 
 /obj/effect/meteor/Bump(atom/A)
 
-	for(var/mob/M in range(15, src)) //One screen length's from ex_act 3 reach
-		if(!M.stat && !istype(M, /mob/living/silicon/ai)) //Bad idea to shake an ai's view
-			shake_camera(M, 4, 2) //Medium hit
-
-	explosion(src.loc, 2, 4, 6, 8, 0) //Medium meteor, medium boom
+	explosion(get_turf(src), 2, 4, 6, 8, 0, 0, 0) //Medium meteor, medium boom
 	qdel(src)
 
 /obj/effect/meteor/Move()
@@ -130,11 +161,7 @@
 
 /obj/effect/meteor/small/Bump(atom/A)
 
-	for(var/mob/M in range(10, src)) //One screen length's from ex_act 3 reach
-		if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
-			shake_camera(M, 1, 1) //Poof
-
-	explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
+	explosion(get_turf(src), -1, 1, 3, 4, 0, 0, 0) //Tiny meteor doesn't cause too much damage
 	qdel(src)
 
 /obj/effect/meteor/big
@@ -143,15 +170,11 @@
 
 /obj/effect/meteor/big/Bump(atom/A)
 
-	for(var/mob/M in range(15, src)) //One screen length's from ex_act 3 reach
-		if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
-			shake_camera(M, 6, 4) //Massive shellshock
-
-	explosion(src.loc, 4, 6, 8, 8, 0) //You have been visited by the nuclear meteor
+	explosion(get_turf(src), 4, 6, 8, 8, 0, 0, 1) //You have been visited by the nuclear meteor
 	qdel(src)
 
 /obj/effect/meteor/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe)) //Yeah, you can totally do that
 		qdel(src)
 	..()
 

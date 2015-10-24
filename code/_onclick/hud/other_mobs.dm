@@ -15,7 +15,7 @@
 	mymob.flash.icon = 'icons/mob/screen1.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	mymob.client.reset_screen()
@@ -58,7 +58,7 @@
 	mymob.flash.icon = 'icons/mob/screen1.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	mymob.client.reset_screen()
@@ -125,7 +125,7 @@
 	mymob.flash.icon = 'icons/mob/screen1.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	mymob.client.reset_screen()
@@ -149,7 +149,7 @@
 	mymob.flash.icon = 'icons/mob/screen1.dmi'
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	if(constructtype)
@@ -193,18 +193,18 @@
 	vampire_blood_display = getFromPool(/obj/screen)
 	vampire_blood_display.name = "Vampire Blood"
 	vampire_blood_display.icon_state = "dark128"
-	vampire_blood_display.screen_loc = "14:28,9:15"
+	vampire_blood_display.screen_loc = "EAST-1:28,CENTER+2:15"
 	vampire_blood_display.layer = 20
 
 	mymob.client.screen += list(vampire_blood_display)
-	
+
 /datum/hud/proc/changeling_hud()
 	vampire_blood_display = getFromPool(/obj/screen)
 	vampire_blood_display.name = "Changeling Chems"
 	vampire_blood_display.icon_state = "dark128"
-	vampire_blood_display.screen_loc = "14:28,9:15"
+	vampire_blood_display.screen_loc = "EAST-1:28,CENTER+2:15"
 	vampire_blood_display.layer = 20
-	
+
 	mymob.client.screen += list(vampire_blood_display)
 
 

@@ -179,6 +179,8 @@
 	item_state = "cardborg"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
+	starting_materials = list(MAT_CARDBOARD = 11250)
+	w_type=RECYK_MISC
 
 /*
  * Misc

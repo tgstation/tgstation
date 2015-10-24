@@ -74,7 +74,6 @@
 /datum/mind/New(var/key)
 	src.key = key
 
-
 /datum/mind/proc/transfer_to(mob/living/new_character)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/mind/proc/transfer_to() called tick#: [world.time]")
 	if(!istype(new_character))
@@ -1454,3 +1453,11 @@ proc/clear_memory(var/silent = 1)
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
+
+
+/proc/mind_can_reenter(var/datum/mind/mind)
+	if(mind)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.can_reenter_corpse && G.mind == mind)
+				return TRUE
+	return FALSE

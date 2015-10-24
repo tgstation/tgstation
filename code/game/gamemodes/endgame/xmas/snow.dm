@@ -39,6 +39,7 @@
 
 /obj/structure/snow/attackby(obj/item/W,mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe/shovel))//using a shovel or spade harvests some snow and let's you click on the lower layers
+		playsound(loc, 'sound/items/shovel.ogg', 50, 1)
 		snow_amount = SNOWCOVERING_LITTLE
 		icon_state = "snow_dug"
 		mouse_opacity = 0
@@ -304,23 +305,23 @@
 
 var/global/list/datum/stack_recipe/snow_recipes = list (
 	new/datum/stack_recipe("snowman", /mob/living/simple_animal/hostile/retaliate/snowman, 10, time = 50, one_per_turf = 0, on_floor = 1),
-	new/datum/stack_recipe("snow barricade", /obj/structure/barricade/snow, 20, time = 50, one_per_turf = 1, on_floor = 1),
+	new/datum/stack_recipe("snow barricade", /obj/structure/window/barricade/snow, 20, time = 50, one_per_turf = 1, on_floor = 1),
 	)
 
 
 //////BARRICADE//////
 
-/obj/structure/barricade/snow
+/obj/structure/window/barricade/snow
 	name = "snow barricade"
 	desc = "This space is blocked off by a snow barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "snowbarricade"
 	anchored = 1.0
 	density = 1.0
-	var/health = 50.0
+	health = 50.0
 	var/maxhealth = 50.0
 
-/obj/structure/barricade/snow/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/window/barricade/snow/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/stack/sheet/snow))
 		if (src.health < src.maxhealth)
 			visible_message("<span class='warning'>[user] begins to repair the [src]!</span>")
@@ -347,7 +348,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 			del(src)
 		..()
 
-/obj/structure/barricade/snow/ex_act(severity)
+/obj/structure/window/barricade/snow/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			visible_message("<span class='danger'>\the [src] is blown apart!</span>")
@@ -363,22 +364,20 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 				qdel(src)
 			return
 
-/obj/structure/barricade/snow/blob_act()
+/obj/structure/window/barricade/snow/blob_act()
 	src.health -= 25
 	if (src.health <= 0)
 		visible_message("<span class='danger'>The blob eats through \the [src]!</span>")
 		del(src)
 	return
 
-/obj/structure/barricade/snow/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
+/obj/structure/window/barricade/snow/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)//So bullets will fly over and stuff.
 	if(air_group || (height==0))
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
 		return 0
-
-
 
 //////TREES//////
 /obj/structure/snow_flora

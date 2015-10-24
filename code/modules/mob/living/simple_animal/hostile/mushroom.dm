@@ -20,7 +20,6 @@
 	faction = "mushroom"
 	environment_smash = 0
 	stat_attack = 2
-	mouse_opacity = 1
 	speed = 1
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it

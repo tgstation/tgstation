@@ -41,13 +41,7 @@
 
 	component_parts = newlist(\
 		/obj/item/weapon/circuitboard/microwave,\
-		/obj/item/weapon/stock_parts/matter_bin,\
-		/obj/item/weapon/stock_parts/matter_bin,\
-		/obj/item/weapon/stock_parts/matter_bin,\
 		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/micro_laser,\
-		/obj/item/weapon/stock_parts/scanning_module,\
 		/obj/item/weapon/stock_parts/scanning_module,\
 		/obj/item/weapon/stock_parts/console_screen\
 	)
@@ -74,7 +68,7 @@
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		T += M.rating-1
-	speed_multiplier = initial(speed_multiplier)+(T * 0.25)
+	speed_multiplier = initial(speed_multiplier)+(T * 0.5)
 
 	T = 0
 	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)

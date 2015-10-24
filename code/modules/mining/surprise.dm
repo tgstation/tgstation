@@ -321,12 +321,12 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 				continue
 			new thing(T)
 
-	proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/clean=0)
+	proc/spawn_room(var/atom/start_loc, var/x_size, var/y_size, var/clean = 0)
 		//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\proc/spawn_room() called tick#: [world.time]")
-		if(!check_complex_placement(start_loc,x_size,y_size))
+		if(!check_complex_placement(start_loc, x_size, y_size))
 			return 0
 
-		// If walls/floors are contiguous, pick them out.
+		//If walls/floors are contiguous, pick them out.
 		var/wall_type
 		if(flags & CONTIGUOUS_WALLS)
 			wall_type = pickweight(walltypes)
@@ -335,12 +335,11 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		if(flags & CONTIGUOUS_FLOORS)
 			floor_type = pickweight(floortypes)
 
-
 		var/list/walls[0]
 		var/list/floors[0]
-		for(var/x = 0,x<x_size,x++)
-			for(var/y = 0,y<y_size,y++)
-				var/turf/cur_loc = locate(start_loc.x+x,start_loc.y+y,start_loc.z)
+		for(var/x = 0, x < x_size, x++)
+			for(var/y = 0, y < y_size, y++)
+				var/turf/cur_loc = locate(start_loc.x + x, start_loc.y + y, start_loc.z)
 
 				if(clean)
 					for(var/O in cur_loc)
@@ -348,7 +347,7 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 							continue
 						qdel(O)
 
-				if(x == 0 || x==x_size-1 || y==0 || y==y_size-1)
+				if(x == 0 || x == x_size - 1 || y == 0 || y == y_size - 1)
 					walls |= cur_loc
 				else
 					floors |= cur_loc
@@ -357,38 +356,33 @@ var/global/list/mining_surprises = typesof(/mining_surprise)-/mining_surprise
 		for(var/turf/turf in walls)
 
 			if(!(flags & CONTIGUOUS_WALLS))
-				wall_type=pickweight(walltypes)
+				wall_type = pickweight(walltypes)
 
-			var/turf/T
 			if(dd_hasprefix("[wall_type]","/obj"))
 				if(!(flags & CONTIGUOUS_FLOORS))
-					floor_type=pickweight(floortypes)
-				T=new floor_type(turf)
-				new wall_type(T)
+					floor_type = pickweight(floortypes)
+				turf.ChangeTurf(floor_type)
+				new wall_type(turf)
 			else
-				//testing("Creating wall of type [wall_type].")
-				T=new wall_type(turf)
-			room.turfs += T
-			complex_area.contents += T
-			var/surprise_turf_info/Ti = room.GetTurfInfo(T)
-			Ti.turf_type=TURF_WALL
+				turf.ChangeTurf(wall_type)
+			room.turfs += turf
+			complex_area.contents += turf
+			var/surprise_turf_info/Ti = room.GetTurfInfo(turf)
+			Ti.turf_type = TURF_WALL
 
 		for(var/turf/turf in floors)
 			if(!(flags & CONTIGUOUS_FLOORS))
-				floor_type=pickweight(floortypes)
+				floor_type = pickweight(floortypes)
 
-			var/turf/T = new floor_type(turf)
-			room.turfs += T
-			complex_area.contents += T
-			var/surprise_turf_info/Ti = room.GetTurfInfo(T)
-			Ti.turf_type=TURF_FLOOR
+			turf.ChangeTurf(floor_type)
+			room.turfs += turf
+			complex_area.contents += turf
+			var/surprise_turf_info/Ti = room.GetTurfInfo(turf)
+			Ti.turf_type = TURF_FLOOR
 
 		room.UpdateTurfs()
-
 		postProcessRoom(room)
-
 		rooms += room
-
 		message_admins("Room spawned at [formatJumpTo(start_loc)]")
 
 		return 1

@@ -169,14 +169,8 @@
 				user << "<span class='warning'>Sticking an empty [W] into the frame would sort of defeat the purpose.</span>"
 				return
 			if(!M.brainmob.key)
-				var/ghost_can_reenter = 0
-				if(M.brainmob.mind)
-					for(var/mob/dead/observer/G in player_list)
-						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
-							ghost_can_reenter = 1
-							break
-				if(!ghost_can_reenter)
-					user << "<span class='notice'>The [W] is completely unresponsive; there's no point.</span>"
+				if(!mind_can_reenter(M.brainmob.mind))
+					user << "<span class='notice'>\The [W] is completely unresponsive; there's no point.</span>"
 					return
 
 			if(M.brainmob.stat == DEAD)

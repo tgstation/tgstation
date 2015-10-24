@@ -103,45 +103,10 @@ Implant Specifics:<BR>"}
 			if(prob(60))
 				meltdown()
 		if(2)
-			delay = rand(5 MINUTES,15 MINUTES)
+			delay = rand(5 MINUTES, 15 MINUTES)
 
 	spawn(delay)
 		malfunction--
-
-
-/obj/item/weapon/implant/dexplosive
-	name = "explosive"
-	desc = "And boom goes the weasel."
-	icon_state = "implant_evil"
-
-	get_data()
-		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Explodes<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
-		return dat
-
-
-/obj/item/weapon/implant/dexplosive/trigger(emote, source as mob)
-	if(emote == "deathgasp")
-		src.activate("death")
-	return
-
-
-/obj/item/weapon/implant/dexplosive/activate(var/cause)
-	if((!cause) || (!src.imp_in))	return 0
-	explosion(src, 1, 2, 3, 3, 0)//This might be a bit much, dono will have to see.
-	if(src.imp_in)
-		src.imp_in.gib()
-
-/obj/item/weapon/implant/dexplosive/islegal()
-	return 0
 
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
@@ -154,7 +119,7 @@ Implant Specifics:<BR>"}
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
-<b>Life:</b> Activates upon codephrase.<BR>
+<b>Life:</b> Activates upon codephrase or detected death.<BR>
 <b>Important Notes:</b> Explodes<BR>
 <HR>
 <b>Implant Details:</b><BR>
@@ -163,36 +128,39 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-/obj/item/weapon/implant/explosive/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	hear(message)
+/obj/item/weapon/implant/explosive/Hear(var/datum/speech/speech, var/rendered_speech="")
+	hear(speech.message)
 	return
 
 /obj/item/weapon/implant/explosive/hear(var/msg)
-	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
+	var/list/replacechars = list("'" = "", "\"" = "", ">" = "", "<" = "", "(" = "", ")" = "")
 	msg = sanitize_simple(msg, replacechars)
-	if(findtext(msg,phrase))
+	if(findtext(msg, phrase))
 		activate()
-		del(src)
+
+/obj/item/weapon/implant/explosive/trigger(emote, source as mob)
+	if(emote == "deathgasp")
+		activate()
 
 /obj/item/weapon/implant/explosive/activate()
-	if (malfunction == MALFUNCTION_PERMANENT)
+	if(malfunction == MALFUNCTION_PERMANENT)
 		return
 	if(istype(imp_in, /mob/))
-		var/mob/T = imp_in
+		var/mob/M = imp_in
 
-		message_admins("Explosive implant triggered in [T] ([T.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>) ")
-		log_game("Explosive implant triggered in [T] ([T.key]).")
+		message_admins("Explosive implant triggered in [M] ([M.key]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[M.x];Y=[M.y];Z=[M.z]'>JMP</a>) ")
+		log_game("Explosive implant triggered in [M] ([M.key]).")
 
-		explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
-		T.gib()
-	var/turf/t = get_turf(imp_in)
+		var/turf/T = get_turf(M)
 
-	if(t)
-		t.hotspot_expose(3500,125,surfaces=1)
+		explosion(T, 1, 3, 4, 6)
+		T.hotspot_expose(3500, 125, surfaces = 1)
+
+		qdel(src)
 
 /obj/item/weapon/implant/explosive/implanted(mob/source as mob)
 	phrase = input("Choose activation phrase:") as text
-	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
+	var/list/replacechars = list("'" = "", "\"" = "", ">" = "", "<" = "", "(" = "", ")" = "")
 	phrase = sanitize_simple(phrase, replacechars)
 	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
 	usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
@@ -200,23 +168,23 @@ Implant Specifics:<BR>"}
 	return 1
 
 /obj/item/weapon/implant/explosive/emp_act(severity)
-	if (malfunction)
+	if(malfunction)
 		return
 	malfunction = MALFUNCTION_TEMPORARY
 	switch (severity)
-		if (2.0)	//Weak EMP will make implant tear limbs off.
-			if (prob(50))
+		if(2.0)	//Weak EMP will make implant tear limbs off.
+			if(prob(50))
 				small_boom()
-		if (1.0)	//strong EMP will melt implant either making it go off, or disarming it
-			if (prob(70))
-				if (prob(50))
+		if(1.0)	//Strong EMP will melt implant either making it go off, or disarming it
+			if(prob(70))
+				if(prob(50))
 					small_boom()
 				else
-					if (prob(50))
+					if(prob(50))
 						activate()		//50% chance of bye bye
 					else
 						meltdown()		//50% chance of implant disarming
-	spawn (20)
+	spawn(20)
 		malfunction--
 
 /obj/item/weapon/implant/explosive/islegal()
@@ -224,21 +192,19 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/weapon/implant/explosive/proc/small_boom() called tick#: [world.time]")
-	if (ishuman(imp_in) && part)
-		imp_in.visible_message("<span class = 'warning'> Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
+	if(ishuman(imp_in) && part)
+		imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!</span>")
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
-			if (ishuman(imp_in) && part)
+			if(ishuman(imp_in) && part)
 				//No tearing off these parts since it's pretty much killing
 				//and you can't replace groins
-				if (istype(part,/datum/organ/external/chest) ||	\
-					istype(part,/datum/organ/external/groin) ||	\
-					istype(part,/datum/organ/external/head))
-					part.createwound(BRUISE, 60)	//mangle them instead
+				if(istype(part, /datum/organ/external/chest) || istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
+					part.createwound(BRUISE, 60) //Mangle them instead
 				else
 					part.droplimb(1)
 			explosion(get_turf(imp_in), -1, -1, 2, 3, 3)
-			del(src)
+			qdel(src)
 
 /obj/item/weapon/implant/chem
 	name = "chem"
@@ -459,6 +425,10 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	var/mob/M = imp_in
 	var/area/t = get_area(M)
 	src.name = "\improper [mobname]'s Death Alarm"
+	var/datum/speech/speech = create_speech("[mobname] has died in",1459,src)
+	speech.name="[mobname]'s Death Alarm"
+	speech.job="Death Alarm"
+	speech.set_language(LANGUAGE_SOL_COMMON)
 	switch (cause)
 		if("death")
 			if(!announcement_intercom || !istype(announcement_intercom))
@@ -466,16 +436,18 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
 				//give the syndies a bit of stealth
-				Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in Space!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+				speech.message="[mobname] has died in Space!"
 			else
-				Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in [t.name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+				speech.message="[mobname] has died in [t.name]!"
 			processing_objects.Remove(src)
 		if ("emp")
 			var/name = prob(50) ? t.name : pick(teleportlocs)
-			Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died in [name]!", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+			speech.message="[mobname] has died in [name]!"
 		else
-			Broadcast_Message(announcement_intercom, all_languages["Sol Common"], null, announcement_intercom, "[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm", "Death Alarm", "[mobname]'s Death Alarm", 0, 0, list(0,1), 1459)
+			speech.message="[mobname] has died-zzzzt in-in-in..."
 			processing_objects.Remove(src)
+	Broadcast_Message(speech, vmask=0, data=0, compression=0, level=list(0,1))
+	returnToPool(speech)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
 	if (malfunction)		//so I'm just going to add a meltdown chance here

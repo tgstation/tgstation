@@ -2711,6 +2711,8 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "pizzabox1"
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 	var/open = 0 // Is the box open?
 	var/ismessy = 0 // Fancy mess on the lid
@@ -3677,6 +3679,32 @@
 		..()
 		reagents.add_reagent("nutriment", 10)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	name = "cinnamon roll"
+	desc = "Sweet and spicy!"
+	icon_state = "cinnamon_roll"
+	trash = /obj/item/trash/plate
+	food_flags = FOOD_SWEET
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+		reagents.add_reagent("cinnamon",5)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonpie
+	name = "cinnamon pie"
+	desc = "Guarranted snail-free!"
+	icon_state = "cinnamon_pie"
+	trash = /obj/item/trash/pietin
+	food_flags = FOOD_SWEET
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("cinnamon",5)
+		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sundaeramen
 	name = "Sundae Ramen"

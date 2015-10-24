@@ -417,7 +417,7 @@ var/list/mechtoys = list(
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]<BR>
+		<HR>Bank account credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]<BR>
 		<BR>\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>
 		<A href='?src=\ref[src];vieworders=1'>View approved orders</A><BR><BR>
 		<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR><BR>
@@ -442,7 +442,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:383: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
+			temp = {"<b>Bank account credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>
 				<b>Select a category</b><BR><BR>"}
 			// END AUTOFIX
@@ -453,7 +453,7 @@ var/list/mechtoys = list(
 
 			// AUTOFIXED BY fix_string_idiocy.py
 			// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:390: temp = "<b>Supply points: [supply_shuttle.points]</b><BR>"
-			temp = {"<b>Supply points: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
+			temp = {"<b>Bank account credits: [current_acct ? current_acct.fmtBalance() : "PANIC"]</b><BR>
 				<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR><BR><BR>
 				<b>Request from: [last_viewed_group]</b><BR><BR>"}
 			// END AUTOFIX
@@ -489,6 +489,9 @@ var/list/mechtoys = list(
 			else
 				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"
 				return
+			usr << "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>"
+			if(account && (account.money < P.cost))
+				usr << "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>"
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account
@@ -697,8 +700,11 @@ var/list/mechtoys = list(
 				idrank = I.GetJobName()
 				account = get_card_account(I)
 			else
-				usr << "<span class='warning'>Please wear an ID with an associated bank account.</span>"
+				usr << "\icon[src]<span class='warning'>Please wear an ID with an associated bank account.</span>"
 				return
+			usr << "\icon[src]<span class='notice'>Your request has been saved. The transaction will be performed to your bank account when it has been accepted by cargo staff.</span>"
+			if(account && (account.money < P.cost))
+				usr << "\icon[src]<span class='warning'>Your bank account doesn't have enough funds to order this pack. Your request will be on hold until you provide your bank account with the necessary funds.</span>"
 		else if(issilicon(usr))
 			idname = usr.real_name
 			account = station_account
@@ -750,10 +756,12 @@ var/list/mechtoys = list(
 				O = SO
 				P = O.object
 				A = SO.account
-				if(A && A.money >= P.cost + SUPPLY_TAX)
+				if(A && A.money >= P.cost)
 					supply_shuttle.requestlist.Cut(i,i+1)
-					A.charge(P.cost,null,"Supply Order #[SO.ordernum]",dest_name = "CentComm")
-					A.charge(SUPPLY_TAX,cargo_acct,"Order Tax")
+					var/cargo_share = round((P.cost/100)*20)
+					var/centcom_share = P.cost-cargo_share
+					A.charge(centcom_share,null,"Supply Order #[SO.ordernum] ([P.name])",src.name,dest_name = "CentComm")
+					A.charge(cargo_share,cargo_acct,"Order Tax",src.name)
 					supply_shuttle.shoppinglist += O
 					// AUTOFIXED BY fix_string_idiocy.py
 					// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\supplyshuttle.dm:658: temp = "Thanks for your order.<BR>"

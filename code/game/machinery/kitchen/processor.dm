@@ -14,6 +14,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 500
+	var/time_coeff = 1
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -23,17 +24,18 @@
 
 	component_parts = newlist(
 		/obj/item/weapon/circuitboard/processor,
-		/obj/item/weapon/stock_parts/matter_bin,
-		/obj/item/weapon/stock_parts/matter_bin,
-		/obj/item/weapon/stock_parts/capacitor,
 		/obj/item/weapon/stock_parts/scanning_module,
 		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/micro_laser/high,
-		/obj/item/weapon/stock_parts/micro_laser/high
+		/obj/item/weapon/stock_parts/manipulator
 	)
 
 	RefreshParts()
+
+/obj/machinery/processor/RefreshParts()
+	var/manipcount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+	time_coeff = 2/manipcount
 
 /datum/food_processor_process
 	var/input
@@ -75,7 +77,6 @@
 
 
 		slime
-			time=0//It's painful enough
 
 			process(loc, what)
 
@@ -122,6 +123,48 @@
 				..()
 
 			input = /mob/living/carbon/monkey
+			output = null
+
+		chicken
+			process(loc, what)
+				playsound(loc, 'sound/machines/ya_dun_clucked.ogg', 50, 1)
+				..()
+			input = /mob/living/simple_animal/chicken
+			output = /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets
+
+		chick
+			process(loc, what)
+				playsound(loc, 'sound/machines/ya_dun_clucked.ogg', 50, 1)
+				..()
+			input = /mob/living/simple_animal/chick
+			output = /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets
+
+		human
+			process(loc, what)
+				var/mob/living/carbon/human/target = what
+				if (istype(target.wear_suit,/obj/item/clothing/suit/chickensuit) && istype(target.head,/obj/item/clothing/head/chicken))
+					target.visible_message("<span class='danger'>Bwak! Bwak! Bwak!</span>")
+					playsound(loc, 'sound/machines/ya_dun_clucked.ogg', 50, 1)
+					target.canmove = 0
+					target.icon = null
+					target.invisibility = 101
+					target.density = 0
+					var/throwzone = list()
+					for(var/turf/T in orange(loc,4))
+						throwzone += T
+					for(var/obj/I in target.contents)
+						I.loc = loc
+						I.throw_at(pick(throwzone),rand(2,5),0)
+					hgibs(loc, target.viruses, target.dna, target.species.flesh_color, target.species.blood_color)
+					del(target)
+					for(var/i = 1;i<=6;i++)
+						new /obj/item/weapon/reagent_containers/food/snacks/chicken_nuggets(loc)
+						sleep(2)
+					..()
+				else
+					target.loc = loc
+					target.visible_message("<span class='danger'>The processor's safety protocols won't allow it to cut something that looks human!</span>")
+			input = /mob/living/carbon/human
 			output = null
 
 /obj/machinery/processor/proc/select_recipe(var/X)
@@ -191,7 +234,7 @@
 			"You hear [src] start")
 		playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
 		use_power(500)
-		sleep(P.time)
+		sleep(P.time*time_coeff)
 		P.process(src.loc, O)
 		src.processing = 0
 	src.visible_message("<span class='notice'>[src] is done.</span>", \

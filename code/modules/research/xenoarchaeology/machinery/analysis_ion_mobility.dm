@@ -1,13 +1,25 @@
 
 // This machine shows the amount of a certain material that is present
 
-obj/machinery/anomaly/ion_mobility
+/obj/machinery/anomaly/ion_mobility
 	name = "Ion Mobility Spectrometer"
 	desc = "A specialised, complex analysis machine."
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 
-obj/machinery/anomaly/ion_mobility/ScanResults()
+/obj/machinery/anomaly/ion_mobility/New()
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/anom/ion,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/scanning_module
+	)
+
+	RefreshParts()
+
+/obj/machinery/anomaly/ion_mobility/ScanResults()
 	var/results = "The scan was inconclusive. Check sample integrity and carrier consistency."
 
 	var/datum/geosample/scanned_sample

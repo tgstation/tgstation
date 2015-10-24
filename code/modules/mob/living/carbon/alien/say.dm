@@ -20,11 +20,11 @@
 		if((!S.stat && S.hivecheck()) || ((S in dead_mob_list) && !istype(S, /mob/new_player)))
 			handle_render(S,rendered,src)
 
-/mob/living/carbon/alien/handle_inherent_channels(message, message_mode, var/datum/language/speaking)
+/mob/living/carbon/alien/handle_inherent_channels(var/datum/speech/speech, var/message_mode)
 	if(!..())
 		if(message_mode == MODE_ALIEN)
 			if(hivecheck())
-				alien_talk(message)
+				alien_talk(speech.message)
 			return 1
 		return 0
 

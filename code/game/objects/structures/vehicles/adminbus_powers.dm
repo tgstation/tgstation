@@ -83,7 +83,7 @@
 				T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1,'sound/weapons/emitter2.ogg',"#C70AF5")
 			if(3)
 				if(prob(10))
-					var/mob/living/simple_animal/hostile/russian/M = new /mob/living/simple_animal/hostile/russian(T)
+					var/mob/living/simple_animal/hostile/humanoid/russian/M = new /mob/living/simple_animal/hostile/humanoid/russian(T)
 					M.faction = "adminbus mob"
 					spawned_mobs += M
 				else

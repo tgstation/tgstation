@@ -52,6 +52,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/list/applications = list()
 
+	var/list/incoming_transactions = list()
+
 	var/list/currentevents1 = list("The Prime Minister of Space Australia has announced today a new policy to hand out fake dollar bills to the poor.",
 		"The President of Space America issued a press release today stating that he is not in fact, a Tajaran in disguise.",
 		"The Prime Minister of Space England is in hot water today after he announced that space tea would now be made with 20% more nuclear waste.",
@@ -172,6 +174,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/onthisday = null
 	var/didyouknow = null
 
+
+/obj/item/device/pda/New()
+	..()
+	var/datum/pda_app/balance_check/app = new /datum/pda_app/balance_check()
+	app.onInstall(src)
+
 /obj/item/device/pda/medical
 	name = "Medical PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -217,10 +225,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/detective/New()
 	..()
-	var/datum/pda_app/light_upgrade/app1 = new /datum/pda_app/light_upgrade()
-	app1.onInstall(src)
-	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
-	app2.onInstall(src)
+	var/datum/pda_app/light_upgrade/app = new /datum/pda_app/light_upgrade()
+	app.onInstall(src)
 
 /obj/item/device/pda/warden
 	name = "Warden PDA"
@@ -277,11 +283,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/heads/hop/New()
 	..()
-	var/datum/pda_app/ringer/app1 = new /datum/pda_app/ringer()
-	app1.onInstall(src)
-	app1.frequency = deskbell_freq_hop
-	var/datum/pda_app/balance_check/app2 = new /datum/pda_app/balance_check()
-	app2.onInstall(src)
+	var/datum/pda_app/ringer/app = new /datum/pda_app/ringer()
+	app.onInstall(src)
+	app.frequency = deskbell_freq_hop
 
 /obj/item/device/pda/heads/hos
 	name = "Head of Security PDA"
@@ -629,7 +633,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(user.client) //If we have a client to send to, in reality none of this proc is needed in that case but eh I don't care.
 					var/datum/asset/simple/C = new/datum/asset/simple/pda()
 					send_asset_list(user.client, C.assets)
-			
+
 				// AUTOFIXED BY fix_string_idiocy.py
 				// C:\Users\Rob\\documents\\\projects\vgstation13\code\game\objects\items\\devices\\\pDA\\\pDA.dm:331: dat += "<h2>PERSONAL DATA ASSISTANT v.1.3</h2>"
 				dat += {"<h2>PERSONAL DATA ASSISTANT v.1.3</h2>
@@ -800,6 +804,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if (P == src)	continue
 						if(P.hidden) continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
+						if (id && !istype(P,/obj/item/device/pda/ai))
+							dat += " (<a href='byond://?src=\ref[src];choice=transferFunds;target=\ref[P]'><img src=pda_money.png>*Send Money*</a>)"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
 						if (istype(cartridge, /obj/item/weapon/cartridge/clown))
@@ -922,22 +928,41 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if (PDA_APP_BALANCECHECK)
 				var/datum/pda_app/balance_check/app = locate(/datum/pda_app/balance_check) in applications
-				dat += {"<h4>Balance Check Application</h4>"}
+				dat += {"<h4><img src=[app.icon].png> Virtual Wallet and Balance Check Application</h4>"}
 				if(app)
 					if(!id)
-						dat += {"<i>Insert an ID card linked to the account to check.</i>"}
+						dat += {"<i>Insert an ID card in the PDA to use this application.</i>"}
 					else
+						if(!id.virtual_wallet)
+							id.update_virtual_wallet()
+						dat += {"<hr>
+							<h5>Virtual Wallet</h5>
+							Owner: <b>[id.virtual_wallet.owner_name]</b><br>
+							Balance: <b>[id.virtual_wallet.money]</b>$  <u><a href='byond://?src=\ref[src];choice=printCurrency'><img src=[app.icon].png>Print Currency</a></u>
+							<h6>Transaction History</h6>
+							On [MM]/[DD]/[game_year]:
+							<ul>
+							"}
+						var/list/v_log = list()
+						for(var/e in id.virtual_wallet.transaction_log)
+							v_log += e
+						for(var/datum/transaction/T in reverseRange(v_log))
+							dat += {"<li>\[[T.time]\] [T.amount]$, [T.purpose] at [T.source_terminal]</li>"}
+						dat += {"</ul><hr>"}
 						if(!(app.linked_db))
 							app.reconnect_database()
 						if(app.linked_db)
 							if(app.linked_db.activated)
 								var/datum/money_account/D = app.linked_db.attempt_account_access(id.associated_account_number, 0, 2, 0)
 								if(D)
-									dat += {"Owner: <b>[D.owner_name]</b><br>
-										Current Balance: <b>[D.money]</b>$
-										<h5>Transaction History</h5>
+									dat += {"
+										<h5>Bank Account</h5>
+										Owner: <b>[D.owner_name]</b><br>
+										Balance: <b>[D.money]</b>$
+										<h6>Transaction History</h6>
 										On [MM]/[DD]/[game_year]:
-										<ul>"}
+										<ul>
+										"}
 									var/list/t_log = list()
 									for(var/e in D.transaction_log)
 										t_log += e
@@ -953,11 +978,20 @@ var/global/list/obj/item/device/pda/PDAs = list()
 									if(!D.transaction_log.len)
 										dat += {"</ul>"}
 								else
-									dat += {"<i>Unable to access account. Either its security settings don't allow remote checking or the account is nonexistent.</i>"}
+									dat += {"
+										<h5>Bank Account</h5>
+										<i>Unable to access bank account. Either its security settings don't allow remote checking or the account is nonexistent.</i>
+										"}
 							else
-								dat += {"<i>Unfortunately your station's Accounts Database doesn't allow remote access. Negociate with your HoP or Captain to solve this issue.</i>"}
+								dat += {"
+									<h5>Bank Account</h5>
+									<i>Unfortunately your station's Accounts Database doesn't allow remote access. Negociate with your HoP or Captain to solve this issue.</i>
+									"}
 						else
-							dat += {"<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>"}
+							dat += {"
+								<h5>Bank Account</h5>
+								<i>Unable to connect to accounts database. The database is either nonexistent, inoperative, or too far away.</i>
+								"}
 
 			if (PDA_APP_STATIONMAP)
 				var/datum/pda_app/station_map/app = locate(/datum/pda_app/station_map) in applications
@@ -1254,7 +1288,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(user.client) //If we have a client to send to, in reality none of this proc is needed in that case but eh I don't care.
 					var/datum/asset/simple/C = new/datum/asset/simple/pda_spesspets()
 					send_asset_list(user.client, C.assets)
-				
+
 				var/datum/pda_app/spesspets/app = locate(/datum/pda_app/spesspets) in applications
 				dat += {"<h4><img src=[app.icon].png> Spess Pets</h4>"}
 				if(app)
@@ -1415,6 +1449,33 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					app.function = text2num(href_list["filter"])
 			if(PDA_APP_BALANCECHECK)
 				mode = PDA_APP_BALANCECHECK
+			if("printCurrency")
+				var/mob/user = usr
+				var/amount = round(input("How much money do you wish to print?", "Currency Printer", 0) as num)
+				if(!amount || (amount < 0) || (id.virtual_wallet.money <= 0))
+					user << "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>"
+					return
+				if(amount > id.virtual_wallet.money)
+					amount = id.virtual_wallet.money
+				if(amount > 10000) // prevent crashes
+					user << "\icon[src]<span class='notice'>The PDA's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>"
+					amount = 10000
+
+				id.virtual_wallet.money -= amount
+				withdraw_arbitrary_sum(user,amount)
+				if(prob(50))
+					playsound(get_turf(src), 'sound/items/polaroid1.ogg', 50, 1)
+				else
+					playsound(get_turf(src), 'sound/items/polaroid2.ogg', 50, 1)
+
+				var/datum/transaction/T = new()
+				T.target_name = user.name
+				T.purpose = "Currency printed"
+				T.amount = "-[amount]"
+				T.source_terminal = src.name
+				T.date = current_date_string
+				T.time = worldtime2text()
+				id.virtual_wallet.transaction_log.Add(T)
 
 			if(PDA_APP_STATIONMAP)
 				mode = PDA_APP_STATIONMAP
@@ -1705,6 +1766,36 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				var/obj/item/device/pda/P = locate(href_list["target"])
 				src.create_message(U, P)
 
+			if("transferFunds")
+				if(!id)
+					return
+				var/obj/item/device/pda/P = locate(href_list["target"])
+				var/amount = round(input("How much money do you wish to transfer to [P.owner]?", "Money Transfer", 0) as num)
+				if(!amount || (amount < 0) || (id.virtual_wallet.money <= 0))
+					usr << "\icon[src]<span class='warning'>The PDA's screen flashes, 'Invalid value.'</span>"
+					return
+				if(amount > id.virtual_wallet.money)
+					amount = id.virtual_wallet.money
+
+				switch(P.receive_funds(owner,amount,name))
+					if(1)
+						usr << "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete!'</span>"
+					if(2)
+						usr << "\icon[src]<span class='notice'>The PDA's screen flashes, 'Transaction complete! The recipient will earn the funds once he enters his ID in his PDA.'</span>"
+					else
+						usr << "\icon[src]<span class='warning'>The PDA's screen flashes, 'Error, transaction canceled'</span>"
+						return
+
+				id.virtual_wallet.money -= amount
+				var/datum/transaction/T = new()
+				T.target_name = P.owner
+				T.purpose = "Money transfer"
+				T.amount = "-[amount]"
+				T.source_terminal = src.name
+				T.date = current_date_string
+				T.time = worldtime2text()
+				id.virtual_wallet.transaction_log.Add(T)
+
 			if("Send Honk")//Honk virus
 				if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
@@ -1821,6 +1912,76 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		U.unset_machine()
 		U << browse(null, "window=pda")
 	return
+
+//Convert money from the virtual wallet into physical bills
+/obj/item/device/pda/proc/withdraw_arbitrary_sum(var/mob/user,var/arbitrary_sum)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_id,/obj/item/weapon/storage/wallet))
+			dispense_cash(arbitrary_sum,H.wear_id)
+			usr << "\icon[src]<span class='notice'>Funds were transferred into your physical wallet!</span>"
+			return
+	dispense_cash(arbitrary_sum,get_turf(src))
+
+//Receive money transferred from another PDA
+/obj/item/device/pda/proc/receive_funds(var/creditor_name,var/arbitrary_sum,var/other_pda)
+	var/turf/U = get_turf(src)
+	if(!silent)
+		playsound(U, 'sound/machines/twobeep.ogg', 50, 1)
+
+	for (var/mob/O in hearers(3, U))
+		if(!silent) O.show_message(text("\icon[src] *[src.ttone]*"))
+
+	var/mob/living/L = null
+	if(src.loc && isliving(src.loc))
+		L = src.loc
+	else
+		L = get(src, /mob/living/silicon)
+
+	if(L)
+		L << "\icon[src] <b>Money transfer from [creditor_name] ([arbitrary_sum]$) </b>[id ? "" : "Insert your ID in the PDA to receive the funds."]"
+
+	tnote += "<i><b>&larr; Money transfer from [creditor_name] ([arbitrary_sum]$)<br>"
+
+	if(id)
+		if(!id.virtual_wallet)
+			id.update_virtual_wallet()
+		id.virtual_wallet.money += arbitrary_sum
+		var/datum/transaction/T = new()
+		T.target_name = creditor_name
+		T.purpose = "Money transfer"
+		T.amount = arbitrary_sum
+		T.source_terminal = other_pda
+		T.date = current_date_string
+		T.time = worldtime2text()
+		id.virtual_wallet.transaction_log.Add(T)
+		return 1
+	else
+		incoming_transactions |= list(list(creditor_name,arbitrary_sum,other_pda))
+		return 2
+
+//Receive money transferred from another PDA
+/obj/item/device/pda/proc/receive_incoming_transactions(var/obj/item/weapon/card/id/ID_card)
+	for(var/transac in incoming_transactions)
+		if(!id.virtual_wallet)
+			id.update_virtual_wallet()
+		id.virtual_wallet.money += transac[2]
+		var/datum/transaction/T = new()
+		T.target_name = transac[1]
+		T.purpose = "Money transfer"
+		T.amount = transac[2]
+		T.source_terminal = transac[3]
+		T.date = current_date_string
+		T.time = worldtime2text()
+		id.virtual_wallet.transaction_log.Add(T)
+
+	incoming_transactions = list()
+
+	var/mob/living/L = null
+	if(src.loc && isliving(src.loc))
+		L = src.loc
+	L << "\icon[src]<span class='notice'> <b>Transactions successfully received! </b></span>"
+
 
 /obj/item/device/pda/proc/remove_id()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/pda/proc/remove_id() called tick#: [world.time]")
@@ -1980,6 +2141,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			user.drop_item(I, src)
 			id = I
 			user.put_in_hands(old_id)
+	if(id && incoming_transactions.len)
+		receive_incoming_transactions(id)
 	return
 
 // access to status display signals
@@ -2008,6 +2171,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if( can_use(user) )//If they can still act.
 					id_check(user, 2)
 					user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+					if(incoming_transactions.len)
+						receive_incoming_transactions(id)
 					updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
@@ -2023,6 +2188,30 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else
 			user.drop_item(C, src)
 			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+	else if(istype(C,/obj/item/weapon/spacecash))
+		if(!id)
+			user << "\icon[src]<span class='warning'>There is no ID in the PDA!</span>"
+			return
+		var/obj/item/weapon/spacecash/dosh = C
+		id.virtual_wallet.money += dosh.worth * dosh.amount
+		if(prob(50))
+			playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+		else
+			playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+
+		var/datum/transaction/T = new()
+		T.target_name = user.name
+		T.purpose = "Currency deposit"
+		T.amount = dosh.worth * dosh.amount
+		T.source_terminal = src.name
+		T.date = current_date_string
+		T.time = worldtime2text()
+		id.virtual_wallet.transaction_log.Add(T)
+
+		user << "<span class='info'>You insert [dosh] into the PDA.</span>"
+		qdel(dosh)
+		updateUsrDialog()
+
 	return
 
 /obj/item/device/pda/attack(mob/living/carbon/C, mob/living/user as mob)

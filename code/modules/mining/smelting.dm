@@ -119,6 +119,13 @@
 	)
 	yieldtype = /obj/item/stack/sheet/mineral/plastic
 
+/datum/smelting_recipe/cardboard
+	name = "Cardboard"
+	ingredients=list(
+		MAT_CARDBOARD = 1
+	)
+	yieldtype = /obj/item/stack/sheet/cardboard
+
 /*
 /datum/smelting_recipe/pharosium
 	name="pharosium"

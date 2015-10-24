@@ -43,6 +43,12 @@
 	S.reagents.add_reagent("analysis_sample", 1, D.geological_data)
 	S.reagents.add_reagent("chlorine", 1, null)*/
 
+/obj/machinery/anomaly/RefreshParts()
+	var/scancount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+	target_scan_ticks = initial(target_scan_ticks) - scancount*4
+
 /obj/machinery/anomaly/process()
 	//not sure if everything needs to heat up, or just the GLPC
 	var/datum/gas_mixture/env = loc.return_air()

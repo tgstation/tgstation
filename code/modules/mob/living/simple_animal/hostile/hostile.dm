@@ -1,6 +1,5 @@
 /mob/living/simple_animal/hostile
 	faction = "hostile"
-	mouse_opacity = 2 //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	stop_automated_movement_when_pulled = 0
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 
@@ -269,7 +268,6 @@
 
 /mob/living/simple_animal/hostile/Die()
 	LoseAggro()
-	mouse_opacity = 1
 	..()
 	walk(src, 0)
 
@@ -281,22 +279,22 @@
 	if(rapid)
 		spawn(1)
 			Shoot(tturf, src.loc, src)
-			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
+			if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(4)
 			Shoot(tturf, src.loc, src)
-			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
+			if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 			if(casingtype)
 				new casingtype(get_turf(src))
 		spawn(6)
 			Shoot(tturf, src.loc, src)
-			visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
+			if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 			if(casingtype)
 				new casingtype(get_turf(src))
 	else
 		Shoot(tturf, src.loc, src)
-		visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
+		if(ranged_message) visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>", 1)
 		if(casingtype)
 			new casingtype
 	ranged_cooldown = ranged_cooldown_cap

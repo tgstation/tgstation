@@ -209,6 +209,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/engaged = 0
+	density = 0
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
@@ -242,13 +243,25 @@
 	)
 
 	RefreshParts()
-
+/*
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	spawn()
 		if (src.engaged)
 			teleport(M)
 			use_power(5000)
 	return
+*/
+/obj/machinery/teleport/hub/Crossed(AM as mob|obj)
+	if(istype(AM,/obj/item/projectile/beam))
+		var/obj/item/projectile/beam/B = AM
+		B.wait = 1
+	if(istype(AM,/obj/effect/beam))
+		src.Bump(AM)
+		return
+	spawn()
+		if (src.engaged)
+			teleport(AM)
+			use_power(5000)
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/teleport/hub/proc/teleport() called tick#: [world.time]")

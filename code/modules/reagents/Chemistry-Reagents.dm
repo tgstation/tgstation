@@ -18,6 +18,7 @@
 	var/list/data = null
 	var/volume = 0
 	var/nutriment_factor = 0
+	var/sport = 1 //High sport helps you show off on a treadmill; multiplicative
 	var/custom_metabolism = REAGENTS_METABOLISM
 	var/overdose = 0
 	var/overdose_dam = 1
@@ -694,7 +695,7 @@
 /datum/reagent/holywater/reaction_obj(var/obj/O, var/volume)
 	src = null //WHAT
 	if(volume >= 1)
-		O.blessed = 1
+		O.bless()
 /datum/reagent/holywater/on_mob_life(var/mob/living/M as mob,var/alien)
 	if(!holder)
 		return
@@ -782,6 +783,7 @@
 	if(!holder) return
 	if(ishuman(M))
 		if(prob(7)) M.emote(pick("twitch","drool","moan","gasp"))
+		M.druggy = max(M.druggy, 50)
 		holder.remove_reagent(src.id, 0.25 * REAGENTS_METABOLISM)
 	return
 
@@ -1003,6 +1005,7 @@
 	description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
+	sport = 1.2
 
 /datum/reagent/sugar/on_mob_life(var/mob/living/M as mob)
 	M.nutrition += 1*REM
@@ -2812,6 +2815,14 @@
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
 	reagent_state = SOLID
 	// no color (ie, black)
+
+/datum/reagent/cinnamon
+	name = "Cinnamon Powder"
+	id = "cinnamon"
+	description = "A spice, obtained from the bark of cinnamomum trees."
+	reagent_state = SOLID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#D2691E" // rgb: 210, 105, 30
 
 /datum/reagent/coco
 	name = "Coco Powder"
@@ -4859,14 +4870,13 @@ var/global/list/tonio_doesnt_remove=list(
 	id = "etank"
 	description = "Regardless of how energized this coffee makes you feel, jumping against doors will still never be a viable way to open them."
 
-
 /datum/reagent/drink/cold/quantum
 	name = "Nuka Cola Quantum"
 	id = "quantum"
 	description = "Take the leap... enjoy a Quantum!"
 	color = "#100800" // rgb: 16, 8, 0
 	adj_sleepy = -2
-
+	sport = 5
 
 /datum/reagent/drink/cold/quantum/on_mob_life(var/mob/living/M as mob)
 
@@ -4875,3 +4885,11 @@ var/global/list/tonio_doesnt_remove=list(
 	M.apply_effect(2,IRRADIATE,0)
 	..()
 	return
+
+/datum/reagent/drink/sportdrink
+	name = "Sport Drink"
+	id = "sportdrink"
+	description = "You like sports, and you don't care who knows."
+	sport = 5
+	color = "#CCFF66" //rgb: 204, 255, 51
+	custom_metabolism =  0.01

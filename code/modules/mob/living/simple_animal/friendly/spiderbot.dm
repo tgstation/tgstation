@@ -53,13 +53,7 @@
 			user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose.</span>"
 			return
 		if(!B.brainmob.key)
-			var/ghost_can_reenter = 0
-			if(B.brainmob.mind)
-				for(var/mob/dead/observer/G in player_list)
-					if(G.can_reenter_corpse && G.mind == B.brainmob.mind)
-						ghost_can_reenter = 1
-						break
-			if(!ghost_can_reenter)
+			if(!mind_can_reenter(B.brainmob.mind))
 				user << "<span class='notice'>[O] is completely unresponsive; there's no point.</span>"
 				return
 
@@ -209,17 +203,7 @@
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Spiderbot"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/spiderbot/verb/ventcrawl()  called tick#: [world.time]")
-	var/atom/pipe
-	var/list/pipes = list()
-	for(var/obj/machinery/atmospherics/unary/U in range(1))
-		if((istype(U, /obj/machinery/atmospherics/unary/vent_pump) || istype(U,/obj/machinery/atmospherics/unary/vent_scrubber)) && Adjacent(U))
-			pipes |= U
-	if(!pipes || !pipes.len)
-		return
-	if(pipes.len == 1)
-		pipe = pipes[1]
-	else
-		pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
+	var/pipe = start_ventcrawl()
 	if(pipe)
 		handle_ventcrawl(pipe)
 

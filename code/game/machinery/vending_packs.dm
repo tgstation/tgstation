@@ -155,6 +155,11 @@
 	targetvendomat = /obj/machinery/vending/nuka
 	icon_state = "nuka"
 
+/obj/structure/vendomatpack/chapelvend
+	name = "Chapelvend recharge pack"
+	targetvendomat = /obj/machinery/vending/chapel
+	icon_state = "chapel"
+
 //////EMPTY PACKS//////
 
 /obj/item/emptyvendomatpack

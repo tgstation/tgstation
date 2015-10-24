@@ -65,7 +65,11 @@
 		return 0
 
 /obj/machinery/bodyscanner/Destroy()
-	..()
+
+	go_out() //Eject everything
+
+	. = ..()
+
 	if(connected)
 		connected.connected = null
 		qdel(connected)
@@ -226,10 +230,10 @@
 	return
 
 /obj/machinery/bodyscanner/crowbarDestroy(mob/user)
-	if (occupant)
-		user << "<span class='warning'>You cannot disassemble this [src], it's occupado.</span>"
+	if(occupant)
+		user << "<span class='warning'>You cannot disassemble \the [src], it's occupado.</span>"
 		return
-	return..()
+	return ..()
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/W as obj, user as mob)
 	if(iswrench(W) && !occupant)
@@ -615,10 +619,10 @@
 		dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 	return dat
 
-/obj/machinery/body_scanconsole/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+/obj/machinery/body_scanconsole/Hear(var/datum/speech/speech, var/rendered_speech="")
 	if(!src.connected || src.connected.scanning<3)
 		return
-	if(speaker in range(src,3) && findtext(raw_message, "scanner, print"))
+	if(speech.speaker && speech.speaker in range(src,3) && findtext(speech.message, "scanner, print"))
 		if(!src.connected.occupant||!istype(src.connected.occupant,/mob/living/carbon/human))
 			return
 		var/obj/item/weapon/paper/R = new(src.loc)

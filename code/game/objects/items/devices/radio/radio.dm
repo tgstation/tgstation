@@ -224,17 +224,25 @@
 	return
 
 */
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel, var/datum/language/speaking)
-	if(!on) return // the device has to be on
+
+/obj/item/device/radio/talk_into(var/datum/speech/speech_orig, var/channel=null)
+	say_testing(loc, "\[Radio\] - Got radio/talk_into([html_encode(speech_orig.message)], [channel!=null ? channel : "null"]).")
+	if(!on)
+		say_testing(loc, "\[Radio\] - Not on.")
+		return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
-	if(!M || !message) return
+	if(!speech_orig.speaker || !speech_orig.message)
+		say_testing(loc, "\[Radio\] - speech.speaker or speech.message are null. [speech_orig.speaker], [html_encode(speech_orig.message)]")
+		return
 
 	//  Uncommenting this. To the above comment:
 	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(isWireCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+		say_testing(loc, "\[Radio\] - TRANSMIT wire cut.")
 		return
 
-	if(!M.IsVocal())
+	if(!speech_orig.speaker.IsVocal())
+		say_testing(loc, "\[Radio\] - Speaker not vocal.")
 		return
 
 	/* Quick introduction:
@@ -250,66 +258,84 @@
 	/*
 		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
 	*/
+	var/datum/speech/speech=speech_orig.clone()
+	speech.radio=src
+	#ifdef SAY_DEBUG
+	var/msgclasses  = speech.render_message_classes(", ")
+	var/wrapclasses = speech.render_wrapper_classes(", ")
+	say_testing(loc, "\[Radio\] - Cloned speech - language=[speech.language], message_classes={[msgclasses]}, wrapper_classes={[wrapclasses]}")
+	#endif
 
-		//get the frequency you buttface. radios no longer use the radio_controller. confusing for future generations, convenient for me.
-	var/freq
-	if(channel && channels && channels.len > 0)
-		if(channel == "department")
-			channel = channels[1]
-		freq = secure_radio_connections[channel]
-		if(!channels[channel])
-			return
-	else
-		freq = frequency
-		channel = null
+	var/skip_freq_search=0
+	switch(channel)
+		if(MODE_HEADSET,null) // Used for ";" prefix, which always sends to src.frequency.
+			say_testing(loc, "\[Radio\] - channel=[channel]; Forcing frequency to be [frequency].")
+			speech.frequency = src.frequency
+			channel = null
+			skip_freq_search=1
+		if(MODE_SECURE_HEADSET) // Secure headset (?)
+			channel = 1 // Always pick the first channel...?
+
+
+	if(!skip_freq_search)
+		if(channel && channels && channels.len > 0)
+			if(channel == "department")
+				channel = channels[1]
+			speech.frequency = secure_radio_connections[channel]
+			if(!channels[channel])
+				say_testing(loc, "\[Radio\] - Unable to find channel \"[channel]\".")
+				returnToPool(speech)
+				return
+		else
+			speech.frequency = frequency
+			channel = null
+
+	say_testing(loc, "talk_into(): frequency set to [speech.frequency]")
 
 	var/turf/position = get_turf(src)
 
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
-	var/real_name = M.name // mob's real name
+	var/real_name = speech.name // mob's real name
 	var/mobkey = "none" // player key associated with mob
 	var/voicemask = 0 // the speaker is wearing a voice mask
-	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
-	if(ismob(M))
-		var/mob/speaker = M
+	var/voice = speech.speaker.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
+	if(ismob(speech.speaker))
+		var/mob/speaker = speech.speaker
 		real_name = speaker.real_name
 		if(speaker.client)
 			mobkey = speaker.key // assign the mob's key
 
-
-	var/jobname // the mob's "job"
-
 	// --- Human: use their actual job ---
-	if (ishuman(M))
+	if (ishuman(speech.speaker))
 		if(voice != real_name)
 			voicemask = 1
-		jobname = M:get_assignment()
+		speech.job = speech.speaker:get_assignment()
 
 	// --- Carbon Nonhuman ---
-	else if (iscarbon(M)) // Nonhuman carbon mob
-		jobname = "No id"
+	else if (iscarbon(speech.speaker)) // Nonhuman carbon mob
+		speech.job = "No id"
 
 	// --- AI ---
-	else if (isAI(M))
-		jobname = "AI"
+	else if (isAI(speech.speaker))
+		speech.job = "AI"
 
 	// --- Cyborg ---
-	else if (isrobot(M))
-		jobname = "Cyborg"
+	else if (isrobot(speech.speaker))
+		speech.job = "Cyborg"
 
 	// --- Personal AI (pAI) ---
-	else if (istype(M, /mob/living/silicon/pai))
-		jobname = "Personal AI"
+	else if (istype(speech.speaker, /mob/living/silicon/pai))
+		speech.job = "Personal AI"
 
 	// --- Cold, emotionless machines. ---
-	else if(isobj(M))
-		jobname = "Machine"
+	else if(isobj(speech.speaker))
+		speech.job = "Machine"
 
 	// --- Unidentifiable mob ---
 	else
-		jobname = "Unknown"
+		speech.job = "Unknown"
 
 /*
 	// --- Modifications to the mob's identity ---
@@ -333,20 +359,20 @@
 		// --- Finally, tag the actual signal with the appropriate values ---
 		signal.data = list(
 		  // Identity-associated tags:
-			"mob" = M, // store a reference to the mob
-			"mobtype" = M.type, 	// the mob's type
-			"realname" = real_name, // the mob's real name
-			"name" = voice,	// the mob's voice name
-			"job" = jobname,		// the mob's job
-			"key" = mobkey,			// the mob's key
-			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
+			"mob"      = speech.speaker,      // store a reference to the mob
+			"mobtype"  = speech.speaker.type, // the mob's type
+			"realname" = real_name,           // the mob's real name
+			"name"     = voice,               // the mob's voice name
+			"job"      = speech.job,          // the mob's job
+			"key"      = mobkey,              // the mob's key
+			"vmask"    = voicemask,           // 1 if the mob is using a voice gas mask
 
 			// We store things that would otherwise be kept in the actual mob
 			// so that they can be logged even AFTER the mob is deleted or something
 
 		  // Other tags:
 			"compression" = rand(45,50), // compressed radio signal
-			"message" = message, // the actual sent message
+			"message" = speech.message, // the actual sent message
 			"radio" = src, // stores the radio used for transmission
 			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
 			"traffic" = 0, // dictates the total traffic sum that the signal went through
@@ -354,9 +380,17 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"language" = speaking //The language M is talking in.
+			"language" = speech.language, //The language M is talking in.
+
+			"r_quote"  = speech.rquote,
+			"l_quote"  = speech.lquote,
+
+			"message_classes" = speech.message_classes.Copy(),
+			"wrapper_classes" = speech.wrapper_classes.Copy()
 		)
-		signal.frequency = freq // Quick frequency set
+		signal.frequency = speech.frequency // Quick frequency set
+
+		say_testing(loc, "talk_into(): subspace signal frequency set to [signal.frequency]")
 
 	  //#### Sending the signal to all subspace receivers ####//
 
@@ -368,6 +402,7 @@
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
+		returnToPool(speech)
 		return
 
 
@@ -388,16 +423,16 @@
 
 	signal.data = list(
 
-		"mob" = M, // store a reference to the mob
-		"mobtype" = M.type, 	// the mob's type
-		"realname" = real_name, // the mob's real name
-		"name" = voice,	// the mob's display name
-		"job" = jobname,		// the mob's job
-		"key" = mobkey,			// the mob's key
-		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
+		"mob"      = speech.speaker,      // store a reference to the mob
+		"mobtype"  = speech.speaker.type, // the mob's type
+		"realname" = real_name,           // the mob's real name
+		"name"     = voice,               // the mob's display name
+		"job"      = speech.job,          // the mob's job
+		"key"      = mobkey,              // the mob's key
+		"vmask"    = voicemask,           // 1 if the mob is using a voice gas mas
 
 		"compression" = 0, // uncompressed radio signal
-		"message" = message, // the actual sent message
+		"message" = speech.message, // the actual sent message
 		"radio" = src, // stores the radio used for transmission
 		"slow" = 0,
 		"traffic" = 0,
@@ -405,32 +440,39 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-		"language" = speaking
+		"language" = speech.language,
+
+		"r_quote"  = speech.rquote,
+		"l_quote"  = speech.lquote,
+
+		"message_classes" = speech.message_classes.Copy(),
+		"wrapper_classes" = speech.wrapper_classes.Copy(),
 	)
-	signal.frequency = text2num(freq) // Quick frequency set
+	signal.frequency = speech.frequency // Quick frequency set
+
+	say_testing(loc, "talk_into(): subspace signal frequency set to [signal.frequency]")
 
 	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 		R.receive_signal(signal)
-
 
 	spawn(rand(10,25)) // wait a little...
 
 		if(signal.data["done"] && position.z in signal.data["level"])
 			// we're done here.
+			returnToPool(speech)
 			return
 
-  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-  	// Send a mundane broadcast with limited targets:
-		Broadcast_Message(M, speaking, voicemask,
-						  src, message, voice, jobname, real_name,
-						  filter_type, signal.data["compression"], list(position.z), freq)
+		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
+		// Send a mundane broadcast with limited targets:
+		Broadcast_Message(speech, voicemask, filter_type, signal.data["compression"], list(position.z))
+		returnToPool(speech)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(radio_freq)
+/obj/item/device/radio/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(!speech.speaker || speech.frequency)
 		return
 	if (broadcasting)
-		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, null, speaking)
+		if(get_dist(src, speech.speaker) <= canhear_range)
+			talk_into(speech)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 

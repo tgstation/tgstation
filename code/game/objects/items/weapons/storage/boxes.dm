@@ -25,6 +25,8 @@
 	icon_state = "box"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 	autoignition_temperature = 522 // Kelvin
 	fire_fuel = 2
@@ -37,6 +39,7 @@
 	w_class = 42 // Big, bulky.
 	foldable = /obj/item/stack/sheet/cardboard
 	foldable_amount = 4 // Takes 4 to make. - N3X
+	starting_materials = list(MAT_CARDBOARD = 15000)
 	storage_slots = 21
 	max_combined_w_class = 42 // 21*2
 
@@ -95,6 +98,26 @@
 		..()
 		for(var/i=0,i<7,i++)
 			new /obj/item/clothing/gloves/latex(src)
+
+/obj/item/weapon/storage/box/bgloves
+	name = "box of black gloves"
+	desc = "Contains black gloves."
+	icon_state = "bgloves"
+
+	New()
+		..()
+		for(var/i = 0, i < 7, i++)
+			new /obj/item/clothing/gloves/black(src)
+
+/obj/item/weapon/storage/box/sunglasses
+	name = "box of sunglasses"
+	desc = "Contains sunglasses."
+	icon_state = "sunglass"
+
+	New()
+		..()
+		for(var/i = 0, i < 7, i++)
+			new /obj/item/clothing/glasses/sunglasses(src)
 
 /obj/item/weapon/storage/box/masks
 	name = "sterile masks"
@@ -187,6 +210,15 @@
 		for(var/i=0,i<5,i++)
 			new /obj/item/weapon/grenade/empgrenade(src)
 
+/obj/item/weapon/storage/box/foam
+	name = "metal foam grenades"
+	desc = "A box containing 7 metal foam grenades"
+	icon_state = "metalfoam"
+
+	New()
+		..()
+		for(var/i = 0, i < 7, i++)
+			new /obj/item/weapon/grenade/chem_grenade/metalfoam(src)
 
 /obj/item/weapon/storage/box/trackimp
 	name = "tracking implant kit"

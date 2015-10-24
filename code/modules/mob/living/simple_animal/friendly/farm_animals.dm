@@ -208,7 +208,7 @@
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
-	size = SIZE_TINY
+	size = SIZE_SMALL
 
 /mob/living/simple_animal/chicken/New()
 	if(prob(5))
@@ -259,9 +259,12 @@
 	if(isturf(loc))
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
-			visible_message("[src] hatches with a quiet cracking sound.")
-			new /mob/living/simple_animal/chick(get_turf(src))
-			processing_objects.Remove(src)
-			qdel(src)
+			hatch()
 	else
 		processing_objects.Remove(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/proc/hatch()
+	visible_message("[src] hatches with a quiet cracking sound.")
+	new /mob/living/simple_animal/chick(get_turf(src))
+	processing_objects.Remove(src)
+	qdel(src)

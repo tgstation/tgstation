@@ -158,9 +158,11 @@
 
 /datum/preferences/proc/save_preferences_sqlite(var/user, var/ckey)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/preferences/proc/save_preferences_sqlite() called tick#: [world.time]")
+	/* FUCK YOU
 	if(!(world.timeofday >= (lastPolled + POLLED_LIMIT)))
 		user << "You need to wait [round((((lastPolled + POLLED_LIMIT) - world.timeofday) / 10))] seconds before you can save again."
 		return
+	*/
 
 	var/database/query/check = new
 	var/database/query/q = new

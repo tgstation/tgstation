@@ -119,6 +119,8 @@ proc/populate_seed_list()
 
 	var/mob_drop					// Seed type dropped by the mobs when it dies without an host
 
+	var/large = 1					// Is the plant large? For clay pots.
+
 //Creates a random seed. MAKE SURE THE LINE HAS DIVERGED BEFORE THIS IS CALLED.
 /datum/seed/proc/randomize()
 
@@ -134,68 +136,71 @@ proc/populate_seed_list()
 	potency = rand(5,30)
 
 	var/list/plant_icons = pick(list(
-		list("seed-chili",              "chili"),
-		list("seed-icepepper",          "chiliice"),
-		list("seed-berry",              "berry"),
-		list("seed-glowberry",          "glowberry"),
-		list("seed-poisonberry",        "poisonberry"),
-		list("seed-deathberry",         "deathberry"),
-		list("seed-nettle",             "nettle"),
-		list("seed-deathnettle",        "deathnettle"),
-		list("seed-tomato",             "tomato"),
-		list("seed-bloodtomato",        "bloodtomato"),
-		list("seed-killertomato",       "killertomato"),
-		list("seed-bluetomato",         "bluetomato"),
-		list("seed-bluespacetomato",    "bluespacetomato"),
-		list("seed-eggplant",           "eggplant"),
-		list("seed-eggy",               "eggy"),
-		list("seed-apple",              "apple"),
-		list("seed-goldapple",          "goldapple"),
-		list("seed-ambrosiavulgaris",   "ambrosiavulgaris"),
-		list("seed-ambrosiadeus",       "ambrosiadeus"),
-		list("mycelium-chanter",        "chanter"),
-		list("mycelium-plump",          "plump"),
-		list("mycelium-reishi",         "reishi"),
-		list("mycelium-liberty",        "liberty"),
-		list("mycelium-amanita",        "amanita"),
-		list("mycelium-angel",          "angel"),
-		list("mycelium-tower",          "towercap"),
-		list("mycelium-glowshroom",     "glowshroom"),
-		list("mycelium-walkingmushroom","walkingmushroom"),
-		list("mycelium-plast",          "plastellium"),
-		list("seed-harebell",           "harebell"),
-		list("seed-poppy",              "poppy"),
-		list("seed-sunflower",          "sunflower"),
-		list("seed-grapes",             "grape"),
-		list("seed-greengrapes",        "greengrape"),
-		list("seed-peanut",             "peanut"),
-		list("seed-cabbage",            "cabbage"),
-		list("seed-shand",              "shand"),
-		list("seed-mtear",              "mtear"),
-		list("seed-banana",             "banana"),
-		list("seed-corn",               "corn"),
-		list("seed-potato",             "potato"),
-		list("seed-soybean",            "soybean"),
-		list("seed-wheat",              "wheat"),
-		list("seed-rice",               "rice"),
-		list("seed-carrot",             "carrot"),
-		list("seed-ambrosiavulgaris",   "weeds"),
-		list("seed-whitebeet",          "whitebeet"),
-		list("seed-sugarcane",          "sugarcane"),
-		list("seed-watermelon",         "watermelon"),
-		list("seed-pumpkin",            "pumpkin"),
-		list("seed-lime",               "lime"),
-		list("seed-lemon",              "lemon"),
-		list("seed-orange",             "orange"),
-		list("seed-grass",              "grass"),
-		list("seed-cocoapod",           "cocoapod"),
-		list("seed-cherry",             "cherry"),
-		list("seed-kudzu",              "kudzu"),
-		list("seed-dionanode",          "dionanode")
+		list("seed-chili",              "chili",				6),
+		list("seed-icepepper",          "chiliice",				6),
+		list("seed-berry",              "berry",				6),
+		list("seed-glowberry",          "glowberry",			6),
+		list("seed-poisonberry",        "poisonberry",			6),
+		list("seed-deathberry",         "deathberry",			6),
+		list("seed-nettle",             "nettle",				6),
+		list("seed-deathnettle",        "deathnettle",			6),
+		list("seed-tomato",             "tomato",				6),
+		list("seed-bloodtomato",        "bloodtomato",			6),
+		list("seed-killertomato",       "killertomato",			2),
+		list("seed-bluetomato",         "bluetomato",			6),
+		list("seed-bluespacetomato",    "bluespacetomato",		6),
+		list("seed-eggplant",           "eggplant",				6),
+		list("seed-eggy",               "eggy",					6),
+		list("seed-apple",              "apple",				6),
+		list("seed-goldapple",          "goldapple",			6),
+		list("seed-ambrosiavulgaris",   "ambrosiavulgaris",		6),
+		list("seed-ambrosiadeus",       "ambrosiadeus",			6),
+		list("mycelium-chanter",        "chanter",				3),
+		list("mycelium-plump",          "plump",				3),
+		list("mycelium-reishi",         "reishi",				4),
+		list("mycelium-liberty",        "liberty",				3),
+		list("mycelium-amanita",        "amanita",				3),
+		list("mycelium-angel",          "angel",				3),
+		list("mycelium-tower",          "towercap",				3),
+		list("mycelium-glowshroom",     "glowshroom",			4),
+		list("mycelium-walkingmushroom","walkingmushroom",		3),
+		list("mycelium-plast",          "plastellium",			3),
+		list("seed-harebell",           "harebell",				4),
+		list("seed-poppy",              "poppy",				3),
+		list("seed-sunflower",          "sunflower",			3),
+		list("seed-moonflower",         "moonflower",			3),
+		list("seed-novaflower",         "novaflower",			3),
+		list("seed-grapes",             "grape",				2),
+		list("seed-greengrapes",        "greengrape",			2),
+		list("seed-peanut",             "peanut",				6),
+		list("seed-cabbage",            "cabbage",				1),
+		list("seed-shand",              "shand",				3),
+		list("seed-mtear",              "mtear",				4),
+		list("seed-banana",             "banana",				6),
+		list("seed-corn",               "corn",					3),
+		list("seed-potato",             "potato",				4),
+		list("seed-soybean",            "soybean",				6),
+		list("seed-koibean",            "soybean",				6),
+		list("seed-wheat",              "wheat",				6),
+		list("seed-rice",               "rice",					4),
+		list("seed-carrot",             "carrot",				3),
+		list("seed-ambrosiavulgaris",   "weeds",				4),
+		list("seed-whitebeet",          "whitebeet",			6),
+		list("seed-sugarcane",          "sugarcane",			3),
+		list("seed-watermelon",         "watermelon",			6),
+		list("seed-pumpkin",            "pumpkin",				2),
+		list("seed-lime",               "lime",					6),
+		list("seed-lemon",              "lemon",				6),
+		list("seed-orange",             "orange",				6),
+		list("seed-grass",              "grass",				2),
+		list("seed-cocoapod",           "cocoapod",				5),
+		list("seed-cherry",             "cherry",				5),
+		list("seed-kudzu",              "kudzu",				4),
 		))
 
 	packet_icon = plant_icons[1]
 	plant_icon = plant_icons[2]
+	growth_stages = plant_icons[3]
 
 	if(prob(20))
 		harvest_repeat = 1
@@ -223,7 +228,6 @@ proc/populate_seed_list()
 			"cryoxadone",
 			"blood",
 			"water",
-			"potassium",
 			"plasticide",
 			"slimetoxin",
 			"aslimetoxin",
@@ -659,6 +663,7 @@ proc/populate_seed_list()
 	new_seed.name = "new line"
 	new_seed.uid = 0
 	new_seed.roundstart = 0
+	new_seed.large = large
 
 	//Copy over everything else.
 	if(products)       new_seed.products = products.Copy()
@@ -943,6 +948,8 @@ proc/populate_seed_list()
 	yield = 5
 	potency = 10
 
+	large = 0
+
 /datum/seed/apple/poison
 	name = "poisonapple"
 	mutants = null
@@ -980,6 +987,8 @@ proc/populate_seed_list()
 	production = 6
 	yield = 6
 	potency = 5
+
+	large = 0
 
 
 /datum/seed/ambrosia/cruciatus
@@ -1210,17 +1219,60 @@ proc/populate_seed_list()
 	yield = 6
 	growth_stages = 3
 
+	large = 0
+
 /datum/seed/flower/sunflower
 	name = "sunflowers"
 	seed_name = "sunflower"
 	display_name = "sunflowers"
 	packet_icon = "seed-sunflower"
 	products = list(/obj/item/weapon/grown/sunflower)
+	mutants = list("moonflowers","novaflowers")
 	plant_icon = "sunflower"
 
 	lifespan = 25
 	maturation = 6
 	growth_stages = 3
+
+	large = 0
+
+/datum/seed/flower/sunflower/moonflower
+	name = "moonflowers"
+	seed_name = "moonflower"
+	display_name = "moonflowers"
+	packet_icon = "seed-moonflower"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower)
+	mutants = null
+	plant_icon = "moonflower"
+	chems = list("nutriment" = list(1), "moonshine" = list(1,5))
+
+	lifespan = 25
+	maturation = 6
+	growth_stages = 3
+	potency = 30
+	biolum = 1
+	biolum_colour = "#B5ABDD"
+
+	large = 0
+
+/datum/seed/flower/sunflower/novaflower
+	name = "novaflowers"
+	seed_name = "novaflower"
+	display_name = "novaflowers"
+	packet_icon = "seed-novaflower"
+	products = list(/obj/item/weapon/grown/novaflower)
+	mutants = null
+	plant_icon = "novaflower"
+	chems = list("nutriment" = list(1), "capsaicin" = list(1,5))
+
+	lifespan = 25
+	maturation = 6
+	growth_stages = 3
+	potency = 30
+	biolum = 1
+	biolum_colour = "#FF9900"
+
+	large = 0
 
 //Grapes/varieties
 /datum/seed/grapes
@@ -1239,6 +1291,8 @@ proc/populate_seed_list()
 	production = 5
 	yield = 4
 	potency = 10
+
+	large = 0
 
 /datum/seed/grapes/green
 	name = "greengrapes"
@@ -1347,6 +1401,8 @@ proc/populate_seed_list()
 	potency = 20
 	growth_stages = 3
 
+	large = 0
+
 /datum/seed/potato
 	name = "potato"
 	seed_name = "potato"
@@ -1369,6 +1425,7 @@ proc/populate_seed_list()
 	display_name = "soybeans"
 	packet_icon = "seed-soybean"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans)
+	mutants = list("koibean")
 	plant_icon = "soybean"
 	harvest_repeat = 1
 	chems = list("nutriment" = list(1,20))
@@ -1378,6 +1435,22 @@ proc/populate_seed_list()
 	production = 4
 	yield = 3
 	potency = 5
+
+/datum/seed/koiseed
+	name = "koibean"
+	seed_name = "koibean"
+	display_name = "koibeans"
+	packet_icon = "seed-koibean"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans)
+	plant_icon = "soybean"
+	harvest_repeat = 1
+	chems = list("nutriment" = list(1,10),"carpotoxin" = list(1,25))
+
+	lifespan = 25
+	maturation = 4
+	production = 4
+	yield = 3
+	potency = 10
 
 /datum/seed/wheat
 	name = "wheat"
@@ -1522,6 +1595,8 @@ proc/populate_seed_list()
 	yield = 4
 	potency = 15
 
+	large = 0
+
 /datum/seed/lemon
 	name = "lemon"
 	seed_name = "lemon"
@@ -1538,6 +1613,8 @@ proc/populate_seed_list()
 	yield = 4
 	potency = 10
 
+	large = 0
+
 /datum/seed/orange
 	name = "orange"
 	seed_name = "orange"
@@ -1553,6 +1630,8 @@ proc/populate_seed_list()
 	production = 6
 	yield = 5
 	potency = 1
+
+	large = 0
 
 /datum/seed/grass
 	name = "grass"
@@ -1586,6 +1665,8 @@ proc/populate_seed_list()
 	potency = 10
 	growth_stages = 5
 
+	large = 0
+
 /datum/seed/cherries
 	name = "cherry"
 	seed_name = "cherry"
@@ -1603,6 +1684,27 @@ proc/populate_seed_list()
 	yield = 3
 	potency = 10
 	growth_stages = 5
+
+	large = 0
+
+/datum/seed/cinnamomum
+	name = "cinnamomum"
+	seed_name = "cinnamomum"
+	display_name = "cinnamomum tree"
+	packet_icon = "seed-cinnamomum"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "cinnamomum"
+	chems = list("cinnamon" = list(4,3))
+
+	lifespan = 80
+	maturation = 15
+	production = 1
+	yield = 4
+	potency = 10
+	growth_stages = 4
+
+	large = 0
 
 /datum/seed/kudzu
 	name = "kudzu"

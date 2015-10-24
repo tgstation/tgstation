@@ -30,7 +30,8 @@ var/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN\""//Initial message shown.
 	if(announcer)
-		Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+		AliceAnnounce(announcer, message)
+
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -46,7 +47,7 @@ var/specops_shuttle_timeleft = 0
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
-				Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+				AliceAnnounce(announcer, message)
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -90,6 +91,15 @@ var/specops_shuttle_timeleft = 0
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
 	del(announcer)
+/proc/AliceAnnounce(var/atom/movable/announcer,var/message)
+	var/datum/speech/speech = announcer.create_speech(message=message, frequency=radiochannels["Response Team"], transmitter=announcer)
+	//speech.name="A.L.I.C.E."
+	speech.job="Response Team"
+	Broadcast_Message(speech,
+		data=0,
+		compression=0,
+		level=list(0,1))
+	returnToPool(speech)
 
 /proc/specops_process()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/specops_process() called tick#: [world.time]")
@@ -99,7 +109,7 @@ var/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "\"THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH\""//Initial message shown.
 	if(announcer)
-		Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+		AliceAnnounce(announcer, message)
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
 //		announcer.autosay(message, "A.L.I.C.E.", "A.L.I.C.E.")
 
@@ -117,7 +127,7 @@ var/specops_shuttle_timeleft = 0
 				message = "\"ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN\""
 				if(rounded_time_left==0)
 					message = "\"ALERT: TAKEOFF\""
-				Broadcast_Message(announcer, null, null, announcer, message, "A.L.I.C.E.", "Response Team", "A.L.I.C.E.", 0, 0, list(0,1), radiochannels["Response Team"])
+				AliceAnnounce(announcer, message)
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -160,7 +170,6 @@ var/specops_shuttle_timeleft = 0
 			if(L.name == "Marauder Exit")
 				var/obj/effect/portal/P = new(L.loc)
 				P.invisibility = 101//So it is not seen by anyone.
-				P.failchance = 0//So it has no fail chance when teleporting.
 				P.target = pick(spawn_marauder)//Where the marauder will arrive.
 				spawn_marauder.Remove(P.target)
 

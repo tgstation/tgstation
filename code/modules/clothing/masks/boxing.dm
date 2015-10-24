@@ -19,7 +19,8 @@
 	siemens_coefficient = 3.0
 	species_fit = list("Vox")
 
-/obj/item/clothing/mask/luchador/treat_mask_message(var/message)
+/obj/item/clothing/mask/luchador/treat_mask_speech(var/datum/speech/speech)
+	var/message=speech.message
 	message = replacetext(message, "captain", "CAPITÁN")
 	message = replacetext(message, "station", "ESTACIÓN")
 	message = replacetext(message, "sir", "SEÑOR")
@@ -39,7 +40,7 @@
 	message = uppertext(message)	//Things end up looking better this way (no mixed cases), and it fits the macho wrestler image.
 	if(prob(25))
 		message += " OLE!"
-	return message
+	speech.message = message
 
 /obj/item/clothing/mask/luchador/tecnicos
 	name = "Tecnicos Mask"

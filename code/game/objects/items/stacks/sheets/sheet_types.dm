@@ -246,10 +246,16 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	icon_state = "sheet-card"
 	flags = FPRINT
 	origin_tech = "materials=1"
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()
+
+/obj/item/stack/sheet/cardboard/recycle(var/datum/materials/rec)
+	rec.addAmount(MAT_CARDBOARD, amount)
+	return 1
 
 /*
  * /vg/ charcoal

@@ -1377,3 +1377,33 @@ proc/find_holder_of_type(var/atom/reference,var/typepath) //Returns the first ob
 /world/Error(exception/e)
 	print_runtime(e)
 	..()
+
+//Checks if any of the atoms in the turf are dense
+//Returns 1 is anything is dense, 0 otherwise
+/turf/proc/has_dense_content()
+	for(var/atom/turf_contents in contents)
+		if(turf_contents.density)
+			return 1
+	return 0
+
+/proc/multinum_display(var/number,var/digits)//multinum_display(42,4) = "0042"; multinum_display(-137,6) = "-000137"; multinum_display(4572,3) = "999"
+	var/result = ""
+	if((digits < 1))
+		return "0"
+	var/abs = abs(number)
+	if(abs > (10**digits))
+		for(var/D=0;D<digits;D++)
+			result += "9"
+		if(number<0)
+			result = "-[result]"
+		return result
+	var/number_digits = 1
+	for(var/N = abs;N >= 10; N = N/10)
+		number_digits++
+	var/additional_digits = digits-number_digits
+	for(var/i=0;i<additional_digits;i++)
+		result += "0"
+	result += "[number]"
+	if(number<0)
+		result = "-[result]"
+	return result

@@ -43,6 +43,11 @@
 
 	var/bees = 0				//Are there currently bees above the tray?
 
+	var/decay_reduction = 0     //How much is mutation decay reduced by?
+	var/weed_coefficient = 1    //Coefficient to the chance of weeds appearing
+	var/internal_light = 1
+	var/light_on = 0
+
 	// Seed details/line data.
 	var/datum/seed/seed = null // The currently planted seed
 
@@ -149,6 +154,18 @@
 	if(closed_system)
 		flags &= ~OPENCONTAINER
 
+/obj/machinery/portable_atmospherics/hydroponics/RefreshParts()
+	var/capcount = 0
+	var/scancount = 0
+	var/mattercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/capacitor)) capcount += SP.rating
+		if(istype(SP, /obj/item/weapon/stock_parts/scanning_module)) scancount += SP.rating-1
+		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin)) mattercount += SP.rating
+	decay_reduction = scancount
+	weed_coefficient = 2/mattercount
+	internal_light = capcount
+
 /obj/machinery/portable_atmospherics/hydroponics/bullet_act(var/obj/item/projectile/Proj)
 
 	//Don't act on seeds like dionaea that shouldn't change.
@@ -186,7 +203,7 @@
 	lastcycle = world.time
 
 	// Mutation level drops each main tick.
-	mutation_level -= rand(2,4)
+	mutation_level -= rand(2-decay_reduction,4-decay_reduction)
 
 	var/mob/living/simple_animal/bee/BEE = locate() in loc
 	if(BEE && (BEE.feral < 1))
@@ -197,7 +214,7 @@
 	// Weeds like water and nutrients, there's a chance the weed population will increase.
 	// Bonus chance if the tray is unoccupied.
 	if(waterlevel > 10 && nutrilevel > 2 && prob(isnull(seed) ? 5 : (1/(1+bees))))
-		weedlevel += 1 * HYDRO_SPEED_MULTIPLIER
+		weedlevel += 1 * HYDRO_SPEED_MULTIPLIER * weed_coefficient
 
 	// There's a chance for a weed explosion to happen if the weeds take over.
 	// Plants that are themselves weeds (weed_tolerance > 10) are unaffected.
@@ -249,7 +266,7 @@
 	var/datum/gas_mixture/environment
 
 	// If we're closed, take from our internal sources.
-	if(closed_system && (connected_port || holding))
+	if(closed_system)
 		environment = air_contents
 
 	// If atmos input is not there, grab from turf.
@@ -480,12 +497,10 @@
 
 //Refreshes the icon and sets the luminosity
 /obj/machinery/portable_atmospherics/hydroponics/update_icon()
-
 	overlays.len = 0
 
 	// Updates the plant overlay.
 	if(!isnull(seed))
-
 		if(draw_warnings && health <= (seed.endurance / 2))
 			overlays += image(seed.plant_dmi,"over_lowhealth3")
 
@@ -494,13 +509,7 @@
 		else if(harvest)
 			overlays += image(seed.plant_dmi,"[seed.plant_icon]-harvest")
 		else if(age < seed.maturation)
-
-			var/t_growthstate
-			if(age >= seed.maturation)
-				t_growthstate = seed.growth_stages
-			else
-				t_growthstate = round(seed.maturation / seed.growth_stages)
-
+			var/t_growthstate = max(1,round((age * seed.growth_stages) / seed.maturation))
 			overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[t_growthstate]")
 			lastproduce = age
 		else
@@ -521,18 +530,18 @@
 		if(harvest)
 			overlays += "over_harvest3"
 
-	// Update bioluminescence.
-	if(seed)
-		if(seed.biolum)
-			set_light(round(seed.potency/10))
-			if(seed.biolum_colour)
-				light_color = seed.biolum_colour
-			else
-				light_color = null
-			return
-
-	set_light(0)
+	// Update bioluminescence and tray light
+	calculate_light()
 	return
+
+/obj/machinery/portable_atmospherics/hydroponics/proc/calculate_light()
+	var/light_out = 0
+	if(light_on) light_out += internal_light
+	if(seed&&seed.biolum)
+		light_out+=round(seed.potency/10)
+		if(seed.biolum_colour) light_color = seed.biolum_colour
+		else light_color = null
+	set_light(light_out)
 
  // If a weed growth is sufficient, this proc is called.
 /obj/machinery/portable_atmospherics/hydroponics/proc/weed_invasion()
@@ -626,6 +635,59 @@
 
 	if(..())
 		return 1
+
+	if(istype(O, /obj/item/claypot))
+		user << "<span class='warning'>You must place the pot on the ground and use a spade on \the [src] to make a transplant.</span>"
+		return
+
+	if(seed && istype(O, /obj/item/weapon/pickaxe/shovel))
+		var/obj/item/claypot/C = locate() in range(user,1)
+		if(!C)
+			user << "<span class='warning'>You need an empty clay pot next to you.</span>"
+			return
+		playsound(loc, 'sound/items/shovel.ogg', 50, 1)
+		if(do_after(user, src, 50))
+			user.visible_message(	"<span class='notice'>[user] transplants \the [seed.display_name] into \the [C].</span>",
+									"<span class='notice'>\icon[src] You transplant \the [seed.display_name] into \the [C].</span>",
+									"<span class='notice'>You hear a ratchet.</span>")
+
+			var/obj/structure/claypot/S = new(get_turf(C))
+			transfer_fingerprints(C, S)
+			qdel(C)
+
+			if(seed.large)
+				S.icon_state += "-large"
+
+			if(dead)
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-dead")
+			else if(harvest)
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-harvest")
+			else if(age < seed.maturation)
+				var/t_growthstate = max(1,round((age * seed.growth_stages) / seed.maturation))
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[t_growthstate]")
+			else
+				S.overlays += image(seed.plant_dmi,"[seed.plant_icon]-grow[seed.growth_stages]")
+
+			S.plant_name = seed.display_name
+
+			if(seed.biolum)
+				S.set_light(round(seed.potency/10))
+				if(seed.biolum_colour)
+					S.light_color = seed.biolum_colour
+
+			harvest = 0
+			seed = null
+			dead = 0
+			sampled = 0
+			age = 0
+			yield_mod = 0
+			mutation_mod = 0
+			set_light(0)
+
+			check_level_sanity()
+			update_icon()
+
+		return
 
 	if(istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/weapon/scalpel))
 
@@ -871,6 +933,15 @@
 
 	update_icon()
 
+/obj/machinery/portable_atmospherics/hydroponics/verb/light_toggle()
+	set name = "Toggle Light"
+	set category = "Object"
+	set src in view(1)
+	if(!usr || usr.stat || usr.restrained() || (usr.status_flags & FAKEDEATH))
+		return
+	light_on = !light_on
+	calculate_light()
+
 /obj/machinery/portable_atmospherics/hydroponics/soil
 	name = "soil"
 	icon = 'icons/obj/hydroponics.dmi'
@@ -881,8 +952,13 @@
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/pickaxe/shovel))
-		user << "You clear up [src]!"
-		qdel(src)
+		if(!seed)
+			user << "You clear up [src]!"
+			new /obj/item/weapon/ore/glass(loc)//we get some of the dirt back
+			new /obj/item/weapon/ore/glass(loc)
+			qdel(src)
+		else
+			..()
 	else if(istype(O,/obj/item/weapon/pickaxe/shovel) || istype(O,/obj/item/weapon/tank))
 		return
 	else

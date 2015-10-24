@@ -58,6 +58,8 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
 
 	foldable = /obj/item/stack/sheet/cardboard
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/weapon/storage/fancy/donut_box/New()
 	..()
@@ -78,6 +80,8 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 	foldable = /obj/item/stack/sheet/cardboard
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
@@ -97,6 +101,8 @@
 	icon_type = "candle"
 	item_state = "candlebox5"
 	foldable = /obj/item/stack/sheet/cardboard
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 	storage_slots = 5
 	throwforce = 2
 	flags = 0
@@ -125,6 +131,8 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	foldable = /obj/item/stack/sheet/cardboard
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 	w_class = 2.0
 	storage_slots = 6
 	icon_type = "crayon"
@@ -243,6 +251,8 @@
 	storage_slots = 6
 	can_hold = list("=/obj/item/clothing/mask/cigarette", "/obj/item/weapon/lighter") // Strict type check.
 	icon_type = "cigarette"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
 	..()
@@ -355,6 +365,8 @@
 	can_hold = list("/obj/item/device/flashlight/flare")
 
 	foldable = /obj/item/stack/sheet/cardboard
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/weapon/storage/fancy/flares/New()
 	..()
@@ -383,6 +395,8 @@
 	item_state = "kfc_bucket"
 	icon_type = "drumstick"
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/chicken_drumstick")
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/weapon/storage/fancy/food_box/chicken_bucket/New()
 	..()
@@ -422,6 +436,8 @@
 	storage_slots = 4
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/slider")
 	var/slider_type = /obj/item/weapon/reagent_containers/food/snacks/slider//set this as the spawn path of your slider
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/weapon/storage/fancy/food_box/slider_box/New()
 	..()

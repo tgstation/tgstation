@@ -5,6 +5,8 @@
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
 
+	can_rename_areas = list(AREA_BLUEPRINTS)
+
 /obj/item/blueprints/mommiprints/attack_self(mob/M as mob)
 	interact()
 	return
@@ -30,12 +32,17 @@
 		if (AREA_STATION)
 			text += {"
 <p>According the blueprints, you are now in <b>\"[A.name]\"</b>.</p>
-<p>You may not change the existing rooms, only create new ones.</p>
+<p>You may not change the existing rooms, only create new ones and rename them.</p>
 "}
 		if (AREA_SPECIAL)
 			text += {"
 <p>This place isn't noted on the blueprint.</p>
 "}
+		if (AREA_BLUEPRINTS)
+			text += {"
+<p>According to the blueprints, you are now in <b>\"[A.name]\"</b> This place seems to be relatively new on the blueprints.</p>"}
+			text += "<p>You may <a href='?src=\ref[src];action=edit_area'>move an amendment</a> to the drawing.</p>"
+
 		else
 			return
 	text += "</BODY></HTML>"

@@ -122,6 +122,20 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
 
+/obj/effect/decal/cleanable/clay_fragments
+	name = "clay fragments"
+	desc = "pieces from a broken clay pot"
+	gender = PLURAL
+	icon = 'icons/effects/tomatodecal.dmi'
+	icon_state = "clay_fragments"
+	anchored = 0
+	layer=2
+
+/obj/effect/decal/cleanable/clay_fragments/New()
+	..()
+	pixel_x = rand (-3,3)
+	pixel_y = rand (-3,3)
+
 /obj/effect/decal/cleanable/soot
 	name = "soot"
 	desc = "One hell of a party..."

@@ -266,6 +266,7 @@ var/list/beam_master = list()
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
+	var/wait = 0
 
 /obj/item/projectile/beam/OnFired()	//if assigned, allows for code when the projectile gets fired
 	target = get_turf(original)
@@ -417,6 +418,9 @@ var/list/beam_master = list()
 		if(tS)
 			timestopped = loc.timestopped
 			tS = 0
+		if(wait)
+			sleep(wait)
+			wait = 0
 		while((loc.timestopped || timestopped) && !first)
 			sleep(3)
 		first = 0

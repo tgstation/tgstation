@@ -199,7 +199,7 @@
 
 	if(href_list["read"])
 		var/code = input("Input exported AAC code.","Automations","") as message|null
-		if(!code || !Adjacent(usr)) return 0
+		if(!code || (!issilicon(usr) && !Adjacent(usr))) return 0
 		try // To prevent invalid JSON causing runtimes.
 			ReadCode(code)
 		catch

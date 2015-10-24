@@ -18,10 +18,14 @@
 /obj/item/trash/bustanuts
 	name = "Busta-Nuts"
 	icon_state = "busta_nut"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/trash/raisins
 	name = "4no raisins"
 	icon_state= "4no_raisins"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/trash/candy
 	name = "Candy"
@@ -35,17 +39,24 @@
 	name = "Chips"
 	icon_state = "chips"
 
+
 /obj/item/trash/popcorn
 	name = "Popcorn"
 	icon_state = "popcorn"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/trash/sosjerky
 	name = "Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/trash/syndi_cakes
 	name = "Syndi cakes"
 	icon_state = "syndi_cakes"
+	starting_materials = list(MAT_CARDBOARD = 370)
+	w_type=RECYK_MISC
 
 /obj/item/trash/discountchocolate
 	name = "Discount Dan's Chocolate Bar"
@@ -105,6 +116,8 @@
 /obj/item/trash/chicken_bucket
 	name = "Chicken bucket"
 	icon_state = "kfc_bucket"
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
 
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return

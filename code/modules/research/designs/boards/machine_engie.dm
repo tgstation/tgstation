@@ -14,6 +14,16 @@
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/smes
 
+/datum/design/treadmill
+	name = "Circuit Design (Treadmill Generator)"
+	desc = "Allows for the construction of circuit boards used to build Treadmill Generators."
+	id="treadmill"
+	req_tech = list("powerstorage" = 4, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	category = "Machine Boards"
+	build_path = /obj/item/weapon/circuitboard/treadmill
+
 /datum/design/cell_charger
 	name = "Circuit Design (Cell Charger)"
 	desc = "Allows for the construction of circuit boards used to build a cell charger"

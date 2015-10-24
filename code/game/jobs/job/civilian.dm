@@ -91,7 +91,7 @@
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	minimal_access = list(access_hydroponics, access_morgue) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-	alt_titles = list("Hydroponicist", "Beekeeper")
+	alt_titles = list("Hydroponicist", "Beekeeper", "Gardener")
 
 	pdaslot=slot_belt
 	pdatype=/obj/item/device/pda/botanist
@@ -110,6 +110,9 @@
 				H.equip_or_collect(new /obj/item/clothing/under/rank/botany(H), slot_w_uniform)
 			if("Beekeeper")
 				H.equip_or_collect(new /obj/item/clothing/under/rank/beekeeper(H), slot_w_uniform)
+			if("Gardener")
+				H.equip_or_collect(new /obj/item/clothing/under/rank/gardener(H), slot_w_uniform)
+
 		H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/clothing/gloves/botanic_leather(H), slot_gloves)
 		H.equip_or_collect(new /obj/item/clothing/suit/apron(H), slot_wear_suit)

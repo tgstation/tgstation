@@ -1,6 +1,7 @@
 /obj/effect/decal/chemical_puff
 	name = "chemicals"
 	icon = 'icons/obj/chempuff.dmi'
+	pass_flags = PASSTABLE|PASSGRILLE|PASSMACHINE
 	var/turf/initial_turf = null
 
 /obj/effect/decal/chemical_puff/New(var/pos, var/color = null, var/reagent_amt = 5)

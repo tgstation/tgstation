@@ -23,9 +23,10 @@
  * @param light_impact_range
  * @param flash_range        Unused
  * @param adminlog           Log to admins
- * @param squelch            Do not notify explosion listeners
+ * @param ignored            Do not notify explosion listeners
+ * @param verbose            Explosion listeners will treat as an important explosion worth reporting on radio
  */
-/proc/explosion(turf/epicenter, const/devastation_range, const/heavy_impact_range, const/light_impact_range, const/flash_range, adminlog = 1, squelch = 0)
+/proc/explosion(turf/epicenter, const/devastation_range, const/heavy_impact_range, const/light_impact_range, const/flash_range, adminlog = 1, ignored = 0, verbose = 1)
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/explosion() called tick#: [world.time]")
 	src = null	//so we don't abort once src is deleted
 
@@ -139,10 +140,10 @@
 			world.log << "## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds."
 
 		//Machines which report explosions.
-		if(!squelch)
+		if(!ignored)
 			for(var/obj/machinery/computer/bhangmeter/bhangmeter in doppler_arrays)
 				if(bhangmeter && !bhangmeter.stat)
-					bhangmeter.sense_explosion(x0,y0,z0,devastation_range,heavy_impact_range,light_impact_range,took)
+					bhangmeter.sense_explosion(x0, y0, z0, devastation_range, heavy_impact_range, light_impact_range, took, 0, verbose)
 
 		sleep(8)
 

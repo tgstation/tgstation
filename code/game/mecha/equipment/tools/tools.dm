@@ -580,7 +580,6 @@
 	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(target))
 	P.target = target_turf
 	P.icon = 'icons/obj/objects.dmi'
-	P.failchance = 0
 	P.icon_state = "anom"
 	P.name = "wormhole"
 	do_after_cooldown()

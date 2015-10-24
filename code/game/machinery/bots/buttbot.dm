@@ -44,11 +44,9 @@ Here it is: Buttbot.
 	return
 
 
-/obj/machinery/bot/buttbot/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(prob(buttchance) && !findtext(message,"butt"))
-		message = strip_html_properly(html_decode(raw_message))
-
-		var/list/split_phrase = text2list(message," ") //Split it up into words.
+/obj/machinery/bot/buttbot/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(prob(buttchance) && !findtext(speech.message,"butt"))
+		var/list/split_phrase = text2list(speech.message," ") // Split it up into words.
 
 		var/list/prepared_words = split_phrase.Copy()
 		var/i = rand(1,3)
@@ -62,7 +60,7 @@ Here it is: Buttbot.
 
 			split_phrase[index] = "butt"
 
-		say(sanitize(list2text(split_phrase," ")), speaking)
+		say(list2text(split_phrase," "), speech.language) // No longer need to sanitize, speech is automatically html_encoded at render-time.
 	return
 
 

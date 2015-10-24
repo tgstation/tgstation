@@ -104,6 +104,8 @@
 		if(M.locked_to) //Mob is locked to something, so it's not actually stepping on the glass
 			playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1) //Make noise
 			return //Stop here
+		if(M.flying) //We don't check for lying because it's intended to hurt
+			return
 		else //Stepping on the glass
 			M << "<span class='danger'>You step in the broken glass!</span>"
 			playsound(get_turf(src), 'sound/effects/glass_step.ogg', 50, 1)

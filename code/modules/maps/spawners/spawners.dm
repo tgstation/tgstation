@@ -773,7 +773,7 @@
 	name = "space russian spawner"
 	icon_state = "space_russian"
 	chance = 5
-	toSpawn = list(/mob/living/simple_animal/hostile/russian/ranged)
+	toSpawn = list(/mob/living/simple_animal/hostile/humanoid/russian/ranged)
 
 // Mobs ////////////////////////////////////////////////////////
 
@@ -895,14 +895,14 @@
 		/obj/item/seeds/harebell,
 		/obj/item/seeds/icepepperseed,
 		/obj/item/seeds/killertomatoseed,
-		//obj/item/seeds/koiseed,
+		/obj/item/seeds/koiseed,
 		/obj/item/seeds/kudzuseed,
 		/obj/item/seeds/lemonseed,
 		/obj/item/seeds/libertymycelium,
 		/obj/item/seeds/limeseed,
-		//obj/item/seeds/moonflowerseed,
+		/obj/item/seeds/moonflowerseed,
 		/obj/item/seeds/nettleseed,
-		//obj/item/seeds/novaflowerseed,
+		/obj/item/seeds/novaflowerseed,
 		/obj/item/seeds/orangeseed,
 		/obj/item/seeds/plastiseed,
 		/obj/item/seeds/plumpmycelium,
@@ -926,6 +926,7 @@
 		/obj/item/seeds/watermelonseed,
 		/obj/item/seeds/wheatseed,
 		/obj/item/seeds/whitebeetseed,
+		/obj/item/seeds/cinnamomum,
 		)
 
 

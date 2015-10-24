@@ -25,6 +25,7 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	universal_speak = 0
+	treadmill_speed = 0.2 //You can still do it, but you're not going to generate much power.
 
 	size = SIZE_TINY
 
@@ -80,17 +81,7 @@
 	set desc = "Enter an air vent and crawl through the pipe system."
 	set category = "Object"
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""]) \\/mob/living/simple_animal/mouse/verb/ventcrawl()  called tick#: [world.time]")
-	var/atom/pipe
-	var/list/pipes = list()
-	for(var/obj/machinery/atmospherics/unary/U in range(1))
-		if((istype(U, /obj/machinery/atmospherics/unary/vent_pump) || istype(U,/obj/machinery/atmospherics/unary/vent_scrubber)) && Adjacent(U))
-			pipes |= U
-	if(!pipes || !pipes.len)
-		return
-	if(pipes.len == 1)
-		pipe = pipes[1]
-	else
-		pipe = input("Crawl Through Vent", "Pick a pipe") as null|anything in pipes
+	var/pipe = start_ventcrawl()
 	if(pipe)
 		handle_ventcrawl(pipe)
 
@@ -196,7 +187,7 @@
 /mob/living/simple_animal/mouse/say_quote(text)
 	if(!text)
 		return "squeaks, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
-	return "squeaks, \"[text]\"";
+	return "squeaks, [text]";
 
 /mob/living/simple_animal/mouse/singularity_act()
 	if(!(src.flags & INVULNERABLE))

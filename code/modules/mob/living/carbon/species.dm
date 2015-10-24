@@ -125,16 +125,17 @@ var/global/list/whitelisted_species = list("Human")
 
 	var/move_speed_mod = 0 //Higher value is slower, lower is faster.
 
-/datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/proc/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/species/proc/handle_speech() called tick#: [world.time]")
 	if(H.dna)
-		if(length(message) >= 2)
+		if(length(speech.message) >= 2)
 			for(var/gene_type in H.active_genes)
 				var/datum/dna/gene/gene = dna_genes[gene_type]
 				if(!gene.block)
 					continue
-				message = gene.OnSay(H,message)
-	return message
+				if(gene.OnSay(H,speech))
+					return 0
+	return 1
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
@@ -389,8 +390,9 @@ var/global/list/whitelisted_species = list("Human")
 
 	flesh_color = "#34AF10"
 
-/datum/species/unathi/handle_speech(message, mob/living/carbon/human/H)
-	return ..(replacetext(message, "s", stutter("ss")), H)
+/datum/species/unathi/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
+	speech.message = replacetext(speech.message, "s", stutter("ss"))
+	return ..(speech, H)
 
 /datum/species/skellington // /vg/
 	name = "Skellington"
@@ -412,11 +414,11 @@ var/global/list/whitelisted_species = list("Human")
 
 	move_speed_mod = 3
 
-/datum/species/skellington/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/skellington/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if (prob(25))
-		message += "  ACK ACK!"
+		speech.message += "  ACK ACK!"
 
-	return ..(message, H)
+	return ..(speech, H)
 
 /datum/species/tajaran
 	name = "Tajaran"
@@ -468,18 +470,18 @@ var/global/list/whitelisted_species = list("Human")
 	filter.addReplacement("god","gosh")
 	filter.addWordReplacement("(ass|butt)", "rump")
 
-/datum/species/tajaran/handle_speech(message, mob/living/carbon/human/H)
+/datum/species/tajaran/handle_speech(var/datum/speech/speech, mob/living/carbon/human/H)
 	if (prob(15))
-		message = ""
+		speech.message = ""
 
 		if (prob(50))
-			message = pick("GOD, PLEASE", "NO, GOD", "AGGGGGGGH") + " "
+			speech.message = pick("GOD, PLEASE", "NO, GOD", "AGGGGGGGH") + " "
 
-		message += pick("KILL ME", "END MY SUFFERING", "I CAN'T DO THIS ANYMORE")
+		speech.message += pick("KILL ME", "END MY SUFFERING", "I CAN'T DO THIS ANYMORE")
 
-		return ..(message, H)
+		return ..(speech, H)
 
-	return ..(filter.FilterSpeech(message), H)
+	return ..(filter.FilterSpeech(speech), H)
 
 /datum/species/grey // /vg/
 	name = "Grey"

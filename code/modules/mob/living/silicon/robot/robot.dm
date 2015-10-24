@@ -18,6 +18,7 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
+	var/obj/screen/sensor = null
 
 	var/shown_robot_modules = 0
 	var/obj/screen/robot_modules_background
@@ -214,6 +215,11 @@
 		if(client)
 			client.screen -= robot_modules_background
 		robot_modules_background = null
+	if(sensor)
+		returnToPool(sensor)
+		if(client)
+			client.screen -= sensor
+		sensor = null
 
 /proc/getAvailableRobotModules()
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/getAvailableRobotModules() called tick#: [world.time]")
@@ -867,7 +873,16 @@
 		if(wiresexposed)
 			user << "Close the panel first."
 		else if(cell)
-			user << "There is a power cell already installed."
+			user << "You swap the power cell within with the new cell in your hand."
+			var/obj/item/weapon/oldpowercell = cell
+			C.wrapped = null
+			C.installed = 0
+			cell = W
+			user.drop_item(W, src)
+			user.put_in_hands(oldpowercell)
+			C.installed = 1
+			C.wrapped = W
+			C.install()
 		else
 			user.drop_item(W, src)
 			cell = W
@@ -1105,7 +1120,11 @@
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "You remove \the [cell]."
+			user.visible_message("<span class='warning'>[user] removes [src]'s [cell.name].</span>", \
+			"<span class='notice'>You remove [src]'s [cell.name].</span>")
+			src.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their [cell.name] removed by [user.name] ([user.ckey])</font>"
+			user.attack_log += "\[[time_stamp()]\] <font color='red'>Removed the [cell.name] of [src.name] ([src.ckey])</font>"
+			log_attack("<font color='red'>[user.name] ([user.ckey]) removed [src]'s [cell.name] ([src.ckey])</font>")
 			cell = null
 			cell_component.wrapped = null
 			cell_component.installed = 0
@@ -1312,7 +1331,7 @@
 		src << "<span class='warning'>No Sensor Augmentations located or no module has been equipped.</span>"
 		return
 	var/sensor_type
-	if(module.sensor_augs.len == 1) // Only one choice so toggle between it.
+	if(module.sensor_augs.len == 2) // Only one choice so toggle between it.
 		if(!sensor_mode)
 			sensor_type = module.sensor_augs[1]
 		else

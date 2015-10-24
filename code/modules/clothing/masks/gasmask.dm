@@ -129,10 +129,9 @@
 	species_fit = list("Vox")
 	var/muted = 0
 
-/obj/item/clothing/mask/gas/mime/treat_mask_message(var/message)
+/obj/item/clothing/mask/gas/mime/treat_mask_speech(var/datum/speech/speech)
 	if(src.muted)
-		return("")
-	return message
+		speech.message=""
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"

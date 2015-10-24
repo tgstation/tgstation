@@ -17,6 +17,7 @@ The currently supporting non-reagent materials:
 - $uranium (/obj/item/stack/uranium). One sheet = 3750 units.
 - $diamond (/obj/item/stack/diamond). One sheet = 3750 units.
 - $clown (/obj/item/stack/clown). One sheet = 3750 units. ("Bananium")
+- $cardboard (/obj/item/stack/sheet/cardboard). One sheet = 3750 units.
 (Insert new ones here)
 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
@@ -41,7 +42,6 @@ The required techs are the following:
 - Electromagnetic Spectrum Research	max=8	"magnets"
 - Data Theory Research				max=5	"programming"
 - Illegal Technologies Research		max=8	"syndicate"
-k
 */
 
 #define	IMPRINTER	1	//For circuits. Uses glass/chemicals.

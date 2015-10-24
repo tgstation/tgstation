@@ -236,6 +236,8 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 40
+	var/speed_coefficient = 15
+	var/biomass_coefficient = 9
 	var/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0
@@ -291,6 +293,15 @@
 			recipe_categories[recipe.category]=list()
 		recipe_categories[recipe.category] += recipe.id
 		recipes[recipe.id]=recipe
+
+/obj/machinery/biogenerator/RefreshParts()
+	var/manipcount = 0
+	var/lasercount = 0
+	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/weapon/stock_parts/manipulator)) manipcount += SP.rating
+		if(istype(SP, /obj/item/weapon/stock_parts/micro_laser)) lasercount += SP.rating
+	speed_coefficient = 2/manipcount
+	biomass_coefficient = 3*lasercount
 
 /obj/machinery/biogenerator/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(..())
@@ -427,7 +438,7 @@
 		S += 5
 		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
 			points += 1
-		else points += I.reagents.get_reagent_amount("nutriment")*10
+		else points += I.reagents.get_reagent_amount("nutriment")*biomass_coefficient
 		qdel(I)
 	if(S)
 		processing = 1
@@ -435,7 +446,7 @@
 		updateUsrDialog()
 		playsound(get_turf(src), 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
-		sleep(S+15)
+		sleep(speed_coefficient*(S+15))
 		processing = 0
 		update_icon()
 	else

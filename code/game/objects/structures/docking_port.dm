@@ -14,8 +14,6 @@ var/global/list/all_docking_ports = list()
 
 	var/obj/structure/docking_port/docked_with
 
-	var/list/used_by_shuttles = list() //List of all shuttles which use this in any way
-
 /obj/structure/docking_port/New()
 	.=..()
 	all_docking_ports |= src
@@ -23,6 +21,13 @@ var/global/list/all_docking_ports = list()
 /obj/structure/docking_port/Destroy()
 	.=..()
 	all_docking_ports -= src
+
+	undock()
+
+	for(var/datum/shuttle/S in shuttles) //Go through every existing shuttle and remove references
+		if(src == S.current_port) S.current_port = null
+		if(src == S.transit_port) S.transit_port = null
+		if(src == S.destination_port) S.destination_port = null
 
 //just in case
 /obj/structure/docking_port/singuloCanEat()
@@ -41,11 +46,9 @@ var/global/list/all_docking_ports = list()
 	return ..()
 
 /obj/structure/docking_port/proc/link_to_shuttle(var/datum/shuttle/S)
-	used_by_shuttles |= S
 	return
 
 /obj/structure/docking_port/proc/unlink_from_shuttle(var/datum/shuttle/S)
-	used_by_shuttles -= S
 	return
 
 /obj/structure/docking_port/proc/undock()
@@ -71,6 +74,13 @@ var/global/list/all_docking_ports = list()
 	areaname = "shuttle"
 
 	var/datum/shuttle/linked_shuttle
+
+/obj/structure/docking_port/shuttle/Destroy()
+	message_admins("<span class='warning'>WARNING: A shuttle docking port (linked to [linked_shuttle ? (linked_shuttle.name) : "nothing"]) has been deleted.</span>")
+	if(linked_shuttle)
+		unlink_from_shuttle(linked_shuttle)
+
+	..()
 
 /obj/structure/docking_port/shuttle/link_to_shuttle(var/datum/shuttle/S)
 	.=..()
@@ -103,12 +113,6 @@ var/global/list/all_docking_ports = list()
 /obj/structure/docking_port/destination //this guy is installed on stations and connects to shuttles
 	icon_state = "docking_station"
 
-	var/min_x = 0
-	var/max_x = 255
-
-	var/min_y = 0
-	var/max_y = 255
-
 	var/base_turf_type			= /turf/space
 	var/base_turf_icon			= null
 	var/base_turf_icon_state	= null
@@ -131,35 +135,6 @@ var/global/list/all_docking_ports = list()
 				base_turf_type			= T.type
 				base_turf_icon			= T.icon
 				base_turf_icon_state	= T.icon_state
-
-/obj/structure/docking_port/destination/proc/calculate_bounds(var/from)
-	if(istype(from,/datum/shuttle))
-		var/datum/shuttle/S = from
-
-		if(!S || !S.linked_area || !S.linked_port) return
-
-		var/turf/shuttle = S.linked_port.get_docking_turf()
-		var/turf/us = get_turf(src)
-
-		var/datum/coords/offset = new(us.x-shuttle.x, us.y-shuttle.y)
-
-		for(var/turf/T in S.linked_area.get_turfs())
-			var/new_x = T.x + offset.x_pos
-			var/new_y = T.y + offset.y_pos
-
-			if(new_x < min_x) min_x = new_x
-			if(new_x > max_x) max_x = new_x
-
-			if(new_y < min_y) min_y = new_y
-			if(new_y > max_y) max_y = new_y
-
-	else if(istype(from,/obj/structure/docking_port/destination))
-		var/obj/structure/docking_port/destination/D = from
-
-		src.min_x = src.x - D.x + D.min_x
-		src.min_y = src.y - D.y + D.min_y
-		src.max_x = src.x - D.x + D.max_x
-		src.max_y = src.y - D.y + D.max_y
 
 /obj/structure/docking_port/destination/link_to_shuttle(var/datum/shuttle/S)
 	..()

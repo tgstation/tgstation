@@ -5,6 +5,7 @@
 
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
+	anchored = TRUE
 
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
@@ -39,14 +40,14 @@
 	return 0
 
 //An AI eyeobj mob cant have a virtualhearer to hear with unless it gets one from a malf module
-/mob/camera/aiEye/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(radio_freq) //HOW CAN IT POSSIBLY READ LIPS THROUGH RADIOS
+/mob/camera/aiEye/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(speech.frequency) //HOW CAN IT POSSIBLY READ LIPS THROUGH RADIOS
 		return
 
-	var/mob/M = speaker
+	var/mob/M = speech.speaker
 	if(istype(M))
 		if(ishuman(M))
-			var/mob/living/carbon/human/H = speaker
+			var/mob/living/carbon/human/H = speech.speaker
 			if(H.check_body_part_coverage(MOUTH)) //OR MASKS
 				return
 		ai.Hear(args) //He can only read the lips of mobs, I cant think of objects using lips

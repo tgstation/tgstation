@@ -27,6 +27,10 @@
 	var/list/zLevels = list()
 	var/zMainStation = 1
 	var/zCentcomm = 2
+	var/zTCommSat = 3
+	var/zDerelict = 4
+	var/zAsteroid = 5
+	var/zDeepSpace = 6
 
 	//Center of thunderdome admin room
 	var/tDomeX = 0

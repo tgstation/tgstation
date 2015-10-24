@@ -89,6 +89,14 @@
 
 ////////////////////////STAGE 4/////////////////////////////////
 
+/datum/disease2/effect/minttoxin
+	name = "Creosote Syndrome"
+	stage = 4
+/datum/disease2/effect/minttoxin/activate(var/mob/living/carbon/mob,var/multiplier)
+	if(istype(mob) && mob.reagents.get_reagent_amount("minttoxin") < 5)
+		mob << "<span class = 'notice'>You feel a minty freshness"
+		mob.reagents.add_reagent("minttoxin", 5)
+
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
 	stage = 4

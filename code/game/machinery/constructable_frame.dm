@@ -425,11 +425,10 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/power/battery/smes"
 	board_type = "machine"
 	origin_tech = "powerstorage=4;engineering=4;programming=4"
-	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
+	frame_desc = "Requires 4 capacitors, 4 micro-lasers, and 2 console screens."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 4,
-							"/obj/item/weapon/stock_parts/manipulator" = 3,
-							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 4,
+							"/obj/item/weapon/stock_parts/micro_laser" = 4,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
 
 /obj/item/weapon/circuitboard/port_smes
@@ -437,11 +436,10 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/power/battery/portable"
 	board_type = "machine"
 	origin_tech = "powerstorage=5;engineering=4;programming=4"
-	frame_desc = "Requires 4 matter bins, 3 manipulators, 3 micro-lasers, and 2 console screens."
+	frame_desc = "Requires 4 capacitors, 4 micro-lasers, and 2 console screens."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 4,
-							"/obj/item/weapon/stock_parts/manipulator" = 3,
-							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/capacitor" = 4,
+							"/obj/item/weapon/stock_parts/micro_laser" = 4,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
 
 /obj/item/weapon/circuitboard/battery_port
@@ -452,6 +450,16 @@ obj/item/weapon/circuitboard/rdserver
 	frame_desc = "Requires 3 capacitors and 1 console screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/capacitor" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
+
+/obj/item/weapon/circuitboard/treadmill
+	name = "Circuit Board (Treadmill Generator)"
+	build_path = "/obj/machinery/power/treadmill"
+	board_type = "machine"
+	origin_tech = "engineering=2;powerstorage=4"
+	frame_desc = "Requires 4 capacitors and 1 console screen."
+	req_components = list (
+							"/obj/item/weapon/stock_parts/capacitor" = 4,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/chem_dispenser
@@ -483,10 +491,10 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/chem_master"
 	board_type = "machine"
 	origin_tech = "engineering=3;biotech=4"
-	frame_desc = "Requires 1 manipulator, 3 scanning modules, 2 micro-lasers, and 2 console screens."
+	frame_desc = "Requires 1 manipulator, 2 scanning modules, 2 micro-lasers, and 2 console screens."
 	req_components = list (
 							"/obj/item/weapon/stock_parts/manipulator" = 1,
-							"/obj/item/weapon/stock_parts/scanning_module" = 3,
+							"/obj/item/weapon/stock_parts/scanning_module" = 2,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 2)
 
@@ -530,24 +538,20 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/atmospherics/unary/heat_reservoir/heater"
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=5;biotech=4"
-	frame_desc = "Requires 3 manipulators, 2 scanning modules, 1 micro-laser, and 1 console screen."
+	frame_desc = "Requires 3 micro-lasers and 1 console screen."
 	req_components = list (
-							"/obj/item/weapon/stock_parts/manipulator" = 3,
-							"/obj/item/weapon/stock_parts/scanning_module" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,)
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/freezer
 	name = "Circuit Board (Freezer)"
 	build_path = "/obj/machinery/atmospherics/unary/cold_sink/freezer"
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=4;biotech=4"
-	frame_desc = "Requires 3 manipulators, 2 scanning modules, 1 micro-laser, and 1 console screen."
+	frame_desc = "Requires 3 micro-lasers and 1 console screen."
 	req_components = list (
-							"/obj/item/weapon/stock_parts/manipulator" = 3,
-							"/obj/item/weapon/stock_parts/scanning_module" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/stock_parts/console_screen" = 1,)
+							"/obj/item/weapon/stock_parts/micro_laser" = 3,
+							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/photocopier
 	name = "Circuit Board (Photocopier)"
@@ -646,11 +650,10 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/microwave"
 	board_type = "machine"
 	origin_tech = "programming=2;engineering=2;magnets=3"
-	frame_desc = "Requires 3 Matter Bins, 3 Micro-Lasers, 2 Scanning Modules, and 1 Console Screens.   "
+	frame_desc = "Requires 1 Micro-Laser, 1 Scanning Module, and 1 Console Screens.   "
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 3,
-							"/obj/item/weapon/stock_parts/micro_laser" = 3,
-							"/obj/item/weapon/stock_parts/scanning_module" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/reagentgrinder
@@ -728,39 +731,31 @@ obj/item/weapon/circuitboard/rdserver
 	build_path = "/obj/machinery/processor"
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
-	frame_desc = "Requires 2 Matter Bins, 1 Capacitors, 1 Scanning Module, 2 Manipulator and 2 High Powered Micro-Lasers   "
+	frame_desc = "Requires 1 Scanning Module and 2 Manipulators   "
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 1,
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
+							"/obj/item/weapon/stock_parts/manipulator" = 2)
+
+/obj/item/weapon/circuitboard/egg_incubator
+	name = "Circuit Board (Egg Incubator)"
+	build_path = "/obj/machinery/egg_incubator"
+	board_type = "machine"
+	origin_tech = "biotech=3"
+	frame_desc = "Requires 1 Matter Bin and 2 Capacitors   "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 2)
 
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "Circuit Board (Monkey Recycler)"
 	build_path = "/obj/machinery/monkey_recycler"
 	board_type = "machine"
 	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
-	frame_desc = "Requires 2 Matter Bins, 1 Capacitors, 1 Scanning Module, 2 Manipulator and 2 High Powered Micro-Lasers   "
+	frame_desc = "Requires 1 Matter Bin, 2 Manipulators and 1 Micro-Laser   "
 	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 1,
-							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
-
-/obj/item/weapon/circuitboard/chicken_processor
-	name = "Circuit Board (Chicken Processor)"
-	build_path = "/obj/machinery/chicken_processor"
-	board_type = "machine"
-	origin_tech = "programming=3;engineering=2;biotech=3;powerstorage=2"
-	frame_desc = "Requires 2 Matter Bins, 1 Capacitors, 1 Scanning Module, 2 Manipulator and 2 High Powered Micro-Lasers   "
-	req_components = list(
-							"/obj/item/weapon/stock_parts/matter_bin" = 2,
-							"/obj/item/weapon/stock_parts/capacitor" = 1,
-							"/obj/item/weapon/stock_parts/scanning_module" = 1,
-							"/obj/item/weapon/stock_parts/manipulator" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser/high" = 2)
+							"/obj/item/weapon/stock_parts/micro_laser" = 1)
 
 /*
 /obj/item/weapon/circuitboard/hydroseeds
@@ -945,7 +940,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Reverse Engine)"
 	build_path = "/obj/machinery/r_n_d/reverse_engine"
 	board_type = "machine"
-	origin_tech = "materials=6;programming=4;engineering=3;bluespace=3;power=4"
+	origin_tech = "materials=6;programming=4;engineering=3;bluespace=3;powerstorage=4"
 	frame_desc = "Requires 2 Scanning Modules, 2 Capacitors, 1 Manipulator, and 1 Console Screen."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 2,
@@ -968,7 +963,7 @@ obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (Flatpack Fabricator)"
 	build_path = "/obj/machinery/r_n_d/fabricator/mechanic_fab/flatpacker"
 	board_type = "machine"
-	origin_tech = "materials=5;engineering=4;power=3;programming=3"
+	origin_tech = "materials=5;engineering=4;powerstorage=3;programming=3"
 	frame_desc = "Requires 2 Manipulators, 2 Matter Bins, 2 Micro-Lasers, 2 Scanning Modules, and 1 Beaker."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/manipulator" = 2,
@@ -1034,15 +1029,23 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/scanning_module" = 3)
 
+/obj/item/weapon/circuitboard/centrifuge
+	name = "Circuit Board (Isolation Centrifuge)"
+	build_path = "/obj/machinery/centrifuge"
+	board_type = "machine"
+	origin_tech = "biotech=3"
+	frame_desc = "Requires 2 Manipulators"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/manipulator" = 2)
+
 /obj/item/weapon/circuitboard/mech_bay_power_port
 	name = "Circuit Board (Power Port)"
 	build_path = "/obj/machinery/mech_bay_recharge_port"
 	board_type = "machine"
 	origin_tech = "engineering=2;powerstorage=3"
-	frame_desc = "Requires 1 Micro-Laser, 1 Scanning Module, and 1 Console Screen."
+	frame_desc = "Requires 2 Micro-Lasers, and 1 Console Screen."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/micro_laser" = 1,
-							"/obj/item/weapon/stock_parts/scanning_module" = 1,
+							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1)
 
 /obj/item/weapon/circuitboard/mech_bay_recharge_station
@@ -1074,6 +1077,15 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/capacitor" = 2)
+
+/obj/item/weapon/circuitboard/washing_machine
+	name = "Circuit Board (Washing Machine)"
+	build_path = "/obj/machinery/washing_machine"
+	board_type = "machine"
+	origin_tech = "materials=1"
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/stock_parts/manipulator" = 1)
 
 /obj/item/weapon/circuitboard/sorting_machine
 	name = "Circuit Board (Sorting Machine)"
@@ -1116,13 +1128,19 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/matter_bin" = 3,
 							"/obj/item/weapon/stock_parts/capacitor" = 1)
 
+/obj/item/weapon/circuitboard/fax
+	name = "Circuit Board (Fax Machine)"
+	build_path = "/obj/machinery/faxmachine"
+	board_type = "machine"
+	origin_tech = "materials=2;bluespace=2"
+	frame_desc = "Requires 1 ansible and 1 scanning module."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/subspace/ansible" = 1,
+							"/obj/item/weapon/stock_parts/scanning_module" = 1)
+
 /*
- *
- *
- * Xenobotany boards!
- *
- *
- */
+ * Xenobotany
+*/
 
 /obj/item/weapon/circuitboard/botany_centrifuge
 	name = "Circuit Board (Lysis-Isolation Centrifuge)"
@@ -1148,3 +1166,35 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/scanning_module" = 3,
 							"/obj/item/weapon/stock_parts/micro_laser" = 2,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,)
+/*
+ * Xenoarcheology
+*/
+
+/obj/item/weapon/circuitboard/anom
+	name = "Circuit Board (Fourier Transform Spectroscope)"
+	build_path = "/obj/machinery/anomaly/fourier_transform"
+	board_type = "machine"
+	origin_tech = "programming=4"
+	frame_desc = "Requires 3 scanning modules."
+	req_components = list (
+							"/obj/item/weapon/stock_parts/scanning_module" = 3)
+
+/obj/item/weapon/circuitboard/anom/accelerator
+	name = "Circuit Board (Accelerator Spectrometer)"
+	build_path = "/obj/machinery/anomaly/accelerator"
+
+/obj/item/weapon/circuitboard/anom/gas
+	name = "Circuit Board (Gas Chromatography Spectrometer)"
+	build_path = "/obj/machinery/anomaly/gas_chromatography"
+
+/obj/item/weapon/circuitboard/anom/hyper
+	name = "Circuit Board (Hyperspectral Imager)"
+	build_path = "/obj/machinery/anomaly/hyperspectral"
+
+/obj/item/weapon/circuitboard/anom/ion
+	name = "Circuit Board (Ion Mobility Spectrometer)"
+	build_path = "/obj/machinery/anomaly/ion_mobility"
+
+/obj/item/weapon/circuitboard/anom/iso
+	name = "Circuit Board (Isotope Ratio Spectrometer)"
+	build_path = "/obj/machinery/anomaly/isotope_ratio"

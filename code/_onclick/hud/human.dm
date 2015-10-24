@@ -417,7 +417,7 @@
 	mymob.flash.icon = ui_style
 	mymob.flash.icon_state = "blank"
 	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "1,1 to 15,15"
+	mymob.flash.screen_loc = ui_entire_screen
 	mymob.flash.layer = 17
 
 	mymob.pain = getFromPool(/obj/screen)
@@ -477,44 +477,50 @@
 	var/num = 1
 	if(!hud_used) return
 	if(!client) return
+	var/list/used = list()
 
 	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
 		return
 
-	client.screen -= hud_used.item_action_list
-
-	for(var/obj/item/I in src)
-		if(I.action_button_name)
-			if(hud_used.item_action_list.len < num)
-				var/obj/screen/item_action/N = getFromPool(/obj/screen/item_action,hud_used)
-				hud_used.item_action_list += N
-
-			var/obj/screen/item_action/A = hud_used.item_action_list[num]
-
-			A.icon = ui_style2icon(client.prefs.UI_style)
-			A.icon_state = "template"
-
-			A.overlays.len = 0
-			var/image/img = image(I.icon, A, I.icon_state)
-			img.pixel_x = 0
-			img.pixel_y = 0
-			A.overlays += img
-
-			A.name = I.action_button_name
-			A.owner = I
-
-			client.screen += hud_used.item_action_list[num]
-
+	for(var/obj/screen/item_action/actionitem in hud_used.item_action_list)
+		if(actionitem.owner && actionitem.owner.loc == src)
+			actionitem.overlay.appearance = actionitem.owner.appearance
+			actionitem.overlay.dir = SOUTH
 			switch(num)
 				if(1)
-					A.screen_loc = ui_action_slot1
+					actionitem.screen_loc = ui_action_slot1
 				if(2)
-					A.screen_loc = ui_action_slot2
+					actionitem.screen_loc = ui_action_slot2
 				if(3)
-					A.screen_loc = ui_action_slot3
+					actionitem.screen_loc = ui_action_slot3
 				if(4)
-					A.screen_loc = ui_action_slot4
+					actionitem.screen_loc = ui_action_slot4
 				if(5)
-					A.screen_loc = ui_action_slot5
-					break //5 slots available, so no more can be added.
+					actionitem.screen_loc = ui_action_slot5
+			used += actionitem.owner
+			num++
+		else
+			client.screen -= actionitem
+			client.images -= actionitem.overlay
+			hud_used.item_action_list -= actionitem
+			returnToPool(actionitem)
+
+	for(var/obj/item/I in (src.contents-used))
+		if(I.action_button_name && (num < 6))
+			var/obj/screen/item_action/newactionitem = getFromPool(/obj/screen/item_action,null,I)
+			newactionitem.icon = ui_style2icon(client.prefs.UI_style)
+			hud_used.item_action_list += newactionitem
+			client.screen += newactionitem
+			client.images += newactionitem.overlay
+			switch(num)
+				if(1)
+					newactionitem.screen_loc = ui_action_slot1
+				if(2)
+					newactionitem.screen_loc = ui_action_slot2
+				if(3)
+					newactionitem.screen_loc = ui_action_slot3
+				if(4)
+					newactionitem.screen_loc = ui_action_slot4
+				if(5)
+					newactionitem.screen_loc = ui_action_slot5
 			num++

@@ -192,7 +192,7 @@
 		interface.updateContent("totLoad", "[num2text(powernet.viewload,10)] W")
 		interface.updateContent("totDemand", "[load()] W")
 
-		var/tbl = ""
+		var/tbl = list()
 
 		var/list/S = list(" <span class='bad'>Off","<span class='bad'>AOff","  <span class='good'>On", " <span class='good'>AOn")
 		var/list/chg = list(" <span class='bad'>N","<span class='average'>C","<span class='good'>F")
@@ -220,6 +220,7 @@
 					tbl += "<td colspan='2' align='right'>N/C</td>"
 				tbl += "</tr>"
 
+		tbl = list2text(tbl)
 		src.interface.updateContent("APCTable", tbl)
 
 #undef POWER_MONITOR_HIST_SIZE

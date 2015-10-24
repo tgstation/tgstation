@@ -1,3 +1,9 @@
+/var/global/list/prox_sensor_ignored_types = list \
+(
+	/obj/effect/beam,
+	/mob/dead/observer	
+)
+
 /obj/item/device/assembly/prox_sensor
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
@@ -35,11 +41,15 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
-	if(timestopped || (loc && loc.timestopped)) return
-	if (istype(AM, /obj/effect/beam))	return
-	if (AM.move_speed < 12)	sense()
-	return
+/obj/item/device/assembly/prox_sensor/HasProximity(var/atom/movable/AM)
+	if(timestopped || (loc && loc.timestopped))
+		return
+
+	if(is_type_in_list(AM, global.prox_sensor_ignored_types))
+		return
+
+	if(AM.move_speed < 12)
+		sense()
 
 /obj/item/device/assembly/prox_sensor/proc/sense()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/device/assembly/prox_sensor/proc/sense() called tick#: [world.time]")

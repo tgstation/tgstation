@@ -24,7 +24,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
-/obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
+/obj/machinery/telecomms/broadcaster/receive_information(var/datum/signal/signal, var/obj/machinery/telecomms/machine_from)
 	// Don't broadcast rejected signals
 	if(signal.data["reject"])
 		return
@@ -45,6 +45,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			return
 		recentmessages.Add(signal_message)
 
+		// This may be causing some performance issues. - N3X
 		if(signal.data["slow"] > 0)
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
@@ -53,23 +54,28 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	   /** #### - Normal Broadcast - #### **/
 
 		if(signal.data["type"] == 0)
-
+			var/datum/speech/speech = getFromPool(/datum/speech)
+			speech.from_signal(signal)
 			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["mob"], signal.data["language"],
-							  signal.data["vmask"], signal.data["radio"],
-							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
-							  0, signal.data["compression"], signal.data["level"], signal.frequency)
+			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], signal.data["level"])
 
 
 
 	   /** #### - Simple Broadcast - #### **/
 
 		if(signal.data["type"] == 1)
-
 			/* ###### Broadcast a message using signal.data ###### */
+			/*
 			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
 								  signal.data["message"],null, null,
 								  signal.data["compression"], listening_level)
+			*/
+			var/datum/speech/speech = getFromPool(/datum/speech)
+			speech.from_signal(signal)
+			/* ###### Broadcast a message using signal.data ###### */
+			Broadcast_Message(speech, signal.data["vmask"], null, signal.data["compression"], signal.data["level"])
+
+
 
 	   /** #### - Artificial Broadcast - #### **/
 	   			// (Imitates a mob)
@@ -78,12 +84,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			/* ###### Broadcast a message using signal.data ###### */
 				// Parameter "data" as 4: AI can't track this person/mob
-
-			Broadcast_Message(signal.data["mob"], signal.data["language"],
-							  signal.data["vmask"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency)
+			var/datum/speech/speech = getFromPool(/datum/speech)
+			speech.from_signal(signal)
+			/* ###### Broadcast a message using signal.data ###### */
+			Broadcast_Message(speech, signal.data["vmask"], 4, signal.data["compression"], signal.data["level"])
 
 
 		if(!message_delay)
@@ -121,10 +125,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
-	//var/mob/mob = signal.data["mob"]
-	//var/datum/language/language = signal.data["language"]
-	//var/langname = (language ? language.name : "No language")
-	//say_testing(mob, "[src] received radio signal from us, language [langname]")
+#ifdef SAY_DEBUG
+	var/mob/mob = signal.data["mob"]
+	var/datum/language/language = signal.data["language"]
+	var/langname = (language ? language.name : "No language")
+	say_testing(mob, "[src] received radio signal from us, language [langname]")
+#endif
 
 	if(!on) // has to be on to receive messages
 		return
@@ -146,13 +152,12 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
-			Broadcast_Message(signal.data["mob"], signal.data["language"],
-							  signal.data["vmask"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency)
+			var/datum/speech/speech = getFromPool(/datum/speech)
+			speech.from_signal(signal)
+			/* ###### Broadcast a message using signal.data ###### */
+			Broadcast_Message(speech, signal.data["vmask"], 0, signal.data["compression"], list(0, z))
 	else
-		//say_testing(mob, "[src] is not listening")
+		say_testing(mob, "[src] is not listening")
 /**
 
 	Here is the big, bad function that broadcasts a message given the appropriate
@@ -207,45 +212,57 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 **/
 
+/* Old, for records.
 /proc/Broadcast_Message(var/atom/movable/AM, var/datum/language/speaking,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
 						var/data, var/compression, var/list/level, var/freq)
-	//say_testing(AM, "broadcast_message start")
-	// Cut down on the message sizes.
-	message = copytext(message, 1, MAX_BROADCAST_LEN)
+*/
+/proc/Broadcast_Message(
+		var/datum/speech/speech, // Most everything is now in here.
+		var/vmask,               // voice mask (bool)
+		var/data,                // ???
+		var/compression,         // Level of compression
+		var/list/level)          // z-levels that can hear us
+#ifdef SAY_DEBUG
+	if(speech.speaker)
+		say_testing(speech.speaker, "broadcast_message start - Sending \"[html_encode(speech.message)]\" to [speech.frequency]")
+#endif
 
-	if(!message)
+	// Cut down on the message sizes.
+	speech.message = copytext(speech.message, 1, MAX_BROADCAST_LEN)
+
+	if(!speech.message)
 		return
 
 	var/list/radios = list()
 
 	var/atom/movable/virtualspeaker/virt = getFromPool(/atom/movable/virtualspeaker, null)
-	virt.name = name
-	virt.job = job
+	virt.name = speech.name
+	virt.job = speech.job
 	//virt.languages = AM.languages
-	virt.source = AM
-	virt.faketrack = data == 4 ? 1 : 0
-	virt.radio = radio
+	virt.source = speech.speaker
+	virt.faketrack = (data == 4) ? 1 : 0
+	virt.radio = speech.radio
 
 	if (compression > 0)
-		message = Gibberish(message, compression + 40)
+		speech.message = Gibberish(speech.message, compression + 40)
 
 	switch (data)
 		if (1) // broadcast only to intercom devices
-			for (var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
-				if (R && R.receive_range(freq, level) > -1)
+			for (var/obj/item/device/radio/intercom/R in all_radios["[speech.frequency]"])
+				if (R && R.receive_range(speech.frequency, level) > -1)
 					radios += R
 		if (2) // broadcast only to intercoms and station-bounced radios
-			for (var/obj/item/device/radio/R in all_radios["[freq]"])
+			for (var/obj/item/device/radio/R in all_radios["[speech.frequency]"])
 				if (istype(R, /obj/item/device/radio/headset))
 					continue
 
-				if (R && R.receive_range(freq, level) > -1)
+				if (R && R.receive_range(speech.frequency, level) > -1)
 					radios += R
 		else // broadcast to ALL radio devices
-			for (var/obj/item/device/radio/R in all_radios["[freq]"])
-				if (R && R.receive_range(freq, level) > -1)
+			for (var/obj/item/device/radio/R in all_radios["[speech.frequency]"])
+				if (R && R.receive_range(speech.frequency, level) > -1)
 					radios += R
 
 			/*
@@ -253,7 +270,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			 * This was already the case, now it just doesn't need the allinone anymore.
 			 * Solves annoying bugs that aren't worth solving.
 			 */
-			if (num2text(freq) in radiochannelsreverse)
+			if (num2text(speech.frequency) in radiochannelsreverse)
 				for (var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"])
 					if (R && R.receive_range(SYND_FREQ, list(R.z)) > -1)
 						radios |= R
@@ -263,22 +280,23 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	radios = null
 
-	var/rendered = virt.compose_message(virt, speaking, message, freq) // always call this on the virtualspeaker to advoid issues
+	// TODO: Review this usage.
+	var/rendered = virt.render_speech(speech) // always call this on the virtualspeaker to advoid issues
 	//var/listeners_sent = 0
 	for (var/atom/movable/listener in listeners)
 		if (listener)
 			//listeners_sent++
-			listener.Hear(rendered, virt, speaking, message, freq)
+			listener.Hear(speech, rendered)
 
 	if (length(listeners))
 		listeners = null
 
 			// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
-		var/blackbox_msg = "[AM] [AM.say_quote(message)]"
+		var/blackbox_msg = "[speech.speaker] [speech.speaker.say_quote(speech.message)]"
 
 		if(istype(blackbox))
-			switch(freq)
+			switch(speech.frequency)
 				if(1459)
 					blackbox.msg_common += blackbox_msg
 				if(1351)
@@ -303,10 +321,15 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_cargo += blackbox_msg
 				else
 					blackbox.messages += blackbox_msg
-	//say_testing(AM, "Broadcast_Message finished with [listeners_sent] listener\s getting our message, [message] lang = [speaking ? speaking.name : "none"]")
+#ifdef SAY_DEBUG
+	if(speech.speaker)
+		say_testing(speech.speaker, "Broadcast_Message finished with [listeners ? listeners.len : 0] listener\s getting our message, [speech.message] lang = [speech.language ? speech.language.name : "none"]")
+#endif
+
 	spawn(50)
 		returnToPool(virt)
 
+/* Obsolete, RIP
 /proc/Broadcast_SimpleMessage(var/source, var/frequency, var/text, var/data, var/mob/M, var/compression, var/level)
 
 	//writepanic("[__FILE__].[__LINE__] (no type)([usr ? usr.ckey : ""])  \\/proc/Broadcast_SimpleMessage() called tick#: [world.time]")
@@ -540,6 +563,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			for (var/mob/R in heard_gibberish)
 				R.show_message(rendered, 2)
+*/
 
 //Use this to test if an obj can communicate with a Telecommunications Network
 

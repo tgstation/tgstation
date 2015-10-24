@@ -42,7 +42,7 @@
 		/obj/machinery/apiary,
 		/mob/living/simple_animal/cow,
 		/mob/living/simple_animal/hostile/retaliate/goat,
-		/obj/machinery/computer/centrifuge,
+		/obj/machinery/centrifuge,
 		/obj/machinery/cooking/icemachine,
 		/obj/machinery/sleeper,
 		/obj/machinery/anomaly,

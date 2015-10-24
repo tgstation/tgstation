@@ -22,6 +22,10 @@ var/global/floorIsLava = 0
 				var/msg = rendered
 				C << msg
 
+// Not happening.
+// Yes I could do a +PERMISSIONS check but I'm both too lazy and worried admins might do it on accident.
+/datum/admins/SDQL_update(var/const/var_name, var/new_value)
+	return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -75,6 +79,7 @@ var/global/floorIsLava = 0
 		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
+		<A href='?src=\ref[src];oocban=\ref[M]'>OOC Ban</A> |
 		<A href='?_src_=holder;appearanceban=\ref[M]'>Identity Ban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
 	"}

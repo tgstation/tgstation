@@ -375,7 +375,10 @@ Made a proc so this is not repeated 14 (or more) times.*/
 				if(wizard_mind.current.client)
 					for(var/datum/mind/wizard_mind_1 in wizards)
 						if(wizard_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = wizard_mind_1.current, icon_state = "wizard")
+							var/imageloc = wizard_mind_1.current
+							if(istype(wizard_mind_1.current.loc,/obj/mecha))
+								imageloc = wizard_mind_1.current.loc
+							var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "wizard", layer = 13)
 							wizard_mind.current.client.images += I
 
 /datum/game_mode/proc/update_wizard_icons_added(datum/mind/wizard_mind)
@@ -383,7 +386,10 @@ Made a proc so this is not repeated 14 (or more) times.*/
 	spawn(0)
 		if(wizard_mind.current)
 			if(wizard_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = wizard_mind.current, icon_state = "wizard")
+				var/imageloc = wizard_mind.current
+				if(istype(wizard_mind.current.loc,/obj/mecha))
+					imageloc = wizard_mind.current.loc
+				var/I = image('icons/mob/mob.dmi', loc = imageloc, icon_state = "wizard", layer = 13)
 				wizard_mind.current.client.images += I
 
 /datum/game_mode/proc/update_wizard_icons_removed(datum/mind/wizard_mind)
@@ -393,7 +399,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 			if(wizard.current)
 				if(wizard.current.client)
 					for(var/image/I in wizard.current.client.images)
-						if(I.icon_state == "wizard" && I.loc == wizard_mind.current)
+						if(I.icon_state == "wizard" && ((I.loc == wizard_mind.current) || (I.loc == wizard_mind.current.loc)))
 							//del(I)
 							wizard.current.client.images -= I
 

@@ -56,9 +56,10 @@ var/global/list/pda_app_menus = list(
 
 
 /datum/pda_app/balance_check
-	name = "Balance Check"
+	name = "Virtual Wallet and Balance Check"
 	desc = "Connects to the Account Database to check the balance history the inserted ID card."
 	price = 0
+	icon = "pda_money"
 	menu = PDA_APP_BALANCECHECK
 	var/obj/machinery/account_database/linked_db
 

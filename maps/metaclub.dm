@@ -25,5 +25,12 @@
 			}
 		)
 
+
+
+// Metaclub areas
+/area/science/xenobiology/specimen_7
+	name = "\improper Xenobiology Specimen Cage 7"
+	icon_state = "xenocell7"
+
 ////////////////////////////////////////////////////////////////
 #include "metaclub.dmm"

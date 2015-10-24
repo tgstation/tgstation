@@ -17,7 +17,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	icon_state = "coil_red"
 	gender = NEUTER
 	amount = MAXCOIL
-	singular_name = "cable pieces"
+	singular_name = "cable piece"
 	max_amount = MAXCOIL
 	_color = "red"
 	desc = "A coil of power cable."
@@ -28,13 +28,13 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL)
 	w_type = RECYK_METAL
 	flags =  FPRINT
-	siemens_coefficient = 1.5 //extra conducting
+	siemens_coefficient = 1.5 //Extra conducting
 	slot_flags = SLOT_BELT
 	item_state = "coil_red"
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
-	viewers(user) << "<SPAN CLASS='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</SPAN>"
+	viewers(user) << "<span class='danger'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/New(loc, length = MAXCOIL, var/param_color = null, amount = length)
@@ -53,27 +53,28 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 // General procedures
 ///////////////////////////////////
 
-// you can use wires to heal robotics
+//You can use wires to heal robotics
 /obj/item/stack/cable_coil/attack(mob/M as mob, mob/user as mob)
-	if(hasorgans(M))
-		var/datum/organ/external/S = M:get_organ(user.zone_sel.selecting)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/S = H.get_organ(user.zone_sel.selecting)
 
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != I_HELP)
+		if(!(S.is_robotic()) || user.a_intent != I_HELP)
 			return ..()
 
 		if(S.burn_dam > 0 && use(1))
 			S.heal_damage(0, 15, 0, 1)
 
-			if(user != M)
-				user.visible_message("<span class='warning'>\The [user] repairs some burn damage on their [S.display_name] with \the [src]</span>",\
-				"<span class='warning'>You repair some burn damage on your [S.display_name]</span>",\
-				"You hear wires being cut.")
+			if(user != H)
+				user.visible_message("<span class='warning'>\The [user] repairs some burn damage on their [S.display_name] with \the [src].</span>",\
+				"<span class='warning'>You repair some burn damage on your [S.display_name].</span>",\
+				"<span class='warning'>You hear wires being cut.</span>")
 			else
-				user.visible_message("<span class='warning'>\The [user] repairs some burn damage on their [S.display_name] with \the [src]</span>",\
-				"<span class='warning'>You repair some burn damage on your [S.display_name]</span>",\
-				"You hear wires being cut.")
+				user.visible_message("<span class='warning'>\The [user] repairs some burn damage on their [S.display_name] with \the [src].</span>",\
+				"<span class='warning'>You repair some burn damage on your [S.display_name].</span>",\
+				"<span class='warning'>You hear wires being cut.</span>")
 		else
-			user << "Nothing to fix!"
+			user << "<span class='warning'>There's nothing to fix on this limb!</span>"
 	else
 		return ..()
 
@@ -82,7 +83,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	update_icon()
 
 /obj/item/stack/cable_coil/can_stack_with(obj/item/other_stack)
-	return istype(other_stack, /obj/item/stack/cable_coil) && !istype(other_stack, /obj/item/stack/cable_coil/heavyduty) //it can be any cable, except the fat stuff
+	return istype(other_stack, /obj/item/stack/cable_coil) && !istype(other_stack, /obj/item/stack/cable_coil/heavyduty) //It can be any cable, except the fat stuff
 
 /obj/item/stack/cable_coil/update_icon()
 	if(!_color)
@@ -108,14 +109,14 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	else
 		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
-// Items usable on a cable coil :
-//   - Wirecutters : cut them duh !
-//   - Cable coil : merge cables
+//Items usable on a cable coil :
+// - Wirecutters : Cut a piece off
+// - Cable coil : Merge the cables
 /obj/item/stack/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	if((istype(W, /obj/item/weapon/wirecutters)) && (amount > 1))
 		use(1)
 		getFromPool(/obj/item/stack/cable_coil, user.loc, 1, _color)
-		user << "You cut a piece off the cable coil."
+		user << "<span class='notice'>You cut a piece off the cable coil.</span>"
 		update_icon()
 		return
 	return ..()
@@ -124,62 +125,62 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 // Cable laying procedures
 //////////////////////////////////////////////
 
-// called when cable_coil is clicked on a turf/simulated/floor
+//Called when cable_coil is clicked on a turf/simulated/floor
 /obj/item/stack/cable_coil/proc/turf_place(turf/simulated/floor/F, mob/user, var/dirnew)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/cable_coil/proc/turf_place() called tick#: [world.time]")
 	if(!isturf(user.loc))
 		return
 
-	if(!user.Adjacent(F))		//too far
-		user << "You can't lay cable at a place that far away."
+	if(!user.Adjacent(F)) //Too far
+		user << "<span class='warning'>You can't lay cable that far away.</span>"
 		return
 
-	if(F.intact)					// if floor is intact, complain
-		user << "You can't lay cable there unless the floor tiles are removed."
+	if(F.intact) //If floor is intact, complain
+		user << "<span class='warning'>You can't lay cable there until the floor is removed.</span>"
 		return
 	var/dirn = null
 	if(!dirnew) //If we weren't given a direction, come up with one! (Called as null from catwalk.dm and floor.dm)
 		if(user.loc == F)
-			dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
+			dirn = user.dir //If laying on the tile we're on, lay in the direction we're facing
 		else
 			dirn = get_dir(F, user)
 	else
 		dirn = dirnew
 	for(var/obj/structure/cable/LC in F)
 		if(LC.d2 == dirn && LC.d1 == 0)
-			user << "There's already a cable at that position."
+			user << "<span class='warning'>There already is a cable at that position.</span>"
 			return
 
 	var/obj/structure/cable/C = getFromPool(/obj/structure/cable, F)
 	C.cableColor(_color)
 
-	// set up the new cable
-	C.d1 = 0 // it's a O-X node cable
+	//Set up the new cable
+	C.d1 = 0 //It's a O-X node cable
 	C.d2 = dirn
 	C.add_fingerprint(user)
 	C.update_icon()
 
-	//create a new powernet with the cable, if needed it will be merged later
+	//Create a new powernet with the cable, if needed it will be merged later
 	var/datum/powernet/PN = getFromPool(/datum/powernet)
 	PN.add_cable(C)
 
-	C.mergeConnectedNetworks(C.d2)		// merge the powernet with adjacents powernets
-	C.mergeConnectedNetworksOnTurf()	// merge the powernet with on turf powernets
+	C.mergeConnectedNetworks(C.d2)   //Merge the powernet with adjacents powernets
+	C.mergeConnectedNetworksOnTurf() //Merge the powernet with on turf powernets
 
-	if(C.d2 & (C.d2 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
+	if(C.d2 & (C.d2 - 1)) //If the cable is layed diagonally, check the others 2 possible directions
 		C.mergeDiagonalsNetworks(C.d2)
 
 	use(1)
 
 	if(C.shock(user, 50))
-		if(prob(50)) // fail
+		if(prob(50)) //Fail
 			getFromPool(/obj/item/stack/cable_coil, C.loc, 1)
 			returnToPool(C)
 
 	return C //What was our last known position?
 
-// called when cable_coil is click on an installed obj/cable
-// or click on a turf that already contains a "node" cable
+//Called when cable_coil is click on an installed obj/cable
+//or click on a turf that already contains a "node" cable
 /obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/C, mob/user)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/item/stack/cable_coil/proc/cable_join() called tick#: [world.time]")
 	var/turf/U = user.loc
@@ -189,46 +190,46 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 
 	var/turf/T = C.loc
 
-	if(!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
+	if(!isturf(T) || T.intact) //Sanity checks, also stop use interacting with T-scanner revealed cable
 		return
 
-	if(get_dist(C, user) > 1)		// make sure it's close enough
-		user << "You can't lay cable at a place that far away."
+	if(get_dist(C, user) > 1) //Make sure it's close enough
+		user << "<span class='warning'>You can't lay cable that far away.</span>"
 		return
 
-	if(U == T) //if clicked on the turf we're standing on, try to put a cable in the direction we're facing
-		turf_place(T,user)
+	if(U == T) //If clicked on the turf we're standing on, try to put a cable in the direction we're facing
+		turf_place(T, user)
 		return
 
 	var/dirn = get_dir(C, user)
 
-	// one end of the clicked cable is pointing towards us
+	//One end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
-		if(U.intact)						// can't place a cable if the floor is complete
-			user << "You can't lay cable there unless the floor tiles are removed."
+		if(U.intact) //Can't place a cable if the floor is complete
+			user << "<span class='warning'>You can't lay cable there until the floor is removed.</span>"
 			return
 		else
-			// cable is pointing at us, we're standing on an open tile
-			// so create a stub pointing at the clicked cable on our tile
+			//Cable is pointing at us, we're standing on an open tile
+			//So create a stub pointing at the clicked cable on our tile
 
-			turf_place(user.loc,user,turn(dirn,180))
+			turf_place(user.loc,user,turn(dirn, 180))
 
-	// exisiting cable doesn't point at our position, so see if it's a stub
+	//Exisiting cable doesn't point at our position, so see if it's a stub
 	else if(C.d1 == 0)
-		// if so, make it a full cable pointing from it's old direction to our dirn
-		var/nd1 = C.d2		// these will be the new directions
+		//If so, make it a full cable pointing from it's old direction to our dirn
+		var/nd1 = C.d2 //These will be the new directions
 		var/nd2 = dirn
 
-		if(nd1 > nd2)		// swap directions to match icons/states
+		if(nd1 > nd2) //Swap directions to match icons/states
 			nd1 = dirn
 			nd2 = C.d2
 
-		for(var/obj/structure/cable/LC in T)		// check to make sure there's no matching cable
-			if(LC == C)								// skip the cable we're interacting with
+		for(var/obj/structure/cable/LC in T) //Check to make sure there's no matching cable
+			if(LC == C)	//Skip the cable we're interacting with
 				continue
 
-			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
-				user << "There's already a cable at that position."
+			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1)) //Make sure no cable matches either direction
+				user << "<span class='warning'>There's already a cable at that position.</span>"
 				return
 
 		C.cableColor(_color)
@@ -239,25 +240,25 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 		C.add_fingerprint()
 		C.update_icon()
 
-		C.mergeConnectedNetworks(C.d1) // merge the powernets...
-		C.mergeConnectedNetworks(C.d2) // ...in the two new cable directions
+		C.mergeConnectedNetworks(C.d1) //Merge the powernets
+		C.mergeConnectedNetworks(C.d2) //In the two new cable directions
 		C.mergeConnectedNetworksOnTurf()
 
-		if(C.d1 & (C.d1 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
+		if(C.d1 & (C.d1 - 1)) //If the cable is layed diagonally, check the others 2 possible directions
 			C.mergeDiagonalsNetworks(C.d1)
 
-		if(C.d2 & (C.d2 - 1)) // if the cable is layed diagonally, check the others 2 possible directions
+		if(C.d2 & (C.d2 - 1)) //If the cable is layed diagonally, check the others 2 possible directions
 			C.mergeDiagonalsNetworks(C.d2)
 
 		use(1)
 
 		if(C.shock(user, 50))
-			if(prob(50)) //fail
+			if(prob(50)) //Fail
 				getFromPool(/obj/item/stack/cable_coil, C.loc, 1, C.light_color)
 				returnToPool(C)
 				return
 
-		C.denode() // this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
+		C.denode() //This call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
 
 //////////////////////////////
 // Misc.

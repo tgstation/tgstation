@@ -42,7 +42,11 @@
 /obj/item/organ/brain/examine(mob/user)
 	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		user << "<span class='notice'>You can feel the small spark of life still left in this one.</span>"
+		if(mind_can_reenter(brainmob.mind))// This checks if the ghost can re-enter (ghost.can_reenter_corpse)
+			user << "<span class='deadsay'>This one seems unresponsive.</span>" // Should probably make this more realistic,
+			                                                                    //  but this message ties it in with MMI errors.
+		else
+			user << "<span class='notice'>You can feel the small spark of life still left in this one.</span>"
 	else
 		user << "<span class='deadsay'>This one seems particularly lifeless. Perhaps it will regain some of its luster later..</span>"
 

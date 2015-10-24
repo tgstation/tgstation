@@ -218,9 +218,9 @@
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/mecha/proc/drop_item() called tick#: [world.time]")
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if(speaker == occupant && radio.broadcasting)
-		radio.talk_into(speaker, text, null, speaking)
+/obj/mecha/Hear(var/datum/speech/speech, var/rendered_message="")
+	if(speech.speaker == occupant && radio.broadcasting)
+		radio.talk_into(speech)
  	return
 
 ////////////////////////////
@@ -1141,6 +1141,19 @@
 		playsound(src, 'sound/mecha/mechentry.ogg', 50, 1)
 		if(!hasInternalDamage())
 			src.occupant << sound('sound/mecha/nominalsyndi.ogg',volume=50)
+
+		// -- Mode/mind specific stuff goes here
+		if(H.mind)
+			if((H.mind in ticker.mode:revolutionaries) || (H.mind in ticker.mode:head_revolutionaries))
+				ticker.mode.update_all_rev_icons()
+			if(H.mind in ticker.mode.syndicates)
+				ticker.mode.update_all_synd_icons()
+			if (H.mind in ticker.mode.cult)
+				ticker.mode.update_all_cult_icons()
+			if(H.mind in ticker.mode.wizards)
+				ticker.mode.update_all_wizard_icons()
+		// -- End mode specific stuff
+
 		return 1
 	else
 		return 0
@@ -1312,9 +1325,23 @@
 			mmi.mecha = null
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
+
+		// -- Mode/mind specific stuff goes here
+		if(src.occupant.mind)
+			if((src.occupant.mind in ticker.mode:revolutionaries) || (src.occupant.mind in ticker.mode:head_revolutionaries))
+				ticker.mode.update_all_rev_icons()
+			if(src.occupant.mind in ticker.mode.syndicates)
+				ticker.mode.update_all_synd_icons()
+			if (src.occupant.mind in ticker.mode.cult)
+				ticker.mode.update_all_cult_icons()
+			if(src.occupant.mind in ticker.mode.wizards)
+				ticker.mode.update_all_wizard_icons()
+		// -- End mode specific stuff
+
 		src.occupant = null
 		src.icon_state = src.reset_icon()+"-open"
 		src.dir = dir_in
+
 	return
 
 /obj/mecha/proc/shock_n_boot(var/exit = loc)

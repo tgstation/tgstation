@@ -256,9 +256,15 @@
 	//Possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
 	if(damage > 10 && type != BURN && local_damage > 20 && prob(damage) && is_organic() && !(owner.species && owner.species.flags & NO_BLOOD))
-		var/datum/wound/internal_bleeding/I = new (15)
-		wounds += I
-		owner.custom_pain("You feel something rip in your [display_name]!", 1)
+		var/internal_bleeding = 0
+		for(var/datum/wound/Wound in wounds)
+			if(Wound.internal)
+				internal_bleeding = 1
+				break
+		if(!internal_bleeding)
+			var/datum/wound/internal_bleeding/I = new (15)
+			wounds += I
+			owner.custom_pain("You feel something rip in your [display_name]!", 1)
 
 	//Check whether we can add the wound to an existing wound
 	for(var/datum/wound/other in wounds)
@@ -1250,6 +1256,7 @@ obj/item/weapon/organ/head
 	icon_state = "head_m"
 	part = "head"
 	var/mob/living/carbon/brain/brainmob
+	var/mob/living/simple_animal/borer/borer
 	var/brain_op_stage = 0
 
 //obj/item/weapon/organ/head/with_teeth starts with 32 human teeth!
@@ -1287,6 +1294,10 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	spawn(5)
 	if(brainmob && brainmob.client)
 		brainmob.client.screen.len = null //clear the hud
+
+	var/mob/living/simple_animal/borer/B = H.has_brain_worms()
+	if(B)
+		B.infest_head(src)
 
 	//if(ishuman(H))
 	//	if(H.gender == FEMALE)
@@ -1352,6 +1363,9 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				else
 					var/obj/item/organ/brain/B = new(T)
 					B.transfer_identity(brainmob)
+
+				if(borer)
+					borer.detach()
 
 				brain_op_stage = 4.0
 			else

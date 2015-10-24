@@ -25,20 +25,27 @@ var/const/WIRE_BEACON_RX = 256	// beacon ping recv
 		var/obj/machinery/bot/mulebot/M = holder
 		M.interact(user)
 
+/datum/wires/mulebot/GetInteractWindow()
+	. += ..()
+	. += {"<BR>The charge light is [IsIndexCut(WIRE_POWER1) || IsIndexCut(WIRE_POWER2) ? "off" : "on"].<BR>
+	The warning light is [IsIndexCut(WIRE_AVOIDANCE) ? "gleaming ominously" : "off"].<BR>
+	The platform is [IsIndexCut(WIRE_LOADCHECK) ? "riding low" : "elevated"].<BR>
+	The regulator light is [getRegulatorColor()].<BR>"}
+
 /datum/wires/mulebot/UpdatePulsed(var/index)
 	switch(index)
-		if(WIRE_POWER1, WIRE_POWER2)
-			holder.visible_message("<span class='notice'>\icon[holder] The charge light flickers.</span>")
-		if(WIRE_AVOIDANCE)
-			holder.visible_message("<span class='notice'>\icon[holder] The external warning lights flash briefly.</span>")
-		if(WIRE_LOADCHECK)
-			holder.visible_message("<span class='notice'>\icon[holder] The load platform clunks.</span>")
-		if(WIRE_MOTOR1, WIRE_MOTOR2)
-			holder.visible_message("<span class='notice'>\icon[holder] The drive motor whines briefly.</span>")
-		else
+		if(WIRE_REMOTE_RX,WIRE_REMOTE_TX,WIRE_BEACON_RX)
 			holder.visible_message("<span class='notice'>\icon[holder] You hear a radio crackle.</span>")
 
 // HELPER PROCS
+
+/datum/wires/mulebot/proc/getRegulatorColor()
+	if(IsIndexCut(WIRE_MOTOR1) && IsIndexCut(WIRE_MOTOR2))
+		return "red"
+	else if(IsIndexCut(WIRE_MOTOR1)||IsIndexCut(WIRE_MOTOR2))
+		return "yellow"
+	else
+		return "green"
 
 /datum/wires/mulebot/proc/Motor1()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/datum/wires/mulebot/proc/Motor1() called tick#: [world.time]")

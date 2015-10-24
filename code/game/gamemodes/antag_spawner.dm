@@ -32,9 +32,17 @@
 		dat += "<I>Your apprentice is skilled in offensive magic. They know Magic Missile and Fireball.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];school=bluespace'>Bluespace Manipulation</A><BR>"
 		dat += "<I>Your apprentice is able to defy physics, melting through solid objects and travelling great distances in the blink of an eye. They know Teleport and Ethereal Jaunt.</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];school=clown'>Clowning</A><BR>"
+		dat += "<I>Your apprentice is skilled in the ancient art of Clown Magic. They know The Clown Curse and Shoe Snatch</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];school=misdirection'>Misdirection</A><BR>"
+		dat += "<I>Your apprentice is skilled in misdirection and trickery. They know Subjugate and Blind</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];school=muscle'>Muscle Magic</A><BR>"
+		dat += "<I>Your apprentice is skilled in muscle based wizardry. They know Mutate and Blink</I><BR>"
+		dat += "<A href='byond://?src=\ref[src];school=technology'>Technology</A><BR>"
+		dat += "<I>Your apprentice is skilled in technology and future magic. They know Disable Tech and Lightning</I><BR>"
 		//dat += "<A href='byond://?src=\ref[src];school=healing'>Healing</A><BR>"
 		//dat += "<I>Your apprentice is training to cast spells that will aid your survival. They know Forcewall and Charge and come with a Staff of Healing.</I><BR>"
-		dat += "<I>The school of healing has been closed for renovations, so you cannot find an apprentice specializing in this school. (Bug #99 on Redmine for more info)</I>"
+		dat += "<I>The school of healing has been closed for renovations, so you cannot find an apprentice specializing in this school. (Bug #99 on Redmine for more info)</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];school=robeless'>Robeless</A><BR>"
 		dat += "<I>Your apprentice is training to cast spells without their robes. They know Knock and Mindswap.</I><BR>"
 	user << browse(dat, "window=radio")
@@ -89,6 +97,22 @@
 			M.add_spell(new /spell/aoe_turf/knock)
 			M.add_spell(new /spell/targeted/mind_transfer)
 			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap."
+		if("clown")
+			M.add_spell(new /spell/targeted/equip_item/clowncurse)
+			M.add_spell(new /spell/targeted/shoesnatch)
+			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned the venerable and ancient art of Clown Magic. You are able to cast the clown curse and shoe snatch."
+		if("misdirection")
+			M.add_spell(new /spell/targeted/subjugation)
+			M.add_spell(new /spell/targeted/genetic/blind)
+			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have learned spells for misdirection and trickery. You are able to cast subjugate and blind."
+		if("muscle")
+			M.add_spell(new /spell/targeted/genetic/mutate)
+			M.add_spell(new /spell/aoe_turf/blink)
+			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have gained great strength and a natty physique. You are able to cast mutate and blink."
+		if("technology")
+			M.add_spell(new /spell/aoe_turf/disable_tech)
+			M.add_spell(new /spell/lightning)
+			M << "<B>Your service has not gone unrewarded, however. Studying under [usr.real_name], you have futuristic, technological spells. You are able to cast disable tech and lightning."
 
 	equip_antag(M)
 	var/wizard_name_first = pick(wizard_first)

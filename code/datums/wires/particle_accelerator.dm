@@ -14,6 +14,11 @@ var/const/PARTICLE_LIMIT_POWER_WIRE = 8 // Determines how strong the PA can be.
 		return 1
 	return 0
 
+/datum/wires/particle_acc/GetInteractWindow()
+	. += ..()
+	. += {"<BR>The keyboard light is [IsIndexCut(PARTICLE_INTERFACE_WIRE) ? "flashing" : "on"].<BR>
+	The regulator light is [IsIndexCut(PARTICLE_LIMIT_POWER_WIRE) ? "purple" : "teal"].<BR>"}
+
 /datum/wires/particle_acc/control_box/UpdatePulsed(var/index)
 	var/obj/machinery/particle_accelerator/control_box/C = holder
 	switch(index)

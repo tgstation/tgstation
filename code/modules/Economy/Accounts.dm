@@ -1,5 +1,9 @@
 var/global/current_date_string
 var/global/num_financial_terminals = 1
+var/global/num_financial_database = 1
+var/global/num_vending_machines = 1
+var/global/num_pda_terminals = 1
+var/global/num_merch_computers = 1
 var/global/datum/money_account/station_account
 var/global/list/datum/money_account/department_accounts = list()
 var/global/next_account_number = 0
@@ -78,7 +82,7 @@ var/global/list/all_money_accounts = list()
 		var/DD = text2num(time2text(world.timeofday, "DD"))											//For muh lore we'll pretend that Nanotrasen changed its account policy
 		T.date = "[(DD == 1) ? "31" : "[DD-1]"] [time2text(world.timeofday, "Month")], [game_year]"	//shortly before the events of the round,
 		T.time = "[rand(0,24)]:[rand(11,59)]"														//prompting everyone to get a new account one day prior.
-		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"								//The point being to partly to justify the transaction history being empty at the beginning of the round.
+		T.source_terminal = "NTGalaxyNet Terminal #[multinum_display(rand(111,1111),4)]"								//The point being to partly to justify the transaction history being empty at the beginning of the round.
 
 		M.account_number = rand(11111, 99999)
 	else
@@ -131,10 +135,7 @@ var/global/list/all_money_accounts = list()
 	var/security_level = 1	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
-
-/datum/money_account/New()
-	..()
-	security_level = pick (0,1) //Stealing is now slightly viable
+	var/virtual = 0
 
 /datum/transaction
 	var/target_name = ""
@@ -178,7 +179,8 @@ var/global/list/all_money_accounts = list()
 	if(!current_date_string)
 		current_date_string = "[time2text(world.timeofday, "DD")] [time2text(world.timeofday, "Month")], [game_year]"
 
-	machine_id = "[station_name()] Acc. DB #[num_financial_terminals++]"
+	machine_id = "[station_name()] Account Database #[multinum_display(num_financial_database,4)]"
+	num_financial_database++
 
 	account_DBs += src
 
@@ -394,7 +396,7 @@ var/global/list/all_money_accounts = list()
 			T.target_name = source_name
 			T.purpose = purpose
 			if(amount < 0)
-				T.amount = "([amount])"
+				T.amount = "-[amount]"
 			else
 				T.amount = "[amount]"
 			T.date = current_date_string

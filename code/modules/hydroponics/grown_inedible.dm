@@ -85,6 +85,28 @@
 	M << "<font color='green'><b> [user] smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER<b></font>"
 	user << "<font color='green'> Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>"
 
+/obj/item/weapon/grown/novaflower
+	plantname = "novaflowers"
+	name = "novaflower"
+	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
+	icon = 'icons/obj/harvest.dmi'
+	icon_state = "novaflower"
+	damtype = "fire"
+	force = 0
+	flags = 0
+	throwforce = 1
+	w_class = 1.0
+	throw_speed = 1
+	throw_range = 3
+	attack_verb = list("seared", "heated", "whacked", "steamed")
+
+/obj/item/weapon/grown/novaflower/New()
+	..()
+	spawn(5) // So potency can be set in the proc that creates these crops
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("capsaicin", round(potency, 1))
+		force = round((5 + potency / 5), 1)
+
 /obj/item/weapon/grown/nettle // -- Skie
 	plantname = "nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -99,10 +121,11 @@
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=1"
-	New()
-		..()
-		spawn(5)
-			force = round((5+potency/5), 1)
+
+/obj/item/weapon/grown/nettle/New()
+	..()
+	spawn(5)
+		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/nettle/pickup(mob/living/carbon/human/user as mob)
 	if(istype(user))

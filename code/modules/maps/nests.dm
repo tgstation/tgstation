@@ -5,7 +5,7 @@
 
 /obj/map/nest
 	icon = 'icons/obj/map/nests.dmi'
-	var/mobType = /mob/living/simple_animal/hostile/russian
+	var/mobType = /mob/living/simple_animal/hostile/humanoid/russian
 	var/breedTime = 3000
 	var/breedChance = 75
 	var/pop = 10
@@ -21,7 +21,7 @@
 /obj/map/nest/proc/ticker()
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/map/nest/proc/ticker() called tick#: [world.time]")
 	while(src)
-		for(var/mob/M in get_area(src)) 
+		for(var/mob/M in get_area(src))
 			if(istype(M,src.mobType)) src.pop++
 			else src.pop-- //It's harder with an audience, you understand bb
 		if(src.pop in src.popMin to src.popMax) //When enough simple animals...
@@ -42,13 +42,13 @@
 	icon_state = "mouse"
 	mobType = /mob/living/simple_animal/mouse
 	breedTime = 1200
-	
+
 /obj/map/nest/spider
 	name = "spider breeding ground"
 	icon_state = "spider"
 	mobType = /mob/living/simple_animal/hostile/giant_spider
 	popMax = 10
-	
+
 /obj/map/nest/carp
 	name = "carp breeding ground"
 	icon_state = "carp"

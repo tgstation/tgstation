@@ -7,6 +7,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	treadmill_speed = 0.5 //Ian & pals aren't as good at powering a treadmill
 
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/animal
 
@@ -296,8 +297,8 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
 		if(emote)
-			return "[emote], \"[text]\""
-	return "says, \"[text]\"";
+			return "[emote], [text]"
+	return "says, [text]";
 
 /mob/living/simple_animal/emote(var/act, var/type, var/desc)
 	if(timestopped) return //under effects of time magick

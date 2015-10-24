@@ -109,6 +109,19 @@
 		explosion(src.loc, -1, 1, 3, 4, 0) //Tiny meteor doesn't cause too much damage
 		qdel(src)
 
+//Simple fireball
+/obj/item/projectile/simple_fireball
+	name = "fireball"
+	icon_state = "fireball"
+	animate_movement = 2
+	damage = 0
+	nodamage = 1
+	flag = "bullet"
+
+/obj/item/projectile/simple_fireball/Bump(atom/A)
+	explosion(get_turf(src), -1, -1, 2, 2)
+	return qdel(src)
+
 /obj/item/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
@@ -279,3 +292,36 @@ obj/item/projectile/kinetic/New()
 		if(loc == get_turf(original))
 			if(!(original in permutated))
 				Bump(original)
+
+/obj/item/projectile/portalgun
+	name = "portal gun shot"
+	icon = 'icons/obj/projectiles_experimental.dmi'
+	icon_state = "portalgun"
+	damage = 0
+	nodamage = 1
+	kill_count = 500//enough to cross a ZLevel...twice!
+	var/setting = 0
+
+/obj/item/projectile/portalgun/bump_original_check()//so players can aim at floors
+	if(!bumped)
+		if(loc == get_turf(original))
+			if(!(original in permutated))
+				Bump(original)
+
+/obj/item/projectile/portalgun/Bump(atom/A as mob|obj|turf|area)
+	if(bumped)
+		return
+	bumped = 1
+
+	if(!istype(shot_from,/obj/item/weapon/gun/portalgun))
+		bullet_die()
+		return
+
+	var/obj/item/weapon/gun/portalgun/P = shot_from
+
+	if(isliving(A))
+		forceMove(get_step(loc,dir))
+
+	if(!(locate(/obj/effect/portal) in loc))
+		P.open_portal(setting,loc,A)
+	bullet_die()

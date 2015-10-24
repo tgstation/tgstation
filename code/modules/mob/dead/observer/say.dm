@@ -1,5 +1,5 @@
 /mob/dead/observer/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
 
 	if (!message)
 		return
@@ -21,30 +21,33 @@
 	var/ending = copytext(text, length(text))
 
 	if (ending == "?")
-		return "[pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")], \"[text]\"";
+		return "[pick("moans", "gripes", "grumps", "murmurs", "mumbles", "bleats")], [text]";
 	else if (ending == "!")
-		return "[pick("screams", "screeches", "howls")], \"[text]\"";
+		return "[pick("screams", "screeches", "howls")], [text]";
 
-	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], \"[text]\"";
+	return "[pick("whines", "cries", "spooks", "complains", "drones", "mutters")], [text]";
 
-/mob/dead/observer/Hear(message, atom/movable/speaker, var/datum/language/speaking, raw_message, radio_freq)
-	if (isnull(client))
+/mob/dead/observer/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if (isnull(client) || !speech.speaker)
 		return
 
-	var/source = speaker.GetSource()
-
+	var/source = speech.speaker.GetSource()
 	var/source_turf = get_turf(source)
+
+	say_testing(src, "/mob/dead/observer/Hear(): source=[source], frequency=[speech.frequency], source_turf=[formatJumpTo(source_turf)]")
 
 	if (get_dist(source_turf, src) <= world.view) // If this isn't true, we can't be in view, so no need for costlier proc.
 		if (source_turf in view(src))
-			message = "<B>[message]</B>"
+			rendered_speech = "<B>[rendered_speech]</B>"
 	else
 		if(client && client.prefs)
-			if (isnull(radio_freq))
-				if (!(client.prefs.toggles & CHAT_GHOSTEARS))
+			if (!speech.frequency)
+				if ((client.prefs.toggles & CHAT_GHOSTEARS) != CHAT_GHOSTEARS)
+					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTEARS is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTEARS]) = [client.prefs.toggles & CHAT_GHOSTEARS]")
 					return
 			else
-				if (!(client.prefs.toggles & CHAT_GHOSTRADIO))
+				if ((client.prefs.toggles & CHAT_GHOSTRADIO) != CHAT_GHOSTRADIO)
+					say_testing(src, "/mob/dead/observer/Hear(): CHAT_GHOSTRADIO is disabled, blocking. ([client.prefs.toggles] & [CHAT_GHOSTRADIO]) = [client.prefs.toggles & CHAT_GHOSTRADIO]")
 					return
 
-	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [message]"
+	src << "<a href='?src=\ref[src];follow=\ref[source]'>(Follow)</a> [rendered_speech]"

@@ -13,8 +13,6 @@ log transactions
 #define VIEW_TRANSACTION_LOGS 3
 #define PRINT_DELAY 100
 
-/obj/item/weapon/card/id/var/money = 2000
-
 /obj/machinery/atm
 	name = "NanoTrasen Automatic Teller Machine"
 	desc = "For all your monetary needs!"
@@ -23,6 +21,7 @@ log transactions
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
+	layer = 2.9//keep hiding those bills!
 	var/datum/money_account/authenticated_account
 	var/number_incorrect_tries = 0
 	var/previous_account_number = 0
@@ -30,8 +29,7 @@ log transactions
 	var/ticks_left_locked_down = 0
 	var/ticks_left_timeout = 0
 	var/machine_id = ""
-	var/obj/item/weapon/card/held_card
-	var/editing_security_level = 0
+	var/obj/item/weapon/card/id/held_card
 	var/view_screen = NO_SCREEN
 	var/lastprint = 0 // Printer needs time to cooldown
 
@@ -39,7 +37,8 @@ log transactions
 
 /obj/machinery/atm/New()
 	..()
-	machine_id = "[station_name()] RT #[num_financial_terminals++]"
+	machine_id = "[station_name()] ATM #[multinum_display(num_financial_terminals,4)]"
+	num_financial_terminals++
 	if(ticker)
 		initialize()
 
@@ -87,13 +86,14 @@ log transactions
 			new /obj/item/stack/sheet/metal (src.loc,2)
 			qdel(src)
 			return
-	if(istype(I, /obj/item/weapon/card))
+	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)
 			usr.drop_item(idcard, src)
 			held_card = idcard
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
+			src.attack_hand(user)
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
 			var/obj/item/weapon/spacecash/dosh = I
@@ -120,7 +120,7 @@ log transactions
 	else
 		..()
 
-/obj/machinery/atm/attack_hand(mob/user as mob)
+/obj/machinery/atm/attack_hand(mob/user as mob,var/fail_safe=0)
 	if(isobserver(user))
 		user << "<span class='warning'>Your ghostly limb passes right through \the [src].</span>"
 		return
@@ -129,13 +129,14 @@ log transactions
 		return
 	if(get_dist(src,user) <= 1)
 		//check to see if the user has low security enabled
-		scan_user(user)
+		if(!fail_safe)
+			scan_user(user)
 
 		//js replicated from obj/machinery/computer/card
 		var/dat = {"<h1>NanoTrasen Automatic Teller Machine</h1>
 			For all your monetary needs!<br>
 			<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>
-			Card: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card.name : "------"]</a><br><br>"}
+			Card: <a href='?src=\ref[src];choice=insert_card'>[held_card ? held_card.name : "------"]</a><br><br><hr>"}
 
 		if(ticks_left_locked_down > 0)
 			dat += "<span class='alert'>Maximum number of pin attempts exceeded! Access to this ATM has been temporarily disabled.</span>"
@@ -143,7 +144,7 @@ log transactions
 			switch(view_screen)
 				if(CHANGE_SECURITY_LEVEL)
 					dat += "Select a new security level for this account:<br><hr>"
-					var/text = "Zero - Either the account number or card is required to access this account. EFTPOS transactions will require a card and ask for a pin, but not verify the pin is correct."
+					var/text = "Zero - Either the account number or card is required to access this account. Vendor transactions will pay from your bank account if your virtual wallet has insufficient funds."
 					if(authenticated_account.security_level != 0)
 						text = "<A href='?src=\ref[src];choice=change_security_level;new_security_level=0'>[text]</a>"
 					dat += "[text]<hr>"
@@ -179,7 +180,7 @@ log transactions
 							</tr>"}
 					dat += "</table>"
 				if(TRANSFER_FUNDS)
-					dat += {"<b>Account balance:</b> $[authenticated_account.money]<br>
+					dat += {"<b>Bank Account balance:</b> $[authenticated_account.money]<br>
 						<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>
 						<form name='transfer' action='?src=\ref[src]' method='get'>
 						<input type='hidden' name='src' value='\ref[src]'>
@@ -196,12 +197,33 @@ log transactions
 						<input type='hidden' name='src' value='\ref[src]'>
 						<input type='hidden' name='choice' value='withdrawal'>
 						<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw funds'><br>
-						</form>
+						</form><hr>
+						"}
+					if(held_card)
+						dat += {"
+							<b>Virtual Wallet balance:</b> $[held_card.virtual_wallet.money]<br>
+							<form name='withdraw_to_wallet' action='?src=\ref[src]' method='get'>
+							<input type='hidden' name='src' value='\ref[src]'>
+							<input type='hidden' name='choice' value='withdraw_to_wallet'>
+							<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw to virtual wallet'><br>
+							</form>
+							<form name='deposit_from_wallet' action='?src=\ref[src]' method='get'>
+							<input type='hidden' name='src' value='\ref[src]'>
+							<input type='hidden' name='choice' value='deposit_from_wallet'>
+							<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Deposit from virtual wallet'><br>
+							</form><hr>
+							"}
+					else
+						dat += {"
+							<i>Insert an ID card to perform fund transfers to/from it.</i><br>
+							"}
+					dat += {"
 						<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>
-						<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>
+						<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer to another bank account</a><br>
 						<A href='?src=\ref[src];choice=view_screen;view_screen=3'>View transaction log</a><br>
 						<A href='?src=\ref[src];choice=balance_statement'>Print balance statement</a><br>
-						<A href='?src=\ref[src];choice=logout'>Logout</a><br>"}
+						<A href='?src=\ref[src];choice=logout'>Logout</a><br>
+						"}
 		else if(linked_db)
 			dat += {"<form name='atm_auth' action='?src=\ref[src]' method='get'>
 				<input type='hidden' name='src' value='\ref[src]'>
@@ -219,6 +241,7 @@ log transactions
 		user << browse(null,"window=atm")
 
 /obj/machinery/atm/Topic(var/href, var/href_list)
+	var/failsafe = 0
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("transfer")
@@ -240,7 +263,7 @@ log transactions
 							T.source_terminal = machine_id
 							T.date = current_date_string
 							T.time = worldtime2text()
-							T.amount = "([transfer_amount])"
+							T.amount = "-[transfer_amount]"
 							authenticated_account.transaction_log.Add(T)
 						else
 							usr << "\icon[src]<span class='warning'>Funds transfer failed.</span>"
@@ -316,17 +339,81 @@ log transactions
 							usr << "<span class='notice'>The ATM's screen flashes, 'Maximum single withdrawl limit reached, defaulting to 10,000.'</span>"
 							amount = 10000
 						authenticated_account.money -= amount
-						withdraw_arbitrary_sum(amount)
+						withdraw_arbitrary_sum(usr,amount)
 
 						//create an entry in the account transaction log
 						var/datum/transaction/T = new()
 						T.target_name = authenticated_account.owner_name
 						T.purpose = "Credit withdrawal"
-						T.amount = "([amount])"
+						T.amount = "-[amount]"
 						T.source_terminal = machine_id
 						T.date = current_date_string
 						T.time = worldtime2text()
 						authenticated_account.transaction_log.Add(T)
+					else
+						usr << "\icon[src]<span class='warning'>You don't have enough funds to do that!</span>"
+			if("withdraw_to_wallet")
+				var/amount = max(text2num(href_list["funds_amount"]),0)
+				if(!held_card)
+					usr << "<span class='notice'>You must insert your ID card before you can transfer funds to it.</span>"
+					return
+				if(amount <= 0)
+					alert("That is not a valid amount.")
+				else if(authenticated_account && amount > 0)
+					if(amount <= authenticated_account.money)
+						authenticated_account.money -= amount
+						held_card.virtual_wallet.money += amount
+
+						//create an entry in the account transaction log
+						var/datum/transaction/T = new()
+						T.target_name = held_card.virtual_wallet.owner_name
+						T.purpose = "Credit transfer to wallet"
+						T.amount = "-[amount]"
+						T.source_terminal = machine_id
+						T.date = current_date_string
+						T.time = worldtime2text()
+						authenticated_account.transaction_log.Add(T)
+
+						T = new()
+						T.target_name = authenticated_account.owner_name
+						T.purpose = "Credit transfer to wallet"
+						T.amount = "[amount]"
+						T.source_terminal = machine_id
+						T.date = current_date_string
+						T.time = worldtime2text()
+						held_card.virtual_wallet.transaction_log.Add(T)
+					else
+						usr << "\icon[src]<span class='warning'>You don't have enough funds to do that!</span>"
+			if("deposit_from_wallet")
+				var/amount = max(text2num(href_list["funds_amount"]),0)
+				if(!held_card)
+					usr << "<span class='notice'>You must insert your ID card before you can transfer funds from its virtual wallet.</span>"
+					return
+				if(amount <= 0)
+					alert("That is not a valid amount.")
+				else if(authenticated_account && amount > 0)
+					if(amount <= held_card.virtual_wallet.money)
+						authenticated_account.money += amount
+						held_card.virtual_wallet.money -= amount
+
+						//create an entry in the account transaction log
+						var/datum/transaction/T = new()
+						T.target_name = held_card.virtual_wallet.owner_name
+						T.purpose = "Credit transfer from wallet"
+						T.amount = "[amount]"
+						T.source_terminal = machine_id
+						T.date = current_date_string
+						T.time = worldtime2text()
+						authenticated_account.transaction_log.Add(T)
+
+						T = new()
+						T.target_name = authenticated_account.owner_name
+						T.purpose = "Credit transfer from wallet"
+						T.amount = "-[amount]"
+						T.source_terminal = machine_id
+						T.date = current_date_string
+						T.time = worldtime2text()
+						held_card.virtual_wallet.transaction_log.Add(T)
 					else
 						usr << "\icon[src]<span class='warning'>You don't have enough funds to do that!</span>"
 			if("balance_statement")
@@ -373,13 +460,20 @@ log transactions
 						held_card = I
 			if("logout")
 				authenticated_account = null
+				failsafe = 1
 				//usr << browse(null,"window=atm")
 
-	src.attack_hand(usr)
+	src.attack_hand(usr,failsafe)
 
 //create the most effective combination of notes to make up the requested amount
-/obj/machinery/atm/proc/withdraw_arbitrary_sum(var/arbitrary_sum)
+/obj/machinery/atm/proc/withdraw_arbitrary_sum(var/mob/user,var/arbitrary_sum)
 	//writepanic("[__FILE__].[__LINE__] ([src.type])([usr ? usr.ckey : ""])  \\/obj/machinery/atm/proc/withdraw_arbitrary_sum() called tick#: [world.time]")
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_id,/obj/item/weapon/storage/wallet))
+			dispense_cash(arbitrary_sum,H.wear_id)
+			usr << "\icon[src]<span class='notice'>Funds were transferred into your physical wallet!</span>"
+			return
 	dispense_cash(arbitrary_sum,get_step(get_turf(src),turn(dir,180))) // Spawn on the ATM.
 
 //stolen wholesale and then edited a bit from newscasters, which are awesome and by Agouri

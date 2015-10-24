@@ -106,6 +106,15 @@
 	permeability_coefficient = 0.50
 	flags = FPRINT  | ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/gardener
+	desc = "It's a jumpsuit designed to protect against minor plant-related hazards. For those who value the embelishment of the station."
+	name = "gardener's jumpsuit"
+	icon_state = "gardener"
+	item_state = "g_suit"
+	_color = "gardener"
+	permeability_coefficient = 0.50
+	flags = FPRINT  | ONESIZEFITSALL
+
 /obj/item/clothing/under/rank/internalaffairs
 	desc = "The plain, professional attire of an Internal Affairs Agent. The collar is <i>immaculately</i> starched."
 	name = "Internal Affairs uniform"
