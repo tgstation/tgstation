@@ -291,7 +291,6 @@
 	icon_state = "glass_goblet"
 	spawn(30)
 		if(user)
-			user.eye_color = "#7A0000" //A nice dark red
 			user.make_mob_into_vampire()
 
 /obj/item/weapon/antag_spawner/vampire/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
@@ -334,7 +333,6 @@
 	icon_state = "glass_goblet"
 	spawn(30)
 		if(M)
-			M.eye_color = "#7A0000"
 			M.make_mob_into_vampire()
 
 /obj/item/weapon/antag_spawner/vampire/attack_hand(mob/user)

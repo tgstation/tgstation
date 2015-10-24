@@ -350,8 +350,8 @@
 
 	//Things that require clean blood and will not substitute dirty blood go under here
 	if(V.clean_blood)
-		//Vampires slowly recuperate wounds using clean blood
-		if(V.use_blood(0.01, 1))
+		//Vampires slowly recuperate wounds using clean blood passively
+		if(!V.fast_heal && V.use_blood(0.01, 1))
 			adjustBruteLoss(-0.1)
 			adjustFireLoss(-0.05) //Slower than others due to their fire vulnerability
 			adjustToxLoss(-0.1)
@@ -370,6 +370,28 @@
 		if(nutrition > 0)
 			nutrition -= 50 //...they start starving FAST.
 			nutrition = Clamp(nutrition, 0, INFINITY)
+
+	//Sanguine Recuperation effects below this line
+	if(V.fast_heal)
+		if(V.use_blood(2, 1) || V.use_blood(6, 0)) //Either use 2 clean blood or 6 dirty blood
+			adjustBruteLoss(-3)
+			adjustFireLoss(-2)
+			adjustToxLoss(-3)
+			setOxyLoss(0) //With all that oxygenated blood, who needs to breathe?
+			adjustCloneLoss(-3)
+			adjustBrainLoss(-3)
+			losebreath = 0
+		else
+			V.fast_heal = 0 //If we lack the blood to continue, disable it for conservation
+
+	//Accelerated Recovery effects below this line
+	if(V.stun_reduction)
+		if(V.use_blood(3, 1) || V.use_blood(9, 0)) //Either use 3 clean blood or 9 dirty blood
+			AdjustStunned(-2)
+			AdjustWeakened(-2)
+			AdjustParalysis(-2)
+		else
+			V.stun_reduction = 0
 
 
 #undef HUMAN_MAX_OXYLOSS

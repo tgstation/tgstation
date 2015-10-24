@@ -83,6 +83,8 @@
 				stat("Clean Blood", "[mind.vampire.clean_blood]cl")
 				stat("Dirty Blood", "[mind.vampire.dirty_blood]cl")
 
+				stat("Sanguine Regeneration", "[mind.vampire.fast_heal ? "ON" : "OFF"]")
+				stat("Accelerated Recovery", "[mind.vampire.stun_reduction ? "ON" : "OFF"]")
 
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.

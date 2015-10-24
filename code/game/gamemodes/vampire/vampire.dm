@@ -1,6 +1,9 @@
 /datum/game_mode
 	var/list/datum/mind/vampires = list()
 
+/*
+	VAMPIRE PROCS
+*/
 
 /mob/proc/make_mob_into_vampire() //For easy calling on mobs
 	if(make_vampire(src))
@@ -47,11 +50,72 @@
 	return 1
 
 
+/mob/proc/get_vampire()
+	if(!mind && !mind.vampire)
+		return 0
+	return mind.vampire
+
+
+/proc/make_vampire(var/mob/living/carbon/human/V)
+	if(!V || !istype(V) || !V.mind) //Only works on humans that aren't braindead
+		return 0
+	var/datum/mind/M = V.mind
+	if(!change_vampire_state(V, 0))
+		return 0
+	var/datum/vampire/VD = new (M)
+	M.vampire = VD
+	M.special_role = "Vampire"
+	VD.vampire_mob = M
+	V.verbs += /mob/living/carbon/human/proc/teach_vampire_martial_art
+	V.verbs += /mob/living/carbon/human/proc/vampire_sanguine_regeneration
+	V.verbs += /mob/living/carbon/human/proc/vampire_accelerated_recovery
+	V.verbs += /mob/living/carbon/human/proc/vampire_chiropteran_shapeshift
+	V.verbs += /mob/living/carbon/human/proc/vampire_demonic_strength
+	V << "<span class='userdanger'>Lilith's blessing warps your body... you are a vampire!</span>"
+	V << "<b>You are a vampire - a supernatural, nearly-immortal creature nourished by blood. You are physically incapable of death unless certain conditions are met, and you will slowly recuperate all \
+	wounds while blood is in your body. However, there are some weaknesses that \ will bypass your immortality. Holy water and consecrated areas will either outright hurt you or at least weaken \
+	your powers. Blood is your primary resource, and you are incapable of naturally creating it in your body. Instead, you must steal it from sapient humans. To do this, click on them while targeting the \
+	head with an empty hand and harm intent. They will be hypnotized during this \ process, and will not remember the event after it has transpired. It takes several seconds to initiate, and will never \
+	fatally drain them of blood. You may distinguish other vampires by examining them.</b>"
+	var/datum/martial_art/vampirism/VM = new (null)
+	VM.teach(V)
+	V.grant_vampire_objectives()
+	return 1
+
+
+/proc/remove_vampire(var/mob/living/carbon/human/V)
+	if(!V || !istype(V) || !V.mind) //Only works on humans that aren't braindead
+		return 0
+	var/datum/mind/M = V.mind
+	if(!change_vampire_state(V, 1))
+		return 0
+	if(M.vampire)
+		qdel(M.vampire)
+		M.vampire = null
+	else
+		return 0
+	V.verbs.Remove(/mob/living/carbon/human/proc/teach_vampire_martial_art)
+	V.verbs.Remove(/mob/living/carbon/human/proc/vampire_sanguine_regeneration)
+	V.verbs.Remove(/mob/living/carbon/human/proc/vampire_accelerated_recovery)
+	V.verbs.Remove(/mob/living/carbon/human/proc/vampire_chiropteran_shapeshift)
+	V.verbs.Remove(/mob/living/carbon/human/proc/vampire_demonic_strength)
+	V << "<span class='userdanger'>You feel Lilith's blessing vanish. Your immortality fades, your hunger ebbs... you are no longer a vampire!</span>"
+	M.special_role = null
+	V.attack_log += "\[[time_stamp()]\] <font color='red'>Is no longer a vampire!</font>"
+	return 1
+
+/*
+	MIND DATUM
+*/
+
 /datum/vampire //This datum handles stuff specific to the vampire mini-antag
 	var/sucked_blood = 25 //The amount of blood a vampire has stolen. Used for objectives and isn't actually counted as blood for abilities and whatnot.
 	var/clean_blood = 25 //The good stuff! Wholesome food for the growing vampire.
 	var/dirty_blood = 0 //Works as blood, but we won't like it. Always prioritized lower than clean blood.
 	var/draining_blood = 0 //Are we currently draining blood?
+	var/fast_heal = 0 //Is passive regeneration speed tripled?
+	var/stun_reduction = 0 //Is stun reduction active?
+	var/bat_form = 0 //Are we a bat?
 	var/mob/living/vampire_mob //The vampire datum's holder.
 
 
@@ -85,53 +149,9 @@
 	else
 		return 0 //No blood remaining. Bad things for the vampire.
 
-
-/mob/proc/get_vampire()
-	if(!mind && !mind.vampire)
-		return 0
-	return mind.vampire
-
-
-/proc/make_vampire(var/mob/living/carbon/human/V)
-	if(!V || !istype(V) || !V.mind) //Only works on humans that aren't braindead
-		return 0
-	var/datum/mind/M = V.mind
-	if(!change_vampire_state(V, 0))
-		return 0
-	var/datum/vampire/VD = new (M)
-	M.vampire = VD
-	M.special_role = "Vampire"
-	VD.vampire_mob = M
-	V.verbs += /mob/living/carbon/human/proc/teach_vampire_martial_art
-	V << "<span class='userdanger'>Lilith's blessing warps your body... you are a vampire!</span>"
-	V << "<b>You are a vampire - a supernatural, nearly-immortal creature nourished by blood. You are physically incapable of death unless certain conditions are met, and you will slowly recuperate all \
-	wounds while blood is in your body. However, there are some weaknesses that \ will bypass your immortality. Holy water and consecrated areas will either outright hurt you or at least weaken \
-	your powers. Blood is your primary resource, and you are incapable of naturally creating it in your body. Instead, you must steal it from sapient humans. To do this, click on them while targeting the \
-	head with an empty hand and harm intent. They will be hypnotized during this \ process, and will not remember the event after it has transpired. It takes several seconds to initiate, and will never \
-	fatally drain them of blood. You may distinguish other vampires by examining them.</b>"
-	var/datum/martial_art/vampirism/VM = new (null)
-	VM.teach(V)
-	V.grant_vampire_objectives()
-	return 1
-
-
-/proc/remove_vampire(var/mob/living/carbon/human/V)
-	if(!V || !istype(V) || !V.mind) //Only works on humans that aren't braindead
-		return 0
-	var/datum/mind/M = V.mind
-	if(!change_vampire_state(V, 1))
-		return 0
-	if(M.vampire)
-		qdel(M.vampire)
-		M.vampire = null
-	else
-		return 0
-	V.verbs -= /mob/living/carbon/human/proc/teach_vampire_martial_art
-	V << "<span class='userdanger'>You feel Lilith's blessing vanish. Your immortality fades, your hunger ebbs... you are no longer a vampire!</span>"
-	M.special_role = null
-	V.attack_log += "\[[time_stamp()]\] <font color='red'>Is no longer a vampire!</font>"
-	return 1
-
+/*
+	GAME MODE FILES
+*/
 
 /datum/game_mode/vampire //I know this is in a bad spot - gamemode code is archaic - but there's no better place for it.
 	name = "vampire"
@@ -238,6 +258,9 @@
 	text += "<br>"
 	world << text
 
+/*
+	MARTIAL ART
+*/
 
 /datum/martial_art/vampirism //Used for draining blood
 	name = "Vampiric Thirst"
@@ -285,13 +308,17 @@
 		D.Stun(5)
 		D.silent += 5
 		spawn(50)
-			D << "<span class='userdanger'>You can't recall anything after the sting in your neck... your mind is cloudy...</span>"
+			D << "<span class='userdanger'>Your mind is cloudy... your neck hurts and you can't remember what caused it.</span>"
 		return 1
 	else
 		return basic_hit(A,D)
 	return 1
 
+/*
+	VAMPIRE ABILITIES
+*/
 
+//Recall Thirst: Re-teaches the vampire martial art so vampires who forget how to drain people can once again do so.
 /mob/living/carbon/human/proc/teach_vampire_martial_art() //In case another martial art overrides the blood-draining one
 	set name = "Recall Thirst"
 	set desc = "Recall how to drain blood from humans. Use if you suddenly cannot do so."
@@ -305,3 +332,155 @@
 	usr << "<span class='danger'>You recall how to drain blood from humans. If you forget how to do so, use this ability again.</span>"
 	var/datum/martial_art/vampirism/VM = new (null)
 	VM.teach(usr)
+	return 1
+
+//Sanguine Regeneration: Triples healing over time but increases passive blood use.
+/mob/living/carbon/human/proc/vampire_sanguine_regeneration()
+	set name = "Sanguine Regeneration (Toggle)"
+	set desc = "Increases your passive healing ability. Costs 2 cl of clean blood per second or 6 dirty blood per second."
+	set category = "Vampirism"
+
+	if(!is_vampire(usr))
+		usr << "<span class='warning'>The knowledge slips away as you try to grasp it...</span>"
+		usr.verbs -= src
+		return 0
+
+	var/datum/vampire/V = usr.get_vampire()
+	var/mob/living/carbon/human/user = usr
+	V.fast_heal = !V.fast_heal
+	user << "[V.fast_heal ? "<span class='danger'>You begin harnessing your blood to heal your wounds.</span>" : "<span class='danger'>You relax your body's frantic regeneration.</span>"]"
+	return 1
+
+//Accelerated Recovery: Quickly reduces stuns but increases passive blood use.
+/mob/living/carbon/human/proc/vampire_accelerated_recovery()
+	set name = "Accelerated Recovery (Toggle)"
+	set desc = "Dramatically increases stun recovery rate. Costs 3 cl of clean blood per second or 9 dirty blood per second."
+	set category = "Vampirism"
+
+	if(!is_vampire(usr))
+		usr << "<span class='warning'>The knowledge slips away as you try to grasp it...</span>"
+		usr.verbs -= src
+		return 0
+
+	var/datum/vampire/V = usr.get_vampire()
+	var/mob/living/carbon/human/user = usr
+	V.stun_reduction = !V.stun_reduction
+	user << "[V.stun_reduction ? "<span class='danger'>You begin harnessing your blood to empower your metabolism.</span>" : "<span class='danger'>You relax your body's coursing adrenaline.</span>"]"
+	return 1
+
+//Chiropteran Shapeshift: Transforms the vampire into a quick, ventcrawling bat. Return to a normal human at will. Death as a bat or manual cancel revert them to their normal form and stun them.
+/mob/living/carbon/human/proc/vampire_chiropteran_shapeshift()
+	set name = "Chiropteran Shapeshift (100cl)"
+	set desc = "Allows you to morph into a swift bat, capable of using ventilation shafts for movement and passing through creatures. You may revert at will. Costs 100 clean blood or 300 dirty blood."
+	set category = "Vampirism"
+
+	if(!is_vampire(usr))
+		usr << "<span class='warning'>The knowledge slips away as you try to grasp it...</span>"
+		usr.verbs -= src
+		return 0
+
+	var/datum/vampire/V = usr.get_vampire()
+	var/mob/living/carbon/human/user = usr
+	if(!V.use_blood(100, 0))
+		if(!V.use_blood(300, 0))
+			user << "<span class='warning'>You don't have the blood to give yourself strength!</span>"
+			return 0
+	user.visible_message("<span class='warning'>[user]'s body suddenly twists and contorts into a chiropteran form!</span>")
+	if(user.handcuffed)
+		user.unEquip(user.handcuffed)
+	user.status_flags |= GODMODE //To prevent them from taking damage while in the bat
+	var/mob/living/simple_animal/hostile/retaliate/bat/vampiric/VB = new(get_turf(user))
+	user.mind.transfer_to(VB)
+	user.loc = VB
+	VB.stored_human = user
+	V.bat_form = 1
+
+/mob/living/simple_animal/hostile/retaliate/bat/vampiric
+	name = "vampire bat"
+	desc = "A vicious-looking animal whose eyes glow with a peculiar intelligence."
+	maxHealth = 40 //Pretty fragile, but can still tank a few hits
+	health = 40
+	see_in_dark = 10
+	harm_intent_damage = 10
+	speed = -1 //gotta go fast
+	var/mob/living/carbon/human/stored_human //The vampire who is controlling the bat
+
+/mob/living/simple_animal/hostile/retaliate/bat/vampiric/Stat()
+	..()
+	if(statpanel("Status"))
+		if(mind)
+			if(mind.vampire)
+				stat("Total Blood Stolen", "[mind.vampire.sucked_blood]cl")
+				stat("Clean Blood", "[mind.vampire.clean_blood]cl")
+				stat("Dirty Blood", "[mind.vampire.dirty_blood]cl")
+
+				stat("Sanguine Regeneration", "[mind.vampire.fast_heal ? "ON" : "OFF"]")
+				stat("Accelerated Recovery", "[mind.vampire.stun_reduction ? "ON" : "OFF"]")
+
+/mob/living/simple_animal/hostile/retaliate/bat/vampiric/Process_Spacemove(movement_dir = 0)
+	return 1	//No drifting in space for space carp!	//original comments do not steal	//i did it anyway faggot
+
+/mob/living/simple_animal/hostile/retaliate/bat/vampiric/death()
+	..(1)
+	if(stored_human && is_vampire(src))
+		var/datum/vampire/V = get_vampire()
+		visible_message("<span class='warning'>[src]'s body suddenly contorts and expands into a humanoid form!</span>")
+		stored_human.loc = get_turf(src)
+		if(mind)
+			mind.transfer_to(stored_human)
+		stored_human.status_flags &= ~GODMODE
+		stored_human.Paralyse(5)
+		V.bat_form = 0
+		qdel(src)
+
+/mob/living/simple_animal/hostile/retaliate/bat/vampiric/AttackingTarget()
+	..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat != DEAD && is_vampire(src))
+			var/datum/vampire/V = get_vampire()
+			src << "<span class='warning'>You drain some blood along with the bite!</span>"
+			H.drip(3)
+			V.add_blood(3, 0) //If a vampire bites a living human, add 3 clean blood in addition to the damage!
+
+/mob/living/simple_animal/hostile/retaliate/bat/vampiric/verb/turn_to_human()
+	set name = "Human Form"
+	set desc = "Transform yourself back into a human."
+	set category = "Vampirism"
+
+	if(!stored_human)
+		usr << "<span class='warning'>You aren't a human to begin with!</span>"
+		return 0
+
+	death() //Dying is how they turn back
+
+//Demonic Strength: Allows you to snap out of restraints. Costs 50 clean blood or 150 dirty blood.
+/mob/living/carbon/human/proc/vampire_demonic_strength()
+	set name = "Demonic Strength (50cl)"
+	set desc = "Allows you to break free of handcuffs. Costs 50 cl of clean blood or 150 cl of dirty blood."
+	set category = "Vampirism"
+
+	if(!is_vampire(usr))
+		usr << "<span class='warning'>The knowledge slips away as you try to grasp it...</span>"
+		usr.verbs -= src
+		return 0
+
+	var/datum/vampire/V = usr.get_vampire()
+	var/mob/living/carbon/human/user = usr
+	if(!user.handcuffed)
+		if(user.restrained())
+			user << "<span class='warning'>You aren't capable of breaking out of that type of restraint!</span>"
+		else
+			user << "<span class='warning'>You aren't handcuffed!</span>"
+		return 0
+	var/obj/H = user.get_item_by_slot(slot_handcuffed)
+	if(!V.use_blood(50, 1))
+		if(!V.use_blood(150, 0))
+			user << "<span class='warning'>You don't have the blood to give yourself strength!</span>"
+			return 0
+	user.visible_message("<span class='warning'>[user] snaps [H] and frees themself in a surge of strength!</span>", \
+						 "<span class='danger'>You feel dark strength surge through you and snap through [H] around your wrists!</span>")
+	playsound(user, 'sound/effects/snap.ogg', 100, 0)
+	user.unEquip(H)
+	qdel(H)
+	return 1
