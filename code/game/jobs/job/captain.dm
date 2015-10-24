@@ -12,7 +12,6 @@ Captain
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
 	req_admin_notify = 1
-	minimal_player_age = 14
 
 	outfit = /datum/outfit/job/captain
 
