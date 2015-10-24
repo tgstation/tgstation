@@ -768,3 +768,11 @@ var/global/list/g_fancy_list_of_types = null
 		dat += "[path]<BR>"
 
 	usr << browse(dat, "window=dellog")
+
+/client/proc/debug_huds(i as num)
+	set category = "Debug"
+	set name = "Debug HUDs"
+	set desc = "Debug the data or antag HUDs"
+
+	if(!holder)	return
+	debug_variables(huds[i])
