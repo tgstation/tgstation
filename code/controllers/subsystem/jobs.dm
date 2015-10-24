@@ -202,7 +202,6 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/DivideOccupations()
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
-	SetupOccupations()
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
 	if(ticker)
@@ -397,8 +396,8 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/J in occupations)
 		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
 		var/datum/regex/results = regex_find(jobstext, regex)
-		J.total_positions = results.str(2)
-		J.spawn_positions = results.str(3)
+		J.total_positions = text2num(results.str(2))
+		J.spawn_positions = text2num(results.str(3))
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
