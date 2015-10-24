@@ -876,7 +876,8 @@ var/global/floorIsLava = 0
 	//The following commands don't need a selected shuttle
 	dat += {"
 	<a href='?src=\ref[src];shuttle_shuttlify=1'>Turn current area into a shuttle</a><br>
-	<a href='?src=\ref[src];shuttle_mass_lockdown=1'>Lock down all shuttles</a>
+	<a href='?src=\ref[src];shuttle_add_docking_port=1'>Create a shuttle docking port</a><br>
+	<a href='?src=\ref[src];shuttle_mass_lockdown=1'>Lock down all shuttles</a><br>
 	"}
 	usr << browse(dat, "window=shuttlemagic")
 
