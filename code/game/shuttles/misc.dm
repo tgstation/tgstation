@@ -45,6 +45,7 @@ var/global/datum/shuttle/transport/transport_shuttle = new(starting_area = /area
 
 /obj/machinery/computer/shuttle_control/transport
 	machine_flags = 0 //No screwtoggle / emaggable to prevent mortals from fucking with shit
+	allow_silicons = 0
 
 /obj/machinery/computer/shuttle_control/transport/New()
 	link_to(transport_shuttle)
@@ -85,12 +86,13 @@ var/global/datum/shuttle/admin/admin_shuttle = new(starting_area = /area/shuttle
 /obj/structure/docking_port/destination/admin/centcom
 	areaname = "centcom hangar bay"
 
-/obj/machinery/computer/shuttle_control/transport
+/obj/machinery/computer/shuttle_control/admin_shuttle
 	machine_flags = 0 //No screwtoggle / emaggable to prevent mortals from fucking with shit
+	allow_silicons = 0
 
-/obj/machinery/computer/shuttle_control/transport/New()
+/obj/machinery/computer/shuttle_control/admin_shuttle/New()
 	link_to(admin_shuttle)
 	.=..()
 
-/obj/machinery/computer/shuttle_control/transport/emag() //Can't be emagged to hijack the centcom ferry
+/obj/machinery/computer/shuttle_control/admin_shuttle/emag() //Can't be emagged to hijack the centcom ferry
 	return
