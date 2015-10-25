@@ -244,6 +244,9 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	ignored_by = list(/mob/living/simple_animal/slime)
+	burnmod = 0.5
+	coldmod = 2
+	heatmod = 0.5
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(recently_changed)
