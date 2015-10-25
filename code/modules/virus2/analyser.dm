@@ -47,13 +47,11 @@
 			else
 				toscan += D
 		if(!c.drop_item(D, src)) return 1
-		//c.drop_item(D, src)
 		visible_message("<span class='notice'>[user.name] inserts the [D.name] in the [src.name].</span>", 3)
-	return
+		src.updateUsrDialog()
 
 /obj/machinery/disease2/diseaseanalyser/proc/PrintPaper(var/obj/item/weapon/virusdish/D)
 	var/obj/item/weapon/paper/P = new(src.loc)
-	//var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src.loc)
 	P.info = D.virus2.get_info()
 	P.name = "Virus #[D.virus2.uniqueID]"
 	visible_message("\The [src.name] prints a sheet of paper.")
@@ -64,9 +62,10 @@
 	if (D.virus2.addToDB())
 		say("Added new pathogen to database.")
 	PrintPaper(dish)
-	dish.loc = src.loc
+	dish.forceMove(src.loc)
 	dish = null
 	icon_state = "analyser"
+	src.updateUsrDialog()
 
 /obj/machinery/disease2/diseaseanalyser/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -88,73 +87,57 @@
 		else
 			pause = 1
 			spawn(25)
-				dish.loc = src.loc
+				dish.forceMove(src.loc)
 				dish = null
 				alert_noise("buzz")
 				pause = 0
-	return
 
 /obj/machinery/disease2/diseaseanalyser/Topic(href, href_list)
 	if(..())
 		return 1
-	//if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-	//usr.unset_machine()
-	//usr << browse(null, "window=computer")
-	//return
 	if(usr) usr.set_machine(src)
-
 	if(href_list["eject"])
 		for(var/obj/item/weapon/virusdish/O in src.contents)
 			if("[O.virus2.uniqueID]" == href_list["name"])
-				O.loc = src.loc
+				O.forceMove(src.loc)
 				if(toscan["O"])
 					toscan -= O
 		src.updateUsrDialog()
-	else if(href_list["scan"])
-		for(var/obj/item/weapon/virusdish/O in src.contents)
-			if("[O.virus2.uniqueID]" == href_list["name"])
-				if(!toscan["O"])
-					toscan += O
 	else if(href_list["print"])
 		for(var/obj/item/weapon/virusdish/O in src.contents)
 			if("[O.virus2.uniqueID]" == href_list["name"])
 				PrintPaper(O)
-	else if(href_list["close"])
-		usr << browse(null, "window=computer")
-	return
 
 /obj/machinery/disease2/diseaseanalyser/attack_hand(var/mob/user as mob)
 	user.set_machine(src)
-	var/dat
-	dat = " Viral Storage & Analysis Unit V1.3"
-	dat += "<BR>Currently stored samples: [src.contents.len]"
+	var/dat = list()
+	dat += "Currently stored samples: [src.contents.len]"
 	if (src.contents.len > 0)
-		dat += "<table cellpadding='2' style='width: 100%;text-align:center;'><td>Name</td><td>Symptoms</td><td>Antibodies</td><td>Transmission</td><td>Options</td>"
+		dat += "<table cellpadding='1' style='width: 100%;text-align:center;'><td>Name</td><td>Symptoms</td><td>Antibodies</td><td>Transmission</td><td>Options</td>"
 		for(var/obj/item/weapon/virusdish/B in src.contents)
-			//if(B == toscan[B])
 			var/ID = B.virus2.uniqueID
-			if("[ID]" in virusDB)
+			if("[ID]" in virusDB) //If it's in the DB they might have given it a name
 				var/datum/data/record/v = virusDB["[ID]"]
 				dat += "<BR><tr><td>[v.fields["name"]]</td>"
-				dat+="<td>"
+			else //Use ID instead
+				dat += "<br><tr><td>[B.virus2.name()]</td>"
+			dat+="<td>"
+			if(!B.analysed)
+				dat += "Awaiting analysis.</td><td></td><td></td>"
+			else
 				for(var/datum/disease2/effectholder/e in B.virus2.effects)
 					dat += "<br>[e.effect.name]"
-				dat+="</td>"
-				dat += "<td>[v.fields["antigen"]]</td>"
-				dat += "<td>[v.fields["spread type"]]</td>"
-			else
-				if(B == dish) //Analysing
-					dat += "<br><tr><td>Analysing Sample.</td><td></td><td></td><td></td>"
-				else
-					dat += "<br><tr><td>Sample not in database.</td><td></td><td></td><td></td>"
-			dat += "<td>"
+				dat +="</td>"
+				dat += "<td>[antigens2string(B.virus2.antigen)]</td>"
+				dat += "<td>[(B.virus2.spreadtype)]</td>"
 			if(B == dish)
-				dat += "</td></tr>"
+				dat += "<td></td>"
 			else
-				dat += "<A href='?src=\ref[src];eject=1;name=["[ID]"];'>Eject</a>" //Disallow ejection if the sample is being analysed
-				dat += "[B.analysed ? "<br><A href='?src=\ref[src];print=1;name=["[ID]"];'>Print</a></td>" : "<br><A href='?src=\ref[src];scan=1;name=["[ID]"];'>Analyse</a></td>"]</tr>"
+				dat += "<td><A href='?src=\ref[src];eject=1;name=["[ID]"];'>Eject</a>"
+				dat += "<br>[B.analysed ? "<A href='?src=\ref[src];print=1;name=["[ID]"];'>Print</a>" : ""]</td>"
+			dat += "</tr>"
 		dat += "</table>"
-	dat += "<BR><A href='?src=\ref[src];close=1'>Close</a>"
-	user << browse("<TITLE>Disease Analyser</TITLE>[dat]", "window=computer;size=600x350")
-	onclose(user, "computer")
-	return
+	dat = list2text(dat)
+	var/datum/browser/popup = new(user, "disease_analyzer", "Viral Storage & Analysis Unit V1.3", 600, 350, src)
+	popup.set_content(dat)
+	popup.open()
