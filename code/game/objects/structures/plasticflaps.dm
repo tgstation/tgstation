@@ -11,8 +11,8 @@
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
 
-	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
+	var/obj/structure/bed/B = A
+	if (istype(A, /obj/structure/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass		return 0
 		return 0
 
 	if (istype(A, /obj/structure/closet/cardboard))
@@ -27,6 +27,10 @@
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
+
+/obj/structure/plasticflaps/attackby(obj/item/weapon/W, mob/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
+	..()
 
 /obj/structure/plasticflaps/ex_act(severity)
 	..()
