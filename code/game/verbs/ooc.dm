@@ -28,6 +28,9 @@
 		if(prefs.muted & MUTE_OOC)
 			src << "<span class='danger'>You cannot use OOC (muted).</span>"
 			return
+		if(jobban_isbanned(src, "OOC"))
+			src << "<span class='danger'>You have been banned from OOC.</span>"
+			return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
