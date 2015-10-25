@@ -208,6 +208,10 @@ var/datum/subsystem/ticker/ticker
 	//Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
 	if( cinematic )	return	//already a cinematic in progress!
+
+	for (var/datum/html_interface/hi in html_interfaces)
+		hi.closeAll()
+
 	auto_toggle_ooc(1) // Turn it on
 	//initialise our cinematic screen object
 	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=20;mouse_opacity=0;screen_loc="1,0";}(src)
