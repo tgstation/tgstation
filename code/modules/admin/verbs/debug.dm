@@ -199,7 +199,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Robot"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -215,7 +215,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Blob"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
@@ -232,7 +232,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 
@@ -280,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make Alien"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -297,7 +297,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Make slime"
 
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
@@ -474,7 +474,7 @@ var/global/list/g_fancy_list_of_types = null
 	set category = "Admin"
 	set name = "Grant Full Access"
 
-	if (!ticker)
+	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
 	if (istype(M, /mob/living/carbon/human))

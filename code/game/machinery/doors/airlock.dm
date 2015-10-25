@@ -971,7 +971,7 @@ About the new airlock wires panel:
 
 	if(!density)
 		return 1
-	if(!ticker)
+	if(!ticker || !ticker.mode)
 		return 0
 	operating = 1
 
@@ -1132,11 +1132,13 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/emag_act(mob/user)
-	if(density && hasPower() && !emagged)
+	if(!operating && density && hasPower() && !emagged)
+		operating = 1
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
 		if(qdeleted(src))
 			return
+		operating = 0
 		if(!open())
 			update_icon(AIRLOCK_CLOSED)
 		emagged = 1

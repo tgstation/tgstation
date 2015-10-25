@@ -35,7 +35,7 @@
 /datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "mutationtoxin")
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.set_species(/datum/species/slime)
+		H.set_species(/datum/species/jelly/slime)
 		H.reagents.del_reagent(chem.type)
 		H.faction |= "slime"
 		return 1
@@ -111,6 +111,8 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
@@ -183,25 +185,24 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 			H.heal_overall_damage(1,1)
 
 /*
- SLIMEPEOPLE
+ JELLYPEOPLE
 */
 
-/datum/species/slime
-	// Humans mutated by slime mutagen, produced from green slimes. They are not targetted by slimes.
-	name = "Slimeperson"
-	id = "slime"
-	default_color = "00FFFF"
-	darksight = 3
-	invis_sight = SEE_INVISIBLE_LEVEL_ONE
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
-	hair_color = "mutcolor"
-	hair_alpha = 150
-	ignored_by = list(/mob/living/simple_animal/slime)
+/datum/species/jelly
+	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
+	name = "Xenobiological Jelly Entity"
+	id = "jelly"
+	default_color = "00FF90"
+	say_mod = "chirps"
+	eyes = "jelleyes"
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	var/recently_changed = 1
 
-/datum/species/slime/spec_life(mob/living/carbon/human/H)
+/datum/species/jelly/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
+		return
 	if(!H.reagents.get_reagent_amount("slimejelly"))
 		if(recently_changed)
 			H.reagents.add_reagent("slimejelly", 80)
@@ -222,48 +223,28 @@ datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 		if(S.volume < 10)
 			H.losebreath++
 
-/datum/species/slime/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "slimejelly")
-		return 1
-/*
- JELLYPEOPLE
-*/
-
-/datum/species/jelly
-	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
-	name = "Xenobiological Jelly Entity"
-	id = "jelly"
-	default_color = "00FF90"
-	say_mod = "chirps"
-	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD)
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
-	var/recently_changed = 1
-
-/datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(!H.reagents.get_reagent_amount("slimejelly"))
-		if(recently_changed)
-			H.reagents.add_reagent("slimejelly", 80)
-			recently_changed = 0
-		else
-			H.reagents.add_reagent("slimejelly", 5)
-			H.adjustBruteLoss(5)
-			H << "<span class='danger'>You feel empty!</span>"
-
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume < 100)
-			if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-				H.reagents.add_reagent("slimejelly", 0.5)
-				H.nutrition -= 5
-			else if(prob(5))
-				H << "<span class='danger'>You feel drained!</span>"
-		if(S.volume < 10)
-			H.losebreath++
-
 /datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "slimejelly")
 		return 1
+
+/*
+ SLIMEPEOPLE
+*/
+
+/datum/species/jelly/slime
+	// Humans mutated by slime mutagen, produced from green slimes. They are not targetted by slimes.
+	name = "Slimeperson"
+	id = "slime"
+	default_color = "00FFFF"
+	darksight = 3
+	invis_sight = SEE_INVISIBLE_LEVEL_ONE
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
+	say_mod = "says"
+	eyes = "eyes"
+	hair_color = "mutcolor"
+	hair_alpha = 150
+	ignored_by = list(/mob/living/simple_animal/slime)
+
 /*
  GOLEMS
 */
