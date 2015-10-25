@@ -534,15 +534,18 @@
 			PoolOrNew(/obj/effect/effect/water, get_turf(H))
 	return 0
 
-/obj/item/clothing/under/plasmaman/attackby(obj/item/device/extinguisher_refill/E, mob/user, params)
-	if (extinguishes_left == 10)
-		user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
-		return
-	else
-		extinguishes_left = 10
+/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
+	if (istype(E, /obj/item/device/extinguisher_refill))
+		if (extinguishes_left == 10)
+			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			return
+		else
+			extinguishes_left = 10
+			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			qdel(E)
+			return
 		return
 	return
-
 /obj/item/device/extinguisher_refill
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
