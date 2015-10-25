@@ -47,6 +47,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 	special_delayer = null
 	gui_icons = null
 	qdel(hud_used)
+	for(var/obj/leftovers in src)
+		qdel(leftovers)
 	..()
 
 /mob/projectile_check()
