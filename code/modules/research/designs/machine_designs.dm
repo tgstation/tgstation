@@ -284,7 +284,7 @@
 	name = "Machine Design (Balloon Extraction Point Board)"
 	desc = "The circuit board for a Balloon Extraction Point."
 	id = "extraction_point"
-	req_tech = list("programming" = 1)
+	req_tech = list("programming" = 2, "bluespace" = 2)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/extraction_point

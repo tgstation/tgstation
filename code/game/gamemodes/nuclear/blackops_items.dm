@@ -117,7 +117,7 @@ var/list/total_extraction_beacons = list()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/extraction_point(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 
 /obj/machinery/extraction_point/Destroy()
 	total_extraction_beacons -= src
