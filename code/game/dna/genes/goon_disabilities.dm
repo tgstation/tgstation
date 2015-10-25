@@ -435,8 +435,14 @@
 			if(H.mind)
 				H.mind.transfer_to(nH) //Transfer mind to the new body - to regain vampire/changeling/antag status!
 			//H.decomp_stage = 4
+			drop_all(H)
 			H.gib(1)
 		else
 			M.visible_message("<span class='danger'>[usr.name] melts into a pile of bloody viscera!</span>")
 			M.gib(1)
 
+/* Helper proc to drop all items the mob is wearing before gib() destroys them*/
+/spell/targeted/melt/proc/drop_all(var/mob/M as mob)
+	//no mobtype sanity checks; get_all_slots and drop_from_inventory are inherit of all mobs
+	for (var/obj/item/I in M.get_all_slots())
+		M.drop_from_inventory(I)
