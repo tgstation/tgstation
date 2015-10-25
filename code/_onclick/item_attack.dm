@@ -13,9 +13,9 @@
 		visible_message("<span class='danger'>[user] has hit [src] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(ismommi(user))
-		var/mob/living/silicon/robot/mommi/R = user
-		if(!R.can_interfere(src))	//MoMMI proc
+	if(issilicon(user))
+		var/mob/living/silicon/R = user
+		if(!R.can_interfere(src))	//Silicon proc
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
 	user.changeNext_move(CLICK_CD_MELEE)

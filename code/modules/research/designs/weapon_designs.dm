@@ -221,7 +221,7 @@
 	name = "Balloon Extraction Pack"
 	desc = "A balloon extraction pack."
 	id = "extraction_pack"
-	req_tech = list("engineering" = 1)
+	req_tech = list("engineering" = 1, "materials" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000)
 	build_path = /obj/item/weapon/extraction_pack

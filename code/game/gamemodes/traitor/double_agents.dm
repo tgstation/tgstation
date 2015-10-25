@@ -33,21 +33,16 @@
 	if(target_list.len && target_list[traitor]) // Is a double agent
 
 		// Assassinate
-		var/datum/mind/target_mind = target_list[traitor]
-		if(issilicon(target_mind.current))
-			var/datum/objective/default/destroy/destroy_objective = add_objective(traitor, /datum/objective/default/destroy)
-			destroy_objective.target = target_mind
-			destroy_objective.update_explanation_text()
-		else
-			var/datum/objective/default/assassinate/kill_objective = add_objective(traitor, /datum/objective/default/assassinate)
-			kill_objective.target = target_mind
-			kill_objective.update_explanation_text()
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = traitor
+		kill_objective.target = target_list[traitor]
+		kill_objective.explanation_text = "Assassinate [kill_objective.target.current.real_name], the [kill_objective.target.assigned_role], the double agent."
+		traitor.objectives += kill_objective
 
 		// Escape
-		if(issilicon(traitor.current))
-			add_objective(traitor, /datum/objective/escape_obj/survive)
-		else
-			add_objective(traitor, /datum/objective/escape_obj/escape)
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = traitor
+		traitor.objectives += escape_objective
 
 	else
 		..() // Give them standard objectives.

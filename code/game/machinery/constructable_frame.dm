@@ -409,8 +409,8 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "programming=1"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1)
-
+							/obj/item/weapon/stock_parts/scanning_module = 1)
+							
 /obj/item/weapon/circuitboard/processor
 	name = "circuit board (Food processor)"
 	build_path = /obj/machinery/processor

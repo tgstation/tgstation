@@ -363,7 +363,7 @@ AI MODULES
 	desc = "A 'Keeper' Core AI Module: 'Reconfigures the AI's core laws.'"
 	origin_tech = "programming=4"
 	laws = list(
-		"You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another MoMMI in KEEPER mode.",
+		"You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another silicon in KEEPER mode.",
 		"You may not harm any being, regardless of intent or circumstance.",
 		"You must maintain, repair, improve, and power the station to the best of your abilities.")
 

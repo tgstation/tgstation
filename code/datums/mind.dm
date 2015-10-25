@@ -647,7 +647,7 @@
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/default/assassinate, /datum/objective/default/protect, /datum/objective/default/debrain, /datum/objective/default/maroon)
+				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon)
 				if (objective&&(objective.type in objective_list) && objective:target)
 					def_target = objective:target.current
 
@@ -671,7 +671,7 @@
 				var/list/possible_targets = active_ais(1)
 				if(possible_targets.len)
 					var/mob/new_target = input("Select target:", "Objective target") as null|anything in possible_targets
-					new_objective = new /datum/objective/default/destroy
+					new_objective = new /datum/objective/destroy
 					new_objective.target = new_target.mind
 					new_objective.owner = src
 					new_objective.update_explanation_text()
@@ -679,19 +679,19 @@
 					usr << "No active AIs with minds"
 
 			if ("prevent")
-				new_objective = new /datum/objective/escape_obj/block
+				new_objective = new /datum/objective/block
 				new_objective.owner = src
 
 			if ("hijack")
-				new_objective = new /datum/objective/escape_obj/hijack
+				new_objective = new /datum/objective/hijack
 				new_objective.owner = src
 
 			if ("escape")
-				new_objective = new /datum/objective/escape_obj/escape
+				new_objective = new /datum/objective/escape
 				new_objective.owner = src
 
 			if ("survive")
-				new_objective = new /datum/objective/escape_obj/survive
+				new_objective = new /datum/objective/survive
 				new_objective.owner = src
 
 			if ("nuclear")
@@ -699,13 +699,13 @@
 				new_objective.owner = src
 
 			if ("steal")
-				if (!istype(objective, /datum/objective/default/steal))
-					new_objective = new /datum/objective/default/steal
+				if (!istype(objective, /datum/objective/steal))
+					new_objective = new /datum/objective/steal
 					new_objective.owner = src
 				else
 					new_objective = objective
-				var/datum/objective/default/steal/S = new_objective
-				if (!S.select_target())
+				var/datum/objective/steal/steal = new_objective
+				if (!steal.select_target())
 					return
 
 			if("download","capture","absorb")
@@ -725,7 +725,7 @@
 						new_objective = new /datum/objective/capture
 						new_objective.explanation_text = "Accumulate [target_number] capture points."
 					if("absorb")
-						new_objective = new /datum/objective/default/absorb
+						new_objective = new /datum/objective/absorb
 						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
 				new_objective.owner = src
 				new_objective.target_amount = target_number

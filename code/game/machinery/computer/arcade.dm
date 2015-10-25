@@ -25,7 +25,7 @@
 							/obj/item/toy/prize/odysseus							= 1,
 							/obj/item/toy/prize/phazon								= 1,
 							/obj/item/toy/prize/reticence							= 1,
-							/obj/item/toy/cards/deck								= 2,
+							/obj/item/weapon/deck									= 2,
 							/obj/item/toy/nuke										= 2,
 							/obj/item/toy/minimeteor								= 2,
 							/obj/item/toy/carpplushie								= 2,

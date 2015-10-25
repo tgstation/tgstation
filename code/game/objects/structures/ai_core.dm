@@ -122,8 +122,8 @@
 
 			if(istype(P, /obj/item/device/mmi))
 				var/obj/item/device/mmi/M = P
-				if(user && ismommi(user))
-					var/mob/living/silicon/robot/mommi/R = user
+				if(user && issilicon(user))
+					var/mob/living/silicon/R = user
 					if(R.keeper)
 						user << "Your laws forbid you from doing this"
 						return

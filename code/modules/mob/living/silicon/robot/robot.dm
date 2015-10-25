@@ -414,8 +414,8 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if (ismommi(user))
-		var/mob/living/silicon/robot/mommi/R = user
+	if (issilicon(user))
+		var/mob/living/silicon/R = user
 		if (!R.can_interfere(src))
 			user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 			return
@@ -510,7 +510,7 @@
 
 	else if(istype(W, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/MOD = W
-		if(ismommi(src))
+		if(ismommi(src) && src.scrambledcodes)
 			user << "You cannot use this module with a MoMMI"
 			return
 		if(!opened)
@@ -605,6 +605,7 @@
 					SetEmagged(1)
 					SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 					lawupdate = 0
+					keeper = 0
 					connected_ai = null
 					user << "You emag [src]'s interface."
 					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
@@ -701,8 +702,8 @@
 			return
 
 		if(cell)
-			if(ismommi(user))
-				var/mob/living/silicon/robot/mommi/R = user
+			if(issilicon(user))
+				var/mob/living/silicon/R = user
 				if(R.keeper)
 					user << "<span class ='warning'>Your laws prevent you from doing this</span>"
 					return

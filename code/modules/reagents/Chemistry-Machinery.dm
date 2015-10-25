@@ -219,7 +219,7 @@
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
-			dispensable_reagents = dispensable_reagents | special_reagents[i] 
+			dispensable_reagents = dispensable_reagents | special_reagents[i]
 		//the parameter to sortList() must be a list and not a product of a list operation.
 		//Watch for hits on git grep -E 'sortList\([^)]+\|[^)]+\)' , for example.
 	dispensable_reagents = sortList( dispensable_reagents )
@@ -742,6 +742,10 @@
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
+#define TAB_ANALYSIS 1
+#define TAB_EXPERIMENT 2
+#define TAB_DATABASE 3
+
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
@@ -759,7 +763,7 @@
 	var/new_diseases = list()
 	var/new_symptoms = list()
 	var/new_cures = list()
-	var/tab_open = 1 //1-Virus Description, 2-Experiment, 3-Database
+	var/tab_open = TAB_ANALYSIS //the magic of defines!
 	var/temp_html = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -1028,7 +1032,7 @@
 	dat += "<A href='?src=\ref[src];tab_open=3'>Database</a><br><hr><BR>"
 
 	switch(tab_open)
-		if(1) //Virus Description
+		if(TAB_ANALYSIS)
 			if(!beaker)
 				dat += "<b>No beaker inserted.</b><BR>"
 
@@ -1102,7 +1106,7 @@
 							dat += "nothing<BR>"
 					else
 						dat += "nothing<BR>"
-		if(2) //Experimentation
+		if(TAB_EXPERIMENT)
 			dat += "<b>Available Chems:</b><br>"
 			dat += "Virus Food: [virusfood_ammount].<br>"
 			dat += "Unstable Mutage: [mutagen_ammount].<br>"
@@ -1152,7 +1156,7 @@
 				dat += "<A href='?src=\ref[src];chem_choice=synaptizine'>Synaptizine</a><BR>"
 				dat += "<A href='?src=\ref[src];chem_choice=reset'>Reset Virus</a><BR>"
 
-		if(3) //Database
+		if(TAB_DATABASE)
 			dat += "<b>Database:</b><BR><hr>"
 			//describe database here
 			var/loop = 0
@@ -1183,12 +1187,6 @@
 				dat += "<li><A href='?src=\ref[src];cure=[loop]'> - <i>Make</i></A><br></li>"
 
 	dat += "<hr><BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>"
-
-	//user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
-	//onclose(user, "pandemic") //Old user interface
-
-	//dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
-	//EXAMPLE, REMOVE WHEN FINISHED
 
 	var/datum/browser/popup = new(user, "pandemic", "PanD.E.M.I.C 2200")
 	popup.set_content(dat)
@@ -1245,6 +1243,11 @@
 	else
 		..()
 	return
+
+#undef TAB_ANALYSIS
+#undef TAB_EXPERIMENT
+#undef TAB_DATABASE
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 /obj/machinery/reagentgrinder

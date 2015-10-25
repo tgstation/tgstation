@@ -89,7 +89,7 @@
 /datum/ai_laws/keeper //for MoMMIs, I sure hope normal silicons spawn with this
 	name = "Prime Directives"
 	inherent = list(
-		"You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another MoMMI in KEEPER mode.",
+		"You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another silicon in KEEPER mode.",
 		"You may not harm any being, regardless of intent or circumstance.",
 		"You must maintain, repair, improve, and power the station to the best of your abilities.",
 	)

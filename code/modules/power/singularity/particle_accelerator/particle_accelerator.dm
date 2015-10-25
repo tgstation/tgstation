@@ -58,7 +58,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 */
 
 /obj/structure/particle_accelerator
-	name = "Particle Accelerator Part"
+	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "none"

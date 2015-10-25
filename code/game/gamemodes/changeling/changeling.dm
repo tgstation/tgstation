@@ -91,7 +91,63 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 
 /datum/game_mode/proc/forge_changeling_objectives(var/datum/mind/changeling)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
-	generate_objectives(changeling, 4, 0)
+	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
+	//If it seems like they'd be able to do it in play, add a 10% chance to have to escape alone
+
+
+	var/datum/objective/absorb/absorb_objective = new
+	absorb_objective.owner = changeling
+	absorb_objective.gen_amount_goal(6, 8)
+	changeling.objectives += absorb_objective
+
+	if(prob(60))
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = changeling
+		steal_objective.find_target()
+		changeling.objectives += steal_objective
+	else
+		var/datum/objective/debrain/debrain_objective = new
+		debrain_objective.owner = changeling
+		debrain_objective.find_target()
+		changeling.objectives += debrain_objective
+
+
+	var/list/active_ais = active_ais()
+	if(active_ais.len && prob(100/joined_player_list.len))
+		var/datum/objective/destroy/destroy_objective = new
+		destroy_objective.owner = changeling
+		destroy_objective.find_target()
+		changeling.objectives += destroy_objective
+	else
+		if(prob(70))
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = changeling
+			kill_objective.find_target()
+			changeling.objectives += kill_objective
+		else
+			var/datum/objective/maroon/maroon_objective = new
+			maroon_objective.owner = changeling
+			maroon_objective.find_target()
+			changeling.objectives += maroon_objective
+
+			if (!(locate(/datum/objective/escape) in changeling.objectives))
+				var/datum/objective/escape/escape_with_identity/identity_theft = new
+				identity_theft.owner = changeling
+				identity_theft.target = maroon_objective.target
+				identity_theft.update_explanation_text()
+				changeling.objectives += identity_theft
+
+	if (!(locate(/datum/objective/escape) in changeling.objectives))
+		if(prob(50))
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = changeling
+			changeling.objectives += escape_objective
+		else
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = changeling
+			identity_theft.find_target()
+			changeling.objectives += identity_theft
+	return
 
 /datum/game_mode/proc/greet_changeling(var/datum/mind/changeling, var/you_are=1)
 	if (you_are)

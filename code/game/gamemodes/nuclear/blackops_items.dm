@@ -52,7 +52,7 @@ var/list/total_extraction_beacons = list()
 				A.anchored = 1
 				A.density = 0
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
-			//holder_obj.appearance = A.appearance //gotta port apperance first
+			holder_obj.appearance = A.appearance
 			A.loc = holder_obj
 			balloon = image(icon,"extraction_balloon")
 			balloon.pixel_y = 10
@@ -117,7 +117,7 @@ var/list/total_extraction_beacons = list()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/extraction_point(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 
 /obj/machinery/extraction_point/Destroy()
 	total_extraction_beacons -= src

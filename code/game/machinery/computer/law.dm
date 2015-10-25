@@ -57,17 +57,9 @@
 	user << "You flood the AI's laws with data pertaining to the clown's left leg and an atmospheric pipe in the Research sector."
 	current = select_active_ai(user)
 	current.clear_inherent_laws()
-	current.clear_zeroth_law(0)
 	for(var/i = 0, i < 10, i++)
 		current.add_ion_law(generate_ion_law())
 	current.laws_update()
-	if(ticker && ticker.mode)
-		if(istype(ticker.mode, /datum/game_mode/nuclear/blackops))
-			var/datum/game_mode/nuclear/blackops/bops = ticker.mode
-			for(var/datum/objective/O in bops.blackops_objective_holder.objectives)
-				if(istype(O, /datum/objective/ai_mag))
-					O.completed = 1
-			bops.AI_magnet_applied = TRUE
 	return
 
 
