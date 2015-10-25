@@ -4,6 +4,7 @@
 	icon_state = "cardboard"
 	health = 10
 	mob_storage_capacity = 1
+	burn_state = 0 //Burnable
 	burntime = 20
 	can_weld_shut = 0
 	cutting_tool = /obj/item/weapon/wirecutters

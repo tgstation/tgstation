@@ -85,6 +85,14 @@
 	var/severity = 0
 
 
+/obj/screen/alert/MouseEntered(location,control,params)
+	openToolTip(usr,src,params,title = name,content = desc)
+
+
+/obj/screen/alert/MouseExited()
+	closeToolTip(usr)
+
+
 //Gas alerts
 /obj/screen/alert/oxy
 	name = "Choking (No O2)"
