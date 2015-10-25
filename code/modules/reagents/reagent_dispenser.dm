@@ -137,8 +137,8 @@
 		"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
 	if (istype(W,/obj/item/device/assembly_holder))
-		if (ismommi(user))
-			var/mob/living/silicon/robot/mommi/M = user
+		if (issilicon(user))
+			var/mob/living/silicon/M = user
 			if(M.keeper)
 				M <<"<span class= 'warning'>Your laws prevent you from doing this</span>" // no welderbombing for mommis
 				return

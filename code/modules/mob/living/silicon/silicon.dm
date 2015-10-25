@@ -27,6 +27,8 @@
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 
+	var/keeper = 0	//Enforces non-involvement
+
 /mob/living/silicon/contents_explosion(severity, target)
 	return
 
@@ -431,3 +433,22 @@
 
 /mob/living/silicon/grabbedby(mob/living/user)
 	return
+
+/mob/living/silicon/start_pulling(var/atom/movable/AM)
+	if(istype(AM,/mob) || istype(AM,/obj/item/clothing/mask/facehugger))
+		if(!src.can_interfere(AM))
+			src << "Your laws prevent you from doing this"
+			return
+	..(AM)
+
+/mob/living/silicon/proc/can_interfere(var/mob/AN)
+	if(!istype(AN))
+		return 1 //Not a mob
+	if(src.keeper)
+		if(AN.client || AN.ckey || (iscarbon(AN) && (!ismonkey(AN) && !isslime(AN))) || issilicon(AN))	//If it's a non-monkey/slime carbon, silicon or other sentient it's not ok => animals are fair game!
+			if(issilicon(AN))	//Keeper MoMMIs can be interfered with
+				var/mob/living/silicon/R = AN
+				if(R.keeper)
+					return 1	//Ok!
+			return 0	//Not ok
+	return 1	//Ok!
