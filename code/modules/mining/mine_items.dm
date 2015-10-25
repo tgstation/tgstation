@@ -57,6 +57,7 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
+	desc = "A sharp cast-iron tool used for breaking apart earth. Ancient even by Old Earth standards."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
@@ -73,6 +74,46 @@
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
+
+/obj/item/weapon/pickaxe/capped //Used at the labor camp
+	name = "capped pickaxe"
+	desc = "A pickaxe capped with rubber softeners, considerably dampening its use a weapon. The caps themselves are fitted extremely tightlu."
+	icon_state = "pickaxe_capped"
+	force = 5 //At the end of the day, it's still a pickaxe
+	digspeed = 50 //Capped off. Realistically, it shouldn't be able to destroy things at all.
+	attack_verb = list("smashed", "slammed", "beaten")
+	var/uncapping = 0 //If the pickaxe is being manipulated
+
+/obj/item/weapon/pickaxe/capped/attack_self(mob/user) //Uncapping!
+	if(!ishuman(user))
+		user << "<span class='warning'>You don't have hands to manipulate [src]!</span>"
+		return 0
+	if(uncapping) //To prevent sanic fast TACTICAL UNCAP SCAM
+		user << "<span class='warning'>You are already manipulating [src]!</span>"
+		return 0
+	var/mob/living/carbon/human/H = user
+	if(H.getBruteLoss() >= 15) //So you don't have nigh-infinite chances
+		H << "<span class='warning'>Your fingers hurt too badly to manipulate [src]!</span>"
+		return 0
+	uncapping = 1
+	H.visible_message("<span class='danger'>[H] starts trying to pull the rubber caps off of [src]...</span>", \
+					  "<span class='danger'>You begin attempting to remove the caps from [src]...</span>")
+	if(!do_after(H, 80, target = H))
+		uncapping = 0
+		return 0
+	if(prob(5)) //Low chance for the caps to actually come off
+		H.visible_message("<span slass='warning'>[H] pulls the caps off of [src]!</span>", \
+						  "<span class='danger'>You remove the rubber softeners from the pickaxe and discard them.</span>") //Possible todo: glove item with tiny shock protection?
+		H.drop_item()
+		qdel(src)
+		var/obj/item/weapon/pickaxe/P = new(get_turf(H)) //A standard, sharp pickaxe.
+		H.put_in_hands(P)
+		return 1
+	H.visible_message("<span class='warning'>[H] fumbles and hurts their fingers!</span>", \
+					  "<span class='warning'>You slip and hurt your fingers trying to remove the softeners!</span>")
+	H.apply_damage(3, BRUTE, pick("l_arm", "r_arm")) //3 brute and a max of 15 = 5 chances to remove the caps = 25% chance if it succeeds on the last attempt
+	uncapping = 0
+	return 0
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond-tipped pickaxe"

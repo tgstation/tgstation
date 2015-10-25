@@ -188,6 +188,15 @@
 	icon_state = "viropack"
 	item_state = "viropack"
 
+/obj/item/weapon/storage/backpack/labor //Labor camp
+	name = "labor backpack"
+	desc = "A heavy-duty backpack made of tough fibers. It's uncomfortable, stiff, and can't hold much."
+	icon_state = "laborpack"
+	item_state = "backpack"
+	storage_slots = 3
+	slowdown = 1
+	burn_state = -1 //Not burnable
+
 
 /*
  * Satchel Types
