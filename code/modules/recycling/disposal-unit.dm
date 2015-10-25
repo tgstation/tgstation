@@ -98,7 +98,7 @@
 	return 1
 
 // mouse drop another mob or self
-//
+
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
 	if(istype(target))
 		stuff_mob_in(target, user)
@@ -134,6 +134,7 @@
 			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", \
 									"<span class='userdanger'>[user] has placed [target] in [src].</span>")
 			add_logs(user, target, "stuffed", addition="into [src]")
+			target.LAssailant = user
 		update()
 
 // can breath normally in the disposal
