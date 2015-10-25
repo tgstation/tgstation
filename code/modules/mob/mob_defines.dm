@@ -49,8 +49,6 @@
 	var/stuttering = null	//Carbon
 	var/slurring = 0		//Carbon
 	var/real_name = null
-	var/bhunger = 0			//Carbon
-	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/sleeping = 0		//Carbon

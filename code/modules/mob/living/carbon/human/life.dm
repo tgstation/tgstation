@@ -335,7 +335,8 @@
 	if(!heart_attack)
 		return
 	else
-		losebreath += 5
+		if(losebreath < 3)
+			losebreath += 2
 		adjustOxyLoss(5)
 		adjustBruteLoss(1)
 

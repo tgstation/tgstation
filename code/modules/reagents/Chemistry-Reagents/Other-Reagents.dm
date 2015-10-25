@@ -364,7 +364,7 @@
 	if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
 		H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 		H.set_species(mutation)
-		if(mutation == /datum/species/slime)
+		if(mutation.id == "slime")
 			H.faction |= "slime"
 		else
 			H.faction -= "slime"

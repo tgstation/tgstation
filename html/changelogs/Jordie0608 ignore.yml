@@ -1,0 +1,5 @@
+author: Jordie0608
+delete-after: True
+
+changes: 
+  - rscadd: "You can now selectively mute non-admin players from OOC with the Ignore verb in the OOC tab."

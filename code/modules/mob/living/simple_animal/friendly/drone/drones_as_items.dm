@@ -18,7 +18,9 @@
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
 		return
-
+	if(!ticker.mode)
+		user << "Can't become a drone before the game has started."
+		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || gc_destroyed)
 		return

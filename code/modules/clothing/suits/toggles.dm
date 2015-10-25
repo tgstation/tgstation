@@ -1,7 +1,7 @@
 //Hoods for winter coats and chaplain hoodie etc
 
 /obj/item/clothing/suit/hooded
-	var/obj/item/clothing/head/winterhood/hood
+	var/obj/item/clothing/head/hood
 	var/hoodtype = /obj/item/clothing/head/winterhood //so the chaplain hoodie or other hoodies can override this
 
 /obj/item/clothing/suit/hooded/New()
@@ -14,7 +14,7 @@
 
 /obj/item/clothing/suit/hooded/proc/MakeHood()
 	if(!hood)
-		var/obj/item/clothing/head/winterhood/W = new hoodtype(src)
+		var/obj/item/clothing/head/W = new hoodtype(src)
 		hood = W
 
 /obj/item/clothing/suit/hooded/ui_action_click()
