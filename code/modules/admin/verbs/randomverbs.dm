@@ -97,7 +97,7 @@
 	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
 	if (!msg)
 		return
-	for(var/mob/living/M in view(range,A))
+	for(var/mob/M in view(range,A))
 		M << msg
 
 	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
@@ -208,11 +208,12 @@
 			usr << "<font color='red'>Error: create_xeno(): no suitable candidates.</font>"
 	if(!istext(ckey))	return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
-		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(spawn_here)
+		if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(spawn_here)
+		if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(spawn_here)
 		if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
 		if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
 		if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
@@ -262,7 +263,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if("Hunter")	new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
 					if("Sentinel")	new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
 					if("Drone")		new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
-					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/queen(T)
+					if("Praetorian")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
+					if("Queen")		new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(T)
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
@@ -684,27 +686,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
 	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/client/proc/reset_all_tcs()
-	set category = "Admin"
-	set name = "Reset Telecomms Scripts"
-	set desc = "Blanks all telecomms scripts from all telecomms servers"
-	if(!holder)
-		usr << "Admin only."
-		return
-
-	var/confirm = alert(src, "You sure you want to blank all NTSL scripts?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
-
-	for(var/obj/machinery/telecomms/server/S in telecomms_list)
-		var/datum/TCS_Compiler/C = S.Compiler
-		S.rawcode = ""
-		C.Compile("")
-	for(var/obj/machinery/computer/telecomms/traffic/T in machines)
-		T.storedcode = ""
-	log_admin("[key_name(usr)] blanked all telecomms scripts.")
-	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
-	feedback_add_details("admin_verb","RAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_change_sec_level()
 	set category = "Special Verbs"

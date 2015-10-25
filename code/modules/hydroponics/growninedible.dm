@@ -310,6 +310,7 @@
 		return
 
 /obj/item/weapon/grown/snapcorn
+	seed = /obj/item/seeds/snapcornseed
 	name = "snap corn"
 	desc = "A cob with snap pops"
 	icon_state = "snapcorn"

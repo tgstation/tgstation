@@ -84,6 +84,12 @@
 			newVirus.holder = blood_prop
 	return
 
+/datum/reagent/liquidgibs
+	name = "Liquid gibs"
+	id = "liquidgibs"
+	color = "#FF9966"
+	description = "You don't even want to think about what's in here."
+
 /datum/reagent/vaccine
 	//data must contain virus type
 	name = "Vaccine"
@@ -127,7 +133,7 @@
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
-			hotspot.Kill()
+			qdel(hotspot)
 	return
 
 /*
@@ -188,6 +194,7 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 	return
 
@@ -454,7 +461,9 @@
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!istype(T, /turf/space))
-		new /obj/effect/decal/cleanable/dirt(T)
+		var/obj/effect/decal/cleanable/dirt/D = locate() in T.contents
+		if(!D)
+			new /obj/effect/decal/cleanable/dirt(T)
 
 /datum/reagent/chlorine
 	name = "Chlorine"
@@ -530,8 +539,10 @@
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("radium", reac_volume)
+			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
+			if(!GG)
+				GG = new/obj/effect/decal/cleanable/greenglow(T)
+			GG.reagents.add_reagent("radium", reac_volume)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -574,8 +585,10 @@
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 3)
 		if(!istype(T, /turf/space))
-			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-			reagentdecal.reagents.add_reagent("uranium", reac_volume)
+			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
+			if(!GG)
+				GG = new/obj/effect/decal/cleanable/greenglow(T)
+			GG.reagents.add_reagent("uranium", reac_volume)
 
 /datum/reagent/aluminium
 	name = "Aluminium"
@@ -1007,6 +1020,13 @@
 	description = "Volatile."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
+
+/datum/reagent/lye
+	name = "Lye"
+	id = "lye"
+	description = "Also known as sodium hydroxide."
+	reagent_state = LIQUID
+	color = "#FFFFD6" // very very light yellow
 
 /datum/reagent/drying_agent
 	name = "Drying agent"

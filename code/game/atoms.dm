@@ -172,7 +172,7 @@ its easier to just keep the beam vertical.
 
 		dir=get_dir(src,BeamTarget)	//Causes the source of the beam to rotate to continuosly face the BeamTarget.
 
-		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
+		for(var/obj/effect/overlay/beam/O in ultra_range(10,src,1))	//This section erases the previously drawn beam because I found it was easier to
 			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
 				qdel(O)							//pieces to a new orientation.
 		var/Angle=round(Get_Angle(src,BeamTarget))
@@ -215,7 +215,7 @@ its easier to just keep the beam vertical.
 			X.pixel_y=Pixel_y
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
-	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
+	for(var/obj/effect/overlay/beam/O in ultra_range(10,src,1)) if(O.BeamSource==src) qdel(O)
 
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
@@ -280,22 +280,22 @@ var/list/blood_splatter_icons = list()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/M)
+	if(!M || !M.has_dna() || rejects_blood())
+		return 0
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(NOBLOOD in H.dna.species.specflags)
 			return 0
-	if(rejects_blood() || !M.has_dna())
-		return 0
 	return 1
 
 /obj/add_blood(mob/living/carbon/M)
-	if(..() == 0)
+	if(!..())
 		return 0
 	return add_blood_list(M)
 
 /obj/item/add_blood(mob/living/carbon/M)
-	var/blood_count = blood_DNA == null ? 0 : blood_DNA.len
-	if(..() == 0)
+	var/blood_count = !blood_DNA ? 0 : blood_DNA.len
+	if(!..())
 		return 0
 	//apply the blood-splatter overlay if it isn't already in there
 	if(!blood_count && initial(icon) && initial(icon_state))
@@ -312,14 +312,14 @@ var/list/blood_splatter_icons = list()
 	return 1 //we applied blood to the item
 
 /obj/item/clothing/gloves/add_blood(mob/living/carbon/M)
-	if(..() == 0)
+	if(!..())
 		return 0
 	transfer_blood = rand(2, 4)
 	bloody_hands_mob = M
 	return 1
 
 /turf/simulated/add_blood(mob/living/carbon/human/M)
-	if(..() == 0)
+	if(!..())
 		return 0
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in contents	//check for existing blood splatter
@@ -330,7 +330,7 @@ var/list/blood_splatter_icons = list()
 	return 1 //we bloodied the floor
 
 /mob/living/carbon/human/add_blood(mob/living/carbon/M)
-	if(..() == 0)
+	if(!..())
 		return 0
 	add_blood_list(M)
 	bloody_hands = rand(2, 4)
@@ -425,3 +425,11 @@ var/list/blood_splatter_icons = list()
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
+
+// Byond seemingly calls stat, each tick.
+// Calling things each tick can get expensive real quick.
+// So we slow this down a little.
+// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
+/atom/Stat()
+	. = ..()
+	sleep(1)

@@ -86,7 +86,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(istype(M, /mob/living))
-		for(var/mob/MM in range(M, 1))
+		for(var/mob/MM in range(1,M))
 			if( ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
 				if ( !(world.time % 5) )
 					src << "<span class='warning'>[M] is restrained, you cannot push past.</span>"
@@ -98,7 +98,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove) // mutual brohugs all around!
+	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
 		if(loc && !loc.Adjacent(M.loc))
 			return 1
 		now_pushing = 1
@@ -505,7 +505,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if (buckled && buckled.loc != newloc)
+	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
@@ -517,7 +517,7 @@ Sorry Giacom. Please don't be mad :(
 
 	var/cuff_dragged = 0
 	if (restrained())
-		for(var/mob/living/M in range(src, 1))
+		for(var/mob/living/M in range(1, src))
 			if (M.pulling == src && !M.incapacitated())
 				cuff_dragged = 1
 	if (!cuff_dragged && pulling && !throwing && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
@@ -577,10 +577,9 @@ Sorry Giacom. Please don't be mad :(
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
-	for(var/mob/living/simple_animal/slime/M in oview(1,src))
-		M.UpdateFeed(src)
-
 /mob/living/proc/makeTrail(turf/T, mob/living/M)
+	if(!has_gravity(M))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
@@ -679,7 +678,7 @@ Sorry Giacom. Please don't be mad :(
 	if(has_gravity)
 		clear_alert("weightless")
 	else
-		throw_alert("weightless")
+		throw_alert("weightless", /obj/screen/alert/weightless)
 	float(!has_gravity)
 
 /mob/living/proc/float(on)

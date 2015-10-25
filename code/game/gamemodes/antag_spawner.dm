@@ -64,7 +64,7 @@
 				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
 
 /obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
-	PoolOrNew(/obj/effect/effect/smoke, T)
+	PoolOrNew(/obj/effect/particle_effect/smoke, T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
@@ -121,7 +121,7 @@
 
 /obj/item/weapon/antag_spawner/borg_tele
 	name = "syndicate cyborg teleporter"
-	desc = "A single-use teleporter used to deploy a Syndicate cyborg on the field."
+	desc = "A single-use teleporter designed to deploy a single Syndicate cyborg onto the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/TC_cost = 0
@@ -130,24 +130,27 @@
 
 /obj/item/weapon/antag_spawner/borg_tele/attack_self(mob/user)
 	if(used)
-		user << "The teleporter is out of power."
+		user << "<span class='warning'>[src] is out of power!</span>"
 		return
+	if(!(user.mind in ticker.mode.syndicates))
+		user << "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>"
+		return 0
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
-	var/list/borg_candicates = get_candidates(BE_OPERATIVE)
+	var/list/borg_candicates = get_candidates(BE_OPERATIVE, 3000, "operative")
 	if(borg_candicates.len > 0)
 		used = 1
 		var/client/C = pick(borg_candicates)
 		spawn_antag(C, get_turf(src.loc), "syndieborg")
 	else
-		user << "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
+		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/borg_tele/spawn_antag(client/C, turf/T, type = "")
 	if(!borg_to_spawn) //If there's no type at all, let it still be used but don't do anything
 		used = 0
 		return
-	var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 	S.set_up(4, 1, src)
 	S.start()
 	var/mob/living/silicon/robot/R

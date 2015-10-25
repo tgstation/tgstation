@@ -62,7 +62,7 @@
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 30 //3 seconds between shots
-	var/datum/effect/effect/system/spark_spread/spark_system
+	var/datum/effect_system/spark_spread/spark_system
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -73,7 +73,7 @@
 
 
 /obj/machinery/turret/New()
-	spark_system = new /datum/effect/effect/system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 //	targets = new
@@ -346,7 +346,7 @@
 
 /obj/machinery/gun_turret //related to turrets but work way differentely because of being mounted on a moving ship.
 	name = "machine gun turret"
-	desc = "Syndicate defense turret. It really packs a bunch."
+	desc = "Syndicate defense turret. It really packs a punch."
 	density = 1
 	anchored = 1
 	var/state = 0 //Like stat on mobs, 0 is alive, 1 is damaged, 2 is dead

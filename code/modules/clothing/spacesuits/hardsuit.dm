@@ -139,6 +139,7 @@
 	item_color = "mining"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	brightness_on = 7
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
 
 
 /obj/item/clothing/suit/space/hardsuit/mining
@@ -273,8 +274,6 @@
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-	unacidable = 1
-
 
 /obj/item/clothing/suit/space/hardsuit/wizard
 	icon_state = "hardsuit-wiz"
@@ -288,7 +287,6 @@
 	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	unacidable = 1
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
 
 
@@ -303,7 +301,6 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 
-
 /obj/item/clothing/suit/space/hardsuit/medical
 	icon_state = "hardsuit-medical"
 	name = "medical hardsuit"
@@ -313,6 +310,37 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
+
+	//Research Director hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/rd
+	name = "prototype hardsuit helmet"
+	desc = "A prototype helmet designed for research in a hazardous, low pressure environment. Scientific data flashes across the visor."
+	icon_state = "hardsuit0-rd"
+	item_color = "rd"
+	unacidable = 1
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/user, slot)
+	user.scanner.Grant(user)
+	..(user, slot)
+
+/obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/user)
+	user.scanner.devices -= 1
+	..(user)
+
+/obj/item/clothing/suit/space/hardsuit/rd
+	icon_state = "hardsuit-rd"
+	name = "prototype hardsuit"
+	desc = "A prototype suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous research materials."
+	item_state = "hardsuit-rd"
+	unacidable = 1
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy/wormhole_projector,
+	/obj/item/weapon/hand_tele, /obj/item/device/aicard)
+	armor = list(melee = 10, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
+
 
 
 	//Security hardsuit

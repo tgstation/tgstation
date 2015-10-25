@@ -34,16 +34,14 @@
 		Entered(AM)
 
 /turf/Destroy()
-	return QDEL_HINT_HARDDEL_NOW
-
-// Adds the adjacent turfs to the current atmos processing
-/turf/Del()
+	// Adds the adjacent turfs to the current atmos processing
 	for(var/direction in cardinal)
 		if(atmos_adjacent_turfs & direction)
 			var/turf/simulated/T = get_step(src, direction)
 			if(istype(T))
 				SSair.add_to_active(T)
 	..()
+	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -267,8 +265,9 @@
 				spawn (i)
 					step(C, olddir)
 					C.spin(1,1)
-		if(C.lying != oldlying) //did we actually fall?
-			C.adjustBruteLoss(2)
+		if(C.lying != oldlying && lube) //did we actually fall?
+			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			C.apply_damage(5, BRUTE, dam_zone)
 		return 1
 
 /turf/singularity_act()

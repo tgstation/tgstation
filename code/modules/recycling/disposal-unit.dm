@@ -106,7 +106,7 @@
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		return
-	if(target.buckled)
+	if(target.buckled || target.buckled_mob)
 		return
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		user << "<span class='warning'>[target] doesn't fit inside [src]!</span>"

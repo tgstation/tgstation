@@ -5,9 +5,13 @@
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB))
 		return 1
+	if(buckled == mover)
+		return 1
 	if(ismob(mover))
 		var/mob/moving_mob = mover
 		if ((other_mobs && moving_mob.other_mobs))
+			return 1
+		if (mover == buckled_mob)
 			return 1
 	return (!mover.density || !density || lying)
 
@@ -143,7 +147,7 @@
 		move_delay += T.slowdown
 
 		if(mob.restrained())	//Why being pulled while cuffed prevents you from moving
-			for(var/mob/M in range(mob, 1))
+			for(var/mob/M in range(1, mob))
 				if(M.pulling == mob)
 					if(!M.incapacitated() && mob.Adjacent(M))
 						src << "<span class='warning'>You're restrained! You can't move!</span>"

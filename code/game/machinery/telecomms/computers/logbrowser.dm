@@ -79,7 +79,7 @@
 					var/list/animals = typesof(/mob/living/simple_animal)
 
 					if(mobtype in humans)
-						race = "Human"
+						race = "Humanoid"
 						language = race
 
 					else if(mobtype in slimes) // NT knows a lot about slimes, but not aliens. Can identify slimes
@@ -173,7 +173,7 @@
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
-					for(var/obj/machinery/telecomms/server/T in range(25, src))
+					for(var/obj/machinery/telecomms/server/T in ultra_range(25, src))
 						if(T.network == network)
 							servers.Add(T)
 

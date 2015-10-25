@@ -84,7 +84,7 @@
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
 					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span>"
-					else			occupant_status += "<span class='bad'>DEAD - Cannot Operate</span>"
+					else			occupant_status += "<span class='bad'>DEAD</span>"
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
@@ -95,8 +95,6 @@
 			else
 				viable_occupant = null
 				occupant_status += "<span class='bad'>Invalid DNA structure</span></div></div>"
-			if (viable_occupant && viable_occupant.stat == DEAD)
-				viable_occupant = null // No editing the dead.
 		else
 			occupant_status += "<span class='bad'>No subject detected</span></div></div>"
 
@@ -202,7 +200,7 @@
 							temp_html += "<br>\tUI: No Data"
 						if(se)
 							temp_html += "<br>\tSE: [se] "
-							if(viable_occupant && viable_occupant.stat != DEAD)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
 							else												temp_html += "<span class='linkOff'>Occupant</span> "
 							if(injectorready)									temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
 							else												temp_html += "<span class='linkOff'>Injector</span>"
@@ -327,7 +325,7 @@
 				if(istype(buffer_slot))
 					buffer_slot.Cut()
 		if("transferbuffer")
-			if(num && viable_occupant && viable_occupant.stat != DEAD)
+			if(num && viable_occupant)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))                                                                                  //15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
@@ -394,7 +392,7 @@
 				diskette.loc = get_turf(src)
 				diskette = null
 		if("pulseui","pulsese")
-			if(num && viable_occupant && connected && viable_occupant.stat != DEAD)
+			if(num && viable_occupant && connected)
 				radduration = Wrap(radduration, 1, RADIATION_DURATION_MAX+1)
 				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
 

@@ -13,13 +13,10 @@
 	var/obj/item/organ/internal/body_egg/egg = user.getorgan(/obj/item/organ/internal/body_egg)
 	if(egg)
 		egg.Remove(user)
-		user.visible_message("<span class='danger'>[user] vomits up [egg]!</span>", "<span class='userdanger'>[user] vomits up [egg]!</span>")
-		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
-
-		var/turf/location = user.loc
-		if(istype(location, /turf/simulated))
-			location.add_vomit_floor(user, 1)
-		egg.loc = location
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.vomit(0)
+		egg.loc = get_turf(user)
 
 	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("potass_iodide", 10)

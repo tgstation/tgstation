@@ -25,7 +25,7 @@
 
 
 /obj/item/weapon/gun/energy/laser/captain
-	name = "\improper QSJ 01 Premium laser pistol"
+	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
@@ -54,6 +54,7 @@
 	return 1
 
 /obj/item/weapon/gun/energy/laser/cyborg
+	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()

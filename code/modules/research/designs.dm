@@ -379,9 +379,39 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list("Equipment")
 
+/datum/design/sci_goggles
+	name = "Science Goggles"
+	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
+	id = "scigoggles"
+	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
+	build_path = /obj/item/clothing/glasses/science
+	category = list("Equipment")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
+
+/datum/design/advmop
+	name = "Advanced Mop"
+	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	id = "advmop"
+	req_tech = list("materials" = 4, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
+	build_path = /obj/item/weapon/mop/advanced
+	category = list("Equipment")
+
+/datum/design/blutrash
+	name = "Trashbag of Holding"
+	desc = "An advanced trashabg with bluespace properties; capable of holding a plethora of garbage."
+	id = "blutrash"
+	req_tech = list("materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PLASMA = 1500)
+	build_path = /obj/item/weapon/storage/bag/trash/bluespace
+	category = list("Equipment")
 
 /datum/design/buffer
 	name = "Floor Buffer Upgrade"

@@ -60,13 +60,13 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	//sends text to all mobs within view of atmo
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/reset_all_tcs			/*resets all telecomms scripts*/
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/jobbans,
 	/client/proc/unjobban_panel,
-	/client/proc/DB_ban_panel
+	/client/proc/DB_ban_panel,
+	/client/proc/stickybanpanel
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -107,7 +107,12 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
+#if SERVERTOOLS
+	/client/proc/forcerandomrotate,
+	/client/proc/adminchangemap,
+#endif
 	/client/proc/panicbunker
+
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
@@ -138,7 +143,8 @@ var/list/admin_verbs_possess = list(
 	/proc/release
 	)
 var/list/admin_verbs_permissions = list(
-	/client/proc/edit_admin_permissions
+	/client/proc/edit_admin_permissions,
+	/client/proc/create_poll
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
@@ -205,7 +211,6 @@ var/list/admin_verbs_hideable = list(
 	/proc/possess,
 	/proc/release,
 	/client/proc/reload_admins,
-	/client/proc/reset_all_tcs,
 	/client/proc/panicbunker,
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
@@ -314,6 +319,9 @@ var/list/admin_verbs_hideable = list(
 	if(istype(mob,/mob/dead/observer))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
+		if (!ghost.can_reenter_corpse)
+			log_admin("[key_name(usr)] re-entered corpse")
+			message_admins("[key_name_admin(usr)] re-entered corpse")
 		ghost.can_reenter_corpse = 1			//just in-case.
 		ghost.reenter_corpse()
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -321,6 +329,8 @@ var/list/admin_verbs_hideable = list(
 		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
 	else
 		//ghostize
+		log_admin("[key_name(usr)] admin ghosted")
+		message_admins("[key_name_admin(usr)] admin ghosted")
 		var/mob/body = mob
 		body.ghostize(1)
 		if(body && !body.key)

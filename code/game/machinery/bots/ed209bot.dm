@@ -436,12 +436,12 @@ Auto Patrol[]"},
 			if(lasercolor == "r")
 				new /obj/item/clothing/suit/redtag(Tsec)
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
-	qdel(src)
+	..()
 
 /obj/machinery/bot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'

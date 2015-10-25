@@ -400,12 +400,10 @@
 		B.reagents.clear_reagents() //Just in case!
 		B.icon_state = null //Invisible
 		B.reagents.add_reagent("blindness_smoke", 10)
-		var/datum/effect/effect/system/smoke_spread/chem/S = new
+		var/datum/effect_system/smoke_spread/chem/S = new
 		S.attach(B)
 		if(S)
-			S.set_up(B.reagents, 10, 0, B.loc)
-			S.start()
-			sleep(10)
+			S.set_up(B.reagents, 4, 0, B.loc)
 			S.start()
 		qdel(B)
 
@@ -466,7 +464,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 				S << "<span class='warning'><b>ERROR $!(@ ERROR )#^! SENSORY OVERLOAD \[$(!@#</b></span>"
 				S << 'sound/misc/interference.ogg'
 				playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
-				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
 				S.Weaken(6)
@@ -754,6 +752,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Thrall\]</b><i> [usr.real_name]</i>: [text]</span>"
+		log_say("[user.real_name]/[user.key] : [text]")
 
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //
@@ -909,6 +908,7 @@ datum/reagent/shadowling_blindness_smoke //Reagent used for above spell
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
 				M << "<span class='shadowling'><b>\[Ascendant\]<i> [usr.real_name]</i>: [text]</b></span>" //Bigger text for ascendants.
+		log_say("[user.real_name]/[user.key] : [text]")
 
 
 /obj/effect/proc_holder/spell/targeted/ascendant_transmit //Sends a message to the entire world. If this gets abused too much it can be removed safely

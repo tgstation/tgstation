@@ -1,7 +1,0 @@
-author: Feemjmeem
-
-delete-after: True
-changes: 
-  - bugfix: "Rechargers can now be wrenched and unwrenched by cyborgs."
-  - bugfix: "Rechargers no longer stop working forever if you move them from an unpowered area to a powered area, and now actually look powered off when they are."
-  - bugfix: "Guns and batons can no longer be placed in unwrenched chargers."

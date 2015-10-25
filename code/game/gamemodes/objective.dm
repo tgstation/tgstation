@@ -380,6 +380,11 @@
 	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = 1
 
+/datum/objective/nuclear/check_completion()
+	if(ticker && ticker.mode && ticker.mode.station_was_nuked)
+		return 1
+	return 0
+
 
 var/global/list/possible_items = list()
 /datum/objective/steal
@@ -570,7 +575,7 @@ var/global/list/possible_items_special = list()
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
+		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
 			if(M.stat==2)
 				captured_amount+=1.5
 			else

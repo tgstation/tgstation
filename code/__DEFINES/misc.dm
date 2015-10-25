@@ -273,3 +273,9 @@ var/list/bloody_footprints_cache = list()
 #define IS_BLUNT			0
 #define IS_SHARP			1
 #define IS_SHARP_ACCURATE	2
+
+//unmagic-strings for types of polls
+#define POLLTYPE_OPTION		"OPTION"
+#define POLLTYPE_TEXT		"TEXT"
+#define POLLTYPE_RATING		"NUMVAL"
+#define POLLTYPE_MULTI		"MULTICHOICE"

@@ -17,6 +17,7 @@
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
+ *      Kitty toys!
  */
 
 
@@ -515,7 +516,7 @@
 	w_class = 1
 
 /obj/item/toy/snappop/proc/pop_burst()
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(loc)
@@ -538,7 +539,7 @@
 		if(M.m_intent == "run")
 			M << "<span class='danger'>You step on the snap pop!</span>"
 
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(2, 0, src)
 			s.start()
 			new /obj/effect/decal/cleanable/ash(src.loc)
@@ -1106,7 +1107,7 @@
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
-		for(var/mob/M in range(10, src))
+		for(var/mob/M in ultra_range(10, src))
 			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
 				shake_camera(M, 3, 1)
 		qdel(src)
@@ -1152,7 +1153,7 @@
 		cooldown = (world.time + 300) // Sets cooldown at 30 seconds
 		user.visible_message("<span class='warning'>[user] presses the big red button.</span>", "<span class='notice'>You press the button, it plays a loud noise!</span>", "<span class='italics'>The button clicks loudly.</span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', 50, 0, surround = 0)
-		for(var/mob/M in range(10, src)) // Checks range
+		for(var/mob/M in ultra_range(10, src)) // Checks range
 			if(!M.stat && !istype(M, /mob/living/silicon/ai)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				sleep(8) // Short delay to match up with the explosion sound
 				shake_camera(M, 2, 1) // Shakes player camera 2 squares for 1 second.
@@ -1202,3 +1203,13 @@
 	else
 		user << "<span class='warning'>The string on [src] hasn't rewound all the way!</span>"
 		return
+
+// TOY MOUSEYS :3 :3 :3
+
+/obj/item/toy/cattoy
+	name = "toy mouse"
+	desc = "A colorful toy mouse!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toy_mouse"
+	w_class = 2.0
+	var/cooldown = 0

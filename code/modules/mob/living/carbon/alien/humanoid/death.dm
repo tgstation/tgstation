@@ -9,6 +9,7 @@
 		update_canmove()
 		if(client)	blind.layer = 0
 		update_icons()
+		status_flags |=CANPUSH
 
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind) 	mind.store_memory("Time of death: [tod]", 0)

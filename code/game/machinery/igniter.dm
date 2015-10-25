@@ -54,10 +54,19 @@
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
+	var/datum/effect_system/spark_spread/spark_system
 	anchored = 1
 
 /obj/machinery/sparker/New()
 	..()
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(2, 1, src)
+	spark_system.attach(src)
+
+/obj/machinery/sparker/Destroy()
+	qdel(spark_system)
+	spark_system = null
+	return ..()
 
 /obj/machinery/sparker/power_change()
 	if ( powered() && disable == 0 )
@@ -86,7 +95,7 @@
 				icon_state = "[base_state]-p"
 
 /obj/machinery/sparker/attack_ai()
-	if (src.anchored)
+	if (anchored)
 		return src.ignite()
 	else
 		return
@@ -100,10 +109,8 @@
 
 
 	flick("[base_state]-spark", src)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(2, 1, src)
-	s.start()
-	src.last_spark = world.time
+	spark_system.start()
+	last_spark = world.time
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))

@@ -1,7 +1,0 @@
- 
-author: Razharas
-
-delete-after: True
-
-changes:
-  - rscadd: "Added button to preferences menu that kills all currently playing sounds when pressed, now you can kill midis and any other sounds for real."

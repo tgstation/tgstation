@@ -25,12 +25,13 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_grenadelnchr"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
+	pin = /obj/item/device/firing_pin
 
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self()
 	return
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
-	name = "\improper Gyrojet rocket pistol"
+	name = "gyrojet pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
