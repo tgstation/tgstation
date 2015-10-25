@@ -75,14 +75,6 @@ REAGENT SCANNER
 				if(M)
 					M.invisibility = INVISIBILITY_LEVEL_TWO
 
-/obj/item/device/t_scanner/adv
-	name = "advanced t-ray scanner"
-	desc = "An improved terahertz-ray emitter and scanner that can pick up the faintest traces of energy, used to detect the invisible. Resonates much better than the normal T-ray scanner."
-	ray_range = 3
-	origin_tech = "magnets=3;engineering=3"
-	icon_state = "t-ray_adv0"
-	base_state = "t-ray_adv"
-
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
 	icon_state = "health"
