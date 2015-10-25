@@ -22,7 +22,8 @@
 		t_is = "are"
 	else
 		if(icon)
-			msg += "\icon[src] " //note, should we ever go back to runtime-generated icons (please don't), you will need to change this to \icon[icon] to prevent crashes.
+			var/icon/nude_icon = data_core.get_id_photo(src, 1) //Scandalous.
+			msg += "\icon[nude_icon] "
 		switch(gender)
 			if(MALE)
 				t_He = "He"

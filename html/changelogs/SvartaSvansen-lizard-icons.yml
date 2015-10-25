@@ -1,0 +1,7 @@
+author: SvartaSvansen
+
+delete-after: True
+
+changes: 
+  - tweak: "Lizards are now pictured properly in security records and AI holograms."
+  - tweak: "The tiny icon on examination now reflects a character's actual appearance."
