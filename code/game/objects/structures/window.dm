@@ -20,7 +20,7 @@
 	var/ini_dir = null //This really shouldn't exist, but it does and I don't want to risk deleting it because it's likely mapping-related
 	var/d_state = WINDOWLOOSEFRAME //Normal windows have one step (unanchor), reinforced windows have three
 	var/shardtype = /obj/item/weapon/shard
-	var/sheettype = /obj/item/stack/sheet/glass //Used for deconstruction
+	var/sheettype = /obj/item/stack/sheet/glass/glass //Used for deconstruction
 	var/sheetamount = 1 //Number of sheets needed to build this window (determines how much shit is spawned via Destroy())
 	var/reinforced = 0 //Used for deconstruction steps
 	penetration_dampening = 1
