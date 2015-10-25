@@ -45,7 +45,7 @@
 			for(var/obj/item/W in summoner)
 				if(!summoner.unEquip(W))
 					qdel(W)
-			summoner.gib()
+			summoner.dust()
 			ghostize()
 			qdel(src)
 	else
