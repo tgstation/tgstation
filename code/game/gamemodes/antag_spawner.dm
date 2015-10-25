@@ -212,3 +212,130 @@
 	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
 	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"
+
+
+/obj/item/weapon/antag_spawner/vampire //Even edgier than the vial of blood
+	name = "filled glass goblet"
+	desc = "It's topped off with what seems to be blood. If one listens closely, they can hear a faint singing..."
+	icon = 'icons/obj/vampire.dmi'
+	icon_state = "glass_goblet_filled"
+	w_class = 2
+
+/obj/item/weapon/antag_spawner/vampire/examine(mob/user)
+	..()
+	if(is_vampire(user) && used)
+		user << "<span class='warning'>If you are powerful enough, you may activate the goblet in your hand to refill it and create more vampires.</span>"
+
+/obj/item/weapon/antag_spawner/vampire/attack_self(mob/living/carbon/human/user)
+	if(!user.mind)
+		return 0
+	if(!istype(user))
+		return 0
+	if(is_vampire(user))
+		if(!used)
+			user << "<span class='warning'>[src] is already full.</span>"
+			return
+		var/datum/vampire/V = user.get_vampire()
+		if(!V)
+			return 0
+		if(V.sucked_blood < 500) //They need quite a bit of blood
+			user << "<span class='warning'>You are not powerful enough to fill the goblet.</span>"
+			return 0
+		else
+			var/mob/living/carbon/human/H = user
+			if(V.clean_blood < 50) //50 blood to fill the goblet
+				user << "<span class='warning'>You do not possess enough clean blood to fill the goblet.</span>"
+				return 0
+			user.visible_message("<span class='warning'>[user] cuts their finger on the lip of [src] and begins dripping blood into it...</span>", "<span class='userdanger'>You begin preparing the goblet for conversion of fledgling vampires.</span>")
+			H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
+			if(!do_after(user, 100, target = user))
+				return 0
+			user.visible_message("<span class='warning'>[user] fills [src] with their own blood!</span>", "<span class='userdanger'>You fill the goblet. You may now create an additional vampire.</span>")
+			used = 0
+			name = initial(name)
+			desc = initial(desc)
+			icon_state = initial(icon_state)
+		return 1
+	if(used)
+		user << "<span class='notice'>The goblet is empty.</span>"
+		return 0
+	if(iscultist(user))
+		user << "<span class='warning'>Nar-Sie does not interfere with the business of Lilith. No good can from this.</span>"
+		return 0
+	if(user.mind.assigned_role == "Chaplain")
+		user.visible_message("<span class='warning'>[user] spills the contents of [src] onto the ground!</span>", \
+							 "<span class='warning'>The disgusting blood in the goblet reeks of the unholy. You spill it onto the ground.</span>")
+		used = 1
+		name = "glass goblet"
+		desc = "It's an empty glass goblet. It sparkles with a bright sheen."
+		icon_state = "glass_goblet"
+		return 0
+	if(user.mind.changeling)
+		user << "<span class='warning'>The demon whose blood fills this goblet refuses to bless our form.</span>"
+		return 0
+	if(isloyal(user))
+		user << "<span class='warning'>Something about the goblet fills you with dread. You can't bring yourself to drink it.</span>"
+		return 0
+	user.visible_message("<span class='warning'>[user] slowly raises [src] to their lips with a trembling hand...</span>", \
+						 "<span class='userdanger'>You slowly lift the goblet to your lips, the haunting song resonating in your ears...</span>")
+	if(!do_after(user, 50, target = user))
+		return 0
+	if(used)
+		return 0
+	playsound(user, 'sound/items/drink.ogg', 10, 1)
+	user.visible_message("<span class='warning'>[user] tips [src] up, spilling the contents into their mouth.</span>", \
+						 "<span class='userdanger'>Something strange and terrifying enters your mind as you drink from the goblet...</span>")
+	used = 1
+	name = "glass goblet"
+	desc = "It's an empty glass goblet. It has faint red stains at the bottom."
+	icon_state = "glass_goblet"
+	spawn(30)
+		if(user)
+			user.make_mob_into_vampire()
+
+/obj/item/weapon/antag_spawner/vampire/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+	if(M == user)
+		return attack_self(user)
+	if(!is_vampire(user) || used)
+		return ..()
+	if(is_vampire(M))
+		user << "<span class='warning'>[M] has already received Lilith's blessing!</span>"
+		return 0
+	var/datum/reagent/blood = M.get_blood(M.vessel)
+	if(blood.volume > BLOOD_VOLUME_OKAY + 50) //Around the same drained by bloodsucking
+		user << "<span class='warning'>[M] requires less blood in their body so that they may hunger for it!</span>"
+		return 0
+	if(iscultist(M))
+		user << "<span class='warning'>[M] has already made a pact with another demon!</span>"
+		return 0
+	if(M.mind.changeling)
+		user << "<span class='warning'>Lilith refuses to grant her blessing upon a changeling!</span>"
+		return 0
+	if(isloyal(M))
+		user << "<span class='warning'>[M]'s mind is chained by corporate bonds!</span>"
+		return 0
+	if(M.mind && M.mind.assigned_role == "Chaplain")
+		user << "<span class='warning'>[M]'s heretical aura wards away Lilith's blessing!</span>"
+		return 0
+	if(!M.mind || !M.client)
+		user << "<span class='warning'>[M] must not be braindead or catatonic!</span>"
+		return 0
+	M.visible_message("<span class='warning'>[user] brings [src] to [M]'s lips and begins tipping it back!</span>", \
+					  "<span class='userdanger'>A haunting song fills your ears as [user] begins forcing you to drink from [src]!</span>")
+	if(!do_after(user, 100, target = M))
+		return 0
+	playsound(user, 'sound/items/drink.ogg', 10, 1)
+	M.visible_message("<span class='warning'>[user] feeds [M] the contents of [src]!</span>", \
+					  "<span class='userdanger'>Something strange and terrifying enters your mind as you drink from the goblet...</span>")
+	used = 1
+	name = "glass goblet"
+	desc = "It's an empty glass goblet. It has faint red stains at the bottom."
+	icon_state = "glass_goblet"
+	spawn(30)
+		if(M)
+			M.make_mob_into_vampire()
+
+/obj/item/weapon/antag_spawner/vampire/attack_hand(mob/user)
+	if(ishuman(user) && user.mind && user.mind.assigned_role != "Chaplain" && !is_vampire(user) && !used)
+		user << "<span class='warning'>The gentle harmony emanating from [src] grows louder for just a moment...</span>"
+	..()

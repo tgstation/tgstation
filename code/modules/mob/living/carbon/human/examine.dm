@@ -236,8 +236,20 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
-	if(pale)
+	if(pale && !is_vampire(user))
 		msg += "[t_He] [t_has] pale skin.\n"
+
+	if(!is_vampire(src) && is_vampire(user) && vessel) //Vampires can see exact blood levels at a glance
+		var/datum/reagent/blood/B = locate() in vessel.reagent_list
+		var/usable_blood = B.volume - (BLOOD_VOLUME_OKAY + 25)
+		usable_blood = Clamp(usable_blood, 0, INFINITY)
+		msg += "[t_He] [t_has] [B.volume]cl of blood, [usable_blood]cl of which is drinkable without harming [t_him].\n"
+
+	if(is_vampire(src) && is_vampire(user))
+		msg += "You recognize Lilith's blessing. [t_He], like you, is a vampire.\n"
+
+	if(is_vampire(src) && src.mind && src.mind.vampire && src.mind.vampire.clean_blood <= 10) //If they're a vampire with less than 10 units of CLEAN blood, give a unique examine text
+		msg += "[t_He] has deathly pale skin.\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"

@@ -15,6 +15,21 @@
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)	return
+	if(is_vampire(src))
+		var/datum/vampire/V = get_vampire()
+		var/rekt = 0
+		if(getFireLoss() > 200) //If they have 200 burn, they die as normal
+			src << "<span class='userdanger'>Your life slips away as the burns on your body take their toll...</span>"
+			rekt = 1 //Makes it ignore the proc below
+		if(!rekt && !reagents.has_reagent("holywater") && V.use_blood(1, 1)) //Vampires are incapable of death if they have clean blood (but can still die if they have holy water in their body)
+			adjustBruteLoss(-5)
+			adjustFireLoss(-5)
+			adjustToxLoss(-5)
+			adjustOxyLoss(-5)
+			adjustCloneLoss(-5)
+			adjustStaminaLoss(-5)
+			src << "<span class='warning'>The clean blood in your body protects you from death.</span>"
+			return 0
 	if(healths)		healths.icon_state = "health5"
 	stat = DEAD
 	dizziness = 0

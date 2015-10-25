@@ -84,6 +84,14 @@
 			newVirus.holder = blood_prop
 	return
 
+/datum/reagent/blood/on_mob_life(mob/living/M)
+	if(is_vampire(M))
+		var/datum/vampire/V = M.get_vampire()
+		V.dirty_blood += volume //Vampires can drink stored blood to gain dirty blood
+		holder.remove_reagent(id, volume)
+		return 1
+	..()
+
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
 	id = "liquidgibs"
@@ -185,6 +193,8 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","Egkau'haom'nai en Chaous","Ho Diak'nos tou Ap'iron","R'ge Na'sie","Diabo us Vo'iscum","Si gn'um Co'nu"))
+		if(is_vampire(M))
+			M.adjustFireLoss(8) //Holy water kills vampires FAST.
 	if(data >= 75 && prob(33))	// 30 units, 135 seconds
 		if (!M.confused) M.confused = 1
 		M.confused += 3
