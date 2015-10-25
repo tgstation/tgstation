@@ -531,7 +531,7 @@
 			extinguishes_left--
 			H.visible_message("<span class='warning'>[H]'s suit automatically extinguishes them!</span>","<span class='warning'>Your suit automatically extinguishes you.</span>")
 			H.ExtinguishMob()
-			PoolOrNew(/obj/effect/effect/water, get_turf(H))
+			PoolOrNew(/obj/effect/particle_effect/water, get_turf(H))
 	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
