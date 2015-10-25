@@ -52,15 +52,15 @@ Medical Doctor
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
-	spawn_positions = 3
+	total_positions = 10
+	spawn_positions = 8
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/doctor
 
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_surgery)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -85,8 +85,8 @@ Chemist
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
@@ -113,8 +113,8 @@ Geneticist
 	department_head = list("Chief Medical Officer", "Research Director")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
 
@@ -142,8 +142,8 @@ Virologist
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
