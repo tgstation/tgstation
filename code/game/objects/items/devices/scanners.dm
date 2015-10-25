@@ -446,10 +446,11 @@ Subject's pulse: ??? BPM"}
 	. = ..()
 	if(.)
 		return
-	if (!user.dexterity_check())
+	if(!istype(O)) //Wrong type sent
+		return
+	if(!user.dexterity_check())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
-
 	if(O.reagents)
 		var/dat = ""
 		if(O.reagents.reagent_list.len)
