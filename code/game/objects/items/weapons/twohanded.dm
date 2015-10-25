@@ -310,7 +310,7 @@
 	w_class = 4.0 // can't fit in backpacks
 	force_unwielded = 13
 	force_wielded = 22
-	wieldsound = 'sound/weapons/chainsawstart.ogg'
+	wieldsound = 'sound/weapons/chainsawStart.ogg'
 	hitsound = "swing_hit"
 	flags = NOSHIELD
 	origin_tech = "materials=2;combat=2;engineering=2"
