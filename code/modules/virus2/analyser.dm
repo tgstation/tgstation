@@ -1,6 +1,6 @@
 /obj/machinery/disease2/diseaseanalyser
 	name = "Disease Analyser"
-	desc = "For analysing and storing viral samples"
+	desc = "For analysing and storing viral samples."
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 	anchored = 1
@@ -46,19 +46,17 @@
 				dish = D
 			else
 				toscan += D
-		c.drop_item(D, src)
-		for(var/mob/M in viewers(src))
-			if(M == user)	continue
-			M.show_message("<span class='notice'>[user.name] inserts the [D.name] in the [src.name]</span>", 3)
+		if(!c.drop_item(D, src)) return 1
+		//c.drop_item(D, src)
+		visible_message("<span class='notice'>[user.name] inserts the [D.name] in the [src.name].</span>", 3)
 	return
 
 /obj/machinery/disease2/diseaseanalyser/proc/PrintPaper(var/obj/item/weapon/virusdish/D)
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src.loc)
-	//var/r = D.virus2.get_info()
+	var/obj/item/weapon/paper/P = new(src.loc)
+	//var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src.loc)
 	P.info = D.virus2.get_info()
 	P.name = "Virus #[D.virus2.uniqueID]"
-	visible_message("\The [src.name] prints a sheet of paper")
-	return
+	visible_message("\The [src.name] prints a sheet of paper.")
 
 /obj/machinery/disease2/diseaseanalyser/proc/Analyse(var/obj/item/weapon/virusdish/D)
 	dish.info = D.virus2.get_info()
@@ -69,7 +67,6 @@
 	dish.loc = src.loc
 	dish = null
 	icon_state = "analyser"
-	return
 
 /obj/machinery/disease2/diseaseanalyser/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -99,18 +96,19 @@
 
 /obj/machinery/disease2/diseaseanalyser/Topic(href, href_list)
 	if(..())
-		return
-	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		usr.unset_machine()
-		usr << browse(null, "window=computer")
-		return
+		return 1
+	//if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	//usr.unset_machine()
+	//usr << browse(null, "window=computer")
+	//return
 	if(usr) usr.set_machine(src)
 
 	if(href_list["eject"])
 		for(var/obj/item/weapon/virusdish/O in src.contents)
 			if("[O.virus2.uniqueID]" == href_list["name"])
 				O.loc = src.loc
-				toscan -= O
+				if(toscan["O"])
+					toscan -= O
 		src.updateUsrDialog()
 	else if(href_list["scan"])
 		for(var/obj/item/weapon/virusdish/O in src.contents)
