@@ -125,3 +125,31 @@
 
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
+
+/obj/item/weapon/melee/supermatter_sword
+	name = "supermatter sword"
+	desc = "In a station full of bad ideas, this might just be the worst."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "telebaton_0" //Needed!
+	item_state = null //Needed!
+	slot_flags = null
+	w_class = 4
+	var/obj/machinery/power/supermatter_shard/shard
+
+
+/obj/item/weapon/melee/supermatter_sword/New()
+	..()
+	shard = new /obj/machinery/power/supermatter_shard(src)
+
+/obj/item/weapon/melee/supermatter_sword/afterattack(target)
+	..()
+	shard.Bumped(target)
+
+/obj/item/weapon/melee/supermatter_sword/throw_impact(target)
+	..()
+	shard.Bumped(target)
+
+/obj/item/weapon/melee/supermatter_sword/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] touches the [src.name]'s blade. It looks like they're tired of waiting for the radiation to kill them!</span>")
+	user.drop_item()
+	shard.Bumped(user)
