@@ -33,7 +33,7 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Added chainsaws to table crafting. Chainsaws can now serve as a ghetto circular saw for surgery, and turn logs into planks."
+  - rscadd: "Added chainsaws to table crafting. Chainsaws can now serve as a ghetto circular saw for surgery, and can turn logs into planks."
   - rscadd: "Added missing inhands sprites for the chainsaw; chainsaw now properly displays on your character. Sprites by WalterJe"
-  - tweak: "Chainsaw damage and research values nerfed, chainsaw no longer weakens"
-  - tweak: "Chainsaw code cleaned up with help from Xhuis, added chainsaw_attack var to sound.dm to reduce snowflake code"
+  - tweak: "Chainsaw damage and research values nerfed, chainsaw no longer weakens, and the chainsaw now runs on fuel."
+  - tweak: "Chainsaw code cleaned up, added chainsaw_attack var to sound.dm to reduce snowflake code."

@@ -85,3 +85,14 @@
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
 	return 1
+
+
+/datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
+    if (istype(tool, /obj/item/weapon/twohanded/chainsaw))
+        var/obj.item/weapon/twohanded/chainsaw/CHS = tool
+        if(CHS.wielded)
+            return 1
+        else
+            return 0
+    
+    return 1

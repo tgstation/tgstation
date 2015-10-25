@@ -316,7 +316,7 @@
 	origin_tech = "materials=2;combat=2;engineering=2"
 	attack_verb = list("bashed", "smacked")
 	var/wield_cooldown = 0
-	var/max_fuel = 20
+	var/max_fuel = 40
 //	bleedcap = 0 //You can bleed anytime bby
 
 /obj/item/weapon/twohanded/chainsaw/New()
