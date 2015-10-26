@@ -486,8 +486,8 @@
 			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound!</span>"
 		else
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
-		H.drop_everything()
-		qdel(H)
+	H.drop_everything()
+	qdel(H)
 	return
 
 /*
