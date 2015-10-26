@@ -3397,6 +3397,26 @@
 			usr << "[S] ([S.type]) selected!"
 
 		shuttle_magic() //Update the window!
+	if(href_list["shuttle_add_docking_port"])
+		feedback_inc("admin_shuttle_magic_used",1)
+		feedback_add_details("admin_shuttle_magic_used","CD")
+
+		var/area/A = get_area(get_turf(usr))
+		var/datum/shuttle/shuttle_to_add_to = A.get_shuttle()
+
+		if(istype(shuttle_to_add_to))
+			if(alert(usr, "Would you like the new shuttle docking port to be assigned to [shuttle_to_add_to.name]? [shuttle_to_add_to.linked_port ? "NOTE: It already has a shuttle docking port." : ""]", "Admin abuse", "Yes", "No") != "Yes")
+				shuttle_to_add_to = null
+
+		var/obj/structure/docking_port/shuttle/D = new( get_turf(usr) )
+		D.dir = usr.dir
+
+		if(istype(shuttle_to_add_to))
+			D.link_to_shuttle(shuttle_to_add_to)
+			usr << "Assigned the [D] to [shuttle_to_add_to.name]"
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] has created a new shuttle docking port in [get_area(D)] [formatJumpTo(get_turf(D))][shuttle_to_add_to ? " and assigned it to [shuttle_to_add_to.name]" : ""]</span>", 1)
+		log_admin("[key_name_admin(usr)] has created a new destination docking port ([D.areaname]) at [D.x];[D.y];[D.z][shuttle_to_add_to ? " and assigned it to [shuttle_to_add_to.name]" : ""]")
 
 	if(href_list["shuttle_create_destination"])
 		feedback_inc("admin_shuttle_magic_used",1)
@@ -3734,8 +3754,8 @@
 		if(!A)
 			usr << "You must be standing on an area!"
 			return
-		if(A.type == /area && A.name == "Space")
-			usr << "You can't shuttlify space. (If this isn't space, rename this area to something else!)"
+		if(isspace(A))
+			usr << "You can't turn space into a shuttle."
 			return
 
 		var/datum/shuttle/conflict = A.get_shuttle()
