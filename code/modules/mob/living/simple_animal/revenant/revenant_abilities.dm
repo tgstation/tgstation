@@ -168,7 +168,7 @@
 					bot.open = 1
 					bot.Emag(null)
 			for(var/obj/machinery/mach in T.contents)
-				if(istype(mach, /obj/machinery/dominator) || istype(mach, /obj/machinery/power/apc) || istype(mach, /obj/machinery/power/smes) || istype(mach, /obj/machinery/bot)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery //Also doesn't work on bots so they can go do stuff faster(god this is so ugly)
+				if(istype(mach, /obj/machinery/dominator) || istype(mach, /obj/machinery/power/apc) || istype(mach, /obj/machinery/power/smes) || isbot(mach)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery //Also doesn't work on bots so they can go do stuff faster(god this is so ugly)
 					continue
 				if(prob(30))
 					new/obj/effect/overlay/temp/revenant(mach.loc)
