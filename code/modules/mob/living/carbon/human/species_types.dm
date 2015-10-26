@@ -337,15 +337,16 @@
 
 /datum/species/golem/meeseeks/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
-		switch (stage)
-			if(1)
-				if(prob(20))
-					message = pick("HI! I'M MR MEESEEKS! LOOK AT ME!","Ooohhh can do!")
-			if(2)
-				if(prob(30))
-					message = pick("He roped me into this!","Meeseeks don't usually have to exist for this long. It's gettin' weeeiiird...")
-			if(3)
-				message = pick("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHH!!!!!!!!!","I JUST WANNA DIE!","Existence is pain to a meeseeks, and we will do anything to alleviate that pain.!","KILL ME, LET ME DIE!","We are created to serve a singular purpose, for which we will go to any lengths to fulfill!")
+		if(!lingseek)
+			switch (stage)
+				if(1)
+					if(prob(20))
+						message = pick("HI! I'M MR MEESEEKS! LOOK AT ME!","Ooohhh can do!")
+				if(2)
+					if(prob(30))
+						message = pick("He roped me into this!","Meeseeks don't usually have to exist for this long. It's gettin' weeeiiird...")
+				if(3)
+					message = pick("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHH!!!!!!!!!","I JUST WANNA DIE!","Existence is pain to a meeseeks, and we will do anything to alleviate that pain.!","KILL ME, LET ME DIE!","We are created to serve a singular purpose, for which we will go to any lengths to fulfill!")
 
 	return message
 
@@ -371,6 +372,13 @@
 			else
 				H << "<span class='danger'>[pick("BLOOD MUST BE OUT OF THE BODY","THE WORLD BURNED AND YOU WERE LEFT!","EVERYTHING IS DEAD!")]</span>"
 				H.say("DIEEEEEEEEE!!!!!")
+			var/randsound = rand (1,4)	//for the spooks
+			switch(randsound)
+				if(1) playsound(H.loc, 'sound/voice/meeseeks/ling/lingseekscando.ogg', 75, 0, 1)
+				if(2) playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel2.ogg', 75, 0, 1)
+				if(3) playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel3.ogg', 75, 0, 1)
+				if(4) playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 75, 0, 1)
+
 	if(H.health < -50 && !lingseek) //lingseeks are mortal
 		H.adjustOxyLoss(-H.getOxyLoss())
 		H.adjustToxLoss(-H.getToxLoss())
@@ -401,7 +409,7 @@
 			H << "<span class='warning'>Something is wrong. Some$thi&ng is/ verywr)orscv/)oiu3)(/&34sSDF#DSF%$#</span>"
 			playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel2.ogg', 40, 0, 1)
 			new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
-			M.status_flags |= GOTTAGOFAST //nightmares darting around the station
+			H.status_flags |= GOTTAGOFAST //nightmares darting around the station
 		else
 			id = "meeseeks_2"
 			H << "<span class='warning'>You are starting to feel desperate! You must help your master quickly! Meeseeks are not used to exist for this long!</span>"
@@ -427,7 +435,7 @@
 			H.mind.store_memory("KILL")
 			playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel3.ogg', 40, 0, 1)
 			new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
-			M.status_flags |= GOTTAGOREALLYFAST //rocket powered nightmare fuel
+			H.status_flags |= GOTTAGOREALLYFAST //rocket powered nightmare fuel
 		else
 			id = "meeseeks_3"
 			H << "<span class='danger'>EXISTENCE IS PAIN! YOU CAN'T TAKE IT ANYMORE!</span>"
@@ -446,12 +454,12 @@
 		ME.force_give(H)
 		max_brain_damage = 80
 		stage_counter = 1 //to stop the spam of "I CAN'T TAKE IT"
-	var/mob/living/carbon/human/MST = master
 
+	var/mob/living/carbon/human/MST = master
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0 && !lingseek) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
+		else if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0 && !lingseek) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
 			//hardset_dna(H, null, null, null, null, /datum/species/human )
 			H.real_name = "Lingseek"
 			id = "lingseek_1"
@@ -462,10 +470,11 @@
 			stage_three = 25 //fast stage progression
 			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
 			return // get me the hell out of here.
-		for(var/mob/M in viewers(7, H.loc))
-			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
-		H.drop_everything()
-		qdel(H)
+		else if(!lingseek) //just to be sure
+			for(var/mob/M in viewers(7, H.loc))
+				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
+			H.drop_everything()
+			qdel(H)
 
 /datum/species/golem/meeseeks/spec_death(var/gibbed, var/mob/living/carbon/human/H)
 	if(lingseek)
@@ -474,7 +483,7 @@
 		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
 	for(var/mob/M in viewers(7, H.loc))
 		if(lingseek)
-			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound.</span>"
+			M << "<span class='warning'><b>[src]</b> screams and collapses with a horrible crunching sound!</span>"
 		else
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
 		H.drop_everything()
