@@ -20,6 +20,14 @@
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
 
+/obj/item/projectile/bullet/toxinbullet
+	damage = 15
+	damage_type = TOX
+
+/obj/item/projectile/bullet/armourpiercing
+	damage = 17
+	armour_penetration = 10
+
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 15
@@ -64,7 +72,6 @@
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
 
-
 /obj/item/projectile/bullet/incendiary/shell
 	name = "incendiary slug"
 	damage = 25
@@ -82,6 +89,8 @@
 	name = "dragonsbreath round"
 	damage = 5
 
+/obj/item/projectile/bullet/incendiary/firebullet
+	damage = 10
 
 /obj/item/projectile/bullet/meteorshot
 	name = "meteor"

@@ -337,6 +337,22 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "incendiary weapons crate"
 	access = access_heads
 
+/datum/supply_packs/security/armory/wt550
+	name = "WT-550 Auto Rifle Crate"
+	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
+					/obj/item/weapon/gun/projectile/automatic/wt550)
+	cost = 35
+	containername = "auto rifle crate"
+
+/datum/supply_packs/security/armory/wt550ammo
+	name = "WT-550 Rifle Ammo Crate"
+	contains = list(/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,
+					/obj/item/ammo_box/magazine/wt550m9,)
+	cost = 30
+	containername = "auto rifle ammo crate"
+
 /////// Implants & etc
 
 /datum/supply_packs/security/armory/loyalty
@@ -1303,6 +1319,26 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
 
+/datum/supply_packs/misc/randomised/toys
+	name = "Toy Crate"
+	num_contained = 5
+	contains = list(/obj/item/toy/spinningtoy,
+	                /obj/item/toy/sword,
+	                /obj/item/toy/foamblade,
+	                /obj/item/toy/AI,
+	                /obj/item/toy/owl,
+	                /obj/item/toy/griffin,
+	                /obj/item/toy/nuke,
+	                /obj/item/toy/minimeteor,
+	                /obj/item/toy/carpplushie,
+	                /obj/item/weapon/coin/antagtoken,
+	                /obj/item/stack/tile/fakespace,
+	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
+	                /obj/item/toy/redbutton)
+
+	cost = 50 // or play the arcade machines ya lazy bum
+	containername ="toy crate"
+
 /datum/supply_packs/misc/autodrobe
 	name = "Autodrobe Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/autodrobe,
@@ -1341,3 +1377,26 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/lipstick/random)
 	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
 	containername = "formal-wear crate"
+
+/datum/supply_packs/misc/foamforce
+	name = "Foam Force Crate"
+	contains = list(/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy,
+					/obj/item/weapon/gun/projectile/shotgun/toy)
+	cost = 10
+	containername = "foam force crate"
+
+/datum/supply_packs/misc/foamforce/bonus
+	name = "Foam Force Pistols Crate"
+	contains = list(/obj/item/weapon/gun/projectile/automatic/toy/pistol,
+					/obj/item/weapon/gun/projectile/automatic/toy/pistol,
+					/obj/item/ammo_box/magazine/toy/pistol,
+					/obj/item/ammo_box/magazine/toy/pistol)
+	cost = 40
+	containername = "foam force pistols crate"
+	contraband = 1
