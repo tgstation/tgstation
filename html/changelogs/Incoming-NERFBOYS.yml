@@ -1,0 +1,10 @@
+
+author: Incoming5643
+
+delete-after: True
+
+changes: 
+  - tweak: "The lich spell has been subjected to some gentle nerfing. When you die a string of energy will tie your new body to your old body for a short time, aiding others in determining your location. The duration of this beam scales with the number of deaths you've avoided."
+  - tweak: "Additionally the post revival stun now also scales in this way."
+  - tweak: "The spell will also fail if the item and the wizard don't share the same z level, though the nature of space means the odds of the item (or the wizard) looping around back to the station is pretty high."
+  - rscadd: "The spell is still really good."
