@@ -102,4 +102,5 @@
 			if ("hiss") soundin = pick('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 			if ("pageturn") soundin = pick('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 			if ("gunshot") soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
+			if ("chainsaw_attack") soundin = pick('sound/weapons/chainsawAttack1.ogg', 'sound/weapons/chainsawAttack2.ogg','sound/weapons/chainsawAttack3.ogg') //Credit goes to where Hotline Miami 2 got the chainsaw sounds from.
 	return soundin

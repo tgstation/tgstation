@@ -25,6 +25,25 @@
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
+/obj/item/ammo_casing/c46x30mm
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/weakbullet3
+
+/obj/item/ammo_casing/c46x30mmap
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type =/obj/item/projectile/bullet/armourpiercing
+
+/obj/item/ammo_casing/c46x30mmtox
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/toxinbullet
+
+/obj/item/ammo_casing/c46x30mminc
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
