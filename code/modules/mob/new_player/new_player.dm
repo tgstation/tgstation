@@ -116,7 +116,10 @@
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
 			src << "<span class='notice'>Now teleporting.</span>"
-			observer.loc = O.loc
+			if (O)
+				observer.loc = O.loc
+			else
+				src << "Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful"
 			if(client.prefs.be_random_name)
 				client.prefs.real_name = random_unique_name(gender)
 			if(client.prefs.be_random_body)
