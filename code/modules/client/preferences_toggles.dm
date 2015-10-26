@@ -236,4 +236,5 @@ var/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_
 	set name = "Game Preferences"
 	set category = "Preferences"
 	set desc = "Allows you to access the Setup Character screen. Changes to your character won't take effect until next round, but other changes will."
+	prefs.current_tab = 1
 	prefs.ShowChoices(usr)
