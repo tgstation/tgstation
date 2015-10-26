@@ -183,8 +183,9 @@
 
 	add_logs(user, occupant, "gibbed")
 	src.occupant.death(1)
-	src.occupant.ghostize()
-	qdel(src.occupant)
+	if(src.occupant)
+		src.occupant.ghostize()
+		qdel(src.occupant)
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
