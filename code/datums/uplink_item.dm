@@ -212,7 +212,14 @@ var/list/uplink_items = list()
 	desc = "A powerful industrial spraygun that holds 600 units of any liquid, and can cover area faster than a standard spray bottle."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer
 	cost = 4
-	job = list("Chemist")
+	job = list("Chemist", "Chief Medical Officer")
+
+/datum/uplink_item/jobspecific/antisocial
+	name = "Explosive Hug Chemical"
+	desc = "30 units of Bicarodyne, a chemical that causes a devastating explosion when exposed to endorphins released in the body by a hug. Metabolizes quite slowly."
+	item = /obj/item/weapon/storage/box/syndie_kit/explosive_hug //Had to be put in a box because it didn't play well with reagent creation
+	cost = 4
+	job = list("Chemist", "Chief Medical Officer")
 
 //Engineer
 /datum/uplink_item/jobspecific/powergloves
@@ -236,7 +243,7 @@ var/list/uplink_items = list()
 	desc = "An experimental energy gun that fires radioactive projectiles that burn, irradiate, and scramble DNA, giving the victim a different appearance and name, and potentially harmful or beneficial mutations. Recharges automatically."
 	item = /obj/item/weapon/gun/energy/radgun
 	cost = 6
-	job = list("Geneticist")
+	job = list("Geneticist", "Chief Medical Officer")
 
 //Atmospheric Technician
 /datum/uplink_item/jobspecific/flaregun

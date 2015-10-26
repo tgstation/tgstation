@@ -159,7 +159,7 @@
 	packet_icon = "seed-vale"
 	plant_icon = "vale"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"paracetamol" = list(0,2),"dexalin" = list(0,5))
+	chems = list("nutriment" = list(1,10),"sportdrink" = list(0,2),"dexalin" = list(0,5))
 
 	lifespan = 100
 	maturation = 6

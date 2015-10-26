@@ -10,6 +10,14 @@
 	possible_transfer_amounts = list(1,2,3,4,5)
 	volume = 5
 	var/filled = 0
+	// List of types that can be injected regardless of the CONTAINEROPEN flag
+	// TODO Remove snowflake
+	var/injectable_types = list(/obj/item/weapon/reagent_containers/food,
+	                            /obj/item/slime_extract,
+	                            /obj/item/clothing/mask/cigarette,
+	                            /obj/item/weapon/storage/fancy/cigarettes,
+	                            /obj/item/weapon/implantcase/chem,
+	                            /obj/item/weapon/reagent_containers/pill/time_release)
 
 	afterattack(obj/target, mob/user , flag)
 		if(!user.Adjacent(target))
@@ -30,7 +38,7 @@
 				user << "<span class='warning'>[target] is full.</span>"
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
+			if(!target.is_open_container() && !ismob(target) && !is_type_in_list(target, injectable_types)) //You can inject humans and food but you cant remove the shit.
 				user << "<span class='warning'>You cannot directly fill this object.</span>"
 				return
 

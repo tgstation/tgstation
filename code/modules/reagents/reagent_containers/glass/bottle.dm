@@ -380,3 +380,10 @@
 	New()
 		..()
 		reagents.add_reagent("frostoil", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/antisocial
+	//No special name or description
+
+	New()
+		..()
+		reagents.add_reagent("bicarodyne", 30)

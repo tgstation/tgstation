@@ -2295,6 +2295,14 @@
 	..()
 	return
 
+/datum/reagent/bicarodyne
+	name = "Bicarodyne"
+	id = "bicarodyne"
+	description = "Not to be confused with Bicaridine, Bicarodyne is a volatile chemical that reacts violently in the presence of most human endorphins."
+	reagent_state = LIQUID
+	color = "#C8A5DC" // rgb: 200, 165, 220
+	overdose = REAGENTS_OVERDOSE * 2 //No need for anyone to get suspicious.
+	custom_metabolism = 0.01
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

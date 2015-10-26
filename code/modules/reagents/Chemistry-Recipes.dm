@@ -646,6 +646,17 @@ datum
 			required_catalysts = list("fluorine" = 5)
 			result_amount = 1
 
+		explosion_bicarodyne
+			name = "Explosion"
+			id = "explosion_bicarodyne"
+			result = null
+			required_reagents = list("bicarodyne" = 1, "paracetamol" = 1)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				explosion(get_turf(holder.my_atom),1,2,4)
+				holder.clear_reagents()
+				return
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

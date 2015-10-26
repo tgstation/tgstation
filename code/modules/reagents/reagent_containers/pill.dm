@@ -44,11 +44,7 @@
 			src.forceMove(get_turf(H))
 			H.visible_message("<span class='warning'>\The [src] falls through and onto the ground.</span>", "<span class='notice'>You hear \the [src] plinking around for a second before it hits the ground below you.</span>")
 			return 0
-	if (!src.is_empty())
-		reagents.reaction(M, INGEST)
-		reagents.trans_to(M, reagents.total_volume)
-
-	qdel(src)
+	injest(M)
 	return 1
 
 // Handles pill dissolving in containers
@@ -74,6 +70,15 @@
 			user << "<span class='notice'>You [target_was_empty ? "crush partially" : "partially dissolve"] the pill into \the [target], filling it.</span>"
 	else
 		user << "<span class='notice'>\The [target] is full!</span>"
+
+//OOP, HO!
+/obj/item/weapon/reagent_containers/pill/proc/injest(mob/M as mob)
+	if(!reagents) return
+	if(!M) return
+	if (!src.is_empty())
+		reagents.reaction(M, INGEST)
+		reagents.trans_to(M, reagents.total_volume)
+	qdel(src)
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
@@ -228,3 +233,51 @@
 	New()
 		..()
 		reagents.add_reagent("hyperzine", 10)
+
+/obj/item/weapon/storage/pill_bottle/time_release
+	name = "controlled release pill bottle"
+	desc = "A bottle containing special pills which can be calibrated for delayed release with sugar."
+
+/obj/item/weapon/storage/pill_bottle/time_release/New()
+	..()
+	for(var/i=1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/time_release(src)
+
+/obj/item/weapon/reagent_containers/pill/time_release
+	name = "time release pill"
+	desc = "A pill which will not be metabolized until all of the sugar inside metabolizes. Unlike other pills, it is specially designed to be compatible with droppers and syringes."
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_containers/pill/time_release/injest(mob/M as mob)
+	if(!reagents) return
+	if(!M) return
+	var/timer = round(reagents.get_reagent_amount("sugar"),1)
+	forceMove(M)
+	spawn(timer*30)
+		reagents.del_reagent("sugar")
+		reagents.reaction(M, INGEST)
+		reagents.trans_to(M, reagents.total_volume)
+		qdel(src)
+
+/obj/item/weapon/storage/pill_bottle/random
+	name = "trail mix"
+	desc = "Just what the assistant ordered."
+
+/obj/item/weapon/storage/pill_bottle/random/New()
+	..()
+	for(var/i=1 to 14)
+		new /obj/item/weapon/reagent_containers/pill/random(src)
+
+/obj/item/weapon/reagent_containers/pill/random
+	name = "unknown pill"
+	desc = "Dare you enter my chemical realm?"
+
+/obj/item/weapon/reagent_containers/pill/random/New()
+	..()
+	var/chemical = pick("hyperzine", "oxycodone", "doctorsdelight", "lexorin", "leporazine", "mutagen", "ryetalyn", "pacid", "cornoil", "tonio", "space_drugs","zombiepowder")
+	reagents.add_reagent(chemical, 10)
+	/* Possible choices:
+	Good: Hyperzine, Oxycodone, Doctor's Delight, Leporazine
+	Neutral: Corn Oil, Ryetalyn, Tonio, Space Drugs
+	Bad: Mutagen, Polytrinic Acid, Lexorin, Zombie Powder
+	*/
