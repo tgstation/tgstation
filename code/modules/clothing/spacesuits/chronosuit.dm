@@ -29,7 +29,7 @@
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
 	var/atom/movable/overlay/phase_underlay = null
-	var/datum/action/item_action/hands_free/chrono_teleport/teleport_now = new
+	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
 	var/cooldowntime = 50 //deciseconds
@@ -310,19 +310,19 @@
 	else
 		qdel(src)
 
-/datum/action/item_action/hands_free/chrono_teleport
+/datum/action/innate/chrono_teleport
 	name = "Teleport Now"
 	button_icon_state = "chrono_phase"
-	action_type = AB_INNATE
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
 
-/datum/action/item_action/hands_free/chrono_teleport/IsAvailable()
+/datum/action/innate/chrono_teleport/IsAvailable()
 	return (!CheckRemoval(owner) && !chronosuit.teleporting)
 
-/datum/action/item_action/hands_free/chrono_teleport/Activate()
+/datum/action/innate/chrono_teleport/Activate()
 	if(IsAvailable())
 		if(chronosuit.camera)
 			chronosuit.chronowalk(chronosuit.camera)
 
-/datum/action/item_action/hands_free/chrono_teleport/CheckRemoval()
+/datum/action/innate/chrono_teleport/CheckRemoval()
 	return (..() && !(chronosuit && chronosuit.activated && chronosuit.camera))
