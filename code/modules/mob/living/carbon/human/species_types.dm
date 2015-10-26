@@ -334,6 +334,7 @@
 	var/max_clone_damage = 0 //controls the increase of clone damage
 	var/master = null //if master dies, Meeseeks dies too.
 	var/lingseek = 0 //to control specific lingseek behaviour
+	dangerous_existence = 1 // Meeseeks does not want to exist.
 
 /datum/species/golem/meeseeks/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
@@ -459,18 +460,20 @@
 	if((MST && MST.stat == DEAD) || !MST)
 		if(lingseek)
 			return //everything is fine
-		else if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0 && !lingseek) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
-			//hardset_dna(H, null, null, null, null, /datum/species/human )
+		if( H.job != "Mr. Meeseeks" ) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
 			H.real_name = "Lingseek"
 			id = "lingseek_1"
 			H.regenerate_icons()
+			if( H.mind )
+				H.mind.assigned_role = "Lingseeks" // suppress special role candidacy.
 			lingseek = 1
 			stage = 1
 			stage_two = 20
 			stage_three = 25 //fast stage progression
 			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
 			return // get me the hell out of here.
-		else if(!lingseek) //just to be sure
+			
+		if(!lingseek) //just to be sure
 			for(var/mob/M in viewers(7, H.loc))
 				M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
 			H.drop_everything()
