@@ -76,69 +76,55 @@
 						H.Stun(4)
 						H.Weaken(5)
 
-		if(M.flying)
+		//Anything beyond that point will not fire if the mob isn't physically walking here
+		if(!M.walking()) //Checks lying, flying and locked.to
 			return ..()
 
-		switch (src.wet)
-			if(1)
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && M.CheckSlip() > 0)
-						M.stop_pulling()
-						step(M, M.dir)
-						M << "<span class='notice'>You slipped on the wet floor!</span>"
-						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(5)
-						M.Weaken(3)
-					else
-						M.inertia_dir = 0
-						return
-				else if(!istype(M, /mob/living/carbon/slime))
-					if (M.m_intent == "run")
-						M.stop_pulling()
-						step(M, M.dir)
-						M << "<span class='notice'>You slipped on the wet floor!</span>"
-						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(5)
-						M.Weaken(3)
-					else
-						M.inertia_dir = 0
-						return
+		//And anything beyond that point will not fire for slimes
+		if(isslime(M)) //Slimes just don't slip, end of story
+			return ..()
 
-			if(2) //lube		//can cause infinite loops - needs work
-				if(!istype(M, /mob/living/carbon/slime))
+		switch(src.wet)
+			if(1) //Water
+				if(M.CheckSlip() < 1) //No slipping
+					return ..()
+				if(M.m_intent == "run")
 					M.stop_pulling()
 					step(M, M.dir)
-					spawn(1) step(M, M.dir)
-					spawn(2) step(M, M.dir)
-					spawn(3) step(M, M.dir)
-					spawn(4) step(M, M.dir)
-					M.take_organ_damage(2) // Was 5 -- TLE
-					M << "<span class='notice'>You slipped on the floor!</span>"
+					M.visible_message("<span class='warning'>[M] slips on the wet floor!</span>", \
+					"<span class='warning'>You slip on the wet floor!</span>")
 					playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-					M.Weaken(10)
-			if(3) // Ice
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && M.CheckSlip() > 0 && prob(30))
-						M.stop_pulling()
-						step(M, M.dir)
-						M << "<span class='notice'>You slipped on the icy floor!</span>"
-						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(4)
-						M.Weaken(3)
-					else
-						M.inertia_dir = 0
-						return
-				else if(!istype(M, /mob/living/carbon/slime))
-					if (M.m_intent == "run" && prob(30))
-						M.stop_pulling()
-						step(M, M.dir)
-						M << "<span class='notice'>You slipped on the icy floor!</span>"
-						playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
-						M.Stun(4)
-						M.Weaken(3)
-					else
-						M.inertia_dir = 0
-						return
+					M.Stun(5)
+					M.Weaken(3)
+
+			if(2) //Lube
+				M.stop_pulling()
+				step(M, M.dir)
+				spawn(1)
+					step(M, M.dir)
+				spawn(2)
+					step(M, M.dir)
+				spawn(3)
+					step(M, M.dir)
+				spawn(4)
+					step(M, M.dir)
+				M.take_organ_damage(2) // Was 5 -- TLE
+				M.visible_message("<span class='warning'>[M] slips on the floor!</span>", \
+				"<span class='warning'>You slip on the floor!</span>")
+				playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
+				M.Weaken(10)
+
+			if(3) //Ice
+				if(!M.CheckSlip() < 1) //No slipping
+					return ..()
+				if((M.m_intent == "run") && prob(30))
+					M.stop_pulling()
+					step(M, M.dir)
+					M.visible_message("<span class='warning'>[M] slips on the icy floor!</span>", \
+					"<span class='warning'>You slip on the icy floor!</span>")
+					playsound(get_turf(src), 'sound/misc/slip.ogg', 50, 1, -3)
+					M.Stun(4)
+					M.Weaken(3)
 
 	..()
 
