@@ -40,7 +40,7 @@
 	update_icon()
 	if(isrobot(user))
 		user << "<span class='notice'>You free up your module.</span>"
-	else
+	else if()
 		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
@@ -63,6 +63,8 @@
 	update_icon()
 	if(isrobot(user))
 		user << "<span class='notice'>You dedicate your module to [name].</span>"
+	else if(istype(src, /obj/item/weapon/twohanded/required))
+		user << "<span class='notice'>You drop the [name].</span>"
 	else
 		user << "<span class='notice'>You grab the [name] with both hands.</span>"
 	if (wieldsound)
