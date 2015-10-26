@@ -298,9 +298,6 @@
 			discipline_slime(user)
 	..()
 
-/mob/living/simple_animal/slime/show_inv(mob/user)
-	return
-
 /mob/living/simple_animal/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
 	if(!client)
