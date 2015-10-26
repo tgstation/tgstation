@@ -231,3 +231,19 @@
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/meatseek_big
+
+/datum/table_recipe/lingseeks_small
+	name = "Lingseek Quarter Pounder"
+	reqs = list(
+			/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/meatseek
+
+/datum/table_recipe/lingseeks_big
+	name = "Lingseek Big Stack"
+	reqs = list(
+			/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks = 3,
+			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/burger/meatseek_big

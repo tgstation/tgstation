@@ -188,3 +188,15 @@
 	desc = "It will either satisfy your appetite, or kill you trying."
 	icon_state = "meatseek_bigstack"
 	list_reagents = list("nutriment" = 8, "vitamin" = 5,"mushroomhallucinogen" = 5, "krokodil" = 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/lingseek
+	name = "Lingseek Quarter Pounder"
+	desc = "It wants you dead."
+	icon_state = "lingseakburger"
+	list_reagents = list("nutriment" = 1,"mindbreaker" = 10, "spore" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/lingseek_big
+	name = "Lingseek Big Stack"
+	desc = "The chef has just commited a multidimensional monstrosity."
+	icon_state = "lingseakbigburger"
+	list_reagents = list("nutriment" = 3,"mindbreaker" = 30, "spore" = 15)

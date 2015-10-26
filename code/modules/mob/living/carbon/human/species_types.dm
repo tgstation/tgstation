@@ -333,6 +333,7 @@
 	var/max_brain_damage = 0 //controls the increase of brain damage
 	var/max_clone_damage = 0 //controls the increase of clone damage
 	var/master = null //if master dies, Meeseeks dies too.
+	var/lingseek = 0 //to control specific lingseek behaviour
 
 /datum/species/golem/meeseeks/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
@@ -359,16 +360,26 @@
 
 	if(prob(5) && !H.stat)
 		if(stage <3)
-			H.say("HI, I'M MR. MEESEEKS! LOOK AT ME!")
+			if(!lingseek)
+				H.say("HI, I'M MR. MEESEEKS! LOOK AT ME!")
+			else
+				H.say("[pick("%#$%LKJ#$GLRU#L$%","h3lp. help! Help, helP... !He1p!","HELP ME OH PLEASE HELP ME","vckuc.. skre... !! ASD. FDOI#$!!! mansd...","tbh smh fam")]")
 		else
-			H << "<span class='danger'>[pick("KILL YOUR MASTER!","YOU CAN'T TAKE IT ANYMORE!","EVERYTHING IS PAIN!")]</span>"
-			H.say("KILL ME!!!!!")
-	if(H.health < -50)
+			if(!lingseek)
+				H << "<span class='danger'>[pick("KILL YOUR MASTER!","YOU CAN'T TAKE IT ANYMORE!","EVERYTHING IS PAIN!")]</span>"
+				H.say("KILL ME!!!!!")
+			else
+				H << "<span class='danger'>[pick("BLOOD MUST BE OUT OF THE BODY","THE WORLD BURNED AND YOU WERE LEFT!","EVERYTHING IS DEAD!")]</span>"
+				H.say("DIEEEEEEEEE!!!!!")
+	if(H.health < -50 && !lingseek) //lingseeks are mortal
 		H.adjustOxyLoss(-H.getOxyLoss())
 		H.adjustToxLoss(-H.getToxLoss())
 		H.adjustFireLoss(-H.getFireLoss())
 		H.adjustBruteLoss(-H.getBruteLoss()) //this way, you can knock a Meeseeks into crit, but he gets back up after a while.
 		stage_counter += 1 //extreme pain will make them progress a level
+
+	if(lingseek && H.hallucination<50 && stage == 3) //lingseeks are WILD
+		H.hallucination = 50
 
 	if(stage_counter == 0) //initialize the random stage counters and the clumsyness
 		stage_two += rand(0,50)
@@ -384,10 +395,16 @@
 		H.adjustBrainLoss(1)
 
 	if(stage_counter > stage_two)
-		H << "<span class='warning'>You are starting to feel desperate! You must help your master quickly! Meeseeks are not used to exist for this long!</span>"
-		playsound(H.loc, 'sound/voice/meeseeks/Level2.ogg', 40, 0, 1)
 		stage = 2
-		id = "meeseeks_2"
+		if(lingseek)
+			id = "lingseek_2"
+			H << "<span class='warning'>Something is wrong. Some$thi&ng is/ verywr)orscv/)oiu3)(/&34sSDF#DSF%$#</span>"
+			playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel2.ogg', 40, 0, 1)
+			new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+		else
+			id = "meeseeks_2"
+			H << "<span class='warning'>You are starting to feel desperate! You must help your master quickly! Meeseeks are not used to exist for this long!</span>"
+			playsound(H.loc, 'sound/voice/meeseeks/Level2.ogg', 40, 0, 1)
 		H.regenerate_icons()
 		stage_counter = 1 //not 0, to prevent it from randomizing it again
 
@@ -400,13 +417,23 @@
 		stage_two = stage_three *2 //prevents the stage 2 from activating twice
 
 	if(stage_counter > stage_three)
-		H << "<span class='danger'>EXISTENCE IS PAIN! YOU CAN'T TAKE IT ANYMORE!</span>"
-		H << "<span class='danger'>MAKE SURE YOUR MASTER, [master], NEVER HAS A PROBLEM AGAIN!</span>"
-		H << "<span class='danger'>KILL HIM SO YOU CAN FIND RELEASE</span>"
-		H.mind.store_memory("KILL YOUR MASTER, [master]!")
-		playsound(H.loc, 'sound/voice/meeseeks/Level3.ogg', 40, 0, 1)
+
 		stage = 3
-		id = "meeseeks_3"
+		if(lingseek)
+			id = "lingseek_3"
+			H << "<span class='danger'>/&GFK&/G&JH...KILL...(DF=)LKM/$#</span>"
+			H << "<span class='danger'>=&S%FDV(C&%...KILL...!F)(DK=KDVJ</span>"
+			H << "<span class='danger'>!#$JDS$%I$D...KILL...%J$D&K/&%KV</span>"
+			H.mind.store_memory("KILL")
+			playsound(H.loc, 'sound/voice/meeseeks/ling/LingseeksLevel3.ogg', 40, 0, 1)
+			new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+		else
+			id = "meeseeks_3"
+			H << "<span class='danger'>EXISTENCE IS PAIN! YOU CAN'T TAKE IT ANYMORE!</span>"
+			H << "<span class='danger'>MAKE SURE YOUR MASTER, [master], NEVER HAS A PROBLEM AGAIN!</span>"
+			H << "<span class='danger'>KILL HIM SO YOU CAN FIND RELEASE</span>"
+			H.mind.store_memory("KILL YOUR MASTER, [master]!")
+			playsound(H.loc, 'sound/voice/meeseeks/Level3.ogg', 40, 0, 1)
 		H.regenerate_icons()
 		H.disabilities |= FAT
 		H.disabilities |= NEARSIGHT
@@ -421,13 +448,28 @@
 	var/mob/living/carbon/human/MST = master
 
 	if((MST && MST.stat == DEAD) || !MST)
-		if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0) // This mob has no business being a meeseeks
-			hardset_dna(H, null, null, null, null, /datum/species/human )
+		if(findtextEx(H.real_name, "Mr. Meeseeks (") == 0 && !lingseek) // This mob has no business being a meeseeks // AHAH, now it's a Lingseeks!
+			//hardset_dna(H, null, null, null, null, /datum/species/human )
+			H.real_name = "Lingseek"
+			id = "lingseek_1"
+			H.regenerate_icons()
+			lingseek = 1
+			stage = 1
+			stage_two = 20
+			stage_three = 25 //fast stage progression
+			meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lingseeks
 			return // get me the hell out of here.
 		for(var/mob/M in viewers(7, H.loc))
 			M << "<span class='warning'><b>[src]</b> smiles and disappers with a low pop sound.</span>"
 		H.drop_everything()
 		qdel(H)
+
+/datum/species/golem/meeseeks/spec_death(var/gibbed, var/mob/living/carbon/human/H)
+	if(lingseek)
+		playsound(H.loc, 'sound/voice/meeseeks/ling/lingseeksspawn.ogg', 40, 0, 1)
+		new /obj/item/device/meeseeks_box/malf(H.loc)
+		new /obj/effect/decal/cleanable/lingseek_gibs(H.loc)
+	return
 
 /*
  FLIES
@@ -453,12 +495,17 @@
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable))
-		var/turf/pos = get_turf(H)
-		var/vomit_pile = pos.add_vomit_floor(H)
-		H.reagents.trans_to(vomit_pile, H.reagents.total_volume) //might need nerfing later since it allows fly people to purge all poisons too.
-		playsound(pos, 'sound/effects/splat.ogg', 50, 1)
-		H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
-					"<span class='userdanger'>You throw up on the floor!</span>")
+		var/datum/reagent/consumable/nutri_check = chem
+		if(nutri_check.nutriment_factor >0)
+			var/turf/pos = get_turf(H)
+			pos.add_vomit_floor(H,1) //toxic vomit, for the extra "disgusting" feeling
+			//var/vomit_pile =
+			//vomit_pile
+			//H.reagents.
+			//H.reagents.trans_to(vomit_pile, H.reagents.total_volume) //might need nerfing later since it allows fly people to purge all poisons too.
+			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
+						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()
 
 /*
