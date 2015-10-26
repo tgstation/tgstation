@@ -6,7 +6,7 @@ var/req_console_information = list()
 var/list/obj/machinery/requests_console/allConsoles = list()
 
 /obj/machinery/requests_console
-	name = "Requests Console"
+	name = "requests console"
 	desc = "A console intended to send requests to diferent departments on the station."
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
@@ -447,3 +447,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")
 			updateUsrDialog()
 	return
+
+/obj/machinery/requests_console/mechanic
+	name = "\improper Mechanics requests console"
+	department = "Mechanics"
+	departmentType = 4

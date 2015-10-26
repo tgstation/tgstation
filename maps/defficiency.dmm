@@ -1763,7 +1763,7 @@
 "aHU" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/medical/morgue)
 "aHV" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/medical/patients_rooms)
 "aHW" = (/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/medical/medbay)
-"aHX" = (/obj/structure/table,/obj/item/stack/sheet/glass/glass{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/mineral/plastic{amount = 20},/turf/simulated/floor,/area/engineering/mechanics)
+"aHX" = (/obj/structure/table,/obj/item/stack/sheet/glass/glass{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/sheet/mineral/plastic{amount = 20},/obj/machinery/requests_console/mechanic{dir = 8; pixel_x = -32},/turf/simulated/floor,/area/engineering/mechanics)
 "aHY" = (/obj/machinery/light_switch{pixel_x = -26; pixel_y = -24},/obj/structure/bed/chair/office/dark,/obj/effect/landmark/start{name = "Mechanic"},/turf/simulated/floor,/area/engineering/mechanics)
 "aHZ" = (/obj/machinery/computer/rdconsole/mechanic,/turf/simulated/floor,/area/engineering/mechanics)
 "aIa" = (/obj/effect/decal/warning_stripes{icon_state = "unloading"},/turf/simulated/floor,/area/engineering/mechanics)
